@@ -25,6 +25,7 @@
     "@elastic/datemath": "^2.3.0",
     "bluebird": "^3.5.0",
     "futil-js": "^1.31.0",
+    "include-all": "^4.0.3",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "mongoose": "^4.11.13"
