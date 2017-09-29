@@ -1,0 +1,37 @@
+{
+  "name": "contexture-elasticsearch",
+  "version": "0.0.1",
+  "description": "ElasticSearch Provider for Contexture",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/_mocha --recursive",
+    "test-watch": "chokidar 'src/**/*.js' 'test/**/*.js' -c 'npm t'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smartprocure/contexture-elasticsearch.git"
+  },
+  "keywords": [
+    "contexture",
+    "elasticsearch"
+  ],
+  "author": "Samuel Greene",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smartprocure/contexture-elasticsearch/issues"
+  },
+  "homepage": "https://github.com/smartprocure/contexture-elasticsearch#readme",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "futil-js": "^1.31.0",
+    "include-all": "^4.0.3",
+    "json-stable-stringify": "^1.0.1",
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chokidar-cli": "^1.2.0",
+    "mocha": "^3.5.3",
+    "sinon": "^4.0.0"
+  }
+}
