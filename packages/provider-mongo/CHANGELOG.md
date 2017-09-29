@@ -1,3 +1,6 @@
+# 0.0.4
+Add date documentation and missing mongoId dependencies
+
 # 0.0.3
 Add date unit tests and missing date dependencies
 
