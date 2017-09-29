@@ -1,5 +1,5 @@
-let {expect} = require('chai'),
-  {text} = require('../src/types')
+let { expect } = require('chai')
+let { text } = require('../src/types')
 
 describe('text', () => {
   it('should check for values', () => {
@@ -8,8 +8,8 @@ describe('text', () => {
         type: 'text',
         field: 'test',
         data: {
-          values: ['asdf']
-        }
+          values: ['asdf'],
+        },
       })
     ).to.be.true
     expect(
@@ -17,8 +17,8 @@ describe('text', () => {
         type: 'text',
         field: 'test',
         data: {
-          values: []
-        }
+          values: [],
+        },
       })
     ).to.be.false
   })
@@ -31,8 +31,8 @@ describe('text', () => {
         data: {
           join: 'any',
           operator: operator,
-          values: ['laserjet', 'printer']
-        }
+          values: ['laserjet', 'printer'],
+        },
       })
     it('containsWord', () => {
       expect(laserjetPrinterText('containsWord')).to.deep.equal({
@@ -40,16 +40,16 @@ describe('text', () => {
           {
             description: {
               $regex: 'laserjet',
-              $options: 'i'
-            }
+              $options: 'i',
+            },
           },
           {
             description: {
               $regex: 'printer',
-              $options: 'i'
-            }
-          }
-        ]
+              $options: 'i',
+            },
+          },
+        ],
       })
     })
     it('containsExact', () => {
@@ -58,16 +58,16 @@ describe('text', () => {
           {
             description: {
               $regex: '\\blaserjet\\b',
-              $options: 'i'
-            }
+              $options: 'i',
+            },
           },
           {
             description: {
               $regex: '\\bprinter\\b',
-              $options: 'i'
-            }
-          }
-        ]
+              $options: 'i',
+            },
+          },
+        ],
       })
     })
     it('startsWith', () => {
@@ -76,16 +76,16 @@ describe('text', () => {
           {
             description: {
               $regex: '^laserjet',
-              $options: 'i'
-            }
+              $options: 'i',
+            },
           },
           {
             description: {
               $regex: '^printer',
-              $options: 'i'
-            }
-          }
-        ]
+              $options: 'i',
+            },
+          },
+        ],
       })
     })
     it('endsWith', () => {
@@ -94,16 +94,16 @@ describe('text', () => {
           {
             description: {
               $regex: 'laserjet$',
-              $options: 'i'
-            }
+              $options: 'i',
+            },
           },
           {
             description: {
               $regex: 'printer$',
-              $options: 'i'
-            }
-          }
-        ]
+              $options: 'i',
+            },
+          },
+        ],
       })
     })
     it('is', () => {
@@ -112,16 +112,16 @@ describe('text', () => {
           {
             description: {
               $regex: '^laserjet$',
-              $options: 'i'
-            }
+              $options: 'i',
+            },
           },
           {
             description: {
               $regex: '^printer$',
-              $options: 'i'
-            }
-          }
-        ]
+              $options: 'i',
+            },
+          },
+        ],
       })
     })
     it('wordStartsWith', () => {
@@ -130,16 +130,16 @@ describe('text', () => {
           {
             description: {
               $regex: '\\blaserjet',
-              $options: 'i'
-            }
+              $options: 'i',
+            },
           },
           {
             description: {
               $regex: '\\bprinter',
-              $options: 'i'
-            }
-          }
-        ]
+              $options: 'i',
+            },
+          },
+        ],
       })
     })
     it('wordEndsWith', () => {
@@ -148,16 +148,16 @@ describe('text', () => {
           {
             description: {
               $regex: 'laserjet\\b',
-              $options: 'i'
-            }
+              $options: 'i',
+            },
           },
           {
             description: {
               $regex: 'printer\\b',
-              $options: 'i'
-            }
-          }
-        ]
+              $options: 'i',
+            },
+          },
+        ],
       })
     })
   })
