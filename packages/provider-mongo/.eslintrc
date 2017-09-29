@@ -1,3 +1,6 @@
 {
-  "extends": "smartprocure"
+  "extends": "smartprocure",
+  "rules": {
+    "no-unused-vars": 1
+  }
 }
