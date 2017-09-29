@@ -36,3 +36,8 @@ let process = Contexture({
   }
 })
 ```
+
+## Default Types
+
+### `mongoId`
+`mongoId` is filter only and compares against a mongo id, which in mongoose needs to be cast.
