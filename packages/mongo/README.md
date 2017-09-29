@@ -58,7 +58,10 @@ The following operators are supported:
 | `wordEndsWith`    | `/WORD\b/` |
 
 ### `date`
+`date` is filter only and converts `{from, to}` to a `{$gte, $lte}` mongo date filter.
+It also supports `dateMath` via `@elastic/datemath` (the same as supported by elasticsearch) to provide time ranges as well as three custom strings `lastQuarter`, `thisQuarter`, and `nextQuarter` (which are calculated on the fly)
+
+### `number`
 ### `exists`
 ### `facet`
-### `number`
 ### `results`
