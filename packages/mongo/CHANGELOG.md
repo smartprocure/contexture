@@ -1,3 +1,6 @@
+# 0.0.5
+Add dev tooling around contributing
+
 # 0.0.4
 Add date documentation and missing mongoId dependencies
 
