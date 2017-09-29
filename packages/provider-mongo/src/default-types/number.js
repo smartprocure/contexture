@@ -5,7 +5,7 @@ module.exports = {
   filter: context => ({
     [context.field]: _.pickBy(_.negate(_.isNil), {
       $gte: Number(context.data.min),
-      $lte: Number(context.data.max)
-    })
-  })
+      $lte: Number(context.data.max),
+    }),
+  }),
 }

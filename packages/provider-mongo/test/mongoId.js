@@ -1,4 +1,4 @@
-let {expect} = require('chai')
+let { expect } = require('chai')
 let mongoId = require('../src/default-types/mongoId')
 let mongoose = require('mongoose')
 
@@ -9,15 +9,15 @@ describe('mongoId', () => {
         type: 'mongoId',
         field: 'test',
         data: {
-          value: '53b46feb938d89315aae1477'
-        }
+          value: '53b46feb938d89315aae1477',
+        },
       })
     ).to.be.true
     expect(
       !!mongoId.hasValue({
         type: 'mongoId',
         field: 'test',
-        data: {}
+        data: {},
       })
     ).to.be.false
   })
@@ -26,11 +26,11 @@ describe('mongoId', () => {
       mongoId.filter({
         field: '_id',
         data: {
-          value: '53b46feb938d89315aae1477'
-        }
+          value: '53b46feb938d89315aae1477',
+        },
       })
     ).to.deep.equal({
-      _id: mongoose.Types.ObjectId('53b46feb938d89315aae1477')
+      _id: mongoose.Types.ObjectId('53b46feb938d89315aae1477'),
     })
   })
 })

@@ -9,13 +9,12 @@ var mongoDSL = (client, dsl) => {
   // if (dsl.count)
   //     return Model.count(dsl.criteria)
 
-  if (dsl.aggs)
-    return Model.aggregate(dsl.aggs).exec()
+  if (dsl.aggs) return Model.aggregate(dsl.aggs).exec()
 }
 
 var MongoProvider = config => ({
   groupCombinator: (group, filters) => ({
-    [`$${  group.join == 'not' ? 'nor' : group.join}`]: filters
+    [`$${group.join == 'not' ? 'nor' : group.join}`]: filters,
   }),
   runSearch: (options, context, schema, filters, aggs) => {
     var client = config.getMongooseClient()
@@ -23,10 +22,13 @@ var MongoProvider = config => ({
     var request = {
       // criteria: filters,
       model: schema.mongo.model,
-      aggs: [{
-        $match: filters || {}
-      //}].concat(aggs)
-      }, ...aggs]
+      aggs: [
+        {
+          $match: filters || {},
+          //}].concat(aggs)
+        },
+        ...aggs,
+      ],
     }
 
     // Log Request
@@ -37,7 +39,7 @@ var MongoProvider = config => ({
       // Log response
       request.response = results
     })
-  }
+  },
 })
 
 module.exports = MongoProvider

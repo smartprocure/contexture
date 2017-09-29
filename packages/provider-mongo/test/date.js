@@ -1,11 +1,11 @@
-let {expect} = require('chai')
-let {date} = require('../src/types')
+let { expect } = require('chai')
+let { date } = require('../src/types')
 
 let dateBuilder = data => ({
   key: 'test',
   type: 'date',
   field: 'test',
-  data
+  data,
 })
 
 describe('date', () => {
@@ -13,14 +13,14 @@ describe('date', () => {
     expect(
       !!date.hasValue(
         dateBuilder({
-          from: '2017-09-28'
+          from: '2017-09-28',
         })
       )
     ).to.be.true
     expect(
       !!date.hasValue(
         dateBuilder({
-          from: null
+          from: null,
         })
       )
     ).to.be.false
@@ -30,13 +30,13 @@ describe('date', () => {
       expect(
         date.filter(
           dateBuilder({
-            from: '2017-09-28'
+            from: '2017-09-28',
           })
         )
       ).to.deep.equal({
         test: {
-          $gte: new Date('2017-09-28')
-        }
+          $gte: new Date('2017-09-28'),
+        },
       })
     })
     it('basic datemath', () => {
@@ -44,13 +44,13 @@ describe('date', () => {
         date.filter(
           dateBuilder({
             useDateMath: true,
-            from: '2017-09-28T00:00:00.000Z||-1d'
+            from: '2017-09-28T00:00:00.000Z||-1d',
           })
         )
       ).to.deep.equal({
         test: {
-          $gte: new Date('2017-09-27T00:00:00.000Z')
-        }
+          $gte: new Date('2017-09-27T00:00:00.000Z'),
+        },
       })
     })
     // TODO: lastQuarter, thisQuarter, nextQuarter
