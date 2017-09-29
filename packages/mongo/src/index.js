@@ -15,7 +15,7 @@ var mongoDSL = (client, dsl) => {
 
 var MongoProvider = config => ({
   groupCombinator: (group, filters) => ({
-    ['$' + (group.join == 'not' ? 'nor' : group.join)]: filters
+    [`$${  group.join == 'not' ? 'nor' : group.join}`]: filters
   }),
   runSearch: (options, context, schema, filters, aggs) => {
     var client = config.getMongooseClient()

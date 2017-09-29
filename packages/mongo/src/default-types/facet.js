@@ -1,5 +1,5 @@
-let _ = require('lodash'),
-  Promise = require('bluebird')
+let _ = require('lodash')
+let Promise = require('bluebird')
 
 module.exports = {
   hasValue: context => _.get(context.data, 'values.length'),
@@ -11,7 +11,7 @@ module.exports = {
   result: (context, search) => Promise.all([
     search([{
       $group: {
-        _id: '$' + context.field,
+        _id: `$${  context.field}`,
         count: {
           $sum: 1
         }
@@ -21,7 +21,7 @@ module.exports = {
     }]),
     search([{
       $group: {
-        _id: '$' + context.field
+        _id: `$${  context.field}`
       }
     }, {
       $group: {

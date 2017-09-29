@@ -1,6 +1,6 @@
-let _ = require('lodash'),
-  moment = require('moment'),
-  datemath = require('@elastic/datemath')
+let _ = require('lodash')
+let moment = require('moment')
+let datemath = require('@elastic/datemath')
 
 module.exports = {
   hasValue: context => context.data.from || context.data.to,
@@ -9,13 +9,13 @@ module.exports = {
     if (context.data.useDateMath) {
       if (from === 'thisQuarter') {
         from = moment().quarter(moment().quarter()).startOf('quarter').format('YYYY-MM-DD')
-        to = from + '||+3M-1d/d'
+        to = `${from  }||+3M-1d/d`
       } else if (from === 'lastQuarter') {
         from = moment().quarter(moment().quarter() - 1).startOf('quarter').format('YYYY-MM-DD')
-        to = from + '||+3M-1d/d'
+        to = `${from  }||+3M-1d/d`
       } else if (from === 'nextQuarter') {
         from = moment().quarter(moment().quarter() + 1).startOf('quarter').format('YYYY-MM-DD')
-        to = from + '||+3M-1d/d'
+        to = `${from  }||+3M-1d/d`
       }
       from = datemath.parse(from)
       to = datemath.parse(to)

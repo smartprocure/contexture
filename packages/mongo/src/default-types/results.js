@@ -1,14 +1,14 @@
-let _ = require('lodash'),
-  Promise = require('bluebird')
+let _ = require('lodash')
+let Promise = require('bluebird')
 
 module.exports = {
   result: (context, search, schema) => {
-    let page = (context.config.page || 1) - 1,
-      pageSize = context.config.pageSize || 10,
-      startRecord = page * pageSize,
-      sortField = context.config.sortField || '_score',
-      sortDir = context.config.sortDir || 'desc',
-      sort = {
+    let page = (context.config.page || 1) - 1
+    let pageSize = context.config.pageSize || 10
+    let startRecord = page * pageSize
+    let sortField = context.config.sortField || '_score'
+    let sortDir = context.config.sortDir || 'desc'
+    let sort = {
         [sortField]: sortDir === 'asc' ? 1 : -1
       }
 

@@ -1,5 +1,5 @@
-let _ = require('lodash/fp'),
-  F = require('futil-js')
+let _ = require('lodash/fp')
+let F = require('futil-js')
 
 let joinmap = {
   all: '$and',

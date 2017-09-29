@@ -1,6 +1,6 @@
-let {expect} = require('chai'),
-  mongoId = require('../src/default-types/mongoId'),
-  mongoose = require('mongoose')
+let {expect} = require('chai')
+let mongoId = require('../src/default-types/mongoId')
+let mongoose = require('mongoose')
 
 describe('mongoId', () => {
   it('should check for value', () => {
