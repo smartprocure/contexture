@@ -41,3 +41,18 @@ let process = Contexture({
 
 ### `mongoId`
 `mongoId` is filter only and compares against a mongo id, which in mongoose needs to be cast.
+
+### `text`
+`text` is filter only and supports an array of values, a join, and an operator which it uses to construct a $regex filter.
+
+The following operators are supported:
+
+| Operator          | Description |
+| ----------------- | ----------- |
+| `containsWord`    | `/WORD/` (matches mid-word) |
+| `containsExact`   | `/\bWORD\b/` (matches word in field) |
+| `startsWith`      | `/^WORD/` |
+| `endsWith`        | `/WORD$/` |
+| `is`              | `/^WORD$/` (exact match) |
+| `wordStartsWith`  | `/\bWORD/` |
+| `wordEndsWith`    | `/WORD\b/` |
