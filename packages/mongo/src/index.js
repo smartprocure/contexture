@@ -1,3 +1,4 @@
+let _ = require('lodash/fp')
 var Promise = require('bluebird')
 
 // Basic function to encapsulate everything needed to run a request - tiny wrapper over raw mongo syntax
@@ -16,19 +17,19 @@ var MongoProvider = config => ({
   groupCombinator: (group, filters) => ({
     [`$${group.join == 'not' ? 'nor' : group.join}`]: filters,
   }),
+  types: config.types,
   runSearch: (options, context, schema, filters, aggs) => {
     var client = config.getMongooseClient()
 
     var request = {
       // criteria: filters,
       model: schema.mongo.model,
-      aggs: [
+      aggs: _.concat([
         {
           $match: filters || {},
           //}].concat(aggs)
-        },
-        ...aggs,
-      ],
+        }
+      ], aggs)
     }
 
     // Log Request
