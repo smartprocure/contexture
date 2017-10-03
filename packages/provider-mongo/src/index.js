@@ -16,6 +16,7 @@ var MongoProvider = config => ({
   groupCombinator: (group, filters) => ({
     [`$${group.join == 'not' ? 'nor' : group.join}`]: filters,
   }),
+  types: config.types,
   runSearch: (options, context, schema, filters, aggs) => {
     var client = config.getMongooseClient()
 
@@ -27,8 +28,8 @@ var MongoProvider = config => ({
           $match: filters || {},
           //}].concat(aggs)
         },
-        ...aggs,
-      ],
+        ...aggs
+      ]
     }
 
     // Log Request
