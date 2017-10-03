@@ -1,3 +1,6 @@
+﻿# 0.0.6
+Making sure we export the types.
+
 # 0.0.5
 Add dev tooling around contributing
 
