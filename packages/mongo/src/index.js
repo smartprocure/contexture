@@ -1,4 +1,3 @@
-let _ = require('lodash/fp')
 var Promise = require('bluebird')
 
 // Basic function to encapsulate everything needed to run a request - tiny wrapper over raw mongo syntax
@@ -24,15 +23,13 @@ var MongoProvider = config => ({
     var request = {
       // criteria: filters,
       model: schema.mongo.model,
-      aggs: _.concat(
-        [
-          {
-            $match: filters || {},
-            //}].concat(aggs)
-          },
-        ],
-        aggs
-      ),
+      aggs: [
+        {
+          $match: filters || {},
+          //}].concat(aggs)
+        },
+        ...aggs
+      ]
     }
 
     // Log Request
