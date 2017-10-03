@@ -24,12 +24,15 @@ var MongoProvider = config => ({
     var request = {
       // criteria: filters,
       model: schema.mongo.model,
-      aggs: _.concat([
-        {
-          $match: filters || {},
-          //}].concat(aggs)
-        }
-      ], aggs)
+      aggs: _.concat(
+        [
+          {
+            $match: filters || {},
+            //}].concat(aggs)
+          },
+        ],
+        aggs
+      ),
     }
 
     // Log Request
