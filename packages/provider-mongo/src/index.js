@@ -28,8 +28,8 @@ var MongoProvider = config => ({
           $match: filters || {},
           //}].concat(aggs)
         },
-        ...aggs
-      ]
+        ...aggs,
+      ],
     }
 
     // Log Request
