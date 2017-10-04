@@ -1,6 +1,6 @@
 {
   "name": "contexture-mongo",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Mongo Provider for Contexture",
   "main": "src/index.js",
   "scripts": {
@@ -51,7 +51,7 @@
     "include-all": "^4.0.3",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
-    "mongoose": "^4.11.13"
+    "mongodb": "^2.2.31"
   },
   "devDependencies": {
     "chai": "^4.1.2",

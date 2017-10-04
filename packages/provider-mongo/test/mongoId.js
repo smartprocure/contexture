@@ -1,6 +1,6 @@
 let { expect } = require('chai')
 let mongoId = require('../src/default-types/mongoId')
-let mongoose = require('mongoose')
+let ObjectID = require('mongodb').ObjectID
 
 describe('mongoId', () => {
   it('should check for value', () => {
@@ -30,7 +30,7 @@ describe('mongoId', () => {
         },
       })
     ).to.deep.equal({
-      _id: mongoose.Types.ObjectId('53b46feb938d89315aae1477'),
+      _id: new ObjectID('53b46feb938d89315aae1477'),
     })
   })
 })

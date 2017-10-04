@@ -1,20 +1,26 @@
-# contexture-mongo
+﻿# contexture-mongo
 Mongo Provider for Contexture
 
 ## Overview
-This library assumes mongoose, but can easily be extended to support anything that can handle native mongo aggregations.
+This library assumes you'll pass a native Mongo client. For example,
+if you're using the package `mongo`, you would be passing the database object you get
+right after calling `connect`.  Most of other MongoDB clients and
+similar tools provide a way to access the native client.
 
 ## Usage
-This provider takes a config object as a parameter, and expects a `getMongooseClient` method to be provided, which should be an instantiated mongoose client.
+This provider takes a `config` object as a parameter, and expects a
+`getClient` method to be provided, which should return an instantiated
+MongoDB client.
 
-Schemas using this mongo provider must specify a `model` property, which is which collection (mongoose model) it runs against.
+Schemas using this mongo provider must specify a `collection` property,
+which is the name of the collection it runs against.
 
 ### Example Schema for SomeMongoCollection
 
 ```js
 module.exports = {
   mongo: {
-    model: 'SomeMongoCollection'
+    collection: 'SomeMongoCollection'
   }
 }
 ```
@@ -30,7 +36,7 @@ let process = Contexture({
   schemas,
   providers: {
     mongo: provider({
-      getMongooseClient: () => mongoose,
+      getClient: () => client,
       types
     })
   }
