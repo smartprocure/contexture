@@ -1,5 +1,6 @@
 ﻿# 0.0.7
-Using the native mongo driver.
+Using the native mongo driver, and renamed the expected model property
+to be collection.
 
 # 0.0.6
 Making sure we export the types.

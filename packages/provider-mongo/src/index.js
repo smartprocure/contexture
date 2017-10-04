@@ -2,14 +2,14 @@ var Promise = require('bluebird')
 
 // Basic function to encapsulate everything needed to run a request - tiny wrapper over raw mongo syntax
 var mongoDSL = (client, dsl) => {
-  var Model = client.collection(dsl.model)
+  var Collection = client.collection(dsl.collection)
 
   // if (dsl.resultOptions)
-  //     return Model.find(dsl.criteria, dsl.resultOptions)
+  //     return Collection.find(dsl.criteria, dsl.resultOptions)
   // if (dsl.count)
-  //     return Model.count(dsl.criteria)
+  //     return Collection.count(dsl.criteria)
 
-  if (dsl.aggs) return Model.aggregate(dsl.aggs).toArray()
+  if (dsl.aggs) return Collection.aggregate(dsl.aggs).toArray()
 }
 
 var MongoProvider = config => ({
@@ -22,7 +22,7 @@ var MongoProvider = config => ({
 
     var request = {
       // criteria: filters,
-      model: schema.mongo.model,
+      collection: schema.mongo.collection,
       aggs: [
         {
           $match: filters || {},

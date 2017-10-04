@@ -12,7 +12,7 @@ This provider takes a `config` object as a parameter, and expects a
 `getClient` method to be provided, which should return an instantiated
 MongoDB client.
 
-Schemas using this mongo provider must specify a `model` property,
+Schemas using this mongo provider must specify a `collection` property,
 which is the name of the collection it runs against.
 
 ### Example Schema for SomeMongoCollection
@@ -20,7 +20,7 @@ which is the name of the collection it runs against.
 ```js
 module.exports = {
   mongo: {
-    model: 'SomeMongoCollection'
+    collection: 'SomeMongoCollection'
   }
 }
 ```
