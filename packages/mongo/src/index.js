@@ -26,9 +26,8 @@ var MongoProvider = config => ({
       aggs: [
         {
           $match: filters || {},
-          //}].concat(aggs)
         },
-        ...aggs
+        ...aggs,
       ]
     }
 
