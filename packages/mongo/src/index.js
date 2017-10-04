@@ -18,7 +18,7 @@ var MongoProvider = config => ({
   }),
   types: config.types,
   runSearch: (options, context, schema, filters, aggs) => {
-    var client = config.client
+    var client = config.getClient()
 
     var request = {
       // criteria: filters,
@@ -28,8 +28,8 @@ var MongoProvider = config => ({
           $match: filters || {},
           //}].concat(aggs)
         },
-        ...aggs,
-      ],
+        ...aggs
+      ]
     }
 
     // Log Request
