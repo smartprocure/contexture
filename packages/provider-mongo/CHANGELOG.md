@@ -1,4 +1,7 @@
-﻿# 0.0.6
+﻿# 0.0.7
+Using the native mongo driver.
+
+# 0.0.6
 Making sure we export the types.
 
 # 0.0.5
