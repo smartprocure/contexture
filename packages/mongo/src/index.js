@@ -28,7 +28,7 @@ var MongoProvider = config => ({
           $match: filters || {},
         },
         ...aggs,
-      ]
+      ],
     }
 
     // Log Request
