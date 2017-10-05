@@ -1,5 +1,27 @@
 let _ = require('lodash/fp')
 
+// Org -> Month -> $
+// let example = {
+//   metric: {
+//     type: 'sum',
+//     field: 'PO.IssuedAmount'
+//   },
+//   aggs: [
+//     {
+//       type: 'terms',
+//       field: 'Organization.NameState.untouched',
+//       data: {}
+//     },
+//     {
+//       type: 'date_histogram',
+//       field: 'PO.IssuedDate',
+//       data: {
+//         interval: 'month'
+//       }
+//     }
+//   ]
+// }
+
 module.exports = {
   validContext: context =>
     context.config.metric.type &&

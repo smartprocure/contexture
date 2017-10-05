@@ -1,6 +1,30 @@
 let _ = require('lodash/fp')
 let aggUtils = require('../aggUtils')
 
+// let example = {
+//   config: {
+//     field: 'Organization.NameState.untouched',
+//     background: {
+//       type: 'range',
+//       field: 'PO.IssuedDate',
+//       data: {
+//         gte: 'now-1y-90d',
+//         lte: 'now-90d',
+//         format: 'dateOptionalTime'
+//       }
+//     },
+//     foreground: {
+//       type: 'range',
+//       field: 'PO.IssuedDate',
+//       data: {
+//         gte: 'now-90d',
+//         lte: 'now',
+//         format: 'dateOptionalTime'
+//       }
+//     }
+//   }
+// }
+
 let rawFieldName = _.pipe(
   _.replace('.untouched', ''),
   _.replace('.shingle', '')
