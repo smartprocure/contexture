@@ -1,4 +1,5 @@
 let _ = require('lodash/fp')
+let F = require('futil-js')
 
 // let example = {
 //   key_type: 'range',
@@ -63,7 +64,7 @@ module.exports = {
 
     return search(query).then(results => {
       let rtn = {
-        results: _.map(
+        results: F.mapIndexed(
           (bucket, key) =>
             _.extend(
               {
