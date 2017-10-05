@@ -1,5 +1,5 @@
 module.exports = require('include-all')({
-  dirname: `${__dirname}/default-types`,
+  dirname: `${__dirname}/src/example-types`,
   filter: /(.+)\.js$/,
   optional: true,
 })
