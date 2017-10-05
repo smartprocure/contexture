@@ -77,3 +77,34 @@ let process = Contexture({
   }
 })
 ```
+
+## Default Types
+### `bool`
+### `cardinality`
+### `date`
+### `dateHistogram`
+### `esTwoLevelAggregation`
+### `exists`
+### `facet`
+### `geo`
+### `groupedMetric`
+### `matchCardinality`
+### `matchStats`
+### `nLevelAggregation`
+### `nonzeroClusters`
+### `number`
+### `percentileRanks`
+### `percentiles`
+### `percentilesRange`
+### `query`
+### `rangeStats`
+### `results`
+### `smartIntervalHistogram`
+### `smartPercentileRanks`
+### `statistical`
+### `terms`
+### `termsDelta`
+### `termsStatsHits`
+### `terms_stats`
+### `text`
+### `twoLevelMatch`
