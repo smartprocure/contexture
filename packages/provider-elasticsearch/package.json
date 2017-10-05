@@ -23,7 +23,7 @@
   "homepage": "https://github.com/smartprocure/contexture-elasticsearch#readme",
   "dependencies": {
     "bluebird": "^3.5.0",
-    "futil-js": "^1.31.0",
+    "futil-js": "^1.32.0",
     "include-all": "^4.0.3",
     "json-stable-stringify": "^1.0.1",
     "lodash": "^4.17.4"
@@ -32,6 +32,7 @@
     "chai": "^4.1.2",
     "chokidar-cli": "^1.2.0",
     "mocha": "^3.5.3",
-    "sinon": "^4.0.0"
+    "sinon": "^4.0.0",
+    "sinon-chai": "^2.14.0"
   }
 }
