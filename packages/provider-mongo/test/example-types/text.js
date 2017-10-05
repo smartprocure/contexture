@@ -1,7 +1,6 @@
 let { expect } = require('chai')
 let { text } = require('../../types')()
 
-
 describe('text', () => {
   it('should check for values', () => {
     expect(
