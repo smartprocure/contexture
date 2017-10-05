@@ -5,7 +5,7 @@ let geo = ({
   geocodeLocation = () => {
     throw new Error('Geo filter was not passed a geocode service')
   }
-}) => ({
+} = {}) => ({
   hasValue: context =>
     !!(context.data.location && context.data.radius && context.data.operator),
   filter: context =>
