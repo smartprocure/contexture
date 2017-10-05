@@ -28,6 +28,11 @@
     "url": "https://github.com/smartprocure/contexture-elasticsearch/issues"
   },
   "homepage": "https://github.com/smartprocure/contexture-elasticsearch#readme",
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "semi": false
+  },
   "dependencies": {
     "@elastic/datemath": "^2.3.0",
     "bluebird": "^3.5.0",
