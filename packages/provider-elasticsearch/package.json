@@ -1,11 +1,18 @@
 {
   "name": "contexture-elasticsearch",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "ElasticSearch Provider for Contexture",
   "main": "src/index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/_mocha --recursive",
-    "test-watch": "chokidar 'src/**/*.js' 'test/**/*.js' -c 'npm t'"
+    "test-watch": "chokidar 'src/**/*.js' 'test/**/*.js' -c 'npm t'",
+    "test-ci": "./node_modules/mocha/bin/_mocha --recursive --reporter json > test-results.json",
+    "lint": "eslint --ignore-path .gitignore '{src,test}/**/*.js'",
+    "lint-ci": "npm run lint -- -o lint-results.json -f json",
+    "lint-fix": "npm run lint -- --fix",
+    "fmt": "prettier --write '{src,test}/**/*.js'",
+    "duti": "duti",
+    "duti:fix": "npm run lint-fix; npm run fmt"
   },
   "repository": {
     "type": "git",
@@ -34,7 +41,10 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "chokidar-cli": "^1.2.0",
+    "eslint": "^4.8.0",
+    "eslint-config-smartprocure": "^1.0.2",
     "mocha": "^3.5.3",
+    "prettier": "^1.7.4",
     "sinon": "^4.0.0",
     "sinon-chai": "^2.14.0"
   }
