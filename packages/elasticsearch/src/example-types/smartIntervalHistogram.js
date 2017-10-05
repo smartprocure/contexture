@@ -1,18 +1,18 @@
-let _ = require('lodash/fp'),
-  Promise = require('bluebird'),
-  statsResults = require('./statistical').result,
-  calcSmartInterval = require('../smartInterval').calcSmartInterval
+let _ = require('lodash/fp')
+let Promise = require('bluebird')
+let statsResults = require('./statistical').result
+let calcSmartInterval = require('../smartInterval').calcSmartInterval
 
 module.exports = {
   validContext: context => context.field || context.config.field,
-  result: (context, search, schema, provider, options) => {
+  result: (context, search) => {
     let field = context.field || context.config.field
     let interval = context.config.interval
     if (!interval) {
       interval = statsResults(
         {
           key: context.key,
-          field: field
+          field: field,
         },
         search
       ).then(statResult => calcSmartInterval(statResult.min, statResult.max))
@@ -25,8 +25,8 @@ module.exports = {
             histogram: {
               field: field,
               interval: intervalResult,
-              min_doc_count: 0
-            } // ,
+              min_doc_count: 0,
+            }, // ,
             // aggs: {
             //   histogram: {
             //     stats: {
@@ -34,8 +34,8 @@ module.exports = {
             //     }
             //   }
             // }
-          }
-        }
+          },
+        },
       }).then(results => ({
         interval: intervalResult,
         entries: _.map(
@@ -43,12 +43,12 @@ module.exports = {
             //_.extend
             ({
               key: bucket.key,
-              count: bucket.doc_count
+              count: bucket.doc_count,
             }), //,
           //{} /* bucket.histogram */
           results.aggregations.histogram.buckets
-        )
+        ),
       }))
     )
-  }
+  },
 }

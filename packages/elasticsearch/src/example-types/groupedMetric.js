@@ -1,27 +1,5 @@
 let _ = require('lodash/fp')
 
-// Org -> Month -> $
-let example = {
-  metric: {
-    type: 'sum',
-    field: 'PO.IssuedAmount'
-  },
-  aggs: [
-    {
-      type: 'terms',
-      field: 'Organization.NameState.untouched',
-      data: {}
-    },
-    {
-      type: 'date_histogram',
-      field: 'PO.IssuedDate',
-      data: {
-        interval: 'month'
-      }
-    }
-  ]
-}
-
 module.exports = {
   validContext: context =>
     context.config.metric.type &&
@@ -29,7 +7,7 @@ module.exports = {
       /value_count|top_hits/.test(context.config.metric.type) ||
       context.config.metric.field
     ),
-  result: (context, search, schema, provider, options) =>
+  result: (context, search) =>
     search(
       _.reduce(
         (r, agg) => ({
@@ -40,18 +18,18 @@ module.exports = {
                   agg.type == 'top_hits'
                     ? {}
                     : {
-                        field: agg.field
+                        field: agg.field,
                       },
                   agg.data
-                )
+                ),
               },
               r
-            )
-          }
+            ),
+          },
         }),
         {}
       )([context.config.metric].concat(_.reverse(context.config.aggs)))
     ).then(results => ({
-      results: results.aggregations
-    }))
+      results: results.aggregations,
+    })),
 }

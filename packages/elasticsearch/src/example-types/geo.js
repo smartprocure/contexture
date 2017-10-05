@@ -1,11 +1,13 @@
-let _ = require('lodash/fp'),
-  Promise = require('bluebird')
+let _ = require('lodash/fp')
+let Promise = require('bluebird')
 
-let geo = ({
-  geocodeLocation = () => {
-    throw new Error('Geo filter was not passed a geocode service')
-  }
-} = {}) => ({
+let geo = (
+  {
+    geocodeLocation = () => {
+      throw new Error('Geo filter was not passed a geocode service')
+    },
+  } = {}
+) => ({
   hasValue: context =>
     !!(context.data.location && context.data.radius && context.data.operator),
   filter: context =>
@@ -18,15 +20,15 @@ let geo = ({
 
         let result = {
           geo_distance: {
-            [context.field]: location.lat + ',' + location.lng,
-            distance: context.data.radius + 'mi'
-          }
+            [context.field]: `${location.lat},${location.lng}`,
+            distance: `${context.data.radius}mi`,
+          },
         }
         if (context.data.operator !== 'within') {
           result = {
             bool: {
-              must_not: result
-            }
+              must_not: result,
+            },
           }
         }
 
@@ -42,8 +44,8 @@ let geo = ({
       context.data.operator
     ),
   result: context => ({
-    place: _.get('_meta.preprocessorResult.results.0', context)
-  })
+    place: _.get('_meta.preprocessorResult.results.0', context),
+  }),
 })
 
 module.exports = geo

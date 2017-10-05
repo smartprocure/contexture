@@ -1,10 +1,16 @@
 /* eslint-env mocha */
-let _ = require('lodash/fp'),
-  F = require('futil-js'),
-  sequentialResultTest = require('./testUtils').sequentialResultTest
+let _ = require('lodash/fp')
+let F = require('futil-js')
+let sequentialResultTest = require('./testUtils').sequentialResultTest
 
 describe('results', () => {
-  let schema, context, service, expectedResult, expectedCalls, resultsTest
+  let schema
+  let context
+  let service
+  let expectedResult
+  let expectedCalls
+  let resultsTest
+
   beforeEach(() => {
     service = [
       {
@@ -14,16 +20,16 @@ describe('results', () => {
           hits: [
             {
               _id: 'test-id',
-              field: 'test field'
-            }
-          ]
-        }
-      }
+              field: 'test field',
+            },
+          ],
+        },
+      },
     ]
     schema = {
       elasticsearch: {
-        summaryView: _.identity
-      }
+        summaryView: _.identity,
+      },
     }
     expectedResult = {
       scrollId: 1,
@@ -35,10 +41,10 @@ describe('results', () => {
           {
             _id: 'test-id',
             additionalFields: [],
-            field: 'test field'
-          }
-        ]
-      }
+            field: 'test field',
+          },
+        ],
+      },
     }
     context = {
       key: 'test',
@@ -46,22 +52,22 @@ describe('results', () => {
       config: {
         highlight: false,
         verbose: false,
-        explain: false
-      }
+        explain: false,
+      },
     }
     expectedCalls = [
       {
         from: 0,
         size: 10,
-        explain: false
-      }
+        explain: false,
+      },
     ]
     resultsTest = _.partial(sequentialResultTest, [
       service,
       _,
       expectedResult,
       _,
-      schema
+      schema,
     ])
   })
 
@@ -69,62 +75,62 @@ describe('results', () => {
     resultsTest(context, [
       _.extend(expectedCalls[0], {
         sort: {
-          _score: 'desc'
-        }
-      })
+          _score: 'desc',
+        },
+      }),
     ]))
   it('should order by sortDir config', () => {
-    F.extendOn(context.config, {sortDir: 'asc'})
+    F.extendOn(context.config, { sortDir: 'asc' })
     return resultsTest(context, [
       _.extend(expectedCalls[0], {
         sort: {
-          _score: 'asc'
-        }
-      })
+          _score: 'asc',
+        },
+      }),
     ])
   })
   it('should sort on sortField config', () => {
     let sortField = 'test.field'
-    F.extendOn(context.config, {sortField: sortField})
+    F.extendOn(context.config, { sortField: sortField })
     return resultsTest(context, [
       _.extend(expectedCalls[0], {
         sort: {
-          [context.config.sortField]: 'desc'
-        }
-      })
+          [context.config.sortField]: 'desc',
+        },
+      }),
     ])
   })
   it('should strip ".untouched" from sortField config', () => {
     let sortField = 'test.field'
-    F.extendOn(context.config, {sortField: sortField + '.untouched'})
+    F.extendOn(context.config, { sortField: `${sortField}.untouched` })
     return resultsTest(context, [
       _.extend(expectedCalls[0], {
         sort: {
-          [sortField]: 'desc'
-        }
-      })
+          [sortField]: 'desc',
+        },
+      }),
     ])
   })
   it('should strip ".untouched" from sortField config when sortMode config is "word"', () => {
     let sortField = 'test.field'
-    F.extendOn(context.config, {sortField: sortField, sortMode: 'word'})
+    F.extendOn(context.config, { sortField: sortField, sortMode: 'word' })
     return resultsTest(context, [
       _.extend(expectedCalls[0], {
         sort: {
-          [sortField]: 'desc'
-        }
-      })
+          [sortField]: 'desc',
+        },
+      }),
     ])
   })
   it('should sort on sortField + ".untouched" when sortMode config is "field"', () => {
     let sortField = 'test.field'
-    F.extendOn(context.config, {sortField: sortField, sortMode: 'field'})
+    F.extendOn(context.config, { sortField: sortField, sortMode: 'field' })
     return resultsTest(context, [
       _.extend(expectedCalls[0], {
         sort: {
-          [sortField + '.untouched']: 'desc'
-        }
-      })
+          [`${sortField}.untouched`]: 'desc',
+        },
+      }),
     ])
   })
 })

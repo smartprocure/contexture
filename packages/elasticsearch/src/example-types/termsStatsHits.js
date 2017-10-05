@@ -1,5 +1,5 @@
- let _ = require('lodash/fp')
- let F = require('futil-js')
+let _ = require('lodash/fp')
+let F = require('futil-js')
 
 let breadthFirstBucketSwitch = 500000
 let getAggregationObject = config => ({
@@ -7,30 +7,30 @@ let getAggregationObject = config => ({
     field: config.key_field,
     size: config.size || 10,
     order: {
-      ['Stats.' + (config.order || 'sum')]: config.sortDir || 'desc'
-    }
+      [`Stats.${config.order || 'sum'}`]: config.sortDir || 'desc',
+    },
   },
   aggs: {
     Stats: {
       stats: {
-        field: config.value_field
-      }
+        field: config.value_field,
+      },
     },
     Hits: {
       top_hits: {
         size: config.hitSize || 1,
         _source: {
-          include: config.include || []
-        }
-      }
-    }
-  }
+          include: config.include || [],
+        },
+      },
+    },
+  },
 })
 
 module.exports = {
   validContext: context =>
     context.config.key_field && context.config.value_field,
-  result: (context, search, schema, provider, options) => {
+  result: (context, search) => {
     let filter
     let isDetails =
       context.config.details_key_field && context.config.details_value_field
@@ -42,18 +42,21 @@ module.exports = {
       )
       filter = {
         bool: {
-          must: _.map(f => ({
-            wildcard: {
-              [rawFieldName]: '*' + f.replace(/\*|\-|\+/g, '') + '*'
-            }
-          }), filterParts)
-        }
+          must: _.map(
+            f => ({
+              wildcard: {
+                [rawFieldName]: `*${f.replace(/\*|-|\+/g, '')}*`,
+              },
+            }),
+            filterParts
+          ),
+        },
       }
     }
     let request = {
       aggs: {
-        termsStatsHitsStats: getAggregationObject(context.config)
-      }
+        termsStatsHitsStats: getAggregationObject(context.config),
+      },
     }
     if (isDetails) {
       F.setOn(
@@ -64,7 +67,7 @@ module.exports = {
           size: context.config.details_size,
           order: context.config.details_order,
           sortDir: context.config.details_sortDir,
-          include: context.config.details_include
+          include: context.config.details_include,
         }),
         request
       )
@@ -78,8 +81,8 @@ module.exports = {
       request.aggs = {
         termsStatsHits: {
           filter: filter,
-          aggs: request.aggs
-        }
+          aggs: request.aggs,
+        },
       }
     }
     return search(request).then(results => ({
@@ -88,30 +91,32 @@ module.exports = {
           _.extendAll([
             {
               key: bucket.key,
-              doc_count: bucket.doc_count
+              doc_count: bucket.doc_count,
             },
             bucket.Stats,
             {
-              hits: _.map( '_source', _.get('hits.hits', bucket.Hits))
+              hits: _.map('_source', _.get('hits.hits', bucket.Hits)),
             },
             isDetails
               ? {
-                  details: _.map(detailsBucket =>
-                    _.extendAll([
-                      {
-                        key: detailsBucket.key,
-                        doc_count: detailsBucket.doc_count
-                      },
-                      detailsBucket.Stats,
-                      _.get( 'hits.hits.0._source', detailsBucket.Hits)
-                    ]), bucket.Details.buckets
-                  )
+                  details: _.map(
+                    detailsBucket =>
+                      _.extendAll([
+                        {
+                          key: detailsBucket.key,
+                          doc_count: detailsBucket.doc_count,
+                        },
+                        detailsBucket.Stats,
+                        _.get('hits.hits.0._source', detailsBucket.Hits),
+                      ]),
+                    bucket.Details.buckets
+                  ),
                 }
-              : {}
+              : {},
           ]),
         (results.aggregations.termsStatsHits || results.aggregations)
           .termsStatsHitsStats.buckets
-      )
+      ),
     }))
-  }
+  },
 }
