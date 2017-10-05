@@ -44,6 +44,7 @@
     "unidecode": "^0.1.8"
   },
   "devDependencies": {
+    "babel-eslint": "^8.0.1",
     "chai": "^4.1.2",
     "chokidar-cli": "^1.2.0",
     "eslint": "^4.8.0",
