@@ -22,11 +22,13 @@
   },
   "homepage": "https://github.com/smartprocure/contexture-elasticsearch#readme",
   "dependencies": {
+    "@elastic/datemath": "^2.3.0",
     "bluebird": "^3.5.0",
     "futil-js": "^1.32.0",
     "include-all": "^4.0.3",
     "json-stable-stringify": "^1.0.1",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1",
   },
   "devDependencies": {
     "chai": "^4.1.2",
