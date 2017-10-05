@@ -65,7 +65,14 @@ let process = Contexture({
           'custom-header-app-name': 'my-app-sent-this'
         }
       },
-      types
+      types: types({
+        geo: {
+          geocodeLocation: query =>
+            googleplaces.textSearch({
+              query
+            })
+        }
+      })
     })
   }
 })
