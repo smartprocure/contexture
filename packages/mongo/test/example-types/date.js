@@ -1,5 +1,5 @@
 let { expect } = require('chai')
-let { date } = require('../../types')
+let { date } = require('../../types')()
 
 let dateBuilder = data => ({
   key: 'test',
