@@ -29,7 +29,7 @@ module.exports = {
 ```js
 let Contexture = require('contexture')
 let provider = require('contexture-mongo')
-let types = require('contexture-mongo/types')
+let types = require('contexture-mongo/types')()
 let schemas = require('./path/to/schemas')
 
 let process = Contexture({
@@ -44,6 +44,12 @@ let process = Contexture({
 ```
 
 ## Default Types
+
+Requiring `contexture-mongo/types` and calling it as a function will allow you to use a
+curated set of types we offer by default.
+`contexture-mongo/types` allows you to pass a
+customization object that will allow you to pass custom
+parameters to the provided types.
 
 ### `mongoId`
 `mongoId` is filter only and compares against a mongo id, which in mongoose needs to be cast.
