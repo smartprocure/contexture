@@ -1,5 +1,5 @@
 let { expect } = require('chai')
-let { mongoId } = require('../../types')
+let { mongoId } = require('../../types')()
 let ObjectID = require('mongodb').ObjectID
 
 describe('mongoId', () => {
