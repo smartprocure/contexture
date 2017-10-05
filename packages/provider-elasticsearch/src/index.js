@@ -4,23 +4,22 @@ let deterministic_stringify = require('json-stable-stringify')
 
 let ElasticsearchProvider = (
   config = {
-    request: {}
+    request: {},
   }
 ) => ({
   groupCombinator: (group, filters) => {
     let join = {
       and: 'must',
       or: 'should',
-      not: 'must_not'
+      not: 'must_not',
     }[group.join || 'and']
 
     let result = {
       bool: {
-        [join]: filters
-      }
+        [join]: filters,
+      },
     }
-    if (join == 'should')
-      result.bool.minimum_should_match = 1
+    if (join == 'should') result.bool.minimum_should_match = 1
 
     return result
   },
@@ -35,16 +34,16 @@ let ElasticsearchProvider = (
     if (query && !_.has('sort._score', aggs))
       query = {
         constant_score: {
-          filter: query
-        }
+          filter: query,
+        },
       }
 
     // Could nestify aggs here generically based on schema
     let request = {
       body: {
         query,
-        ...aggs
-      }
+        ...aggs, // This is only available in Node >= 8.3.0
+      },
     }
     // If there are aggs, skip search results
     if (aggs.aggs) request.body.size = 0
@@ -67,7 +66,7 @@ let ElasticsearchProvider = (
 
     // Log Request
     context._meta.requests.push({
-      request
+      request,
     })
 
     // Required for scroll since 2.1.0 ES
@@ -81,17 +80,16 @@ let ElasticsearchProvider = (
     // If we have scrollId then keep scrolling if not search
     let result = scrollId
       ? client.scroll({
-        scroll: context.config.scroll,
-        scrollId: scrollId
-      })
+          scroll: context.config.scroll,
+          scrollId: scrollId,
+        })
       : client.search(request)
     return Promise.resolve(result).tap(results => {
-      if (results.timed_out)
-        context.timedout = true
+      if (results.timed_out) context.timedout = true
       // Log response
       _.last(context._meta.requests).response = results
     })
-  }
+  },
 })
 
 module.exports = ElasticsearchProvider

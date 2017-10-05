@@ -2,31 +2,30 @@ let _ = require('lodash/fp')
 
 let processReducers = (results, reducers) => {
   let handlers = {
-    peakBy: (currentConfig, currentResults) => {
-      return _.map(result => {
+    peakBy: (currentConfig, currentResults) =>
+      _.map(result => {
         let peak = _.maxBy(currentConfig.field)(result.terms.buckets)
         return _.extend(peak, {
           id: result.key,
-          peakKey: +peak.key
+          peakKey: Number(peak.key),
         })
-      })(currentResults)
-    },
+      })(currentResults),
     filter: (config, currentResults) => {
-      let filteredResults = [],
-        hasFieldPlus = _.curry(
-          (currentConfig, other) =>
-            _.has(other, currentConfig) && _.has('field', currentConfig)
-        )(config),
-        operation = _.curry(
-          (op, item) =>
-            _.isNumber(config[op])
-              ? _[op](_.get(config.field, item), config[op])
-              : true
-        )
+      let filteredResults = []
+      let hasFieldPlus = _.curry(
+        (currentConfig, other) =>
+          _.has(other, currentConfig) && _.has('field', currentConfig)
+      )(config)
+      let operation = _.curry(
+        (op, item) =>
+          _.isNumber(config[op])
+            ? _[op](_.get(config.field, item), config[op])
+            : true
+      )
       let filter = _.flow(operation, _.filter)
 
       if (hasFieldPlus('value'))
-        filteredResults = _.filter({[config.field]: config.value})(
+        filteredResults = _.filter({ [config.field]: config.value })(
           currentResults
         )
       else
@@ -39,7 +38,7 @@ let processReducers = (results, reducers) => {
     orderBy: (config, currentResults) =>
       _.has('field', config)
         ? _.orderBy(config.field, config.order || 'asc', currentResults)
-        : currentResults
+        : currentResults,
   }
 
   let pipeline = []
@@ -56,18 +55,18 @@ let getInnerMost = result => {
   return getInnerMost(result.aggs[_.keys(result.aggs)[0]])
 }
 module.exports = {
-  validContext: x => true,
-  result: (context, search, schema, provider, options) => {
+  validContext: () => true,
+  result: (context, search) => {
     let body = _.reduce((r, agg) => {
       getInnerMost(r).aggs = {
         [agg.type]: {
           [agg.type]: _.extend(
             {
-              field: agg.field
+              field: agg.field,
             },
             agg.data
-          )
-        }
+          ),
+        },
       }
       return r
     }, {})(context.config.aggs)
@@ -89,19 +88,19 @@ module.exports = {
               0,
               context.config.pageSize
             ),
-            totalRecords: reducedResults.length
+            totalRecords: reducedResults.length,
           }
         }
 
         return {
           results: reducedResults,
-          totalRecords: reducedResults.length
+          totalRecords: reducedResults.length,
         }
       }
 
       return {
-        results: buckets
+        results: buckets,
       }
     })
-  }
+  },
 }

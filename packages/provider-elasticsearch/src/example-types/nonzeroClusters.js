@@ -1,9 +1,9 @@
-let _ = require('lodash/fp'),
-  histogramResult = require('./smartIntervalHistogram').result
+let _ = require('lodash/fp')
+let histogramResult = require('./smartIntervalHistogram').result
 
 function calcClusters(entries, interval, isSignificant) {
   let clusters = []
-  let prev = {count: 0}
+  let prev = { count: 0 }
   if (!isSignificant) {
     isSignificant = x => x !== 0
   }
@@ -26,15 +26,15 @@ function calcClusters(entries, interval, isSignificant) {
 
 module.exports = {
   validContext: context => context.config.field,
-  result: (context, search, schema, provider, options) =>
+  result: (context, search) =>
     histogramResult(context, search).then(histResult => ({
       clusters: _.map(
         cluster => ({
           min: cluster[0],
           max: cluster[1],
-          count: cluster[2]
+          count: cluster[2],
         }),
         calcClusters(histResult.entries, histResult.interval)
-      )
-    }))
+      ),
+    })),
 }

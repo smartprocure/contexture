@@ -19,25 +19,25 @@ describe('nLevelAggregation', () => {
                     key: '4.0',
                     doc_count: 892,
                     sum: {
-                      value: 488363940.0390625
-                    }
+                      value: 488363940.0390625,
+                    },
                   },
                   {
                     key: '3.0',
                     doc_count: 616,
                     sum: {
-                      value: 62682913.21875
-                    }
+                      value: 62682913.21875,
+                    },
                   },
                   {
                     key: '2.0',
                     doc_count: 66,
                     sum: {
-                      value: 6337980
-                    }
-                  }
-                ]
-              }
+                      value: 6337980,
+                    },
+                  },
+                ],
+              },
             },
             {
               key: 'University Of Michigan at Ann Arbor, MI',
@@ -50,74 +50,74 @@ describe('nLevelAggregation', () => {
                     key: '10.0',
                     doc_count: 206,
                     sum: {
-                      value: 4494826.968653679
-                    }
+                      value: 4494826.968653679,
+                    },
                   },
                   {
                     key: '11.0',
                     doc_count: 125,
                     sum: {
-                      value: 2480435.41474247
-                    }
+                      value: 2480435.41474247,
+                    },
                   },
                   {
                     key: '8.0',
                     doc_count: 144,
                     sum: {
-                      value: 2060078.2864041328
-                    }
+                      value: 2060078.2864041328,
+                    },
                   },
                   {
                     key: '4.0',
                     doc_count: 134,
                     sum: {
-                      value: 1708329.3825302124
-                    }
+                      value: 1708329.3825302124,
+                    },
                   },
                   {
                     key: '9.0',
                     doc_count: 99,
                     sum: {
-                      value: 1000498.0503225327
-                    }
+                      value: 1000498.0503225327,
+                    },
                   },
                   {
                     key: '0.0',
                     doc_count: 111,
                     sum: {
-                      value: 982454.9842643738
-                    }
+                      value: 982454.9842643738,
+                    },
                   },
                   {
                     key: '5.0',
                     doc_count: 120,
                     sum: {
-                      value: 831668.8991127014
-                    }
+                      value: 831668.8991127014,
+                    },
                   },
                   {
                     key: '7.0',
                     doc_count: 86,
                     sum: {
-                      value: 746187.5491752625
-                    }
+                      value: 746187.5491752625,
+                    },
                   },
                   {
                     key: '3.0',
                     doc_count: 87,
                     sum: {
-                      value: 624460.5026683807
-                    }
+                      value: 624460.5026683807,
+                    },
                   },
                   {
                     key: '1.0',
                     doc_count: 47,
                     sum: {
-                      value: 418691.68712997437
-                    }
-                  }
-                ]
-              }
+                      value: 418691.68712997437,
+                    },
+                  },
+                ],
+              },
             },
             {
               key: 'Chicago Public Schools, IL',
@@ -130,79 +130,79 @@ describe('nLevelAggregation', () => {
                     key: '5.0',
                     doc_count: 353,
                     sum: {
-                      value: 2834849.039703369
-                    }
+                      value: 2834849.039703369,
+                    },
                   },
                   {
                     key: '2.0',
                     doc_count: 260,
                     sum: {
-                      value: 2159473.974975586
-                    }
+                      value: 2159473.974975586,
+                    },
                   },
                   {
                     key: '4.0',
                     doc_count: 178,
                     sum: {
-                      value: 1265103.317993164
-                    }
+                      value: 1265103.317993164,
+                    },
                   },
                   {
                     key: '3.0',
                     doc_count: 116,
                     sum: {
-                      value: 1092895.722366333
-                    }
+                      value: 1092895.722366333,
+                    },
                   },
                   {
                     key: '0.0',
                     doc_count: 105,
                     sum: {
-                      value: 619770.5160751343
-                    }
+                      value: 619770.5160751343,
+                    },
                   },
                   {
                     key: '8.0',
                     doc_count: 69,
                     sum: {
-                      value: 558812.4596176147
-                    }
+                      value: 558812.4596176147,
+                    },
                   },
                   {
                     key: '1.0',
                     doc_count: 70,
                     sum: {
-                      value: 481842.10912132263
-                    }
+                      value: 481842.10912132263,
+                    },
                   },
                   {
                     key: '9.0',
                     doc_count: 61,
                     sum: {
-                      value: 377538.7209377289
-                    }
+                      value: 377538.7209377289,
+                    },
                   },
                   {
                     key: '10.0',
                     doc_count: 18,
                     sum: {
-                      value: 148339.1697998047
-                    }
+                      value: 148339.1697998047,
+                    },
                   },
                   {
                     key: '6.0',
                     doc_count: 25,
                     sum: {
-                      value: 121189.78030776978
-                    }
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      }
-    }
+                      value: 121189.78030776978,
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    },
   ])
   it('should work without reducers', () =>
     test(
@@ -215,8 +215,8 @@ describe('nLevelAggregation', () => {
               type: 'terms',
               field: 'Organization.NameState.untouched',
               data: {
-                size: 10000000
-              }
+                size: 10000000,
+              },
             },
             {
               type: 'terms',
@@ -224,16 +224,16 @@ describe('nLevelAggregation', () => {
                 script: "doc['PO.IssuedDate'].getMonth()",
                 lang: 'expression',
                 order: {
-                  sum: 'desc'
-                }
-              }
+                  sum: 'desc',
+                },
+              },
             },
             {
               type: 'sum',
-              field: 'PO.IssuedAmount'
-            }
-          ]
-        }
+              field: 'PO.IssuedAmount',
+            },
+          ],
+        },
       },
       {
         results: [
@@ -248,25 +248,25 @@ describe('nLevelAggregation', () => {
                   key: '4.0',
                   doc_count: 892,
                   sum: {
-                    value: 488363940.0390625
-                  }
+                    value: 488363940.0390625,
+                  },
                 },
                 {
                   key: '3.0',
                   doc_count: 616,
                   sum: {
-                    value: 62682913.21875
-                  }
+                    value: 62682913.21875,
+                  },
                 },
                 {
                   key: '2.0',
                   doc_count: 66,
                   sum: {
-                    value: 6337980
-                  }
-                }
-              ]
-            }
+                    value: 6337980,
+                  },
+                },
+              ],
+            },
           },
           {
             key: 'University Of Michigan at Ann Arbor, MI',
@@ -279,74 +279,74 @@ describe('nLevelAggregation', () => {
                   key: '10.0',
                   doc_count: 206,
                   sum: {
-                    value: 4494826.968653679
-                  }
+                    value: 4494826.968653679,
+                  },
                 },
                 {
                   key: '11.0',
                   doc_count: 125,
                   sum: {
-                    value: 2480435.41474247
-                  }
+                    value: 2480435.41474247,
+                  },
                 },
                 {
                   key: '8.0',
                   doc_count: 144,
                   sum: {
-                    value: 2060078.2864041328
-                  }
+                    value: 2060078.2864041328,
+                  },
                 },
                 {
                   key: '4.0',
                   doc_count: 134,
                   sum: {
-                    value: 1708329.3825302124
-                  }
+                    value: 1708329.3825302124,
+                  },
                 },
                 {
                   key: '9.0',
                   doc_count: 99,
                   sum: {
-                    value: 1000498.0503225327
-                  }
+                    value: 1000498.0503225327,
+                  },
                 },
                 {
                   key: '0.0',
                   doc_count: 111,
                   sum: {
-                    value: 982454.9842643738
-                  }
+                    value: 982454.9842643738,
+                  },
                 },
                 {
                   key: '5.0',
                   doc_count: 120,
                   sum: {
-                    value: 831668.8991127014
-                  }
+                    value: 831668.8991127014,
+                  },
                 },
                 {
                   key: '7.0',
                   doc_count: 86,
                   sum: {
-                    value: 746187.5491752625
-                  }
+                    value: 746187.5491752625,
+                  },
                 },
                 {
                   key: '3.0',
                   doc_count: 87,
                   sum: {
-                    value: 624460.5026683807
-                  }
+                    value: 624460.5026683807,
+                  },
                 },
                 {
                   key: '1.0',
                   doc_count: 47,
                   sum: {
-                    value: 418691.68712997437
-                  }
-                }
-              ]
-            }
+                    value: 418691.68712997437,
+                  },
+                },
+              ],
+            },
           },
           {
             key: 'Chicago Public Schools, IL',
@@ -359,76 +359,76 @@ describe('nLevelAggregation', () => {
                   key: '5.0',
                   doc_count: 353,
                   sum: {
-                    value: 2834849.039703369
-                  }
+                    value: 2834849.039703369,
+                  },
                 },
                 {
                   key: '2.0',
                   doc_count: 260,
                   sum: {
-                    value: 2159473.974975586
-                  }
+                    value: 2159473.974975586,
+                  },
                 },
                 {
                   key: '4.0',
                   doc_count: 178,
                   sum: {
-                    value: 1265103.317993164
-                  }
+                    value: 1265103.317993164,
+                  },
                 },
                 {
                   key: '3.0',
                   doc_count: 116,
                   sum: {
-                    value: 1092895.722366333
-                  }
+                    value: 1092895.722366333,
+                  },
                 },
                 {
                   key: '0.0',
                   doc_count: 105,
                   sum: {
-                    value: 619770.5160751343
-                  }
+                    value: 619770.5160751343,
+                  },
                 },
                 {
                   key: '8.0',
                   doc_count: 69,
                   sum: {
-                    value: 558812.4596176147
-                  }
+                    value: 558812.4596176147,
+                  },
                 },
                 {
                   key: '1.0',
                   doc_count: 70,
                   sum: {
-                    value: 481842.10912132263
-                  }
+                    value: 481842.10912132263,
+                  },
                 },
                 {
                   key: '9.0',
                   doc_count: 61,
                   sum: {
-                    value: 377538.7209377289
-                  }
+                    value: 377538.7209377289,
+                  },
                 },
                 {
                   key: '10.0',
                   doc_count: 18,
                   sum: {
-                    value: 148339.1697998047
-                  }
+                    value: 148339.1697998047,
+                  },
                 },
                 {
                   key: '6.0',
                   doc_count: 25,
                   sum: {
-                    value: 121189.78030776978
-                  }
-                }
-              ]
-            }
-          }
-        ]
+                    value: 121189.78030776978,
+                  },
+                },
+              ],
+            },
+          },
+        ],
       },
       [
         {
@@ -439,27 +439,27 @@ describe('nLevelAggregation', () => {
                   aggs: {
                     sum: {
                       sum: {
-                        field: 'PO.IssuedAmount'
-                      }
-                    }
+                        field: 'PO.IssuedAmount',
+                      },
+                    },
                   },
                   terms: {
                     field: undefined,
                     lang: 'expression',
                     order: {
-                      sum: 'desc'
+                      sum: 'desc',
                     },
-                    script: "doc['PO.IssuedDate'].getMonth()"
-                  }
-                }
+                    script: "doc['PO.IssuedDate'].getMonth()",
+                  },
+                },
               },
               terms: {
                 field: 'Organization.NameState.untouched',
-                size: 10000000
-              }
-            }
-          }
-        }
+                size: 10000000,
+              },
+            },
+          },
+        },
       ]
     ))
   it('should work with peakBy reducer', () =>
@@ -473,8 +473,8 @@ describe('nLevelAggregation', () => {
               type: 'terms',
               field: 'Organization.NameState.untouched',
               data: {
-                size: 10000000
-              }
+                size: 10000000,
+              },
             },
             {
               type: 'terms',
@@ -482,24 +482,24 @@ describe('nLevelAggregation', () => {
                 script: "doc['PO.IssuedDate'].getMonth()",
                 lang: 'expression',
                 order: {
-                  sum: 'desc'
-                }
-              }
+                  sum: 'desc',
+                },
+              },
             },
             {
               type: 'sum',
-              field: 'PO.IssuedAmount'
-            }
+              field: 'PO.IssuedAmount',
+            },
           ],
           reducers: [
             {
               type: 'peakBy',
               config: {
-                field: 'sum.value'
-              }
-            }
-          ]
-        }
+                field: 'sum.value',
+              },
+            },
+          ],
+        },
       },
       {
         results: [
@@ -509,8 +509,8 @@ describe('nLevelAggregation', () => {
             key: '4.0',
             peakKey: 4,
             sum: {
-              value: 488363940.0390625
-            }
+              value: 488363940.0390625,
+            },
           },
           {
             doc_count: 206,
@@ -518,8 +518,8 @@ describe('nLevelAggregation', () => {
             key: '10.0',
             peakKey: 10,
             sum: {
-              value: 4494826.968653679
-            }
+              value: 4494826.968653679,
+            },
           },
           {
             doc_count: 353,
@@ -527,11 +527,11 @@ describe('nLevelAggregation', () => {
             key: '5.0',
             peakKey: 5,
             sum: {
-              value: 2834849.039703369
-            }
-          }
+              value: 2834849.039703369,
+            },
+          },
         ],
-        totalRecords: 3
+        totalRecords: 3,
       },
       [
         {
@@ -542,27 +542,27 @@ describe('nLevelAggregation', () => {
                   aggs: {
                     sum: {
                       sum: {
-                        field: 'PO.IssuedAmount'
-                      }
-                    }
+                        field: 'PO.IssuedAmount',
+                      },
+                    },
                   },
                   terms: {
                     field: undefined,
                     lang: 'expression',
                     order: {
-                      sum: 'desc'
+                      sum: 'desc',
                     },
-                    script: "doc['PO.IssuedDate'].getMonth()"
-                  }
-                }
+                    script: "doc['PO.IssuedDate'].getMonth()",
+                  },
+                },
               },
               terms: {
                 field: 'Organization.NameState.untouched',
-                size: 10000000
-              }
-            }
-          }
-        }
+                size: 10000000,
+              },
+            },
+          },
+        },
       ]
     ))
   it('should work with peakBy and filter reducers', () =>
@@ -576,8 +576,8 @@ describe('nLevelAggregation', () => {
               type: 'terms',
               field: 'Organization.NameState.untouched',
               data: {
-                size: 10000000
-              }
+                size: 10000000,
+              },
             },
             {
               type: 'terms',
@@ -585,31 +585,31 @@ describe('nLevelAggregation', () => {
                 script: "doc['PO.IssuedDate'].getMonth()",
                 lang: 'expression',
                 order: {
-                  sum: 'desc'
-                }
-              }
+                  sum: 'desc',
+                },
+              },
             },
             {
               type: 'sum',
-              field: 'PO.IssuedAmount'
-            }
+              field: 'PO.IssuedAmount',
+            },
           ],
           reducers: [
             {
               type: 'peakBy',
               config: {
-                field: 'sum.value'
-              }
+                field: 'sum.value',
+              },
             },
             {
               type: 'filter',
               config: {
                 field: 'peakKey',
-                value: 10
-              }
-            }
-          ]
-        }
+                value: 10,
+              },
+            },
+          ],
+        },
       },
       {
         results: [
@@ -619,11 +619,11 @@ describe('nLevelAggregation', () => {
             key: '10.0',
             peakKey: 10,
             sum: {
-              value: 4494826.968653679
-            }
-          }
+              value: 4494826.968653679,
+            },
+          },
         ],
-        totalRecords: 1
+        totalRecords: 1,
       },
       [
         {
@@ -634,27 +634,27 @@ describe('nLevelAggregation', () => {
                   aggs: {
                     sum: {
                       sum: {
-                        field: 'PO.IssuedAmount'
-                      }
-                    }
+                        field: 'PO.IssuedAmount',
+                      },
+                    },
                   },
                   terms: {
                     field: undefined,
                     lang: 'expression',
                     order: {
-                      sum: 'desc'
+                      sum: 'desc',
                     },
-                    script: "doc['PO.IssuedDate'].getMonth()"
-                  }
-                }
+                    script: "doc['PO.IssuedDate'].getMonth()",
+                  },
+                },
               },
               terms: {
                 field: 'Organization.NameState.untouched',
-                size: 10000000
-              }
-            }
-          }
-        }
+                size: 10000000,
+              },
+            },
+          },
+        },
       ]
     ))
   it('should work with peakBy and orderBy reducers', () =>
@@ -668,8 +668,8 @@ describe('nLevelAggregation', () => {
               type: 'terms',
               field: 'Organization.NameState.untouched',
               data: {
-                size: 10000000
-              }
+                size: 10000000,
+              },
             },
             {
               type: 'terms',
@@ -677,31 +677,31 @@ describe('nLevelAggregation', () => {
                 script: "doc['PO.IssuedDate'].getMonth()",
                 lang: 'expression',
                 order: {
-                  sum: 'desc'
-                }
-              }
+                  sum: 'desc',
+                },
+              },
             },
             {
               type: 'sum',
-              field: 'PO.IssuedAmount'
-            }
+              field: 'PO.IssuedAmount',
+            },
           ],
           reducers: [
             {
               type: 'peakBy',
               config: {
-                field: 'sum.value'
-              }
+                field: 'sum.value',
+              },
             },
             {
               type: 'orderBy',
               config: {
                 field: 'sum.value',
-                order: 'asc'
-              }
-            }
-          ]
-        }
+                order: 'asc',
+              },
+            },
+          ],
+        },
       },
       {
         results: [
@@ -711,8 +711,8 @@ describe('nLevelAggregation', () => {
             key: '5.0',
             peakKey: 5,
             sum: {
-              value: 2834849.039703369
-            }
+              value: 2834849.039703369,
+            },
           },
           {
             doc_count: 206,
@@ -720,8 +720,8 @@ describe('nLevelAggregation', () => {
             key: '10.0',
             peakKey: 10,
             sum: {
-              value: 4494826.968653679
-            }
+              value: 4494826.968653679,
+            },
           },
           {
             doc_count: 892,
@@ -729,11 +729,11 @@ describe('nLevelAggregation', () => {
             key: '4.0',
             peakKey: 4,
             sum: {
-              value: 488363940.0390625
-            }
-          }
+              value: 488363940.0390625,
+            },
+          },
         ],
-        totalRecords: 3
+        totalRecords: 3,
       },
       [
         {
@@ -744,27 +744,27 @@ describe('nLevelAggregation', () => {
                   aggs: {
                     sum: {
                       sum: {
-                        field: 'PO.IssuedAmount'
-                      }
-                    }
+                        field: 'PO.IssuedAmount',
+                      },
+                    },
                   },
                   terms: {
                     field: undefined,
                     lang: 'expression',
                     order: {
-                      sum: 'desc'
+                      sum: 'desc',
                     },
-                    script: "doc['PO.IssuedDate'].getMonth()"
-                  }
-                }
+                    script: "doc['PO.IssuedDate'].getMonth()",
+                  },
+                },
               },
               terms: {
                 field: 'Organization.NameState.untouched',
-                size: 10000000
-              }
-            }
-          }
-        }
+                size: 10000000,
+              },
+            },
+          },
+        },
       ]
     ))
   it('should work with peakBy and gt reducers', () =>
@@ -778,8 +778,8 @@ describe('nLevelAggregation', () => {
               type: 'terms',
               field: 'Organization.NameState.untouched',
               data: {
-                size: 10000000
-              }
+                size: 10000000,
+              },
             },
             {
               type: 'terms',
@@ -787,31 +787,31 @@ describe('nLevelAggregation', () => {
                 script: "doc['PO.IssuedDate'].getMonth()",
                 lang: 'expression',
                 order: {
-                  sum: 'desc'
-                }
-              }
+                  sum: 'desc',
+                },
+              },
             },
             {
               type: 'sum',
-              field: 'PO.IssuedAmount'
-            }
+              field: 'PO.IssuedAmount',
+            },
           ],
           reducers: [
             {
               type: 'peakBy',
               config: {
-                field: 'sum.value'
-              }
+                field: 'sum.value',
+              },
             },
             {
               type: 'filter',
               config: {
                 field: 'sum.value',
-                gt: 5000000
-              }
-            }
-          ]
-        }
+                gt: 5000000,
+              },
+            },
+          ],
+        },
       },
       {
         results: [
@@ -821,11 +821,11 @@ describe('nLevelAggregation', () => {
             key: '4.0',
             peakKey: 4,
             sum: {
-              value: 488363940.0390625
-            }
-          }
+              value: 488363940.0390625,
+            },
+          },
         ],
-        totalRecords: 1
+        totalRecords: 1,
       },
       [
         {
@@ -836,27 +836,27 @@ describe('nLevelAggregation', () => {
                   aggs: {
                     sum: {
                       sum: {
-                        field: 'PO.IssuedAmount'
-                      }
-                    }
+                        field: 'PO.IssuedAmount',
+                      },
+                    },
                   },
                   terms: {
                     field: undefined,
                     lang: 'expression',
                     order: {
-                      sum: 'desc'
+                      sum: 'desc',
                     },
-                    script: "doc['PO.IssuedDate'].getMonth()"
-                  }
-                }
+                    script: "doc['PO.IssuedDate'].getMonth()",
+                  },
+                },
               },
               terms: {
                 field: 'Organization.NameState.untouched',
-                size: 10000000
-              }
-            }
-          }
-        }
+                size: 10000000,
+              },
+            },
+          },
+        },
       ]
     ))
   it('should work with peakBy and lt reducers', () =>
@@ -870,8 +870,8 @@ describe('nLevelAggregation', () => {
               type: 'terms',
               field: 'Organization.NameState.untouched',
               data: {
-                size: 10000000
-              }
+                size: 10000000,
+              },
             },
             {
               type: 'terms',
@@ -879,31 +879,31 @@ describe('nLevelAggregation', () => {
                 script: "doc['PO.IssuedDate'].getMonth()",
                 lang: 'expression',
                 order: {
-                  sum: 'desc'
-                }
-              }
+                  sum: 'desc',
+                },
+              },
             },
             {
               type: 'sum',
-              field: 'PO.IssuedAmount'
-            }
+              field: 'PO.IssuedAmount',
+            },
           ],
           reducers: [
             {
               type: 'peakBy',
               config: {
-                field: 'sum.value'
-              }
+                field: 'sum.value',
+              },
             },
             {
               type: 'filter',
               config: {
                 field: 'sum.value',
-                lt: 5000000
-              }
-            }
-          ]
-        }
+                lt: 5000000,
+              },
+            },
+          ],
+        },
       },
       {
         results: [
@@ -913,8 +913,8 @@ describe('nLevelAggregation', () => {
             key: '10.0',
             peakKey: 10,
             sum: {
-              value: 4494826.968653679
-            }
+              value: 4494826.968653679,
+            },
           },
           {
             doc_count: 353,
@@ -922,11 +922,11 @@ describe('nLevelAggregation', () => {
             key: '5.0',
             peakKey: 5,
             sum: {
-              value: 2834849.039703369
-            }
-          }
+              value: 2834849.039703369,
+            },
+          },
         ],
-        totalRecords: 2
+        totalRecords: 2,
       },
       [
         {
@@ -937,27 +937,27 @@ describe('nLevelAggregation', () => {
                   aggs: {
                     sum: {
                       sum: {
-                        field: 'PO.IssuedAmount'
-                      }
-                    }
+                        field: 'PO.IssuedAmount',
+                      },
+                    },
                   },
                   terms: {
                     field: undefined,
                     lang: 'expression',
                     order: {
-                      sum: 'desc'
+                      sum: 'desc',
                     },
-                    script: "doc['PO.IssuedDate'].getMonth()"
-                  }
-                }
+                    script: "doc['PO.IssuedDate'].getMonth()",
+                  },
+                },
               },
               terms: {
                 field: 'Organization.NameState.untouched',
-                size: 10000000
-              }
-            }
-          }
-        }
+                size: 10000000,
+              },
+            },
+          },
+        },
       ]
     ))
   it('should work with peakBy and lte reducers', () =>
@@ -971,8 +971,8 @@ describe('nLevelAggregation', () => {
               type: 'terms',
               field: 'Organization.NameState.untouched',
               data: {
-                size: 10000000
-              }
+                size: 10000000,
+              },
             },
             {
               type: 'terms',
@@ -980,31 +980,31 @@ describe('nLevelAggregation', () => {
                 script: "doc['PO.IssuedDate'].getMonth()",
                 lang: 'expression',
                 order: {
-                  sum: 'desc'
-                }
-              }
+                  sum: 'desc',
+                },
+              },
             },
             {
               type: 'sum',
-              field: 'PO.IssuedAmount'
-            }
+              field: 'PO.IssuedAmount',
+            },
           ],
           reducers: [
             {
               type: 'peakBy',
               config: {
-                field: 'sum.value'
-              }
+                field: 'sum.value',
+              },
             },
             {
               type: 'filter',
               config: {
                 field: 'sum.value',
-                lte: 4494826.968653679
-              }
-            }
-          ]
-        }
+                lte: 4494826.968653679,
+              },
+            },
+          ],
+        },
       },
       {
         results: [
@@ -1014,8 +1014,8 @@ describe('nLevelAggregation', () => {
             key: '10.0',
             peakKey: 10,
             sum: {
-              value: 4494826.968653679
-            }
+              value: 4494826.968653679,
+            },
           },
           {
             doc_count: 353,
@@ -1023,11 +1023,11 @@ describe('nLevelAggregation', () => {
             key: '5.0',
             peakKey: 5,
             sum: {
-              value: 2834849.039703369
-            }
-          }
+              value: 2834849.039703369,
+            },
+          },
         ],
-        totalRecords: 2
+        totalRecords: 2,
       },
       [
         {
@@ -1038,27 +1038,27 @@ describe('nLevelAggregation', () => {
                   aggs: {
                     sum: {
                       sum: {
-                        field: 'PO.IssuedAmount'
-                      }
-                    }
+                        field: 'PO.IssuedAmount',
+                      },
+                    },
                   },
                   terms: {
                     field: undefined,
                     lang: 'expression',
                     order: {
-                      sum: 'desc'
+                      sum: 'desc',
                     },
-                    script: "doc['PO.IssuedDate'].getMonth()"
-                  }
-                }
+                    script: "doc['PO.IssuedDate'].getMonth()",
+                  },
+                },
               },
               terms: {
                 field: 'Organization.NameState.untouched',
-                size: 10000000
-              }
-            }
-          }
-        }
+                size: 10000000,
+              },
+            },
+          },
+        },
       ]
     ))
   it('should work with peakBy and gte reducers', () =>
@@ -1072,8 +1072,8 @@ describe('nLevelAggregation', () => {
               type: 'terms',
               field: 'Organization.NameState.untouched',
               data: {
-                size: 10000000
-              }
+                size: 10000000,
+              },
             },
             {
               type: 'terms',
@@ -1081,31 +1081,31 @@ describe('nLevelAggregation', () => {
                 script: "doc['PO.IssuedDate'].getMonth()",
                 lang: 'expression',
                 order: {
-                  sum: 'desc'
-                }
-              }
+                  sum: 'desc',
+                },
+              },
             },
             {
               type: 'sum',
-              field: 'PO.IssuedAmount'
-            }
+              field: 'PO.IssuedAmount',
+            },
           ],
           reducers: [
             {
               type: 'peakBy',
               config: {
-                field: 'sum.value'
-              }
+                field: 'sum.value',
+              },
             },
             {
               type: 'filter',
               config: {
                 field: 'sum.value',
-                gte: 488363940.0390625
-              }
-            }
-          ]
-        }
+                gte: 488363940.0390625,
+              },
+            },
+          ],
+        },
       },
       {
         results: [
@@ -1115,11 +1115,11 @@ describe('nLevelAggregation', () => {
             key: '4.0',
             peakKey: 4,
             sum: {
-              value: 488363940.0390625
-            }
-          }
+              value: 488363940.0390625,
+            },
+          },
         ],
-        totalRecords: 1
+        totalRecords: 1,
       },
       [
         {
@@ -1130,27 +1130,27 @@ describe('nLevelAggregation', () => {
                   aggs: {
                     sum: {
                       sum: {
-                        field: 'PO.IssuedAmount'
-                      }
-                    }
+                        field: 'PO.IssuedAmount',
+                      },
+                    },
                   },
                   terms: {
                     field: undefined,
                     lang: 'expression',
                     order: {
-                      sum: 'desc'
+                      sum: 'desc',
                     },
-                    script: "doc['PO.IssuedDate'].getMonth()"
-                  }
-                }
+                    script: "doc['PO.IssuedDate'].getMonth()",
+                  },
+                },
               },
               terms: {
                 field: 'Organization.NameState.untouched',
-                size: 10000000
-              }
-            }
-          }
-        }
+                size: 10000000,
+              },
+            },
+          },
+        },
       ]
     ))
   it('should work with peakBy and eq reducers', () =>
@@ -1164,8 +1164,8 @@ describe('nLevelAggregation', () => {
               type: 'terms',
               field: 'Organization.NameState.untouched',
               data: {
-                size: 10000000
-              }
+                size: 10000000,
+              },
             },
             {
               type: 'terms',
@@ -1173,31 +1173,31 @@ describe('nLevelAggregation', () => {
                 script: "doc['PO.IssuedDate'].getMonth()",
                 lang: 'expression',
                 order: {
-                  sum: 'desc'
-                }
-              }
+                  sum: 'desc',
+                },
+              },
             },
             {
               type: 'sum',
-              field: 'PO.IssuedAmount'
-            }
+              field: 'PO.IssuedAmount',
+            },
           ],
           reducers: [
             {
               type: 'peakBy',
               config: {
-                field: 'sum.value'
-              }
+                field: 'sum.value',
+              },
             },
             {
               type: 'filter',
               config: {
                 field: 'sum.value',
-                eq: 4494826.968653679
-              }
-            }
-          ]
-        }
+                eq: 4494826.968653679,
+              },
+            },
+          ],
+        },
       },
       {
         results: [
@@ -1207,11 +1207,11 @@ describe('nLevelAggregation', () => {
             key: '10.0',
             peakKey: 10,
             sum: {
-              value: 4494826.968653679
-            }
-          }
+              value: 4494826.968653679,
+            },
+          },
         ],
-        totalRecords: 1
+        totalRecords: 1,
       },
       [
         {
@@ -1222,27 +1222,27 @@ describe('nLevelAggregation', () => {
                   aggs: {
                     sum: {
                       sum: {
-                        field: 'PO.IssuedAmount'
-                      }
-                    }
+                        field: 'PO.IssuedAmount',
+                      },
+                    },
                   },
                   terms: {
                     field: undefined,
                     lang: 'expression',
                     order: {
-                      sum: 'desc'
+                      sum: 'desc',
                     },
-                    script: "doc['PO.IssuedDate'].getMonth()"
-                  }
-                }
+                    script: "doc['PO.IssuedDate'].getMonth()",
+                  },
+                },
               },
               terms: {
                 field: 'Organization.NameState.untouched',
-                size: 10000000
-              }
-            }
-          }
-        }
+                size: 10000000,
+              },
+            },
+          },
+        },
       ]
     ))
 })
