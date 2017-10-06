@@ -1,49 +1,24 @@
 let { expect } = require('chai')
 let types = require('../../types')()
-let MongoClient = require('mongodb').MongoClient
-let ObjectID = require('mongodb').ObjectID
 let Promise = require('bluebird')
 let Contexture = require('contexture')
 let provider = require('../../src')
 let _ = require('lodash/fp')
 let util = require('util')
+let testSetup = require('../setup')
 
-MongoClient.max_delay = 0
-let url = 'mongodb://localhost/contexture-test';
-let schemaName = 'Things'
-let collectionName = 'thing'
-let field = 'code'
+let schemaName = 'Documents'
+let collection = 'document'
 
-let db
-
-before(done => {
-  MongoClient.connect(url, {}, (err, _db) => {
-    db = _db
-    done()
-  })
-})
-
-describe('Grouping text', () => {
+describe('Grouping text and mongoId', () => {
   it('should work', async () => {
-    let collection = db.collection(collectionName)
-    let docs = [{
-      _id: new ObjectID(),
-      code: '112233'
-    }, {
-      _id: new ObjectID(),
-      code: '223344'
-    }, {
-      _id: new ObjectID(),
-      code: '334455'
-    }]
-    await collection.remove({})
-    await collection.insertMany(docs)
+    let {db} = await testSetup({collection})
 
     let process = Contexture({
       schemas: {
         [schemaName]: {
           mongo: {
-            collection: collectionName
+            collection
           }
         }
       },
@@ -64,10 +39,10 @@ describe('Grouping text', () => {
       items: [{
         key: 'text',
         type: 'text',
-        field,
+        field: 'code',
         data: {
-          operator: 'is',
-          value: expectedCode
+          operator: 'containsWord',
+          value: '22'
         }
       }, {
         key: 'results',
@@ -77,7 +52,10 @@ describe('Grouping text', () => {
 
     let context = await process(dsl, { debug: true })
     let response = _.last(context.items).context.response
-    expect(response.totalRecords).to.equal(1)
-    expect(response.results[0].code).to.equal(expectedCode)
+    expect(response.totalRecords).to.equal(2)
+    expect(_.map('code', response.results)).to.deep.equal([
+      '112233',
+      '223344',
+    ])
   })
 })

@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/_mocha --recursive",
-    "test-integration": "./node_modules/mocha/bin/_mocha --recursive integration-test",
+    "test-integration": "./node_modules/mocha/bin/_mocha --recursive integration-test/example-types",
     "test:ci": "./node_modules/mocha/bin/_mocha --recursive --reporter json > test-results.json",
     "test-watch": "chokidar 'src/**/*.js' 'test/**/*.js' -c 'npm t'",
     "lint": "eslint --ignore-path .gitignore '{src,test}/**/*.js'",
