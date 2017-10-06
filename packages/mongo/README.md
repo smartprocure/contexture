@@ -77,3 +77,10 @@ It also supports `dateMath` via `@elastic/datemath` (the same as supported by el
 ### `exists`
 ### `facet`
 ### `results`
+
+## Integration Tests
+
+This repository offers integration tests to practice and understand the example
+types we offer. You can run the integration tests with the command: `npm run test-integration`.
+If you have a mongo database available at localhost (default port), the tests
+will connect to it and do changes on a database named `contexture-test`.
