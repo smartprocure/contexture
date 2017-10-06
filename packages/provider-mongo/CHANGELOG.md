@@ -1,6 +1,7 @@
 ﻿# 0.0.8
 - Make sure types are available `contexture-mongo/types`.
 - Rename the default types to example types.
+- Made integration tests for the text and the mongoId example types.
 
 # 0.0.7
 Using the native mongo driver, and renamed the expected model property
