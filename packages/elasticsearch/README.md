@@ -13,8 +13,6 @@ This provider takes a config object as a parameter:
 | `request`   | `object`   | Merged in the json body of every request to elasticsearch (e.g. to add custom headers) |          |
 | `types`     | `object`   | Contexture node types, like all other providers  |          |
 
-90, 145, 82
-
 ### Schemas
 Schemas with with an elasticsearch provider can specify any or all of the following properties:
 
