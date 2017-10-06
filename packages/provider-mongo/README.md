@@ -29,7 +29,7 @@ module.exports = {
 ```js
 let Contexture = require('contexture')
 let provider = require('contexture-mongo')
-let types = require('contexture-mongo/types')()
+let types = require('contexture-mongo/types')
 let schemas = require('./path/to/schemas')
 
 let process = Contexture({
@@ -37,7 +37,7 @@ let process = Contexture({
   providers: {
     mongo: provider({
       getClient: () => client,
-      types
+      types: types()
     })
   }
 })
