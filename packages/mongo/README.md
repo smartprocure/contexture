@@ -12,8 +12,18 @@ This provider takes a `config` object as a parameter, and expects a
 `getClient` method to be provided, which should return an instantiated
 MongoDB client.
 
+| Option      | Type       | Description                                      | Required |
+| ------      | ----       | -----------                                      | -------- |
+| `getClient` | `function` | Returns an instantiated elasticsearch client     | x        |
+| `types`     | `object`   | Contexture node types, like all other providers  |          |
+
+### Schemas
 Schemas using this mongo provider must specify a `collection` property,
 which is the name of the collection it runs against.
+
+| Option        | Type       | Description                                                 | Required |
+| ------        | ----       | -----------                                                 | -------- |
+| `collection`  | `string`   | The MongoDB collection that will be used to run the queries | x        |
 
 ### Example Schema for SomeMongoCollection
 
