@@ -1,0 +1,48 @@
+{
+  "name": "contexture-client",
+  "version": "1.0.0",
+  "description": "asd",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "babel-node ./node_modules/mocha/bin/_mocha",
+    "test-watch": "chokidar 'src/*.js' 'test/*.js' -c 'npm t'",
+    "coverage": "nyc --require babel-core/register node_modules/.bin/mocha test",
+    "cicoverage": "nyc --reporter=lcov --require babel-core/register node_modules/.bin/mocha test",
+    "prepublish": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smartprocure/contexture-client.git"
+  },
+  "author": "Samuel Greene",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smartprocure/contexture-client/issues"
+  },
+  "homepage": "https://github.com/smartprocure/contexture-client#readme",
+  "dependencies": {
+    "futil-js": "^1.33.0",
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.1",
+    "babel-loader": "^7.1.2",
+    "babel-preset-latest": "^6.24.1",
+    "chai": "^4.1.2",
+    "chokidar": "^1.7.0",
+    "chokidar-cli": "^1.2.0",
+    "mocha": "^4.0.1",
+    "nyc": "^11.2.1",
+    "sinon": "^4.0.1",
+    "sinon-chai": "^2.14.0",
+    "webpack": "^3.8.1"
+  },
+  "babel": {
+    "presets": [
+      "latest"
+    ]
+  }
+}
