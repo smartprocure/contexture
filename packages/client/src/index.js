@@ -8,25 +8,13 @@ import {validateGroup, validateLeaves} from './validation'
 import {getAffectedNodes} from './reactors'
 import actions from './actions'
 import serialize from './serialize'
-
 // Named Traversals
-let markForUpdate = Tree.walk(x => {
-  x.markedForUpdate = true
-})
-let markLastUpdate = time =>
-  Tree.walk(child => {
-    if (child.markedForUpdate) child.lastUpdateTime = time
-  })
-let prepForUpdate = Tree.walk(child => {
-  if (child.markedForUpdate) {
-    child.updating = true
-    child.markedForUpdate = false
-  }
-})
-let acknoweldgeMissedUpdates = Tree.walk(child => {
-  if (child.paused) child.missedUpdates = true
-})
-
+import {
+  markForUpdate,
+  markLastUpdate,
+  prepForUpdate,
+  acknoweldgeMissedUpdates
+} from './traversals'
 
 let process = flowAsync(4)(
   getAffectedNodes,
