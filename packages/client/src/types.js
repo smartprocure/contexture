@@ -34,8 +34,9 @@ export let defaultTypes = {
 }
 
 
-export let getTypeProp = _.curry(
-  (prop, types, node) =>
-    F.cascade([`${node.type}.${prop}`, `default.${prop}`], types)
+export let getTypeProp = _.curry((prop, types, node) =>
+  F.cascade([`${node.type}.${prop}`, `default.${prop}`], types)
 )
-export let getValidate = getTypeProp('validate')
+export let runTypeFunction = _.curry((prop, types, node) =>
+  getTypeProp(prop, types, node)(node)
+)
