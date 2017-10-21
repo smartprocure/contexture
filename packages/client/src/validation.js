@@ -4,9 +4,9 @@ import {mapAsync} from './util/promise'
 import {flatLeaves, flattenTree} from './util/tree'
 
 export let defaultHasValue = x => !F.isBlankDeep(_.some)(x.data)
-export let validate = (runValidate) => {
-  // Aync fn to inspect types.
-  // ASYNC validate: return true -> proceed, return false -> exclude, throw -> error!
+// Aync fn to inspect types.
+// ASYNC runValidate: return true -> proceed, return false -> exclude, throw -> error!
+export let validate = runValidate => {
   let validateLeaves = mapAsync(async child => {
     try {
       delete child.error //?? might need to be on mutate only in case of server error?
