@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
-import {unsetOn} from './futil'
-import {Tree} from './tree'
+import {unsetOn} from './util/futil'
+import {Tree} from './util/tree'
 
 let isFilterOnly = x =>
   !x.children && (x.forceFilterOnly || !x.markedForUpdate || x.paused)

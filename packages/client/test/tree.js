@@ -1,4 +1,4 @@
-import {flattenTree, keyPath} from '../src/tree'
+import {flattenTree, keyPath} from '../src/util/tree'
 import _ from 'lodash/fp'
 import chai from 'chai'
 const expect = chai.expect

@@ -1,7 +1,7 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
-import {mapAsync} from './promise'
-import {flatLeaves, flattenTree} from './tree'
+import {mapAsync} from './util/promise'
+import {flatLeaves, flattenTree} from './util/tree'
 
 export let defaultHasValue = x => !F.isBlankDeep(_.some)(x.data)
 

@@ -1,8 +1,8 @@
 import _ from 'lodash/fp'
 import * as f from 'futil-js'
-import {flattenTree, bubbleUpAsync, flatLeaves, Tree} from './tree'
-import {catches, flowAsync} from './futil'
-import {mapValuesAsync} from './promise'
+import {flattenTree, bubbleUpAsync, flatLeaves, Tree} from './util/tree'
+import {catches, flowAsync} from './util/futil'
+import {mapValuesAsync} from './util/promise'
 
 import {validateGroup, validateLeaves} from './validation'
 import {getAffectedNodes} from './reactors'

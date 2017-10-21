@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
-import {mapAsync} from './promise'
+import {mapAsync} from './util/promise'
 
 export default ({getNode, flat, dispatch}) => ({
   add: async (path, value) => {

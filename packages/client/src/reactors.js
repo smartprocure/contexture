@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 import {validateGroup} from './validation'
-import {lookup} from './tree'
+import {lookup} from './util/tree'
 
 // TODO check type, etc
 let hasContext = node => node.context
