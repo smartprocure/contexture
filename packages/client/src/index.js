@@ -15,7 +15,7 @@ import {
   prepForUpdate,
   acknoweldgeMissedUpdates
 } from './traversals'
-import {defaultTypes, runTypeFunction} from './types'
+import {defaultTypes, runTypeFunction, getTypeProp} from './types'
 
 let process = flowAsync(4)(
   getAffectedNodes,
@@ -42,7 +42,9 @@ export let ContextTree = (
   let flat = flattenTree(tree)
   let getNode = path => flat[path.join('->')]
   let fakeRoot = { key: 'virtualFakeRoot', path: '', children: [tree] }
-  let { validateLeaves, validateGroup } = validate(runTypeFunction('validate', types))
+  let typeFunction = runTypeFunction(types)
+  let typeProp = getTypeProp(types)
+  let { validateLeaves, validateGroup } = validate(typeFunction('validate'))
 
   // Event Handling
   let dispatch = async event => {
