@@ -64,8 +64,8 @@ export let ContextTree = (
     let hasValueMap = await mapValuesAsync(validateGroup, snapshot(flat))
 
     // Process from instigator parent up to fake root so affectedNodes are always calculated in context of a group
-    await bubbleUpAsync(process(event, hasValueMap), _.dropRight(1, path), flat)
-    await process(event, hasValueMap, fakeRoot, fakeRoot.path)
+    await bubbleUpAsync(process(event, hasValueMap, validateGroup), _.dropRight(1, path), flat)
+    await process(event, hasValueMap, validateGroup, fakeRoot, fakeRoot.path)
 
     // trickleDown((node, p) => console.log('down', p, path, node), path, tree)
     return triggerUpdate()
@@ -154,38 +154,3 @@ export default ContextTree
 //   - Much more memory efficient - functional instead of local function copies
 //   - Instant traversals due to flat tree in parallel with nested
 //   - Redux-y API
-
-
-
-
-
-
-
-
-
-
-
-
-
-// let Types = {
-//   facet: {
-//     data: {
-//       values: [],
-//       mode: 'include'
-//     },
-//     config: {
-//       size: 12,
-//       filter: ''
-//     },
-//     context: {
-//       total: 0,
-//       options: [],
-//       cardinality: 0
-//     },
-//     : _.every(isNotBlank.config),//node.data.values && node.data.mode,
-//     toString() {
-
-//     }
-//   }
-// }
-

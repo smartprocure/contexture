@@ -1,5 +1,4 @@
 import _ from 'lodash/fp'
-import {validateGroup} from './validation'
 import {lookup} from './util/tree'
 
 // TODO check type, etc
@@ -11,7 +10,7 @@ let reactors = {
   only: (parent, instigator) => [instigator],
   all: parent => parent.children,
   standardChange: async (...args) => {
-    let [parent, instigator, previous, hasValueMap] = args
+    let [parent, instigator, previous, hasValueMap, value, validateGroup] = args
     let needUpdate = hasContext(instigator)
     let affectsOthers =
       hasValueMap[instigator.path] ||
@@ -44,7 +43,7 @@ export let StandardReactors = {
   },
   add: reactors.standardChange,
   remove: async (...args) => {
-    let [parent, instigator, previous, hasValueMap] = args
+    let [parent, instigator, previous, hasValueMap, value, validateGroup] = args
     if (await validateGroup(previous)) return reactors.all(...args)
   },
   paused: (...args) => {
@@ -62,7 +61,7 @@ export let StandardReactors = {
 }
 
 export let getAffectedNodes = _.curry(
-  async ({type, path, value, previous}, hasValueMap, node, p) => {
+  async ({type, path, value, previous}, hasValueMap, validateGroup, node, p) => {
     let instigatorPath = _.difference(path, p)[0]
     let instigator = lookup(node, instigatorPath)
     return (StandardReactors[type] || _.noop)(
@@ -70,7 +69,8 @@ export let getAffectedNodes = _.curry(
       instigator,
       previous,
       hasValueMap,
-      value
+      value,
+      validateGroup
     )
   }
 )
