@@ -2,7 +2,7 @@
   "name": "contexture-client",
   "version": "1.0.0",
   "description": "asd",
-  "main": "index.js",
+  "main": "lib/contexture-client.js",
   "scripts": {
     "build": "webpack",
     "test": "babel-node ./node_modules/mocha/bin/_mocha",

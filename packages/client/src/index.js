@@ -138,20 +138,12 @@ export default ContextTree
 // subscriptions (e.g. cascade)
 // make sure all locally tracked props are in _meta or something like that
 //    Constrain all update to an update meta method which can be overriden to support observables and notifications
-// --- pause/resume + tests
 //  both kinds of pausing - normal and queue paused
 // sergvice adapter + children vs items
 // subquery/savedsearch
-// --- add/remove contexts
-// --- resolve
-// --- real friggen tests
-// --- has Value + optional
-// --- ASYNC validate: return true -> proceed, return false -> exclude, throw -> error!
-//    _might_ need markedForDeletion and stuff again :/
 // tree lenses
 // broadcast pausing, just hold on to dispatches?
-// Addd
-// ---   configurable debounce time :)
+// Add
 //   never updated
 
 
