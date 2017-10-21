@@ -1,8 +1,9 @@
+import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import {defaultHasValue} from './validation'
 // import {toSentence} from 'underscore.string.fp'
 
-export default {
+export let defaultTypes = {
   default: {
     validate: defaultHasValue
   },
@@ -20,7 +21,7 @@ export default {
       options: [],
       cardinality: 0
     },
-    validate: x => x.data.values,
+    // validate: x => x.data.values,
     // toString: ({data: {values, mode}}) =>
     //   values.length
     //     ? F.compactJoin(' ', [
@@ -31,3 +32,10 @@ export default {
     //     : 'is anything'
   }
 }
+
+
+export let getTypeProp = _.curry(
+  (prop, types, node) =>
+    F.cascade([`${node.type}.${prop}`, `default.${prop}`], types)
+)
+export let getValidate = getTypeProp('validate')

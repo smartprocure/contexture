@@ -4,7 +4,7 @@ import {flattenTree, bubbleUpAsync, flatLeaves, Tree} from './util/tree'
 import {catches, flowAsync} from './util/futil'
 import {mapValuesAsync} from './util/promise'
 
-import {validateGroup, validateLeaves} from './validation'
+import {validate} from './validation'
 import {getAffectedNodes} from './reactors'
 import actions from './actions'
 import serialize from './serialize'
@@ -15,6 +15,7 @@ import {
   prepForUpdate,
   acknoweldgeMissedUpdates
 } from './traversals'
+import {defaultTypes, getValidate} from './types'
 
 let process = flowAsync(4)(
   getAffectedNodes,
@@ -29,6 +30,7 @@ export let ContextTree = (
   service = () => {
     throw new Error('No update service provided!')
   },
+  types = defaultTypes,
   {
     subscribers = [],
     snapshot = _.cloneDeep,
@@ -40,6 +42,7 @@ export let ContextTree = (
   let flat = flattenTree(tree)
   let getNode = path => flat[path.join('->')]
   let fakeRoot = { key: 'virtualFakeRoot', path: '', children: [tree] }
+  let { validateLeaves, validateGroup } = validate(getValidate(types))
 
   // Event Handling
   let dispatch = async event => {
