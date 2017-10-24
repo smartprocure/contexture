@@ -12,8 +12,18 @@ This provider takes a `config` object as a parameter, and expects a
 `getClient` method to be provided, which should return an instantiated
 MongoDB client.
 
+| Option      | Type       | Description                                      | Required |
+| ------      | ----       | -----------                                      | -------- |
+| `getClient` | `function` | Returns an instantiated elasticsearch client     | x        |
+| `types`     | `object`   | Contexture node types, like all other providers  |          |
+
+### Schemas
 Schemas using this mongo provider must specify a `collection` property,
 which is the name of the collection it runs against.
+
+| Option        | Type       | Description                                                 | Required |
+| ------        | ----       | -----------                                                 | -------- |
+| `collection`  | `string`   | The MongoDB collection that will be used to run the queries | x        |
 
 ### Example Schema for SomeMongoCollection
 
@@ -37,13 +47,19 @@ let process = Contexture({
   providers: {
     mongo: provider({
       getClient: () => client,
-      types
+      types: types()
     })
   }
 })
 ```
 
 ## Default Types
+
+Requiring `contexture-mongo/types` and calling it as a function will allow you to use a
+curated set of types we offer by default.
+`contexture-mongo/types` allows you to pass a
+customization object that will allow you to pass custom
+parameters to the provided types.
 
 ### `mongoId`
 `mongoId` is filter only and compares against a mongo id, which in mongoose needs to be cast.
@@ -71,3 +87,10 @@ It also supports `dateMath` via `@elastic/datemath` (the same as supported by el
 ### `exists`
 ### `facet`
 ### `results`
+
+## Integration Tests
+
+This repository offers integration tests to practice and understand the example
+types we offer. You can run the integration tests with the command: `npm run test-integration`.
+If you have a mongo database available at localhost (default port), the tests
+will connect to it and do changes on a database named `contexture-test`.
