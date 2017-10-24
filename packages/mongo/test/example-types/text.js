@@ -1,5 +1,5 @@
 let { expect } = require('chai')
-let { text } = require('../src/types')
+let text = require('../../src/example-types/text')
 
 describe('text', () => {
   it('should check for values', () => {
