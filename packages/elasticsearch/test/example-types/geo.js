@@ -1,6 +1,6 @@
-const geoType = require('../../src/example-types/geo'),
-  utils = require('./testUtils')
-let {expect} = require('chai')
+const geoType = require('../../src/example-types/geo')
+const utils = require('./testUtils')
+let { expect } = require('chai')
 let chai = require('chai')
 let chaiAsPromised = require('chai-as-promised')
 chai.use(chaiAsPromised)
@@ -13,12 +13,12 @@ describe('geo', () => {
           geometry: {
             location: {
               lat: 26.3170479,
-              lng: -80.1131784
-            }
-          }
-        }
-      ]
-    })
+              lng: -80.1131784,
+            },
+          },
+        },
+      ],
+    }),
   })
 
   it('hasValue should work', () => {
@@ -27,88 +27,88 @@ describe('geo', () => {
         data: {
           location: true,
           radius: true,
-          operator: true
-        }
+          operator: true,
+        },
       },
       {
         data: {
           location: true,
           radius: -1,
-          operator: true
-        }
+          operator: true,
+        },
       },
       {
         data: {
           location: 'SmartProcure',
           radius: 10,
-          operator: 'within'
-        }
-      }
+          operator: 'within',
+        },
+      },
     ])
     utils.noValueContexts(geo)([
       {
-        data: {}
+        data: {},
       },
       {
         data: {
           location: false,
           radius: 10,
-          operator: 'within'
-        }
+          operator: 'within',
+        },
       },
       {
         data: {
           location: '',
           radius: 10,
-          operator: 'within'
-        }
+          operator: 'within',
+        },
       },
       {
         data: {
           radius: 10,
-          operator: 'within'
-        }
+          operator: 'within',
+        },
       },
       {
         data: {
           location: true,
           radius: 0,
-          operator: 'within'
-        }
+          operator: 'within',
+        },
       },
       {
         data: {
           location: true,
           radius: false,
-          operator: 'within'
-        }
+          operator: 'within',
+        },
       },
       {
         data: {
           location: true,
-          operator: 'within'
-        }
-      },
-      {
-        data: {
-          location: true,
-          radius: 10,
-          operator: false
-        }
+          operator: 'within',
+        },
       },
       {
         data: {
           location: true,
           radius: 10,
-          operator: ''
-        }
+          operator: false,
+        },
       },
       {
         data: {
           location: true,
-          radius: 10
-        }
-      }
+          radius: 10,
+          operator: '',
+        },
+      },
+      {
+        data: {
+          location: true,
+          radius: 10,
+        },
+      },
     ])
   })
 
@@ -121,15 +121,15 @@ describe('geo', () => {
           data: {
             location: 'SmartProcure',
             radius: 10,
-            operator: 'within'
+            operator: 'within',
           },
-          _meta: {}
+          _meta: {},
         })
       ).to.become({
         geo_distance: {
           test: '26.3170479,-80.1131784',
-          distance: '10mi'
-        }
+          distance: '10mi',
+        },
       })
     })
     it('should filter properly outside', () => {
@@ -140,19 +140,19 @@ describe('geo', () => {
           data: {
             location: 'SmartProcure',
             radius: 15,
-            operator: 'outside'
+            operator: 'outside',
           },
-          _meta: {}
+          _meta: {},
         })
       ).to.eventually.deep.equal({
         bool: {
           must_not: {
             geo_distance: {
               test: '26.3170479,-80.1131784',
-              distance: '15mi'
-            }
-          }
-        }
+              distance: '15mi',
+            },
+          },
+        },
       })
     })
   })
@@ -163,74 +163,74 @@ describe('geo', () => {
         data: {
           location: true,
           radius: 1,
-          operator: true
-        }
+          operator: true,
+        },
       },
       {
         data: {
           location: 'SmartProcure',
           radius: 10,
-          operator: 'within'
-        }
-      }
+          operator: 'within',
+        },
+      },
     ])
     utils.noValidContexts(geo)([
       {
-        data: {}
+        data: {},
       },
       {
         data: {
           location: false,
           radius: 10,
-          operator: 'within'
-        }
+          operator: 'within',
+        },
       },
       {
         data: {
           location: '',
           radius: 10,
-          operator: 'within'
-        }
+          operator: 'within',
+        },
       },
       {
         data: {
           radius: 10,
-          operator: 'within'
-        }
+          operator: 'within',
+        },
       },
       {
         data: {
           location: true,
           radius: 0,
-          operator: 'within'
-        }
+          operator: 'within',
+        },
       },
       {
         data: {
           location: true,
-          operator: 'within'
-        }
-      },
-      {
-        data: {
-          location: true,
-          radius: 10,
-          operator: false
-        }
+          operator: 'within',
+        },
       },
       {
         data: {
           location: true,
           radius: 10,
-          operator: ''
-        }
+          operator: false,
+        },
       },
       {
         data: {
           location: true,
-          radius: 10
-        }
-      }
+          radius: 10,
+          operator: '',
+        },
+      },
+      {
+        data: {
+          location: true,
+          radius: 10,
+        },
+      },
     ])
   })
 
@@ -241,9 +241,9 @@ describe('geo', () => {
       data: {
         location: 'SmartProcure',
         radius: 10,
-        operator: 'within'
+        operator: 'within',
       },
-      _meta: {}
+      _meta: {},
     }
     return expect(
       geo.filter(context).then(() => geo.result(context))
@@ -252,10 +252,10 @@ describe('geo', () => {
         geometry: {
           location: {
             lat: 26.3170479,
-            lng: -80.1131784
-          }
-        }
-      }
+            lng: -80.1131784,
+          },
+        },
+      },
     })
   })
 })

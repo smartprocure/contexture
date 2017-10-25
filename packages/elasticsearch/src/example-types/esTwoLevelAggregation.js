@@ -17,7 +17,7 @@ module.exports = {
     context.config.key_type &&
     context.config.value_field &&
     context.config.value_type,
-  result: (context, search, schema, provider, options) => {
+  result: (context, search) => {
     let query = {
       aggs: {
         twoLevelAgg: {
@@ -25,7 +25,7 @@ module.exports = {
             _.isNil,
             _.extend(
               {
-                field: context.config.key_field
+                field: context.config.key_field,
               },
               context.config.key_data
             )
@@ -36,15 +36,15 @@ module.exports = {
                 _.isNil,
                 _.extend(
                   {
-                    field: context.config.value_field
+                    field: context.config.value_field,
                   },
                   context.config.value_data
                 )
-              )
-            }
-          }
-        }
-      }
+              ),
+            },
+          },
+        },
+      },
     }
     _.each(agg => {
       query.aggs[agg.key] = agg.config.data
@@ -55,11 +55,11 @@ module.exports = {
         aggs: {
           twoLevelFilter: _.extend(
             {
-              filter: context.config.filter_agg
+              filter: context.config.filter_agg,
             },
             query
-          )
-        }
+          ),
+        },
       }
 
     return search(query).then(results => {
@@ -70,13 +70,13 @@ module.exports = {
               {
                 // Generally bucket.key works, but for twoLevelMatch it needed to be key because buckets is an object and not an array
                 key: bucket.key || key,
-                doc_count: bucket.doc_count
+                doc_count: bucket.doc_count,
               },
               bucket.twoLevelAgg
             ),
           (results.aggregations.twoLevelFilter || results.aggregations)
             .twoLevelAgg.buckets
-        )
+        ),
       }
       if (context.config.extraAggs) {
         _.each(agg => {
@@ -85,5 +85,5 @@ module.exports = {
       }
       return rtn
     })
-  }
+  },
 }

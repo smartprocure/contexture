@@ -1,5 +1,5 @@
 var exists = require('../../src/example-types/exists')
-let {expect} = require('chai')
+let { expect } = require('chai')
 
 describe('exists', () => {
   it('should filter properly', () => {
@@ -8,13 +8,13 @@ describe('exists', () => {
         type: 'bool',
         field: 'test',
         data: {
-          value: true
-        }
+          value: true,
+        },
       })
     ).to.deep.equal({
       exists: {
-        field: 'test'
-      }
+        field: 'test',
+      },
     })
   })
   it('should filter properly if false', () => {
@@ -23,17 +23,17 @@ describe('exists', () => {
         type: 'bool',
         field: 'test',
         data: {
-          value: false
-        }
+          value: false,
+        },
       })
     ).to.deep.equal({
       bool: {
         must_not: {
           exists: {
-            field: 'test'
-          }
-        }
-      }
+            field: 'test',
+          },
+        },
+      },
     })
   })
 })

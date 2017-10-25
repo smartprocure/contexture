@@ -1,29 +1,29 @@
-let F = require('futil-js'),
-  _ = require('lodash/fp'),
-  highlightResults = require('../highlighting').highlightResults
+let F = require('futil-js')
+let _ = require('lodash/fp')
+let highlightResults = require('../highlighting').highlightResults
 
 let sortModeMap = {
   field: '.untouched',
-  word: ''
+  word: '',
 }
 let getSortField = context =>
   _.replace('.untouched', '', context.config.sortField) +
   _.getOr('', context.config.sortMode, sortModeMap)
 module.exports = {
   result: (context, search, schema) => {
-    let page = (context.config.page || 1) - 1,
-      pageSize = context.config.pageSize || 10,
-      startRecord = page * pageSize,
-      sortField = context.config.sortField ? getSortField(context) : '_score',
-      sortDir = context.config.sortDir || 'desc',
-      result = {
-        from: startRecord,
-        size: pageSize,
-        sort: {
-          [sortField]: sortDir
-        },
-        explain: context.config.explain
-      }
+    let page = (context.config.page || 1) - 1
+    let pageSize = context.config.pageSize || 10
+    let startRecord = page * pageSize
+    let sortField = context.config.sortField ? getSortField(context) : '_score'
+    let sortDir = context.config.sortDir || 'desc'
+    let result = {
+      from: startRecord,
+      size: pageSize,
+      sort: {
+        [sortField]: sortDir,
+      },
+      explain: context.config.explain,
+    }
     let highlight =
       _.getOr(true, 'config.highlight', context) &&
       schema.elasticsearch.highlight
@@ -35,8 +35,8 @@ module.exports = {
           post_tags: ['</b>'],
           require_field_match: false,
           number_of_fragments: 0,
-          fields: _.fromPairs(_.map(val => [val, {}], highlightFields))
-        }
+          fields: _.fromPairs(_.map(val => [val, {}], highlightFields)),
+        },
       })
     }
 
@@ -47,7 +47,8 @@ module.exports = {
         startRecord: startRecord + 1,
         endRecord: startRecord + results.hits.hits.length,
         results: _.map(hit => {
-          let highlightObject, additionalFields // , mainHighlighted;
+          let highlightObject
+          let additionalFields // , mainHighlighted;
           if (highlight) {
             highlightObject = highlightResults(
               schema.elasticsearch.highlight,
@@ -60,15 +61,15 @@ module.exports = {
 
           // TODO - If nested path, iterate properties on nested path, filtering out nested path results unless mainHighlighted or relevant nested fields have b tags in them
           return _.extendAll(
-            context.config.verbose ? {hit: hit} : {},
+            context.config.verbose ? { hit: hit } : {},
             {
               _id: hit._id,
-              additionalFields: highlight ? additionalFields : []
+              additionalFields: highlight ? additionalFields : [],
             },
             _.getOr(_.identity, 'elasticsearch.summaryView', schema)(hit)
           )
-        }, results.hits.hits)
-      }
+        }, results.hits.hits),
+      },
     }))
-  }
+  },
 }

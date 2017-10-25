@@ -4,9 +4,9 @@ module.exports = {
       aggs: {
         cardinality: {
           cardinality: {
-            field: context.field || context.config.field
-          }
-        }
-      }
-    }).then(results => results.aggregations.cardinality)
+            field: context.field || context.config.field,
+          },
+        },
+      },
+    }).then(results => results.aggregations.cardinality),
 }

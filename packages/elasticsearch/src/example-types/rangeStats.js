@@ -8,20 +8,20 @@ module.exports = {
       context.config.value_field &&
       context.config.ranges
     ),
-  result: (context, search, schema, provider, options) =>
+  result: (context, search) =>
     esTwoLevel(
       _.merge(
         {
           config: {
             key_type: 'range',
             key_data: {
-              ranges: context.config.ranges
+              ranges: context.config.ranges,
             },
-            value_type: 'stats'
-          }
+            value_type: 'stats',
+          },
         },
         context
       ),
       search
-    )
+    ),
 }

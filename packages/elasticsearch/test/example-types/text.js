@@ -1,5 +1,5 @@
 let text = require('../../src/example-types/text')
-let {expect} = require('chai')
+let { expect } = require('chai')
 
 describe('text', () => {
   it('should check for values', () => {
@@ -8,8 +8,8 @@ describe('text', () => {
         type: 'text',
         field: 'test',
         data: {
-          values: ['asdf']
-        }
+          values: ['asdf'],
+        },
       })
     ).to.be.true
     expect(
@@ -17,8 +17,8 @@ describe('text', () => {
         type: 'text',
         field: 'test',
         data: {
-          values: []
-        }
+          values: [],
+        },
       })
     ).to.be.false
   })
@@ -31,8 +31,8 @@ describe('text', () => {
         data: {
           join: 'any',
           operator: operator,
-          values: values
-        }
+          values: values,
+        },
       })
     let laserjetPrinterText = anyText(['laserjet', 'printer'])
     it('contains', () => {
@@ -40,8 +40,8 @@ describe('text', () => {
         query_string: {
           default_field: 'description',
           default_operator: 'OR',
-          query: '"laserjet" "printer"'
-        }
+          query: '"laserjet" "printer"',
+        },
       })
     })
     describe('containsWord', () => {
@@ -51,16 +51,16 @@ describe('text', () => {
             should: [
               {
                 wildcard: {
-                  'description.lowercased': '*laserjet*'
-                }
+                  'description.lowercased': '*laserjet*',
+                },
               },
               {
                 wildcard: {
-                  'description.lowercased': '*printer*'
-                }
-              }
-            ]
-          }
+                  'description.lowercased': '*printer*',
+                },
+              },
+            ],
+          },
         })
       })
       it('should use query_string for > 2 words', () => {
@@ -70,8 +70,8 @@ describe('text', () => {
           query_string: {
             default_field: 'description',
             default_operator: 'OR',
-            query: '"has" "more" "words"'
-          }
+            query: '"has" "more" "words"',
+          },
         })
       })
     })
@@ -82,16 +82,16 @@ describe('text', () => {
           should: [
             {
               wildcard: {
-                'description.lowercased': 'laserjet*'
-              }
+                'description.lowercased': 'laserjet*',
+              },
             },
             {
               wildcard: {
-                'description.lowercased': 'printer*'
-              }
-            }
-          ]
-        }
+                'description.lowercased': 'printer*',
+              },
+            },
+          ],
+        },
       })
     })
     it('endsWith', () => {
@@ -100,16 +100,16 @@ describe('text', () => {
           should: [
             {
               wildcard: {
-                'description.lowercased': '*laserjet'
-              }
+                'description.lowercased': '*laserjet',
+              },
             },
             {
               wildcard: {
-                'description.lowercased': '*printer'
-              }
-            }
-          ]
-        }
+                'description.lowercased': '*printer',
+              },
+            },
+          ],
+        },
       })
       expect(() => anyText(['<', '2', 'words'])('endsWith')).to.throw
     })
@@ -119,16 +119,16 @@ describe('text', () => {
           should: [
             {
               wildcard: {
-                'description.lowercased': 'laserjet'
-              }
+                'description.lowercased': 'laserjet',
+              },
             },
             {
               wildcard: {
-                'description.lowercased': 'printer'
-              }
-            }
-          ]
-        }
+                'description.lowercased': 'printer',
+              },
+            },
+          ],
+        },
       })
     })
     it('isNot', () => {
@@ -139,18 +139,18 @@ describe('text', () => {
               should: [
                 {
                   wildcard: {
-                    'description.lowercased': 'laserjet'
-                  }
+                    'description.lowercased': 'laserjet',
+                  },
                 },
                 {
                   wildcard: {
-                    'description.lowercased': 'printer'
-                  }
-                }
-              ]
-            }
-          }
-        }
+                    'description.lowercased': 'printer',
+                  },
+                },
+              ],
+            },
+          },
+        },
       })
     })
     it('doesNotContain', () => {
@@ -161,18 +161,18 @@ describe('text', () => {
               should: [
                 {
                   wildcard: {
-                    description: '*laserjet*'
-                  }
+                    description: '*laserjet*',
+                  },
                 },
                 {
                   wildcard: {
-                    description: '*printer*'
-                  }
-                }
-              ]
-            }
-          }
-        }
+                    description: '*printer*',
+                  },
+                },
+              ],
+            },
+          },
+        },
       })
     })
     it('wordStartsWith', () => {
@@ -181,16 +181,16 @@ describe('text', () => {
           should: [
             {
               wildcard: {
-                description: 'laserjet*'
-              }
+                description: 'laserjet*',
+              },
             },
             {
               wildcard: {
-                description: 'printer*'
-              }
-            }
-          ]
-        }
+                description: 'printer*',
+              },
+            },
+          ],
+        },
       })
     })
     it('wordEndsWith', () => {
@@ -199,16 +199,16 @@ describe('text', () => {
           should: [
             {
               wildcard: {
-                description: '*laserjet'
-              }
+                description: '*laserjet',
+              },
             },
             {
               wildcard: {
-                description: '*printer'
-              }
-            }
-          ]
-        }
+                description: '*printer',
+              },
+            },
+          ],
+        },
       })
       expect(() => anyText(['<', '2', 'words'])('wordEndsWith')).to.throw
     })
