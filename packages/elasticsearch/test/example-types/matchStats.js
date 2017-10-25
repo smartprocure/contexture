@@ -15,8 +15,8 @@ describe('matchStats', () => {
                     min: 60,
                     max: 98,
                     avg: 78.5,
-                    sum: 471
-                  }
+                    sum: 471,
+                  },
                 },
                 fail: {
                   doc_count: 50,
@@ -25,13 +25,13 @@ describe('matchStats', () => {
                     min: 60,
                     max: 98,
                     avg: 78.5,
-                    sum: 471
-                  }
-                }
-              }
-            }
-          }
-        }
+                    sum: 471,
+                  },
+                },
+              },
+            },
+          },
+        },
       ],
       ...x
     )
@@ -43,8 +43,8 @@ describe('matchStats', () => {
         config: {
           key_field: 'Vendor.City.untouched',
           key_value: 'Washington',
-          value_field: 'LineItem.TotalPrice'
-        }
+          value_field: 'LineItem.TotalPrice',
+        },
       },
       {
         results: [
@@ -55,7 +55,7 @@ describe('matchStats', () => {
             min: 60,
             max: 98,
             avg: 78.5,
-            sum: 471
+            sum: 471,
           },
           {
             key: 'fail',
@@ -64,9 +64,9 @@ describe('matchStats', () => {
             min: 60,
             max: 98,
             avg: 78.5,
-            sum: 471
-          }
-        ]
+            sum: 471,
+          },
+        ],
       },
       [
         {
@@ -76,30 +76,30 @@ describe('matchStats', () => {
                 filters: {
                   pass: {
                     term: {
-                      'Vendor.City.untouched': 'Washington'
-                    }
+                      'Vendor.City.untouched': 'Washington',
+                    },
                   },
                   fail: {
                     bool: {
                       must_not: {
                         term: {
-                          'Vendor.City.untouched': 'Washington'
-                        }
-                      }
-                    }
-                  }
-                }
+                          'Vendor.City.untouched': 'Washington',
+                        },
+                      },
+                    },
+                  },
+                },
               },
               aggs: {
                 twoLevelAgg: {
                   stats: {
-                    field: 'LineItem.TotalPrice'
-                  }
-                }
-              }
-            }
-          }
-        }
+                    field: 'LineItem.TotalPrice',
+                  },
+                },
+              },
+            },
+          },
+        },
       ]
     ))
 })

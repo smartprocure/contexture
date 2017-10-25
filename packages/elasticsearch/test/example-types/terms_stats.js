@@ -17,8 +17,8 @@ describe('term_stats', () => {
                       min: 60,
                       max: 98,
                       avg: 78.5,
-                      sum: 471
-                    }
+                      sum: 471,
+                    },
                   },
                   {
                     key: 'City of Boca',
@@ -28,14 +28,14 @@ describe('term_stats', () => {
                       min: 60,
                       max: 98,
                       avg: 78.5,
-                      sum: 471
-                    }
-                  }
-                ]
-              }
-            }
-          }
-        }
+                      sum: 471,
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        },
       ],
       ...x
     )
@@ -46,8 +46,8 @@ describe('term_stats', () => {
         type: 'terms_stats',
         config: {
           key_field: 'Organization.Name.untouched',
-          value_field: 'LineItem.TotalPrice'
-        }
+          value_field: 'LineItem.TotalPrice',
+        },
       },
       {
         terms: [
@@ -58,7 +58,7 @@ describe('term_stats', () => {
             min: 60,
             max: 98,
             avg: 78.5,
-            sum: 471
+            sum: 471,
           },
           {
             key: 'City of Boca',
@@ -67,9 +67,9 @@ describe('term_stats', () => {
             min: 60,
             max: 98,
             avg: 78.5,
-            sum: 471
-          }
-        ]
+            sum: 471,
+          },
+        ],
       },
       [
         {
@@ -79,19 +79,19 @@ describe('term_stats', () => {
                 field: 'Organization.Name.untouched',
                 size: 10,
                 order: {
-                  'twoLevelAgg.sum': 'desc'
-                }
+                  'twoLevelAgg.sum': 'desc',
+                },
               },
               aggs: {
                 twoLevelAgg: {
                   stats: {
-                    field: 'LineItem.TotalPrice'
-                  }
-                }
-              }
-            }
-          }
-        }
+                    field: 'LineItem.TotalPrice',
+                  },
+                },
+              },
+            },
+          },
+        },
       ]
     ))
   it('should support a filter', () =>
@@ -102,8 +102,8 @@ describe('term_stats', () => {
         config: {
           key_field: 'Organization.Name.untouched',
           value_field: 'LineItem.TotalPrice',
-          filter: 'city'
-        }
+          filter: 'city',
+        },
       },
       {
         terms: [
@@ -114,7 +114,7 @@ describe('term_stats', () => {
             min: 60,
             max: 98,
             avg: 78.5,
-            sum: 471
+            sum: 471,
           },
           {
             key: 'City of Boca',
@@ -123,9 +123,9 @@ describe('term_stats', () => {
             min: 60,
             max: 98,
             avg: 78.5,
-            sum: 471
-          }
-        ]
+            sum: 471,
+          },
+        ],
       },
       [
         {
@@ -136,11 +136,11 @@ describe('term_stats', () => {
                   must: [
                     {
                       wildcard: {
-                        'Organization.Name.lowercased': '*city*'
-                      }
-                    }
-                  ]
-                }
+                        'Organization.Name.lowercased': '*city*',
+                      },
+                    },
+                  ],
+                },
               },
               aggs: {
                 twoLevelAgg: {
@@ -148,21 +148,21 @@ describe('term_stats', () => {
                     field: 'Organization.Name.untouched',
                     size: 10,
                     order: {
-                      'twoLevelAgg.sum': 'desc'
-                    }
+                      'twoLevelAgg.sum': 'desc',
+                    },
                   },
                   aggs: {
                     twoLevelAgg: {
                       stats: {
-                        field: 'LineItem.TotalPrice'
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
+                        field: 'LineItem.TotalPrice',
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       ]
     ))
   it('should support a filter with ridiculous spaces', () =>
@@ -173,8 +173,8 @@ describe('term_stats', () => {
         config: {
           key_field: 'Organization.Name.untouched',
           value_field: 'LineItem.TotalPrice',
-          filter: 'city   of    '
-        }
+          filter: 'city   of    ',
+        },
       },
       {
         terms: [
@@ -185,7 +185,7 @@ describe('term_stats', () => {
             min: 60,
             max: 98,
             avg: 78.5,
-            sum: 471
+            sum: 471,
           },
           {
             key: 'City of Boca',
@@ -194,9 +194,9 @@ describe('term_stats', () => {
             min: 60,
             max: 98,
             avg: 78.5,
-            sum: 471
-          }
-        ]
+            sum: 471,
+          },
+        ],
       },
       [
         {
@@ -207,16 +207,16 @@ describe('term_stats', () => {
                   must: [
                     {
                       wildcard: {
-                        'Organization.Name.lowercased': '*city*'
-                      }
+                        'Organization.Name.lowercased': '*city*',
+                      },
                     },
                     {
                       wildcard: {
-                        'Organization.Name.lowercased': '*of*'
-                      }
-                    }
-                  ]
-                }
+                        'Organization.Name.lowercased': '*of*',
+                      },
+                    },
+                  ],
+                },
               },
               aggs: {
                 twoLevelAgg: {
@@ -224,21 +224,21 @@ describe('term_stats', () => {
                     field: 'Organization.Name.untouched',
                     size: 10,
                     order: {
-                      'twoLevelAgg.sum': 'desc'
-                    }
+                      'twoLevelAgg.sum': 'desc',
+                    },
                   },
                   aggs: {
                     twoLevelAgg: {
                       stats: {
-                        field: 'LineItem.TotalPrice'
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
+                        field: 'LineItem.TotalPrice',
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       ]
     ))
 })

@@ -11,11 +11,11 @@ describe('percentiles', () => {
               values: {
                 10.0: 44,
                 30.0: 63,
-                75.0: 80.5
-              }
-            }
-          }
-        }
+                75.0: 80.5,
+              },
+            },
+          },
+        },
       ],
       ...x
     )
@@ -29,20 +29,20 @@ describe('percentiles', () => {
               values: [
                 {
                   key: 10.0,
-                  value: 44
+                  value: 44,
                 },
                 {
                   key: 30.0,
-                  value: 63
+                  value: 63,
                 },
                 {
                   key: 70.0,
-                  value: 80.5
-                }
-              ]
-            }
-          }
-        }
+                  value: 80.5,
+                },
+              ],
+            },
+          },
+        },
       ],
       ...x
     )
@@ -53,8 +53,8 @@ describe('percentiles', () => {
         type: 'percentiles',
         config: {
           field: 'LineItem.UnitPrice',
-          percents: [10, 30, 75]
-        }
+          percents: [10, 30, 75],
+        },
       },
       {
         percentiles: {
@@ -62,9 +62,9 @@ describe('percentiles', () => {
           values: {
             10.0: 44,
             30.0: 63,
-            75.0: 80.5
-          }
-        }
+            75.0: 80.5,
+          },
+        },
       },
       [
         {
@@ -73,11 +73,11 @@ describe('percentiles', () => {
               percentiles: {
                 keyed: false,
                 field: 'LineItem.UnitPrice',
-                percents: [10, 30, 75]
-              }
-            }
-          }
-        }
+                percents: [10, 30, 75],
+              },
+            },
+          },
+        },
       ]
     ))
   it('percentiles should work with keyed', () =>
@@ -88,8 +88,8 @@ describe('percentiles', () => {
         config: {
           keyed: true,
           field: 'LineItem.UnitPrice',
-          percents: [10, 30, 75]
-        }
+          percents: [10, 30, 75],
+        },
       },
       {
         percentiles: {
@@ -97,18 +97,18 @@ describe('percentiles', () => {
           values: [
             {
               key: 10.0,
-              value: 44
+              value: 44,
             },
             {
               key: 30.0,
-              value: 63
+              value: 63,
             },
             {
               key: 70.0,
-              value: 80.5
-            }
-          ]
-        }
+              value: 80.5,
+            },
+          ],
+        },
       },
       [
         {
@@ -117,11 +117,11 @@ describe('percentiles', () => {
               percentiles: {
                 keyed: true,
                 field: 'LineItem.UnitPrice',
-                percents: [10, 30, 75]
-              }
-            }
-          }
-        }
+                percents: [10, 30, 75],
+              },
+            },
+          },
+        },
       ]
     ))
 })

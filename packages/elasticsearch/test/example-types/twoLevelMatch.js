@@ -1,6 +1,6 @@
-const twoLevelMatch = require('../../src/example-types/twoLevelMatch'),
-  utils = require('./testUtils')
-let {expect} = require('chai')
+const twoLevelMatch = require('../../src/example-types/twoLevelMatch')
+const utils = require('./testUtils')
+let { expect } = require('chai')
 
 describe('twoLevelMatch', function() {
   describe('validContext', function() {
@@ -10,8 +10,8 @@ describe('twoLevelMatch', function() {
           config: {
             key_field: true,
             value_field: true,
-            key_value: true
-          }
+            key_value: true,
+          },
         })
       ).to.be.true
     })
@@ -21,41 +21,41 @@ describe('twoLevelMatch', function() {
           config: {
             key_field: true,
             value_field: true,
-            key_value: false
-          }
+            key_value: false,
+          },
         },
         {
           config: {
             key_field: true,
-            value_field: true
-          }
+            value_field: true,
+          },
         },
         {
           config: {
             key_field: true,
             key_value: true,
-            value_field: false
-          }
+            value_field: false,
+          },
         },
         {
           config: {
             key_field: true,
-            key_value: true
-          }
+            key_value: true,
+          },
         },
         {
           config: {
             value_field: true,
             key_value: true,
-            key_field: false
-          }
+            key_field: false,
+          },
         },
         {
           config: {
             value_field: true,
-            key_value: true
-          }
-        }
+            key_value: true,
+          },
+        },
       ])
     })
   })
@@ -68,8 +68,8 @@ describe('twoLevelMatch', function() {
         key_field: 'Vendor.City.untouched',
         value_field: 'LineItem.TotalPrice',
         value_type: 'stats',
-        key_value: 'Washington'
-      }
+        key_value: 'Washington',
+      },
     }
 
     const callsArguments = [
@@ -79,9 +79,9 @@ describe('twoLevelMatch', function() {
             aggs: {
               twoLevelAgg: {
                 stats: {
-                  field: 'LineItem.TotalPrice'
-                }
-              }
+                  field: 'LineItem.TotalPrice',
+                },
+              },
             },
             filters: {
               filters: {
@@ -89,21 +89,21 @@ describe('twoLevelMatch', function() {
                   bool: {
                     must_not: {
                       term: {
-                        'Vendor.City.untouched': 'Washington'
-                      }
-                    }
-                  }
+                        'Vendor.City.untouched': 'Washington',
+                      },
+                    },
+                  },
                 },
                 pass: {
                   term: {
-                    'Vendor.City.untouched': 'Washington'
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+                    'Vendor.City.untouched': 'Washington',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     ]
 
     it('works for stub config values and gets the expected structure (empty results)', function() {
@@ -112,13 +112,13 @@ describe('twoLevelMatch', function() {
           {
             aggregations: {
               twoLevelAgg: {
-                buckets: []
-              }
-            }
-          }
+                buckets: [],
+              },
+            },
+          },
         ],
         context,
-        {results: []},
+        { results: [] },
         callsArguments
       )
     })
@@ -136,8 +136,8 @@ describe('twoLevelMatch', function() {
                       min: 60,
                       max: 98,
                       avg: 78.5,
-                      sum: 471
-                    }
+                      sum: 471,
+                    },
                   },
                   fail: {
                     doc_count: 50,
@@ -146,13 +146,13 @@ describe('twoLevelMatch', function() {
                       min: 60,
                       max: 98,
                       avg: 78.5,
-                      sum: 471
-                    }
-                  }
-                }
-              }
-            }
-          }
+                      sum: 471,
+                    },
+                  },
+                },
+              },
+            },
+          },
         ],
         context,
         {
@@ -164,7 +164,7 @@ describe('twoLevelMatch', function() {
               key: 'pass',
               max: 98,
               min: 60,
-              sum: 471
+              sum: 471,
             },
             {
               avg: 78.5,
@@ -173,9 +173,9 @@ describe('twoLevelMatch', function() {
               key: 'fail',
               max: 98,
               min: 60,
-              sum: 471
-            }
-          ]
+              sum: 471,
+            },
+          ],
         },
         callsArguments
       )

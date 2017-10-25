@@ -1,6 +1,6 @@
-let _ = require('lodash'),
-  utils = require('../luceneQueryUtils'),
-  unidecode = require('unidecode')
+let _ = require('lodash')
+let utils = require('../luceneQueryUtils')
+let unidecode = require('unidecode')
 // luceneValidator = require('lib/luceneValidator/luceneValidator');
 
 module.exports = {
@@ -27,11 +27,11 @@ module.exports = {
       query_string: {
         query: query,
         default_operator: 'AND',
-        default_field: field + (context.data.exact ? '.exact' : '') || '_all'
-      }
+        default_field: field + (context.data.exact ? '.exact' : '') || '_all',
+      },
     }
     if (context.data.exact) result.query_string.analyzer = 'exact'
 
     return result
-  }
+  },
 }

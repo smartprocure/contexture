@@ -1,11 +1,18 @@
 {
   "name": "contexture-elasticsearch",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "ElasticSearch Provider for Contexture",
   "main": "src/index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/_mocha --recursive",
-    "test-watch": "chokidar 'src/**/*.js' 'test/**/*.js' -c 'npm t'"
+    "test-watch": "chokidar 'src/**/*.js' 'test/**/*.js' -c 'npm t'",
+    "test-ci": "./node_modules/mocha/bin/_mocha --recursive --reporter json > test-results.json",
+    "lint": "eslint --ignore-path .gitignore '{src,test}/**/*.js'",
+    "lint-ci": "npm run lint -- -o lint-results.json -f json",
+    "lint-fix": "npm run lint -- --fix",
+    "fmt": "prettier --write '{src,test}/**/*.js'",
+    "duti": "duti",
+    "duti:fix": "npm run lint-fix; npm run fmt"
   },
   "repository": {
     "type": "git",
@@ -21,6 +28,11 @@
     "url": "https://github.com/smartprocure/contexture-elasticsearch/issues"
   },
   "homepage": "https://github.com/smartprocure/contexture-elasticsearch#readme",
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "semi": false
+  },
   "dependencies": {
     "@elastic/datemath": "^2.3.0",
     "bluebird": "^3.5.0",
@@ -32,9 +44,15 @@
     "unidecode": "^0.1.8"
   },
   "devDependencies": {
+    "babel-eslint": "^8.0.1",
     "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
     "chokidar-cli": "^1.2.0",
+    "duti": "^0.7.1",
+    "eslint": "^4.8.0",
+    "eslint-config-smartprocure": "^1.0.2",
     "mocha": "^3.5.3",
+    "prettier": "^1.7.4",
     "sinon": "^4.0.0",
     "sinon-chai": "^2.14.0"
   }

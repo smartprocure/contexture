@@ -16,8 +16,8 @@ module.exports = {
     range: {
       [context.field]: _.pickBy(_.isNumber, {
         gte: boundaryFilter(context.data.min),
-        lte: boundaryFilter(context.data.max)
-      })
-    }
-  })
+        lte: boundaryFilter(context.data.max),
+      }),
+    },
+  }),
 }

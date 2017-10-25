@@ -11,8 +11,8 @@ module.exports = {
   result: (context, search) => {
     let filter = {
       [_.get('key_type', context.config) || 'term']: {
-        [context.config.key_field]: context.config.key_value
-      }
+        [context.config.key_field]: context.config.key_value,
+      },
     }
     return esTwoLevel(
       _.merge(
@@ -24,17 +24,17 @@ module.exports = {
                 pass: filter,
                 fail: {
                   bool: {
-                    must_not: filter
-                  }
-                }
+                    must_not: filter,
+                  },
+                },
               },
-              field: null
-            }
-          }
+              field: null,
+            },
+          },
         },
         context
       ),
       search
     )
-  }
+  },
 }

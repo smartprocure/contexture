@@ -15,7 +15,7 @@ describe('termStatsHits', () => {
                   min: 60,
                   max: 98,
                   avg: 78.5,
-                  sum: 471
+                  sum: 471,
                 },
                 Hits: {
                   hits: {
@@ -23,12 +23,12 @@ describe('termStatsHits', () => {
                       {
                         _source: {
                           Organization: {
-                            LatLong: '34.056237,-118.257362'
-                          }
-                        }
-                      }
-                    ]
-                  }
+                            LatLong: '34.056237,-118.257362',
+                          },
+                        },
+                      },
+                    ],
+                  },
                 },
                 Details: {
                   buckets: [
@@ -39,18 +39,18 @@ describe('termStatsHits', () => {
                             {
                               _source: {
                                 Organization: {
-                                  ID: '80229'
+                                  ID: '80229',
                                 },
                                 doc_count: 1,
-                                key: 'University Of Michigan at Ann Arbor, MI'
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  ]
-                }
+                                key: 'University Of Michigan at Ann Arbor, MI',
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    },
+                  ],
+                },
               },
               {
                 key: 'City of Boca',
@@ -60,7 +60,7 @@ describe('termStatsHits', () => {
                   min: 60,
                   max: 98,
                   avg: 78.5,
-                  sum: 471
+                  sum: 471,
                 },
                 Hits: {
                   hits: {
@@ -68,12 +68,12 @@ describe('termStatsHits', () => {
                       {
                         _source: {
                           Organization: {
-                            LatLong: '34.056237,-118.257362'
-                          }
-                        }
-                      }
-                    ]
-                  }
+                            LatLong: '34.056237,-118.257362',
+                          },
+                        },
+                      },
+                    ],
+                  },
                 },
                 Details: {
                   buckets: [
@@ -84,24 +84,24 @@ describe('termStatsHits', () => {
                             {
                               _source: {
                                 Organization: {
-                                  ID: '80229'
+                                  ID: '80229',
                                 },
                                 doc_count: 1,
-                                key: 'University Of Michigan at Ann Arbor, MI'
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      }
-    }
+                                key: 'University Of Michigan at Ann Arbor, MI',
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      },
+    },
   ])
   it('should work', () =>
     test(
@@ -115,8 +115,8 @@ describe('termStatsHits', () => {
           details_value_field: 'LineItem.UnitPrice',
           include: ['Organization.LatLong'],
           details_size: 1,
-          details_include: ['Organization.ID']
-        }
+          details_include: ['Organization.ID'],
+        },
       },
       {
         terms: [
@@ -131,19 +131,19 @@ describe('termStatsHits', () => {
             hits: [
               {
                 Organization: {
-                  LatLong: '34.056237,-118.257362'
-                }
-              }
+                  LatLong: '34.056237,-118.257362',
+                },
+              },
             ],
             details: [
               {
                 Organization: {
-                  ID: '80229'
+                  ID: '80229',
                 },
                 doc_count: 1,
-                key: 'University Of Michigan at Ann Arbor, MI'
-              }
-            ]
+                key: 'University Of Michigan at Ann Arbor, MI',
+              },
+            ],
           },
           {
             key: 'City of Boca',
@@ -156,21 +156,21 @@ describe('termStatsHits', () => {
             hits: [
               {
                 Organization: {
-                  LatLong: '34.056237,-118.257362'
-                }
-              }
+                  LatLong: '34.056237,-118.257362',
+                },
+              },
             ],
             details: [
               {
                 Organization: {
-                  ID: '80229'
+                  ID: '80229',
                 },
                 doc_count: 1,
-                key: 'University Of Michigan at Ann Arbor, MI'
-              }
-            ]
-          }
-        ]
+                key: 'University Of Michigan at Ann Arbor, MI',
+              },
+            ],
+          },
+        ],
       },
       [
         {
@@ -180,51 +180,51 @@ describe('termStatsHits', () => {
                 field: 'Organization.Name.untouched',
                 size: 10,
                 order: {
-                  'Stats.sum': 'desc'
-                }
+                  'Stats.sum': 'desc',
+                },
               },
               aggs: {
                 Hits: {
                   top_hits: {
                     _source: {
-                      include: ['Organization.LatLong']
+                      include: ['Organization.LatLong'],
                     },
-                    size: 1
-                  }
+                    size: 1,
+                  },
                 },
                 Stats: {
                   stats: {
-                    field: 'LineItem.TotalPrice'
-                  }
+                    field: 'LineItem.TotalPrice',
+                  },
                 },
                 Details: {
                   aggs: {
                     Hits: {
                       top_hits: {
                         _source: {
-                          include: ['Organization.ID']
+                          include: ['Organization.ID'],
                         },
-                        size: 1
-                      }
+                        size: 1,
+                      },
                     },
                     Stats: {
                       stats: {
-                        field: 'LineItem.UnitPrice'
-                      }
-                    }
+                        field: 'LineItem.UnitPrice',
+                      },
+                    },
                   },
                   terms: {
                     field: 'Organization.NameState.untouched',
                     order: {
-                      'Stats.sum': 'desc'
+                      'Stats.sum': 'desc',
                     },
-                    size: 1
-                  }
-                }
-              }
-            }
-          }
-        }
+                    size: 1,
+                  },
+                },
+              },
+            },
+          },
+        },
       ]
     ))
   it('should support a filter', () =>
@@ -236,8 +236,8 @@ describe('termStatsHits', () => {
           key_field: 'Organization.Name.untouched',
           value_field: 'LineItem.TotalPrice',
           filter: 'city',
-          include: ['Organization.LatLong']
-        }
+          include: ['Organization.LatLong'],
+        },
       },
       {
         terms: [
@@ -252,10 +252,10 @@ describe('termStatsHits', () => {
             hits: [
               {
                 Organization: {
-                  LatLong: '34.056237,-118.257362'
-                }
-              }
-            ]
+                  LatLong: '34.056237,-118.257362',
+                },
+              },
+            ],
           },
           {
             key: 'City of Boca',
@@ -268,12 +268,12 @@ describe('termStatsHits', () => {
             hits: [
               {
                 Organization: {
-                  LatLong: '34.056237,-118.257362'
-                }
-              }
-            ]
-          }
-        ]
+                  LatLong: '34.056237,-118.257362',
+                },
+              },
+            ],
+          },
+        ],
       },
       [
         {
@@ -284,11 +284,11 @@ describe('termStatsHits', () => {
                   must: [
                     {
                       wildcard: {
-                        'Organization.Name.lowercased': '*city*'
-                      }
-                    }
-                  ]
-                }
+                        'Organization.Name.lowercased': '*city*',
+                      },
+                    },
+                  ],
+                },
               },
               aggs: {
                 termsStatsHitsStats: {
@@ -296,29 +296,29 @@ describe('termStatsHits', () => {
                     field: 'Organization.Name.untouched',
                     size: 10,
                     order: {
-                      'Stats.sum': 'desc'
-                    }
+                      'Stats.sum': 'desc',
+                    },
                   },
                   aggs: {
                     Hits: {
                       top_hits: {
                         _source: {
-                          include: ['Organization.LatLong']
+                          include: ['Organization.LatLong'],
                         },
-                        size: 1
-                      }
+                        size: 1,
+                      },
                     },
                     Stats: {
                       stats: {
-                        field: 'LineItem.TotalPrice'
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
+                        field: 'LineItem.TotalPrice',
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       ]
     ))
 })
