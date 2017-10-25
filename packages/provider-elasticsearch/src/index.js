@@ -7,6 +7,7 @@ let ElasticsearchProvider = (
     request: {},
   }
 ) => ({
+  types: config.types,
   groupCombinator: (group, filters) => {
     let join = {
       and: 'must',
