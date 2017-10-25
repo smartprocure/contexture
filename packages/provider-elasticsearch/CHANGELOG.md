@@ -1,3 +1,7 @@
+### 0.0.4
+
+- Fix default type issue
+
 ### 0.0.3
 
 - Fix types issue
