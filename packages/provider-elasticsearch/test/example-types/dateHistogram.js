@@ -7,10 +7,10 @@ describe('dateHistogram', () => {
         {
           aggregations: {
             max_date: {
-              value: '2010'
+              value: '2010',
             },
             min_date: {
-              value: '2008'
+              value: '2008',
             },
             twoLevelAgg: {
               buckets: [
@@ -22,8 +22,8 @@ describe('dateHistogram', () => {
                     min: 60,
                     max: 98,
                     avg: 78.5,
-                    sum: 471
-                  }
+                    sum: 471,
+                  },
                 },
                 {
                   key: '2010',
@@ -33,13 +33,13 @@ describe('dateHistogram', () => {
                     min: 60,
                     max: 98,
                     avg: 78.5,
-                    sum: 471
-                  }
-                }
-              ]
-            }
-          }
-        }
+                    sum: 471,
+                  },
+                },
+              ],
+            },
+          },
+        },
       ],
       ...x
     )
@@ -50,8 +50,8 @@ describe('dateHistogram', () => {
         type: 'dateHistogram',
         config: {
           key_field: 'PO.IssuedDate',
-          value_field: 'LineItem.TotalPrice'
-        }
+          value_field: 'LineItem.TotalPrice',
+        },
       },
       {
         entries: [
@@ -62,7 +62,7 @@ describe('dateHistogram', () => {
             min: 60,
             max: 98,
             avg: 78.5,
-            sum: 471
+            sum: 471,
           },
           {
             key: '2010',
@@ -71,41 +71,41 @@ describe('dateHistogram', () => {
             min: 60,
             max: 98,
             avg: 78.5,
-            sum: 471
-          }
+            sum: 471,
+          },
         ],
         maxDate: '2010',
-        minDate: '2008'
+        minDate: '2008',
       },
       [
         {
           aggs: {
             max_date: {
               max: {
-                field: 'PO.IssuedDate'
-              }
+                field: 'PO.IssuedDate',
+              },
             },
             min_date: {
               min: {
-                field: 'PO.IssuedDate'
-              }
+                field: 'PO.IssuedDate',
+              },
             },
             twoLevelAgg: {
               date_histogram: {
                 field: 'PO.IssuedDate',
                 interval: 'year',
-                min_doc_count: 0
+                min_doc_count: 0,
               },
               aggs: {
                 twoLevelAgg: {
                   stats: {
-                    field: 'LineItem.TotalPrice'
-                  }
-                }
-              }
-            }
-          }
-        }
+                    field: 'LineItem.TotalPrice',
+                  },
+                },
+              },
+            },
+          },
+        },
       ]
     ))
 })

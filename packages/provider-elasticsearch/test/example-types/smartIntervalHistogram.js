@@ -11,9 +11,9 @@ describe('smartIntervalHistogram', () => {
               min: 10,
               max: 5000,
               avg: 78.5,
-              sum: 471
-            }
-          }
+              sum: 471,
+            },
+          },
         },
         {
           aggregations: {
@@ -21,24 +21,24 @@ describe('smartIntervalHistogram', () => {
               buckets: [
                 {
                   key: 0,
-                  doc_count: 8587960
+                  doc_count: 8587960,
                 },
                 {
                   key: 250,
-                  doc_count: 613556605
+                  doc_count: 613556605,
                 },
                 {
                   key: 500,
-                  doc_count: 1
+                  doc_count: 1,
                 },
                 {
                   key: 750,
-                  doc_count: 1
-                }
-              ]
-            }
-          }
-        }
+                  doc_count: 1,
+                },
+              ],
+            },
+          },
+        },
       ],
       ...x
     )
@@ -47,38 +47,38 @@ describe('smartIntervalHistogram', () => {
       {
         key: 'test',
         type: 'smartIntervalHistogram',
-        field: 'LineItem.TotalPrice'
+        field: 'LineItem.TotalPrice',
       },
       {
         interval: 250,
         entries: [
           {
             key: 0,
-            count: 8587960
+            count: 8587960,
           },
           {
             key: 250,
-            count: 613556605
+            count: 613556605,
           },
           {
             key: 500,
-            count: 1
+            count: 1,
           },
           {
             key: 750,
-            count: 1
-          }
-        ]
+            count: 1,
+          },
+        ],
       },
       [
         {
           aggs: {
             statistical: {
               stats: {
-                field: 'LineItem.TotalPrice'
-              }
-            }
-          }
+                field: 'LineItem.TotalPrice',
+              },
+            },
+          },
         },
         {
           aggs: {
@@ -86,11 +86,11 @@ describe('smartIntervalHistogram', () => {
               histogram: {
                 field: 'LineItem.TotalPrice',
                 interval: 250,
-                min_doc_count: 0
-              }
-            }
-          }
-        }
+                min_doc_count: 0,
+              },
+            },
+          },
+        },
       ]
     ))
 })

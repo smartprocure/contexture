@@ -1,5 +1,5 @@
-let _ = require('lodash/fp'),
-  unidecode = require('unidecode')
+let _ = require('lodash/fp')
+let unidecode = require('unidecode')
 
 module.exports = {
   hasValue: context =>
@@ -20,18 +20,18 @@ module.exports = {
     if (useQueryString) {
       let result = {
         query_string: {
-          query: _.map(x => '"' + x + '"', filterParts).join(' '),
+          query: _.map(x => `"${x}"`, filterParts).join(' '),
           default_field: fieldName,
-          default_operator: context.data.join == 'any' ? 'OR' : 'AND'
-        }
+          default_operator: context.data.join == 'any' ? 'OR' : 'AND',
+        },
       }
       if (context.data.operator == 'containsExact')
         result.query_string.analyzer = 'exact'
       if (context.data.join == 'none') {
         result = {
           bool: {
-            must_not: result
-          }
+            must_not: result,
+          },
         }
       }
       return result
@@ -48,7 +48,7 @@ module.exports = {
     let join = {
       all: 'must',
       any: 'should',
-      none: 'must_not'
+      none: 'must_not',
     }[context.data.join || 'all']
 
     let filter = {
@@ -75,21 +75,21 @@ module.exports = {
 
           return {
             wildcard: {
-              [fieldName]: unidecode(prefix + criteria + suffix)
-            }
+              [fieldName]: unidecode(prefix + criteria + suffix),
+            },
           }
-        }, filterParts)
-      }
+        }, filterParts),
+      },
     }
 
     if (/doesNotContain|isNot/.test(context.data.operator)) {
       filter = {
         bool: {
-          must_not: filter
-        }
+          must_not: filter,
+        },
       }
     }
 
     return filter
-  }
+  },
 }

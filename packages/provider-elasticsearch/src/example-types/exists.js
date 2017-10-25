@@ -3,18 +3,18 @@ module.exports = {
   filter: context => {
     let result = {
       exists: {
-        field: context.field
-      }
+        field: context.field,
+      },
     }
 
     if (!context.data.value) {
       result = {
         bool: {
-          must_not: result
-        }
+          must_not: result,
+        },
       }
     }
 
     return result
-  }
+  },
 }

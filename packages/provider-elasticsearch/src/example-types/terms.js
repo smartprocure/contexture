@@ -1,5 +1,5 @@
-var facet = require('./facet');
+var facet = require('./facet')
 
 module.exports = {
-    result: facet.result
-};
+  result: facet.result,
+}

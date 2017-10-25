@@ -6,6 +6,6 @@ module.exports = (config = {}) =>
     require('include-all')({
       dirname: `${__dirname}/example-types`,
       filter: /(.+)\.js$/,
-      optional: true
+      optional: true,
     })
   )
