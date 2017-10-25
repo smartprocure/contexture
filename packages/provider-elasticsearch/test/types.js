@@ -1,6 +1,6 @@
 let _ = require('lodash/fp')
 let Types = require('../src/types')
-let {expect} = require('chai')
+let { expect } = require('chai')
 
 describe('All Example Types', () => {
   it('should load', () => {
@@ -34,7 +34,7 @@ describe('All Example Types', () => {
       'termsStatsHits',
       'terms_stats',
       'text',
-      'twoLevelMatch'
+      'twoLevelMatch',
     ])
   })
 })

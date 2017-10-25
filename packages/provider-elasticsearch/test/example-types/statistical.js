@@ -11,10 +11,10 @@ describe('statistical', function() {
               min: 60,
               max: 98,
               avg: 78.5,
-              sum: 471
-            }
-          }
-        }
+              sum: 471,
+            },
+          },
+        },
       ],
       ...x
     )
@@ -23,25 +23,25 @@ describe('statistical', function() {
       {
         key: 'test',
         type: 'statistical',
-        field: 'LineItem.TotalPrice'
+        field: 'LineItem.TotalPrice',
       },
       {
         count: 6,
         min: 60,
         max: 98,
         avg: 78.5,
-        sum: 471
+        sum: 471,
       },
       [
         {
           aggs: {
             statistical: {
               stats: {
-                field: 'LineItem.TotalPrice'
-              }
-            }
-          }
-        }
+                field: 'LineItem.TotalPrice',
+              },
+            },
+          },
+        },
       ]
     ))
 })

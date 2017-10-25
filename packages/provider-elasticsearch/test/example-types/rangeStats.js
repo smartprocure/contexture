@@ -1,6 +1,6 @@
-const rangeStats = require('../../src/example-types/rangeStats'),
-  _ = require('lodash/fp'),
-  utils = require('./testUtils')
+const rangeStats = require('../../src/example-types/rangeStats')
+const _ = require('lodash/fp')
+const utils = require('./testUtils')
 
 describe('rangeStats', () => {
   describe('validContext', () => {
@@ -10,16 +10,16 @@ describe('rangeStats', () => {
           config: {
             key_field: true,
             value_field: true,
-            ranges: true
-          }
+            ranges: true,
+          },
         },
         {
           config: {
             key_field: 'key_field',
             value_field: 'value_field',
-            ranges: [1]
-          }
-        }
+            ranges: [1],
+          },
+        },
       ])
     })
     it('should validate a context without config key_field, value_field or ranges', () => {
@@ -28,41 +28,41 @@ describe('rangeStats', () => {
           config: {
             key_field: true,
             value_field: true,
-            ranges: false
-          }
+            ranges: false,
+          },
         },
         {
           config: {
             key_field: true,
-            value_field: true
-          }
+            value_field: true,
+          },
         },
         {
           config: {
             key_field: true,
             value_field: false,
-            ranges: true
-          }
+            ranges: true,
+          },
         },
         {
           config: {
             key_field: true,
-            ranges: true
-          }
+            ranges: true,
+          },
         },
         {
           config: {
             key_field: false,
             value_field: true,
-            ranges: true
-          }
+            ranges: true,
+          },
         },
         {
           config: {
             value_field: true,
-            ranges: true
-          }
-        }
+            ranges: true,
+          },
+        },
       ])
     })
   })
@@ -85,8 +85,8 @@ describe('rangeStats', () => {
                   min: -500000000,
                   max: 937998784,
                   avg: 973.7296742278231,
-                  sum: 464370811124.9201
-                }
+                  sum: 464370811124.9201,
+                },
               },
               {
                 key: '500.0-10000.0',
@@ -100,13 +100,13 @@ describe('rangeStats', () => {
                   min: -999299968,
                   max: 2100000000,
                   avg: 3038.799582495458,
-                  sum: 335754844787.8146
-                }
-              }
-            ]
-          }
-        }
-      }
+                  sum: 335754844787.8146,
+                },
+              },
+            ],
+          },
+        },
+      },
     ])
     it('should work', () =>
       test(
@@ -119,14 +119,14 @@ describe('rangeStats', () => {
             ranges: [
               {
                 from: '0',
-                to: '500'
+                to: '500',
               },
               {
                 from: '500',
-                to: '10000'
-              }
-            ]
-          }
+                to: '10000',
+              },
+            ],
+          },
         },
         {
           results: [
@@ -137,7 +137,7 @@ describe('rangeStats', () => {
               min: -500000000,
               max: 937998784,
               avg: 973.7296742278231,
-              sum: 464370811124.9201
+              sum: 464370811124.9201,
             },
             {
               key: '500.0-10000.0',
@@ -146,9 +146,9 @@ describe('rangeStats', () => {
               min: -999299968,
               max: 2100000000,
               avg: 3038.799582495458,
-              sum: 335754844787.8146
-            }
-          ]
+              sum: 335754844787.8146,
+            },
+          ],
         },
         [
           {
@@ -159,24 +159,24 @@ describe('rangeStats', () => {
                   ranges: [
                     {
                       from: '0',
-                      to: '500'
+                      to: '500',
                     },
                     {
                       from: '500',
-                      to: '10000'
-                    }
-                  ]
+                      to: '10000',
+                    },
+                  ],
                 },
                 aggs: {
                   twoLevelAgg: {
                     stats: {
-                      field: 'LineItem.TotalPrice'
-                    }
-                  }
-                }
-              }
-            }
-          }
+                      field: 'LineItem.TotalPrice',
+                    },
+                  },
+                },
+              },
+            },
+          },
         ]
       ))
   })

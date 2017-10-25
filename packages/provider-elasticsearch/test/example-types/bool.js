@@ -1,5 +1,5 @@
 let bool = require('../../src/example-types/bool')
-let {expect} = require('chai')
+let { expect } = require('chai')
 
 describe('bool', function() {
   it('should filter properly', function() {
@@ -8,13 +8,13 @@ describe('bool', function() {
         type: 'bool',
         field: 'test',
         data: {
-          value: true
-        }
+          value: true,
+        },
       })
     ).to.deep.equal({
       term: {
-        test: true
-      }
+        test: true,
+      },
     })
   })
   it('should filter properly if false', function() {
@@ -23,13 +23,13 @@ describe('bool', function() {
         type: 'bool',
         field: 'test',
         data: {
-          value: false
-        }
+          value: false,
+        },
       })
     ).to.deep.equal({
       term: {
-        test: false
-      }
+        test: false,
+      },
     })
   })
 })

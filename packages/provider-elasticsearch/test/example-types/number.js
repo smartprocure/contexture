@@ -1,5 +1,5 @@
 let number = require('../../src/example-types/number')
-let {expect} = require('chai')
+let { expect } = require('chai')
 describe('number/filter', () => {
   it('should check for values', () => {
     expect(
@@ -7,15 +7,15 @@ describe('number/filter', () => {
         type: 'number',
         field: 'test',
         data: {
-          max: 1000
-        }
+          max: 1000,
+        },
       })
     ).to.be.true
     expect(
       !!number.hasValue({
         type: 'number',
         field: 'test',
-        data: {}
+        data: {},
       })
     ).to.be.false
   })
@@ -25,15 +25,15 @@ describe('number/filter', () => {
         type: 'number',
         field: 'test',
         data: {
-          min: 500
-        }
+          min: 500,
+        },
       })
     ).to.deep.equal({
       range: {
         test: {
-          gte: 500
-        }
-      }
+          gte: 500,
+        },
+      },
     })
   })
   it('should handle max', () => {
@@ -42,15 +42,15 @@ describe('number/filter', () => {
         type: 'number',
         field: 'test',
         data: {
-          max: 500
-        }
+          max: 500,
+        },
       })
     ).to.deep.equal({
       range: {
         test: {
-          lte: 500
-        }
-      }
+          lte: 500,
+        },
+      },
     })
   })
   it('should handle min and max', () => {
@@ -60,16 +60,16 @@ describe('number/filter', () => {
         field: 'test',
         data: {
           min: 500,
-          max: 1000
-        }
+          max: 1000,
+        },
       })
     ).to.deep.equal({
       range: {
         test: {
           gte: 500,
-          lte: 1000
-        }
-      }
+          lte: 1000,
+        },
+      },
     })
   })
 })

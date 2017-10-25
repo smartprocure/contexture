@@ -11,19 +11,19 @@ describe('matchCardinality', () => {
                 pass: {
                   doc_count: 50,
                   twoLevelAgg: {
-                    value: 471
-                  }
+                    value: 471,
+                  },
                 },
                 fail: {
                   doc_count: 50,
                   twoLevelAgg: {
-                    value: 471
-                  }
-                }
-              }
-            }
-          }
-        }
+                    value: 471,
+                  },
+                },
+              },
+            },
+          },
+        },
       ],
       ...x
     )
@@ -35,22 +35,22 @@ describe('matchCardinality', () => {
         config: {
           key_field: 'Vendor.City.untouched',
           key_value: 'Washington',
-          value_field: 'LineItem.TotalPrice'
-        }
+          value_field: 'LineItem.TotalPrice',
+        },
       },
       {
         results: [
           {
             key: 'pass',
             doc_count: 50,
-            value: 471
+            value: 471,
           },
           {
             key: 'fail',
             doc_count: 50,
-            value: 471
-          }
-        ]
+            value: 471,
+          },
+        ],
       },
       [
         {
@@ -60,30 +60,30 @@ describe('matchCardinality', () => {
                 filters: {
                   pass: {
                     term: {
-                      'Vendor.City.untouched': 'Washington'
-                    }
+                      'Vendor.City.untouched': 'Washington',
+                    },
                   },
                   fail: {
                     bool: {
                       must_not: {
                         term: {
-                          'Vendor.City.untouched': 'Washington'
-                        }
-                      }
-                    }
-                  }
-                }
+                          'Vendor.City.untouched': 'Washington',
+                        },
+                      },
+                    },
+                  },
+                },
               },
               aggs: {
                 twoLevelAgg: {
                   cardinality: {
-                    field: 'LineItem.TotalPrice'
-                  }
-                }
-              }
-            }
-          }
-        }
+                    field: 'LineItem.TotalPrice',
+                  },
+                },
+              },
+            },
+          },
+        },
       ]
     ))
 })

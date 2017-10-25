@@ -12,18 +12,18 @@ let modeMap = {
   word: {
     field: '',
     filter: '',
-    optionFilter: '.exact'
+    optionFilter: '.exact',
   },
   autocomplete: {
     field: '.untouched',
     filter: '.lowercased',
-    optionFilter: '.exact'
+    optionFilter: '.exact',
   },
   suggest: {
     field: '.shingle',
     filter: '.shingle_edgengram',
-    optionFilter: '.exact'
-  }
+    optionFilter: '.exact',
+  },
 }
 let getFieldMode = type => context =>
   rawFieldName(context.field) +
@@ -37,15 +37,15 @@ module.exports = {
   filter: context => {
     let result = {
       terms: {
-        [getField(context)]: context.data.values
-      }
+        [getField(context)]: context.data.values,
+      },
     }
 
     if (context.data.mode === 'exclude') {
       result = {
         bool: {
-          must_not: result
-        }
+          must_not: result,
+        },
       }
     }
 
@@ -54,14 +54,14 @@ module.exports = {
       // 4096 is our actual limit
       result = {
         bool: {
-          filter: result
-        }
+          filter: result,
+        },
       }
     }
 
     return result
   },
-  result: (context, search, schema, provider, options) => {
+  result: (context, search) => {
     let filter
     if (context.config.optionsFilter) {
       let filterParts = context.config.optionsFilter
@@ -75,18 +75,20 @@ module.exports = {
               ? _.map(
                   f => ({
                     wildcard: {
-                      [getOptionFilterField(context)]:
-                        f.replace(/\*|\-|\+/g, '') + '*'
-                    }
+                      [getOptionFilterField(context)]: `${f.replace(
+                        /\*|-|\+/g,
+                        ''
+                      )}*`,
+                    },
                   }),
                   filterParts
                 )
               : {
                   term: {
-                    [getFilterField(context)]: context.config.optionsFilter
-                  }
-                }
-        }
+                    [getFilterField(context)]: context.config.optionsFilter,
+                  },
+                },
+        },
       }
     }
 
@@ -106,32 +108,32 @@ module.exports = {
               field: getField(context),
               size: size,
               order: {
-                term: {_term: 'asc'},
-                count: {_count: 'desc'}
-              }[context.config.sort || 'count']
+                term: { _term: 'asc' },
+                count: { _count: 'desc' },
+              }[context.config.sort || 'count'],
               // include: context.config.filterJunk ? "([A-Za-z0-9]{3,} ?)+" : '*'
             },
             context.data.fieldMode == 'suggest'
               ? {
-                  include: '.*' + context.config.optionsFilter + '.*'
+                  include: `.*${context.config.optionsFilter}.*`,
                 }
               : {}
-          )
+          ),
         },
         facetCardinality: {
           cardinality: {
             field: getField(context),
-            precision_threshold: cardinality
-          }
-        }
-      }
+            precision_threshold: cardinality,
+          },
+        },
+      },
     }
     if (filter)
       resultRequest.aggs = {
         facetAggregation: {
           filter: filter,
-          aggs: resultRequest.aggs
-        }
+          aggs: resultRequest.aggs,
+        },
       }
 
     return search(resultRequest).then(response1 => {
@@ -156,8 +158,8 @@ module.exports = {
         cardinality: agg.facetCardinality.value,
         options: buckets.map(x => ({
           name: x.key,
-          count: x.doc_count
-        }))
+          count: x.doc_count,
+        })),
       }
 
       // If no missing results, move on
@@ -178,8 +180,8 @@ module.exports = {
       )
       let missingFilter = {
         terms: {
-          [getField(context)]: missing
-        }
+          [getField(context)]: missing,
+        },
       }
       let missingRequest = {
         aggs: {
@@ -191,20 +193,20 @@ module.exports = {
                   field: getField(context),
                   size: missing.length,
                   order: {
-                    term: {_term: 'asc'},
-                    count: {_count: 'desc'}
-                  }[context.config.sort || 'count']
-                }
-              }
-            }
-          }
-        }
+                    term: { _term: 'asc' },
+                    count: { _count: 'desc' },
+                  }[context.config.sort || 'count'],
+                },
+              },
+            },
+          },
+        },
       }
       return search(missingRequest).then(response2 => {
         let agg2 = response2.aggregations.facetAggregation
         let moreOptions = agg2.facetOptions.buckets.map(x => ({
           name: x.key,
-          count: x.doc_count
+          count: x.doc_count,
         }))
 
         // Add zeroes for options that are still missing (since es wont return 0)
@@ -212,7 +214,7 @@ module.exports = {
         moreOptions = moreOptions.concat(
           stillMissing.map(x => ({
             name: x,
-            count: 0
+            count: 0,
           }))
         )
 
@@ -221,5 +223,5 @@ module.exports = {
         return result
       })
     })
-  }
+  },
 }

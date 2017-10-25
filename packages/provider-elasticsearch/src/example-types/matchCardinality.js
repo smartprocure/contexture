@@ -1,5 +1,5 @@
-let _ = require('lodash'),
-  twoLevelMatch = require('./twoLevelMatch')
+let _ = require('lodash')
+let twoLevelMatch = require('./twoLevelMatch')
 
 module.exports = {
   validContext: twoLevelMatch.validContext,
@@ -8,11 +8,11 @@ module.exports = {
       _.merge(
         {
           config: {
-            value_type: 'cardinality'
-          }
+            value_type: 'cardinality',
+          },
         },
         context
       ),
       search
-    )
+    ),
 }
