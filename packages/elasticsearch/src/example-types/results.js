@@ -60,14 +60,14 @@ module.exports = {
           }
 
           // TODO - If nested path, iterate properties on nested path, filtering out nested path results unless mainHighlighted or relevant nested fields have b tags in them
-          return _.extendAll(
+          return _.extendAll([
             context.config.verbose ? { hit: hit } : {},
             {
               _id: hit._id,
               additionalFields: highlight ? additionalFields : [],
             },
-            _.getOr(_.identity, 'elasticsearch.summaryView', schema)(hit)
-          )
+            _.getOr(_.identity, 'elasticsearch.summaryView', schema)(hit),
+          ])
         }, results.hits.hits),
       },
     }))

@@ -10,6 +10,7 @@ describe('All Example Types', () => {
       'cardinality',
       'date',
       'dateHistogram',
+      'default',
       'esTwoLevelAggregation',
       'exists',
       'facet',
