@@ -79,6 +79,27 @@ describe('results', () => {
         },
       }),
     ]))
+  it('verbose should work', () => {
+    F.extendOn(context.config, { verbose: true })
+    F.extendOn(expectedResult.response.results, [
+      {
+        _id: 'test-id',
+        additionalFields: [],
+        field: 'test field',
+        hit: {
+          _id: 'test-id',
+          field: 'test field',
+        },
+      },
+    ])
+    return resultsTest(context, [
+      _.extend(expectedCalls[0], {
+        sort: {
+          _score: 'desc',
+        },
+      }),
+    ])
+  })
   it('should order by sortDir config', () => {
     F.extendOn(context.config, { sortDir: 'asc' })
     return resultsTest(context, [
