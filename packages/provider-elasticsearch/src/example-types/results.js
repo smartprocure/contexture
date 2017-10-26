@@ -66,7 +66,7 @@ module.exports = {
               _id: hit._id,
               additionalFields: highlight ? additionalFields : [],
             },
-            _.getOr(_.identity, 'elasticsearch.summaryView', schema)(hit)
+            _.getOr(_.identity, 'elasticsearch.summaryView', schema)(hit),
           ])
         }, results.hits.hits),
       },
