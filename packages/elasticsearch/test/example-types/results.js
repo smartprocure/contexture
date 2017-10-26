@@ -41,7 +41,7 @@ describe('results', () => {
           {
             _id: 'test-id',
             additionalFields: [],
-            field: 'test field'
+            field: 'test field',
           },
         ],
       },
@@ -88,9 +88,9 @@ describe('results', () => {
         field: 'test field',
         hit: {
           _id: 'test-id',
-          field: 'test field'
-        }
-      }
+          field: 'test field',
+        },
+      },
     ])
     return resultsTest(context, [
       _.extend(expectedCalls[0], {
