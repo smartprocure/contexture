@@ -1,3 +1,7 @@
+### 0.0.5
+
+- Fix _.extendAll issue where it should accept an array as a parameter
+
 ### 0.0.4
 
 - Fix default type issue
