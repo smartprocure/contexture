@@ -2,7 +2,7 @@ let _ = require('lodash')
 let Promise = require('bluebird')
 
 module.exports = {
-  result: (context, search, schema) => {
+  result: (context, search) => {
     let page = (context.config.page || 1) - 1
     let pageSize = context.config.pageSize || 10
     let startRecord = page * pageSize
