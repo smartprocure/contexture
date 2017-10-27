@@ -1,4 +1,7 @@
-﻿# 0.0.8
+# 0.0.9
+Added data.values support to mongoId
+
+# 0.0.8
 - Make sure types are available `contexture-mongo/types`.
 - Rename the default types to example types.
 - Made integration tests for the text and the mongoId example types.
