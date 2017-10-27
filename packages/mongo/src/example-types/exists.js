@@ -1,5 +1,5 @@
 module.exports = {
-  hasValue: x => true,
+  hasValue: () => true,
   filter: context =>
     context.data.value
       ? {
