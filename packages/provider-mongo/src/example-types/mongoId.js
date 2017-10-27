@@ -1,3 +1,4 @@
+let _ = require('lodash/fp')
 let ObjectID = require('mongodb').ObjectID
 
 module.exports = {
