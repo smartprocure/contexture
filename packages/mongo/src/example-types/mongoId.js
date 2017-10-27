@@ -1,8 +1,11 @@
+let _ = require('lodash/fp')
 let ObjectID = require('mongodb').ObjectID
 
 module.exports = {
-  hasValue: context => context.data.value,
+  hasValue: context => context.data.values || context.data.value,
   filter: context => ({
-    [context.field]: new ObjectID(context.data.value),
+    [context.field]: context.data.values
+      ? { $in: _.map(x => new ObjectID(x), context.data.values) }
+      : new ObjectID(context.data.value),
   }),
 }

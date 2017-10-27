@@ -33,4 +33,5 @@ describe('mongoId', () => {
       _id: new ObjectID('53b46feb938d89315aae1477'),
     })
   })
+  it('should handle $in with a data.values array')
 })
