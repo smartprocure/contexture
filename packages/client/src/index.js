@@ -1,8 +1,8 @@
 import _ from 'lodash/fp'
 import * as f from 'futil-js'
 import {flattenTree, bubbleUpAsync, flatLeaves, Tree} from './util/tree'
-import {catches, flowAsync} from './util/futil'
-import {mapValuesAsync} from './util/promise'
+import {catches} from './util/futil'
+import {mapValuesAsync, flowAsync} from './util/promise'
 
 import {validate} from './validation'
 import {getAffectedNodes} from './reactors'
@@ -119,6 +119,7 @@ export let ContextTree = (
   }
 }
 export default ContextTree
+//   rearg contexture so types + service can be curried first and reused in app - add two options obj and merge (so we can have defaults)
 //TODO
 //  unify notify subscribers with dispatch/mutate
 // subscribe(path, fn, type), fn: (delta, node) -> null
