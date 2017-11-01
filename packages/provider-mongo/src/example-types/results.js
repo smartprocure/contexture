@@ -10,12 +10,12 @@ module.exports = {
         pageSize = 10,
         sortField = '_score',
         sortDir = 'desc',
-        populate = {}
-      } = {}
+        populate = {},
+      } = {},
     } = context
     let startRecord = page * pageSize
     let sort = {
-      [sortField]: sortDir === 'asc' ? 1 : -1
+      [sortField]: sortDir === 'asc' ? 1 : -1,
     }
     page -= 1
 
@@ -35,10 +35,10 @@ module.exports = {
             as,
             collection: x.schema, //|| toSingular(as), //<-- needs compromise-fp
             localField: x.localField || '_id',
-            foreignField: x.foreignField || context.schema
+            foreignField: x.foreignField || context.schema,
           }),
           populate
-        )
+        ),
       ]),
       search([
         {
