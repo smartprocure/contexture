@@ -1,3 +1,8 @@
+﻿### 0.0.6
+
+- Using Lodash's extend instead of the three dot syntax, so we can
+  support Node v8.2.0.
+
 ### 0.0.5
 
 - Fix _.extendAll issue where it should accept an array as a parameter
