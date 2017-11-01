@@ -41,16 +41,13 @@ let ElasticsearchProvider = (
 
     // Could nestify aggs here generically based on schema
     let request = {
-      body: {
-        query,
-        ...aggs, // This is only available in Node >= 8.3.0
-      },
+      body: _.extend({ query }, aggs)
     }
     // If there are aggs, skip search results
     if (aggs.aggs) request.body.size = 0
 
     // Additional config for ES searches
-    request = {
+    request = _.extendAll({
       type: schema.elasticsearch.type,
       index: schema.elasticsearch.index,
 
@@ -58,10 +55,9 @@ let ElasticsearchProvider = (
       scroll: context.config.scroll,
       // searchType:         context.config.searchType
 
-      ...config.request,
+    }, config.request, {
       headers: options.requestorContext,
-      ...request,
-    }
+    }, request)
     // Deterministic ordering of JSON keys for request cache optimization
     request = JSON.parse(deterministic_stringify(request))
 
