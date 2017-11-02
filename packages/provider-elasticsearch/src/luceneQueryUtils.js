@@ -34,16 +34,16 @@ let utils = {
 
   luceneQueryProcessor: newVal =>
     utils
-      .asciifyString(`${unidecode(newVal)}`)
-      .result.replace(/[\xad]/g, ' ') // Convert SHY-HYPHEN to HYPHEN-MINUS (ZD #9811)
-      .replace(/−/g, '-') // Convert MINUS-SIGN to HYPHEN-MINUS (ZD #7477)
-      .replace(utils._reWHITESPACE, ' ') // any kind of white space to normal spaces
+      .asciifyString(`${newVal}`)
+      // .result.replace(/[\xad]/g, ' ') // Convert SHY-HYPHEN to HYPHEN-MINUS (ZD #9811)
+      // .replace(/−/g, '-') // Convert MINUS-SIGN to HYPHEN-MINUS (ZD #7477)
+      // .replace(utils._reWHITESPACE, ' ') // any kind of white space to normal spaces
       .replace(/\band\b/gi, 'AND')
       .replace(/\bor\b/gi, 'OR')
       .replace(/\bnot\b/gi, 'NOT')
       // once better unit tested the above three could likely be replaced with:
       //.replace(/\b(?:and|or|not)\b/ig, function(s) { return s.toUpperCase(); })
-      .replace(/\s\s+/g, ' ')
+      // .replace(/\s\s+/g, ' ')
       .replace(/\\(?!")/g, '\\\\')
       .replace(/\//g, '\\/')
       .trim(),
