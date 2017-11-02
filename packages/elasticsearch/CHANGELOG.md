@@ -1,4 +1,7 @@
-﻿### 0.0.6
+### 0.0.7
+- Radically reduced ascii folding checks in query example type. Recommended alternative is to use an ascii folding analyzer.
+
+### 0.0.6
 
 - Using Lodash's extend instead of the three dot syntax, so we can
   support Node v8.2.0.
