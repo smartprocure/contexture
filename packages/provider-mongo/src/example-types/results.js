@@ -10,17 +10,17 @@ module.exports = {
         pageSize = 10,
         sortField = '_score',
         sortDir = 'desc',
-        populate = {},
+        populate,
       } = {},
     } = context
+    page -= 1
     let startRecord = page * pageSize
     let sort = {
       [sortField]: sortDir === 'asc' ? 1 : -1,
     }
-    page -= 1
 
     return Promise.all([
-      search([
+      search(_.reject(_.isEmpty, [
         {
           $sort: sort,
         },
@@ -30,16 +30,17 @@ module.exports = {
         {
           $limit: pageSize,
         },
-        F.mapValuesIndexed(
+        ...F.mapIndexed(
           (x, as) => ({
+            $lookup: {
             as,
-            collection: x.schema, //|| toSingular(as), //<-- needs compromise-fp
-            localField: x.localField || '_id',
-            foreignField: x.foreignField || context.schema,
-          }),
+            from: x.schema, //|| toSingular(as), //<-- needs compromise-fp
+            localField: x.localField,// || '_id',
+            foreignField: x.foreignField,// || context.schema, <-- needs schema lookup
+          }}),
           populate
         ),
-      ]),
+      ])),
       search([
         {
           $group: {
