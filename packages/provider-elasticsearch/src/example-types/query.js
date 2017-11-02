@@ -1,20 +1,11 @@
-let _ = require('lodash')
+let _ = require('lodash/fp')
 let utils = require('../luceneQueryUtils')
-let unidecode = require('unidecode')
 // luceneValidator = require('lib/luceneValidator/luceneValidator');
 
 module.exports = {
-  hasValue: context => _.get(context.data, 'query.length'),
+  hasValue: _.get('data.query.length'),
   filter: context => {
-    let query = context.data.query
-      .replace(/\band\b/gi, 'AND')
-      .replace(/\bor\b/gi, 'OR')
-      .replace(/\bnot\b/gi, 'NOT')
-      .replace(/\\(?!")/g, '\\\\')
-      .replace(/\//g, '\\/')
-
-    query = unidecode(query)
-    query = utils.luceneQueryProcessor(query)
+    let query = utils.luceneQueryProcessor(context.data.query)
 
     // let luceneValidation = luceneValidator.doCheckLuceneQueryValue(query);
     // if (!_.isEmpty(luceneValidation))
