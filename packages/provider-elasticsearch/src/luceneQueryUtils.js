@@ -1,6 +1,6 @@
 module.exports = {
   luceneQueryProcessor: newVal =>
-    (`${newVal}`)
+    `${newVal}`
       .replace(/“/g, '"')
       .replace(/”/g, '"')
       .replace(/‘/g, "'")
@@ -12,5 +12,5 @@ module.exports = {
       //.replace(/\b(?:and|or|not)\b/ig, function(s) { return s.toUpperCase(); })
       .replace(/\\(?!")/g, '\\\\')
       .replace(/\//g, '\\/')
-      .trim()
+      .trim(),
 }
