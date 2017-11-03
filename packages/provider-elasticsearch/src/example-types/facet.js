@@ -34,7 +34,7 @@ let getOptionFilterField = getFieldMode('optionFilter')
 
 module.exports = {
   hasValue: context => _.get('values.length', context.data),
-  filter: context => {
+  filter(context) {
     let result = {
       terms: {
         [getField(context)]: context.data.values,
@@ -61,7 +61,7 @@ module.exports = {
 
     return result
   },
-  result: (context, search) => {
+  result(context, search) {
     let filter
     if (context.config.optionsFilter) {
       let filterParts = context.config.optionsFilter
@@ -71,7 +71,7 @@ module.exports = {
       filter = {
         bool: {
           must:
-            !context.data.fieldMode || context.data.fieldMode == 'autocomplete'
+            !context.data.fieldMode || context.data.fieldMode === 'autocomplete'
               ? _.map(
                   f => ({
                     wildcard: {
@@ -106,14 +106,14 @@ module.exports = {
           terms: _.extend(
             {
               field: getField(context),
-              size: size,
+              size,
               order: {
                 term: { _term: 'asc' },
                 count: { _count: 'desc' },
               }[context.config.sort || 'count'],
               // include: context.config.filterJunk ? "([A-Za-z0-9]{3,} ?)+" : '*'
             },
-            context.data.fieldMode == 'suggest'
+            context.data.fieldMode === 'suggest'
               ? {
                   include: `.*${context.config.optionsFilter}.*`,
                 }
@@ -131,7 +131,7 @@ module.exports = {
     if (filter)
       resultRequest.aggs = {
         facetAggregation: {
-          filter: filter,
+          filter,
           aggs: resultRequest.aggs,
         },
       }

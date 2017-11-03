@@ -30,8 +30,8 @@ describe('text', () => {
         field: 'description',
         data: {
           join: 'any',
-          operator: operator,
-          values: values,
+          operator,
+          values,
         },
       })
     let laserjetPrinterText = anyText(['laserjet', 'printer'])

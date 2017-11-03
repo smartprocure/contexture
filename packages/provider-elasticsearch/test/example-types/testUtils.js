@@ -68,5 +68,5 @@ module.exports = {
   noValidContexts: type => F.flowMap(type.validContext, chai.assert.isFalse),
   hasValueContexts: type => F.flowMap(type.hasValue, chai.assert.isTrue),
   noValueContexts: type => F.flowMap(type.hasValue, chai.assert.isFalse),
-  sequentialResultTest: sequentialResultTest,
+  sequentialResultTest,
 }

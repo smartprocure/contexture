@@ -10,7 +10,7 @@ let processReducers = (results, reducers) => {
           peakKey: Number(peak.key),
         })
       })(currentResults),
-    filter: (config, currentResults) => {
+    filter(config, currentResults) {
       let filteredResults = []
       let hasFieldPlus = _.curry(
         (currentConfig, other) =>
@@ -56,7 +56,7 @@ let getInnerMost = result => {
 }
 module.exports = {
   validContext: () => true,
-  result: (context, search) => {
+  result(context, search) {
     let body = _.reduce((r, agg) => {
       getInnerMost(r).aggs = {
         [agg.type]: {

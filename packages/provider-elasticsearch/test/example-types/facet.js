@@ -100,7 +100,7 @@ describe('facet', () => {
           type: 'facet',
           field: 'testField',
           data: {
-            values: values,
+            values,
           },
         })
       ).to.deep.equal({

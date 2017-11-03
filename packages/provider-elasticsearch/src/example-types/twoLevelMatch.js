@@ -8,7 +8,7 @@ module.exports = {
       context.config.value_field &&
       context.config.key_value
     ),
-  result: (context, search) => {
+  result(context, search) {
     let filter = {
       [_.get('key_type', context.config) || 'term']: {
         [context.config.key_field]: context.config.key_value,

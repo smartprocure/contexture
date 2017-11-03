@@ -4,7 +4,7 @@ let utils = require('../luceneQueryUtils')
 
 module.exports = {
   hasValue: _.get('data.query.length'),
-  filter: context => {
+  filter(context) {
     let query = utils.luceneQueryProcessor(context.data.query)
 
     // let luceneValidation = luceneValidator.doCheckLuceneQueryValue(query);
@@ -16,7 +16,7 @@ module.exports = {
 
     let result = {
       query_string: {
-        query: query,
+        query,
         default_operator: 'AND',
         default_field: field + (context.data.exact ? '.exact' : '') || '_all',
       },

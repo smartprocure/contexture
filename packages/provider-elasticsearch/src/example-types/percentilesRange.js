@@ -3,7 +3,7 @@ let percentiles = require('./percentiles').result
 
 module.exports = {
   validContext: context => context.config.field,
-  result: (context, search) => {
+  result(context, search) {
     let keyField = _.get('config.field', context)
     let percentsArray = _.get('config.percents', context)
     return percentiles(context, search).then(percentilesResult => {
@@ -26,7 +26,7 @@ module.exports = {
           price_ranges: {
             range: {
               field: keyField,
-              ranges: ranges,
+              ranges,
             },
           },
         },
