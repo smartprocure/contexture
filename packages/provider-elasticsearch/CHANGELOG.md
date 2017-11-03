@@ -1,3 +1,6 @@
+﻿### 0.0.8
+- Our use of extendAll was wrong, it expects an array.
+
 ### 0.0.7
 - Radically reduced ascii folding checks in query example type. Recommended alternative is to use an ascii folding analyzer.
 
