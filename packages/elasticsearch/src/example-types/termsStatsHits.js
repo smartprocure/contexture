@@ -30,7 +30,7 @@ let getAggregationObject = config => ({
 module.exports = {
   validContext: context =>
     context.config.key_field && context.config.value_field,
-  result: (context, search) => {
+  result(context, search) {
     let filter
     let isDetails =
       context.config.details_key_field && context.config.details_value_field
@@ -80,7 +80,7 @@ module.exports = {
     if (filter) {
       request.aggs = {
         termsStatsHits: {
-          filter: filter,
+          filter,
           aggs: request.aggs,
         },
       }

@@ -17,7 +17,7 @@ module.exports = {
     context.config.key_type &&
     context.config.value_field &&
     context.config.value_type,
-  result: (context, search) => {
+  result(context, search) {
     let query = {
       aggs: {
         twoLevelAgg: {

@@ -34,7 +34,7 @@ function highlightResults(highlightFields, hit, pathToNested) {
       if (_.isArray(value) && !_.includes(key, pathToNested)) {
         additionalFields.push({
           label: key,
-          value: value,
+          value,
         })
       } else {
         // Handle Nested Item Highlighting Replacement
@@ -67,8 +67,8 @@ function highlightResults(highlightFields, hit, pathToNested) {
   }
 
   return {
-    additionalFields: additionalFields,
-    mainHighlighted: mainHighlighted,
+    additionalFields,
+    mainHighlighted,
   }
 }
 

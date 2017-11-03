@@ -4,7 +4,7 @@ var esTwoLevel = require('./esTwoLevelAggregation').result
 module.exports = {
   validContext: context =>
     context.config.key_field && context.config.value_field,
-  result: function(context, search) {
+  result(context, search) {
     var filter = null
 
     if (context.config.filter) {
