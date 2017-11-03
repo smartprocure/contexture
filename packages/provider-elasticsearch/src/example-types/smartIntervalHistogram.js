@@ -5,14 +5,14 @@ let calcSmartInterval = require('../smartInterval').calcSmartInterval
 
 module.exports = {
   validContext: context => context.field || context.config.field,
-  result: (context, search) => {
+  result(context, search) {
     let field = context.field || context.config.field
     let interval = context.config.interval
     if (!interval) {
       interval = statsResults(
         {
           key: context.key,
-          field: field,
+          field,
         },
         search
       ).then(statResult => calcSmartInterval(statResult.min, statResult.max))
@@ -23,7 +23,7 @@ module.exports = {
         aggs: {
           histogram: {
             histogram: {
-              field: field,
+              field,
               interval: intervalResult,
               min_doc_count: 0,
             }, // ,

@@ -1,6 +1,6 @@
 module.exports = {
   hasValue: () => true,
-  filter: context => {
+  filter(context) {
     let result = {
       exists: {
         field: context.field,

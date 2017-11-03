@@ -4,7 +4,7 @@ let unidecode = require('unidecode')
 module.exports = {
   hasValue: context =>
     context.data.value || _.get('values.length', context.data),
-  filter: context => {
+  filter(context) {
     let fieldName = context.field.replace('.untouched', '')
     let filterParts =
       context.data.values || context.data.value.toLowerCase().split(' ')

@@ -7,7 +7,7 @@ let esTwoLevel = require('./esTwoLevelAggregation').result
 module.exports = {
   validContext: context =>
     context.config.key_field && context.config.value_field,
-  result: (context, search) => {
+  result(context, search) {
     let payload = {
       config: {
         key_type: 'date_histogram',

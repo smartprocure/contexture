@@ -112,7 +112,7 @@ describe('results', () => {
   })
   it('should sort on sortField config', () => {
     let sortField = 'test.field'
-    F.extendOn(context.config, { sortField: sortField })
+    F.extendOn(context.config, { sortField })
     return resultsTest(context, [
       _.extend(expectedCalls[0], {
         sort: {
@@ -134,7 +134,7 @@ describe('results', () => {
   })
   it('should strip ".untouched" from sortField config when sortMode config is "word"', () => {
     let sortField = 'test.field'
-    F.extendOn(context.config, { sortField: sortField, sortMode: 'word' })
+    F.extendOn(context.config, { sortField, sortMode: 'word' })
     return resultsTest(context, [
       _.extend(expectedCalls[0], {
         sort: {
@@ -145,7 +145,7 @@ describe('results', () => {
   })
   it('should sort on sortField + ".untouched" when sortMode config is "field"', () => {
     let sortField = 'test.field'
-    F.extendOn(context.config, { sortField: sortField, sortMode: 'field' })
+    F.extendOn(context.config, { sortField, sortMode: 'field' })
     return resultsTest(context, [
       _.extend(expectedCalls[0], {
         sort: {
