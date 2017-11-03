@@ -47,7 +47,7 @@ let ElasticsearchProvider = (
     if (aggs.aggs) request.body.size = 0
 
     // Additional config for ES searches
-    request = _.extendAll(
+    request = _.extendAll([
       {
         type: schema.elasticsearch.type,
         index: schema.elasticsearch.index,
@@ -61,7 +61,7 @@ let ElasticsearchProvider = (
         headers: options.requestorContext,
       },
       request
-    )
+    ])
     // Deterministic ordering of JSON keys for request cache optimization
     request = JSON.parse(deterministic_stringify(request))
 
