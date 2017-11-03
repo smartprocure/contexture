@@ -2,7 +2,7 @@ let _ = require('lodash/fp')
 
 module.exports = {
   validContext: context => context.config.field,
-  result: (context, search) => {
+  result(context, search) {
     let keyField = _.get('config.field', context)
     let percentsArray = _.get('config.percents', context)
     return search({
@@ -33,7 +33,7 @@ module.exports = {
           price_ranges: {
             range: {
               field: keyField,
-              ranges: ranges,
+              ranges,
             },
           },
         },

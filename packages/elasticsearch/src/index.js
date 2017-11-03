@@ -8,7 +8,7 @@ let ElasticsearchProvider = (
   }
 ) => ({
   types: config.types,
-  groupCombinator: (group, filters) => {
+  groupCombinator(group, filters) {
     let join = {
       and: 'must',
       or: 'should',
@@ -20,11 +20,11 @@ let ElasticsearchProvider = (
         [join]: filters,
       },
     }
-    if (join == 'should') result.bool.minimum_should_match = 1
+    if (join === 'should') result.bool.minimum_should_match = 1
 
     return result
   },
-  runSearch: (options = {}, context, schema, filters, aggs) => {
+  runSearch(options = {}, context, schema, filters, aggs) {
     let query = filters
 
     // Wrapping any query NOT sorted by _score in a constant_score,
@@ -60,7 +60,7 @@ let ElasticsearchProvider = (
       {
         headers: options.requestorContext,
       },
-      request
+      request,
     ])
     // Deterministic ordering of JSON keys for request cache optimization
     request = JSON.parse(deterministic_stringify(request))
@@ -82,7 +82,7 @@ let ElasticsearchProvider = (
     let result = scrollId
       ? client.scroll({
           scroll: context.config.scroll,
-          scrollId: scrollId,
+          scrollId,
         })
       : client.search(request)
     return Promise.resolve(result).tap(results => {

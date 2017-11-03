@@ -34,11 +34,11 @@ function highlightResults(highlightFields, hit, pathToNested) {
       if (_.isArray(value) && !_.includes(key, pathToNested)) {
         additionalFields.push({
           label: key,
-          value: value,
+          value,
         })
       } else {
         // Handle Nested Item Highlighting Replacement
-        if (key == pathToNested)
+        if (key === pathToNested)
           // Clarify [{a}, {b}] case and not [a,b] case (ie, does not handle http://stackoverflow.com/questions/25565546/highlight-whole-content-in-elasticsearch-for-multivalue-fields)
           throw new Error('Arrays of scalars not supported')
 
@@ -67,8 +67,8 @@ function highlightResults(highlightFields, hit, pathToNested) {
   }
 
   return {
-    additionalFields: additionalFields,
-    mainHighlighted: mainHighlighted,
+    additionalFields,
+    mainHighlighted,
   }
 }
 

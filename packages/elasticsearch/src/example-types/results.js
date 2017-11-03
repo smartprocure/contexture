@@ -10,7 +10,7 @@ let getSortField = context =>
   _.replace('.untouched', '', context.config.sortField) +
   _.getOr('', context.config.sortMode, sortModeMap)
 module.exports = {
-  result: (context, search, schema) => {
+  result(context, search, schema) {
     let page = (context.config.page || 1) - 1
     let pageSize = context.config.pageSize || 10
     let startRecord = page * pageSize
@@ -61,7 +61,7 @@ module.exports = {
 
           // TODO - If nested path, iterate properties on nested path, filtering out nested path results unless mainHighlighted or relevant nested fields have b tags in them
           return _.extendAll([
-            context.config.verbose ? { hit: hit } : {},
+            context.config.verbose ? { hit } : {},
             {
               _id: hit._id,
               additionalFields: highlight ? additionalFields : [],
