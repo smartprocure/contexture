@@ -37,7 +37,7 @@ module.exports = {
             [agg.key || 'child']: _.extend(
               {
                 [agg.type]: _.extend(
-                  agg.type == 'top_hits'
+                  agg.type === 'top_hits'
                     ? {}
                     : {
                         field: agg.field,

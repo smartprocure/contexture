@@ -71,7 +71,7 @@ module.exports = {
       filter = {
         bool: {
           must:
-            !context.data.fieldMode || context.data.fieldMode == 'autocomplete'
+            !context.data.fieldMode || context.data.fieldMode === 'autocomplete'
               ? _.map(
                   f => ({
                     wildcard: {
@@ -113,7 +113,7 @@ module.exports = {
               }[context.config.sort || 'count'],
               // include: context.config.filterJunk ? "([A-Za-z0-9]{3,} ?)+" : '*'
             },
-            context.data.fieldMode == 'suggest'
+            context.data.fieldMode === 'suggest'
               ? {
                   include: `.*${context.config.optionsFilter}.*`,
                 }
