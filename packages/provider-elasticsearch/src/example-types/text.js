@@ -15,19 +15,19 @@ module.exports = {
 
     let useQueryString =
       /\b(contains|containsExact)\b/.test(context.data.operator) ||
-      (context.data.operator == 'containsWord' && filterParts.length > 2)
+      (context.data.operator === 'containsWord' && filterParts.length > 2)
 
     if (useQueryString) {
       let result = {
         query_string: {
           query: _.map(x => `"${x}"`, filterParts).join(' '),
           default_field: fieldName,
-          default_operator: context.data.join == 'any' ? 'OR' : 'AND',
+          default_operator: context.data.join === 'any' ? 'OR' : 'AND',
         },
       }
-      if (context.data.operator == 'containsExact')
+      if (context.data.operator === 'containsExact')
         result.query_string.analyzer = 'exact'
-      if (context.data.join == 'none') {
+      if (context.data.join === 'none') {
         result = {
           bool: {
             must_not: result,

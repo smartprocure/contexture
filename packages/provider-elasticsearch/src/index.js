@@ -20,7 +20,7 @@ let ElasticsearchProvider = (
         [join]: filters,
       },
     }
-    if (join == 'should') result.bool.minimum_should_match = 1
+    if (join === 'should') result.bool.minimum_should_match = 1
 
     return result
   },
