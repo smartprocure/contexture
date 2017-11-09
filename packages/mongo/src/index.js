@@ -1,9 +1,9 @@
 var Promise = require('bluebird'),
-    _ = require('lodash')
+    _ = require('lodash/fp')
 
 // Basic function to encapsulate everything needed to run a request - tiny wrapper over raw mongo syntax
 var mongoDSL = (client, dsl) => {
-  if (_.get(client, `collections.${dsl.collection}`)) {
+  if (_.get(`collections.${dsl.collection}`, client)) {
     var Collection = client.collection(dsl.collection)
       // if (dsl.resultOptions)
       //     return Collection.find(dsl.criteria, dsl.resultOptions)
