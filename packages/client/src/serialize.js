@@ -1,5 +1,5 @@
 import _ from 'lodash/fp'
-import {unsetOn} from './util/futil'
+import {unsetOn} from 'futil-js'
 import {Tree} from './util/tree'
 
 let isFilterOnly = x =>
