@@ -1,4 +1,7 @@
-﻿### 0.0.8
+### 0.0.9
+- Fix request config override order
+
+### 0.0.8
 - Our use of extendAll was wrong, it expects an array.
 
 ### 0.0.7
