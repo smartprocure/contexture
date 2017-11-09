@@ -1,14 +1,15 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import {mapAsync} from './util/promise'
+import {setPath, decodePath} from './util/tree'
 
 export default ({getNode, flat, dispatch}) => ({
   add: async (path, value) => {
     let target = getNode(path)
-    value.path = target.path + '->' + value.key
+    setPath(value, null, [target])
     target.children.push(value)
     flat[value.path] = value
-    return dispatch({ type: 'add', path: value.path.split('->'), value })
+    return dispatch({ type: 'add', path: decodePath(value.path), value })
   },
   remove: async path => {
     let target = getNode(path)

@@ -16,11 +16,11 @@ export let Tree = F.tree(x => x.children)
 export let keyPath = path => _.isString(path) ? { key: path } : path
 export let lookup = (tree, path) => _.find(keyPath(path), getChildren(tree))
 
-let encodePath = F.compactJoin('->')
-let decodePath = _.split('->')
+export let encodePath = F.compactJoin('->')
+export let decodePath = _.split('->')
 
 // Flat Tree Utils
-let setPath = (node, i, [{path =''} = {}] = []) => {
+export let setPath = (node, i, [{path =''} = {}] = []) => {
   node.path = encodePath([path, _.get('key', node)])
 }
 export let flattenTree = Tree.reduce((result, node, ...args) => {
