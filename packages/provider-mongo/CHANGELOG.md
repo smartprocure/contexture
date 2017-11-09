@@ -1,3 +1,6 @@
+# 0.0.10
+Switch to lodash/fp in index
+
 # 0.0.9
 Added data.values support to mongoId
 
