@@ -3,16 +3,14 @@ var Promise = require('bluebird'),
 
 // Basic function to encapsulate everything needed to run a request - tiny wrapper over raw mongo syntax
 var mongoDSL = (client, dsl) => {
-  if (_.get(`collections.${dsl.collection}`, client)) {
-    var Collection = client.collection(dsl.collection)
-      // if (dsl.resultOptions)
-      //     return Collection.find(dsl.criteria, dsl.resultOptions)
-      // if (dsl.count)
-      //     return Collection.count(dsl.criteria)
-      if (dsl.aggs) return Collection.aggregate(dsl.aggs).toArray()
-  } else {
+  if (!_.get(`collections.${dsl.collection}`, client))
     throw (`Collection [${dsl.collection}] does not exist in the client's db!`)
-  }
+  var Collection = client.collection(dsl.collection)
+  // if (dsl.resultOptions)
+  //     return Collection.find(dsl.criteria, dsl.resultOptions)
+  // if (dsl.count)
+  //     return Collection.count(dsl.criteria)
+  if (dsl.aggs) return Collection.aggregate(dsl.aggs).toArray()
 }
 
 var MongoProvider = config => ({
