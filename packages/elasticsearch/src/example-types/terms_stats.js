@@ -13,8 +13,8 @@ module.exports = {
         .replace(/\s\s+/g, ' ')
         .toLowerCase()
         .split(' ')
-      var rawFieldName = (_.get('name', context.config.key_field) ||
-        context.config.key_field
+      var rawFieldName = (
+        _.get('name', context.config.key_field) || context.config.key_field
       ).replace('.untouched', '.lowercased')
       filter = {
         bool: {

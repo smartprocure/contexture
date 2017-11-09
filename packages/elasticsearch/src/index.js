@@ -47,7 +47,7 @@ let ElasticsearchProvider = (
     if (aggs.aggs) request.body.size = 0
 
     // Additional config for ES searches
-    request = _.extendAll([
+    request = _.defaultsAll([
       {
         type: schema.elasticsearch.type,
         index: schema.elasticsearch.index,
