@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 import * as f from 'futil-js'
-import {flattenTree, bubbleUpAsync, flatLeaves, Tree} from './util/tree'
+import {flattenTree, bubbleUpAsync, flatLeaves, decodePath, encodePath, Tree} from './util/tree'
 import {catches} from './util/futil'
 import {mapValuesAsync, flowAsync} from './util/promise'
 
@@ -40,7 +40,7 @@ export let ContextTree = (
 ) => {
   let log = x => debug && console.log(x)
   let flat = flattenTree(tree)
-  let getNode = path => flat[path.join('->')]
+  let getNode = path => flat[encodePath(path)]
   let fakeRoot = { key: 'virtualFakeRoot', path: '', children: [tree] }
   let typeFunction = runTypeFunction(types)
   let typeProp = getTypeProp(types)
@@ -87,7 +87,7 @@ export let ContextTree = (
       if (!node.children)
         dispatch({
           type: 'update',
-          path: node.path.split('->'),
+          path: decodePath(node.path),
           value: responseNode,
           node,
           dontProcess: true
