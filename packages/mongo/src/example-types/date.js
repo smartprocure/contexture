@@ -4,7 +4,7 @@ let datemath = require('@elastic/datemath')
 
 module.exports = {
   hasValue: context => context.data.from || context.data.to,
-  filter: context => {
+  filter(context) {
     let { from, to } = context.data
     if (context.data.useDateMath) {
       if (from === 'thisQuarter') {

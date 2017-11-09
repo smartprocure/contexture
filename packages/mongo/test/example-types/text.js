@@ -30,7 +30,7 @@ describe('text', () => {
         field: 'description',
         data: {
           join: 'any',
-          operator: operator,
+          operator,
           values: ['laserjet', 'printer'],
         },
       })
