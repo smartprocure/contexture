@@ -64,15 +64,15 @@ describe('text', () => {
         })
       })
       it('should use query_string for > 2 words', () => {
-        expect(
-          anyText(['has', 'more', 'words'])('containsWord')
-        ).to.deep.equal({
-          query_string: {
-            default_field: 'description',
-            default_operator: 'OR',
-            query: '"has" "more" "words"',
-          },
-        })
+        expect(anyText(['has', 'more', 'words'])('containsWord')).to.deep.equal(
+          {
+            query_string: {
+              default_field: 'description',
+              default_operator: 'OR',
+              query: '"has" "more" "words"',
+            },
+          }
+        )
       })
     })
     // it.skip('containsExact');
