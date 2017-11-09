@@ -1,5 +1,4 @@
-var Promise = require('bluebird'),
-  _ = require('lodash/fp')
+var _ = require('lodash/fp')
 
 // Basic function to encapsulate everything needed to run a request - tiny wrapper over raw mongo syntax
 var mongoDSL = (client, dsl) => {
