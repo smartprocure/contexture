@@ -1,5 +1,5 @@
 import _ from 'lodash/fp'
-import * as f from 'futil-js'
+import * as F from 'futil-js'
 import {flattenTree, bubbleUpAsync, flatLeaves, decodePath, encodePath, Tree} from './util/tree'
 import {catches} from './util/futil'
 import {mapValuesAsync, flowAsync} from './util/promise'
@@ -35,6 +35,7 @@ export let ContextTree = (
     subscribers = [],
     snapshot = _.cloneDeep,
     debounce = 1,
+    allowBlank = false,
     debug //= true
   } = {}
 ) => {
@@ -63,7 +64,7 @@ export let ContextTree = (
     // trickleDown((node, p) => console.log('down', p, path, node), path, tree)
     return triggerUpdate()
   }
-  let triggerUpdate = f.debounceAsync(debounce, async () => {
+  let triggerUpdate = F.debounceAsync(debounce, async () => {
     if (await shouldBlockUpdate()) return log('Blocked Search')
     let now = new Date().getTime()
     markLastUpdate(now)(tree)
@@ -75,14 +76,14 @@ export let ContextTree = (
     let leaves = flatLeaves(flat)
     let allBlank = _.every(x => !x, await validateLeaves(leaves))
     let noUpdates = !_.some('markedForUpdate', leaves)
-    return noUpdates || (!tree.allowBlank && allBlank)
+    return noUpdates || (!(tree.allowBlank || allowBlank) && allBlank)
   })
   let processResponse = ({data, error}) => {
     _.each(node => {
       let target = flat[node.path]
       if (!target) return
       let responseNode = _.pick(['context', 'error'], node)
-      f.mergeOn(target, responseNode)
+      F.mergeOn(target, responseNode)
       target.updating = false
       if (!node.children)
         dispatch({
@@ -119,7 +120,10 @@ export let ContextTree = (
   }
 }
 export default ContextTree
+
+// TODO
 //   rearg contexture so types + service can be curried first and reused in app - add two options obj and merge (so we can have defaults)
+
 //TODO
 //  unify notify subscribers with dispatch/mutate
 // subscribe(path, fn, type), fn: (delta, node) -> null
@@ -139,12 +143,3 @@ export default ContextTree
 // broadcast pausing, just hold on to dispatches?
 // Add
 //   never updated
-
-
-// Improvements
-// - Client update logic now accounts for the join relationship! Even more efficient
-// - Dispatch (and action methods) return a promise for when it resolves despite debounce (no more subscribable falsey crap)
-// - Design Improvements for Performance + Simplicity
-//   - Much more memory efficient - functional instead of local function copies
-//   - Instant traversals due to flat tree in parallel with nested
-//   - Redux-y API
