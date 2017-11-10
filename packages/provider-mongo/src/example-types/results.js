@@ -70,7 +70,7 @@ module.exports = {
         totalRecords: _.get('0.count', count),
         startRecord: startRecord + 1,
         endRecord: startRecord + results.length,
-        results: results,
+        results,
       },
     }))
   },
