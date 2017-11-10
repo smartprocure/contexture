@@ -1,5 +1,8 @@
+# 0.1.0
+- Add `populate` support to results type, which performs `$lookup`s
+
 # 0.0.10
-Switch to lodash/fp in index
+- Add error for specified collection not being found
 
 # 0.0.9
 Added data.values support to mongoId
