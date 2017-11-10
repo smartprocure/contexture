@@ -2,7 +2,7 @@ var _ = require('lodash/fp')
 var Promise = require('bluebird')
 
 // Basic function to encapsulate everything needed to run a request - tiny wrapper over raw mongo syntax
-var mongoDSL = async (client, dsl) => {
+var mongoDSL = (client, dsl) => {
   // if (!_.get(`collections.${dsl.collection}`, client))
   //   console.log('missing collection', await client.collections())
   //   throw `Collection [${dsl.collection}] does not exist in the client's db!`
