@@ -1,3 +1,6 @@
+# 0.1.1
+- Fix bluebird regression and temporarily disable missing collection check
+
 # 0.1.0
 - Add `populate` support to results type, which performs `$lookup`s
 
