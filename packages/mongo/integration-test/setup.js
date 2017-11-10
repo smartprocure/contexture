@@ -19,7 +19,8 @@ module.exports = async ({collection: collectionName}) => {
   let count = 0
   let docs = _.map(_id => ({
     _id,
-    code: `${++count}${count}${count+1}${count+1}${count+2}${count+2}`
+    code: `${++count}${count}${count+1}${count+1}${count+2}${count+2}`,
+    nextCode: ids[count] || ids[0]
   }), ids)
 
   await collection.remove({})
