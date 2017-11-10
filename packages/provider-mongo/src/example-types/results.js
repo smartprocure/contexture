@@ -3,7 +3,7 @@ let _ = require('lodash/fp')
 let Promise = require('bluebird')
 
 module.exports = {
-  result: (context, search) => {
+  result: (context, search, schema, {getSchema}) => {
     let {
       config: {
         page = 1,
@@ -31,13 +31,26 @@ module.exports = {
           $limit: pageSize,
         },
         ...F.mapIndexed(
-          (x, as) => ({
-            $lookup: {
-            as,
-            from: x.schema, //|| toSingular(as), //<-- needs compromise-fp
-            localField: x.localField,// || '_id',
-            foreignField: x.foreignField,// || context.schema, <-- needs schema lookup
-          }}),
+            (x, as) => {
+              let targetSchema = getSchema(x.schema) //|| toSingular(as), //<-- needs compromise-fp
+              if (!targetSchema)
+                throw Error(`Couldn't find schema configuration for ${x.schema}`)
+              if (!targetSchema.mongo)
+                throw Error('Populating a non mongo provider schema on a mongo provider schema is not supported')
+              let targetCollection = _.get('mongo.collection', targetSchema)
+              if (!targetCollection)
+                throw Error(`The ${targetCollection} schema has a mongo configuration, but doesn't have a 'collection' property`)
+
+              return ({
+                $lookup: {
+                  as,
+                  from: targetCollection,
+                  localField: x.localField, // || '_id',
+                  foreignField: x.foreignField, // || context.schema, <-- needs schema lookup
+                }
+
+              })
+            },
           populate
         ),
       ])),
