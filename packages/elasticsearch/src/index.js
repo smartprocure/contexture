@@ -57,11 +57,11 @@ let ElasticsearchProvider = (
         // searchType:         context.config.searchType
       },
       config.request,
-      {
-        headers: options.requestorContext,
-      },
       request,
     ])
+
+    request.headers = _.defaults(request.headers, options.requestorContext)
+
     // Deterministic ordering of JSON keys for request cache optimization
     request = JSON.parse(deterministic_stringify(request))
 

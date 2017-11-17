@@ -1,3 +1,6 @@
+﻿### 0.0.10
+- Passing the headers properly with requestorContext
+
 ### 0.0.9
 - Fix request config override order
 
