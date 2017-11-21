@@ -1,4 +1,7 @@
-﻿### 0.0.10
+﻿### 0.1.0
+- Using regexp instead of wildcard on the text type.
+
+### 0.0.10
 - Passing the headers properly with requestorContext
 
 ### 0.0.9

@@ -45,18 +45,18 @@ describe('text', () => {
       })
     })
     describe('containsWord', () => {
-      it('should use wildcard for < 3 words', () => {
+      it('should use regexp for < 3 words', () => {
         expect(laserjetPrinterText('containsWord')).to.deep.equal({
           bool: {
             should: [
               {
-                wildcard: {
-                  'description.lowercased': '*laserjet*',
+                regexp: {
+                  'description.keyword': '.*[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt].*',
                 },
               },
               {
-                wildcard: {
-                  'description.lowercased': '*printer*',
+                regexp: {
+                  'description.keyword': '.*[Pp][Rr][Ii][Nn][Tt][Ee][Rr].*',
                 },
               },
             ],
@@ -81,13 +81,13 @@ describe('text', () => {
         bool: {
           should: [
             {
-              wildcard: {
-                'description.lowercased': 'laserjet*',
+              regexp: {
+                'description.keyword': '[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt].*',
               },
             },
             {
-              wildcard: {
-                'description.lowercased': 'printer*',
+              regexp: {
+                'description.keyword': '[Pp][Rr][Ii][Nn][Tt][Ee][Rr].*',
               },
             },
           ],
@@ -99,13 +99,13 @@ describe('text', () => {
         bool: {
           should: [
             {
-              wildcard: {
-                'description.lowercased': '*laserjet',
+              regexp: {
+                'description.keyword': '.*[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt]',
               },
             },
             {
-              wildcard: {
-                'description.lowercased': '*printer',
+              regexp: {
+                'description.keyword': '.*[Pp][Rr][Ii][Nn][Tt][Ee][Rr]',
               },
             },
           ],
@@ -118,13 +118,13 @@ describe('text', () => {
         bool: {
           should: [
             {
-              wildcard: {
-                'description.lowercased': 'laserjet',
+              regexp: {
+                'description.keyword': '[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt]',
               },
             },
             {
-              wildcard: {
-                'description.lowercased': 'printer',
+              regexp: {
+                'description.keyword': '[Pp][Rr][Ii][Nn][Tt][Ee][Rr]',
               },
             },
           ],
@@ -138,13 +138,13 @@ describe('text', () => {
             bool: {
               should: [
                 {
-                  wildcard: {
-                    'description.lowercased': 'laserjet',
+                  regexp: {
+                    'description.keyword': '[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt]',
                   },
                 },
                 {
-                  wildcard: {
-                    'description.lowercased': 'printer',
+                  regexp: {
+                    'description.keyword': '[Pp][Rr][Ii][Nn][Tt][Ee][Rr]',
                   },
                 },
               ],
@@ -160,13 +160,13 @@ describe('text', () => {
             bool: {
               should: [
                 {
-                  wildcard: {
-                    description: '*laserjet*',
+                  regexp: {
+                    description: '.*[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt].*',
                   },
                 },
                 {
-                  wildcard: {
-                    description: '*printer*',
+                  regexp: {
+                    description: '.*[Pp][Rr][Ii][Nn][Tt][Ee][Rr].*',
                   },
                 },
               ],
@@ -180,13 +180,13 @@ describe('text', () => {
         bool: {
           should: [
             {
-              wildcard: {
-                description: 'laserjet*',
+              regexp: {
+                description: '[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt].*',
               },
             },
             {
-              wildcard: {
-                description: 'printer*',
+              regexp: {
+                description: '[Pp][Rr][Ii][Nn][Tt][Ee][Rr].*',
               },
             },
           ],
@@ -198,13 +198,13 @@ describe('text', () => {
         bool: {
           should: [
             {
-              wildcard: {
-                description: '*laserjet',
+              regexp: {
+                description: '.*[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt]',
               },
             },
             {
-              wildcard: {
-                description: '*printer',
+              regexp: {
+                description: '.*[Pp][Rr][Ii][Nn][Tt][Ee][Rr]',
               },
             },
           ],

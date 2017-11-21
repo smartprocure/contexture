@@ -1,6 +1,12 @@
 let _ = require('lodash/fp')
 let unidecode = require('unidecode')
 
+const vRegex = str => str
+  .replace(/[.?+*|{}\[\]()]/g, '\\$&')
+  .split('')
+  .map(ch => ch.match(/[A-Za-z]/) ? `[${ch.toUpperCase()}${ch.toLowerCase()}]` : ch)
+  .join('')
+
 module.exports = {
   hasValue: context =>
     context.data.value || _.get('values.length', context.data),
@@ -9,7 +15,7 @@ module.exports = {
     let filterParts =
       context.data.values || context.data.value.toLowerCase().split(' ')
 
-    let lookAtUntouched = /startsWith|endsWith|is|isNot|containsWord/.test(
+    let lookAtKeyword = /startsWith|endsWith|is|isNot|containsWord/.test(
       context.data.operator
     )
 
@@ -37,7 +43,7 @@ module.exports = {
       return result
     }
 
-    if (lookAtUntouched) fieldName += '.lowercased'
+    if (lookAtKeyword) fieldName += '.keyword'
 
     if (
       /endsWith|wordEndsWith/.test(context.data.operator) &&
@@ -59,23 +65,23 @@ module.exports = {
             .replace('*', '')
             .replace('+', '')
             .replace('-', '')
-          if (lookAtUntouched)
+          if (lookAtKeyword)
             criteria = (context.data.value || f).toLowerCase()
 
           let prefix = /startsWith|wordStartsWith|is|isNot/.test(
             context.data.operator
           )
             ? ''
-            : '*'
+            : '.*'
           let suffix = /endsWith|wordEndsWith|is|isNot/.test(
             context.data.operator
           )
             ? ''
-            : '*'
+            : '.*'
 
           return {
-            wildcard: {
-              [fieldName]: unidecode(prefix + criteria + suffix),
+            regexp: {
+              [fieldName]: unidecode(prefix + vRegex(criteria) + suffix),
             },
           }
         }, filterParts),
