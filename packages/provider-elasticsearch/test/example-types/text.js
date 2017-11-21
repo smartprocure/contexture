@@ -51,12 +51,12 @@ describe('text', () => {
             should: [
               {
                 regexp: {
-                  'description.keyword': '.*[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt].*',
+                  'description.untouched': '.*[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt].*',
                 },
               },
               {
                 regexp: {
-                  'description.keyword': '.*[Pp][Rr][Ii][Nn][Tt][Ee][Rr].*',
+                  'description.untouched': '.*[Pp][Rr][Ii][Nn][Tt][Ee][Rr].*',
                 },
               },
             ],
@@ -82,12 +82,12 @@ describe('text', () => {
           should: [
             {
               regexp: {
-                'description.keyword': '[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt].*',
+                'description.untouched': '[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt].*',
               },
             },
             {
               regexp: {
-                'description.keyword': '[Pp][Rr][Ii][Nn][Tt][Ee][Rr].*',
+                'description.untouched': '[Pp][Rr][Ii][Nn][Tt][Ee][Rr].*',
               },
             },
           ],
@@ -100,12 +100,12 @@ describe('text', () => {
           should: [
             {
               regexp: {
-                'description.keyword': '.*[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt]',
+                'description.untouched': '.*[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt]',
               },
             },
             {
               regexp: {
-                'description.keyword': '.*[Pp][Rr][Ii][Nn][Tt][Ee][Rr]',
+                'description.untouched': '.*[Pp][Rr][Ii][Nn][Tt][Ee][Rr]',
               },
             },
           ],
@@ -119,12 +119,12 @@ describe('text', () => {
           should: [
             {
               regexp: {
-                'description.keyword': '[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt]',
+                'description.untouched': '[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt]',
               },
             },
             {
               regexp: {
-                'description.keyword': '[Pp][Rr][Ii][Nn][Tt][Ee][Rr]',
+                'description.untouched': '[Pp][Rr][Ii][Nn][Tt][Ee][Rr]',
               },
             },
           ],
@@ -139,12 +139,12 @@ describe('text', () => {
               should: [
                 {
                   regexp: {
-                    'description.keyword': '[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt]',
+                    'description.untouched': '[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt]',
                   },
                 },
                 {
                   regexp: {
-                    'description.keyword': '[Pp][Rr][Ii][Nn][Tt][Ee][Rr]',
+                    'description.untouched': '[Pp][Rr][Ii][Nn][Tt][Ee][Rr]',
                   },
                 },
               ],

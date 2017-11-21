@@ -2,7 +2,7 @@ let _ = require('lodash/fp')
 let unidecode = require('unidecode')
 
 const vRegex = str => str
-  .replace(/[.?+*|{}\[\]()]/g, '\\$&')
+  .replace(/[.?+*|{}[]()]/g, '\\$&')
   .split('')
   .map(ch => ch.match(/[A-Za-z]/) ? `[${ch.toUpperCase()}${ch.toLowerCase()}]` : ch)
   .join('')
@@ -15,7 +15,7 @@ module.exports = {
     let filterParts =
       context.data.values || context.data.value.toLowerCase().split(' ')
 
-    let lookAtKeyword = /startsWith|endsWith|is|isNot|containsWord/.test(
+    let lookAtUntouched = /startsWith|endsWith|is|isNot|containsWord/.test(
       context.data.operator
     )
 
@@ -43,7 +43,7 @@ module.exports = {
       return result
     }
 
-    if (lookAtKeyword) fieldName += '.keyword'
+    if (lookAtUntouched) fieldName += '.untouched'
 
     if (
       /endsWith|wordEndsWith/.test(context.data.operator) &&
@@ -65,7 +65,7 @@ module.exports = {
             .replace('*', '')
             .replace('+', '')
             .replace('-', '')
-          if (lookAtKeyword)
+          if (lookAtUntouched)
             criteria = (context.data.value || f).toLowerCase()
 
           let prefix = /startsWith|wordStartsWith|is|isNot/.test(
