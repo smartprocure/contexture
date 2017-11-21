@@ -51,7 +51,8 @@ describe('text', () => {
             should: [
               {
                 regexp: {
-                  'description.untouched': '.*[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt].*',
+                  'description.untouched':
+                    '.*[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt].*',
                 },
               },
               {

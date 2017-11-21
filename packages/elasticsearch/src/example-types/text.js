@@ -1,11 +1,15 @@
 let _ = require('lodash/fp')
 let unidecode = require('unidecode')
 
-const vRegex = str => str
-  .replace(/[.?+*|{}[]()]/g, '\\$&')
-  .split('')
-  .map(ch => ch.match(/[A-Za-z]/) ? `[${ch.toUpperCase()}${ch.toLowerCase()}]` : ch)
-  .join('')
+const vRegex = str =>
+  str
+    .replace(/[.?+*|{}[]()]/g, '\\$&')
+    .split('')
+    .map(
+      ch =>
+        ch.match(/[A-Za-z]/) ? `[${ch.toUpperCase()}${ch.toLowerCase()}]` : ch
+    )
+    .join('')
 
 module.exports = {
   hasValue: context =>
