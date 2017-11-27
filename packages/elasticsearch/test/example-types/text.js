@@ -23,7 +23,7 @@ describe('text', () => {
     ).to.be.false
   })
   describe('filter', () => {
-    let anyText = values => operator =>
+    let anyText = values => (operator, caseSensitive) =>
       text.filter({
         key: 'test',
         type: 'text',
@@ -32,6 +32,7 @@ describe('text', () => {
           join: 'any',
           operator,
           values,
+          caseSensitive,
         },
       })
     let laserjetPrinterText = anyText(['laserjet', 'printer'])
@@ -58,6 +59,25 @@ describe('text', () => {
               {
                 regexp: {
                   'description.untouched': '.*[Pp][Rr][Ii][Nn][Tt][Ee][Rr].*',
+                },
+              },
+            ],
+          },
+        })
+      })
+      it('should use a case sensitive regexp if the option is provided', () => {
+        expect(laserjetPrinterText('containsWord', true)).to.deep.equal({
+          bool: {
+            should: [
+              {
+                regexp: {
+                  'description.untouched':
+                    '.*laserjet.*',
+                },
+              },
+              {
+                regexp: {
+                  'description.untouched': '.*printer.*',
                 },
               },
             ],
