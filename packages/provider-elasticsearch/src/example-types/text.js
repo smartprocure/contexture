@@ -1,5 +1,14 @@
 let _ = require('lodash/fp')
 let unidecode = require('unidecode')
+let vRegex = (str, caseSensitive) =>
+  str
+    .replace(/[.?+*|{}[]()]/g, '\\$&')
+    .split('')
+    .map(
+      ch =>
+        (ch.match(/[A-Za-z]/) && !caseSensitive) ? `[${ch.toUpperCase()}${ch.toLowerCase()}]` : ch
+    )
+    .join('')
 
 module.exports = {
   hasValue: context =>
@@ -37,7 +46,7 @@ module.exports = {
       return result
     }
 
-    if (lookAtUntouched) fieldName += '.lowercased'
+    if (lookAtUntouched) fieldName += '.untouched'
 
     if (
       /endsWith|wordEndsWith/.test(context.data.operator) &&
@@ -66,16 +75,20 @@ module.exports = {
             context.data.operator
           )
             ? ''
-            : '*'
+            : '.*'
           let suffix = /endsWith|wordEndsWith|is|isNot/.test(
             context.data.operator
           )
             ? ''
-            : '*'
+            : '.*'
+
+          let builtCriteria = context.data.operator === 'regexp'
+            ? criteria
+            : unidecode(prefix + vRegex(criteria, context.data.caseSensitive) + suffix)
 
           return {
-            wildcard: {
-              [fieldName]: unidecode(prefix + criteria + suffix),
+            regexp: {
+              [fieldName]: builtCriteria,
             },
           }
         }, filterParts),

@@ -23,7 +23,7 @@ describe('text', () => {
     ).to.be.false
   })
   describe('filter', () => {
-    let anyText = values => operator =>
+    let anyText = values => (operator, caseSensitive) =>
       text.filter({
         key: 'test',
         type: 'text',
@@ -32,6 +32,7 @@ describe('text', () => {
           join: 'any',
           operator,
           values,
+          caseSensitive,
         },
       })
     let laserjetPrinterText = anyText(['laserjet', 'printer'])
@@ -45,18 +46,38 @@ describe('text', () => {
       })
     })
     describe('containsWord', () => {
-      it('should use wildcard for < 3 words', () => {
+      it('should use regexp for < 3 words', () => {
         expect(laserjetPrinterText('containsWord')).to.deep.equal({
           bool: {
             should: [
               {
-                wildcard: {
-                  'description.lowercased': '*laserjet*',
+                regexp: {
+                  'description.untouched':
+                    '.*[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt].*',
                 },
               },
               {
-                wildcard: {
-                  'description.lowercased': '*printer*',
+                regexp: {
+                  'description.untouched': '.*[Pp][Rr][Ii][Nn][Tt][Ee][Rr].*',
+                },
+              },
+            ],
+          },
+        })
+      })
+      it('should use a case sensitive regexp if the option is provided', () => {
+        expect(laserjetPrinterText('containsWord', true)).to.deep.equal({
+          bool: {
+            should: [
+              {
+                regexp: {
+                  'description.untouched':
+                    '.*laserjet.*',
+                },
+              },
+              {
+                regexp: {
+                  'description.untouched': '.*printer.*',
                 },
               },
             ],
@@ -81,13 +102,13 @@ describe('text', () => {
         bool: {
           should: [
             {
-              wildcard: {
-                'description.lowercased': 'laserjet*',
+              regexp: {
+                'description.untouched': '[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt].*',
               },
             },
             {
-              wildcard: {
-                'description.lowercased': 'printer*',
+              regexp: {
+                'description.untouched': '[Pp][Rr][Ii][Nn][Tt][Ee][Rr].*',
               },
             },
           ],
@@ -99,13 +120,13 @@ describe('text', () => {
         bool: {
           should: [
             {
-              wildcard: {
-                'description.lowercased': '*laserjet',
+              regexp: {
+                'description.untouched': '.*[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt]',
               },
             },
             {
-              wildcard: {
-                'description.lowercased': '*printer',
+              regexp: {
+                'description.untouched': '.*[Pp][Rr][Ii][Nn][Tt][Ee][Rr]',
               },
             },
           ],
@@ -118,13 +139,13 @@ describe('text', () => {
         bool: {
           should: [
             {
-              wildcard: {
-                'description.lowercased': 'laserjet',
+              regexp: {
+                'description.untouched': '[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt]',
               },
             },
             {
-              wildcard: {
-                'description.lowercased': 'printer',
+              regexp: {
+                'description.untouched': '[Pp][Rr][Ii][Nn][Tt][Ee][Rr]',
               },
             },
           ],
@@ -138,13 +159,13 @@ describe('text', () => {
             bool: {
               should: [
                 {
-                  wildcard: {
-                    'description.lowercased': 'laserjet',
+                  regexp: {
+                    'description.untouched': '[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt]',
                   },
                 },
                 {
-                  wildcard: {
-                    'description.lowercased': 'printer',
+                  regexp: {
+                    'description.untouched': '[Pp][Rr][Ii][Nn][Tt][Ee][Rr]',
                   },
                 },
               ],
@@ -160,13 +181,13 @@ describe('text', () => {
             bool: {
               should: [
                 {
-                  wildcard: {
-                    description: '*laserjet*',
+                  regexp: {
+                    description: '.*[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt].*',
                   },
                 },
                 {
-                  wildcard: {
-                    description: '*printer*',
+                  regexp: {
+                    description: '.*[Pp][Rr][Ii][Nn][Tt][Ee][Rr].*',
                   },
                 },
               ],
@@ -180,13 +201,13 @@ describe('text', () => {
         bool: {
           should: [
             {
-              wildcard: {
-                description: 'laserjet*',
+              regexp: {
+                description: '[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt].*',
               },
             },
             {
-              wildcard: {
-                description: 'printer*',
+              regexp: {
+                description: '[Pp][Rr][Ii][Nn][Tt][Ee][Rr].*',
               },
             },
           ],
@@ -198,13 +219,13 @@ describe('text', () => {
         bool: {
           should: [
             {
-              wildcard: {
-                description: '*laserjet',
+              regexp: {
+                description: '.*[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt]',
               },
             },
             {
-              wildcard: {
-                description: '*printer',
+              regexp: {
+                description: '.*[Pp][Rr][Ii][Nn][Tt][Ee][Rr]',
               },
             },
           ],
