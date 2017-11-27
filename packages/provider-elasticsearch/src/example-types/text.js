@@ -1,13 +1,12 @@
 let _ = require('lodash/fp')
 let unidecode = require('unidecode')
-
-const vRegex = str =>
+let vRegex = (str, caseSensitive) =>
   str
     .replace(/[.?+*|{}[]()]/g, '\\$&')
     .split('')
     .map(
       ch =>
-        ch.match(/[A-Za-z]/) ? `[${ch.toUpperCase()}${ch.toLowerCase()}]` : ch
+        (ch.match(/[A-Za-z]/) && !caseSensitive) ? `[${ch.toUpperCase()}${ch.toLowerCase()}]` : ch
     )
     .join('')
 
@@ -83,9 +82,13 @@ module.exports = {
             ? ''
             : '.*'
 
+          let builtCriteria = /regexp/.test(context.data.operator)
+            ? criteria
+            : unidecode(prefix + vRegex(criteria, context.data.caseSensitive) + suffix)
+
           return {
             regexp: {
-              [fieldName]: unidecode(prefix + vRegex(criteria) + suffix),
+              [fieldName]: builtCriteria,
             },
           }
         }, filterParts),
