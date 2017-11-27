@@ -82,7 +82,7 @@ module.exports = {
             ? ''
             : '.*'
 
-          let builtCriteria = /regexp/.test(context.data.operator)
+          let builtCriteria = context.data.operator === 'regexp'
             ? criteria
             : unidecode(prefix + vRegex(criteria, context.data.caseSensitive) + suffix)
 
