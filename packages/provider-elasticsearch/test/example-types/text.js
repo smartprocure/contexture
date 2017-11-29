@@ -71,8 +71,7 @@ describe('text', () => {
             should: [
               {
                 regexp: {
-                  'description.untouched':
-                    '.*laserjet.*',
+                  'description.untouched': '.*laserjet.*',
                 },
               },
               {
