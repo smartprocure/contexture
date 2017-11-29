@@ -11,15 +11,11 @@ describe('percentilesRange', function() {
               values: [
                 {
                   key: 20,
-                  value: 138,
-                },
-                {
-                  key: 55,
-                  value: 203.57399468587244,
+                  value: 30.549999237060547,
                 },
                 {
                   key: 95,
-                  value: 276.52129629629627,
+                  value: 39.20000076293945,
                 },
               ],
             },
@@ -30,20 +26,20 @@ describe('percentilesRange', function() {
             price_ranges: {
               buckets: [
                 {
-                  doc_count: 1783,
-                  key: '*-137.99999999999997',
-                  to: 137.99999999999997,
+                  doc_count: 3,
+                  key: '*-30.549999237060547',
+                  to: 30.549999237060547,
                 },
                 {
-                  doc_count: 3703,
-                  from: 203.62810095761603,
-                  key: '203.62810095761603-276.5217105263158',
-                  to: 276.5217105263158,
+                  doc_count: 11,
+                  from: 30.549999237060547,
+                  key: '30.549999237060547-39.20000076293945',
+                  to: 39.20000076293945,
                 },
                 {
-                  doc_count: 455,
-                  from: 276.5217105263158,
-                  key: '276.5217105263158-*',
+                  doc_count: 3,
+                  from: 39.20000076293945,
+                  key: '39.20000076293945-*',
                 },
               ],
             },
@@ -59,29 +55,26 @@ describe('percentilesRange', function() {
         type: 'percentilesRange',
         config: {
           field: 'LineItem.UnitPrice',
-          percents: [20, 55, 95],
+          percents: [20, 95],
         },
       },
       {
         percentilesRange: [
           {
-            doc_count: 1783,
-            key: '*-137.99999999999997',
-            percent: 20,
-            to: 137.99999999999997,
+            doc_count: 3,
+            key: '*-30.549999237060547',
+            to: 30.549999237060547,
           },
           {
-            doc_count: 3703,
-            from: 203.62810095761603,
-            key: '203.62810095761603-276.5217105263158',
-            percent: 55,
-            to: 276.5217105263158,
+            doc_count: 11,
+            from: 30.549999237060547,
+            key: '30.549999237060547-39.20000076293945',
+            to: 39.20000076293945,
           },
           {
-            doc_count: 455,
-            from: 276.5217105263158,
-            key: '276.5217105263158-*',
-            percent: 95,
+            doc_count: 3,
+            from: 39.20000076293945,
+            key: '39.20000076293945-*',
           },
         ],
       },
@@ -92,7 +85,7 @@ describe('percentilesRange', function() {
               percentiles: {
                 keyed: false,
                 field: 'LineItem.UnitPrice',
-                percents: [20, 55, 95],
+                percents: [20, 95],
               },
             },
           },
@@ -104,14 +97,14 @@ describe('percentilesRange', function() {
                 field: 'LineItem.UnitPrice',
                 ranges: [
                   {
-                    to: 138,
+                    to: 30.549999237060547,
                   },
                   {
-                    from: 203.57399468587244,
-                    to: 276.52129629629627,
+                    from: 30.549999237060547,
+                    to: 39.20000076293945,
                   },
                   {
-                    from: 276.52129629629627,
+                    from: 39.20000076293945,
                   },
                 ],
               },
