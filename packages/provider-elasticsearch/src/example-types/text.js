@@ -6,7 +6,9 @@ let vRegex = (str, caseSensitive) =>
     .split('')
     .map(
       ch =>
-        (ch.match(/[A-Za-z]/) && !caseSensitive) ? `[${ch.toUpperCase()}${ch.toLowerCase()}]` : ch
+        ch.match(/[A-Za-z]/) && !caseSensitive
+          ? `[${ch.toUpperCase()}${ch.toLowerCase()}]`
+          : ch
     )
     .join('')
 
@@ -82,9 +84,12 @@ module.exports = {
             ? ''
             : '.*'
 
-          let builtCriteria = context.data.operator === 'regexp'
-            ? criteria
-            : unidecode(prefix + vRegex(criteria, context.data.caseSensitive) + suffix)
+          let builtCriteria =
+            context.data.operator === 'regexp'
+              ? criteria
+              : unidecode(
+                  prefix + vRegex(criteria, context.data.caseSensitive) + suffix
+                )
 
           return {
             regexp: {
