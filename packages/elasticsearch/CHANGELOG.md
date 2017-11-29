@@ -1,4 +1,7 @@
-﻿### 0.1.0
+﻿### 0.1.1
+- Fixed issues with percentileRange type
+
+### 0.1.0
 - Using regexp instead of wildcard on the text type.
 
 ### 0.0.10
