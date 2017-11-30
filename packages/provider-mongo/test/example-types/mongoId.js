@@ -33,5 +33,33 @@ describe('mongoId', () => {
       _id: new ObjectID('53b46feb938d89315aae1477'),
     })
   })
-  it('should handle $in with a data.values array')
+  it('should handle $in with a data.values array', () => {
+    expect(
+      mongoId.filter({
+        field: '_id',
+        data: {
+          values: ['53b46feb938d89315aae1477'],
+        },
+      })
+    ).to.deep.equal({
+      _id: {
+        $in: [new ObjectID('53b46feb938d89315aae1477')],
+      },
+    })
+  })
+  it('should handle $in with a data.values array', () => {
+    expect(
+      mongoId.filter({
+        field: '_id',
+        data: {
+          mode: 'exclude',
+          values: ['53b46feb938d89315aae1477'],
+        },
+      })
+    ).to.deep.equal({
+      _id: {
+        $nin: [new ObjectID('53b46feb938d89315aae1477')],
+      },
+    })
+  })
 })
