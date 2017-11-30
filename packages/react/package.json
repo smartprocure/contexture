@@ -10,6 +10,7 @@
     "build-storybook": "build-storybook",
     "test": "jest --coverage",
     "test-u": "jest --coverage --u",
+    "test-ci": "npm t -- --json --outputFile=test-results.json",
     "duti": "duti",
     "fmt": "prettier --write '{src,stories,__tests__,.storybook}/**/*'",
     "duti:fix": "npm run fmt"
@@ -45,6 +46,8 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
     "duti": "^0.9.3",
+    "eslint": "^4.12.1",
+    "eslint-config-smartprocure": "^1.1.0",
     "jest": "^21.2.1",
     "prettier": "^1.8.2",
     "react": "^16.2.0",
