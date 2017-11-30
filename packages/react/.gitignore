@@ -60,4 +60,3 @@ typings/
 # jest cpverage
 coverage/
 jest_0/
-__snapshots__
