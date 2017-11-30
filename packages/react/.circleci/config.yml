@@ -29,9 +29,15 @@ jobs:
           command: npm run duti
           when: always
       - deploy:
-          name: Maybe Deploy
+          name: Maybe Deploy Library
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
               npm publish
+            fi
+      - deploy:
+          name: Maybe Deploy Storybook
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              npm run deploy-storybook
             fi
