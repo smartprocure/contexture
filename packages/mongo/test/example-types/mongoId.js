@@ -43,7 +43,7 @@ describe('mongoId', () => {
       })
     ).to.deep.equal({
       _id: {
-        $in: [new ObjectID('53b46feb938d89315aae1477')]
+        $in: [new ObjectID('53b46feb938d89315aae1477')],
       },
     })
   })
@@ -58,7 +58,7 @@ describe('mongoId', () => {
       })
     ).to.deep.equal({
       _id: {
-        $nin: [new ObjectID('53b46feb938d89315aae1477')]
+        $nin: [new ObjectID('53b46feb938d89315aae1477')],
       },
     })
   })
