@@ -37,6 +37,9 @@
     "semi": false,
     "trailingComma": "es5"
   },
+  "storybook-deployer": {
+    "commitMessage": "Deploy Storybook [ci skip]"
+  },
   "devDependencies": {
     "@storybook/addon-actions": "^3.2.16",
     "@storybook/addon-console": "^1.0.0",
