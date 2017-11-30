@@ -10,7 +10,7 @@
     "build-storybook": "build-storybook",
     "test": "jest --coverage",
     "test-u": "jest --coverage --u",
-    "fmt": "prettier --write"
+    "fmt": "prettier --write '{src,stories,__tests__,.storybook}/**/*'"
   },
   "repository": {
     "type": "git",
