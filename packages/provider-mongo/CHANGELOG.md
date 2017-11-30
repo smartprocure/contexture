@@ -1,4 +1,7 @@
-﻿# 0.1.2
+﻿# 0.1.3
+- Refactoring exclude mongoId
+
+# 0.1.2
 - Added the option to exclude on the mongoId type
 
 # 0.1.1
