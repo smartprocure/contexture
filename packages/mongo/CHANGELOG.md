@@ -1,3 +1,6 @@
+﻿# 0.1.2
+- Added the option to exclude on the mongoId type
+
 # 0.1.1
 - Fix bluebird regression and temporarily disable missing collection check
 
