@@ -1,4 +1,4 @@
-# 0.0.2
+# 0.0.3
 
 * Add storybook deploying to github pages
 
