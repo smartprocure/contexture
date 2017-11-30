@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "React components for building contexture interfaces",
   "main": "index.js",
   "scripts": {
@@ -8,8 +8,15 @@
     "build": "babel ./src --out-dir ./dist",
     "storybook": "start-storybook -p 3000",
     "build-storybook": "build-storybook",
+    "lint": "eslint src stories .storybook .circleci __tests__",
+    "lint-fix": "npm run lint -- --fix",
+    "lint-ci": "npm run lint -- -o lint-results.json -f json",
     "test": "jest --coverage",
-    "test-u": "jest --coverage --u"
+    "test-u": "jest --coverage --u",
+    "test-ci": "npm t -- --json --outputFile=test-results.json",
+    "duti": "duti",
+    "fmt": "prettier --write '{src,stories,__tests__,.storybook}/**/*'",
+    "duti:fix": "npm run lint-fix && npm run fmt"
   },
   "repository": {
     "type": "git",
@@ -24,6 +31,11 @@
   "peerDependencies": {
     "react": "^15.x"
   },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false,
+    "trailingComma": "es5"
+  },
   "devDependencies": {
     "@storybook/addon-actions": "^3.2.16",
     "@storybook/addon-console": "^1.0.0",
@@ -33,10 +45,15 @@
     "@storybook/react": "^3.2.16",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.2",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
+    "duti": "^0.9.3",
+    "eslint": "^4.12.1",
+    "eslint-config-smartprocure": "^1.1.0",
     "jest": "^21.2.1",
+    "prettier": "^1.8.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-test-renderer": "^16.2.0"
