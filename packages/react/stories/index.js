@@ -6,16 +6,19 @@ import { withInfo } from '@storybook/addon-info'
 
 import { Button } from '../src/index'
 
-import readme from '../README.md'
-
-storiesOf('Docs', module).add(
-  'README.md',
-  withInfo({
-    text: readme,
-    inline: true,
-    source: false,
-  })(() => null)
-)
+storiesOf('Docs', module)
+  .add(
+    'README.md',
+    withInfo({ text: require('../README.md'), inline: true, source: false })(
+      () => null
+    )
+  )
+  .add(
+    'CHANGELOG.md',
+    withInfo({ text: require('../CHANGELOG.md'), inline: true, source: false })(
+      () => null
+    )
+  )
 
 storiesOf('Button', module)
   .add('with text', () => (
