@@ -30,7 +30,9 @@ describe('mongoId', () => {
         },
       })
     ).to.deep.equal({
-      _id: new ObjectID('53b46feb938d89315aae1477'),
+      _id: {
+        $in: [new ObjectID('53b46feb938d89315aae1477')],
+      },
     })
   })
   it('should handle $in with a data.values array', () => {

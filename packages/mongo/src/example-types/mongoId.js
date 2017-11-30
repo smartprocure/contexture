@@ -4,13 +4,11 @@ let ObjectID = require('mongodb').ObjectID
 module.exports = {
   hasValue: context => context.data.values || context.data.value,
   filter: context => ({
-    [context.field]: context.data.values
-      ? {
-          [context.data.mode === 'exclude' ? '$nin' : '$in']: _.map(
-            x => new ObjectID(x),
-            context.data.values
-          ),
-        }
-      : new ObjectID(context.data.value),
+    [context.field]: {
+      [context.data.mode === 'exclude' ? '$nin' : '$in']: _.map(
+        x => new ObjectID(x),
+        context.data.values || [context.data.value]
+      ),
+    },
   }),
 }
