@@ -12,7 +12,7 @@ exports[`Storyshots Button with some emoji 1`] = `
 >
   😀 😎 👍 💯
 </button>
-`;
+`
 
 exports[`Storyshots Button with text 1`] = `
 <button
@@ -26,7 +26,7 @@ exports[`Storyshots Button with text 1`] = `
 >
   Hello Button
 </button>
-`;
+`
 
 exports[`Storyshots Welcome to Storybook 1`] = `
 <article
@@ -129,4 +129,4 @@ exports[`Storyshots Welcome to Storybook 1`] = `
     to add webpack loaders and plugins you are using in this project.
   </p>
 </article>
-`;
+`
