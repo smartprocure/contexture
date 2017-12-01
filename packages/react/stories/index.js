@@ -4,6 +4,14 @@ import {storiesOf} from '@storybook/react'
 import {action} from '@storybook/addon-actions'
 import {withInfo} from '@storybook/addon-info'
 
+import {DragDropContext} from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend'
+let DnDWrap = DragDropContext(HTML5Backend)(({children}) => <div>{children}</div>)
+const DnDDecorator = (storyFn) => (
+  <DnDWrap>
+    { storyFn() }
+  </DnDWrap>)
+
 import * as F from 'futil-js'
 
 storiesOf('Docs', module)
@@ -78,6 +86,7 @@ let operatorStory = (join, index) => () => (
   />
 )
 storiesOf('Operator', module)
+  .addDecorator(DnDDecorator)
   .add('and', operatorStory('and', 1))
   .add('or', operatorStory('or', 1))
   .add('not', operatorStory('not', 1))
@@ -108,3 +117,4 @@ storiesOf('Indentable', module)
       <div style={{height: '100px'}}>Contents</div>
     </Indentable>
   ))
+

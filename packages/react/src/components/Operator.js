@@ -55,21 +55,20 @@ let JoinOperator = ({state, tree, child, parent}) => (
     <OperatorLine {...{tree, child}} />
   </div>
 )
-// `noDrop` is used for testing to avoid having to wrap in a DragDropContext
 let Operator = Component(
   () => ({
     state: lenservable({
       show: false
     })
   }),
-  ({state, tree, child, parent, root, blank, parentTree, index, noDrop}) => (
+  ({state, tree, child, parent, root, blank, parentTree, index}) => (
     <div>
       {!(index !== 0 || tree.join === 'not') ? (
         <BlankOperator {...{state, tree, child}} />
       ) : (
         <JoinOperator {...{state, tree, child, parent}} />
       )}
-      {!noDrop && <OperatorMoveTarget {...{tree, root, index}} />}
+      <OperatorMoveTarget {...{tree, root, index}} />
       <Popover
         show={state.lens.show}
         style={{
