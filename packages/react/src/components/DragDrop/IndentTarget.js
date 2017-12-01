@@ -1,3 +1,4 @@
+import React from 'react'
 import FilterDropTarget from './FilterDropTarget'
 import styles from '../../styles'
 
