@@ -31,23 +31,26 @@ let parent = {
     removeHover: F.objectLens()
   }
 }
+let root = {
+  join: action('join'),
+  indent: action('indent'),
+  remove: action('remove'),
+  typeChange: action('typeChange'),
+  types: {
+    testType: {},
+    testType2: {}
+  }
+}
 
 storiesOf('Internal Components', module)
   .add('Popover', () => <Popover show={() => true}>Contents</Popover>)
-  .add('OperatorMenu', () => (
-    <OperatorMenu {...{tree, parent /*, root, parentTree*/}} />
-  ))
+  .add('OperatorMenu', () => <OperatorMenu {...{tree, parent, root}} />)
   .add('FilterContents', () => (
     <FilterContents
       node={{
         type: 'test',
         key: 'testKey'
       }}
-      root={{
-        types: {
-          blah: {}
-        },
-        typeChange: () => {}
-      }}
+      root={root}
     />
   ))
