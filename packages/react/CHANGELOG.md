@@ -1,3 +1,7 @@
+# 0.0.4
+
+* Add README and CHANGELOG to Storybook
+
 # 0.0.3
 
 * Add storybook deploying to github pages

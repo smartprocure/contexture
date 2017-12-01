@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "React components for building contexture interfaces",
   "main": "index.js",
   "scripts": {
@@ -40,6 +40,11 @@
   "storybook-deployer": {
     "commitMessage": "Deploy Storybook [ci skip]"
   },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(md)$": "<rootDir>/__mocks__/fileMock.js"
+    }
+  },
   "devDependencies": {
     "@storybook/addon-actions": "^3.2.16",
     "@storybook/addon-console": "^1.0.0",
@@ -59,6 +64,7 @@
     "eslint-config-smartprocure": "^1.1.0",
     "jest": "^21.2.1",
     "prettier": "^1.8.2",
+    "raw-loader": "^0.5.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-test-renderer": "^16.2.0"

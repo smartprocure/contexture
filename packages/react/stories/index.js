@@ -2,14 +2,23 @@ import React from 'react'
 
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import { linkTo } from '@storybook/addon-links'
+import { withInfo } from '@storybook/addon-info'
 
-import { Welcome } from '@storybook/react/demo'
 import { Button } from '../src/index'
 
-storiesOf('Welcome', module).add('to Storybook', () => (
-  <Welcome showApp={linkTo('Button')} />
-))
+storiesOf('Docs', module)
+  .add(
+    'README.md',
+    withInfo({ text: require('../README.md'), inline: true, source: false })(
+      () => null
+    )
+  )
+  .add(
+    'CHANGELOG.md',
+    withInfo({ text: require('../CHANGELOG.md'), inline: true, source: false })(
+      () => null
+    )
+  )
 
 storiesOf('Button', module)
   .add('with text', () => (
