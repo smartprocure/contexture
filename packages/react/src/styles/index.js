@@ -3,5 +3,6 @@ import * as advanced from './advancedSearch'
 
 export default {
   ...generic,
-  ...advanced
+  ...advanced.styles,
+  background: advanced.background
 }
