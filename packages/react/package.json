@@ -40,6 +40,11 @@
   "storybook-deployer": {
     "commitMessage": "Deploy Storybook [ci skip]"
   },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(md)$": "<rootDir>/__mocks__/fileMock.js"
+    }
+  },
   "devDependencies": {
     "@storybook/addon-actions": "^3.2.16",
     "@storybook/addon-console": "^1.0.0",
