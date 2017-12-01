@@ -12,7 +12,7 @@ exports[`Storyshots Button with some emoji 1`] = `
 >
   😀 😎 👍 💯
 </button>
-`;
+`
 
 exports[`Storyshots Button with text 1`] = `
 <button
@@ -26,7 +26,7 @@ exports[`Storyshots Button with text 1`] = `
 >
   Hello Button
 </button>
-`;
+`
 
 exports[`Storyshots Docs CHANGELOG.md 1`] = `
 <div>
@@ -133,7 +133,7 @@ exports[`Storyshots Docs CHANGELOG.md 1`] = `
     </div>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots Docs README.md 1`] = `
 <div>
@@ -240,4 +240,4 @@ exports[`Storyshots Docs README.md 1`] = `
     </div>
   </div>
 </div>
-`;
+`
