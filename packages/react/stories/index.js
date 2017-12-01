@@ -84,3 +84,9 @@ storiesOf('Operator', module)
   .add('first and', operatorStory('and', 0))
   .add('first or', operatorStory('or', 0))
   .add('first not', operatorStory('not', 0))
+
+import AddPreview from '../src/components/preview/AddPreview'
+storiesOf('AddPreview', module)
+  .add('and', () => <AddPreview onClick={action('join')}  join='and' />)
+  .add('or', () => <AddPreview onClick={action('join')}  join='or' />)
+  .add('not', () => <AddPreview onClick={action('join')}  join='not' />)
