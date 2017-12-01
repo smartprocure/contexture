@@ -22,6 +22,7 @@ storiesOf('Docs', module)
 
 import Popover from '../src/components/Popover'
 import OperatorMenu from '../src/components/OperatorMenu'
+import FilterContents from '../src/components/FilterContents'
 
 let tree = {join: 'and'}
 let parent = {
@@ -35,4 +36,18 @@ storiesOf('Internal Components', module)
   .add('Popover', () => <Popover show={() => true}>Contents</Popover>)
   .add('OperatorMenu', () => (
     <OperatorMenu {...{tree, parent /*, root, parentTree*/}} />
+  ))
+  .add('FilterContents', () => (
+    <FilterContents
+      node={{
+        type: 'test',
+        key: 'testKey'
+      }}
+      root={{
+        types: {
+          blah: {}
+        },
+        typeChange: () => {}
+      }}
+    />
   ))
