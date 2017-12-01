@@ -20,15 +20,21 @@ storiesOf('Docs', module)
     )
   )
 
+
 import Popover from '../src/components/Popover'
+storiesOf('Popover', module)
+  .add('Show', () => <Popover show={() => true}>Contents</Popover>)
+  .add('Hide', () => <Popover show={() => false}>Contents</Popover>)
+
 import OperatorMenu from '../src/components/OperatorMenu'
 import FilterContents from '../src/components/FilterContents'
+import Operator from '../src/components/Operator'
 
-let tree = {join: 'and'}
 let parent = {
   lens: {
     wrapHover: F.objectLens(),
-    removeHover: F.objectLens()
+    removeHover: F.objectLens(),
+    joinHover: F.objectLens()
   }
 }
 let root = {
@@ -42,9 +48,12 @@ let root = {
   }
 }
 
-storiesOf('Internal Components', module)
-  .add('Popover', () => <Popover show={() => true}>Contents</Popover>)
-  .add('OperatorMenu', () => <OperatorMenu {...{tree, parent, root}} />)
+storiesOf('OperatorMenu', module)
+  .add('OperatorMenu', () => (
+    <OperatorMenu {...{tree: {join: 'and'}, parent, root}} />
+  ))
+
+storiesOf('FilterContents', module)
   .add('FilterContents', () => (
     <FilterContents
       node={{
@@ -54,3 +63,24 @@ storiesOf('Internal Components', module)
       root={root}
     />
   ))
+
+let operatorStory = (join, index) => () => (
+  <Operator
+    {...{
+      tree: {join},
+      child: {
+        join: 'and'
+      },
+      root,
+      index,
+      parent
+    }}
+  />
+)
+storiesOf('Operator', module)
+  .add('and', operatorStory('and', 1))
+  .add('or', operatorStory('or', 1))
+  .add('not', operatorStory('not', 1))
+  .add('first and', operatorStory('and', 0))
+  .add('first or', operatorStory('or', 0))
+  .add('first not', operatorStory('not', 0))
