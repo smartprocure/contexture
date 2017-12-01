@@ -4,6 +4,7 @@ import {Component, lenservable} from '../mobx-react-utils'
 import styles from '../styles'
 import Popover from './Popover'
 import OperatorMenu from './OperatorMenu'
+import {OperatorMoveTarget} from './DragDrop/MoveTargets'
 
 let BlankOperator = ({state, tree, child}) => (
   <div>
@@ -54,20 +55,21 @@ let JoinOperator = ({state, tree, child, parent}) => (
     <OperatorLine {...{tree, child}} />
   </div>
 )
+// `noDrop` is used for testing to avoid having to wrap in a DragDropContext
 let Operator = Component(
   () => ({
     state: lenservable({
       show: false
     })
   }),
-  ({state, tree, child, parent, root, blank, parentTree, index}) => (
+  ({state, tree, child, parent, root, blank, parentTree, index, noDrop}) => (
     <div>
       {!(index !== 0 || tree.join === 'not') ? (
         <BlankOperator {...{state, tree, child}} />
       ) : (
         <JoinOperator {...{state, tree, child, parent}} />
       )}
-      {/*<OperatorDropTarget {...{tree, root, index}} />*/}
+      {!noDrop && <OperatorMoveTarget {...{tree, root, index}} />}
       <Popover
         show={state.lens.show}
         style={{

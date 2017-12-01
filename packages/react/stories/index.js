@@ -25,9 +25,6 @@ storiesOf('Popover', module)
   .add('Show', () => <Popover show={() => true}>Contents</Popover>)
   .add('Hide', () => <Popover show={() => false}>Contents</Popover>)
 
-import OperatorMenu from '../src/components/OperatorMenu'
-import FilterContents from '../src/components/FilterContents'
-import Operator from '../src/components/Operator'
 
 let parent = {
   lens: {
@@ -41,16 +38,20 @@ let root = {
   indent: action('indent'),
   remove: action('remove'),
   typeChange: action('typeChange'),
+  add: action('add'),
+  move: action('move'),
   types: {
     testType: {},
     testType2: {}
   }
 }
 
+import OperatorMenu from '../src/components/OperatorMenu'
 storiesOf('OperatorMenu', module).add('OperatorMenu', () => (
   <OperatorMenu {...{tree: {join: 'and'}, parent, root}} />
 ))
 
+import FilterContents from '../src/components/FilterContents'
 storiesOf('FilterContents', module).add('FilterContents', () => (
   <FilterContents
     node={{
@@ -61,6 +62,7 @@ storiesOf('FilterContents', module).add('FilterContents', () => (
   />
 ))
 
+import Operator from '../src/components/Operator'
 let operatorStory = (join, index) => () => (
   <Operator
     {...{
@@ -70,7 +72,8 @@ let operatorStory = (join, index) => () => (
       },
       root,
       index,
-      parent
+      parent,
+      noDrop: true
     }}
   />
 )
