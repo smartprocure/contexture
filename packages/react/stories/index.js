@@ -20,7 +20,6 @@ storiesOf('Docs', module)
     )
   )
 
-
 import Popover from '../src/components/Popover'
 storiesOf('Popover', module)
   .add('Show', () => <Popover show={() => true}>Contents</Popover>)
@@ -48,21 +47,19 @@ let root = {
   }
 }
 
-storiesOf('OperatorMenu', module)
-  .add('OperatorMenu', () => (
-    <OperatorMenu {...{tree: {join: 'and'}, parent, root}} />
-  ))
+storiesOf('OperatorMenu', module).add('OperatorMenu', () => (
+  <OperatorMenu {...{tree: {join: 'and'}, parent, root}} />
+))
 
-storiesOf('FilterContents', module)
-  .add('FilterContents', () => (
-    <FilterContents
-      node={{
-        type: 'test',
-        key: 'testKey'
-      }}
-      root={root}
-    />
-  ))
+storiesOf('FilterContents', module).add('FilterContents', () => (
+  <FilterContents
+    node={{
+      type: 'test',
+      key: 'testKey'
+    }}
+    root={root}
+  />
+))
 
 let operatorStory = (join, index) => () => (
   <Operator
@@ -87,6 +84,24 @@ storiesOf('Operator', module)
 
 import AddPreview from '../src/components/preview/AddPreview'
 storiesOf('AddPreview', module)
-  .add('and', () => <AddPreview onClick={action('join')}  join='and' />)
-  .add('or', () => <AddPreview onClick={action('join')}  join='or' />)
-  .add('not', () => <AddPreview onClick={action('join')}  join='not' />)
+  .add('and', () => <AddPreview onClick={action('join')} join="and" />)
+  .add('or', () => <AddPreview onClick={action('join')} join="or" />)
+  .add('not', () => <AddPreview onClick={action('join')} join="not" />)
+
+import Indentable from '../src/components/preview/Indentable'
+storiesOf('Indentable', module)
+  .add('and', () => (
+    <Indentable indent={() => true} tree={{join: 'and'}}>
+      <div style={{height: '100px'}}>Contents</div>
+    </Indentable>
+  ))
+  .add('or', () => (
+    <Indentable indent={() => true} tree={{join: 'or'}}>
+      <div style={{height: '100px'}}>Contents</div>
+    </Indentable>
+  ))
+  .add('not', () => (
+    <Indentable indent={() => true} tree={{join: 'not'}}>
+      <div style={{height: '100px'}}>Contents</div>
+    </Indentable>
+  ))
