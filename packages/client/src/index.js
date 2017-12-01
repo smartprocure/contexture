@@ -45,7 +45,7 @@ export let ContextTree = (
   let fakeRoot = { key: 'virtualFakeRoot', path: '', children: [tree] }
   let typeFunction = runTypeFunction(types)
   let typeProp = getTypeProp(types)
-  let { validateLeaves, validateGroup } = validate(typeFunction('validate'))
+  let { validateLeaves, validateGroup } = validate(_.flow(snapshot, typeFunction('validate')))
 
   // Event Handling
   let dispatch = async event => {
@@ -97,7 +97,6 @@ export let ContextTree = (
     if (error) tree.error = error
   }
 
-  let {add, remove, mutate} = actions({ getNode, flat, dispatch })
   let subscribe = (f, cond = _.stubTrue) => {
     let index = subscribers.length
     // Potential improvement - optimize for `path` cases and store locally at node (assuming we have lots of subscriptions to different nodes)
@@ -105,19 +104,13 @@ export let ContextTree = (
     return () => subscribers.splice(index, 1)
   }
 
-  return {
+  return _.extend(actions({ getNode, flat, dispatch, snapshot }), {
     tree,
     getNode,
-
-    // Actions
-    add,
-    remove,
-    mutate,
-
     dispatch,
     subscribe,
     serialize: () => serialize(snapshot(tree), {})
-  }
+  })
 }
 export default ContextTree
 
