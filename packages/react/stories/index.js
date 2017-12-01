@@ -21,6 +21,18 @@ storiesOf('Docs', module)
   )
 
 import Popover from '../src/components/Popover'
+import OperatorMenu from '../src/components/OperatorMenu'
+
+let tree = {join: 'and'}
+let parent = {
+  lens: {
+    wrapHover: F.objectLens(),
+    removeHover: F.objectLens()
+  }
+}
 
 storiesOf('Internal Components', module)
   .add('Popover', () => <Popover show={() => true}>Contents</Popover>)
+  .add('OperatorMenu', () => (
+    <OperatorMenu {...{tree, parent /*, root, parentTree*/}} />
+  ))
