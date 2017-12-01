@@ -6,11 +6,10 @@ import {withInfo} from '@storybook/addon-info'
 
 import {DragDropContext} from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
-let DnDWrap = DragDropContext(HTML5Backend)(({children}) => <div>{children}</div>)
-const DnDDecorator = (storyFn) => (
-  <DnDWrap>
-    { storyFn() }
-  </DnDWrap>)
+let DnDWrap = DragDropContext(HTML5Backend)(({children}) => (
+  <div>{children}</div>
+))
+const DnDDecorator = storyFn => <DnDWrap>{storyFn()}</DnDWrap>
 
 import * as F from 'futil-js'
 
@@ -32,7 +31,6 @@ import Popover from '../src/components/Popover'
 storiesOf('Popover', module)
   .add('Show', () => <Popover show={() => true}>Contents</Popover>)
   .add('Hide', () => <Popover show={() => false}>Contents</Popover>)
-
 
 let parent = {
   lens: {
@@ -118,3 +116,18 @@ storiesOf('Indentable', module)
     </Indentable>
   ))
 
+import Rule from '../src/components/Rule'
+storiesOf('Rule', module)
+  .addDecorator(DnDDecorator)
+  .add('index', () => (
+    <Rule
+      node={{
+        type: 'test',
+        key: 'testKey'
+      }}
+      tree={{
+        join: 'and'
+      }}
+      root={root}
+    />
+  ))
