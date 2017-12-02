@@ -1,6 +1,7 @@
 import React from 'react'
 import FilterDropTarget from './FilterDropTarget'
 import styles from '../../styles'
+import {oppositeJoin} from '../../searchUtils'
 
 // Indent
 let FilterIndentSpec = {
@@ -24,6 +25,6 @@ export let FilterIndentTarget = FilterDropTarget(FilterIndentSpec)(({
   position: 'fixed',
   ...dragItem.node === child
     ? styles.bgStriped
-    : styles.bgPreview(styles.oppositeJoin(tree.join)),
+    : styles.bgPreview(oppositeJoin(tree.join)),
   zIndex: 100
 }} />}</div>))
