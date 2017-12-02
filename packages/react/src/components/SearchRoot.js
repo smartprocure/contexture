@@ -1,6 +1,4 @@
 import React from 'react'
-import _ from 'lodash/fp'
-import * as F from 'futil-js'
 import {observable, action} from 'mobx'
 import {DragDropContext} from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'

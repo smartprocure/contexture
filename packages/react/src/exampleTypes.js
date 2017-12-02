@@ -1,18 +1,15 @@
 import _ from 'lodash/fp'
 import React from 'react'
-import * as f from 'futil-js'
-import {observable, autorun} from 'mobx'
-
-import {hover, Component, lenservable, lensOf} from './mobx-react-utils'
-
+import {observable} from 'mobx'
+import {Component, lensOf} from './mobx-react-utils'
 import {value} from './actout'
 
-let addWord = node => {
-  node.data.words.push(observable({
-    word: '',
-    misspellings: false
-  }))
-}
+// let addWord = node => {
+//   node.data.words.push(observable({
+//     word: '',
+//     misspellings: false
+//   }))
+// }
 
 let textOperatorOptions = [{
   value: "containsWord",
