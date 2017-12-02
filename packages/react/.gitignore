@@ -60,3 +60,5 @@ typings/
 # jest cpverage
 coverage/
 jest_0/
+
+package-lock.json
