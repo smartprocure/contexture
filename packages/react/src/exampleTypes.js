@@ -56,7 +56,11 @@ export default {
   },
   number: {
     label: 'Range',
-    Component: Component(({node, root, update}) => <span>
+    Component: Component(({
+      node,
+      // root,
+      // update
+    }) => <span>
           <input {...value(lensOf(node.data).from)} />
           <input {...value(lensOf(node.data).to)} />
         </span>
