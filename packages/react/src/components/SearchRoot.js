@@ -1,7 +1,6 @@
 import React from 'react'
 import { observable, action } from 'mobx'
-import { DragDropContext } from 'react-dnd'
-import HTML5Backend from 'react-dnd-html5-backend'
+import DDContext from './DragDrop/DDContext'
 import { Component } from '../mobx-react-utils'
 import Group from './Group'
 import styles from '../styles'
@@ -83,7 +82,7 @@ let ObservableTreeBridge = Types => ({
   },
 })
 
-export let SearchRoot = DragDropContext(HTML5Backend)(
+export let SearchRoot = DDContext(
   Component(
     (uselessStores, { types, tree }) => ({
       state: observable({

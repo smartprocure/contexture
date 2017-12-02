@@ -4,9 +4,8 @@ import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { withInfo } from '@storybook/addon-info'
 
-import { DragDropContext } from 'react-dnd'
-import HTML5Backend from 'react-dnd-html5-backend'
-let DnDWrap = DragDropContext(HTML5Backend)(({ children }) => (
+import DDContext from '../src/components/DragDrop/DDContext'
+let DnDWrap = DDContext(({ children }) => (
   <div>{children}</div>
 ))
 const DnDDecorator = storyFn => <DnDWrap>{storyFn()}</DnDWrap>
