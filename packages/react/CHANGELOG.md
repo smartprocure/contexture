@@ -1,3 +1,7 @@
+# 0.1.1
+
+* Add `SearchRoot` multifield stories
+
 # 0.1.0
 
 * Initial commit of actual search GUI components
