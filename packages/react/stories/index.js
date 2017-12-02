@@ -1,11 +1,11 @@
 import React from 'react'
-import {observable} from 'mobx'
-import {storiesOf} from '@storybook/react'
-import {action} from '@storybook/addon-actions'
-import {withInfo} from '@storybook/addon-info'
+import { observable } from 'mobx'
+import { storiesOf } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
+import { withInfo } from '@storybook/addon-info'
 
 import DDContext from '../src/components/DragDrop/DDContext'
-let DnDWrap = DDContext(({children}) => <div>{children}</div>)
+let DnDWrap = DDContext(({ children }) => <div>{children}</div>)
 const DnDDecorator = storyFn => <DnDWrap>{storyFn()}</DnDWrap>
 
 import * as F from 'futil-js'
@@ -13,13 +13,13 @@ import * as F from 'futil-js'
 storiesOf('Docs', module)
   .add(
     'README.md',
-    withInfo({text: require('../README.md'), inline: true, source: false})(
+    withInfo({ text: require('../README.md'), inline: true, source: false })(
       () => null
     )
   )
   .add(
     'CHANGELOG.md',
-    withInfo({text: require('../CHANGELOG.md'), inline: true, source: false})(
+    withInfo({ text: require('../CHANGELOG.md'), inline: true, source: false })(
       () => null
     )
   )
@@ -33,8 +33,8 @@ let parent = {
   lens: {
     wrapHover: F.objectLens(),
     removeHover: F.objectLens(),
-    joinHover: F.objectLens()
-  }
+    joinHover: F.objectLens(),
+  },
 }
 let root = {
   join: action('join'),
@@ -45,13 +45,13 @@ let root = {
   move: action('move'),
   types: {
     testType: {},
-    testType2: {}
-  }
+    testType2: {},
+  },
 }
 
 import OperatorMenu from '../src/components/OperatorMenu'
 storiesOf('OperatorMenu', module).add('OperatorMenu', () => (
-  <OperatorMenu {...{tree: {join: 'and'}, parent, root}} />
+  <OperatorMenu {...{ tree: { join: 'and' }, parent, root }} />
 ))
 
 import FilterContents from '../src/components/FilterContents'
@@ -59,7 +59,7 @@ storiesOf('FilterContents', module).add('FilterContents', () => (
   <FilterContents
     node={{
       type: 'test',
-      key: 'testKey'
+      key: 'testKey',
     }}
     root={root}
   />
@@ -69,14 +69,14 @@ import Operator from '../src/components/Operator'
 let operatorStory = (join, index) => () => (
   <Operator
     {...{
-      tree: {join},
+      tree: { join },
       child: {
-        join: 'and'
+        join: 'and',
       },
       root,
       index,
       parent,
-      noDrop: true
+      noDrop: true,
     }}
   />
 )
@@ -98,18 +98,18 @@ storiesOf('AddPreview', module)
 import Indentable from '../src/components/preview/Indentable'
 storiesOf('Indentable', module)
   .add('and', () => (
-    <Indentable indent={() => true} tree={{join: 'and'}}>
-      <div style={{height: '100px'}}>Contents</div>
+    <Indentable indent={() => true} tree={{ join: 'and' }}>
+      <div style={{ height: '100px' }}>Contents</div>
     </Indentable>
   ))
   .add('or', () => (
-    <Indentable indent={() => true} tree={{join: 'or'}}>
-      <div style={{height: '100px'}}>Contents</div>
+    <Indentable indent={() => true} tree={{ join: 'or' }}>
+      <div style={{ height: '100px' }}>Contents</div>
     </Indentable>
   ))
   .add('not', () => (
-    <Indentable indent={() => true} tree={{join: 'not'}}>
-      <div style={{height: '100px'}}>Contents</div>
+    <Indentable indent={() => true} tree={{ join: 'not' }}>
+      <div style={{ height: '100px' }}>Contents</div>
     </Indentable>
   ))
 
@@ -120,10 +120,10 @@ storiesOf('Rule', module)
     <Rule
       node={{
         type: 'test',
-        key: 'testKey'
+        key: 'testKey',
       }}
       tree={{
-        join: 'and'
+        join: 'and',
       }}
       root={root}
     />
@@ -137,7 +137,7 @@ storiesOf('Group', module)
       tree={{
         key: 'root',
         join: 'and',
-        children: [{key: 'filter 1', type: 'query'}]
+        children: [{ key: 'filter 1', type: 'query' }],
       }}
       root={root}
       isRoot={true}
@@ -149,34 +149,34 @@ storiesOf('Group', module)
         key: 'root',
         join: 'and',
         children: [
-          {type: 'query', key: 'filter 1'},
+          { type: 'query', key: 'filter 1' },
           {
             key: 'group1',
             join: 'or',
             children: [
-              {type: 'query', key: 'filter 2a'},
-              {type: 'query', key: 'filter 2b'},
+              { type: 'query', key: 'filter 2a' },
+              { type: 'query', key: 'filter 2b' },
               {
                 key: 'group2',
                 join: 'and',
                 children: [
                   {
                     key: 'filter 4a',
-                    type: 'facet'
+                    type: 'facet',
                   },
-                  {type: 'query', key: 'filter 4b'}
-                ]
-              }
-            ]
+                  { type: 'query', key: 'filter 4b' },
+                ],
+              },
+            ],
           },
-          {type: 'query', key: 'filter 3'},
+          { type: 'query', key: 'filter 3' },
           {
             key: 'group2',
             join: 'not',
             children: [
-              {key: 'filter 5a', type: 'number'},
-              {type: 'query', key: 'filter 5b'}
-            ]
+              { key: 'filter 5a', type: 'number' },
+              { type: 'query', key: 'filter 5b' },
+            ],
           },
           {
             key: 'group24',
@@ -186,24 +186,24 @@ storiesOf('Group', module)
                 key: 'group2',
                 join: 'and',
                 children: [
-                  {type: 'query', key: 'filter 4a'},
-                  {key: 'txt filter 4b', type: 'text'}
-                ]
+                  { type: 'query', key: 'filter 4a' },
+                  { key: 'txt filter 4b', type: 'text' },
+                ],
               },
               {
                 key: 'asdf',
-                typ: 'query'
-              }
-            ]
-          }
-        ]
+                typ: 'query',
+              },
+            ],
+          },
+        ],
       }}
       root={root}
       isRoot={true}
     />
   ))
 
-import SearchRoot, {NewNode} from '../src/components/SearchRoot'
+import SearchRoot, { NewNode } from '../src/components/SearchRoot'
 import Types from '../src/exampleTypes'
 let Node = NewNode(Types)
 storiesOf('SearchRoot', module)
@@ -212,7 +212,7 @@ storiesOf('SearchRoot', module)
       tree={observable({
         key: 'root',
         join: 'and',
-        children: [{key: 'filter 1', type: 'query'}]
+        children: [{ key: 'filter 1', type: 'query' }],
       })}
       types={Types}
     />
@@ -235,19 +235,16 @@ storiesOf('SearchRoot', module)
                 join: 'and',
                 children: [
                   Node('facet', 'filter 4a'),
-                  Node('query', 'filter 4b')
-                ]
-              }
-            ]
+                  Node('query', 'filter 4b'),
+                ],
+              },
+            ],
           },
           Node('query', 'filter 3'),
           {
             key: 'group2',
             join: 'not',
-            children: [
-              Node('number', 'filter 5a'),
-              Node('query', 'filter 5b')
-            ]
+            children: [Node('number', 'filter 5a'), Node('query', 'filter 5b')],
           },
           {
             key: 'group24',
@@ -258,13 +255,13 @@ storiesOf('SearchRoot', module)
                 join: 'and',
                 children: [
                   Node('query', 'filter 4a'),
-                  Node('text', 'txt filter 4b')
-                ]
+                  Node('text', 'txt filter 4b'),
+                ],
               },
-              Node('query', 'asdf')
-            ]
-          }
-        ]
+              Node('query', 'asdf'),
+            ],
+          },
+        ],
       })}
       types={Types}
     />
