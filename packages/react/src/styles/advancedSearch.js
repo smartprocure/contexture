@@ -1,5 +1,9 @@
 import {
-  dFlex, flexJustifyContentBetween, btn, roundedLeft0,  w100
+  dFlex,
+  flexJustifyContentBetween,
+  btn,
+  roundedLeft0,
+  w100,
 } from './generic'
 
 // Style Configuration
@@ -40,14 +44,14 @@ export let styles = {
     borderLeft: 0,
     marginLeft: `-${ruleGutter + 5}px`, //+5 arbitrarily aligns bg slashes
     paddingLeft: ruleGutter * 2,
-    ...roundedLeft0
+    ...roundedLeft0,
   },
 
   // Set up the left join line - color gets overriden
   conditions: {
     borderLeft: `${lineWidth}px solid black`,
-    paddingLeft: `${(operatorWidth - lineWidth)/2}px`,
-    marginLeft: `${(operatorWidth - lineWidth)/2}px`
+    paddingLeft: `${(operatorWidth - lineWidth) / 2}px`,
+    marginLeft: `${(operatorWidth - lineWidth) / 2}px`,
   },
   conditionsInner: {
     marginLeft: `-${operatorWidth}px`,
@@ -67,7 +71,7 @@ export let styles = {
 
     width: '100%',
     background: 'white',
-    ...flexJustifyContentBetween
+    ...flexJustifyContentBetween,
   },
 
   // Operator
@@ -78,29 +82,29 @@ export let styles = {
     borderRadius: '5px',
     color: 'white',
     lineHeight: `${operatorHeight}px`,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   blankOperator: {
-    width: `${(operatorWidth/2) + ruleGutter}px`,
-    height: operatorHeight/2,
-    marginLeft: `${(operatorWidth - lineWidth)/2}px`,
+    width: `${operatorWidth / 2 + ruleGutter}px`,
+    height: operatorHeight / 2,
+    marginLeft: `${(operatorWidth - lineWidth) / 2}px`,
     background,
-    borderBottom: `solid ${lineWidth}px black`
+    borderBottom: `solid ${lineWidth}px black`,
   },
   operatorLine: {
     width: `${ruleGutter}px`,
-    bottom: `${operatorHeight/2}px`,
+    bottom: `${operatorHeight / 2}px`,
     height: `${lineWidth}px`,
     position: 'relative',
-    left: `${operatorWidth}px`
+    left: `${operatorWidth}px`,
   },
   blankOperatorLineExtended: {
-    width: operatorWidth/2,
+    width: operatorWidth / 2,
     top: -lineWidth,
-    left: operatorWidth + ruleGutter - lineWidth
+    left: operatorWidth + ruleGutter - lineWidth,
   },
   operatorLineExtended: {
-    width: `${(operatorWidth/2) + ruleGutter - (lineWidth/2)}px`
+    width: `${operatorWidth / 2 + ruleGutter - lineWidth / 2}px`,
   },
 
   operatorPopover: {
@@ -108,6 +112,6 @@ export let styles = {
     marginLeft: operatorWidth + ruleGutter, // Set to 0 on wrapHover to avoid jumping
     marginTop: `-${operatorHeight + lineWidth}px`,
     boxShadow: '0 5px 10px rgba(0,0,0,.2)',
-    padding: '15px'
-  }
+    padding: '15px',
+  },
 }

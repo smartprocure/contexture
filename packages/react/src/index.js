@@ -1,2 +1,2 @@
 import SearchRoot from './components/SearchRoot'
-export {SearchRoot}
+export { SearchRoot }

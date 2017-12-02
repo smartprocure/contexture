@@ -1,10 +1,10 @@
 import React from 'react'
-import {Component, lenservable, hover} from '../mobx-react-utils'
+import { Component, lenservable, hover } from '../mobx-react-utils'
 import styles from '../styles'
 import Indentable from './preview/Indentable'
 import FilterContents from './FilterContents'
 import FilterDragSource from './DragDrop/FilterDragSource'
-import {oppositeJoin} from '../searchUtils'
+import { oppositeJoin } from '../searchUtils'
 
 let Rule = ({
   state,
@@ -13,7 +13,7 @@ let Rule = ({
   root,
   connectDragSource,
   // connectDragPreview,
-  isDragging
+  isDragging,
 }) =>
   connectDragSource(
     <div style={styles.w100}>
@@ -25,26 +25,29 @@ let Rule = ({
             ...(state.removeHover && {
               borderStyle: 'dashed',
               opacity: 0.25,
-              ...styles.bgStriped
+              ...styles.bgStriped,
             }),
-            ...(isDragging && {opacity: 0.25}),
-            ...(state.ruleHover && {background: 'rgba(0, 0, 0, 0.05)'})
+            ...(isDragging && { opacity: 0.25 }),
+            ...(state.ruleHover && { background: 'rgba(0, 0, 0, 0.05)' }),
           }}
-          {...hover(state.lens.ruleHover)}>
-          <FilterContents {...{node, root, tree}} />
+          {...hover(state.lens.ruleHover)}
+        >
+          <FilterContents {...{ node, root, tree }} />
           <div
             style={{
-              ...(state.ruleHover || {visibility: 'hidden'}),
-              minWidth: 82
-            }}>
+              ...(state.ruleHover || { visibility: 'hidden' }),
+              minWidth: 82,
+            }}
+          >
             <button
               {...hover(state.lens.indentHover)}
               style={{
                 color: styles.joinColor(oppositeJoin(tree.join)),
                 ...styles.btn,
-                ...styles.roundedRight0
+                ...styles.roundedRight0,
               }}
-              onClick={() => root.indent(tree, node)}>
+              onClick={() => root.indent(tree, node)}
+            >
               >
             </button>
             <button
@@ -52,9 +55,10 @@ let Rule = ({
               style={{
                 ...styles.btn,
                 ...styles.roundedLeft0,
-                marginLeft: '-1px'
+                marginLeft: '-1px',
               }}
-              onClick={() => root.remove(tree, node)}>
+              onClick={() => root.remove(tree, node)}
+            >
               X
             </button>
           </div>
@@ -69,8 +73,8 @@ export default FilterDragSource(
       state: lenservable({
         indentHover: false,
         removeHover: false,
-        ruleHover: false
-      })
+        ruleHover: false,
+      }),
     }),
     Rule
   )

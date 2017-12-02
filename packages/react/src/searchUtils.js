@@ -1,1 +1,1 @@
-export let oppositeJoin = join => join === 'and' ? 'or' : 'and'
+export let oppositeJoin = join => (join === 'and' ? 'or' : 'and')
