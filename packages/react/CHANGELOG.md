@@ -1,3 +1,7 @@
+# 0.1.0
+
+* Initial commit of actual search GUI components
+
 # 0.0.4
 
 * Add README and CHANGELOG to Storybook
