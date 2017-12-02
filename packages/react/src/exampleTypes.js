@@ -51,7 +51,7 @@ export default {
     Component: Component(() => <span>
       <input type='text' />
     </span>),
-    init: node => {
+    init(node) {
       node.data = observable({
         words: []
       })
@@ -59,14 +59,12 @@ export default {
   },
   number: {
     label: 'Range',
-    Component: Component(({node, root, update}) => {
-        return <span>
+    Component: Component(({node, root, update}) => <span>
           <input {...value(lensOf(node.data).from)} />
           <input {...value(lensOf(node.data).to)} />
         </span>
-      }
     ),
-    init: node => {
+    init(node) {
       node.data = observable({
         from: undefined,
         to: undefined
@@ -86,7 +84,7 @@ export default {
         <option value='none'>None of these</option>
       </select>
     </span>),
-    init: node => {
+    init(node) {
       node.data = observable({
         operator: undefined,
         values: [],
