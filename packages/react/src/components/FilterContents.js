@@ -38,7 +38,7 @@ let FilterContents = ({ node, root }) => {
         </div>
       )}
       {JSON.stringify(node)}
-      {new Date().toString()}
+      {/*new Date().toString()*/}
     </div>
   )
 }

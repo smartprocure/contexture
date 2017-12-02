@@ -365,7 +365,6 @@ exports[`Storyshots FilterContents FilterContents 1`] = `
   </select>
   testKey
   {"type":"test","key":"testKey"}
-  Sat Dec 02 2017 06:21:43 GMT+0000 (UTC)
 </div>
 `;
 
@@ -502,7 +501,6 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                         </select>
                         filter 1
                         {"type":"query","key":"filter 1"}
-                        Sat Dec 02 2017 06:21:43 GMT+0000 (UTC)
                       </div>
                       <div
                         style={
@@ -739,7 +737,6 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                     </select>
                                     filter 2a
                                     {"type":"query","key":"filter 2a"}
-                                    Sat Dec 02 2017 06:21:43 GMT+0000 (UTC)
                                   </div>
                                   <div
                                     style={
@@ -915,7 +912,6 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                     </select>
                                     filter 2b
                                     {"type":"query","key":"filter 2b"}
-                                    Sat Dec 02 2017 06:21:43 GMT+0000 (UTC)
                                   </div>
                                   <div
                                     style={
@@ -1153,7 +1149,6 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                                 </select>
                                                 filter 4a
                                                 {"key":"filter 4a","type":"facet"}
-                                                Sat Dec 02 2017 06:21:43 GMT+0000 (UTC)
                                               </div>
                                               <div
                                                 style={
@@ -1330,7 +1325,6 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                                 </select>
                                                 filter 4b
                                                 {"type":"query","key":"filter 4b"}
-                                                Sat Dec 02 2017 06:21:43 GMT+0000 (UTC)
                                               </div>
                                               <div
                                                 style={
@@ -1518,7 +1512,6 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                         </select>
                         filter 3
                         {"type":"query","key":"filter 3"}
-                        Sat Dec 02 2017 06:21:43 GMT+0000 (UTC)
                       </div>
                       <div
                         style={
@@ -1775,7 +1768,6 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                     </select>
                                     filter 5a
                                     {"key":"filter 5a","type":"number"}
-                                    Sat Dec 02 2017 06:21:43 GMT+0000 (UTC)
                                   </div>
                                   <div
                                     style={
@@ -1952,7 +1944,6 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                     </select>
                                     filter 5b
                                     {"type":"query","key":"filter 5b"}
-                                    Sat Dec 02 2017 06:21:43 GMT+0000 (UTC)
                                   </div>
                                   <div
                                     style={
@@ -2271,7 +2262,6 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                                 </select>
                                                 filter 4a
                                                 {"type":"query","key":"filter 4a"}
-                                                Sat Dec 02 2017 06:21:43 GMT+0000 (UTC)
                                               </div>
                                               <div
                                                 style={
@@ -2448,7 +2438,6 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                                 </select>
                                                 txt filter 4b
                                                 {"key":"txt filter 4b","type":"text"}
-                                                Sat Dec 02 2017 06:21:43 GMT+0000 (UTC)
                                               </div>
                                               <div
                                                 style={
@@ -2631,7 +2620,6 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                     </select>
                                     asdf
                                     {"key":"asdf","typ":"query"}
-                                    Sat Dec 02 2017 06:21:43 GMT+0000 (UTC)
                                   </div>
                                   <div
                                     style={
@@ -2818,7 +2806,6 @@ exports[`Storyshots Group One Filter 1`] = `
                         </select>
                         filter 1
                         {"key":"filter 1","type":"query"}
-                        Sat Dec 02 2017 06:21:43 GMT+0000 (UTC)
                       </div>
                       <div
                         style={
@@ -3566,7 +3553,6 @@ exports[`Storyshots Rule index 1`] = `
             </select>
             testKey
             {"type":"test","key":"testKey"}
-            Sat Dec 02 2017 06:21:43 GMT+0000 (UTC)
           </div>
           <div
             style={
@@ -3770,7 +3756,6 @@ exports[`Storyshots SearchRoot One Filter 1`] = `
                           </span>
                         </div>
                         {"key":"filter 1","type":"query"}
-                        Sat Dec 02 2017 06:21:43 GMT+0000 (UTC)
                       </div>
                       <div
                         style={
