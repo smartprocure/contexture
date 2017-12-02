@@ -5,9 +5,7 @@ import { action } from '@storybook/addon-actions'
 import { withInfo } from '@storybook/addon-info'
 
 import DDContext from '../src/components/DragDrop/DDContext'
-let DnDWrap = DDContext(({ children }) => (
-  <div>{children}</div>
-))
+let DnDWrap = DDContext(({ children }) => <div>{children}</div>)
 const DnDDecorator = storyFn => <DnDWrap>{storyFn()}</DnDWrap>
 
 import * as F from 'futil-js'
@@ -205,15 +203,66 @@ storiesOf('Group', module)
     />
   ))
 
-import SearchRoot from '../src/components/SearchRoot'
+import SearchRoot, { NewNode } from '../src/components/SearchRoot'
 import Types from '../src/exampleTypes'
-storiesOf('SearchRoot', module).add('One Filter', () => (
-  <SearchRoot
-    tree={observable({
-      key: 'root',
-      join: 'and',
-      children: [{ key: 'filter 1', type: 'query' }],
-    })}
-    types={Types}
-  />
-))
+let Node = NewNode(Types)
+storiesOf('SearchRoot', module)
+  .add('One Filter', () => (
+    <SearchRoot
+      tree={observable({
+        key: 'root',
+        join: 'and',
+        children: [{ key: 'filter 1', type: 'query' }],
+      })}
+      types={Types}
+    />
+  ))
+  .add('Multiple Filters', () => (
+    <SearchRoot
+      tree={observable({
+        key: 'root',
+        join: 'and',
+        children: [
+          Node('query', 'filter 1'),
+          {
+            key: 'group1',
+            join: 'or',
+            children: [
+              Node('query', 'filter 2a'),
+              Node('query', 'filter 2b'),
+              {
+                key: 'group2',
+                join: 'and',
+                children: [
+                  Node('facet', 'filter 4a'),
+                  Node('query', 'filter 4b'),
+                ],
+              },
+            ],
+          },
+          Node('query', 'filter 3'),
+          {
+            key: 'group2',
+            join: 'not',
+            children: [Node('number', 'filter 5a'), Node('query', 'filter 5b')],
+          },
+          {
+            key: 'group24',
+            join: 'or',
+            children: [
+              {
+                key: 'group2',
+                join: 'and',
+                children: [
+                  Node('query', 'filter 4a'),
+                  Node('text', 'txt filter 4b'),
+                ],
+              },
+              Node('query', 'asdf'),
+            ],
+          },
+        ],
+      })}
+      types={Types}
+    />
+  ))

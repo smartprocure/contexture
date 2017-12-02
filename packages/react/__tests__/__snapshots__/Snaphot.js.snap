@@ -38,7 +38,7 @@ exports[`Storyshots AddPreview and 1`] = `
     </b>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots AddPreview not 1`] = `
 <div
@@ -78,7 +78,7 @@ exports[`Storyshots AddPreview not 1`] = `
     </b>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots AddPreview or 1`] = `
 <div
@@ -118,7 +118,7 @@ exports[`Storyshots AddPreview or 1`] = `
     </b>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots Docs CHANGELOG.md 1`] = `
 <div>
@@ -225,7 +225,7 @@ exports[`Storyshots Docs CHANGELOG.md 1`] = `
     </div>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots Docs README.md 1`] = `
 <div>
@@ -332,7 +332,7 @@ exports[`Storyshots Docs README.md 1`] = `
     </div>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots FilterContents FilterContents 1`] = `
 <div
@@ -366,7 +366,7 @@ exports[`Storyshots FilterContents FilterContents 1`] = `
   testKey
   {"type":"test","key":"testKey"}
 </div>
-`;
+`
 
 exports[`Storyshots Group Multiple Filters 1`] = `
 <div>
@@ -2688,7 +2688,7 @@ exports[`Storyshots Group Multiple Filters 1`] = `
     </div>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots Group One Filter 1`] = `
 <div>
@@ -2868,7 +2868,7 @@ exports[`Storyshots Group One Filter 1`] = `
     </div>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots Indentable and 1`] = `
 <div
@@ -2950,7 +2950,7 @@ exports[`Storyshots Indentable and 1`] = `
     </div>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots Indentable not 1`] = `
 <div
@@ -3032,7 +3032,7 @@ exports[`Storyshots Indentable not 1`] = `
     </div>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots Indentable or 1`] = `
 <div
@@ -3114,7 +3114,7 @@ exports[`Storyshots Indentable or 1`] = `
     </div>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots Operator and 1`] = `
 <div>
@@ -3157,7 +3157,7 @@ exports[`Storyshots Operator and 1`] = `
     <div />
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots Operator first and 1`] = `
 <div>
@@ -3194,7 +3194,7 @@ exports[`Storyshots Operator first and 1`] = `
     <div />
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots Operator first not 1`] = `
 <div>
@@ -3237,7 +3237,7 @@ exports[`Storyshots Operator first not 1`] = `
     <div />
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots Operator first or 1`] = `
 <div>
@@ -3274,7 +3274,7 @@ exports[`Storyshots Operator first or 1`] = `
     <div />
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots Operator not 1`] = `
 <div>
@@ -3317,7 +3317,7 @@ exports[`Storyshots Operator not 1`] = `
     <div />
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots Operator or 1`] = `
 <div>
@@ -3360,7 +3360,7 @@ exports[`Storyshots Operator or 1`] = `
     <div />
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots OperatorMenu OperatorMenu 1`] = `
 <div>
@@ -3445,9 +3445,9 @@ exports[`Storyshots OperatorMenu OperatorMenu 1`] = `
     </div>
   </div>
 </div>
-`;
+`
 
-exports[`Storyshots Popover Hide 1`] = `null`;
+exports[`Storyshots Popover Hide 1`] = `null`
 
 exports[`Storyshots Popover Show 1`] = `
 <div>
@@ -3478,7 +3478,7 @@ exports[`Storyshots Popover Show 1`] = `
     }
   />
 </div>
-`;
+`
 
 exports[`Storyshots Rule index 1`] = `
 <div>
@@ -3608,7 +3608,2698 @@ exports[`Storyshots Rule index 1`] = `
     </div>
   </div>
 </div>
-`;
+`
+
+exports[`Storyshots SearchRoot Multiple Filters 1`] = `
+<div
+  style={
+    Object {
+      "background": "#f0f8ff",
+    }
+  }
+>
+  <div
+    style={
+      Object {
+        "display": "flex",
+        "width": "100%",
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "width": "100%",
+        }
+      }
+    >
+      <div
+        style={
+          Object {
+            "borderColor": "#5bc0de",
+            "borderLeft": "2px solid black",
+            "marginLeft": "24px",
+            "paddingLeft": "24px",
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "marginLeft": "-50px",
+              "width": "100%",
+            }
+          }
+        >
+          <div>
+            <div />
+            <div
+              style={
+                Object {
+                  "display": "flex",
+                }
+              }
+            >
+              <div>
+                <div>
+                  <div
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "background": "#f0f8ff",
+                        "borderBottom": "solid 2px black",
+                        "borderBottomColor": "#5bc0de",
+                        "height": 17.5,
+                        "marginLeft": "24px",
+                        "width": "40px",
+                      }
+                    }
+                  />
+                </div>
+                <div />
+              </div>
+              <div
+                style={
+                  Object {
+                    "width": "100%",
+                  }
+                }
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "flex",
+                      "width": "100%",
+                    }
+                  }
+                >
+                  <div
+                    style={
+                      Object {
+                        "width": "100%",
+                      }
+                    }
+                  >
+                    <div
+                      onMouseOut={[Function]}
+                      onMouseOver={[Function]}
+                      style={
+                        Object {
+                          "background": "white",
+                          "borderColor": "#5bc0de",
+                          "borderLeftWidth": 1,
+                          "borderRadius": "5px",
+                          "borderStyle": "solid",
+                          "borderWidth": 1,
+                          "display": "flex",
+                          "justifyContent": "space-between",
+                          "marginBottom": "15px",
+                          "padding": "10px",
+                          "width": "100%",
+                        }
+                      }
+                    >
+                      <div
+                        style={
+                          Object {
+                            "lineHeight": "30px",
+                            "minHeight": "34px",
+                          }
+                        }
+                      >
+                        <select>
+                          <option>
+                            Select a Field
+                          </option>
+                        </select>
+                        <select
+                          onChange={[Function]}
+                          value="query"
+                        >
+                          <option
+                            value="facet"
+                          >
+                            List
+                          </option>
+                          <option
+                            value="query"
+                          >
+                            Query
+                          </option>
+                          <option
+                            value="number"
+                          >
+                            Range
+                          </option>
+                          <option
+                            value="text"
+                          >
+                            Text
+                          </option>
+                        </select>
+                        filter 1
+                        <div
+                          style={
+                            Object {
+                              "display": "inline-block",
+                              "verticalAlign": "top",
+                            }
+                          }
+                        >
+                          <span>
+                            <input
+                              type="text"
+                            />
+                          </span>
+                        </div>
+                        {"key":"filter 1","type":"query","data":{"words":[]}}
+                      </div>
+                      <div
+                        style={
+                          Object {
+                            "minWidth": 82,
+                            "visibility": "hidden",
+                          }
+                        }
+                      >
+                        <button
+                          onClick={[Function]}
+                          onMouseOut={[Function]}
+                          onMouseOver={[Function]}
+                          style={
+                            Object {
+                              "background": "white",
+                              "border": "1px solid #ccc",
+                              "borderBottomRightRadius": 0,
+                              "borderRadius": 5000,
+                              "borderTopRightRadius": 0,
+                              "color": "#5cb85c",
+                              "display": "inline-block",
+                              "padding": ".5rem 1rem",
+                              "textAlign": "center",
+                            }
+                          }
+                        >
+                          &gt;
+                        </button>
+                        <button
+                          onClick={[Function]}
+                          onMouseOut={[Function]}
+                          onMouseOver={[Function]}
+                          style={
+                            Object {
+                              "background": "white",
+                              "border": "1px solid #ccc",
+                              "borderBottomLeftRadius": 0,
+                              "borderRadius": 5000,
+                              "borderTopLeftRadius": 0,
+                              "display": "inline-block",
+                              "marginLeft": "-1px",
+                              "padding": ".5rem 1rem",
+                              "textAlign": "center",
+                            }
+                          }
+                        >
+                          X
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div />
+          </div>
+          <div>
+            <div />
+            <div
+              style={
+                Object {
+                  "display": "flex",
+                }
+              }
+            >
+              <div>
+                <div>
+                  <div
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "background": "#5bc0de",
+                        "borderRadius": "5px",
+                        "color": "white",
+                        "lineHeight": "35px",
+                        "marginRight": "15px",
+                        "textAlign": "center",
+                        "width": "50px",
+                      }
+                    }
+                  >
+                    <span
+                      style={Object {}}
+                    >
+                      and
+                    </span>
+                  </div>
+                  <div
+                    style={
+                      Object {
+                        "background": "#5bc0de",
+                        "bottom": "17.5px",
+                        "color": "white",
+                        "height": "2px",
+                        "left": "50px",
+                        "position": "relative",
+                        "width": "39px",
+                      }
+                    }
+                  />
+                </div>
+                <div />
+              </div>
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "width": "100%",
+                  }
+                }
+              >
+                <div
+                  style={
+                    Object {
+                      "width": "100%",
+                    }
+                  }
+                >
+                  <div
+                    style={
+                      Object {
+                        "borderColor": "#5cb85c",
+                        "borderLeft": "2px solid black",
+                        "marginLeft": "24px",
+                        "paddingLeft": "24px",
+                        "width": "100%",
+                      }
+                    }
+                  >
+                    <div
+                      style={
+                        Object {
+                          "marginLeft": "-50px",
+                          "width": "100%",
+                        }
+                      }
+                    >
+                      <div>
+                        <div />
+                        <div
+                          style={
+                            Object {
+                              "display": "flex",
+                            }
+                          }
+                        >
+                          <div>
+                            <div>
+                              <div
+                                onClick={[Function]}
+                                style={
+                                  Object {
+                                    "background": "#f0f8ff",
+                                    "borderBottom": "solid 2px black",
+                                    "borderBottomColor": "#5cb85c",
+                                    "height": 17.5,
+                                    "marginLeft": "24px",
+                                    "width": "40px",
+                                  }
+                                }
+                              />
+                            </div>
+                            <div />
+                          </div>
+                          <div
+                            style={
+                              Object {
+                                "width": "100%",
+                              }
+                            }
+                          >
+                            <div
+                              style={
+                                Object {
+                                  "display": "flex",
+                                  "width": "100%",
+                                }
+                              }
+                            >
+                              <div
+                                style={
+                                  Object {
+                                    "width": "100%",
+                                  }
+                                }
+                              >
+                                <div
+                                  onMouseOut={[Function]}
+                                  onMouseOver={[Function]}
+                                  style={
+                                    Object {
+                                      "background": "white",
+                                      "borderColor": "#5cb85c",
+                                      "borderLeftWidth": 1,
+                                      "borderRadius": "5px",
+                                      "borderStyle": "solid",
+                                      "borderWidth": 1,
+                                      "display": "flex",
+                                      "justifyContent": "space-between",
+                                      "marginBottom": "15px",
+                                      "padding": "10px",
+                                      "width": "100%",
+                                    }
+                                  }
+                                >
+                                  <div
+                                    style={
+                                      Object {
+                                        "lineHeight": "30px",
+                                        "minHeight": "34px",
+                                      }
+                                    }
+                                  >
+                                    <select>
+                                      <option>
+                                        Select a Field
+                                      </option>
+                                    </select>
+                                    <select
+                                      onChange={[Function]}
+                                      value="query"
+                                    >
+                                      <option
+                                        value="facet"
+                                      >
+                                        List
+                                      </option>
+                                      <option
+                                        value="query"
+                                      >
+                                        Query
+                                      </option>
+                                      <option
+                                        value="number"
+                                      >
+                                        Range
+                                      </option>
+                                      <option
+                                        value="text"
+                                      >
+                                        Text
+                                      </option>
+                                    </select>
+                                    filter 2a
+                                    <div
+                                      style={
+                                        Object {
+                                          "display": "inline-block",
+                                          "verticalAlign": "top",
+                                        }
+                                      }
+                                    >
+                                      <span>
+                                        <input
+                                          type="text"
+                                        />
+                                      </span>
+                                    </div>
+                                    {"key":"filter 2a","type":"query","data":{"words":[]}}
+                                  </div>
+                                  <div
+                                    style={
+                                      Object {
+                                        "minWidth": 82,
+                                        "visibility": "hidden",
+                                      }
+                                    }
+                                  >
+                                    <button
+                                      onClick={[Function]}
+                                      onMouseOut={[Function]}
+                                      onMouseOver={[Function]}
+                                      style={
+                                        Object {
+                                          "background": "white",
+                                          "border": "1px solid #ccc",
+                                          "borderBottomRightRadius": 0,
+                                          "borderRadius": 5000,
+                                          "borderTopRightRadius": 0,
+                                          "color": "#5bc0de",
+                                          "display": "inline-block",
+                                          "padding": ".5rem 1rem",
+                                          "textAlign": "center",
+                                        }
+                                      }
+                                    >
+                                      &gt;
+                                    </button>
+                                    <button
+                                      onClick={[Function]}
+                                      onMouseOut={[Function]}
+                                      onMouseOver={[Function]}
+                                      style={
+                                        Object {
+                                          "background": "white",
+                                          "border": "1px solid #ccc",
+                                          "borderBottomLeftRadius": 0,
+                                          "borderRadius": 5000,
+                                          "borderTopLeftRadius": 0,
+                                          "display": "inline-block",
+                                          "marginLeft": "-1px",
+                                          "padding": ".5rem 1rem",
+                                          "textAlign": "center",
+                                        }
+                                      }
+                                    >
+                                      X
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div />
+                      </div>
+                      <div>
+                        <div />
+                        <div
+                          style={
+                            Object {
+                              "display": "flex",
+                            }
+                          }
+                        >
+                          <div>
+                            <div>
+                              <div
+                                onClick={[Function]}
+                                style={
+                                  Object {
+                                    "background": "#5cb85c",
+                                    "borderRadius": "5px",
+                                    "color": "white",
+                                    "lineHeight": "35px",
+                                    "marginRight": "15px",
+                                    "textAlign": "center",
+                                    "width": "50px",
+                                  }
+                                }
+                              >
+                                <span
+                                  style={Object {}}
+                                >
+                                  or
+                                </span>
+                              </div>
+                              <div
+                                style={
+                                  Object {
+                                    "background": "#5cb85c",
+                                    "bottom": "17.5px",
+                                    "color": "white",
+                                    "height": "2px",
+                                    "left": "50px",
+                                    "position": "relative",
+                                    "width": "15px",
+                                  }
+                                }
+                              />
+                            </div>
+                            <div />
+                          </div>
+                          <div
+                            style={
+                              Object {
+                                "width": "100%",
+                              }
+                            }
+                          >
+                            <div
+                              style={
+                                Object {
+                                  "display": "flex",
+                                  "width": "100%",
+                                }
+                              }
+                            >
+                              <div
+                                style={
+                                  Object {
+                                    "width": "100%",
+                                  }
+                                }
+                              >
+                                <div
+                                  onMouseOut={[Function]}
+                                  onMouseOver={[Function]}
+                                  style={
+                                    Object {
+                                      "background": "white",
+                                      "borderColor": "#5cb85c",
+                                      "borderLeftWidth": 1,
+                                      "borderRadius": "5px",
+                                      "borderStyle": "solid",
+                                      "borderWidth": 1,
+                                      "display": "flex",
+                                      "justifyContent": "space-between",
+                                      "marginBottom": "15px",
+                                      "padding": "10px",
+                                      "width": "100%",
+                                    }
+                                  }
+                                >
+                                  <div
+                                    style={
+                                      Object {
+                                        "lineHeight": "30px",
+                                        "minHeight": "34px",
+                                      }
+                                    }
+                                  >
+                                    <select>
+                                      <option>
+                                        Select a Field
+                                      </option>
+                                    </select>
+                                    <select
+                                      onChange={[Function]}
+                                      value="query"
+                                    >
+                                      <option
+                                        value="facet"
+                                      >
+                                        List
+                                      </option>
+                                      <option
+                                        value="query"
+                                      >
+                                        Query
+                                      </option>
+                                      <option
+                                        value="number"
+                                      >
+                                        Range
+                                      </option>
+                                      <option
+                                        value="text"
+                                      >
+                                        Text
+                                      </option>
+                                    </select>
+                                    filter 2b
+                                    <div
+                                      style={
+                                        Object {
+                                          "display": "inline-block",
+                                          "verticalAlign": "top",
+                                        }
+                                      }
+                                    >
+                                      <span>
+                                        <input
+                                          type="text"
+                                        />
+                                      </span>
+                                    </div>
+                                    {"key":"filter 2b","type":"query","data":{"words":[]}}
+                                  </div>
+                                  <div
+                                    style={
+                                      Object {
+                                        "minWidth": 82,
+                                        "visibility": "hidden",
+                                      }
+                                    }
+                                  >
+                                    <button
+                                      onClick={[Function]}
+                                      onMouseOut={[Function]}
+                                      onMouseOver={[Function]}
+                                      style={
+                                        Object {
+                                          "background": "white",
+                                          "border": "1px solid #ccc",
+                                          "borderBottomRightRadius": 0,
+                                          "borderRadius": 5000,
+                                          "borderTopRightRadius": 0,
+                                          "color": "#5bc0de",
+                                          "display": "inline-block",
+                                          "padding": ".5rem 1rem",
+                                          "textAlign": "center",
+                                        }
+                                      }
+                                    >
+                                      &gt;
+                                    </button>
+                                    <button
+                                      onClick={[Function]}
+                                      onMouseOut={[Function]}
+                                      onMouseOver={[Function]}
+                                      style={
+                                        Object {
+                                          "background": "white",
+                                          "border": "1px solid #ccc",
+                                          "borderBottomLeftRadius": 0,
+                                          "borderRadius": 5000,
+                                          "borderTopLeftRadius": 0,
+                                          "display": "inline-block",
+                                          "marginLeft": "-1px",
+                                          "padding": ".5rem 1rem",
+                                          "textAlign": "center",
+                                        }
+                                      }
+                                    >
+                                      X
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div />
+                      </div>
+                      <div>
+                        <div />
+                        <div
+                          style={
+                            Object {
+                              "background": "#f0f8ff",
+                              "display": "flex",
+                            }
+                          }
+                        >
+                          <div>
+                            <div>
+                              <div
+                                onClick={[Function]}
+                                style={
+                                  Object {
+                                    "background": "#5cb85c",
+                                    "borderRadius": "5px",
+                                    "color": "white",
+                                    "lineHeight": "35px",
+                                    "marginRight": "15px",
+                                    "textAlign": "center",
+                                    "width": "50px",
+                                  }
+                                }
+                              >
+                                <span
+                                  style={Object {}}
+                                >
+                                  or
+                                </span>
+                              </div>
+                              <div
+                                style={
+                                  Object {
+                                    "background": "#5cb85c",
+                                    "bottom": "17.5px",
+                                    "color": "white",
+                                    "height": "2px",
+                                    "left": "50px",
+                                    "position": "relative",
+                                    "width": "39px",
+                                  }
+                                }
+                              />
+                            </div>
+                            <div />
+                          </div>
+                          <div
+                            style={
+                              Object {
+                                "display": "flex",
+                                "width": "100%",
+                              }
+                            }
+                          >
+                            <div
+                              style={
+                                Object {
+                                  "width": "100%",
+                                }
+                              }
+                            >
+                              <div
+                                style={
+                                  Object {
+                                    "borderColor": "#5bc0de",
+                                    "borderLeft": "2px solid black",
+                                    "marginLeft": "24px",
+                                    "paddingLeft": "24px",
+                                    "width": "100%",
+                                  }
+                                }
+                              >
+                                <div
+                                  style={
+                                    Object {
+                                      "marginLeft": "-50px",
+                                      "width": "100%",
+                                    }
+                                  }
+                                >
+                                  <div>
+                                    <div />
+                                    <div
+                                      style={
+                                        Object {
+                                          "display": "flex",
+                                        }
+                                      }
+                                    >
+                                      <div>
+                                        <div>
+                                          <div
+                                            onClick={[Function]}
+                                            style={
+                                              Object {
+                                                "background": "#f0f8ff",
+                                                "borderBottom": "solid 2px black",
+                                                "borderBottomColor": "#5bc0de",
+                                                "height": 17.5,
+                                                "marginLeft": "24px",
+                                                "width": "40px",
+                                              }
+                                            }
+                                          />
+                                        </div>
+                                        <div />
+                                      </div>
+                                      <div
+                                        style={
+                                          Object {
+                                            "width": "100%",
+                                          }
+                                        }
+                                      >
+                                        <div
+                                          style={
+                                            Object {
+                                              "display": "flex",
+                                              "width": "100%",
+                                            }
+                                          }
+                                        >
+                                          <div
+                                            style={
+                                              Object {
+                                                "width": "100%",
+                                              }
+                                            }
+                                          >
+                                            <div
+                                              onMouseOut={[Function]}
+                                              onMouseOver={[Function]}
+                                              style={
+                                                Object {
+                                                  "background": "white",
+                                                  "borderColor": "#5bc0de",
+                                                  "borderLeftWidth": 1,
+                                                  "borderRadius": "5px",
+                                                  "borderStyle": "solid",
+                                                  "borderWidth": 1,
+                                                  "display": "flex",
+                                                  "justifyContent": "space-between",
+                                                  "marginBottom": "15px",
+                                                  "padding": "10px",
+                                                  "width": "100%",
+                                                }
+                                              }
+                                            >
+                                              <div
+                                                style={
+                                                  Object {
+                                                    "lineHeight": "30px",
+                                                    "minHeight": "34px",
+                                                  }
+                                                }
+                                              >
+                                                <select>
+                                                  <option>
+                                                    Select a Field
+                                                  </option>
+                                                </select>
+                                                <select
+                                                  onChange={[Function]}
+                                                  value="facet"
+                                                >
+                                                  <option
+                                                    value="facet"
+                                                  >
+                                                    List
+                                                  </option>
+                                                  <option
+                                                    value="query"
+                                                  >
+                                                    Query
+                                                  </option>
+                                                  <option
+                                                    value="number"
+                                                  >
+                                                    Range
+                                                  </option>
+                                                  <option
+                                                    value="text"
+                                                  >
+                                                    Text
+                                                  </option>
+                                                </select>
+                                                filter 4a
+                                                <div
+                                                  style={
+                                                    Object {
+                                                      "display": "inline-block",
+                                                      "verticalAlign": "top",
+                                                    }
+                                                  }
+                                                >
+                                                  <div>
+                                                    <div>
+                                                      <input
+                                                        type="checkbox"
+                                                      />
+                                                       Label
+                                                    </div>
+                                                    <div>
+                                                      <input
+                                                        type="checkbox"
+                                                      />
+                                                       Label
+                                                    </div>
+                                                    <div>
+                                                      <input
+                                                        type="checkbox"
+                                                      />
+                                                       Label
+                                                    </div>
+                                                    <div>
+                                                      <input
+                                                        type="checkbox"
+                                                      />
+                                                       Label
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                {"key":"filter 4a","type":"facet"}
+                                              </div>
+                                              <div
+                                                style={
+                                                  Object {
+                                                    "minWidth": 82,
+                                                    "visibility": "hidden",
+                                                  }
+                                                }
+                                              >
+                                                <button
+                                                  onClick={[Function]}
+                                                  onMouseOut={[Function]}
+                                                  onMouseOver={[Function]}
+                                                  style={
+                                                    Object {
+                                                      "background": "white",
+                                                      "border": "1px solid #ccc",
+                                                      "borderBottomRightRadius": 0,
+                                                      "borderRadius": 5000,
+                                                      "borderTopRightRadius": 0,
+                                                      "color": "#5cb85c",
+                                                      "display": "inline-block",
+                                                      "padding": ".5rem 1rem",
+                                                      "textAlign": "center",
+                                                    }
+                                                  }
+                                                >
+                                                  &gt;
+                                                </button>
+                                                <button
+                                                  onClick={[Function]}
+                                                  onMouseOut={[Function]}
+                                                  onMouseOver={[Function]}
+                                                  style={
+                                                    Object {
+                                                      "background": "white",
+                                                      "border": "1px solid #ccc",
+                                                      "borderBottomLeftRadius": 0,
+                                                      "borderRadius": 5000,
+                                                      "borderTopLeftRadius": 0,
+                                                      "display": "inline-block",
+                                                      "marginLeft": "-1px",
+                                                      "padding": ".5rem 1rem",
+                                                      "textAlign": "center",
+                                                    }
+                                                  }
+                                                >
+                                                  X
+                                                </button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div />
+                                  </div>
+                                  <div>
+                                    <div />
+                                    <div
+                                      style={
+                                        Object {
+                                          "background": "#f0f8ff",
+                                          "display": "flex",
+                                        }
+                                      }
+                                    >
+                                      <div>
+                                        <div>
+                                          <div
+                                            onClick={[Function]}
+                                            style={
+                                              Object {
+                                                "background": "#5bc0de",
+                                                "borderRadius": "5px",
+                                                "color": "white",
+                                                "lineHeight": "35px",
+                                                "marginRight": "15px",
+                                                "textAlign": "center",
+                                                "width": "50px",
+                                              }
+                                            }
+                                          >
+                                            <span
+                                              style={Object {}}
+                                            >
+                                              and
+                                            </span>
+                                          </div>
+                                          <div
+                                            style={
+                                              Object {
+                                                "background": "#5bc0de",
+                                                "bottom": "17.5px",
+                                                "color": "white",
+                                                "height": "2px",
+                                                "left": "50px",
+                                                "position": "relative",
+                                                "width": "15px",
+                                              }
+                                            }
+                                          />
+                                        </div>
+                                        <div />
+                                      </div>
+                                      <div
+                                        style={
+                                          Object {
+                                            "width": "100%",
+                                          }
+                                        }
+                                      >
+                                        <div
+                                          style={
+                                            Object {
+                                              "display": "flex",
+                                              "width": "100%",
+                                            }
+                                          }
+                                        >
+                                          <div
+                                            style={
+                                              Object {
+                                                "width": "100%",
+                                              }
+                                            }
+                                          >
+                                            <div
+                                              onMouseOut={[Function]}
+                                              onMouseOver={[Function]}
+                                              style={
+                                                Object {
+                                                  "background": "white",
+                                                  "borderColor": "#5bc0de",
+                                                  "borderLeftWidth": 1,
+                                                  "borderRadius": "5px",
+                                                  "borderStyle": "solid",
+                                                  "borderWidth": 1,
+                                                  "display": "flex",
+                                                  "justifyContent": "space-between",
+                                                  "marginBottom": "15px",
+                                                  "padding": "10px",
+                                                  "width": "100%",
+                                                }
+                                              }
+                                            >
+                                              <div
+                                                style={
+                                                  Object {
+                                                    "lineHeight": "30px",
+                                                    "minHeight": "34px",
+                                                  }
+                                                }
+                                              >
+                                                <select>
+                                                  <option>
+                                                    Select a Field
+                                                  </option>
+                                                </select>
+                                                <select
+                                                  onChange={[Function]}
+                                                  value="query"
+                                                >
+                                                  <option
+                                                    value="facet"
+                                                  >
+                                                    List
+                                                  </option>
+                                                  <option
+                                                    value="query"
+                                                  >
+                                                    Query
+                                                  </option>
+                                                  <option
+                                                    value="number"
+                                                  >
+                                                    Range
+                                                  </option>
+                                                  <option
+                                                    value="text"
+                                                  >
+                                                    Text
+                                                  </option>
+                                                </select>
+                                                filter 4b
+                                                <div
+                                                  style={
+                                                    Object {
+                                                      "display": "inline-block",
+                                                      "verticalAlign": "top",
+                                                    }
+                                                  }
+                                                >
+                                                  <span>
+                                                    <input
+                                                      type="text"
+                                                    />
+                                                  </span>
+                                                </div>
+                                                {"key":"filter 4b","type":"query","data":{"words":[]}}
+                                              </div>
+                                              <div
+                                                style={
+                                                  Object {
+                                                    "minWidth": 82,
+                                                    "visibility": "hidden",
+                                                  }
+                                                }
+                                              >
+                                                <button
+                                                  onClick={[Function]}
+                                                  onMouseOut={[Function]}
+                                                  onMouseOver={[Function]}
+                                                  style={
+                                                    Object {
+                                                      "background": "white",
+                                                      "border": "1px solid #ccc",
+                                                      "borderBottomRightRadius": 0,
+                                                      "borderRadius": 5000,
+                                                      "borderTopRightRadius": 0,
+                                                      "color": "#5cb85c",
+                                                      "display": "inline-block",
+                                                      "padding": ".5rem 1rem",
+                                                      "textAlign": "center",
+                                                    }
+                                                  }
+                                                >
+                                                  &gt;
+                                                </button>
+                                                <button
+                                                  onClick={[Function]}
+                                                  onMouseOut={[Function]}
+                                                  onMouseOver={[Function]}
+                                                  style={
+                                                    Object {
+                                                      "background": "white",
+                                                      "border": "1px solid #ccc",
+                                                      "borderBottomLeftRadius": 0,
+                                                      "borderRadius": 5000,
+                                                      "borderTopLeftRadius": 0,
+                                                      "display": "inline-block",
+                                                      "marginLeft": "-1px",
+                                                      "padding": ".5rem 1rem",
+                                                      "textAlign": "center",
+                                                    }
+                                                  }
+                                                >
+                                                  X
+                                                </button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div />
+            <div
+              style={
+                Object {
+                  "display": "flex",
+                }
+              }
+            >
+              <div>
+                <div>
+                  <div
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "background": "#5bc0de",
+                        "borderRadius": "5px",
+                        "color": "white",
+                        "lineHeight": "35px",
+                        "marginRight": "15px",
+                        "textAlign": "center",
+                        "width": "50px",
+                      }
+                    }
+                  >
+                    <span
+                      style={Object {}}
+                    >
+                      and
+                    </span>
+                  </div>
+                  <div
+                    style={
+                      Object {
+                        "background": "#5bc0de",
+                        "bottom": "17.5px",
+                        "color": "white",
+                        "height": "2px",
+                        "left": "50px",
+                        "position": "relative",
+                        "width": "15px",
+                      }
+                    }
+                  />
+                </div>
+                <div />
+              </div>
+              <div
+                style={
+                  Object {
+                    "width": "100%",
+                  }
+                }
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "flex",
+                      "width": "100%",
+                    }
+                  }
+                >
+                  <div
+                    style={
+                      Object {
+                        "width": "100%",
+                      }
+                    }
+                  >
+                    <div
+                      onMouseOut={[Function]}
+                      onMouseOver={[Function]}
+                      style={
+                        Object {
+                          "background": "white",
+                          "borderColor": "#5bc0de",
+                          "borderLeftWidth": 1,
+                          "borderRadius": "5px",
+                          "borderStyle": "solid",
+                          "borderWidth": 1,
+                          "display": "flex",
+                          "justifyContent": "space-between",
+                          "marginBottom": "15px",
+                          "padding": "10px",
+                          "width": "100%",
+                        }
+                      }
+                    >
+                      <div
+                        style={
+                          Object {
+                            "lineHeight": "30px",
+                            "minHeight": "34px",
+                          }
+                        }
+                      >
+                        <select>
+                          <option>
+                            Select a Field
+                          </option>
+                        </select>
+                        <select
+                          onChange={[Function]}
+                          value="query"
+                        >
+                          <option
+                            value="facet"
+                          >
+                            List
+                          </option>
+                          <option
+                            value="query"
+                          >
+                            Query
+                          </option>
+                          <option
+                            value="number"
+                          >
+                            Range
+                          </option>
+                          <option
+                            value="text"
+                          >
+                            Text
+                          </option>
+                        </select>
+                        filter 3
+                        <div
+                          style={
+                            Object {
+                              "display": "inline-block",
+                              "verticalAlign": "top",
+                            }
+                          }
+                        >
+                          <span>
+                            <input
+                              type="text"
+                            />
+                          </span>
+                        </div>
+                        {"key":"filter 3","type":"query","data":{"words":[]}}
+                      </div>
+                      <div
+                        style={
+                          Object {
+                            "minWidth": 82,
+                            "visibility": "hidden",
+                          }
+                        }
+                      >
+                        <button
+                          onClick={[Function]}
+                          onMouseOut={[Function]}
+                          onMouseOver={[Function]}
+                          style={
+                            Object {
+                              "background": "white",
+                              "border": "1px solid #ccc",
+                              "borderBottomRightRadius": 0,
+                              "borderRadius": 5000,
+                              "borderTopRightRadius": 0,
+                              "color": "#5cb85c",
+                              "display": "inline-block",
+                              "padding": ".5rem 1rem",
+                              "textAlign": "center",
+                            }
+                          }
+                        >
+                          &gt;
+                        </button>
+                        <button
+                          onClick={[Function]}
+                          onMouseOut={[Function]}
+                          onMouseOver={[Function]}
+                          style={
+                            Object {
+                              "background": "white",
+                              "border": "1px solid #ccc",
+                              "borderBottomLeftRadius": 0,
+                              "borderRadius": 5000,
+                              "borderTopLeftRadius": 0,
+                              "display": "inline-block",
+                              "marginLeft": "-1px",
+                              "padding": ".5rem 1rem",
+                              "textAlign": "center",
+                            }
+                          }
+                        >
+                          X
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div />
+          </div>
+          <div>
+            <div />
+            <div
+              style={
+                Object {
+                  "display": "flex",
+                }
+              }
+            >
+              <div>
+                <div>
+                  <div
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "background": "#5bc0de",
+                        "borderRadius": "5px",
+                        "color": "white",
+                        "lineHeight": "35px",
+                        "marginRight": "15px",
+                        "textAlign": "center",
+                        "width": "50px",
+                      }
+                    }
+                  >
+                    <span
+                      style={Object {}}
+                    >
+                      and
+                    </span>
+                  </div>
+                  <div
+                    style={
+                      Object {
+                        "background": "#5bc0de",
+                        "bottom": "17.5px",
+                        "color": "white",
+                        "height": "2px",
+                        "left": "50px",
+                        "position": "relative",
+                        "width": "15px",
+                      }
+                    }
+                  />
+                </div>
+                <div />
+              </div>
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "width": "100%",
+                  }
+                }
+              >
+                <div
+                  style={
+                    Object {
+                      "width": "100%",
+                    }
+                  }
+                >
+                  <div
+                    style={
+                      Object {
+                        "borderColor": "#d9534f",
+                        "borderLeft": "2px solid black",
+                        "marginLeft": "24px",
+                        "paddingLeft": "24px",
+                        "width": "100%",
+                      }
+                    }
+                  >
+                    <div
+                      style={
+                        Object {
+                          "marginLeft": "-50px",
+                          "width": "100%",
+                        }
+                      }
+                    >
+                      <div>
+                        <div />
+                        <div
+                          style={
+                            Object {
+                              "display": "flex",
+                            }
+                          }
+                        >
+                          <div>
+                            <div>
+                              <div
+                                onClick={[Function]}
+                                style={
+                                  Object {
+                                    "background": "#d9534f",
+                                    "borderRadius": "5px",
+                                    "color": "white",
+                                    "lineHeight": "35px",
+                                    "marginRight": "15px",
+                                    "textAlign": "center",
+                                    "width": "50px",
+                                  }
+                                }
+                              >
+                                <span
+                                  style={Object {}}
+                                >
+                                  not
+                                </span>
+                              </div>
+                              <div
+                                style={
+                                  Object {
+                                    "background": "#d9534f",
+                                    "bottom": "17.5px",
+                                    "color": "white",
+                                    "height": "2px",
+                                    "left": "50px",
+                                    "position": "relative",
+                                    "width": "15px",
+                                  }
+                                }
+                              />
+                            </div>
+                            <div />
+                          </div>
+                          <div
+                            style={
+                              Object {
+                                "width": "100%",
+                              }
+                            }
+                          >
+                            <div
+                              style={
+                                Object {
+                                  "display": "flex",
+                                  "width": "100%",
+                                }
+                              }
+                            >
+                              <div
+                                style={
+                                  Object {
+                                    "width": "100%",
+                                  }
+                                }
+                              >
+                                <div
+                                  onMouseOut={[Function]}
+                                  onMouseOver={[Function]}
+                                  style={
+                                    Object {
+                                      "background": "white",
+                                      "borderColor": "#d9534f",
+                                      "borderLeftWidth": 1,
+                                      "borderRadius": "5px",
+                                      "borderStyle": "solid",
+                                      "borderWidth": 1,
+                                      "display": "flex",
+                                      "justifyContent": "space-between",
+                                      "marginBottom": "15px",
+                                      "padding": "10px",
+                                      "width": "100%",
+                                    }
+                                  }
+                                >
+                                  <div
+                                    style={
+                                      Object {
+                                        "lineHeight": "30px",
+                                        "minHeight": "34px",
+                                      }
+                                    }
+                                  >
+                                    <select>
+                                      <option>
+                                        Select a Field
+                                      </option>
+                                    </select>
+                                    <select
+                                      onChange={[Function]}
+                                      value="number"
+                                    >
+                                      <option
+                                        value="facet"
+                                      >
+                                        List
+                                      </option>
+                                      <option
+                                        value="query"
+                                      >
+                                        Query
+                                      </option>
+                                      <option
+                                        value="number"
+                                      >
+                                        Range
+                                      </option>
+                                      <option
+                                        value="text"
+                                      >
+                                        Text
+                                      </option>
+                                    </select>
+                                    filter 5a
+                                    <div
+                                      style={
+                                        Object {
+                                          "display": "inline-block",
+                                          "verticalAlign": "top",
+                                        }
+                                      }
+                                    >
+                                      <span>
+                                        <input
+                                          onChange={[Function]}
+                                          value={undefined}
+                                        />
+                                        <input
+                                          onChange={[Function]}
+                                          value={undefined}
+                                        />
+                                      </span>
+                                    </div>
+                                    {"key":"filter 5a","type":"number","data":{}}
+                                  </div>
+                                  <div
+                                    style={
+                                      Object {
+                                        "minWidth": 82,
+                                        "visibility": "hidden",
+                                      }
+                                    }
+                                  >
+                                    <button
+                                      onClick={[Function]}
+                                      onMouseOut={[Function]}
+                                      onMouseOver={[Function]}
+                                      style={
+                                        Object {
+                                          "background": "white",
+                                          "border": "1px solid #ccc",
+                                          "borderBottomRightRadius": 0,
+                                          "borderRadius": 5000,
+                                          "borderTopRightRadius": 0,
+                                          "color": "#5bc0de",
+                                          "display": "inline-block",
+                                          "padding": ".5rem 1rem",
+                                          "textAlign": "center",
+                                        }
+                                      }
+                                    >
+                                      &gt;
+                                    </button>
+                                    <button
+                                      onClick={[Function]}
+                                      onMouseOut={[Function]}
+                                      onMouseOver={[Function]}
+                                      style={
+                                        Object {
+                                          "background": "white",
+                                          "border": "1px solid #ccc",
+                                          "borderBottomLeftRadius": 0,
+                                          "borderRadius": 5000,
+                                          "borderTopLeftRadius": 0,
+                                          "display": "inline-block",
+                                          "marginLeft": "-1px",
+                                          "padding": ".5rem 1rem",
+                                          "textAlign": "center",
+                                        }
+                                      }
+                                    >
+                                      X
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div />
+                      </div>
+                      <div>
+                        <div />
+                        <div
+                          style={
+                            Object {
+                              "background": "#f0f8ff",
+                              "display": "flex",
+                            }
+                          }
+                        >
+                          <div>
+                            <div>
+                              <div
+                                onClick={[Function]}
+                                style={
+                                  Object {
+                                    "background": "#d9534f",
+                                    "borderRadius": "5px",
+                                    "color": "white",
+                                    "lineHeight": "35px",
+                                    "marginRight": "15px",
+                                    "textAlign": "center",
+                                    "width": "50px",
+                                  }
+                                }
+                              >
+                                <span
+                                  style={Object {}}
+                                >
+                                  not
+                                </span>
+                              </div>
+                              <div
+                                style={
+                                  Object {
+                                    "background": "#d9534f",
+                                    "bottom": "17.5px",
+                                    "color": "white",
+                                    "height": "2px",
+                                    "left": "50px",
+                                    "position": "relative",
+                                    "width": "15px",
+                                  }
+                                }
+                              />
+                            </div>
+                            <div />
+                          </div>
+                          <div
+                            style={
+                              Object {
+                                "width": "100%",
+                              }
+                            }
+                          >
+                            <div
+                              style={
+                                Object {
+                                  "display": "flex",
+                                  "width": "100%",
+                                }
+                              }
+                            >
+                              <div
+                                style={
+                                  Object {
+                                    "width": "100%",
+                                  }
+                                }
+                              >
+                                <div
+                                  onMouseOut={[Function]}
+                                  onMouseOver={[Function]}
+                                  style={
+                                    Object {
+                                      "background": "white",
+                                      "borderColor": "#d9534f",
+                                      "borderLeftWidth": 1,
+                                      "borderRadius": "5px",
+                                      "borderStyle": "solid",
+                                      "borderWidth": 1,
+                                      "display": "flex",
+                                      "justifyContent": "space-between",
+                                      "marginBottom": "15px",
+                                      "padding": "10px",
+                                      "width": "100%",
+                                    }
+                                  }
+                                >
+                                  <div
+                                    style={
+                                      Object {
+                                        "lineHeight": "30px",
+                                        "minHeight": "34px",
+                                      }
+                                    }
+                                  >
+                                    <select>
+                                      <option>
+                                        Select a Field
+                                      </option>
+                                    </select>
+                                    <select
+                                      onChange={[Function]}
+                                      value="query"
+                                    >
+                                      <option
+                                        value="facet"
+                                      >
+                                        List
+                                      </option>
+                                      <option
+                                        value="query"
+                                      >
+                                        Query
+                                      </option>
+                                      <option
+                                        value="number"
+                                      >
+                                        Range
+                                      </option>
+                                      <option
+                                        value="text"
+                                      >
+                                        Text
+                                      </option>
+                                    </select>
+                                    filter 5b
+                                    <div
+                                      style={
+                                        Object {
+                                          "display": "inline-block",
+                                          "verticalAlign": "top",
+                                        }
+                                      }
+                                    >
+                                      <span>
+                                        <input
+                                          type="text"
+                                        />
+                                      </span>
+                                    </div>
+                                    {"key":"filter 5b","type":"query","data":{"words":[]}}
+                                  </div>
+                                  <div
+                                    style={
+                                      Object {
+                                        "minWidth": 82,
+                                        "visibility": "hidden",
+                                      }
+                                    }
+                                  >
+                                    <button
+                                      onClick={[Function]}
+                                      onMouseOut={[Function]}
+                                      onMouseOver={[Function]}
+                                      style={
+                                        Object {
+                                          "background": "white",
+                                          "border": "1px solid #ccc",
+                                          "borderBottomRightRadius": 0,
+                                          "borderRadius": 5000,
+                                          "borderTopRightRadius": 0,
+                                          "color": "#5bc0de",
+                                          "display": "inline-block",
+                                          "padding": ".5rem 1rem",
+                                          "textAlign": "center",
+                                        }
+                                      }
+                                    >
+                                      &gt;
+                                    </button>
+                                    <button
+                                      onClick={[Function]}
+                                      onMouseOut={[Function]}
+                                      onMouseOver={[Function]}
+                                      style={
+                                        Object {
+                                          "background": "white",
+                                          "border": "1px solid #ccc",
+                                          "borderBottomLeftRadius": 0,
+                                          "borderRadius": 5000,
+                                          "borderTopLeftRadius": 0,
+                                          "display": "inline-block",
+                                          "marginLeft": "-1px",
+                                          "padding": ".5rem 1rem",
+                                          "textAlign": "center",
+                                        }
+                                      }
+                                    >
+                                      X
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div />
+            <div
+              style={
+                Object {
+                  "background": "#f0f8ff",
+                  "display": "flex",
+                }
+              }
+            >
+              <div>
+                <div>
+                  <div
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "background": "#5bc0de",
+                        "borderRadius": "5px",
+                        "color": "white",
+                        "lineHeight": "35px",
+                        "marginRight": "15px",
+                        "textAlign": "center",
+                        "width": "50px",
+                      }
+                    }
+                  >
+                    <span
+                      style={Object {}}
+                    >
+                      and
+                    </span>
+                  </div>
+                  <div
+                    style={
+                      Object {
+                        "background": "#5bc0de",
+                        "bottom": "17.5px",
+                        "color": "white",
+                        "height": "2px",
+                        "left": "50px",
+                        "position": "relative",
+                        "width": "39px",
+                      }
+                    }
+                  />
+                </div>
+                <div />
+              </div>
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "width": "100%",
+                  }
+                }
+              >
+                <div
+                  style={
+                    Object {
+                      "width": "100%",
+                    }
+                  }
+                >
+                  <div
+                    style={
+                      Object {
+                        "borderColor": "#5cb85c",
+                        "borderLeft": "2px solid black",
+                        "marginLeft": "24px",
+                        "paddingLeft": "24px",
+                        "width": "100%",
+                      }
+                    }
+                  >
+                    <div
+                      style={
+                        Object {
+                          "marginLeft": "-50px",
+                          "width": "100%",
+                        }
+                      }
+                    >
+                      <div>
+                        <div />
+                        <div
+                          style={
+                            Object {
+                              "display": "flex",
+                            }
+                          }
+                        >
+                          <div>
+                            <div>
+                              <div
+                                onClick={[Function]}
+                                style={
+                                  Object {
+                                    "background": "#f0f8ff",
+                                    "borderBottom": "solid 2px black",
+                                    "borderBottomColor": "#5cb85c",
+                                    "height": 17.5,
+                                    "marginLeft": "24px",
+                                    "width": "40px",
+                                  }
+                                }
+                              />
+                              <div
+                                style={
+                                  Object {
+                                    "background": "#5cb85c",
+                                    "bottom": "17.5px",
+                                    "color": "white",
+                                    "height": "2px",
+                                    "left": 63,
+                                    "position": "relative",
+                                    "top": -2,
+                                    "width": 25,
+                                  }
+                                }
+                              />
+                            </div>
+                            <div />
+                          </div>
+                          <div
+                            style={
+                              Object {
+                                "display": "flex",
+                                "width": "100%",
+                              }
+                            }
+                          >
+                            <div
+                              style={
+                                Object {
+                                  "width": "100%",
+                                }
+                              }
+                            >
+                              <div
+                                style={
+                                  Object {
+                                    "borderColor": "#5bc0de",
+                                    "borderLeft": "2px solid black",
+                                    "marginLeft": "24px",
+                                    "paddingLeft": "24px",
+                                    "width": "100%",
+                                  }
+                                }
+                              >
+                                <div
+                                  style={
+                                    Object {
+                                      "marginLeft": "-50px",
+                                      "width": "100%",
+                                    }
+                                  }
+                                >
+                                  <div>
+                                    <div />
+                                    <div
+                                      style={
+                                        Object {
+                                          "display": "flex",
+                                        }
+                                      }
+                                    >
+                                      <div>
+                                        <div>
+                                          <div
+                                            onClick={[Function]}
+                                            style={
+                                              Object {
+                                                "background": "#f0f8ff",
+                                                "borderBottom": "solid 2px black",
+                                                "borderBottomColor": "#5bc0de",
+                                                "height": 17.5,
+                                                "marginLeft": "24px",
+                                                "width": "40px",
+                                              }
+                                            }
+                                          />
+                                        </div>
+                                        <div />
+                                      </div>
+                                      <div
+                                        style={
+                                          Object {
+                                            "width": "100%",
+                                          }
+                                        }
+                                      >
+                                        <div
+                                          style={
+                                            Object {
+                                              "display": "flex",
+                                              "width": "100%",
+                                            }
+                                          }
+                                        >
+                                          <div
+                                            style={
+                                              Object {
+                                                "width": "100%",
+                                              }
+                                            }
+                                          >
+                                            <div
+                                              onMouseOut={[Function]}
+                                              onMouseOver={[Function]}
+                                              style={
+                                                Object {
+                                                  "background": "white",
+                                                  "borderColor": "#5bc0de",
+                                                  "borderLeftWidth": 1,
+                                                  "borderRadius": "5px",
+                                                  "borderStyle": "solid",
+                                                  "borderWidth": 1,
+                                                  "display": "flex",
+                                                  "justifyContent": "space-between",
+                                                  "marginBottom": "15px",
+                                                  "padding": "10px",
+                                                  "width": "100%",
+                                                }
+                                              }
+                                            >
+                                              <div
+                                                style={
+                                                  Object {
+                                                    "lineHeight": "30px",
+                                                    "minHeight": "34px",
+                                                  }
+                                                }
+                                              >
+                                                <select>
+                                                  <option>
+                                                    Select a Field
+                                                  </option>
+                                                </select>
+                                                <select
+                                                  onChange={[Function]}
+                                                  value="query"
+                                                >
+                                                  <option
+                                                    value="facet"
+                                                  >
+                                                    List
+                                                  </option>
+                                                  <option
+                                                    value="query"
+                                                  >
+                                                    Query
+                                                  </option>
+                                                  <option
+                                                    value="number"
+                                                  >
+                                                    Range
+                                                  </option>
+                                                  <option
+                                                    value="text"
+                                                  >
+                                                    Text
+                                                  </option>
+                                                </select>
+                                                filter 4a
+                                                <div
+                                                  style={
+                                                    Object {
+                                                      "display": "inline-block",
+                                                      "verticalAlign": "top",
+                                                    }
+                                                  }
+                                                >
+                                                  <span>
+                                                    <input
+                                                      type="text"
+                                                    />
+                                                  </span>
+                                                </div>
+                                                {"key":"filter 4a","type":"query","data":{"words":[]}}
+                                              </div>
+                                              <div
+                                                style={
+                                                  Object {
+                                                    "minWidth": 82,
+                                                    "visibility": "hidden",
+                                                  }
+                                                }
+                                              >
+                                                <button
+                                                  onClick={[Function]}
+                                                  onMouseOut={[Function]}
+                                                  onMouseOver={[Function]}
+                                                  style={
+                                                    Object {
+                                                      "background": "white",
+                                                      "border": "1px solid #ccc",
+                                                      "borderBottomRightRadius": 0,
+                                                      "borderRadius": 5000,
+                                                      "borderTopRightRadius": 0,
+                                                      "color": "#5cb85c",
+                                                      "display": "inline-block",
+                                                      "padding": ".5rem 1rem",
+                                                      "textAlign": "center",
+                                                    }
+                                                  }
+                                                >
+                                                  &gt;
+                                                </button>
+                                                <button
+                                                  onClick={[Function]}
+                                                  onMouseOut={[Function]}
+                                                  onMouseOver={[Function]}
+                                                  style={
+                                                    Object {
+                                                      "background": "white",
+                                                      "border": "1px solid #ccc",
+                                                      "borderBottomLeftRadius": 0,
+                                                      "borderRadius": 5000,
+                                                      "borderTopLeftRadius": 0,
+                                                      "display": "inline-block",
+                                                      "marginLeft": "-1px",
+                                                      "padding": ".5rem 1rem",
+                                                      "textAlign": "center",
+                                                    }
+                                                  }
+                                                >
+                                                  X
+                                                </button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div />
+                                  </div>
+                                  <div>
+                                    <div />
+                                    <div
+                                      style={
+                                        Object {
+                                          "background": "#f0f8ff",
+                                          "display": "flex",
+                                        }
+                                      }
+                                    >
+                                      <div>
+                                        <div>
+                                          <div
+                                            onClick={[Function]}
+                                            style={
+                                              Object {
+                                                "background": "#5bc0de",
+                                                "borderRadius": "5px",
+                                                "color": "white",
+                                                "lineHeight": "35px",
+                                                "marginRight": "15px",
+                                                "textAlign": "center",
+                                                "width": "50px",
+                                              }
+                                            }
+                                          >
+                                            <span
+                                              style={Object {}}
+                                            >
+                                              and
+                                            </span>
+                                          </div>
+                                          <div
+                                            style={
+                                              Object {
+                                                "background": "#5bc0de",
+                                                "bottom": "17.5px",
+                                                "color": "white",
+                                                "height": "2px",
+                                                "left": "50px",
+                                                "position": "relative",
+                                                "width": "15px",
+                                              }
+                                            }
+                                          />
+                                        </div>
+                                        <div />
+                                      </div>
+                                      <div
+                                        style={
+                                          Object {
+                                            "width": "100%",
+                                          }
+                                        }
+                                      >
+                                        <div
+                                          style={
+                                            Object {
+                                              "display": "flex",
+                                              "width": "100%",
+                                            }
+                                          }
+                                        >
+                                          <div
+                                            style={
+                                              Object {
+                                                "width": "100%",
+                                              }
+                                            }
+                                          >
+                                            <div
+                                              onMouseOut={[Function]}
+                                              onMouseOver={[Function]}
+                                              style={
+                                                Object {
+                                                  "background": "white",
+                                                  "borderColor": "#5bc0de",
+                                                  "borderLeftWidth": 1,
+                                                  "borderRadius": "5px",
+                                                  "borderStyle": "solid",
+                                                  "borderWidth": 1,
+                                                  "display": "flex",
+                                                  "justifyContent": "space-between",
+                                                  "marginBottom": "15px",
+                                                  "padding": "10px",
+                                                  "width": "100%",
+                                                }
+                                              }
+                                            >
+                                              <div
+                                                style={
+                                                  Object {
+                                                    "lineHeight": "30px",
+                                                    "minHeight": "34px",
+                                                  }
+                                                }
+                                              >
+                                                <select>
+                                                  <option>
+                                                    Select a Field
+                                                  </option>
+                                                </select>
+                                                <select
+                                                  onChange={[Function]}
+                                                  value="text"
+                                                >
+                                                  <option
+                                                    value="facet"
+                                                  >
+                                                    List
+                                                  </option>
+                                                  <option
+                                                    value="query"
+                                                  >
+                                                    Query
+                                                  </option>
+                                                  <option
+                                                    value="number"
+                                                  >
+                                                    Range
+                                                  </option>
+                                                  <option
+                                                    value="text"
+                                                  >
+                                                    Text
+                                                  </option>
+                                                </select>
+                                                txt filter 4b
+                                                <div
+                                                  style={
+                                                    Object {
+                                                      "display": "inline-block",
+                                                      "verticalAlign": "top",
+                                                    }
+                                                  }
+                                                >
+                                                  <span>
+                                                    <select
+                                                      onChange={[Function]}
+                                                      value={undefined}
+                                                    >
+                                                      <option
+                                                        value="containsWord"
+                                                      >
+                                                        Field Contains
+                                                      </option>
+                                                      <option
+                                                        value="wordStartsWith"
+                                                      >
+                                                        Word Starts With
+                                                      </option>
+                                                      <option
+                                                        value="wordEndsWith"
+                                                      >
+                                                        Word Ends With
+                                                      </option>
+                                                      <option
+                                                        value="containsExact"
+                                                      >
+                                                        Word Is Exactly
+                                                      </option>
+                                                      <option
+                                                        value="startsWith"
+                                                      >
+                                                        Field Starts With
+                                                      </option>
+                                                      <option
+                                                        value="endsWith"
+                                                      >
+                                                        Field Ends With
+                                                      </option>
+                                                      <option
+                                                        value="is"
+                                                      >
+                                                        Field Is Exactly
+                                                      </option>
+                                                    </select>
+                                                    <select
+                                                      onChange={[Function]}
+                                                      value={undefined}
+                                                    >
+                                                      <option
+                                                        value="all"
+                                                      >
+                                                        All of these
+                                                      </option>
+                                                      <option
+                                                        value="any"
+                                                      >
+                                                        Any of these
+                                                      </option>
+                                                      <option
+                                                        value="none"
+                                                      >
+                                                        None of these
+                                                      </option>
+                                                    </select>
+                                                  </span>
+                                                </div>
+                                                {"key":"txt filter 4b","type":"text","data":{"values":[]}}
+                                              </div>
+                                              <div
+                                                style={
+                                                  Object {
+                                                    "minWidth": 82,
+                                                    "visibility": "hidden",
+                                                  }
+                                                }
+                                              >
+                                                <button
+                                                  onClick={[Function]}
+                                                  onMouseOut={[Function]}
+                                                  onMouseOver={[Function]}
+                                                  style={
+                                                    Object {
+                                                      "background": "white",
+                                                      "border": "1px solid #ccc",
+                                                      "borderBottomRightRadius": 0,
+                                                      "borderRadius": 5000,
+                                                      "borderTopRightRadius": 0,
+                                                      "color": "#5cb85c",
+                                                      "display": "inline-block",
+                                                      "padding": ".5rem 1rem",
+                                                      "textAlign": "center",
+                                                    }
+                                                  }
+                                                >
+                                                  &gt;
+                                                </button>
+                                                <button
+                                                  onClick={[Function]}
+                                                  onMouseOut={[Function]}
+                                                  onMouseOver={[Function]}
+                                                  style={
+                                                    Object {
+                                                      "background": "white",
+                                                      "border": "1px solid #ccc",
+                                                      "borderBottomLeftRadius": 0,
+                                                      "borderRadius": 5000,
+                                                      "borderTopLeftRadius": 0,
+                                                      "display": "inline-block",
+                                                      "marginLeft": "-1px",
+                                                      "padding": ".5rem 1rem",
+                                                      "textAlign": "center",
+                                                    }
+                                                  }
+                                                >
+                                                  X
+                                                </button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div />
+                        <div
+                          style={
+                            Object {
+                              "background": "#f0f8ff",
+                              "display": "flex",
+                            }
+                          }
+                        >
+                          <div>
+                            <div>
+                              <div
+                                onClick={[Function]}
+                                style={
+                                  Object {
+                                    "background": "#5cb85c",
+                                    "borderRadius": "5px",
+                                    "color": "white",
+                                    "lineHeight": "35px",
+                                    "marginRight": "15px",
+                                    "textAlign": "center",
+                                    "width": "50px",
+                                  }
+                                }
+                              >
+                                <span
+                                  style={Object {}}
+                                >
+                                  or
+                                </span>
+                              </div>
+                              <div
+                                style={
+                                  Object {
+                                    "background": "#5cb85c",
+                                    "bottom": "17.5px",
+                                    "color": "white",
+                                    "height": "2px",
+                                    "left": "50px",
+                                    "position": "relative",
+                                    "width": "15px",
+                                  }
+                                }
+                              />
+                            </div>
+                            <div />
+                          </div>
+                          <div
+                            style={
+                              Object {
+                                "width": "100%",
+                              }
+                            }
+                          >
+                            <div
+                              style={
+                                Object {
+                                  "display": "flex",
+                                  "width": "100%",
+                                }
+                              }
+                            >
+                              <div
+                                style={
+                                  Object {
+                                    "width": "100%",
+                                  }
+                                }
+                              >
+                                <div
+                                  onMouseOut={[Function]}
+                                  onMouseOver={[Function]}
+                                  style={
+                                    Object {
+                                      "background": "white",
+                                      "borderColor": "#5cb85c",
+                                      "borderLeftWidth": 1,
+                                      "borderRadius": "5px",
+                                      "borderStyle": "solid",
+                                      "borderWidth": 1,
+                                      "display": "flex",
+                                      "justifyContent": "space-between",
+                                      "marginBottom": "15px",
+                                      "padding": "10px",
+                                      "width": "100%",
+                                    }
+                                  }
+                                >
+                                  <div
+                                    style={
+                                      Object {
+                                        "lineHeight": "30px",
+                                        "minHeight": "34px",
+                                      }
+                                    }
+                                  >
+                                    <select>
+                                      <option>
+                                        Select a Field
+                                      </option>
+                                    </select>
+                                    <select
+                                      onChange={[Function]}
+                                      value="query"
+                                    >
+                                      <option
+                                        value="facet"
+                                      >
+                                        List
+                                      </option>
+                                      <option
+                                        value="query"
+                                      >
+                                        Query
+                                      </option>
+                                      <option
+                                        value="number"
+                                      >
+                                        Range
+                                      </option>
+                                      <option
+                                        value="text"
+                                      >
+                                        Text
+                                      </option>
+                                    </select>
+                                    asdf
+                                    <div
+                                      style={
+                                        Object {
+                                          "display": "inline-block",
+                                          "verticalAlign": "top",
+                                        }
+                                      }
+                                    >
+                                      <span>
+                                        <input
+                                          type="text"
+                                        />
+                                      </span>
+                                    </div>
+                                    {"key":"asdf","type":"query","data":{"words":[]}}
+                                  </div>
+                                  <div
+                                    style={
+                                      Object {
+                                        "minWidth": 82,
+                                        "visibility": "hidden",
+                                      }
+                                    }
+                                  >
+                                    <button
+                                      onClick={[Function]}
+                                      onMouseOut={[Function]}
+                                      onMouseOver={[Function]}
+                                      style={
+                                        Object {
+                                          "background": "white",
+                                          "border": "1px solid #ccc",
+                                          "borderBottomRightRadius": 0,
+                                          "borderRadius": 5000,
+                                          "borderTopRightRadius": 0,
+                                          "color": "#5bc0de",
+                                          "display": "inline-block",
+                                          "padding": ".5rem 1rem",
+                                          "textAlign": "center",
+                                        }
+                                      }
+                                    >
+                                      &gt;
+                                    </button>
+                                    <button
+                                      onClick={[Function]}
+                                      onMouseOut={[Function]}
+                                      onMouseOver={[Function]}
+                                      style={
+                                        Object {
+                                          "background": "white",
+                                          "border": "1px solid #ccc",
+                                          "borderBottomLeftRadius": 0,
+                                          "borderRadius": 5000,
+                                          "borderTopLeftRadius": 0,
+                                          "display": "inline-block",
+                                          "marginLeft": "-1px",
+                                          "padding": ".5rem 1rem",
+                                          "textAlign": "center",
+                                        }
+                                      }
+                                    >
+                                      X
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button
+    onClick={[Function]}
+    style={
+      Object {
+        "background": "white",
+        "border": "1px solid #ccc",
+        "borderRadius": 5000,
+        "display": "inline-block",
+        "padding": ".5rem 1rem",
+        "textAlign": "center",
+      }
+    }
+    type="button"
+  >
+    Add Filter
+  </button>
+</div>
+`
 
 exports[`Storyshots SearchRoot One Filter 1`] = `
 <div
@@ -3834,4 +6525,4 @@ exports[`Storyshots SearchRoot One Filter 1`] = `
     Add Filter
   </button>
 </div>
-`;
+`

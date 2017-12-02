@@ -13,6 +13,8 @@ React components for building contexture interfaces
 
 * [Storybook](https://smartprocure.github.io/contexture-react)
 
+The most complete example is the [`SearchRoot` multifield story](https://smartprocure.github.io/contexture-react/?selectedKind=SearchRoot&selectedStory=Multiple%20Filters)
+
 # Version History/Changelog
 
 See our
