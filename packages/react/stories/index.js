@@ -1,5 +1,5 @@
 import React from 'react'
-
+import {observable} from 'mobx'
 import {storiesOf} from '@storybook/react'
 import {action} from '@storybook/addon-actions'
 import {withInfo} from '@storybook/addon-info'
@@ -205,3 +205,17 @@ storiesOf('Group', module)
       isRoot={true}
     />
   ))
+
+import SearchRoot from '../src/components/SearchRoot'
+import Types from '../src/exampleTypes'
+storiesOf('SearchRoot', module)
+  .add('One Filter', () =>
+    <SearchRoot
+      tree={observable({
+        key: 'root',
+        join: 'and',
+        children: [{key: 'filter 1', type: 'query'}]
+      })}
+      types={Types}
+    />
+  )
