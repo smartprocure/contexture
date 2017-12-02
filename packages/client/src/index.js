@@ -3,6 +3,7 @@ import * as F from 'futil-js'
 import {flattenTree, bubbleUpAsync, flatLeaves, decodePath, encodePath, Tree} from './util/tree'
 import {catches} from './util/futil'
 import {mapValuesAsync, flowAsync} from './util/promise'
+import util from 'util'
 
 import {validate} from './validation'
 import {getAffectedNodes} from './reactors'
@@ -34,6 +35,7 @@ export let ContextTree = (
   {
     subscribers = [],
     snapshot = _.cloneDeep,
+    extend = F.extendOn,
     debounce = 1,
     allowBlank = false,
     debug //= true
@@ -104,7 +106,7 @@ export let ContextTree = (
     return () => subscribers.splice(index, 1)
   }
 
-  return _.extend(actions({ getNode, flat, dispatch, snapshot }), {
+  return _.extend(actions({ getNode, flat, dispatch, snapshot, extend }), {
     tree,
     getNode,
     dispatch,
