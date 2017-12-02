@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash/fp'
 import { observable, action } from 'mobx'
 import DDContext from './DragDrop/DDContext'
 import { Component } from '../mobx-react-utils'
@@ -16,7 +17,7 @@ export let NewNode = Types => (type, key) => {
     key: key || randomString(),
     type,
   })
-  Types[type].init(node)
+  _.getOr(_.noop, `${type}.init`, Types)(node)
   return node
 }
 export let DefaultNode = Types => key => NewNode(Types)('query', key)
