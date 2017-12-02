@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import {hover, Component} from '../mobx-react-utils'
 import styles from '../styles'
@@ -7,8 +8,8 @@ let {btn, joinColor, bgJoin} = styles
 
 let OperatorMenu = ({tree, parent, root, parentTree}) => (
   <div>
-    {F.mapIndexed(
-      (join, i) =>
+    {_.map(
+      join =>
         tree.join !== join && (
           <div
             key={join}

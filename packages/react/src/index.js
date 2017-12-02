@@ -1,2 +1,2 @@
-import React from 'react'
-
+import SearchRoot from './components/SearchRoot'
+export {SearchRoot}

@@ -61,7 +61,7 @@ let Operator = Component(
       show: false
     })
   }),
-  ({state, tree, child, parent, root, blank, parentTree, index}) => (
+  ({state, tree, child, parent, root, parentTree, index}) => (
     <div>
       {!(index !== 0 || tree.join === 'not') ? (
         <BlankOperator {...{state, tree, child}} />

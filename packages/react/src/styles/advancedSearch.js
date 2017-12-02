@@ -1,8 +1,6 @@
 import {
-  bgStriped, dFlex, flexJustifyContentBetween, btn, roundedLeft0, roundedRight0, w100,
-  joinColor, bgJoin, bdJoin, bgPreview
+  dFlex, flexJustifyContentBetween, btn, roundedLeft0,  w100
 } from './generic'
-
 
 // Style Configuration
 export let background = '#f0f8ff'

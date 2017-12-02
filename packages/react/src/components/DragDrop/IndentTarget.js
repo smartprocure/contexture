@@ -17,7 +17,13 @@ let FilterIndentSpec = {
   }
 }
 export let FilterIndentTarget = FilterDropTarget(FilterIndentSpec)(({
-  child, tree, root, connectDropTarget, isOver, canDrop, dragItem
+  child,
+  tree,
+  // root,
+  connectDropTarget,
+  // isOver,
+  canDrop,
+  dragItem
 }) => connectDropTarget(<div>{!child.children && canDrop && <div style={{
   width: '50%',
   marginLeft: '50%',

@@ -1,8 +1,6 @@
 import _ from 'lodash/fp'
 import React from 'react'
-import {action, autorun, observe, computed, toJS} from 'mobx'
-import {hover, Component, lenservable, lensOf} from '../mobx-react-utils'
-
+import {Component} from '../mobx-react-utils'
 
 let FilterContents = ({node, root}) => {
   let type = root.types[node.type] || {}

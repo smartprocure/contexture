@@ -13,7 +13,8 @@ let {background} = styles
 
 let GroupItem = FilterDragSource(({
   child, tree, index, state, parentTree, root, isRoot,
-  connectDragSource, connectDragPreview, isDragging
+  connectDragSource,
+  //connectDragPreview, isDragging
 }) =>
   connectDragSource(<div style={{
     ...styles.dFlex,

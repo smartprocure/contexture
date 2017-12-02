@@ -1,5 +1,4 @@
 import React from 'react'
-import * as F from 'futil-js'
 import {Component, lenservable, hover} from '../mobx-react-utils'
 import styles from '../styles'
 import Indentable from './preview/Indentable'
@@ -13,7 +12,7 @@ let Rule = ({
   tree,
   root,
   connectDragSource,
-  connectDragPreview,
+  // connectDragPreview,
   isDragging
 }) =>
   connectDragSource(
