@@ -1,7 +1,7 @@
-import { flattenTree, keyPath } from '../src/util/tree';
-import _ from 'lodash/fp';
-import chai from 'chai';
-const expect = chai.expect;
+import { flattenTree, keyPath } from '../src/util/tree'
+import _ from 'lodash/fp'
+import chai from 'chai'
+const expect = chai.expect
 
 describe('tree', () => {
   let tree = {
@@ -36,9 +36,9 @@ describe('tree', () => {
         ],
       },
     ],
-  };
+  }
   it('should find', () => {
-    let findTest = _.find(keyPath('test'));
+    let findTest = _.find(keyPath('test'))
     var test = findTest([
       {
         key: 'a',
@@ -48,15 +48,15 @@ describe('tree', () => {
         key: 'test',
         val: 2,
       },
-    ]);
+    ])
     expect(test).to.deep.equal({
       key: 'test',
       val: 2,
-    });
-  });
+    })
+  })
   it('should tree', () => {
-    let r = flattenTree(tree);
-    r['root->criteria'].join = 'or';
-    expect(tree.children[1].join).to.equal('or');
-  });
-});
+    let r = flattenTree(tree)
+    r['root->criteria'].join = 'or'
+    expect(tree.children[1].join).to.equal('or')
+  })
+})
