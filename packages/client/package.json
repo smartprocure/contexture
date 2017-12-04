@@ -5,10 +5,13 @@
   "main": "lib/contexture-client.js",
   "scripts": {
     "build": "webpack",
+    "lint": "eslint src test",
     "test": "babel-node ./node_modules/mocha/bin/_mocha",
     "test-watch": "chokidar 'src/*.js' 'test/*.js' -c 'npm t'",
-    "coverage": "nyc --require babel-core/register node_modules/.bin/mocha test",
-    "cicoverage": "nyc --reporter=lcov --require babel-core/register node_modules/.bin/mocha test",
+    "coverage":
+      "nyc --require babel-core/register node_modules/.bin/mocha test",
+    "cicoverage":
+      "nyc --reporter=lcov --require babel-core/register node_modules/.bin/mocha test",
     "prepublish": "webpack"
   },
   "repository": {
@@ -28,12 +31,15 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
-    "babel-eslint": "^8.0.1",
+    "babel-eslint": "^8.0.3",
     "babel-loader": "^7.1.2",
     "babel-preset-latest": "^6.24.1",
     "chai": "^4.1.2",
     "chokidar": "^1.7.0",
     "chokidar-cli": "^1.2.0",
+    "duti": "^0.9.3",
+    "eslint": "^4.12.1",
+    "eslint-config-smartprocure": "^1.1.0",
     "mocha": "^4.0.1",
     "nyc": "^11.2.1",
     "sinon": "^4.0.1",
@@ -41,8 +47,6 @@
     "webpack": "^3.8.1"
   },
   "babel": {
-    "presets": [
-      "latest"
-    ]
+    "presets": ["latest"]
   }
 }
