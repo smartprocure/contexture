@@ -55,7 +55,7 @@
     "webpack": "^3.8.1"
   },
   "prettier": {
-    "noSemi": true,
+    "semi": false,
     "singleQuote": true,
     "trailingComma": "es5"
   },
