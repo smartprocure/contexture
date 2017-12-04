@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
-import {flattenTree, bubbleUpAsync, flatLeaves, decodePath, encodePath, Tree} from './util/tree'
+import {flattenTree, bubbleUpAsync, flatLeaves, decodePath, encodePath} from './util/tree'
 import {catches} from './util/futil'
 import {mapValuesAsync, flowAsync} from './util/promise'
 
@@ -15,7 +15,7 @@ import {
   prepForUpdate,
   acknoweldgeMissedUpdates
 } from './traversals'
-import {defaultTypes, runTypeFunction, getTypeProp} from './types'
+import {defaultTypes, runTypeFunction} from './types'
 
 let process = flowAsync(4)(
   getAffectedNodes,
@@ -44,7 +44,6 @@ export let ContextTree = (
   let getNode = path => flat[encodePath(path)]
   let fakeRoot = { key: 'virtualFakeRoot', path: '', children: [tree] }
   let typeFunction = runTypeFunction(types)
-  let typeProp = getTypeProp(types)
   let { validateLeaves, validateGroup } = validate(typeFunction('validate'))
 
   // Event Handling

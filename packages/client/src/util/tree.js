@@ -6,7 +6,7 @@ export let getChildren = x => {
   let arr = x.children//_.get('children', x)
   return arr ? arr.slice() : arr
   } catch (e) {
-   debugger
+   
   }
 }
 // export let getChildren = _.get('children')
@@ -47,8 +47,4 @@ let visitPath = (fn, path, tree) => {
   let remainingPath = path.slice(1)
   if (remainingPath.length)
     visitPath(fn, remainingPath, node)
-}
-let trickleDown = (f, path, tree) => {
-  f(tree, path)
-  visitPath(f, path.slice(1), tree)
 }

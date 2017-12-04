@@ -9,8 +9,8 @@ let reactors = {
     parent.join == 'or' ? [] : _.difference(parent.children, [instigator]),
   only: (parent, instigator) => [instigator],
   all: parent => parent.children,
-  standardChange: async (...args) => {
-    let [parent, instigator, previous, hasValueMap, value, validateGroup] = args
+  async standardChange(...args) {
+    let [, instigator, previous, hasValueMap, , validateGroup] = args
     let needUpdate = hasContext(instigator)
     let affectsOthers =
       hasValueMap[instigator.path] ||
@@ -31,8 +31,8 @@ export let StandardReactors = {
   refresh: reactors.all,
   data: reactors.others,
   config: reactors.only,
-  join: (...args) => {
-    let [parent, instigator, previous, hasValueMap] = args
+  join(...args) {
+    let [, instigator, previous, hasValueMap] = args
     let childrenWithValues = _.filter(
       child => hasValueMap[child.path],
       instigator.children
@@ -42,12 +42,12 @@ export let StandardReactors = {
       return reactors.all(...args)
   },
   add: reactors.standardChange,
-  remove: async (...args) => {
-    let [parent, instigator, previous, hasValueMap, value, validateGroup] = args
+  async remove(...args) {
+    let [, , previous, , , validateGroup] = args
     if (await validateGroup(previous)) return reactors.all(...args)
   },
-  paused: (...args) => {
-    let [parent, instigator, previous, hasValueMap, value] = args
+  paused(...args) {
+    let [, instigator, , , value] = args
     if (!value && instigator.missedUpdates) {
       // Reactor probably shouldn't mutate but this needs to clear somewhere :/
       // maybe in reactor??
