@@ -17,6 +17,7 @@
     "cicoverage":
       "nyc --reporter=lcov --require babel-core/register node_modules/.bin/mocha test --reporter json > test-results.json",
     "fmt": "prettier --write '{src,test}/**/*.*'",
+    "duti": "duti",
     "duti:fix": "npm run lint-fix && npm run fmt",
     "prepublish": "webpack"
   },
