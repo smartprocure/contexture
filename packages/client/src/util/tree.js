@@ -6,7 +6,7 @@ export let getChildren = x => {
   let arr = x.children//_.get('children', x)
   return arr ? arr.slice() : arr
   } catch (e) {
-   debugger
+   
   }
 }
 // export let getChildren = _.get('children')
