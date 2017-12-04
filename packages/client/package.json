@@ -6,11 +6,15 @@
   "scripts": {
     "build": "webpack",
     "lint": "eslint src test",
+    "lint-ci": "npm run lint -- -o lint-results.json -f json",
     "test": "babel-node ./node_modules/mocha/bin/_mocha",
     "test-watch": "chokidar 'src/*.js' 'test/*.js' -c 'npm t'",
-    "coverage": "nyc --require babel-core/register node_modules/.bin/mocha test",
-    "test-ci": "babel-node ./node_modules/mocha/bin/_mocha --reporter json > test-results.json",
-    "cicoverage": "nyc --reporter=lcov --require babel-core/register node_modules/.bin/mocha test --reporter json > test-results.json",
+    "coverage":
+      "nyc --require babel-core/register node_modules/.bin/mocha test",
+    "test-ci":
+      "babel-node ./node_modules/mocha/bin/_mocha --reporter json > test-results.json",
+    "cicoverage":
+      "nyc --reporter=lcov --require babel-core/register node_modules/.bin/mocha test --reporter json > test-results.json",
     "prepublish": "webpack"
   },
   "repository": {
@@ -46,8 +50,6 @@
     "webpack": "^3.8.1"
   },
   "babel": {
-    "presets": [
-      "latest"
-    ]
+    "presets": ["latest"]
   }
 }
