@@ -1,6 +1,6 @@
 {
   "name": "contexture-client",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "asd",
   "main": "lib/contexture-client.js",
   "scripts": {
