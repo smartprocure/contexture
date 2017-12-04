@@ -8,10 +8,9 @@
     "lint": "eslint src test",
     "test": "babel-node ./node_modules/mocha/bin/_mocha",
     "test-watch": "chokidar 'src/*.js' 'test/*.js' -c 'npm t'",
-    "coverage":
-      "nyc --require babel-core/register node_modules/.bin/mocha test",
-    "cicoverage":
-      "nyc --reporter=lcov --require babel-core/register node_modules/.bin/mocha test",
+    "coverage": "nyc --require babel-core/register node_modules/.bin/mocha test",
+    "test-ci": "babel-node ./node_modules/mocha/bin/_mocha --reporter json > test-results.json",
+    "cicoverage": "nyc --reporter=lcov --require babel-core/register node_modules/.bin/mocha test --reporter json > test-results.json",
     "prepublish": "webpack"
   },
   "repository": {
@@ -47,6 +46,8 @@
     "webpack": "^3.8.1"
   },
   "babel": {
-    "presets": ["latest"]
+    "presets": [
+      "latest"
+    ]
   }
 }
