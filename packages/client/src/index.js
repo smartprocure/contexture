@@ -1,40 +1,40 @@
-import _ from "lodash/fp";
-import * as F from "futil-js";
+import _ from 'lodash/fp';
+import * as F from 'futil-js';
 import {
   flattenTree,
   bubbleUpAsync,
   flatLeaves,
   decodePath,
-  encodePath
-} from "./util/tree";
-import { catches } from "./util/futil";
-import { mapValuesAsync, flowAsync } from "./util/promise";
+  encodePath,
+} from './util/tree';
+import { catches } from './util/futil';
+import { mapValuesAsync, flowAsync } from './util/promise';
 
-import { validate } from "./validation";
-import { getAffectedNodes } from "./reactors";
-import actions from "./actions";
-import serialize from "./serialize";
+import { validate } from './validation';
+import { getAffectedNodes } from './reactors';
+import actions from './actions';
+import serialize from './serialize';
 // Named Traversals
 import {
   markForUpdate,
   markLastUpdate,
   prepForUpdate,
-  acknoweldgeMissedUpdates
-} from "./traversals";
-import { defaultTypes, runTypeFunction } from "./types";
+  acknoweldgeMissedUpdates,
+} from './traversals';
+import { defaultTypes, runTypeFunction } from './types';
 
 let process = flowAsync(4)(
   getAffectedNodes,
   _.each(n => {
     acknoweldgeMissedUpdates(n);
-    if (!_.some("markedForUpdate", n.children)) markForUpdate(n);
+    if (!_.some('markedForUpdate', n.children)) markForUpdate(n);
   })
 );
 
 export let ContextTree = (
   tree,
   service = () => {
-    throw new Error("No update service provided!");
+    throw new Error('No update service provided!');
   },
   types = defaultTypes,
   {
@@ -42,21 +42,21 @@ export let ContextTree = (
     snapshot = _.cloneDeep,
     debounce = 1,
     allowBlank = false,
-    debug //= true
+    debug, //= true
   } = {}
 ) => {
   let log = x => debug && console.log(x);
   let flat = flattenTree(tree);
   let getNode = path => flat[encodePath(path)];
-  let fakeRoot = { key: "virtualFakeRoot", path: "", children: [tree] };
+  let fakeRoot = { key: 'virtualFakeRoot', path: '', children: [tree] };
   let typeFunction = runTypeFunction(types);
-  let { validateLeaves, validateGroup } = validate(typeFunction("validate"));
+  let { validateLeaves, validateGroup } = validate(typeFunction('validate'));
 
   // Event Handling
   let dispatch = async event => {
     let { type, path, dontProcess } = event;
     log(
-      `${type} event at ${path} (${dontProcess ? "internal" : "user"} event)`
+      `${type} event at ${path} (${dontProcess ? 'internal' : 'user'} event)`
     );
     _.cond(subscribers)(event);
     if (dontProcess) return; // short circuit deepClone and triggerUpdate
@@ -76,7 +76,7 @@ export let ContextTree = (
     return triggerUpdate();
   };
   let triggerUpdate = F.debounceAsync(debounce, async () => {
-    if (await shouldBlockUpdate()) return log("Blocked Search");
+    if (await shouldBlockUpdate()) return log('Blocked Search');
     let now = new Date().getTime();
     markLastUpdate(now)(tree);
     let dto = serialize(snapshot(tree), { search: true });
@@ -86,23 +86,23 @@ export let ContextTree = (
   let shouldBlockUpdate = catches(() => true)(async () => {
     let leaves = flatLeaves(flat);
     let allBlank = _.every(x => !x, await validateLeaves(leaves));
-    let noUpdates = !_.some("markedForUpdate", leaves);
+    let noUpdates = !_.some('markedForUpdate', leaves);
     return noUpdates || (!(tree.allowBlank || allowBlank) && allBlank);
   });
   let processResponse = ({ data, error }) => {
     _.each(node => {
       let target = flat[node.path];
       if (!target) return;
-      let responseNode = _.pick(["context", "error"], node);
+      let responseNode = _.pick(['context', 'error'], node);
       F.mergeOn(target, responseNode);
       target.updating = false;
       if (!node.children)
         dispatch({
-          type: "update",
+          type: 'update',
           path: decodePath(node.path),
           value: responseNode,
           node,
-          dontProcess: true
+          dontProcess: true,
         });
     }, flattenTree(data));
     if (error) tree.error = error;
@@ -127,7 +127,7 @@ export let ContextTree = (
 
     dispatch,
     subscribe,
-    serialize: () => serialize(snapshot(tree), {})
+    serialize: () => serialize(snapshot(tree), {}),
   };
 };
 export default ContextTree;

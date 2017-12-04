@@ -10,12 +10,9 @@
     "lint-fix": "npm run lint -- --fix",
     "test": "babel-node ./node_modules/mocha/bin/_mocha",
     "test-watch": "chokidar 'src/*.js' 'test/*.js' -c 'npm t'",
-    "coverage":
-      "nyc --require babel-core/register node_modules/.bin/mocha test",
-    "test-ci":
-      "babel-node ./node_modules/mocha/bin/_mocha --reporter json > test-results.json",
-    "cicoverage":
-      "nyc --reporter=lcov --require babel-core/register node_modules/.bin/mocha test --reporter json > test-results.json",
+    "coverage": "nyc --require babel-core/register node_modules/.bin/mocha test",
+    "test-ci": "babel-node ./node_modules/mocha/bin/_mocha --reporter json > test-results.json",
+    "cicoverage": "nyc --reporter=lcov --require babel-core/register node_modules/.bin/mocha test --reporter json > test-results.json",
     "fmt": "prettier --write '{src,test}/**/*.*'",
     "duti": "duti",
     "duti:fix": "npm run lint-fix && npm run fmt",
@@ -60,6 +57,8 @@
     "trailingComma": "es5"
   },
   "babel": {
-    "presets": ["latest"]
+    "presets": [
+      "latest"
+    ]
   }
 }

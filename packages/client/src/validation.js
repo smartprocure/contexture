@@ -1,7 +1,7 @@
-import _ from "lodash/fp";
-import * as F from "futil-js";
-import { mapAsync } from "./util/promise";
-import { flatLeaves, flattenTree } from "./util/tree";
+import _ from 'lodash/fp';
+import * as F from 'futil-js';
+import { mapAsync } from './util/promise';
+import { flatLeaves, flattenTree } from './util/tree';
 
 export let defaultHasValue = x => !F.isBlankDeep(_.some)(x.data);
 // Aync fn to inspect types.
@@ -24,6 +24,6 @@ export let validate = runValidate => {
 
   return {
     validateLeaves,
-    validateGroup
+    validateGroup,
   };
 };

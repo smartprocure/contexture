@@ -1,5 +1,5 @@
-import _ from "lodash/fp";
-import * as F from "futil-js";
+import _ from 'lodash/fp';
+import * as F from 'futil-js';
 
 export let getChildren = x => {
   try {
@@ -14,12 +14,12 @@ export let Tree = F.tree(x => x.children);
 export let keyPath = path => (_.isString(path) ? { key: path } : path);
 export let lookup = (tree, path) => _.find(keyPath(path), getChildren(tree));
 
-export let encodePath = F.compactJoin("->");
-export let decodePath = _.split("->");
+export let encodePath = F.compactJoin('->');
+export let decodePath = _.split('->');
 
 // Flat Tree Utils
-export let setPath = (node, i, [{ path = "" } = {}] = []) => {
-  node.path = encodePath([path, _.get("key", node)]);
+export let setPath = (node, i, [{ path = '' } = {}] = []) => {
+  node.path = encodePath([path, _.get('key', node)]);
 };
 export let flattenTree = Tree.reduce((result, node, ...args) => {
   setPath(node, ...args);
@@ -28,15 +28,15 @@ export let flattenTree = Tree.reduce((result, node, ...args) => {
 
 export let bubbleUp = (f, path, flatTree) => {
   if (_.isEmpty(path)) return;
-  f(flatTree[path.join("->")], path);
+  f(flatTree[path.join('->')], path);
   bubbleUp(f, _.dropRight(1, path), flatTree);
 };
 export let bubbleUpAsync = async (f, path, flatTree) => {
   if (_.isEmpty(path)) return;
-  await f(flatTree[path.join("->")], path);
+  await f(flatTree[path.join('->')], path);
   await bubbleUpAsync(f, _.dropRight(1, path), flatTree);
 };
-export let flatLeaves = _.reject("children");
+export let flatLeaves = _.reject('children');
 
 // Not used...
 let visitPath = (fn, path, tree) => {
