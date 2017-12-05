@@ -50,6 +50,7 @@ export let ContextTree = (
   let getNode = path => flat[encodePath(path)]
   let fakeRoot = { key: 'virtualFakeRoot', path: '', children: [tree] }
   let typeFunction = runTypeFunction(types)
+  // let typeProp = getTypeProp(types)
   let { validateLeaves, validateGroup } = validate(typeFunction('validate'))
 
   // Event Handling
