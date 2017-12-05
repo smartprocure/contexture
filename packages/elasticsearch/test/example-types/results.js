@@ -79,8 +79,8 @@ describe('results', () => {
           includes: 'field',
         },
         sort: {
-          _score: 'desc'
-        }
+          _score: 'desc',
+        },
       }),
     ])
     delete context.config.include
@@ -93,8 +93,8 @@ describe('results', () => {
           excludes: 'field',
         },
         sort: {
-          _score: 'desc'
-        }
+          _score: 'desc',
+        },
       }),
     ])
     delete context.config.exclude
