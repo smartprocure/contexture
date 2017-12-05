@@ -1,11 +1,17 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
-import {flattenTree, bubbleUpAsync, flatLeaves, decodePath, encodePath, Tree} from './util/tree'
-import {catches} from './util/futil'
-import {mapValuesAsync, flowAsync} from './util/promise'
+import {
+  flattenTree,
+  bubbleUpAsync,
+  flatLeaves,
+  decodePath,
+  encodePath,
+} from './util/tree'
+import { catches } from './util/futil'
+import { mapValuesAsync, flowAsync } from './util/promise'
 
-import {validate} from './validation'
-import {getAffectedNodes} from './reactors'
+import { validate } from './validation'
+import { getAffectedNodes } from './reactors'
 import actions from './actions'
 import serialize from './serialize'
 // Named Traversals
@@ -13,9 +19,9 @@ import {
   markForUpdate,
   markLastUpdate,
   prepForUpdate,
-  acknoweldgeMissedUpdates
+  acknoweldgeMissedUpdates,
 } from './traversals'
-import {defaultTypes, runTypeFunction, getTypeProp} from './types'
+import { defaultTypes, runTypeFunction } from './types'
 
 let process = flowAsync(4)(
   getAffectedNodes,
@@ -36,7 +42,7 @@ export let ContextTree = (
     snapshot = _.cloneDeep,
     debounce = 1,
     allowBlank = false,
-    debug //= true
+    debug, //= true
   } = {}
 ) => {
   let log = x => debug && console.log(x)
@@ -44,7 +50,7 @@ export let ContextTree = (
   let getNode = path => flat[encodePath(path)]
   let fakeRoot = { key: 'virtualFakeRoot', path: '', children: [tree] }
   let typeFunction = runTypeFunction(types)
-  let typeProp = getTypeProp(types)
+  // let typeProp = getTypeProp(types)
   let { validateLeaves, validateGroup } = validate(typeFunction('validate'))
 
   // Event Handling
@@ -58,7 +64,11 @@ export let ContextTree = (
     let hasValueMap = await mapValuesAsync(validateGroup, snapshot(flat))
 
     // Process from instigator parent up to fake root so affectedNodes are always calculated in context of a group
-    await bubbleUpAsync(process(event, hasValueMap, validateGroup), _.dropRight(1, path), flat)
+    await bubbleUpAsync(
+      process(event, hasValueMap, validateGroup),
+      _.dropRight(1, path),
+      flat
+    )
     await process(event, hasValueMap, validateGroup, fakeRoot, fakeRoot.path)
 
     // trickleDown((node, p) => console.log('down', p, path, node), path, tree)
@@ -68,7 +78,7 @@ export let ContextTree = (
     if (await shouldBlockUpdate()) return log('Blocked Search')
     let now = new Date().getTime()
     markLastUpdate(now)(tree)
-    let dto = serialize(snapshot(tree), {search: true})
+    let dto = serialize(snapshot(tree), { search: true })
     prepForUpdate(tree)
     processResponse(await service(dto, now))
   })
@@ -78,7 +88,7 @@ export let ContextTree = (
     let noUpdates = !_.some('markedForUpdate', leaves)
     return noUpdates || (!(tree.allowBlank || allowBlank) && allBlank)
   })
-  let processResponse = ({data, error}) => {
+  let processResponse = ({ data, error }) => {
     _.each(node => {
       let target = flat[node.path]
       if (!target) return
@@ -91,13 +101,13 @@ export let ContextTree = (
           path: decodePath(node.path),
           value: responseNode,
           node,
-          dontProcess: true
+          dontProcess: true,
         })
     }, flattenTree(data))
     if (error) tree.error = error
   }
 
-  let {add, remove, mutate} = actions({ getNode, flat, dispatch })
+  let { add, remove, mutate } = actions({ getNode, flat, dispatch })
   let subscribe = (f, cond = _.stubTrue) => {
     let index = subscribers.length
     // Potential improvement - optimize for `path` cases and store locally at node (assuming we have lots of subscriptions to different nodes)
@@ -116,7 +126,7 @@ export let ContextTree = (
 
     dispatch,
     subscribe,
-    serialize: () => serialize(snapshot(tree), {})
+    serialize: () => serialize(snapshot(tree), {}),
   }
 }
 export default ContextTree
@@ -128,7 +138,6 @@ export default ContextTree
 //  unify notify subscribers with dispatch/mutate
 // subscribe(path, fn, type), fn: (delta, node) -> null
 // OR! just `dispatch` the change type as 'update', then allow external subscriptions to dispatch
-
 
 // TODO
 // types (validate, to(Human)String, defaults?, hasContext)

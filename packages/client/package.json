@@ -1,14 +1,21 @@
 {
   "name": "contexture-client",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "asd",
   "main": "lib/contexture-client.js",
   "scripts": {
     "build": "webpack",
+    "lint": "eslint src test",
+    "lint-ci": "npm run lint -- -o lint-results.json -f json",
+    "lint-fix": "npm run lint -- --fix",
     "test": "babel-node ./node_modules/mocha/bin/_mocha",
     "test-watch": "chokidar 'src/*.js' 'test/*.js' -c 'npm t'",
     "coverage": "nyc --require babel-core/register node_modules/.bin/mocha test",
-    "cicoverage": "nyc --reporter=lcov --require babel-core/register node_modules/.bin/mocha test",
+    "test-ci": "babel-node ./node_modules/mocha/bin/_mocha --reporter json > test-results.json",
+    "cicoverage": "nyc --reporter=lcov --require babel-core/register node_modules/.bin/mocha test --reporter json > test-results.json",
+    "fmt": "prettier --write '{src,test}/**/*.*'",
+    "duti": "duti",
+    "duti:fix": "npm run lint-fix && npm run fmt",
     "prepublish": "webpack"
   },
   "repository": {
@@ -28,17 +35,26 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
-    "babel-eslint": "^8.0.1",
+    "babel-eslint": "^8.0.3",
     "babel-loader": "^7.1.2",
     "babel-preset-latest": "^6.24.1",
     "chai": "^4.1.2",
     "chokidar": "^1.7.0",
     "chokidar-cli": "^1.2.0",
+    "duti": "^0.9.3",
+    "eslint": "^4.12.1",
+    "eslint-config-smartprocure": "^1.1.0",
     "mocha": "^4.0.1",
     "nyc": "^11.2.1",
+    "prettier": "^1.8.2",
     "sinon": "^4.0.1",
     "sinon-chai": "^2.14.0",
     "webpack": "^3.8.1"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "es5"
   },
   "babel": {
     "presets": [

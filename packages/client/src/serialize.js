@@ -1,11 +1,11 @@
 import _ from 'lodash/fp'
-import {unsetOn} from 'futil-js'
-import {Tree} from './util/tree'
+import { unsetOn } from 'futil-js'
+import { Tree } from './util/tree'
 
 let isFilterOnly = x =>
   !x.children && (x.forceFilterOnly || !x.markedForUpdate || x.paused)
 
-export default (tree, {search} = {}) =>
+export default (tree, { search } = {}) =>
   _.flow(
     _.tap(
       Tree.walk(
@@ -21,7 +21,7 @@ export default (tree, {search} = {}) =>
             'paused',
             'missedUpdates',
             'hasValue',
-            ...(search ? [] : ['lastUpdateTime', 'context'])
+            ...(search ? [] : ['lastUpdateTime', 'context']),
           ])
         },
         x => {

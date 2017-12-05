@@ -1,4 +1,3 @@
-import _ from 'lodash/fp'
 import chai from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
@@ -10,134 +9,162 @@ describe('lib', () => {
   let tree = {
     key: 'root',
     join: 'and',
-    children: [{
-      key: 'analysis',
-      join: 'and',
-      children: [{
-        key: 'results',
-        type: 'results'
-      }]
-    }, {
-      key: 'criteria',
-      join: 'or',
-      children: [{
-        key: 'agencies',
-        field: 'Organization.Name',
-        type: 'facet',
-        data: {
-          values: ['City of Deerfield']
-        },
-        config: {
-          size: 24
-        }
-      }, {
-        key: 'mainQuery',
-        type: 'query',
-        data: {
-          query: 'cable internet~'
-        }
-      }, {
-        key: 'noValue',
-        type: 'facet',
-        data: {
-          values: []
-        }
-      }, {
-        key: 'uselessGroup',
+    children: [
+      {
+        key: 'analysis',
         join: 'and',
-        children: [{
-          key: 'uselessChild',
-          type: 'facet',
-          data: {
-            values: []
-          }
-        }]
-      }]
-    }]
+        children: [
+          {
+            key: 'results',
+            type: 'results',
+          },
+        ],
+      },
+      {
+        key: 'criteria',
+        join: 'or',
+        children: [
+          {
+            key: 'agencies',
+            field: 'Organization.Name',
+            type: 'facet',
+            data: {
+              values: ['City of Deerfield'],
+            },
+            config: {
+              size: 24,
+            },
+          },
+          {
+            key: 'mainQuery',
+            type: 'query',
+            data: {
+              query: 'cable internet~',
+            },
+          },
+          {
+            key: 'noValue',
+            type: 'facet',
+            data: {
+              values: [],
+            },
+          },
+          {
+            key: 'uselessGroup',
+            join: 'and',
+            children: [
+              {
+                key: 'uselessChild',
+                type: 'facet',
+                data: {
+                  values: [],
+                },
+              },
+            ],
+          },
+        ],
+      },
+    ],
   }
   describe('should generally work', () => {
     // TODO: make these generally self contained - some rely on previous test runs
     let tree = {
       key: 'root',
       join: 'and',
-      children: [{
-        key: 'filter'
-      }, {
-        key: 'results'
-      }]
+      children: [
+        {
+          key: 'filter',
+        },
+        {
+          key: 'results',
+        },
+      ],
     }
     let service = sinon.spy(() => ({
       data: {
         key: 'root',
-        children: [{
-          key: 'results',
-          context: {
-            count: 1,
-            results: [{
-              title: 'some result'
-            }]
+        children: [
+          {
+            key: 'results',
+            context: {
+              count: 1,
+              results: [
+                {
+                  title: 'some result',
+                },
+              ],
+            },
+            config: {
+              size: 20,
+            },
           },
-          config: {
-            size: 20
-          }
-        }, {
-          key: 'filter'
-        }]
-      }
+          {
+            key: 'filter',
+          },
+        ],
+      },
     }))
     let Tree = lib.ContextTree(tree, service)
     it('should generally mutate', async () => {
       await Tree.mutate(['root', 'filter'], {
         data: {
-          values: ['a']
-        }
+          values: ['a'],
+        },
       })
       expect(service).to.have.callCount(1)
       let [dto, now] = service.getCall(0).args
       expect(dto).to.deep.equal({
         key: 'root',
         join: 'and',
-        children: [{
-          key: 'filter',
-          data: {
-            values: ['a']
+        children: [
+          {
+            key: 'filter',
+            data: {
+              values: ['a'],
+            },
+            filterOnly: true,
           },
-          filterOnly: true
-        }, {
-          key: 'results',
-          lastUpdateTime: now
-        }]
+          {
+            key: 'results',
+            lastUpdateTime: now,
+          },
+        ],
       })
     })
     it('should update contexts', () => {
       expect(Tree.getNode(['root', 'results']).updating).to.be.false
       expect(Tree.getNode(['root', 'results']).context).to.deep.equal({
         count: 1,
-        results: [{
-          title: 'some result'
-        }]
+        results: [
+          {
+            title: 'some result',
+          },
+        ],
       })
     })
     it('should serialize cleanly', () => {
       expect(Tree.serialize()).to.deep.equal({
         key: 'root',
         join: 'and',
-        children: [{
-          key: 'filter',
-          data: {
-            values: ['a']
-          }
-        }, {
-          key: 'results'
-        }]
+        children: [
+          {
+            key: 'filter',
+            data: {
+              values: ['a'],
+            },
+          },
+          {
+            key: 'results',
+          },
+        ],
       })
     })
     it('should remove filterOnly nodes with no value', async () => {
       service.reset()
       await Tree.mutate(['root', 'filter'], {
         config: {
-          size: 10
-        }
+          size: 10,
+        },
       })
       expect(service).to.have.callCount(1)
       let [dto, now] = service.getCall(0).args
@@ -145,31 +172,33 @@ describe('lib', () => {
       expect(dto).to.deep.equal({
         key: 'root',
         join: 'and',
-        children: [{
-          key: 'filter',
-          data: {
-            values: ['a']
+        children: [
+          {
+            key: 'filter',
+            data: {
+              values: ['a'],
+            },
+            config: {
+              size: 10,
+            },
+            lastUpdateTime: now,
           },
-          config: {
-            size: 10
-          },
-          lastUpdateTime: now
-        }]
+        ],
       })
     })
     it('should block blank searches', async () => {
       service.reset()
       await Tree.mutate(['root', 'filter'], {
         data: {
-          values: []
-        }
+          values: [],
+        },
       })
       expect(service).to.have.callCount(0)
       Tree.getNode(['root']).allowBlank = true
       await Tree.mutate(['root', 'filter'], {
         data: {
-          values: []
-        }
+          values: [],
+        },
       })
       expect(service).to.have.callCount(1)
     })
@@ -178,7 +207,7 @@ describe('lib', () => {
       expect(service).to.have.callCount(0)
       await Tree.dispatch({
         path: ['root'],
-        type: 'notAType'
+        type: 'notAType',
       })
       expect(service).to.have.callCount(0)
     })
@@ -187,14 +216,14 @@ describe('lib', () => {
       service.reset()
       expect(service).to.have.callCount(0)
       Tree.getNode(['root', 'filter']).data = {
-        values: ['real val']
+        values: ['real val'],
       }
       await Tree.mutate(['root'], {
-        join: 'or'
+        join: 'or',
       })
       expect(service).to.have.callCount(0)
       await Tree.mutate(['root'], {
-        join: 'not'
+        join: 'not',
       })
       expect(service).to.have.callCount(1)
       // let [dto] = service.getCall(0).args
@@ -203,21 +232,21 @@ describe('lib', () => {
     it('should support add', async () => {
       service.reset()
       await Tree.add(['root'], {
-        key: 'newFilter'
+        key: 'newFilter',
       })
       expect(service).to.have.callCount(0)
       await Tree.add(['root'], {
         key: 'newFilterWithValue',
         data: {
-          values: 'asdf'
-        }
+          values: 'asdf',
+        },
       })
       expect(service).to.have.callCount(1)
     })
     it('should support remove', async () => {
       service.reset()
       await Tree.add(['root'], {
-        key: 'newEmptyFilter'
+        key: 'newEmptyFilter',
       })
       expect(service).to.have.callCount(0)
       expect(Tree.getNode(['root', 'newEmptyFilter'])).to.exist
@@ -228,13 +257,14 @@ describe('lib', () => {
       await Tree.add(['root'], {
         key: 'newFilterWithValueForRemoveTest',
         data: {
-          values: 'asdf'
-        }
+          values: 'asdf',
+        },
       })
       expect(service).to.have.callCount(1)
       expect(Tree.getNode(['root', 'newFilterWithValueForRemoveTest'])).to.exist
       await Tree.remove(['root', 'newFilterWithValueForRemoveTest'])
-      expect(Tree.getNode(['root', 'newFilterWithValueForRemoveTest'])).to.not.exist
+      expect(Tree.getNode(['root', 'newFilterWithValueForRemoveTest'])).to.not
+        .exist
       expect(service).to.have.callCount(2)
     })
     it('should support field changes')
@@ -243,26 +273,26 @@ describe('lib', () => {
     it('should (un)pause', async () => {
       service.reset()
       await Tree.mutate(['root', 'filter'], {
-        paused: true
+        paused: true,
       })
       // Unpause here shouldn't trigger update since it didn't miss anything
       await Tree.mutate(['root', 'filter'], {
-        paused: false
+        paused: false,
       })
       await Tree.mutate(['root', 'filter'], {
-        paused: true
+        paused: true,
       })
       await Tree.mutate(['root', 'filter'], {
         config: {
-          size: 42
-        }
+          size: 42,
+        },
       })
       expect(service).to.have.callCount(1)
       expect(Tree.getNode(['root', 'filter']).paused).to.be.true
       expect(Tree.getNode(['root', 'filter']).missedUpdates).to.be.true
       // Unpause here should trigger this to run
       await Tree.mutate(['root', 'filter'], {
-        paused: false
+        paused: false,
       })
       expect(service).to.have.callCount(2)
       expect(Tree.getNode(['root', 'filter']).paused).to.be.false
@@ -273,17 +303,20 @@ describe('lib', () => {
   it('should throw if no service is provided', async () => {
     let Tree = lib.ContextTree({
       key: 'root',
-      children: [{
-        key: 'filter'
-      }, {
-        key: 'results'
-      }]
+      children: [
+        {
+          key: 'filter',
+        },
+        {
+          key: 'results',
+        },
+      ],
     })
     try {
       await Tree.mutate(['root', 'filter'], {
         data: {
-          values: ['cable']
-        }
+          values: ['cable'],
+        },
       })
     } catch (e) {
       expect(e.message).to.equal('No update service provided!')
@@ -303,104 +336,124 @@ describe('lib', () => {
 
   // })
   it('should work', async () => {
-    let service = sinon.spy(() => ({data: {}}))
+    let service = sinon.spy(() => ({ data: {} }))
     let Tree = lib.ContextTree(tree, service)
 
     await Tree.mutate(['root', 'criteria', 'mainQuery'], {
       data: {
-        query: 'cable'
-      }
+        query: 'cable',
+      },
     })
     expect(service).to.have.callCount(1)
     let [dto, now] = service.getCall(0).args
     expect(dto).to.deep.equal({
       key: 'root',
       join: 'and',
-      children: [{
-        key: 'analysis',
-        join: 'and',
-        children: [{
-          key: 'results',
-          type: 'results',
-          lastUpdateTime: now
-        }],
-        lastUpdateTime: now
-      }, {
-        key: 'criteria',
-        join: 'or',
-        children: [{
-          key: 'agencies',
-          field: 'Organization.Name',
-          type: 'facet',
-          data: {
-            values: ['City of Deerfield']
-          },
-          config: {
-            size: 24
-          },
-          filterOnly: true
-        }, {
-          key: 'mainQuery',
-          type: 'query',
-          data: {
-            query: 'cable'
-          },
-          filterOnly: true
-        }]
-      }]
+      children: [
+        {
+          key: 'analysis',
+          join: 'and',
+          children: [
+            {
+              key: 'results',
+              type: 'results',
+              lastUpdateTime: now,
+            },
+          ],
+          lastUpdateTime: now,
+        },
+        {
+          key: 'criteria',
+          join: 'or',
+          children: [
+            {
+              key: 'agencies',
+              field: 'Organization.Name',
+              type: 'facet',
+              data: {
+                values: ['City of Deerfield'],
+              },
+              config: {
+                size: 24,
+              },
+              filterOnly: true,
+            },
+            {
+              key: 'mainQuery',
+              type: 'query',
+              data: {
+                query: 'cable',
+              },
+              filterOnly: true,
+            },
+          ],
+        },
+      ],
     })
   })
   it('should subscribe and unsubscribe', async () => {
     let subscriber = sinon.spy()
-    let Tree = lib.ContextTree({
-      key: 'root',
-      children: [{
-        key: 'filter'
-      }, {
-        key: 'results'
-      }]
-    }, () => ({
-      data: {
+    let Tree = lib.ContextTree(
+      {
         key: 'root',
-        children: [{
-          key: 'results',
-          context: {
-            results: [{
-              a: 1
-            }]
-          }
-        }]
-      }
-    }))
-    let subscription = Tree.subscribe(subscriber, {type:'update'})
+        children: [
+          {
+            key: 'filter',
+          },
+          {
+            key: 'results',
+          },
+        ],
+      },
+      () => ({
+        data: {
+          key: 'root',
+          children: [
+            {
+              key: 'results',
+              context: {
+                results: [
+                  {
+                    a: 1,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      })
+    )
+    let subscription = Tree.subscribe(subscriber, { type: 'update' })
     await Tree.mutate(['root', 'filter'], {
       data: {
-        value: 'as'
-      }
+        value: 'as',
+      },
     })
     expect(subscriber).to.have.callCount(1)
-    let {path, type, value} = subscriber.getCall(0).args[0]
+    let { path, type, value } = subscriber.getCall(0).args[0]
     expect(path).to.deep.equal(['root', 'results'])
     expect(type).to.equal('update')
     expect(value).to.deep.equal({
       context: {
-        results: [{
-          a: 1
-        }]
-      }
+        results: [
+          {
+            a: 1,
+          },
+        ],
+      },
     })
     subscription()
     await Tree.mutate(['root', 'filter'], {
       data: {
-        value: 'as'
-      }
+        value: 'as',
+      },
     })
     expect(subscriber).to.have.callCount(1)
-    Tree.subscribe(subscriber, {type:'update'})
+    Tree.subscribe(subscriber, { type: 'update' })
     await Tree.mutate(['root', 'filter'], {
       data: {
-        value: 'as'
-      }
+        value: 'as',
+      },
     })
     expect(subscriber).to.have.callCount(2)
   })
