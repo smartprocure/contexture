@@ -1,4 +1,7 @@
-﻿### 0.1.1
+﻿### 0.1.2
+- Added include and exclude to the results type.
+
+### 0.1.1
 - Fixed issues with percentileRange type
 
 ### 0.1.0

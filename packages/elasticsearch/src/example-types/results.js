@@ -24,6 +24,9 @@ module.exports = {
       },
       explain: context.config.explain,
     }
+    if (context.config.include || context.config.exclude) result._source = {}
+    if (context.config.include) result._source.includes = context.config.include
+    if (context.config.exclude) result._source.excludes = context.config.exclude
     let highlight =
       _.getOr(true, 'config.highlight', context) &&
       schema.elasticsearch.highlight
