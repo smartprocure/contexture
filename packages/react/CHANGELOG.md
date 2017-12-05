@@ -1,3 +1,7 @@
+﻿# 0.1.2
+
+* Fixed the remove function on the SearchRoot component
+
 # 0.1.1
 
 * Add `SearchRoot` multifield stories
