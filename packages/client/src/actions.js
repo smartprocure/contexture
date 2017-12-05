@@ -2,8 +2,9 @@ import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { mapAsync } from './util/promise'
 import { setPath, decodePath } from './util/tree'
+import { pullOn } from './util/futil'
 
-export default ({ getNode, flat, dispatch }) => ({
+export default ({getNode, flat, dispatch, snapshot, extend = F.extendOn }) => ({
   async add(path, value) {
     let target = getNode(path)
     setPath(value, null, [target])
@@ -14,14 +15,14 @@ export default ({ getNode, flat, dispatch }) => ({
   async remove(path) {
     let target = getNode(path)
     let parent = getNode(_.dropRight(1, path))
-    _.update('children', _.without(target), parent)
+    pullOn(target, parent.children)
     delete flat[target.path]
     return dispatch({ type: 'remove', path, previous: target })
   },
   async mutate(path, value) {
     let target = getNode(path)
-    let previous = _.cloneDeep(_.omit('children', target))
-    F.extendOn(target, value)
+    let previous = snapshot(_.omit('children', target))
+    extend(target, value)
     await mapAsync(
       async (value, type) => dispatch({ type, path, value, previous }),
       value

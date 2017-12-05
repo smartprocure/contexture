@@ -9,12 +9,10 @@ import {
 } from './util/tree'
 import { catches } from './util/futil'
 import { mapValuesAsync, flowAsync } from './util/promise'
-
 import { validate } from './validation'
 import { getAffectedNodes } from './reactors'
 import actions from './actions'
 import serialize from './serialize'
-// Named Traversals
 import {
   markForUpdate,
   markLastUpdate,
@@ -40,6 +38,7 @@ export let ContextTree = (
   {
     subscribers = [],
     snapshot = _.cloneDeep,
+    extend = F.extendOn,
     debounce = 1,
     allowBlank = false,
     debug, //= true
@@ -50,8 +49,7 @@ export let ContextTree = (
   let getNode = path => flat[encodePath(path)]
   let fakeRoot = { key: 'virtualFakeRoot', path: '', children: [tree] }
   let typeFunction = runTypeFunction(types)
-  // let typeProp = getTypeProp(types)
-  let { validateLeaves, validateGroup } = validate(typeFunction('validate'))
+  let { validateLeaves, validateGroup } = validate(_.flow(snapshot, typeFunction('validate')))
 
   // Event Handling
   let dispatch = async event => {
@@ -107,7 +105,6 @@ export let ContextTree = (
     if (error) tree.error = error
   }
 
-  let { add, remove, mutate } = actions({ getNode, flat, dispatch })
   let subscribe = (f, cond = _.stubTrue) => {
     let index = subscribers.length
     // Potential improvement - optimize for `path` cases and store locally at node (assuming we have lots of subscriptions to different nodes)
@@ -116,14 +113,9 @@ export let ContextTree = (
   }
 
   return {
+    ...actions({ getNode, flat, dispatch, snapshot, extend }),
     tree,
     getNode,
-
-    // Actions
-    add,
-    remove,
-    mutate,
-
     dispatch,
     subscribe,
     serialize: () => serialize(snapshot(tree), {}),
