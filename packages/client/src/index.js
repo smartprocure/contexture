@@ -106,13 +106,14 @@ export let ContextTree = (
     return () => subscribers.splice(index, 1)
   }
 
-  return _.extend(actions({ getNode, flat, dispatch, snapshot, extend }), {
+  return {
+    ...actions({ getNode, flat, dispatch, snapshot, extend }),
     tree,
     getNode,
     dispatch,
     subscribe,
     serialize: () => serialize(snapshot(tree), {})
-  })
+  }
 }
 export default ContextTree
 

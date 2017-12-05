@@ -15,350 +15,190 @@ let traverse = x => x && x.children && x.children.slice() // mobx needs slice
 let treeUtils = F.tree(traverse, keyPath)
 let ContextTreeMobx = (tree, service) => lib.ContextTree(tree, service, undefined, { snapshot: toJS, extend: extendObservable })
 
-describe('mobx', () => {
+describe('should generally work', () => {
+  // TODO: make these generally self contained - some rely on previous test runs
   let tree = observable({
     key: 'root',
     join: 'and',
     children: [{
-      key: 'analysis',
-      join: 'and',
-      children: [{
-        key: 'results',
-        type: 'results'
-      }]
+      key: 'filter',
+      data: {
+        values: null
+      }
     }, {
-      key: 'criteria',
-      join: 'or',
-      children: [{
-        key: 'agencies',
-        field: 'Organization.Name',
-        type: 'facet',
-        data: {
-          values: ['City of Deerfield']
-        },
-        config: {
-          size: 24
-        }
-      }, {
-        key: 'mainQuery',
-        type: 'query',
-        data: {
-          query: 'cable internet~'
-        }
-      }, {
-        key: 'noValue',
-        type: 'facet',
-        data: {
-          values: []
-        }
-      }, {
-        key: 'uselessGroup',
-        join: 'and',
-        children: [{
-          key: 'uselessChild',
-          type: 'facet',
-          data: {
-            values: []
-          }
-        }]
-      }]
+      key: 'results',
+      context: {
+        results: null
+      }
     }]
   })
+  let service = sinon.spy(() => ({
+    data: {
+      key: 'root',
+      children: [{
+        key: 'results',
+        context: {
+          count: 1,
+          results: [{
+            title: 'some result'
+          }]
+        },
+        config: {
+          size: 20
+        }
+      }, {
+        key: 'filter'
+      }]
+    }
+  }))
 
-  it('should work', async () => {
-    let service = sinon.spy(x => ({data: {}}))
-    let Tree = ContextTreeMobx(tree, service)
+  let Tree = ContextTreeMobx(tree, service)
+  let reactor = sinon.spy()
 
-    await Tree.mutate(['root', 'criteria', 'mainQuery'], {
+  it('should generally mutate and have updated contexts', async () => {
+    let disposer = reaction(() => toJS(tree), reactor)
+    await Tree.mutate(['root', 'filter'], {
       data: {
-        query: 'cable'
+        values: ['a']
       }
     })
-
     expect(service).to.have.callCount(1)
-
     let [dto, now] = service.getCall(0).args
-
     expect(dto).to.deep.equal({
       key: 'root',
       join: 'and',
       children: [{
-        key: 'analysis',
-        join: 'and',
-        children: [{
-          key: 'results',
-          type: 'results',
-          lastUpdateTime: now
-        }],
-        lastUpdateTime: now
-      }, {
-        key: 'criteria',
-        join: 'or',
-        children: [{
-          key: 'agencies',
-          field: 'Organization.Name',
-          type: 'facet',
-          data: {
-            values: ['City of Deerfield']
-          },
-          config: {
-            size: 24
-          },
-          filterOnly: true
-        }, {
-          key: 'mainQuery',
-          type: 'query',
-          data: {
-            query: 'cable'
-          },
-          filterOnly: true
-        }]
-      }]
-    })
-  })
-
-  it('should subscribe and unsubscribe', async () => {
-    let subscriber = sinon.spy()
-    let Tree = lib.ContextTree({
-      key: 'root',
-      children: [{
-        key: 'filter'
-      }, {
-        key: 'results'
-      }]
-    }, () => ({
-      data: {
-        key: 'root',
-        children: [{
-          key: 'results',
-          context: {
-            results: [{
-              a: 1
-            }]
-          }
-        }]
-      }
-    }))
-    let subscription = Tree.subscribe(subscriber, {type:'update'})
-    await Tree.mutate(['root', 'filter'], {
-      data: {
-        value: 'as'
-      }
-    })
-    expect(subscriber).to.have.callCount(1)
-    let {path, type, value} = subscriber.getCall(0).args[0]
-    expect(path).to.deep.equal(['root', 'results'])
-    expect(type).to.equal('update')
-    expect(value).to.deep.equal({
-      context: {
-        results: [{
-          a: 1
-        }]
-      }
-    })
-    subscription()
-    await Tree.mutate(['root', 'filter'], {
-      data: {
-        value: 'as'
-      }
-    })
-    expect(subscriber).to.have.callCount(1)
-    Tree.subscribe(subscriber, {type:'update'})
-    await Tree.mutate(['root', 'filter'], {
-      data: {
-        value: 'as'
-      }
-    })
-    expect(subscriber).to.have.callCount(2)
-  })
-
-  describe('should generally work', () => {
-    // TODO: make these generally self contained - some rely on previous test runs
-    let tree = observable({
-      key: 'root',
-      join: 'and',
-      children: [{
         key: 'filter',
-        // Don't seem to be able to get past these (1/2)
         data: {
-          values: null
-        }
+          values: ['a']
+        },
+        filterOnly: true
       }, {
         key: 'results',
-        // Don't seem to be able to get past these (2/2)
+        lastUpdateTime: now,
         context: {
           results: null
         }
       }]
     })
-    let service = sinon.spy(() => ({
+    expect(reactor).to.have.callCount(2)
+    disposer()
+    expect(treeUtils.lookup(['filter'], reactor.getCall(0).args[0])).to.deep.equal({
+      key: 'filter',
+      path: 'root->filter',
       data: {
-        key: 'root',
-        children: [{
-          key: 'results',
-          context: {
-            count: 1,
-            results: [{
-              title: 'some result'
-            }]
-          },
-          config: {
-            size: 20
-          }
-        }, {
-          key: 'filter'
-        }]
+        values: ['a']
+      },
+    })
+    // should update contexts
+    expect(Tree.getNode(['root', 'results']).updating).to.be.false
+    expect(toJS(Tree.getNode(['root', 'results']).context)).to.deep.equal({
+      count: 1,
+      results: [{
+        title: 'some result'
+      }]
+    })
+    expect(treeUtils.lookup(['results'], reactor.getCall(1).args[0]).context).to.deep.equal({
+      count: 1,
+      results: [{
+        title: 'some result'
+      }]
+    })
+  })
+
+  it('should support add', async () => {
+    reactor.reset()
+    service.reset()
+    let disposer = reaction(() => toJS(tree), reactor)
+    await Tree.add(['root'], {
+      key: 'newFilter'
+    })
+    expect(service).to.have.callCount(0)
+    await Tree.add(['root'], {
+      key: 'newFilterWithValue',
+      data: {
+        values: 'asdf'
       }
-    }))
-
-    let Tree = ContextTreeMobx(tree, service)
-    let reactor = sinon.spy()
-
-    it('should generally mutate and have updated contexts', async () => {
-      let disposer = reaction(() => toJS(tree), reactor)
-      await Tree.mutate(['root', 'filter'], {
-        data: {
-          values: ['a']
-        }
-      })
-      expect(service).to.have.callCount(1)
-      let [dto, now] = service.getCall(0).args
-      expect(dto).to.deep.equal({
-        key: 'root',
-        join: 'and',
-        children: [{
-          key: 'filter',
-          data: {
-            values: ['a']
-          },
-          filterOnly: true
-        }, {
-          key: 'results',
-          lastUpdateTime: now,
-          context: {
-            results: null
-          }
-        }]
-      })
-      expect(reactor).to.have.callCount(2)
-      disposer()
-      expect(treeUtils.lookup(['filter'], reactor.getCall(0).args[0])).to.deep.equal({
-        key: 'filter',
-        path: 'root->filter',
-        data: {
-          values: ['a']
-        },
-      })
-      // should update contexts
-      expect(Tree.getNode(['root', 'results']).updating).to.be.false
-      expect(toJS(Tree.getNode(['root', 'results']).context)).to.deep.equal({
-        count: 1,
-        results: [{
-          title: 'some result'
-        }]
-      })
-      expect(treeUtils.lookup(['results'], reactor.getCall(1).args[0]).context).to.deep.equal({
-        count: 1,
-        results: [{
-          title: 'some result'
-        }]
-      })
     })
-
-    it('should support add', async () => {
-      reactor.reset()
-      service.reset()
-      let disposer = reaction(() => toJS(tree), reactor)
-      await Tree.add(['root'], {
-        key: 'newFilter'
-      })
-      expect(service).to.have.callCount(0)
-      await Tree.add(['root'], {
-        key: 'newFilterWithValue',
-        data: {
-          values: 'asdf'
-        }
-      })
-      expect(service).to.have.callCount(1)
-      expect(reactor).to.have.callCount(3)
-      expect(treeUtils.lookup(['newFilterWithValue'], reactor.getCall(1).args[0])).to.deep.equal({
-        key: 'newFilterWithValue',
-        path: 'root->newFilterWithValue',
-        data: {
-          values: 'asdf'
-        },
-      })
-      disposer()
+    expect(service).to.have.callCount(1)
+    expect(reactor).to.have.callCount(3)
+    expect(treeUtils.lookup(['newFilterWithValue'], reactor.getCall(1).args[0])).to.deep.equal({
+      key: 'newFilterWithValue',
+      path: 'root->newFilterWithValue',
+      data: {
+        values: 'asdf'
+      },
     })
+    disposer()
+  })
 
-    it('should support remove', async () => {
-      reactor.reset()
-      service.reset()
-      let disposer = reaction(() => toJS(tree), reactor)
-      await Tree.add(['root'], {
-        key: 'newEmptyFilter'
-      })
-      expect(service).to.have.callCount(0)
-      expect(Tree.getNode(['root', 'newEmptyFilter'])).to.exist
-      await Tree.remove(['root', 'newEmptyFilter'])
-      expect(service).to.have.callCount(0)
-      expect(Tree.getNode(['root', 'newEmptyFilter'])).to.not.exist
-
-      await Tree.add(['root'], {
-        key: 'newFilterWithValueForRemoveTest',
-        data: {
-          values: 'asdf'
-        }
-      })
-      expect(service).to.have.callCount(1)
-      expect(Tree.getNode(['root', 'newFilterWithValueForRemoveTest'])).to.exist
-      await Tree.remove(['root', 'newFilterWithValueForRemoveTest'])
-      expect(Tree.getNode(['root', 'newFilterWithValueForRemoveTest'])).to.not.exist
-      expect(service).to.have.callCount(2)
-      expect(reactor).to.have.callCount(4)
-      expect(treeUtils.lookup(['newEmptyFilter'], reactor.getCall(0).args[0])).to.deep.equal({
-        key: 'newEmptyFilter',
-        path: 'root->newEmptyFilter',
-      })
-      expect(treeUtils.lookup(['newEmptyFilter'], reactor.getCall(1).args[0])).to.deep.equal({
-        key: 'newEmptyFilter',
-        path: 'root->newEmptyFilter',
-        hasValue: false
-      })
-      expect(_.omit(['lastUpdateTime'], treeUtils.lookup(['newEmptyFilter'], reactor.getCall(2).args[0]))).to.deep.equal({
-        key: 'newEmptyFilter',
-        path: 'root->newEmptyFilter',
-        hasValue: false,
-        updating: true,
-        markedForUpdate: false
-      })
-      expect(treeUtils.lookup(['newFilterWithValueForRemoveTest'], reactor.getCall(0).args[0])).to.equal(undefined)
-      expect(treeUtils.lookup(['newFilterWithValueForRemoveTest'], reactor.getCall(1).args[0])).to.deep.equal({
-        key: 'newFilterWithValueForRemoveTest',
-        path: 'root->newFilterWithValueForRemoveTest',
-        data: {
-          values: 'asdf'
-        },
-      })
-      expect(treeUtils.lookup(['newFilterWithValueForRemoveTest'], reactor.getCall(2).args[0])).to.deep.equal({
-        key: 'newFilterWithValueForRemoveTest',
-        path: 'root->newFilterWithValueForRemoveTest',
-        hasValue: true,
-        data: {
-          values: 'asdf'
-        },
-      })
-      expect(_.omit(['lastUpdateTime'], treeUtils.lookup(['newFilterWithValueForRemoveTest'], reactor.getCall(3).args[0]))).to.deep.equal({
-        key: 'newFilterWithValueForRemoveTest',
-        path: 'root->newFilterWithValueForRemoveTest',
-        hasValue: true,
-        markedForUpdate: false,
-        updating: true,
-        data: {
-          values: 'asdf'
-        },
-      })
-      disposer()
+  it('should support remove', async () => {
+    reactor.reset()
+    service.reset()
+    let disposer = reaction(() => toJS(tree), reactor)
+    await Tree.add(['root'], {
+      key: 'newEmptyFilter'
     })
+    expect(service).to.have.callCount(0)
+    expect(Tree.getNode(['root', 'newEmptyFilter'])).to.exist
+    await Tree.remove(['root', 'newEmptyFilter'])
+    expect(service).to.have.callCount(0)
+    expect(Tree.getNode(['root', 'newEmptyFilter'])).to.not.exist
+
+    await Tree.add(['root'], {
+      key: 'newFilterWithValueForRemoveTest',
+      data: {
+        values: 'asdf'
+      }
+    })
+    expect(service).to.have.callCount(1)
+    expect(Tree.getNode(['root', 'newFilterWithValueForRemoveTest'])).to.exist
+    await Tree.remove(['root', 'newFilterWithValueForRemoveTest'])
+    expect(Tree.getNode(['root', 'newFilterWithValueForRemoveTest'])).to.not.exist
+    expect(service).to.have.callCount(2)
+    expect(reactor).to.have.callCount(4)
+    expect(treeUtils.lookup(['newEmptyFilter'], reactor.getCall(0).args[0])).to.deep.equal({
+      key: 'newEmptyFilter',
+      path: 'root->newEmptyFilter',
+    })
+    expect(treeUtils.lookup(['newEmptyFilter'], reactor.getCall(1).args[0])).to.deep.equal({
+      key: 'newEmptyFilter',
+      path: 'root->newEmptyFilter',
+      hasValue: false
+    })
+    expect(_.omit(['lastUpdateTime'], treeUtils.lookup(['newEmptyFilter'], reactor.getCall(2).args[0]))).to.deep.equal({
+      key: 'newEmptyFilter',
+      path: 'root->newEmptyFilter',
+      hasValue: false,
+      updating: true,
+      markedForUpdate: false
+    })
+    expect(treeUtils.lookup(['newFilterWithValueForRemoveTest'], reactor.getCall(0).args[0])).to.equal(undefined)
+    expect(treeUtils.lookup(['newFilterWithValueForRemoveTest'], reactor.getCall(1).args[0])).to.deep.equal({
+      key: 'newFilterWithValueForRemoveTest',
+      path: 'root->newFilterWithValueForRemoveTest',
+      data: {
+        values: 'asdf'
+      },
+    })
+    expect(treeUtils.lookup(['newFilterWithValueForRemoveTest'], reactor.getCall(2).args[0])).to.deep.equal({
+      key: 'newFilterWithValueForRemoveTest',
+      path: 'root->newFilterWithValueForRemoveTest',
+      hasValue: true,
+      data: {
+        values: 'asdf'
+      },
+    })
+    expect(_.omit(['lastUpdateTime'], treeUtils.lookup(['newFilterWithValueForRemoveTest'], reactor.getCall(3).args[0]))).to.deep.equal({
+      key: 'newFilterWithValueForRemoveTest',
+      path: 'root->newFilterWithValueForRemoveTest',
+      hasValue: true,
+      markedForUpdate: false,
+      updating: true,
+      data: {
+        values: 'asdf'
+      },
+    })
+    disposer()
   })
 })
