@@ -1,4 +1,4 @@
-import {Tree} from './util/tree'
+import { Tree } from './util/tree'
 
 export let markForUpdate = Tree.walk(x => {
   x.markedForUpdate = true
