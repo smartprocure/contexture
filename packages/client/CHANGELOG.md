@@ -1,3 +1,7 @@
+﻿# 1.0.2
+
+* MobX support and tests.
+
 # 1.0.1
 
 * Add CI stuff

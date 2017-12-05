@@ -6,7 +6,7 @@ let hasContext = node => node.context
 
 let reactors = {
   others: (parent, instigator) =>
-    parent.join == 'or' ? [] : _.difference(parent.children, [instigator]),
+    parent.join === 'or' ? [] : _.difference(parent.children, [instigator]),
   only: (parent, instigator) => [instigator],
   all: parent => parent.children,
   async standardChange(
@@ -52,7 +52,7 @@ export let StandardReactors = {
       child => hasValueMap[child.path],
       instigator.children
     )
-    let joinInverted = instigator.join == 'not' || previous.join == 'not'
+    let joinInverted = instigator.join === 'not' || previous.join === 'not'
     if (childrenWithValues.length > 1 || joinInverted)
       return reactors.all(parent, instigator, previous, hasValueMap, ...args)
   },

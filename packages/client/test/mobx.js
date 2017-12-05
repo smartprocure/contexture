@@ -1,4 +1,4 @@
-import {flattenTree, keyPath} from '../src/util/tree'
+import {keyPath} from '../src/util/tree'
 import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import chai from 'chai'
@@ -6,7 +6,6 @@ import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import * as lib from '../src'
 import { observable, reaction, toJS, extendObservable } from 'mobx'
-import util from 'util'
 const expect = chai.expect
 chai.use(sinonChai)
 
