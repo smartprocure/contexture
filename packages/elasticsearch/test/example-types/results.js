@@ -73,7 +73,7 @@ describe('results', () => {
 
   it('should be able to filter fields with config.include', () => {
     F.extendOn(context.config, { include: 'field' })
-    return resultsTest(context, [
+    resultsTest(context, [
       _.extend(expectedCalls[0], {
         _source: {
           includes: 'field',
@@ -84,10 +84,11 @@ describe('results', () => {
       }),
     ])
     delete context.config.include
+    return
   })
   it('should be able to filter fields with config.exclude', () => {
     F.extendOn(context.config, { exclude: 'field' })
-    return resultsTest(context, [
+    resultsTest(context, [
       _.extend(expectedCalls[0], {
         _source: {
           excludes: 'field',
@@ -98,6 +99,7 @@ describe('results', () => {
       }),
     ])
     delete context.config.exclude
+    return
   })
 
   it('should sort on "_score: desc" with no sortField config', () =>
