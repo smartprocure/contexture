@@ -45,3 +45,7 @@ let visitPath = (fn, path, tree) => {
   let remainingPath = path.slice(1)
   if (remainingPath.length) visitPath(fn, remainingPath, node)
 }
+// let trickleDown = (f, path, tree) => {
+//   f(tree, path)
+//   visitPath(f, path.slice(1), tree)
+// }
