@@ -1,4 +1,7 @@
-﻿### 0.1.2
+﻿### 0.1.3
+- Using directory metagen instead of include-all.
+
+### 0.1.2
 - Added include and exclude to the results type.
 
 ### 0.1.1
