@@ -29,7 +29,7 @@ let ContextureClientBridge = (Types, Tree) => ({
     node.data.words.push({ word: 'hi' })
     Tree.add(tree.path.split('->'), node)
   },
-  remove: (tree, node) => Tree.remove(tree.path.split('->'), node),
+  remove: (tree, node) => Tree.remove(node.path.split('->')),
   join: (tree, join) => Tree.mutate(tree.path.split('->'), { join }),
 })
 
