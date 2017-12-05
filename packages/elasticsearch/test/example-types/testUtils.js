@@ -4,11 +4,7 @@ const Promise = require('bluebird')
 const F = require('futil-js')
 const _ = require('lodash/fp')
 const sinonChai = require('sinon-chai')
-const types = require('include-all')({
-  dirname: `${__dirname}/../../src/example-types`,
-  filter: /(.+)\.js$/,
-  optional: true,
-})
+const types = require('../../src/example-types/__all')
 
 let { expect } = require('chai')
 

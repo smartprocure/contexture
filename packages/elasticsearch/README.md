@@ -1,4 +1,4 @@
-# contexture-elasticsearch
+﻿# contexture-elasticsearch
 Elasticsearch Provider for Contexture
 
 ## Usage
@@ -106,3 +106,4 @@ let process = Contexture({
 ### `terms_stats`
 ### `text`
 ### `twoLevelMatch`
+
