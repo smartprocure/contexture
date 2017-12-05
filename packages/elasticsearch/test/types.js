@@ -2,7 +2,8 @@ let _ = require('lodash/fp')
 let Types = require('../src/types')
 let { expect } = require('chai')
 
-describe('All Example Types', () => {
+describe('All Example Types', function () {
+  this.timeout(5000)
   it('should load', () => {
     let types = Types()
     expect(_.keys(types)).to.deep.equal([
