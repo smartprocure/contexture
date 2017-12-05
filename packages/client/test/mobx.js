@@ -7,7 +7,6 @@ import sinonChai from 'sinon-chai'
 import * as lib from '../src'
 import { observable, reaction, toJS, extendObservable } from 'mobx'
 import util from 'util'
-import Promise from 'bluebird'
 const expect = chai.expect
 chai.use(sinonChai)
 
