@@ -1,4 +1,8 @@
-﻿# 1.0.3
+# 1.0.4
+
+* package.json description and formatting thanks to Duti.
+
+# 1.0.3
 
 * Added babel-plugin-transform-runtime.
 

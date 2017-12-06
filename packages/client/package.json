@@ -1,7 +1,7 @@
 {
   "name": "contexture-client",
-  "version": "1.0.3",
-  "description": "asd",
+  "version": "1.0.4",
+  "description": "The Contexture (aka ContextTree) Client",
   "main": "lib/contexture-client.js",
   "scripts": {
     "build": "webpack",
