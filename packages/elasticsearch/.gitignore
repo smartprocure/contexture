@@ -58,5 +58,3 @@ typings/
 .env
 
 package-lock.json
-
-src/example-types/__all.js
