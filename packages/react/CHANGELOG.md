@@ -1,4 +1,8 @@
-﻿# 0.1.2
+# 0.1.3
+
+* Making the src folder available to NPM.
+
+# 0.1.2
 
 * Fixed the remove function on the SearchRoot component
 
