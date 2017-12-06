@@ -49,7 +49,9 @@ export let ContextTree = (
   let getNode = path => flat[encodePath(path)]
   let fakeRoot = { key: 'virtualFakeRoot', path: '', children: [tree] }
   let typeFunction = runTypeFunction(types)
-  let { validateLeaves, validateGroup } = validate(_.flow(snapshot, typeFunction('validate')))
+  let { validateLeaves, validateGroup } = validate(
+    _.flow(snapshot, typeFunction('validate'))
+  )
 
   // Event Handling
   let dispatch = async event => {
