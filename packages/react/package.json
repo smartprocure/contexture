@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "React components for building contexture interfaces",
   "main": "index.js",
   "scripts": {
