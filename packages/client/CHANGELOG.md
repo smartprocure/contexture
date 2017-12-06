@@ -1,4 +1,8 @@
-﻿# 1.0.2
+﻿# 1.0.3
+
+* Added babel-plugin-transform-runtime.
+
+# 1.0.2
 
 * MobX support and tests.
 
