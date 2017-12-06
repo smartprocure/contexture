@@ -9,8 +9,8 @@ module.exports = {
   exists: require('./exists'),
   facet: require('./facet'),
   geo: require('./geo'),
-  matchCardinality: require('./matchCardinality'),
   groupedMetric: require('./groupedMetric'),
+  matchCardinality: require('./matchCardinality'),
   matchStats: require('./matchStats'),
   nLevelAggregation: require('./nLevelAggregation'),
   nonzeroClusters: require('./nonzeroClusters'),
@@ -27,7 +27,7 @@ module.exports = {
   terms: require('./terms'),
   termsDelta: require('./termsDelta'),
   termsStatsHits: require('./termsStatsHits'),
-  text: require('./text'),
   terms_stats: require('./terms_stats'),
+  text: require('./text'),
   twoLevelMatch: require('./twoLevelMatch'),
 }
