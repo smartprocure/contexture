@@ -7,6 +7,7 @@ describe('All Example Types', function() {
   it('should load', () => {
     let types = Types()
     expect(_.keys(types)).to.deep.equal([
+      '__all',
       'bool',
       'cardinality',
       'date',
