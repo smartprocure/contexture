@@ -1,4 +1,7 @@
-﻿### 0.1.3
+﻿### 0.1.4
+- Removed `__all` from .gitignore.
+
+### 0.1.3
 - Using directory metagen instead of include-all.
 
 ### 0.1.2

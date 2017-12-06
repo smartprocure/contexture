@@ -1,11 +1,10 @@
 {
   "name": "contexture-elasticsearch",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "ElasticSearch Provider for Contexture",
   "main": "src/index.js",
   "scripts": {
     "prepublish": "./node_modules/.bin/metagen src/example-types commonJS ./__all.js",
-    "pretest": "rm src/example-types/__all.js",
     "test": "./node_modules/mocha/bin/_mocha --recursive",
     "test-watch": "chokidar 'src/**/*.js' 'test/**/*.js' -c 'npm t'",
     "test-ci": "./node_modules/mocha/bin/_mocha --recursive --reporter json > test-results.json",
