@@ -1,6 +1,6 @@
 {
   "name": "contexture-client",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "asd",
   "main": "lib/contexture-client.js",
   "scripts": {
@@ -38,14 +38,15 @@
     "babel-eslint": "^8.0.3",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-latest": "^6.24.1",
     "chai": "^4.1.2",
     "chokidar": "^1.7.0",
     "chokidar-cli": "^1.2.0",
-    "mobx": "^3.3.2",
     "duti": "^0.9.3",
     "eslint": "^4.12.1",
     "eslint-config-smartprocure": "^1.1.0",
+    "mobx": "^3.3.2",
     "mocha": "^4.0.1",
     "nyc": "^11.2.1",
     "prettier": "^1.8.2",
@@ -63,7 +64,8 @@
       "latest"
     ],
     "plugins": [
-      "transform-object-rest-spread"
+      "transform-object-rest-spread",
+      "transform-runtime"
     ]
   }
 }
