@@ -1,3 +1,7 @@
+# 0.1.4
+
+* `npm run build` on `prepublish`.
+
 # 0.1.3
 
 * Making the src folder available to NPM.
