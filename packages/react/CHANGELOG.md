@@ -1,3 +1,7 @@
+﻿# 0.1.5
+
+* Moved mobx and mobx-react to peer dependencies.
+
 # 0.1.4
 
 * `npm run build` on `prepublish`.
