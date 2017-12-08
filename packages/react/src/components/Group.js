@@ -17,7 +17,6 @@ let GroupItem = FilterDragSource(args => {
     tree,
     index,
     state,
-    parentTree,
     root,
     isRoot,
     connectDragSource,
@@ -33,7 +32,7 @@ let GroupItem = FilterDragSource(args => {
     >
       {!(isRoot && tree.children.length === 1) && (
         <Operator
-          {...{ tree, child, root, parentTree, index, parent: state }}
+          {...{ ...args, parent: state }}
         />
       )}
       {child.join ? (
@@ -54,7 +53,7 @@ let Group = Component(
     }),
   }),
   args => {
-    let { tree, root, state, isRoot, parentTree } = args
+    let { tree, root, state, isRoot } = args
     return <Indentable tree={tree} indent={state.lens.wrapHover}>
       <div
         style={{
