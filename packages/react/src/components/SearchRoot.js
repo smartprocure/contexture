@@ -96,7 +96,9 @@ export let SearchRoot = DDContext(
     ({ tree, state, path, fields, types = {} }) => (
       <div style={{ background }}>
         <Group
-          tree={path ? treeUtils.lookup(path, tree.tree || tree) : tree.tree || tree}
+          tree={
+            path ? treeUtils.lookup(path, tree.tree || tree) : tree.tree || tree
+          }
           root={{
             ...state,
             types,

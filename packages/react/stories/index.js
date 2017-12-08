@@ -224,11 +224,7 @@ storiesOf('SearchRoot', module)
         join: 'and',
         children: [{ key: 'filter 1', type: 'query' }],
       })}
-      fields={[
-        'field1',
-        'field2',
-        { label: 'Field 3', value: 'field3' },
-      ]}
+      fields={['field1', 'field2', { label: 'Field 3', value: 'field3' }]}
       types={Types}
     />
   ))

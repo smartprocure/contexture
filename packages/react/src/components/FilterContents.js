@@ -8,10 +8,23 @@ let FilterContents = ({ node, root, fields }) => {
 
   return (
     <div style={{ lineHeight: '30px', minHeight: '34px' }}>
-      <select onChange={x => {
-        node.field = x.target.value
-      }}>
-        {fields ? _.map(x => <option key={x.value || x} value={x.value || x}>{x.label || x}</option>, fields) : <option>Select a Field</option>}
+      <select
+        onChange={x => {
+          node.field = x.target.value
+        }}
+      >
+        {fields ? (
+          _.map(
+            x => (
+              <option key={x.value || x} value={x.value || x}>
+                {x.label || x}
+              </option>
+            ),
+            fields
+          )
+        ) : (
+          <option>Select a Field</option>
+        )}
       </select>
       <select
         onChange={({ target: { value } }) => {

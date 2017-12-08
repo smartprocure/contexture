@@ -78,7 +78,16 @@ let Group = Component(
                 <FilterIndentTarget {...{ child, tree, root, index }} />
                 {/*<FilterMoveTarget index={index} tree={tree} />*/}
                 <GroupItem
-                  {...{ child, tree, fields, index, state, parentTree, isRoot, root }}
+                  {...{
+                    child,
+                    tree,
+                    fields,
+                    index,
+                    state,
+                    parentTree,
+                    isRoot,
+                    root,
+                  }}
                 />
                 {/*index !== (tree.children.length-1) &&*/ !child.children && (
                   <FilterMoveTarget {...{ index, tree, child, root }} />

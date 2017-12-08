@@ -73,11 +73,7 @@ export default {
         words: [],
       })
     },
-    fields: [
-      'field1',
-      'field2',
-      'field3'
-    ]
+    fields: ['field1', 'field2', 'field3'],
   },
   number: {
     label: 'Range',
