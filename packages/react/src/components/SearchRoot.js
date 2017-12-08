@@ -96,7 +96,7 @@ export let SearchRoot = DDContext(
         getNode: tree.getNode || getNode(tree)
       }),
     }),
-    ({ tree, state, path, types = {} }) => (
+    ({ state, path, types = {} }) => (
       <div style={{ background }}>
         <Group
           tree={state.getNode(path)}
