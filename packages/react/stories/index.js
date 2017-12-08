@@ -241,7 +241,7 @@ storiesOf('SearchRoot', module)
           },
         ],
       })}
-      path={['search']}
+      path={['root', 'search']}
       types={Types}
     />
   ))
