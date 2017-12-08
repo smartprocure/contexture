@@ -6,6 +6,7 @@ import { Component } from '../mobx-react-utils'
 import Group from './Group'
 import styles from '../styles'
 import { oppositeJoin } from '../searchUtils'
+import treeUtils from '../treeUtils'
 let { background } = styles
 let randomString = () =>
   Math.random()
@@ -83,6 +84,9 @@ let ObservableTreeBridge = Types => ({
   },
 })
 
+let getNode = tree => path =>
+  path ? treeUtils.lookup(_.tail(path), tree.tree || tree) : tree.tree || tree
+
 export let SearchRoot = DDContext(
   Component(
     (uselessStores, { types, tree }) => ({
@@ -90,12 +94,13 @@ export let SearchRoot = DDContext(
         adding: false,
         ...ObservableTreeBridge(types),
         ...(tree.tree && ContextureClientBridge(types, tree)),
+        getNode: tree.getNode || getNode(tree),
       }),
     }),
-    ({ tree, state, types = {} }) => (
+    ({ state, path, types = {} }) => (
       <div style={{ background }}>
         <Group
-          tree={tree.tree || tree}
+          tree={state.getNode(path)}
           root={{
             ...state,
             types,
