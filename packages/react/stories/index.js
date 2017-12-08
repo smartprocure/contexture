@@ -222,11 +222,13 @@ storiesOf('SearchRoot', module)
       tree={observable({
         key: 'root',
         join: 'and',
-        children: [{
-          key: 'search',
-          join: 'and',
-          children: [{ key: 'filter 1', type: 'query' }],
-        }],
+        children: [
+          {
+            key: 'search',
+            join: 'and',
+            children: [{ key: 'filter 1', type: 'query' }],
+          },
+        ],
       })}
       path={['search']}
       types={Types}
