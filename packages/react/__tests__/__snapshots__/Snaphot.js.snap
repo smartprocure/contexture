@@ -343,13 +343,9 @@ exports[`Storyshots FilterContents FilterContents 1`] = `
     }
   }
 >
-  <select
-    onChange={[Function]}
-  >
-    <input
-      type="text"
-    />
-  </select>
+  <input
+    type="text"
+  />
   <select
     onChange={[Function]}
     value="test"
@@ -481,13 +477,9 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                           }
                         }
                       >
-                        <select
-                          onChange={[Function]}
-                        >
-                          <input
-                            type="text"
-                          />
-                        </select>
+                        <input
+                          type="text"
+                        />
                         <select
                           onChange={[Function]}
                           value="query"
@@ -719,13 +711,9 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                       }
                                     }
                                   >
-                                    <select
-                                      onChange={[Function]}
-                                    >
-                                      <input
-                                        type="text"
-                                      />
-                                    </select>
+                                    <input
+                                      type="text"
+                                    />
                                     <select
                                       onChange={[Function]}
                                       value="query"
@@ -896,13 +884,9 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                       }
                                     }
                                   >
-                                    <select
-                                      onChange={[Function]}
-                                    >
-                                      <input
-                                        type="text"
-                                      />
-                                    </select>
+                                    <input
+                                      type="text"
+                                    />
                                     <select
                                       onChange={[Function]}
                                       value="query"
@@ -1135,13 +1119,9 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                                   }
                                                 }
                                               >
-                                                <select
-                                                  onChange={[Function]}
-                                                >
-                                                  <input
-                                                    type="text"
-                                                  />
-                                                </select>
+                                                <input
+                                                  type="text"
+                                                />
                                                 <select
                                                   onChange={[Function]}
                                                   value="facet"
@@ -1313,13 +1293,9 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                                   }
                                                 }
                                               >
-                                                <select
-                                                  onChange={[Function]}
-                                                >
-                                                  <input
-                                                    type="text"
-                                                  />
-                                                </select>
+                                                <input
+                                                  type="text"
+                                                />
                                                 <select
                                                   onChange={[Function]}
                                                   value="query"
@@ -1502,13 +1478,9 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                           }
                         }
                       >
-                        <select
-                          onChange={[Function]}
-                        >
-                          <input
-                            type="text"
-                          />
-                        </select>
+                        <input
+                          type="text"
+                        />
                         <select
                           onChange={[Function]}
                           value="query"
@@ -1760,13 +1732,9 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                       }
                                     }
                                   >
-                                    <select
-                                      onChange={[Function]}
-                                    >
-                                      <input
-                                        type="text"
-                                      />
-                                    </select>
+                                    <input
+                                      type="text"
+                                    />
                                     <select
                                       onChange={[Function]}
                                       value="number"
@@ -1938,13 +1906,9 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                       }
                                     }
                                   >
-                                    <select
-                                      onChange={[Function]}
-                                    >
-                                      <input
-                                        type="text"
-                                      />
-                                    </select>
+                                    <input
+                                      type="text"
+                                    />
                                     <select
                                       onChange={[Function]}
                                       value="query"
@@ -2258,13 +2222,9 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                                   }
                                                 }
                                               >
-                                                <select
-                                                  onChange={[Function]}
-                                                >
-                                                  <input
-                                                    type="text"
-                                                  />
-                                                </select>
+                                                <input
+                                                  type="text"
+                                                />
                                                 <select
                                                   onChange={[Function]}
                                                   value="query"
@@ -2436,13 +2396,9 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                                   }
                                                 }
                                               >
-                                                <select
-                                                  onChange={[Function]}
-                                                >
-                                                  <input
-                                                    type="text"
-                                                  />
-                                                </select>
+                                                <input
+                                                  type="text"
+                                                />
                                                 <select
                                                   onChange={[Function]}
                                                   value="text"
@@ -2620,13 +2576,9 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                       }
                                     }
                                   >
-                                    <select
-                                      onChange={[Function]}
-                                    >
-                                      <input
-                                        type="text"
-                                      />
-                                    </select>
+                                    <input
+                                      type="text"
+                                    />
                                     <select
                                       onChange={[Function]}
                                       value={undefined}
@@ -2808,13 +2760,9 @@ exports[`Storyshots Group One Filter 1`] = `
                           }
                         }
                       >
-                        <select
-                          onChange={[Function]}
-                        >
-                          <input
-                            type="text"
-                          />
-                        </select>
+                        <input
+                          type="text"
+                        />
                         <select
                           onChange={[Function]}
                           value="query"
@@ -3557,13 +3505,9 @@ exports[`Storyshots Rule index 1`] = `
               }
             }
           >
-            <select
-              onChange={[Function]}
-            >
-              <input
-                type="text"
-              />
-            </select>
+            <input
+              type="text"
+            />
             <select
               onChange={[Function]}
               value="test"
@@ -3755,13 +3699,9 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                           }
                         }
                       >
-                        <select
-                          onChange={[Function]}
-                        >
-                          <input
-                            type="text"
-                          />
-                        </select>
+                        <input
+                          type="text"
+                        />
                         <select
                           onChange={[Function]}
                           value="query"
@@ -4017,13 +3957,9 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                       }
                                     }
                                   >
-                                    <select
-                                      onChange={[Function]}
-                                    >
-                                      <input
-                                        type="text"
-                                      />
-                                    </select>
+                                    <input
+                                      type="text"
+                                    />
                                     <select
                                       onChange={[Function]}
                                       value="query"
@@ -4218,13 +4154,9 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                       }
                                     }
                                   >
-                                    <select
-                                      onChange={[Function]}
-                                    >
-                                      <input
-                                        type="text"
-                                      />
-                                    </select>
+                                    <input
+                                      type="text"
+                                    />
                                     <select
                                       onChange={[Function]}
                                       value="query"
@@ -4481,13 +4413,9 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                                   }
                                                 }
                                               >
-                                                <select
-                                                  onChange={[Function]}
-                                                >
-                                                  <input
-                                                    type="text"
-                                                  />
-                                                </select>
+                                                <input
+                                                  type="text"
+                                                />
                                                 <select
                                                   onChange={[Function]}
                                                   value="facet"
@@ -4704,13 +4632,9 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                                   }
                                                 }
                                               >
-                                                <select
-                                                  onChange={[Function]}
-                                                >
-                                                  <input
-                                                    type="text"
-                                                  />
-                                                </select>
+                                                <input
+                                                  type="text"
+                                                />
                                                 <select
                                                   onChange={[Function]}
                                                   value="query"
@@ -4917,13 +4841,9 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                           }
                         }
                       >
-                        <select
-                          onChange={[Function]}
-                        >
-                          <input
-                            type="text"
-                          />
-                        </select>
+                        <input
+                          type="text"
+                        />
                         <select
                           onChange={[Function]}
                           value="query"
@@ -5199,13 +5119,9 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                       }
                                     }
                                   >
-                                    <select
-                                      onChange={[Function]}
-                                    >
-                                      <input
-                                        type="text"
-                                      />
-                                    </select>
+                                    <input
+                                      type="text"
+                                    />
                                     <select
                                       onChange={[Function]}
                                       value="number"
@@ -5406,13 +5322,9 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                       }
                                     }
                                   >
-                                    <select
-                                      onChange={[Function]}
-                                    >
-                                      <input
-                                        type="text"
-                                      />
-                                    </select>
+                                    <input
+                                      type="text"
+                                    />
                                     <select
                                       onChange={[Function]}
                                       value="query"
@@ -5750,13 +5662,9 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                                   }
                                                 }
                                               >
-                                                <select
-                                                  onChange={[Function]}
-                                                >
-                                                  <input
-                                                    type="text"
-                                                  />
-                                                </select>
+                                                <input
+                                                  type="text"
+                                                />
                                                 <select
                                                   onChange={[Function]}
                                                   value="query"
@@ -5952,13 +5860,9 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                                   }
                                                 }
                                               >
-                                                <select
-                                                  onChange={[Function]}
-                                                >
-                                                  <input
-                                                    type="text"
-                                                  />
-                                                </select>
+                                                <input
+                                                  type="text"
+                                                />
                                                 <select
                                                   onChange={[Function]}
                                                   value="text"
@@ -6217,13 +6121,9 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                       }
                                     }
                                   >
-                                    <select
-                                      onChange={[Function]}
-                                    >
-                                      <input
-                                        type="text"
-                                      />
-                                    </select>
+                                    <input
+                                      type="text"
+                                    />
                                     <select
                                       onChange={[Function]}
                                       value="query"
@@ -6451,13 +6351,9 @@ exports[`Storyshots SearchRoot One Filter 1`] = `
                           }
                         }
                       >
-                        <select
-                          onChange={[Function]}
-                        >
-                          <input
-                            type="text"
-                          />
-                        </select>
+                        <input
+                          type="text"
+                        />
                         <select
                           onChange={[Function]}
                           value="query"
@@ -6679,13 +6575,9 @@ exports[`Storyshots SearchRoot One Filter on a misplaced root 1`] = `
                           }
                         }
                       >
-                        <select
-                          onChange={[Function]}
-                        >
-                          <input
-                            type="text"
-                          />
-                        </select>
+                        <input
+                          type="text"
+                        />
                         <select
                           onChange={[Function]}
                           value="query"
@@ -6913,12 +6805,12 @@ exports[`Storyshots SearchRoot One Filter with fields 1`] = `
                           <option
                             value="field1"
                           >
-                            field1
+                            Field 1
                           </option>
                           <option
                             value="field2"
                           >
-                            field2
+                            Field 2
                           </option>
                           <option
                             value="field3"

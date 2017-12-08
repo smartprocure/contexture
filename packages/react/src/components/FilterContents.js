@@ -1,3 +1,4 @@
+import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
 import { Component } from '../mobx-react-utils'
@@ -8,22 +9,22 @@ let FilterContents = ({ node, root, fields }) => {
 
   return (
     <div style={{ lineHeight: '30px', minHeight: '34px' }}>
-      <select
-        onChange={x => root.mutate(node, { field: x.target.value })}
-      >
-        {fields ? (
-          _.map(
-            x => (
-              <option key={x.value || x} value={x.value || x}>
-                {x.label || x}
+      {fields ? (
+        <select
+          onChange={x => root.mutate(node, { field: x.target.value })}
+        >{
+          _.map(({ value, label })=> (
+              <option key={value} value={value}>
+                {label}
               </option>
             ),
-            fields
+            F.autoLabelOptions(fields)
           )
-        ) : (
-          <input type='text' />
-        )}
-      </select>
+        }
+        </select>
+      ) : (
+        <input type='text' />
+      )}
       <select
         onChange={({ target: { value } }) => {
           root.typeChange(root.types, node, value)
