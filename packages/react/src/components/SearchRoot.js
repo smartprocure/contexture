@@ -84,7 +84,8 @@ let ObservableTreeBridge = Types => ({
   },
 })
 
-let getNode = tree => path => path ? treeUtils.lookup(_.tail(path), tree.tree || tree) : tree.tree || tree
+let getNode = tree => path =>
+  path ? treeUtils.lookup(_.tail(path), tree.tree || tree) : tree.tree || tree
 
 export let SearchRoot = DDContext(
   Component(
@@ -93,7 +94,7 @@ export let SearchRoot = DDContext(
         adding: false,
         ...ObservableTreeBridge(types),
         ...(tree.tree && ContextureClientBridge(types, tree)),
-        getNode: tree.getNode || getNode(tree)
+        getNode: tree.getNode || getNode(tree),
       }),
     }),
     ({ state, path, types = {} }) => (
