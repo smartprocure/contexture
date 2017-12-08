@@ -11,6 +11,7 @@ let Rule = ({
   node,
   tree,
   root,
+  fields,
   connectDragSource,
   // connectDragPreview,
   isDragging,
@@ -32,7 +33,7 @@ let Rule = ({
           }}
           {...hover(state.lens.ruleHover)}
         >
-          <FilterContents {...{ node, root, tree }} />
+          <FilterContents {...{ node, root, tree, fields }} />
           <div
             style={{
               ...(state.ruleHover || { visibility: 'hidden' }),

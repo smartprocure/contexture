@@ -19,6 +19,7 @@ let GroupItem = FilterDragSource(
     state,
     parentTree,
     root,
+    fields,
     isRoot,
     connectDragSource,
     //connectDragPreview, isDragging
@@ -39,7 +40,7 @@ let GroupItem = FilterDragSource(
         {child.join ? (
           <Group tree={child} root={root} parentTree={tree} />
         ) : (
-          <Rule node={child} tree={tree} root={root} />
+          <Rule {...{ node: child, tree, root, fields }} />
         )}
       </div>
     )
@@ -52,7 +53,7 @@ let Group = Component(
       removeHover: false,
     }),
   }),
-  ({ tree, root, state, isRoot, parentTree }) => (
+  ({ tree, root, state, fields, isRoot, parentTree }) => (
     <Indentable tree={tree} indent={state.lens.wrapHover}>
       <div
         style={{
@@ -77,7 +78,7 @@ let Group = Component(
                 <FilterIndentTarget {...{ child, tree, root, index }} />
                 {/*<FilterMoveTarget index={index} tree={tree} />*/}
                 <GroupItem
-                  {...{ child, tree, index, state, parentTree, isRoot, root }}
+                  {...{ child, tree, fields, index, state, parentTree, isRoot, root }}
                 />
                 {/*index !== (tree.children.length-1) &&*/ !child.children && (
                   <FilterMoveTarget {...{ index, tree, child, root }} />

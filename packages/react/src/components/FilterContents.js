@@ -2,19 +2,16 @@ import _ from 'lodash/fp'
 import React from 'react'
 import { Component } from '../mobx-react-utils'
 
-let FilterContents = ({ node, root }) => {
+let FilterContents = ({ node, root, fields }) => {
   let type = root.types[node.type] || {}
   let TypeComponent = type.Component
-  // observe(node, 'data', (change) => {
-  //   console.log(change.type, change.name, "from", change.oldValue, "to", change.object[change.name]);
-  // })
-
-  // autorun(() => root.dispatchTest(node.data))
 
   return (
     <div style={{ lineHeight: '30px', minHeight: '34px' }}>
-      <select>
-        <option>Select a Field</option>
+      <select onChange={x => {
+        node.field = x.target.value
+      }}>
+        {fields ? _.map(x => <option key={x.value || x} value={x.value || x}>{x.label || x}</option>, fields) : <option>Select a Field</option>}
       </select>
       <select
         onChange={({ target: { value } }) => {
