@@ -11,40 +11,40 @@ import { FilterIndentTarget } from './DragDrop/IndentTarget'
 import { FilterMoveTarget } from './DragDrop/MoveTargets'
 let { background } = styles
 
-let GroupItem = FilterDragSource(
-  ({
+let GroupItem = FilterDragSource(args => {
+  let {
     child,
     tree,
     index,
     state,
     parentTree,
     root,
-    fields,
     isRoot,
     connectDragSource,
     //connectDragPreview, isDragging
-  }) =>
-    connectDragSource(
-      <div
-        style={{
-          ...styles.dFlex,
-          ...(index === tree.children.length - 1 &&
-            !root.adding && { background }),
-        }}
-      >
-        {!(isRoot && tree.children.length === 1) && (
-          <Operator
-            {...{ tree, child, root, parentTree, index, parent: state }}
-          />
-        )}
-        {child.join ? (
-          <Group tree={child} root={root} parentTree={tree} />
-        ) : (
-          <Rule {...{ node: child, tree, root, fields }} />
-        )}
-      </div>
-    )
-)
+  } = args
+  return connectDragSource(
+    <div
+      style={{
+        ...styles.dFlex,
+        ...(index === tree.children.length - 1 &&
+          !root.adding && { background }),
+      }}
+    >
+      {!(isRoot && tree.children.length === 1) && (
+        <Operator
+          {...{ tree, child, root, parentTree, index, parent: state }}
+        />
+      )}
+      {child.join ? (
+        <Group tree={child} root={root} parentTree={tree} />
+      ) : (
+        <Rule {...{...args, node: child}} />
+      )}
+    </div>
+  )
+})
+
 let Group = Component(
   () => ({
     state: lenservable({
@@ -53,8 +53,9 @@ let Group = Component(
       removeHover: false,
     }),
   }),
-  ({ tree, root, state, fields, isRoot, parentTree }) => (
-    <Indentable tree={tree} indent={state.lens.wrapHover}>
+  args => {
+    let { tree, root, state, isRoot, parentTree } = args
+    return <Indentable tree={tree} indent={state.lens.wrapHover}>
       <div
         style={{
           ...styles.conditions,
@@ -75,22 +76,13 @@ let Group = Component(
           {F.map(
             (child, index) => (
               <div key={child.key}>
-                <FilterIndentTarget {...{ child, tree, root, index }} />
+                <FilterIndentTarget {...{...args, child, index}} />
                 {/*<FilterMoveTarget index={index} tree={tree} />*/}
                 <GroupItem
-                  {...{
-                    child,
-                    tree,
-                    fields,
-                    index,
-                    state,
-                    parentTree,
-                    isRoot,
-                    root,
-                  }}
+                  {...{...args, child, index}}
                 />
                 {/*index !== (tree.children.length-1) &&*/ !child.children && (
-                  <FilterMoveTarget {...{ index, tree, child, root }} />
+                  <FilterMoveTarget {...{...args, child, index}} />
                 )}
               </div>
             ),
@@ -113,7 +105,7 @@ let Group = Component(
         </div>
       </div>
     </Indentable>
-  ),
+  },
   'Group'
 )
 

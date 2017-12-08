@@ -9,9 +9,7 @@ let FilterContents = ({ node, root, fields }) => {
   return (
     <div style={{ lineHeight: '30px', minHeight: '34px' }}>
       <select
-        onChange={x => {
-          node.field = x.target.value
-        }}
+        onChange={x => root.mutate(node, { field: x.target.value })}
       >
         {fields ? (
           _.map(
@@ -23,7 +21,7 @@ let FilterContents = ({ node, root, fields }) => {
             fields
           )
         ) : (
-          <option>Select a Field</option>
+          <input type='text' />
         )}
       </select>
       <select

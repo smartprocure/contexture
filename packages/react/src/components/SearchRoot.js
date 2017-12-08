@@ -32,6 +32,7 @@ let ContextureClientBridge = (Types, Tree) => ({
   },
   remove: (tree, node) => Tree.remove(node.path.split('->')),
   join: (tree, join) => Tree.mutate(tree.path.split('->'), { join }),
+  mutate: (tree, node, changes) => Tree.mutate(node.path.split('->'), changes),
 })
 
 // Basic observable tree bridge
@@ -43,6 +44,7 @@ let ObservableTreeBridge = Types => ({
     })
     tree.children.push(node)
   },
+  mutate: (tree, node, changes) => F.extendOn(node, changes),
   remove(tree, node) {
     tree.children.remove(node)
   },
