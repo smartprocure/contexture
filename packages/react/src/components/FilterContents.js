@@ -10,20 +10,18 @@ let FilterContents = ({ node, root, fields }) => {
   return (
     <div style={{ lineHeight: '30px', minHeight: '34px' }}>
       {fields ? (
-        <select
-          onChange={x => root.mutate(node, { field: x.target.value })}
-        >{
-          _.map(({ value, label })=> (
+        <select onChange={x => root.mutate(node, { field: x.target.value })}>
+          {_.map(
+            ({ value, label }) => (
               <option key={value} value={value}>
                 {label}
               </option>
             ),
             F.autoLabelOptions(fields)
-          )
-        }
+          )}
         </select>
       ) : (
-        <input type='text' />
+        <input type="text" />
       )}
       <select
         onChange={({ target: { value } }) => {

@@ -31,14 +31,12 @@ let GroupItem = FilterDragSource(args => {
       }}
     >
       {!(isRoot && tree.children.length === 1) && (
-        <Operator
-          {...{ ...args, parent: state }}
-        />
+        <Operator {...{ ...args, parent: state }} />
       )}
       {child.join ? (
         <Group tree={child} root={root} parentTree={tree} />
       ) : (
-        <Rule {...{...args, node: child}} />
+        <Rule {...{ ...args, node: child }} />
       )}
     </div>
   )
@@ -54,56 +52,56 @@ let Group = Component(
   }),
   args => {
     let { tree, root, state, isRoot } = args
-    return <Indentable tree={tree} indent={state.lens.wrapHover}>
-      <div
-        style={{
-          ...styles.conditions,
-          ...(!isRoot && styles.w100),
-          ...styles.bdJoin(tree),
-          ...(state.removeHover && {
-            ...styles.bgStriped,
-            borderColor: background,
-          }),
-        }}
-      >
+    return (
+      <Indentable tree={tree} indent={state.lens.wrapHover}>
         <div
           style={{
-            ...styles.conditionsInner,
-            ...(state.removeHover && { opacity: 0.25 }),
+            ...styles.conditions,
+            ...(!isRoot && styles.w100),
+            ...styles.bdJoin(tree),
+            ...(state.removeHover && {
+              ...styles.bgStriped,
+              borderColor: background,
+            }),
           }}
         >
-          {F.map(
-            (child, index) => (
-              <div key={child.key}>
-                <FilterIndentTarget {...{...args, child, index}} />
-                {/*<FilterMoveTarget index={index} tree={tree} />*/}
-                <GroupItem
-                  {...{...args, child, index}}
-                />
-                {/*index !== (tree.children.length-1) &&*/ !child.children && (
-                  <FilterMoveTarget {...{...args, child, index}} />
-                )}
-              </div>
-            ),
-            tree.children.slice()
-          )}
-          {/*<FilterMoveTarget index={tree.children.length} tree={tree} /> */}
-          {root.adding && (
-            <AddPreview
-              onClick={() => {
-                root.add(tree)
-              }}
-              join={tree.join}
-              style={{
-                marginLeft: 0,
-                borderTopLeftRadius: 5,
-                borderBottomLeftRadius: 5,
-              }}
-            />
-          )}
+          <div
+            style={{
+              ...styles.conditionsInner,
+              ...(state.removeHover && { opacity: 0.25 }),
+            }}
+          >
+            {F.map(
+              (child, index) => (
+                <div key={child.key}>
+                  <FilterIndentTarget {...{ ...args, child, index }} />
+                  {/*<FilterMoveTarget index={index} tree={tree} />*/}
+                  <GroupItem {...{ ...args, child, index }} />
+                  {/*index !== (tree.children.length-1) &&*/ !child.children && (
+                    <FilterMoveTarget {...{ ...args, child, index }} />
+                  )}
+                </div>
+              ),
+              tree.children.slice()
+            )}
+            {/*<FilterMoveTarget index={tree.children.length} tree={tree} /> */}
+            {root.adding && (
+              <AddPreview
+                onClick={() => {
+                  root.add(tree)
+                }}
+                join={tree.join}
+                style={{
+                  marginLeft: 0,
+                  borderTopLeftRadius: 5,
+                  borderBottomLeftRadius: 5,
+                }}
+              />
+            )}
+          </div>
         </div>
-      </div>
-    </Indentable>
+      </Indentable>
+    )
   },
   'Group'
 )
