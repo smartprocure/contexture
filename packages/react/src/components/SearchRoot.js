@@ -1,5 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
+import * as F from 'futil-js'
 import { observable, action } from 'mobx'
 import DDContext from './DragDrop/DDContext'
 import { Component } from '../mobx-react-utils'
@@ -83,6 +84,10 @@ let ObservableTreeBridge = Types => ({
   },
 })
 
+export let traverse = x => x && x.children && x.children.slice() // mobx needs slice
+export let keyPath = key => (_.isString(key) ? { key } : key)
+export let treeUtils = F.tree(traverse, keyPath)
+
 export let SearchRoot = DDContext(
   Component(
     (uselessStores, { types, tree }) => ({
@@ -92,10 +97,10 @@ export let SearchRoot = DDContext(
         ...(tree.tree && ContextureClientBridge(types, tree)),
       }),
     }),
-    ({ tree, state, types = {} }) => (
+    ({ tree, state, path, types = {} }) => (
       <div style={{ background }}>
         <Group
-          tree={tree.tree || tree}
+          tree={path ? treeUtils.lookup(path, tree.tree || tree) : tree.tree || tree}
           root={{
             ...state,
             types,
