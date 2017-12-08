@@ -1,4 +1,8 @@
-﻿# 0.1.5
+﻿# 0.1.6
+
+* Allowing specific paths to be used instead of the search root.
+
+# 0.1.5
 
 * Moved mobx and mobx-react to peer dependencies.
 
