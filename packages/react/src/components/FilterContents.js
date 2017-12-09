@@ -21,7 +21,7 @@ let FilterContents = ({ node, root, fields }) => {
           )}
         </select>
       ) : (
-        <input type="text" />
+        <input type="text" onChange={x => root.mutate(node, { field: x.target.value })} />
       )}
       <select
         onChange={({ target: { value } }) => {
