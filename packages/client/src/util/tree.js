@@ -22,7 +22,7 @@ export let setPath = (node, i, [{ path = '' } = {}] = []) => {
   node.path = encodePath([path, _.get('key', node)])
 }
 export let flattenTree = Tree.reduce((result, node, ...args) => {
-  setPath(node, ...args)
+  if (!node.path) setPath(node, ...args)
   return _.set(node.path, node, result)
 }, {})
 
