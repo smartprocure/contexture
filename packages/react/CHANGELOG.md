@@ -1,4 +1,10 @@
-﻿# 0.1.6
+﻿# 0.1.7
+
+* Fixes after 0.1.6
+* Made the facet component actually work.
+* Made the query component actually work.
+
+# 0.1.6
 
 * Allowing specific paths to be used instead of the search root.
 * Making the field picker work.

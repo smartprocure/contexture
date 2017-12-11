@@ -31,9 +31,9 @@ let ContextureClientBridge = (Types, Tree) => ({
     node.data.words.push({ word: 'hi' })
     Tree.add(tree.path.split('->'), node)
   },
-  remove: (tree, node) => Tree.remove(node.path.split('->')),
+  remove: node => Tree.remove(node.path.split('->')),
   join: (tree, join) => Tree.mutate(tree.path.split('->'), { join }),
-  mutate: (tree, node, changes) => Tree.mutate(node.path.split('->'), changes),
+  mutate: (node, changes) => Tree.mutate(node.path.split('->'), changes),
 })
 
 // Basic observable tree bridge

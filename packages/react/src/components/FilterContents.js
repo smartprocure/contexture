@@ -23,6 +23,7 @@ let FilterContents = ({ node, root, fields }) => {
       ) : (
         <input
           type="text"
+          value={node.field}
           onChange={x => root.mutate(node, { field: x.target.value })}
         />
       )}
@@ -43,7 +44,13 @@ let FilterContents = ({ node, root, fields }) => {
       </select>
       {node.key}
       {TypeComponent && (
-        <div style={{ display: 'inline-block', verticalAlign: 'top' }}>
+        <div
+          style={{
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: '100%',
+          }}
+        >
           <TypeComponent {...{ node, root }} />
         </div>
       )}

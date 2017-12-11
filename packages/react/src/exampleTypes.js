@@ -1,6 +1,7 @@
 import _ from 'lodash/fp'
+import styles from './styles'
 import React from 'react'
-import { observable } from 'mobx'
+import { observable, extendObservable } from 'mobx'
 import { Component, lensOf } from './mobx-react-utils'
 import { value } from './actout'
 
@@ -45,32 +46,59 @@ let textOperatorOptions = [
 export default {
   facet: {
     label: 'List',
-    Component: Component(() => (
+    Component: Component(({ node, root }) => (
       <div>
-        <div>
-          <input type="checkbox" /> Label
-        </div>
-        <div>
-          <input type="checkbox" /> Label
-        </div>
-        <div>
-          <input type="checkbox" /> Label
-        </div>
-        <div>
-          <input type="checkbox" /> Label
-        </div>
+        {_.map(
+          option => (
+            <div key={option.name} style={styles.flexJustifyContentBetween}>
+              <div>
+                <input
+                  type="checkbox"
+                  onChange={() => {
+                    let value = option.name
+                    let values = _.result('data.values.slice', node) || []
+                    if (_.includes(value, values))
+                      values = _.pull(value, values)
+                    else values.push(value)
+                    root.mutate(node, { data: { ...node.data, values } })
+                  }}
+                />
+                {option.name}
+              </div>
+              <div>{option.count}</div>
+            </div>
+          ),
+          _.get('context.options', node)
+        )}
       </div>
     )),
+    init(node) {
+      extendObservable(node, {
+        context: {
+          options: [],
+        },
+        data: {
+          fieldMode: 'word',
+        },
+      })
+    },
   },
   query: {
-    Component: Component(() => (
+    Component: Component(({ node, root }) => (
       <span>
-        <input type="text" />
+        <input
+          type="text"
+          value={_.get('data.query', node)}
+          onChange={e => root.mutate(node, { data: { query: e.target.value } })}
+        />
       </span>
     )),
     init(node) {
-      node.data = observable({
-        words: [],
+      extendObservable(node, {
+        data: {
+          ...node.data,
+          words: [],
+        },
       })
     },
     fields: ['field1', 'field2', 'field3'],
