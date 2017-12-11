@@ -38,7 +38,7 @@ exports[`Storyshots AddPreview and 1`] = `
     </b>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots AddPreview not 1`] = `
 <div
@@ -78,7 +78,7 @@ exports[`Storyshots AddPreview not 1`] = `
     </b>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots AddPreview or 1`] = `
 <div
@@ -118,7 +118,7 @@ exports[`Storyshots AddPreview or 1`] = `
     </b>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Docs CHANGELOG.md 1`] = `
 <div>
@@ -225,7 +225,7 @@ exports[`Storyshots Docs CHANGELOG.md 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Docs README.md 1`] = `
 <div>
@@ -332,7 +332,7 @@ exports[`Storyshots Docs README.md 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots FilterContents FilterContents 1`] = `
 <div
@@ -344,6 +344,7 @@ exports[`Storyshots FilterContents FilterContents 1`] = `
   }
 >
   <input
+    onChange={[Function]}
     type="text"
   />
   <select
@@ -364,7 +365,7 @@ exports[`Storyshots FilterContents FilterContents 1`] = `
   testKey
   {"type":"test","key":"testKey"}
 </div>
-`
+`;
 
 exports[`Storyshots Group Multiple Filters 1`] = `
 <div>
@@ -478,6 +479,7 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                         }
                       >
                         <input
+                          onChange={[Function]}
                           type="text"
                         />
                         <select
@@ -712,6 +714,7 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                     }
                                   >
                                     <input
+                                      onChange={[Function]}
                                       type="text"
                                     />
                                     <select
@@ -885,6 +888,7 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                     }
                                   >
                                     <input
+                                      onChange={[Function]}
                                       type="text"
                                     />
                                     <select
@@ -1120,6 +1124,7 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                                 }
                                               >
                                                 <input
+                                                  onChange={[Function]}
                                                   type="text"
                                                 />
                                                 <select
@@ -1294,6 +1299,7 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                                 }
                                               >
                                                 <input
+                                                  onChange={[Function]}
                                                   type="text"
                                                 />
                                                 <select
@@ -1479,6 +1485,7 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                         }
                       >
                         <input
+                          onChange={[Function]}
                           type="text"
                         />
                         <select
@@ -1733,6 +1740,7 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                     }
                                   >
                                     <input
+                                      onChange={[Function]}
                                       type="text"
                                     />
                                     <select
@@ -1907,6 +1915,7 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                     }
                                   >
                                     <input
+                                      onChange={[Function]}
                                       type="text"
                                     />
                                     <select
@@ -2223,6 +2232,7 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                                 }
                                               >
                                                 <input
+                                                  onChange={[Function]}
                                                   type="text"
                                                 />
                                                 <select
@@ -2397,6 +2407,7 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                                 }
                                               >
                                                 <input
+                                                  onChange={[Function]}
                                                   type="text"
                                                 />
                                                 <select
@@ -2577,6 +2588,7 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                     }
                                   >
                                     <input
+                                      onChange={[Function]}
                                       type="text"
                                     />
                                     <select
@@ -2664,7 +2676,7 @@ exports[`Storyshots Group Multiple Filters 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Group One Filter 1`] = `
 <div>
@@ -2761,6 +2773,7 @@ exports[`Storyshots Group One Filter 1`] = `
                         }
                       >
                         <input
+                          onChange={[Function]}
                           type="text"
                         />
                         <select
@@ -2842,7 +2855,7 @@ exports[`Storyshots Group One Filter 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Indentable and 1`] = `
 <div
@@ -2924,7 +2937,7 @@ exports[`Storyshots Indentable and 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Indentable not 1`] = `
 <div
@@ -3006,7 +3019,7 @@ exports[`Storyshots Indentable not 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Indentable or 1`] = `
 <div
@@ -3088,7 +3101,7 @@ exports[`Storyshots Indentable or 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Operator and 1`] = `
 <div>
@@ -3131,7 +3144,7 @@ exports[`Storyshots Operator and 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Operator first and 1`] = `
 <div>
@@ -3168,7 +3181,7 @@ exports[`Storyshots Operator first and 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Operator first not 1`] = `
 <div>
@@ -3211,7 +3224,7 @@ exports[`Storyshots Operator first not 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Operator first or 1`] = `
 <div>
@@ -3248,7 +3261,7 @@ exports[`Storyshots Operator first or 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Operator not 1`] = `
 <div>
@@ -3291,7 +3304,7 @@ exports[`Storyshots Operator not 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Operator or 1`] = `
 <div>
@@ -3334,7 +3347,7 @@ exports[`Storyshots Operator or 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots OperatorMenu OperatorMenu 1`] = `
 <div>
@@ -3419,9 +3432,9 @@ exports[`Storyshots OperatorMenu OperatorMenu 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
-exports[`Storyshots Popover Hide 1`] = `null`
+exports[`Storyshots Popover Hide 1`] = `null`;
 
 exports[`Storyshots Popover Show 1`] = `
 <div>
@@ -3452,7 +3465,7 @@ exports[`Storyshots Popover Show 1`] = `
     }
   />
 </div>
-`
+`;
 
 exports[`Storyshots Rule index 1`] = `
 <div>
@@ -3506,6 +3519,7 @@ exports[`Storyshots Rule index 1`] = `
             }
           >
             <input
+              onChange={[Function]}
               type="text"
             />
             <select
@@ -3580,7 +3594,7 @@ exports[`Storyshots Rule index 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots SearchRoot Multiple Filters 1`] = `
 <div
@@ -3700,6 +3714,7 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                         }
                       >
                         <input
+                          onChange={[Function]}
                           type="text"
                         />
                         <select
@@ -3958,6 +3973,7 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                     }
                                   >
                                     <input
+                                      onChange={[Function]}
                                       type="text"
                                     />
                                     <select
@@ -4155,6 +4171,7 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                     }
                                   >
                                     <input
+                                      onChange={[Function]}
                                       type="text"
                                     />
                                     <select
@@ -4414,6 +4431,7 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                                 }
                                               >
                                                 <input
+                                                  onChange={[Function]}
                                                   type="text"
                                                 />
                                                 <select
@@ -4633,6 +4651,7 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                                 }
                                               >
                                                 <input
+                                                  onChange={[Function]}
                                                   type="text"
                                                 />
                                                 <select
@@ -4842,6 +4861,7 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                         }
                       >
                         <input
+                          onChange={[Function]}
                           type="text"
                         />
                         <select
@@ -5120,6 +5140,7 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                     }
                                   >
                                     <input
+                                      onChange={[Function]}
                                       type="text"
                                     />
                                     <select
@@ -5323,6 +5344,7 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                     }
                                   >
                                     <input
+                                      onChange={[Function]}
                                       type="text"
                                     />
                                     <select
@@ -5663,6 +5685,7 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                                 }
                                               >
                                                 <input
+                                                  onChange={[Function]}
                                                   type="text"
                                                 />
                                                 <select
@@ -5861,6 +5884,7 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                                 }
                                               >
                                                 <input
+                                                  onChange={[Function]}
                                                   type="text"
                                                 />
                                                 <select
@@ -6122,6 +6146,7 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                     }
                                   >
                                     <input
+                                      onChange={[Function]}
                                       type="text"
                                     />
                                     <select
@@ -6249,7 +6274,7 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
     Add Filter
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots SearchRoot One Filter 1`] = `
 <div
@@ -6352,6 +6377,7 @@ exports[`Storyshots SearchRoot One Filter 1`] = `
                         }
                       >
                         <input
+                          onChange={[Function]}
                           type="text"
                         />
                         <select
@@ -6473,7 +6499,7 @@ exports[`Storyshots SearchRoot One Filter 1`] = `
     Add Filter
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots SearchRoot One Filter on a misplaced root 1`] = `
 <div
@@ -6576,6 +6602,7 @@ exports[`Storyshots SearchRoot One Filter on a misplaced root 1`] = `
                         }
                       >
                         <input
+                          onChange={[Function]}
                           type="text"
                         />
                         <select
@@ -6697,7 +6724,7 @@ exports[`Storyshots SearchRoot One Filter on a misplaced root 1`] = `
     Add Filter
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots SearchRoot One Filter with fields 1`] = `
 <div
@@ -6937,4 +6964,4 @@ exports[`Storyshots SearchRoot One Filter with fields 1`] = `
     Add Filter
   </button>
 </div>
-`
+`;
