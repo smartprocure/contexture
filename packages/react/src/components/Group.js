@@ -32,7 +32,9 @@ let GroupItem = FilterDragSource(args => {
       }}
     >
       {!(isRoot && tree.children.length === 1) && (
-        <Operator {...{ tree, child, root, parentTree, index, parent: state }} />
+        <Operator
+          {...{ tree, child, root, parentTree, index, parent: state }}
+        />
       )}
       {child.join ? (
         <Group tree={child} root={root} parentTree={tree} />
