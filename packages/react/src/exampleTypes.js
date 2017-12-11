@@ -1,4 +1,6 @@
 import _ from 'lodash/fp'
+import * as F from 'futil-js'
+import styles from './styles'
 import React from 'react'
 import { observable } from 'mobx'
 import { Component, lensOf } from './mobx-react-utils'
@@ -45,27 +47,33 @@ let textOperatorOptions = [
 export default {
   facet: {
     label: 'List',
-    Component: Component(() => (
+    Component: Component(({ node, root }) => (
       <div>
-        <div>
-          <input type="checkbox" /> Label
-        </div>
-        <div>
-          <input type="checkbox" /> Label
-        </div>
-        <div>
-          <input type="checkbox" /> Label
-        </div>
-        <div>
-          <input type="checkbox" /> Label
-        </div>
+        {_.map(
+          option => (
+            <div key={option.name} style={styles.flexJustifyContentBetween}>
+              <div>
+                <input type="checkbox" onChange={e => {
+                  let value = e.target.value
+                  let values = _.get('node.data.values').slice()
+                  if (_.includes(value, values)) values = _.pull(value, values)
+                  else values.push(value)
+                  root.mutate(node, { data: { ...node.data, values } })
+                }} />
+                {option.name}
+              </div>
+              <div>{option.count}</div>
+            </div>
+          ),
+          _.get('context.options', node)
+        )}
       </div>
     )),
   },
   query: {
-    Component: Component(() => (
+    Component: Component(({ node, root }) => (
       <span>
-        <input type="text" />
+        <input type="text" onChange={e => root.mutate(node, { data: { query: e.target.value } })} />
       </span>
     )),
     init(node) {
