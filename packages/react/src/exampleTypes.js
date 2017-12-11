@@ -52,13 +52,17 @@ export default {
           option => (
             <div key={option.name} style={styles.flexJustifyContentBetween}>
               <div>
-                <input type="checkbox" onChange={() => {
-                  let value = option.name
-                  let values = _.result('data.values.slice', node) || []
-                  if (_.includes(value, values)) values = _.pull(value, values)
-                  else values.push(value)
-                  root.mutate(node, { data: { ...node.data, values } })
-                }} />
+                <input
+                  type="checkbox"
+                  onChange={() => {
+                    let value = option.name
+                    let values = _.result('data.values.slice', node) || []
+                    if (_.includes(value, values))
+                      values = _.pull(value, values)
+                    else values.push(value)
+                    root.mutate(node, { data: { ...node.data, values } })
+                  }}
+                />
                 {option.name}
               </div>
               <div>{option.count}</div>
@@ -71,13 +75,13 @@ export default {
     init(node) {
       extendObservable(node, {
         context: {
-          options: []
+          options: [],
         },
         data: {
           fieldMode: 'word',
         },
       })
-    }
+    },
   },
   query: {
     Component: Component(({ node, root }) => (
