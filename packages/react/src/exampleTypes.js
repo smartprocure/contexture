@@ -1,5 +1,4 @@
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
 import styles from './styles'
 import React from 'react'
 import { observable, extendObservable } from 'mobx'
@@ -53,7 +52,7 @@ export default {
           option => (
             <div key={option.name} style={styles.flexJustifyContentBetween}>
               <div>
-                <input type="checkbox" onChange={e => {
+                <input type="checkbox" onChange={() => {
                   let value = option.name
                   let values = _.result('data.values.slice', node) || []
                   if (_.includes(value, values)) values = _.pull(value, values)
