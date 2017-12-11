@@ -1,3 +1,7 @@
+﻿# 1.0.5
+
+* flattenTree fix for nodes that already have a path.
+
 # 1.0.4
 
 * package.json description and formatting thanks to Duti.
