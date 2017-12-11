@@ -217,6 +217,17 @@ storiesOf('SearchRoot', module)
       types={Types}
     />
   ))
+  .add('One Filter with fields', () => (
+    <SearchRoot
+      tree={observable({
+        key: 'root',
+        join: 'and',
+        children: [{ key: 'filter 1', type: 'query' }],
+      })}
+      fields={['field1', 'field2', 'field3']}
+      types={Types}
+    />
+  ))
   .add('One Filter on a misplaced root', () => (
     <SearchRoot
       tree={observable({

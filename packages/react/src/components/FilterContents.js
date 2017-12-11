@@ -1,21 +1,31 @@
+import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
 import { Component } from '../mobx-react-utils'
 
-let FilterContents = ({ node, root }) => {
+let FilterContents = ({ node, root, fields }) => {
   let type = root.types[node.type] || {}
   let TypeComponent = type.Component
-  // observe(node, 'data', (change) => {
-  //   console.log(change.type, change.name, "from", change.oldValue, "to", change.object[change.name]);
-  // })
-
-  // autorun(() => root.dispatchTest(node.data))
 
   return (
     <div style={{ lineHeight: '30px', minHeight: '34px' }}>
-      <select>
-        <option>Select a Field</option>
-      </select>
+      {fields ? (
+        <select onChange={x => root.mutate(node, { field: x.target.value })}>
+          {_.map(
+            ({ value, label }) => (
+              <option key={value} value={value}>
+                {label}
+              </option>
+            ),
+            F.autoLabelOptions(fields)
+          )}
+        </select>
+      ) : (
+        <input
+          type="text"
+          onChange={x => root.mutate(node, { field: x.target.value })}
+        />
+      )}
       <select
         onChange={({ target: { value } }) => {
           root.typeChange(root.types, node, value)

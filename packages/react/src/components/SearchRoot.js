@@ -1,4 +1,5 @@
 import React from 'react'
+import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import { observable, action } from 'mobx'
 import DDContext from './DragDrop/DDContext'
@@ -32,6 +33,7 @@ let ContextureClientBridge = (Types, Tree) => ({
   },
   remove: (tree, node) => Tree.remove(node.path.split('->')),
   join: (tree, join) => Tree.mutate(tree.path.split('->'), { join }),
+  mutate: (tree, node, changes) => Tree.mutate(node.path.split('->'), changes),
 })
 
 // Basic observable tree bridge
@@ -43,6 +45,7 @@ let ObservableTreeBridge = Types => ({
     })
     tree.children.push(node)
   },
+  mutate: (tree, node, changes) => F.extendOn(node, changes),
   remove(tree, node) {
     tree.children.remove(node)
   },
@@ -97,7 +100,7 @@ export let SearchRoot = DDContext(
         getNode: tree.getNode || getNode(tree),
       }),
     }),
-    ({ state, path, types = {} }) => (
+    ({ state, path, fields, types = {} }) => (
       <div style={{ background }}>
         <Group
           tree={state.getNode(path)}
@@ -105,6 +108,7 @@ export let SearchRoot = DDContext(
             ...state,
             types,
           }}
+          fields={fields}
           isRoot={true}
         />
         <button

@@ -1,6 +1,7 @@
 ﻿# 0.1.6
 
 * Allowing specific paths to be used instead of the search root.
+* Making the field picker work.
 
 # 0.1.5
 
