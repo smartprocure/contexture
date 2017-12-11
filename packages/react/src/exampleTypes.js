@@ -2,7 +2,7 @@ import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import styles from './styles'
 import React from 'react'
-import { observable } from 'mobx'
+import { observable, extendObservable } from 'mobx'
 import { Component, lensOf } from './mobx-react-utils'
 import { value } from './actout'
 
@@ -54,8 +54,8 @@ export default {
             <div key={option.name} style={styles.flexJustifyContentBetween}>
               <div>
                 <input type="checkbox" onChange={e => {
-                  let value = e.target.value
-                  let values = _.get('node.data.values').slice()
+                  let value = option.name
+                  let values = _.result('data.values.slice', node) || []
                   if (_.includes(value, values)) values = _.pull(value, values)
                   else values.push(value)
                   root.mutate(node, { data: { ...node.data, values } })
@@ -69,16 +69,33 @@ export default {
         )}
       </div>
     )),
+    init(node) {
+      extendObservable(node, {
+        context: {
+          options: []
+        },
+        data: {
+          fieldMode: 'word',
+        },
+      })
+    }
   },
   query: {
     Component: Component(({ node, root }) => (
       <span>
-        <input type="text" onChange={e => root.mutate(node, { data: { query: e.target.value } })} />
+        <input
+          type="text"
+          value={_.get('data.query', node)}
+          onChange={e => root.mutate(node, { data: { query: e.target.value } })}
+        />
       </span>
     )),
     init(node) {
-      node.data = observable({
-        words: [],
+      extendObservable(node, {
+        data: {
+          ...node.data,
+          words: [],
+        },
       })
     },
     fields: ['field1', 'field2', 'field3'],
