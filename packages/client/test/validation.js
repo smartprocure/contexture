@@ -22,14 +22,18 @@ describe('validateGroup', () => {
     // Which was introduced in: https://github.com/smartprocure/contexture-client/pull/6
     let tree = {
       key: 'root',
-      children: [{
-        key: 'searchRoot',
-        path: 'root->searchRoot',
-        children: [{
-          key: 'first',
-          path: 'root->searchRoot->first'
-        }]
-      }]
+      children: [
+        {
+          key: 'searchRoot',
+          path: 'root->searchRoot',
+          children: [
+            {
+              key: 'first',
+              path: 'root->searchRoot->first',
+            },
+          ],
+        },
+      ],
     }
     await validate(_.constant(true)).validateGroup(tree.children[0])
     expect(tree.children[0].children[0]).to.deep.equal({
