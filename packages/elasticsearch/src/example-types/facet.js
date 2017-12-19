@@ -77,7 +77,7 @@ module.exports = {
                   include: `.*${context.config.optionsFilter}.*`,
                 }
               : {},
-            context.config.includeZeroes && { min_doc_count: 0 }
+            context.config.includeZeroes && { min_doc_count: 0 },
           ]),
         },
         facetCardinality: {
@@ -85,13 +85,12 @@ module.exports = {
             field: getField(context),
             precision_threshold: _.isNumber(context.config.cardinality)
               ? context.config.cardinality
-              : 5000 // setting default precision to reasonable default (40000 is max),
+              : 5000, // setting default precision to reasonable default (40000 is max),
           },
         },
       },
     }
-    
-    
+
     if (context.config.optionsFilter) {
       let filterParts = context.config.optionsFilter
         .toLowerCase()
@@ -102,7 +101,8 @@ module.exports = {
           filter: {
             bool: {
               must:
-                !context.data.fieldMode || context.data.fieldMode === 'autocomplete'
+                !context.data.fieldMode ||
+                context.data.fieldMode === 'autocomplete'
                   ? _.map(
                       f => ({
                         wildcard: {
@@ -138,7 +138,7 @@ module.exports = {
         count: x.doc_count,
       })),
     }
-    
+
     // Get missing counts for values sent up but not included in the results
     let missing = _.difference(values, _.map('name', result.options))
 
