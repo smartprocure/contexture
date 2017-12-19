@@ -1,8 +1,4 @@
 let _ = require('lodash/fp')
-// Words from Jeff
-let stopRegex = /^(([0-9 ]+)|(received and)|(received and invoiced)|(received no)|(received no invoice)|(fee received)|(fee received and)|(fee received and invoiced)|(and invoiced)|(no invoice)|(invoice no)|(invoices)|(please)|(attention of)|(deliver to attention)|(deliver to attention of)|(to attention)|(to attention of)|(to the)|(for the)|(per attached)|(po to)|(for the)|(purchase order for)|(as per)|invoice|invoiced|receive|received|tax|sales|item|order|purchase|ourselves|out|over|own|same|she|should|so|some|such|than|that|the|their|theirs|them|themselves|then|there|these|they|this|those|through|to|too|under|until|up|very|was|we|were|what|when|where|which|while|who|whom|why|with|would|you|your|yours|yourself|yourselves|a|about|above|after|again|against|all|am|an|and|any|are|as|at|be|because|been|before|being|below|between|both|but|by|cannot|could|did|do|does|doing|down|during|each|few|for|from|further|had|has|have|having|he|her|here|hers|herself|him|himself|his|how|i|if|in|into|is|it|its|itself|me|more|most|my|myself|no|nor|not|of|off|on|once|only|or|other|ought|our|ours|a|about|an|are|as|at|be|by|com|for|from|how|in|is|it|of|on|or|that|the|this|to|was|what|when|where|who|will|with|the|www|a|an|and|are|as|at|be|but|by|for|if|is|no|not|of|on|such|that|the|their|then|there|these|they|this|to|was|will|with|inc|llc|incorporated|corp|corporation|ltd|llp)$/
-
-let junkRegex = /\.|:|\)|\(|=/
 
 let rawFieldName = _.pipe(
   _.replace('.untouched', ''),
@@ -96,22 +92,17 @@ module.exports = {
       ? context.config.cardinality
       : 5000 // setting default precision to reasonable default (40000 is max)
 
-    // If filtering junk, we'll need more results
-    let size = context.config.size || 10
-    if (context.config.filterJunk) size *= 2
-
     let resultRequest = {
       aggs: {
         facetOptions: {
           terms: _.extend(
             {
               field: getField(context),
-              size,
+              size: context.config.size || 10,
               order: {
                 term: { _term: 'asc' },
                 count: { _count: 'desc' },
               }[context.config.sort || 'count'],
-              // include: context.config.filterJunk ? "([A-Za-z0-9]{3,} ?)+" : '*'
             },
             context.data.fieldMode === 'suggest'
               ? {
@@ -140,18 +131,6 @@ module.exports = {
       let agg =
         response1.aggregations.facetAggregation || response1.aggregations
       let buckets = agg.facetOptions.buckets
-
-      // Filter junk
-      if (context.config.filterJunk)
-        buckets = _.take(
-          context.config.size,
-          buckets.filter(
-            x =>
-              x.key.length > 3 &&
-              !junkRegex.test(x.key) &&
-              !stopRegex.test(x.key)
-          )
-        )
 
       let result = {
         total: agg.doc_count,
