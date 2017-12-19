@@ -1,6 +1,6 @@
 let _ = require('lodash/fp')
 
-let rawFieldName = _.pipe(
+let rawFieldName = _.flow(
   _.replace('.untouched', ''),
   _.replace('.shingle', '')
 )
@@ -60,40 +60,6 @@ module.exports = {
   async result(context, search) {
     let values = _.get('data.values', context)
 
-    let filter
-    if (context.config.optionsFilter) {
-      let filterParts = context.config.optionsFilter
-        .toLowerCase()
-        .trim()
-        .split(' ')
-      filter = {
-        bool: {
-          must:
-            !context.data.fieldMode || context.data.fieldMode === 'autocomplete'
-              ? _.map(
-                  f => ({
-                    wildcard: {
-                      [getOptionFilterField(context)]: `${f.replace(
-                        /\*|-|\+/g,
-                        ''
-                      )}*`,
-                    },
-                  }),
-                  filterParts
-                )
-              : {
-                  term: {
-                    [getFilterField(context)]: context.config.optionsFilter,
-                  },
-                },
-        },
-      }
-    }
-
-    let cardinality = _.isNumber(context.config.cardinality)
-      ? context.config.cardinality
-      : 5000 // setting default precision to reasonable default (40000 is max)
-
     let resultRequest = {
       aggs: {
         facetOptions: {
@@ -116,18 +82,48 @@ module.exports = {
         facetCardinality: {
           cardinality: {
             field: getField(context),
-            precision_threshold: cardinality,
+            precision_threshold: _.isNumber(context.config.cardinality)
+              ? context.config.cardinality
+              : 5000 // setting default precision to reasonable default (40000 is max),
           },
         },
       },
     }
-    if (filter)
+    
+    
+    if (context.config.optionsFilter) {
+      let filterParts = context.config.optionsFilter
+        .toLowerCase()
+        .trim()
+        .split(' ')
       resultRequest.aggs = {
         facetAggregation: {
-          filter,
+          filter: {
+            bool: {
+              must:
+                !context.data.fieldMode || context.data.fieldMode === 'autocomplete'
+                  ? _.map(
+                      f => ({
+                        wildcard: {
+                          [getOptionFilterField(context)]: `${f.replace(
+                            /\*|-|\+/g,
+                            ''
+                          )}*`,
+                        },
+                      }),
+                      filterParts
+                    )
+                  : {
+                      term: {
+                        [getFilterField(context)]: context.config.optionsFilter,
+                      },
+                    },
+            },
+          },
           aggs: resultRequest.aggs,
         },
       }
+    }
 
     let response1 = await search(resultRequest)
     let agg = response1.aggregations.facetAggregation || response1.aggregations
@@ -141,13 +137,13 @@ module.exports = {
         count: x.doc_count,
       })),
     }
-
-    // If no missing results, move on
-    if (!(values && _.difference(values, _.map('name', result.options)).length))
-      return result
-
+    
     // Get missing counts for values sent up but not included in the results
     let missing = _.difference(values, _.map('name', result.options))
+
+    // If no missing results, move on
+    if (!(values && missing.length)) return result
+
     let missingFilter = {
       terms: {
         [getField(context)]: missing,
