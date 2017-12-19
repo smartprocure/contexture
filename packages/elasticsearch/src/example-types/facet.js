@@ -57,7 +57,9 @@ module.exports = {
 
     return result
   },
-  result(context, search) {
+  async result(context, search) {
+    let values = _.get('data.values', context)
+    
     let filter
     if (context.config.optionsFilter) {
       let filterParts = context.config.optionsFilter
@@ -127,80 +129,71 @@ module.exports = {
         },
       }
 
-    return search(resultRequest).then(response1 => {
-      let agg =
-        response1.aggregations.facetAggregation || response1.aggregations
-      let buckets = agg.facetOptions.buckets
+    let response1 = await search(resultRequest)
+    let agg = response1.aggregations.facetAggregation || response1.aggregations
+    let buckets = agg.facetOptions.buckets
 
-      let result = {
-        total: agg.doc_count,
-        cardinality: agg.facetCardinality.value,
-        options: buckets.map(x => ({
-          name: x.key,
-          count: x.doc_count,
-        })),
-      }
+    let result = {
+      total: agg.doc_count,
+      cardinality: agg.facetCardinality.value,
+      options: buckets.map(x => ({
+        name: x.key,
+        count: x.doc_count,
+      })),
+    }
 
-      // If no missing results, move on
-      if (
-        !(
-          context.data &&
-          context.data.values &&
-          _.difference(context.data.values, _.map('name', result.options))
-            .length
-        )
-      )
-        return result
+    // If no missing results, move on
+    if (!(values && _.difference(values, _.map('name', result.options)).length))
+      return result
 
-      // Get missing counts for values sent up but not included in the results
-      let missing = _.difference(
-        context.data.values,
-        _.map('name', result.options)
-      )
-      let missingFilter = {
-        terms: {
-          [getField(context)]: missing,
-        },
-      }
-      let missingRequest = {
-        aggs: {
-          facetAggregation: {
-            filter: missingFilter,
-            aggs: {
-              facetOptions: {
-                terms: {
-                  field: getField(context),
-                  size: missing.length,
-                  order: {
-                    term: { _term: 'asc' },
-                    count: { _count: 'desc' },
-                  }[context.config.sort || 'count'],
-                },
+    // Get missing counts for values sent up but not included in the results
+    let missing = _.difference(
+      values,
+      _.map('name', result.options)
+    )
+    let missingFilter = {
+      terms: {
+        [getField(context)]: missing,
+      },
+    }
+    let missingRequest = {
+      aggs: {
+        facetAggregation: {
+          filter: missingFilter,
+          aggs: {
+            facetOptions: {
+              terms: {
+                field: getField(context),
+                size: missing.length,
+                order: {
+                  term: { _term: 'asc' },
+                  count: { _count: 'desc' },
+                }[context.config.sort || 'count'],
               },
             },
           },
         },
-      }
-      return search(missingRequest).then(response2 => {
-        let agg2 = response2.aggregations.facetAggregation
-        let moreOptions = agg2.facetOptions.buckets.map(x => ({
-          name: x.key,
-          count: x.doc_count,
-        }))
+      },
+    }
+    
+    let response2 = await search(missingRequest)
+    let agg2 = response2.aggregations.facetAggregation
+    let moreOptions = agg2.facetOptions.buckets.map(x => ({
+      name: x.key,
+      count: x.doc_count,
+    }))
 
-        // Add zeroes for options that are still missing (since es wont return 0)
-        let stillMissing = _.difference(missing, _.map('name', moreOptions))
-        moreOptions = moreOptions.concat(
-          stillMissing.map(x => ({
-            name: x,
-            count: 0,
-          }))
-        )
+    // Add zeroes for options that are still missing (since es wont return 0)
+    let stillMissing = _.difference(missing, _.map('name', moreOptions))
+    moreOptions = moreOptions.concat(
+      stillMissing.map(x => ({
+        name: x,
+        count: 0,
+      }))
+    )
 
-        result.options = result.options.concat(moreOptions)
+    result.options = result.options.concat(moreOptions)
 
-        return result
-      })
-    })
+    return result
   },
 }
