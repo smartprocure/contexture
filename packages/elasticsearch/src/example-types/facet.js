@@ -71,6 +71,7 @@ module.exports = {
                 term: { _term: 'asc' },
                 count: { _count: 'desc' },
               }[context.config.sort || 'count'],
+              min_doc_count: context.config.includeZeroes ? 0 : 1
             },
             context.data.fieldMode === 'suggest'
               ? {
