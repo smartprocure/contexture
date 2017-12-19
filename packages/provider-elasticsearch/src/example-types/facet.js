@@ -59,7 +59,7 @@ module.exports = {
   },
   async result(context, search) {
     let values = _.get('data.values', context)
-    
+
     let filter
     if (context.config.optionsFilter) {
       let filterParts = context.config.optionsFilter
@@ -147,10 +147,7 @@ module.exports = {
       return result
 
     // Get missing counts for values sent up but not included in the results
-    let missing = _.difference(
-      values,
-      _.map('name', result.options)
-    )
+    let missing = _.difference(values, _.map('name', result.options))
     let missingFilter = {
       terms: {
         [getField(context)]: missing,
@@ -175,7 +172,7 @@ module.exports = {
         },
       },
     }
-    
+
     let response2 = await search(missingRequest)
     let agg2 = response2.aggregations.facetAggregation
     let moreOptions = agg2.facetOptions.buckets.map(x => ({
