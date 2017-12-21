@@ -5,27 +5,24 @@ let { expect } = require('chai')
 let facetTest = sequentialResultTest([
   {
     aggregations: {
-      facetAggregation: {
-        doc_count: 20,
-        facetOptions: {
-          buckets: [
-            {
-              key: 'a',
-              doc_count: 10,
-            },
-            {
-              key: 'b',
-              doc_count: 10,
-            },
-            {
-              key: 'c',
-              doc_count: 10,
-            },
-          ],
-        },
-        facetCardinality: {
-          value: 10,
-        },
+      facetOptions: {
+        buckets: [
+          {
+            key: 'a',
+            doc_count: 10,
+          },
+          {
+            key: 'b',
+            doc_count: 10,
+          },
+          {
+            key: 'c',
+            doc_count: 10,
+          },
+        ],
+      },
+      facetCardinality: {
+        value: 10,
       },
     },
   },
@@ -125,7 +122,6 @@ describe('facet', () => {
           },
         },
         {
-          total: 20,
           cardinality: 10,
           options: [
             {
@@ -176,7 +172,6 @@ describe('facet', () => {
           },
         },
         {
-          total: 20,
           cardinality: 10,
           options: [
             {
@@ -256,24 +251,21 @@ describe('facet', () => {
           {
             /* This is the raw query response from ES. */
             aggregations: {
-              facetAggregation: {
-                doc_count: 20,
-                facetCardinality: {
-                  value: 958,
-                },
-                facetOptions: {
-                  buckets: [
-                    {
-                      key: 'Oklahoma State Health Care Authority, OK',
-                      doc_count: 2552446,
-                    },
-                    {
-                      key:
-                        'Virginia Polytechnic Institute And State University, VA',
-                      doc_count: 1358257,
-                    },
-                  ],
-                },
+              facetCardinality: {
+                value: 958,
+              },
+              facetOptions: {
+                buckets: [
+                  {
+                    key: 'Oklahoma State Health Care Authority, OK',
+                    doc_count: 2552446,
+                  },
+                  {
+                    key:
+                      'Virginia Polytechnic Institute And State University, VA',
+                    doc_count: 1358257,
+                  },
+                ],
               },
             },
           },
@@ -306,48 +298,31 @@ describe('facet', () => {
               count: 1358257,
             },
           ],
-          total: 20,
         },
         [
           {
             /* This is the payload that gets sent to ES by the server side search.
                 In this case there is only one but there could be potentially more. */
             aggs: {
-              facetAggregation: {
-                aggs: {
-                  facetCardinality: {
-                    cardinality: {
-                      field: 'Organization.NameState.untouched',
-                      precision_threshold: 5000,
-                    },
-                  },
-                  facetOptions: {
-                    terms: {
-                      field: 'Organization.NameState.untouched',
-                      order: {
-                        _count: 'desc',
-                      },
-                      size: 2,
-                    },
-                  },
+              facetCardinality: {
+                cardinality: {
+                  field: 'Organization.NameState.untouched',
+                  precision_threshold: 5000,
                 },
-                filter: {
-                  bool: {
-                    must: [
-                      {
-                        wildcard: {
-                          'Organization.NameState.exact': 'state*',
-                        },
-                      },
-                    ],
+              },
+              facetOptions: {
+                terms: {
+                  field: 'Organization.NameState.untouched',
+                  order: {
+                    _count: 'desc',
                   },
+                  size: 2,
+                  include: '.*([Ss][Tt][Aa][Tt][Ee]).*'
                 },
               },
             },
           },
         ]
       ))
-
-    it('filtersJunk test')
   })
 })
