@@ -7,7 +7,7 @@ module.exports = {
       _.map(
         x =>
           !caseSensitive && x.match(/[A-Za-z]/)
-            ? `[${_.toLower(x)}${_.toUpper(x)}]`
+            ? `[${_.toUpper(x)}${_.toLower(x)}]`
             : x
       ),
       _.join('')
