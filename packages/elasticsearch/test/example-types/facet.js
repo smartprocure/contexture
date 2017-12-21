@@ -317,7 +317,7 @@ describe('facet', () => {
                     _count: 'desc',
                   },
                   size: 2,
-                  include: '.*([Ss][Tt][Aa][Tt][Ee]).*'
+                  include: '.*([Ss][Tt][Aa][Tt][Ee]).*',
                 },
               },
             },

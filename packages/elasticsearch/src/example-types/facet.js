@@ -8,7 +8,7 @@ let rawFieldName = _.flow(
 let modeMap = {
   word: '',
   autocomplete: '.untouched',
-  suggest: '.shingle'
+  suggest: '.shingle',
 }
 let getField = context =>
   rawFieldName(context.field) +
@@ -59,15 +59,13 @@ module.exports = {
               }[context.config.sort || 'count'],
             },
             context.config.optionsFilter && {
-              include: `.*(${
-                _.flow(
-                  _.split(' '),
-                  _.map(toSafeRegex(context.config.caseSensitive)),
-                  _.join('|')
-                )(context.config.optionsFilter)
-              }).*`,
+              include: `.*(${_.flow(
+                _.split(' '),
+                _.map(toSafeRegex(context.config.caseSensitive)),
+                _.join('|')
+              )(context.config.optionsFilter)}).*`,
             },
-            context.config.includeZeroes && { min_doc_count: 0 }
+            context.config.includeZeroes && { min_doc_count: 0 },
           ]),
         },
         facetCardinality: {
