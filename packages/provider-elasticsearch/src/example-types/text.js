@@ -1,6 +1,6 @@
 let _ = require('lodash/fp')
 let unidecode = require('unidecode')
-let {toSafeRegex} = require('../regex')
+let { toSafeRegex } = require('../regex')
 
 module.exports = {
   hasValue: context =>
@@ -78,7 +78,9 @@ module.exports = {
             context.data.operator === 'regexp'
               ? criteria
               : unidecode(
-                  prefix + toSafeRegex(context.data.caseSensitive)(criteria) + suffix
+                  prefix +
+                    toSafeRegex(context.data.caseSensitive)(criteria) +
+                    suffix
                 )
 
           return {
