@@ -1,32 +1,18 @@
 let _ = require('lodash/fp')
+let { toSafeRegex } = require('../regex')
 
 let rawFieldName = _.flow(
   _.replace('.untouched', ''),
   _.replace('.shingle', '')
 )
 let modeMap = {
-  word: {
-    field: '',
-    filter: '',
-    optionFilter: '.exact',
-  },
-  autocomplete: {
-    field: '.untouched',
-    filter: '.lowercased',
-    optionFilter: '.exact',
-  },
-  suggest: {
-    field: '.shingle',
-    filter: '.shingle_edgengram',
-    optionFilter: '.exact',
-  },
+  word: '',
+  autocomplete: '.untouched',
+  suggest: '.shingle'
 }
-let getFieldMode = type => context =>
+let getField = context =>
   rawFieldName(context.field) +
-  modeMap[context.data.fieldMode || 'autocomplete'][type]
-let getField = getFieldMode('field')
-let getFilterField = getFieldMode('filter')
-let getOptionFilterField = getFieldMode('optionFilter')
+  modeMap[context.data.fieldMode || 'autocomplete']
 
 module.exports = {
   hasValue: context => _.get('values.length', context.data),
@@ -72,12 +58,16 @@ module.exports = {
                 count: { _count: 'desc' },
               }[context.config.sort || 'count'],
             },
-            context.data.fieldMode === 'suggest'
-              ? {
-                  include: `.*${context.config.optionsFilter}.*`,
-                }
-              : {},
-            context.config.includeZeroes && { min_doc_count: 0 },
+            context.config.optionsFilter && {
+              include: `.*(${
+                _.flow(
+                  _.split(' '),
+                  _.map(toSafeRegex(context.config.caseSensitive)),
+                  _.join('|')
+                )(context.config.optionsFilter)
+              }).*`,
+            },
+            context.config.includeZeroes && { min_doc_count: 0 }
           ]),
         },
         facetCardinality: {
@@ -91,47 +81,11 @@ module.exports = {
       },
     }
 
-    if (context.config.optionsFilter) {
-      let filterParts = context.config.optionsFilter
-        .toLowerCase()
-        .trim()
-        .split(' ')
-      resultRequest.aggs = {
-        facetAggregation: {
-          filter: {
-            bool: {
-              must:
-                !context.data.fieldMode ||
-                context.data.fieldMode === 'autocomplete'
-                  ? _.map(
-                      f => ({
-                        wildcard: {
-                          [getOptionFilterField(context)]: `${f.replace(
-                            /\*|-|\+/g,
-                            ''
-                          )}*`,
-                        },
-                      }),
-                      filterParts
-                    )
-                  : {
-                      term: {
-                        [getFilterField(context)]: context.config.optionsFilter,
-                      },
-                    },
-            },
-          },
-          aggs: resultRequest.aggs,
-        },
-      }
-    }
-
     let response1 = await search(resultRequest)
-    let agg = response1.aggregations.facetAggregation || response1.aggregations
+    let agg = response1.aggregations
     let buckets = agg.facetOptions.buckets
 
     let result = {
-      total: agg.doc_count,
       cardinality: agg.facetCardinality.value,
       options: buckets.map(x => ({
         name: x.key,
