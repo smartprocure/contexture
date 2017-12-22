@@ -1,3 +1,6 @@
+### 0.2.2
+* [Facet] Fix spacing bug on optionsFilter (regex generation)
+
 ### 0.2.1
 * [Facet] Make filtering work with includeZeroes
 * [Facet] Move off of `lowercased` and `exact`
