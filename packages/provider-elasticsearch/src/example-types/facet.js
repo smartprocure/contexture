@@ -64,7 +64,7 @@ module.exports = {
               include: buildRegexForWords(
                 context.config.caseSensitive,
                 context.config.anyOrder // Scary
-              )(context.config.optionsFilter)
+              )(context.config.optionsFilter),
             },
             context.config.includeZeroes && { min_doc_count: 0 },
           ]),

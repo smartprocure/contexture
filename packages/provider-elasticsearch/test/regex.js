@@ -1,5 +1,5 @@
 let regex = require('../src/regex')
-let {expect} = require('chai')
+let { expect } = require('chai')
 
 describe('regex', () => {
   describe('toSafeRegex', () => {
