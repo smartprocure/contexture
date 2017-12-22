@@ -1,16 +1,6 @@
 let _ = require('lodash/fp')
 let unidecode = require('unidecode')
-let vRegex = (str, caseSensitive) =>
-  str
-    .replace(/[.?+*|{}[]()]/g, '\\$&')
-    .split('')
-    .map(
-      ch =>
-        ch.match(/[A-Za-z]/) && !caseSensitive
-          ? `[${ch.toUpperCase()}${ch.toLowerCase()}]`
-          : ch
-    )
-    .join('')
+let { toSafeRegex } = require('../regex')
 
 module.exports = {
   hasValue: context =>
@@ -88,7 +78,9 @@ module.exports = {
             context.data.operator === 'regexp'
               ? criteria
               : unidecode(
-                  prefix + vRegex(criteria, context.data.caseSensitive) + suffix
+                  prefix +
+                    toSafeRegex(context.data.caseSensitive)(criteria) +
+                    suffix
                 )
 
           return {
