@@ -6,7 +6,7 @@ describe('All Example Types', function() {
   this.timeout(5000)
   it('should load', () => {
     let types = Types()
-    expect(_.keys(types)).to.deep.equal([
+    expect(_.keys(types)).to.have.members([
       '__all',
       'bool',
       'cardinality',
