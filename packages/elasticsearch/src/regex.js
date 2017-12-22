@@ -4,7 +4,7 @@ let Combinatorics = require('js-combinatorics')
 
 let toSafeRegex = caseSensitive =>
   _.flow(
-    _.replace(/[.?+*|{}\[\]()]/g, '\\$&'),
+    _.replace(/[.?+*|{}[\]()]/g, '\\$&'),
     _.map(
       x =>
         !caseSensitive && x.match(/[A-Za-z]/)
