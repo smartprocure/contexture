@@ -1,5 +1,5 @@
 let regex = require('../src/regex')
-let {expect} = require('chai')
+let { expect } = require('chai')
 
 describe('regex', () => {
   describe('toSafeRegex', () => {
@@ -34,9 +34,9 @@ describe('regex', () => {
       )
     })
     it('case sensitive in specific order with tons of spaces', () => {
-      expect(regex.buildRegexForWords(true, false)('Nuclear        Ord')).to.eql(
-        '.*Nuclear.*Ord.*'
-      )
+      expect(
+        regex.buildRegexForWords(true, false)('Nuclear        Ord')
+      ).to.eql('.*Nuclear.*Ord.*')
     })
     it('case insensitive in any order', () => {
       expect(regex.buildRegexForWords(false, true)('Nuclear Ord')).to.eql(
