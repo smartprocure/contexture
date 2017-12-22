@@ -1,3 +1,9 @@
+### 0.2.1
+* [Facet] Make filtering work with includeZeroes
+* [Facet] Move off of `lowercased` and `exact`
+* [Facet] Use term `include` intead of wildcard filter
+* [Facet] Add support for `anyOrder` and `caseSensitive` flags for options filter
+
 ### 0.2.0
 * Add `includeZeroes` support to facet type.
 

@@ -1,39 +1,26 @@
 let _ = require('lodash/fp')
+let { buildRegexForWords } = require('../regex')
 
 let rawFieldName = _.flow(
   _.replace('.untouched', ''),
   _.replace('.shingle', '')
 )
 let modeMap = {
-  word: {
-    field: '',
-    filter: '',
-    optionFilter: '.exact',
-  },
-  autocomplete: {
-    field: '.untouched',
-    filter: '.lowercased',
-    optionFilter: '.exact',
-  },
-  suggest: {
-    field: '.shingle',
-    filter: '.shingle_edgengram',
-    optionFilter: '.exact',
-  },
+  word: '',
+  autocomplete: '.untouched',
+  suggest: '.shingle',
 }
-let getFieldMode = type => context =>
+let getField = context =>
   rawFieldName(context.field) +
-  modeMap[context.data.fieldMode || 'autocomplete'][type]
-let getField = getFieldMode('field')
-let getFilterField = getFieldMode('filter')
-let getOptionFilterField = getFieldMode('optionFilter')
+  modeMap[context.data.fieldMode || 'autocomplete']
 
 module.exports = {
   hasValue: context => _.get('values.length', context.data),
   filter(context) {
+    let field = getField(context)
     let result = {
       terms: {
-        [getField(context)]: context.data.values,
+        [field]: context.data.values,
       },
     }
 
@@ -58,6 +45,7 @@ module.exports = {
     return result
   },
   async result(context, search) {
+    let field = getField(context)
     let values = _.get('data.values', context)
 
     let resultRequest = {
@@ -65,24 +53,25 @@ module.exports = {
         facetOptions: {
           terms: _.extendAll([
             {
-              field: getField(context),
+              field,
               size: context.config.size || 10,
               order: {
                 term: { _term: 'asc' },
                 count: { _count: 'desc' },
               }[context.config.sort || 'count'],
             },
-            context.data.fieldMode === 'suggest'
-              ? {
-                  include: `.*${context.config.optionsFilter}.*`,
-                }
-              : {},
+            context.config.optionsFilter && {
+              include: buildRegexForWords(
+                context.config.caseSensitive,
+                context.config.anyOrder // Scary
+              )(context.config.optionsFilter),
+            },
             context.config.includeZeroes && { min_doc_count: 0 },
           ]),
         },
         facetCardinality: {
           cardinality: {
-            field: getField(context),
+            field,
             precision_threshold: _.isNumber(context.config.cardinality)
               ? context.config.cardinality
               : 5000, // setting default precision to reasonable default (40000 is max),
@@ -91,47 +80,11 @@ module.exports = {
       },
     }
 
-    if (context.config.optionsFilter) {
-      let filterParts = context.config.optionsFilter
-        .toLowerCase()
-        .trim()
-        .split(' ')
-      resultRequest.aggs = {
-        facetAggregation: {
-          filter: {
-            bool: {
-              must:
-                !context.data.fieldMode ||
-                context.data.fieldMode === 'autocomplete'
-                  ? _.map(
-                      f => ({
-                        wildcard: {
-                          [getOptionFilterField(context)]: `${f.replace(
-                            /\*|-|\+/g,
-                            ''
-                          )}*`,
-                        },
-                      }),
-                      filterParts
-                    )
-                  : {
-                      term: {
-                        [getFilterField(context)]: context.config.optionsFilter,
-                      },
-                    },
-            },
-          },
-          aggs: resultRequest.aggs,
-        },
-      }
-    }
-
     let response1 = await search(resultRequest)
-    let agg = response1.aggregations.facetAggregation || response1.aggregations
+    let agg = response1.aggregations
     let buckets = agg.facetOptions.buckets
 
     let result = {
-      total: agg.doc_count,
       cardinality: agg.facetCardinality.value,
       options: buckets.map(x => ({
         name: x.key,
@@ -147,7 +100,7 @@ module.exports = {
 
     let missingFilter = {
       terms: {
-        [getField(context)]: missing,
+        [field]: missing,
       },
     }
     let missingRequest = {
@@ -157,7 +110,7 @@ module.exports = {
           aggs: {
             facetOptions: {
               terms: {
-                field: getField(context),
+                field,
                 size: missing.length,
                 order: {
                   term: { _term: 'asc' },
