@@ -1,5 +1,5 @@
 let _ = require('lodash/fp')
-let { toSafeRegex } = require('../regex')
+let { buildRegexForWords } = require('../regex')
 
 let rawFieldName = _.flow(
   _.replace('.untouched', ''),
@@ -17,9 +17,10 @@ let getField = context =>
 module.exports = {
   hasValue: context => _.get('values.length', context.data),
   filter(context) {
+    let field = getField(context)
     let result = {
       terms: {
-        [getField(context)]: context.data.values,
+        [field]: context.data.values,
       },
     }
 
@@ -44,6 +45,7 @@ module.exports = {
     return result
   },
   async result(context, search) {
+    let field = getField(context)
     let values = _.get('data.values', context)
 
     let resultRequest = {
@@ -51,7 +53,7 @@ module.exports = {
         facetOptions: {
           terms: _.extendAll([
             {
-              field: getField(context),
+              field,
               size: context.config.size || 10,
               order: {
                 term: { _term: 'asc' },
@@ -59,18 +61,17 @@ module.exports = {
               }[context.config.sort || 'count'],
             },
             context.config.optionsFilter && {
-              include: `.*(${_.flow(
-                _.split(' '),
-                _.map(toSafeRegex(context.config.caseSensitive)),
-                _.join('|')
-              )(context.config.optionsFilter)}).*`,
+              include: buildRegexForWords(
+                context.config.caseSensitive,
+                context.config.anyOrder // Scary
+              )(context.config.optionsFilter)
             },
             context.config.includeZeroes && { min_doc_count: 0 },
           ]),
         },
         facetCardinality: {
           cardinality: {
-            field: getField(context),
+            field,
             precision_threshold: _.isNumber(context.config.cardinality)
               ? context.config.cardinality
               : 5000, // setting default precision to reasonable default (40000 is max),
@@ -99,7 +100,7 @@ module.exports = {
 
     let missingFilter = {
       terms: {
-        [getField(context)]: missing,
+        [field]: missing,
       },
     }
     let missingRequest = {
@@ -109,7 +110,7 @@ module.exports = {
           aggs: {
             facetOptions: {
               terms: {
-                field: getField(context),
+                field,
                 size: missing.length,
                 order: {
                   term: { _term: 'asc' },
