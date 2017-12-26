@@ -1,5 +1,4 @@
 let _ = require('lodash/fp')
-let F = require('futil-js')
 
 let toSafeRegex = caseSensitive =>
   _.flow(

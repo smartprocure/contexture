@@ -185,4 +185,21 @@ describe('results', () => {
       }),
     ])
   })
+  // it.only('should populate', () => {
+  //   let sortField = 'test.field'
+  //   F.extendOn(context.config, { populate: {
+  //     test: {
+  //       localField: 'local',
+  //       foreignField: 'foreign',
+  //       schema: 'targetSchema'
+  //     }
+  //   } })
+  //   return resultsTest(context, [
+  //     _.extend(expectedCalls[0], {
+  //       sort: {
+  //         [`${sortField}.untouched`]: 'desc',
+  //       },
+  //     }),
+  //   ])
+  // })
 })
