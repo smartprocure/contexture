@@ -14,7 +14,7 @@ module.exports = {
             key_type: 'terms',
             key_data: _.extend(
               {
-                field: getField(schema, context.key_field),
+                field: getField(schema, context.config.key_field),
                 size: context.config.size || 10,
                 order: {
                   // Disable nested path checking for now as we don't need it anymore:

@@ -130,33 +130,19 @@ describe('term_stats', () => {
       [
         {
           aggs: {
-            twoLevelFilter: {
-              filter: {
-                bool: {
-                  must: [
-                    {
-                      wildcard: {
-                        'Organization.Name.lowercased': '*city*',
-                      },
-                    },
-                  ],
+            twoLevelAgg: {
+              terms: {
+                field: 'Organization.Name.untouched',
+                size: 10,
+                order: {
+                  'twoLevelAgg.sum': 'desc',
                 },
+                include: '.*[Cc][Ii][Tt][Yy].*'
               },
               aggs: {
                 twoLevelAgg: {
-                  terms: {
-                    field: 'Organization.Name.untouched',
-                    size: 10,
-                    order: {
-                      'twoLevelAgg.sum': 'desc',
-                    },
-                  },
-                  aggs: {
-                    twoLevelAgg: {
-                      stats: {
-                        field: 'LineItem.TotalPrice',
-                      },
-                    },
+                  stats: {
+                    field: 'LineItem.TotalPrice',
                   },
                 },
               },
@@ -201,38 +187,19 @@ describe('term_stats', () => {
       [
         {
           aggs: {
-            twoLevelFilter: {
-              filter: {
-                bool: {
-                  must: [
-                    {
-                      wildcard: {
-                        'Organization.Name.lowercased': '*city*',
-                      },
-                    },
-                    {
-                      wildcard: {
-                        'Organization.Name.lowercased': '*of*',
-                      },
-                    },
-                  ],
+            twoLevelAgg: {
+              terms: {
+                field: 'Organization.Name.untouched',
+                size: 10,
+                order: {
+                  'twoLevelAgg.sum': 'desc',
                 },
+                include: '.*[Cc][Ii][Tt][Yy].*[Oo][Ff].*'
               },
               aggs: {
                 twoLevelAgg: {
-                  terms: {
-                    field: 'Organization.Name.untouched',
-                    size: 10,
-                    order: {
-                      'twoLevelAgg.sum': 'desc',
-                    },
-                  },
-                  aggs: {
-                    twoLevelAgg: {
-                      stats: {
-                        field: 'LineItem.TotalPrice',
-                      },
-                    },
+                  stats: {
+                    field: 'LineItem.TotalPrice',
                   },
                 },
               },
