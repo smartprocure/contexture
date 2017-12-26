@@ -6,9 +6,9 @@ let modeMap = {
   suggest: '.shingle',
 }
 module.exports = {
-  getField: (context, schema) =>
+  getField: (schema, field, fieldMode = 'autocomplete') =>
     schema.getField
       ? schema.getField(context, schema)
-      : (schema.rawFieldName || rawFieldName)(context.field) +
-        (schema.modeMap || modeMap)[context.data.fieldMode || 'autocomplete'],
+      : (schema.rawFieldName || rawFieldName)(field) +
+        (schema.modeMap || modeMap)[fieldMode],
 }
