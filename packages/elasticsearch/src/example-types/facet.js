@@ -67,12 +67,15 @@ module.exports = {
       resultRequest.aggs = {
         topLevelFilter: {
           filter: buildRegexQueryForWords(field)(context.config.optionsFilter),
-          aggs: resultRequest.aggs
-        }
+          aggs: resultRequest.aggs,
+        },
       }
     }
-            
-    let agg = F.cascade(['aggregations.topLevelFilter', 'aggregations'], await search(resultRequest))
+
+    let agg = F.cascade(
+      ['aggregations.topLevelFilter', 'aggregations'],
+      await search(resultRequest)
+    )
     let result = {
       cardinality: agg.facetCardinality.value,
       options: agg.facetOptions.buckets.map(x => ({

@@ -12,7 +12,11 @@ module.exports = {
       _.merge(
         {
           config: {
-            filter_agg: context.config.filter && buildRegexQueryForWords(field, context.config.caseSensitive)(context.config.filter),
+            filter_agg:
+              context.config.filter &&
+              buildRegexQueryForWords(field, context.config.caseSensitive)(
+                context.config.filter
+              ),
             key_type: 'terms',
             key_data: {
               field,

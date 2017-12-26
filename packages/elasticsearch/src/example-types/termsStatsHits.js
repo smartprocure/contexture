@@ -38,7 +38,9 @@ module.exports = {
       context.config.details_key_field && context.config.details_value_field
     if (context.config.filter) {
       let rawFieldName = getField(schema, context.config.key_field)
-      filter = buildRegexQueryForWords(rawFieldName, false)(context.config.filter)
+      filter = buildRegexQueryForWords(rawFieldName, false)(
+        context.config.filter
+      )
     }
     let request = {
       aggs: {
@@ -48,14 +50,17 @@ module.exports = {
     if (isDetails) {
       F.setOn(
         'aggs.termsStatsHitsStats.aggs.Details',
-        getAggregationObject({
-          key_field: context.config.details_key_field,
-          value_field: context.config.details_value_field,
-          size: context.config.details_size,
-          order: context.config.details_order,
-          sortDir: context.config.details_sortDir,
-          include: context.config.details_include,
-        }, schema),
+        getAggregationObject(
+          {
+            key_field: context.config.details_key_field,
+            value_field: context.config.details_value_field,
+            size: context.config.details_size,
+            order: context.config.details_order,
+            sortDir: context.config.details_sortDir,
+            include: context.config.details_include,
+          },
+          schema
+        ),
         request
       )
     }
