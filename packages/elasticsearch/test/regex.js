@@ -35,7 +35,7 @@ describe('regex', () => {
     })
     it('case sensitive in specific order with tons of spaces', () => {
       expect(
-        regex.buildRegexForWords(true, false)('Nuclear        Ord')
+        regex.buildRegexForWords(true, false)('Nuclear        Ord          ')
       ).to.eql('.*Nuclear.*Ord.*')
     })
     it('case insensitive in any order', () => {
