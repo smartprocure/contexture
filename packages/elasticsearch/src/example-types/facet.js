@@ -1,5 +1,6 @@
 let _ = require('lodash/fp')
-let { buildRegexForWords } = require('../regex')
+let F = require('futil-js')
+let { buildRegexQueryForWords } = require('../regex')
 let { getField } = require('../fields')
 
 module.exports = {
@@ -48,12 +49,6 @@ module.exports = {
                 count: { _count: 'desc' },
               }[context.config.sort || 'count'],
             },
-            context.config.optionsFilter && {
-              include: buildRegexForWords(
-                context.config.caseSensitive,
-                context.config.anyOrder // Scary
-              )(context.config.optionsFilter),
-            },
             context.config.includeZeroes && { min_doc_count: 0 },
           ]),
         },
@@ -68,7 +63,16 @@ module.exports = {
       },
     }
 
-    let agg = (await search(resultRequest)).aggregations
+    if (context.config.optionsFilter) {
+      resultRequest.aggs = {
+        topLevelFilter: {
+          filter: buildRegexQueryForWords(field)(context.config.optionsFilter),
+          aggs: resultRequest.aggs
+        }
+      }
+    }
+            
+    let agg = F.cascade(['aggregations.topLevelFilter', 'aggregations'], await search(resultRequest))
     let result = {
       cardinality: agg.facetCardinality.value,
       options: agg.facetOptions.buckets.map(x => ({

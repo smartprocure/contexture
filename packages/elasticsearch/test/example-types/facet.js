@@ -304,20 +304,34 @@ describe('facet', () => {
             /* This is the payload that gets sent to ES by the server side search.
                 In this case there is only one but there could be potentially more. */
             aggs: {
-              facetCardinality: {
-                cardinality: {
-                  field: 'Organization.NameState.untouched',
-                  precision_threshold: 5000,
+              topLevelFilter: {
+                filter: {
+                  bool: {
+                    must: [
+                      {
+                        regexp: {
+                          "Organization.NameState.untouched": ".*[Ss][Tt][Aa][Tt][Ee].*",
+                        }
+                      }
+                    ]
+                  }
                 },
-              },
-              facetOptions: {
-                terms: {
-                  field: 'Organization.NameState.untouched',
-                  order: {
-                    _count: 'desc',
+                aggs: {
+                  facetCardinality: {
+                    cardinality: {
+                      field: 'Organization.NameState.untouched',
+                      precision_threshold: 5000,
+                    },
                   },
-                  size: 2,
-                  include: '.*[Ss][Tt][Aa][Tt][Ee].*',
+                  facetOptions: {
+                    terms: {
+                      field: 'Organization.NameState.untouched',
+                      order: {
+                        _count: 'desc',
+                      },
+                      size: 2,
+                    },
+                  },
                 },
               },
             },
