@@ -135,8 +135,8 @@ describe('term_stats', () => {
                 bool: {
                   must: [
                     {
-                      wildcard: {
-                        'Organization.Name.lowercased': '*city*',
+                      regexp: {
+                        'Organization.Name.untouched': '.*[Cc][Ii][Tt][Yy].*',
                       },
                     },
                   ],
@@ -206,13 +206,13 @@ describe('term_stats', () => {
                 bool: {
                   must: [
                     {
-                      wildcard: {
-                        'Organization.Name.lowercased': '*city*',
+                      regexp: {
+                        'Organization.Name.untouched': '.*[Cc][Ii][Tt][Yy].*',
                       },
                     },
                     {
-                      wildcard: {
-                        'Organization.Name.lowercased': '*of*',
+                      regexp: {
+                        'Organization.Name.untouched': '.*[Oo][Ff].*',
                       },
                     },
                   ],

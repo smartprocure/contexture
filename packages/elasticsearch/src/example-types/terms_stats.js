@@ -1,42 +1,25 @@
 var _ = require('lodash/fp')
 var esTwoLevel = require('./esTwoLevelAggregation').result
+let { buildRegexQueryForWords } = require('../regex')
+let { getField } = require('../fields')
 
 module.exports = {
   validContext: context =>
     context.config.key_field && context.config.value_field,
-  result(context, search) {
-    var filter = null
-
-    if (context.config.filter) {
-      var filterParts = context.config.filter
-        .trim()
-        .replace(/\s\s+/g, ' ')
-        .toLowerCase()
-        .split(' ')
-      var rawFieldName = (
-        _.get('name', context.config.key_field) || context.config.key_field
-      ).replace('.untouched', '.lowercased')
-      filter = {
-        bool: {
-          must: _.map(
-            f => ({
-              wildcard: {
-                [rawFieldName]: `*${f.replace(/\*|-|\+/g, '')}*`,
-              },
-            }),
-            filterParts
-          ),
-        },
-      }
-    }
-
-    return esTwoLevel(
+  async result(context, search, schema) {
+    let field = getField(schema, context.config.key_field)
+    let x = await esTwoLevel(
       _.merge(
         {
           config: {
-            filter_agg: filter,
+            filter_agg:
+              context.config.filter &&
+              buildRegexQueryForWords(field, context.config.caseSensitive)(
+                context.config.filter
+              ),
             key_type: 'terms',
             key_data: {
+              field,
               size: context.config.size || 10,
               order: {
                 // Disable nested path checking for now as we don't need it anymore:
@@ -55,8 +38,9 @@ module.exports = {
         context
       ),
       search
-    ).then(x => ({
+    )
+    return {
       terms: x.results,
-    }))
+    }
   },
 }
