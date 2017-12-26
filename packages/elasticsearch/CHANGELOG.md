@@ -1,3 +1,10 @@
+### 0.3.0
+* [facet, terms_stats, termsStatsHits] Add support for overriding fieldmode behavior for all terms aggregation based types. Schemas can either completely override `getField` or just `modeMap` or `rawFieldName`.
+* [facet, terms_stats, termsStatsHits] Use regexp filter intead of wildcard filter/terms include
+* [terms_stats, termsStatsHits] Add support for `caseSensitive` flags for options filter
+* [terms_stats, termsStatsHits] Move off of `lowercased` and `exact`
+* [facet] Remove `anyOrder` support, now is `anyOrder` all the time (powered by bool must)
+
 ### 0.2.2
 * [Facet] Fix spacing bug on optionsFilter (regex generation)
 
