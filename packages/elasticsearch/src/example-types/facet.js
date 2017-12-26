@@ -68,13 +68,10 @@ module.exports = {
       },
     }
 
-    let response1 = await search(resultRequest)
-    let agg = response1.aggregations
-    let buckets = agg.facetOptions.buckets
-
+    let agg = (await search(resultRequest)).aggregations
     let result = {
       cardinality: agg.facetCardinality.value,
-      options: buckets.map(x => ({
+      options: agg.facetOptions.buckets.map(x => ({
         name: x.key,
         count: x.doc_count,
       })),
@@ -84,17 +81,16 @@ module.exports = {
     let missing = _.difference(values, _.map('name', result.options))
 
     // If no missing results, move on
-    if (!(values && missing.length)) return result
+    if (!missing.length) return result
 
-    let missingFilter = {
-      terms: {
-        [field]: missing,
-      },
-    }
     let missingRequest = {
       aggs: {
         facetAggregation: {
-          filter: missingFilter,
+          filter: {
+            terms: {
+              [field]: missing,
+            },
+          },
           aggs: {
             facetOptions: {
               terms: {
@@ -111,8 +107,7 @@ module.exports = {
       },
     }
 
-    let response2 = await search(missingRequest)
-    let agg2 = response2.aggregations.facetAggregation
+    let agg2 = (await search(missingRequest)).aggregations.facetAggregation
     let moreOptions = agg2.facetOptions.buckets.map(x => ({
       name: x.key,
       count: x.doc_count,
