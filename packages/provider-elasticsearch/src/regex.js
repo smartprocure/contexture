@@ -13,29 +13,30 @@ let toSafeRegex = caseSensitive =>
     _.join('')
   )
 
-let regexPartsForWords = caseSensitive =>_.flow(
-  _.replace(/\s\s+/g, ' '),
-  _.trim,
-  _.split(' '),
-  _.map(toSafeRegex(caseSensitive))
-)
+let regexPartsForWords = caseSensitive =>
+  _.flow(
+    _.replace(/\s\s+/g, ' '),
+    _.trim,
+    _.split(' '),
+    _.map(toSafeRegex(caseSensitive))
+  )
 
 let buildRegexQueryForWords = (field, caseSensitive) =>
   _.flow(
     regexPartsForWords(caseSensitive),
     _.map(x => ({
       regexp: {
-        [field]: `.*${x}.*`
-      }
+        [field]: `.*${x}.*`,
+      },
     })),
     x => ({
       bool: {
-        must: x
-      }
+        must: x,
+      },
     })
   )
 
 module.exports = {
   toSafeRegex,
-  buildRegexQueryForWords
+  buildRegexQueryForWords,
 }
