@@ -8,7 +8,7 @@ let modeMap = {
 module.exports = {
   getField: (schema, field, fieldMode = 'autocomplete') =>
     schema.getField
-      ? schema.getField(context, schema)
+      ? schema.getField(schema, field, fieldMode)
       : (schema.rawFieldName || rawFieldName)(field) +
         (schema.modeMap || modeMap)[fieldMode],
 }
