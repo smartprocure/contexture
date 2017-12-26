@@ -1,23 +1,11 @@
 let _ = require('lodash/fp')
 let { buildRegexForWords } = require('../regex')
-
-let rawFieldName = _.flow(
-  _.replace('.untouched', ''),
-  _.replace('.shingle', '')
-)
-let modeMap = {
-  word: '',
-  autocomplete: '.untouched',
-  suggest: '.shingle',
-}
-let getField = context =>
-  rawFieldName(context.field) +
-  modeMap[context.data.fieldMode || 'autocomplete']
+let { getField } = require('../fields')
 
 module.exports = {
   hasValue: context => _.get('values.length', context.data),
-  filter(context) {
-    let field = getField(context)
+  filter(context, schema) {
+    let field = getField(context, schema)
     let result = {
       terms: {
         [field]: context.data.values,
