@@ -1,10 +1,12 @@
 let _ = require('lodash/fp')
 let F = require('futil-js')
+let { buildRegexQueryForWords } = require('../regex')
+let { getField } = require('../fields')
 
 let breadthFirstBucketSwitch = 500000
-let getAggregationObject = config => ({
+let getAggregationObject = (config, schema) => ({
   terms: {
-    field: config.key_field,
+    field: getField(schema, config.key_field),
     size: config.size || 10,
     order: {
       [`Stats.${config.order || 'sum'}`]: config.sortDir || 'desc',
@@ -30,32 +32,17 @@ let getAggregationObject = config => ({
 module.exports = {
   validContext: context =>
     context.config.key_field && context.config.value_field,
-  result(context, search) {
+  result(context, search, schema) {
     let filter
     let isDetails =
       context.config.details_key_field && context.config.details_value_field
     if (context.config.filter) {
-      let filterParts = context.config.filter.toLowerCase().split(' ')
-      let rawFieldName = context.config.key_field.replace(
-        '.untouched',
-        '.lowercased'
-      )
-      filter = {
-        bool: {
-          must: _.map(
-            f => ({
-              wildcard: {
-                [rawFieldName]: `*${f.replace(/\*|-|\+/g, '')}*`,
-              },
-            }),
-            filterParts
-          ),
-        },
-      }
+      let rawFieldName = getField(schema, context.config.key_field)
+      filter = buildRegexQueryForWords(rawFieldName, false)(context.config.filter)
     }
     let request = {
       aggs: {
-        termsStatsHitsStats: getAggregationObject(context.config),
+        termsStatsHitsStats: getAggregationObject(context.config, schema),
       },
     }
     if (isDetails) {
@@ -68,7 +55,7 @@ module.exports = {
           order: context.config.details_order,
           sortDir: context.config.details_sortDir,
           include: context.config.details_include,
-        }),
+        }, schema),
         request
       )
     }

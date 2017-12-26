@@ -233,7 +233,7 @@ describe('termStatsHits', () => {
         key: 'test',
         type: 'termsStatsHits',
         config: {
-          key_field: 'Organization.Name.untouched',
+          key_field: 'Organization.Name',
           value_field: 'LineItem.TotalPrice',
           filter: 'city',
           include: ['Organization.LatLong'],
@@ -283,9 +283,8 @@ describe('termStatsHits', () => {
                 bool: {
                   must: [
                     {
-                      wildcard: {
-                        'Organization.Name.lowercased': '*city*',
-                      },
+                      regexp: {
+                        "Organization.Name.untouched": ".*[Cc][Ii][Tt][Yy].*"                      },
                     },
                   ],
                 },
