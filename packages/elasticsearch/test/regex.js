@@ -1,5 +1,5 @@
 let regex = require('../src/regex')
-let { expect } = require('chai')
+let {expect} = require('chai')
 
 describe('regex', () => {
   describe('toSafeRegex', () => {
@@ -47,6 +47,28 @@ describe('regex', () => {
       expect(regex.buildRegexForWords(false, false)('Nuclear Ord')).to.eql(
         '.*[Nn][Uu][Cc][Ll][Ee][Aa][Rr].*[Oo][Rr][Dd].*'
       )
+    })
+  })
+  describe('buildRegexQueryForWords', () => {
+    it('should work', () => {
+      expect(
+        regex.buildRegexQueryForWords('_all', false)('Nuclear Ord')
+      ).to.deep.eql({
+        bool: {
+          must: [
+            {
+              regexp: {
+                _all: '.*[Nn][Uu][Cc][Ll][Ee][Aa][Rr].*',
+              },
+            },
+            {
+              regexp: {
+                _all: '.*[Oo][Rr][Dd].*',
+              },
+            },
+          ],
+        },
+      })
     })
   })
 })
