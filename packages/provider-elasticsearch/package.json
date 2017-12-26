@@ -38,7 +38,6 @@
     "@elastic/datemath": "^2.3.0",
     "bluebird": "^3.5.0",
     "futil-js": "^1.32.0",
-    "js-combinatorics": "^0.5.3",
     "json-stable-stringify": "^1.0.1",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
