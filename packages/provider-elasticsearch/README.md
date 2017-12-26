@@ -1,4 +1,4 @@
-﻿# contexture-elasticsearch
+# contexture-elasticsearch
 Elasticsearch Provider for Contexture
 
 ## Usage
@@ -77,33 +77,152 @@ let process = Contexture({
 ```
 
 ## Default Types
-### `bool`
-### `cardinality`
-### `date`
-### `dateHistogram`
-### `esTwoLevelAggregation`
-### `exists`
-### `facet`
-### `geo`
-### `groupedMetric`
-### `matchCardinality`
-### `matchStats`
-### `nLevelAggregation`
-### `nonzeroClusters`
-### `number`
-### `percentileRanks`
-### `percentiles`
-### `percentilesRange`
-### `query`
-### `rangeStats`
-### `results`
-### `smartIntervalHistogram`
-### `smartPercentileRanks`
-### `statistical`
-### `terms`
-### `termsDelta`
-### `termsStatsHits`
-### `terms_stats`
-### `text`
-### `twoLevelMatch`
+
+### Combo Filter + Result Types
+These types both filter and have contextual results.
+
+#### `facet`
+Facet represents a list of dynamic choices, e.g. a checkbox list filter.
+
+Input
+
+```js
+{
+  field: String,
+  mode: 'include|exclude', // Should this filter act as inclusion or exclusion of the values
+  values: Boolean, // What is checked
+  fieldMode: 'autocomplete|word|suggest', // Whether to look at the entire field (autocomplete), the analyzed words in the field, or magic suggestions. This generally means switching field/analyzers but abstracts that lower level es/index knowledge away from the client.
+  size: Number, // How many options to return
+  cardinality: Number, // Precision threshold override, defaults to 5000
+  includeZeroes: Boolean, // If true, it will include options with 0 matching documents (aka min_doc_count: 0)
+  optionsFilter: String, // Filters the options further, e.g. a find box above a checkbox list
+  caseSensitive: Boolean, // Whether options filter is case sensitive. Defaults to false. *no known usages*
+  sort: 'term|count'// Sort results alphabetically or by count of matching records
+}
+```
+
+Output
+
+```js
+{
+  cardinality: Number, // Cardinality (total number of options) for the field
+  options: [{
+    name: String,
+    count: Number
+  }]
+}
+```
+
+#### `geo`
+Represents a geographic radius search. Needs a geocodeLocation service passed in to it. Currently assumes it is a google maps geocoder search.
+
+```js
+{
+  field: String,
+  location: String, // Location to geocode
+  radius: Number, // Radius in miles
+  operator: 'within|not within'
+}
+```
+
+Result
+```js
+{
+  place: GeocodeLocationResponse
+}
+```
+
+The result can be used to show what location the server on a map, though in practice it's usually better to geocode on the client. This type is planned to be extended to support passing along raw lat/lng.
+
+
+### Filter Only Types
+Filter only types just filter and nothing more. They don't have contextual results of their own.
+
+
+#### `bool`
+Bool represent a boolean check, e.g. a checkbox for true/false
+
+```js
+{
+  field: String,
+  value: String|Boolean
+}
+```
+
+#### `date`
+Date represents a data range filter, with support datemath
+
+```js
+{
+  field: String,
+  from: DateString|'thisQuarter|lastQuarter|nextQuarter', // Date string or one of three custom date math options
+  to: DateString,
+  useDateMath: Boolean // If true, it will parse dates as dateMath using @elastic/datemath
+}
+```
+
+#### `exists`
+Exists represents whether or not a field is present on results
+
+```js
+{
+  field: String,
+  value: Boolean // Whether the field should exist or not
+}
+```
+
+#### `number`
+Number represents a number range with inclusive bounds. This type is planned to be extended to return contextual info on min, max, and histogram value distribution.
+
+Some Notes:
+1. An empty value as the upper boundary represents infinity.
+2. An empty value as the lower boundary represents negative infinity.
+3. Zero has to be respected as a boundary value.
+
+```js
+{
+  field: String,
+  min: Number,
+  max: Number
+}
+```
+
+#### `query`
+Query represents a raw elasticsearch query_string.
+```js
+{
+  field: String,
+  query: String, // The actual query
+  exact: Boolean // Represents opting out of stemming. Currently assumes the presence of an `.exact` subfield and analyzer. Defaults to false.
+}
+```
+
+#### `text`
+
+
+
+### Result-Only Types
+These types don't do any filtering of their own and only have results. These often power charts or analytics pages.
+
+#### `cardinality`
+#### `dateHistogram`
+#### `esTwoLevelAggregation`
+#### `groupedMetric`
+#### `matchCardinality`
+#### `matchStats`
+#### `nLevelAggregation`
+#### `nonzeroClusters`
+#### `percentileRanks`
+#### `percentiles`
+#### `percentilesRange`
+#### `rangeStats`
+#### `results`
+#### `smartIntervalHistogram`
+#### `smartPercentileRanks`
+#### `statistical`
+#### `terms`
+#### `termsDelta`
+#### `termsStatsHits`
+#### `terms_stats`
+#### `twoLevelMatch`
 

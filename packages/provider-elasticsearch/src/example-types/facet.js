@@ -1,23 +1,12 @@
 let _ = require('lodash/fp')
-let { buildRegexForWords } = require('../regex')
-
-let rawFieldName = _.flow(
-  _.replace('.untouched', ''),
-  _.replace('.shingle', '')
-)
-let modeMap = {
-  word: '',
-  autocomplete: '.untouched',
-  suggest: '.shingle',
-}
-let getField = context =>
-  rawFieldName(context.field) +
-  modeMap[context.data.fieldMode || 'autocomplete']
+let F = require('futil-js')
+let { buildRegexQueryForWords } = require('../regex')
+let { getField } = require('../fields')
 
 module.exports = {
   hasValue: context => _.get('values.length', context.data),
-  filter(context) {
-    let field = getField(context)
+  filter(context, schema = {}) {
+    let field = getField(schema, context.field, context.data.fieldMode)
     let result = {
       terms: {
         [field]: context.data.values,
@@ -44,8 +33,8 @@ module.exports = {
 
     return result
   },
-  async result(context, search) {
-    let field = getField(context)
+  async result(context, search, schema) {
+    let field = getField(schema, context.field, context.data.fieldMode)
     let values = _.get('data.values', context)
 
     let resultRequest = {
@@ -59,12 +48,6 @@ module.exports = {
                 term: { _term: 'asc' },
                 count: { _count: 'desc' },
               }[context.config.sort || 'count'],
-            },
-            context.config.optionsFilter && {
-              include: buildRegexForWords(
-                context.config.caseSensitive,
-                context.config.anyOrder // Scary
-              )(context.config.optionsFilter),
             },
             context.config.includeZeroes && { min_doc_count: 0 },
           ]),
@@ -80,13 +63,22 @@ module.exports = {
       },
     }
 
-    let response1 = await search(resultRequest)
-    let agg = response1.aggregations
-    let buckets = agg.facetOptions.buckets
+    if (context.config.optionsFilter) {
+      resultRequest.aggs = {
+        topLevelFilter: {
+          filter: buildRegexQueryForWords(field)(context.config.optionsFilter),
+          aggs: resultRequest.aggs,
+        },
+      }
+    }
 
+    let agg = F.cascade(
+      ['aggregations.topLevelFilter', 'aggregations'],
+      await search(resultRequest)
+    )
     let result = {
       cardinality: agg.facetCardinality.value,
-      options: buckets.map(x => ({
+      options: agg.facetOptions.buckets.map(x => ({
         name: x.key,
         count: x.doc_count,
       })),
@@ -96,17 +88,16 @@ module.exports = {
     let missing = _.difference(values, _.map('name', result.options))
 
     // If no missing results, move on
-    if (!(values && missing.length)) return result
+    if (!missing.length) return result
 
-    let missingFilter = {
-      terms: {
-        [field]: missing,
-      },
-    }
     let missingRequest = {
       aggs: {
         facetAggregation: {
-          filter: missingFilter,
+          filter: {
+            terms: {
+              [field]: missing,
+            },
+          },
           aggs: {
             facetOptions: {
               terms: {
@@ -123,8 +114,7 @@ module.exports = {
       },
     }
 
-    let response2 = await search(missingRequest)
-    let agg2 = response2.aggregations.facetAggregation
+    let agg2 = (await search(missingRequest)).aggregations.facetAggregation
     let moreOptions = agg2.facetOptions.buckets.map(x => ({
       name: x.key,
       count: x.doc_count,
