@@ -5,7 +5,7 @@ let { getField } = require('../fields')
 module.exports = {
   hasValue: context => _.get('values.length', context.data),
   filter(context, schema) {
-    let field = getField(context, schema)
+    let field = getField(schema, context.field, context.data.fieldMode)
     let result = {
       terms: {
         [field]: context.data.values,
@@ -32,8 +32,8 @@ module.exports = {
 
     return result
   },
-  async result(context, search) {
-    let field = getField(context)
+  async result(context, search, schema) {
+    let field = getField(schema, context.field, context.data.fieldMode)
     let values = _.get('data.values', context)
 
     let resultRequest = {
