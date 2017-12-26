@@ -4,7 +4,7 @@ let { getField } = require('../fields')
 
 module.exports = {
   hasValue: context => _.get('values.length', context.data),
-  filter(context, schema) {
+  filter(context, schema = {}) {
     let field = getField(schema, context.field, context.data.fieldMode)
     let result = {
       terms: {
