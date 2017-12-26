@@ -130,19 +130,33 @@ describe('term_stats', () => {
       [
         {
           aggs: {
-            twoLevelAgg: {
-              terms: {
-                field: 'Organization.Name.untouched',
-                size: 10,
-                order: {
-                  'twoLevelAgg.sum': 'desc',
-                },
-                include: '.*[Cc][Ii][Tt][Yy].*'
+            twoLevelFilter: {
+              filter: {
+                bool: {
+                  must: [
+                    {
+                      regexp: {
+                        "Organization.Name.untouched": ".*[Cc][Ii][Tt][Yy].*"
+                      }
+                    }
+                  ]
+                }
               },
               aggs: {
                 twoLevelAgg: {
-                  stats: {
-                    field: 'LineItem.TotalPrice',
+                  terms: {
+                    field: 'Organization.Name.untouched',
+                    size: 10,
+                    order: {
+                      'twoLevelAgg.sum': 'desc',
+                    },
+                  },
+                  aggs: {
+                    twoLevelAgg: {
+                      stats: {
+                        field: 'LineItem.TotalPrice',
+                      },
+                    },
                   },
                 },
               },
@@ -187,19 +201,38 @@ describe('term_stats', () => {
       [
         {
           aggs: {
-            twoLevelAgg: {
-              terms: {
-                field: 'Organization.Name.untouched',
-                size: 10,
-                order: {
-                  'twoLevelAgg.sum': 'desc',
-                },
-                include: '.*[Cc][Ii][Tt][Yy].*[Oo][Ff].*'
+            twoLevelFilter: {
+              filter: {
+                bool: {
+                  must: [
+                    {
+                      regexp: {
+                        "Organization.Name.untouched": ".*[Cc][Ii][Tt][Yy].*"
+                      }
+                    },
+                    {
+                      regexp: {
+                        "Organization.Name.untouched": ".*[Oo][Ff].*"
+                      }
+                    }
+                  ]
+                }
               },
               aggs: {
                 twoLevelAgg: {
-                  stats: {
-                    field: 'LineItem.TotalPrice',
+                  terms: {
+                    field: 'Organization.Name.untouched',
+                    size: 10,
+                    order: {
+                      'twoLevelAgg.sum': 'desc',
+                    }
+                  },
+                  aggs: {
+                    twoLevelAgg: {
+                      stats: {
+                        field: 'LineItem.TotalPrice',
+                      },
+                    },
                   },
                 },
               },
