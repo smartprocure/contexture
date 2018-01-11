@@ -49,11 +49,9 @@ describe('results', () => {
     context = {
       key: 'test',
       type: 'results',
-      config: {
-        highlight: false,
-        verbose: false,
-        explain: false,
-      },
+      highlight: false,
+      verbose: false,
+      explain: false,
     }
     expectedCalls = [
       {
@@ -71,8 +69,8 @@ describe('results', () => {
     ])
   })
 
-  it('should be able to filter fields with config.include', () => {
-    F.extendOn(context.config, { include: 'field' })
+  it('should be able to filter fields with include', () => {
+    F.extendOn(context, { include: 'field' })
     resultsTest(context, [
       _.extend(expectedCalls[0], {
         _source: {
@@ -83,11 +81,11 @@ describe('results', () => {
         },
       }),
     ])
-    delete context.config.include
+    delete context.include
     return
   })
-  it('should be able to filter fields with config.exclude', () => {
-    F.extendOn(context.config, { exclude: 'field' })
+  it('should be able to filter fields with exclude', () => {
+    F.extendOn(context, { exclude: 'field' })
     resultsTest(context, [
       _.extend(expectedCalls[0], {
         _source: {
@@ -98,7 +96,7 @@ describe('results', () => {
         },
       }),
     ])
-    delete context.config.exclude
+    delete context.exclude
     return
   })
 
@@ -111,7 +109,7 @@ describe('results', () => {
       }),
     ]))
   it('verbose should work', () => {
-    F.extendOn(context.config, { verbose: true })
+    F.extendOn(context, { verbose: true })
     F.extendOn(expectedResult.response.results, [
       {
         _id: 'test-id',
@@ -132,7 +130,7 @@ describe('results', () => {
     ])
   })
   it('should order by sortDir config', () => {
-    F.extendOn(context.config, { sortDir: 'asc' })
+    F.extendOn(context, { sortDir: 'asc' })
     return resultsTest(context, [
       _.extend(expectedCalls[0], {
         sort: {
@@ -143,18 +141,18 @@ describe('results', () => {
   })
   it('should sort on sortField config', () => {
     let sortField = 'test.field'
-    F.extendOn(context.config, { sortField })
+    F.extendOn(context, { sortField })
     return resultsTest(context, [
       _.extend(expectedCalls[0], {
         sort: {
-          [context.config.sortField]: 'desc',
+          [context.sortField]: 'desc',
         },
       }),
     ])
   })
   it('should strip ".untouched" from sortField config', () => {
     let sortField = 'test.field'
-    F.extendOn(context.config, { sortField: `${sortField}.untouched` })
+    F.extendOn(context, { sortField: `${sortField}.untouched` })
     return resultsTest(context, [
       _.extend(expectedCalls[0], {
         sort: {
@@ -165,7 +163,7 @@ describe('results', () => {
   })
   it('should strip ".untouched" from sortField config when sortMode config is "word"', () => {
     let sortField = 'test.field'
-    F.extendOn(context.config, { sortField, sortMode: 'word' })
+    F.extendOn(context, { sortField, sortMode: 'word' })
     return resultsTest(context, [
       _.extend(expectedCalls[0], {
         sort: {
@@ -176,7 +174,7 @@ describe('results', () => {
   })
   it('should sort on sortField + ".untouched" when sortMode config is "field"', () => {
     let sortField = 'test.field'
-    F.extendOn(context.config, { sortField, sortMode: 'field' })
+    F.extendOn(context, { sortField, sortMode: 'field' })
     return resultsTest(context, [
       _.extend(expectedCalls[0], {
         sort: {
@@ -187,7 +185,7 @@ describe('results', () => {
   })
   // it.only('should populate', () => {
   //   let sortField = 'test.field'
-  //   F.extendOn(context.config, { populate: {
+  //   F.extendOn(context, { populate: {
   //     test: {
   //       localField: 'local',
   //       foreignField: 'foreign',
