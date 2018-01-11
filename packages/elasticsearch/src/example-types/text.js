@@ -3,12 +3,10 @@ let unidecode = require('unidecode')
 let { toSafeRegex } = require('../regex')
 
 module.exports = {
-  hasValue: context =>
-    context.value || _.get('values.length', context),
+  hasValue: context => context.value || _.get('values.length', context),
   filter(context) {
     let fieldName = context.field.replace('.untouched', '')
-    let filterParts =
-      context.values || context.value.toLowerCase().split(' ')
+    let filterParts = context.values || context.value.toLowerCase().split(' ')
 
     let lookAtUntouched = /startsWith|endsWith|is|isNot|containsWord/.test(
       context.operator
@@ -60,17 +58,14 @@ module.exports = {
             .replace('*', '')
             .replace('+', '')
             .replace('-', '')
-          if (lookAtUntouched)
-            criteria = (context.value || f).toLowerCase()
+          if (lookAtUntouched) criteria = (context.value || f).toLowerCase()
 
           let prefix = /startsWith|wordStartsWith|is|isNot/.test(
             context.operator
           )
             ? ''
             : '.*'
-          let suffix = /endsWith|wordEndsWith|is|isNot/.test(
-            context.operator
-          )
+          let suffix = /endsWith|wordEndsWith|is|isNot/.test(context.operator)
             ? ''
             : '.*'
 
@@ -78,9 +73,7 @@ module.exports = {
             context.operator === 'regexp'
               ? criteria
               : unidecode(
-                  prefix +
-                    toSafeRegex(context.caseSensitive)(criteria) +
-                    suffix
+                  prefix + toSafeRegex(context.caseSensitive)(criteria) + suffix
                 )
 
           return {
