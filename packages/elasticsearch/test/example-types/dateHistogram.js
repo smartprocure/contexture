@@ -48,10 +48,8 @@ describe('dateHistogram', () => {
       {
         key: 'test',
         type: 'dateHistogram',
-        config: {
-          key_field: 'PO.IssuedDate',
-          value_field: 'LineItem.TotalPrice',
-        },
+        key_field: 'PO.IssuedDate',
+        value_field: 'LineItem.TotalPrice',
       },
       {
         entries: [

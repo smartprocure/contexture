@@ -5,49 +5,46 @@ let dateMath = require('@elastic/datemath')
 let esTwoLevel = require('./esTwoLevelAggregation').result
 
 module.exports = {
-  validContext: context =>
-    context.config.key_field && context.config.value_field,
+  validContext: context => context.key_field && context.value_field,
   result(context, search) {
     let payload = {
-      config: {
-        key_type: 'date_histogram',
-        key_data: {
-          interval: context.config.interval || 'year',
-          min_doc_count: 0,
-        },
-        value_type: 'stats',
-        extraAggs: [
-          {
-            key: 'max_date',
-            config: {
-              value_field: 'value',
-              data: {
-                max: {
-                  field: 'PO.IssuedDate',
-                },
-              },
-            },
-          },
-          {
-            key: 'min_date',
-            config: {
-              value_field: 'value',
-              data: {
-                min: {
-                  field: 'PO.IssuedDate',
-                },
-              },
-            },
-          },
-        ],
+      key_type: 'date_histogram',
+      key_data: {
+        interval: context.interval || 'year',
+        min_doc_count: 0,
       },
+      value_type: 'stats',
+      extraAggs: [
+        {
+          key: 'max_date',
+          config: {
+            value_field: 'value',
+            data: {
+              max: {
+                field: 'PO.IssuedDate',
+              },
+            },
+          },
+        },
+        {
+          key: 'min_date',
+          config: {
+            value_field: 'value',
+            data: {
+              min: {
+                field: 'PO.IssuedDate',
+              },
+            },
+          },
+        },
+      ],
     }
 
-    if (context.config.boundsRange_min && context.config.boundsRange_max) {
-      let useDateMath = context.config.boundsRange_useDateMath
-      let min = context.config.boundsRange_min
-      let max = context.config.boundsRange_max
-      F.extendOn(payload.config.key_data, {
+    if (context.boundsRange_min && context.boundsRange_max) {
+      let useDateMath = context.boundsRange_useDateMath
+      let min = context.boundsRange_min
+      let max = context.boundsRange_max
+      F.extendOn(payload.key_data, {
         extended_bounds: {
           min: useDateMath
             ? dateMath.parse(min)

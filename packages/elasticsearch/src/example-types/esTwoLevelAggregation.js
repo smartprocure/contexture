@@ -13,32 +13,32 @@ let F = require('futil-js')
 // }
 module.exports = {
   validContext: context =>
-    context.config.key_field &&
-    context.config.key_type &&
-    context.config.value_field &&
-    context.config.value_type,
+    context.key_field &&
+    context.key_type &&
+    context.value_field &&
+    context.value_type,
   result(context, search) {
     let query = {
       aggs: {
         twoLevelAgg: {
-          [context.config.key_type]: _.omitBy(
+          [context.key_type]: _.omitBy(
             _.isNil,
             _.extend(
               {
-                field: context.config.key_field,
+                field: context.key_field,
               },
-              context.config.key_data
+              context.key_data
             )
           ),
           aggs: {
             twoLevelAgg: {
-              [context.config.value_type]: _.omitBy(
+              [context.value_type]: _.omitBy(
                 _.isNil,
                 _.extend(
                   {
-                    field: context.config.value_field,
+                    field: context.value_field,
                   },
-                  context.config.value_data
+                  context.value_data
                 )
               ),
             },
@@ -48,14 +48,14 @@ module.exports = {
     }
     _.each(agg => {
       query.aggs[agg.key] = agg.config.data
-    }, context.config.extraAggs)
+    }, context.extraAggs)
 
-    if (context.config.filter_agg)
+    if (context.filter_agg)
       query = {
         aggs: {
           twoLevelFilter: _.extend(
             {
-              filter: context.config.filter_agg,
+              filter: context.filter_agg,
             },
             query
           ),
@@ -78,10 +78,10 @@ module.exports = {
             .twoLevelAgg.buckets
         ),
       }
-      if (context.config.extraAggs) {
+      if (context.extraAggs) {
         _.each(agg => {
           rtn[agg.key] = results.aggregations[agg.key][agg.config.value_field]
-        }, context.config.extraAggs)
+        }, context.extraAggs)
       }
       return rtn
     })
