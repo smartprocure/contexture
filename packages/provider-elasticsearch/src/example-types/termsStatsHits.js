@@ -30,21 +30,17 @@ let getAggregationObject = (config, schema) => ({
 })
 
 module.exports = {
-  validContext: context =>
-    context.config.key_field && context.config.value_field,
+  validContext: context => context.key_field && context.value_field,
   result(context, search, schema) {
     let filter
-    let isDetails =
-      context.config.details_key_field && context.config.details_value_field
-    if (context.config.filter) {
-      let rawFieldName = getField(schema, context.config.key_field)
-      filter = buildRegexQueryForWords(rawFieldName, false)(
-        context.config.filter
-      )
+    let isDetails = context.details_key_field && context.details_value_field
+    if (context.filter) {
+      let rawFieldName = getField(schema, context.key_field)
+      filter = buildRegexQueryForWords(rawFieldName, false)(context.filter)
     }
     let request = {
       aggs: {
-        termsStatsHitsStats: getAggregationObject(context.config, schema),
+        termsStatsHitsStats: getAggregationObject(context, schema),
       },
     }
     if (isDetails) {
@@ -52,12 +48,12 @@ module.exports = {
         'aggs.termsStatsHitsStats.aggs.Details',
         getAggregationObject(
           {
-            key_field: context.config.details_key_field,
-            value_field: context.config.details_value_field,
-            size: context.config.details_size,
-            order: context.config.details_order,
-            sortDir: context.config.details_sortDir,
-            include: context.config.details_include,
+            key_field: context.details_key_field,
+            value_field: context.details_value_field,
+            size: context.details_size,
+            order: context.details_order,
+            sortDir: context.details_sortDir,
+            include: context.details_include,
           },
           schema
         ),
@@ -66,8 +62,8 @@ module.exports = {
     }
 
     // Breadth first if more buckets than a certain size - which is apparently parent size squared times the child size
-    let topSize = context.config.size || 10
-    if (topSize * topSize * context.config.hitSize > breadthFirstBucketSwitch)
+    let topSize = context.size || 10
+    if (topSize * topSize * context.hitSize > breadthFirstBucketSwitch)
       request.aggs.termsStatsHitsStats.terms.collect_mode = 'breadth_first'
     if (filter) {
       request.aggs = {

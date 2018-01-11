@@ -7,18 +7,14 @@ describe('text', () => {
       !!text.hasValue({
         type: 'text',
         field: 'test',
-        data: {
-          values: ['asdf'],
-        },
+        values: ['asdf'],
       })
     ).to.be.true
     expect(
       !!text.hasValue({
         type: 'text',
         field: 'test',
-        data: {
-          values: [],
-        },
+        values: [],
       })
     ).to.be.false
   })
@@ -28,12 +24,10 @@ describe('text', () => {
         key: 'test',
         type: 'text',
         field: 'description',
-        data: {
-          join: 'any',
-          operator,
-          values,
-          caseSensitive,
-        },
+        join: 'any',
+        operator,
+        values,
+        caseSensitive,
       })
     let laserjetPrinterText = anyText(['laserjet', 'printer'])
     it('contains', () => {
