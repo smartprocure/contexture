@@ -51,10 +51,8 @@ describe('percentiles', () => {
       {
         key: 'test',
         type: 'percentiles',
-        config: {
-          field: 'LineItem.UnitPrice',
-          percents: [10, 30, 75],
-        },
+        field: 'LineItem.UnitPrice',
+        percents: [10, 30, 75],
       },
       {
         percentiles: {
@@ -85,11 +83,9 @@ describe('percentiles', () => {
       {
         key: 'test',
         type: 'percentiles',
-        config: {
-          keyed: true,
-          field: 'LineItem.UnitPrice',
-          percents: [10, 30, 75],
-        },
+        keyed: true,
+        field: 'LineItem.UnitPrice',
+        percents: [10, 30, 75],
       },
       {
         percentiles: {

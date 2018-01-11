@@ -1,19 +1,17 @@
 let _ = require('lodash/fp')
 
 module.exports = {
-  validContext: context => context.config.field,
+  validContext: context => context.field,
   result: (context, search) =>
     search({
       aggs: {
         agg_percentiles: {
           percentiles: _.extend(
             {
-              field: context.config.field,
-              keyed: context.config.keyed || false,
+              field: context.field,
+              keyed: context.keyed || false,
             },
-            _.get('config.percents', context)
-              ? { percents: context.config.percents }
-              : {}
+            _.get('percents', context) ? { percents: context.percents } : {}
           ),
         },
       },
