@@ -7,9 +7,7 @@ describe('exists', () => {
       exists.filter({
         type: 'bool',
         field: 'test',
-        data: {
-          value: true,
-        },
+        value: true,
       })
     ).to.deep.equal({
       exists: {
@@ -22,9 +20,7 @@ describe('exists', () => {
       exists.filter({
         type: 'bool',
         field: 'test',
-        data: {
-          value: false,
-        },
+        value: false,
       })
     ).to.deep.equal({
       bool: {

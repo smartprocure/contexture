@@ -7,7 +7,7 @@ module.exports = {
       },
     }
 
-    if (!context.data.value) {
+    if (!context.value) {
       result = {
         bool: {
           must_not: result,
