@@ -47,9 +47,7 @@ describe('nonZeroClusters', () => {
       {
         key: 'test',
         type: 'nonzeroClusters',
-        config: {
-          field: 'LineItem.TotalPrice',
-        },
+        field: 'LineItem.TotalPrice',
       },
       {
         clusters: [
