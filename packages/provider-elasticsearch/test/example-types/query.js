@@ -8,9 +8,7 @@ describe('query', () => {
         key: 'test',
         type: 'query',
         field: '_all',
-        data: {
-          query: 'cable',
-        },
+        query: 'cable',
       })
     ).to.deep.equal({
       query_string: {
@@ -24,10 +22,8 @@ describe('query', () => {
         key: 'test',
         type: 'query',
         field: '_all',
-        data: {
-          query: 'cable',
-          exact: true,
-        },
+        query: 'cable',
+        exact: true,
       })
     ).to.deep.equal({
       query_string: {
