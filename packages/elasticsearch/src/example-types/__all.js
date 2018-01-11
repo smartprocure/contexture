@@ -6,8 +6,8 @@ module.exports = {
   dateHistogram: require('./dateHistogram'),
   default: require('./default'),
   esTwoLevelAggregation: require('./esTwoLevelAggregation'),
-  exists: require('./exists'),
   facet: require('./facet'),
+  exists: require('./exists'),
   geo: require('./geo'),
   groupedMetric: require('./groupedMetric'),
   matchCardinality: require('./matchCardinality'),
@@ -27,7 +27,7 @@ module.exports = {
   terms: require('./terms'),
   termsDelta: require('./termsDelta'),
   termsStatsHits: require('./termsStatsHits'),
-  terms_stats: require('./terms_stats'),
   text: require('./text'),
+  terms_stats: require('./terms_stats'),
   twoLevelMatch: require('./twoLevelMatch'),
 }
