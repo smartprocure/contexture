@@ -108,15 +108,13 @@ describe('termStatsHits', () => {
       {
         key: 'test',
         type: 'termsStatsHits',
-        config: {
-          key_field: 'Organization.Name.untouched',
-          value_field: 'LineItem.TotalPrice',
-          details_key_field: 'Organization.NameState.untouched',
-          details_value_field: 'LineItem.UnitPrice',
-          include: ['Organization.LatLong'],
-          details_size: 1,
-          details_include: ['Organization.ID'],
-        },
+        key_field: 'Organization.Name.untouched',
+        value_field: 'LineItem.TotalPrice',
+        details_key_field: 'Organization.NameState.untouched',
+        details_value_field: 'LineItem.UnitPrice',
+        include: ['Organization.LatLong'],
+        details_size: 1,
+        details_include: ['Organization.ID'],
       },
       {
         terms: [
@@ -232,12 +230,10 @@ describe('termStatsHits', () => {
       {
         key: 'test',
         type: 'termsStatsHits',
-        config: {
-          key_field: 'Organization.Name',
-          value_field: 'LineItem.TotalPrice',
-          filter: 'city',
-          include: ['Organization.LatLong'],
-        },
+        key_field: 'Organization.Name',
+        value_field: 'LineItem.TotalPrice',
+        filter: 'city',
+        include: ['Organization.LatLong'],
       },
       {
         terms: [
