@@ -51,11 +51,9 @@ describe('percentileRanks', function() {
       {
         key: 'test',
         type: 'percentileRanks',
-        config: {
-          field: 'LineItem.UnitPrice',
-          keyed: false,
-          values: [10, 30, 75],
-        },
+        field: 'LineItem.UnitPrice',
+        keyed: false,
+        values: [10, 30, 75],
       },
       {
         percentileRanks: {
@@ -86,11 +84,9 @@ describe('percentileRanks', function() {
       {
         key: 'test',
         type: 'percentileRanks',
-        config: {
-          field: 'LineItem.UnitPrice',
-          keyed: true,
-          values: [10, 30, 75],
-        },
+        field: 'LineItem.UnitPrice',
+        keyed: true,
+        values: [10, 30, 75],
       },
       {
         percentileRanks: {
