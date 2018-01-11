@@ -1,3 +1,7 @@
+﻿### 0.4.0
+* Removed the root level usage of context.data and context.config, now
+  the inner properties can be passed directly to the root object.
+
 ### 0.3.0
 * [facet, terms_stats, termsStatsHits] Add support for overriding fieldmode behavior for all terms aggregation based types. Schemas can either completely override `getField` or just `modeMap` or `rawFieldName`.
 * [facet, terms_stats, termsStatsHits] Use regexp filter intead of wildcard filter/terms include
