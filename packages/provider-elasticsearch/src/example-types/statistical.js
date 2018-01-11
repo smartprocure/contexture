@@ -1,5 +1,3 @@
-let _ = require('lodash/fp')
-
 module.exports = {
   result: (context, search) =>
     search({
