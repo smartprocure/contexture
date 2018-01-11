@@ -5,7 +5,7 @@ let dateBuilder = data => ({
   key: 'test',
   type: 'date',
   field: 'test',
-  data,
+  ...data,
 })
 
 describe('date', () => {
