@@ -2,10 +2,10 @@ let _ = require('lodash/fp')
 let percentiles = require('./percentiles').result
 
 module.exports = {
-  validContext: context => context.config.field,
+  validContext: context => context.field,
   result(context, search) {
-    let keyField = _.get('config.field', context)
-    let percentsArray = _.get('config.percents', context)
+    let keyField = _.get('field', context)
+    let percentsArray = _.get('percents', context)
     return percentiles(context, search).then(percentilesResult => {
       let percentilesArray = _.get('percentiles.values', percentilesResult)
       let ranges = []

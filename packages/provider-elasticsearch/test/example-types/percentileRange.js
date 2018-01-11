@@ -53,10 +53,8 @@ describe('percentilesRange', function() {
       {
         key: 'test',
         type: 'percentilesRange',
-        config: {
-          field: 'LineItem.UnitPrice',
-          percents: [20, 95],
-        },
+        field: 'LineItem.UnitPrice',
+        percents: [20, 95],
       },
       {
         percentilesRange: [

@@ -7,29 +7,28 @@ let sortModeMap = {
   word: '',
 }
 let getSortField = context =>
-  _.replace('.untouched', '', context.config.sortField) +
-  _.getOr('', context.config.sortMode, sortModeMap)
+  _.replace('.untouched', '', context.sortField) +
+  _.getOr('', context.sortMode, sortModeMap)
 module.exports = {
   result(context, search, schema) {
-    let page = (context.config.page || 1) - 1
-    let pageSize = context.config.pageSize || 10
+    let page = (context.page || 1) - 1
+    let pageSize = context.pageSize || 10
     let startRecord = page * pageSize
-    let sortField = context.config.sortField ? getSortField(context) : '_score'
-    let sortDir = context.config.sortDir || 'desc'
+    let sortField = context.sortField ? getSortField(context) : '_score'
+    let sortDir = context.sortDir || 'desc'
     let result = {
       from: startRecord,
       size: pageSize,
       sort: {
         [sortField]: sortDir,
       },
-      explain: context.config.explain,
+      explain: context.explain,
     }
-    if (context.config.include || context.config.exclude) result._source = {}
-    if (context.config.include) result._source.includes = context.config.include
-    if (context.config.exclude) result._source.excludes = context.config.exclude
+    if (context.include || context.exclude) result._source = {}
+    if (context.include) result._source.includes = context.include
+    if (context.exclude) result._source.excludes = context.exclude
     let highlight =
-      _.getOr(true, 'config.highlight', context) &&
-      schema.elasticsearch.highlight
+      _.getOr(true, 'highlight', context) && schema.elasticsearch.highlight
     if (highlight) {
       let highlightFields = _.flatten(_.values(schema.elasticsearch.highlight))
       F.extendOn(result, {
@@ -64,7 +63,7 @@ module.exports = {
 
           // TODO - If nested path, iterate properties on nested path, filtering out nested path results unless mainHighlighted or relevant nested fields have b tags in them
           return _.extendAll([
-            context.config.verbose ? { hit } : {},
+            context.verbose ? { hit } : {},
             {
               _id: hit._id,
               additionalFields: highlight ? additionalFields : [],

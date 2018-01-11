@@ -69,25 +69,18 @@ module.exports = {
         },
       }
       return r
-    }, {})(context.config.aggs)
+    }, {})(context.aggs)
     return search(body).then(results => {
       let buckets =
         results.aggregations[_.keys(results.aggregations)[0]].buckets
 
-      if (context.config.reducers) {
-        let reducedResults = processReducers(
-          buckets,
-          context.config.reducers,
-          context.config
-        )
+      if (context.reducers) {
+        let reducedResults = processReducers(buckets, context.reducers, context)
 
-        if (context.config.page) {
-          let offset = (context.config.page - 1) * context.config.pageSize
+        if (context.page) {
+          let offset = (context.page - 1) * context.pageSize
           return {
-            results: _.drop(offset)(reducedResults).slice(
-              0,
-              context.config.pageSize
-            ),
+            results: _.drop(offset)(reducedResults).slice(0, context.pageSize),
             totalRecords: reducedResults.length,
           }
         }
