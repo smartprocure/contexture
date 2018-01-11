@@ -58,9 +58,7 @@ describe('facet', () => {
           key: 'test',
           type: 'facet',
           field: 'testField',
-          data: {
-            values: ['abc', '123'],
-          },
+          values: ['abc', '123'],
         })
       ).to.deep.equal({
         terms: {
@@ -74,10 +72,8 @@ describe('facet', () => {
           key: 'test',
           type: 'facet',
           field: 'testField',
-          data: {
-            mode: 'exclude',
-            values: ['abc', '123'],
-          },
+          mode: 'exclude',
+          values: ['abc', '123'],
         })
       ).to.deep.equal({
         bool: {
@@ -96,9 +92,7 @@ describe('facet', () => {
           key: 'test',
           type: 'facet',
           field: 'testField',
-          data: {
-            values,
-          },
+          values,
         })
       ).to.deep.equal({
         bool: {
@@ -117,9 +111,7 @@ describe('facet', () => {
           key: 'test',
           type: 'facet',
           field: 'testField.untouched',
-          data: {
-            values: ['a'],
-          },
+          values: ['a'],
         },
         {
           cardinality: 10,
@@ -167,9 +159,7 @@ describe('facet', () => {
           key: 'test',
           type: 'facet',
           field: 'testField',
-          data: {
-            values: ['a', 'x', 'y', 'z'],
-          },
+          values: ['a', 'x', 'y', 'z'],
         },
         {
           cardinality: 10,
@@ -275,14 +265,10 @@ describe('facet', () => {
           key: 'wildCardTest',
           type: 'facet',
           field: 'Organization.NameState.untouched',
-          data: {
-            mode: 'include',
-            values: [],
-          },
-          config: {
-            size: 2,
-            optionsFilter: 'state',
-          },
+          mode: 'include',
+          values: [],
+          size: 2,
+          optionsFilter: 'state',
         },
         {
           /* This is the payload the server sends to the web client. This is the result after the

@@ -6,14 +6,14 @@ let { getField } = require('../fields')
 module.exports = {
   hasValue: context => _.get('values.length', context.data),
   filter(context, schema = {}) {
-    let field = getField(schema, context.field, context.data.fieldMode)
+    let field = getField(schema, context.field, context.fieldMode)
     let result = {
       terms: {
-        [field]: context.data.values,
+        [field]: context.values,
       },
     }
 
-    if (context.data.mode === 'exclude') {
+    if (context.mode === 'exclude') {
       result = {
         bool: {
           must_not: result,
@@ -22,7 +22,7 @@ module.exports = {
     }
 
     // trying to prevent 'Too Many Clauses' exception ... http://george-stathis.com/2013/10/18/setting-the-booleanquery-maxclausecount-in-elasticsearch/
-    if (context.data.values.length > 4095) {
+    if (context.values.length > 4095) {
       // 4096 is our actual limit
       result = {
         bool: {
@@ -34,8 +34,8 @@ module.exports = {
     return result
   },
   async result(context, search, schema) {
-    let field = getField(schema, context.field, context.data.fieldMode)
-    let values = _.get('data.values', context)
+    let field = getField(schema, context.field, context.fieldMode)
+    let values = _.get('values', context)
 
     let resultRequest = {
       aggs: {
@@ -43,30 +43,30 @@ module.exports = {
           terms: _.extendAll([
             {
               field,
-              size: context.config.size || 10,
+              size: context.size || 10,
               order: {
                 term: { _term: 'asc' },
                 count: { _count: 'desc' },
-              }[context.config.sort || 'count'],
+              }[context.sort || 'count'],
             },
-            context.config.includeZeroes && { min_doc_count: 0 },
+            context.includeZeroes && { min_doc_count: 0 },
           ]),
         },
         facetCardinality: {
           cardinality: {
             field,
-            precision_threshold: _.isNumber(context.config.cardinality)
-              ? context.config.cardinality
+            precision_threshold: _.isNumber(context.cardinality)
+              ? context.cardinality
               : 5000, // setting default precision to reasonable default (40000 is max),
           },
         },
       },
     }
 
-    if (context.config.optionsFilter) {
+    if (context.optionsFilter) {
       resultRequest.aggs = {
         topLevelFilter: {
-          filter: buildRegexQueryForWords(field)(context.config.optionsFilter),
+          filter: buildRegexQueryForWords(field)(context.optionsFilter),
           aggs: resultRequest.aggs,
         },
       }
@@ -106,7 +106,7 @@ module.exports = {
                 order: {
                   term: { _term: 'asc' },
                   count: { _count: 'desc' },
-                }[context.config.sort || 'count'],
+                }[context.sort || 'count'],
               },
             },
           },
