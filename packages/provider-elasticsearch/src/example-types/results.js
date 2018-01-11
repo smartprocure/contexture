@@ -28,8 +28,7 @@ module.exports = {
     if (context.include) result._source.includes = context.include
     if (context.exclude) result._source.excludes = context.exclude
     let highlight =
-      _.getOr(true, 'highlight', context) &&
-      schema.elasticsearch.highlight
+      _.getOr(true, 'highlight', context) && schema.elasticsearch.highlight
     if (highlight) {
       let highlightFields = _.flatten(_.values(schema.elasticsearch.highlight))
       F.extendOn(result, {
