@@ -6,7 +6,7 @@ let calcSmartInterval = require('../smartInterval').calcSmartInterval
 module.exports = {
   validContext: context => context.field || context.field,
   result(context, search) {
-    let field = context.field || context.field
+    let field = context.field
     let interval = context.interval
     if (!interval) {
       interval = statsResults(
