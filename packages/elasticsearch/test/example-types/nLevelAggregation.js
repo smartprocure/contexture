@@ -209,31 +209,29 @@ describe('nLevelAggregation', () => {
       {
         key: 'widget',
         type: 'nLevelAggregation',
-        config: {
-          aggs: [
-            {
-              type: 'terms',
-              field: 'Organization.NameState.untouched',
-              data: {
-                size: 10000000,
+        aggs: [
+          {
+            type: 'terms',
+            field: 'Organization.NameState.untouched',
+            data: {
+              size: 10000000,
+            },
+          },
+          {
+            type: 'terms',
+            data: {
+              script: "doc['PO.IssuedDate'].getMonth()",
+              lang: 'expression',
+              order: {
+                sum: 'desc',
               },
             },
-            {
-              type: 'terms',
-              data: {
-                script: "doc['PO.IssuedDate'].getMonth()",
-                lang: 'expression',
-                order: {
-                  sum: 'desc',
-                },
-              },
-            },
-            {
-              type: 'sum',
-              field: 'PO.IssuedAmount',
-            },
-          ],
-        },
+          },
+          {
+            type: 'sum',
+            field: 'PO.IssuedAmount',
+          },
+        ],
       },
       {
         results: [
@@ -467,39 +465,37 @@ describe('nLevelAggregation', () => {
       {
         key: 'widget',
         type: 'nLevelAggregation',
-        config: {
-          aggs: [
-            {
-              type: 'terms',
-              field: 'Organization.NameState.untouched',
-              data: {
-                size: 10000000,
+        aggs: [
+          {
+            type: 'terms',
+            field: 'Organization.NameState.untouched',
+            data: {
+              size: 10000000,
+            },
+          },
+          {
+            type: 'terms',
+            data: {
+              script: "doc['PO.IssuedDate'].getMonth()",
+              lang: 'expression',
+              order: {
+                sum: 'desc',
               },
             },
-            {
-              type: 'terms',
-              data: {
-                script: "doc['PO.IssuedDate'].getMonth()",
-                lang: 'expression',
-                order: {
-                  sum: 'desc',
-                },
-              },
+          },
+          {
+            type: 'sum',
+            field: 'PO.IssuedAmount',
+          },
+        ],
+        reducers: [
+          {
+            type: 'peakBy',
+            config: {
+              field: 'sum.value',
             },
-            {
-              type: 'sum',
-              field: 'PO.IssuedAmount',
-            },
-          ],
-          reducers: [
-            {
-              type: 'peakBy',
-              config: {
-                field: 'sum.value',
-              },
-            },
-          ],
-        },
+          },
+        ],
       },
       {
         results: [
@@ -570,46 +566,44 @@ describe('nLevelAggregation', () => {
       {
         key: 'widget',
         type: 'nLevelAggregation',
-        config: {
-          aggs: [
-            {
-              type: 'terms',
-              field: 'Organization.NameState.untouched',
-              data: {
-                size: 10000000,
+        aggs: [
+          {
+            type: 'terms',
+            field: 'Organization.NameState.untouched',
+            data: {
+              size: 10000000,
+            },
+          },
+          {
+            type: 'terms',
+            data: {
+              script: "doc['PO.IssuedDate'].getMonth()",
+              lang: 'expression',
+              order: {
+                sum: 'desc',
               },
             },
-            {
-              type: 'terms',
-              data: {
-                script: "doc['PO.IssuedDate'].getMonth()",
-                lang: 'expression',
-                order: {
-                  sum: 'desc',
-                },
-              },
+          },
+          {
+            type: 'sum',
+            field: 'PO.IssuedAmount',
+          },
+        ],
+        reducers: [
+          {
+            type: 'peakBy',
+            config: {
+              field: 'sum.value',
             },
-            {
-              type: 'sum',
-              field: 'PO.IssuedAmount',
+          },
+          {
+            type: 'filter',
+            config: {
+              field: 'peakKey',
+              value: 10,
             },
-          ],
-          reducers: [
-            {
-              type: 'peakBy',
-              config: {
-                field: 'sum.value',
-              },
-            },
-            {
-              type: 'filter',
-              config: {
-                field: 'peakKey',
-                value: 10,
-              },
-            },
-          ],
-        },
+          },
+        ],
       },
       {
         results: [
@@ -662,46 +656,44 @@ describe('nLevelAggregation', () => {
       {
         key: 'widget',
         type: 'nLevelAggregation',
-        config: {
-          aggs: [
-            {
-              type: 'terms',
-              field: 'Organization.NameState.untouched',
-              data: {
-                size: 10000000,
+        aggs: [
+          {
+            type: 'terms',
+            field: 'Organization.NameState.untouched',
+            data: {
+              size: 10000000,
+            },
+          },
+          {
+            type: 'terms',
+            data: {
+              script: "doc['PO.IssuedDate'].getMonth()",
+              lang: 'expression',
+              order: {
+                sum: 'desc',
               },
             },
-            {
-              type: 'terms',
-              data: {
-                script: "doc['PO.IssuedDate'].getMonth()",
-                lang: 'expression',
-                order: {
-                  sum: 'desc',
-                },
-              },
+          },
+          {
+            type: 'sum',
+            field: 'PO.IssuedAmount',
+          },
+        ],
+        reducers: [
+          {
+            type: 'peakBy',
+            config: {
+              field: 'sum.value',
             },
-            {
-              type: 'sum',
-              field: 'PO.IssuedAmount',
+          },
+          {
+            type: 'orderBy',
+            config: {
+              field: 'sum.value',
+              order: 'asc',
             },
-          ],
-          reducers: [
-            {
-              type: 'peakBy',
-              config: {
-                field: 'sum.value',
-              },
-            },
-            {
-              type: 'orderBy',
-              config: {
-                field: 'sum.value',
-                order: 'asc',
-              },
-            },
-          ],
-        },
+          },
+        ],
       },
       {
         results: [
@@ -772,46 +764,44 @@ describe('nLevelAggregation', () => {
       {
         key: 'widget',
         type: 'nLevelAggregation',
-        config: {
-          aggs: [
-            {
-              type: 'terms',
-              field: 'Organization.NameState.untouched',
-              data: {
-                size: 10000000,
+        aggs: [
+          {
+            type: 'terms',
+            field: 'Organization.NameState.untouched',
+            data: {
+              size: 10000000,
+            },
+          },
+          {
+            type: 'terms',
+            data: {
+              script: "doc['PO.IssuedDate'].getMonth()",
+              lang: 'expression',
+              order: {
+                sum: 'desc',
               },
             },
-            {
-              type: 'terms',
-              data: {
-                script: "doc['PO.IssuedDate'].getMonth()",
-                lang: 'expression',
-                order: {
-                  sum: 'desc',
-                },
-              },
+          },
+          {
+            type: 'sum',
+            field: 'PO.IssuedAmount',
+          },
+        ],
+        reducers: [
+          {
+            type: 'peakBy',
+            config: {
+              field: 'sum.value',
             },
-            {
-              type: 'sum',
-              field: 'PO.IssuedAmount',
+          },
+          {
+            type: 'filter',
+            config: {
+              field: 'sum.value',
+              gt: 5000000,
             },
-          ],
-          reducers: [
-            {
-              type: 'peakBy',
-              config: {
-                field: 'sum.value',
-              },
-            },
-            {
-              type: 'filter',
-              config: {
-                field: 'sum.value',
-                gt: 5000000,
-              },
-            },
-          ],
-        },
+          },
+        ],
       },
       {
         results: [
@@ -864,46 +854,44 @@ describe('nLevelAggregation', () => {
       {
         key: 'widget',
         type: 'nLevelAggregation',
-        config: {
-          aggs: [
-            {
-              type: 'terms',
-              field: 'Organization.NameState.untouched',
-              data: {
-                size: 10000000,
+        aggs: [
+          {
+            type: 'terms',
+            field: 'Organization.NameState.untouched',
+            data: {
+              size: 10000000,
+            },
+          },
+          {
+            type: 'terms',
+            data: {
+              script: "doc['PO.IssuedDate'].getMonth()",
+              lang: 'expression',
+              order: {
+                sum: 'desc',
               },
             },
-            {
-              type: 'terms',
-              data: {
-                script: "doc['PO.IssuedDate'].getMonth()",
-                lang: 'expression',
-                order: {
-                  sum: 'desc',
-                },
-              },
+          },
+          {
+            type: 'sum',
+            field: 'PO.IssuedAmount',
+          },
+        ],
+        reducers: [
+          {
+            type: 'peakBy',
+            config: {
+              field: 'sum.value',
             },
-            {
-              type: 'sum',
-              field: 'PO.IssuedAmount',
+          },
+          {
+            type: 'filter',
+            config: {
+              field: 'sum.value',
+              lt: 5000000,
             },
-          ],
-          reducers: [
-            {
-              type: 'peakBy',
-              config: {
-                field: 'sum.value',
-              },
-            },
-            {
-              type: 'filter',
-              config: {
-                field: 'sum.value',
-                lt: 5000000,
-              },
-            },
-          ],
-        },
+          },
+        ],
       },
       {
         results: [
@@ -965,46 +953,44 @@ describe('nLevelAggregation', () => {
       {
         key: 'widget',
         type: 'nLevelAggregation',
-        config: {
-          aggs: [
-            {
-              type: 'terms',
-              field: 'Organization.NameState.untouched',
-              data: {
-                size: 10000000,
+        aggs: [
+          {
+            type: 'terms',
+            field: 'Organization.NameState.untouched',
+            data: {
+              size: 10000000,
+            },
+          },
+          {
+            type: 'terms',
+            data: {
+              script: "doc['PO.IssuedDate'].getMonth()",
+              lang: 'expression',
+              order: {
+                sum: 'desc',
               },
             },
-            {
-              type: 'terms',
-              data: {
-                script: "doc['PO.IssuedDate'].getMonth()",
-                lang: 'expression',
-                order: {
-                  sum: 'desc',
-                },
-              },
+          },
+          {
+            type: 'sum',
+            field: 'PO.IssuedAmount',
+          },
+        ],
+        reducers: [
+          {
+            type: 'peakBy',
+            config: {
+              field: 'sum.value',
             },
-            {
-              type: 'sum',
-              field: 'PO.IssuedAmount',
+          },
+          {
+            type: 'filter',
+            config: {
+              field: 'sum.value',
+              lte: 4494826.968653679,
             },
-          ],
-          reducers: [
-            {
-              type: 'peakBy',
-              config: {
-                field: 'sum.value',
-              },
-            },
-            {
-              type: 'filter',
-              config: {
-                field: 'sum.value',
-                lte: 4494826.968653679,
-              },
-            },
-          ],
-        },
+          },
+        ],
       },
       {
         results: [
@@ -1066,46 +1052,44 @@ describe('nLevelAggregation', () => {
       {
         key: 'widget',
         type: 'nLevelAggregation',
-        config: {
-          aggs: [
-            {
-              type: 'terms',
-              field: 'Organization.NameState.untouched',
-              data: {
-                size: 10000000,
+        aggs: [
+          {
+            type: 'terms',
+            field: 'Organization.NameState.untouched',
+            data: {
+              size: 10000000,
+            },
+          },
+          {
+            type: 'terms',
+            data: {
+              script: "doc['PO.IssuedDate'].getMonth()",
+              lang: 'expression',
+              order: {
+                sum: 'desc',
               },
             },
-            {
-              type: 'terms',
-              data: {
-                script: "doc['PO.IssuedDate'].getMonth()",
-                lang: 'expression',
-                order: {
-                  sum: 'desc',
-                },
-              },
+          },
+          {
+            type: 'sum',
+            field: 'PO.IssuedAmount',
+          },
+        ],
+        reducers: [
+          {
+            type: 'peakBy',
+            config: {
+              field: 'sum.value',
             },
-            {
-              type: 'sum',
-              field: 'PO.IssuedAmount',
+          },
+          {
+            type: 'filter',
+            config: {
+              field: 'sum.value',
+              gte: 488363940.0390625,
             },
-          ],
-          reducers: [
-            {
-              type: 'peakBy',
-              config: {
-                field: 'sum.value',
-              },
-            },
-            {
-              type: 'filter',
-              config: {
-                field: 'sum.value',
-                gte: 488363940.0390625,
-              },
-            },
-          ],
-        },
+          },
+        ],
       },
       {
         results: [
@@ -1158,46 +1142,44 @@ describe('nLevelAggregation', () => {
       {
         key: 'widget',
         type: 'nLevelAggregation',
-        config: {
-          aggs: [
-            {
-              type: 'terms',
-              field: 'Organization.NameState.untouched',
-              data: {
-                size: 10000000,
+        aggs: [
+          {
+            type: 'terms',
+            field: 'Organization.NameState.untouched',
+            data: {
+              size: 10000000,
+            },
+          },
+          {
+            type: 'terms',
+            data: {
+              script: "doc['PO.IssuedDate'].getMonth()",
+              lang: 'expression',
+              order: {
+                sum: 'desc',
               },
             },
-            {
-              type: 'terms',
-              data: {
-                script: "doc['PO.IssuedDate'].getMonth()",
-                lang: 'expression',
-                order: {
-                  sum: 'desc',
-                },
-              },
+          },
+          {
+            type: 'sum',
+            field: 'PO.IssuedAmount',
+          },
+        ],
+        reducers: [
+          {
+            type: 'peakBy',
+            config: {
+              field: 'sum.value',
             },
-            {
-              type: 'sum',
-              field: 'PO.IssuedAmount',
+          },
+          {
+            type: 'filter',
+            config: {
+              field: 'sum.value',
+              eq: 4494826.968653679,
             },
-          ],
-          reducers: [
-            {
-              type: 'peakBy',
-              config: {
-                field: 'sum.value',
-              },
-            },
-            {
-              type: 'filter',
-              config: {
-                field: 'sum.value',
-                eq: 4494826.968653679,
-              },
-            },
-          ],
-        },
+          },
+        ],
       },
       {
         results: [
