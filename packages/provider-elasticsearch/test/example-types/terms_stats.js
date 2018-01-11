@@ -44,10 +44,8 @@ describe('term_stats', () => {
       {
         key: 'test',
         type: 'terms_stats',
-        config: {
-          key_field: 'Organization.Name.untouched',
-          value_field: 'LineItem.TotalPrice',
-        },
+        key_field: 'Organization.Name.untouched',
+        value_field: 'LineItem.TotalPrice',
       },
       {
         terms: [
@@ -99,11 +97,9 @@ describe('term_stats', () => {
       {
         key: 'test',
         type: 'terms_stats',
-        config: {
-          key_field: 'Organization.Name.untouched',
-          value_field: 'LineItem.TotalPrice',
-          filter: 'city',
-        },
+        key_field: 'Organization.Name.untouched',
+        value_field: 'LineItem.TotalPrice',
+        filter: 'city',
       },
       {
         terms: [
@@ -170,11 +166,9 @@ describe('term_stats', () => {
       {
         key: 'test',
         type: 'terms_stats',
-        config: {
-          key_field: 'Organization.Name.untouched',
-          value_field: 'LineItem.TotalPrice',
-          filter: 'city   of    ',
-        },
+        key_field: 'Organization.Name.untouched',
+        value_field: 'LineItem.TotalPrice',
+        filter: 'city   of    ',
       },
       {
         terms: [

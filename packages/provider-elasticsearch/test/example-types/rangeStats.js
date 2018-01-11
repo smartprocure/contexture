@@ -7,61 +7,45 @@ describe('rangeStats', () => {
     it('should validate a context with config key_field, value_field and ranges', () => {
       utils.validContexts(rangeStats)([
         {
-          config: {
-            key_field: true,
-            value_field: true,
-            ranges: true,
-          },
+          key_field: true,
+          value_field: true,
+          ranges: true,
         },
         {
-          config: {
-            key_field: 'key_field',
-            value_field: 'value_field',
-            ranges: [1],
-          },
+          key_field: 'key_field',
+          value_field: 'value_field',
+          ranges: [1],
         },
       ])
     })
     it('should validate a context without config key_field, value_field or ranges', () => {
       utils.noValidContexts(rangeStats)([
         {
-          config: {
-            key_field: true,
-            value_field: true,
-            ranges: false,
-          },
+          key_field: true,
+          value_field: true,
+          ranges: false,
         },
         {
-          config: {
-            key_field: true,
-            value_field: true,
-          },
+          key_field: true,
+          value_field: true,
         },
         {
-          config: {
-            key_field: true,
-            value_field: false,
-            ranges: true,
-          },
+          key_field: true,
+          value_field: false,
+          ranges: true,
         },
         {
-          config: {
-            key_field: true,
-            ranges: true,
-          },
+          key_field: true,
+          ranges: true,
         },
         {
-          config: {
-            key_field: false,
-            value_field: true,
-            ranges: true,
-          },
+          key_field: false,
+          value_field: true,
+          ranges: true,
         },
         {
-          config: {
-            value_field: true,
-            ranges: true,
-          },
+          value_field: true,
+          ranges: true,
         },
       ])
     })
@@ -113,20 +97,18 @@ describe('rangeStats', () => {
         {
           key: 'test',
           type: 'rangeStats',
-          config: {
-            key_field: 'LineItem.UnitPrice',
-            value_field: 'LineItem.TotalPrice',
-            ranges: [
-              {
-                from: '0',
-                to: '500',
-              },
-              {
-                from: '500',
-                to: '10000',
-              },
-            ],
-          },
+          key_field: 'LineItem.UnitPrice',
+          value_field: 'LineItem.TotalPrice',
+          ranges: [
+            {
+              from: '0',
+              to: '500',
+            },
+            {
+              from: '500',
+              to: '10000',
+            },
+          ],
         },
         {
           results: [

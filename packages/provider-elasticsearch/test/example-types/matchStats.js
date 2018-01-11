@@ -40,11 +40,9 @@ describe('matchStats', () => {
       {
         key: 'test',
         type: 'matchStats',
-        config: {
-          key_field: 'Vendor.City.untouched',
-          key_value: 'Washington',
-          value_field: 'LineItem.TotalPrice',
-        },
+        key_field: 'Vendor.City.untouched',
+        key_value: 'Washington',
+        value_field: 'LineItem.TotalPrice',
       },
       {
         results: [
