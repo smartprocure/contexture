@@ -4,31 +4,31 @@ let { toSafeRegex } = require('../regex')
 
 module.exports = {
   hasValue: context =>
-    context.data.value || _.get('values.length', context.data),
+    context.value || _.get('values.length', context),
   filter(context) {
     let fieldName = context.field.replace('.untouched', '')
     let filterParts =
-      context.data.values || context.data.value.toLowerCase().split(' ')
+      context.values || context.value.toLowerCase().split(' ')
 
     let lookAtUntouched = /startsWith|endsWith|is|isNot|containsWord/.test(
-      context.data.operator
+      context.operator
     )
 
     let useQueryString =
-      /\b(contains|containsExact)\b/.test(context.data.operator) ||
-      (context.data.operator === 'containsWord' && filterParts.length > 2)
+      /\b(contains|containsExact)\b/.test(context.operator) ||
+      (context.operator === 'containsWord' && filterParts.length > 2)
 
     if (useQueryString) {
       let result = {
         query_string: {
           query: _.map(x => `"${x}"`, filterParts).join(' '),
           default_field: fieldName,
-          default_operator: context.data.join === 'any' ? 'OR' : 'AND',
+          default_operator: context.join === 'any' ? 'OR' : 'AND',
         },
       }
-      if (context.data.operator === 'containsExact')
+      if (context.operator === 'containsExact')
         result.query_string.analyzer = 'exact'
-      if (context.data.join === 'none') {
+      if (context.join === 'none') {
         result = {
           bool: {
             must_not: result,
@@ -41,7 +41,7 @@ module.exports = {
     if (lookAtUntouched) fieldName += '.untouched'
 
     if (
-      /endsWith|wordEndsWith/.test(context.data.operator) &&
+      /endsWith|wordEndsWith/.test(context.operator) &&
       filterParts.length > 2
     )
       throw new Error("You can't have more than 2 ends with filters")
@@ -50,7 +50,7 @@ module.exports = {
       all: 'must',
       any: 'should',
       none: 'must_not',
-    }[context.data.join || 'all']
+    }[context.join || 'all']
 
     let filter = {
       bool: {
@@ -61,25 +61,25 @@ module.exports = {
             .replace('+', '')
             .replace('-', '')
           if (lookAtUntouched)
-            criteria = (context.data.value || f).toLowerCase()
+            criteria = (context.value || f).toLowerCase()
 
           let prefix = /startsWith|wordStartsWith|is|isNot/.test(
-            context.data.operator
+            context.operator
           )
             ? ''
             : '.*'
           let suffix = /endsWith|wordEndsWith|is|isNot/.test(
-            context.data.operator
+            context.operator
           )
             ? ''
             : '.*'
 
           let builtCriteria =
-            context.data.operator === 'regexp'
+            context.operator === 'regexp'
               ? criteria
               : unidecode(
                   prefix +
-                    toSafeRegex(context.data.caseSensitive)(criteria) +
+                    toSafeRegex(context.caseSensitive)(criteria) +
                     suffix
                 )
 
@@ -92,7 +92,7 @@ module.exports = {
       },
     }
 
-    if (/doesNotContain|isNot/.test(context.data.operator)) {
+    if (/doesNotContain|isNot/.test(context.operator)) {
       filter = {
         bool: {
           must_not: filter,
