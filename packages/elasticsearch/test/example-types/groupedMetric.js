@@ -6,33 +6,25 @@ describe('groupedMetric', () => {
     it('should validate a context with config metric type value_count|top_hits, or an existing metric.field', () => {
       utils.validContexts(groupedMetric)([
         {
-          config: {
-            metric: {
-              type: 'value_count',
-            },
+          metric: {
+            type: 'value_count',
           },
         },
         {
-          config: {
-            metric: {
-              type: 'top_hits',
-            },
+          metric: {
+            type: 'top_hits',
           },
         },
         {
-          config: {
-            metric: {
-              type: 'value_count',
-              field: 'of study',
-            },
+          metric: {
+            type: 'value_count',
+            field: 'of study',
           },
         },
         {
-          config: {
-            metric: {
-              type: 'top_hits',
-              field: true,
-            },
+          metric: {
+            type: 'top_hits',
+            field: true,
           },
         },
       ])
@@ -40,10 +32,8 @@ describe('groupedMetric', () => {
     it('should not validate a context with an invalid config metric type (even if the metric field is non-negative)', () => {
       utils.noValidContexts(groupedMetric)([
         {
-          config: {
-            metric: {
-              type: 'invalid',
-            },
+          metric: {
+            type: 'invalid',
           },
         },
       ])
@@ -145,28 +135,26 @@ describe('groupedMetric', () => {
         {
           key: 'test-groupedMetric',
           type: 'groupedMetric',
-          config: {
-            metric: {
-              type: 'sum',
-              field: 'PO.IssuedAmount',
-            },
-            aggs: [
-              {
-                type: 'terms',
-                field: 'Organization.NameState.untouched',
-                data: {
-                  size: 10,
-                },
-              },
-              {
-                type: 'date_histogram',
-                field: 'PO.IssuedDate',
-                data: {
-                  interval: 'month',
-                },
-              },
-            ],
+          metric: {
+            type: 'sum',
+            field: 'PO.IssuedAmount',
           },
+          aggs: [
+            {
+              type: 'terms',
+              field: 'Organization.NameState.untouched',
+              data: {
+                size: 10,
+              },
+            },
+            {
+              type: 'date_histogram',
+              field: 'PO.IssuedDate',
+              data: {
+                interval: 'month',
+              },
+            },
+          ],
         },
         {
           results: {
