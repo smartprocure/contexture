@@ -4,10 +4,10 @@ let statsResults = require('./statistical').result
 let calcSmartInterval = require('../smartInterval').calcSmartInterval
 
 module.exports = {
-  validContext: context => context.field || context.config.field,
+  validContext: context => context.field || context.field,
   result(context, search) {
-    let field = context.field || context.config.field
-    let interval = context.config.interval
+    let field = context.field || context.field
+    let interval = context.interval
     if (!interval) {
       interval = statsResults(
         {
@@ -30,7 +30,7 @@ module.exports = {
             // aggs: {
             //   histogram: {
             //     stats: {
-            //       field: context.config.value_field
+            //       field: context.value_field
             //     }
             //   }
             // }
