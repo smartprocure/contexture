@@ -24,90 +24,64 @@ describe('geo', () => {
   it('hasValue should work', () => {
     utils.hasValueContexts(geo)([
       {
-        data: {
-          location: true,
-          radius: true,
-          operator: true,
-        },
+        location: true,
+        radius: true,
+        operator: true,
       },
       {
-        data: {
-          location: true,
-          radius: -1,
-          operator: true,
-        },
+        location: true,
+        radius: -1,
+        operator: true,
       },
       {
-        data: {
-          location: 'SmartProcure',
-          radius: 10,
-          operator: 'within',
-        },
+        location: 'SmartProcure',
+        radius: 10,
+        operator: 'within',
       },
     ])
     utils.noValueContexts(geo)([
+      {},
       {
-        data: {},
+        location: false,
+        radius: 10,
+        operator: 'within',
       },
       {
-        data: {
-          location: false,
-          radius: 10,
-          operator: 'within',
-        },
+        location: '',
+        radius: 10,
+        operator: 'within',
       },
       {
-        data: {
-          location: '',
-          radius: 10,
-          operator: 'within',
-        },
+        radius: 10,
+        operator: 'within',
       },
       {
-        data: {
-          radius: 10,
-          operator: 'within',
-        },
+        location: true,
+        radius: 0,
+        operator: 'within',
       },
       {
-        data: {
-          location: true,
-          radius: 0,
-          operator: 'within',
-        },
+        location: true,
+        radius: false,
+        operator: 'within',
       },
       {
-        data: {
-          location: true,
-          radius: false,
-          operator: 'within',
-        },
+        location: true,
+        operator: 'within',
       },
       {
-        data: {
-          location: true,
-          operator: 'within',
-        },
+        location: true,
+        radius: 10,
+        operator: false,
       },
       {
-        data: {
-          location: true,
-          radius: 10,
-          operator: false,
-        },
+        location: true,
+        radius: 10,
+        operator: '',
       },
       {
-        data: {
-          location: true,
-          radius: 10,
-          operator: '',
-        },
-      },
-      {
-        data: {
-          location: true,
-          radius: 10,
-        },
+        location: true,
+        radius: 10,
       },
     ])
   })
@@ -118,11 +92,9 @@ describe('geo', () => {
         geo.filter({
           type: 'geo',
           field: 'test',
-          data: {
-            location: 'SmartProcure',
-            radius: 10,
-            operator: 'within',
-          },
+          location: 'SmartProcure',
+          radius: 10,
+          operator: 'within',
           _meta: {},
         })
       ).to.become({
@@ -137,11 +109,9 @@ describe('geo', () => {
         geo.filter({
           type: 'geo',
           field: 'test',
-          data: {
-            location: 'SmartProcure',
-            radius: 15,
-            operator: 'outside',
-          },
+          location: 'SmartProcure',
+          radius: 15,
+          operator: 'outside',
           _meta: {},
         })
       ).to.eventually.deep.equal({
@@ -160,76 +130,54 @@ describe('geo', () => {
   it('validContext should work', () => {
     utils.validContexts(geo)([
       {
-        data: {
-          location: true,
-          radius: 1,
-          operator: true,
-        },
+        location: true,
+        radius: 1,
+        operator: true,
       },
       {
-        data: {
-          location: 'SmartProcure',
-          radius: 10,
-          operator: 'within',
-        },
+        location: 'SmartProcure',
+        radius: 10,
+        operator: 'within',
       },
     ])
     utils.noValidContexts(geo)([
+      {},
       {
-        data: {},
+        location: false,
+        radius: 10,
+        operator: 'within',
       },
       {
-        data: {
-          location: false,
-          radius: 10,
-          operator: 'within',
-        },
+        location: '',
+        radius: 10,
+        operator: 'within',
       },
       {
-        data: {
-          location: '',
-          radius: 10,
-          operator: 'within',
-        },
+        radius: 10,
+        operator: 'within',
       },
       {
-        data: {
-          radius: 10,
-          operator: 'within',
-        },
+        location: true,
+        radius: 0,
+        operator: 'within',
       },
       {
-        data: {
-          location: true,
-          radius: 0,
-          operator: 'within',
-        },
+        location: true,
+        operator: 'within',
       },
       {
-        data: {
-          location: true,
-          operator: 'within',
-        },
+        location: true,
+        radius: 10,
+        operator: false,
       },
       {
-        data: {
-          location: true,
-          radius: 10,
-          operator: false,
-        },
+        location: true,
+        radius: 10,
+        operator: '',
       },
       {
-        data: {
-          location: true,
-          radius: 10,
-          operator: '',
-        },
-      },
-      {
-        data: {
-          location: true,
-          radius: 10,
-        },
+        location: true,
+        radius: 10,
       },
     ])
   })
@@ -238,11 +186,9 @@ describe('geo', () => {
     let context = {
       type: 'geo',
       field: 'test',
-      data: {
-        location: 'SmartProcure',
-        radius: 10,
-        operator: 'within',
-      },
+      location: 'SmartProcure',
+      radius: 10,
+      operator: 'within',
       _meta: {},
     }
     return expect(
