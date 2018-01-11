@@ -6,16 +6,13 @@ describe('number/filter', () => {
       !!number.hasValue({
         type: 'number',
         field: 'test',
-        data: {
-          max: 1000,
-        },
+        max: 1000,
       })
     ).to.be.true
     expect(
       !!number.hasValue({
         type: 'number',
         field: 'test',
-        data: {},
       })
     ).to.be.false
   })
@@ -24,9 +21,7 @@ describe('number/filter', () => {
       number.filter({
         type: 'number',
         field: 'test',
-        data: {
-          min: 500,
-        },
+        min: 500,
       })
     ).to.deep.equal({
       range: {
@@ -41,9 +36,7 @@ describe('number/filter', () => {
       number.filter({
         type: 'number',
         field: 'test',
-        data: {
-          max: 500,
-        },
+        max: 500,
       })
     ).to.deep.equal({
       range: {
@@ -58,10 +51,8 @@ describe('number/filter', () => {
       number.filter({
         type: 'number',
         field: 'test',
-        data: {
-          min: 500,
-          max: 1000,
-        },
+        min: 500,
+        max: 1000,
       })
     ).to.deep.equal({
       range: {
