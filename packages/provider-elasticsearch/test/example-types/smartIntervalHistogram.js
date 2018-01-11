@@ -46,49 +46,48 @@ describe('smartIntervalHistogram', () => {
         field: 'LineItem.TotalPrice',
       },
       {
-      interval: 250,
-      entries: [
+        interval: 250,
+        entries: [
+          {
+            key: 0,
+            count: 8587960,
+          },
+          {
+            key: 250,
+            count: 613556605,
+          },
+          {
+            key: 500,
+            count: 1,
+          },
+          {
+            key: 750,
+            count: 1,
+          },
+        ],
+      },
+      [
         {
-          key: 0,
-          count: 8587960,
-        },
-        {
-          key: 250,
-          count: 613556605,
-        },
-        {
-          key: 500,
-          count: 1,
-        },
-        {
-          key: 750,
-          count: 1,
-        },
-      ],
-    },
-    [
-      {
-        aggs: {
-          statistical: {
-            stats: {
-              field: 'LineItem.TotalPrice',
+          aggs: {
+            statistical: {
+              stats: {
+                field: 'LineItem.TotalPrice',
+              },
             },
           },
         },
-      },
-      {
-        aggs: {
-          histogram: {
+        {
+          aggs: {
             histogram: {
-              field: 'LineItem.TotalPrice',
-              interval: 250,
-              min_doc_count: 0,
+              histogram: {
+                field: 'LineItem.TotalPrice',
+                interval: 250,
+                min_doc_count: 0,
+              },
             },
           },
         },
-      },
-    ]
-,
+      ]
     ))
   it('should work with context.interval', () =>
     sequentialResultTest(
@@ -116,7 +115,7 @@ describe('smartIntervalHistogram', () => {
               ],
             },
           },
-        }
+        },
       ],
       {
         key: 'test',
@@ -124,39 +123,39 @@ describe('smartIntervalHistogram', () => {
         field: 'LineItem.TotalPrice',
         interval: 250,
       },
-{
-      interval: 250,
-      entries: [
-        {
-          key: 0,
-          count: 8587960,
-        },
-        {
-          key: 250,
-          count: 613556605,
-        },
-        {
-          key: 500,
-          count: 1,
-        },
-        {
-          key: 750,
-          count: 1,
-        },
-      ],
-    },
-    [
       {
-        aggs: {
-          histogram: {
+        interval: 250,
+        entries: [
+          {
+            key: 0,
+            count: 8587960,
+          },
+          {
+            key: 250,
+            count: 613556605,
+          },
+          {
+            key: 500,
+            count: 1,
+          },
+          {
+            key: 750,
+            count: 1,
+          },
+        ],
+      },
+      [
+        {
+          aggs: {
             histogram: {
-              field: 'LineItem.TotalPrice',
-              interval: 250,
-              min_doc_count: 0,
+              histogram: {
+                field: 'LineItem.TotalPrice',
+                interval: 250,
+                min_doc_count: 0,
+              },
             },
           },
         },
-      },
-    ]
+      ]
     ))
 })
