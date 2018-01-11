@@ -152,30 +152,28 @@ describe('termsDelta', () => {
       {
         key: 'widget',
         type: 'termsDelta',
-        config: {
-          field: 'Organization.State',
-          size: 50000,
-          aggs: [
-            {
-              type: 'range',
-              field: 'PO.IssuedDate',
-              data: {
-                gte: 'now-2y-180d',
-                lte: 'now-180d',
-                format: 'dateOptionalTime',
-              },
+        field: 'Organization.State',
+        size: 50000,
+        aggs: [
+          {
+            type: 'range',
+            field: 'PO.IssuedDate',
+            data: {
+              gte: 'now-2y-180d',
+              lte: 'now-180d',
+              format: 'dateOptionalTime',
             },
-            {
-              type: 'range',
-              field: 'PO.IssuedDate',
-              data: {
-                gte: 'now-180d',
-                lte: 'now',
-                format: 'dateOptionalTime',
-              },
+          },
+          {
+            type: 'range',
+            field: 'PO.IssuedDate',
+            data: {
+              gte: 'now-180d',
+              lte: 'now',
+              format: 'dateOptionalTime',
             },
-          ],
-        },
+          },
+        ],
       },
       {
         results: ['mo', 'oh'],
@@ -225,33 +223,31 @@ describe('termsDelta', () => {
       {
         key: 'widget',
         type: 'termsDelta',
-        config: {
-          field: 'Organization.NameStateLatLongJson',
-          fieldMode: 'word',
-          isScript: false,
-          isJsonString: true,
-          size: 50000,
-          aggs: [
-            {
-              type: 'range',
-              field: 'PO.IssuedDate',
-              data: {
-                gte: 'now-2y-180d',
-                lte: 'now-180d',
-                format: 'dateOptionalTime',
-              },
+        field: 'Organization.NameStateLatLongJson',
+        fieldMode: 'word',
+        isScript: false,
+        isJsonString: true,
+        size: 50000,
+        aggs: [
+          {
+            type: 'range',
+            field: 'PO.IssuedDate',
+            data: {
+              gte: 'now-2y-180d',
+              lte: 'now-180d',
+              format: 'dateOptionalTime',
             },
-            {
-              type: 'range',
-              field: 'PO.IssuedDate',
-              data: {
-                gte: 'now-180d',
-                lte: 'now',
-                format: 'dateOptionalTime',
-              },
+          },
+          {
+            type: 'range',
+            field: 'PO.IssuedDate',
+            data: {
+              gte: 'now-180d',
+              lte: 'now',
+              format: 'dateOptionalTime',
             },
-          ],
-        },
+          },
+        ],
       },
       {
         results: [
