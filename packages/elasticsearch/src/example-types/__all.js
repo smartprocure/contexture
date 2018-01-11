@@ -1,7 +1,7 @@
 module.exports = {
   __all: require('./__all'),
-  bool: require('./bool'),
   cardinality: require('./cardinality'),
+  bool: require('./bool'),
   date: require('./date'),
   dateHistogram: require('./dateHistogram'),
   default: require('./default'),
