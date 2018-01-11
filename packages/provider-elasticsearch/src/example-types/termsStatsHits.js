@@ -30,17 +30,13 @@ let getAggregationObject = (config, schema) => ({
 })
 
 module.exports = {
-  validContext: context =>
-    context.key_field && context.value_field,
+  validContext: context => context.key_field && context.value_field,
   result(context, search, schema) {
     let filter
-    let isDetails =
-      context.details_key_field && context.details_value_field
+    let isDetails = context.details_key_field && context.details_value_field
     if (context.filter) {
       let rawFieldName = getField(schema, context.key_field)
-      filter = buildRegexQueryForWords(rawFieldName, false)(
-        context.filter
-      )
+      filter = buildRegexQueryForWords(rawFieldName, false)(context.filter)
     }
     let request = {
       aggs: {
