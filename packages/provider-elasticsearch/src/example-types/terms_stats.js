@@ -4,8 +4,7 @@ let { buildRegexQueryForWords } = require('../regex')
 let { getField } = require('../fields')
 
 module.exports = {
-  validContext: context =>
-    context.key_field && context.value_field,
+  validContext: context => context.key_field && context.value_field,
   async result(context, search, schema) {
     let field = getField(schema, context.key_field)
     let x = await esTwoLevel(
