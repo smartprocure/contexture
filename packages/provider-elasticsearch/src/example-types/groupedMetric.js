@@ -10,24 +10,20 @@ let _ = require('lodash/fp')
 //     {
 //       type: 'terms',
 //       field: 'Organization.NameState.untouched',
-//       data: {}
 //     },
 //     {
 //       type: 'date_histogram',
 //       field: 'PO.IssuedDate',
-//       data: {
-//         interval: 'month'
-//       }
+//       interval: 'month'
 //     }
 //   ]
 // }
 
 module.exports = {
   validContext: context =>
-    context.config.metric.type &&
+    context.metric.type &&
     !!(
-      /value_count|top_hits/.test(context.config.metric.type) ||
-      context.config.metric.field
+      /value_count|top_hits/.test(context.metric.type) || context.metric.field
     ),
   result: (context, search) =>
     search(
@@ -50,7 +46,7 @@ module.exports = {
           },
         }),
         {}
-      )([context.config.metric].concat(_.reverse(context.config.aggs)))
+      )([context.metric].concat(_.reverse(context.aggs)))
     ).then(results => ({
       results: results.aggregations,
     })),
