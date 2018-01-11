@@ -47,10 +47,8 @@ describe('smartPercentileRanks', () => {
       {
         key: 'test',
         type: 'smartPercentileRanks',
-        config: {
-          field: 'LineItem.UnitPrice',
-          percents: [10, 30, 75],
-        },
+        field: 'LineItem.UnitPrice',
+        percents: [10, 30, 75],
       },
       {
         percentileRanks: [
