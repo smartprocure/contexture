@@ -7,9 +7,7 @@ module.exports = {
     twoLevelMatch.result(
       _.merge(
         {
-          config: {
-            value_type: 'stats',
-          },
+          value_type: 'stats',
         },
         context
       ),
