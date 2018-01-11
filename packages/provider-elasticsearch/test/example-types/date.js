@@ -9,9 +9,7 @@ describe('date/filter', () => {
       date.filter({
         type: 'date',
         field: 'test',
-        data: {
-          from: '2016-04-25',
-        },
+        from: '2016-04-25',
       })
     ).to.deep.equal({
       range: {
@@ -27,9 +25,7 @@ describe('date/filter', () => {
       date.filter({
         type: 'date',
         field: 'test',
-        data: {
-          to: '2016-04-25',
-        },
+        to: '2016-04-25',
       })
     ).to.deep.equal({
       range: {
@@ -45,10 +41,8 @@ describe('date/filter', () => {
       date.filter({
         type: 'date',
         field: 'test',
-        data: {
-          from: '2015-04-25',
-          to: '2016-04-25',
-        },
+        from: '2015-04-25',
+        to: '2016-04-25',
       })
     ).to.deep.equal({
       range: {
@@ -65,11 +59,9 @@ describe('date/filter', () => {
       date.filter({
         type: 'date',
         field: 'test',
-        data: {
-          from: '2015-04-25',
-          to: 'now+1M',
-          useDateMath: true,
-        },
+        from: '2015-04-25',
+        to: 'now+1M',
+        useDateMath: true,
       })
     ).to.deep.equal({
       range: {
@@ -86,10 +78,8 @@ describe('date/filter', () => {
       date.filter({
         type: 'date',
         field: 'test',
-        data: {
-          from: 'thisQuarter',
-          useDateMath: true,
-        },
+        from: 'thisQuarter',
+        useDateMath: true,
       })
     ).to.deep.equal({
       range: {
@@ -118,10 +108,8 @@ describe('date/filter', () => {
       date.filter({
         type: 'date',
         field: 'test',
-        data: {
-          from: 'lastQuarter',
-          useDateMath: true,
-        },
+        from: 'lastQuarter',
+        useDateMath: true,
       })
     ).to.deep.equal({
       range: {
@@ -150,10 +138,8 @@ describe('date/filter', () => {
       date.filter({
         type: 'date',
         field: 'test',
-        data: {
-          from: 'nextQuarter',
-          useDateMath: true,
-        },
+        from: 'nextQuarter',
+        useDateMath: true,
       })
     ).to.deep.equal({
       range: {
