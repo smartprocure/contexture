@@ -25,7 +25,7 @@ function calcClusters(entries, interval, isSignificant) {
 }
 
 module.exports = {
-  validContext: context => context.config.field,
+  validContext: context => context.field,
   result: (context, search) =>
     histogramResult(context, search).then(histResult => ({
       clusters: _.map(
