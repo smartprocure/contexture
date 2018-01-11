@@ -6,7 +6,7 @@ module.exports = {
       aggs: {
         statistical: {
           stats: {
-            field: _.get('config.field', context) || context.field,
+            field: context.field,
           },
         },
       },
