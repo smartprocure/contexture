@@ -26,8 +26,8 @@ module.exports = {
   statistical: require('./statistical'),
   terms: require('./terms'),
   termsDelta: require('./termsDelta'),
-  text: require('./text'),
   termsStatsHits: require('./termsStatsHits'),
   terms_stats: require('./terms_stats'),
+  text: require('./text'),
   twoLevelMatch: require('./twoLevelMatch'),
 }
