@@ -1,10 +1,10 @@
 let _ = require('lodash/fp')
 
 module.exports = {
-  validContext: context => context.config.field,
+  validContext: context => context.field,
   result(context, search) {
-    let keyField = _.get('config.field', context)
-    let percentsArray = _.get('config.percents', context)
+    let keyField = _.get('field', context)
+    let percentsArray = _.get('percents', context)
     return search({
       aggs: {
         statistical: {
