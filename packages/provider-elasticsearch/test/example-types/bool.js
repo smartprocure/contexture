@@ -7,9 +7,7 @@ describe('bool', function() {
       bool.filter({
         type: 'bool',
         field: 'test',
-        data: {
-          value: true,
-        },
+        value: true,
       })
     ).to.deep.equal({
       term: {
@@ -22,9 +20,7 @@ describe('bool', function() {
       bool.filter({
         type: 'bool',
         field: 'test',
-        data: {
-          value: false,
-        },
+        value: false,
       })
     ).to.deep.equal({
       term: {
