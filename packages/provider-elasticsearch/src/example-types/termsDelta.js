@@ -58,9 +58,7 @@ module.exports = {
           aggs: {
             field: {
               terms: {
-                [context.isScript ? 'script' : 'field']: getFieldMode(
-                  context
-                ),
+                [context.isScript ? 'script' : 'field']: getFieldMode(context),
                 size: context.size || 50000, // Arbitrary value instead integer max value.
               },
             },
