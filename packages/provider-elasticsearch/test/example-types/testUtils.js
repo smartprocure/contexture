@@ -36,8 +36,6 @@ let sequentialResultTest = _.curry(
       _.defaults(
         {
           meta: {},
-          data: {},
-          config: {},
         },
         context
       ),
