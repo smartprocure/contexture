@@ -86,20 +86,19 @@ Facet represents a list of dynamic choices, e.g. a checkbox list filter.
 
 Input
 
-```js
-{
-  field: String,
-  mode: 'include|exclude', // Should this filter act as inclusion or exclusion of the values
-  values: Boolean, // What is checked
-  fieldMode: 'autocomplete|word|suggest', // Whether to look at the entire field (autocomplete), the analyzed words in the field, or magic suggestions. This generally means switching field/analyzers but abstracts that lower level es/index knowledge away from the client.
-  size: Number, // How many options to return
-  cardinality: Number, // Precision threshold override, defaults to 5000
-  includeZeroes: Boolean, // If true, it will include options with 0 matching documents (aka min_doc_count: 0)
-  optionsFilter: String, // Filters the options further, e.g. a find box above a checkbox list
-  caseSensitive: Boolean, // Whether options filter is case sensitive. Defaults to false. *no known usages*
-  sort: 'term|count'// Sort results alphabetically or by count of matching records
-}
-```
+| Name            | Type                            | Default           | Description |
+| ----            | ----                            | -------           | ----------- |
+| `field`         | string                          | None, *required*  | The field it's operating on |
+| `mode`          | `include`/`exclude`             | include           | Should this filter act as inclusion or exclusion of the values |
+| `values`        | array[string]                   | []                | What is checked |
+| `fieldMode`     | `autocomplete`/`word`/`suggest` | autocomplete      | Whether to look at the entire field (autocomplete), the analyzed words in the field, or magic suggestions. This generally means switching field/analyzers but abstracts that lower level es/index knowledge away from the client. |
+| `size`          | number                          | 12                | How many options to return |
+| `cardinality`   | number                          | 5000              | Precision threshold override |
+| `includeZeroes` | boolean                         | false             | If true, it will include options with 0 matching documents (aka `min_doc_count: 0`) |
+| `optionsFilter` | string                          | ''                | Filters the options further, e.g. a find box above a checkbox list |
+| `caseSensitive` | boolean                         | false             | Whether options filter is case sensitive. *no known usages* |
+| `sort`          | `term`/`count`                  | count             | Sort results alphabetically or by count of matching records |
+
 
 Output
 
@@ -116,16 +115,17 @@ Output
 #### `geo`
 Represents a geographic radius search. Needs a geocodeLocation service passed in to it. Currently assumes it is a google maps geocoder search.
 
-```js
-{
-  field: String,
-  location: String, // Location to geocode
-  radius: Number, // Radius in miles
-  operator: 'within|not within'
-}
-```
+Input
 
-Result
+| Name            | Type                            | Default           | Description |
+| ----            | ----                            | -------           | ----------- |
+| `field`         | string                          | None, *required*  | The field it's operating on |
+| `location`      | string                          | None, *required*  | Location to geocode (e.g. an address, businessname, anything the google geocode can take) |
+| `radius`        | number                          | None, *required*  | Radius in miles |
+| `operator`      | `within`/`not within`           | within            | Whether the filter forces inclusion or exclusion |
+
+Output
+
 ```js
 {
   place: GeocodeLocationResponse
