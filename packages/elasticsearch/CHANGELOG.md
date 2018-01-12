@@ -1,4 +1,7 @@
-﻿### 0.4.0
+﻿### 0.4.1
+* Removed the last reference of context.data from the facet type.
+ 
+ ### 0.4.0
 * Removed the root level usage of context.data and context.config, now
   the inner properties can be passed directly to the root object.
 
