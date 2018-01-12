@@ -8,9 +8,9 @@ let joinmap = {
 }
 
 module.exports = {
-  hasValue: F.cascade(['data.value', 'data.values.length']),
+  hasValue: F.cascade(['value', 'values.length']),
   filter: context => ({
-    [joinmap[context.data.join || 'all']]: _.map(
+    [joinmap[context.join || 'all']]: _.map(
       val => ({
         [context.field]: {
           $regex: {
@@ -21,11 +21,11 @@ module.exports = {
             wordEndsWith: `${val}\\b`,
             is: `^${val}$`,
             containsExact: `\\b${val}\\b`,
-          }[context.data.operator],
+          }[context.operator],
           $options: 'i',
         },
       }),
-      context.data.values || [context.data.value]
+      context.values || [context.value]
     ),
   }),
 }

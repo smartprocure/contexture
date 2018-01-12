@@ -7,18 +7,14 @@ describe('text', () => {
       !!text.hasValue({
         type: 'text',
         field: 'test',
-        data: {
-          values: ['asdf'],
-        },
+        values: ['asdf'],
       })
     ).to.be.true
     expect(
       !!text.hasValue({
         type: 'text',
         field: 'test',
-        data: {
-          values: [],
-        },
+        values: [],
       })
     ).to.be.false
   })
@@ -28,11 +24,9 @@ describe('text', () => {
         key: 'test',
         type: 'text',
         field: 'description',
-        data: {
-          join: 'any',
-          operator,
-          values: ['laserjet', 'printer'],
-        },
+        join: 'any',
+        operator,
+        values: ['laserjet', 'printer'],
       })
     it('containsWord', () => {
       expect(laserjetPrinterText('containsWord')).to.deep.equal({
