@@ -3,10 +3,10 @@ let moment = require('moment')
 let datemath = require('@elastic/datemath')
 
 module.exports = {
-  hasValue: context => context.data.from || context.data.to,
+  hasValue: context => context.from || context.to,
   filter(context) {
-    let { from, to } = context.data
-    if (context.data.useDateMath) {
+    let { from, to } = context
+    if (context.useDateMath) {
       if (from === 'thisQuarter') {
         from = moment()
           .quarter(moment().quarter())
