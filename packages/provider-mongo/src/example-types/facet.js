@@ -2,10 +2,10 @@ let _ = require('lodash')
 let Promise = require('bluebird')
 
 module.exports = {
-  hasValue: context => _.get(context.data, 'values.length'),
+  hasValue: context => _.get(context, 'values.length'),
   filter: context => ({
     [context.field]: {
-      [context.data.mode === 'exclude' ? '$nin' : '$in']: context.data.values,
+      [context.mode === 'exclude' ? '$nin' : '$in']: context.values,
     },
   }),
   result: (context, search) =>
@@ -20,7 +20,7 @@ module.exports = {
           },
         },
         {
-          $limit: context.config.size || 10,
+          $limit: context.size || 10,
         },
       ]),
       search([

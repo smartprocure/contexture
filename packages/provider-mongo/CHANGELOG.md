@@ -1,4 +1,7 @@
-﻿# 0.1.3
+# 0.1.4
+- Kill data and config, requiring contexture >= 0.40
+
+# 0.1.3
 - Refactoring exclude mongoId
 
 # 0.1.2
