@@ -2,11 +2,15 @@ let { expect } = require('chai')
 let _ = require('lodash')
 let date = require('../../src/example-types/date')
 
-let dateBuilder = data => _.extend({
-  key: 'test',
-  type: 'date',
-  field: 'test',
-}, data)
+let dateBuilder = data =>
+  _.extend(
+    {
+      key: 'test',
+      type: 'date',
+      field: 'test',
+    },
+    data
+  )
 
 describe('date', () => {
   it('should check for values', () => {
