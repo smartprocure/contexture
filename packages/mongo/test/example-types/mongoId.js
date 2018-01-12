@@ -8,16 +8,13 @@ describe('mongoId', () => {
       !!mongoId.hasValue({
         type: 'mongoId',
         field: 'test',
-        data: {
-          value: '53b46feb938d89315aae1477',
-        },
+        value: '53b46feb938d89315aae1477',
       })
     ).to.be.true
     expect(
       !!mongoId.hasValue({
         type: 'mongoId',
         field: 'test',
-        data: {},
       })
     ).to.be.false
   })
@@ -25,9 +22,7 @@ describe('mongoId', () => {
     expect(
       mongoId.filter({
         field: '_id',
-        data: {
-          value: '53b46feb938d89315aae1477',
-        },
+        value: '53b46feb938d89315aae1477',
       })
     ).to.deep.equal({
       _id: {
@@ -39,9 +34,7 @@ describe('mongoId', () => {
     expect(
       mongoId.filter({
         field: '_id',
-        data: {
-          values: ['53b46feb938d89315aae1477'],
-        },
+        values: ['53b46feb938d89315aae1477'],
       })
     ).to.deep.equal({
       _id: {
@@ -53,10 +46,8 @@ describe('mongoId', () => {
     expect(
       mongoId.filter({
         field: '_id',
-        data: {
-          mode: 'exclude',
-          values: ['53b46feb938d89315aae1477'],
-        },
+        mode: 'exclude',
+        values: ['53b46feb938d89315aae1477'],
       })
     ).to.deep.equal({
       _id: {
