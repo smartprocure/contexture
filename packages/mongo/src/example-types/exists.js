@@ -1,12 +1,12 @@
 module.exports = {
   hasValue: () => true,
   filter: context =>
-    context.data.value
+    context.value
       ? {
           $and: [
             {
               [context.field]: {
-                $exists: context.data.value,
+                $exists: context.value,
                 $ne: '',
               },
             },

@@ -5,13 +5,11 @@ let Promise = require('bluebird')
 module.exports = {
   result(context, search, schema, { getSchema }) {
     let {
-      config: {
-        page = 1,
-        pageSize = 10,
-        sortField = '_score',
-        sortDir = 'desc',
-        populate,
-      } = {},
+      page = 1,
+      pageSize = 10,
+      sortField = '_score',
+      sortDir = 'desc',
+      populate,
     } = context
     page -= 1
     let startRecord = page * pageSize
