@@ -4,7 +4,7 @@ let { buildRegexQueryForWords } = require('../regex')
 let { getField } = require('../fields')
 
 module.exports = {
-  hasValue: context => _.get('values.length', context.data),
+  hasValue: context => _.get('values.length', context),
   filter(context, schema = {}) {
     let field = getField(schema, context.field, context.fieldMode)
     let result = {
