@@ -40,9 +40,7 @@ module.exports = {
             let targetCollection = _.get('mongo.collection', targetSchema)
             if (!targetCollection)
               throw Error(
-                `The ${
-                  targetCollection
-                } schema has a mongo configuration, but doesn't have a 'collection' property`
+                `The ${targetCollection} schema has a mongo configuration, but doesn't have a 'collection' property`
               )
 
             return {
