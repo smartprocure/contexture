@@ -1,3 +1,6 @@
+# 0.1.5
+- Fixed the contexture version in our peerDependencies.
+
 # 0.1.4
 - Kill data and config, requiring contexture >= 0.40
 
