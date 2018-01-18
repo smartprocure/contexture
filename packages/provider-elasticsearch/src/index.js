@@ -91,6 +91,17 @@ let ElasticsearchProvider = (
       _.last(context._meta.requests).response = results
     })
   },
+  async getSchemaMapping(index, type) {
+    let client = config.getClient()
+    let mapping = await client.indices.getMapping({ index, type })
+
+    // Change the initial key to the passed index to support index aliasing
+    for (let key in mapping) {
+      let val = mapping[key]
+      let aliasedMapping = { [index]: val }
+      return aliasedMapping
+    }
+  },
 })
 
 module.exports = ElasticsearchProvider
