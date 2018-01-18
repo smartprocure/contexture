@@ -91,6 +91,16 @@ let ElasticsearchProvider = (
       _.last(context._meta.requests).response = results
     })
   },
+  // Utility function to get a mapping used for building a schema directly from ES
+  async getMappingProperties(schema) {
+    let client = config.getClient()
+    let { type, index } = schema.elasticsearch
+    let mapping = await client.indices.getMapping({ index, type })
+
+    for (let key in mapping) {
+      return _.get([key, 'mappings', type, 'properties'], mapping)
+    }
+  },
 })
 
 module.exports = ElasticsearchProvider
