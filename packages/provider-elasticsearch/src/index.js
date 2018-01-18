@@ -92,16 +92,13 @@ let ElasticsearchProvider = (
     })
   },
   // Utility function to get a mapping used for building a schema directly from ES
-  async getSchemaMapping(schema) {
+  async getMappingProperties(schema) {
     let client = config.getClient()
     let { type, index } = schema.elasticsearch
     let mapping = await client.indices.getMapping({ index, type })
 
-    // Change the initial key to the passed index to support index aliasing
     for (let key in mapping) {
-      let val = mapping[key]
-      let aliasedMapping = { [index]: val }
-      return aliasedMapping
+      return _.get([key, 'mappings', type, 'properties'], mapping)
     }
   },
 })
