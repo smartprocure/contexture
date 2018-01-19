@@ -15,8 +15,7 @@ let reactors = {
     previous,
     hasValueMap,
     value,
-    validateGroup,
-    ...args
+    validateGroup
   ) {
     let needUpdate = hasContext(instigator)
     let affectsOthers =
@@ -31,15 +30,7 @@ let reactors = {
       reactor = reactors.all
     }
     if (reactor)
-      return reactor(
-        parent,
-        instigator,
-        previous,
-        hasValueMap,
-        value,
-        validateGroup,
-        ...args
-      )
+      return reactor(...arguments)
   },
 }
 
@@ -47,14 +38,14 @@ export let StandardReactors = {
   refresh: reactors.all,
   data: reactors.others,
   config: reactors.only,
-  join(parent, instigator, previous, hasValueMap, ...args) {
+  join(parent, instigator, previous, hasValueMap) {
     let childrenWithValues = _.filter(
       child => hasValueMap[child.path],
       instigator.children
     )
     let joinInverted = instigator.join === 'not' || previous.join === 'not'
     if (childrenWithValues.length > 1 || joinInverted)
-      return reactors.all(parent, instigator, previous, hasValueMap, ...args)
+      return reactors.all(...arguments)
   },
   add: reactors.standardChange,
   async remove(
@@ -63,33 +54,17 @@ export let StandardReactors = {
     previous,
     hasValueMap,
     value,
-    validateGroup,
-    ...args
+    validateGroup
   ) {
     if (await validateGroup(previous))
-      return reactors.all(
-        parent,
-        instigator,
-        previous,
-        hasValueMap,
-        value,
-        validateGroup,
-        ...args
-      )
+      return reactors.all(...arguments)
   },
-  paused(parent, instigator, previous, hasValueMap, value, ...args) {
+  paused(parent, instigator, previous, hasValueMap, value) {
     if (!value && instigator.missedUpdates) {
       // Reactor probably shouldn't mutate but this needs to clear somewhere :/
       // maybe in reactor??
       instigator.missedUpdates = false
-      return reactors.only(
-        parent,
-        instigator,
-        previous,
-        hasValueMap,
-        value,
-        ...args
-      )
+      return reactors.only(...arguments)
     }
   },
   // ported from main app ¯\_(ツ)_/¯
