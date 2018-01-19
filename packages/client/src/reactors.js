@@ -29,8 +29,7 @@ let reactors = {
     } else if (affectsOthers && needUpdate) {
       reactor = reactors.all
     }
-    if (reactor)
-      return reactor(...arguments)
+    if (reactor) return reactor(...arguments)
   },
 }
 
@@ -56,8 +55,7 @@ export let StandardReactors = {
     value,
     validateGroup
   ) {
-    if (await validateGroup(previous))
-      return reactors.all(...arguments)
+    if (await validateGroup(previous)) return reactors.all(...arguments)
   },
   paused(parent, instigator, previous, hasValueMap, value) {
     if (!value && instigator.missedUpdates) {
