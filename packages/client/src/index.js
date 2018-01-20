@@ -63,7 +63,9 @@ export let ContextTree = (
     if (dontProcess) return // short circuit deepClone and triggerUpdate
     // Avoid race conditions - what matters is state _at the time of dispatch_
     // snapshot might not be needed since await is blocking?
-    let hasValue = checkValue(await mapValuesAsync(validateGroup, snapshot(flat)))
+    let hasValue = checkValue(
+      await mapValuesAsync(validateGroup, snapshot(flat))
+    )
 
     // Process from instigator parent up to fake root so affectedNodes are always calculated in context of a group
     await bubbleUpAsync(
