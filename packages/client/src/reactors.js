@@ -62,7 +62,7 @@ export let StandardReactors = {
 export let getAffectedNodes = _.curry(
   async (
     { type, path, value, previous },
-    hasValueMap,
+    hasValue,
     validateGroup,
     node,
     p
@@ -73,7 +73,7 @@ export let getAffectedNodes = _.curry(
       node,
       instigator,
       previous,
-      hasValueMap,
+      hasValue,
       value,
       validateGroup
     )
