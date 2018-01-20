@@ -8,7 +8,7 @@ import {
   encodePath,
 } from './util/tree'
 import { catches } from './util/futil'
-import { mapValuesAsync, flowAsync } from './util/promise'
+import { flowAsync } from './util/promise'
 import { validate } from './validation'
 import { getAffectedNodes } from './reactors'
 import actions from './actions'
@@ -28,8 +28,6 @@ let process = flowAsync(4)(
     if (!_.some('markedForUpdate', n.children)) markForUpdate(n)
   })
 )
-
-let checkValue = _.curry((map, { path }) => map[path])
 
 export let ContextTree = (
   tree,
@@ -61,11 +59,13 @@ export let ContextTree = (
     log(`${type} event at ${path} (${dontProcess ? 'internal' : 'user'} event)`)
     _.cond(subscribers)(event)
     if (dontProcess) return // short circuit deepClone and triggerUpdate
+
     // Avoid race conditions - what matters is state _at the time of dispatch_
     // snapshot might not be needed since await is blocking?
-    let hasValue = checkValue(
-      await mapValuesAsync(validateGroup, snapshot(flat))
-    )
+    let treeshot = snapshot(tree)
+    let flatshot = flattenTree(treeshot)
+    await validateGroup(flatshot[tree.key])
+    let hasValue = ({path}) => flatshot[path].hasValue && !flatshot[path].error
 
     // Process from instigator parent up to fake root so affectedNodes are always calculated in context of a group
     await bubbleUpAsync(
