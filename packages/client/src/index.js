@@ -65,7 +65,8 @@ export let ContextTree = (
     let treeshot = snapshot(tree)
     let flatshot = flattenTree(treeshot)
     await validateGroup(flatshot[tree.key])
-    let hasValue = ({path}) => flatshot[path].hasValue && !flatshot[path].error
+    let hasValue = ({ path }) =>
+      flatshot[path].hasValue && !flatshot[path].error
 
     // Process from instigator parent up to fake root so affectedNodes are always calculated in context of a group
     await bubbleUpAsync(
