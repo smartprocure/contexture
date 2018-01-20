@@ -19,11 +19,11 @@ export default ({
     return dispatch({ type: 'add', path: decodePath(value.path), value })
   },
   async remove(path) {
-    let target = getNode(path)
+    let previous = getNode(path)
     let parent = getNode(_.dropRight(1, path))
-    pullOn(target, parent.children)
-    delete flat[target.path]
-    return dispatch({ type: 'remove', path, previous: target })
+    pullOn(previous, parent.children)
+    delete flat[previous.path]
+    return dispatch({ type: 'remove', path, previous })
   },
   async mutate(path, value) {
     let target = getNode(path)
