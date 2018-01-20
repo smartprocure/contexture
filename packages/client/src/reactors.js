@@ -13,13 +13,13 @@ let reactors = {
     parent,
     instigator,
     previous,
-    hasValueMap,
+    hasValue,
     value,
     validateGroup
   ) {
     let needUpdate = hasContext(instigator)
     let affectsOthers =
-      hasValueMap[instigator.path] ||
+      hasValue(instigator) ||
       (previous && (await validateGroup(previous)))
     let reactor
     if (needUpdate) {
@@ -37,11 +37,8 @@ export let StandardReactors = {
   refresh: reactors.all,
   data: reactors.others,
   config: reactors.only,
-  join(parent, instigator, previous, hasValueMap) {
-    let childrenWithValues = _.filter(
-      child => hasValueMap[child.path],
-      instigator.children
-    )
+  join(parent, instigator, previous, hasValue) {
+    let childrenWithValues = _.filter(hasValue, instigator.children)
     let joinInverted = instigator.join === 'not' || previous.join === 'not'
     if (childrenWithValues.length > 1 || joinInverted)
       return reactors.all(...arguments)
@@ -51,13 +48,13 @@ export let StandardReactors = {
     parent,
     instigator,
     previous,
-    hasValueMap,
+    _x,
     value,
     validateGroup
   ) {
     if (await validateGroup(previous)) return reactors.all(...arguments)
   },
-  paused(parent, instigator, previous, hasValueMap, value) {
+  paused(parent, instigator, previous, _x, value) {
     if (!value && instigator.missedUpdates) {
       // Reactor probably shouldn't mutate but this needs to clear somewhere :/
       // maybe in reactor??
