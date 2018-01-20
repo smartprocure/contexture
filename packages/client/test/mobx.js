@@ -17,7 +17,7 @@ let ContextTreeMobx = (tree, service) =>
     extend: extendObservable,
   })
 
-describe('should generally work', () => {
+describe('usage with mobx should generally work', () => {
   // TODO: make these generally self contained - some rely on previous test runs
   let tree = observable({
     key: 'root',
