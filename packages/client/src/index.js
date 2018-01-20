@@ -29,7 +29,7 @@ let process = flowAsync(4)(
   })
 )
 
-let hasValue = _.curry((map, {path}) => map[path])
+let hasValue = _.curry((map, { path }) => map[path])
 
 export let ContextTree = (
   tree,
@@ -64,14 +64,20 @@ export let ContextTree = (
     // Avoid race conditions - what matters is state _at the time of dispatch_
     // snapshot might not be needed since await is blocking?
     let hasValueMap = await mapValuesAsync(validateGroup, snapshot(flat))
-    
+
     // Process from instigator parent up to fake root so affectedNodes are always calculated in context of a group
     await bubbleUpAsync(
       process(event, hasValue(hasValueMap), validateGroup),
       _.dropRight(1, path),
       flat
     )
-    await process(event, hasValue(hasValueMap), validateGroup, fakeRoot, fakeRoot.path)
+    await process(
+      event,
+      hasValue(hasValueMap),
+      validateGroup,
+      fakeRoot,
+      fakeRoot.path
+    )
 
     // trickleDown((node, p) => console.log('down', p, path, node), path, tree)
     return triggerUpdate()

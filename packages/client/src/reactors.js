@@ -19,8 +19,7 @@ let reactors = {
   ) {
     let needUpdate = hasContext(instigator)
     let affectsOthers =
-      hasValue(instigator) ||
-      (previous && (await validateGroup(previous)))
+      hasValue(instigator) || (previous && (await validateGroup(previous)))
     let reactor
     if (needUpdate) {
       reactor = reactors.only
@@ -44,14 +43,7 @@ export let StandardReactors = {
       return reactors.all(...arguments)
   },
   add: reactors.standardChange,
-  async remove(
-    parent,
-    instigator,
-    previous,
-    _x,
-    value,
-    validateGroup
-  ) {
+  async remove(parent, instigator, previous, _x, value, validateGroup) {
     if (await validateGroup(previous)) return reactors.all(...arguments)
   },
   paused(parent, instigator, previous, _x, value) {
