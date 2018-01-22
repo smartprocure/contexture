@@ -10,7 +10,6 @@ module.exports = {
   'facet': require('./facet'),
   'geo': require('./geo'),
   'groupedMetric': require('./groupedMetric'),
-  'interval': require('./interval'),
   'matchCardinality': require('./matchCardinality'),
   'matchStats': require('./matchStats'),
   'nLevelAggregation': require('./nLevelAggregation'),
