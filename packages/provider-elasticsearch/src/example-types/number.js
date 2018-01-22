@@ -43,7 +43,7 @@ module.exports = {
           values: {
             histogram: {
               field,
-              interval: interval,
+              interval,
               min_doc_count: 0
             }
           }
