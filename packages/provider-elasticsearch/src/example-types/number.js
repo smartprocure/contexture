@@ -17,10 +17,10 @@ module.exports = {
       [context.field]: _.pickBy(_.isNumber, {
         gte: boundaryFilter(context.min),
         lte: boundaryFilter(context.max),
-      })
-    }
+      }),
+    },
   }),
-  result: async (context, search) => {
+  async result(context, search) {
     let field = _.get('field', context)
     let result = await search({
       aggs: {
@@ -29,12 +29,13 @@ module.exports = {
             field,
             missing: 0,
           },
-        }
+        },
       },
     })
 
     let statistical = _.get('aggregations.statistical', result)
-    let interval = Math.round(Math.abs(statistical.max - statistical.min) / 50) || 1
+    let interval =
+      Math.round(Math.abs(statistical.max - statistical.min) / 50) || 1
     let histogram = []
 
     if (interval) {
@@ -44,27 +45,34 @@ module.exports = {
             histogram: {
               field,
               interval,
+<<<<<<< HEAD
               min_doc_count: 0
             }
           }
+=======
+              min_doc_count: 0,
+            },
+          },
+>>>>>>> 7eb8ce0727a824cad0d6210514f7b6a0bde4af67
         },
       })
 
       let totalDocuments = _.get('hits.total', valuesResult)
-      histogram = _.map(entry => {
-        return {
+      histogram = _.map(
+        entry => ({
           value: Math.round(entry.key),
-          count: entry.doc_count
-        }
-      }, _.get('aggregations.values.buckets', valuesResult))
+          count: entry.doc_count,
+        }),
+        _.get('aggregations.values.buckets', valuesResult)
+      )
     }
 
     return {
       results: {
         interval,
         statistical,
-        histogram
-      }
+        histogram,
+      },
     }
-  }
+  },
 }
