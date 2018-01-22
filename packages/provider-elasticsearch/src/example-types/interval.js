@@ -44,8 +44,7 @@ module.exports = {
             histogram: {
               field,
               interval: interval,
-              min_doc_count: 0,
-              offset: statistical.min
+              min_doc_count: 0
             }
           }
         },
