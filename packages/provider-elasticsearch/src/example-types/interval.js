@@ -38,9 +38,9 @@ module.exports = {
     let histogram = []
 
     if (interval) {
-      let pricesResult = await search({
+      let valuesResult = await search({
         aggs: {
-          prices: {
+          values: {
             histogram: {
               field,
               interval: interval,
@@ -51,15 +51,15 @@ module.exports = {
         },
       })
 
-      let totalDocuments = _.get('hits.total', pricesResult)
+      let totalDocuments = _.get('hits.total', valuesResult)
       histogram = _.map(entry => {
         let percent = Math.round(totalDocuments ? (100 * (entry.doc_count / totalDocuments)) : 0)
         return {
-          price: Math.round(entry.key),
+          value: Math.round(entry.key),
           count: entry.doc_count,
           percent: (percent > 1 ? percent : 2)
         }
-      }, _.get('aggregations.prices.buckets', pricesResult))
+      }, _.get('aggregations.values.buckets', valuesResult))
     }
 
     return {
