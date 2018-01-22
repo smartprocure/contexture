@@ -34,7 +34,7 @@ module.exports = {
     })
 
     let statistical = _.get('aggregations.statistical', result)
-    let interval = Math.round(Math.abs(statistical.max - statistical.min) / 50)
+    let interval = Math.round(Math.abs(statistical.max - statistical.min) / 50) || 1
     let histogram = []
 
     if (interval) {
