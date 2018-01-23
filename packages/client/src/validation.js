@@ -10,25 +10,24 @@ export let validate = (runValidate, extend = F.extendOn) => {
     try {
       delete child.error //?? might need to be on mutate only in case of server error?
       let hasValue = await runValidate(child)
-      extend(child, {hasValue})
+      extend(child, { hasValue })
       return hasValue
     } catch (e) {
       extend(child, {
         hasValue: false,
-        error: e
+        error: e,
       })
       throw e
     }
   }
-  
+
   let validateGroup = async child => {
     if (child.children) {
       await mapAsync(validateGroup, child.children)
       let hasValue = _.some('hasValue', child.children)
-      extend(child, {hasValue})
+      extend(child, { hasValue })
       return hasValue
-    }
-    else return validateLeaf(child)
+    } else return validateLeaf(child)
   }
 
   return {
