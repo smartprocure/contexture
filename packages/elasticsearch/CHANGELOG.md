@@ -1,4 +1,6 @@
-﻿### 0.5.0
+﻿### 0.5.1
+* Improved number type by providing feedback as statistics and histogram results.
+### 0.5.0
 * Added utility function `getSchemaMapping` to get a mapping used for building a schema directly from ES.
 
 ### 0.4.1
