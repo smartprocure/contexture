@@ -31,11 +31,11 @@ export let bubbleUp = (f, path, flatTree) => {
   f(flatTree[path.join('->')], path)
   bubbleUp(f, _.dropRight(1, path), flatTree)
 }
-export let bubbleUpAsync = async (f, path, flatTree) => {
-  if (_.isEmpty(path)) return
-  await f(flatTree[path.join('->')], path)
-  await bubbleUpAsync(f, _.dropRight(1, path), flatTree)
-}
+// export let bubbleUpAsync = async (f, path, flatTree) => {
+//   if (_.isEmpty(path)) return
+//   await f(flatTree[path.join('->')], path)
+//   await bubbleUpAsync(f, _.dropRight(1, path), flatTree)
+// }
 export let flatLeaves = _.reject('children')
 
 // Not used...
