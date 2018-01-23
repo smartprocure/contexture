@@ -20,7 +20,7 @@ module.exports = {
       }),
     },
   }),
-  async result({field}, search) {
+  async result({ field }, search) {
     let result = await search({
       aggs: {
         statistical: {
