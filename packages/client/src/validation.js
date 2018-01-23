@@ -16,11 +16,15 @@ export let validate = runValidate => {
       child.error = e
       throw e
     }
-  })
-  let validateGroup = async child =>
-    child.children
-      ? _.some(null, await validateLeaves(flatLeaves(flattenTree(child))))
-      : runValidate(child)
+  }
+  
+  let validateGroup = async child => {
+    if (child.children) {
+      await mapAsync(validateGroup, child.children)
+      return child.hasValue = _.some('hasValue', child.children)
+    }
+    else return validateLeaf(child)
+  }
 
   return {
     validateLeaves,
