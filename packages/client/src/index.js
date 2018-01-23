@@ -2,7 +2,7 @@ import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import {
   flattenTree,
-  bubbleUpAsync,
+  bubbleUp,
   flatLeaves,
   decodePath,
   encodePath,
@@ -49,9 +49,8 @@ export let ContextTree = (
   let getNode = path => flat[encodePath(path)]
   let fakeRoot = { key: 'virtualFakeRoot', path: '', children: [tree] }
   let typeFunction = runTypeFunction(types)
-  let { validateLeaves, validateGroup } = validate(
-    _.flow(snapshot, typeFunction('validate'))
-  )
+  let { validateGroup } = validate(typeFunction('validate'))
+  let hasValue = ({ path }) => flat[path].hasValue && !flat[path].error
 
   // Event Handling
   let dispatch = async event => {
@@ -60,39 +59,30 @@ export let ContextTree = (
     _.cond(subscribers)(event)
     if (dontProcess) return // short circuit deepClone and triggerUpdate
 
-    // Avoid race conditions - what matters is state _at the time of dispatch_
-    // snapshot might not be needed since await is blocking?
-    let treeshot = snapshot(tree)
-    let flatshot = flattenTree(treeshot)
-    await validateGroup(flatshot[tree.key])
-    let hasValue = ({ path }) =>
-      flatshot[path].hasValue && !flatshot[path].error
+    await validateGroup(tree)
 
     // Process from instigator parent up to fake root so affectedNodes are always calculated in context of a group
-    await bubbleUpAsync(
-      process(event, hasValue, validateGroup),
-      _.dropRight(1, path),
-      flat
-    )
-    await process(event, hasValue, validateGroup, fakeRoot, fakeRoot.path)
+    bubbleUp(process(event, hasValue, validateGroup), _.dropRight(1, path), flat)
+    process(event, hasValue, validateGroup, fakeRoot, fakeRoot.path)
 
     // trickleDown((node, p) => console.log('down', p, path, node), path, tree)
     return triggerUpdate()
   }
   let triggerUpdate = F.debounceAsync(debounce, async () => {
-    if (await shouldBlockUpdate()) return log('Blocked Search')
+    if (shouldBlockUpdate()) return log('Blocked Search')
     let now = new Date().getTime()
     markLastUpdate(now)(tree)
     let dto = serialize(snapshot(tree), { search: true })
     prepForUpdate(tree)
     processResponse(await service(dto, now))
   })
-  let shouldBlockUpdate = catches(() => true)(async () => {
+  let shouldBlockUpdate = () => {
     let leaves = flatLeaves(flat)
-    let allBlank = _.every(x => !x, await validateLeaves(leaves))
+    let allBlank = !_.some('hasValue', leaves)
     let noUpdates = !_.some('markedForUpdate', leaves)
-    return noUpdates || (!(tree.allowBlank || allowBlank) && allBlank)
-  })
+    let hasErrors = _.some('error', leaves)
+    return hasErrors || noUpdates || (!(tree.allowBlank || allowBlank) && allBlank)
+  }
   let processResponse = ({ data, error }) => {
     _.each(node => {
       let target = flat[node.path]
