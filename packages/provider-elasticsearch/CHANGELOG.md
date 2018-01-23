@@ -1,12 +1,13 @@
-﻿### 0.5.1
+### 0.6.0
 * Improved number type by providing feedback as statistics and histogram results.
+
 ### 0.5.0
 * Added utility function `getSchemaMapping` to get a mapping used for building a schema directly from ES.
 
 ### 0.4.1
 * Removed the last reference of context.data from the facet type.
 
- ### 0.4.0
+### 0.4.0
 * Removed the root level usage of context.data and context.config, now
   the inner properties can be passed directly to the root object.
 
