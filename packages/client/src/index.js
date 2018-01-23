@@ -126,7 +126,6 @@ export default ContextTree
 //TODO
 //  unify notify subscribers with dispatch/mutate
 // subscribe(path, fn, type), fn: (delta, node) -> null
-// OR! just `dispatch` the change type as 'update', then allow external subscriptions to dispatch
 
 // TODO
 // types (validate, to(Human)String, defaults?, hasContext)
