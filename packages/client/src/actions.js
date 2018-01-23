@@ -1,5 +1,4 @@
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
 import { mapAsync } from './util/promise'
 import { setPath, decodePath } from './util/tree'
 import { pullOn } from './util/futil'
