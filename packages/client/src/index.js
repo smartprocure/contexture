@@ -7,7 +7,6 @@ import {
   decodePath,
   encodePath,
 } from './util/tree'
-import { catches } from './util/futil'
 import { flowAsync } from './util/promise'
 import { validate } from './validation'
 import { getAffectedNodes } from './reactors'

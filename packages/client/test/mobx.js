@@ -5,7 +5,6 @@ import chai from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import * as lib from '../src'
-import {flattenTree} from '../src/util/tree'
 import { observable, reaction, toJS, extendObservable } from 'mobx'
 const expect = chai.expect
 chai.use(sinonChai)
