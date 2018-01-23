@@ -20,8 +20,7 @@ module.exports = {
       }),
     },
   }),
-  async result(context, search) {
-    let field = _.get('field', context)
+  async result({field}, search) {
     let result = await search({
       aggs: {
         statistical: {
@@ -35,7 +34,7 @@ module.exports = {
 
     let statistical = _.get('aggregations.statistical', result)
     let interval =
-      Math.round(Math.abs(statistical.max - statistical.min) / 50) || 1
+      Math.round(Math.abs(statistical.max - statistical.min) / 25) || 1
     let histogram = []
 
     if (interval) {
@@ -51,7 +50,6 @@ module.exports = {
         },
       })
 
-      let totalDocuments = _.get('hits.total', valuesResult)
       histogram = _.map(
         entry => ({
           value: Math.round(entry.key),
