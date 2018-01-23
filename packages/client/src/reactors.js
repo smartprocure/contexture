@@ -3,7 +3,10 @@ import { lookup } from './util/tree'
 
 // TODO check type, etc
 let hasContext = node => node.context
-let hadValue = previous => previous && previous.hasValue && !previous.error
+let hadValue = previous => {
+  if (previous && previous.hasValue === undefined) throw Error('Node was never validated')
+  return previous && previous.hasValue && !previous.error
+}
 
 let reactors = {
   others: (parent, instigator) =>
