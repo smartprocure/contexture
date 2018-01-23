@@ -233,7 +233,7 @@ describe('usage with mobx should generally work', () => {
     expect(
       treeUtils.lookup(
         ['newFilterWithValueForRemoveTest'],
-        reactor.getCall(4).args[0] // ----------- was 3
+        reactor.getCall(4).args[0]
       )
     ).to.deep.equal({
       key: 'newFilterWithValueForRemoveTest',
