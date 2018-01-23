@@ -14,9 +14,9 @@ let reactors = {
     parent.join === 'or' ? [] : _.difference(parent.children, [instigator]),
   only: (parent, instigator) => [instigator],
   all: parent => parent.children,
-  standardChange(parent, instigator, previous, hasValue) {
+  standardChange(parent, instigator, previous) {
     let needUpdate = hasContext(instigator)
-    let affectsOthers = hasValue(instigator) || hadValue(previous)
+    let affectsOthers = hadValue(instigator) || hadValue(previous)
     let reactor
     if (needUpdate) {
       reactor = reactors.only
@@ -33,8 +33,8 @@ export let StandardReactors = {
   refresh: reactors.all,
   data: reactors.others,
   config: reactors.only,
-  join(parent, instigator, previous, hasValue) {
-    let childrenWithValues = _.filter(hasValue, instigator.children)
+  join(parent, instigator, previous) {
+    let childrenWithValues = _.filter(hadValue, instigator.children)
     let joinInverted = instigator.join === 'not' || previous.join === 'not'
     if (childrenWithValues.length > 1 || joinInverted)
       return reactors.all(...arguments)
@@ -43,7 +43,7 @@ export let StandardReactors = {
   remove(parent, instigator, previous) {
     if (hadValue(previous)) return reactors.all(...arguments)
   },
-  paused(parent, instigator, previous, _x, value) {
+  paused(parent, instigator, previous, value) {
     if (!value && instigator.missedUpdates) {
       // Reactor probably shouldn't mutate but this needs to clear somewhere :/
       instigator.missedUpdates = false
@@ -56,10 +56,10 @@ export let StandardReactors = {
 }
 
 export let getAffectedNodes = _.curry(
-  ({ type, path, value, previous }, hasValue, node, p) => {
+  ({ type, path, value, previous }, node, p) => {
     let instigatorPath = _.difference(path, p)[0]
     let instigator = lookup(node, instigatorPath)
     let reactor = StandardReactors[type] || _.noop
-    return reactor(node, instigator, previous, hasValue, value)
+    return reactor(node, instigator, previous, value)
   }
 )

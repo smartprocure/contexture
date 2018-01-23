@@ -20,7 +20,7 @@ import {
 } from './traversals'
 import { defaultTypes, runTypeFunction } from './types'
 
-let process = flowAsync(4)(
+let process = flowAsync(3)(
   getAffectedNodes,
   _.each(n => {
     acknoweldgeMissedUpdates(n)
@@ -46,7 +46,6 @@ export let ContextTree = (
   let log = x => debug && console.log(x)
   let flat = flattenTree(tree)
   let getNode = path => flat[encodePath(path)]
-  let hasValue = ({ path }) => flat[path].hasValue && !flat[path].error
   let typeFunction = runTypeFunction(types)
   let { validateGroup } = validate(typeFunction('validate'), extend)
   let fakeRoot = { key: 'virtualFakeRoot', path: '', children: [tree] }
@@ -61,8 +60,8 @@ export let ContextTree = (
     await validateGroup(tree)
 
     // Process from instigator parent up to fake root so affectedNodes are always calculated in context of a group
-    bubbleUp(process(event, hasValue), _.dropRight(1, path), flat)
-    process(event, hasValue, fakeRoot, fakeRoot.path)
+    bubbleUp(process(event), _.dropRight(1, path), flat)
+    process(event, fakeRoot, fakeRoot.path)
 
     // trickleDown((node, p) => console.log('down', p, path, node), path, tree)
     return triggerUpdate()
