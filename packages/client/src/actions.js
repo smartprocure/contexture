@@ -15,7 +15,10 @@ export default ({
     let target = getNode(path)
     setPath(value, null, [target])
     target.children.push(value)
-    flat[value.path] = value
+    // flat[value.path] = value
+    // Need this nonsense to support the case where push actually mutates, e.g. a mobx observable tree
+    flat[value.path] = target.children[target.children.length - 1]
+
     return dispatch({ type: 'add', path: decodePath(value.path), value })
   },
   async remove(path) {
