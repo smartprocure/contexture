@@ -46,10 +46,10 @@ export let ContextTree = (
   let log = x => debug && console.log(x)
   let flat = flattenTree(tree)
   let getNode = path => flat[encodePath(path)]
-  let fakeRoot = { key: 'virtualFakeRoot', path: '', children: [tree] }
+  let hasValue = ({ path }) => flat[path].hasValue && !flat[path].error
   let typeFunction = runTypeFunction(types)
   let { validateGroup } = validate(typeFunction('validate'), extend)
-  let hasValue = ({ path }) => flat[path].hasValue && !flat[path].error
+  let fakeRoot = { key: 'virtualFakeRoot', path: '', children: [tree] }
 
   // Event Handling
   let dispatch = async event => {
@@ -84,9 +84,8 @@ export let ContextTree = (
     let allBlank = !_.some('hasValue', leaves)
     let noUpdates = !_.some('markedForUpdate', leaves)
     let hasErrors = _.some('error', leaves)
-    return (
-      hasErrors || noUpdates || (!(tree.allowBlank || allowBlank) && allBlank)
-    )
+    let allowsBlank = tree.allowBlank || allowBlank
+    return hasErrors || noUpdates || (!allowsBlank && allBlank)
   }
   let processResponse = ({ data, error }) => {
     _.each(node => {

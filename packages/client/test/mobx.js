@@ -15,7 +15,6 @@ let ContextTreeMobx = (tree, service) =>
   lib.ContextTree(tree, service, undefined, {
     snapshot: toJS,
     extend: extendObservable,
-    // debug: true
   })
 
 describe('usage with mobx should generally work', () => {
