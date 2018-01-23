@@ -4,13 +4,7 @@ import { mapAsync } from './util/promise'
 import { setPath, decodePath } from './util/tree'
 import { pullOn } from './util/futil'
 
-export default ({
-  getNode,
-  flat,
-  dispatch,
-  snapshot,
-  extend = F.extendOn,
-}) => ({
+export default ({ getNode, flat, dispatch, snapshot, extend }) => ({
   async add(path, value) {
     let target = getNode(path)
     setPath(value, null, [target])

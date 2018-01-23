@@ -61,12 +61,8 @@ export let ContextTree = (
     await validateGroup(tree)
 
     // Process from instigator parent up to fake root so affectedNodes are always calculated in context of a group
-    bubbleUp(
-      process(event, hasValue, validateGroup),
-      _.dropRight(1, path),
-      flat
-    )
-    process(event, hasValue, validateGroup, fakeRoot, fakeRoot.path)
+    bubbleUp(process(event, hasValue), _.dropRight(1, path), flat)
+    process(event, hasValue, fakeRoot, fakeRoot.path)
 
     // trickleDown((node, p) => console.log('down', p, path, node), path, tree)
     return triggerUpdate()

@@ -57,15 +57,10 @@ export let StandardReactors = {
 }
 
 export let getAffectedNodes = _.curry(
-  ({ type, path, value, previous }, hasValue, validateGroup, node, p) => {
+  ({ type, path, value, previous }, hasValue, node, p) => {
     let instigatorPath = _.difference(path, p)[0]
     let instigator = lookup(node, instigatorPath)
-    return (StandardReactors[type] || _.noop)(
-      node,
-      instigator,
-      previous,
-      hasValue,
-      value
-    )
+    let reactor = StandardReactors[type] || _.noop
+    return reactor(node, instigator, previous, hasValue, value)
   }
 )
