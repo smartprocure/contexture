@@ -63,7 +63,6 @@ export let ContextTree = (
     bubbleUp(process(event), _.dropRight(1, path), flat)
     process(event, fakeRoot, fakeRoot.path)
 
-    // trickleDown((node, p) => console.log('down', p, path, node), path, tree)
     return triggerUpdate()
   }
   let triggerUpdate = F.debounceAsync(debounce, async () => {
