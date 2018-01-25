@@ -11,7 +11,7 @@ let boundaryFilter = value => {
 }
 
 module.exports = {
-  hasValue: context => context.min || context.max,
+  hasValue: context => _.isNumber(context.min) || _.isNumber(context.max),
   filter: context => ({
     range: {
       [context.field]: _.pickBy(_.isNumber, {
