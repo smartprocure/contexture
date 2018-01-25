@@ -1,3 +1,5 @@
+### 0.6.1
+* Allow min 0 and max undefined to be evaluated as truthy or vice-versa.
 ### 0.6.0
 * Improved number type by providing feedback as statistics and histogram results.
 
