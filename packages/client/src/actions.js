@@ -1,7 +1,7 @@
 import _ from 'lodash/fp'
 import { mapAsync } from './util/promise'
 import { setPath, decodePath } from './util/tree'
-import { pullOn } from './util/futil'
+import { pullOn } from 'futil-js'
 
 export default ({ getNode, flat, dispatch, snapshot, extend }) => ({
   async add(path, value) {
