@@ -1,7 +1,7 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
 
-let keyPath = path => (_.isString(path) ? { key: path } : path)
+let keyPath = F.when(_.isString, key => ({ key }))
 export let Tree = F.tree(_.get('children'), keyPath)
 
 export let {encode: encodePath, decode: decodePath} = F.encoder('/')
