@@ -2,7 +2,7 @@ import _ from 'lodash/fp'
 import * as F from 'futil-js'
 
 export let Tree = F.tree(_.get('children'))
-let path = F.encoder('->')
+let path = F.encoder('/')
 
 // Path Lookup
 export let keyPath = path => (_.isString(path) ? { key: path } : path)
@@ -12,8 +12,7 @@ export let encodePath = path.encode
 export let decodePath = path.decode
 
 // Flat Tree Utils
-let flatBuilder = F.treePath(_.flow(F.treeValues, _.map('key')), F.encoder('->'))
-export let flattenTree = Tree.flatten(flatBuilder)
+export let flattenTree = Tree.flatten(F.propTreePath('key'))
 
 export let bubbleUp = (f, path, flatTree) => {
   if (_.isEmpty(path)) return
