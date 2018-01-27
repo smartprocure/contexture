@@ -1,5 +1,5 @@
 import _ from 'lodash/fp'
-import { lookup } from './util/tree'
+import { Tree } from './util/tree'
 
 // TODO check type, etc
 let hasContext = node => node.context
@@ -58,7 +58,7 @@ export let StandardReactors = {
 export let getAffectedNodes = _.curry(
   ({ type, path, value, previous }, node, p) => {
     let instigatorPath = _.difference(path, p)[0]
-    let instigator = lookup(node, instigatorPath)
+    let instigator = Tree.lookup([instigatorPath], node)
     let reactor = StandardReactors[type] || _.noop
     return reactor(node, instigator, previous, value)
   }
