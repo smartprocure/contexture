@@ -1,4 +1,4 @@
-import { flattenTree, keyPath } from '../src/util/tree'
+import { flattenTree, keyPath, encodePath } from '../src/util/tree'
 import _ from 'lodash/fp'
 import chai from 'chai'
 const expect = chai.expect
@@ -56,11 +56,11 @@ describe('tree', () => {
   })
   it('should maintain references in flattened tree', () => {
     let flat = flattenTree(tree)
-
-    flat['root->criteria'].join = 'or'
+    let path = encodePath(['root','criteria'])
+    flat[path].join = 'or'
     expect(tree.children[1].join).to.equal('or')
 
     tree.children[1].join = 'and'
-    expect(flat['root->criteria'].join).to.equal('and')
+    expect(flat[path].join).to.equal('and')
   })
 })

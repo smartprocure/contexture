@@ -25,11 +25,9 @@ describe('validateGroup', () => {
       children: [
         {
           key: 'searchRoot',
-          path: 'root->searchRoot',
           children: [
             {
               key: 'first',
-              path: 'root->searchRoot->first',
             },
           ],
         },
@@ -38,7 +36,6 @@ describe('validateGroup', () => {
     await validate(_.constant(true)).validateGroup(tree.children[0])
     expect(tree.children[0].children[0]).to.deep.equal({
       key: 'first',
-      path: 'root->searchRoot->first',
       hasValue: true,
     })
   })
