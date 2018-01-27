@@ -37,23 +37,6 @@ describe('tree', () => {
       },
     ],
   }
-  it('should find', () => {
-    let findTest = _.find(keyPath('test'))
-    var test = findTest([
-      {
-        key: 'a',
-        val: 1,
-      },
-      {
-        key: 'test',
-        val: 2,
-      },
-    ])
-    expect(test).to.deep.equal({
-      key: 'test',
-      val: 2,
-    })
-  })
   it('should maintain references in flattened tree', () => {
     let flat = flattenTree(tree)
     let path = encodePath(['root', 'criteria'])

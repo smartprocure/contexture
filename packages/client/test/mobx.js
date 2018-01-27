@@ -1,4 +1,4 @@
-import { keyPath } from '../src/util/tree'
+import { Tree } from '../src/util/tree'
 import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import chai from 'chai'
@@ -9,8 +9,7 @@ import { observable, reaction, toJS, extendObservable } from 'mobx'
 const expect = chai.expect
 chai.use(sinonChai)
 
-let traverse = x => x && x.children && x.children.slice() // mobx needs slice
-let treeUtils = F.tree(traverse, keyPath)
+let treeUtils = Tree
 let ContextTreeMobx = (tree, service) =>
   lib.ContextTree(tree, service, undefined, {
     snapshot: toJS,
