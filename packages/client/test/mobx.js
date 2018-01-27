@@ -100,7 +100,6 @@ describe('usage with mobx should generally work', () => {
       treeUtils.lookup(['filter'], reactor.getCall(0).args[0])
     ).to.deep.equal({
       key: 'filter',
-      path: 'root->filter',
       data: {
         values: ['a'],
       },
@@ -147,7 +146,6 @@ describe('usage with mobx should generally work', () => {
       treeUtils.lookup(['newFilterWithValue'], reactor.getCall(1).args[0])
     ).to.deep.equal({
       key: 'newFilterWithValue',
-      path: 'root->newFilterWithValue',
       data: {
         values: 'asdf',
       },
@@ -193,7 +191,6 @@ describe('usage with mobx should generally work', () => {
       treeUtils.lookup(['newEmptyFilter'], reactor.getCall(0).args[0])
     ).to.deep.equal({
       key: 'newEmptyFilter',
-      path: 'root->newEmptyFilter',
       context: {},
     })
     expect(
@@ -203,7 +200,6 @@ describe('usage with mobx should generally work', () => {
       )
     ).to.deep.equal({
       key: 'newEmptyFilter',
-      path: 'root->newEmptyFilter',
       context: {},
       hasValue: false,
       updating: true,
@@ -223,7 +219,6 @@ describe('usage with mobx should generally work', () => {
       )
     ).to.deep.equal({
       key: 'newFilterWithValueForRemoveTest',
-      path: 'root->newFilterWithValueForRemoveTest',
       data: {
         values: 'asdf',
       },
@@ -235,7 +230,6 @@ describe('usage with mobx should generally work', () => {
       )
     ).to.deep.equal({
       key: 'newFilterWithValueForRemoveTest',
-      path: 'root->newFilterWithValueForRemoveTest',
       hasValue: true,
       data: {
         values: 'asdf',

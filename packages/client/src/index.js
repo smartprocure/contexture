@@ -5,7 +5,7 @@ import {
   bubbleUp,
   flatLeaves,
   decodePath,
-  encodePath,
+  encodePath
 } from './util/tree'
 import { flowAsync } from './util/promise'
 import { validate } from './validation'
@@ -48,7 +48,7 @@ export let ContextTree = (
   let getNode = path => flat[encodePath(path)]
   let typeFunction = runTypeFunction(types)
   let { validateGroup } = validate(typeFunction('validate'), extend)
-  let fakeRoot = { key: 'virtualFakeRoot', path: '', children: [tree] }
+  let fakeRoot = { key: 'virtualFakeRoot', children: [tree] }
 
   // Event Handling
   let dispatch = async event => {
@@ -61,7 +61,7 @@ export let ContextTree = (
 
     // Process from instigator parent up to fake root so affectedNodes are always calculated in context of a group
     bubbleUp(process(event), _.dropRight(1, path), flat)
-    process(event, fakeRoot, fakeRoot.path)
+    process(event, fakeRoot, '')
 
     return triggerUpdate()
   }
@@ -82,8 +82,8 @@ export let ContextTree = (
     return hasErrors || noUpdates || (!allowsBlank && allBlank)
   }
   let processResponse = ({ data, error }) => {
-    _.each(node => {
-      let target = flat[node.path]
+    F.eachIndexed((node, path) => {
+      let target = flat[path]
       if (!target) return
       let responseNode = _.pick(['context', 'error'], node)
       F.mergeOn(target, responseNode)
@@ -91,7 +91,7 @@ export let ContextTree = (
       if (!node.children)
         dispatch({
           type: 'update',
-          path: decodePath(node.path),
+          path: decodePath(path),
           value: responseNode,
           node,
           dontProcess: true,
