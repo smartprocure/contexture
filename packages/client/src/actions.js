@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 import { mapAsync } from './util/promise'
-import { setPath, encodePath } from './util/tree'
+import { encodePath } from './util/tree'
 import { pullOn } from 'futil-js'
 
 export default ({ getNode, flat, dispatch, snapshot, extend }) => ({
