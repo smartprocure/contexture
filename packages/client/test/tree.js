@@ -56,7 +56,7 @@ describe('tree', () => {
   })
   it('should maintain references in flattened tree', () => {
     let flat = flattenTree(tree)
-    let path = encodePath(['root','criteria'])
+    let path = encodePath(['root', 'criteria'])
     flat[path].join = 'or'
     expect(tree.children[1].join).to.equal('or')
 

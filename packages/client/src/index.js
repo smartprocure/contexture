@@ -5,7 +5,7 @@ import {
   bubbleUp,
   flatLeaves,
   decodePath,
-  encodePath
+  encodePath,
 } from './util/tree'
 import { flowAsync } from './util/promise'
 import { validate } from './validation'
