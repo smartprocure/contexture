@@ -60,7 +60,7 @@ export let ContextTree = (
     await validateGroup(tree)
 
     // Process from instigator parent up to fake root so affectedNodes are always calculated in context of a group
-    bubbleUp(process(event), _.dropRight(1, path), flat)
+    bubbleUp(process(event), _.dropRight(1, path), getNode)
     process(event, fakeRoot, '')
 
     return triggerUpdate()
