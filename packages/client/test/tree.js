@@ -1,5 +1,4 @@
-import { flattenTree, keyPath, encodePath } from '../src/util/tree'
-import _ from 'lodash/fp'
+import { flattenTree, encodePath } from '../src/util/tree'
 import chai from 'chai'
 const expect = chai.expect
 

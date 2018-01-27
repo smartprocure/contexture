@@ -1,5 +1,4 @@
 import { Tree } from '../src/util/tree'
-import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import chai from 'chai'
 import sinon from 'sinon'
