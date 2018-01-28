@@ -1,7 +1,6 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { flattenTree, bubbleUp, flatLeaves, decode, encode } from './util/tree'
-import { flowAsync } from './util/promise'
 import { validate } from './validation'
 import { getAffectedNodes } from './reactors'
 import actions from './actions'
@@ -14,13 +13,13 @@ import {
 } from './traversals'
 import { defaultTypes, runTypeFunction } from './types'
 
-let process = flowAsync(3)(
+let process = _.curryN(3, _.flow(
   getAffectedNodes,
   _.each(n => {
     acknoweldgeMissedUpdates(n)
     if (!_.some('markedForUpdate', n.children)) markForUpdate(n)
   })
-)
+))
 
 export let ContextTree = (
   tree,

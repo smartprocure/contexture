@@ -55,11 +55,9 @@ export let StandardReactors = {
   type: reactors.standardChange,
 }
 
-export let getAffectedNodes = _.curry(
-  ({ type, path, value, previous }, node, p) => {
-    let instigatorPath = _.difference(path, p)[0]
-    let instigator = Tree.lookup([instigatorPath], node)
-    let reactor = StandardReactors[type] || _.noop
-    return reactor(node, instigator, previous, value)
-  }
-)
+export let getAffectedNodes = ({ type, path, value, previous }, node, p) => {
+  let instigatorPath = _.difference(path, p)[0]
+  let instigator = Tree.lookup([instigatorPath], node)
+  let reactor = StandardReactors[type] || _.noop
+  return reactor(node, instigator, previous, value)
+}
