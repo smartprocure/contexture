@@ -12,4 +12,4 @@ export let flattenTree = Tree.flatten(F.propTreePath('key'))
 export let flatLeaves = Tree.flatLeaves
 
 export let bubbleUp = (f, path, lookup) =>
-  _.flow(F.prefixes, _.reverse, _.map(p => f(lookup(p), p)))(path)
+  _.flow(F.prefixes, _.reverse, _.map(p => f(lookup(p), p, lookup)))(path)

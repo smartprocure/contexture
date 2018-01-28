@@ -38,21 +38,15 @@ export let ContextTree = (
   let getNode = path => flat[encode(path)]
   let typeFunction = runTypeFunction(types)
   let { validateGroup } = validate(typeFunction('validate'), extend)
-  let fakeRoot = { key: 'virtualFakeRoot', children: [tree] }
-
+  
   // Event Handling
   let dispatch = async event => {
     let { type, path, dontProcess } = event
     log(`${type} event at ${path} (${dontProcess ? 'internal' : 'user'} event)`)
     _.cond(subscribers)(event)
     if (dontProcess) return // short circuit deepClone and triggerUpdate
-
     await validateGroup(tree)
-
-    // Process from instigator parent up to fake root so affectedNodes are always calculated in context of a group
-    bubbleUp(processEvent(event), _.dropRight(1, path), getNode)
-    processEvent(event, fakeRoot, '')
-
+    bubbleUp(processEvent(event), path, getNode)
     return triggerUpdate()
   }
   let triggerUpdate = F.debounceAsync(debounce, async () => {
