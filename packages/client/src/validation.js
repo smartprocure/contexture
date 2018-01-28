@@ -7,24 +7,20 @@ export let defaultHasValue = x => !F.isBlankDeep(_.some)(x.data)
 // ASYNC runValidate: return true -> proceed, return false -> exclude, throw -> error!
 export let validate = (runValidate, extend = F.extendOn) => {
   let validateGroup = async child => {
-    if (child.children) {
-      await mapAsync(validateGroup, child.children)
-      let hasValue = _.some('hasValue', child.children)
+    delete child.error //?? might need to be on mutate only in case of server error?
+    try {
+      if (child.children) await mapAsync(validateGroup, child.children)
+      let hasValue = child.children
+        ? _.some('hasValue', child.children)
+        : await runValidate(child)
       extend(child, { hasValue })
       return hasValue
-    } else {
-      try {
-        delete child.error //?? might need to be on mutate only in case of server error?
-        let hasValue = await runValidate(child)
-        extend(child, { hasValue })
-        return hasValue
-      } catch (error) {
-        extend(child, {
-          hasValue: false,
-          error,
-        })
-        throw error
-      }
+    } catch (error) {
+      extend(child, {
+        hasValue: false,
+        error,
+      })
+      throw error
     }
   }
   return validateGroup
