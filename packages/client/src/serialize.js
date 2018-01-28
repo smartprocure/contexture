@@ -19,7 +19,7 @@ export default (tree, { search } = {}) =>
             'path',
             'updating',
             'paused',
-            'missedUpdates',
+            'missedUpdate',
             'hasValue',
             ...(search ? [] : ['lastUpdateTime', 'context']),
           ])

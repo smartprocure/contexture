@@ -289,14 +289,14 @@ describe('lib', () => {
       })
       expect(service).to.have.callCount(1)
       expect(Tree.getNode(['root', 'filter']).paused).to.be.true
-      expect(Tree.getNode(['root', 'filter']).missedUpdates).to.be.true
+      expect(Tree.getNode(['root', 'filter']).missedUpdate).to.be.true
       // Unpause here should trigger this to run
       await Tree.mutate(['root', 'filter'], {
         paused: false,
       })
       expect(service).to.have.callCount(2)
       expect(Tree.getNode(['root', 'filter']).paused).to.be.false
-      expect(Tree.getNode(['root', 'filter']).missedUpdates).to.be.false
+      expect(Tree.getNode(['root', 'filter']).missedUpdate).to.be.false
     })
     it('should handle groups being paused')
   })

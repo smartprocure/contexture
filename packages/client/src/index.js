@@ -9,14 +9,14 @@ import {
   markForUpdate,
   markLastUpdate,
   prepForUpdate,
-  acknoweldgeMissedUpdates,
+  markMissedUpdate,
 } from './traversals'
 import { defaultTypes, runTypeFunction } from './types'
 
 let process = _.curryN(3, _.flow(
   getAffectedNodes,
   _.each(n => {
-    acknoweldgeMissedUpdates(n)
+    markMissedUpdate(n)
     if (!_.some('markedForUpdate', n.children)) markForUpdate(n)
   })
 ))

@@ -13,6 +13,6 @@ export let prepForUpdate = Tree.walk(child => {
     child.markedForUpdate = false
   }
 })
-export let acknoweldgeMissedUpdates = Tree.walk(child => {
-  if (child.paused) child.missedUpdates = true
+export let markMissedUpdate = Tree.walk(child => {
+  if (child.paused) child.missedUpdate = true
 })

@@ -44,9 +44,9 @@ export let StandardReactors = {
     if (hadValue(previous)) return reactors.all(...arguments)
   },
   paused(parent, instigator, previous, value) {
-    if (!value && instigator.missedUpdates) {
+    if (!value && instigator.missedUpdate) {
       // Reactor probably shouldn't mutate but this needs to clear somewhere :/
-      instigator.missedUpdates = false
+      instigator.missedUpdate = false
       return reactors.only(...arguments)
     }
   },
