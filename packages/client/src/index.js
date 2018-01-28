@@ -8,7 +8,7 @@ import serialize from './serialize'
 import { markForUpdate, markLastUpdate, prepForUpdate } from './traversals'
 import { defaultTypes, runTypeFunction } from './types'
 
-let process = _.curryN(
+let processEvent = _.curryN(
   3,
   _.flow(
     getAffectedNodes,
@@ -50,8 +50,8 @@ export let ContextTree = (
     await validateGroup(tree)
 
     // Process from instigator parent up to fake root so affectedNodes are always calculated in context of a group
-    bubbleUp(process(event), _.dropRight(1, path), getNode)
-    process(event, fakeRoot, '')
+    bubbleUp(processEvent(event), _.dropRight(1, path), getNode)
+    processEvent(event, fakeRoot, '')
 
     return triggerUpdate()
   }
@@ -76,6 +76,7 @@ export let ContextTree = (
       let target = flat[path]
       if (!target) return
       let responseNode = _.pick(['context', 'error'], node)
+      // TODO: check lastUpdateTime to prevent race conditions - if lastUpdate exists and this response is older, drop it
       F.mergeOn(target, responseNode)
       target.updating = false
       if (!node.children)
@@ -122,7 +123,7 @@ export default ContextTree
 // make sure all locally tracked props are in _meta or something like that
 //    Constrain all update to an update meta method which can be overriden to support observables and notifications
 //  both kinds of pausing - normal and queue paused
-// sergvice adapter + children vs items
+// sergvice adapter: schema transform + contextMap (should be solved with custom serialize + server aliasing)
 // subquery/savedsearch
 // tree lenses
 // broadcast pausing, just hold on to dispatches?
