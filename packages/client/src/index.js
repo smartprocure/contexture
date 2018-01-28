@@ -46,7 +46,7 @@ export let ContextTree = (
     _.cond(subscribers)(event)
     if (dontProcess) return // short circuit deepClone and triggerUpdate
     await validateGroup(tree)
-    bubbleUp(processEvent(event), path, getNode)
+    bubbleUp(processEvent(event, getNode), path)
     return triggerUpdate()
   }
   let triggerUpdate = F.debounceAsync(debounce, async () => {

@@ -54,7 +54,8 @@ export let StandardReactors = {
   type: reactors.standardChange,
 }
 
-export let getAffectedNodes = ({ type, ...event }, node, path, lookup) => {
+export let getAffectedNodes = ({ type, ...event }, lookup, path) => {
+  let node = lookup(path) 
   // Parent defaults to a fake root since reactors don't handle null parents
   let parent = lookup(_.dropRight(1, path)) || { children: [node] }
   let reactor = StandardReactors[type] || _.noop
