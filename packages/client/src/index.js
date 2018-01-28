@@ -5,18 +5,12 @@ import { validate } from './validation'
 import { getAffectedNodes } from './reactors'
 import actions from './actions'
 import serialize from './serialize'
-import {
-  markForUpdate,
-  markLastUpdate,
-  prepForUpdate,
-  markMissedUpdate,
-} from './traversals'
+import { markForUpdate, markLastUpdate, prepForUpdate } from './traversals'
 import { defaultTypes, runTypeFunction } from './types'
 
 let process = _.curryN(3, _.flow(
   getAffectedNodes,
   _.each(n => {
-    markMissedUpdate(n)
     if (!_.some('markedForUpdate', n.children)) markForUpdate(n)
   })
 ))

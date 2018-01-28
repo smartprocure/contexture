@@ -3,7 +3,7 @@ import { unsetOn } from 'futil-js'
 import { Tree } from './util/tree'
 
 let isFilterOnly = x =>
-  !x.children && (x.forceFilterOnly || !x.markedForUpdate || x.paused)
+  !x.children && (x.forceFilterOnly || !x.markedForUpdate)
 
 export default (tree, { search } = {}) =>
   _.flow(

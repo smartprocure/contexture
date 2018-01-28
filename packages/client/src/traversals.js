@@ -1,7 +1,8 @@
 import { Tree } from './util/tree'
 
 export let markForUpdate = Tree.walk(x => {
-  x.markedForUpdate = true
+  if (x.paused) x.missedUpdate = true
+  else x.markedForUpdate = true
 })
 export let markLastUpdate = time =>
   Tree.walk(child => {
@@ -12,7 +13,4 @@ export let prepForUpdate = Tree.walk(child => {
     child.updating = true
     child.markedForUpdate = false
   }
-})
-export let markMissedUpdate = Tree.walk(child => {
-  if (child.paused) child.missedUpdate = true
 })
