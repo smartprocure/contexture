@@ -38,7 +38,7 @@ export let ContextTree = (
   let getNode = path => flat[encode(path)]
   let typeFunction = runTypeFunction(types)
   let { validateGroup } = validate(typeFunction('validate'), extend)
-  
+
   // Event Handling
   let dispatch = async event => {
     let { type, path, dontProcess } = event

@@ -13,7 +13,7 @@ let reactors = {
     parent.join === 'or' ? [] : _.difference(parent.children, [node]),
   only: (parent, node) => [node],
   all: parent => parent.children,
-  standardChange(parent, node, {previous}) {
+  standardChange(parent, node, { previous }) {
     let needUpdate = hasContext(node)
     let affectsOthers = hadValue(node) || hadValue(previous)
     let reactor
@@ -32,17 +32,17 @@ export let StandardReactors = {
   refresh: reactors.all,
   data: reactors.others,
   config: reactors.only,
-  join(parent, node, {previous}) {
+  join(parent, node, { previous }) {
     let childrenWithValues = _.filter(hadValue, node.children)
     let joinInverted = node.join === 'not' || previous.join === 'not'
     if (childrenWithValues.length > 1 || joinInverted)
       return reactors.all(...arguments)
   },
   add: reactors.standardChange,
-  remove(parent, node, {previous}) {
+  remove(parent, node, { previous }) {
     if (hadValue(previous)) return reactors.all(...arguments)
   },
-  paused(parent, node, {value}) {
+  paused(parent, node, { value }) {
     if (!value && node.missedUpdate) {
       // Reactor probably shouldn't mutate but this needs to clear somewhere :/
       node.missedUpdate = false
@@ -54,7 +54,7 @@ export let StandardReactors = {
   type: reactors.standardChange,
 }
 
-export let getAffectedNodes = ({type, ...event}, node, path, lookup) => {
+export let getAffectedNodes = ({ type, ...event }, node, path, lookup) => {
   // Parent defaults to a fake root since reactors don't handle null parents
   let parent = lookup(_.dropRight(1, path)) || { children: [node] }
   let reactor = StandardReactors[type] || _.noop
