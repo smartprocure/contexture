@@ -2,8 +2,7 @@ import _ from 'lodash/fp'
 import { unsetOn } from 'futil-js'
 import { Tree } from './util/tree'
 
-let isFilterOnly = x =>
-  !x.children && (x.forceFilterOnly || !x.markedForUpdate)
+let isFilterOnly = x => !x.children && (x.forceFilterOnly || !x.markedForUpdate)
 
 export default (tree, { search } = {}) =>
   _.flow(

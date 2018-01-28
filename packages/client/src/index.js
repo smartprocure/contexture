@@ -8,12 +8,15 @@ import serialize from './serialize'
 import { markForUpdate, markLastUpdate, prepForUpdate } from './traversals'
 import { defaultTypes, runTypeFunction } from './types'
 
-let process = _.curryN(3, _.flow(
-  getAffectedNodes,
-  _.each(n => {
-    if (!_.some('markedForUpdate', n.children)) markForUpdate(n)
-  })
-))
+let process = _.curryN(
+  3,
+  _.flow(
+    getAffectedNodes,
+    _.each(n => {
+      if (!_.some('markedForUpdate', n.children)) markForUpdate(n)
+    })
+  )
+)
 
 export let ContextTree = (
   tree,
