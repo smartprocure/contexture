@@ -1,4 +1,4 @@
-import { flattenTree, encodePath } from '../src/util/tree'
+import { flattenTree, encode } from '../src/util/tree'
 import chai from 'chai'
 const expect = chai.expect
 
@@ -38,7 +38,7 @@ describe('tree', () => {
   }
   it('should maintain references in flattened tree', () => {
     let flat = flattenTree(tree)
-    let path = encodePath(['root', 'criteria'])
+    let path = encode(['root', 'criteria'])
     flat[path].join = 'or'
     expect(tree.children[1].join).to.equal('or')
 

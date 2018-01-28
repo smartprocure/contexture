@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 import { mapAsync } from './util/promise'
-import { encodePath } from './util/tree'
+import { encode } from './util/tree'
 import { pullOn } from 'futil-js'
 
 export default ({ getNode, flat, dispatch, snapshot, extend }) => ({
@@ -9,14 +9,14 @@ export default ({ getNode, flat, dispatch, snapshot, extend }) => ({
     let path = [...parentPath, value.key]
     target.children.push(value)
     // Need this nonsense to support the case where push actually mutates, e.g. a mobx observable tree
-    flat[encodePath(path)] = target.children[target.children.length - 1]
+    flat[encode(path)] = target.children[target.children.length - 1]
     return dispatch({ type: 'add', path, value })
   },
   async remove(path) {
     let previous = getNode(path)
     let parent = getNode(_.dropRight(1, path))
     pullOn(previous, parent.children)
-    delete flat[encodePath(path)]
+    delete flat[encode(path)]
     return dispatch({ type: 'remove', path, previous })
   },
   async mutate(path, value) {
