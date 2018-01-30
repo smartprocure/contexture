@@ -1,6 +1,7 @@
 # 1.1.1
 - Remove unused subscribe API **Note** Normally this would be a breaking change, but it was undocumented.
 - Made mutate a first class dispatchable event to avoid multiple dispatches
+- Separated `defaultTypes` out to `exampleTypes.js`
 
 # 1.1.0
 
