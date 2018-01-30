@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
-import { flattenTree, bubbleUp, flatLeaves, encode } from './util/tree'
+import { flattenTree, bubbleUp, flatLeaves, encode, decode } from './util/tree'
 import { validate } from './validation'
 import { getAffectedNodes } from './reactors'
 import actions from './actions'
@@ -23,6 +23,11 @@ let shouldBlockUpdate = (flat, allowsBlank) => {
   return hasErrors || noUpdates || (!allowsBlank && allBlank)
 }
 
+let shouldDropUpdate = (result, target) =>
+  target.lastUpdateTime &&
+  result.lastUpdateTime &&
+  target.lastUpdateTime > result.lastUpdateTime
+
 export let ContextTree = (
   tree,
   service = () => {
@@ -34,6 +39,7 @@ export let ContextTree = (
     extend = F.extendOn,
     debounce = 1,
     allowBlank = false,
+    onResult = _.noop,
     debug, //= true
   } = {}
 ) => {
@@ -62,11 +68,11 @@ export let ContextTree = (
       let target = flat[path]
       if (!target) return
       let responseNode = _.pick(['context', 'error'], node)
-      // TODO: check lastUpdateTime to prevent race conditions - if lastUpdate exists and this response is older, drop it
-      F.mergeOn(target, responseNode)
-      // We may want expose a hook to notify external subscribers that the context has mutated.
-      // Something like this existed but was removed here since it was overly complex and unused: https://github.com/smartprocure/contexture-client/pull/10/commits/d025d1119c3f4cf41447a942e8757b0b5fcd0856
-      target.updating = false
+      if (!shouldDropUpdate(node, target)) {
+        onResult(decode(path), node, target)
+        F.mergeOn(target, responseNode)
+        target.updating = false
+      }
     }, flattenTree(data))
     if (error) tree.error = error
   }

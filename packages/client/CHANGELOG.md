@@ -1,3 +1,7 @@
+# 1.2.0
+- Drop stale updates
+- Add `onResult` api (mainly for use in test above)
+
 # 1.1.1
 - Remove unused subscribe API **Note** Normally this would be a breaking change, but it was undocumented.
 - Made mutate a first class dispatchable event to avoid multiple dispatches
