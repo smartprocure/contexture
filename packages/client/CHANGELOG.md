@@ -1,8 +1,12 @@
+# 1.1.1
+- Remove unused subscribe API **Note** Normally this would be a breaking change, but it was undocumented.
+- Made mutate a first class dispatchable event to avoid multiple dispatches
+
 # 1.1.0
 
 ## Major internal overhaul
 
-*Note* Since the public API did not change, this is not a major version release - but these changes should result in _substantially_ improved performance.
+**Note** Since the public API did not change, this is not a major version release - but these changes should result in _substantially_ improved performance.
 
 A big theme was realizing that the edge case of async validation messing up in-progress dispatches is not actually possible in JS since it is single threaded - and even if it was, we don't snapshot the actual data/config values anyway.
 
