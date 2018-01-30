@@ -1,32 +1,21 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
-import {
-  flattenTree,
-  bubbleUpAsync,
-  flatLeaves,
-  decodePath,
-  encodePath,
-} from './util/tree'
-import { catches } from './util/futil'
-import { mapValuesAsync, flowAsync } from './util/promise'
+import { flattenTree, bubbleUp, flatLeaves, decode, encode } from './util/tree'
 import { validate } from './validation'
 import { getAffectedNodes } from './reactors'
 import actions from './actions'
 import serialize from './serialize'
-import {
-  markForUpdate,
-  markLastUpdate,
-  prepForUpdate,
-  acknoweldgeMissedUpdates,
-} from './traversals'
+import { markForUpdate, markLastUpdate, prepForUpdate } from './traversals'
 import { defaultTypes, runTypeFunction } from './types'
 
-let process = flowAsync(4)(
-  getAffectedNodes,
-  _.each(n => {
-    acknoweldgeMissedUpdates(n)
-    if (!_.some('markedForUpdate', n.children)) markForUpdate(n)
-  })
+let processEvent = _.curryN(
+  3,
+  _.flow(
+    getAffectedNodes,
+    _.each(n => {
+      if (!_.some('markedForUpdate', n.children)) markForUpdate(n)
+    })
+  )
 )
 
 export let ContextTree = (
@@ -46,12 +35,9 @@ export let ContextTree = (
 ) => {
   let log = x => debug && console.log(x)
   let flat = flattenTree(tree)
-  let getNode = path => flat[encodePath(path)]
-  let fakeRoot = { key: 'virtualFakeRoot', path: '', children: [tree] }
+  let getNode = path => flat[encode(path)]
   let typeFunction = runTypeFunction(types)
-  let { validateLeaves, validateGroup } = validate(
-    _.flow(snapshot, typeFunction('validate'))
-  )
+  let validateGroup = validate(typeFunction('validate'), extend)
 
   // Event Handling
   let dispatch = async event => {
@@ -59,46 +45,38 @@ export let ContextTree = (
     log(`${type} event at ${path} (${dontProcess ? 'internal' : 'user'} event)`)
     _.cond(subscribers)(event)
     if (dontProcess) return // short circuit deepClone and triggerUpdate
-    // Avoid race conditions - what matters is state _at the time of dispatch_
-    // snapshot might not be needed since await is blocking?
-    let hasValueMap = await mapValuesAsync(validateGroup, snapshot(flat))
-
-    // Process from instigator parent up to fake root so affectedNodes are always calculated in context of a group
-    await bubbleUpAsync(
-      process(event, hasValueMap, validateGroup),
-      _.dropRight(1, path),
-      flat
-    )
-    await process(event, hasValueMap, validateGroup, fakeRoot, fakeRoot.path)
-
-    // trickleDown((node, p) => console.log('down', p, path, node), path, tree)
+    await validateGroup(tree)
+    bubbleUp(processEvent(event, getNode), path)
     return triggerUpdate()
   }
   let triggerUpdate = F.debounceAsync(debounce, async () => {
-    if (await shouldBlockUpdate()) return log('Blocked Search')
+    if (shouldBlockUpdate()) return log('Blocked Search')
     let now = new Date().getTime()
     markLastUpdate(now)(tree)
     let dto = serialize(snapshot(tree), { search: true })
     prepForUpdate(tree)
     processResponse(await service(dto, now))
   })
-  let shouldBlockUpdate = catches(() => true)(async () => {
+  let shouldBlockUpdate = () => {
     let leaves = flatLeaves(flat)
-    let allBlank = _.every(x => !x, await validateLeaves(leaves))
+    let allBlank = !_.some('hasValue', leaves)
     let noUpdates = !_.some('markedForUpdate', leaves)
-    return noUpdates || (!(tree.allowBlank || allowBlank) && allBlank)
-  })
+    let hasErrors = _.some('error', leaves)
+    let allowsBlank = tree.allowBlank || allowBlank
+    return hasErrors || noUpdates || (!allowsBlank && allBlank)
+  }
   let processResponse = ({ data, error }) => {
-    _.each(node => {
-      let target = flat[node.path]
+    F.eachIndexed((node, path) => {
+      let target = flat[path]
       if (!target) return
       let responseNode = _.pick(['context', 'error'], node)
+      // TODO: check lastUpdateTime to prevent race conditions - if lastUpdate exists and this response is older, drop it
       F.mergeOn(target, responseNode)
       target.updating = false
       if (!node.children)
         dispatch({
           type: 'update',
-          path: decodePath(node.path),
+          path: decode(path),
           value: responseNode,
           node,
           dontProcess: true,
@@ -131,7 +109,6 @@ export default ContextTree
 //TODO
 //  unify notify subscribers with dispatch/mutate
 // subscribe(path, fn, type), fn: (delta, node) -> null
-// OR! just `dispatch` the change type as 'update', then allow external subscriptions to dispatch
 
 // TODO
 // types (validate, to(Human)String, defaults?, hasContext)
@@ -140,7 +117,7 @@ export default ContextTree
 // make sure all locally tracked props are in _meta or something like that
 //    Constrain all update to an update meta method which can be overriden to support observables and notifications
 //  both kinds of pausing - normal and queue paused
-// sergvice adapter + children vs items
+// sergvice adapter: schema transform + contextMap (should be solved with custom serialize + server aliasing)
 // subquery/savedsearch
 // tree lenses
 // broadcast pausing, just hold on to dispatches?

@@ -1,27 +1,23 @@
 import _ from 'lodash/fp'
-import { lookup } from './util/tree'
 
 // TODO check type, etc
 let hasContext = node => node.context
+let throwsError = x => {
+  throw Error(x)
+} // Throw expressions are stage 0 :(
+let hadValue = previous =>
+  previous && _.isUndefined(previous.hasValue)
+    ? throwsError('Node was never validated')
+    : previous && previous.hasValue && !previous.error
 
 let reactors = {
-  others: (parent, instigator) =>
-    parent.join === 'or' ? [] : _.difference(parent.children, [instigator]),
-  only: (parent, instigator) => [instigator],
+  others: (parent, node) =>
+    parent.join === 'or' ? [] : _.difference(parent.children, [node]),
+  only: (parent, node) => [node],
   all: parent => parent.children,
-  async standardChange(
-    parent,
-    instigator,
-    previous,
-    hasValueMap,
-    value,
-    validateGroup,
-    ...args
-  ) {
-    let needUpdate = hasContext(instigator)
-    let affectsOthers =
-      hasValueMap[instigator.path] ||
-      (previous && (await validateGroup(previous)))
+  standardChange(parent, node, { previous }) {
+    let needUpdate = hasContext(node)
+    let affectsOthers = hadValue(node) || hadValue(previous)
     let reactor
     if (needUpdate) {
       reactor = reactors.only
@@ -30,16 +26,7 @@ let reactors = {
     } else if (affectsOthers && needUpdate) {
       reactor = reactors.all
     }
-    if (reactor)
-      return reactor(
-        parent,
-        instigator,
-        previous,
-        hasValueMap,
-        value,
-        validateGroup,
-        ...args
-      )
+    if (reactor) return reactor(...arguments)
   },
 }
 
@@ -47,49 +34,21 @@ export let StandardReactors = {
   refresh: reactors.all,
   data: reactors.others,
   config: reactors.only,
-  join(parent, instigator, previous, hasValueMap, ...args) {
-    let childrenWithValues = _.filter(
-      child => hasValueMap[child.path],
-      instigator.children
-    )
-    let joinInverted = instigator.join === 'not' || previous.join === 'not'
+  join(parent, node, { previous }) {
+    let childrenWithValues = _.filter(hadValue, node.children)
+    let joinInverted = node.join === 'not' || previous.join === 'not'
     if (childrenWithValues.length > 1 || joinInverted)
-      return reactors.all(parent, instigator, previous, hasValueMap, ...args)
+      return reactors.all(...arguments)
   },
   add: reactors.standardChange,
-  async remove(
-    parent,
-    instigator,
-    previous,
-    hasValueMap,
-    value,
-    validateGroup,
-    ...args
-  ) {
-    if (await validateGroup(previous))
-      return reactors.all(
-        parent,
-        instigator,
-        previous,
-        hasValueMap,
-        value,
-        validateGroup,
-        ...args
-      )
+  remove(parent, node, { previous }) {
+    if (hadValue(previous)) return reactors.all(...arguments)
   },
-  paused(parent, instigator, previous, hasValueMap, value, ...args) {
-    if (!value && instigator.missedUpdates) {
+  paused(parent, node, { value }) {
+    if (!value && node.missedUpdate) {
       // Reactor probably shouldn't mutate but this needs to clear somewhere :/
-      // maybe in reactor??
-      instigator.missedUpdates = false
-      return reactors.only(
-        parent,
-        instigator,
-        previous,
-        hasValueMap,
-        value,
-        ...args
-      )
+      node.missedUpdate = false
+      return reactors.only(...arguments)
     }
   },
   // ported from main app ¯\_(ツ)_/¯
@@ -97,23 +56,10 @@ export let StandardReactors = {
   type: reactors.standardChange,
 }
 
-export let getAffectedNodes = _.curry(
-  async (
-    { type, path, value, previous },
-    hasValueMap,
-    validateGroup,
-    node,
-    p
-  ) => {
-    let instigatorPath = _.difference(path, p)[0]
-    let instigator = lookup(node, instigatorPath)
-    return (StandardReactors[type] || _.noop)(
-      node,
-      instigator,
-      previous,
-      hasValueMap,
-      value,
-      validateGroup
-    )
-  }
-)
+export let getAffectedNodes = ({ type, ...event }, lookup, path) => {
+  let node = lookup(path)
+  // Parent defaults to a fake root since reactors don't handle null parents
+  let parent = lookup(_.dropRight(1, path)) || { children: [node] }
+  let reactor = StandardReactors[type] || _.noop
+  return reactor(parent, node, event)
+}

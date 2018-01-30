@@ -1,4 +1,20 @@
-﻿# 1.0.5
+# 1.1.0
+
+## Major internal overhaul
+
+*Note* Since the public API did not change, this is not a major version release - but these changes should result in _substantially_ improved performance.
+
+A big theme was realizing that the edge case of async validation messing up in-progress dispatches is not actually possible in JS since it is single threaded - and even if it was, we don't snapshot the actual data/config values anyway.
+
+* Removed almost all internal snapshotting (except serialization) by ignoring non-existant race conditions
+* Validation now runs only 1 time per dispatch and stamps on group nodes (simplifying the API)
+* All reactor processing and search blocking is now synchronous and have had their APIs radically simplified
+* Removed all explicit knowledge of path encoding, instead using a single function
+* Removed tons of custom code in favor of generic flat tree methods (originally extracted from this repo)
+* Paths are no longer stamped on nodes (side effect of using a more generic method)
+* Encoded path delimiter changed from `->` to `/`
+
+# 1.0.5
 
 * flattenTree fix for nodes that already have a path.
 

@@ -1,29 +1,23 @@
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
 import { mapAsync } from './util/promise'
-import { setPath, decodePath } from './util/tree'
-import { pullOn } from './util/futil'
+import { encode } from './util/tree'
+import { pullOn } from 'futil-js'
 
-export default ({
-  getNode,
-  flat,
-  dispatch,
-  snapshot,
-  extend = F.extendOn,
-}) => ({
-  async add(path, value) {
-    let target = getNode(path)
-    setPath(value, null, [target])
+export default ({ getNode, flat, dispatch, snapshot, extend }) => ({
+  async add(parentPath, value) {
+    let target = getNode(parentPath)
+    let path = [...parentPath, value.key]
     target.children.push(value)
-    flat[value.path] = value
-    return dispatch({ type: 'add', path: decodePath(value.path), value })
+    // Need this nonsense to support the case where push actually mutates, e.g. a mobx observable tree
+    flat[encode(path)] = target.children[target.children.length - 1]
+    return dispatch({ type: 'add', path, value })
   },
   async remove(path) {
-    let target = getNode(path)
+    let previous = getNode(path)
     let parent = getNode(_.dropRight(1, path))
-    pullOn(target, parent.children)
-    delete flat[target.path]
-    return dispatch({ type: 'remove', path, previous: target })
+    pullOn(previous, parent.children)
+    delete flat[encode(path)]
+    return dispatch({ type: 'remove', path, previous })
   },
   async mutate(path, value) {
     let target = getNode(path)

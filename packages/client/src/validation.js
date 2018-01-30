@@ -1,29 +1,27 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { mapAsync } from './util/promise'
-import { flatLeaves, flattenTree } from './util/tree'
 
 export let defaultHasValue = x => !F.isBlankDeep(_.some)(x.data)
 // Aync fn to inspect types.
 // ASYNC runValidate: return true -> proceed, return false -> exclude, throw -> error!
-export let validate = runValidate => {
-  let validateLeaves = mapAsync(async child => {
+export let validate = (runValidate, extend = F.extendOn) => {
+  let validateGroup = async child => {
+    delete child.error //?? might need to be on mutate only in case of server error?
     try {
-      delete child.error //?? might need to be on mutate only in case of server error?
-      return (child.hasValue = await runValidate(child))
-    } catch (e) {
-      child.hasValue = false
-      child.error = e
-      throw e
+      if (child.children) await mapAsync(validateGroup, child.children)
+      let hasValue = child.children
+        ? _.some('hasValue', child.children)
+        : await runValidate(child)
+      extend(child, { hasValue })
+      return hasValue
+    } catch (error) {
+      extend(child, {
+        hasValue: false,
+        error,
+      })
+      throw error
     }
-  })
-  let validateGroup = async child =>
-    child.children
-      ? _.some(null, await validateLeaves(flatLeaves(flattenTree(child))))
-      : runValidate(child)
-
-  return {
-    validateLeaves,
-    validateGroup,
   }
+  return validateGroup
 }
