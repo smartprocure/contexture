@@ -54,19 +54,19 @@ export let StandardReactors = {
   // ported from main app ¯\_(ツ)_/¯
   field: reactors.standardChange,
   type: reactors.standardChange,
-  mutate: (parent, node, event) =>
+  mutate: (parent, node, event, types) =>
     _.flow(
       _.keys,
-      _.flatMap(x => Reactor(x)(parent, node, event)),
+      _.flatMap(x => Reactor(x)(parent, node, event, types)),
       _.compact,
       _.uniq
     )(event.value),
 }
 let Reactor = x => StandardReactors[x] || reactors[x] || _.noop
 
-export let getAffectedNodes = ({ type, ...event }, lookup, path) => {
+export let getAffectedNodes = ({ type, ...event }, lookup, types, path) => {
   let node = lookup(path)
   // Parent defaults to a fake root since reactors don't handle null parents
   let parent = lookup(_.dropRight(1, path)) || { children: [node] }
-  return Reactor(type)(parent, node, event)
+  return Reactor(type)(parent, node, event, types)
 }

@@ -51,7 +51,7 @@ export let ContextTree = (
   let dispatch = async event => {
     log(`${event.type} event at ${event.path}`)
     await validate(runTypeFunction(types, 'validate'), extend, tree)
-    bubbleUp(processEvent(event, getNode), event.path)
+    bubbleUp(processEvent(event, getNode, types), event.path)
     await triggerUpdate()
   }
   let triggerUpdate = F.debounceAsync(debounce, async () => {
