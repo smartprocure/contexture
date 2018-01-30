@@ -6,7 +6,8 @@ import { getAffectedNodes } from './reactors'
 import actions from './actions'
 import serialize from './serialize'
 import { markForUpdate, markLastUpdate, prepForUpdate } from './traversals'
-import { defaultTypes, runTypeFunction } from './types'
+import { runTypeFunction } from './types'
+import exampleTypes from './exampleTypes'
 
 let processEvent = F.flurry(
   getAffectedNodes,
@@ -27,7 +28,7 @@ export let ContextTree = (
   service = () => {
     throw new Error('No update service provided!')
   },
-  types = defaultTypes,
+  types = exampleTypes,
   {
     subscribers = [],
     snapshot = _.cloneDeep,
