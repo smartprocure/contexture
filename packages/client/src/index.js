@@ -30,7 +30,6 @@ export let ContextTree = (
   },
   types = exampleTypes,
   {
-    subscribers = [],
     snapshot = _.cloneDeep,
     extend = F.extendOn,
     debounce = 1,
