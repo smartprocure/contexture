@@ -48,7 +48,6 @@ export let ContextTree = (
   let dispatch = async event => {
     let { type, path, dontProcess } = event
     log(`${type} event at ${path} (${dontProcess ? 'internal' : 'user'} event)`)
-    _.cond(subscribers)(event)
     await validateGroup(tree)
     bubbleUp(processEvent(event, getNode), path)
     await triggerUpdate()
@@ -70,22 +69,8 @@ export let ContextTree = (
       // TODO: check lastUpdateTime to prevent race conditions - if lastUpdate exists and this response is older, drop it
       F.mergeOn(target, responseNode)
       target.updating = false
-      if (!node.children)
-        dispatch({
-          type: 'update',
-          path: decode(path),
-          value: responseNode,
-          node,
-        })
     }, flattenTree(data))
     if (error) tree.error = error
-  }
-
-  let subscribe = (f, cond = _.stubTrue) => {
-    let index = subscribers.length
-    // Potential improvement - optimize for `path` cases and store locally at node (assuming we have lots of subscriptions to different nodes)
-    subscribers.push([_.iteratee(cond), f])
-    return () => subscribers.splice(index, 1)
   }
 
   return {
@@ -93,7 +78,6 @@ export let ContextTree = (
     tree,
     getNode,
     dispatch,
-    subscribe,
     serialize: () => serialize(snapshot(tree), {}),
   }
 }
