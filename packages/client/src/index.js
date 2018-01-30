@@ -49,7 +49,6 @@ export let ContextTree = (
     let { type, path, dontProcess } = event
     log(`${type} event at ${path} (${dontProcess ? 'internal' : 'user'} event)`)
     _.cond(subscribers)(event)
-    if (dontProcess) return // short circuit deepClone and triggerUpdate
     await validateGroup(tree)
     bubbleUp(processEvent(event, getNode), path)
     await triggerUpdate()
@@ -77,7 +76,6 @@ export let ContextTree = (
           path: decode(path),
           value: responseNode,
           node,
-          dontProcess: true,
         })
     }, flattenTree(data))
     if (error) tree.error = error
