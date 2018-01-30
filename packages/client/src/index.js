@@ -14,6 +14,13 @@ let processEvent = F.flurry(
     if (!_.some('markedForUpdate', n.children)) markForUpdate(n)
   })
 )
+let shouldBlockUpdate = (flat, allowsBlank) => {
+  let leaves = flatLeaves(flat)
+  let allBlank = !_.some('hasValue', leaves)
+  let noUpdates = !_.some('markedForUpdate', leaves)
+  let hasErrors = _.some('error', leaves)
+  return hasErrors || noUpdates || (!allowsBlank && allBlank)
+}
 
 export let ContextTree = (
   tree,
@@ -47,21 +54,14 @@ export let ContextTree = (
     await triggerUpdate()
   }
   let triggerUpdate = F.debounceAsync(debounce, async () => {
-    if (shouldBlockUpdate()) return log('Blocked Search')
+    if (shouldBlockUpdate(flat, tree.allowBlank || allowBlank))
+      return log('Blocked Search')
     let now = new Date().getTime()
     markLastUpdate(now)(tree)
     let dto = serialize(snapshot(tree), { search: true })
     prepForUpdate(tree)
     processResponse(await service(dto, now))
   })
-  let shouldBlockUpdate = () => {
-    let leaves = flatLeaves(flat)
-    let allBlank = !_.some('hasValue', leaves)
-    let noUpdates = !_.some('markedForUpdate', leaves)
-    let hasErrors = _.some('error', leaves)
-    let allowsBlank = tree.allowBlank || allowBlank
-    return hasErrors || noUpdates || (!allowsBlank && allBlank)
-  }
   let processResponse = ({ data, error }) => {
     F.eachIndexed((node, path) => {
       let target = flat[path]
