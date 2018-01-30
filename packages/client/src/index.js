@@ -40,15 +40,13 @@ export let ContextTree = (
   let log = x => debug && console.log(x)
   let flat = flattenTree(tree)
   let getNode = path => flat[encode(path)]
-  let typeFunction = runTypeFunction(types)
-  let validateGroup = validate(typeFunction('validate'), extend)
-
+  
   // Event Handling
   let dispatch = async event => {
     let { type, path } = event
     log(`${type} event at ${path}`)
-    await validateGroup(tree)
     bubbleUp(processEvent(event, getNode), path)
+    await validate(runTypeFunction(types, 'validate'), extend, tree)
     await triggerUpdate()
   }
   let triggerUpdate = F.debounceAsync(debounce, async () => {
