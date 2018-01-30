@@ -2,9 +2,11 @@ import _ from 'lodash/fp'
 
 // TODO check type, etc
 let hasContext = node => node.context
-let throwsError = x => { throw Error(x) } // Throw expressions are stage 0 :(
-let hadValue = previous => 
-  (previous && _.isUndefined(previous.hasValue))
+let throwsError = x => {
+  throw Error(x)
+} // Throw expressions are stage 0 :(
+let hadValue = previous =>
+  previous && _.isUndefined(previous.hasValue)
     ? throwsError('Node was never validated')
     : previous && previous.hasValue && !previous.error
 
