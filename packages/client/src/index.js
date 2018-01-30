@@ -46,8 +46,8 @@ export let ContextTree = (
 
   // Event Handling
   let dispatch = async event => {
-    let { type, path, dontProcess } = event
-    log(`${type} event at ${path} (${dontProcess ? 'internal' : 'user'} event)`)
+    let { type, path } = event
+    log(`${type} event at ${path}`)
     await validateGroup(tree)
     bubbleUp(processEvent(event, getNode), path)
     await triggerUpdate()
