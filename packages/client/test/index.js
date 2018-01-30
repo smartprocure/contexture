@@ -411,7 +411,7 @@ describe('lib', () => {
     let service = sinon.spy(async (dto, lastUpdateTime) => {
       let testChange = dto.children[0].data.values[0]
       // arbitrarily delay the first call to trigger a stale update
-      await Promise.delay(testChange == 'a' ? 20 : 1)
+      await Promise.delay(testChange === 'a' ? 20 : 1)
       return {
         data: {
           key: 'root',
