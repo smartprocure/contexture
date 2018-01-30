@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
-import { flattenTree, bubbleUp, flatLeaves, decode, encode } from './util/tree'
+import { flattenTree, bubbleUp, flatLeaves, encode } from './util/tree'
 import { validate } from './validation'
 import { getAffectedNodes } from './reactors'
 import actions from './actions'
