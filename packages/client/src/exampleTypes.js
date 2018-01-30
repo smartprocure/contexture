@@ -3,8 +3,7 @@ import { defaultHasValue } from './validation'
 
 export default {
   default: {
-    validate: defaultHasValue,
-    reactors: {}
+    validate: defaultHasValue
   },
   facet: {
     // data: {

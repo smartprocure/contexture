@@ -44,8 +44,8 @@ export let StandardReactors = {
   remove(parent, node, { previous }) {
     if (hadValue(previous)) return reactors.all(...arguments)
   },
-  paused(parent, node, { value }) {
-    if (!value && node.missedUpdate) {
+  paused(parent, node, { value: {paused} }) {
+    if (!paused && node.missedUpdate) {
       // Reactor probably shouldn't mutate but this needs to clear somewhere :/
       node.missedUpdate = false
       return reactors.only(...arguments)
@@ -54,12 +54,19 @@ export let StandardReactors = {
   // ported from main app ¯\_(ツ)_/¯
   field: reactors.standardChange,
   type: reactors.standardChange,
+  mutate: (parent, node, event) =>
+    _.flow(
+      _.keys,
+      _.flatMap(x => Reactor(x)(parent, node, event)),
+      _.compact,
+      _.uniq
+    )(event.value)
 }
+let Reactor = x => StandardReactors[x] || reactors[x] || _.noop
 
 export let getAffectedNodes = ({ type, ...event }, lookup, path) => {
   let node = lookup(path)
   // Parent defaults to a fake root since reactors don't handle null parents
   let parent = lookup(_.dropRight(1, path)) || { children: [node] }
-  let reactor = StandardReactors[type] || _.noop
-  return reactor(parent, node, event)
+  return Reactor(type)(parent, node, event)
 }

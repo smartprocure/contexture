@@ -1,5 +1,4 @@
 import _ from 'lodash/fp'
-import { mapAsync } from './util/promise'
 import { encode } from './util/tree'
 import { pullOn } from 'futil-js'
 
@@ -23,17 +22,12 @@ export default ({ getNode, flat, dispatch, snapshot, extend }) => ({
     let target = getNode(path)
     let previous = snapshot(_.omit('children', target))
     extend(target, value)
-    await mapAsync(
-      async (value, type) => dispatch({ type, path, value, previous }),
-      value
-    )
     return dispatch({
       type: 'mutate',
       path,
       previous,
       value,
       node: target,
-      dontProcess: true,
     })
   },
 })
