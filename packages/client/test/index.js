@@ -279,66 +279,69 @@ describe('lib', () => {
   // })
   it('should work', async () => {
     let service = sinon.spy(() => ({ data: {} }))
-    let Tree = lib.ContextTree({
-      key: 'root',
-      join: 'and',
-      children: [
-        {
-          key: 'analysis',
-          join: 'and',
-          children: [
-            {
-              key: 'results',
-              type: 'results',
-            },
-          ],
-        },
-        {
-          key: 'criteria',
-          join: 'or',
-          children: [
-            {
-              key: 'agencies',
-              field: 'Organization.Name',
-              type: 'facet',
-              data: {
-                values: ['City of Deerfield'],
+    let Tree = lib.ContextTree(
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'analysis',
+            join: 'and',
+            children: [
+              {
+                key: 'results',
+                type: 'results',
               },
-              config: {
-                size: 24,
-              },
-            },
-            {
-              key: 'mainQuery',
-              type: 'query',
-              data: {
-                query: 'cable internet~',
-              },
-            },
-            {
-              key: 'noValue',
-              type: 'facet',
-              data: {
-                values: [],
-              },
-            },
-            {
-              key: 'uselessGroup',
-              join: 'and',
-              children: [
-                {
-                  key: 'uselessChild',
-                  type: 'facet',
-                  data: {
-                    values: [],
-                  },
+            ],
+          },
+          {
+            key: 'criteria',
+            join: 'or',
+            children: [
+              {
+                key: 'agencies',
+                field: 'Organization.Name',
+                type: 'facet',
+                data: {
+                  values: ['City of Deerfield'],
                 },
-              ],
-            },
-          ],
-        },
-      ],
-    }, service)
+                config: {
+                  size: 24,
+                },
+              },
+              {
+                key: 'mainQuery',
+                type: 'query',
+                data: {
+                  query: 'cable internet~',
+                },
+              },
+              {
+                key: 'noValue',
+                type: 'facet',
+                data: {
+                  values: [],
+                },
+              },
+              {
+                key: 'uselessGroup',
+                join: 'and',
+                children: [
+                  {
+                    key: 'uselessChild',
+                    type: 'facet',
+                    data: {
+                      values: [],
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      service
+    )
 
     await Tree.mutate(['root', 'criteria', 'mainQuery'], {
       data: {
@@ -407,7 +410,7 @@ describe('lib', () => {
     }
     let service = sinon.spy(async (dto, lastUpdateTime) => {
       let testChange = dto.children[0].data.values[0]
-      // arbitrarily delay the first call to trigger a stale update 
+      // arbitrarily delay the first call to trigger a stale update
       await Promise.delay(testChange == 'a' ? 20 : 1)
       return {
         data: {
@@ -426,7 +429,7 @@ describe('lib', () => {
               config: {
                 size: 20,
               },
-              lastUpdateTime
+              lastUpdateTime,
             },
             {
               key: 'filter',
@@ -435,12 +438,12 @@ describe('lib', () => {
         },
       }
     })
-    
+
     let spy = sinon.spy()
     // Just call the spy for `results`
     let onResult = path => _.isEqual(path, ['root', 'results']) && spy()
     let Tree = lib.ContextTree(tree, service, undefined, {
-      onResult
+      onResult,
     })
     let step1 = Tree.mutate(['root', 'filter'], {
       data: {
