@@ -8,7 +8,8 @@ export let defaultHasValue = x => !F.isBlankDeep(_.some)(x.data)
 export let validate = _.curry(async (runValidate, extend, child) => {
   delete child.error //?? might need to be on mutate only in case of server error?
   try {
-    if (child.children) await mapAsync(validate(runValidate, extend), child.children)
+    if (child.children)
+      await mapAsync(validate(runValidate, extend), child.children)
     let hasValue = child.children
       ? _.some('hasValue', child.children)
       : await runValidate(child)

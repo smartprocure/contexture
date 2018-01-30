@@ -44,7 +44,7 @@ export let StandardReactors = {
   remove(parent, node, { previous }) {
     if (hadValue(previous)) return reactors.all(...arguments)
   },
-  paused(parent, node, { value: {paused} }) {
+  paused(parent, node, { value: { paused } }) {
     if (!paused && node.missedUpdate) {
       // Reactor probably shouldn't mutate but this needs to clear somewhere :/
       node.missedUpdate = false
@@ -60,7 +60,7 @@ export let StandardReactors = {
       _.flatMap(x => Reactor(x)(parent, node, event)),
       _.compact,
       _.uniq
-    )(event.value)
+    )(event.value),
 }
 let Reactor = x => StandardReactors[x] || reactors[x] || _.noop
 

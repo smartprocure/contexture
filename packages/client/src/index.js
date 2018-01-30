@@ -40,7 +40,7 @@ export let ContextTree = (
   let log = x => debug && console.log(x)
   let flat = flattenTree(tree)
   let getNode = path => flat[encode(path)]
-  
+
   // Event Handling
   let dispatch = async event => {
     let { type, path } = event

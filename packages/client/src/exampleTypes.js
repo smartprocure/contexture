@@ -3,7 +3,7 @@ import { defaultHasValue } from './validation'
 
 export default {
   default: {
-    validate: defaultHasValue
+    validate: defaultHasValue,
   },
   facet: {
     // data: {
@@ -23,7 +23,7 @@ export default {
       values: 'others',
       mode: 'others',
       size: 'only',
-      filter: 'only'
+      filter: 'only',
     },
     // validate: x => x.data.values,
     // toString: ({data: {values, mode}}) =>
