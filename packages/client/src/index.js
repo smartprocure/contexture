@@ -44,7 +44,7 @@ export let ContextTree = (
     if (dontProcess) return // short circuit deepClone and triggerUpdate
     await validateGroup(tree)
     bubbleUp(processEvent(event, getNode), path)
-    return triggerUpdate()
+    await triggerUpdate()
   }
   let triggerUpdate = F.debounceAsync(debounce, async () => {
     if (shouldBlockUpdate()) return log('Blocked Search')
