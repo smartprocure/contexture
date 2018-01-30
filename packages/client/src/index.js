@@ -68,6 +68,8 @@ export let ContextTree = (
       let responseNode = _.pick(['context', 'error'], node)
       // TODO: check lastUpdateTime to prevent race conditions - if lastUpdate exists and this response is older, drop it
       F.mergeOn(target, responseNode)
+      // We may want expose a hook to notify external subscribers that the context has mutated.
+      // Something like this existed but was removed here since it was overly complex and unused: https://github.com/smartprocure/contexture-client/pull/10/commits/d025d1119c3f4cf41447a942e8757b0b5fcd0856
       target.updating = false
     }, flattenTree(data))
     if (error) tree.error = error
