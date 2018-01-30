@@ -6,7 +6,7 @@ export let Tree = F.tree(
   F.when(_.isString, key => ({ key }))
 )
 
-export let { encode, decode } = F.encoder('/')
+export let { encode } = F.encoder('/')
 
 export let flattenTree = Tree.flatten(F.propTreePath('key'))
 export let flatLeaves = Tree.flatLeaves
