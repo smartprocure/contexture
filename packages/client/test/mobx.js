@@ -30,6 +30,7 @@ describe('usage with mobx should generally work', () => {
       },
       {
         key: 'results',
+        type: 'results',
         context: {
           results: null,
         },
@@ -86,6 +87,7 @@ describe('usage with mobx should generally work', () => {
         },
         {
           key: 'results',
+          type:'results',
           lastUpdateTime: now,
         },
       ],
