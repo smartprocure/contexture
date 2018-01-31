@@ -1,4 +1,5 @@
 import _ from 'lodash/fp'
+import * as F from 'futil-js'
 import chai from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
@@ -6,6 +7,7 @@ import * as lib from '../src'
 import Promise from 'bluebird'
 const expect = chai.expect
 chai.use(sinonChai)
+import { mockService } from './mocks'
 
 describe('lib', () => {
   describe('should generally work', () => {
@@ -19,33 +21,11 @@ describe('lib', () => {
         },
         {
           key: 'results',
+          type: 'results'
         },
       ],
     }
-    let service = sinon.spy(() => ({
-      data: {
-        key: 'root',
-        children: [
-          {
-            key: 'results',
-            context: {
-              count: 1,
-              results: [
-                {
-                  title: 'some result',
-                },
-              ],
-            },
-            config: {
-              size: 20,
-            },
-          },
-          {
-            key: 'filter',
-          },
-        ],
-      },
-    }))
+    let service = sinon.spy(mockService())
     let Tree = lib.ContextTree(tree, service)
     it('should generally mutate', async () => {
       await Tree.mutate(['root', 'filter'], {
@@ -68,6 +48,7 @@ describe('lib', () => {
           },
           {
             key: 'results',
+            type: 'results',
             lastUpdateTime: now,
           },
         ],
@@ -97,6 +78,7 @@ describe('lib', () => {
           },
           {
             key: 'results',
+            type: 'results',
           },
         ],
       })
@@ -278,7 +260,7 @@ describe('lib', () => {
 
   // })
   it('should work', async () => {
-    let service = sinon.spy(() => ({ data: {} }))
+    let service = sinon.spy(mockService())
     let Tree = lib.ContextTree(
       {
         key: 'root',
@@ -405,6 +387,7 @@ describe('lib', () => {
         },
         {
           key: 'results',
+          type: 'results'
         },
       ],
     }
@@ -412,31 +395,7 @@ describe('lib', () => {
       let testChange = dto.children[0].data.values[0]
       // arbitrarily delay the first call to trigger a stale update
       await Promise.delay(testChange === 'a' ? 20 : 1)
-      return {
-        data: {
-          key: 'root',
-          children: [
-            {
-              key: 'results',
-              context: {
-                count: 1,
-                results: [
-                  {
-                    title: 'some result',
-                  },
-                ],
-              },
-              config: {
-                size: 20,
-              },
-              lastUpdateTime,
-            },
-            {
-              key: 'filter',
-            },
-          ],
-        },
-      }
+      return mockService()(dto, lastUpdateTime)
     })
 
     let spy = sinon.spy()
