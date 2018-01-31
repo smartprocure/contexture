@@ -1,4 +1,5 @@
 import _ from 'lodash/fp'
+import * as F from 'futil-js'
 
 // TODO check type, etc
 let hasContext = node => node.context
@@ -57,6 +58,9 @@ export let StandardReactors = {
   mutate: (parent, node, event, types) =>
     _.flow(
       _.keys,
+      // assumes reactors are { field: reactor, ...}
+      _.map(F.aliasIn(_.getOr({}, `${node.type}.reactors`, types))),
+      _.uniq,
       _.flatMap(x => Reactor(x)(parent, node, event, types)),
       _.compact,
       _.uniq
