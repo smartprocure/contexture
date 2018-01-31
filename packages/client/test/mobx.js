@@ -10,10 +10,14 @@ chai.use(sinonChai)
 
 let treeUtils = Tree
 let ContextTreeMobx = (tree, service) =>
-  lib.ContextTree(tree, service, undefined, {
-    snapshot: toJS,
-    extend: extendObservable,
-  })
+  lib.ContextTree(
+    {
+      service,
+      snapshot: toJS,
+      extend: extendObservable,
+    },
+    tree
+  )
 
 describe('usage with mobx should generally work', () => {
   // TODO: make these generally self contained - some rely on previous test runs
@@ -29,6 +33,7 @@ describe('usage with mobx should generally work', () => {
       },
       {
         key: 'results',
+        type: 'results',
         context: {
           results: null,
         },
@@ -85,6 +90,7 @@ describe('usage with mobx should generally work', () => {
         },
         {
           key: 'results',
+          type: 'results',
           lastUpdateTime: now,
         },
       ],
@@ -98,6 +104,7 @@ describe('usage with mobx should generally work', () => {
       data: {
         values: ['a'],
       },
+      path: ['root', 'filter'],
     })
     // should update contexts
     expect(Tree.getNode(['root', 'results']).updating).to.be.false
@@ -144,6 +151,7 @@ describe('usage with mobx should generally work', () => {
       data: {
         values: 'asdf',
       },
+      path: ['root', 'newFilterWithValue'],
     })
     disposer()
   })
@@ -187,6 +195,7 @@ describe('usage with mobx should generally work', () => {
     ).to.deep.equal({
       key: 'newEmptyFilter',
       context: {},
+      path: ['root', 'newEmptyFilter'],
     })
     expect(
       _.omit(
@@ -199,6 +208,7 @@ describe('usage with mobx should generally work', () => {
       hasValue: false,
       updating: true,
       markedForUpdate: false,
+      path: ['root', 'newEmptyFilter'],
     })
 
     expect(
@@ -217,6 +227,7 @@ describe('usage with mobx should generally work', () => {
       data: {
         values: 'asdf',
       },
+      path: ['root', 'newFilterWithValueForRemoveTest'],
     })
     expect(
       treeUtils.lookup(
@@ -229,6 +240,7 @@ describe('usage with mobx should generally work', () => {
       data: {
         values: 'asdf',
       },
+      path: ['root', 'newFilterWithValueForRemoveTest'],
     })
     disposer()
   })
