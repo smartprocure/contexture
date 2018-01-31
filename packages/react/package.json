@@ -1,11 +1,11 @@
 {
   "name": "contexture-react",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "description": "React components for building contexture interfaces",
   "main": "index.js",
   "scripts": {
     "pre-build": "rm -rf ./dist",
-    "build": "babel ./src --out-dir ./dist",
+    "build": "babel ./src --out-dir ./dist --source-maps",
     "prepublish": "npm run build",
     "storybook": "start-storybook -p 3000",
     "build-storybook": "build-storybook",
