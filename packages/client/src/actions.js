@@ -6,7 +6,7 @@ export default ({ getNode, flat, dispatch, snapshot, extend }) => ({
   async add(parentPath, value) {
     let target = getNode(parentPath)
     let path = [...parentPath, value.key]
-    extend(value, {path})
+    extend(value, { path })
     target.children.push(value)
     // Need this nonsense to support the case where push actually mutates, e.g. a mobx observable tree
     flat[encode(path)] = target.children[target.children.length - 1]

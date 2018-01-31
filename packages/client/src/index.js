@@ -28,21 +28,9 @@ let shouldDropUpdate = (result, target) =>
   result.lastUpdateTime &&
   target.lastUpdateTime > result.lastUpdateTime
 
-export let ContextTree = _.curry((
-  {
-    service = () => {
-      throw new Error('No update service provided!')
-    },
-    types = exampleTypes,
-    debounce = 1,
-    onResult = _.noop,
-    allowBlank,
-    debug, //= true
-    extend = F.extendOn,
-    snapshot = _.cloneDeep,
-  },
-  tree
-) => {
+export let ContextTree = _.curry(({ service = () => {
+    throw new Error('No update service provided!')
+  }, types = exampleTypes, debounce = 1, onResult = _.noop, allowBlank, debug, extend = F.extendOn, snapshot = _.cloneDeep }, tree) => { //= true
   let log = x => debug && console.info(x)
   let flat = flattenTree(tree)
   F.eachIndexed((node, path) => {

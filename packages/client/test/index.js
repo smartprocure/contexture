@@ -25,7 +25,7 @@ describe('lib', () => {
       ],
     }
     let service = sinon.spy(mockService())
-    let Tree = lib.ContextTree({service}, tree)
+    let Tree = lib.ContextTree({ service }, tree)
     it('should generally mutate', async () => {
       await Tree.mutate(['root', 'filter'], {
         data: {
@@ -224,17 +224,20 @@ describe('lib', () => {
     it('should handle groups being paused')
   })
   it('should throw if no service is provided', async () => {
-    let Tree = lib.ContextTree({}, {
-      key: 'root',
-      children: [
-        {
-          key: 'filter',
-        },
-        {
-          key: 'results',
-        },
-      ],
-    })
+    let Tree = lib.ContextTree(
+      {},
+      {
+        key: 'root',
+        children: [
+          {
+            key: 'filter',
+          },
+          {
+            key: 'results',
+          },
+        ],
+      }
+    )
     try {
       await Tree.mutate(['root', 'filter'], {
         data: {
@@ -261,7 +264,7 @@ describe('lib', () => {
   it('should work', async () => {
     let service = sinon.spy(mockService())
     let Tree = lib.ContextTree(
-      {service},
+      { service },
       {
         key: 'root',
         join: 'and',
@@ -400,10 +403,13 @@ describe('lib', () => {
     let spy = sinon.spy()
     // Just call the spy for `results`
     let onResult = path => _.isEqual(path, ['root', 'results']) && spy()
-    let Tree = lib.ContextTree({
-      service,
-      onResult,
-    }, tree)
+    let Tree = lib.ContextTree(
+      {
+        service,
+        onResult,
+      },
+      tree
+    )
     let step1 = Tree.mutate(['root', 'filter'], {
       data: {
         values: ['a'],
@@ -428,18 +434,20 @@ describe('lib', () => {
       [_.isEqual(['root', 'filter']), filterUpdated],
     ])
 
-    let Tree = lib.ContextTree({
-      types: {
-        testType: {
-          reactors: {
-            value: 'others',
-            optionType: 'only',
+    let Tree = lib.ContextTree(
+      {
+        types: {
+          testType: {
+            reactors: {
+              value: 'others',
+              optionType: 'only',
+            },
           },
         },
+        service,
+        onResult,
       },
-      service,
-      onResult,
-    }, {
+      {
         key: 'root',
         join: 'and',
         children: [
@@ -453,7 +461,6 @@ describe('lib', () => {
           },
         ],
       }
-      
     )
     await Tree.mutate(['root', 'filter'], {
       value: 'a',
