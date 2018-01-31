@@ -1,3 +1,6 @@
+# 0.2.1
+* Fix snapshots
+
 # 0.2.0
 * Support contexture-client 2.0
 * Add source maps
