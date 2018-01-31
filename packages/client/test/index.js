@@ -424,40 +424,45 @@ describe('lib', () => {
     let filterUpdated = sinon.spy()
     let onResult = _.cond([
       [_.isEqual(['root', 'results']), resultsUpdated],
-      [_.isEqual(['root', 'filter']), filterUpdated]
+      [_.isEqual(['root', 'filter']), filterUpdated],
     ])
-    
-    let Tree = lib.ContextTree({
-      key: 'root',
-      join: 'and',
-      children: [
-        {
-          key: 'filter',
-          type: 'testType',
+
+    let Tree = lib.ContextTree(
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'filter',
+            type: 'testType',
+          },
+          {
+            key: 'results',
+            type: 'results',
+          },
+        ],
+      },
+      service,
+      {
+        testType: {
+          reactors: {
+            value: 'others',
+            optionType: 'only',
+          },
         },
-        {
-          key: 'results',
-          type: 'results'
-        },
-      ],
-    }, service, {
-      testType: {
-        reactors: {
-          value: 'others',
-          optionType: 'only'
-        }
+      },
+      {
+        onResult,
       }
-    }, {
-      onResult
-    })
+    )
     await Tree.mutate(['root', 'filter'], {
-      value: 'a'
+      value: 'a',
     })
     expect(service).to.have.callCount(1)
     expect(resultsUpdated).to.have.callCount(1)
     expect(filterUpdated).to.have.callCount(0)
     await Tree.mutate(['root', 'filter'], {
-      optionType: 2
+      optionType: 2,
     })
     expect(service).to.have.callCount(2)
     expect(resultsUpdated).to.have.callCount(1)
