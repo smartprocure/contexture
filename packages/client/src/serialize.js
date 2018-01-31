@@ -20,7 +20,8 @@ export default (tree, { search } = {}) =>
             'paused',
             'missedUpdate',
             'hasValue',
-            ...(search ? [] : ['lastUpdateTime', 'context']),
+            'context',
+            ...(search ? [] : ['lastUpdateTime']),
           ])
         },
         x => {

@@ -5,5 +5,5 @@ export let getTypeProp = _.curry((types, prop, node) =>
   F.cascade([`${node.type}.${prop}`, `default.${prop}`], types)
 )
 export let runTypeFunction = _.curry((types, prop, node) =>
-  getTypeProp(types, prop, node)(node)
+  (getTypeProp(types, prop, node) || _.stubTrue)(node)
 )

@@ -43,7 +43,7 @@ export let ContextTree = (
     debug, //= true
   } = {}
 ) => {
-  let log = x => debug && console.log(x)
+  let log = x => debug && console.info(x)
   let flat = flattenTree(tree)
   let getNode = path => flat[encode(path)]
 
@@ -51,7 +51,7 @@ export let ContextTree = (
   let dispatch = async event => {
     log(`${event.type} event at ${event.path}`)
     await validate(runTypeFunction(types, 'validate'), extend, tree)
-    bubbleUp(processEvent(event, getNode), event.path)
+    bubbleUp(processEvent(event, getNode, types), event.path)
     await triggerUpdate()
   }
   let triggerUpdate = F.debounceAsync(debounce, async () => {
@@ -68,7 +68,7 @@ export let ContextTree = (
       let target = flat[path]
       if (!target) return
       let responseNode = _.pick(['context', 'error'], node)
-      if (!shouldDropUpdate(node, target)) {
+      if (!shouldDropUpdate(node, target) && !_.isEmpty(responseNode)) {
         onResult(decode(path), node, target)
         F.mergeOn(target, responseNode)
         target.updating = false
