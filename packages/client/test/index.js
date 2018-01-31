@@ -1,5 +1,4 @@
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
 import chai from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
