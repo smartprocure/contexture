@@ -1,11 +1,17 @@
+# 1.2.1
+* Fix serialization to never include contexts
+* Fix onResult not to be called if there was no context response
+* Default validation function is now stubTrue
+* Added internal mocks utility
+
 # 1.2.0
-- Drop stale updates
-- Add `onResult` api (mainly for use in test above)
+* Drop stale updates
+* Add `onResult` api (mainly for use in test above)
 
 # 1.1.1
-- Remove unused subscribe API **Note** Normally this would be a breaking change, but it was undocumented.
-- Made mutate a first class dispatchable event to avoid multiple dispatches
-- Separated `defaultTypes` out to `exampleTypes.js`
+* Remove unused subscribe API **Note** Normally this would be a breaking change, but it was undocumented.
+* Made mutate a first class dispatchable event to avoid multiple dispatches
+* Separated `defaultTypes` out to `exampleTypes.js`
 
 # 1.1.0
 
