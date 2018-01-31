@@ -10,10 +10,11 @@ chai.use(sinonChai)
 
 let treeUtils = Tree
 let ContextTreeMobx = (tree, service) =>
-  lib.ContextTree(tree, service, undefined, {
+  lib.ContextTree({
+    service,
     snapshot: toJS,
     extend: extendObservable,
-  })
+  }, tree)
 
 describe('usage with mobx should generally work', () => {
   // TODO: make these generally self contained - some rely on previous test runs
