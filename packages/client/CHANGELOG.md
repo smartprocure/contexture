@@ -1,3 +1,6 @@
+# 1.3.0
+* Add support for custom type specific reactors, eliminating the need for data/config (which the server flattens anyway)
+
 # 1.2.1
 * Fix serialization to never include contexts
 * Fix onResult not to be called if there was no context response
