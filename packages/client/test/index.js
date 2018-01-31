@@ -418,4 +418,49 @@ describe('lib', () => {
     await Promise.all([step1, step2])
     expect(spy).to.have.callCount(1)
   })
+  it('should support custom type reactors', async () => {
+    let service = sinon.spy(mockService({}))
+    let resultsUpdated = sinon.spy()
+    let filterUpdated = sinon.spy()
+    let onResult = _.cond([
+      [_.isEqual(['root', 'results']), resultsUpdated],
+      [_.isEqual(['root', 'filter']), filterUpdated]
+    ])
+    
+    let Tree = lib.ContextTree({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'filter',
+          type: 'testType',
+        },
+        {
+          key: 'results',
+          type: 'results'
+        },
+      ],
+    }, service, {
+      testType: {
+        reactors: {
+          value: 'others',
+          optionType: 'only'
+        }
+      }
+    }, {
+      onResult
+    })
+    await Tree.mutate(['root', 'filter'], {
+      value: 'a'
+    })
+    expect(service).to.have.callCount(1)
+    expect(resultsUpdated).to.have.callCount(1)
+    expect(filterUpdated).to.have.callCount(0)
+    await Tree.mutate(['root', 'filter'], {
+      optionType: 2
+    })
+    expect(service).to.have.callCount(2)
+    expect(resultsUpdated).to.have.callCount(1)
+    expect(filterUpdated).to.have.callCount(1)
+  })
 })
