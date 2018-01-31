@@ -1,3 +1,11 @@
+# 2.0.0
+* Add decoded `path` to each node
+* **Breaking change** Simplified initial api from `(tree, service, types, config)` to moving service and types into config as the first param and currying.
+
+### Migration Guide
+Replace every call like this: `ContextTree(tree, service, types, {...config})`
+with a call like this: `ContextTree({service, types, ...config}, tree)`
+
 # 1.3.0
 * Add support for custom type specific reactors, eliminating the need for data/config (which the server flattens anyway)
 
