@@ -1,4 +1,8 @@
-﻿# 0.1.7
+# 0.2.0
+* Support contexture-client 2.0
+* Add source maps
+
+# 0.1.7
 
 * Fixes after 0.1.6
 * Made the facet component actually work.
