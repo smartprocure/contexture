@@ -68,7 +68,7 @@ export let ContextTree = (
       let target = flat[path]
       if (!target) return
       let responseNode = _.pick(['context', 'error'], node)
-      if (!shouldDropUpdate(node, target)) {
+      if (!shouldDropUpdate(node, target) && !_.isEmpty(responseNode)) {
         onResult(decode(path), node, target)
         F.mergeOn(target, responseNode)
         target.updating = false
