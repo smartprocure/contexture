@@ -20,7 +20,7 @@ describe('lib', () => {
         },
         {
           key: 'results',
-          type: 'results'
+          type: 'results',
         },
       ],
     }
@@ -386,7 +386,7 @@ describe('lib', () => {
         },
         {
           key: 'results',
-          type: 'results'
+          type: 'results',
         },
       ],
     }
