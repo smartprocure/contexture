@@ -19,7 +19,7 @@ export let mockService = ({
   logInput,
   logOutput,
 } = {}) => (dto, lastUpdateTime) => {
-  if (logInput) console.log('dto', JSON.stringify(dto, 0, 2))
+  if (logInput) console.info('dto', JSON.stringify(dto, 0, 2))
   let result = {
     data: Tree.transform(node => {
       let context = mocks[node.type]
@@ -31,7 +31,7 @@ export let mockService = ({
       }
     }, dto),
   }
-  if (logOutput) console.log('result', JSON.stringify(result, 0, 2))
+  if (logOutput) console.info('result', JSON.stringify(result, 0, 2))
   return result
 }
 

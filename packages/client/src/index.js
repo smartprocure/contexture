@@ -43,7 +43,7 @@ export let ContextTree = (
     debug, //= true
   } = {}
 ) => {
-  let log = x => debug && console.log(x)
+  let log = x => debug && console.info(x)
   let flat = flattenTree(tree)
   let getNode = path => flat[encode(path)]
 
