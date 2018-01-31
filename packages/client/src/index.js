@@ -45,6 +45,9 @@ export let ContextTree = _.curry((
 ) => {
   let log = x => debug && console.info(x)
   let flat = flattenTree(tree)
+  F.eachIndexed((node, path) => {
+    node.path = decode(path)
+  }, flat)
   let getNode = path => flat[encode(path)]
 
   // Event Handling
