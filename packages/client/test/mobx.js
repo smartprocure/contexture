@@ -86,9 +86,6 @@ describe('usage with mobx should generally work', () => {
         {
           key: 'results',
           lastUpdateTime: now,
-          context: {
-            results: null,
-          },
         },
       ],
     })
