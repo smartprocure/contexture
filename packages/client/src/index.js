@@ -30,7 +30,8 @@ let shouldDropUpdate = (result, target) =>
 
 export let ContextTree = _.curry(({ service = () => {
     throw new Error('No update service provided!')
-  }, types = exampleTypes, debounce = 1, onResult = _.noop, allowBlank, debug, extend = F.extendOn, snapshot = _.cloneDeep }, tree) => { //= true
+  }, types = exampleTypes, debounce = 1, onResult = _.noop, allowBlank, debug, extend = F.extendOn, snapshot = _.cloneDeep }, tree) => {
+  //= true
   let log = x => debug && console.info(x)
   let flat = flattenTree(tree)
   F.eachIndexed((node, path) => {
