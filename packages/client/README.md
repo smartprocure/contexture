@@ -3,7 +3,6 @@ The Contexture (aka ContextTree) Client
 
 [![npm version](https://badge.fury.io/js/contexture-client.svg)](https://badge.fury.io/js/contexture-client)
 [![CircleCI](https://circleci.com/gh/smartprocure/contexture-client.svg?style=svg)](https://circleci.com/gh/smartprocure/contexture-client)
-[![Greenkeeper badge](https://badges.greenkeeper.io/smartprocure/contexture-client.svg)](https://greenkeeper.io/)
 
 ## Overview
 This library manages the state of a contexture tree to automatically run only the optimal minimal amount of searches possible.
