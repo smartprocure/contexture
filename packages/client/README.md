@@ -146,7 +146,7 @@ For those familiar with the previous client implementation (`DataContext`/`Conte
   - Prepare for update - on each node that's markedForUpdate:
     - Set the lastUpdateTime to now (to enable dropping stale results later in this process)
     - Set `updating` to true
-  - Serialize the search, omitting all temporary state except lastUpdateTime (which the sever will effectively echo back)
+  - Serialize the search, omitting all temporary state except lastUpdateTime (which the sever will effectively echo back) and deleting nodes that are filter only with no value
   - Execute an actual contexture search
   - For each node in the response:
     - If the path isn't found in the current tree, ignore it
