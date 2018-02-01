@@ -86,6 +86,22 @@ This is the general structure:
 }
 ```
 
+When picking field reactors, you should use the `others` reactor for things that are used for filtering (formerly `data` properties), and `self` for things that are only used to determine that node's context result (formerly `config` properties).
+
+**NOTE** There are a few reserved words you can't use for type properties:
+- markedForUpdate
+- path
+- updating
+- paused
+- missedUpdate
+- hasValue
+- lastUpdateTime
+- context
+- data*
+- config*
+
+Data and config are special in that you can put properties inside them, and they will automatically have `others` or a `self` reactor, respectively.
+
 ### Run Time
 The following methods are exposed on an instantiated client
 
