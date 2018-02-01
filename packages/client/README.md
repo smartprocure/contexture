@@ -138,7 +138,7 @@ For those familiar with the previous client implementation (`DataContext`/`Conte
     - Determine affected nodes by calling the reactor for the current event type
     - Mark each affected node for update, or if it is currently paused, mark that it missed updates
   - Trigger an update (which is debounced so it does not run right away)
-- When the debounce elapses an update is triggered:
+- When the debounce elapses, an update is triggered:
   - Check if the update should be blocked
     - There may be no affected nodes
     - Some nodes might have erros on validation
@@ -160,3 +160,7 @@ For those familiar with the previous client implementation (`DataContext`/`Conte
 The client maintains a flat tree in addition to the actual tree, which is an object mapped using `flattenTree` from `futil-js`.
 The keys are the array paths encoded as a string, currently using a slashEncoder.
 This allows path lookups to perform in constant time at `O(1)`, drastically speeds up some of the internal tree operations.
+The paths are also stamped on individual nodes for convenience as performing an action on a node requires knowing its path.
+
+### Initialization
+On instantiation, the client creates a flat tree representation of the tree and stamps the paths on the nodes.
