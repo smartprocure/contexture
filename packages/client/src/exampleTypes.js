@@ -22,8 +22,8 @@ export default {
     reactors: {
       values: 'others',
       mode: 'others',
-      size: 'only',
-      filter: 'only',
+      size: 'self',
+      filter: 'self',
     },
     // validate: x => x.data.values,
     // toString: ({data: {values, mode}}) =>
