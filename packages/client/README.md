@@ -33,7 +33,7 @@ You can think of the client as a pub/sub system with prebuilt subscribers that c
 - Stopping blank searches and eliminating blank nodes (nodes without values)
 - Per Node Loading Indicators
 - Intelligent Search Debouncing (global debounce and optional per node pausing until results come back)
-- Dropping intermediate responses (implementation currently missing)
+- Dropping intermediate (stale) responses
 - Error handling
 
 
