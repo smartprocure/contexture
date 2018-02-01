@@ -8,11 +8,7 @@ The Contexture (aka ContextTree) Client
 ## Overview
 This library manages the state of a contexture tree to automatically run only the optimal minimal amount of searches possible.
 
-The general flow looks like this
-
-- Instantiate a client with a tree (and some config)
-- `dispatch` events that the client intelligently reacts to and runs searches if needed
-- To keep it easy, the client also exposes top level `actions` that dispatches one or more events
+In general, you perform `actions` which `dispatch` one or more events to an instantiated client, and it reacts by intelligently running searches as needed.
 
 ### Helpful Mental Models
 To help people grok the purpose of the this library, this section attempts to explain in terms of mental models that developers are likely to have seen before.
@@ -98,7 +94,7 @@ The following methods are exposed on an instantiated client
 | add | `async (path, newNode) -> await searchCompleted` | Adds a node to the tree as a child of the specified path. You can await this for when updates settle and relevant searches are completed. |
 | remove | `async path -> await searchCompleted` | Removes a node at the specified path. You can await this for when updates settle and relevant searches are completed. |
 | mutate | `async (path, deltas) -> await searchCompleted` | Mutates the node at the given path with the new values. You can await this for when updates settle and relevant searches are completed. |
-| dispatch | `async event -> await searchCompleted` | The core method of interaction. Events are dispatched by the user, reacted to by the system, and searches are automatically run as needed. You can await this for when updates settle and relevant searches are completed. |
+| dispatch | `async event -> await searchCompleted` | A lower level, core method of interaction (called automatically by the actions above). You can await this for when updates settle and relevant searches are completed. |
 | getNode | `[path] -> node` | Lookup a node by a path (array of keys). |
 | serialize | `() => tree` | Returns a snapshot of the tree without any of the temporary state like updating flags. |
 | tree | tree | A reference to the internal tree. If you mutate this, you should dispatch an appropriate event. |
