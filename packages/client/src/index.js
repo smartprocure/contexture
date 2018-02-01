@@ -32,18 +32,9 @@ let stampPaths = F.eachIndexed((node, path) => {
   node.path = decode(path)
 })
 
-export let ContextTree = _.curry(({
-  service = () => {
+export let ContextTree = _.curry(({ service = () => {
     throw new Error('No update service provided!')
-  },
-  types = exampleTypes,
-  debounce = 1,
-  onResult = _.noop,
-  allowBlank,
-  debug,
-  extend = F.extendOn,
-  snapshot = _.cloneDeep
-}, tree) => {
+  }, types = exampleTypes, debounce = 1, onResult = _.noop, allowBlank, debug, extend = F.extendOn, snapshot = _.cloneDeep }, tree) => {
   //= true
   let log = x => debug && console.info(x)
   let flat = flattenTree(tree)
