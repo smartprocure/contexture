@@ -1,3 +1,7 @@
+# 2.0.2
+* Rename `only` reactor to `self`
+* Small internal tweaks and documentation updates
+
 # 2.0.1
 * First pass at some real documentation
 

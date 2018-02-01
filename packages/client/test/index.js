@@ -440,7 +440,7 @@ describe('lib', () => {
           testType: {
             reactors: {
               value: 'others',
-              optionType: 'only',
+              optionType: 'self',
             },
           },
         },
