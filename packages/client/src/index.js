@@ -35,56 +35,61 @@ let stampPaths = F.eachIndexed((node, path) => {
 let defaultService = () => {
   throw new Error('No update service provided!')
 }
-export let ContextTree = _.curry(({
-  service = defaultService,
-  types = exampleTypes,
-  debounce = 1,
-  onResult = _.noop,
-  allowBlank,
-  debug,
-  extend = F.extendOn,
-  snapshot = _.cloneDeep
-}, tree) => {
-  let log = x => debug && console.info(x)
-  let flat = flattenTree(tree)
-  stampPaths(flat)
-  let getNode = path => flat[encode(path)]
+export let ContextTree = _.curry(
+  (
+    {
+      service = defaultService,
+      types = exampleTypes,
+      debounce = 1,
+      onResult = _.noop,
+      allowBlank,
+      debug,
+      extend = F.extendOn,
+      snapshot = _.cloneDeep,
+    },
+    tree
+  ) => {
+    let log = x => debug && console.info(x)
+    let flat = flattenTree(tree)
+    stampPaths(flat)
+    let getNode = path => flat[encode(path)]
 
-  // Event Handling
-  let dispatch = async event => {
-    log(`${event.type} event at ${event.path}`)
-    await validate(runTypeFunction(types, 'validate'), extend, tree)
-    bubbleUp(processEvent(event, getNode, types), event.path)
-    await triggerUpdate()
-  }
-  let triggerUpdate = F.debounceAsync(debounce, async () => {
-    if (shouldBlockUpdate(flat, tree.allowBlank || allowBlank))
-      return log('Blocked Search')
-    let now = new Date().getTime()
-    markLastUpdate(now)(tree)
-    let dto = serialize(snapshot(tree), { search: true })
-    prepForUpdate(tree)
-    processResponse(await service(dto, now))
-  })
-  let processResponse = ({ data, error }) => {
-    F.eachIndexed((node, path) => {
-      let target = flat[path]
-      let responseNode = _.pick(['context', 'error'], node)
-      if (target && !_.isEmpty(responseNode) && !isStale(node, target)) {
-        onResult(decode(path), node, target)
-        F.mergeOn(target, responseNode)
-        target.updating = false
-      }
-    }, flattenTree(data))
-    if (error) tree.error = error
-  }
+    // Event Handling
+    let dispatch = async event => {
+      log(`${event.type} event at ${event.path}`)
+      await validate(runTypeFunction(types, 'validate'), extend, tree)
+      bubbleUp(processEvent(event, getNode, types), event.path)
+      await triggerUpdate()
+    }
+    let triggerUpdate = F.debounceAsync(debounce, async () => {
+      if (shouldBlockUpdate(flat, tree.allowBlank || allowBlank))
+        return log('Blocked Search')
+      let now = new Date().getTime()
+      markLastUpdate(now)(tree)
+      let dto = serialize(snapshot(tree), { search: true })
+      prepForUpdate(tree)
+      processResponse(await service(dto, now))
+    })
+    let processResponse = ({ data, error }) => {
+      F.eachIndexed((node, path) => {
+        let target = flat[path]
+        let responseNode = _.pick(['context', 'error'], node)
+        if (target && !_.isEmpty(responseNode) && !isStale(node, target)) {
+          onResult(decode(path), node, target)
+          F.mergeOn(target, responseNode)
+          target.updating = false
+        }
+      }, flattenTree(data))
+      if (error) tree.error = error
+    }
 
-  return {
-    ...actions({ getNode, flat, dispatch, snapshot, extend }),
-    tree,
-    getNode,
-    dispatch,
-    serialize: () => serialize(snapshot(tree), {}),
+    return {
+      ...actions({ getNode, flat, dispatch, snapshot, extend }),
+      tree,
+      getNode,
+      dispatch,
+      serialize: () => serialize(snapshot(tree), {}),
+    }
   }
-})
+)
 export default ContextTree
