@@ -23,20 +23,31 @@ let shouldBlockUpdate = (flat, allowsBlank) => {
   return hasErrors || noUpdates || (!allowsBlank && allBlank)
 }
 
-let shouldDropUpdate = (result, target) =>
+let isStale = (result, target) =>
   target.lastUpdateTime &&
   result.lastUpdateTime &&
   target.lastUpdateTime > result.lastUpdateTime
 
-export let ContextTree = _.curry(({ service = () => {
+let stampPaths = F.eachIndexed((node, path) => {
+  node.path = decode(path)
+})
+
+export let ContextTree = _.curry(({
+  service = () => {
     throw new Error('No update service provided!')
-  }, types = exampleTypes, debounce = 1, onResult = _.noop, allowBlank, debug, extend = F.extendOn, snapshot = _.cloneDeep }, tree) => {
+  },
+  types = exampleTypes,
+  debounce = 1,
+  onResult = _.noop,
+  allowBlank,
+  debug,
+  extend = F.extendOn,
+  snapshot = _.cloneDeep
+}, tree) => {
   //= true
   let log = x => debug && console.info(x)
   let flat = flattenTree(tree)
-  F.eachIndexed((node, path) => {
-    node.path = decode(path)
-  }, flat)
+  stampPaths(flat)
   let getNode = path => flat[encode(path)]
 
   // Event Handling
@@ -58,9 +69,8 @@ export let ContextTree = _.curry(({ service = () => {
   let processResponse = ({ data, error }) => {
     F.eachIndexed((node, path) => {
       let target = flat[path]
-      if (!target) return
       let responseNode = _.pick(['context', 'error'], node)
-      if (!shouldDropUpdate(node, target) && !_.isEmpty(responseNode)) {
+      if (target && !_.isEmpty(responseNode) && !isStale(node, target)) {
         onResult(decode(path), node, target)
         F.mergeOn(target, responseNode)
         target.updating = false
