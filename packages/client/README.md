@@ -110,7 +110,31 @@ For those familiar with the previous client implementation (`DataContext`/`Conte
 - Redux-y API
 
 ## Implementation Details
+:construction: _More Details Coming Soon._ :construction:
 
 ### Process Algorithm
-:construction: _Coming Soon._ :construction:
 
+- An action method is called at the top level which:
+  - Interally mutates the tree
+  - Makes one or more calls to `dispatch` with relevant event data
+- For each dispatched event:
+  - Validate the entire tree (an async operation)
+  - Bubble up the tree from the affected out to the root, and for each node in the path:
+    - Determine affected nodes by calling the reactor for the current event types
+    - Mark each affected node for update, or if it is currently paused, mark that it missed updates
+  - Trigger an update (which is debounced so it does not run right away)
+- When the debounce elapses an an update is triggered:
+  - Check if the update should be blocked
+    - There may be no affected nodes
+    - Some nodes might have erros on validation
+    - There may be no nodes that have values and the config doesn't allow blank searches
+  - Prepare for update - for each node that's markedForUpdate:
+    - Set the lastUpdateTime to now (to enable dropping stale results later in this process)
+    - Set `updating` to true
+  - Serialize the search, omitting all temporary state except lastUpdateTime (which the sever will effectively echo back)
+  - Execute an actual search
+  - For each node in the response:
+    - If the path isn't found in the current tree, ignore it
+    - If the response is empty, ignore it
+    - If the response has a lastUpdateTime earlier than the node in the current tree, ignore it (because it's stale)
+    - If not ignoring the update, mutate the node with the result and set `updating` to false.
