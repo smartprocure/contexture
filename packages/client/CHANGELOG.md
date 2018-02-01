@@ -1,3 +1,6 @@
+# 2.0.1
+* First pass at some real documentation
+
 # 2.0.0
 * Add decoded `path` to each node
 * **Breaking change** Simplified initial api from `(tree, service, types, config)` to moving service and types into config as the first param and currying.
