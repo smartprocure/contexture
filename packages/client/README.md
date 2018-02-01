@@ -1,5 +1,6 @@
-#contexture-client
+# contexture-client
 The Contexture (aka ContextTree) Client
+
 [![npm version](https://badge.fury.io/js/contexture-client.svg)](https://badge.fury.io/js/contexture-client)
 [![CircleCI](https://circleci.com/gh/smartprocure/contexture-client.svg?style=svg)](https://circleci.com/gh/smartprocure/contexture-client)
 [![Greenkeeper badge](https://badges.greenkeeper.io/smartprocure/contexture-client.svg)](https://greenkeeper.io/)
@@ -115,5 +116,5 @@ For those familiar with the previous client implementation (`DataContext`/`Conte
 ## Implementation Details
 
 ### Process Algorithm
-_Coming Soon._
+:construction: _Coming Soon._ :construction:
 
