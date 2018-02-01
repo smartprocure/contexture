@@ -14,14 +14,14 @@ let hadValue = previous =>
 let reactors = {
   others: (parent, node) =>
     parent.join === 'or' ? [] : _.difference(parent.children, [node]),
-  only: (parent, node) => [node],
+  self: (parent, node) => [node],
   all: parent => parent.children,
   standardChange(parent, node, { previous }) {
     let needUpdate = hasContext(node)
     let affectsOthers = hadValue(node) || hadValue(previous)
     let reactor
     if (needUpdate) {
-      reactor = reactors.only
+      reactor = reactors.self
     } else if (affectsOthers) {
       reactor = reactors.others
     } else if (affectsOthers && needUpdate) {
@@ -34,7 +34,7 @@ let reactors = {
 export let StandardReactors = {
   refresh: reactors.all,
   data: reactors.others,
-  config: reactors.only,
+  config: reactors.self,
   join(parent, node, { previous }) {
     let childrenWithValues = _.filter(hadValue, node.children)
     let joinInverted = node.join === 'not' || previous.join === 'not'
@@ -49,7 +49,7 @@ export let StandardReactors = {
     if (!paused && node.missedUpdate) {
       // Reactor probably shouldn't mutate but this needs to clear somewhere :/
       node.missedUpdate = false
-      return reactors.only(...arguments)
+      return reactors.self(...arguments)
     }
   },
   // ported from main app ¯\_(ツ)_/¯
