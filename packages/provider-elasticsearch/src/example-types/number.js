@@ -16,18 +16,18 @@ module.exports = {
     range: {
       [context.field]: _.pickBy(_.isNumber, {
         gte: boundaryFilter(context.min),
-        lte: boundaryFilter(context.max)
-      })
-    }
+        lte: boundaryFilter(context.max),
+      }),
+    },
   }),
-  async result({field, min, max, zoomIn}, search) {
+  async result({ field, min, max, zoomIn }, search) {
     let rangeFilter = {
       range: {
         [field]: _.pickBy(_.isNumber, {
           gte: boundaryFilter(min),
-          lte: boundaryFilter(max)
-        })
-      }
+          lte: boundaryFilter(max),
+        }),
+      },
     }
 
     let baseStatistical = {
@@ -35,9 +35,9 @@ module.exports = {
         extended_stats: {
           field,
           missing: 0,
-          sigma: 1
-        }
-      }
+          sigma: 1,
+        },
+      },
     }
 
     let statisticalResult
@@ -47,13 +47,13 @@ module.exports = {
         aggs: {
           range_filter: {
             filter: rangeFilter,
-            aggs: baseStatistical
-          }
-        }
+            aggs: baseStatistical,
+          },
+        },
       })
     } else {
       statisticalResult = await search({
-        aggs: baseStatistical
+        aggs: baseStatistical,
       })
     }
 
@@ -64,20 +64,20 @@ module.exports = {
             range: {
               [field]: _.pickBy(_.isNumber, {
                 gte: boundaryFilter(min),
-                lte: boundaryFilter(max)
-              })
-            }
+                lte: boundaryFilter(max),
+              }),
+            },
           },
           aggs: {
             all_percentiles: {
               percentiles: {
                 field,
-                percents: [0, 0.5, 99.5, 100]
-              }
-            }
-          }
-        }
-      }
+                percents: [0, 0.5, 99.5, 100],
+              },
+            },
+          },
+        },
+      },
     })
 
     let percentiles = _.get(
@@ -98,9 +98,9 @@ module.exports = {
           histogram: {
             field,
             interval,
-            min_doc_count: 0
-          }
-        }
+            min_doc_count: 0,
+          },
+        },
       }
 
       let histogramResult
@@ -109,20 +109,20 @@ module.exports = {
           aggs: {
             range_filter: {
               filter: rangeFilter,
-              aggs: histogramBase
-            }
-          }
+              aggs: histogramBase,
+            },
+          },
         })
       } else {
         histogramResult = await search({
-          aggs: histogramBase
+          aggs: histogramBase,
         })
       }
 
       histogram = _.map(
         entry => ({
           value: Math.round(entry.key),
-          count: entry.doc_count
+          count: entry.doc_count,
         }),
         zoomIn
           ? _.get('aggregations.range_filter.values.buckets', histogramResult)
@@ -135,8 +135,8 @@ module.exports = {
         interval,
         statistical,
         histogram,
-        percentiles
-      }
+        percentiles,
+      },
     }
-  }
+  },
 }
