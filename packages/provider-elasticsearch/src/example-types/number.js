@@ -21,8 +21,8 @@ let rangeFilter = (field, min, max) => ({
 
 module.exports = {
   hasValue: context => _.isNumber(context.min) || _.isNumber(context.max),
-  filter: ({field, min, max}) => rangeFilter(field, min, max),
-  async result({field, min, max}, search) {
+  filter: ({ field, min, max }) => rangeFilter(field, min, max),
+  async result({ field, min, max }, search) {
     let statisticalResult = await search({
       aggs: {
         range_filter: {
