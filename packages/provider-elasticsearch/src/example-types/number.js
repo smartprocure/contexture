@@ -10,41 +10,68 @@ let boundaryFilter = value => {
   return _.isNaN(_.toNumber(value)) ? null : _.toNumber(value)
 }
 
+let rangeFilter = (field, min, max) => ({
+  range: {
+    [field]: _.pickBy(_.isNumber, {
+      gte: boundaryFilter(min),
+      lte: boundaryFilter(max),
+    }),
+  },
+})
+
 module.exports = {
   hasValue: context => _.isNumber(context.min) || _.isNumber(context.max),
-  filter: context => ({
-    range: {
-      [context.field]: _.pickBy(_.isNumber, {
-        gte: boundaryFilter(context.min),
-        lte: boundaryFilter(context.max),
-      }),
-    },
-  }),
-  async result({ field }, search) {
-    let result = await search({
+  filter: ({ field, min, max }) => rangeFilter(field, min, max),
+  async result({ field, min, max }, search) {
+    let statisticalResult = await search({
       aggs: {
-        statistical: {
-          stats: {
-            field,
-            missing: 0,
+        range_filter: {
+          filter: rangeFilter(field, min, max),
+          aggs: {
+            statistical: {
+              extended_stats: {
+                field,
+                missing: 0,
+                sigma: 1,
+              },
+            },
+            all_percentiles: {
+              percentiles: {
+                field,
+                percents: [0, 0.5, 99.5, 100],
+              },
+            },
           },
         },
       },
     })
 
-    let statistical = _.get('aggregations.statistical', result)
+    let percentiles = _.get(
+      'aggregations.range_filter.all_percentiles.values',
+      statisticalResult
+    )
+    let statistical = _.get(
+      'aggregations.range_filter.statistical',
+      statisticalResult
+    )
+
     let interval =
-      Math.round(Math.abs(statistical.max - statistical.min) / 25) || 1
+      Math.round(Math.abs(statistical.max - statistical.min) / 40) || 1
     let histogram = []
 
     if (interval) {
-      let valuesResult = await search({
+      let histogramResult = await search({
         aggs: {
-          values: {
-            histogram: {
-              field,
-              interval,
-              min_doc_count: 0,
+          range_filter: {
+            filter: rangeFilter(field, min, max),
+            aggs: {
+              values: {
+                histogram: {
+                  field,
+                  interval,
+                  min_doc_count: 0,
+                },
+              },
             },
           },
         },
@@ -55,7 +82,7 @@ module.exports = {
           value: Math.round(entry.key),
           count: entry.doc_count,
         }),
-        _.get('aggregations.values.buckets', valuesResult)
+        _.get('aggregations.range_filter.values.buckets', histogramResult)
       )
     }
 
@@ -64,6 +91,7 @@ module.exports = {
         interval,
         statistical,
         histogram,
+        percentiles,
       },
     }
   },
