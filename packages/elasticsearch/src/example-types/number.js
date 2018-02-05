@@ -26,8 +26,8 @@ module.exports = {
         [field]: _.pickBy(_.isNumber, {
           gte: boundaryFilter(min),
           lte: boundaryFilter(max),
-        })
-      }
+        }),
+      },
     }
 
     let statisticalResult = await search({
@@ -42,7 +42,7 @@ module.exports = {
                 sigma: 1,
               },
             },
-          }
+          },
         },
       },
     })
@@ -55,7 +55,7 @@ module.exports = {
             all_percentiles: {
               percentiles: {
                 field,
-                percents: [0, 0.5, 99.5, 100]
+                percents: [0, 0.5, 99.5, 100],
               },
             },
           },
@@ -63,8 +63,14 @@ module.exports = {
       },
     })
 
-    let percentiles = _.get('aggregations.range_filter.all_percentiles.values', percentilesResult)
-    let statistical = _.get('aggregations.range_filter.statistical', statisticalResult)
+    let percentiles = _.get(
+      'aggregations.range_filter.all_percentiles.values',
+      percentilesResult
+    )
+    let statistical = _.get(
+      'aggregations.range_filter.statistical',
+      statisticalResult
+    )
 
     let interval =
       Math.round(Math.abs(statistical.max - statistical.min) / 40) || 1
@@ -83,7 +89,7 @@ module.exports = {
                   min_doc_count: 0,
                 },
               },
-            }
+            },
           },
         },
       })
