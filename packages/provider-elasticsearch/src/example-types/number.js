@@ -20,59 +20,42 @@ module.exports = {
       }),
     },
   }),
-  async result({ field, min, max, zoomIn }, search) {
+  async result({ field, min, max }, search) {
     let rangeFilter = {
       range: {
         [field]: _.pickBy(_.isNumber, {
           gte: boundaryFilter(min),
           lte: boundaryFilter(max),
-        }),
-      },
+        })
+      }
     }
 
-    let baseStatistical = {
-      statistical: {
-        extended_stats: {
-          field,
-          missing: 0,
-          sigma: 1,
+    let statisticalResult = await search({
+      aggs: {
+        range_filter: {
+          filter: rangeFilter,
+          aggs: {
+            statistical: {
+              extended_stats: {
+                field,
+                missing: 0,
+                sigma: 1,
+              },
+            },
+          }
         },
       },
-    }
-
-    let statisticalResult
-
-    if (zoomIn) {
-      statisticalResult = await search({
-        aggs: {
-          range_filter: {
-            filter: rangeFilter,
-            aggs: baseStatistical,
-          },
-        },
-      })
-    } else {
-      statisticalResult = await search({
-        aggs: baseStatistical,
-      })
-    }
+    })
 
     let percentilesResult = await search({
       aggs: {
         range_filter: {
-          filter: {
-            range: {
-              [field]: _.pickBy(_.isNumber, {
-                gte: boundaryFilter(min),
-                lte: boundaryFilter(max),
-              }),
-            },
-          },
+          filter: rangeFilter,
           aggs: {
             all_percentiles: {
               percentiles: {
                 field,
-                percents: [0, 0.5, 99.5, 100],
+                percents: [0, 0.5, 99.5, 100]
               },
             },
           },
@@ -80,53 +63,37 @@ module.exports = {
       },
     })
 
-    let percentiles = _.get(
-      'aggregations.range_filter.all_percentiles.values',
-      percentilesResult
-    )
-    let statistical = zoomIn
-      ? _.get('aggregations.range_filter.statistical', statisticalResult)
-      : _.get('aggregations.statistical', statisticalResult)
+    let percentiles = _.get('aggregations.range_filter.all_percentiles.values', percentilesResult)
+    let statistical = _.get('aggregations.range_filter.statistical', statisticalResult)
 
     let interval =
       Math.round(Math.abs(statistical.max - statistical.min) / 40) || 1
     let histogram = []
 
     if (interval) {
-      let histogramBase = {
-        values: {
-          histogram: {
-            field,
-            interval,
-            min_doc_count: 0,
+      let histogramResult = await search({
+        aggs: {
+          range_filter: {
+            filter: rangeFilter,
+            aggs: {
+              values: {
+                histogram: {
+                  field,
+                  interval,
+                  min_doc_count: 0,
+                },
+              },
+            }
           },
         },
-      }
-
-      let histogramResult
-      if (zoomIn) {
-        histogramResult = await search({
-          aggs: {
-            range_filter: {
-              filter: rangeFilter,
-              aggs: histogramBase,
-            },
-          },
-        })
-      } else {
-        histogramResult = await search({
-          aggs: histogramBase,
-        })
-      }
+      })
 
       histogram = _.map(
         entry => ({
           value: Math.round(entry.key),
           count: entry.doc_count,
         }),
-        zoomIn
-          ? _.get('aggregations.range_filter.values.buckets', histogramResult)
-          : _.get('aggregations.values.buckets', histogramResult)
+        _.get('aggregations.range_filter.values.buckets', histogramResult)
       )
     }
 
