@@ -15,14 +15,14 @@ let rangeFilter = (field, min, max) => ({
     [field]: _.pickBy(_.isNumber, {
       gte: boundaryFilter(min),
       lte: boundaryFilter(max),
-    })
-  }
+    }),
+  },
 })
 
 module.exports = {
   hasValue: context => _.isNumber(context.min) || _.isNumber(context.max),
   filter: ({field, min, max}) => rangeFilter(field, min, max),
-  async result({ field, min, max }, search) {
+  async result({field, min, max}, search) {
     let statisticalResult = await search({
       aggs: {
         range_filter: {
@@ -38,16 +38,22 @@ module.exports = {
             all_percentiles: {
               percentiles: {
                 field,
-                percents: [0, 0.5, 99.5, 100]
+                percents: [0, 0.5, 99.5, 100],
               },
             },
-          }
+          },
         },
       },
     })
 
-    let percentiles = _.get('aggregations.range_filter.all_percentiles.values', statisticalResult)
-    let statistical = _.get('aggregations.range_filter.statistical', statisticalResult)
+    let percentiles = _.get(
+      'aggregations.range_filter.all_percentiles.values',
+      statisticalResult
+    )
+    let statistical = _.get(
+      'aggregations.range_filter.statistical',
+      statisticalResult
+    )
 
     let interval =
       Math.round(Math.abs(statistical.max - statistical.min) / 40) || 1
@@ -66,7 +72,7 @@ module.exports = {
                   min_doc_count: 0,
                 },
               },
-            }
+            },
           },
         },
       })
