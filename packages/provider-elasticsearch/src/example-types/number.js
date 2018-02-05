@@ -10,30 +10,23 @@ let boundaryFilter = value => {
   return _.isNaN(_.toNumber(value)) ? null : _.toNumber(value)
 }
 
+let rangeFilter = (field, min, max) => ({
+  range: {
+    [field]: _.pickBy(_.isNumber, {
+      gte: boundaryFilter(min),
+      lte: boundaryFilter(max),
+    })
+  }
+})
+
 module.exports = {
   hasValue: context => _.isNumber(context.min) || _.isNumber(context.max),
-  filter: context => ({
-    range: {
-      [context.field]: _.pickBy(_.isNumber, {
-        gte: boundaryFilter(context.min),
-        lte: boundaryFilter(context.max),
-      }),
-    },
-  }),
+  filter: ({field, min, max}) => rangeFilter(field, min, max),
   async result({ field, min, max }, search) {
-    let rangeFilter = {
-      range: {
-        [field]: _.pickBy(_.isNumber, {
-          gte: boundaryFilter(min),
-          lte: boundaryFilter(max),
-        })
-      }
-    }
-
     let statisticalResult = await search({
       aggs: {
         range_filter: {
-          filter: rangeFilter,
+          filter: rangeFilter(field, min, max),
           aggs: {
             statistical: {
               extended_stats: {
@@ -42,28 +35,18 @@ module.exports = {
                 sigma: 1,
               },
             },
-          }
-        },
-      },
-    })
-
-    let percentilesResult = await search({
-      aggs: {
-        range_filter: {
-          filter: rangeFilter,
-          aggs: {
             all_percentiles: {
               percentiles: {
                 field,
                 percents: [0, 0.5, 99.5, 100]
               },
             },
-          },
+          }
         },
       },
     })
 
-    let percentiles = _.get('aggregations.range_filter.all_percentiles.values', percentilesResult)
+    let percentiles = _.get('aggregations.range_filter.all_percentiles.values', statisticalResult)
     let statistical = _.get('aggregations.range_filter.statistical', statisticalResult)
 
     let interval =
@@ -74,7 +57,7 @@ module.exports = {
       let histogramResult = await search({
         aggs: {
           range_filter: {
-            filter: rangeFilter,
+            filter: rangeFilter(field, min, max),
             aggs: {
               values: {
                 histogram: {
