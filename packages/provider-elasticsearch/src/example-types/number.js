@@ -22,23 +22,23 @@ let rangeFilter = (field, min, max) => ({
 module.exports = {
   hasValue: context => _.isNumber(context.min) || _.isNumber(context.max),
   filter: ({ field, min, max }) => rangeFilter(field, min, max),
-  async result({ field, min, max }, search) {
+  async result({ field, min, max, percentileInterval = 1 }, search) {
     let statisticalResult = await search({
       aggs: {
         range_filter: {
           filter: rangeFilter(field, min, max),
           aggs: {
             statistical: {
-              extended_stats: {
+              stats: {
                 field,
                 missing: 0,
-                sigma: 1,
               },
             },
             all_percentiles: {
               percentiles: {
                 field,
-                percents: [0, 0.5, 99.5, 100],
+                percents: [0, percentileInterval, 100 - percentileInterval, 100],
+                keyed: false
               },
             },
           },
@@ -46,10 +46,16 @@ module.exports = {
       },
     })
 
-    let percentiles = _.get(
-      'aggregations.range_filter.all_percentiles.values',
+    let percentiles = _.reduce((acc, { key, value }) => {
+      key === 0 && (acc.rangeMin = value)
+      key === 100 && (acc.rangeMax = value)
+      key === percentileInterval && (acc.intervalMin = value)
+      key === (100 - percentileInterval) && (acc.intervalMax = value)
+      return acc
+    }, {}, _.get('aggregations.range_filter.all_percentiles.values',
       statisticalResult
-    )
+    ))
+
     let statistical = _.get(
       'aggregations.range_filter.statistical',
       statisticalResult
