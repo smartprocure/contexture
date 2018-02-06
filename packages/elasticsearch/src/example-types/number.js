@@ -37,8 +37,13 @@ module.exports = {
             all_percentiles: {
               percentiles: {
                 field,
-                percents: [0, percentileInterval, 100 - percentileInterval, 100],
-                keyed: false
+                percents: [
+                  0,
+                  percentileInterval,
+                  100 - percentileInterval,
+                  100,
+                ],
+                keyed: false,
               },
             },
           },
@@ -46,15 +51,20 @@ module.exports = {
       },
     })
 
-    let percentiles = _.reduce((acc, { key, value }) => {
-      key === 0 && (acc.rangeMin = value)
-      key === 100 && (acc.rangeMax = value)
-      key === percentileInterval && (acc.intervalMin = value)
-      key === (100 - percentileInterval) && (acc.intervalMax = value)
-      return acc
-    }, {}, _.get('aggregations.range_filter.all_percentiles.values',
-      statisticalResult
-    ))
+    let percentiles = _.reduce(
+      (acc, { key, value }) => {
+        key === 0 && (acc.rangeMin = value)
+        key === 100 && (acc.rangeMax = value)
+        key === percentileInterval && (acc.intervalMin = value)
+        key === 100 - percentileInterval && (acc.intervalMax = value)
+        return acc
+      },
+      {},
+      _.get(
+        'aggregations.range_filter.all_percentiles.values',
+        statisticalResult
+      )
+    )
 
     let statistical = _.get(
       'aggregations.range_filter.statistical',
