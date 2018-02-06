@@ -37,7 +37,12 @@ module.exports = {
             all_percentiles: {
               percentiles: {
                 field,
-                percents: [0, percentileInterval, 100 - percentileInterval, 100],
+                percents: [
+                  0,
+                  percentileInterval,
+                  100 - percentileInterval,
+                  100,
+                ],
               },
             },
           },
@@ -45,15 +50,16 @@ module.exports = {
       },
     })
 
-    let percentiles = _.flow(
-      _.mapKeys(Number),
-      mappedResult => ({
-        rangeMin: mappedResult[0],
-        rangeMax: mappedResult[100],
-        intervalMin: mappedResult[percentileInterval],
-        intervalMax: mappedResult[100 - percentileInterval],
-      }))(
-      _.get('aggregations.range_filter.all_percentiles.values', statisticalResult)
+    let percentiles = _.flow(_.mapKeys(Number), mappedResult => ({
+      rangeMin: mappedResult[0],
+      rangeMax: mappedResult[100],
+      intervalMin: mappedResult[percentileInterval],
+      intervalMax: mappedResult[100 - percentileInterval],
+    }))(
+      _.get(
+        'aggregations.range_filter.all_percentiles.values',
+        statisticalResult
+      )
     )
 
     let statistical = _.get(
