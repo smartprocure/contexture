@@ -1,4 +1,4 @@
-let _ = require('lodash/fp')
+const _ = require('lodash/fp')
 
 /*
  1. An empty value as the upper boundary represents infinity.
@@ -22,23 +22,27 @@ let rangeFilter = (field, min, max) => ({
 module.exports = {
   hasValue: context => _.isNumber(context.min) || _.isNumber(context.max),
   filter: ({ field, min, max }) => rangeFilter(field, min, max),
-  async result({ field, min, max }, search) {
+  async result({ field, min, max, percentileInterval = 1 }, search) {
     let statisticalResult = await search({
       aggs: {
         range_filter: {
           filter: rangeFilter(field, min, max),
           aggs: {
             statistical: {
-              extended_stats: {
+              stats: {
                 field,
                 missing: 0,
-                sigma: 1,
               },
             },
             all_percentiles: {
               percentiles: {
                 field,
-                percents: [0, 0.5, 99.5, 100],
+                percents: [
+                  0,
+                  percentileInterval,
+                  100 - percentileInterval,
+                  100,
+                ],
               },
             },
           },
@@ -46,10 +50,18 @@ module.exports = {
       },
     })
 
-    let percentiles = _.get(
-      'aggregations.range_filter.all_percentiles.values',
-      statisticalResult
+    let percentiles = _.flow(_.mapKeys(Number), mappedResult => ({
+      rangeMin: mappedResult[0],
+      rangeMax: mappedResult[100],
+      intervalMin: mappedResult[percentileInterval],
+      intervalMax: mappedResult[100 - percentileInterval],
+    }))(
+      _.get(
+        'aggregations.range_filter.all_percentiles.values',
+        statisticalResult
+      )
     )
+
     let statistical = _.get(
       'aggregations.range_filter.statistical',
       statisticalResult
