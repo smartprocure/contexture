@@ -7,9 +7,11 @@ let joinmap = {
   none: '$nor',
 }
 
+let getValues = x => x.values || [x.value]
+
 module.exports = {
   hasValue: F.cascade(['value', 'values.length']),
-  filter: context => ({
+  filter: context => _.isEmpty(getValues(context)) ? {} : {
     [joinmap[context.join || 'all']]: _.map(
       val => ({
         [context.field]: {
@@ -27,6 +29,6 @@ module.exports = {
       }),
       context.values || [context.value]
     ),
-  }),
+  },
 }
 // query could be the same as text:containsExact
