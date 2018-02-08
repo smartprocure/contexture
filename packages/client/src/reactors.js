@@ -59,7 +59,9 @@ export let StandardReactors = {
     _.flow(
       _.keys,
       // assumes reactors are { field: reactor, ...}
-      _.map(F.aliasIn(_.getOr({}, `${lookup(event.path).type}.reactors`, types))),
+      _.map(
+        F.aliasIn(_.getOr({}, `${lookup(event.path).type}.reactors`, types))
+      ),
       _.uniq,
       _.flatMap(x => Reactor(x)(parent, node, event, types)),
       _.compact,

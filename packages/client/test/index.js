@@ -515,13 +515,15 @@ describe('lib', () => {
           {
             key: 'filterGroup',
             type: 'group',
-            children: [{
-              key: 'filterChild',
-              type: 'testType',
-              data: {
-                value: null,
+            children: [
+              {
+                key: 'filterChild',
+                type: 'testType',
+                data: {
+                  value: null,
+                },
               },
-            }]
+            ],
           },
           {
             key: 'results',
@@ -536,7 +538,7 @@ describe('lib', () => {
     await Tree.mutate(['root', 'filter'], {
       data: {
         value: 'z',
-      }
+      },
     })
     expect(service).to.have.callCount(1)
     expect(resultsUpdated).to.have.callCount(1)
