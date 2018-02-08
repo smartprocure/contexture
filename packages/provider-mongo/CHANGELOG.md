@@ -1,3 +1,6 @@
+# 0.1.6
+- Fixed the text type using F.cascade with more than one parammeter.
+
 # 0.1.5
 - Fixed the contexture version in our peerDependencies.
 
