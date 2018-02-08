@@ -1,3 +1,6 @@
+### 0.6.4
+* Number type no longer wraps results in a results property.
+
 ### 0.6.3
 * Improved number type by providing a configurable interval value for the percentile aggregation.
 ### 0.6.2
