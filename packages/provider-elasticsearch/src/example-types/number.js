@@ -99,12 +99,10 @@ module.exports = {
     }
 
     return {
-      results: {
-        interval,
-        statistical,
-        histogram,
-        percentiles,
-      },
+      interval,
+      statistical,
+      histogram,
+      percentiles,
     }
   },
 }
