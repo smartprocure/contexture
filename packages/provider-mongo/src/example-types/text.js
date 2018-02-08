@@ -7,8 +7,6 @@ let joinmap = {
   none: '$nor',
 }
 
-let getValues = x => x.values || [x.value]
-
 module.exports = {
   hasValue: x => F.cascade(['value', 'values.length'])(x),
   filter: context => ({
