@@ -262,11 +262,13 @@ describe('usage with mobx should generally work', () => {
 
     await Tree.mutate(['root', 'filter'], {
       data: {
-        values: [1, 2, 3]
-      }
+        values: [1, 2, 3],
+      },
     })
     expect(service).to.have.callCount(1)
-    expect(Tree.getNode(['root', 'results']).context.results.slice()).to.deep.equal([
+    expect(
+      Tree.getNode(['root', 'results']).context.results.slice()
+    ).to.deep.equal([
       {
         title: 'Some result',
       },
@@ -274,16 +276,20 @@ describe('usage with mobx should generally work', () => {
         title: 'Some other result',
       },
     ])
-    treeUtils.lookup(['results'], responseData).context.results = [{
-      title: 'New values'
-    }]
+    treeUtils.lookup(['results'], responseData).context.results = [
+      {
+        title: 'New values',
+      },
+    ]
     await Tree.mutate(['root', 'filter'], {
       data: {
-        values: [1, 2, 3, 4]
-      }
+        values: [1, 2, 3, 4],
+      },
     })
     expect(service).to.have.callCount(2)
-    expect(Tree.getNode(['root', 'results']).context.results.slice()).to.deep.equal([
+    expect(
+      Tree.getNode(['root', 'results']).context.results.slice()
+    ).to.deep.equal([
       {
         title: 'New values',
       },
