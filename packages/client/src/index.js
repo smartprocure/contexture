@@ -9,6 +9,8 @@ import { markForUpdate, markLastUpdate, prepForUpdate } from './traversals'
 import { runTypeFunction } from './types'
 import exampleTypes from './exampleTypes'
 
+let mergeWith = _.mergeWith.convert({ immutable: false })
+
 let processEvent = F.flurry(
   getAffectedNodes,
   _.each(n => {
@@ -76,7 +78,7 @@ export let ContextTree = _.curry(
         let responseNode = _.pick(['context', 'error'], node)
         if (target && !_.isEmpty(responseNode) && !isStale(node, target)) {
           onResult(decode(path), node, target)
-          F.mergeOn(target, responseNode)
+          mergeWith((oldValue, newValue) => newValue, target, responseNode)
           target.updating = false
         }
       }, flattenTree(data))
