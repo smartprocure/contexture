@@ -8,7 +8,7 @@ let joinmap = {
 }
 
 module.exports = {
-  hasValue: F.cascade(['value', 'values.length']),
+  hasValue: x => F.cascade(['value', 'values.length'])(x),
   filter: context => ({
     [joinmap[context.join || 'all']]: _.map(
       val => ({
