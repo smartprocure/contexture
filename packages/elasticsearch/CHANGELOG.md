@@ -1,3 +1,6 @@
+### 0.6.5
+* Added documentation for termsStatsHits
+
 ### 0.6.4
 * Number type no longer wraps results in a results property.
 
