@@ -37,6 +37,9 @@ let stampPaths = F.eachIndexed((node, path) => {
 let defaultService = () => {
   throw new Error('No update service provided!')
 }
+
+export exampleTypes
+
 export let ContextTree = _.curry(
   (
     {
