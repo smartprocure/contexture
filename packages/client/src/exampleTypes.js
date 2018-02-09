@@ -28,11 +28,6 @@ export default {
       values: 'others',
     },
   },
-  group: {
-    reactors: {
-      children: 'others',
-    },
-  },
   results: {
     reactors: {
       page: 'self',
