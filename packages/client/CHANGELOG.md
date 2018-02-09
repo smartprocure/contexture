@@ -1,3 +1,8 @@
+﻿# 2.0.3
+* Fixed bug with nested custom reactors.
+* Fixdd bug with the mergeOn used by processResponse that was causing
+  mobx arrays to mix old and new values instead of replacing them.
+
 # 2.0.2
 * Rename `only` reactor to `self`
 * Small internal tweaks and documentation updates
