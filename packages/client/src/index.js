@@ -7,7 +7,7 @@ import actions from './actions'
 import serialize from './serialize'
 import { markForUpdate, markLastUpdate, prepForUpdate } from './traversals'
 import { runTypeFunction } from './types'
-import exampleTypes as _exampleTypes from './exampleTypes'
+import Types from './exampleTypes'
 
 let mergeWith = _.mergeWith.convert({ immutable: false })
 
@@ -38,13 +38,13 @@ let defaultService = () => {
   throw new Error('No update service provided!')
 }
 
-export let exampleTypes = _exampleTypes
+export let exampleTypes = Types
 
 export let ContextTree = _.curry(
   (
     {
       service = defaultService,
-      types = exampleTypes,
+      types = Types,
       debounce = 1,
       onResult = _.noop,
       allowBlank,
