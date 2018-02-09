@@ -35,4 +35,34 @@ export default {
     //     ])
     //     : 'is anything'
   },
+  text: {
+    reactors: {
+      value: 'others',
+    },
+  },
+  facet: {
+    reactors: {
+      values: 'others',
+    },
+  },
+  query: {
+    reactors: {
+      query: 'others',
+    },
+  },
+  mongoId: {
+    reactors: {
+      values: 'others',
+    },
+  },
+  group: {
+    reactors: {
+      children: 'others',
+    },
+  },
+  results: {
+    reactors: {
+      page: 'self',
+    },
+  },
 }
