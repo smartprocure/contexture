@@ -40,29 +40,33 @@ describe('usage with mobx should generally work', () => {
       },
     ],
   })
+  let responseData = {
+    key: 'root',
+    children: [
+      {
+        key: 'results',
+        context: {
+          count: 1,
+          results: [
+            {
+              title: 'Some result',
+            },
+            {
+              title: 'Some other result',
+            },
+          ],
+        },
+        config: {
+          size: 20,
+        },
+      },
+      {
+        key: 'filter',
+      },
+    ],
+  }
   let service = sinon.spy(() => ({
-    data: {
-      key: 'root',
-      children: [
-        {
-          key: 'results',
-          context: {
-            count: 1,
-            results: [
-              {
-                title: 'some result',
-              },
-            ],
-          },
-          config: {
-            size: 20,
-          },
-        },
-        {
-          key: 'filter',
-        },
-      ],
-    },
+    data: responseData,
   }))
 
   let Tree = ContextTreeMobx(tree, service)
@@ -112,7 +116,10 @@ describe('usage with mobx should generally work', () => {
       count: 1,
       results: [
         {
-          title: 'some result',
+          title: 'Some result',
+        },
+        {
+          title: 'Some other result',
         },
       ],
     })
@@ -122,7 +129,10 @@ describe('usage with mobx should generally work', () => {
       count: 1,
       results: [
         {
-          title: 'some result',
+          title: 'Some result',
+        },
+        {
+          title: 'Some other result',
         },
       ],
     })
@@ -242,6 +252,48 @@ describe('usage with mobx should generally work', () => {
       },
       path: ['root', 'newFilterWithValueForRemoveTest'],
     })
+    disposer()
+  })
+
+  it('should support retrieving results with different array sizes', async () => {
+    reactor.reset()
+    service.reset()
+    let disposer = reaction(() => toJS(tree), reactor)
+
+    await Tree.mutate(['root', 'filter'], {
+      data: {
+        values: [1, 2, 3],
+      },
+    })
+    expect(service).to.have.callCount(1)
+    expect(
+      Tree.getNode(['root', 'results']).context.results.slice()
+    ).to.deep.equal([
+      {
+        title: 'Some result',
+      },
+      {
+        title: 'Some other result',
+      },
+    ])
+    treeUtils.lookup(['results'], responseData).context.results = [
+      {
+        title: 'New values',
+      },
+    ]
+    await Tree.mutate(['root', 'filter'], {
+      data: {
+        values: [1, 2, 3, 4],
+      },
+    })
+    expect(service).to.have.callCount(2)
+    expect(
+      Tree.getNode(['root', 'results']).context.results.slice()
+    ).to.deep.equal([
+      {
+        title: 'New values',
+      },
+    ])
     disposer()
   })
 })

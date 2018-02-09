@@ -475,4 +475,85 @@ describe('lib', () => {
     expect(resultsUpdated).to.have.callCount(1)
     expect(filterUpdated).to.have.callCount(1)
   })
+  it('should custom type reactors should work with and without data, and nested', async () => {
+    let service = sinon.spy(mockService({}))
+    let resultsUpdated = sinon.spy()
+    let filterUpdated = sinon.spy()
+    let onResult = _.cond([
+      [_.isEqual(['root', 'results']), resultsUpdated],
+      [_.isEqual(['root', 'filter']), filterUpdated],
+    ])
+
+    let Tree = lib.ContextTree(
+      {
+        types: {
+          testType: {
+            reactors: {
+              value: 'others',
+            },
+          },
+        },
+        service,
+        onResult,
+      },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'filter',
+            type: 'testType',
+            data: {
+              value: null,
+            },
+          },
+          {
+            key: 'filterNoData',
+            type: 'testType',
+            value: null,
+          },
+          {
+            key: 'filterGroup',
+            type: 'group',
+            children: [
+              {
+                key: 'filterChild',
+                type: 'testType',
+                data: {
+                  value: null,
+                },
+              },
+            ],
+          },
+          {
+            key: 'results',
+            type: 'results',
+            context: {
+              results: null,
+            },
+          },
+        ],
+      }
+    )
+    await Tree.mutate(['root', 'filter'], {
+      data: {
+        value: 'z',
+      },
+    })
+    expect(service).to.have.callCount(1)
+    expect(resultsUpdated).to.have.callCount(1)
+    expect(filterUpdated).to.have.callCount(0)
+    await Tree.mutate(['root', 'filterNoData'], {
+      value: 'z',
+    })
+    expect(service).to.have.callCount(2)
+    expect(resultsUpdated).to.have.callCount(2)
+    expect(filterUpdated).to.have.callCount(1)
+    await Tree.mutate(['root', 'filterGroup', 'filterChild'], {
+      value: 'z',
+    })
+    expect(service).to.have.callCount(3)
+    expect(resultsUpdated).to.have.callCount(3)
+    expect(filterUpdated).to.have.callCount(2)
+  })
 })
