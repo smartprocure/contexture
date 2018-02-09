@@ -1,4 +1,7 @@
-﻿# 2.0.4
+﻿# 2.0.5
+* Removed the default group reactor that listened to children changes.
+
+# 2.0.4
 * Added some example types
 
 # 2.0.3
