@@ -1,4 +1,7 @@
-﻿# 2.0.5
+# 2.0.6
+* Exposed exampleTypes
+
+# 2.0.5
 * Removed the default group reactor that listened to children changes.
 
 # 2.0.4
