@@ -1,3 +1,6 @@
+﻿# 2.0.7
+* Implemented a refresh action.
+
 # 2.0.6
 * Exposed exampleTypes
 
