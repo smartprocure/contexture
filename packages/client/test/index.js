@@ -190,6 +190,11 @@ describe('lib', () => {
         .exist
       expect(service).to.have.callCount(2)
     })
+    it('should support refresh', async () => {
+      service.reset()
+      await Tree.refresh(['root'])
+      expect(service).to.have.callCount(1)
+    })
     it('should support field changes')
     it('should probably support type changes ¯\\_(ツ)_/¯')
 
