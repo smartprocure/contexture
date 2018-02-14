@@ -31,5 +31,5 @@ export default ({ getNode, flat, dispatch, snapshot, extend }) => ({
       node: target,
     })
   },
-  refresh: path => dispatch({ type: 'refresh', path, })
+  refresh: path => dispatch({ type: 'refresh', path }),
 })
