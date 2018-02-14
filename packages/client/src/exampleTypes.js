@@ -10,7 +10,7 @@ export default {
       values: 'others',
       mode: 'others',
       size: 'self',
-      filter: 'self',
+      optionsFilter: 'self',
     },
   },
   text: {
