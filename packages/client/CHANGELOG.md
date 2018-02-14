@@ -1,4 +1,4 @@
-﻿# 2.0.7
+﻿# 2.1.0
 * Implemented a refresh action.
 
 # 2.0.6
