@@ -5,7 +5,7 @@ import { Tree } from './util/tree'
 let isFilterOnly = x => !x.children && (x.forceFilterOnly || !x.markedForUpdate)
 let getNillKeys = _.flow(
   _.toPairs,
-  _.map(([k, v]) => _.isNil(v) ? k : v),
+  _.map(([k, v]) => (_.isNil(v) ? k : v)),
   _.compact
 )
 
@@ -29,7 +29,7 @@ export default (tree, { search } = {}) =>
             'error',
             'results',
             ...(search ? [] : ['lastUpdateTime']),
-            ...getNillKeys(x)
+            ...getNillKeys(x),
           ])
         },
         x => {
