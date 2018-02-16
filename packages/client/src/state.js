@@ -14,4 +14,14 @@ export let defaultState = {
 }
 
 export let setState = (flat, extend) =>
-  _.each(node => extend(node, F.mapValuesIndexed((v, k) => _.isNil(node[k]) ? v : node[k], defaultState)), flat)
+  _.each(
+    node =>
+      extend(
+        node,
+        F.mapValuesIndexed(
+          (v, k) => (_.isNil(node[k]) ? v : node[k]),
+          defaultState
+        )
+      ),
+    flat
+  )
