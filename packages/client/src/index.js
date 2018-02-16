@@ -7,6 +7,7 @@ import actions from './actions'
 import serialize from './serialize'
 import { markForUpdate, markLastUpdate, prepForUpdate } from './traversals'
 import { runTypeFunction } from './types'
+import { setState } from './state'
 import Types from './exampleTypes'
 
 let mergeWith = _.mergeWith.convert({ immutable: false })
@@ -54,15 +55,16 @@ export let ContextTree = _.curry(
     },
     tree
   ) => {
-    let log = x => debug && console.info(x)
+    let log = x => console.info(x)
     let flat = flattenTree(tree)
+    setState(flat, extend)
     stampPaths(flat)
     let getNode = path => flat[encode(path)]
 
     // Event Handling
     let dispatch = async event => {
       log(`${event.type} event at ${event.path}`)
-      await validate(runTypeFunction(types, 'validate'), extend, tree)
+      await validate(runTypeFunction(types, 'validate'), tree)
       bubbleUp(processEvent(event, getNode, types), event.path)
       await triggerUpdate()
     }

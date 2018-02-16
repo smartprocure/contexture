@@ -1,3 +1,7 @@
+﻿# 2.1.2
+* Initializing all the custom properties as null when creting a new
+  client.
+
 # 2.1.1
 * Fix facet reactor for `optionsFilter` (was incorrectly named `filter`)
 
