@@ -41,10 +41,11 @@ let defaultService = () => {
   throw new Error('No update service provided!')
 }
 
-let callInitTypes = (types, extend) => _.each(node => {
-  let init = _.get([node.type, 'init'], types)
-  if (_.isFunction(init)) init(node, extend)
-})
+let callInitTypes = (types, extend) =>
+  _.each(node => {
+    let init = _.get([node.type, 'init'], types)
+    if (_.isFunction(init)) init(node, extend)
+  })
 
 let privateExtend = (extend, onChange) => (node, change) => {
   extend(node, change)
