@@ -4,6 +4,7 @@
 * Using extend on all the custom properties that are added on the tree
   and not at the serialize level.
 * Removed allowBlank.
+* Allowing types to have init functions that can extend each node.
 
 # 2.1.1
 * Fix facet reactor for `optionsFilter` (was incorrectly named `filter`)

@@ -474,6 +474,37 @@ describe('lib', () => {
     expect(resultsUpdated).to.have.callCount(1)
     expect(filterUpdated).to.have.callCount(1)
   })
+  it('should support custom type initializers', async () => {
+    let testInit = sinon.spy((node, extend) => {
+      extend(node, { isExtended: true })
+    })
+
+    let Tree = lib.ContextTree(
+      {
+        types: {
+          testType: {
+            init: testInit,
+          },
+        },
+      },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'filter',
+            type: 'testType',
+          },
+          {
+            key: 'results',
+            type: 'results',
+          },
+        ],
+      }
+    )
+    expect(testInit).to.have.callCount(1)
+    expect(Tree.getNode(['root', 'filter']).isExtended).to.be.true
+  })
   it('should custom type reactors should work with and without data, and nested', async () => {
     let service = sinon.spy(mockService({}))
     let resultsUpdated = sinon.spy()

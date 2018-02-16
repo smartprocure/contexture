@@ -41,6 +41,12 @@ let defaultService = () => {
   throw new Error('No update service provided!')
 }
 
+let callInitTypes = (types, extend) =>
+  _.each(node => {
+    let init = _.get([node.type, 'init'], types)
+    if (_.isFunction(init)) init(node, extend)
+  })
+
 export let exampleTypes = Types
 
 export let ContextTree = _.curry(
@@ -61,6 +67,7 @@ export let ContextTree = _.curry(
     let getNode = path => flat[encode(path)]
 
     setState(flat, extend)
+    callInitTypes(types, extend)(flat)
     stampPaths(extend)(flat)
 
     // Event Handling
