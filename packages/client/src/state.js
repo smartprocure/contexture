@@ -10,7 +10,7 @@ export let defaultState = {
   updating: null,
   hasValue: null,
   error: null,
-  context: null,
+  results: null,
 }
 
 export let setState = (flat, extend) => F.eachIndexed((node, path) => extend(node, defaultState), flat)

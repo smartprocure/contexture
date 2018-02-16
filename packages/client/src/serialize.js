@@ -22,6 +22,7 @@ export default (tree, { search } = {}) =>
             'hasValue',
             'context',
             'error',
+            'results',
             ...(search ? [] : ['lastUpdateTime']),
           ])
         },

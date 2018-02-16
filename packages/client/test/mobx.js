@@ -109,17 +109,18 @@ describe('usage with mobx should generally work', () => {
     expect(reactor).to.have.callCount(10)
     disposer()
     expect(
-      treeUtils.lookup(['filter'], reactor.getCall(0).args[0])
+      treeUtils.lookup(['filter'], reactor.getCall(1).args[0])
     ).to.deep.equal({
       key: 'filter',
       error: null,
       filterOnly: null,
-      hasValue: null,
+      hasValue: true,
       lastUpdateTime: null,
       markedForDeletion: null,
       markedForUpdate: null,
       missedUpdate: null,
       updating: null,
+      results: null,
       data: {
         values: ['a'],
       },
@@ -139,7 +140,7 @@ describe('usage with mobx should generally work', () => {
       ],
     })
     expect(
-      treeUtils.lookup(['results'], reactor.getCall(1).args[0]).context
+      treeUtils.lookup(['results'], reactor.getCall(8).args[0]).context
     ).to.deep.equal({
       count: 1,
       results: [
@@ -168,11 +169,20 @@ describe('usage with mobx should generally work', () => {
       },
     })
     expect(service).to.have.callCount(1)
-    expect(reactor).to.have.callCount(10)
+    expect(reactor).to.have.callCount(18)
     expect(
-      treeUtils.lookup(['newFilterWithValue'], reactor.getCall(1).args[0])
+      treeUtils.lookup(['newFilterWithValue'], reactor.getCall(2).args[0])
     ).to.deep.equal({
       key: 'newFilterWithValue',
+      error: null,
+      filterOnly: null,
+      hasValue: null,
+      lastUpdateTime: null,
+      markedForDeletion: null,
+      markedForUpdate: null,
+      missedUpdate: null,
+      updating: null,
+      results: null,
       data: {
         values: 'asdf',
       },
@@ -191,12 +201,12 @@ describe('usage with mobx should generally work', () => {
       context: {},
     })
     expect(service).to.have.callCount(1)
-    expect(reactor).to.have.callCount(2)
+    expect(reactor).to.have.callCount(7)
     expect(Tree.getNode(['root', 'newEmptyFilter'])).to.exist
 
     await Tree.remove(['root', 'newEmptyFilter'])
     expect(service).to.have.callCount(1)
-    expect(reactor).to.have.callCount(3)
+    expect(reactor).to.have.callCount(8)
     expect(Tree.getNode(['root', 'newEmptyFilter'])).to.not.exist
 
     await Tree.add(['root'], {
@@ -206,14 +216,14 @@ describe('usage with mobx should generally work', () => {
       },
     })
     expect(service).to.have.callCount(2)
-    expect(reactor).to.have.callCount(5)
+    expect(reactor).to.have.callCount(26)
     expect(Tree.getNode(['root', 'newFilterWithValueForRemoveTest'])).to.exist
 
     await Tree.remove(['root', 'newFilterWithValueForRemoveTest'])
     expect(Tree.getNode(['root', 'newFilterWithValueForRemoveTest'])).to.not
       .exist
     expect(service).to.have.callCount(3)
-    expect(reactor).to.have.callCount(7)
+    expect(reactor).to.have.callCount(42)
 
     expect(
       treeUtils.lookup(['newEmptyFilter'], reactor.getCall(0).args[0])
@@ -221,6 +231,15 @@ describe('usage with mobx should generally work', () => {
       key: 'newEmptyFilter',
       context: {},
       path: ['root', 'newEmptyFilter'],
+      error: null,
+      filterOnly: null,
+      hasValue: null,
+      lastUpdateTime: null,
+      markedForDeletion: null,
+      markedForUpdate: null,
+      missedUpdate: null,
+      updating: null,
+      results: null,
     })
     expect(
       _.omit(
@@ -230,9 +249,14 @@ describe('usage with mobx should generally work', () => {
     ).to.deep.equal({
       key: 'newEmptyFilter',
       context: {},
+      error: null,
+      filterOnly: null,
       hasValue: false,
-      updating: true,
-      markedForUpdate: false,
+      updating: null,
+      results: null,
+      markedForUpdate: null,
+      markedForDeletion: null,
+      missedUpdate: null,
       path: ['root', 'newEmptyFilter'],
     })
 
@@ -245,7 +269,7 @@ describe('usage with mobx should generally work', () => {
     expect(
       treeUtils.lookup(
         ['newFilterWithValueForRemoveTest'],
-        reactor.getCall(3).args[0]
+        reactor.getCall(8).args[0]
       )
     ).to.deep.equal({
       key: 'newFilterWithValueForRemoveTest',
@@ -253,11 +277,20 @@ describe('usage with mobx should generally work', () => {
         values: 'asdf',
       },
       path: ['root', 'newFilterWithValueForRemoveTest'],
+      error: null,
+      filterOnly: null,
+      hasValue: null,
+      lastUpdateTime: null,
+      markedForDeletion: null,
+      markedForUpdate: null,
+      missedUpdate: null,
+      updating: null,
+      results: null,
     })
     expect(
       treeUtils.lookup(
         ['newFilterWithValueForRemoveTest'],
-        reactor.getCall(4).args[0]
+        reactor.getCall(8).args[0]
       )
     ).to.deep.equal({
       key: 'newFilterWithValueForRemoveTest',
@@ -266,6 +299,15 @@ describe('usage with mobx should generally work', () => {
         values: 'asdf',
       },
       path: ['root', 'newFilterWithValueForRemoveTest'],
+      error: null,
+      filterOnly: null,
+      hasValue: null,
+      lastUpdateTime: null,
+      markedForDeletion: null,
+      markedForUpdate: null,
+      missedUpdate: null,
+      updating: null,
+      results: null,
     })
     disposer()
   })
