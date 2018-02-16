@@ -41,11 +41,15 @@ let defaultService = () => {
   throw new Error('No update service provided!')
 }
 
-let callInitTypes = (types, extend) =>
-  _.each(node => {
-    let init = _.get([node.type, 'init'], types)
-    if (_.isFunction(init)) init(node, extend)
-  })
+let callInitTypes = (types, extend) => _.each(node => {
+  let init = _.get([node.type, 'init'], types)
+  if (_.isFunction(init)) init(node, extend)
+})
+
+let privateExtend = (extend, onChange) => (node, change) => {
+  extend(node, change)
+  onChange(node.path, node, change)
+}
 
 export let exampleTypes = Types
 
@@ -58,6 +62,7 @@ export let ContextTree = _.curry(
       onResult = _.noop,
       debug,
       extend = F.extendOn,
+      onChange = _.noop,
       snapshot = _.cloneDeep,
     },
     tree
@@ -69,6 +74,9 @@ export let ContextTree = _.curry(
     setState(flat, extend)
     callInitTypes(types, extend)(flat)
     stampPaths(extend)(flat)
+
+    // overwriting extend
+    extend = privateExtend(extend, onChange)
 
     // Event Handling
     let dispatch = async event => {

@@ -237,7 +237,6 @@ describe('usage with mobx should generally work', () => {
       )
     ).to.deep.equal({
       key: 'newEmptyFilter',
-      context: {},
       error: null,
       hasValue: false,
       updating: null,
