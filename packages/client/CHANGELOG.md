@@ -1,6 +1,8 @@
-﻿# 2.1.2
+﻿# 2.2.0
 * Initializing all the custom properties as null when creting a new
   client.
+* Using extend on all the custom properties that are added on the tree
+  and not at the serialize level.
 
 # 2.1.1
 * Fix facet reactor for `optionsFilter` (was incorrectly named `filter`)
