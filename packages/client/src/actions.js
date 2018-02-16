@@ -3,12 +3,14 @@ import { encode } from './util/tree'
 import { setState } from './state'
 import { pullOn } from 'futil-js'
 
-export default ({ getNode, flat, dispatch, snapshot, extend }) => ({
+export default ({ getNode, flat, dispatch, snapshot, types, extend }) => ({
   async add(parentPath, value) {
     let target = getNode(parentPath)
     let path = [...parentPath, value.key]
     setState([value], extend)
     extend(value, { path })
+    let init = _.get([value.type, 'init'], types)
+    if (_.isFunction(init)) init(value, extend)
     target.children.push(value)
     // Need this nonsense to support the case where push actually mutates, e.g. a mobx observable tree
     flat[encode(path)] = target.children[target.children.length - 1]
