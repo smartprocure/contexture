@@ -21,6 +21,7 @@ export default (tree, { search } = {}) =>
             'missedUpdate',
             'hasValue',
             'context',
+            'error',
             ...(search ? [] : ['lastUpdateTime']),
           ])
         },

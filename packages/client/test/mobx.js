@@ -84,6 +84,9 @@ describe('usage with mobx should generally work', () => {
     expect(dto).to.deep.equal({
       key: 'root',
       join: 'and',
+      lastUpdateTime: null,
+      markedForDeletion: null,
+      filterOnly: null,
       children: [
         {
           key: 'filter',
@@ -91,20 +94,32 @@ describe('usage with mobx should generally work', () => {
             values: ['a'],
           },
           filterOnly: true,
+          lastUpdateTime: null,
+          markedForDeletion: null,
         },
         {
           key: 'results',
           type: 'results',
+          filterOnly: null,
           lastUpdateTime: now,
+          markedForDeletion: null,
         },
       ],
     })
-    expect(reactor).to.have.callCount(2)
+    expect(reactor).to.have.callCount(10)
     disposer()
     expect(
       treeUtils.lookup(['filter'], reactor.getCall(0).args[0])
     ).to.deep.equal({
       key: 'filter',
+      error: null,
+      filterOnly: null,
+      hasValue: null,
+      lastUpdateTime: null,
+      markedForDeletion: null,
+      markedForUpdate: null,
+      missedUpdate: null,
+      updating: null,
       data: {
         values: ['a'],
       },
@@ -153,7 +168,7 @@ describe('usage with mobx should generally work', () => {
       },
     })
     expect(service).to.have.callCount(1)
-    expect(reactor).to.have.callCount(3)
+    expect(reactor).to.have.callCount(10)
     expect(
       treeUtils.lookup(['newFilterWithValue'], reactor.getCall(1).args[0])
     ).to.deep.equal({

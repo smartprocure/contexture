@@ -37,6 +37,9 @@ describe('lib', () => {
       expect(dto).to.deep.equal({
         key: 'root',
         join: 'and',
+        filterOnly: null,
+        lastUpdateTime: null,
+        markedForDeletion: null,
         children: [
           {
             key: 'filter',
@@ -44,11 +47,15 @@ describe('lib', () => {
               values: ['a'],
             },
             filterOnly: true,
+            lastUpdateTime: null,
+            markedForDeletion: null,
           },
           {
             key: 'results',
             type: 'results',
             lastUpdateTime: now,
+            filterOnly: null,
+            markedForDeletion: null,
           },
         ],
       })
@@ -68,9 +75,13 @@ describe('lib', () => {
       expect(Tree.serialize()).to.deep.equal({
         key: 'root',
         join: 'and',
+        filterOnly: null,
+        markedForDeletion: null,
         children: [
           {
             key: 'filter',
+            filterOnly: null,
+            markedForDeletion: null,
             data: {
               values: ['a'],
             },
@@ -78,6 +89,8 @@ describe('lib', () => {
           {
             key: 'results',
             type: 'results',
+            filterOnly: null,
+            markedForDeletion: null,
           },
         ],
       })
@@ -95,6 +108,9 @@ describe('lib', () => {
       expect(dto).to.deep.equal({
         key: 'root',
         join: 'and',
+        filterOnly: null,
+        lastUpdateTime: null,
+        markedForDeletion: null,
         children: [
           {
             key: 'filter',
@@ -105,6 +121,8 @@ describe('lib', () => {
               size: 10,
             },
             lastUpdateTime: now,
+            filterOnly: null,
+            markedForDeletion: null,
           },
         ],
       })
@@ -342,15 +360,22 @@ describe('lib', () => {
     expect(dto).to.deep.equal({
       key: 'root',
       join: 'and',
+      filterOnly: null,
+      lastUpdateTime: null,
+      markedForDeletion: null,
       children: [
         {
           key: 'analysis',
           join: 'and',
+          filterOnly: null,
+          markedForDeletion: null,
           children: [
             {
               key: 'results',
               type: 'results',
               lastUpdateTime: now,
+              filterOnly: null,
+              markedForDeletion: null,
             },
           ],
           lastUpdateTime: now,
@@ -358,11 +383,16 @@ describe('lib', () => {
         {
           key: 'criteria',
           join: 'or',
+          filterOnly: null,
+          markedForDeletion: null,
+          lastUpdateTime: null,
           children: [
             {
               key: 'agencies',
               field: 'Organization.Name',
               type: 'facet',
+              markedForDeletion: null,
+              lastUpdateTime: null,
               data: {
                 values: ['City of Deerfield'],
               },
@@ -378,6 +408,8 @@ describe('lib', () => {
                 query: 'cable',
               },
               filterOnly: true,
+              markedForDeletion: null,
+              lastUpdateTime: null,
             },
           ],
         },
@@ -431,7 +463,7 @@ describe('lib', () => {
     expect(spy).to.have.callCount(1)
   })
   it('should support custom type reactors', async () => {
-    let service = sinon.spy(mockService({}))
+    let service = sinon.spy(mockService({ debug: true }))
     let resultsUpdated = sinon.spy()
     let filterUpdated = sinon.spy()
     let onResult = _.cond([
