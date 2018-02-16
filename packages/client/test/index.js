@@ -109,15 +109,8 @@ describe('lib', () => {
         ],
       })
     })
-    it('should block blank searches', async () => {
+    it('should not block blank searches', async () => {
       service.reset()
-      await Tree.mutate(['root', 'filter'], {
-        data: {
-          values: [],
-        },
-      })
-      expect(service).to.have.callCount(0)
-      Tree.getNode(['root']).allowBlank = true
       await Tree.mutate(['root', 'filter'], {
         data: {
           values: [],
