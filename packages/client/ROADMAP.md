@@ -1,4 +1,13 @@
-﻿3.0.0
+﻿
+- Remove allowBlank
+- Per type init functions. Should take as parammeters the node and the
+  extend function.
+- Add an onChange event
+- The extend is a curried funciton, so we can fire onChange. that
+  extend might need the node path and possibly some information about
+  the type or something. Maybe `on init` or `server result` or `on
+  update`.
 
-- Move all the state properties (see state.js) into a single property
-  called `state`.
+3.0.0
+
+- Renaming the `mutate` action to be `update`.

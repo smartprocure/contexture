@@ -106,14 +106,13 @@ describe('usage with mobx should generally work', () => {
     ).to.deep.equal({
       key: 'filter',
       error: null,
-      filterOnly: null,
       lastUpdateTime: null,
-      markedForDeletion: null,
+      context: null,
+      pause: null,
       hasValue: true,
       markedForUpdate: null,
       missedUpdate: null,
       updating: null,
-      results: null,
       data: {
         values: ['a'],
       },
@@ -172,10 +171,9 @@ describe('usage with mobx should generally work', () => {
       markedForUpdate: null,
       missedUpdate: null,
       updating: null,
-      results: null,
-      filterOnly: null,
       lastUpdateTime: null,
-      markedForDeletion: null,
+      context: null,
+      pause: null,
       data: {
         values: 'asdf',
       },
@@ -193,13 +191,13 @@ describe('usage with mobx should generally work', () => {
       key: 'newEmptyFilter',
       context: {},
     })
-    expect(service).to.have.callCount(1)
-    expect(reactor).to.have.callCount(7)
+    expect(service).to.have.callCount(0)
+    expect(reactor).to.have.callCount(2)
     expect(Tree.getNode(['root', 'newEmptyFilter'])).to.exist
 
     await Tree.remove(['root', 'newEmptyFilter'])
-    expect(service).to.have.callCount(1)
-    expect(reactor).to.have.callCount(8)
+    expect(service).to.have.callCount(0)
+    expect(reactor).to.have.callCount(3)
     expect(Tree.getNode(['root', 'newEmptyFilter'])).to.not.exist
 
     await Tree.add(['root'], {
@@ -208,31 +206,29 @@ describe('usage with mobx should generally work', () => {
         values: 'asdf',
       },
     })
-    expect(service).to.have.callCount(2)
-    expect(reactor).to.have.callCount(26)
+    expect(service).to.have.callCount(1)
+    expect(reactor).to.have.callCount(21)
     expect(Tree.getNode(['root', 'newFilterWithValueForRemoveTest'])).to.exist
 
     await Tree.remove(['root', 'newFilterWithValueForRemoveTest'])
     expect(Tree.getNode(['root', 'newFilterWithValueForRemoveTest'])).to.not
       .exist
-    expect(service).to.have.callCount(3)
-    expect(reactor).to.have.callCount(42)
+    expect(service).to.have.callCount(2)
+    expect(reactor).to.have.callCount(37)
 
     expect(
       treeUtils.lookup(['newEmptyFilter'], reactor.getCall(0).args[0])
     ).to.deep.equal({
       key: 'newEmptyFilter',
-      context: {},
-      filterOnly: null,
       lastUpdateTime: null,
-      markedForDeletion: null,
       path: ['root', 'newEmptyFilter'],
       error: null,
       hasValue: null,
       markedForUpdate: null,
       missedUpdate: null,
       updating: null,
-      results: null,
+      context: null,
+      pause: null,
     })
     expect(
       _.omit(
@@ -242,12 +238,11 @@ describe('usage with mobx should generally work', () => {
     ).to.deep.equal({
       key: 'newEmptyFilter',
       context: {},
-      filterOnly: null,
-      markedForDeletion: null,
       error: null,
       hasValue: false,
       updating: null,
-      results: null,
+      context: null,
+      pause: null,
       markedForUpdate: null,
       missedUpdate: null,
       path: ['root', 'newEmptyFilter'],
@@ -269,16 +264,15 @@ describe('usage with mobx should generally work', () => {
       data: {
         values: 'asdf',
       },
-      filterOnly: null,
       lastUpdateTime: null,
-      markedForDeletion: null,
       path: ['root', 'newFilterWithValueForRemoveTest'],
       error: null,
-      hasValue: null,
+      hasValue: true,
       markedForUpdate: null,
       missedUpdate: null,
       updating: null,
-      results: null,
+      context: null,
+      pause: null,
     })
     expect(
       treeUtils.lookup(
@@ -291,16 +285,14 @@ describe('usage with mobx should generally work', () => {
       data: {
         values: 'asdf',
       },
-      filterOnly: null,
       lastUpdateTime: null,
-      markedForDeletion: null,
       path: ['root', 'newFilterWithValueForRemoveTest'],
       error: null,
-      hasValue: null,
       markedForUpdate: null,
       missedUpdate: null,
       updating: null,
-      results: null,
+      context: null,
+      pause: null,
     })
     disposer()
   })

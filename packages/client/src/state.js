@@ -1,16 +1,16 @@
-import * as F from 'futil-js'
+import _ from 'lodash/fp'
 
 export let defaultState = {
   path: null,
-  filterOnly: null,
-  lastUpdateTime: null,
-  markedForDeletion: null,
-  markedForUpdate: null,
-  missedUpdate: null,
   updating: null,
+  lastUpdateTime: null,
+  markedForUpdate: null,
   hasValue: null,
   error: null,
-  results: null,
+  context: null,
+  missedUpdate: null,
+  pause: null,
 }
 
-export let setState = (flat, extend) => F.eachIndexed((node, path) => extend(node, defaultState), flat)
+export let setState = (flat, extend) =>
+  _.each(node => extend(node, defaultState), flat)

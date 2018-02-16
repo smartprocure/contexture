@@ -12,12 +12,14 @@ import Types from './exampleTypes'
 
 let mergeWith = _.mergeWith.convert({ immutable: false })
 
-let processEvent = F.flurry(
-  getAffectedNodes,
-  _.each(n => {
-    if (!_.some('markedForUpdate', n.children)) markForUpdate(n)
-  })
-)
+let processEvent = extend =>
+  F.flurry(
+    getAffectedNodes,
+    _.each(n => {
+      if (!_.some('markedForUpdate', n.children)) markForUpdate(extend)(n)
+    })
+  )
+
 let shouldBlockUpdate = (flat, allowsBlank) => {
   let leaves = flatLeaves(flat)
   let allBlank = !_.some('hasValue', leaves)
@@ -31,9 +33,10 @@ let isStale = (result, target) =>
   result.lastUpdateTime &&
   target.lastUpdateTime > result.lastUpdateTime
 
-let stampPaths = F.eachIndexed((node, path) => {
-  node.path = decode(path)
-})
+let stampPaths = extend =>
+  F.eachIndexed((node, path) => {
+    extend(node, { path: decode(path) })
+  })
 
 let defaultService = () => {
   throw new Error('No update service provided!')
@@ -55,28 +58,31 @@ export let ContextTree = _.curry(
     },
     tree
   ) => {
-    let log = x => console.info(x)
+    let log = x => debug && console.info(x)
     let flat = flattenTree(tree)
-    setState(flat, extend)
-    stampPaths(flat)
     let getNode = path => flat[encode(path)]
+
+    setState(flat, extend)
+    stampPaths(extend)(flat)
 
     // Event Handling
     let dispatch = async event => {
       log(`${event.type} event at ${event.path}`)
-      await validate(runTypeFunction(types, 'validate'), tree)
-      bubbleUp(processEvent(event, getNode, types), event.path)
+      await validate(runTypeFunction(types, 'validate'), extend, tree)
+      bubbleUp(processEvent(extend)(event, getNode, types), event.path)
       await triggerUpdate()
     }
+
     let triggerUpdate = F.debounceAsync(debounce, async () => {
       if (shouldBlockUpdate(flat, tree.allowBlank || allowBlank))
         return log('Blocked Search')
       let now = new Date().getTime()
-      markLastUpdate(now)(tree)
+      markLastUpdate(extend)(now)(tree)
       let dto = serialize(snapshot(tree), { search: true })
-      prepForUpdate(tree)
+      prepForUpdate(extend)(tree)
       processResponse(await service(dto, now))
     })
+
     let processResponse = ({ data, error }) => {
       F.eachIndexed((node, path) => {
         let target = flat[path]
@@ -84,18 +90,18 @@ export let ContextTree = _.curry(
         if (target && !_.isEmpty(responseNode) && !isStale(node, target)) {
           onResult(decode(path), node, target)
           mergeWith((oldValue, newValue) => newValue, target, responseNode)
-          target.updating = false
+          extend(target, { updating: false })
         }
       }, flattenTree(data))
-      if (error) tree.error = error
+      if (error) extend(tree, { error })
     }
 
     return {
       ...actions({ getNode, flat, dispatch, snapshot, extend }),
-      tree,
-      getNode,
-      dispatch,
       serialize: () => serialize(snapshot(tree), {}),
+      dispatch,
+      getNode,
+      tree,
     }
   }
 )
