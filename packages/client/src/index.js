@@ -20,12 +20,11 @@ let processEvent = extend =>
     })
   )
 
-let shouldBlockUpdate = (flat, allowsBlank) => {
+let shouldBlockUpdate = flat => {
   let leaves = flatLeaves(flat)
-  let allBlank = !_.some('hasValue', leaves)
   let noUpdates = !_.some('markedForUpdate', leaves)
   let hasErrors = _.some('error', leaves)
-  return hasErrors || noUpdates || (!allowsBlank && allBlank)
+  return hasErrors || noUpdates
 }
 
 let isStale = (result, target) =>
@@ -51,7 +50,6 @@ export let ContextTree = _.curry(
       types = Types,
       debounce = 1,
       onResult = _.noop,
-      allowBlank,
       debug,
       extend = F.extendOn,
       snapshot = _.cloneDeep,
@@ -74,8 +72,7 @@ export let ContextTree = _.curry(
     }
 
     let triggerUpdate = F.debounceAsync(debounce, async () => {
-      if (shouldBlockUpdate(flat, tree.allowBlank || allowBlank))
-        return log('Blocked Search')
+      if (shouldBlockUpdate(flat)) return log('Blocked Search')
       let now = new Date().getTime()
       markLastUpdate(extend)(now)(tree)
       let dto = serialize(snapshot(tree), { search: true })
