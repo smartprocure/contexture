@@ -110,7 +110,7 @@ export let ContextTree = _.curry(
     }
 
     return {
-      ...actions({ getNode, flat, dispatch, snapshot, extend }),
+      ...actions({ getNode, flat, dispatch, snapshot, extend, types }),
       serialize: () => serialize(snapshot(tree), {}),
       dispatch,
       getNode,

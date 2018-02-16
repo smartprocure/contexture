@@ -1,4 +1,5 @@
 import _ from 'lodash/fp'
+import * as F from 'futil-js'
 
 export let defaultState = {
   path: null,
@@ -13,4 +14,4 @@ export let defaultState = {
 }
 
 export let setState = (flat, extend) =>
-  _.each(node => extend(node, defaultState), flat)
+  _.each(node => extend(node, F.mapValuesIndexed((v, k) => _.isNil(node[k]) ? v : node[k], defaultState)), flat)

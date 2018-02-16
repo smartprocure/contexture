@@ -21,9 +21,8 @@ export default (tree, { search } = {}) =>
             'paused',
             'missedUpdate',
             'hasValue',
-            'context',
             'error',
-            'results',
+            'context',
             ...(search ? [] : ['lastUpdateTime']),
             ...getNilKeys(x),
           ])
