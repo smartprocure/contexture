@@ -1,5 +1,4 @@
 ﻿
-- Remove allowBlank
 - Per type init functions. Should take as parammeters the node and the
   extend function.
 - Add an onChange event
