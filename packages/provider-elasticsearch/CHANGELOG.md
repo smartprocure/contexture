@@ -1,5 +1,8 @@
-### 0.6.5
+### 0.6.6
 * Added documentation for termsStatsHits
+
+### 0.6.5
+* Facet now allows size 0
 
 ### 0.6.4
 * Number type no longer wraps results in a results property.
