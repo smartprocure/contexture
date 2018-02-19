@@ -6,7 +6,7 @@ export let defaultHasValue = _.flow(
   F.cascade(['data', 'values', 'value', 'query']),
   F.overNone([
     F.isBlankDeep(_.some),
-    x => _.isArray(x) ? _.isEmpty(x) : _.isNil(x),
+    x => (_.isArray(x) ? _.isEmpty(x) : _.isNil(x)),
   ])
 )
 
