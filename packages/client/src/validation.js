@@ -2,7 +2,14 @@ import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { mapAsync } from './util/promise'
 
-export let defaultHasValue = x => !F.isBlankDeep(_.some)(x.data)
+export let defaultHasValue = _.flow(
+  F.cascade(['data', 'values', 'value', 'query']),
+  F.overNone([
+    F.isBlankDeep(_.some),
+    x => _.isArray(x) ? _.isEmpty(x) : _.isNil(x),
+  ])
+)
+
 // Aync fn to inspect types.
 // ASYNC runValidate: return true -> proceed, return false -> exclude, throw -> error!
 export let validate = _.curry(async (runValidate, extend, child) => {

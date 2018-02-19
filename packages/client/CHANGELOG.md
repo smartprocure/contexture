@@ -8,6 +8,8 @@
 * Added an optional onChange function that gets called as soon as the
   extend function gets excecuted. It gets called with the node's path,
   the node and the changes received.
+* Changed defaultHasValue to check for other fields, such as data,
+  values, value and query.
 
 # 2.1.1
 * Fix facet reactor for `optionsFilter` (was incorrectly named `filter`)
