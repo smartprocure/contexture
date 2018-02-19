@@ -1,3 +1,6 @@
+### 0.6.6
+* Added documentation for termsStatsHits
+
 ### 0.6.5
 * Facet now allows size 0
 
