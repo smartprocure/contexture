@@ -1,3 +1,5 @@
+### 0.6.7
+* Fixed Number type bug where min and max values were ignored if passed as strings.
 ### 0.6.6
 * Added documentation for termsStatsHits
 
