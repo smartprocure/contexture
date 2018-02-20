@@ -149,10 +149,12 @@ describe('lib', () => {
       service.reset()
       await Tree.add(['root'], {
         key: 'newFilter',
+        type: 'facet',
       })
       expect(service).to.have.callCount(0)
       await Tree.add(['root'], {
         key: 'newFilterWithValue',
+        type: 'facet',
         data: {
           values: 'asdf',
         },
@@ -163,6 +165,7 @@ describe('lib', () => {
       service.reset()
       await Tree.add(['root'], {
         key: 'newEmptyFilter',
+        type: 'facet',
       })
       expect(service).to.have.callCount(0)
       expect(Tree.getNode(['root', 'newEmptyFilter'])).to.exist
@@ -172,6 +175,7 @@ describe('lib', () => {
 
       await Tree.add(['root'], {
         key: 'newFilterWithValueForRemoveTest',
+        type: 'facet',
         data: {
           values: 'asdf',
         },
@@ -299,26 +303,6 @@ describe('lib', () => {
                 data: {
                   query: 'cable internet~',
                 },
-              },
-              {
-                key: 'noValue',
-                type: 'facet',
-                data: {
-                  values: [],
-                },
-              },
-              {
-                key: 'uselessGroup',
-                join: 'and',
-                children: [
-                  {
-                    key: 'uselessChild',
-                    type: 'facet',
-                    data: {
-                      values: [],
-                    },
-                  },
-                ],
               },
             ],
           },
