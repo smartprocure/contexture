@@ -1,11 +1,5 @@
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
 import { mapAsync } from './util/promise'
-
-export let defaultHasValue = _.flow(
-  F.cascade(['data', 'values', 'value', 'query']),
-  _.negate(F.isBlankDeep(_.some)),
-)
 
 // Aync fn to inspect types.
 // ASYNC runValidate: return true -> proceed, return false -> exclude, throw -> error!

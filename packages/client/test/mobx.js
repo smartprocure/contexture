@@ -152,10 +152,12 @@ describe('usage with mobx should generally work', () => {
     let disposer = reaction(() => toJS(tree), reactor)
     await Tree.add(['root'], {
       key: 'newFilter',
+      type: 'facet',
     })
     expect(service).to.have.callCount(0)
     await Tree.add(['root'], {
       key: 'newFilterWithValue',
+      type: 'facet',
       data: {
         values: 'asdf',
       },
@@ -166,6 +168,7 @@ describe('usage with mobx should generally work', () => {
       treeUtils.lookup(['newFilterWithValue'], reactor.getCall(2).args[0])
     ).to.deep.equal({
       key: 'newFilterWithValue',
+      type: 'facet',
       error: null,
       hasValue: null,
       markedForUpdate: null,
@@ -189,6 +192,7 @@ describe('usage with mobx should generally work', () => {
 
     await Tree.add(['root'], {
       key: 'newEmptyFilter',
+      type: 'facet',
       context: {},
     })
     expect(service).to.have.callCount(1)
@@ -202,6 +206,7 @@ describe('usage with mobx should generally work', () => {
 
     await Tree.add(['root'], {
       key: 'newFilterWithValueForRemoveTest',
+      type: 'facet',
       data: {
         values: 'asdf',
       },
@@ -220,6 +225,7 @@ describe('usage with mobx should generally work', () => {
       treeUtils.lookup(['newEmptyFilter'], reactor.getCall(0).args[0])
     ).to.deep.equal({
       key: 'newEmptyFilter',
+      type: 'facet',
       lastUpdateTime: null,
       path: ['root', 'newEmptyFilter'],
       error: null,
@@ -237,6 +243,7 @@ describe('usage with mobx should generally work', () => {
       )
     ).to.deep.equal({
       key: 'newEmptyFilter',
+      type: 'facet',
       error: null,
       hasValue: false,
       updating: null,
@@ -260,6 +267,7 @@ describe('usage with mobx should generally work', () => {
       )
     ).to.deep.equal({
       key: 'newFilterWithValueForRemoveTest',
+      type: 'facet',
       data: {
         values: 'asdf',
       },
