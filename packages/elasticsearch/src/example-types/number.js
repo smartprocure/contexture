@@ -20,7 +20,7 @@ let rangeFilter = (field, min, max) => ({
 })
 
 module.exports = {
-  hasValue: context => _.isNumber(context.min) || _.isNumber(context.max),
+  hasValue: context => _.isNil(context.min) || _.isNil(context.max),
   filter: ({ field, min, max }) => rangeFilter(field, min, max),
   async result({ field, min, max, percentileInterval = 1 }, search) {
     let statisticalResult = await search({
