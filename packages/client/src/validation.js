@@ -4,10 +4,7 @@ import { mapAsync } from './util/promise'
 
 export let defaultHasValue = _.flow(
   F.cascade(['data', 'values', 'value', 'query']),
-  F.overNone([
-    F.isBlankDeep(_.some),
-    x => (_.isArray(x) ? _.isEmpty(x) : _.isNil(x)),
-  ])
+  _.negate(F.isBlankDeep(_.some)),
 )
 
 // Aync fn to inspect types.
