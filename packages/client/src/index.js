@@ -48,10 +48,13 @@ export let ContextTree = _.curry(
     let flat = flattenTree(tree)
     let getNode = path => flat[encode(path)]
 
-    F.eachIndexed((node, path) => initNode(node, decode(path), extend, types))
+    F.eachIndexed(
+      (node, path) => initNode(node, decode(path), extend, types),
+      flat
+    )
 
     // overwriting extend
-    extend = _.over(extend, onChange)
+    extend = _.overSome([extend, onChange])
 
     // Getting the Traversals
     let { markForUpdate, markLastUpdate, prepForUpdate } = traversals(extend)

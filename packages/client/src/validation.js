@@ -10,7 +10,7 @@ export let validate = _.curry(async (runValidate, extend, child) => {
       await mapAsync(validate(runValidate, extend), child.children)
     let hasValue = child.children
       ? _.some('hasValue', child.children)
-      : await runValidate(child)
+      : await runValidate(child, extend)
     extend(child, { hasValue })
     return hasValue
   } catch (error) {
