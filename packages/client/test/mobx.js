@@ -56,9 +56,7 @@ describe('usage with mobx should generally work', () => {
             },
           ],
         },
-        config: {
-          size: 20,
-        },
+        size: 20,
       },
       {
         key: 'filter',
