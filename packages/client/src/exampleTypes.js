@@ -1,15 +1,11 @@
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
 
-let checkValueOn = (...fields) => _.flow(F.cascade(fields), _.negate(_.isEmpty))
-let validate = checkValueOn('data.values', 'values', 'value')
+let validateValues = ({ value, values = [] }) => value || values.length
 
 export default {
-  default: {
-    validate: x => true,
-  },
+  default: {},
   facet: {
-    validate,
+    validate: validateValues,
     reactors: {
       values: 'others',
       mode: 'others',
@@ -18,31 +14,31 @@ export default {
     },
   },
   text: {
-    validate,
+    validate: validateValues,
     reactors: {
       value: 'others',
     },
   },
   query: {
-    validate: checkValueOn('data.query', 'query'),
+    validate: x => x.query,
     reactors: {
       query: 'others',
     },
   },
   mongoId: {
-    validate,
+    validate: validateValues,
     reactors: {
       values: 'others',
     },
   },
   results: {
-    validate: x => false,
+    validate: () => false,
     reactors: {
       page: 'self',
     },
   },
   number: {
-    validate: checkValueOn('min', 'max'),
+    validate: x => !_.isNil(x.min || x.max),
     reactors: {
       min: 'others',
       max: 'others',

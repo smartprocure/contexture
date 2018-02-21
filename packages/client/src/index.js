@@ -5,20 +5,12 @@ import { validate } from './validation'
 import { getAffectedNodes } from './reactors'
 import actions from './actions'
 import serialize from './serialize'
-import { markForUpdate, markLastUpdate, prepForUpdate } from './traversals'
+import traversals from './traversals'
 import { runTypeFunction } from './types'
-import { setState } from './state'
+import { initNode } from './node'
 import Types from './exampleTypes'
 
 let mergeWith = _.mergeWith.convert({ immutable: false })
-
-let processEvent = extend =>
-  F.flurry(
-    getAffectedNodes,
-    _.each(n => {
-      if (!_.some('markedForUpdate', n.children)) markForUpdate(extend)(n)
-    })
-  )
 
 let shouldBlockUpdate = flat => {
   let leaves = flatLeaves(flat)
@@ -32,24 +24,8 @@ let isStale = (result, target) =>
   result.lastUpdateTime &&
   target.lastUpdateTime > result.lastUpdateTime
 
-let stampPaths = extend =>
-  F.eachIndexed((node, path) => {
-    extend(node, { path: decode(path) })
-  })
-
 let defaultService = () => {
   throw new Error('No update service provided!')
-}
-
-let callInitTypes = (types, extend) =>
-  _.each(node => {
-    let init = _.get([node.type, 'init'], types)
-    if (_.isFunction(init)) init(node, extend)
-  })
-
-let privateExtend = (extend, onChange) => (node, change) => {
-  extend(node, change)
-  onChange(node.path, node, change)
 }
 
 export let exampleTypes = Types
@@ -72,27 +48,35 @@ export let ContextTree = _.curry(
     let flat = flattenTree(tree)
     let getNode = path => flat[encode(path)]
 
-    setState(flat, extend)
-    callInitTypes(types, extend)(flat)
-    stampPaths(extend)(flat)
+    F.eachIndexed((node, path) => initNode(node, decode(path), extend, types))
 
     // overwriting extend
-    extend = privateExtend(extend, onChange)
+    extend = _.over(extend, onChange)
+
+    // Getting the Traversals
+    let { markForUpdate, markLastUpdate, prepForUpdate } = traversals(extend)
+
+    let processEvent = F.flurry(
+      getAffectedNodes,
+      _.each(n => {
+        if (!_.some('markedForUpdate', n.children)) markForUpdate(n)
+      })
+    )
 
     // Event Handling
     let dispatch = async event => {
       log(`${event.type} event at ${event.path}`)
       await validate(runTypeFunction(types, 'validate'), extend, tree)
-      bubbleUp(processEvent(extend)(event, getNode, types), event.path)
+      bubbleUp(processEvent(event, getNode, types), event.path)
       await triggerUpdate()
     }
 
     let triggerUpdate = F.debounceAsync(debounce, async () => {
       if (shouldBlockUpdate(flat)) return log('Blocked Search')
       let now = new Date().getTime()
-      markLastUpdate(extend)(now)(tree)
+      markLastUpdate(now)(tree)
       let dto = serialize(snapshot(tree), { search: true })
-      prepForUpdate(extend)(tree)
+      prepForUpdate(tree)
       processResponse(await service(dto, now))
     })
 
