@@ -122,7 +122,7 @@ describe('usage with mobx should generally work', () => {
       ],
     })
     expect(
-      treeUtils.lookup(['results'], reactor.getCall(8).args[0]).context
+      treeUtils.lookup(['results'], reactor.lastCall.args[0]).context
     ).to.deep.equal({
       count: 1,
       results: [
@@ -230,19 +230,11 @@ describe('usage with mobx should generally work', () => {
       )
     ).to.equal(undefined)
     expect(
-      F.compactObject(
-        treeUtils.lookup(
-          ['newFilterWithValueForRemoveTest'],
-          reactor.getCall(23).args[0]
-        )
+      treeUtils.lookup(
+        ['newFilterWithValueForRemoveTest'],
+        reactor.lastCall.args[0]
       )
-    ).to.deep.equal({
-      key: 'newFilterWithValueForRemoveTest',
-      type: 'facet',
-      values: 'asdf',
-      path: ['root', 'newFilterWithValueForRemoveTest'],
-      hasValue: 4,
-    })
+    ).to.deep.equal(undefined)
     disposer()
   })
 
