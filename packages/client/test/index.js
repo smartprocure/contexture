@@ -433,10 +433,9 @@ describe('lib', () => {
     expect(filterUpdated).to.have.callCount(1)
   })
   it('should support custom type initializers', async () => {
-    let testInit = sinon.spy((node, extend) => {
+    let testInit = sinon.spy((node, extend) =>
       extend(node, { isExtended: true })
-    })
-
+    )
     let Tree = lib.ContextTree(
       {
         types: {
@@ -447,15 +446,10 @@ describe('lib', () => {
       },
       {
         key: 'root',
-        join: 'and',
         children: [
           {
             key: 'filter',
             type: 'testType',
-          },
-          {
-            key: 'results',
-            type: 'results',
           },
         ],
       }
