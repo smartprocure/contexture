@@ -1,4 +1,5 @@
 import { Tree } from '../src/util/tree'
+import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import chai from 'chai'
 import sinon from 'sinon'
@@ -99,19 +100,12 @@ describe('usage with mobx should generally work', () => {
     expect(reactor).to.have.callCount(10)
     disposer()
     expect(
-      treeUtils.lookup(['filter'], reactor.getCall(1).args[0])
+      F.compactObject(treeUtils.lookup(['filter'], reactor.getCall(1).args[0]))
     ).to.deep.equal({
       key: 'filter',
       type: 'facet',
-      error: null,
-      lastUpdateTime: null,
-      context: null,
-      paused: null,
-      hasValue: 1,
-      markedForUpdate: null,
-      missedUpdate: null,
-      updating: null,
       values: ['a'],
+      hasValue: 1,
       path: ['root', 'filter'],
     })
     // should update contexts
@@ -159,18 +153,12 @@ describe('usage with mobx should generally work', () => {
     expect(service).to.have.callCount(1)
     expect(reactor).to.have.callCount(18)
     expect(
-      treeUtils.lookup(['newFilterWithValue'], reactor.getCall(2).args[0])
+      F.compactObject(
+        treeUtils.lookup(['newFilterWithValue'], reactor.getCall(2).args[0])
+      )
     ).to.deep.equal({
       key: 'newFilterWithValue',
       type: 'facet',
-      error: null,
-      hasValue: null,
-      markedForUpdate: null,
-      missedUpdate: null,
-      updating: null,
-      lastUpdateTime: null,
-      context: null,
-      paused: null,
       values: 'asdf',
       path: ['root', 'newFilterWithValue'],
     })
@@ -212,35 +200,23 @@ describe('usage with mobx should generally work', () => {
     expect(reactor).to.have.callCount(42)
 
     expect(
-      treeUtils.lookup(['newEmptyFilter'], reactor.getCall(0).args[0])
+      F.compactObject(
+        treeUtils.lookup(['newEmptyFilter'], reactor.getCall(0).args[0])
+      )
     ).to.deep.equal({
       key: 'newEmptyFilter',
       type: 'facet',
-      lastUpdateTime: null,
       path: ['root', 'newEmptyFilter'],
-      error: null,
-      hasValue: null,
-      markedForUpdate: null,
-      missedUpdate: null,
-      updating: null,
       context: {},
-      paused: null,
     })
     expect(
-      _.omit(
-        ['lastUpdateTime'],
+      _.flow(_.omit(['lastUpdateTime']), F.compactObject)(
         treeUtils.lookup(['newEmptyFilter'], reactor.getCall(1).args[0])
       )
     ).to.deep.equal({
       key: 'newEmptyFilter',
       type: 'facet',
-      error: null,
-      hasValue: 0,
-      updating: null,
       context: {},
-      paused: null,
-      markedForUpdate: null,
-      missedUpdate: null,
       path: ['root', 'newEmptyFilter'],
     })
 
@@ -251,23 +227,18 @@ describe('usage with mobx should generally work', () => {
       )
     ).to.equal(undefined)
     expect(
-      treeUtils.lookup(
-        ['newFilterWithValueForRemoveTest'],
-        reactor.getCall(23).args[0]
+      F.compactObject(
+        treeUtils.lookup(
+          ['newFilterWithValueForRemoveTest'],
+          reactor.getCall(23).args[0]
+        )
       )
     ).to.deep.equal({
       key: 'newFilterWithValueForRemoveTest',
       type: 'facet',
       values: 'asdf',
-      lastUpdateTime: null,
       path: ['root', 'newFilterWithValueForRemoveTest'],
-      error: null,
       hasValue: 4,
-      markedForUpdate: null,
-      missedUpdate: null,
-      updating: null,
-      context: null,
-      paused: null,
     })
     disposer()
   })
