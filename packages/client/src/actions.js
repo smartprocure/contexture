@@ -1,20 +1,17 @@
 import _ from 'lodash/fp'
 import { encode } from './util/tree'
-import { setState } from './state'
 import { pullOn } from 'futil-js'
+import { initNode } from './node'
 
 export default ({ getNode, flat, dispatch, snapshot, types, extend }) => ({
-  async add(parentPath, value) {
+  async add(parentPath, node) {
     let target = getNode(parentPath)
-    let path = [...parentPath, value.key]
-    setState([value], extend)
-    extend(value, { path })
-    let init = _.get([value.type, 'init'], types)
-    if (_.isFunction(init)) init(value, extend)
-    target.children.push(value)
+    let path = [...parentPath, node.key]
+    initNode(node, path, extend, types)
+    target.children.push(node)
     // Need this nonsense to support the case where push actually mutates, e.g. a mobx observable tree
     flat[encode(path)] = target.children[target.children.length - 1]
-    return dispatch({ type: 'add', path, value })
+    return dispatch({ type: 'add', path, node })
   },
   async remove(path) {
     let previous = getNode(path)
