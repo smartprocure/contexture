@@ -1,4 +1,4 @@
-# contexture-client
+﻿# contexture-client
 The Contexture (aka ContextTree) Client
 
 [![npm version](https://badge.fury.io/js/contexture-client.svg)](https://badge.fury.io/js/contexture-client)
@@ -29,7 +29,7 @@ You can think of the client as a pub/sub system with prebuilt subscribers that c
   - Keeps track of if it missed updates, allowing it to know if it needs to update on resume or not
 - Per node async validation
   - Node types can implement a function to have a node instance pass (return true), be ignored for the search (return false), or block the search (throw)
-- Stopping blank searches and eliminating blank nodes (nodes without values)
+- Eliminating blank nodes (nodes without values)
 - Per Node Loading Indicators
 - Intelligent Search Debouncing (global debounce and optional per node pausing until results come back)
 - Dropping intermediate (stale) responses
@@ -62,7 +62,6 @@ The following config options are available:
 | types      | ClientTypeSpec                 | exampleTypes | Configuration of available types (documented below) |
 | debounce   | number                         | 1            | How many milliseconds to globally debounce search |
 | onResult   | (path, response, target) => {} |  _.noop      | A hook to capture when the client updates a node with results from the server |
-| allowBlank | boolean                        | false        | Whether or not the client will run blank searches |
 | debug      | boolean                        | false        | Debug mode will log all dispatched events and generally help debugging |
 | extend     | function                       | F.extendOn   | Used to mutate nodes internally |
 | snapshot   | function                       | _.cloneDeep  | Used to take snapshots |
@@ -75,6 +74,9 @@ This is the general structure:
 ```js
 {
   TypeName: {
+    init: (node, extend) => {
+      // Do stuff like extend the node with some default properties
+    },
     validate: async node => true || false || throw Exception()
     reactors: {
       fieldName: 'reactor',
@@ -96,10 +98,6 @@ When picking field reactors, you should use the `others` reactor for things that
 - hasValue
 - lastUpdateTime
 - context
-- data*
-- config*
-
-Data and config are special in that you can put properties inside them, and they will automatically have `others` or a `self` reactor, respectively.
 
 ### Run Time
 The following methods are exposed on an instantiated client
@@ -142,7 +140,6 @@ For those familiar with the previous client implementation (`DataContext`/`Conte
   - Check if the update should be blocked
     - There may be no affected nodes
     - Some nodes might have erros on validation
-    - There may be no nodes that have values and the config doesn't allow blank searches
   - Prepare for update - on each node that's markedForUpdate:
     - Set the lastUpdateTime to now (to enable dropping stale results later in this process)
     - Set `updating` to true

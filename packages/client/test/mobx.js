@@ -1,4 +1,5 @@
 import { Tree } from '../src/util/tree'
+import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import chai from 'chai'
 import sinon from 'sinon'
@@ -27,9 +28,8 @@ describe('usage with mobx should generally work', () => {
     children: [
       {
         key: 'filter',
-        data: {
-          values: [1, 2],
-        },
+        type: 'facet',
+        values: [1, 2],
       },
       {
         key: 'results',
@@ -56,12 +56,11 @@ describe('usage with mobx should generally work', () => {
             },
           ],
         },
-        config: {
-          size: 20,
-        },
+        size: 20,
       },
       {
         key: 'filter',
+        type: 'facet',
       },
     ],
   }
@@ -75,9 +74,7 @@ describe('usage with mobx should generally work', () => {
   it('should generally mutate and have updated contexts', async () => {
     let disposer = reaction(() => toJS(tree), reactor)
     await Tree.mutate(['root', 'filter'], {
-      data: {
-        values: ['a'],
-      },
+      values: ['a'],
     })
     expect(service).to.have.callCount(1)
     let [dto, now] = service.getCall(0).args
@@ -87,9 +84,8 @@ describe('usage with mobx should generally work', () => {
       children: [
         {
           key: 'filter',
-          data: {
-            values: ['a'],
-          },
+          type: 'facet',
+          values: ['a'],
           filterOnly: true,
         },
         {
@@ -99,15 +95,15 @@ describe('usage with mobx should generally work', () => {
         },
       ],
     })
-    expect(reactor).to.have.callCount(2)
+    expect(reactor).to.satisfy(x => x.callCount > 1)
     disposer()
     expect(
-      treeUtils.lookup(['filter'], reactor.getCall(0).args[0])
+      F.compactObject(treeUtils.lookup(['filter'], reactor.getCall(1).args[0]))
     ).to.deep.equal({
       key: 'filter',
-      data: {
-        values: ['a'],
-      },
+      type: 'facet',
+      values: ['a'],
+      hasValue: 1,
       path: ['root', 'filter'],
     })
     // should update contexts
@@ -124,7 +120,7 @@ describe('usage with mobx should generally work', () => {
       ],
     })
     expect(
-      treeUtils.lookup(['results'], reactor.getCall(1).args[0]).context
+      treeUtils.lookup(['results'], reactor.lastCall.args[0]).context
     ).to.deep.equal({
       count: 1,
       results: [
@@ -144,23 +140,24 @@ describe('usage with mobx should generally work', () => {
     let disposer = reaction(() => toJS(tree), reactor)
     await Tree.add(['root'], {
       key: 'newFilter',
+      type: 'facet',
     })
     expect(service).to.have.callCount(0)
     await Tree.add(['root'], {
       key: 'newFilterWithValue',
-      data: {
-        values: 'asdf',
-      },
+      type: 'facet',
+      values: 'asdf',
     })
     expect(service).to.have.callCount(1)
-    expect(reactor).to.have.callCount(3)
+    expect(reactor).to.satisfy(x => x.callCount > 1)
     expect(
-      treeUtils.lookup(['newFilterWithValue'], reactor.getCall(1).args[0])
+      F.compactObject(
+        treeUtils.lookup(['newFilterWithValue'], reactor.getCall(2).args[0])
+      )
     ).to.deep.equal({
       key: 'newFilterWithValue',
-      data: {
-        values: 'asdf',
-      },
+      type: 'facet',
+      values: 'asdf',
       path: ['root', 'newFilterWithValue'],
     })
     disposer()
@@ -173,51 +170,54 @@ describe('usage with mobx should generally work', () => {
 
     await Tree.add(['root'], {
       key: 'newEmptyFilter',
+      type: 'facet',
       context: {},
     })
     expect(service).to.have.callCount(1)
-    expect(reactor).to.have.callCount(2)
+    expect(reactor).to.satisfy(x => x.callCount > 1)
     expect(Tree.getNode(['root', 'newEmptyFilter'])).to.exist
 
+    let previousCallCount = reactor.callCount
     await Tree.remove(['root', 'newEmptyFilter'])
     expect(service).to.have.callCount(1)
-    expect(reactor).to.have.callCount(3)
+    expect(reactor).to.satisfy(x => x.callCount > previousCallCount)
     expect(Tree.getNode(['root', 'newEmptyFilter'])).to.not.exist
 
+    previousCallCount = reactor.callCount
     await Tree.add(['root'], {
       key: 'newFilterWithValueForRemoveTest',
-      data: {
-        values: 'asdf',
-      },
+      type: 'facet',
+      values: 'asdf',
     })
     expect(service).to.have.callCount(2)
-    expect(reactor).to.have.callCount(5)
+    expect(reactor).to.satisfy(x => x.callCount > previousCallCount)
     expect(Tree.getNode(['root', 'newFilterWithValueForRemoveTest'])).to.exist
 
+    previousCallCount = reactor.callCount
     await Tree.remove(['root', 'newFilterWithValueForRemoveTest'])
     expect(Tree.getNode(['root', 'newFilterWithValueForRemoveTest'])).to.not
       .exist
     expect(service).to.have.callCount(3)
-    expect(reactor).to.have.callCount(7)
+    expect(reactor).to.satisfy(x => x.callCount > previousCallCount)
 
     expect(
-      treeUtils.lookup(['newEmptyFilter'], reactor.getCall(0).args[0])
+      F.compactObject(
+        treeUtils.lookup(['newEmptyFilter'], reactor.getCall(0).args[0])
+      )
     ).to.deep.equal({
       key: 'newEmptyFilter',
-      context: {},
+      type: 'facet',
       path: ['root', 'newEmptyFilter'],
+      context: {},
     })
     expect(
-      _.omit(
-        ['lastUpdateTime'],
+      _.flow(_.omit(['lastUpdateTime']), F.compactObject)(
         treeUtils.lookup(['newEmptyFilter'], reactor.getCall(1).args[0])
       )
     ).to.deep.equal({
       key: 'newEmptyFilter',
+      type: 'facet',
       context: {},
-      hasValue: false,
-      updating: true,
-      markedForUpdate: false,
       path: ['root', 'newEmptyFilter'],
     })
 
@@ -230,28 +230,9 @@ describe('usage with mobx should generally work', () => {
     expect(
       treeUtils.lookup(
         ['newFilterWithValueForRemoveTest'],
-        reactor.getCall(3).args[0]
+        reactor.lastCall.args[0]
       )
-    ).to.deep.equal({
-      key: 'newFilterWithValueForRemoveTest',
-      data: {
-        values: 'asdf',
-      },
-      path: ['root', 'newFilterWithValueForRemoveTest'],
-    })
-    expect(
-      treeUtils.lookup(
-        ['newFilterWithValueForRemoveTest'],
-        reactor.getCall(4).args[0]
-      )
-    ).to.deep.equal({
-      key: 'newFilterWithValueForRemoveTest',
-      hasValue: true,
-      data: {
-        values: 'asdf',
-      },
-      path: ['root', 'newFilterWithValueForRemoveTest'],
-    })
+    ).to.deep.equal(undefined)
     disposer()
   })
 
@@ -261,9 +242,7 @@ describe('usage with mobx should generally work', () => {
     let disposer = reaction(() => toJS(tree), reactor)
 
     await Tree.mutate(['root', 'filter'], {
-      data: {
-        values: [1, 2, 3],
-      },
+      values: [1, 2, 3],
     })
     expect(service).to.have.callCount(1)
     expect(
@@ -282,9 +261,7 @@ describe('usage with mobx should generally work', () => {
       },
     ]
     await Tree.mutate(['root', 'filter'], {
-      data: {
-        values: [1, 2, 3, 4],
-      },
+      values: [1, 2, 3, 4],
     })
     expect(service).to.have.callCount(2)
     expect(
