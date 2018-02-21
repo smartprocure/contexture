@@ -1,4 +1,5 @@
 import _ from 'lodash/fp'
+import * as F from 'futil-js'
 import { runTypeFunction } from './types'
 
 export let defaults = {
@@ -13,13 +14,10 @@ export let defaults = {
   paused: null,
 }
 
-// TOOD: Move this to futil
-let pickByIndexed = _.pickBy.convert({ cap: false })
-
 export let initNode = (node, path, extend, types) => {
   runTypeFunction(types, 'init', node, extend)
   extend(node, {
-    ...pickByIndexed((v, k) => _.isNil(node[k]), defaults),
+    ...F.pickByIndexed((v, k) => _.isNil(node[k]), defaults),
     path,
   })
 }
