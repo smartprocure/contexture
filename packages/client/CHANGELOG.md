@@ -4,7 +4,7 @@
 * Removed allowBlank.
 * Allowing types to have init functions that can extend each node.
 * Added an optional onChange function that gets called as soon as the extend function gets excecuted. It gets called with the node's path, the node and the changes received.
-* Changed defaultHasValue to check for other fields, such as data, values, value and query.
+* Removed defaultHasValue and added a validate function to each of the example types.
 * Cleaned up the code after the changes to have a single initialize function for each and every node, and also removed data even from the tests.
 
 # 2.1.1
