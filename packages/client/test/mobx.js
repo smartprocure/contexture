@@ -15,6 +15,7 @@ let ContextTreeMobx = (tree, service) =>
       service,
       snapshot: toJS,
       extend: extendObservable,
+      debug: true,
     },
     tree
   )
@@ -27,9 +28,8 @@ describe('usage with mobx should generally work', () => {
     children: [
       {
         key: 'filter',
-        data: {
-          values: [1, 2],
-        },
+        type: 'facet',
+        values: [1, 2],
       },
       {
         key: 'results',
@@ -62,6 +62,7 @@ describe('usage with mobx should generally work', () => {
       },
       {
         key: 'filter',
+        type: 'facet',
       },
     ],
   }
@@ -75,9 +76,7 @@ describe('usage with mobx should generally work', () => {
   it('should generally mutate and have updated contexts', async () => {
     let disposer = reaction(() => toJS(tree), reactor)
     await Tree.mutate(['root', 'filter'], {
-      data: {
-        values: ['a'],
-      },
+      values: ['a'],
     })
     expect(service).to.have.callCount(1)
     let [dto, now] = service.getCall(0).args
@@ -87,9 +86,8 @@ describe('usage with mobx should generally work', () => {
       children: [
         {
           key: 'filter',
-          data: {
-            values: ['a'],
-          },
+          type: 'facet',
+          values: ['a'],
           filterOnly: true,
         },
         {
@@ -105,17 +103,16 @@ describe('usage with mobx should generally work', () => {
       treeUtils.lookup(['filter'], reactor.getCall(1).args[0])
     ).to.deep.equal({
       key: 'filter',
+      type: 'facet',
       error: null,
       lastUpdateTime: null,
       context: null,
-      pause: null,
-      hasValue: true,
+      paused: null,
+      hasValue: 1,
       markedForUpdate: null,
       missedUpdate: null,
       updating: null,
-      data: {
-        values: ['a'],
-      },
+      values: ['a'],
       path: ['root', 'filter'],
     })
     // should update contexts
@@ -158,9 +155,7 @@ describe('usage with mobx should generally work', () => {
     await Tree.add(['root'], {
       key: 'newFilterWithValue',
       type: 'facet',
-      data: {
-        values: 'asdf',
-      },
+      values: 'asdf',
     })
     expect(service).to.have.callCount(1)
     expect(reactor).to.have.callCount(18)
@@ -176,10 +171,8 @@ describe('usage with mobx should generally work', () => {
       updating: null,
       lastUpdateTime: null,
       context: null,
-      pause: null,
-      data: {
-        values: 'asdf',
-      },
+      paused: null,
+      values: 'asdf',
       path: ['root', 'newFilterWithValue'],
     })
     disposer()
@@ -207,9 +200,7 @@ describe('usage with mobx should generally work', () => {
     await Tree.add(['root'], {
       key: 'newFilterWithValueForRemoveTest',
       type: 'facet',
-      data: {
-        values: 'asdf',
-      },
+      values: 'asdf',
     })
     expect(service).to.have.callCount(2)
     expect(reactor).to.have.callCount(26)
@@ -234,7 +225,7 @@ describe('usage with mobx should generally work', () => {
       missedUpdate: null,
       updating: null,
       context: {},
-      pause: null,
+      paused: null,
     })
     expect(
       _.omit(
@@ -245,10 +236,10 @@ describe('usage with mobx should generally work', () => {
       key: 'newEmptyFilter',
       type: 'facet',
       error: null,
-      hasValue: false,
+      hasValue: 0,
       updating: null,
       context: {},
-      pause: null,
+      paused: null,
       markedForUpdate: null,
       missedUpdate: null,
       path: ['root', 'newEmptyFilter'],
@@ -268,18 +259,16 @@ describe('usage with mobx should generally work', () => {
     ).to.deep.equal({
       key: 'newFilterWithValueForRemoveTest',
       type: 'facet',
-      data: {
-        values: 'asdf',
-      },
+      values: 'asdf',
       lastUpdateTime: null,
       path: ['root', 'newFilterWithValueForRemoveTest'],
       error: null,
-      hasValue: true,
+      hasValue: 4,
       markedForUpdate: null,
       missedUpdate: null,
       updating: null,
       context: null,
-      pause: null,
+      paused: null,
     })
     disposer()
   })
@@ -290,9 +279,7 @@ describe('usage with mobx should generally work', () => {
     let disposer = reaction(() => toJS(tree), reactor)
 
     await Tree.mutate(['root', 'filter'], {
-      data: {
-        values: [1, 2, 3],
-      },
+      values: [1, 2, 3],
     })
     expect(service).to.have.callCount(1)
     expect(
@@ -311,9 +298,7 @@ describe('usage with mobx should generally work', () => {
       },
     ]
     await Tree.mutate(['root', 'filter'], {
-      data: {
-        values: [1, 2, 3, 4],
-      },
+      values: [1, 2, 3, 4],
     })
     expect(service).to.have.callCount(2)
     expect(

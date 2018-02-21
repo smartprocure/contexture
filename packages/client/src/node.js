@@ -17,9 +17,9 @@ export let defaults = {
 let pickByIndexed = _.pickBy.convert({ cap: false })
 
 export let initNode = (node, path, extend, types) => {
-  runTypeFunction(types, 'init', node)
+  runTypeFunction(types, 'init', node, extend)
   extend(node, {
+    ...pickByIndexed((v, k) => _.isNil(node[k]), defaults),
     path,
-    ...pickByIndexed((v, k) => _.has(k, node), defaults),
   })
 }
