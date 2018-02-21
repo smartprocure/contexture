@@ -1,8 +1,10 @@
 import _ from 'lodash/fp'
 import { unsetOn } from 'futil-js'
 import { Tree } from './util/tree'
+import { defaults } from './node'
 
 let isFilterOnly = x => !x.children && (x.forceFilterOnly || !x.markedForUpdate)
+let getNilKeys = _.flow(_.pickBy(_.isNil), _.keys)
 
 export default (tree, { search } = {}) =>
   _.flow(
@@ -14,14 +16,8 @@ export default (tree, { search } = {}) =>
             if (!x.hasValue) x.markedForDeletion = true
           }
           _.each(unsetOn(_, x), [
-            'markedForUpdate',
-            'path',
-            'updating',
-            'paused',
-            'missedUpdate',
-            'hasValue',
-            'context',
-            ...(search ? [] : ['lastUpdateTime']),
+            ..._.keys(_.omit(search ? 'lastUpdateTime' : '', defaults)),
+            ...getNilKeys(x),
           ])
         },
         x => {

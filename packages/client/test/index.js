@@ -17,6 +17,7 @@ describe('lib', () => {
       children: [
         {
           key: 'filter',
+          type: 'facet',
         },
         {
           key: 'results',
@@ -28,9 +29,7 @@ describe('lib', () => {
     let Tree = lib.ContextTree({ service }, tree)
     it('should generally mutate', async () => {
       await Tree.mutate(['root', 'filter'], {
-        data: {
-          values: ['a'],
-        },
+        values: ['a'],
       })
       expect(service).to.have.callCount(1)
       let [dto, now] = service.getCall(0).args
@@ -40,9 +39,8 @@ describe('lib', () => {
         children: [
           {
             key: 'filter',
-            data: {
-              values: ['a'],
-            },
+            type: 'facet',
+            values: ['a'],
             filterOnly: true,
           },
           {
@@ -71,9 +69,8 @@ describe('lib', () => {
         children: [
           {
             key: 'filter',
-            data: {
-              values: ['a'],
-            },
+            type: 'facet',
+            values: ['a'],
           },
           {
             key: 'results',
@@ -85,9 +82,7 @@ describe('lib', () => {
     it('should remove filterOnly nodes with no value', async () => {
       service.reset()
       await Tree.mutate(['root', 'filter'], {
-        config: {
-          size: 10,
-        },
+        size: 10,
       })
       expect(service).to.have.callCount(1)
       let [dto, now] = service.getCall(0).args
@@ -98,30 +93,18 @@ describe('lib', () => {
         children: [
           {
             key: 'filter',
-            data: {
-              values: ['a'],
-            },
-            config: {
-              size: 10,
-            },
+            type: 'facet',
+            values: ['a'],
+            size: 10,
             lastUpdateTime: now,
           },
         ],
       })
     })
-    it('should block blank searches', async () => {
+    it('should not block blank searches', async () => {
       service.reset()
       await Tree.mutate(['root', 'filter'], {
-        data: {
-          values: [],
-        },
-      })
-      expect(service).to.have.callCount(0)
-      Tree.getNode(['root']).allowBlank = true
-      await Tree.mutate(['root', 'filter'], {
-        data: {
-          values: [],
-        },
+        values: [],
       })
       expect(service).to.have.callCount(1)
     })
@@ -138,9 +121,7 @@ describe('lib', () => {
     it('should handle join changes', async () => {
       service.reset()
       expect(service).to.have.callCount(0)
-      Tree.getNode(['root', 'filter']).data = {
-        values: ['real val'],
-      }
+      Tree.getNode(['root', 'filter']).values = ['real val']
       await Tree.mutate(['root'], {
         join: 'or',
       })
@@ -156,13 +137,13 @@ describe('lib', () => {
       service.reset()
       await Tree.add(['root'], {
         key: 'newFilter',
+        type: 'facet',
       })
       expect(service).to.have.callCount(0)
       await Tree.add(['root'], {
         key: 'newFilterWithValue',
-        data: {
-          values: 'asdf',
-        },
+        type: 'facet',
+        values: 'asdf',
       })
       expect(service).to.have.callCount(1)
     })
@@ -170,6 +151,7 @@ describe('lib', () => {
       service.reset()
       await Tree.add(['root'], {
         key: 'newEmptyFilter',
+        type: 'facet',
       })
       expect(service).to.have.callCount(0)
       expect(Tree.getNode(['root', 'newEmptyFilter'])).to.exist
@@ -179,9 +161,8 @@ describe('lib', () => {
 
       await Tree.add(['root'], {
         key: 'newFilterWithValueForRemoveTest',
-        data: {
-          values: 'asdf',
-        },
+        type: 'facet',
+        values: 'asdf',
       })
       expect(service).to.have.callCount(1)
       expect(Tree.getNode(['root', 'newFilterWithValueForRemoveTest'])).to.exist
@@ -211,9 +192,7 @@ describe('lib', () => {
         paused: true,
       })
       await Tree.mutate(['root', 'filter'], {
-        config: {
-          size: 42,
-        },
+        size: 42,
       })
       expect(service).to.have.callCount(1)
       expect(Tree.getNode(['root', 'filter']).paused).to.be.true
@@ -236,6 +215,7 @@ describe('lib', () => {
         children: [
           {
             key: 'filter',
+            type: 'facet',
           },
           {
             key: 'results',
@@ -245,9 +225,7 @@ describe('lib', () => {
     )
     try {
       await Tree.mutate(['root', 'filter'], {
-        data: {
-          values: ['cable'],
-        },
+        values: ['cable'],
       })
     } catch (e) {
       expect(e.message).to.equal('No update service provided!')
@@ -292,39 +270,14 @@ describe('lib', () => {
                 key: 'agencies',
                 field: 'Organization.Name',
                 type: 'facet',
-                data: {
-                  values: ['City of Deerfield'],
-                },
-                config: {
-                  size: 24,
-                },
+                lastUpdateTime: null,
+                values: ['City of Deerfield'],
+                size: 24,
               },
               {
                 key: 'mainQuery',
                 type: 'query',
-                data: {
-                  query: 'cable internet~',
-                },
-              },
-              {
-                key: 'noValue',
-                type: 'facet',
-                data: {
-                  values: [],
-                },
-              },
-              {
-                key: 'uselessGroup',
-                join: 'and',
-                children: [
-                  {
-                    key: 'uselessChild',
-                    type: 'facet',
-                    data: {
-                      values: [],
-                    },
-                  },
-                ],
+                query: 'cable internet~',
               },
             ],
           },
@@ -333,9 +286,7 @@ describe('lib', () => {
     )
 
     await Tree.mutate(['root', 'criteria', 'mainQuery'], {
-      data: {
-        query: 'cable',
-      },
+      query: 'cable',
     })
     expect(service).to.have.callCount(1)
     let [dto, now] = service.getCall(0).args
@@ -363,20 +314,14 @@ describe('lib', () => {
               key: 'agencies',
               field: 'Organization.Name',
               type: 'facet',
-              data: {
-                values: ['City of Deerfield'],
-              },
-              config: {
-                size: 24,
-              },
+              values: ['City of Deerfield'],
+              size: 24,
               filterOnly: true,
             },
             {
               key: 'mainQuery',
               type: 'query',
-              data: {
-                query: 'cable',
-              },
+              query: 'cable',
               filterOnly: true,
             },
           ],
@@ -391,6 +336,7 @@ describe('lib', () => {
       children: [
         {
           key: 'filter',
+          type: 'facet',
         },
         {
           key: 'results',
@@ -399,7 +345,7 @@ describe('lib', () => {
       ],
     }
     let service = sinon.spy(async (dto, lastUpdateTime) => {
-      let testChange = dto.children[0].data.values[0]
+      let testChange = dto.children[0].values[0]
       // arbitrarily delay the first call to trigger a stale update
       await Promise.delay(testChange === 'a' ? 20 : 1)
       return mockService()(dto, lastUpdateTime)
@@ -416,22 +362,18 @@ describe('lib', () => {
       tree
     )
     let step1 = Tree.mutate(['root', 'filter'], {
-      data: {
-        values: ['a'],
-      },
+      values: ['a'],
     })
     // Give it enough time for the core to trigger a search for step 1 (but not awaiting step1 because that would also wait for the service)
     await Promise.delay(10)
     let step2 = Tree.mutate(['root', 'filter'], {
-      data: {
-        values: ['b'],
-      },
+      values: ['b'],
     })
     await Promise.all([step1, step2])
     expect(spy).to.have.callCount(1)
   })
   it('should support custom type reactors', async () => {
-    let service = sinon.spy(mockService({}))
+    let service = sinon.spy(mockService())
     let resultsUpdated = sinon.spy()
     let filterUpdated = sinon.spy()
     let onResult = _.cond([
@@ -480,7 +422,32 @@ describe('lib', () => {
     expect(resultsUpdated).to.have.callCount(1)
     expect(filterUpdated).to.have.callCount(1)
   })
-  it('should custom type reactors should work with and without data, and nested', async () => {
+  it('should support custom type initializers', async () => {
+    let testInit = sinon.spy((node, extend) =>
+      extend(node, { isExtended: true })
+    )
+    let Tree = lib.ContextTree(
+      {
+        types: {
+          testType: {
+            init: testInit,
+          },
+        },
+      },
+      {
+        key: 'root',
+        children: [
+          {
+            key: 'filter',
+            type: 'testType',
+          },
+        ],
+      }
+    )
+    expect(testInit).to.have.callCount(1)
+    expect(Tree.getNode(['root', 'filter']).isExtended).to.be.true
+  })
+  it('should custom type reactors should work with and without values, and nested', async () => {
     let service = sinon.spy(mockService({}))
     let resultsUpdated = sinon.spy()
     let filterUpdated = sinon.spy()
@@ -508,9 +475,7 @@ describe('lib', () => {
           {
             key: 'filter',
             type: 'testType',
-            data: {
-              value: null,
-            },
+            value: null,
           },
           {
             key: 'filterNoData',
@@ -524,9 +489,7 @@ describe('lib', () => {
               {
                 key: 'filterChild',
                 type: 'testType',
-                data: {
-                  value: null,
-                },
+                value: null,
               },
             ],
           },
@@ -541,9 +504,7 @@ describe('lib', () => {
       }
     )
     await Tree.mutate(['root', 'filter'], {
-      data: {
-        value: 'z',
-      },
+      value: 'z',
     })
     expect(service).to.have.callCount(1)
     expect(resultsUpdated).to.have.callCount(1)
