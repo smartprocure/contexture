@@ -61,6 +61,7 @@ The following config options are available:
 | service    | function                       | n/a          | **Required** Async function to actually get service results (from the contexture server). An exception will be thrown if this is not passed in. |
 | types      | ClientTypeSpec                 | exampleTypes | Configuration of available types (documented below) |
 | debounce   | number                         | 1            | How many milliseconds to globally debounce search |
+| onChange   | (node, changes) => {}          |  _.noop      | A hook to capture when the client changes any property on a node |
 | onResult   | (path, response, target) => {} |  _.noop      | A hook to capture when the client updates a node with results from the server |
 | debug      | boolean                        | false        | Debug mode will log all dispatched events and generally help debugging |
 | extend     | function                       | F.extendOn   | Used to mutate nodes internally |
