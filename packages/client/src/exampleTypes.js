@@ -3,7 +3,6 @@ import _ from 'lodash/fp'
 let validateValues = ({ value, values = [] }) => value || values.length
 
 export default {
-  default: {},
   facet: {
     validate: validateValues,
     reactors: {
@@ -38,7 +37,7 @@ export default {
     },
   },
   number: {
-    validate: x => !_.isNil(x.min || x.max),
+    validate: x => !_.isNil(x.min) || !_.isNil(x.max),
     reactors: {
       min: 'others',
       max: 'others',

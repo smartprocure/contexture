@@ -82,9 +82,7 @@ describe('lib', () => {
     it('should remove filterOnly nodes with no value', async () => {
       service.reset()
       await Tree.mutate(['root', 'filter'], {
-        config: {
-          size: 10,
-        },
+        size: 10,
       })
       expect(service).to.have.callCount(1)
       let [dto, now] = service.getCall(0).args
@@ -97,9 +95,7 @@ describe('lib', () => {
             key: 'filter',
             type: 'facet',
             values: ['a'],
-            config: {
-              size: 10,
-            },
+            size: 10,
             lastUpdateTime: now,
           },
         ],
@@ -196,9 +192,7 @@ describe('lib', () => {
         paused: true,
       })
       await Tree.mutate(['root', 'filter'], {
-        config: {
-          size: 42,
-        },
+        size: 42,
       })
       expect(service).to.have.callCount(1)
       expect(Tree.getNode(['root', 'filter']).paused).to.be.true
@@ -278,9 +272,7 @@ describe('lib', () => {
                 type: 'facet',
                 lastUpdateTime: null,
                 values: ['City of Deerfield'],
-                config: {
-                  size: 24,
-                },
+                size: 24,
               },
               {
                 key: 'mainQuery',
@@ -323,9 +315,7 @@ describe('lib', () => {
               field: 'Organization.Name',
               type: 'facet',
               values: ['City of Deerfield'],
-              config: {
-                size: 24,
-              },
+              size: 24,
               filterOnly: true,
             },
             {

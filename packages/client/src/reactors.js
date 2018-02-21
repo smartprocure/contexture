@@ -33,7 +33,6 @@ let reactors = {
 
 export let StandardReactors = {
   refresh: reactors.all,
-  config: reactors.self,
   join(parent, node, { previous }) {
     let childrenWithValues = _.filter(hadValue, node.children)
     let joinInverted = node.join === 'not' || previous.join === 'not'
