@@ -20,7 +20,7 @@ export default ({ getNode, flat, dispatch, snapshot, types, extend }) => ({
     delete flat[encode(path)]
     return dispatch({ type: 'remove', path, previous })
   },
-  async mutate(path, value) {
+  mutate: _.curry(async (path, value) => {
     let target = getNode(path)
     let previous = snapshot(_.omit('children', target))
     extend(target, value)
@@ -31,6 +31,6 @@ export default ({ getNode, flat, dispatch, snapshot, types, extend }) => ({
       value,
       node: target,
     })
-  },
+  }),
   refresh: path => dispatch({ type: 'refresh', path }),
 })
