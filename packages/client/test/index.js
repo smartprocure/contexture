@@ -26,7 +26,7 @@ describe('lib', () => {
       ],
     }
     let service = sinon.spy(mockService())
-    let Tree = lib.ContextTree({ service }, tree)
+    let Tree = lib.ContextTree({ service, debounce: 1 }, tree)
     it('should generally mutate', async () => {
       await Tree.mutate(['root', 'filter'], {
         values: ['a'],
@@ -209,7 +209,9 @@ describe('lib', () => {
   })
   it('should throw if no service is provided', async () => {
     let Tree = lib.ContextTree(
-      {},
+      {
+        debounce: 1,
+      },
       {
         key: 'root',
         children: [
@@ -247,7 +249,7 @@ describe('lib', () => {
   it('should work', async () => {
     let service = sinon.spy(mockService())
     let Tree = lib.ContextTree(
-      { service },
+      { service, debounce: 1 },
       {
         key: 'root',
         join: 'and',
@@ -357,6 +359,7 @@ describe('lib', () => {
     let Tree = lib.ContextTree(
       {
         service,
+        debounce: 1,
         onResult,
       },
       tree
@@ -383,6 +386,7 @@ describe('lib', () => {
 
     let Tree = lib.ContextTree(
       {
+        debounce: 1,
         types: {
           testType: {
             reactors: {
@@ -428,6 +432,7 @@ describe('lib', () => {
     )
     let Tree = lib.ContextTree(
       {
+        debounce: 1,
         types: {
           testType: {
             init: testInit,
@@ -458,6 +463,7 @@ describe('lib', () => {
 
     let Tree = lib.ContextTree(
       {
+        debounce: 1,
         types: {
           testType: {
             reactors: {
