@@ -1,4 +1,8 @@
-﻿# 2.2.1
+﻿# 2.2.2
+* Made the mutate action to be curried
+* Defined a default debounce time
+
+# 2.2.1
 * Added a comment about onChange on the readme.
 
 # 2.2.0
