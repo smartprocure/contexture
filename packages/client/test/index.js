@@ -528,4 +528,45 @@ describe('lib', () => {
     expect(resultsUpdated).to.have.callCount(3)
     expect(filterUpdated).to.have.callCount(2)
   })
+  it('Tree lenses should work', async () => {
+    let service = sinon.spy(mockService({}))
+    let resultsUpdated = sinon.spy()
+    let filterUpdated = sinon.spy()
+    let onResult = _.cond([
+      [_.isEqual(['root', 'results']), resultsUpdated],
+      [_.isEqual(['root', 'filter']), filterUpdated],
+    ])
+
+    let Tree = lib.ContextTree(
+      {
+        debounce: 1,
+        onResult,
+        service,
+      },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'filter',
+            type: 'facet',
+            values: null
+          },
+          {
+            key: 'results',
+            type: 'results',
+            context: {
+              results: null,
+            },
+          },
+        ],
+      }
+    )
+    let lens = Tree.lens(['root', 'filter'])('values')
+    expect(lens.get()).to.equal(null)
+    await lens.set(['values'])
+    expect(lens.get()).to.deep.equal(['values'])
+    expect(filterUpdated).to.have.callCount(0)
+    expect(resultsUpdated).to.have.callCount(1)
+  })
 })
