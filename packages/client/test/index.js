@@ -550,7 +550,7 @@ describe('lib', () => {
           {
             key: 'filter',
             type: 'facet',
-            values: null
+            values: null,
           },
           {
             key: 'results',
