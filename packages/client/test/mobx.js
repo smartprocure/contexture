@@ -14,6 +14,7 @@ let ContextTreeMobx = (tree, service) =>
   lib.ContextTree(
     {
       service,
+      debounce: 1,
       snapshot: toJS,
       extend: extendObservable,
     },
