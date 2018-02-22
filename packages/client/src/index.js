@@ -35,7 +35,7 @@ export let ContextTree = _.curry(
     {
       service = defaultService,
       types = Types,
-      debounce = 1,
+      debounce = 500,
       onResult = _.noop,
       debug,
       extend = F.extendOn,
