@@ -30,17 +30,22 @@ module.exports = {
       from = datemath.parse(from)
       to = datemath.parse(to)
     }
+    let gte = from
+    let lte = to
+
+    let getDateIfValid = x =>
+      moment.utc(new Date(x)).isValid() &&
+      moment.utc(new Date(x)).format('YYYY-MM-DD')
+
+    if (!context.useRaw) {
+      gte = getDateIfValid(from)
+      lte = getDateIfValid(to)
+    }
     return {
       range: {
         [context.field]: _.pickBy(_.identity, {
-          gte:
-            from &&
-            moment.utc(new Date(from)).isValid() &&
-            moment.utc(new Date(from)).format('YYYY-MM-DD'),
-          lte:
-            to &&
-            moment.utc(new Date(to)).isValid() &&
-            moment.utc(new Date(to)).format('YYYY-MM-DD'),
+          gte,
+          lte,
           // Only force date formatting on the date range filter.
           format: 'dateOptionalTime',
         }),
