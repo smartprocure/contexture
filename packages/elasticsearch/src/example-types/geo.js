@@ -1,11 +1,13 @@
 let _ = require('lodash/fp')
 let Promise = require('bluebird')
 
-let geo = ({
-  geocodeLocation = () => {
-    throw new Error('Geo filter was not passed a geocode service')
-  },
-} = {}) => ({
+let geo = (
+  {
+    geocodeLocation = () => {
+      throw new Error('Geo filter was not passed a geocode service')
+    },
+  } = {}
+) => ({
   hasValue: context =>
     !!(context.location && context.radius && context.operator),
   filter: context =>
