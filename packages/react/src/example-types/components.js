@@ -5,7 +5,8 @@ import { observer, inject } from 'mobx-react'
 import { Flex } from './Flex'
 
 // For futil-js
-let toggleElement = (check, val, arr = []) => (check ? _.pull : F.push)(val, arr)
+let toggleElement = (check, val, arr = []) =>
+  (check ? _.pull : F.push)(val, arr)
 
 export let Styles = () => (
   <style>
