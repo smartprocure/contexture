@@ -1,15 +1,15 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
-import {observer, inject} from 'mobx-react'
-import {Flex} from './Flex'
+import { observer, inject } from 'mobx-react'
+import { Flex } from './Flex'
 
 // For futil-js
 let toggleElement = (check, val, arr) => (check ? _.pull : F.push)(val, arr)
 
 export let Styles = () => (
   <style>
-{`.contexture-search-box:focus {
+    {`.contexture-search-box:focus {
   background: rgba(255, 255, 255, 1);
   outline: none;
 }
@@ -30,13 +30,13 @@ export let Styles = () => (
   </style>
 )
 
-export let InjectTreeNode = inject(({tree: t1}, {tree = t1, path}) => ({
+export let InjectTreeNode = inject(({ tree: t1 }, { tree = t1, path }) => ({
   tree,
   node: tree.getNode(path),
 }))
 
 export let Facet = InjectTreeNode(
-  observer(({tree, node, hide = {}, ...props}) => (
+  observer(({ tree, node, hide = {}, ...props }) => (
     <div {...props}>
       {!hide.facetFilter && (
         <input
@@ -44,17 +44,18 @@ export let Facet = InjectTreeNode(
           type="text"
           value={node.optionsFilter}
           onChange={e =>
-            tree.mutate(node.path, {optionsFilter: e.target.value})
+            tree.mutate(node.path, { optionsFilter: e.target.value })
           }
           placeholder="Find..."
         />
       )}
-      {_.map(({name, count}) => {
+      {_.map(({ name, count }) => {
         let checked = _.includes(name, node.values)
         return (
           <Flex
             key={name}
-            style={{justifyContent: 'space-between', alignItems: 'baseline'}}>
+            style={{ justifyContent: 'space-between', alignItems: 'baseline' }}
+          >
             <input
               type="checkbox"
               onChange={() => {
@@ -64,7 +65,7 @@ export let Facet = InjectTreeNode(
               }}
               checked={checked}
             />
-            <div style={{flex: 2, paddingLeft: '5px', paddingRight: '5px'}}>
+            <div style={{ flex: 2, paddingLeft: '5px', paddingRight: '5px' }}>
               {name}
             </div>
             <div>{count}</div>
@@ -76,30 +77,30 @@ export let Facet = InjectTreeNode(
 )
 
 export let Range = InjectTreeNode(
-  observer(({tree, node, ...props}) => (
+  observer(({ tree, node, ...props }) => (
     <Flex {...props}>
       <input
         className="contexture-search-box"
         type="number"
         value={node.min}
-        onChange={e => tree.mutate(node.path, {min: e.target.value})}
+        onChange={e => tree.mutate(node.path, { min: e.target.value })}
       />
       <div>-</div>
       <input
         className="contexture-search-box"
         type="number"
         value={node.max}
-        onChange={e => tree.mutate(node.path, {max: e.target.value})}
+        onChange={e => tree.mutate(node.path, { max: e.target.value })}
       />
     </Flex>
   ))
 )
 
 export let Query = InjectTreeNode(
-  observer(({tree, node, style, ...props}) => (
+  observer(({ tree, node, style, ...props }) => (
     <input
       className="contexture-search-box"
-      style={{padding: '15px', ...style}}
+      style={{ padding: '15px', ...style }}
       value={node.query}
       onChange={e =>
         tree.mutate(node.path, {
@@ -113,8 +114,8 @@ export let Query = InjectTreeNode(
 )
 
 export let ResultCount = InjectTreeNode(
-  observer(({node, ...props}) => (
-    <div style={{textAlign: 'center'}} {...props}>
+  observer(({ node, ...props }) => (
+    <div style={{ textAlign: 'center' }} {...props}>
       {node.context.response.results.length
         ? `Viewing records ${node.context.response.startRecord} - ${
             node.context.response.endRecord
@@ -125,25 +126,32 @@ export let ResultCount = InjectTreeNode(
 )
 
 export let DateHistogram = InjectTreeNode(
-  observer(({node, format=_.identity, height = 100, background = () => '#ccc'}) => {
-    let max = _.get('count', _.maxBy('count', node.context.entries))
-    return (
-      <Flex style={{alignItems: 'baseline', justifyContent: 'center'}}>
-        {_.map(
-          x => (
-            <div key={x.key}>
-              <div
-                style={{
-                  height: x.count / max * height,
-                  background: background(x, max),
-                }}
-              />
-              <div style={{padding: '5px'}}>{format(x.key)}</div>
-            </div>
-          ),
-          node.context.entries
-        )}
-      </Flex>
-    )
-  })
+  observer(
+    ({
+      node,
+      format = _.identity,
+      height = 100,
+      background = () => '#ccc',
+    }) => {
+      let max = _.get('count', _.maxBy('count', node.context.entries))
+      return (
+        <Flex style={{ alignItems: 'baseline', justifyContent: 'center' }}>
+          {_.map(
+            x => (
+              <div key={x.key}>
+                <div
+                  style={{
+                    height: x.count / max * height,
+                    background: background(x, max),
+                  }}
+                />
+                <div style={{ padding: '5px' }}>{format(x.key)}</div>
+              </div>
+            ),
+            node.context.entries
+          )}
+        </Flex>
+      )
+    }
+  )
 )

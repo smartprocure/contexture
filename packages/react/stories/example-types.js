@@ -1,8 +1,8 @@
 import React from 'react'
-import {observable, extendObservable} from 'mobx'
-import {observer, Provider} from 'mobx-react'
-import {storiesOf} from '@storybook/react'
-import {action} from '@storybook/addon-actions'
+import { observable, extendObservable } from 'mobx'
+import { observer, Provider } from 'mobx-react'
+import { storiesOf } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
 
 let tree = observable({
   facet: {
@@ -141,8 +141,8 @@ let testTree = {
 }
 import SpacedList from '../src/example-types/SpacedList'
 let Results = InjectTreeNode(
-  observer(({node}) => (
-    <Flex style={{alignItems: 'baseline', justifyContent: 'center'}}>
+  observer(({ node }) => (
+    <Flex style={{ alignItems: 'baseline', justifyContent: 'center' }}>
       <table>
         <thead>
           <tr>
@@ -151,7 +151,7 @@ let Results = InjectTreeNode(
           </tr>
         </thead>
         <tbody>
-          {node.context.response.results.map(({_id, title}) => (
+          {node.context.response.results.map(({ _id, title }) => (
             <tr key={_id}>
               <td>{_id}</td>
               <td>{title}</td>
@@ -172,38 +172,40 @@ import {
   InjectTreeNode,
   Styles,
 } from '../src/example-types/components'
-import {Flex} from '../src/example-types/Flex'
+import { Flex } from '../src/example-types/Flex'
 
-export default () => storiesOf('Example Types', module).add('Example Components', () => (
-  <div
-    style={{
-      backgroundColor: '#333',
-      color: '#AAA',
-      padding: '20px',
-      borderRadius: '10px',
-    }}>
-    <Styles />
-    <Provider tree={testTree}>
-      <SpacedList>
-        <Query path={['query']} />
-        <Flex>
-          <div style={{flex: 1}}>
-            <SpacedList>
-              <Facet path={['facet']} />
-              <Facet path={['facet']} />
-              <Range path={['range']} />
-              <Range path={['range']} />
-            </SpacedList>
-          </div>
-          <div style={{flex: 4}}>
-            <SpacedList>
-              <DateHistogram path={['dateHistogram']} format={formatYear} />
-              <ResultCount path={['results']} />
-              <Results path={['results']} />
-            </SpacedList>
-          </div>
-        </Flex>
-      </SpacedList>
-    </Provider>
-  </div>
-))
+export default () =>
+  storiesOf('Example Types', module).add('Example Components', () => (
+    <div
+      style={{
+        backgroundColor: '#333',
+        color: '#AAA',
+        padding: '20px',
+        borderRadius: '10px',
+      }}
+    >
+      <Styles />
+      <Provider tree={testTree}>
+        <SpacedList>
+          <Query path={['query']} />
+          <Flex>
+            <div style={{ flex: 1 }}>
+              <SpacedList>
+                <Facet path={['facet']} />
+                <Facet path={['facet']} />
+                <Range path={['range']} />
+                <Range path={['range']} />
+              </SpacedList>
+            </div>
+            <div style={{ flex: 4 }}>
+              <SpacedList>
+                <DateHistogram path={['dateHistogram']} format={formatYear} />
+                <ResultCount path={['results']} />
+                <Results path={['results']} />
+              </SpacedList>
+            </div>
+          </Flex>
+        </SpacedList>
+      </Provider>
+    </div>
+  ))
