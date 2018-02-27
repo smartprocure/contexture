@@ -173,7 +173,8 @@ import {
   Styles,
 } from '../src/example-types/components'
 import {Flex} from '../src/example-types/Flex'
-storiesOf('Example Types', module).add('Example Components', () => (
+
+export default () => storiesOf('Example Types', module).add('Example Components', () => (
   <div
     style={{
       backgroundColor: '#333',
