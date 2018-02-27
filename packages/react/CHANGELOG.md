@@ -1,3 +1,6 @@
+# 0.3.0
+* Add real exapmle type components
+
 # 0.2.1
 * Fix snapshots
 
