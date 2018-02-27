@@ -33,12 +33,7 @@ let searchResults = async (search, field, min, max, percentileInterval) => {
           all_percentiles: {
             percentiles: {
               field,
-              percents: [
-                0,
-                percentileInterval,
-                100 - percentileInterval,
-                100,
-              ],
+              percents: [0, percentileInterval, 100 - percentileInterval, 100],
             },
           },
         },
@@ -52,10 +47,7 @@ let searchResults = async (search, field, min, max, percentileInterval) => {
     intervalMin: mappedResult[percentileInterval],
     intervalMax: mappedResult[100 - percentileInterval],
   }))(
-    _.get(
-      'aggregations.range_filter.all_percentiles.values',
-      statisticalResult
-    )
+    _.get('aggregations.range_filter.all_percentiles.values', statisticalResult)
   )
 
   let statistical = _.get(
@@ -72,7 +64,17 @@ let searchResults = async (search, field, min, max, percentileInterval) => {
 module.exports = {
   hasValue: context => !_.isNil(context.min) || !_.isNil(context.max),
   filter: ({ field, min, max }) => rangeFilter(field, min, max),
-  async result({ field, min, max, percentileInterval = 1, rangeThreshold, findBestRange = false }, search) {
+  async result(
+    {
+      field,
+      min,
+      max,
+      percentileInterval = 1,
+      rangeThreshold,
+      findBestRange = false,
+    },
+    search
+  ) {
     let results
 
     if (findBestRange) {
@@ -84,14 +86,24 @@ module.exports = {
       let iterationCount = 1
 
       while (hasMaxOutlier || hasMaxOutlier || iterationCount <= maxIteration) {
-        results = await searchResults(search, field, minValue, maxValue, percentileInterval)
+        results = await searchResults(
+          search,
+          field,
+          minValue,
+          maxValue,
+          percentileInterval
+        )
         let { statistical, percentiles } = results
         let rangeMin = _.get('min', statistical)
         let rangeMax = _.get('max', statistical)
-        hasMaxOutlier = percentiles &&
-          ((rangeMax - percentiles.intervalMax) / (rangeMax - rangeMin) > rangeThreshold)
-        hasMinOutlier = percentiles &&
-          ((percentiles.intervalMin - rangeMin) / (rangeMax - rangeMin) > rangeThreshold)
+        hasMaxOutlier =
+          percentiles &&
+          (rangeMax - percentiles.intervalMax) / (rangeMax - rangeMin) >
+            rangeThreshold
+        hasMinOutlier =
+          percentiles &&
+          (percentiles.intervalMin - rangeMin) / (rangeMax - rangeMin) >
+            rangeThreshold
         if (hasMaxOutlier) {
           maxValue = percentiles.intervalMax
         }
@@ -105,8 +117,8 @@ module.exports = {
       results = _.extend(results, {
         extremes: {
           min: minValue,
-          max: maxValue
-        }
+          max: maxValue,
+        },
       })
     } else {
       results = await searchResults(search, field, min, max, percentileInterval)
