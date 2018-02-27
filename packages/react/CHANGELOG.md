@@ -1,3 +1,6 @@
+# 0.3.1
+* Fix facet bug
+
 # 0.3.0
 * Add real exapmle type components
 
