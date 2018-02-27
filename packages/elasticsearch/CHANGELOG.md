@@ -1,4 +1,7 @@
-﻿### 0.6.8
+﻿### 0.6.9
+* Introducing new example type number range histogram.
+* Number now supports find best functionality.
+### 0.6.8
 * Added the context property useRaw to step out of date formattings on the date example type.
 ### 0.6.7
 * Fixed Number type bug where min and max values were ignored if passed as strings.
