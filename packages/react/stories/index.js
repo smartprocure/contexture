@@ -322,3 +322,5 @@ storiesOf('SearchRoot', module)
       types={Types}
     />
   ))
+
+import * as ExampleStories from './example-types'
