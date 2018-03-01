@@ -13,7 +13,7 @@ let geo = ({
       .then(response => {
         // Check for API key limit/expiration
         if (response.error_message) {
-            throw response.error_message
+          throw response.error_message
         }
 
         let geolocation = _.flow(
