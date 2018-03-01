@@ -8,8 +8,8 @@ module.exports = {
     let { statistical, percentiles } = await util.getStatisticalResults(
       search,
       field,
-      minValue,
-      maxValue,
+      min,
+      max,
       percentileInterval
     )
 
