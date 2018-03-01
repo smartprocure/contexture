@@ -12,13 +12,21 @@ let geo = ({
     Promise.resolve(geocodeLocation(context.location))
       .then(response => {
         // Check for API key limit/expiration
-        if (response.error_message) throw response.error_message
-        let location = response.results[0].geometry.location
+        if (response.error_message) {
+            throw response.error_message
+        }
+
+        let geolocation = _.flow(
+          _.head,
+          _.get('geometry.location'),
+          result => result || { lat: 0, lng: 0 }
+        )(response.results)
+
         context._meta.preprocessorResult = response
 
         let result = {
           geo_distance: {
-            [context.field]: `${location.lat},${location.lng}`,
+            [context.field]: `${geolocation.lat},${geolocation.lng}`,
             distance: `${context.radius}mi`,
           },
         }

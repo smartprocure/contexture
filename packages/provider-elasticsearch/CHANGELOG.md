@@ -1,6 +1,7 @@
 ﻿### 0.6.9
 * Introducing new example type number range histogram.
 * Number now supports find best functionality.
+* Geo type now guards against 0 results in geocoder.
 ### 0.6.8
 * Added the context property useRaw to step out of date formattings on the date example type.
 ### 0.6.7
