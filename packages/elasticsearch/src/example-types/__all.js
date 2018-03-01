@@ -16,6 +16,7 @@ module.exports = {
   nonzeroClusters: require('./nonzeroClusters'),
   number: require('./number'),
   numberRangeHistogram: require('./numberRangeHistogram'),
+  numberUtil: require('./numberUtil'),
   percentileRanks: require('./percentileRanks'),
   percentiles: require('./percentiles'),
   percentilesRange: require('./percentilesRange'),

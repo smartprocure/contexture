@@ -10,7 +10,6 @@ let boundaryFilter = value => {
   return _.isNaN(_.toNumber(value)) ? null : _.toNumber(value)
 }
 
-
 let rangeFilter = (field, min, max) => ({
   range: {
     [field]: _.pickBy(_.isNumber, {
@@ -22,7 +21,7 @@ let rangeFilter = (field, min, max) => ({
 
 module.exports = {
   rangeFilter,
-  getStatisticalResults: async (search, field, min, max, percentileInterval) => {
+  async getStatisticalResults(search, field, min, max, percentileInterval) {
     let statisticalResult = await search({
       aggs: {
         range_filter: {
@@ -37,7 +36,12 @@ module.exports = {
             all_percentiles: {
               percentiles: {
                 field,
-                percents: [0, percentileInterval, 100 - percentileInterval, 100],
+                percents: [
+                  0,
+                  percentileInterval,
+                  100 - percentileInterval,
+                  100,
+                ],
               },
             },
           },
@@ -51,7 +55,10 @@ module.exports = {
       intervalMin: mappedResult[percentileInterval],
       intervalMax: mappedResult[100 - percentileInterval],
     }))(
-      _.get('aggregations.range_filter.all_percentiles.values', statisticalResult)
+      _.get(
+        'aggregations.range_filter.all_percentiles.values',
+        statisticalResult
+      )
     )
 
     let statistical = _.get(
@@ -63,5 +70,5 @@ module.exports = {
       statistical,
       percentiles,
     }
-  }
+  },
 }
