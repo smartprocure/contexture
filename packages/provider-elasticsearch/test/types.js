@@ -24,6 +24,7 @@ describe('All Example Types', function() {
       'nonzeroClusters',
       'number',
       'numberRangeHistogram',
+      'numberUtil',
       'percentileRanks',
       'percentiles',
       'percentilesRange',
