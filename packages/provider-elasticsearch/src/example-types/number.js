@@ -33,7 +33,7 @@ module.exports = {
           maxValue,
           percentileInterval
         )
-        
+
         let { statistical, percentiles } = results
         let rangeMin = _.get('min', statistical)
         let rangeMax = _.get('max', statistical)
@@ -62,7 +62,13 @@ module.exports = {
         },
       })
     } else {
-      results = await util.getStatisticalResults(search, field, min, max, percentileInterval)
+      results = await util.getStatisticalResults(
+        search,
+        field,
+        min,
+        max,
+        percentileInterval
+      )
     }
 
     return results
