@@ -5,7 +5,7 @@ module.exports = {
   hasValue: context => !_.isNil(context.min) || !_.isNil(context.max),
   filter: ({ field, min, max }) => util.rangeFilter(field, min, max),
   async result({ field, min, max, percentileInterval = 1 }, search) {
-    let { statistical, percentiles } = await util.getStatisticalResults(
+    let { statistical = {min, max}, percentiles } = await util.getStatisticalResults(
       search,
       field,
       min,
