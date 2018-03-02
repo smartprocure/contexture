@@ -173,13 +173,13 @@ Exists represents whether or not a field is present on results
 ```
 
 #### `number`
-Number represents a number range with inclusive bounds. This type provides the ability to determine the best range values based on a percentile interval and range threshold.
+Number represents a number range with inclusive bounds. This type provides the ability to determine the best range values based on percentile interval and range threshold.
 
 Some Notes:
 1. An empty value as the upper boundary represents infinity.
 2. An empty value as the lower boundary represents negative infinity.
 3. Zero has to be respected as a boundary value.
-4. If findBestRange is true it will return the min and max range.
+4. If findBestRange is true it will return the best min and max range.
 
 ```js
 {
