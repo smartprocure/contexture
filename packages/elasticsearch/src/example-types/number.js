@@ -56,7 +56,7 @@ module.exports = {
       }
 
       results = _.extend(results, {
-        extremes: {
+        bestRange: {
           min: minValue,
           max: maxValue,
         },
