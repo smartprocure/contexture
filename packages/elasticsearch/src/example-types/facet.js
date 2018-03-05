@@ -43,7 +43,7 @@ module.exports = {
           terms: _.extendAll([
             {
               field,
-              size: _.isNil(context.size) ? 10 : context.size,
+              size: context.size || 10,
               order: {
                 term: { _term: 'asc' },
                 count: { _count: 'desc' },
