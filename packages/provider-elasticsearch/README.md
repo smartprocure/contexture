@@ -181,6 +181,8 @@ Some Notes:
 3. Zero has to be respected as a boundary value.
 4. If findBestRange is true it will return the best min and max range.
 
+Request:
+
 ```js
 {
   field: String,
@@ -192,6 +194,29 @@ Some Notes:
 }
 ```
 
+Response:
+
+```js
+{
+  statistical: {
+    count: Number,
+    min: Number,
+    max: Number,
+    avg: Number,
+    sum: Number
+  },
+  percentiles: {
+    rangeMin: Number,
+    rangeMax: Number,
+    intervalMin: Number,
+    intervalMax: Number
+  },
+  bestRange: {
+    min: Number,
+    max: Number
+  }
+}
+```
 #### `numberRangeHistogram`
 Number represents a number range with inclusive bounds. This type returns feedback in the form of histogram and statistical data.
 
