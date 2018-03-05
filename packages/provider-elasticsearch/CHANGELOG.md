@@ -1,4 +1,4 @@
-### 0.6.91
+### 0.7.0
 * Introducing new example type number range histogram.
 * Number now supports find best functionality.
 * Geo type now guards against 0 results in geocoder.
