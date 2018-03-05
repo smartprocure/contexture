@@ -1,4 +1,6 @@
-﻿### 0.6.8
+﻿### 0.6.9
+* Facet can't allow size 0 or empty, so we're sending 10 by default (as before).
+### 0.6.8
 * Added the context property useRaw to step out of date formattings on the date example type.
 ### 0.6.7
 * Fixed Number type bug where min and max values were ignored if passed as strings.
