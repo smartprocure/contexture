@@ -173,7 +173,52 @@ Exists represents whether or not a field is present on results
 ```
 
 #### `number`
-Number represents a number range with inclusive bounds. This type is planned to be extended to return contextual info on min, max, and histogram value distribution.
+Number represents a number range with inclusive bounds. This type provides the ability to determine the best range values based on percentile interval and range threshold.
+
+Some Notes:
+1. An empty value as the upper boundary represents infinity.
+2. An empty value as the lower boundary represents negative infinity.
+3. Zero has to be respected as a boundary value.
+4. If findBestRange is true it will return the best min and max range.
+
+Request:
+
+```js
+{
+  field: String,
+  min: Number,
+  max: Number,
+  percentileInterval: Number,
+  rangeThreshold: Number,
+  findBestRange = Boolean
+}
+```
+
+Response:
+
+```js
+{
+  statistical: {
+    count: Number,
+    min: Number,
+    max: Number,
+    avg: Number,
+    sum: Number
+  },
+  percentiles: {
+    rangeMin: Number,
+    rangeMax: Number,
+    intervalMin: Number,
+    intervalMax: Number
+  },
+  bestRange: {
+    min: Number,
+    max: Number
+  }
+}
+```
+#### `numberRangeHistogram`
+Number represents a number range with inclusive bounds. This type returns feedback in the form of histogram and statistical data.
 
 Some Notes:
 1. An empty value as the upper boundary represents infinity.
@@ -184,7 +229,8 @@ Some Notes:
 {
   field: String,
   min: Number,
-  max: Number
+  max: Number,
+  percentileInterval: Number
 }
 ```
 

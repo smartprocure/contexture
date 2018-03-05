@@ -23,6 +23,8 @@ describe('All Example Types', function() {
       'nLevelAggregation',
       'nonzeroClusters',
       'number',
+      'numberRangeHistogram',
+      'numberUtil',
       'percentileRanks',
       'percentiles',
       'percentilesRange',
