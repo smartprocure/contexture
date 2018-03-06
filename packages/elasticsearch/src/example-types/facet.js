@@ -50,12 +50,12 @@ module.exports = {
               }[context.sort || 'count'],
             },
             context.includeZeroes && { min_doc_count: 0 },
-            context.config.optionsFilter && {
+            context.optionsFilter && {
               include: buildRegexForWords(
-                context.config.caseSensitive,
-                context.config.anyOrder, // Scary
-                context.config.maxWords,
-              )(context.config.optionsFilter),
+                context.caseSensitive,
+                context.anyOrder, // Scary
+                context.maxWords,
+              )(context.optionsFilter),
             },
           ]),
         },

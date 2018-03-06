@@ -313,6 +313,7 @@ describe('facet', () => {
                   facetOptions: {
                     terms: {
                       field: 'Organization.NameState.untouched',
+                      include: '.*[Ss][Tt][Aa][Tt][Ee].*',
                       order: {
                         _count: 'desc',
                       },
