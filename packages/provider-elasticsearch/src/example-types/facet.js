@@ -1,17 +1,7 @@
 let _ = require('lodash/fp')
 let F = require('futil-js')
-let { buildRegexQueryForWords } = require('../regex')
+let { buildRegexQueryForWords, buildRegexForWords } = require('../regex')
 let { getField } = require('../fields')
-
-let order = {
-  term: { _term: 'asc' },
-  count: { _count: 'desc' },
-  countFirst: [{
-    _count: 'desc'
-  }, {
-    _term: 'asc'
-  }]
-}
 
 module.exports = {
   hasValue: context => _.get('values.length', context),
@@ -54,9 +44,19 @@ module.exports = {
             {
               field,
               size: context.size || context.size === 0 ? context.size : 10,
-              order: order[context.includeZeroes ? 'countFirst' : context.sort || 'count'],
+              order: {
+                term: { _term: 'asc' },
+                count: { _count: 'desc' },
+              }[context.sort || 'count'],
             },
             context.includeZeroes && { min_doc_count: 0 },
+            context.config.optionsFilter && {
+              include: buildRegexForWords(
+                context.config.caseSensitive,
+                context.config.anyOrder, // Scary
+                context.config.maxWords,
+              )(context.config.optionsFilter),
+            },
           ]),
         },
         facetCardinality: {
@@ -110,7 +110,10 @@ module.exports = {
               terms: {
                 field,
                 size: missing.length,
-                order: order[context.includeZeroes ? 'countFirst' : context.sort || 'count'],
+                order: {
+                  term: { _term: 'asc' },
+                  count: { _count: 'desc' },
+                }[context.sort || 'count'],
               },
             },
           },

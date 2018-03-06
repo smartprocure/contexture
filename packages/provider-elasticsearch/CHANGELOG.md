@@ -1,5 +1,5 @@
 ﻿### 0.8.0
-* If includeZeroes on facet, show results with count first, then the rest.
+* Using combinatorics of the received words on regexp includes if optionsFilter is present on the facet example type.
 ### 0.7.0
 * Introducing new example type number range histogram.
 * Number now supports find best functionality.
