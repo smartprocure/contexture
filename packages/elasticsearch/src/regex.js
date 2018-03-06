@@ -49,7 +49,7 @@ let buildRegexForWords = (caseSensitive, anyOrder, maxWords = 3) =>
   _.flow(
     _.split(' '),
     _.map(toSafeRegex(caseSensitive)),
-    x => (anyOrder && x.length <= maxWords) ? regexAnd(x) : _.join('.*', x), // This enforces order, for any order we either need `&` (intersection which is behind a flag and not available here) or to do every combination of patterns joined by .* and or'ed together
+    x => (anyOrder && x.length <= maxWords ? regexAnd(x) : _.join('.*', x)), // This enforces order, for any order we either need `&` (intersection which is behind a flag and not available here) or to do every combination of patterns joined by .* and or'ed together
     x => `.*${x}.*`
   )
 

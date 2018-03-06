@@ -54,7 +54,7 @@ module.exports = {
               include: buildRegexForWords(
                 context.caseSensitive,
                 context.anyOrder, // Scary
-                context.maxWords,
+                context.maxWords
               )(context.optionsFilter),
             },
           ]),
