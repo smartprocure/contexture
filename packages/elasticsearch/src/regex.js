@@ -45,7 +45,7 @@ let regexAnd = _.flow(
   _.join('|')
 )
 
-let buildRegexForWords = (caseSensitive, anyOrder, maxWords = 3) =>
+let buildRegexForWords = (caseSensitive, anyOrder = true, maxWords = 3) =>
   _.flow(
     _.split(' '),
     _.map(toSafeRegex(caseSensitive)),
