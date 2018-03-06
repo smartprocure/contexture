@@ -55,6 +55,7 @@ let buildRegexForWords = (caseSensitive, anyOrder, maxWords = 3) =>
 
 module.exports = {
   toSafeRegex,
+  regexAnd,
   buildRegexQueryForWords,
   buildRegexForWords,
 }
