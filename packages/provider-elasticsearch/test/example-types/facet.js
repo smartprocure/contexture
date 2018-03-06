@@ -394,19 +394,19 @@ describe('facet', () => {
                       },
                       {
                         regexp: {
-                          "Organization.NameState.untouched": ".*1.*"
-                        }
+                          'Organization.NameState.untouched': '.*1.*',
+                        },
                       },
                       {
                         regexp: {
-                          "Organization.NameState.untouched": ".*2.*"
-                        }
+                          'Organization.NameState.untouched': '.*2.*',
+                        },
                       },
                       {
                         regexp: {
-                          "Organization.NameState.untouched": ".*3.*"
-                        }
-                      }
+                          'Organization.NameState.untouched': '.*3.*',
+                        },
+                      },
                     ],
                   },
                 },
