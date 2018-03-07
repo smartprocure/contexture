@@ -66,7 +66,7 @@ module.exports = {
               ? context.cardinality
               : 5000, // setting default precision to reasonable default (40000 is max),
           },
-        }
+        },
       },
     }
 
@@ -88,18 +88,23 @@ module.exports = {
         name: x.key,
         count: x.doc_count,
       })),
-      cardinality: context.includeZeroes ? _.get('aggregations.facetCardinality.value', await search({
-        aggs: {
-          facetCardinality: {
-            cardinality: {
-              field,
-            },
-          }
-        },
-        query: {
-          match_all: {}
-        }
-      })) : agg.facetCardinality.value
+      cardinality: context.includeZeroes
+        ? _.get(
+            'aggregations.facetCardinality.value',
+            await search({
+              aggs: {
+                facetCardinality: {
+                  cardinality: {
+                    field,
+                  },
+                },
+              },
+              query: {
+                match_all: {},
+              },
+            })
+          )
+        : agg.facetCardinality.value,
     }
 
     // Get missing counts for values sent up but not included in the results
