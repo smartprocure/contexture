@@ -1,6 +1,6 @@
 let _ = require('lodash/fp')
 let F = require('futil-js')
-let { buildRegexQueryForWords } = require('../regex')
+let { buildRegexQueryForWords, buildRegexForWords } = require('../regex')
 let { getField } = require('../fields')
 
 module.exports = {
@@ -50,6 +50,13 @@ module.exports = {
               }[context.sort || 'count'],
             },
             context.includeZeroes && { min_doc_count: 0 },
+            context.optionsFilter && {
+              include: buildRegexForWords(
+                context.caseSensitive,
+                context.anyOrder, // Scary
+                context.maxWords
+              )(context.optionsFilter),
+            },
           ]),
         },
         facetCardinality: {
