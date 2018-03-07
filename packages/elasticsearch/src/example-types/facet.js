@@ -103,11 +103,7 @@ module.exports = {
           match_all: {}
         }
       }
-      let aggCardinality = F.cascade(
-        ['aggregations.topLevelFilter', 'aggregations'],
-        await search(cardinalityRequest)
-      )
-      result.cardinality = aggCardinality.facetCardinality.value
+      result.cardinality = _.get('aggregations.facetCardinality.value', await search(cardinalityRequest))
     } else {
       result.cardinality = agg.facetCardinality.value
     }
