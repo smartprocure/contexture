@@ -66,7 +66,7 @@ module.exports = {
               ? context.cardinality
               : 5000, // setting default precision to reasonable default (40000 is max),
           },
-        },
+        }
       },
     }
 
@@ -84,11 +84,32 @@ module.exports = {
       await search(resultRequest)
     )
     let result = {
-      cardinality: agg.facetCardinality.value,
       options: agg.facetOptions.buckets.map(x => ({
         name: x.key,
         count: x.doc_count,
       })),
+    }
+
+    if (context.includeZeroes) {
+      let cardinalityRequest = {
+        aggs: {
+          facetCardinality: {
+            cardinality: {
+              field,
+            },
+          }
+        },
+        query: {
+          match_all: {}
+        }
+      }
+      let aggCardinality = F.cascade(
+        ['aggregations.topLevelFilter', 'aggregations'],
+        await search(cardinalityRequest)
+      )
+      result.cardinality = aggCardinality.facetCardinality.value
+    } else {
+      result.cardinality = agg.facetCardinality.value
     }
 
     // Get missing counts for values sent up but not included in the results
