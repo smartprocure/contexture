@@ -1,4 +1,4 @@
-﻿### 0.8.0
+﻿### 0.7.1
 * Using combinatorics of the received words on regexp includes if optionsFilter is present on the facet example type.
 ### 0.7.0
 * Introducing new example type number range histogram.
