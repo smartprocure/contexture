@@ -88,10 +88,7 @@ module.exports = {
         name: x.key,
         count: x.doc_count,
       })),
-    }
-
-    if (context.includeZeroes) {
-      let cardinalityRequest = {
+      cardinality: context.includeZeroes ? _.get('aggregations.facetCardinality.value', await search({
         aggs: {
           facetCardinality: {
             cardinality: {
@@ -102,10 +99,7 @@ module.exports = {
         query: {
           match_all: {}
         }
-      }
-      result.cardinality = _.get('aggregations.facetCardinality.value', await search(cardinalityRequest))
-    } else {
-      result.cardinality = agg.facetCardinality.value
+      })) : agg.facetCardinality.value
     }
 
     // Get missing counts for values sent up but not included in the results
