@@ -9,6 +9,7 @@ import traversals from './traversals'
 import { runTypeFunction } from './types'
 import { initNode } from './node'
 import Types from './exampleTypes'
+import lens from './lens'
 
 let mergeWith = _.mergeWith.convert({ immutable: false })
 
@@ -96,13 +97,17 @@ export let ContextTree = _.curry(
       if (error) extend(tree, { error })
     }
 
-    return {
+    let Tree = {
       ...actions({ getNode, flat, dispatch, snapshot, extend, types }),
       serialize: () => serialize(snapshot(tree), {}),
       dispatch,
       getNode,
       tree,
     }
+
+    Tree.lens = lens(Tree)
+
+    return Tree
   }
 )
 export default ContextTree

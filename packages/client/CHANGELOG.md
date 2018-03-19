@@ -1,4 +1,7 @@
-﻿# 2.2.2
+﻿# 2.3.0
+* Added lens
+
+# 2.2.2
 * Made the mutate action to be curried
 * Defined a default debounce time
 
