@@ -111,6 +111,7 @@ The following methods are exposed on an instantiated client
 | dispatch | `async event -> await searchCompleted` | A lower level, core method of interaction (called automatically by the actions above). You can await this for when updates settle and relevant searches are completed. |
 | getNode | `[path] -> node` | Lookup a node by a path (array of keys). |
 | serialize | `() => tree` | Returns a snapshot of the tree without any of the temporary state like updating flags. |
+| lens | `(path, prop) -> ({ get, set })` | Given a path and a property, returns a lens that provides a getter and a setter for the provided property on the provided path. |
 | tree | tree | A reference to the internal tree. If you mutate this, you should dispatch an appropriate event. |
 
 ## Improvements
