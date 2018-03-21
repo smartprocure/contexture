@@ -43,4 +43,30 @@ export default {
       max: 'others',
     },
   },
+  bool: {
+    reactors: {
+      value: 'others'
+    }
+  },
+  exists: {
+    reactors: {
+      value: 'others'
+    }
+  },
+  date: {
+    validate: x => !_.isNil(x.from) || !_.isNil(x.to),
+    reactors: {
+      from: 'others',
+      to: 'others',
+      useDateMath: 'others',
+      useRaw: 'others'
+    }
+  },
+  geo: {
+    reactors: {
+      location: 'others',
+      radius: 'others',
+      operator: 'others'
+    }
+  }
 }
