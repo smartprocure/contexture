@@ -32,9 +32,9 @@ export let Styles = () => (
 )
 
 export let InjectTreeNode = inject(
-  ({ tree: t1 }, { tree = t1, path, node: n2 }) => ({
+  ({ tree: t1, node: n1 }, { tree = t1, path, node: n2 }) => ({
     tree,
-    node: n2 || tree.getNode(path),
+    node: n2 || n1 || tree.getNode(path),
   })
 )
 
