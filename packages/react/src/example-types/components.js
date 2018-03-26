@@ -31,9 +31,9 @@ export let Styles = () => (
   </style>
 )
 
-export let InjectTreeNode = inject(({ tree: t1 }, { tree = t1, path }) => ({
+export let InjectTreeNode = inject(({ tree: t1 }, { tree = t1, path, node: n2 }) => ({
   tree,
-  node: tree.getNode(path),
+  node: n2 || tree.getNode(path),
 }))
 
 export let Facet = InjectTreeNode(
