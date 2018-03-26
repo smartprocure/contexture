@@ -31,10 +31,12 @@ export let Styles = () => (
   </style>
 )
 
-export let InjectTreeNode = inject(({ tree: t1 }, { tree = t1, path, node: n2 }) => ({
-  tree,
-  node: n2 || tree.getNode(path),
-}))
+export let InjectTreeNode = inject(
+  ({ tree: t1 }, { tree = t1, path, node: n2 }) => ({
+    tree,
+    node: n2 || tree.getNode(path),
+  })
+)
 
 export let Facet = InjectTreeNode(
   observer(({ tree, node, hide = {}, ...props }) => (
