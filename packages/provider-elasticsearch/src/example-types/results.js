@@ -24,6 +24,10 @@ module.exports = {
       },
       explain: context.explain,
     }
+
+    if (context.forceExclude && _.isArray(schema.forceExclude))
+      context.exclude = _.union(schema.forceExclude, context.exclude)
+
     if (context.include || context.exclude) result._source = {}
     if (context.include) result._source.includes = context.include
     if (context.exclude) result._source.excludes = context.exclude
