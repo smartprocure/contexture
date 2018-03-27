@@ -16,12 +16,13 @@ This provider takes a config object as a parameter:
 ### Schemas
 Schemas with with an elasticsearch provider can specify any or all of the following properties:
 
-| Option        | Type       | Description                          | Required |
-| ------        | ----       | -----------                          | -------- |
-| `index`       | `string`   | Which ES index to use when querying  | x        |
-| `type`        | `string`   | Which ES type to use when querying   |          |
-| `summaryView` | `function` | Used by `results` to return a summary view instead of the whole document, (e.g. for indexes with many fields). Defaults to returning the `hit` property. | |
-| `highlight`   | `object `  | Used by `results` to determine what fields to highlight, and whether or not they are `inline` (copied over inline on to the source) or `additional` (in a list of additional fields that matched) | |
+| Option         | Type       | Description                          | Required |
+| ------         | ----       | -----------                          | -------- |
+| `index`        | `string`   | Which ES index to use when querying  | x        |
+| `type`         | `string`   | Which ES type to use when querying   |          |
+| `summaryView`  | `function` | Used by `results` to return a summary view instead of the whole document, (e.g. for indexes with many fields). Defaults to returning the `hit` property. | |
+| `highlight`    | `object`   | Used by `results` to determine what fields to highlight, and whether or not they are `inline` (copied over inline on to the source) or `additional` (in a list of additional fields that matched) | |
+| `forceExclude` | `array`    | Used by `results` to extend the exclude fields provided on the search tree. The extension happens only if the results node has a `forceExclude` flag set to true.
 
 ### Example Schema for SomeType in SomeIndex
 
