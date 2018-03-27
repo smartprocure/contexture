@@ -183,6 +183,21 @@ describe('results', () => {
       }),
     ])
   })
+  it('forceExclude', () => {
+    F.extendOn(context, { forceExclude: true })
+    let excludes = ['a', 'b', 'c']
+    F.extendOn(schema, { forceExclude: excludes })
+    return resultsTest(context, [
+      _.extend(expectedCalls[0], {
+        _source: {
+          excludes,
+        },
+        sort: {
+          _score: 'desc',
+        },
+      }),
+    ])
+  })
   // it.only('should populate', () => {
   //   let sortField = 'test.field'
   //   F.extendOn(context, { populate: {
