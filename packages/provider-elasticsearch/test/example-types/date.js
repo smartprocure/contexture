@@ -163,14 +163,14 @@ describe('date/filter', () => {
       },
     })
   })
-  it('should handle useRaw', () => {
+  it('should handle isDateTime', () => {
     expect(
       date.filter({
         type: 'date',
         field: 'test',
         from: 'a very specific date',
         to: 'another very specific date',
-        useRaw: true,
+        isDateTime: true,
       })
     ).to.deep.equal({
       range: {
