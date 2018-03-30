@@ -37,7 +37,8 @@ module.exports = {
       moment.utc(new Date(x)).isValid() &&
       moment.utc(new Date(x)).format('YYYY-MM-DD')
 
-    if (!context.useRaw) {
+    // If isDateTime we do not format but rely on the input to be in ES date & time format currently
+    if (!context.isDateTime) {
       gte = getDateIfValid(from)
       lte = getDateIfValid(to)
     }
