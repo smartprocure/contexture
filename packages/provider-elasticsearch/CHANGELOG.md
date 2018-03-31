@@ -1,4 +1,6 @@
-﻿### 0.8.1
+﻿### 0.8.2
+* Results type will now return verbose data i.e. hits property when include has items so that data values for additional fields is accessible.
+### 0.8.1
 * decomission `useRaw` in favor of `isDateTime` flag
 ### 0.8.0
 * forceExclude on the results type allows us to extend any existing exclude value (even if empty) with a default list of forceExclude fields defined at the schema.
