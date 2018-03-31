@@ -67,7 +67,7 @@ module.exports = {
 
           // TODO - If nested path, iterate properties on nested path, filtering out nested path results unless mainHighlighted or relevant nested fields have b tags in them
           return _.extendAll([
-            context.verbose ? { hit } : {},
+            context.verbose || _.size(context.include) > 0 ? { hit } : {},
             {
               _id: hit._id,
               additionalFields: highlight ? additionalFields : [],
