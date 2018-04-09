@@ -9,7 +9,7 @@ export let defaults = {
   markedForUpdate: null,
   hasValue: null,
   error: null,
-  context: null,
+  context: {},
   missedUpdate: null,
   paused: null,
 }
