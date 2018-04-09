@@ -1,4 +1,8 @@
-﻿# 2.3.0
+# 2.4.0
+* Added more example types (`bool`, `exists`, `date`, `geo`)
+* Default `context` to `{}` instead of `null`
+
+# 2.3.0
 * Added lens
 
 # 2.2.2
