@@ -21,12 +21,12 @@ describe('regex', () => {
           must: [
             {
               regexp: {
-                _all: '.*[Nn][Uu][Cc][Ll][Ee][Aa][Rr].*',
+                _all: '.*([Nn][Uu][Cc][Ll][Ee][Aa][Rr]).*',
               },
             },
             {
               regexp: {
-                _all: '.*[Oo][Rr][Dd].*',
+                _all: '.*([Oo][Rr][Dd]).*',
               },
             },
           ],
@@ -47,22 +47,22 @@ describe('regex', () => {
   describe('buildRegexForWords', () => {
     it('case sensitive in any order', () => {
       expect(regex.buildRegexForWords(true, true)('Nuclear Ord')).to.eql(
-        '.*(Nuclear.*Ord)|(Ord.*Nuclear).*'
+        '.*((Nuclear.*Ord)|(Ord.*Nuclear)).*'
       )
     })
     it('case sensitive in specific order', () => {
       expect(regex.buildRegexForWords(true, false)('Nuclear Ord')).to.eql(
-        '.*Nuclear.*Ord.*'
+        '.*(Nuclear.*Ord).*'
       )
     })
     it('case insensitive in any order', () => {
       expect(regex.buildRegexForWords(false, true)('Nuclear Ord')).to.eql(
-        '.*([Nn][Uu][Cc][Ll][Ee][Aa][Rr].*[Oo][Rr][Dd])|([Oo][Rr][Dd].*[Nn][Uu][Cc][Ll][Ee][Aa][Rr]).*'
+        '.*(([Nn][Uu][Cc][Ll][Ee][Aa][Rr].*[Oo][Rr][Dd])|([Oo][Rr][Dd].*[Nn][Uu][Cc][Ll][Ee][Aa][Rr])).*'
       )
     })
     it('case insensitive in specific order', () => {
       expect(regex.buildRegexForWords(false, false)('Nuclear Ord')).to.eql(
-        '.*[Nn][Uu][Cc][Ll][Ee][Aa][Rr].*[Oo][Rr][Dd].*'
+        '.*([Nn][Uu][Cc][Ll][Ee][Aa][Rr].*[Oo][Rr][Dd]).*'
       )
     })
   })
