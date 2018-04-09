@@ -132,7 +132,7 @@ describe('term_stats', () => {
                   must: [
                     {
                       regexp: {
-                        'Organization.Name.untouched': '.*[Cc][Ii][Tt][Yy].*',
+                        'Organization.Name.untouched': '.*([Cc][Ii][Tt][Yy]).*',
                       },
                     },
                   ],
@@ -201,12 +201,12 @@ describe('term_stats', () => {
                   must: [
                     {
                       regexp: {
-                        'Organization.Name.untouched': '.*[Cc][Ii][Tt][Yy].*',
+                        'Organization.Name.untouched': '.*([Cc][Ii][Tt][Yy]).*',
                       },
                     },
                     {
                       regexp: {
-                        'Organization.Name.untouched': '.*[Oo][Ff].*',
+                        'Organization.Name.untouched': '.*([Oo][Ff]).*',
                       },
                     },
                   ],

@@ -297,7 +297,7 @@ describe('facet', () => {
                       {
                         regexp: {
                           'Organization.NameState.untouched':
-                            '.*[Ss][Tt][Aa][Tt][Ee].*',
+                            '.*([Ss][Tt][Aa][Tt][Ee]).*',
                         },
                       },
                     ],
@@ -313,7 +313,7 @@ describe('facet', () => {
                   facetOptions: {
                     terms: {
                       field: 'Organization.NameState.untouched',
-                      include: '.*([Ss][Tt][Aa][Tt][Ee]).*',
+                      include: '.*(([Ss][Tt][Aa][Tt][Ee])).*',
                       order: {
                         _count: 'desc',
                       },
@@ -389,22 +389,22 @@ describe('facet', () => {
                       {
                         regexp: {
                           'Organization.NameState.untouched':
-                            '.*[Ss][Tt][Aa][Tt][Ee].*',
+                            '.*([Ss][Tt][Aa][Tt][Ee]).*',
                         },
                       },
                       {
                         regexp: {
-                          'Organization.NameState.untouched': '.*1.*',
+                          'Organization.NameState.untouched': '.*(1).*',
                         },
                       },
                       {
                         regexp: {
-                          'Organization.NameState.untouched': '.*2.*',
+                          'Organization.NameState.untouched': '.*(2).*',
                         },
                       },
                       {
                         regexp: {
-                          'Organization.NameState.untouched': '.*3.*',
+                          'Organization.NameState.untouched': '.*(3).*',
                         },
                       },
                     ],
@@ -420,7 +420,7 @@ describe('facet', () => {
                   facetOptions: {
                     terms: {
                       field: 'Organization.NameState.untouched',
-                      include: '.*[Ss][Tt][Aa][Tt][Ee].*1.*2.*3.*',
+                      include: '.*([Ss][Tt][Aa][Tt][Ee].*1.*2.*3).*',
                       order: {
                         _count: 'desc',
                       },
