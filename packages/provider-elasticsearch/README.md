@@ -159,7 +159,7 @@ Date represents a data range filter, with support datemath
   from: DateString|'thisQuarter|lastQuarter|nextQuarter', // Date string or one of three custom date math options
   to: DateString,
   useDateMath: Boolean, // If true, it will parse dates as dateMath using @elastic/datemath
-  useRaw: Boolean // If true, it will pass the from and to values as is, without formatting
+  isDateTime: Boolean // If true, it will pass the from and to values as is, without formatting assuming it is valid date & time ES string
 }
 ```
 
