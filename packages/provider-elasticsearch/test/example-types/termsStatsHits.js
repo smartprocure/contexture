@@ -280,7 +280,7 @@ describe('termStatsHits', () => {
                   must: [
                     {
                       regexp: {
-                        'Organization.Name.untouched': '.*[Cc][Ii][Tt][Yy].*',
+                        'Organization.Name.untouched': '.*([Cc][Ii][Tt][Yy]).*',
                       },
                     },
                   ],

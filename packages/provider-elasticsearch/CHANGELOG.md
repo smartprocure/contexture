@@ -1,4 +1,6 @@
-﻿### 0.8.0
+﻿### 0.8.1
+* Fix regEx
+### 0.8.0
 * forceExclude on the results type allows us to extend any existing exclude value (even if empty) with a default list of forceExclude fields defined at the schema.
 ### 0.7.2
 * If includeZeroes, facet should make another search for it's cardinality with query match_all.
