@@ -1,5 +1,4 @@
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
 import { runTypeFunction, getTypeProp } from './types'
 
 export let defaults = {
