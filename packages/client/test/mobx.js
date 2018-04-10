@@ -65,9 +65,7 @@ describe('usage with mobx should generally work', () => {
       },
     ],
   }
-  let service = sinon.spy(() => ({
-    data: responseData,
-  }))
+  let service = sinon.spy(() => responseData)
 
   let Tree = ContextTreeMobx(tree, service)
   let reactor = sinon.spy()
