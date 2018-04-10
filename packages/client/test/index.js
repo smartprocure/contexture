@@ -461,8 +461,8 @@ describe('lib', () => {
             defaults: {
               isExtended: true,
               context: {
-                example: 0
-              }
+                example: 0,
+              },
             },
           },
         },
