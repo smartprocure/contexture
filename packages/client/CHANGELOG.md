@@ -1,6 +1,6 @@
 # 2.4.0
 * Added more example types (`bool`, `exists`, `date`, `geo`)
-* Default `context` to `{}` instead of `null`
+* Add support for default properties on node types
 
 # 2.3.0
 * Added lens
