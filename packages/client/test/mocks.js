@@ -20,17 +20,15 @@ export let mockService = ({
   logOutput,
 } = {}) => (dto, lastUpdateTime) => {
   if (logInput) console.info('dto', JSON.stringify(dto, 0, 2))
-  let result = {
-    data: Tree.transform(node => {
-      let context = mocks[node.type]
-      if (!node.filterOnly && context) {
-        F.extendOn(node, {
-          context,
-          lastUpdateTime,
-        })
-      }
-    }, dto),
-  }
+  let result = Tree.transform(node => {
+    let context = mocks[node.type]
+    if (!node.filterOnly && context) {
+      F.extendOn(node, {
+        context,
+        lastUpdateTime,
+      })
+    }
+  }, dto)
   if (logOutput) console.info('result', JSON.stringify(result, 0, 2))
   return result
 }

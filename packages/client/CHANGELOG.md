@@ -1,3 +1,6 @@
+# 2.5.0
+* Deprecate wrapping responses in `data`, will be removed in 3.0
+
 # 2.4.0
 * Added more example types (`bool`, `exists`, `date`, `geo`, `dateHistogram`)
 * Add support for default properties on node types
