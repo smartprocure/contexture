@@ -26,6 +26,7 @@ describe('lib', () => {
       ],
     }
     let service = sinon.spy(mockService())
+    let Tree = lib.ContextTree({ service, debounce: 1 }, tree)
     it('should generally mutate', async () => {
       await Tree.mutate(['root', 'filter'], {
         values: ['a'],
