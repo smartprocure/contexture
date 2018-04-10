@@ -107,7 +107,7 @@ describe('usage with mobx should generally work', () => {
       hasValue: 1,
       path: ['root', 'filter'],
       context: {
-        values: []
+        values: [],
       },
     })
     // should update contexts
@@ -164,8 +164,8 @@ describe('usage with mobx should generally work', () => {
       values: 'asdf',
       path: ['root', 'newFilterWithValue'],
       context: {
-        values: []
-      }
+        values: [],
+      },
     })
     disposer()
   })

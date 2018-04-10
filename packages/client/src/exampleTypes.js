@@ -13,9 +13,9 @@ export default {
     },
     defaults: {
       context: {
-        values: []
-      }
-    }
+        values: [],
+      },
+    },
   },
   text: {
     validate: validateValues,
@@ -58,13 +58,13 @@ export default {
   },
   bool: {
     reactors: {
-      value: 'others'
-    }
+      value: 'others',
+    },
   },
   exists: {
     reactors: {
-      value: 'others'
-    }
+      value: 'others',
+    },
   },
   date: {
     validate: x => !_.isNil(x.from) || !_.isNil(x.to),
@@ -72,15 +72,15 @@ export default {
       from: 'others',
       to: 'others',
       useDateMath: 'others',
-      useRaw: 'others'
-    }
+      useRaw: 'others',
+    },
   },
   geo: {
     reactors: {
       location: 'others',
       radius: 'others',
-      operator: 'others'
-    }
+      operator: 'others',
+    },
   },
   dateHistogram: {
     defaults: {
@@ -88,7 +88,7 @@ export default {
         entries: [],
         maxDate: null,
         minDate: null,
-      }
-    }
-  }
+      },
+    },
+  },
 }
