@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
-import { runTypeFunction } from './types'
+import { runTypeFunction, getTypeProp } from './types'
 
 export let defaults = {
   path: null,
@@ -9,7 +9,7 @@ export let defaults = {
   markedForUpdate: null,
   hasValue: null,
   error: null,
-  context: {},
+  context: null,
   missedUpdate: null,
   paused: null,
 }
@@ -17,7 +17,8 @@ export let defaults = {
 export let initNode = (node, path, extend, types) => {
   runTypeFunction(types, 'init', node, extend)
   extend(node, {
-    ...F.pickByIndexed((v, k) => !_.has(k, node), defaults),
+    ..._.omit(_.keys(node), defaults),
+    ..._.omit(_.keys(node), getTypeProp(types, 'defaults', node)),
     path,
   })
 }
