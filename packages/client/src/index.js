@@ -87,9 +87,9 @@ export let ContextTree = _.curry(
     let processResponse = data => {
       // TODO: Remove these 3 deprecated lines in 3.0. Errors will just be on the tree so no need to wrap in `data` to allow `error`
       data = data.data || data
-      let {error} = data
+      let { error } = data
       if (error) extend(tree, { error })
-      
+
       F.eachIndexed((node, path) => {
         let target = flat[path]
         let responseNode = _.pick(['context', 'error'], node)
