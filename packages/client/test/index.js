@@ -26,7 +26,6 @@ describe('lib', () => {
       ],
     }
     let service = sinon.spy(mockService())
-    let Tree = lib.ContextTree({ service, debounce: 1 }, tree)
     it('should generally mutate', async () => {
       await Tree.mutate(['root', 'filter'], {
         values: ['a'],
@@ -151,7 +150,7 @@ describe('lib', () => {
       service.reset()
       await Tree.add(['root'], {
         key: 'newEmptyFilter',
-        type: 'facet',
+        type: 'text',
       })
       expect(service).to.have.callCount(0)
       expect(Tree.getNode(['root', 'newEmptyFilter'])).to.exist

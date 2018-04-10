@@ -1,5 +1,5 @@
 # 2.4.0
-* Added more example types (`bool`, `exists`, `date`, `geo`)
+* Added more example types (`bool`, `exists`, `date`, `geo`, `dateHistogram`)
 * Add support for default properties on node types
 
 # 2.3.0

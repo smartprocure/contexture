@@ -11,6 +11,11 @@ export default {
       size: 'self',
       optionsFilter: 'self',
     },
+    defaults: {
+      context: {
+        values: []
+      }
+    }
   },
   text: {
     validate: validateValues,
@@ -34,6 +39,14 @@ export default {
     validate: () => false,
     reactors: {
       page: 'self',
+    },
+    defaults: {
+      context: {
+        response: {
+          results: [],
+          totalRecords: null,
+        },
+      },
     },
   },
   number: {
