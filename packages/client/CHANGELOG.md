@@ -1,3 +1,6 @@
+# 2.5.1
+* Account for core returning an empty data object
+
 # 2.5.0
 * Deprecate wrapping responses in `data`, will be removed in 3.0
 

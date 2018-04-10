@@ -86,7 +86,7 @@ export let ContextTree = _.curry(
 
     let processResponse = data => {
       // TODO: Remove these 3 deprecated lines in 3.0. Errors will just be on the tree so no need to wrap in `data` to allow `error`
-      data = data.data || data
+      data = _.isEmpty(data.data) ? data : data.data
       let { error } = data
       if (error) extend(tree, { error })
 
