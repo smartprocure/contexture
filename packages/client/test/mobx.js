@@ -106,6 +106,9 @@ describe('usage with mobx should generally work', () => {
       values: ['a'],
       hasValue: 1,
       path: ['root', 'filter'],
+      context: {
+        values: [],
+      },
     })
     // should update contexts
     expect(Tree.getNode(['root', 'results']).updating).to.be.false
@@ -141,7 +144,7 @@ describe('usage with mobx should generally work', () => {
     let disposer = reaction(() => toJS(tree), reactor)
     await Tree.add(['root'], {
       key: 'newFilter',
-      type: 'facet',
+      type: 'text',
     })
     expect(service).to.have.callCount(0)
     await Tree.add(['root'], {
@@ -160,6 +163,9 @@ describe('usage with mobx should generally work', () => {
       type: 'facet',
       values: 'asdf',
       path: ['root', 'newFilterWithValue'],
+      context: {
+        values: [],
+      },
     })
     disposer()
   })

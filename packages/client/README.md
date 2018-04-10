@@ -1,4 +1,4 @@
-﻿# contexture-client
+# contexture-client
 The Contexture (aka ContextTree) Client
 
 [![npm version](https://badge.fury.io/js/contexture-client.svg)](https://badge.fury.io/js/contexture-client)
@@ -78,6 +78,7 @@ This is the general structure:
     init: (node, extend) => {
       // Do stuff like extend the node with some default properties
     },
+    defaults: {...} // sugar over simply calling extend(node, {...}) in init
     validate: async node => true || false || throw Exception()
     reactors: {
       fieldName: 'reactor',
