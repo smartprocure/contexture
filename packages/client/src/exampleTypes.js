@@ -81,5 +81,14 @@ export default {
       radius: 'others',
       operator: 'others'
     }
+  },
+  dateHistogram: {
+    defaults: {
+      context: {
+        entries: [],
+        maxDate: null,
+        minDate: null,
+      }
+    }
   }
 }
