@@ -11,6 +11,11 @@ export default {
       size: 'self',
       optionsFilter: 'self',
     },
+    defaults: {
+      context: {
+        values: [],
+      },
+    },
   },
   text: {
     validate: validateValues,
@@ -35,12 +40,55 @@ export default {
     reactors: {
       page: 'self',
     },
+    defaults: {
+      context: {
+        response: {
+          results: [],
+          totalRecords: null,
+        },
+      },
+    },
   },
   number: {
     validate: x => !_.isNil(x.min) || !_.isNil(x.max),
     reactors: {
       min: 'others',
       max: 'others',
+    },
+  },
+  bool: {
+    reactors: {
+      value: 'others',
+    },
+  },
+  exists: {
+    reactors: {
+      value: 'others',
+    },
+  },
+  date: {
+    validate: x => !_.isNil(x.from) || !_.isNil(x.to),
+    reactors: {
+      from: 'others',
+      to: 'others',
+      useDateMath: 'others',
+      useRaw: 'others',
+    },
+  },
+  geo: {
+    reactors: {
+      location: 'others',
+      radius: 'others',
+      operator: 'others',
+    },
+  },
+  dateHistogram: {
+    defaults: {
+      context: {
+        entries: [],
+        maxDate: null,
+        minDate: null,
+      },
     },
   },
 }

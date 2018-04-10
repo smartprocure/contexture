@@ -1,4 +1,9 @@
-﻿# 2.3.0
+# 2.4.0
+* Added more example types (`bool`, `exists`, `date`, `geo`, `dateHistogram`)
+* Add support for default properties on node types
+* Add default contexts for `facet` and `results`
+
+# 2.3.0
 * Added lens
 
 # 2.2.2

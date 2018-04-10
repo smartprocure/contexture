@@ -137,13 +137,13 @@ describe('lib', () => {
       service.reset()
       await Tree.add(['root'], {
         key: 'newFilter',
-        type: 'facet',
+        type: 'text',
       })
       expect(service).to.have.callCount(0)
       await Tree.add(['root'], {
         key: 'newFilterWithValue',
-        type: 'facet',
-        values: 'asdf',
+        type: 'text',
+        value: 'asdf',
       })
       expect(service).to.have.callCount(1)
     })
@@ -151,7 +151,7 @@ describe('lib', () => {
       service.reset()
       await Tree.add(['root'], {
         key: 'newEmptyFilter',
-        type: 'facet',
+        type: 'text',
       })
       expect(service).to.have.callCount(0)
       expect(Tree.getNode(['root', 'newEmptyFilter'])).to.exist
@@ -451,6 +451,34 @@ describe('lib', () => {
     )
     expect(testInit).to.have.callCount(1)
     expect(Tree.getNode(['root', 'filter']).isExtended).to.be.true
+  })
+  it('should support custom type defaults', async () => {
+    let Tree = lib.ContextTree(
+      {
+        debounce: 1,
+        types: {
+          testType: {
+            defaults: {
+              isExtended: true,
+              context: {
+                example: 0,
+              },
+            },
+          },
+        },
+      },
+      {
+        key: 'root',
+        children: [
+          {
+            key: 'filter',
+            type: 'testType',
+          },
+        ],
+      }
+    )
+    expect(Tree.getNode(['root', 'filter']).isExtended).to.be.true
+    expect(Tree.getNode(['root', 'filter']).context.example).to.equal(0)
   })
   it('should custom type reactors should work with and without values, and nested', async () => {
     let service = sinon.spy(mockService({}))
