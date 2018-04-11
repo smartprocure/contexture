@@ -12,8 +12,11 @@ export default {
       optionsFilter: 'self',
     },
     defaults: {
+      values: [],
+      optionsFilter: '',
       context: {
-        values: [],
+        options: [],
+        cardinality: null,
       },
     },
   },
