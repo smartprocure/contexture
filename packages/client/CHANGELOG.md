@@ -1,3 +1,6 @@
+# 2.5.2
+* Fix defaults for facet
+
 # 2.5.1
 * Account for core returning an empty data object
 
