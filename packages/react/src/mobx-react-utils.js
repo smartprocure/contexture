@@ -1,12 +1,12 @@
 import _ from 'lodash/fp'
-import * as f from 'futil-js'
+import * as F from 'futil-js'
 import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
 
 // Utils
 export let hover = set => ({
-  onMouseOver: () => f.set(true, set),
-  onMouseOut: () => f.set(false, set),
+  onMouseOver: () => F.set(true, set),
+  onMouseOut: () => F.set(false, set),
 })
 // export let Component = (init, render) => inject(init)(observer(render))
 // export let Component = (init, render) => inject(render ? init : () => {})(observer(render || init))
@@ -23,7 +23,7 @@ export let Component = (init, render, displayName) => {
 export let lensOf = s =>
   _.reduce(
     (res, key) => {
-      res[key] = f.lensProp(key, s)
+      res[key] = F.lensProp(key, s)
       return res
     },
     {},
@@ -35,5 +35,7 @@ export let lenservable = x => {
   return s
 }
 // let toggle = (val, lens, unset=undefined) => {
-//   f.set(f.view(lens) === val ? unset : val, lens)
+//   F.set(F.view(lens) === val ? unset : val, lens)
 // }
+
+export let withStateLens = state => inject(() => F.lensOf(observable(state)))
