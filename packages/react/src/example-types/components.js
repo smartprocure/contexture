@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { observer, inject } from 'mobx-react'
-import { Flex } from './Flex'
+import { Flex } from '../layout/Flex'
 
 // For futil-js
 let toggleElement = (check, val, arr = []) =>

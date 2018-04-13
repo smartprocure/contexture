@@ -24,7 +24,7 @@ storiesOf('Docs', module)
     )
   )
 
-import Popover from '../src/components/Popover'
+import Popover from '../src/layout/Popover'
 storiesOf('Popover', module)
   .add('Show', () => <Popover show={() => true}>Contents</Popover>)
   .add('Hide', () => <Popover show={() => false}>Contents</Popover>)
