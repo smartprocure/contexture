@@ -6,7 +6,7 @@ const _ = require('lodash/fp')
  3. Zero has to be respected as a boundary value.
 */
 let boundaryFilter = value =>
-    _.isNil(value) || (_.isString(value) && _.isEmpty(value))
+  _.isNil(value) || (_.isString(value) && _.isEmpty(value))
     ? undefined
     : _.toNumber(value)
 
@@ -14,7 +14,7 @@ let rangeFilter = (field, min, max) => ({
   range: {
     [field]: _.pickBy(_.isNumber, {
       gte: boundaryFilter(min),
-      lte: boundaryFilter(max)
+      lte: boundaryFilter(max),
     }),
   },
 })
