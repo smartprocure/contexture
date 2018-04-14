@@ -5,16 +5,16 @@ const _ = require('lodash/fp')
  2. An empty value as the lower boundary represents negative infinity.
  3. Zero has to be respected as a boundary value.
 */
-let boundaryFilter = value => {
-  if (_.isString(value) && _.isEmpty(value)) value = NaN
-  return _.isNaN(_.toNumber(value)) ? null : _.toNumber(value)
-}
+let boundaryFilter = value =>
+    _.isNil(value) || (_.isString(value) && _.isEmpty(value))
+    ? undefined
+    : _.toNumber(value)
 
 let rangeFilter = (field, min, max) => ({
   range: {
     [field]: _.pickBy(_.isNumber, {
-      gte: !_.isNil(min) ? boundaryFilter(min) : undefined,
-      lte: !_.isNil(max) ? boundaryFilter(max) : undefined,
+      gte: boundaryFilter(min),
+      lte: boundaryFilter(max)
     }),
   },
 })
