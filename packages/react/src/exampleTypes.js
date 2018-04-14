@@ -3,7 +3,7 @@ import styles from './styles'
 import React from 'react'
 import { observable, extendObservable } from 'mobx'
 import { Component, lensOf } from './utils/mobx-react-utils'
-import { value } from './actout'
+import { value } from './utils/actout'
 
 // let addWord = node => {
 //   node.data.words.push(observable({
