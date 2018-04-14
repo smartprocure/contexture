@@ -13,8 +13,8 @@ let boundaryFilter = value => {
 let rangeFilter = (field, min, max) => ({
   range: {
     [field]: _.pickBy(_.isNumber, {
-      gte: boundaryFilter(min),
-      lte: boundaryFilter(max),
+      gte: !_.isNil(min) ? boundaryFilter(min) : undefined,
+      lte: !_.isNil(max) ? boundaryFilter(max) : undefined
     }),
   },
 })

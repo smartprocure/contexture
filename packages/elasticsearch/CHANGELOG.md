@@ -1,4 +1,6 @@
-﻿### 0.8.3
+﻿### 0.8.4
+* Number types will interpret interval min or max null values as open left or right boundaries.
+### 0.8.3
 * Fix regEx for words
 ﻿### 0.8.2
 * Results type will now return verbose data i.e. hits property when include has items so that data values for additional fields is accessible.
