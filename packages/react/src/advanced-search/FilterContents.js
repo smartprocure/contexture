@@ -1,7 +1,7 @@
 import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
-import { Component } from '../mobx-react-utils'
+import { Component } from '../utils/mobx-react-utils'
 
 let FilterContents = ({ node, root, fields }) => {
   let type = root.types[node.type] || {}

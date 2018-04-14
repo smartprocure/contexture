@@ -1,6 +1,6 @@
 import React from 'react'
 import * as F from 'futil-js'
-import { Component } from '../../mobx-react-utils'
+import { Component } from '../../utils/mobx-react-utils'
 import styles from '../../styles'
 import { oppositeJoin } from '../../searchUtils'
 import AddPreview from './AddPreview'

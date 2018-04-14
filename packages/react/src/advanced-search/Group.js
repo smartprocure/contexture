@@ -1,6 +1,6 @@
 import React from 'react'
 import * as F from 'futil-js'
-import { Component, lenservable } from '../mobx-react-utils'
+import { Component, lenservable } from '../utils/mobx-react-utils'
 import styles from '../styles'
 import Indentable from './preview/Indentable'
 import AddPreview from './preview/AddPreview'

@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { withInfo } from '@storybook/addon-info'
 
-import DDContext from '../src/components/DragDrop/DDContext'
+import DDContext from '../src/advanced-search/DragDrop/DDContext'
 let DnDWrap = DDContext(({ children }) => <div>{children}</div>)
 const DnDDecorator = storyFn => <DnDWrap>{storyFn()}</DnDWrap>
 
@@ -49,12 +49,12 @@ let root = {
   },
 }
 
-import OperatorMenu from '../src/components/OperatorMenu'
+import OperatorMenu from '../src/advanced-search/OperatorMenu'
 storiesOf('OperatorMenu', module).add('OperatorMenu', () => (
   <OperatorMenu {...{ tree: { join: 'and' }, parent, root }} />
 ))
 
-import FilterContents from '../src/components/FilterContents'
+import FilterContents from '../src/advanced-search/FilterContents'
 storiesOf('FilterContents', module).add('FilterContents', () => (
   <FilterContents
     node={{
@@ -65,7 +65,7 @@ storiesOf('FilterContents', module).add('FilterContents', () => (
   />
 ))
 
-import Operator from '../src/components/Operator'
+import Operator from '../src/advanced-search/Operator'
 let operatorStory = (join, index) => () => (
   <Operator
     {...{
@@ -89,13 +89,13 @@ storiesOf('Operator', module)
   .add('first or', operatorStory('or', 0))
   .add('first not', operatorStory('not', 0))
 
-import AddPreview from '../src/components/preview/AddPreview'
+import AddPreview from '../src/advanced-search/preview/AddPreview'
 storiesOf('AddPreview', module)
   .add('and', () => <AddPreview onClick={action('join')} join="and" />)
   .add('or', () => <AddPreview onClick={action('join')} join="or" />)
   .add('not', () => <AddPreview onClick={action('join')} join="not" />)
 
-import Indentable from '../src/components/preview/Indentable'
+import Indentable from '../src/advanced-search/preview/Indentable'
 storiesOf('Indentable', module)
   .add('and', () => (
     <Indentable indent={() => true} tree={{ join: 'and' }}>
@@ -113,7 +113,7 @@ storiesOf('Indentable', module)
     </Indentable>
   ))
 
-import Rule from '../src/components/Rule'
+import Rule from '../src/advanced-search/Rule'
 storiesOf('Rule', module)
   .addDecorator(DnDDecorator)
   .add('index', () => (
@@ -129,7 +129,7 @@ storiesOf('Rule', module)
     />
   ))
 
-import Group from '../src/components/Group'
+import Group from '../src/advanced-search/Group'
 storiesOf('Group', module)
   .addDecorator(DnDDecorator)
   .add('One Filter', () => (
@@ -203,7 +203,7 @@ storiesOf('Group', module)
     />
   ))
 
-import SearchRoot, { NewNode } from '../src/components/SearchRoot'
+import SearchRoot, { NewNode } from '../src/advanced-search/SearchRoot'
 import Types from '../src/exampleTypes'
 let Node = NewNode(Types)
 storiesOf('SearchRoot', module)

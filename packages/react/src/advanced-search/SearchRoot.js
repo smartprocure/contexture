@@ -3,11 +3,11 @@ import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import { observable, action } from 'mobx'
 import DDContext from './DragDrop/DDContext'
-import { Component } from '../mobx-react-utils'
+import { Component } from '../utils/mobx-react-utils'
 import Group from './Group'
 import styles from '../styles'
 import { oppositeJoin } from '../searchUtils'
-import treeUtils from '../treeUtils'
+import treeUtils from '../utils/tree'
 let { background } = styles
 let randomString = () =>
   Math.random()

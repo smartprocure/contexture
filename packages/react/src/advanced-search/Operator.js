@@ -1,6 +1,6 @@
 import React from 'react'
 import * as F from 'futil-js'
-import { Component, lenservable } from '../mobx-react-utils'
+import { Component, lenservable } from '../utils/mobx-react-utils'
 import styles from '../styles'
 import Popover from '../layout/Popover'
 import OperatorMenu from './OperatorMenu'

@@ -2,7 +2,7 @@ import _ from 'lodash/fp'
 import styles from './styles'
 import React from 'react'
 import { observable, extendObservable } from 'mobx'
-import { Component, lensOf } from './mobx-react-utils'
+import { Component, lensOf } from './utils/mobx-react-utils'
 import { value } from './actout'
 
 // let addWord = node => {

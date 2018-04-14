@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
-import { hover, Component } from '../mobx-react-utils'
+import { hover, Component } from '../utils/mobx-react-utils'
 import styles from '../styles'
 import { oppositeJoin } from '../searchUtils'
 let { btn, joinColor, bgJoin } = styles

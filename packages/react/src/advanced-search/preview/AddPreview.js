@@ -1,5 +1,5 @@
 import React from 'react'
-import { Component } from '../../mobx-react-utils'
+import { Component } from '../../utils/mobx-react-utils'
 import styles from '../../styles'
 
 let AddPreview = ({ join, style, onClick }) => (
