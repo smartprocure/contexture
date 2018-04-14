@@ -170,7 +170,7 @@ import {
   ResultCount,
   DateHistogram,
   Styles,
-} from '../src/example-types'
+} from '../src/exampleTypes/'
 import injectTreeNode from '../src/utils/injectTreeNode'
 import { Flex } from '../src/layout/Flex'
 
