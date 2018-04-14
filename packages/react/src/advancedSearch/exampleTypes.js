@@ -1,3 +1,5 @@
+// LEGACY FILE - replace with exampleTypes dir
+
 import _ from 'lodash/fp'
 import styles from '../styles'
 import React from 'react'
