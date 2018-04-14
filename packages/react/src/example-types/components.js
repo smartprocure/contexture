@@ -1,22 +1,17 @@
 import React from 'react'
 import * as F from 'futil-js'
 
-import facet from './Facet'
-import range from './Range'
-import query from './Query'
-import resultCount from './ResultCount'
-import dateHistogram from './DateHistogram'
-import styles from './Styles'
-
-export let Facet = facet
-export let Range = range
-export let Query = query
-export let ResultCount = resultCount
-export let DateHistogram = dateHistogram
-export let Styles = styles
+import Facet from './Facet'
+import Range from './Range'
+import Query from './Query'
+import ResultCount from './ResultCount'
+import DateHistogram from './DateHistogram'
+import Styles from './Styles'
+export {Facet, Range, Query, ResultCount, DateHistogram, Styles}
 
 export let TypeMap = {
   facet: Facet,
-  number: range
+  query: Query,
+  number: Range,
 }
 
