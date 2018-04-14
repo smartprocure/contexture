@@ -25,7 +25,7 @@ storiesOf('Docs', module)
   )
 
 import Popover from '../src/layout/Popover'
-storiesOf('Popover', module)
+storiesOf('Layout/Popover', module)
   .add('Show', () => <Popover show={() => true}>Contents</Popover>)
   .add('Hide', () => <Popover show={() => false}>Contents</Popover>)
 
@@ -50,12 +50,12 @@ let root = {
 }
 
 import OperatorMenu from '../src/queryBuilder/OperatorMenu'
-storiesOf('OperatorMenu', module).add('OperatorMenu', () => (
+storiesOf('QueryBuilder/Internals/OperatorMenu', module).add('OperatorMenu', () => (
   <OperatorMenu {...{ tree: { join: 'and' }, parent, root }} />
 ))
 
 import FilterContents from '../src/queryBuilder/FilterContents'
-storiesOf('FilterContents', module).add('FilterContents', () => (
+storiesOf('QueryBuilder/Internals/FilterContents', module).add('FilterContents', () => (
   <FilterContents
     node={{
       type: 'test',
@@ -80,7 +80,7 @@ let operatorStory = (join, index) => () => (
     }}
   />
 )
-storiesOf('Operator', module)
+storiesOf('QueryBuilder/Internals/Operator', module)
   .addDecorator(DnDDecorator)
   .add('and', operatorStory('and', 1))
   .add('or', operatorStory('or', 1))
@@ -90,13 +90,13 @@ storiesOf('Operator', module)
   .add('first not', operatorStory('not', 0))
 
 import AddPreview from '../src/queryBuilder/preview/AddPreview'
-storiesOf('AddPreview', module)
+storiesOf('QueryBuilder/Internals/AddPreview', module)
   .add('and', () => <AddPreview onClick={action('join')} join="and" />)
   .add('or', () => <AddPreview onClick={action('join')} join="or" />)
   .add('not', () => <AddPreview onClick={action('join')} join="not" />)
 
 import Indentable from '../src/queryBuilder/preview/Indentable'
-storiesOf('Indentable', module)
+storiesOf('QueryBuilder/Internals/Indentable', module)
   .add('and', () => (
     <Indentable indent={() => true} tree={{ join: 'and' }}>
       <div style={{ height: '100px' }}>Contents</div>
@@ -114,7 +114,7 @@ storiesOf('Indentable', module)
   ))
 
 import Rule from '../src/queryBuilder/Rule'
-storiesOf('Rule', module)
+storiesOf('QueryBuilder/Internals/Rule', module)
   .addDecorator(DnDDecorator)
   .add('index', () => (
     <Rule
@@ -130,7 +130,7 @@ storiesOf('Rule', module)
   ))
 
 import Group from '../src/queryBuilder/Group'
-storiesOf('Group', module)
+storiesOf('QueryBuilder/Internals/Group', module)
   .addDecorator(DnDDecorator)
   .add('One Filter', () => (
     <Group
@@ -206,7 +206,7 @@ storiesOf('Group', module)
 import SearchRoot, { NewNode } from '../src/queryBuilder/SearchRoot'
 import Types from '../src/queryBuilder/exampleTypes'
 let Node = NewNode(Types)
-storiesOf('SearchRoot', module)
+storiesOf('QueryBuilder/Examples', module)
   .add('One Filter', () => (
     <SearchRoot
       tree={observable({
