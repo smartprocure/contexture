@@ -1,8 +1,8 @@
 import generic from './generic'
-import * as advanced from './advancedSearch'
+import * as queryBuilder from './queryBuilder'
 
 export default {
   ...generic,
-  ...advanced.styles,
-  background: advanced.background,
+  ...queryBuilder.styles,
+  background: queryBuilder.background,
 }
