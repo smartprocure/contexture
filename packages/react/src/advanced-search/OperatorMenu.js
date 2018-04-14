@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { hover, Component } from '../utils/mobx-react-utils'
 import styles from '../styles'
-import { oppositeJoin } from '../searchUtils'
+import { oppositeJoin } from '../utils/search'
 let { btn, joinColor, bgJoin } = styles
 
 let OperatorMenu = ({ tree, parent, root, parentTree }) => (

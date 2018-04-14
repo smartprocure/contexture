@@ -6,7 +6,7 @@ import DDContext from './DragDrop/DDContext'
 import { Component } from '../utils/mobx-react-utils'
 import Group from './Group'
 import styles from '../styles'
-import { oppositeJoin } from '../searchUtils'
+import { oppositeJoin } from '../utils/search'
 import treeUtils from '../utils/tree'
 let { background } = styles
 let randomString = () =>

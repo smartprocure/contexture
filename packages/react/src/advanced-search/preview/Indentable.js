@@ -2,7 +2,7 @@ import React from 'react'
 import * as F from 'futil-js'
 import { Component } from '../../utils/mobx-react-utils'
 import styles from '../../styles'
-import { oppositeJoin } from '../../searchUtils'
+import { oppositeJoin } from '../../utils/search'
 import AddPreview from './AddPreview'
 
 let Indentable = ({ children, indent, tree }) => (

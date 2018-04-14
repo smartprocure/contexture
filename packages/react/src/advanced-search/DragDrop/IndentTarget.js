@@ -1,7 +1,7 @@
 import React from 'react'
 import FilterDropTarget from './FilterDropTarget'
 import styles from '../../styles'
-import { oppositeJoin } from '../../searchUtils'
+import { oppositeJoin } from '../../utils/search'
 
 // Indent
 let FilterIndentSpec = {

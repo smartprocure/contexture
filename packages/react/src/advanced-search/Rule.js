@@ -4,7 +4,7 @@ import styles from '../styles'
 import Indentable from './preview/Indentable'
 import FilterContents from './FilterContents'
 import FilterDragSource from './DragDrop/FilterDragSource'
-import { oppositeJoin } from '../searchUtils'
+import { oppositeJoin } from '../utils/search'
 
 let Rule = args => {
   let {
