@@ -140,7 +140,7 @@ let testTree = {
   },
 }
 import SpacedList from '../src/layout/SpacedList'
-let Results = InjectTreeNode(
+let Results = injectTreeNode(
   observer(({ node }) => (
     <Flex style={{ alignItems: 'baseline', justifyContent: 'center' }}>
       <table>
@@ -169,9 +169,9 @@ import {
   Query,
   ResultCount,
   DateHistogram,
-  InjectTreeNode,
   Styles,
 } from '../src/example-types/components'
+import injectTreeNode from '../src/utils/injectTreeNode'
 import { Flex } from '../src/layout/Flex'
 
 export default () =>

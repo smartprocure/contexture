@@ -1,8 +1,9 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
-import { observer, inject } from 'mobx-react'
+import { observer } from 'mobx-react'
 import { Flex } from '../layout/Flex'
+import injectTreeNode from '../utils/injectTreeNode'
 
 // For futil-js
 let toggleElement = (check, val, arr = []) =>
@@ -31,14 +32,8 @@ export let Styles = () => (
   </style>
 )
 
-export let InjectTreeNode = inject(
-  ({ tree: t1, node: n1 }, { tree = t1, path, node: n2 }) => ({
-    tree,
-    node: n2 || n1 || tree.getNode(path),
-  })
-)
 
-export let Facet = InjectTreeNode(
+export let Facet = injectTreeNode(
   observer(({ tree, node, hide = {}, ...props }) => (
     <div {...props}>
       {!hide.facetFilter && (
@@ -79,7 +74,7 @@ export let Facet = InjectTreeNode(
   ))
 )
 
-export let Range = InjectTreeNode(
+export let Range = injectTreeNode(
   observer(({ tree, node, ...props }) => (
     <Flex {...props}>
       <input
@@ -99,7 +94,7 @@ export let Range = InjectTreeNode(
   ))
 )
 
-export let Query = InjectTreeNode(
+export let Query = injectTreeNode(
   observer(({ tree, node, style, ...props }) => (
     <input
       className="contexture-search-box"
@@ -116,7 +111,7 @@ export let Query = InjectTreeNode(
   ))
 )
 
-export let ResultCount = InjectTreeNode(
+export let ResultCount = injectTreeNode(
   observer(({ node, ...props }) => (
     <div style={{ textAlign: 'center' }} {...props}>
       {node.context.response.results.length
@@ -128,7 +123,7 @@ export let ResultCount = InjectTreeNode(
   ))
 )
 
-export let DateHistogram = InjectTreeNode(
+export let DateHistogram = injectTreeNode(
   observer(
     ({
       node,
