@@ -1,12 +1,7 @@
 import React from 'react'
 import * as F from 'futil-js'
 import { storiesOf } from '@storybook/react'
-import { action } from '@storybook/addon-actions'
 import { withInfo } from '@storybook/addon-info'
-import DDContext from '../src/queryBuilder/DragDrop/DDContext'
-
-let DnDWrap = DDContext(({ children }) => <div>{children}</div>)
-const DnDDecorator = storyFn => <DnDWrap>{storyFn()}</DnDWrap>
 
 storiesOf('Docs', module)
   .add(
@@ -21,7 +16,6 @@ storiesOf('Docs', module)
       () => null
     )
   )
-
 
 require('./QueryBuilder/examples').default()
 require('./QueryBuilder/internals/').default()
