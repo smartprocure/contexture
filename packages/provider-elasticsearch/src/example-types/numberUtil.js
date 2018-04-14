@@ -14,7 +14,7 @@ let rangeFilter = (field, min, max) => ({
   range: {
     [field]: _.pickBy(_.isNumber, {
       gte: !_.isNil(min) ? boundaryFilter(min) : undefined,
-      lte: !_.isNil(max) ? boundaryFilter(max) : undefined
+      lte: !_.isNil(max) ? boundaryFilter(max) : undefined,
     }),
   },
 })
