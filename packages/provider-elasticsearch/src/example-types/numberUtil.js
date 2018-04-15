@@ -9,7 +9,7 @@ const _ = require('lodash/fp')
     or gte properties as open or closed left or right intervals.
 */
 let boundaryFilter = value =>
-    _.isNil(value) || (_.isString(value) && _.isEmpty(value))
+  _.isNil(value) || (_.isString(value) && _.isEmpty(value))
     ? undefined
     : _.toNumber(value)
 
@@ -17,7 +17,7 @@ let rangeFilter = (field, min, max) => ({
   range: {
     [field]: _.pickBy(_.isNumber, {
       gte: boundaryFilter(min),
-      lte: boundaryFilter(max)
+      lte: boundaryFilter(max),
     }),
   },
 })
