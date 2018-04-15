@@ -5,7 +5,7 @@ const _ = require('lodash/fp')
     resolves to undefined.
  2. This causes the properties gte and lte to be undefined
     if the value is undefined.
- 3. ElasticSearch interprets the absence of presence of lte 
+ 3. ElasticSearch interprets the absence or presence of lte 
     or gte properties as open or closed left or right intervals.
 */
 let boundaryFilter = value =>
