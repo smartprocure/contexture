@@ -9,7 +9,7 @@ import { OperatorMoveTarget } from './DragDrop/MoveTargets'
 let BlankOperator = ({ state, tree, child }) => (
   <div>
     <div
-      onClick={F.flip(state.lens.show)}
+      onClick={F.flip(state.lens.isOpen)}
       style={{
         ...styles.blankOperator,
         borderBottomColor: styles.joinColor(tree.join),
@@ -40,7 +40,7 @@ let OperatorLine = Component(({ tree, child, style }) => (
 let JoinOperator = ({ state, tree, child, parent }) => (
   <div>
     <div
-      onClick={F.flip(state.lens.show)}
+      onClick={F.flip(state.lens.isOpen)}
       style={{ ...styles.operator, ...styles.bgJoin(parent.joinHover || tree) }}
     >
       <span
@@ -60,7 +60,7 @@ let JoinOperator = ({ state, tree, child, parent }) => (
 let Operator = Component(
   () => ({
     state: lenservable({
-      show: false,
+      isOpen: false,
     }),
   }),
   ({ state, tree, child, parent, root, parentTree, index }) => (
@@ -72,7 +72,7 @@ let Operator = Component(
       )}
       <OperatorMoveTarget {...{ tree, root, index }} />
       <Popover
-        show={state.lens.show}
+        isOpen={state.lens.isOpen}
         style={{
           ...styles.operatorPopover,
           ...styles.bdJoin(tree),

@@ -6,8 +6,8 @@ let { fullscreen } = styles
 
 // Simple popover
 export default observer(
-  ({ show, children, style }) =>
-    f.view(show) && (
+  ({ isOpen, children, style }) =>
+    f.view(isOpen) && (
       <div>
         <div
           style={{
@@ -22,7 +22,7 @@ export default observer(
         >
           {children}
         </div>
-        <div style={fullscreen} onClick={f.off(show)} />
+        <div style={fullscreen} onClick={f.off(isOpen)} />
       </div>
     )
 )
