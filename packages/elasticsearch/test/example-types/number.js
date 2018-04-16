@@ -52,7 +52,7 @@ describe('number/filter', () => {
       type: 'number',
       field: 'test',
       min: 500,
-      max: ''
+      max: '',
     }
 
     expect(number.filter(value)).to.deep.equal(gteExpectedValue)
@@ -63,7 +63,7 @@ describe('number/filter', () => {
       type: 'number',
       field: 'test',
       min: 500,
-      max: null
+      max: null,
     }
 
     expect(number.filter(value)).to.deep.equal(gteExpectedValue)
@@ -84,7 +84,7 @@ describe('number/filter', () => {
       type: 'number',
       field: 'test',
       max: 500,
-      min: ''
+      min: '',
     }
 
     expect(number.filter(value)).to.deep.equal(lteExpectedValue)
@@ -95,7 +95,7 @@ describe('number/filter', () => {
       type: 'number',
       field: 'test',
       max: 500,
-      min: null
+      min: null,
     }
 
     expect(number.filter(value)).to.deep.equal(lteExpectedValue)
