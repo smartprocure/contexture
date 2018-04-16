@@ -19,5 +19,5 @@ storiesOf('Docs', module)
 
 require('./queryBuilder/examples').default()
 require('./queryBuilder/internals/').default()
-require('./exampleTypes').default()
+require('./exampleTypes/').default()
 require('./layout').default()

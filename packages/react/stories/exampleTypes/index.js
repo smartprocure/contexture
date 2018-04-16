@@ -139,7 +139,7 @@ let testTree = {
     extendObservable(tree[path], blob)
   },
 }
-import SpacedList from '../src/layout/SpacedList'
+import SpacedList from '../../src/layout/SpacedList'
 let Results = injectTreeNode(
   observer(({ node }) => (
     <Flex style={{ alignItems: 'baseline', justifyContent: 'center' }}>
@@ -170,12 +170,12 @@ import {
   ResultCount,
   DateHistogram,
   Styles,
-} from '../src/exampleTypes/'
-import injectTreeNode from '../src/utils/injectTreeNode'
-import { Flex } from '../src/layout/Flex'
+} from '../../src/exampleTypes/'
+import injectTreeNode from '../../src/utils/injectTreeNode'
+import { Flex } from '../../src/layout/Flex'
 
 export default () =>
-  storiesOf('Example Types', module).add('Example Components', () => (
+  storiesOf('Example Types', module).add('Full Demo', () => (
     <div
       style={{
         backgroundColor: '#333',
