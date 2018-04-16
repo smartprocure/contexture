@@ -3,6 +3,22 @@ let number = require('../../src/example-types/number')
 let numberRangeHistogram = require('../../src/example-types/numberRangeHistogram')
 let { expect } = require('chai')
 
+const lteExpectedValue = {
+  range: {
+    test: {
+      lte: 500,
+    },
+  },
+}
+
+const gteExpectedValue = {
+  range: {
+    test: {
+      gte: 500,
+    },
+  },
+}
+
 describe('number/filter', () => {
   it('should check for values', () => {
     let withMax = {
@@ -27,17 +43,31 @@ describe('number/filter', () => {
       field: 'test',
       min: 500,
     }
-    let expectedValue = {
-      range: {
-        test: {
-          gte: 500,
-        },
-      },
+
+    expect(number.filter(value)).to.deep.equal(gteExpectedValue)
+    expect(numberRangeHistogram.filter(value)).to.deep.equal(gteExpectedValue)
+  })
+  it('should handle min with max as empty string', () => {
+    let value = {
+      type: 'number',
+      field: 'test',
+      min: 500,
+      max: ''
     }
 
-    expect(number.filter(value)).to.deep.equal(expectedValue)
+    expect(number.filter(value)).to.deep.equal(gteExpectedValue)
+    expect(numberRangeHistogram.filter(value)).to.deep.equal(gteExpectedValue)
+  })
+  it('should handle min with max as null', () => {
+    let value = {
+      type: 'number',
+      field: 'test',
+      min: 500,
+      max: null
+    }
 
-    expect(numberRangeHistogram.filter(value)).to.deep.equal(expectedValue)
+    expect(number.filter(value)).to.deep.equal(gteExpectedValue)
+    expect(numberRangeHistogram.filter(value)).to.deep.equal(gteExpectedValue)
   })
   it('should handle max', () => {
     let value = {
@@ -45,17 +75,31 @@ describe('number/filter', () => {
       field: 'test',
       max: 500,
     }
-    let expectedValue = {
-      range: {
-        test: {
-          lte: 500,
-        },
-      },
+
+    expect(number.filter(value)).to.deep.equal(lteExpectedValue)
+    expect(numberRangeHistogram.filter(value)).to.deep.equal(lteExpectedValue)
+  })
+  it('should handle max with min as empty string', () => {
+    let value = {
+      type: 'number',
+      field: 'test',
+      max: 500,
+      min: ''
     }
 
-    expect(number.filter(value)).to.deep.equal(expectedValue)
+    expect(number.filter(value)).to.deep.equal(lteExpectedValue)
+    expect(numberRangeHistogram.filter(value)).to.deep.equal(lteExpectedValue)
+  })
+  it('should handle max with min as null', () => {
+    let value = {
+      type: 'number',
+      field: 'test',
+      max: 500,
+      min: null
+    }
 
-    expect(numberRangeHistogram.filter(value)).to.deep.equal(expectedValue)
+    expect(number.filter(value)).to.deep.equal(lteExpectedValue)
+    expect(numberRangeHistogram.filter(value)).to.deep.equal(lteExpectedValue)
   })
   it('should handle min and max', () => {
     let value = {
@@ -74,7 +118,6 @@ describe('number/filter', () => {
     }
 
     expect(number.filter(value)).to.deep.equal(expectedValue)
-
     expect(numberRangeHistogram.filter(value)).to.deep.equal(expectedValue)
   })
 
