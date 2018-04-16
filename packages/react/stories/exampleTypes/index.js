@@ -1,6 +1,7 @@
+import _ from 'lodash/fp'
 import React from 'react'
 import { observable, extendObservable } from 'mobx'
-import { observer, Provider } from 'mobx-react'
+import { Provider } from 'mobx-react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 
@@ -134,44 +135,22 @@ let tree = observable({
 })
 let testTree = {
   getNode: ([path]) => tree[path],
-  mutate([path], blob) {
+  mutate: _.curry(([path], blob) => {
     action('mutate')(path, blob)
     extendObservable(tree[path], blob)
-  },
+  }),
 }
 import SpacedList from '../../src/layout/SpacedList'
-let Results = injectTreeNode(
-  observer(({ node }) => (
-    <Flex style={{ alignItems: 'baseline', justifyContent: 'center' }}>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-          </tr>
-        </thead>
-        <tbody>
-          {node.context.response.results.map(({ _id, title }) => (
-            <tr key={_id}>
-              <td>{_id}</td>
-              <td>{title}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </Flex>
-  ))
-)
 let formatYear = x => new Date(x).getFullYear() + 1
 import {
   Facet,
   Range,
   Query,
   ResultCount,
+  ResultTable,
   DateHistogram,
   Styles,
 } from '../../src/exampleTypes/'
-import injectTreeNode from '../../src/utils/injectTreeNode'
 import { Flex } from '../../src/layout/Flex'
 
 export default () =>
@@ -201,7 +180,9 @@ export default () =>
               <SpacedList>
                 <DateHistogram path={['dateHistogram']} format={formatYear} />
                 <ResultCount path={['results']} />
-                <Results path={['results']} />
+                <Flex style={{ alignItems: 'baseline', justifyContent: 'center' }}>
+                  <ResultTable path={['results']} infer />
+                </Flex>
               </SpacedList>
             </div>
           </Flex>
