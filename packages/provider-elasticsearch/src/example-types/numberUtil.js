@@ -1,14 +1,17 @@
 const _ = require('lodash/fp')
 
 /*
- 1. An empty value as the upper boundary represents infinity.
- 2. An empty value as the lower boundary represents negative infinity.
- 3. Zero has to be respected as a boundary value.
+ 1. A null, undefined, or an empty string value 
+    resolves to undefined.
+ 2. This causes the properties gte and lte to be undefined
+    if the value is undefined.
+ 3. ElasticSearch interprets the absence or presence of lte 
+    or gte properties as open or closed left or right intervals.
 */
-let boundaryFilter = value => {
-  if (_.isString(value) && _.isEmpty(value)) value = NaN
-  return _.isNaN(_.toNumber(value)) ? null : _.toNumber(value)
-}
+let boundaryFilter = value =>
+  _.isNil(value) || (_.isString(value) && _.isEmpty(value))
+    ? undefined
+    : _.toNumber(value)
 
 let rangeFilter = (field, min, max) => ({
   range: {
