@@ -39,3 +39,5 @@ export let lenservable = x => {
 // }
 
 export let withStateLens = state => inject(() => F.lensOf(observable(state)))
+
+export let partial = _.curry((x, y) => inject(() => x)(y))
