@@ -42,8 +42,13 @@ export default {
     validate: () => false,
     reactors: {
       page: 'self',
+      pageSize: 'self',
+      sortField: 'self',
+      sortDir: 'self',
+      include: 'self',
     },
     defaults: {
+      pageSize: 10,
       context: {
         response: {
           results: [],
