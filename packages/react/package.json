@@ -45,12 +45,12 @@
     }
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^3.2.16",
+    "@storybook/addon-actions": "^3.4.1",
     "@storybook/addon-console": "^1.0.0",
-    "@storybook/addon-info": "^3.2.16",
-    "@storybook/addon-links": "^3.2.16",
-    "@storybook/addon-storyshots": "^3.2.16",
-    "@storybook/react": "^3.2.16",
+    "@storybook/addon-info": "^3.4.1",
+    "@storybook/addon-links": "^3.4.1",
+    "@storybook/addon-storyshots": "^3.4.1",
+    "@storybook/react": "^3.4.1",
     "@storybook/storybook-deployer": "^2.0.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
