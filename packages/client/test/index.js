@@ -42,7 +42,7 @@ describe('lib', () => {
             type: 'facet',
             values: ['a'],
             filterOnly: true,
-            optionsFilter: ''
+            optionsFilter: '',
           },
           {
             key: 'results',
@@ -73,12 +73,12 @@ describe('lib', () => {
             key: 'filter',
             type: 'facet',
             values: ['a'],
-            optionsFilter: ''
+            optionsFilter: '',
           },
           {
             key: 'results',
             type: 'results',
-            pageSize: 10
+            pageSize: 10,
           },
         ],
       })
@@ -101,7 +101,7 @@ describe('lib', () => {
             values: ['a'],
             size: 10,
             lastUpdateTime: now,
-            optionsFilter: ''
+            optionsFilter: '',
           },
         ],
       })
@@ -265,7 +265,7 @@ describe('lib', () => {
             children: [
               {
                 key: 'results',
-                type: 'results'
+                type: 'results',
               },
             ],
           },
@@ -309,7 +309,7 @@ describe('lib', () => {
               key: 'results',
               type: 'results',
               lastUpdateTime: now,
-              pageSize: 10
+              pageSize: 10,
             },
           ],
           lastUpdateTime: now,
@@ -325,7 +325,7 @@ describe('lib', () => {
               values: ['City of Deerfield'],
               size: 24,
               filterOnly: true,
-              optionsFilter: ''
+              optionsFilter: '',
             },
             {
               key: 'mainQuery',
