@@ -1,9 +1,9 @@
 import _ from 'lodash/fp'
 import React from 'react'
-import { observable, extendObservable } from 'mobx'
-import { Provider } from 'mobx-react'
-import { storiesOf } from '@storybook/react'
-import { action } from '@storybook/addon-actions'
+import {observable, extendObservable} from 'mobx'
+import {Provider} from 'mobx-react'
+import {storiesOf} from '@storybook/react'
+import {action} from '@storybook/addon-actions'
 
 let tree = observable({
   facet: {
@@ -57,14 +57,23 @@ let tree = observable({
           {
             _id: '123',
             title: 'Some Result',
+            a: 1,
+            b: 2,
+            c: 3,
           },
           {
             _id: '124',
             title: 'Some Other Result',
+            a: 1,
+            b: 4,
+            c: 3,
           },
           {
             _id: '135',
             title: 'A Different Result',
+            a: 1,
+            b: 2,
+            c: 3,
           },
         ],
         startRecord: 1,
@@ -151,42 +160,81 @@ import {
   DateHistogram,
   Styles,
 } from '../../src/exampleTypes/'
-import { Flex } from '../../src/layout/Flex'
+import {Flex} from '../../src/layout/Flex'
 
 export default () =>
-  storiesOf('Example Types', module).add('Full Demo', () => (
-    <div
-      style={{
-        backgroundColor: '#333',
-        color: '#AAA',
-        padding: '20px',
-        borderRadius: '10px',
-      }}
-    >
-      <Styles />
-      <Provider tree={testTree}>
-        <SpacedList>
-          <Query path={['query']} />
-          <Flex>
-            <div style={{ flex: 1 }}>
-              <SpacedList>
-                <Facet path={['facet']} />
-                <Facet path={['facet']} />
-                <Range path={['range']} />
-                <Range path={['range']} />
-              </SpacedList>
-            </div>
-            <div style={{ flex: 4 }}>
-              <SpacedList>
-                <DateHistogram path={['dateHistogram']} format={formatYear} />
-                <ResultCount path={['results']} />
-                <Flex style={{ alignItems: 'baseline', justifyContent: 'center' }}>
-                  <ResultTable path={['results']} infer />
-                </Flex>
-              </SpacedList>
-            </div>
-          </Flex>
-        </SpacedList>
-      </Provider>
-    </div>
-  ))
+  storiesOf('Example Types', module)
+    .add('Full Demo', () => (
+      <div
+        style={{
+          backgroundColor: '#333',
+          color: '#AAA',
+          padding: '20px',
+          borderRadius: '10px',
+        }}>
+        <Styles />
+        <Provider tree={testTree}>
+          <SpacedList>
+            <Query path={['query']} />
+            <Flex>
+              <div style={{flex: 1}}>
+                <SpacedList>
+                  <Facet path={['facet']} />
+                  <Facet path={['facet']} />
+                  <Range path={['range']} />
+                  <Range path={['range']} />
+                </SpacedList>
+              </div>
+              <div style={{flex: 4}}>
+                <SpacedList>
+                  <DateHistogram path={['dateHistogram']} format={formatYear} />
+                  <ResultCount path={['results']} />
+                  <Flex
+                    style={{alignItems: 'baseline', justifyContent: 'center'}}>
+                    <ResultTable path={['results']} infer />
+                  </Flex>
+                </SpacedList>
+              </div>
+            </Flex>
+          </SpacedList>
+        </Provider>
+      </div>
+    ))
+    .add('ResultTable Customizations', () => (
+      <div>
+        <style>
+          {`
+            .example-table tr:nth-child(even) {
+              background-color: rgba(0, 0, 0, 0.5)
+            }
+            .example-table {
+              background: white;
+              color: #444;
+              border-collapse: collapse;
+            }
+            .example-table td, .example-table th {
+              padding: 5px
+            }
+            .example-table thead {
+              border-bottom: solid 2px #ccc
+            }
+          `}
+        </style>
+        <ResultTable
+          tree={testTree}
+          path={['results']}
+          Table={x => <table className="example-table" {...x} />}
+          infer
+          fields={{
+            b: {
+              label: 'Field B',
+              order: -2,
+            },
+            title: {
+              order: 1,
+              Cell: x => <td style={{color: 'red'}} {...x} />,
+            },
+          }}
+        />
+      </div>
+    ))
