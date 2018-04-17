@@ -10,7 +10,7 @@ export default {
       mode: 'others',
       size: 'self',
       optionsFilter: 'self',
-      sort: 'self'
+      sort: 'self',
     },
     defaults: {
       values: [],

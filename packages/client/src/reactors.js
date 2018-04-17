@@ -43,7 +43,13 @@ export let StandardReactors = {
   remove(parent, node, { previous }) {
     if (hadValue(previous)) return reactors.all(...arguments)
   },
-  paused(parent, node, { value: { paused } }) {
+  paused(
+    parent,
+    node,
+    {
+      value: { paused },
+    }
+  ) {
     if (!paused && node.missedUpdate) {
       // Reactor probably shouldn't mutate but this needs to clear somewhere :/
       node.missedUpdate = false

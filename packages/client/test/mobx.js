@@ -86,13 +86,13 @@ describe('usage with mobx should generally work', () => {
           type: 'facet',
           values: ['a'],
           filterOnly: true,
-          optionsFilter: ''
+          optionsFilter: '',
         },
         {
           key: 'results',
           type: 'results',
           lastUpdateTime: now,
-          pageSize: 10
+          pageSize: 10,
         },
       ],
     })
@@ -108,7 +108,7 @@ describe('usage with mobx should generally work', () => {
       path: ['root', 'filter'],
       context: {
         options: [],
-        cardinality: null
+        cardinality: null,
       },
     })
     // should update contexts
@@ -166,7 +166,7 @@ describe('usage with mobx should generally work', () => {
       path: ['root', 'newFilterWithValue'],
       context: {
         options: [],
-        cardinality: null
+        cardinality: null,
       },
     })
     disposer()
@@ -218,7 +218,7 @@ describe('usage with mobx should generally work', () => {
       type: 'facet',
       path: ['root', 'newEmptyFilter'],
       context: {},
-      values: []
+      values: [],
     })
     expect(
       _.flow(_.omit(['lastUpdateTime']), F.compactObject)(
@@ -229,7 +229,7 @@ describe('usage with mobx should generally work', () => {
       type: 'facet',
       context: {},
       path: ['root', 'newEmptyFilter'],
-      values: []
+      values: [],
     })
 
     expect(
