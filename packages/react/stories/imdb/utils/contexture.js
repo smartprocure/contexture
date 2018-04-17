@@ -1,5 +1,5 @@
 import Contexture from 'contexture'
-import {exampleTypes} from 'contexture-client'
+import { exampleTypes } from 'contexture-client'
 import elasticsearch from 'elasticsearch-browser'
 import contextureES from 'contexture-elasticsearch'
 import contextureESTypes from 'contexture-elasticsearch/src/types'

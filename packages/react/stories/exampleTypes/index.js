@@ -1,9 +1,9 @@
 import _ from 'lodash/fp'
 import React from 'react'
-import {observable, extendObservable} from 'mobx'
-import {Provider} from 'mobx-react'
-import {storiesOf} from '@storybook/react'
-import {action} from '@storybook/addon-actions'
+import { observable, extendObservable } from 'mobx'
+import { Provider } from 'mobx-react'
+import { storiesOf } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
 
 let tree = observable({
   facet: {
@@ -160,7 +160,7 @@ import {
   DateHistogram,
   Styles,
 } from '../../src/exampleTypes/'
-import {Flex} from '../../src/layout/Flex'
+import { Flex } from '../../src/layout/Flex'
 
 export default () =>
   storiesOf('Example Types', module)
@@ -171,13 +171,14 @@ export default () =>
           color: '#AAA',
           padding: '20px',
           borderRadius: '10px',
-        }}>
+        }}
+      >
         <Styles />
         <Provider tree={testTree}>
           <SpacedList>
             <Query path={['query']} />
             <Flex>
-              <div style={{flex: 1}}>
+              <div style={{ flex: 1 }}>
                 <SpacedList>
                   <Facet path={['facet']} />
                   <Facet path={['facet']} />
@@ -185,12 +186,13 @@ export default () =>
                   <Number path={['number']} />
                 </SpacedList>
               </div>
-              <div style={{flex: 4}}>
+              <div style={{ flex: 4 }}>
                 <SpacedList>
                   <DateHistogram path={['dateHistogram']} format={formatYear} />
                   <ResultCount path={['results']} />
                   <Flex
-                    style={{alignItems: 'baseline', justifyContent: 'center'}}>
+                    style={{ alignItems: 'baseline', justifyContent: 'center' }}
+                  >
                     <ResultTable path={['results']} infer />
                   </Flex>
                 </SpacedList>
@@ -232,7 +234,7 @@ export default () =>
             },
             title: {
               order: 1,
-              Cell: x => <td style={{color: 'red'}} {...x} />,
+              Cell: x => <td style={{ color: 'red' }} {...x} />,
             },
           }}
         />

@@ -8,4 +8,3 @@ export default () =>
     .add('and', () => <AddPreview onClick={action('join')} join="and" />)
     .add('or', () => <AddPreview onClick={action('join')} join="or" />)
     .add('not', () => <AddPreview onClick={action('join')} join="not" />)
-    

@@ -1,22 +1,25 @@
 import _ from 'lodash/fp'
 import React from 'react'
-import {observer} from 'mobx-react'
+import { observer } from 'mobx-react'
 import InjectTreeNode from '../utils/injectTreeNode'
 
 // These are to prevent warning from `active`, `previous`, `next`
-let span = ({children}) => <span>{children}</span>
-let a = ({children, onClick}) => <a onClick={onClick}>{children}</a>
+let span = ({ children }) => <span>{children}</span>
+let a = ({ children, onClick }) => <a onClick={onClick}>{children}</a>
 
 export default InjectTreeNode(
-  observer(({node, tree, List = 'div', Item = span, Link = a}) => {
-    let pages = Math.ceil((node.context.response.totalRecords || 1) / node.pageSize)
+  observer(({ node, tree, List = 'div', Item = span, Link = a }) => {
+    let pages = Math.ceil(
+      (node.context.response.totalRecords || 1) / node.pageSize
+    )
     let page = node.page || 1
     return (
       <List>
         <Item disabled={!(page > 1)}>
           <Link
             previous
-            onClick={() => tree.mutate(node.path, {page: page - 1})}>
+            onClick={() => tree.mutate(node.path, { page: page - 1 })}
+          >
             {'<'}
           </Link>
         </Item>
@@ -27,8 +30,9 @@ export default InjectTreeNode(
                 <Item key={`prev${n}`}>
                   <Link
                     onClick={() =>
-                      tree.mutate(node.path, {page: page - (n + 1)})
-                    }>
+                      tree.mutate(node.path, { page: page - (n + 1) })
+                    }
+                  >
                     {page - (n + 1)}
                   </Link>
                 </Item>
@@ -45,8 +49,9 @@ export default InjectTreeNode(
               <Item key={`next${n}`}>
                 <Link
                   onClick={() =>
-                    tree.mutate(node.path, {page: page + (n + 1)})
-                  }>
+                    tree.mutate(node.path, { page: page + (n + 1) })
+                  }
+                >
                   {page + (n + 1)}
                 </Link>
               </Item>
@@ -54,9 +59,7 @@ export default InjectTreeNode(
           2
         )}
         <Item disabled={!(page < pages)}>
-          <Link
-            next
-            onClick={() => tree.mutate(node.path, {page: page + 1})}>
+          <Link next onClick={() => tree.mutate(node.path, { page: page + 1 })}>
             {'>'}
           </Link>
         </Item>

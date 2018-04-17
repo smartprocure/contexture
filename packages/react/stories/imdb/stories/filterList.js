@@ -5,26 +5,59 @@ import { Provider } from 'mobx-react'
 import Contexture, { esClient } from '../utils/contexture'
 import { getESSchemas } from '../../../src/utils/schema'
 import { partial } from '../../../src/utils/mobx-react-utils'
-import { Query, ResultCount, ResultTable, ResultPager, DateHistogram, TypeMap } from '../../../src/exampleTypes/'
-import { Flex, Awaiter, Modal, SpacedList,  ModalPicker, FilteredPicker  } from '../../../src/layout/'
+import {
+  Query,
+  ResultCount,
+  ResultTable,
+  ResultPager,
+  DateHistogram,
+  TypeMap,
+} from '../../../src/exampleTypes/'
+import {
+  Flex,
+  Awaiter,
+  Modal,
+  SpacedList,
+  ModalPicker,
+  FilteredPicker,
+} from '../../../src/layout/'
 import { FilterList } from '../../../src/FilterList'
 import FilterAdder from '../../../src/FilterAdder'
-import { Button, Input, Highlight, ListGroupItem, PagerItem, PagerList } from '../components/DemoControls'
+import {
+  Button,
+  Input,
+  Highlight,
+  ListGroupItem,
+  PagerItem,
+  PagerList,
+} from '../components/DemoControls'
 
 // Pre apply some props
-let Adder = partial({
-  Picker: partial({
-    Modal,
-    Button,
-    label: '+ Include Additional Filter',
-    Picker: partial({Input, Highlight, Item: ListGroupItem}, FilteredPicker),
-  }, ModalPicker),
-}, FilterAdder)
+let Adder = partial(
+  {
+    Picker: partial(
+      {
+        Modal,
+        Button,
+        label: '+ Include Additional Filter',
+        Picker: partial(
+          { Input, Highlight, Item: ListGroupItem },
+          FilteredPicker
+        ),
+      },
+      ModalPicker
+    ),
+  },
+  FilterAdder
+)
 
-let Pager = partial({
-  Item: PagerItem,
-  List: PagerList
-}, ResultPager)
+let Pager = partial(
+  {
+    Item: PagerItem,
+    List: PagerList,
+  },
+  ResultPager
+)
 
 let formatYear = x => new Date(x).getFullYear() + 1
 
@@ -64,7 +97,7 @@ let tree = Contexture({
     {
       key: 'results',
       type: 'results',
-      pageSize: 6
+      pageSize: 6,
     },
     {
       key: 'releases',
@@ -103,7 +136,6 @@ let schemas = fromPromise(
     )
   )
 )
-
 
 export default () => (
   <Awaiter promise={schemas}>

@@ -89,7 +89,10 @@ export default InjectTreeNode(
                   {_.map(
                     ({ field, display, Cell = 'td' }) => (
                       <Cell key={field}>
-                        {(display || (x => x))(getRecord(x)[field], getRecord(x))}
+                        {(display || (x => x))(
+                          getRecord(x)[field],
+                          getRecord(x)
+                        )}
                       </Cell>
                     ),
                     schema

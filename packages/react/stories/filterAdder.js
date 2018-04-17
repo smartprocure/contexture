@@ -1,14 +1,14 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import {storiesOf} from '@storybook/react'
-import {action} from '@storybook/addon-actions'
+import { storiesOf } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
 import FilterAdder from '../src/FilterAdder'
-import {applyDefaults} from '../src/utils/schema'
-import {partial} from '../src/utils/mobx-react-utils'
+import { applyDefaults } from '../src/utils/schema'
+import { partial } from '../src/utils/mobx-react-utils'
 import Modal from '../src/layout/Modal'
-import {ModalPicker, FilteredPicker} from '../src/layout/Pickers'
+import { ModalPicker, FilteredPicker } from '../src/layout/Pickers'
 
-let Select = ({options, onChange}) => (
+let Select = ({ options, onChange }) => (
   <select onChange={e => onChange(e.target.value)}>
     {_.map(
       x => (

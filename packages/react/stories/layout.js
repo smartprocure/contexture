@@ -13,34 +13,27 @@ import TextHighlight from '../src/layout/TextHighlight'
 import { FilteredPicker, ModalPicker } from '../src/layout/Pickers'
 
 let ModalDemo = withStateLens({ isOpen: false })(
-  observer(
-    ({ isOpen }) => (
-      <div>
-        <Modal isOpen={isOpen}>
-          Some Modal Content
-        </Modal>
-        <button onClick={F.on(isOpen)}>Open Modal</button>
-      </div>
-    )
-  )
+  observer(({ isOpen }) => (
+    <div>
+      <Modal isOpen={isOpen}>Some Modal Content</Modal>
+      <button onClick={F.on(isOpen)}>Open Modal</button>
+    </div>
+  ))
 )
 
 let PopoverDemo = withStateLens({ isOpen: false })(
-  observer(
-    ({ isOpen }) => (
-      <div>
-        <Popover isOpen={isOpen}>
-          Some Popover Content
-        </Popover>
-        <button onClick={F.on(isOpen)}>Open Popover</button>
-      </div>
-    )
-  )
+  observer(({ isOpen }) => (
+    <div>
+      <Popover isOpen={isOpen}>Some Popover Content</Popover>
+      <button onClick={F.on(isOpen)}>Open Popover</button>
+    </div>
+  ))
 )
 
-let lipsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-let HighlightDemo = withStateLens({filter: ''})(
-  observer(({filter}) => (
+let lipsum =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+let HighlightDemo = withStateLens({ filter: '' })(
+  observer(({ filter }) => (
     <div>
       <div>
         <input {...value(filter)} />
@@ -58,29 +51,33 @@ export default () => {
     .add('Awaiter', () => {
       let resolve
       let reject
-      let p = fromPromise(new Promise((_resolve, _reject) => {
-        resolve = _resolve
-        reject = _reject
-      }))
-      return <div>
-        <Awaiter promise={p}>
-          {x => (
-            <div>{x}</div>
-          )}
-        </Awaiter>
-        <button onClick={() => resolve('async value')}>Resolve</button>
-        <button onClick={() => reject('some error')}>Reject</button>
-      </div>
+      let p = fromPromise(
+        new Promise((_resolve, _reject) => {
+          resolve = _resolve
+          reject = _reject
+        })
+      )
+      return (
+        <div>
+          <Awaiter promise={p}>{x => <div>{x}</div>}</Awaiter>
+          <button onClick={() => resolve('async value')}>Resolve</button>
+          <button onClick={() => reject('some error')}>Reject</button>
+        </div>
+      )
     })
-    .add('FilteredPicker', () => <FilteredPicker
-      options={['abcd', 'bcde', 'cdef'].map(x => ({label:x, value:x}))}
-      onChange={action(`picked`)}
-    />)
-    .add('ModalPicker', () => <ModalPicker
-      options={['abcd', 'bcde', 'cdef'].map(x => ({label:x, value:x}))}
-      onChange={action('picked')}
-      label='Pick'
-      Picker={FilteredPicker}
-      Modal={Modal}
-    />)
+    .add('FilteredPicker', () => (
+      <FilteredPicker
+        options={['abcd', 'bcde', 'cdef'].map(x => ({ label: x, value: x }))}
+        onChange={action(`picked`)}
+      />
+    ))
+    .add('ModalPicker', () => (
+      <ModalPicker
+        options={['abcd', 'bcde', 'cdef'].map(x => ({ label: x, value: x }))}
+        onChange={action('picked')}
+        label="Pick"
+        Picker={FilteredPicker}
+        Modal={Modal}
+      />
+    ))
 }

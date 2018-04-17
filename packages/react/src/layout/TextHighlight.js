@@ -1,7 +1,7 @@
 import React from 'react'
 import * as F from 'futil-js'
 
-export default ({pattern, text, Wrap = 'i'}) =>
+export default ({ pattern, text, Wrap = 'i' }) =>
   pattern
     ? F.highlight('<>', '<>', pattern, text)
         .split('<>')

@@ -22,4 +22,3 @@ require('./filterList').default()
 require('./filterAdder').default()
 require('./layout').default()
 require('./imdb/stories/').default()
-
