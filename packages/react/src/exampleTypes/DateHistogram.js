@@ -1,6 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
+import { exampleTypes } from 'contexture-client'
 import { Flex } from '../layout/Flex'
 import injectTreeNode from '../utils/injectTreeNode'
 
@@ -32,5 +33,6 @@ export default injectTreeNode(
         </Flex>
       )
     }
-  )
+  ),
+  exampleTypes.dateHistogram
 )

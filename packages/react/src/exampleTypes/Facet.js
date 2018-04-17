@@ -2,6 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { observer } from 'mobx-react'
+import { exampleTypes } from 'contexture-client'
 import { Flex } from '../layout/Flex'
 import injectTreeNode from '../utils/injectTreeNode'
 
@@ -47,5 +48,6 @@ export default injectTreeNode(
         )
       }, _.get('context.options', node))}
     </div>
-  ))
+  )),
+  exampleTypes.facet
 )
