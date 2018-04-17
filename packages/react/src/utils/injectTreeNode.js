@@ -5,7 +5,7 @@ export default (render, {type, reactors, nodeProps = _.keys(reactors)} = {}) =>
     node = node || tree.getNode(path)
     
     // Dynamic add
-    if (type) {
+    if (!node && type) {
       let group = props.group || tree.tree.path
       
       // Lookup if already added

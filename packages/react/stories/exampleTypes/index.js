@@ -36,9 +36,9 @@ let tree = observable({
     field: 'title',
     query: '',
   },
-  range: {
-    key: 'searchRange',
-    path: ['range'],
+  number: {
+    key: 'searchNumber',
+    path: ['number'],
     type: 'number',
     field: 'metaScore',
     min: 0,
@@ -153,7 +153,7 @@ import SpacedList from '../../src/layout/SpacedList'
 let formatYear = x => new Date(x).getFullYear() + 1
 import {
   Facet,
-  Range,
+  Number,
   Query,
   ResultCount,
   ResultTable,
@@ -181,8 +181,8 @@ export default () =>
                 <SpacedList>
                   <Facet path={['facet']} />
                   <Facet path={['facet']} />
-                  <Range path={['range']} />
-                  <Range path={['range']} />
+                  <Number path={['number']} />
+                  <Number path={['number']} />
                 </SpacedList>
               </div>
               <div style={{flex: 4}}>

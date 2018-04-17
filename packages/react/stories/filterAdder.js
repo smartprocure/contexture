@@ -36,16 +36,18 @@ let Adder = partial(
   FilterAdder
 )
 
+let mockTree = {
+  add: action('add'),
+  // if falsey, injectTreeNode assumes an error
+  getNode: () => true,
+}
 export default () => {
   storiesOf('FilterAdder', module)
     .add('Example', () => (
       <div>
         <FilterAdder
           Picker={Select}
-          tree={{
-            add: action('add'),
-            getNode: () => {},
-          }}
+          tree={mockTree}
           path={['path']}
           fields={applyDefaults({
             directors: {
@@ -61,10 +63,7 @@ export default () => {
     ))
     .add('With FilteredPickerModal', () => (
       <Adder
-        tree={{
-          add: action('add'),
-          getNode: () => {},
-        }}
+        tree={mockTree}
         path={['path']}
         fields={applyDefaults({
           directors: {
