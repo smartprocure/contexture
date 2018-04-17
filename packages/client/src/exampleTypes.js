@@ -10,9 +10,11 @@ export default {
       mode: 'others',
       size: 'self',
       optionsFilter: 'self',
+      sort: 'self'
     },
     defaults: {
       values: [],
+      // mode: 'include',
       optionsFilter: '',
       context: {
         options: [],
@@ -91,6 +93,11 @@ export default {
     },
   },
   dateHistogram: {
+    reactors: {
+      key_field: 'self',
+      value_field: 'self',
+      interval: 'self',
+    },
     defaults: {
       context: {
         entries: [],
