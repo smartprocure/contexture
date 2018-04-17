@@ -1,7 +1,6 @@
 import React from 'react'
 
-export let Flex = ({ children, style, ...props }) => (
-  <div style={{ display: 'flex', ...style }} {...props}>
-    {children}
-  </div>
+// TODO: align items/content/justify/etc support
+export let Flex = ({style, ...props}) => (
+  <div style={{display: 'flex', ...style}} {...props} />
 )
