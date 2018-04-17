@@ -1,3 +1,26 @@
+# 1.0.0
+* Rearranged exports
+* `example-types` are now exposed as `exampleTypes/` and are broken into separate files instead of `components.js`
+* `Popover`, `Flex`, and `SpacedList` moved from `example-types` to `layout/`
+* utils like injectTreeNode, mobx-react-utils, etc are available under `utils` instead of root
+* `SearchRoot` is now `QueryBuilder`
+* Popover show lens prop renamed to isOpen
+* Added `layout/Modal`
+* Rearranged storybook set up to split things into separate files with a folder hierarchy
+* Added IMDB storybook section
+* Added `layout/Awaiter`
+* Added `exampleTypes/ResultTable`
+* Added `FilterList`
+* Added `layout/TextHighlight`
+* Added `FilteredPicker` and `ModalPicker` to layout
+* Added `partial` to mobx-react-utils
+* Added schema util and `FilterAdder`
+* `InjectTreeNode` now supports dynamically adding node via group + key? + field + white listed props as a second param
+* Renamed `Range` example type to `Number`
+* Added contexture-mobx
+* Added `ContextureProvider`
+* Added `ResultPager` to example types
+
 # 0.3.2
 * Better InjectTreeNode
 
