@@ -1,13 +1,13 @@
 import _ from 'lodash/fp'
 import { ContextTree } from 'contexture-client'
-import { observable, toJS, extendObservable, action } from 'mobx'
+import { observable, toJS, set, action } from 'mobx'
 
 export default x =>
   _.flow(
     observable,
     ContextTree({
       snapshot: toJS,
-      extend: extendObservable,
+      extend: set,
       ...x,
     }),
     // contexture-client here takes a whole observable tree and doesn't make initial values observable itself so we need to wrap new nodes in observable

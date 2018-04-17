@@ -3,7 +3,7 @@
 import _ from 'lodash/fp'
 import styles from '../styles'
 import React from 'react'
-import { observable, extendObservable } from 'mobx'
+import { observable, set } from 'mobx'
 import { Component, lensOf } from '../utils/mobx-react-utils'
 import { value } from '../utils/actout'
 
@@ -75,7 +75,7 @@ export default {
       </div>
     )),
     init(node) {
-      extendObservable(node, {
+      set(node, {
         context: {
           options: [],
         },
@@ -96,7 +96,7 @@ export default {
       </span>
     )),
     init(node) {
-      extendObservable(node, {
+      set(node, {
         data: {
           ...node.data,
           words: [],

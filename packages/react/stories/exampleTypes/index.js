@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 import React from 'react'
-import { observable, extendObservable } from 'mobx'
+import { observable, set } from 'mobx'
 import { Provider } from 'mobx-react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
@@ -146,7 +146,7 @@ let testTree = {
   getNode: ([path]) => tree[path],
   mutate: _.curry(([path], blob) => {
     action('mutate')(path, blob)
-    extendObservable(tree[path], blob)
+    set(tree[path], blob)
   }),
 }
 import SpacedList from '../../src/layout/SpacedList'
