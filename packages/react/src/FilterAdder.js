@@ -1,0 +1,32 @@
+import _ from 'lodash/fp'
+import React from 'react'
+import { observer } from 'mobx-react'
+import InjectTreeNode from './utils/injectTreeNode'
+
+export let fieldsToOptions = _.map(x => ({ value: x.field, ...x }))
+
+let getGroupFields = (path, tree) => _.map('field', tree.getNode(path).children)
+
+export default InjectTreeNode(observer(
+  ({ tree, path, fields, Picker, uniqueFields }) => {
+    let options = fieldsToOptions(fields)
+    if (uniqueFields) {
+      options = _.reject(
+        x => _.includes(x.field, getGroupFields(path, tree)),
+        options
+      )
+    }
+    return (
+      <Picker
+        options={options}
+        onChange={field => {
+          tree.add(path, {
+            key: _.uniqueId('add'),
+            field,
+            type: fields[field].typeDefault,
+          })
+        }}
+      />
+    )
+  }
+))
