@@ -1,5 +1,3 @@
-import React from 'react'
-import * as F from 'futil-js'
 import { storiesOf } from '@storybook/react'
 import { withInfo } from '@storybook/addon-info'
 

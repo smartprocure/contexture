@@ -4,7 +4,7 @@ import injectTreeNode from '../utils/injectTreeNode'
 import { exampleTypes } from 'contexture-client'
 
 export default injectTreeNode(
-  observer(({ node, ...props }) => (
+  observer(({ node }) => (
     <div style={{ textAlign: 'center' }}>
       {node.context.response.results.length
         ? `Viewing records ${node.context.response.startRecord} - ${

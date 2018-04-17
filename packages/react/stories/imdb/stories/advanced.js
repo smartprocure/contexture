@@ -1,8 +1,7 @@
 import React from 'react'
 import { Provider } from 'mobx-react'
 import SearchRoot from '../../../src/queryBuilder/SearchRoot'
-import Types from '../../../src/exampleTypes/'
-import { ResultCount, ResultTable } from '../../../src/exampleTypes/'
+import { ResultCount, ResultTable, Types } from '../../../src/exampleTypes/'
 import Contexture from '../utils/contexture'
 
 let tree = Contexture({

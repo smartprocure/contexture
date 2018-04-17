@@ -1,5 +1,4 @@
 import React from 'react'
-import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import {storiesOf} from '@storybook/react'
 import {action} from '@storybook/addon-actions'

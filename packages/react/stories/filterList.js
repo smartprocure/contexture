@@ -1,11 +1,9 @@
 import React from 'react'
-import * as F from 'futil-js'
 import {storiesOf} from '@storybook/react'
 import {FilterList} from '../src/FilterList'
 
 export default () => {
-  storiesOf('FilterList', module).add('Example', () => {
-    return (
+  storiesOf('FilterList', module).add('Example', () => (
       <FilterList
         node={{
           children: [
@@ -36,5 +34,5 @@ export default () => {
         }}
       />
     )
-  })
+  )
 }

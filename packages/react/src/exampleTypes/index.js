@@ -1,6 +1,3 @@
-import React from 'react'
-import * as F from 'futil-js'
-
 import Facet from './Facet'
 import Number from './Number'
 import Query from './Query'

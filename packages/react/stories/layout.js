@@ -56,7 +56,8 @@ export default () => {
     .add('Modal', () => <ModalDemo />)
     .add('Highlight', () => <HighlightDemo />)
     .add('Awaiter', () => {
-      let resolve, reject
+      let resolve
+      let reject
       let p = fromPromise(new Promise((_resolve, _reject) => {
         resolve = _resolve
         reject = _reject
