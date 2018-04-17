@@ -4,9 +4,11 @@ import { storiesOf } from '@storybook/react'
 import { observer } from 'mobx-react'
 import { fromPromise } from 'mobx-utils'
 import { withStateLens } from '../src/utils/mobx-react-utils'
+import { value } from '../src/utils/actout'
 import Popover from '../src/layout/Popover'
 import Modal from '../src/layout/Modal'
 import Awaiter from '../src/layout/Awaiter'
+import TextHighlight from '../src/layout/TextHighlight'
 
 let ModalDemo = withStateLens({ isOpen: false })(
   observer(
@@ -34,10 +36,23 @@ let PopoverDemo = withStateLens({ isOpen: false })(
   )
 )
 
+let lipsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+let HighlightDemo = withStateLens({filter: ''})(
+  observer(({filter}) => (
+    <div>
+      <div>
+        <input {...value(filter)} />
+      </div>
+      <TextHighlight text={lipsum} pattern={F.view(filter)} />
+    </div>
+  ))
+)
+
 export default () => {
   storiesOf('Layout', module)
     .add('Popover', () => <PopoverDemo />)
     .add('Modal', () => <ModalDemo />)
+    .add('Highlight', () => <HighlightDemo />)
     .add('Awaiter', () => {
       let resolve, reject
       let p = fromPromise(new Promise((_resolve, _reject) => {
