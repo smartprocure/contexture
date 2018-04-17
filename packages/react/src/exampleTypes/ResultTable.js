@@ -23,7 +23,7 @@ let Header = withStateLens({ popover: false })(
     <th>
       <a onClick={F.flip(popover)}>
         {label}{' '}
-        {field == node.sortField && (node.sortDir === 'asc' ? '^' : 'v')}
+        {field === node.sortField && (node.sortDir === 'asc' ? '^' : 'v')}
       </a>
       <Popover isOpen={popover}>
         <div style={{ textAlign: 'left' }}>

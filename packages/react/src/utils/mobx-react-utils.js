@@ -14,7 +14,6 @@ export let Component = (init, render, displayName) => {
   let c = observer(render || init)
   if (displayName) {
     c.displayName = displayName
-    console.log(displayName)
   }
   return inject(render ? init : () => {})(c)
 }
