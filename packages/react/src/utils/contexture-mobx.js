@@ -9,7 +9,8 @@ export default x => _.flow(
     extend: extendObservable,
     ...x
   }),
-  _.update('add', action),
+  // contexture-client here takes a whole observable tree and doesn't make initial values observable itself so we need to wrap new nodes in observable
+  _.update('add', add => action((path, node) => add(path, observable(node)))),
   _.update('remove', action),
   _.update('mutate', action),
   _.update('refresh', action)
