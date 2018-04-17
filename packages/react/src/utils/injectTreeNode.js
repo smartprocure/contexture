@@ -3,7 +3,7 @@ import {inject} from 'mobx-react'
 export default (render, {type, reactors, nodeProps = _.keys(reactors)} = {}) =>
   inject(({tree: t, node: n}, {tree = t, path, node = n, ...props}) => {
     node = node || tree.getNode(path)
-    
+
     // Dynamic add
     if (!node && type) {
       let group = props.group || tree.tree.path
@@ -22,9 +22,9 @@ export default (render, {type, reactors, nodeProps = _.keys(reactors)} = {}) =>
           ..._.pick(nodeProps, props),
         }
         tree.add(group, newNode)
-        node = newNode
+        // Can't be newNode because it's wrapped in observable, and add doesn't return the new node
+        node = tree.getNode([...group, key])
         
-        console.log('added!!!', newNode.path)
         if (!node)
           throw Error(`Unable to add node ${JSON.stringify(newNode)}`)
       }
