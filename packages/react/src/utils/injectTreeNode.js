@@ -3,18 +3,34 @@ import {inject} from 'mobx-react'
 export default (render, {type, reactors, nodeProps = _.keys(reactors)} = {}) =>
   inject(({tree: t, node: n}, {tree = t, path, node = n, ...props}) => {
     node = node || tree.getNode(path)
-    if (!node && props.key) // Check if already added
-      node = tree.getNode([...path, props.key])
-    if (!node && props.group) {
-      let key = props.key || _.uniqueId(type)
-      tree.add(props.group, {
-        key,
-        type,
-        ...(props.field && {field: props.field}),
-        ..._.pick(nodeProps, props),
-      })
-      // add doesn't return the node
-      node = tree.getNode([...props.group, key])
+    
+    // Dynamic add
+    if (type) {
+      let group = props.group || tree.tree.path
+      
+      // Lookup if already added
+      if (!node && props.nodeKey)
+        node = tree.getNode([...group, props.nodeKey])
+      
+      // Add node if missing
+      if (!node) {
+        let key = props.nodeKey || _.uniqueId(type)
+        let newNode = {
+          key,
+          type,
+          ...(props.field && {field: props.field}),
+          ..._.pick(nodeProps, props),
+        }
+        tree.add(group, newNode)
+        node = newNode
+        
+        console.log('added!!!', newNode.path)
+        if (!node)
+          throw Error(`Unable to add node ${JSON.stringify(newNode)}`)
+      }
     }
+    else if (!node)
+      throw Error(`Node not provided, and couldn't find node at ${path}`)
+
     return {tree, node}
   })(render)
