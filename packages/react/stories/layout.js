@@ -1,6 +1,7 @@
 import React from 'react'
 import * as F from 'futil-js'
 import { storiesOf } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
 import { observer } from 'mobx-react'
 import { fromPromise } from 'mobx-utils'
 import { withStateLens } from '../src/utils/mobx-react-utils'
@@ -9,6 +10,7 @@ import Popover from '../src/layout/Popover'
 import Modal from '../src/layout/Modal'
 import Awaiter from '../src/layout/Awaiter'
 import TextHighlight from '../src/layout/TextHighlight'
+import { FilteredPicker, ModalPicker } from '../src/layout/Pickers'
 
 let ModalDemo = withStateLens({ isOpen: false })(
   observer(
@@ -69,4 +71,15 @@ export default () => {
         <button onClick={() => reject('some error')}>Reject</button>
       </div>
     })
+    .add('FilteredPicker', () => <FilteredPicker
+      options={['abcd', 'bcde', 'cdef'].map(x => ({label:x, value:x}))}
+      onChange={action(`picked`)}
+    />)
+    .add('ModalPicker', () => <ModalPicker
+      options={['abcd', 'bcde', 'cdef'].map(x => ({label:x, value:x}))}
+      onChange={action('picked')}
+      label='Pick'
+      Picker={FilteredPicker}
+      Modal={Modal}
+    />)
 }
