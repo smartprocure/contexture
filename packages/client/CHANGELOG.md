@@ -1,3 +1,8 @@
+# 2.5.2
+* Fix defaults for facet and results
+* Add more reactors across many example types
+* Stamp `type` on example-types
+
 # 2.5.1
 * Account for core returning an empty data object
 
