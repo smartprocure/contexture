@@ -1,8 +1,14 @@
 import _ from 'lodash/fp'
+import * as F from 'futil-js'
+
+// For futil
+export let stampKey = _.curry((key, x) =>
+  F.mapValuesIndexed((val, k) => ({ ...val, [key]: k }), x)
+)
 
 let validateValues = ({ value, values = [] }) => value || values.length
 
-export default {
+export default stampKey('type', {
   facet: {
     validate: validateValues,
     reactors: {
@@ -10,10 +16,15 @@ export default {
       mode: 'others',
       size: 'self',
       optionsFilter: 'self',
+      sort: 'self',
     },
     defaults: {
+      values: [],
+      // mode: 'include',
+      optionsFilter: '',
       context: {
-        values: [],
+        options: [],
+        cardinality: null,
       },
     },
   },
@@ -39,8 +50,13 @@ export default {
     validate: () => false,
     reactors: {
       page: 'self',
+      pageSize: 'self',
+      sortField: 'self',
+      sortDir: 'self',
+      include: 'self',
     },
     defaults: {
+      pageSize: 10,
       context: {
         response: {
           results: [],
@@ -83,6 +99,11 @@ export default {
     },
   },
   dateHistogram: {
+    reactors: {
+      key_field: 'self',
+      value_field: 'self',
+      interval: 'self',
+    },
     defaults: {
       context: {
         entries: [],
@@ -91,4 +112,4 @@ export default {
       },
     },
   },
-}
+})
