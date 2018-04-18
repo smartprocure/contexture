@@ -6,10 +6,10 @@ let hasContext = node => node.context
 let throwsError = x => {
   throw Error(x)
 } // Throw expressions are stage 0 :(
-let hadValue = previous =>
-  previous && _.isUndefined(previous.hasValue)
+let hasValue = node =>
+  node && _.isUndefined(node.hasValue)
     ? throwsError('Node was never validated')
-    : previous && previous.hasValue && !previous.error
+    : node && node.hasValue && !node.error
 
 let reactors = {
   others: (parent, node) =>
@@ -18,7 +18,7 @@ let reactors = {
   all: parent => parent.children,
   standardChange(parent, node, { previous }, reactors) {
     let needUpdate = hasContext(node)
-    let affectsOthers = hadValue(node) || hadValue(previous)
+    let affectsOthers = hasValue(node) || hasValue(previous)
     let reactor
     if (needUpdate) {
       reactor = 'self'
@@ -34,14 +34,14 @@ let reactors = {
 export let StandardReactors = {
   refresh: reactors.all,
   join(parent, node, { previous }, reactor) {
-    let childrenWithValues = _.filter(hadValue, node.children)
+    let childrenWithValues = _.filter(hasValue, node.children)
     let joinInverted = node.join === 'not' || previous.join === 'not'
     if (childrenWithValues.length > 1 || joinInverted)
       return reactor('all')
   },
   add: reactors.standardChange,
   remove(parent, node, { previous }, reactor) {
-    if (hadValue(previous)) return reactor('all')
+    if (hasValue(previous)) return reactor('all')
   },
   paused(
     parent,
