@@ -16,50 +16,51 @@ let reactors = {
     parent.join === 'or' ? [] : _.difference(parent.children, [node]),
   self: (parent, node) => [node],
   all: parent => parent.children,
-  standardChange(parent, node, { previous }) {
+  standardChange(parent, node, { previous }, reactors) {
     let needUpdate = hasContext(node)
     let affectsOthers = hadValue(node) || hadValue(previous)
     let reactor
     if (needUpdate) {
-      reactor = reactors.self
+      reactor = 'self'
     } else if (affectsOthers) {
-      reactor = reactors.others
+      reactor = 'others'
     } else if (affectsOthers && needUpdate) {
-      reactor = reactors.all
+      reactor = 'all'
     }
-    if (reactor) return reactor(...arguments)
+    return reactors(reactor)
   },
 }
 
 export let StandardReactors = {
   refresh: reactors.all,
-  join(parent, node, { previous }) {
+  join(parent, node, { previous }, reactor) {
     let childrenWithValues = _.filter(hadValue, node.children)
     let joinInverted = node.join === 'not' || previous.join === 'not'
     if (childrenWithValues.length > 1 || joinInverted)
-      return reactors.all(...arguments)
+      return reactor('all')
   },
   add: reactors.standardChange,
-  remove(parent, node, { previous }) {
-    if (hadValue(previous)) return reactors.all(...arguments)
+  remove(parent, node, { previous }, reactor) {
+    if (hadValue(previous)) return reactor('all')
   },
   paused(
     parent,
     node,
     {
       value: { paused },
-    }
+    },
+    reactor
   ) {
     if (!paused && node.missedUpdate) {
       // Reactor probably shouldn't mutate but this needs to clear somewhere :/
       node.missedUpdate = false
-      return reactors.self(...arguments)
+      return reactor('self')
     }
   },
   // ported from main app ¯\_(ツ)_/¯
   field: reactors.standardChange,
   type: reactors.standardChange,
-  mutate: (parent, node, event, types, lookup, reactor) =>
+  mutate: (parent, node, event, reactor, types, lookup) =>
     _.flow(
       _.keys,
       // assumes reactors are { field: reactor, ...}
@@ -78,6 +79,6 @@ export let getAffectedNodes = ({ type, ...event }, lookup, types, path) => {
   let node = lookup(path)
   // Parent defaults to a fake root since reactors don't handle null parents
   let parent = lookup(_.dropRight(1, path)) || { children: [node] }
-  let reactor = x => Reactor(x)(parent, node, event, types, lookup, reactor)
+  let reactor = x => Reactor(x)(parent, node, event, reactor, types, lookup)
   return reactor(type)
 }
