@@ -7,7 +7,7 @@ import actions from './actions'
 import serialize from './serialize'
 import traversals from './traversals'
 import { runTypeFunction } from './types'
-import { initNode } from './node'
+import { initNode, hasContext, hasValue } from './node'
 import exampleTypes from './exampleTypes'
 import lens from './lens'
 
@@ -29,11 +29,14 @@ let defaultService = () => {
   throw new Error('No update service provided!')
 }
 
+// Export useful utils which might be needed for extending the core externally
 export {
   Tree,
   encode,
   decode,
-  exampleTypes
+  exampleTypes,
+  hasContext,
+  hasValue
 }
 
 export let ContextTree = _.curry(
