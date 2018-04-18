@@ -102,12 +102,28 @@ export let ContextTree = _.curry(
     }
 
     let TreeInstance = {
-      ...actions({ getNode, flat, dispatch, snapshot, extend, types }),
       serialize: () => serialize(snapshot(tree), {}),
       dispatch,
       getNode,
       tree,
+      createActions: actions => 
+        F.extendOn(
+          TreeInstance,
+          actions({
+            getNode,
+            flat,
+            dispatch,
+            snapshot,
+            extend,
+            types,
+            initNode,
+            encode,
+            decode,
+            Tree
+          })
+        ),
     }
+    TreeInstance.createActions(actions)
     TreeInstance.lens = lens(TreeInstance)
     return TreeInstance
   }
