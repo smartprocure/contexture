@@ -8,7 +8,7 @@ import serialize from './serialize'
 import traversals from './traversals'
 import { runTypeFunction } from './types'
 import { initNode } from './node'
-import Types from './exampleTypes'
+import exampleTypes from './exampleTypes'
 import lens from './lens'
 
 let mergeWith = _.mergeWith.convert({ immutable: false })
@@ -29,13 +29,18 @@ let defaultService = () => {
   throw new Error('No update service provided!')
 }
 
-export let exampleTypes = Types
+export {
+  Tree,
+  encode,
+  decode,
+  exampleTypes
+}
 
 export let ContextTree = _.curry(
   (
     {
       service = defaultService,
-      types = Types,
+      types = exampleTypes,
       debounce = 500,
       onResult = _.noop,
       debug,
@@ -106,22 +111,11 @@ export let ContextTree = _.curry(
       dispatch,
       getNode,
       tree,
-      createActions: actions => 
+      createActions: x => 
         F.extendOn(
           TreeInstance,
-          actions({
-            getNode,
-            flat,
-            dispatch,
-            snapshot,
-            extend,
-            types,
-            initNode,
-            encode,
-            decode,
-            Tree
-          })
-        ),
+          x({ getNode, flat, dispatch, snapshot, extend, types, initNode })
+        )
     }
     TreeInstance.createActions(actions)
     TreeInstance.lens = lens(TreeInstance)
