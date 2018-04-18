@@ -1,15 +1,6 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
-
-// TODO check type, etc
-let hasContext = node => node.context
-let throwsError = x => {
-  throw Error(x)
-} // Throw expressions are stage 0 :(
-let hasValue = node =>
-  node && _.isUndefined(node.hasValue)
-    ? throwsError('Node was never validated')
-    : node && node.hasValue && !node.error
+import { hasContext, hasValue } from './node'
 
 let reactors = {
   others: (parent, node) =>
