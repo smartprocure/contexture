@@ -24,7 +24,14 @@ export let fromFlatEsMapping = _.mapValues(
         float: 'number',
         double: 'number',
       }),
-      // typeOptions: [],
+      // TODO: exists, bool, date, geo, text?
+      typeOptions: {
+        string: ['query'],
+        text: ['facet', 'query'],
+        long: ['number'],
+        float: ['number'],
+        double: ['number'],
+      }[type],
     })),
     applyDefaults,
     fields => ({ fields })
