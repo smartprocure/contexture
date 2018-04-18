@@ -1,7 +1,8 @@
 import _ from 'lodash/fp'
 import { pullOn } from 'futil-js'
+import { encode } from './util/tree'
 
-export default ({ getNode, flat, dispatch, snapshot, types, extend, initNode, encode }) => ({
+export default ({ getNode, flat, dispatch, snapshot, types, extend, initNode }) => ({
   async add(parentPath, node) {
     let target = getNode(parentPath)
     let path = [...parentPath, node.key]
