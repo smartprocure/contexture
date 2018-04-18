@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
-import { flattenTree, bubbleUp, flatLeaves, encode, decode } from './util/tree'
+import { flattenTree, bubbleUp, Tree, encode, decode } from './util/tree'
 import { validate } from './validation'
 import { getAffectedNodes } from './reactors'
 import actions from './actions'
@@ -14,7 +14,7 @@ import lens from './lens'
 let mergeWith = _.mergeWith.convert({ immutable: false })
 
 let shouldBlockUpdate = flat => {
-  let leaves = flatLeaves(flat)
+  let leaves = Tree.flatLeaves(flat)
   let noUpdates = !_.some('markedForUpdate', leaves)
   let hasErrors = _.some('error', leaves)
   return hasErrors || noUpdates
@@ -101,17 +101,15 @@ export let ContextTree = _.curry(
       }, flattenTree(data))
     }
 
-    let Tree = {
+    let TreeInstance = {
       ...actions({ getNode, flat, dispatch, snapshot, extend, types }),
       serialize: () => serialize(snapshot(tree), {}),
       dispatch,
       getNode,
       tree,
     }
-
-    Tree.lens = lens(Tree)
-
-    return Tree
+    TreeInstance.lens = lens(TreeInstance)
+    return TreeInstance
   }
 )
 export default ContextTree
