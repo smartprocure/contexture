@@ -7,7 +7,6 @@ export default injectTreeNode(
   observer(({ tree, node, style, ...props }) => (
     <input
       className="contexture-search-box"
-      style={{ padding: '15px', ...style }}
       value={node.query}
       onChange={e =>
         tree.mutate(node.path, {
