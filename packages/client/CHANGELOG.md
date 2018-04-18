@@ -1,3 +1,6 @@
+# 2.6.0
+* Expose `createActions` to enable extending the client with new actions that have the same access levels as first party ones.
+
 # 2.5.2
 * Fix defaults for facet and results
 * Add more reactors across many example types
