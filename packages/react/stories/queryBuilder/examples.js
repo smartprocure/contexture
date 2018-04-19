@@ -2,7 +2,9 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { observable } from 'mobx'
 import SearchRoot, { NewNode } from '../../src/queryBuilder/SearchRoot'
-import Types from '../../src/queryBuilder/exampleTypes'
+import { TypeMap } from '../../src/exampleTypes/'
+
+let Types = TypeMap
 
 let Node = NewNode(Types)
 
