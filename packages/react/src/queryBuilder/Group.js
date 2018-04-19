@@ -74,7 +74,7 @@ let Group = Component(
               ...(state.removeHover && { opacity: 0.25 }),
             }}
           >
-            {F.map(
+            {F.mapIndexed(
               (child, index) => (
                 <div key={child.key}>
                   <FilterIndentTarget {...{ ...args, child, index }} />
@@ -90,9 +90,7 @@ let Group = Component(
             {/*<FilterMoveTarget index={tree.children.length} tree={tree} /> */}
             {root.adding && (
               <AddPreview
-                onClick={() => {
-                  root.add(tree)
-                }}
+                onClick={() => { root.add(tree) }}
                 join={tree.join}
                 style={{
                   marginLeft: 0,

@@ -18,64 +18,62 @@ let FieldPicker = partial(
 let FilterContents = inject(({fields, types}) => ({
   fields, types
 }))(
-  observer(({node, root, fields, types}) => {
-    return (
-      <div
+  observer(({node, root, fields, types}) => (
+    <div
+      style={{
+        // lineHeight: '30px',
+        // minHeight: '34px',
+        display: 'flex',
+        width: '100%',
+      }}>
+      <FieldPicker
+        label={
+          node.field
+            ? _.get(`${node.field}.label`, fields) || F.autoLabel(node.field)
+            : 'Pick a Field'
+        }
+        options={fieldsToOptions(fields)}
+        // TODO: consider type options in case this isn't safe, e.g. a field/type change action 
+        onChange={field => root.mutate(node.path, {field})}
+      />
+      {node.field && (
+        <div style={{margin: '0 5px'}}>
+          <select
+            onChange={({target: {value}}) => {
+              root.typeChange(node, value)
+            }}
+            value={node.type}
+            >
+            {_.map(
+              x => (
+                <option key={x.value} value={x.value} disabled={x.disabled}>
+                  {x.label}
+                </option>
+              ),
+              [{
+                value: null,
+                label: 'Select Type',
+                disabled: node.type
+              }, ...F.autoLabelOptions(_.get(`${node.field}.typeOptions`, fields))]
+            )}
+          </select>
+        </div>
+      )}
+      {node.type && <div
         style={{
-          // lineHeight: '30px',
-          // minHeight: '34px',
-          display: 'flex',
+          display: 'inline-block',
+          verticalAlign: 'top',
           width: '100%',
+          marginRight: '5px'
         }}>
-        <FieldPicker
-          label={
-            node.field
-              ? _.get(`${node.field}.label`, fields) || F.autoLabel(node.field)
-              : 'Pick a Field'
-          }
-          options={fieldsToOptions(fields)}
-          // TODO: consider type options in case this isn't safe, e.g. a field/type change action 
-          onChange={field => root.mutate(node.path, {field})}
+        <Dynamic
+          component={types[node.type]}
+          path={[...node.path]}
+          tree={root}
         />
-        {node.field && (
-          <div style={{margin: '0 5px'}}>
-            <select
-              onChange={({target: {value}}) => {
-                root.typeChange(node, value)
-              }}
-              value={node.type}
-              >
-              {_.map(
-                x => (
-                  <option key={x.value} value={x.value} disabled={x.disabled}>
-                    {x.label}
-                  </option>
-                ),
-                [{
-                  value: null,
-                  label: 'Select Type',
-                  disabled: node.type
-                }, ...F.autoLabelOptions(_.get(`${node.field}.typeOptions`, fields))]
-              )}
-            </select>
-          </div>
-        )}
-        {node.type && <div
-          style={{
-            display: 'inline-block',
-            verticalAlign: 'top',
-            width: '100%',
-            marginRight: '5px'
-          }}>
-          <Dynamic
-            component={types[node.type]}
-            path={[...node.path]}
-            tree={root}
-          />
-        </div>}
-      </div>
-    )
-  })
+      </div>}
+    </div>
+  ))
 )
 
 export default FilterContents

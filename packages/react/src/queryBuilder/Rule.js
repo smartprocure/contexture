@@ -6,18 +6,16 @@ import FilterContents from './FilterContents'
 import FilterDragSource from './DragDrop/FilterDragSource'
 import { oppositeJoin } from '../utils/search'
 
-let Rule = args => {
-  let {
-    state,
-    node,
-    tree,
-    root,
-    fields,
-    connectDragSource,
-    // connectDragPreview,
-    isDragging,
-  } = args
-  return connectDragSource(
+let Rule = ({
+  state,
+  node,
+  tree,
+  root,
+  connectDragSource,
+  // connectDragPreview,
+  isDragging,
+}) =>
+  connectDragSource(
     <div style={styles.w100}>
       <Indentable tree={tree} indent={state.lens.indentHover}>
         <div
@@ -34,7 +32,7 @@ let Rule = args => {
           }}
           {...hover(state.lens.ruleHover)}
         >
-          <FilterContents {...{ node, root, tree, fields }} />
+          <FilterContents {...{ node, root }} />
           <div
             style={{
               ...(state.ruleHover || { visibility: 'hidden' }),
@@ -68,7 +66,6 @@ let Rule = args => {
       </Indentable>
     </div>
   )
-}
 
 export default FilterDragSource(
   Component(

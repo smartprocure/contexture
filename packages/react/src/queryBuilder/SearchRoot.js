@@ -1,7 +1,7 @@
 import React from 'react'
 import * as F from 'futil-js'
 import _ from 'lodash/fp'
-import { observable, action } from 'mobx'
+import { observable } from 'mobx'
 import {Provider} from 'mobx-react'
 import DDContext from './DragDrop/DDContext'
 import { Component } from '../utils/mobx-react-utils'
@@ -18,7 +18,6 @@ let randomString = () =>
 let {encode} = F.encoder('/') // todo get from client
 
 let blankNode = () => ({ key: randomString() })
-
 let replaceOn = (list, from, to) => list.splice(list.indexOf(from), 1, to)
 
 let ContextureClientBridge = (Types, Tree) => {
@@ -119,7 +118,6 @@ export let SearchRoot = DDContext(
           <Group
             tree={state.getNode(path)}
             root={state}
-            fields={fields}
             isRoot={true}
           />
           <button
