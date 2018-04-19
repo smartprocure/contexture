@@ -1,5 +1,4 @@
 import React from 'react'
-import * as F from 'futil-js'
 import { storiesOf } from '@storybook/react'
 import { observable } from 'mobx'
 import { exampleTypes } from 'contexture-client'
