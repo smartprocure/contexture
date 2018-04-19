@@ -13,7 +13,7 @@ let Client = ContextureMobx({
   service: mockService(),
 })
 
-let Node = (type, key) => observable({ key, type, })
+let Node = (type, key) => observable({ key, type })
 
 export default () =>
   storiesOf('QueryBuilder/Examples', module)
@@ -34,7 +34,7 @@ export default () =>
         tree={Client({
           key: 'root',
           join: 'and',
-          children: [{ key: 'filter 1', field:'test', type: 'query' }],
+          children: [{ key: 'filter 1', field: 'test', type: 'query' }],
         })}
         fields={{
           test: {
