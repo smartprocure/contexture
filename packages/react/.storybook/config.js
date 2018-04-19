@@ -2,7 +2,7 @@ import { configure, setAddon } from '@storybook/react'
 import { setOptions } from '@storybook/addon-options'
 import JSXAddon from 'storybook-addon-jsx'
 
-setAddon(JSXAddon);
+setAddon(JSXAddon)
 
 function loadStories() {
   require('../stories')
