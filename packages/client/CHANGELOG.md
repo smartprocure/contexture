@@ -1,5 +1,7 @@
 # 2.6.0
 * Expose `createActions` to enable extending the client with new actions that have the same access levels as first party ones.
+* Expose `addReactors` which allows extending the client with new reactors.
+* Expose `Tree`, `encode`, `decode`, `hasValue`, and `hasContext` utils.
 
 # 2.5.2
 * Fix defaults for facet and results
