@@ -76,6 +76,7 @@ export default FilterDragSource(
         ruleHover: false,
       }),
     }),
-    Rule
+    Rule,
+    'Rule'
   )
 )

@@ -6,7 +6,7 @@ import { ModalPicker, Modal, FilteredPicker } from '../layout/'
 import { fieldsToOptions } from '../FilterAdder'
 import { partial } from '../utils/mobx-react-utils'
 
-let Dynamic = ({ component: C, ...props }) => <C {...props} />
+let Dynamic = ({ component: C, ...props }) => C ? <C {...props} /> : null
 let FieldPicker = partial(
   {
     Modal,
@@ -16,7 +16,7 @@ let FieldPicker = partial(
 )
 
 let FilterContents = inject(_.defaults)(
-  observer(({ node, root, fields, types }) => (
+  observer(({ node, root, fields, types={} }) => (
     <div
       style={{
         // lineHeight: '30px',
@@ -74,7 +74,7 @@ let FilterContents = inject(_.defaults)(
         >
           <Dynamic
             component={types[node.type]}
-            path={[...node.path]}
+            node={node}
             tree={root}
           />
         </div>
