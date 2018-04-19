@@ -115,7 +115,7 @@ export let ContextTree = _.curry(
         ),
       addReactors: create => F.extendOn(customReactors, create()),
     }
-    
+
     TreeInstance.addActions(actions)
     TreeInstance.lens = lens(TreeInstance)
     return TreeInstance
