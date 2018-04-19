@@ -4,7 +4,7 @@ import injectTreeNode from '../utils/injectTreeNode'
 import { exampleTypes } from 'contexture-client'
 
 export default injectTreeNode(
-  observer(({ tree, node, style, ...props }) => (
+  observer(({ tree, node, ...props }) => (
     <input
       className="contexture-search-box"
       value={node.query || ''}

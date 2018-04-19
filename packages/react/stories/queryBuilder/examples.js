@@ -1,4 +1,3 @@
-import _ from 'lodash/fp'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { observable } from 'mobx'
