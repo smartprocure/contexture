@@ -43,12 +43,12 @@ You can think of the client as a pub/sub system with prebuilt subscribers that c
 The root function takes two parameters, `config` and actual `tree` instance. It's curried, so you can call it like this:
 
 ```js
-ContextTree({...config}, tree)
+ContextureClient({...config}, tree)
 ```
 or
 
 ```js
-ContextTree({...config})(tree)
+ContextureClient({...config})(tree)
 ```
 
 if you want to pre apply it with config.
@@ -114,6 +114,30 @@ The following methods are exposed on an instantiated client
 | serialize | `() => tree` | Returns a snapshot of the tree without any of the temporary state like updating flags. |
 | lens | `(path, prop) -> ({ get, set })` | Given a path and a property, returns a lens that provides a getter and a setter for the provided property on the provided path. The setter function does a `mutate`. |
 | tree | tree | A reference to the internal tree. If you mutate this, you should dispatch an appropriate event. |
+| addActions | `(({ getNode, flat, dispatch, snapshot, extend, types, initNode }) => {actionsMethods} ) => null` | *Experimental* A method for extending the client with new actions on a per instance basis. You pass in a function which takes an object containing internal helpers and returns an object with actions that get extended onto the tree instance. |
+| addReactors | `(() => {customReactors}) => null` | *Experimental* A method for adding new reactors on a per instance basis. You pass in a function which returns an object of new reactors to support (`{reactorName: reactorFunction}`). Reactors are passed `(parent, node, event, reactor, types, lookup)` and are expected to return an array of affected nodes. |
+
+### Top Level Exports
+A number of utilities are now exposed as top level exports. You can import them like:
+
+```js
+import { utilName } from 'contexture-client'
+```
+
+| Name | Description |
+| ---- | ----------- |
+| Tree | A [futil `tree` api](https://smartprocure.github.io/futil-js/#api-trees-tree) pre applied with the right traversals, etc for working with contexture trees (e.g. Tree.walk) |
+| `encode` | The futil encoder method used for the internal `flat` tree. Converts a path array to a flat tree key. Currently a slashEncoder. |
+| `decode` | The futil decoder method used for the internal `flat` tree. Converts a flat tree key to a path array. Currently a slashEncoder. |
+| `hasContext` | An internal utility that determines if a node has a context. Used primarily in custom reactors to help figure out if a node needs updating. |
+| `hasValue` | An internal utility that checks if a node has a value and isn't in an error state. Used primarily in custom reactors to help figure out if other nodes would be affected by an event. |
+| `exampleTypes` | A set of example types. This will likely be split out in a future version to its own repo. |
+
+### Extending the Client
+The client can be enhanced with new types, actions, and reactors.
+- Types are the most common form of new functionality to be added and are paired with a type implementation for the contexture for a given provider.
+- Actions represent a generic type of change to the tree. Custom actions are a great way to experiment with new functionality before adding it to the core and can directly access a lot of typically inaccessible internals like the `flat` tree (which you shouldn't need for normal use). Actions are added on a per instance basis using `tree.addActions`.
+- Reactors can be added to dispatch new event types. Custom reactors are as a way to experiment with new functionality before adding it to the core. Reactors are added on a per instance basis using `tree.addReactors`.
 
 ## Improvements
 

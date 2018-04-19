@@ -21,3 +21,12 @@ export let initNode = (node, path, extend, types) => {
     path,
   })
 }
+
+export let hasContext = node => node.context
+let throwsError = x => {
+  throw Error(x)
+} // Throw expressions are stage 3 :(
+export let hasValue = node =>
+  node && _.isUndefined(node.hasValue)
+    ? throwsError('Node was never validated')
+    : node && node.hasValue && !node.error
