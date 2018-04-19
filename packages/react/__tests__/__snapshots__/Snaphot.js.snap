@@ -107,7 +107,7 @@ exports[`Storyshots Docs CHANGELOG.md 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Docs README.md 1`] = `
 <div>
@@ -216,7 +216,7 @@ exports[`Storyshots Docs README.md 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Example Types Full Demo 1`] = `
 <div
@@ -265,11 +265,6 @@ exports[`Storyshots Example Types Full Demo 1`] = `
         ]
       }
       placeholder="Search"
-      style={
-        Object {
-          "padding": "15px",
-        }
-      }
       value=""
     />
   </div>
@@ -533,7 +528,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
               className="contexture-search-box"
               onChange={[Function]}
               type="number"
-              value={0}
+              value=""
             />
             <div>
               -
@@ -565,7 +560,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
               className="contexture-search-box"
               onChange={[Function]}
               type="number"
-              value={0}
+              value=""
             />
             <div>
               -
@@ -833,7 +828,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Example Types ResultTable Customizations 1`] = `
 <div>
@@ -975,7 +970,7 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
     </tbody>
   </table>
 </div>
-`
+`;
 
 exports[`Storyshots FilterAdder Example 1`] = `
 <div>
@@ -997,7 +992,7 @@ exports[`Storyshots FilterAdder Example 1`] = `
     Check action log to see adding being dispatched
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots FilterAdder With FilteredPickerModal 1`] = `
 <div>
@@ -1007,7 +1002,7 @@ exports[`Storyshots FilterAdder With FilteredPickerModal 1`] = `
     + Include Additional Filter
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots FilterList Example 1`] = `
 Array [
@@ -1056,7 +1051,7 @@ Array [
     </div>
   </div>,
 ]
-`
+`;
 
 exports[`Storyshots IMDB Advanced Search 1`] = `
 <div>
@@ -1081,499 +1076,10 @@ exports[`Storyshots IMDB Advanced Search 1`] = `
     }
   </style>
   <div>
-    <div
-      style={
-        Object {
-          "background": "#f0f8ff",
-        }
-      }
-    >
-      <div
-        style={
-          Object {
-            "display": "flex",
-            "width": "100%",
-          }
-        }
-      >
-        <div
-          style={
-            Object {
-              "width": "100%",
-            }
-          }
-        >
-          <div
-            style={
-              Object {
-                "borderColor": "#5bc0de",
-                "borderLeft": "2px solid black",
-                "marginLeft": "24px",
-                "paddingLeft": "24px",
-              }
-            }
-          >
-            <div
-              style={
-                Object {
-                  "marginLeft": "-50px",
-                  "width": "100%",
-                }
-              }
-            >
-              <div>
-                <div />
-                <div
-                  style={
-                    Object {
-                      "display": "flex",
-                    }
-                  }
-                >
-                  <div>
-                    <div>
-                      <div
-                        onClick={[Function]}
-                        style={
-                          Object {
-                            "background": "#f0f8ff",
-                            "borderBottom": "solid 2px black",
-                            "borderBottomColor": "#5bc0de",
-                            "height": 17.5,
-                            "marginLeft": "24px",
-                            "width": "40px",
-                          }
-                        }
-                      />
-                    </div>
-                    <div />
-                  </div>
-                  <div
-                    style={
-                      Object {
-                        "width": "100%",
-                      }
-                    }
-                  >
-                    <div
-                      style={
-                        Object {
-                          "display": "flex",
-                          "width": "100%",
-                        }
-                      }
-                    >
-                      <div
-                        style={
-                          Object {
-                            "width": "100%",
-                          }
-                        }
-                      >
-                        <div
-                          onMouseOut={[Function]}
-                          onMouseOver={[Function]}
-                          style={
-                            Object {
-                              "background": "white",
-                              "borderColor": "#5bc0de",
-                              "borderLeftWidth": 1,
-                              "borderRadius": "5px",
-                              "borderStyle": "solid",
-                              "borderWidth": 1,
-                              "display": "flex",
-                              "justifyContent": "space-between",
-                              "marginBottom": "15px",
-                              "padding": "10px",
-                              "width": "100%",
-                            }
-                          }
-                        >
-                          <div
-                            style={
-                              Object {
-                                "lineHeight": "30px",
-                                "minHeight": "34px",
-                              }
-                            }
-                          >
-                            <input
-                              onChange={[Function]}
-                              type="text"
-                              value="title"
-                            />
-                            <select
-                              onChange={[Function]}
-                              value="query"
-                            />
-                            searchQuery
-                            {"key":"searchQuery","type":"query","field":"title","query":"rabbit","path":["root","searchRoot","searchQuery"],"updating":null,"lastUpdateTime":null,"markedForUpdate":null,"hasValue":null,"error":null,"context":null,"missedUpdate":null,"paused":null}
-                          </div>
-                          <div
-                            style={
-                              Object {
-                                "minWidth": 82,
-                                "visibility": "hidden",
-                              }
-                            }
-                          >
-                            <button
-                              onClick={[Function]}
-                              onMouseOut={[Function]}
-                              onMouseOver={[Function]}
-                              style={
-                                Object {
-                                  "background": "white",
-                                  "border": "1px solid #ccc",
-                                  "borderBottomRightRadius": 0,
-                                  "borderRadius": 5000,
-                                  "borderTopRightRadius": 0,
-                                  "color": "#5cb85c",
-                                  "display": "inline-block",
-                                  "padding": ".5rem 1rem",
-                                  "textAlign": "center",
-                                }
-                              }
-                            >
-                              &gt;
-                            </button>
-                            <button
-                              onClick={[Function]}
-                              onMouseOut={[Function]}
-                              onMouseOver={[Function]}
-                              style={
-                                Object {
-                                  "background": "white",
-                                  "border": "1px solid #ccc",
-                                  "borderBottomLeftRadius": 0,
-                                  "borderRadius": 5000,
-                                  "borderTopLeftRadius": 0,
-                                  "display": "inline-block",
-                                  "marginLeft": "-1px",
-                                  "padding": ".5rem 1rem",
-                                  "textAlign": "center",
-                                }
-                              }
-                            >
-                              X
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div />
-              </div>
-              <div>
-                <div />
-                <div
-                  style={
-                    Object {
-                      "background": "#f0f8ff",
-                      "display": "flex",
-                    }
-                  }
-                >
-                  <div>
-                    <div>
-                      <div
-                        onClick={[Function]}
-                        style={
-                          Object {
-                            "background": "#5bc0de",
-                            "borderRadius": "5px",
-                            "color": "white",
-                            "lineHeight": "35px",
-                            "marginRight": "15px",
-                            "textAlign": "center",
-                            "width": "50px",
-                          }
-                        }
-                      >
-                        <span
-                          style={Object {}}
-                        >
-                          and
-                        </span>
-                      </div>
-                      <div
-                        style={
-                          Object {
-                            "background": "#5bc0de",
-                            "bottom": "17.5px",
-                            "color": "white",
-                            "height": "2px",
-                            "left": "50px",
-                            "position": "relative",
-                            "width": "15px",
-                          }
-                        }
-                      />
-                    </div>
-                    <div />
-                  </div>
-                  <div
-                    style={
-                      Object {
-                        "width": "100%",
-                      }
-                    }
-                  >
-                    <div
-                      style={
-                        Object {
-                          "display": "flex",
-                          "width": "100%",
-                        }
-                      }
-                    >
-                      <div
-                        style={
-                          Object {
-                            "width": "100%",
-                          }
-                        }
-                      >
-                        <div
-                          onMouseOut={[Function]}
-                          onMouseOver={[Function]}
-                          style={
-                            Object {
-                              "background": "white",
-                              "borderColor": "#5bc0de",
-                              "borderLeftWidth": 1,
-                              "borderRadius": "5px",
-                              "borderStyle": "solid",
-                              "borderWidth": 1,
-                              "display": "flex",
-                              "justifyContent": "space-between",
-                              "marginBottom": "15px",
-                              "padding": "10px",
-                              "width": "100%",
-                            }
-                          }
-                        >
-                          <div
-                            style={
-                              Object {
-                                "lineHeight": "30px",
-                                "minHeight": "34px",
-                              }
-                            }
-                          >
-                            <input
-                              onChange={[Function]}
-                              type="text"
-                              value="genres"
-                            />
-                            <select
-                              onChange={[Function]}
-                              value="facet"
-                            />
-                            searchFacet
-                            {"key":"searchFacet","type":"facet","field":"genres","path":["root","searchRoot","searchFacet"],"updating":null,"lastUpdateTime":null,"markedForUpdate":null,"hasValue":null,"error":null,"context":{"options":[],"cardinality":null},"missedUpdate":null,"paused":null,"values":[],"optionsFilter":""}
-                          </div>
-                          <div
-                            style={
-                              Object {
-                                "minWidth": 82,
-                                "visibility": "hidden",
-                              }
-                            }
-                          >
-                            <button
-                              onClick={[Function]}
-                              onMouseOut={[Function]}
-                              onMouseOver={[Function]}
-                              style={
-                                Object {
-                                  "background": "white",
-                                  "border": "1px solid #ccc",
-                                  "borderBottomRightRadius": 0,
-                                  "borderRadius": 5000,
-                                  "borderTopRightRadius": 0,
-                                  "color": "#5cb85c",
-                                  "display": "inline-block",
-                                  "padding": ".5rem 1rem",
-                                  "textAlign": "center",
-                                }
-                              }
-                            >
-                              &gt;
-                            </button>
-                            <button
-                              onClick={[Function]}
-                              onMouseOut={[Function]}
-                              onMouseOver={[Function]}
-                              style={
-                                Object {
-                                  "background": "white",
-                                  "border": "1px solid #ccc",
-                                  "borderBottomLeftRadius": 0,
-                                  "borderRadius": 5000,
-                                  "borderTopLeftRadius": 0,
-                                  "display": "inline-block",
-                                  "marginLeft": "-1px",
-                                  "padding": ".5rem 1rem",
-                                  "textAlign": "center",
-                                }
-                              }
-                            >
-                              X
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <button
-        onClick={[Function]}
-        style={
-          Object {
-            "background": "white",
-            "border": "1px solid #ccc",
-            "borderRadius": 5000,
-            "display": "inline-block",
-            "padding": ".5rem 1rem",
-            "textAlign": "center",
-          }
-        }
-        type="button"
-      >
-        Add Filter
-      </button>
-    </div>
-    <div>
-      <h1>
-        <div
-          style={
-            Object {
-              "textAlign": "center",
-            }
-          }
-        >
-          No Results
-        </div>
-      </h1>
-    </div>
-    <pre>
-      {
-  "tree": {
-    "key": "root",
-    "type": "group",
-    "join": "and",
-    "schema": "movies",
-    "children": [
-      {
-        "key": "searchRoot",
-        "type": "group",
-        "join": "and",
-        "children": [
-          {
-            "key": "searchQuery",
-            "type": "query",
-            "field": "title",
-            "query": "rabbit",
-            "path": [
-              "root",
-              "searchRoot",
-              "searchQuery"
-            ],
-            "updating": null,
-            "lastUpdateTime": null,
-            "markedForUpdate": null,
-            "hasValue": null,
-            "error": null,
-            "context": null,
-            "missedUpdate": null,
-            "paused": null
-          },
-          {
-            "key": "searchFacet",
-            "type": "facet",
-            "field": "genres",
-            "path": [
-              "root",
-              "searchRoot",
-              "searchFacet"
-            ],
-            "updating": null,
-            "lastUpdateTime": null,
-            "markedForUpdate": null,
-            "hasValue": null,
-            "error": null,
-            "context": {
-              "options": [],
-              "cardinality": null
-            },
-            "missedUpdate": null,
-            "paused": null,
-            "values": [],
-            "optionsFilter": ""
-          }
-        ],
-        "path": [
-          "root",
-          "searchRoot"
-        ],
-        "updating": null,
-        "lastUpdateTime": null,
-        "markedForUpdate": null,
-        "hasValue": null,
-        "error": null,
-        "context": null,
-        "missedUpdate": null,
-        "paused": null
-      },
-      {
-        "key": "results",
-        "type": "results",
-        "pageSize": 10,
-        "page": 1,
-        "path": [
-          "root",
-          "results"
-        ],
-        "updating": null,
-        "lastUpdateTime": null,
-        "markedForUpdate": null,
-        "hasValue": null,
-        "error": null,
-        "context": {
-          "response": {
-            "results": [],
-            "totalRecords": null
-          }
-        },
-        "missedUpdate": null,
-        "paused": null
-      }
-    ],
-    "path": [
-      "root"
-    ],
-    "updating": null,
-    "lastUpdateTime": null,
-    "markedForUpdate": null,
-    "hasValue": null,
-    "error": null,
-    "context": null,
-    "missedUpdate": null,
-    "paused": null
-  }
-}
-    </pre>
+    Loading...
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots IMDB Filter List 1`] = `
 <div
@@ -1612,7 +1118,7 @@ exports[`Storyshots IMDB Filter List 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots IMDB Quick Start 1`] = `
 <div
@@ -1658,12 +1164,7 @@ exports[`Storyshots IMDB Quick Start 1`] = `
         field="title"
         onChange={[Function]}
         placeholder="Search"
-        style={
-          Object {
-            "padding": "15px",
-          }
-        }
-        value={undefined}
+        value=""
       />
     </div>
     <div
@@ -1709,7 +1210,7 @@ exports[`Storyshots IMDB Quick Start 1`] = `
                   className="contexture-search-box"
                   onChange={[Function]}
                   type="number"
-                  value={0}
+                  value=""
                 />
                 <div>
                   -
@@ -1830,7 +1331,7 @@ exports[`Storyshots IMDB Quick Start 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Layout Awaiter 1`] = `
 <div>
@@ -1848,7 +1349,7 @@ exports[`Storyshots Layout Awaiter 1`] = `
     Reject
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots Layout FilteredPicker 1`] = `
 <div>
@@ -1872,7 +1373,7 @@ exports[`Storyshots Layout FilteredPicker 1`] = `
     cdef
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Layout Highlight 1`] = `
 <div>
@@ -1884,7 +1385,7 @@ exports[`Storyshots Layout Highlight 1`] = `
   </div>
   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 </div>
-`
+`;
 
 exports[`Storyshots Layout Modal 1`] = `
 <div>
@@ -1894,7 +1395,7 @@ exports[`Storyshots Layout Modal 1`] = `
     Open Modal
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots Layout ModalPicker 1`] = `
 <div>
@@ -1904,7 +1405,7 @@ exports[`Storyshots Layout ModalPicker 1`] = `
     Pick
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots Layout Popover 1`] = `
 <div>
@@ -1914,7 +1415,7 @@ exports[`Storyshots Layout Popover 1`] = `
     Open Popover
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
 <div
@@ -2028,60 +1529,35 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                       <div
                         style={
                           Object {
-                            "lineHeight": "30px",
-                            "minHeight": "34px",
+                            "display": "flex",
+                            "width": "100%",
                           }
                         }
                       >
-                        <input
-                          onChange={[Function]}
-                          type="text"
-                          value={undefined}
-                        />
-                        <select
-                          onChange={[Function]}
-                          value="query"
-                        >
-                          <option
-                            value="facet"
+                        <div>
+                          <button
+                            onClick={[Function]}
                           >
-                            List
-                          </option>
-                          <option
-                            value="query"
-                          >
-                            Query
-                          </option>
-                          <option
-                            value="number"
-                          >
-                            Range
-                          </option>
-                          <option
-                            value="text"
-                          >
-                            Text
-                          </option>
-                        </select>
-                        filter 1
+                            Pick a Field
+                          </button>
+                        </div>
                         <div
                           style={
                             Object {
                               "display": "inline-block",
+                              "marginRight": "5px",
                               "verticalAlign": "top",
                               "width": "100%",
                             }
                           }
                         >
-                          <span>
-                            <input
-                              onChange={[Function]}
-                              type="text"
-                              value={undefined}
-                            />
-                          </span>
+                          <input
+                            className="contexture-search-box"
+                            onChange={[Function]}
+                            placeholder="Search"
+                            value=""
+                          />
                         </div>
-                        {"key":"filter 1","type":"query","data":{"words":[]}}
                       </div>
                       <div
                         style={
@@ -2291,60 +1767,35 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                   <div
                                     style={
                                       Object {
-                                        "lineHeight": "30px",
-                                        "minHeight": "34px",
+                                        "display": "flex",
+                                        "width": "100%",
                                       }
                                     }
                                   >
-                                    <input
-                                      onChange={[Function]}
-                                      type="text"
-                                      value={undefined}
-                                    />
-                                    <select
-                                      onChange={[Function]}
-                                      value="query"
-                                    >
-                                      <option
-                                        value="facet"
+                                    <div>
+                                      <button
+                                        onClick={[Function]}
                                       >
-                                        List
-                                      </option>
-                                      <option
-                                        value="query"
-                                      >
-                                        Query
-                                      </option>
-                                      <option
-                                        value="number"
-                                      >
-                                        Range
-                                      </option>
-                                      <option
-                                        value="text"
-                                      >
-                                        Text
-                                      </option>
-                                    </select>
-                                    filter 2a
+                                        Pick a Field
+                                      </button>
+                                    </div>
                                     <div
                                       style={
                                         Object {
                                           "display": "inline-block",
+                                          "marginRight": "5px",
                                           "verticalAlign": "top",
                                           "width": "100%",
                                         }
                                       }
                                     >
-                                      <span>
-                                        <input
-                                          onChange={[Function]}
-                                          type="text"
-                                          value={undefined}
-                                        />
-                                      </span>
+                                      <input
+                                        className="contexture-search-box"
+                                        onChange={[Function]}
+                                        placeholder="Search"
+                                        value=""
+                                      />
                                     </div>
-                                    {"key":"filter 2a","type":"query","data":{"words":[]}}
                                   </div>
                                   <div
                                     style={
@@ -2493,60 +1944,35 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                   <div
                                     style={
                                       Object {
-                                        "lineHeight": "30px",
-                                        "minHeight": "34px",
+                                        "display": "flex",
+                                        "width": "100%",
                                       }
                                     }
                                   >
-                                    <input
-                                      onChange={[Function]}
-                                      type="text"
-                                      value={undefined}
-                                    />
-                                    <select
-                                      onChange={[Function]}
-                                      value="query"
-                                    >
-                                      <option
-                                        value="facet"
+                                    <div>
+                                      <button
+                                        onClick={[Function]}
                                       >
-                                        List
-                                      </option>
-                                      <option
-                                        value="query"
-                                      >
-                                        Query
-                                      </option>
-                                      <option
-                                        value="number"
-                                      >
-                                        Range
-                                      </option>
-                                      <option
-                                        value="text"
-                                      >
-                                        Text
-                                      </option>
-                                    </select>
-                                    filter 2b
+                                        Pick a Field
+                                      </button>
+                                    </div>
                                     <div
                                       style={
                                         Object {
                                           "display": "inline-block",
+                                          "marginRight": "5px",
                                           "verticalAlign": "top",
                                           "width": "100%",
                                         }
                                       }
                                     >
-                                      <span>
-                                        <input
-                                          onChange={[Function]}
-                                          type="text"
-                                          value={undefined}
-                                        />
-                                      </span>
+                                      <input
+                                        className="contexture-search-box"
+                                        onChange={[Function]}
+                                        placeholder="Search"
+                                        value=""
+                                      />
                                     </div>
-                                    {"key":"filter 2b","type":"query","data":{"words":[]}}
                                   </div>
                                   <div
                                     style={
@@ -2757,54 +2183,38 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                               <div
                                                 style={
                                                   Object {
-                                                    "lineHeight": "30px",
-                                                    "minHeight": "34px",
+                                                    "display": "flex",
+                                                    "width": "100%",
                                                   }
                                                 }
                                               >
-                                                <input
-                                                  onChange={[Function]}
-                                                  type="text"
-                                                  value={undefined}
-                                                />
-                                                <select
-                                                  onChange={[Function]}
-                                                  value="facet"
-                                                >
-                                                  <option
-                                                    value="facet"
+                                                <div>
+                                                  <button
+                                                    onClick={[Function]}
                                                   >
-                                                    List
-                                                  </option>
-                                                  <option
-                                                    value="query"
-                                                  >
-                                                    Query
-                                                  </option>
-                                                  <option
-                                                    value="number"
-                                                  >
-                                                    Range
-                                                  </option>
-                                                  <option
-                                                    value="text"
-                                                  >
-                                                    Text
-                                                  </option>
-                                                </select>
-                                                filter 4a
+                                                    Pick a Field
+                                                  </button>
+                                                </div>
                                                 <div
                                                   style={
                                                     Object {
                                                       "display": "inline-block",
+                                                      "marginRight": "5px",
                                                       "verticalAlign": "top",
                                                       "width": "100%",
                                                     }
                                                   }
                                                 >
-                                                  <div />
+                                                  <div>
+                                                    <input
+                                                      className="contexture-search-box"
+                                                      onChange={[Function]}
+                                                      placeholder="Find..."
+                                                      type="text"
+                                                      value=""
+                                                    />
+                                                  </div>
                                                 </div>
-                                                {"key":"filter 4a","type":"facet","context":{"options":[]},"data":{"fieldMode":"word"}}
                                               </div>
                                               <div
                                                 style={
@@ -2954,60 +2364,35 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                               <div
                                                 style={
                                                   Object {
-                                                    "lineHeight": "30px",
-                                                    "minHeight": "34px",
+                                                    "display": "flex",
+                                                    "width": "100%",
                                                   }
                                                 }
                                               >
-                                                <input
-                                                  onChange={[Function]}
-                                                  type="text"
-                                                  value={undefined}
-                                                />
-                                                <select
-                                                  onChange={[Function]}
-                                                  value="query"
-                                                >
-                                                  <option
-                                                    value="facet"
+                                                <div>
+                                                  <button
+                                                    onClick={[Function]}
                                                   >
-                                                    List
-                                                  </option>
-                                                  <option
-                                                    value="query"
-                                                  >
-                                                    Query
-                                                  </option>
-                                                  <option
-                                                    value="number"
-                                                  >
-                                                    Range
-                                                  </option>
-                                                  <option
-                                                    value="text"
-                                                  >
-                                                    Text
-                                                  </option>
-                                                </select>
-                                                filter 4b
+                                                    Pick a Field
+                                                  </button>
+                                                </div>
                                                 <div
                                                   style={
                                                     Object {
                                                       "display": "inline-block",
+                                                      "marginRight": "5px",
                                                       "verticalAlign": "top",
                                                       "width": "100%",
                                                     }
                                                   }
                                                 >
-                                                  <span>
-                                                    <input
-                                                      onChange={[Function]}
-                                                      type="text"
-                                                      value={undefined}
-                                                    />
-                                                  </span>
+                                                  <input
+                                                    className="contexture-search-box"
+                                                    onChange={[Function]}
+                                                    placeholder="Search"
+                                                    value=""
+                                                  />
                                                 </div>
-                                                {"key":"filter 4b","type":"query","data":{"words":[]}}
                                               </div>
                                               <div
                                                 style={
@@ -3168,60 +2553,35 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                       <div
                         style={
                           Object {
-                            "lineHeight": "30px",
-                            "minHeight": "34px",
+                            "display": "flex",
+                            "width": "100%",
                           }
                         }
                       >
-                        <input
-                          onChange={[Function]}
-                          type="text"
-                          value={undefined}
-                        />
-                        <select
-                          onChange={[Function]}
-                          value="query"
-                        >
-                          <option
-                            value="facet"
+                        <div>
+                          <button
+                            onClick={[Function]}
                           >
-                            List
-                          </option>
-                          <option
-                            value="query"
-                          >
-                            Query
-                          </option>
-                          <option
-                            value="number"
-                          >
-                            Range
-                          </option>
-                          <option
-                            value="text"
-                          >
-                            Text
-                          </option>
-                        </select>
-                        filter 3
+                            Pick a Field
+                          </button>
+                        </div>
                         <div
                           style={
                             Object {
                               "display": "inline-block",
+                              "marginRight": "5px",
                               "verticalAlign": "top",
                               "width": "100%",
                             }
                           }
                         >
-                          <span>
-                            <input
-                              onChange={[Function]}
-                              type="text"
-                              value={undefined}
-                            />
-                          </span>
+                          <input
+                            className="contexture-search-box"
+                            onChange={[Function]}
+                            placeholder="Search"
+                            value=""
+                          />
                         </div>
-                        {"key":"filter 3","type":"query","data":{"words":[]}}
                       </div>
                       <div
                         style={
@@ -3451,63 +2811,52 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                   <div
                                     style={
                                       Object {
-                                        "lineHeight": "30px",
-                                        "minHeight": "34px",
+                                        "display": "flex",
+                                        "width": "100%",
                                       }
                                     }
                                   >
-                                    <input
-                                      onChange={[Function]}
-                                      type="text"
-                                      value={undefined}
-                                    />
-                                    <select
-                                      onChange={[Function]}
-                                      value="number"
-                                    >
-                                      <option
-                                        value="facet"
+                                    <div>
+                                      <button
+                                        onClick={[Function]}
                                       >
-                                        List
-                                      </option>
-                                      <option
-                                        value="query"
-                                      >
-                                        Query
-                                      </option>
-                                      <option
-                                        value="number"
-                                      >
-                                        Range
-                                      </option>
-                                      <option
-                                        value="text"
-                                      >
-                                        Text
-                                      </option>
-                                    </select>
-                                    filter 5a
+                                        Pick a Field
+                                      </button>
+                                    </div>
                                     <div
                                       style={
                                         Object {
                                           "display": "inline-block",
+                                          "marginRight": "5px",
                                           "verticalAlign": "top",
                                           "width": "100%",
                                         }
                                       }
                                     >
-                                      <span>
+                                      <div
+                                        style={
+                                          Object {
+                                            "display": "flex",
+                                          }
+                                        }
+                                      >
                                         <input
+                                          className="contexture-search-box"
                                           onChange={[Function]}
-                                          value={undefined}
+                                          type="number"
+                                          value=""
                                         />
+                                        <div>
+                                          -
+                                        </div>
                                         <input
+                                          className="contexture-search-box"
                                           onChange={[Function]}
-                                          value={undefined}
+                                          type="number"
+                                          value=""
                                         />
-                                      </span>
+                                      </div>
                                     </div>
-                                    {"key":"filter 5a","type":"number","data":{}}
                                   </div>
                                   <div
                                     style={
@@ -3657,60 +3006,35 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                   <div
                                     style={
                                       Object {
-                                        "lineHeight": "30px",
-                                        "minHeight": "34px",
+                                        "display": "flex",
+                                        "width": "100%",
                                       }
                                     }
                                   >
-                                    <input
-                                      onChange={[Function]}
-                                      type="text"
-                                      value={undefined}
-                                    />
-                                    <select
-                                      onChange={[Function]}
-                                      value="query"
-                                    >
-                                      <option
-                                        value="facet"
+                                    <div>
+                                      <button
+                                        onClick={[Function]}
                                       >
-                                        List
-                                      </option>
-                                      <option
-                                        value="query"
-                                      >
-                                        Query
-                                      </option>
-                                      <option
-                                        value="number"
-                                      >
-                                        Range
-                                      </option>
-                                      <option
-                                        value="text"
-                                      >
-                                        Text
-                                      </option>
-                                    </select>
-                                    filter 5b
+                                        Pick a Field
+                                      </button>
+                                    </div>
                                     <div
                                       style={
                                         Object {
                                           "display": "inline-block",
+                                          "marginRight": "5px",
                                           "verticalAlign": "top",
                                           "width": "100%",
                                         }
                                       }
                                     >
-                                      <span>
-                                        <input
-                                          onChange={[Function]}
-                                          type="text"
-                                          value={undefined}
-                                        />
-                                      </span>
+                                      <input
+                                        className="contexture-search-box"
+                                        onChange={[Function]}
+                                        placeholder="Search"
+                                        value=""
+                                      />
                                     </div>
-                                    {"key":"filter 5b","type":"query","data":{"words":[]}}
                                   </div>
                                   <div
                                     style={
@@ -4002,60 +3326,35 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                               <div
                                                 style={
                                                   Object {
-                                                    "lineHeight": "30px",
-                                                    "minHeight": "34px",
+                                                    "display": "flex",
+                                                    "width": "100%",
                                                   }
                                                 }
                                               >
-                                                <input
-                                                  onChange={[Function]}
-                                                  type="text"
-                                                  value={undefined}
-                                                />
-                                                <select
-                                                  onChange={[Function]}
-                                                  value="query"
-                                                >
-                                                  <option
-                                                    value="facet"
+                                                <div>
+                                                  <button
+                                                    onClick={[Function]}
                                                   >
-                                                    List
-                                                  </option>
-                                                  <option
-                                                    value="query"
-                                                  >
-                                                    Query
-                                                  </option>
-                                                  <option
-                                                    value="number"
-                                                  >
-                                                    Range
-                                                  </option>
-                                                  <option
-                                                    value="text"
-                                                  >
-                                                    Text
-                                                  </option>
-                                                </select>
-                                                filter 4a
+                                                    Pick a Field
+                                                  </button>
+                                                </div>
                                                 <div
                                                   style={
                                                     Object {
                                                       "display": "inline-block",
+                                                      "marginRight": "5px",
                                                       "verticalAlign": "top",
                                                       "width": "100%",
                                                     }
                                                   }
                                                 >
-                                                  <span>
-                                                    <input
-                                                      onChange={[Function]}
-                                                      type="text"
-                                                      value={undefined}
-                                                    />
-                                                  </span>
+                                                  <input
+                                                    className="contexture-search-box"
+                                                    onChange={[Function]}
+                                                    placeholder="Search"
+                                                    value=""
+                                                  />
                                                 </div>
-                                                {"key":"filter 4a","type":"query","data":{"words":[]}}
                                               </div>
                                               <div
                                                 style={
@@ -4205,115 +3504,28 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                               <div
                                                 style={
                                                   Object {
-                                                    "lineHeight": "30px",
-                                                    "minHeight": "34px",
+                                                    "display": "flex",
+                                                    "width": "100%",
                                                   }
                                                 }
                                               >
-                                                <input
-                                                  onChange={[Function]}
-                                                  type="text"
-                                                  value={undefined}
-                                                />
-                                                <select
-                                                  onChange={[Function]}
-                                                  value="text"
-                                                >
-                                                  <option
-                                                    value="facet"
+                                                <div>
+                                                  <button
+                                                    onClick={[Function]}
                                                   >
-                                                    List
-                                                  </option>
-                                                  <option
-                                                    value="query"
-                                                  >
-                                                    Query
-                                                  </option>
-                                                  <option
-                                                    value="number"
-                                                  >
-                                                    Range
-                                                  </option>
-                                                  <option
-                                                    value="text"
-                                                  >
-                                                    Text
-                                                  </option>
-                                                </select>
-                                                txt filter 4b
+                                                    Pick a Field
+                                                  </button>
+                                                </div>
                                                 <div
                                                   style={
                                                     Object {
                                                       "display": "inline-block",
+                                                      "marginRight": "5px",
                                                       "verticalAlign": "top",
                                                       "width": "100%",
                                                     }
                                                   }
-                                                >
-                                                  <span>
-                                                    <select
-                                                      onChange={[Function]}
-                                                      value={undefined}
-                                                    >
-                                                      <option
-                                                        value="containsWord"
-                                                      >
-                                                        Field Contains
-                                                      </option>
-                                                      <option
-                                                        value="wordStartsWith"
-                                                      >
-                                                        Word Starts With
-                                                      </option>
-                                                      <option
-                                                        value="wordEndsWith"
-                                                      >
-                                                        Word Ends With
-                                                      </option>
-                                                      <option
-                                                        value="containsExact"
-                                                      >
-                                                        Word Is Exactly
-                                                      </option>
-                                                      <option
-                                                        value="startsWith"
-                                                      >
-                                                        Field Starts With
-                                                      </option>
-                                                      <option
-                                                        value="endsWith"
-                                                      >
-                                                        Field Ends With
-                                                      </option>
-                                                      <option
-                                                        value="is"
-                                                      >
-                                                        Field Is Exactly
-                                                      </option>
-                                                    </select>
-                                                    <select
-                                                      onChange={[Function]}
-                                                      value={undefined}
-                                                    >
-                                                      <option
-                                                        value="all"
-                                                      >
-                                                        All of these
-                                                      </option>
-                                                      <option
-                                                        value="any"
-                                                      >
-                                                        Any of these
-                                                      </option>
-                                                      <option
-                                                        value="none"
-                                                      >
-                                                        None of these
-                                                      </option>
-                                                    </select>
-                                                  </span>
-                                                </div>
-                                                {"key":"txt filter 4b","type":"text","data":{"values":[]}}
+                                                />
                                               </div>
                                               <div
                                                 style={
@@ -4469,60 +3681,35 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                   <div
                                     style={
                                       Object {
-                                        "lineHeight": "30px",
-                                        "minHeight": "34px",
+                                        "display": "flex",
+                                        "width": "100%",
                                       }
                                     }
                                   >
-                                    <input
-                                      onChange={[Function]}
-                                      type="text"
-                                      value={undefined}
-                                    />
-                                    <select
-                                      onChange={[Function]}
-                                      value="query"
-                                    >
-                                      <option
-                                        value="facet"
+                                    <div>
+                                      <button
+                                        onClick={[Function]}
                                       >
-                                        List
-                                      </option>
-                                      <option
-                                        value="query"
-                                      >
-                                        Query
-                                      </option>
-                                      <option
-                                        value="number"
-                                      >
-                                        Range
-                                      </option>
-                                      <option
-                                        value="text"
-                                      >
-                                        Text
-                                      </option>
-                                    </select>
-                                    asdf
+                                        Pick a Field
+                                      </button>
+                                    </div>
                                     <div
                                       style={
                                         Object {
                                           "display": "inline-block",
+                                          "marginRight": "5px",
                                           "verticalAlign": "top",
                                           "width": "100%",
                                         }
                                       }
                                     >
-                                      <span>
-                                        <input
-                                          onChange={[Function]}
-                                          type="text"
-                                          value={undefined}
-                                        />
-                                      </span>
+                                      <input
+                                        className="contexture-search-box"
+                                        onChange={[Function]}
+                                        placeholder="Search"
+                                        value=""
+                                      />
                                     </div>
-                                    {"key":"asdf","type":"query","data":{"words":[]}}
                                   </div>
                                   <div
                                     style={
@@ -4607,7 +3794,7 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
     Add Filter
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Examples One Filter 1`] = `
 <div
@@ -4704,60 +3891,35 @@ exports[`Storyshots QueryBuilder/Examples One Filter 1`] = `
                       <div
                         style={
                           Object {
-                            "lineHeight": "30px",
-                            "minHeight": "34px",
+                            "display": "flex",
+                            "width": "100%",
                           }
                         }
                       >
-                        <input
-                          onChange={[Function]}
-                          type="text"
-                          value={undefined}
-                        />
-                        <select
-                          onChange={[Function]}
-                          value="query"
-                        >
-                          <option
-                            value="facet"
+                        <div>
+                          <button
+                            onClick={[Function]}
                           >
-                            List
-                          </option>
-                          <option
-                            value="query"
-                          >
-                            Query
-                          </option>
-                          <option
-                            value="number"
-                          >
-                            Range
-                          </option>
-                          <option
-                            value="text"
-                          >
-                            Text
-                          </option>
-                        </select>
-                        filter 1
+                            Pick a Field
+                          </button>
+                        </div>
                         <div
                           style={
                             Object {
                               "display": "inline-block",
+                              "marginRight": "5px",
                               "verticalAlign": "top",
                               "width": "100%",
                             }
                           }
                         >
-                          <span>
-                            <input
-                              onChange={[Function]}
-                              type="text"
-                              value={undefined}
-                            />
-                          </span>
+                          <input
+                            className="contexture-search-box"
+                            onChange={[Function]}
+                            placeholder="Search"
+                            value=""
+                          />
                         </div>
-                        {"key":"filter 1","type":"query"}
                       </div>
                       <div
                         style={
@@ -4836,7 +3998,7 @@ exports[`Storyshots QueryBuilder/Examples One Filter 1`] = `
     Add Filter
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Examples One Filter on a misplaced root 1`] = `
 <div
@@ -4933,60 +4095,35 @@ exports[`Storyshots QueryBuilder/Examples One Filter on a misplaced root 1`] = `
                       <div
                         style={
                           Object {
-                            "lineHeight": "30px",
-                            "minHeight": "34px",
+                            "display": "flex",
+                            "width": "100%",
                           }
                         }
                       >
-                        <input
-                          onChange={[Function]}
-                          type="text"
-                          value={undefined}
-                        />
-                        <select
-                          onChange={[Function]}
-                          value="query"
-                        >
-                          <option
-                            value="facet"
+                        <div>
+                          <button
+                            onClick={[Function]}
                           >
-                            List
-                          </option>
-                          <option
-                            value="query"
-                          >
-                            Query
-                          </option>
-                          <option
-                            value="number"
-                          >
-                            Range
-                          </option>
-                          <option
-                            value="text"
-                          >
-                            Text
-                          </option>
-                        </select>
-                        filter 1
+                            Pick a Field
+                          </button>
+                        </div>
                         <div
                           style={
                             Object {
                               "display": "inline-block",
+                              "marginRight": "5px",
                               "verticalAlign": "top",
                               "width": "100%",
                             }
                           }
                         >
-                          <span>
-                            <input
-                              onChange={[Function]}
-                              type="text"
-                              value={undefined}
-                            />
-                          </span>
+                          <input
+                            className="contexture-search-box"
+                            onChange={[Function]}
+                            placeholder="Search"
+                            value=""
+                          />
                         </div>
-                        {"key":"filter 1","type":"query"}
                       </div>
                       <div
                         style={
@@ -5065,7 +4202,7 @@ exports[`Storyshots QueryBuilder/Examples One Filter on a misplaced root 1`] = `
     Add Filter
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
 <div
@@ -5162,79 +4299,59 @@ exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
                       <div
                         style={
                           Object {
-                            "lineHeight": "30px",
-                            "minHeight": "34px",
+                            "display": "flex",
+                            "width": "100%",
                           }
                         }
                       >
-                        <select
-                          onChange={[Function]}
-                        >
-                          <option
-                            value="field1"
+                        <div>
+                          <button
+                            onClick={[Function]}
                           >
-                            Field 1
-                          </option>
-                          <option
-                            value="field2"
-                          >
-                            Field 2
-                          </option>
-                          <option
-                            value="field3"
-                          >
-                            Field 3
-                          </option>
-                        </select>
-                        <select
-                          onChange={[Function]}
-                          value="facet"
-                        >
-                          <option
-                            value="facet"
-                          >
-                            List
-                          </option>
-                          <option
-                            value="query"
-                          >
-                            Query
-                          </option>
-                          <option
-                            value="number"
-                          >
-                            Range
-                          </option>
-                          <option
-                            value="text"
-                          >
-                            Text
-                          </option>
-                        </select>
-                        filter 1
+                            Pick a Field
+                          </button>
+                        </div>
                         <div
                           style={
                             Object {
                               "display": "inline-block",
+                              "marginRight": "5px",
                               "verticalAlign": "top",
                               "width": "100%",
                             }
                           }
                         >
                           <div>
+                            <input
+                              className="contexture-search-box"
+                              onChange={[Function]}
+                              placeholder="Find..."
+                              type="text"
+                              value=""
+                            />
                             <div
                               style={
                                 Object {
+                                  "alignItems": "baseline",
                                   "display": "flex",
                                   "justifyContent": "space-between",
                                 }
                               }
                             >
-                              <div>
-                                <input
-                                  onChange={[Function]}
-                                  type="checkbox"
-                                />
+                              <input
+                                checked={false}
+                                onChange={[Function]}
+                                type="checkbox"
+                              />
+                              <div
+                                style={
+                                  Object {
+                                    "flex": 2,
+                                    "paddingLeft": "5px",
+                                    "paddingRight": "5px",
+                                  }
+                                }
+                              >
                                 Option 1
                               </div>
                               <div>
@@ -5244,16 +4361,26 @@ exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
                             <div
                               style={
                                 Object {
+                                  "alignItems": "baseline",
                                   "display": "flex",
                                   "justifyContent": "space-between",
                                 }
                               }
                             >
-                              <div>
-                                <input
-                                  onChange={[Function]}
-                                  type="checkbox"
-                                />
+                              <input
+                                checked={false}
+                                onChange={[Function]}
+                                type="checkbox"
+                              />
+                              <div
+                                style={
+                                  Object {
+                                    "flex": 2,
+                                    "paddingLeft": "5px",
+                                    "paddingRight": "5px",
+                                  }
+                                }
+                              >
                                 Option 2
                               </div>
                               <div>
@@ -5262,7 +4389,6 @@ exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
                             </div>
                           </div>
                         </div>
-                        {"key":"filter 1","type":"facet","context":{"options":[{"name":"Option 1","count":2},{"name":"Option 2","count":1}]}}
                       </div>
                       <div
                         style={
@@ -5341,7 +4467,7 @@ exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
     Add Filter
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Examples One Filter with fields 1`] = `
 <div
@@ -5438,74 +4564,66 @@ exports[`Storyshots QueryBuilder/Examples One Filter with fields 1`] = `
                       <div
                         style={
                           Object {
-                            "lineHeight": "30px",
-                            "minHeight": "34px",
+                            "display": "flex",
+                            "width": "100%",
                           }
                         }
                       >
-                        <select
-                          onChange={[Function]}
+                        <div>
+                          <button
+                            onClick={[Function]}
+                          >
+                            Test
+                          </button>
+                        </div>
+                        <div
+                          style={
+                            Object {
+                              "margin": "0 5px",
+                            }
+                          }
                         >
-                          <option
-                            value="field1"
-                          >
-                            Field 1
-                          </option>
-                          <option
-                            value="field2"
-                          >
-                            Field 2
-                          </option>
-                          <option
-                            value="field3"
-                          >
-                            Field 3
-                          </option>
-                        </select>
-                        <select
-                          onChange={[Function]}
-                          value="query"
-                        >
-                          <option
-                            value="facet"
-                          >
-                            List
-                          </option>
-                          <option
+                          <select
+                            onChange={[Function]}
                             value="query"
                           >
-                            Query
-                          </option>
-                          <option
-                            value="number"
-                          >
-                            Range
-                          </option>
-                          <option
-                            value="text"
-                          >
-                            Text
-                          </option>
-                        </select>
-                        filter 1
+                            <option
+                              disabled="query"
+                              value={null}
+                            >
+                              Select Type
+                            </option>
+                            <option
+                              disabled={undefined}
+                              value="facet"
+                            >
+                              Facet
+                            </option>
+                            <option
+                              disabled={undefined}
+                              value="query"
+                            >
+                              Query
+                            </option>
+                          </select>
+                        </div>
                         <div
                           style={
                             Object {
                               "display": "inline-block",
+                              "marginRight": "5px",
                               "verticalAlign": "top",
                               "width": "100%",
                             }
                           }
                         >
-                          <span>
-                            <input
-                              onChange={[Function]}
-                              type="text"
-                              value={undefined}
-                            />
-                          </span>
+                          <input
+                            className="contexture-search-box"
+                            onChange={[Function]}
+                            placeholder="Search"
+                            value=""
+                          />
                         </div>
-                        {"key":"filter 1","type":"query"}
                       </div>
                       <div
                         style={
@@ -5584,7 +4702,7 @@ exports[`Storyshots QueryBuilder/Examples One Filter with fields 1`] = `
     Add Filter
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/AddPreview and 1`] = `
 <div
@@ -5624,7 +4742,7 @@ exports[`Storyshots QueryBuilder/Internals/AddPreview and 1`] = `
     </b>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/AddPreview not 1`] = `
 <div
@@ -5664,7 +4782,7 @@ exports[`Storyshots QueryBuilder/Internals/AddPreview not 1`] = `
     </b>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/AddPreview or 1`] = `
 <div
@@ -5704,41 +4822,26 @@ exports[`Storyshots QueryBuilder/Internals/AddPreview or 1`] = `
     </b>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/FilterContents FilterContents 1`] = `
 <div
   style={
     Object {
-      "lineHeight": "30px",
-      "minHeight": "34px",
+      "display": "flex",
+      "width": "100%",
     }
   }
 >
-  <input
-    onChange={[Function]}
-    type="text"
-    value={undefined}
-  />
-  <select
-    onChange={[Function]}
-    value="test"
-  >
-    <option
-      value="testType"
+  <div>
+    <button
+      onClick={[Function]}
     >
-      Testtype
-    </option>
-    <option
-      value="testType2"
-    >
-      Testtype2
-    </option>
-  </select>
-  testKey
-  {"type":"test","key":"testKey"}
+      Pick a Field
+    </button>
+  </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
 <div>
@@ -5846,33 +4949,28 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
                       <div
                         style={
                           Object {
-                            "lineHeight": "30px",
-                            "minHeight": "34px",
+                            "display": "flex",
+                            "width": "100%",
                           }
                         }
                       >
-                        <input
-                          onChange={[Function]}
-                          type="text"
-                          value={undefined}
+                        <div>
+                          <button
+                            onClick={[Function]}
+                          >
+                            Pick a Field
+                          </button>
+                        </div>
+                        <div
+                          style={
+                            Object {
+                              "display": "inline-block",
+                              "marginRight": "5px",
+                              "verticalAlign": "top",
+                              "width": "100%",
+                            }
+                          }
                         />
-                        <select
-                          onChange={[Function]}
-                          value="query"
-                        >
-                          <option
-                            value="testType"
-                          >
-                            Testtype
-                          </option>
-                          <option
-                            value="testType2"
-                          >
-                            Testtype2
-                          </option>
-                        </select>
-                        filter 1
-                        {"type":"query","key":"filter 1"}
                       </div>
                       <div
                         style={
@@ -6082,33 +5180,28 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
                                   <div
                                     style={
                                       Object {
-                                        "lineHeight": "30px",
-                                        "minHeight": "34px",
+                                        "display": "flex",
+                                        "width": "100%",
                                       }
                                     }
                                   >
-                                    <input
-                                      onChange={[Function]}
-                                      type="text"
-                                      value={undefined}
+                                    <div>
+                                      <button
+                                        onClick={[Function]}
+                                      >
+                                        Pick a Field
+                                      </button>
+                                    </div>
+                                    <div
+                                      style={
+                                        Object {
+                                          "display": "inline-block",
+                                          "marginRight": "5px",
+                                          "verticalAlign": "top",
+                                          "width": "100%",
+                                        }
+                                      }
                                     />
-                                    <select
-                                      onChange={[Function]}
-                                      value="query"
-                                    >
-                                      <option
-                                        value="testType"
-                                      >
-                                        Testtype
-                                      </option>
-                                      <option
-                                        value="testType2"
-                                      >
-                                        Testtype2
-                                      </option>
-                                    </select>
-                                    filter 2a
-                                    {"type":"query","key":"filter 2a"}
                                   </div>
                                   <div
                                     style={
@@ -6257,33 +5350,28 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
                                   <div
                                     style={
                                       Object {
-                                        "lineHeight": "30px",
-                                        "minHeight": "34px",
+                                        "display": "flex",
+                                        "width": "100%",
                                       }
                                     }
                                   >
-                                    <input
-                                      onChange={[Function]}
-                                      type="text"
-                                      value={undefined}
+                                    <div>
+                                      <button
+                                        onClick={[Function]}
+                                      >
+                                        Pick a Field
+                                      </button>
+                                    </div>
+                                    <div
+                                      style={
+                                        Object {
+                                          "display": "inline-block",
+                                          "marginRight": "5px",
+                                          "verticalAlign": "top",
+                                          "width": "100%",
+                                        }
+                                      }
                                     />
-                                    <select
-                                      onChange={[Function]}
-                                      value="query"
-                                    >
-                                      <option
-                                        value="testType"
-                                      >
-                                        Testtype
-                                      </option>
-                                      <option
-                                        value="testType2"
-                                      >
-                                        Testtype2
-                                      </option>
-                                    </select>
-                                    filter 2b
-                                    {"type":"query","key":"filter 2b"}
                                   </div>
                                   <div
                                     style={
@@ -6494,33 +5582,28 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
                                               <div
                                                 style={
                                                   Object {
-                                                    "lineHeight": "30px",
-                                                    "minHeight": "34px",
+                                                    "display": "flex",
+                                                    "width": "100%",
                                                   }
                                                 }
                                               >
-                                                <input
-                                                  onChange={[Function]}
-                                                  type="text"
-                                                  value={undefined}
+                                                <div>
+                                                  <button
+                                                    onClick={[Function]}
+                                                  >
+                                                    Pick a Field
+                                                  </button>
+                                                </div>
+                                                <div
+                                                  style={
+                                                    Object {
+                                                      "display": "inline-block",
+                                                      "marginRight": "5px",
+                                                      "verticalAlign": "top",
+                                                      "width": "100%",
+                                                    }
+                                                  }
                                                 />
-                                                <select
-                                                  onChange={[Function]}
-                                                  value="facet"
-                                                >
-                                                  <option
-                                                    value="testType"
-                                                  >
-                                                    Testtype
-                                                  </option>
-                                                  <option
-                                                    value="testType2"
-                                                  >
-                                                    Testtype2
-                                                  </option>
-                                                </select>
-                                                filter 4a
-                                                {"key":"filter 4a","type":"facet"}
                                               </div>
                                               <div
                                                 style={
@@ -6670,33 +5753,28 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
                                               <div
                                                 style={
                                                   Object {
-                                                    "lineHeight": "30px",
-                                                    "minHeight": "34px",
+                                                    "display": "flex",
+                                                    "width": "100%",
                                                   }
                                                 }
                                               >
-                                                <input
-                                                  onChange={[Function]}
-                                                  type="text"
-                                                  value={undefined}
+                                                <div>
+                                                  <button
+                                                    onClick={[Function]}
+                                                  >
+                                                    Pick a Field
+                                                  </button>
+                                                </div>
+                                                <div
+                                                  style={
+                                                    Object {
+                                                      "display": "inline-block",
+                                                      "marginRight": "5px",
+                                                      "verticalAlign": "top",
+                                                      "width": "100%",
+                                                    }
+                                                  }
                                                 />
-                                                <select
-                                                  onChange={[Function]}
-                                                  value="query"
-                                                >
-                                                  <option
-                                                    value="testType"
-                                                  >
-                                                    Testtype
-                                                  </option>
-                                                  <option
-                                                    value="testType2"
-                                                  >
-                                                    Testtype2
-                                                  </option>
-                                                </select>
-                                                filter 4b
-                                                {"type":"query","key":"filter 4b"}
                                               </div>
                                               <div
                                                 style={
@@ -6857,33 +5935,28 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
                       <div
                         style={
                           Object {
-                            "lineHeight": "30px",
-                            "minHeight": "34px",
+                            "display": "flex",
+                            "width": "100%",
                           }
                         }
                       >
-                        <input
-                          onChange={[Function]}
-                          type="text"
-                          value={undefined}
+                        <div>
+                          <button
+                            onClick={[Function]}
+                          >
+                            Pick a Field
+                          </button>
+                        </div>
+                        <div
+                          style={
+                            Object {
+                              "display": "inline-block",
+                              "marginRight": "5px",
+                              "verticalAlign": "top",
+                              "width": "100%",
+                            }
+                          }
                         />
-                        <select
-                          onChange={[Function]}
-                          value="query"
-                        >
-                          <option
-                            value="testType"
-                          >
-                            Testtype
-                          </option>
-                          <option
-                            value="testType2"
-                          >
-                            Testtype2
-                          </option>
-                        </select>
-                        filter 3
-                        {"type":"query","key":"filter 3"}
                       </div>
                       <div
                         style={
@@ -7113,33 +6186,28 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
                                   <div
                                     style={
                                       Object {
-                                        "lineHeight": "30px",
-                                        "minHeight": "34px",
+                                        "display": "flex",
+                                        "width": "100%",
                                       }
                                     }
                                   >
-                                    <input
-                                      onChange={[Function]}
-                                      type="text"
-                                      value={undefined}
+                                    <div>
+                                      <button
+                                        onClick={[Function]}
+                                      >
+                                        Pick a Field
+                                      </button>
+                                    </div>
+                                    <div
+                                      style={
+                                        Object {
+                                          "display": "inline-block",
+                                          "marginRight": "5px",
+                                          "verticalAlign": "top",
+                                          "width": "100%",
+                                        }
+                                      }
                                     />
-                                    <select
-                                      onChange={[Function]}
-                                      value="number"
-                                    >
-                                      <option
-                                        value="testType"
-                                      >
-                                        Testtype
-                                      </option>
-                                      <option
-                                        value="testType2"
-                                      >
-                                        Testtype2
-                                      </option>
-                                    </select>
-                                    filter 5a
-                                    {"key":"filter 5a","type":"number"}
                                   </div>
                                   <div
                                     style={
@@ -7289,33 +6357,28 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
                                   <div
                                     style={
                                       Object {
-                                        "lineHeight": "30px",
-                                        "minHeight": "34px",
+                                        "display": "flex",
+                                        "width": "100%",
                                       }
                                     }
                                   >
-                                    <input
-                                      onChange={[Function]}
-                                      type="text"
-                                      value={undefined}
+                                    <div>
+                                      <button
+                                        onClick={[Function]}
+                                      >
+                                        Pick a Field
+                                      </button>
+                                    </div>
+                                    <div
+                                      style={
+                                        Object {
+                                          "display": "inline-block",
+                                          "marginRight": "5px",
+                                          "verticalAlign": "top",
+                                          "width": "100%",
+                                        }
+                                      }
                                     />
-                                    <select
-                                      onChange={[Function]}
-                                      value="query"
-                                    >
-                                      <option
-                                        value="testType"
-                                      >
-                                        Testtype
-                                      </option>
-                                      <option
-                                        value="testType2"
-                                      >
-                                        Testtype2
-                                      </option>
-                                    </select>
-                                    filter 5b
-                                    {"type":"query","key":"filter 5b"}
                                   </div>
                                   <div
                                     style={
@@ -7607,33 +6670,28 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
                                               <div
                                                 style={
                                                   Object {
-                                                    "lineHeight": "30px",
-                                                    "minHeight": "34px",
+                                                    "display": "flex",
+                                                    "width": "100%",
                                                   }
                                                 }
                                               >
-                                                <input
-                                                  onChange={[Function]}
-                                                  type="text"
-                                                  value={undefined}
+                                                <div>
+                                                  <button
+                                                    onClick={[Function]}
+                                                  >
+                                                    Pick a Field
+                                                  </button>
+                                                </div>
+                                                <div
+                                                  style={
+                                                    Object {
+                                                      "display": "inline-block",
+                                                      "marginRight": "5px",
+                                                      "verticalAlign": "top",
+                                                      "width": "100%",
+                                                    }
+                                                  }
                                                 />
-                                                <select
-                                                  onChange={[Function]}
-                                                  value="query"
-                                                >
-                                                  <option
-                                                    value="testType"
-                                                  >
-                                                    Testtype
-                                                  </option>
-                                                  <option
-                                                    value="testType2"
-                                                  >
-                                                    Testtype2
-                                                  </option>
-                                                </select>
-                                                filter 4a
-                                                {"type":"query","key":"filter 4a"}
                                               </div>
                                               <div
                                                 style={
@@ -7783,33 +6841,28 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
                                               <div
                                                 style={
                                                   Object {
-                                                    "lineHeight": "30px",
-                                                    "minHeight": "34px",
+                                                    "display": "flex",
+                                                    "width": "100%",
                                                   }
                                                 }
                                               >
-                                                <input
-                                                  onChange={[Function]}
-                                                  type="text"
-                                                  value={undefined}
+                                                <div>
+                                                  <button
+                                                    onClick={[Function]}
+                                                  >
+                                                    Pick a Field
+                                                  </button>
+                                                </div>
+                                                <div
+                                                  style={
+                                                    Object {
+                                                      "display": "inline-block",
+                                                      "marginRight": "5px",
+                                                      "verticalAlign": "top",
+                                                      "width": "100%",
+                                                    }
+                                                  }
                                                 />
-                                                <select
-                                                  onChange={[Function]}
-                                                  value="text"
-                                                >
-                                                  <option
-                                                    value="testType"
-                                                  >
-                                                    Testtype
-                                                  </option>
-                                                  <option
-                                                    value="testType2"
-                                                  >
-                                                    Testtype2
-                                                  </option>
-                                                </select>
-                                                txt filter 4b
-                                                {"key":"txt filter 4b","type":"text"}
                                               </div>
                                               <div
                                                 style={
@@ -7965,33 +7018,18 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
                                   <div
                                     style={
                                       Object {
-                                        "lineHeight": "30px",
-                                        "minHeight": "34px",
+                                        "display": "flex",
+                                        "width": "100%",
                                       }
                                     }
                                   >
-                                    <input
-                                      onChange={[Function]}
-                                      type="text"
-                                      value={undefined}
-                                    />
-                                    <select
-                                      onChange={[Function]}
-                                      value={undefined}
-                                    >
-                                      <option
-                                        value="testType"
+                                    <div>
+                                      <button
+                                        onClick={[Function]}
                                       >
-                                        Testtype
-                                      </option>
-                                      <option
-                                        value="testType2"
-                                      >
-                                        Testtype2
-                                      </option>
-                                    </select>
-                                    asdf
-                                    {"key":"asdf","typ":"query"}
+                                        Pick a Field
+                                      </button>
+                                    </div>
                                   </div>
                                   <div
                                     style={
@@ -8060,7 +7098,7 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Group One Filter 1`] = `
 <div>
@@ -8151,33 +7189,28 @@ exports[`Storyshots QueryBuilder/Internals/Group One Filter 1`] = `
                       <div
                         style={
                           Object {
-                            "lineHeight": "30px",
-                            "minHeight": "34px",
+                            "display": "flex",
+                            "width": "100%",
                           }
                         }
                       >
-                        <input
-                          onChange={[Function]}
-                          type="text"
-                          value={undefined}
+                        <div>
+                          <button
+                            onClick={[Function]}
+                          >
+                            Pick a Field
+                          </button>
+                        </div>
+                        <div
+                          style={
+                            Object {
+                              "display": "inline-block",
+                              "marginRight": "5px",
+                              "verticalAlign": "top",
+                              "width": "100%",
+                            }
+                          }
                         />
-                        <select
-                          onChange={[Function]}
-                          value="query"
-                        >
-                          <option
-                            value="testType"
-                          >
-                            Testtype
-                          </option>
-                          <option
-                            value="testType2"
-                          >
-                            Testtype2
-                          </option>
-                        </select>
-                        filter 1
-                        {"key":"filter 1","type":"query"}
                       </div>
                       <div
                         style={
@@ -8240,7 +7273,7 @@ exports[`Storyshots QueryBuilder/Internals/Group One Filter 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Indentable and 1`] = `
 <div
@@ -8322,7 +7355,7 @@ exports[`Storyshots QueryBuilder/Internals/Indentable and 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Indentable not 1`] = `
 <div
@@ -8404,7 +7437,7 @@ exports[`Storyshots QueryBuilder/Internals/Indentable not 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Indentable or 1`] = `
 <div
@@ -8486,7 +7519,7 @@ exports[`Storyshots QueryBuilder/Internals/Indentable or 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Operator and 1`] = `
 <div>
@@ -8529,7 +7562,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator and 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Operator first and 1`] = `
 <div>
@@ -8566,7 +7599,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator first and 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Operator first not 1`] = `
 <div>
@@ -8609,7 +7642,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator first not 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Operator first or 1`] = `
 <div>
@@ -8646,7 +7679,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator first or 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Operator not 1`] = `
 <div>
@@ -8689,7 +7722,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator not 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Operator or 1`] = `
 <div>
@@ -8732,7 +7765,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator or 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/OperatorMenu OperatorMenu 1`] = `
 <div>
@@ -8817,7 +7850,7 @@ exports[`Storyshots QueryBuilder/Internals/OperatorMenu OperatorMenu 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Rule index 1`] = `
 <div>
@@ -8865,33 +7898,28 @@ exports[`Storyshots QueryBuilder/Internals/Rule index 1`] = `
           <div
             style={
               Object {
-                "lineHeight": "30px",
-                "minHeight": "34px",
+                "display": "flex",
+                "width": "100%",
               }
             }
           >
-            <input
-              onChange={[Function]}
-              type="text"
-              value={undefined}
+            <div>
+              <button
+                onClick={[Function]}
+              >
+                Pick a Field
+              </button>
+            </div>
+            <div
+              style={
+                Object {
+                  "display": "inline-block",
+                  "marginRight": "5px",
+                  "verticalAlign": "top",
+                  "width": "100%",
+                }
+              }
             />
-            <select
-              onChange={[Function]}
-              value="test"
-            >
-              <option
-                value="testType"
-              >
-                Testtype
-              </option>
-              <option
-                value="testType2"
-              >
-                Testtype2
-              </option>
-            </select>
-            testKey
-            {"type":"test","key":"testKey"}
           </div>
           <div
             style={
@@ -8947,4 +7975,4 @@ exports[`Storyshots QueryBuilder/Internals/Rule index 1`] = `
     </div>
   </div>
 </div>
-`
+`;
