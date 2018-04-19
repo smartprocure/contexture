@@ -59,7 +59,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
     "contexture": "^0.2.1",
-    "contexture-client": "^2.5.2",
+    "contexture-client": "^2.6.0",
     "contexture-elasticsearch": "^0.8.3",
     "duti": "^0.9.3",
     "elasticsearch-browser": "^14.2.2",
