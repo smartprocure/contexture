@@ -1,5 +1,8 @@
+# 2.7.0
+* Expose `mockService` as a top level default
+
 # 2.6.1
-* Ensure mockService is accessible from `src`
+* Ensure `mockService` is accessible from `src`
 
 # 2.6.0
 * Expose `addActions` to enable extending the client with new actions that have the same access levels as first party ones.

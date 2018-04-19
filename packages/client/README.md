@@ -132,6 +132,7 @@ import { utilName } from 'contexture-client'
 | `hasContext` | An internal utility that determines if a node has a context. Used primarily in custom reactors to help figure out if a node needs updating. |
 | `hasValue` | An internal utility that checks if a node has a value and isn't in an error state. Used primarily in custom reactors to help figure out if other nodes would be affected by an event. |
 | `exampleTypes` | A set of example types. This will likely be split out in a future version to its own repo. |
+| `mockService` | Useful for mocking services during testing. Takes a config object of logInput, logOutput, and a mocks function which will should return results for a node as input (defaults to fixed results by type) and returns a function for use as a `service` for a contexture-client instance. |
 
 ### Extending the Client
 The client can be enhanced with new types, actions, and reactors.
