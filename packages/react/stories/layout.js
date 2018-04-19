@@ -45,10 +45,10 @@ let HighlightDemo = withStateLens({ filter: '' })(
 
 export default () => {
   storiesOf('Layout', module)
-    .add('Popover', () => <PopoverDemo />)
-    .add('Modal', () => <ModalDemo />)
-    .add('Highlight', () => <HighlightDemo />)
-    .add('Awaiter', () => {
+    .addWithJSX('Popover', () => <PopoverDemo />)
+    .addWithJSX('Modal', () => <ModalDemo />)
+    .addWithJSX('Highlight', () => <HighlightDemo />)
+    .addWithJSX('Awaiter', () => {
       let resolve
       let reject
       let p = fromPromise(
@@ -65,13 +65,13 @@ export default () => {
         </div>
       )
     })
-    .add('FilteredPicker', () => (
+    .addWithJSX('FilteredPicker', () => (
       <FilteredPicker
         options={['abcd', 'bcde', 'cdef'].map(x => ({ label: x, value: x }))}
         onChange={action(`picked`)}
       />
     ))
-    .add('ModalPicker', () => (
+    .addWithJSX('ModalPicker', () => (
       <ModalPicker
         options={['abcd', 'bcde', 'cdef'].map(x => ({ label: x, value: x }))}
         onChange={action('picked')}

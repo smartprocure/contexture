@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { FilterList } from '../src/FilterList'
 
 export default () => {
-  storiesOf('FilterList', module).add('Example', () => (
+  storiesOf('FilterList', module).addWithJSX('Example', () => (
     <FilterList
       node={{
         children: [

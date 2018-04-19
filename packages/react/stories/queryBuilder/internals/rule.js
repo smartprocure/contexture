@@ -6,7 +6,7 @@ import { Provider } from 'mobx-react'
 export default (parent, root, DnDDecorator) =>
   storiesOf('QueryBuilder/Internals/Rule', module)
     .addDecorator(DnDDecorator)
-    .add('index', () => (
+    .addWithJSX('index', () => (
       <Provider
         fields={{
           test: {

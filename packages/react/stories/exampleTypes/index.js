@@ -164,7 +164,7 @@ import { Flex } from '../../src/layout/Flex'
 
 export default () =>
   storiesOf('Example Types', module)
-    .add('Full Demo', () => (
+    .addWithJSX('Full Demo', () => (
       <div
         style={{
           backgroundColor: '#333',
@@ -202,7 +202,7 @@ export default () =>
         </Provider>
       </div>
     ))
-    .add('ResultTable Customizations', () => (
+    .addWithJSX('ResultTable Customizations', () => (
       <div>
         <style>
           {`

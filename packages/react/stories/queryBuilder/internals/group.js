@@ -5,7 +5,7 @@ import Group from '../../../src/queryBuilder/Group'
 export default (parent, root, DnDDecorator) =>
   storiesOf('QueryBuilder/Internals/Group', module)
     .addDecorator(DnDDecorator)
-    .add('One Filter', () => (
+    .addWithJSX('One Filter', () => (
       <Group
         tree={{
           key: 'root',
@@ -16,7 +16,7 @@ export default (parent, root, DnDDecorator) =>
         isRoot={true}
       />
     ))
-    .add('Multiple Filters', () => (
+    .addWithJSX('Multiple Filters', () => (
       <Group
         tree={{
           key: 'root',

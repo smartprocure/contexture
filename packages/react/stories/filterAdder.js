@@ -42,7 +42,7 @@ let mockTree = {
 }
 export default () => {
   storiesOf('FilterAdder', module)
-    .add('Example', () => (
+    .addWithJSX('Example', () => (
       <div>
         <FilterAdder
           Picker={Select}
@@ -60,7 +60,7 @@ export default () => {
         <div>Check action log to see adding being dispatched</div>
       </div>
     ))
-    .add('With FilteredPickerModal', () => (
+    .addWithJSX('With FilteredPickerModal', () => (
       <Adder
         tree={mockTree}
         path={['path']}

@@ -5,6 +5,6 @@ import AddPreview from '../../../src/queryBuilder/preview/AddPreview'
 
 export default () =>
   storiesOf('QueryBuilder/Internals/AddPreview', module)
-    .add('and', () => <AddPreview onClick={action('join')} join="and" />)
-    .add('or', () => <AddPreview onClick={action('join')} join="or" />)
-    .add('not', () => <AddPreview onClick={action('join')} join="not" />)
+    .addWithJSX('and', () => <AddPreview onClick={action('join')} join="and" />)
+    .addWithJSX('or', () => <AddPreview onClick={action('join')} join="or" />)
+    .addWithJSX('not', () => <AddPreview onClick={action('join')} join="not" />)

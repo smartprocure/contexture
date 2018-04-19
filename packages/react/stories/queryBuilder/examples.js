@@ -16,7 +16,7 @@ let Node = (type, key) => observable({ key, type })
 
 export default () =>
   storiesOf('QueryBuilder/Examples', module)
-    .add('One Filter', () => (
+    .addWithJSX('One Filter', () => (
       <QueryBuilder
         tree={Client({
           key: 'root',
@@ -27,7 +27,7 @@ export default () =>
         types={TypeMap}
       />
     ))
-    .add('One Filter with fields', () => (
+    .addWithJSX('One Filter with fields', () => (
       <QueryBuilder
         path={['root']}
         tree={Client({
@@ -50,7 +50,7 @@ export default () =>
         types={TypeMap}
       />
     ))
-    .add('One Filter with facet options', () => (
+    .addWithJSX('One Filter with facet options', () => (
       <QueryBuilder
         path={['root']}
         tree={Client({
@@ -79,7 +79,7 @@ export default () =>
         types={TypeMap}
       />
     ))
-    .add('One Filter on a misplaced root', () => (
+    .addWithJSX('One Filter on a misplaced root', () => (
       <QueryBuilder
         tree={Client({
           key: 'root',
@@ -96,7 +96,7 @@ export default () =>
         types={TypeMap}
       />
     ))
-    .add('Multiple Filters', () => (
+    .addWithJSX('Multiple Filters', () => (
       <QueryBuilder
         path={['root']}
         tree={Client({
