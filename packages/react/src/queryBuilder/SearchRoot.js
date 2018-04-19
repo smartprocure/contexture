@@ -21,8 +21,6 @@ let blankNode = () => ({ key: randomString() })
 
 let replaceOn = (list, from, to) => list.splice(list.indexOf(from), 1, to)
 
-
-// Basic contexture client bridge
 let ContextureClientBridge = (Types, Tree) => {
   // not sure why reassignment is needed - its 2am and that makes it work... fix tomorrow!
   Tree = Tree.addActions(({ getNode, flat }) => ({
@@ -116,14 +114,11 @@ export let SearchRoot = DDContext(
       }),
     }),
     ({ state, path, fields, types = {} }) => (
-      <Provider fields={fields}>
+      <Provider fields={fields} types={types}>
         <div style={{ background }}>
           <Group
             tree={state.getNode(path)}
-            root={{
-              ...state,
-              types,
-            }}
+            root={state}
             fields={fields}
             isRoot={true}
           />

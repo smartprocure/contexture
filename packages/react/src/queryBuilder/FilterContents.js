@@ -15,10 +15,10 @@ let FieldPicker = partial(
   ModalPicker
 )
 
-let FilterContents = inject(({fields}) => ({
-  fields
+let FilterContents = inject(({fields, types}) => ({
+  fields, types
 }))(
-  observer(({node, root, fields}) => {
+  observer(({node, root, fields, types}) => {
     return (
       <div
         style={{
@@ -68,7 +68,7 @@ let FilterContents = inject(({fields}) => ({
             marginRight: '5px'
           }}>
           <Dynamic
-            component={root.types[node.type]}
+            component={types[node.type]}
             path={[...node.path]}
             tree={root}
           />
