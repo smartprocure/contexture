@@ -1,5 +1,5 @@
 # 2.7.0
-* Expose `mockService` as a top level default
+* Expose `mockService` as a top level export
 
 # 2.6.1
 * Ensure `mockService` is accessible from `src`
