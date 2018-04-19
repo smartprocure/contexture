@@ -108,10 +108,10 @@ export let ContextTree = _.curry(
       dispatch,
       getNode,
       tree,
-      createActions: x =>
+      createActions: create =>
         F.extendOn(
           TreeInstance,
-          x({ getNode, flat, dispatch, snapshot, extend, types, initNode })
+          create({ getNode, flat, dispatch, snapshot, extend, types, initNode })
         ),
       addReactors: F.extendOn(customReactors),
     }
