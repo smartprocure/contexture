@@ -137,7 +137,7 @@ import { utilName } from 'contexture-client'
 The client can be enhanced with new types, actions, and reactors.
 - Types are the most common form of new functionality to be added and are paired with a type implementation for the contexture for a given provider.
 - Actions represent a generic type of change to the tree. Custom actions are a great way to experiment with new functionality before adding it to the core and can directly access a lot of typically inaccessible internals like the `flat` tree (which you shouldn't need for normal use). Actions are added on a per instance basis using `tree.addActions`.
-- Reactors can be added to dispatch new event types. Custom reactors are as a way to experiment with new functionality before adding it to the core. Reactors are added on a per instance basis using `tree.addReactors`.
+- Reactors can be added to dispatch new event types. Custom reactors are a way to experiment with new functionality before adding it to the core. Reactors are added on a per instance basis using `tree.addReactors`.
 
 ## Improvements
 
