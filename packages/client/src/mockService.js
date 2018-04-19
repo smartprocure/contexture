@@ -1,7 +1,7 @@
 import * as F from 'futil-js'
 import { Tree } from '../src/util/tree'
 
-export let defaultMocks = {
+export let defaultMocks = ({type}) => ({
   results: {
     count: 1,
     results: [
@@ -13,15 +13,16 @@ export let defaultMocks = {
   testType: {
     option: 'asdf',
   },
-}
-export let mockService = ({
+}[type])
+
+export default  ({
   mocks = defaultMocks,
   logInput,
   logOutput,
 } = {}) => (dto, lastUpdateTime) => {
   if (logInput) console.info('dto', JSON.stringify(dto, 0, 2))
   let result = Tree.transform(node => {
-    let context = mocks[node.type]
+    let context = mocks(node)
     if (!node.filterOnly && context) {
       F.extendOn(node, {
         context,
@@ -32,7 +33,3 @@ export let mockService = ({
   if (logOutput) console.info('result', JSON.stringify(result, 0, 2))
   return result
 }
-
-// Used to allow shorthand syntax, e.g. mockService({ logInput })
-export let logInput = true
-export let logOutput = true
