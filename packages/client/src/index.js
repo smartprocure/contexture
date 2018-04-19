@@ -108,14 +108,15 @@ export let ContextTree = _.curry(
       dispatch,
       getNode,
       tree,
-      createActions: create =>
+      addActions: create =>
         F.extendOn(
           TreeInstance,
           create({ getNode, flat, dispatch, snapshot, extend, types, initNode })
         ),
-      addReactors: F.extendOn(customReactors),
+      addReactors: create => F.extendOn(customReactors, create()),
     }
-    TreeInstance.createActions(actions)
+    
+    TreeInstance.addActions(actions)
     TreeInstance.lens = lens(TreeInstance)
     return TreeInstance
   }
