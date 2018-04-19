@@ -5,6 +5,7 @@ import Popover from './Popover'
 import SpacedList from './SpacedList'
 import TextHighlight from './TextHighlight'
 import { FilteredPicker, ModalPicker } from './Pickers'
+import Dynamic from './Dynamic'
 
 export {
   Awaiter,
@@ -15,4 +16,5 @@ export {
   TextHighlight,
   FilteredPicker,
   ModalPicker,
+  Dynamic
 }
