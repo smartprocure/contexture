@@ -627,7 +627,7 @@ describe('lib', () => {
       ]
     })
     tree.addActions(({ getNode, flat, dispatch, snapshot, extend, types, initNode }) => ({
-      shallowRekey: (path, newKey) => {
+      shallowRekey(path, newKey) {
         let node = getNode(path)
         node.key = newKey
         node.path.splice(-1, 1, newKey)
