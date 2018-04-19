@@ -1,20 +1,20 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
-import { flattenTree, bubbleUp, flatLeaves, encode, decode } from './util/tree'
+import { flattenTree, bubbleUp, Tree, encode, decode } from './util/tree'
 import { validate } from './validation'
 import { getAffectedNodes } from './reactors'
 import actions from './actions'
 import serialize from './serialize'
 import traversals from './traversals'
 import { runTypeFunction } from './types'
-import { initNode } from './node'
-import Types from './exampleTypes'
+import { initNode, hasContext, hasValue } from './node'
+import exampleTypes from './exampleTypes'
 import lens from './lens'
 
 let mergeWith = _.mergeWith.convert({ immutable: false })
 
 let shouldBlockUpdate = flat => {
-  let leaves = flatLeaves(flat)
+  let leaves = Tree.flatLeaves(flat)
   let noUpdates = !_.some('markedForUpdate', leaves)
   let hasErrors = _.some('error', leaves)
   return hasErrors || noUpdates
@@ -29,13 +29,14 @@ let defaultService = () => {
   throw new Error('No update service provided!')
 }
 
-export let exampleTypes = Types
+// Export useful utils which might be needed for extending the core externally
+export { Tree, encode, decode, exampleTypes, hasContext, hasValue }
 
 export let ContextTree = _.curry(
   (
     {
       service = defaultService,
-      types = Types,
+      types = exampleTypes,
       debounce = 500,
       onResult = _.noop,
       debug,
@@ -48,6 +49,7 @@ export let ContextTree = _.curry(
     let log = x => debug && console.info(x)
     let flat = flattenTree(tree)
     let getNode = path => flat[encode(path)]
+    let customReactors = {}
 
     F.eachIndexed(
       (node, path) => initNode(node, decode(path), extend, types),
@@ -61,7 +63,7 @@ export let ContextTree = _.curry(
     let { markForUpdate, markLastUpdate, prepForUpdate } = traversals(extend)
 
     let processEvent = F.flurry(
-      getAffectedNodes,
+      getAffectedNodes(customReactors),
       _.each(n => {
         if (!_.some('markedForUpdate', n.children)) markForUpdate(n)
       })
@@ -101,17 +103,22 @@ export let ContextTree = _.curry(
       }, flattenTree(data))
     }
 
-    let Tree = {
-      ...actions({ getNode, flat, dispatch, snapshot, extend, types }),
+    let TreeInstance = {
       serialize: () => serialize(snapshot(tree), {}),
       dispatch,
       getNode,
       tree,
+      addActions: create =>
+        F.extendOn(
+          TreeInstance,
+          create({ getNode, flat, dispatch, snapshot, extend, types, initNode })
+        ),
+      addReactors: create => F.extendOn(customReactors, create()),
     }
 
-    Tree.lens = lens(Tree)
-
-    return Tree
+    TreeInstance.addActions(actions)
+    TreeInstance.lens = lens(TreeInstance)
+    return TreeInstance
   }
 )
 export default ContextTree

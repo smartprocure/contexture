@@ -604,4 +604,118 @@ describe('lib', () => {
     expect(filterUpdated).to.have.callCount(0)
     expect(resultsUpdated).to.have.callCount(1)
   })
+  it('should support custom actions', async () => {
+    let service = sinon.spy(mockService({}))
+    let tree = lib.ContextTree(
+      {
+        debounce: 1,
+        service,
+      },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'a',
+          },
+          {
+            key: 'b',
+            special: true,
+          },
+          {
+            key: 'c',
+          },
+        ],
+      }
+    )
+    tree.addActions(({ getNode, flat }) => ({
+      shallowRekey(path, newKey) {
+        let node = getNode(path)
+        node.key = newKey
+        node.path.splice(-1, 1, newKey)
+        delete flat[lib.encode(path)]
+        flat[lib.encode(node.path)] = node
+      },
+    }))
+    let node = tree.getNode(['root', 'b'])
+    tree.shallowRekey(['root', 'b'], 'f')
+    await tree.dispatch({ type: 'all', path: ['root', 'a'] })
+    expect(service).to.have.callCount(1)
+    let [dto, now] = service.getCall(0).args
+    expect(dto).to.deep.equal({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'a',
+          lastUpdateTime: now,
+        },
+        {
+          key: 'f', // key is F
+          special: true,
+          lastUpdateTime: now,
+        },
+        {
+          key: 'c',
+          lastUpdateTime: now,
+        },
+      ],
+    })
+    let newNode = tree.getNode(['root', 'f'])
+    expect(node).to.deep.equal(newNode)
+    expect(newNode.key).to.equal('f')
+    expect(newNode.special).to.equal(true)
+  })
+  it('should support custom reactors', async () => {
+    let service = sinon.spy(mockService({}))
+    let tree = lib.ContextTree(
+      {
+        debounce: 1,
+        service,
+      },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'a',
+          },
+          {
+            key: 'b',
+            special: true,
+          },
+          {
+            key: 'c',
+            special: true,
+          },
+        ],
+      }
+    )
+    tree.addReactors(() => ({
+      onlySpecial: parent => _.filter('special', parent.children),
+    }))
+    await tree.dispatch({ type: 'onlySpecial', path: ['root', 'b'] })
+    expect(service).to.have.callCount(1)
+    let [dto, now] = service.getCall(0).args
+    expect(dto).to.deep.equal({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'a',
+          filterOnly: true,
+        },
+        {
+          key: 'b',
+          special: true,
+          lastUpdateTime: now,
+        },
+        {
+          key: 'c',
+          special: true,
+          lastUpdateTime: now,
+        },
+      ],
+    })
+  })
 })
