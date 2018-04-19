@@ -56,6 +56,7 @@ export let ContextTree = _.curry(
     let log = x => debug && console.info(x)
     let flat = flattenTree(tree)
     let getNode = path => flat[encode(path)]
+    let customReactors = {}
 
     F.eachIndexed(
       (node, path) => initNode(node, decode(path), extend, types),
@@ -69,7 +70,7 @@ export let ContextTree = _.curry(
     let { markForUpdate, markLastUpdate, prepForUpdate } = traversals(extend)
 
     let processEvent = F.flurry(
-      getAffectedNodes,
+      getAffectedNodes(customReactors),
       _.each(n => {
         if (!_.some('markedForUpdate', n.children)) markForUpdate(n)
       })
@@ -118,7 +119,8 @@ export let ContextTree = _.curry(
         F.extendOn(
           TreeInstance,
           x({ getNode, flat, dispatch, snapshot, extend, types, initNode })
-        )
+        ),
+      addReactors: F.extendOn(customReactors)
     }
     TreeInstance.createActions(actions)
     TreeInstance.lens = lens(TreeInstance)

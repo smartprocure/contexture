@@ -64,12 +64,15 @@ export let StandardReactors = {
       _.uniq
     )(event.value),
 }
-let Reactor = x => StandardReactors[x] || reactors[x] || _.noop
+let Reactor = (x, customReactors = {}) =>
+  customReactors[x] || StandardReactors[x] || reactors[x] || _.noop
 
-export let getAffectedNodes = ({ type, ...event }, lookup, types, path) => {
-  let node = lookup(path)
-  // Parent defaults to a fake root since reactors don't handle null parents
-  let parent = lookup(_.dropRight(1, path)) || { children: [node] }
-  let reactor = x => Reactor(x)(parent, node, event, reactor, types, lookup)
-  return reactor(type)
-}
+export let getAffectedNodes = customReactors =>
+  ({ type, ...event }, lookup, types, path) => {
+    let node = lookup(path)
+    // Parent defaults to a fake root since reactors don't handle null parents
+    let parent = lookup(_.dropRight(1, path)) || { children: [node] }
+    let reactor = x =>
+      Reactor(x, customReactors)(parent, node, event, reactor, types, lookup)
+    return reactor(type)
+  }
