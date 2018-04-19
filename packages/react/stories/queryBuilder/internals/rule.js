@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import Rule from '../../../src/queryBuilder/Rule'
-import {Provider} from 'mobx-react'
+import { Provider } from 'mobx-react'
 
 export default (parent, root, DnDDecorator) =>
   storiesOf('QueryBuilder/Internals/Rule', module)

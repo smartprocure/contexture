@@ -16,5 +16,5 @@ export {
   TextHighlight,
   FilteredPicker,
   ModalPicker,
-  Dynamic
+  Dynamic,
 }
