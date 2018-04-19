@@ -59,22 +59,25 @@ let schemas = fromPromise(
   )
 )
 
-
 export default () => (
   <Awaiter promise={schemas}>
     {schemas => (
-  <div>
-    <Provider tree={tree}>
       <div>
-        <QueryBuilder types={TypeMap} fields={schemas.movies.fields} path={['root', 'searchRoot']}  />
-        <h1>
-          <ResultCount path={['root', 'results']} />
-        </h1>
-        <ResultTable path={['root', 'results']} infer />
+        <Provider tree={tree}>
+          <div>
+            <QueryBuilder
+              types={TypeMap}
+              fields={schemas.movies.fields}
+              path={['root', 'searchRoot']}
+            />
+            <h1>
+              <ResultCount path={['root', 'results']} />
+            </h1>
+            <ResultTable path={['root', 'results']} infer />
+          </div>
+        </Provider>
+        <pre>{JSON.stringify(tree, null, 2)}</pre>
       </div>
-    </Provider>
-    <pre>{JSON.stringify(tree, null, 2)}</pre>
-  </div>
     )}
   </Awaiter>
 )

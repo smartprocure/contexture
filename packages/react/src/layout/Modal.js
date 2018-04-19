@@ -14,7 +14,7 @@ export default observer(
           right: 0,
           backgroundColor: 'rgba(0,0,0,0.3)',
           padding: 50,
-          overflow: 'scroll'
+          overflow: 'scroll',
         }}
         onClick={F.off(isOpen)}
       >

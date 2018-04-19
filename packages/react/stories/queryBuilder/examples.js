@@ -5,10 +5,11 @@ import QueryBuilder from '../../src/queryBuilder/'
 import { TypeMap } from '../../src/exampleTypes/'
 
 let Types = TypeMap
-let Node = (type, key) => observable({
-  key,
-  type,
-})
+let Node = (type, key) =>
+  observable({
+    key,
+    type,
+  })
 
 export default () =>
   storiesOf('QueryBuilder/Examples', module)

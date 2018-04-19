@@ -2,7 +2,7 @@ import React from 'react'
 import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import { observable } from 'mobx'
-import {Provider} from 'mobx-react'
+import { Provider } from 'mobx-react'
 import DDContext from './DragDrop/DDContext'
 import { Component } from '../utils/mobx-react-utils'
 import Group from './Group'
@@ -15,7 +15,7 @@ let randomString = () =>
     .toString(36)
     .substring(7)
 
-let {encode} = F.encoder('/') // todo get from client
+let { encode } = F.encoder('/') // todo get from client
 
 let blankNode = () => ({ key: randomString() })
 let replaceOn = (list, from, to) => list.splice(list.indexOf(from), 1, to)
@@ -26,21 +26,23 @@ let ContextureClientBridge = (Types, Tree) => {
     updatePath(node, to) {
       let from = node.path
       node.path = to
-      if (from)
-        delete flat[encode(from)]
+      if (from) delete flat[encode(from)]
       flat[encode(to)] = node
     },
     reparentPaths(node, oldParent, newParent) {
       treeUtils.walk(node => {
-        Tree.updatePath(node, [...newParent, ...node.path.slice(oldParent.length)])
+        Tree.updatePath(node, [
+          ...newParent,
+          ...node.path.slice(oldParent.length),
+        ])
       })(node)
-    }
+    },
   }))
   return {
     getNode: Tree.getNode,
     add: tree => Tree.add(tree.path, observable(blankNode())),
     remove: (tree, node) => Tree.remove(node.path),
-    join: (tree, join) => Tree.mutate(tree.path, {join}),
+    join: (tree, join) => Tree.mutate(tree.path, { join }),
     mutate: Tree.mutate,
     typeChange(node, type) {
       let path = node.path
@@ -48,18 +50,21 @@ let ContextureClientBridge = (Types, Tree) => {
       let tree = Tree.getNode(parentPath)
       let index = tree.children.indexOf(node)
       Tree.remove(path)
-      Tree.add(parentPath, observable({
-        key: node.key,
-        type,
-        field: node.field,
-      }))
+      Tree.add(
+        parentPath,
+        observable({
+          key: node.key,
+          type,
+          field: node.field,
+        })
+      )
       let newNode = Tree.getNode(path)
       // Move to same index
       tree.children.remove(newNode) // pop since add does a push
       tree.children.splice(index, 0, newNode)
     },
     move(tree, node, targetTree, index) {
-      // if tree != target tree, do remove/add/move for reactors 
+      // if tree != target tree, do remove/add/move for reactors
       // need to update paths
       tree.children.splice(tree.children.indexOf(node), 1)
       targetTree.children.splice(index, 0, node)
@@ -69,34 +74,34 @@ let ContextureClientBridge = (Types, Tree) => {
       //   OR -> And, nothing
       //   AND -> OR, others if has value
       //   to/from NOT, others if has value
-      if (!tree) { // Indent in place, only needs to happen at root and only works if node is a group
+      if (!tree) {
+        // Indent in place, only needs to happen at root and only works if node is a group
         let key = randomString()
         let newGroup = observable({
           key,
           join: node.join,
           children: node.children,
-          path: [...node.path, key]
+          path: [...node.path, key],
         })
         node.children = [newGroup]
         node.join = oppositeJoin(node.join)
-        
+
         Tree.reparentPaths(newGroup, node.path, newGroup.path)
         Tree.add(node.path, observable(blankNode()))
       } else {
         let newGroup = observable({
           key: randomString(),
           join: oppositeJoin(tree.join),
-          children: [node]
+          children: [node],
         })
         replaceOn(tree.children, node, newGroup)
-        
+
         // Update paths
         Tree.updatePath(newGroup, [..._.dropRight(1, node.path), newGroup.key])
         Tree.reparentPaths(node, _.dropRight(1, node.path), newGroup.path)
-        
-        if (!skipDefaultNode)
-          Tree.add(newGroup.path, observable(blankNode()))
-        
+
+        if (!skipDefaultNode) Tree.add(newGroup.path, observable(blankNode()))
+
         return newGroup
       }
     },
@@ -115,11 +120,7 @@ export default DDContext(
     ({ state, path, fields, types = {} }) => (
       <Provider fields={fields} types={types}>
         <div style={{ background }}>
-          <Group
-            tree={state.getNode(path)}
-            root={state}
-            isRoot={true}
-          />
+          <Group tree={state.getNode(path)} root={state} isRoot={true} />
           <button
             type="button"
             style={styles.btn}

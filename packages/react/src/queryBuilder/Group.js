@@ -90,7 +90,9 @@ let Group = Component(
             {/*<FilterMoveTarget index={tree.children.length} tree={tree} /> */}
             {root.adding && (
               <AddPreview
-                onClick={() => { root.add(tree) }}
+                onClick={() => {
+                  root.add(tree)
+                }}
                 join={tree.join}
                 style={{
                   marginLeft: 0,

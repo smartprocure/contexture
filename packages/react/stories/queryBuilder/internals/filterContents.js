@@ -16,8 +16,8 @@ export default (parent, root) =>
           test: {
             field: 'test',
             label: 'Test',
-            typeOptions: ['test']
-          }
+            typeOptions: ['test'],
+          },
         }}
       />
     )
