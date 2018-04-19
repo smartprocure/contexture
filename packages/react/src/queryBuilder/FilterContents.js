@@ -15,10 +15,7 @@ let FieldPicker = partial(
   ModalPicker
 )
 
-let FilterContents = inject(({ fields, types }) => ({
-  fields,
-  types,
-}))(
+let FilterContents = inject(_.defaults)(
   observer(({ node, root, fields, types }) => (
     <div
       style={{
