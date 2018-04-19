@@ -20,6 +20,7 @@ let root = {
   typeChange: action('typeChange'),
   add: action('add'),
   move: action('move'),
+  mutate: action('mutate'),
   types: {
     testType: {},
     testType2: {},
