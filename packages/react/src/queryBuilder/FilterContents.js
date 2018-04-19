@@ -15,7 +15,8 @@ let FieldPicker = partial(
   ModalPicker
 )
 
-let FilterContents = inject(({}) => ({
+let FilterContents = inject(({fields}) => ({
+  fields
 }))(
   observer(({node, root, fields}) => {
     return (
@@ -42,14 +43,19 @@ let FilterContents = inject(({}) => ({
               onChange={({target: {value}}) => {
                 root.typeChange(node, value)
               }}
-              value={node.type}>
+              value={node.type}
+              >
               {_.map(
                 x => (
                   <option key={x.value} value={x.value} disabled={x.disabled}>
                     {x.label}
                   </option>
                 ),
-                [{ value: null, label:'Select Type', disabled:node.type}, ...F.autoLabelOptions(fields[node.field].typeOptions)]
+                [{
+                  value: null,
+                  label: 'Select Type',
+                  disabled: node.type
+                }, ...F.autoLabelOptions(_.get(`${node.field}.typeOptions`, fields))]
               )}
             </select>
           </div>
