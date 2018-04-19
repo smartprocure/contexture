@@ -10,14 +10,14 @@ export default injectTreeNode(
       <input
         className="contexture-search-box"
         type="number"
-        value={node.min}
+        value={node.min || ''}
         onChange={e => tree.mutate(node.path, { min: e.target.value })}
       />
       <div>-</div>
       <input
         className="contexture-search-box"
         type="number"
-        value={node.max}
+        value={node.max || ''}
         onChange={e => tree.mutate(node.path, { max: e.target.value })}
       />
     </Flex>
