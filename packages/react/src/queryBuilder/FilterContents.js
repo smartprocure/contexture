@@ -1,64 +1,75 @@
 import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
-import { Component } from '../utils/mobx-react-utils'
+import {inject, observer} from 'mobx-react'
+import {ModalPicker, Modal, FilteredPicker} from '../layout/'
+import {fieldsToOptions} from '../FilterAdder'
+import {partial} from '../utils/mobx-react-utils'
 
-let FilterContents = ({ node, root, fields }) => {
-  let type = root.types[node.type] || {}
-  let TypeComponent = type.Component
+let Dynamic = ({component: C, ...props}) => <C {...props} />
+let FieldPicker = partial(
+  {
+    Modal,
+    Picker: FilteredPicker,
+  },
+  ModalPicker
+)
 
-  return (
-    <div style={{ lineHeight: '30px', minHeight: '34px' }}>
-      {fields ? (
-        <select onChange={x => root.mutate(node, { field: x.target.value })}>
-          {_.map(
-            ({ value, label }) => (
-              <option key={value} value={value}>
-                {label}
-              </option>
-            ),
-            F.autoLabelOptions(fields)
-          )}
-        </select>
-      ) : (
-        <input
-          type="text"
-          value={node.field}
-          onChange={x => root.mutate(node, { field: x.target.value })}
+let FilterContents = inject(({}) => ({
+}))(
+  observer(({node, root, fields}) => {
+    return (
+      <div
+        style={{
+          // lineHeight: '30px',
+          // minHeight: '34px',
+          display: 'flex',
+          width: '100%',
+        }}>
+        <FieldPicker
+          label={
+            node.field
+              ? _.get(`${node.field}.label`, fields) || F.autoLabel(node.field)
+              : 'Pick a Field'
+          }
+          options={fieldsToOptions(fields)}
+          // TODO: consider type options in case this isn't safe, e.g. a field/type change action 
+          onChange={field => root.mutate(node.path, {field})}
         />
-      )}
-      <select
-        onChange={({ target: { value } }) => {
-          root.typeChange(root.types, node, value)
-        }}
-        value={node.type}
-      >
-        {_.map(
-          x => (
-            <option key={x} value={x}>
-              {root.types[x].label || _.capitalize(x)}
-            </option>
-          ),
-          _.keys(root.types)
+        {node.field && (
+          <div style={{margin: '0 5px'}}>
+            <select
+              onChange={({target: {value}}) => {
+                root.typeChange(node, value)
+              }}
+              value={node.type}>
+              {_.map(
+                x => (
+                  <option key={x.value} value={x.value} disabled={x.disabled}>
+                    {x.label}
+                  </option>
+                ),
+                [{ value: null, label:'Select Type', disabled:node.type}, ...F.autoLabelOptions(fields[node.field].typeOptions)]
+              )}
+            </select>
+          </div>
         )}
-      </select>
-      {node.key}
-      {TypeComponent && (
-        <div
+        {node.type && <div
           style={{
             display: 'inline-block',
             verticalAlign: 'top',
             width: '100%',
-          }}
-        >
-          <TypeComponent {...{ node, root }} />
-        </div>
-      )}
-      {JSON.stringify(node)}
-      {/*new Date().toString()*/}
-    </div>
-  )
-}
+            marginRight: '5px'
+          }}>
+          <Dynamic
+            component={root.types[node.type]}
+            path={[...node.path]}
+            tree={root}
+          />
+        </div>}
+      </div>
+    )
+  })
+)
 
-export default Component(FilterContents)
-// TODO: schema field type options
+export default FilterContents
