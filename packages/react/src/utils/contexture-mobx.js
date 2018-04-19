@@ -1,11 +1,11 @@
 import _ from 'lodash/fp'
-import { ContextTree } from 'contexture-client'
+import ContextureClient from 'contexture-client'
 import { observable, toJS, set, action } from 'mobx'
 
 export default x =>
   _.flow(
     observable,
-    ContextTree({
+    ContextureClient({
       snapshot: toJS,
       extend: set,
       ...x,
