@@ -27,8 +27,7 @@ export let StandardReactors = {
   join(parent, node, { previous }, reactor) {
     let childrenWithValues = _.filter(hasValue, node.children)
     let joinInverted = node.join === 'not' || previous.join === 'not'
-    if (childrenWithValues.length > 1 || joinInverted)
-      return reactor('all')
+    if (childrenWithValues.length > 1 || joinInverted) return reactor('all')
   },
   add: reactors.standardChange,
   remove(parent, node, { previous }, reactor) {
@@ -67,12 +66,16 @@ export let StandardReactors = {
 let Reactor = (x, customReactors = {}) =>
   customReactors[x] || StandardReactors[x] || reactors[x] || _.noop
 
-export let getAffectedNodes = customReactors =>
-  ({ type, ...event }, lookup, types, path) => {
-    let node = lookup(path)
-    // Parent defaults to a fake root since reactors don't handle null parents
-    let parent = lookup(_.dropRight(1, path)) || { children: [node] }
-    let reactor = x =>
-      Reactor(x, customReactors)(parent, node, event, reactor, types, lookup)
-    return reactor(type)
-  }
+export let getAffectedNodes = customReactors => (
+  { type, ...event },
+  lookup,
+  types,
+  path
+) => {
+  let node = lookup(path)
+  // Parent defaults to a fake root since reactors don't handle null parents
+  let parent = lookup(_.dropRight(1, path)) || { children: [node] }
+  let reactor = x =>
+    Reactor(x, customReactors)(parent, node, event, reactor, types, lookup)
+  return reactor(type)
+}
