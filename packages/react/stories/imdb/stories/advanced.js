@@ -1,8 +1,12 @@
+import _ from 'lodash/fp'
 import React from 'react'
 import { Provider } from 'mobx-react'
+import { fromPromise } from 'mobx-utils'
 import SearchRoot from '../../../src/queryBuilder/SearchRoot'
-import { ResultCount, ResultTable, Types } from '../../../src/exampleTypes/'
-import Contexture from '../utils/contexture'
+import { ResultCount, ResultTable, TypeMap } from '../../../src/exampleTypes/'
+import { Awaiter } from '../../../src/layout/'
+import Contexture, { esClient } from '../utils/contexture'
+import { getESSchemas } from '../../../src/utils/schema'
 
 let tree = Contexture({
   key: 'root',
@@ -19,7 +23,6 @@ let tree = Contexture({
           key: 'searchQuery',
           type: 'query',
           field: 'title',
-          query: 'rabbit',
         },
         {
           key: 'searchFacet',
@@ -36,17 +39,42 @@ let tree = Contexture({
     },
   ],
 })
+
+let schemas = fromPromise(
+  getESSchemas(esClient).then(
+    _.update(
+      'movies.fields',
+      _.flow(
+        _.merge(_, {
+          released: {
+            label: 'Release Date',
+          },
+          // ...flagFields({
+          //   isCommon: ['plot', 'title'],
+          // }),
+        }),
+        _.omit(['imdbId', 'yearEnded'])
+      )
+    )
+  )
+)
+
+
 export default () => (
+  <Awaiter promise={schemas}>
+    {schemas => (
   <div>
-    <SearchRoot tree={tree} types={Types} path={['root', 'searchRoot']} />
     <Provider tree={tree}>
       <div>
+        <SearchRoot types={TypeMap} fields={schemas.movies.fields} path={['root', 'searchRoot']}  />
         <h1>
           <ResultCount path={['root', 'results']} />
         </h1>
-        <ResultTable path={['root', 'results']} />
+        <ResultTable path={['root', 'results']} infer />
       </div>
     </Provider>
     <pre>{JSON.stringify(tree, null, 2)}</pre>
   </div>
+    )}
+  </Awaiter>
 )
