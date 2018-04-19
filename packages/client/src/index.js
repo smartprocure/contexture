@@ -30,14 +30,7 @@ let defaultService = () => {
 }
 
 // Export useful utils which might be needed for extending the core externally
-export {
-  Tree,
-  encode,
-  decode,
-  exampleTypes,
-  hasContext,
-  hasValue
-}
+export { Tree, encode, decode, exampleTypes, hasContext, hasValue }
 
 export let ContextTree = _.curry(
   (
@@ -115,12 +108,12 @@ export let ContextTree = _.curry(
       dispatch,
       getNode,
       tree,
-      createActions: x => 
+      createActions: x =>
         F.extendOn(
           TreeInstance,
           x({ getNode, flat, dispatch, snapshot, extend, types, initNode })
         ),
-      addReactors: F.extendOn(customReactors)
+      addReactors: F.extendOn(customReactors),
     }
     TreeInstance.createActions(actions)
     TreeInstance.lens = lens(TreeInstance)
