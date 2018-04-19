@@ -103,7 +103,7 @@ let ContextureClientBridge = (Types, Tree) => {
   }
 }
 
-export let SearchRoot = DDContext(
+export default DDContext(
   Component(
     ({ tree: iTree, types: iTypes }, { types = iTypes, tree = iTree }) => ({
       types,
@@ -132,8 +132,6 @@ export let SearchRoot = DDContext(
         </div>
       </Provider>
     ),
-    'SearchRoot'
+    'QueryBuilder'
   )
 )
-
-export default SearchRoot

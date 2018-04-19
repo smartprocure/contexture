@@ -2,7 +2,7 @@ import _ from 'lodash/fp'
 import React from 'react'
 import { Provider } from 'mobx-react'
 import { fromPromise } from 'mobx-utils'
-import SearchRoot from '../../../src/queryBuilder/SearchRoot'
+import QueryBuilder from '../../../src/queryBuilder/'
 import { ResultCount, ResultTable, TypeMap } from '../../../src/exampleTypes/'
 import { Awaiter } from '../../../src/layout/'
 import Contexture, { esClient } from '../utils/contexture'
@@ -66,7 +66,7 @@ export default () => (
   <div>
     <Provider tree={tree}>
       <div>
-        <SearchRoot types={TypeMap} fields={schemas.movies.fields} path={['root', 'searchRoot']}  />
+        <QueryBuilder types={TypeMap} fields={schemas.movies.fields} path={['root', 'searchRoot']}  />
         <h1>
           <ResultCount path={['root', 'results']} />
         </h1>

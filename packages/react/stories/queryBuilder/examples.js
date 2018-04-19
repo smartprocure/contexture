@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { observable } from 'mobx'
-import SearchRoot from '../../src/queryBuilder/SearchRoot'
+import QueryBuilder from '../../src/queryBuilder/'
 import { TypeMap } from '../../src/exampleTypes/'
 
 let Types = TypeMap
@@ -13,7 +13,7 @@ let Node = (type, key) => observable({
 export default () =>
   storiesOf('QueryBuilder/Examples', module)
     .add('One Filter', () => (
-      <SearchRoot
+      <QueryBuilder
         tree={observable({
           key: 'root',
           join: 'and',
@@ -23,7 +23,7 @@ export default () =>
       />
     ))
     .add('One Filter with fields', () => (
-      <SearchRoot
+      <QueryBuilder
         tree={observable({
           key: 'root',
           join: 'and',
@@ -34,7 +34,7 @@ export default () =>
       />
     ))
     .add('One Filter with facet options', () => (
-      <SearchRoot
+      <QueryBuilder
         tree={observable({
           key: 'root',
           join: 'and',
@@ -62,7 +62,7 @@ export default () =>
       />
     ))
     .add('One Filter on a misplaced root', () => (
-      <SearchRoot
+      <QueryBuilder
         tree={observable({
           key: 'root',
           join: 'and',
@@ -79,7 +79,7 @@ export default () =>
       />
     ))
     .add('Multiple Filters', () => (
-      <SearchRoot
+      <QueryBuilder
         tree={observable({
           key: 'root',
           join: 'and',

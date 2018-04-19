@@ -1,3 +1,3 @@
-import SearchRoot from './SearchRoot'
+import QueryBuilder from './QueryBuilder'
 
-export default SearchRoot
+export default QueryBuilder
