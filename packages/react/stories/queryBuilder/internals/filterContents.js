@@ -8,10 +8,17 @@ export default (parent, root) =>
     () => (
       <FilterContents
         node={{
-          type: 'test',
+          // type: 'test',
           key: 'testKey',
         }}
         root={root}
+        fields={{
+          test: {
+            field: 'test',
+            label: 'Test',
+            typeOptions: ['test']
+          }
+        }}
       />
     )
   )

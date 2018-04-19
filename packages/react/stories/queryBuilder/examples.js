@@ -1,12 +1,15 @@
+import _ from 'lodash/fp'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { observable } from 'mobx'
-import SearchRoot, { NewNode } from '../../src/queryBuilder/SearchRoot'
+import SearchRoot from '../../src/queryBuilder/SearchRoot'
 import { TypeMap } from '../../src/exampleTypes/'
 
 let Types = TypeMap
-
-let Node = NewNode(Types)
+let Node = (type, key) => observable({
+  key,
+  type,
+})
 
 export default () =>
   storiesOf('QueryBuilder/Examples', module)
