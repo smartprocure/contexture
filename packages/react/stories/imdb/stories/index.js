@@ -17,7 +17,7 @@ export default () =>
         {storyFn()}
       </div>
     ))
-    .add('Advanced Search', require('./advanced').default)
+    .addWithJSX('Advanced Search', require('./advanced').default)
     .addDecorator(story => <div style={demoBox}>{story()}</div>)
-    .add('Quick Start', require('./quickStart').default)
-    .add('Filter List', require('./filterList').default)
+    .addWithJSX('Quick Start', require('./quickStart').default)
+    .addWithJSX('Filter List', require('./filterList').default)
