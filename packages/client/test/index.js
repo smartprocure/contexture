@@ -6,7 +6,7 @@ import * as lib from '../src'
 import Promise from 'bluebird'
 const expect = chai.expect
 chai.use(sinonChai)
-import { mockService } from './mocks'
+import mockService from '../src/mockService'
 
 describe('lib', () => {
   describe('should generally work', () => {
