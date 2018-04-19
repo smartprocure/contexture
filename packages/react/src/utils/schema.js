@@ -16,23 +16,22 @@ export let fromFlatEsMapping = _.mapValues(
   _.flow(
     // Always 1 type per index
     x => _.values(x.mappings)[0].properties,
-    _.mapValues(({ type }) => ({
-      typeDefault: F.alias(type, {
+    _.mapValues(({ type }) => {
+      let typeDefault = F.alias(type, {
         string: 'query',
         text: 'facet',
         long: 'number',
         float: 'number',
         double: 'number',
-      }),
-      // TODO: exists, bool, date, geo, text?
-      typeOptions: {
-        string: ['query'],
-        text: ['facet', 'query'],
-        long: ['number'],
-        float: ['number'],
-        double: ['number'],
-      }[type],
-    })),
+      })
+      return {
+        typeDefault,
+        // TODO: exists, bool, geo, text? //date auto
+        typeOptions: {
+          text: ['facet', 'query'],
+        }[type] || [typeDefault],
+      }
+    }),
     applyDefaults,
     fields => ({ fields })
   )

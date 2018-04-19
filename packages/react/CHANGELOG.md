@@ -21,6 +21,7 @@
 * Added `ContextureProvider`
 * Added `ResultPager` to example types
 * Updated Mobx to v4 (along with related mobx-react)
+* Added `exampleTypes/Date`
 
 # 0.3.2
 * Better InjectTreeNode
