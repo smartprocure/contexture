@@ -1,42 +1,61 @@
 import React from 'react'
+import * as F from 'futil-js'
 import { storiesOf } from '@storybook/react'
 import { observable } from 'mobx'
+import { exampleTypes } from 'contexture-client'
+import mockService from 'contexture-client/src/mockService'
+import ContextureMobx from '../../src/utils/contexture-mobx'
 import QueryBuilder from '../../src/queryBuilder/'
 import { TypeMap } from '../../src/exampleTypes/'
 
-let Types = TypeMap
-let Node = (type, key) =>
-  observable({
-    key,
-    type,
-  })
+let Client = ContextureMobx({
+  debug: true,
+  types: exampleTypes,
+  service: mockService(),
+})
+
+let Node = (type, key) => observable({ key, type, })
 
 export default () =>
   storiesOf('QueryBuilder/Examples', module)
     .add('One Filter', () => (
       <QueryBuilder
-        tree={observable({
+        tree={Client({
           key: 'root',
           join: 'and',
           children: [{ key: 'filter 1', type: 'query' }],
         })}
-        types={Types}
+        path={['root']}
+        types={TypeMap}
       />
     ))
     .add('One Filter with fields', () => (
       <QueryBuilder
-        tree={observable({
+        path={['root']}
+        tree={Client({
           key: 'root',
           join: 'and',
-          children: [{ key: 'filter 1', type: 'query' }],
+          children: [{ key: 'filter 1', field:'test', type: 'query' }],
         })}
-        fields={['field1', 'field2', 'field3']}
-        types={Types}
+        fields={{
+          test: {
+            field: 'test',
+            label: 'Test',
+            typeOptions: ['facet', 'query'],
+          },
+          test2: {
+            field: 'test2',
+            label: 'Test2',
+            typeOptions: ['facet', 'query'],
+          },
+        }}
+        types={TypeMap}
       />
     ))
     .add('One Filter with facet options', () => (
       <QueryBuilder
-        tree={observable({
+        path={['root']}
+        tree={Client({
           key: 'root',
           join: 'and',
           children: [
@@ -59,12 +78,12 @@ export default () =>
           ],
         })}
         fields={['field1', 'field2', { label: 'Field 3', value: 'field3' }]}
-        types={Types}
+        types={TypeMap}
       />
     ))
     .add('One Filter on a misplaced root', () => (
       <QueryBuilder
-        tree={observable({
+        tree={Client({
           key: 'root',
           join: 'and',
           children: [
@@ -76,12 +95,13 @@ export default () =>
           ],
         })}
         path={['root', 'search']}
-        types={Types}
+        types={TypeMap}
       />
     ))
     .add('Multiple Filters', () => (
       <QueryBuilder
-        tree={observable({
+        path={['root']}
+        tree={Client({
           key: 'root',
           join: 'and',
           children: [
@@ -128,6 +148,6 @@ export default () =>
             },
           ],
         })}
-        types={Types}
+        types={TypeMap}
       />
     ))
