@@ -42,20 +42,13 @@ let tree = Contexture({
 
 let schemas = fromPromise(
   getESSchemas(esClient).then(
-    _.update(
-      'movies.fields',
-      _.flow(
-        _.merge(_, {
-          released: {
-            label: 'Release Date',
-          },
-          // ...flagFields({
-          //   isCommon: ['plot', 'title'],
-          // }),
-        }),
-        _.omit(['imdbId', 'yearEnded'])
-      )
-    )
+    _.merge(_, {
+      movies: {
+        fields: {
+          released: { label: 'Release Date' },
+        },
+      },
+    })
   )
 )
 
