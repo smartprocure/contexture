@@ -17,7 +17,7 @@ export let applyDefaults = F.mapValuesIndexed((node, field) =>
   )
 )
 
-let firstValue = _.curry((field, data) => _.find(field, data)[field])
+let firstValue = _.curry((field, data) => _.get(field, _.find(field, data)))
 
 let Tree = F.tree(x => x.properties)
 let flatten = _.flow(Tree.flatten(), _.omitBy(Tree.traverse))
