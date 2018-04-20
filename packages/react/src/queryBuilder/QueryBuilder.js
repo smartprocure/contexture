@@ -45,15 +45,12 @@ let ContextureClientBridge = (Types, Tree) => {
     join: (tree, join) => Tree.mutate(tree.path, { join }),
     mutate: Tree.mutate,
     typeChange(node, type) {
-      let { key, path, field }  = node
+      let { key, path, field } = node
       let parentPath = _.dropRight(1, path)
       let tree = Tree.getNode(parentPath)
       let index = tree.children.indexOf(node)
       Tree.remove(path)
-      Tree.add(
-        parentPath,
-        observable({ key, type, field })
-      )
+      Tree.add(parentPath, observable({ key, type, field }))
       let newNode = Tree.getNode(path)
       // Move to same index
       tree.children.remove(newNode) // pop since add does a push
