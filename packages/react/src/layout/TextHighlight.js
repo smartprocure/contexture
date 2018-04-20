@@ -1,6 +1,7 @@
 import React from 'react'
 import * as F from 'futil-js'
 
+// Since start and end are the same token, splitting on it means every even element was a match
 export default ({ pattern, text, Wrap = 'i' }) =>
   pattern
     ? F.highlight('<>', '<>', pattern, text)
