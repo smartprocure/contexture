@@ -8,6 +8,11 @@ export let hover = set => ({
   onMouseOver: () => F.set(true, set),
   onMouseOut: () => F.set(false, set),
 })
+export let focus = set => ({
+  onFocus: () => F.set(true, set),
+  onBlur: () => F.set(false, set),
+})
+
 // export let Component = (init, render) => inject(init)(observer(render))
 // export let Component = (init, render) => inject(render ? init : () => {})(observer(render || init))
 export let Component = (init, render, displayName) => {

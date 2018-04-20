@@ -1,7 +1,7 @@
 import * as F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { withStateLens, hover } from '../../../src/utils/mobx-react-utils'
+import { withStateLens, hover, focus } from '../../../src/utils/mobx-react-utils'
 import { Flex, TextHighlight } from '../../../src/layout/'
 
 export let Button = x => (
@@ -16,18 +16,26 @@ export let Button = x => (
   />
 )
 
-export let Input = x => (
-  <input
-    style={{
-      width: '100%',
-      padding: '5px 15px',
-      border: 'solid 1px #efefef',
-      borderRadius: '50px',
-      boxSizing: 'border-box',
-      outline: 'none',
-    }}
-    {...x}
-  />
+export let Input = withStateLens({ focusing: false })(
+  observer(({ focusing, ...x }) => (
+    <input
+      style={{
+        width: '100%',
+        padding: '5px',
+        textIndent: '5px',
+        border: 'solid 1px #efefef',
+        borderRadius: '30px',
+        boxSizing: 'border-box',
+        outline: 'none',
+        margin: '0 auto',
+        display: 'block',
+        transition: 'background 0.3s',
+        background: `rgba(255, 255, 255, ${F.view(focusing) ? 1 : 0.7})`
+      }}
+      {...focus(focusing)}
+      {...x}
+    />
+  ))
 )
 
 export let Highlight = x => (
