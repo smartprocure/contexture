@@ -27,7 +27,8 @@ export let fromEsMapping = _.mapValues(
     _.toPairs,
     // Capture esType
     ([[esType, fields]]) => ({ fields, esType }),
-    _.update('fields', 
+    _.update(
+      'fields',
       _.flow(
         flatten,
         _.mapValues(({ type }) => {
@@ -51,9 +52,9 @@ export let fromEsMapping = _.mapValues(
     )
   )
 )
-export let getESSchemas = client => 
+export let getESSchemas = client =>
   Promise.all([client.indices.getMapping(), client.indices.getAlias()]).then(
-    ([mappings, aliases ]) => {
+    ([mappings, aliases]) => {
       let schemas = fromEsMapping(mappings)
       return _.flow(
         _.mapValues(x => _.keys(x.aliases)),
@@ -64,5 +65,3 @@ export let getESSchemas = client =>
       )(aliases)
     }
   )
-
-

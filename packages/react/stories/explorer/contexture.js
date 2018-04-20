@@ -22,5 +22,5 @@ export default ContextureMobx({
         types: contextureESTypes(),
       }),
     },
-  })
+  }),
 })

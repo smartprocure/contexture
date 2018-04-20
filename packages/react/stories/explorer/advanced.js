@@ -10,14 +10,14 @@ import QueryBuilder from '../../src/queryBuilder/'
 import { getESSchemas } from '../../src/utils/schema'
 import { ResultCount, ResultTable, TypeMap } from '../../src/exampleTypes/'
 
-import {Input} from '../imdb/components/DemoControls'
+import { Input } from '../imdb/components/DemoControls'
 
 import Contexture, { es, schemas, updateClient } from './contexture'
 
 let state = observable({
   url: '',
   schemas: null,
-  tree: {}
+  tree: {},
 })
 let changeSchema = schema => {
   state.tree = Contexture({
@@ -34,17 +34,17 @@ let changeSchema = schema => {
           {
             key: 'firstFilter',
             type: null,
-            field: null
-          }
-        ]
+            field: null,
+          },
+        ],
       },
       {
         key: 'results',
         type: 'results',
         pageSize: 10,
-        page: 1
-      }
-    ]
+        page: 1,
+      },
+    ],
   })
 }
 
@@ -57,7 +57,7 @@ let updateEs = host => {
         schemas,
         _.mapValues(
           ({ esIndex, esType }) => ({
-            elasticsearch: { index: esIndex, type: esType }
+            elasticsearch: { index: esIndex, type: esType },
           }),
           x
         )
