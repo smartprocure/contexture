@@ -75,11 +75,11 @@ let With = observer(({ state, children }) => <div>{children(state)}</div>)
 let Debug = ({ value }) => <pre>{JSON.stringify(value, null, 2)}</pre>
 
 export default () => (
-  <div>
-    <Input value={state.url} onChange={e => updateEs(e.target.value)} />
-    <With state={state}>
-      {({ tree, schemas }) =>
-        schemas && (
+  <With state={state}>
+    {({ tree, schemas }) => (
+      <div>
+        <Input value={state.url} onChange={e => updateEs(e.target.value)} />
+        {schemas && (
           <Awaiter promise={schemas}>
             {schemas =>
               _.get('tree.schema', tree) && (
@@ -108,8 +108,8 @@ export default () => (
               )
             }
           </Awaiter>
-        )
-      }
-    </With>
-  </div>
+        )}
+      </div>
+    )}
+  </With>
 )
