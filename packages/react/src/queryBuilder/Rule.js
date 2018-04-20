@@ -12,7 +12,6 @@ let Rule = ({
   tree,
   root,
   connectDragSource,
-  // connectDragPreview,
   isDragging,
 }) =>
   connectDragSource(

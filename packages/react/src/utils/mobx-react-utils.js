@@ -33,9 +33,6 @@ export let lenservable = x => {
   s.lens = lensOf(s)
   return s
 }
-// let toggle = (val, lens, unset=undefined) => {
-//   F.set(F.view(lens) === val ? unset : val, lens)
-// }
 
 export let withStateLens = state => inject(() => F.lensOf(observable(state)))
 
