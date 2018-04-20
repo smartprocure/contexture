@@ -24,7 +24,7 @@ let FilterContents = inject(_.defaults)(
     >
       <FieldPicker
         label={
-          node.field ? _.get(`${node.field}.label`, fields) : 'Pick a Field'
+          node.field ? _.get([node.field, 'label'], fields) : 'Pick a Field'
         }
         options={fieldsToOptions(fields)}
         // TODO: consider type options in case this isn't safe, e.g. a field/type change action
@@ -51,7 +51,7 @@ let FilterContents = inject(_.defaults)(
                   disabled: node.type,
                 },
                 ...F.autoLabelOptions(
-                  _.get(`${node.field}.typeOptions`, fields)
+                  _.get([node.field, 'typeOptions'], fields)
                 ),
               ]
             )}
