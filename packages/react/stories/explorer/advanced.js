@@ -8,9 +8,9 @@ import { Provider, observer } from 'mobx-react'
 import { Awaiter } from '../../src/layout/'
 import QueryBuilder from '../../src/queryBuilder/'
 import { getESSchemas } from '../../src/utils/schema'
-import { ResultCount, ResultTable, TypeMap } from '../../src/exampleTypes/'
-
-import { Input } from '../imdb/components/DemoControls'
+import ExampleTypes from '../../src/exampleTypes/'
+import { Input } from '../DemoControls'
+let { ResultCount, ResultTable, TypeMap } = ExampleTypes({ Input })
 
 import Contexture, { es, schemas, updateClient } from './contexture'
 

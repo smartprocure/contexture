@@ -3,10 +3,12 @@ import React from 'react'
 import { Provider } from 'mobx-react'
 import { fromPromise } from 'mobx-utils'
 import QueryBuilder from '../../../src/queryBuilder/'
-import { ResultCount, ResultTable, TypeMap } from '../../../src/exampleTypes/'
+import ExampleTypes from '../../../src/exampleTypes/'
 import { Awaiter } from '../../../src/layout/'
 import Contexture, { esClient } from '../utils/contexture'
 import { getESSchemas } from '../../../src/utils/schema'
+import { Input } from '../..//DemoControls'
+let { ResultCount, ResultTable, TypeMap } = ExampleTypes({ Input })
 
 let tree = Contexture({
   key: 'root',

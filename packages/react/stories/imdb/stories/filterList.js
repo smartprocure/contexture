@@ -6,14 +6,6 @@ import Contexture, { esClient } from '../utils/contexture'
 import { getESSchemas } from '../../../src/utils/schema'
 import { partial } from '../../../src/utils/mobx-react-utils'
 import {
-  Query,
-  ResultCount,
-  ResultTable,
-  ResultPager,
-  DateHistogram,
-  TypeMap,
-} from '../../../src/exampleTypes/'
-import {
   Flex,
   Awaiter,
   Modal,
@@ -30,7 +22,16 @@ import {
   ListGroupItem,
   PagerItem,
   PagerList,
-} from '../components/DemoControls'
+} from '../../DemoControls'
+import ExampleTypes from '../../../src/exampleTypes/'
+let {
+  Query,
+  ResultCount,
+  ResultTable,
+  ResultPager,
+  DateHistogram,
+  TypeMap,
+} = ExampleTypes({Input})
 
 // Pre apply some props
 let Adder = partial(

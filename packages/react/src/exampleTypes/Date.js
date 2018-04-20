@@ -4,19 +4,16 @@ import { Flex } from '../layout/Flex'
 import { exampleTypes } from 'contexture-client'
 import injectTreeNode from '../utils/injectTreeNode'
 
+let dateInput = x => <input type='date' {...x} />
 export default injectTreeNode(
-  observer(({ tree, node, ...props }) => (
-    <Flex {...props}>
-      <input
-        className="contexture-search-box"
-        type="date"
+  observer(({ tree, node, DateInput=dateInput }) => (
+    <Flex>
+      <DateInput
         value={node.from || ''}
         onChange={e => tree.mutate(node.path, { from: e.target.value })}
       />
       <div>-</div>
-      <input
-        className="contexture-search-box"
-        type="date"
+      <DateInput
         value={node.to || ''}
         onChange={e => tree.mutate(node.path, { to: e.target.value })}
       />

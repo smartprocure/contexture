@@ -11,12 +11,10 @@ let toggleElement = (check, val, arr = []) =>
   (check ? _.pull : F.push)(val, arr)
 
 export default injectTreeNode(
-  observer(({ tree, node, hide = {} }) => (
+  observer(({ tree, node, hide = {}, TextInput='input' }) => (
     <div>
       {!hide.facetFilter && (
-        <input
-          className="contexture-search-box"
-          type="text"
+        <TextInput
           value={node.optionsFilter}
           onChange={e =>
             tree.mutate(node.path, { optionsFilter: e.target.value })

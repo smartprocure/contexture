@@ -151,16 +151,17 @@ let testTree = {
 }
 import SpacedList from '../../src/layout/SpacedList'
 let formatYear = x => new Date(x).getFullYear() + 1
-import {
+import ExampleTypes from '../../src/exampleTypes/'
+import { Flex } from '../../src/layout/Flex'
+import { Input } from '../DemoControls'
+let {
   Facet,
   Number,
   Query,
   ResultCount,
   ResultTable,
   DateHistogram,
-  Styles,
-} from '../../src/exampleTypes/'
-import { Flex } from '../../src/layout/Flex'
+} = ExampleTypes({ Input })
 
 export default () =>
   storiesOf('Example Types', module)
@@ -173,7 +174,6 @@ export default () =>
           borderRadius: '10px',
         }}
       >
-        <Styles />
         <Provider tree={testTree}>
           <SpacedList>
             <Query path={['query']} />

@@ -1,16 +1,19 @@
 import React from 'react'
 import ContextureProvider from '../../../src/ContextureProvider'
 import { Flex, SpacedList } from '../../../src/layout/'
-import {
+import ExampleTypes from '../../../src/exampleTypes/'
+import { types, service } from '../utils/contexture'
+import IMDBCards from '../components/IMDBCards'
+import { Input } from '../../DemoControls'
+let {
   Facet,
   Number,
   Query,
   ResultCount,
   ResultPager,
   DateHistogram,
-} from '../../../src/exampleTypes/'
-import { types, service } from '../utils/contexture'
-import IMDBCards from '../components/IMDBCards'
+} = ExampleTypes({ Input })
+
 let formatYear = x => new Date(x).getFullYear() + 1
 
 export default () => (
