@@ -1,5 +1,4 @@
 import React from 'react'
-import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 import { Dynamic, SpacedList } from './layout'
