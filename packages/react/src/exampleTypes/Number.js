@@ -5,8 +5,8 @@ import { exampleTypes } from 'contexture-client'
 import injectTreeNode from '../utils/injectTreeNode'
 
 export default injectTreeNode(
-  observer(({ tree, node, ...props }) => (
-    <Flex {...props}>
+  observer(({ tree, node }) => (
+    <Flex>
       <input
         className="contexture-search-box"
         type="number"

@@ -11,8 +11,8 @@ let toggleElement = (check, val, arr = []) =>
   (check ? _.pull : F.push)(val, arr)
 
 export default injectTreeNode(
-  observer(({ tree, node, hide = {}, ...props }) => (
-    <div {...props}>
+  observer(({ tree, node, hide = {} }) => (
+    <div>
       {!hide.facetFilter && (
         <input
           className="contexture-search-box"
