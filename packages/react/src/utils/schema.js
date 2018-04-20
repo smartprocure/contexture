@@ -12,10 +12,19 @@ export let applyDefaults = F.mapValuesIndexed((node, field) =>
     node
   )
 )
-export let fromFlatEsMapping = _.mapValues(
+
+let Tree = F.tree(x => x.properties)
+let flatten = _.flow(Tree.flatten(), _.omitBy(Tree.traverse))
+export let fromEsMapping = _.mapValues(
   _.flow(
-    // Always 1 type per index
-    x => _.values(x.mappings)[0].properties,
+    _.flow(
+      _.get('mappings'),
+      // Always 1 type per index but sometimes there's a `_default_` type thing
+      _.omit(['_default_']),
+      _.values,
+      _.head,
+      flatten
+    ),
     _.mapValues(({ type }) => {
       let typeDefault = F.alias(type, {
         string: 'query',
@@ -37,4 +46,4 @@ export let fromFlatEsMapping = _.mapValues(
   )
 )
 export let getESSchemas = client =>
-  client.indices.getMapping().then(fromFlatEsMapping)
+  client.indices.getMapping().then(fromEsMapping)
