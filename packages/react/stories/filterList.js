@@ -27,6 +27,7 @@ export default () => {
       fields={{
         a: { label: 'Field A' },
         b: { label: 'B Field' },
+        c: { label: 'c' }
       }}
       typeComponents={{
         typeA: () => <div>A TYPE</div>,

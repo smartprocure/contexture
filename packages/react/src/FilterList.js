@@ -7,7 +7,7 @@ import InjectTreeNode from './utils/injectTreeNode'
 
 export let FieldLabel = InjectTreeNode(
   observer(({ node: { field } = {}, fields }) => (
-    <b>{_.get(`${field}.label`, fields) || F.autoLabel(field)}</b>
+    <b>{_.get(`${field}.label`, fields)}</b>
   ))
 )
 

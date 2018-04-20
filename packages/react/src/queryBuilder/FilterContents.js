@@ -27,7 +27,7 @@ let FilterContents = inject(_.defaults)(
       <FieldPicker
         label={
           node.field
-            ? _.get(`${node.field}.label`, fields) || F.autoLabel(node.field)
+            ? _.get(`${node.field}.label`, fields)
             : 'Pick a Field'
         }
         options={fieldsToOptions(fields)}
