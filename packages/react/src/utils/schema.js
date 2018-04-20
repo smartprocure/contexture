@@ -47,16 +47,20 @@ export let fromEsMapping = _.mapValues(
             typeOptions: {
               text: ['facet', 'query'],
             }[type] || [typeDefault],
-            notAnalyzedField: _.findKey({ type: 'keyword' }, fields)
+            notAnalyzedField: _.findKey({ type: 'keyword' }, fields),
           }
         }),
         applyDefaults
       )
     ),
-    // TODO: Add contexture-elasticsearch support for per field notAnalyzedField 
-    schema => _.extend({
-      notAnalyzedField: firstValue('notAnalyzedField', schema.fields)
-    }, schema)
+    // TODO: Add contexture-elasticsearch support for per field notAnalyzedField
+    schema =>
+      _.extend(
+        {
+          notAnalyzedField: firstValue('notAnalyzedField', schema.fields),
+        },
+        schema
+      )
   )
 )
 export let getESSchemas = client =>
