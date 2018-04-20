@@ -107,7 +107,7 @@ exports[`Storyshots Docs CHANGELOG.md 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Docs README.md 1`] = `
 <div>
@@ -216,7 +216,7 @@ exports[`Storyshots Docs README.md 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Example Types Full Demo 1`] = `
 <div
@@ -229,26 +229,6 @@ exports[`Storyshots Example Types Full Demo 1`] = `
     }
   }
 >
-  <style>
-    .contexture-search-box:focus {
-      background: rgba(255, 255, 255, 1);
-      outline: none;
-    }
-    .contexture-search-box {
-      background: rgba(255, 255, 255, 0.7);
-      transition: background 0.3s;
-     
-      margin: 0 auto;
-      border-radius: 30px;
-      border: 0;
-      display: block;
-      text-indent: 5px;
-      padding: 5px;
-      
-      width: 100%;
-      box-sizing: border-box;
-    }
-  </style>
   <div
     style={
       Object {
@@ -257,14 +237,25 @@ exports[`Storyshots Example Types Full Demo 1`] = `
     }
   >
     <input
-      className="contexture-search-box"
+      onBlur={[Function]}
       onChange={[Function]}
-      path={
-        Array [
-          "query",
-        ]
-      }
+      onFocus={[Function]}
       placeholder="Search"
+      style={
+        Object {
+          "background": "rgba(255, 255, 255, 0.7)",
+          "border": "solid 1px #efefef",
+          "borderRadius": "30px",
+          "boxSizing": "border-box",
+          "display": "block",
+          "margin": "0 auto",
+          "outline": "none",
+          "padding": "5px",
+          "textIndent": "5px",
+          "transition": "background 0.3s",
+          "width": "100%",
+        }
+      }
       value=""
     />
   </div>
@@ -292,18 +283,146 @@ exports[`Storyshots Example Types Full Demo 1`] = `
             }
           }
         >
-          <div
-            path={
-              Array [
-                "facet",
-              ]
-            }
-          >
+          <div>
             <input
-              className="contexture-search-box"
+              onBlur={[Function]}
               onChange={[Function]}
+              onFocus={[Function]}
               placeholder="Find..."
-              type="text"
+              style={
+                Object {
+                  "background": "rgba(255, 255, 255, 0.7)",
+                  "border": "solid 1px #efefef",
+                  "borderRadius": "30px",
+                  "boxSizing": "border-box",
+                  "display": "block",
+                  "margin": "0 auto",
+                  "outline": "none",
+                  "padding": "5px",
+                  "textIndent": "5px",
+                  "transition": "background 0.3s",
+                  "width": "100%",
+                }
+              }
+              value=""
+            />
+            <div
+              style={
+                Object {
+                  "alignItems": "baseline",
+                  "display": "flex",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <input
+                checked={true}
+                onChange={[Function]}
+                type="checkbox"
+              />
+              <div
+                style={
+                  Object {
+                    "flex": 2,
+                    "paddingLeft": "5px",
+                    "paddingRight": "5px",
+                  }
+                }
+              >
+                a
+              </div>
+              <div>
+                15
+              </div>
+            </div>
+            <div
+              style={
+                Object {
+                  "alignItems": "baseline",
+                  "display": "flex",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <input
+                checked={false}
+                onChange={[Function]}
+                type="checkbox"
+              />
+              <div
+                style={
+                  Object {
+                    "flex": 2,
+                    "paddingLeft": "5px",
+                    "paddingRight": "5px",
+                  }
+                }
+              >
+                b
+              </div>
+              <div>
+                3
+              </div>
+            </div>
+            <div
+              style={
+                Object {
+                  "alignItems": "baseline",
+                  "display": "flex",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <input
+                checked={false}
+                onChange={[Function]}
+                type="checkbox"
+              />
+              <div
+                style={
+                  Object {
+                    "flex": 2,
+                    "paddingLeft": "5px",
+                    "paddingRight": "5px",
+                  }
+                }
+              >
+                c
+              </div>
+              <div>
+                1
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          style={
+            Object {
+              "marginBottom": "25px",
+            }
+          }
+        >
+          <div>
+            <input
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              placeholder="Find..."
+              style={
+                Object {
+                  "background": "rgba(255, 255, 255, 0.7)",
+                  "border": "solid 1px #efefef",
+                  "borderRadius": "30px",
+                  "boxSizing": "border-box",
+                  "display": "block",
+                  "margin": "0 auto",
+                  "outline": "none",
+                  "padding": "5px",
+                  "textIndent": "5px",
+                  "transition": "background 0.3s",
+                  "width": "100%",
+                }
+              }
               value=""
             />
             <div
@@ -403,121 +522,6 @@ exports[`Storyshots Example Types Full Demo 1`] = `
           }
         >
           <div
-            path={
-              Array [
-                "facet",
-              ]
-            }
-          >
-            <input
-              className="contexture-search-box"
-              onChange={[Function]}
-              placeholder="Find..."
-              type="text"
-              value=""
-            />
-            <div
-              style={
-                Object {
-                  "alignItems": "baseline",
-                  "display": "flex",
-                  "justifyContent": "space-between",
-                }
-              }
-            >
-              <input
-                checked={true}
-                onChange={[Function]}
-                type="checkbox"
-              />
-              <div
-                style={
-                  Object {
-                    "flex": 2,
-                    "paddingLeft": "5px",
-                    "paddingRight": "5px",
-                  }
-                }
-              >
-                a
-              </div>
-              <div>
-                15
-              </div>
-            </div>
-            <div
-              style={
-                Object {
-                  "alignItems": "baseline",
-                  "display": "flex",
-                  "justifyContent": "space-between",
-                }
-              }
-            >
-              <input
-                checked={false}
-                onChange={[Function]}
-                type="checkbox"
-              />
-              <div
-                style={
-                  Object {
-                    "flex": 2,
-                    "paddingLeft": "5px",
-                    "paddingRight": "5px",
-                  }
-                }
-              >
-                b
-              </div>
-              <div>
-                3
-              </div>
-            </div>
-            <div
-              style={
-                Object {
-                  "alignItems": "baseline",
-                  "display": "flex",
-                  "justifyContent": "space-between",
-                }
-              }
-            >
-              <input
-                checked={false}
-                onChange={[Function]}
-                type="checkbox"
-              />
-              <div
-                style={
-                  Object {
-                    "flex": 2,
-                    "paddingLeft": "5px",
-                    "paddingRight": "5px",
-                  }
-                }
-              >
-                c
-              </div>
-              <div>
-                1
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          style={
-            Object {
-              "marginBottom": "25px",
-            }
-          }
-        >
-          <div
-            path={
-              Array [
-                "number",
-              ]
-            }
             style={
               Object {
                 "display": "flex",
@@ -525,8 +529,24 @@ exports[`Storyshots Example Types Full Demo 1`] = `
             }
           >
             <input
-              className="contexture-search-box"
+              onBlur={[Function]}
               onChange={[Function]}
+              onFocus={[Function]}
+              style={
+                Object {
+                  "background": "rgba(255, 255, 255, 0.7)",
+                  "border": "solid 1px #efefef",
+                  "borderRadius": "30px",
+                  "boxSizing": "border-box",
+                  "display": "block",
+                  "margin": "0 auto",
+                  "outline": "none",
+                  "padding": "5px",
+                  "textIndent": "5px",
+                  "transition": "background 0.3s",
+                  "width": "100%",
+                }
+              }
               type="number"
               value=""
             />
@@ -534,8 +554,24 @@ exports[`Storyshots Example Types Full Demo 1`] = `
               -
             </div>
             <input
-              className="contexture-search-box"
+              onBlur={[Function]}
               onChange={[Function]}
+              onFocus={[Function]}
+              style={
+                Object {
+                  "background": "rgba(255, 255, 255, 0.7)",
+                  "border": "solid 1px #efefef",
+                  "borderRadius": "30px",
+                  "boxSizing": "border-box",
+                  "display": "block",
+                  "margin": "0 auto",
+                  "outline": "none",
+                  "padding": "5px",
+                  "textIndent": "5px",
+                  "transition": "background 0.3s",
+                  "width": "100%",
+                }
+              }
               type="number"
               value={100}
             />
@@ -545,11 +581,6 @@ exports[`Storyshots Example Types Full Demo 1`] = `
           style={Object {}}
         >
           <div
-            path={
-              Array [
-                "number",
-              ]
-            }
             style={
               Object {
                 "display": "flex",
@@ -557,8 +588,24 @@ exports[`Storyshots Example Types Full Demo 1`] = `
             }
           >
             <input
-              className="contexture-search-box"
+              onBlur={[Function]}
               onChange={[Function]}
+              onFocus={[Function]}
+              style={
+                Object {
+                  "background": "rgba(255, 255, 255, 0.7)",
+                  "border": "solid 1px #efefef",
+                  "borderRadius": "30px",
+                  "boxSizing": "border-box",
+                  "display": "block",
+                  "margin": "0 auto",
+                  "outline": "none",
+                  "padding": "5px",
+                  "textIndent": "5px",
+                  "transition": "background 0.3s",
+                  "width": "100%",
+                }
+              }
               type="number"
               value=""
             />
@@ -566,8 +613,24 @@ exports[`Storyshots Example Types Full Demo 1`] = `
               -
             </div>
             <input
-              className="contexture-search-box"
+              onBlur={[Function]}
               onChange={[Function]}
+              onFocus={[Function]}
+              style={
+                Object {
+                  "background": "rgba(255, 255, 255, 0.7)",
+                  "border": "solid 1px #efefef",
+                  "borderRadius": "30px",
+                  "boxSizing": "border-box",
+                  "display": "block",
+                  "margin": "0 auto",
+                  "outline": "none",
+                  "padding": "5px",
+                  "textIndent": "5px",
+                  "transition": "background 0.3s",
+                  "width": "100%",
+                }
+              }
               type="number"
               value={100}
             />
@@ -828,7 +891,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Example Types ResultTable Customizations 1`] = `
 <div>
@@ -970,7 +1033,7 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
     </tbody>
   </table>
 </div>
-`
+`;
 
 exports[`Storyshots FilterAdder Example 1`] = `
 <div>
@@ -992,7 +1055,7 @@ exports[`Storyshots FilterAdder Example 1`] = `
     Check action log to see adding being dispatched
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots FilterAdder With FilteredPickerModal 1`] = `
 <div>
@@ -1002,7 +1065,7 @@ exports[`Storyshots FilterAdder With FilteredPickerModal 1`] = `
     + Include Additional Filter
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots FilterList Example 1`] = `
 Array [
@@ -1051,35 +1114,13 @@ Array [
     </div>
   </div>,
 ]
-`
+`;
 
 exports[`Storyshots IMDB Advanced Search 1`] = `
 <div>
-  <style>
-    .contexture-search-box:focus {
-      background: rgba(255, 255, 255, 1);
-      outline: none;
-    }
-    .contexture-search-box {
-      background: rgba(255, 255, 255, 0.7);
-      transition: background 0.3s;
-     
-      margin: 0 auto;
-      border-radius: 30px;
-      border: 0;
-      display: block;
-      text-indent: 5px;
-      padding: 5px;
-      
-      width: 100%;
-      box-sizing: border-box;
-    }
-  </style>
-  <div>
-    Loading...
-  </div>
+  Loading...
 </div>
-`
+`;
 
 exports[`Storyshots IMDB Filter List 1`] = `
 <div
@@ -1093,32 +1134,10 @@ exports[`Storyshots IMDB Filter List 1`] = `
   }
 >
   <div>
-    <style>
-      .contexture-search-box:focus {
-      background: rgba(255, 255, 255, 1);
-      outline: none;
-    }
-    .contexture-search-box {
-      background: rgba(255, 255, 255, 0.7);
-      transition: background 0.3s;
-     
-      margin: 0 auto;
-      border-radius: 30px;
-      border: 0;
-      display: block;
-      text-indent: 5px;
-      padding: 5px;
-      
-      width: 100%;
-      box-sizing: border-box;
-    }
-    </style>
-    <div>
-      Loading...
-    </div>
+    Loading...
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots IMDB Quick Start 1`] = `
 <div
@@ -1131,253 +1150,285 @@ exports[`Storyshots IMDB Quick Start 1`] = `
     }
   }
 >
-  <div>
-    <style>
-      .contexture-search-box:focus {
-      background: rgba(255, 255, 255, 1);
-      outline: none;
+  <div
+    style={
+      Object {
+        "marginBottom": "25px",
+      }
     }
-    .contexture-search-box {
-      background: rgba(255, 255, 255, 0.7);
-      transition: background 0.3s;
-     
-      margin: 0 auto;
-      border-radius: 30px;
-      border: 0;
-      display: block;
-      text-indent: 5px;
-      padding: 5px;
-      
-      width: 100%;
-      box-sizing: border-box;
-    }
-    </style>
+  >
+    <input
+      onBlur={[Function]}
+      onChange={[Function]}
+      onFocus={[Function]}
+      placeholder="Search"
+      style={
+        Object {
+          "background": "rgba(255, 255, 255, 0.7)",
+          "border": "solid 1px #efefef",
+          "borderRadius": "30px",
+          "boxSizing": "border-box",
+          "display": "block",
+          "margin": "0 auto",
+          "outline": "none",
+          "padding": "5px",
+          "textIndent": "5px",
+          "transition": "background 0.3s",
+          "width": "100%",
+        }
+      }
+      value=""
+    />
+  </div>
+  <div
+    style={Object {}}
+  >
     <div
       style={
         Object {
-          "marginBottom": "25px",
+          "display": "flex",
         }
       }
-    >
-      <input
-        className="contexture-search-box"
-        field="title"
-        onChange={[Function]}
-        placeholder="Search"
-        value=""
-      />
-    </div>
-    <div
-      style={Object {}}
     >
       <div
         style={
           Object {
-            "display": "flex",
+            "flex": 1,
           }
         }
       >
         <div
           style={
             Object {
-              "flex": 1,
+              "marginBottom": "25px",
             }
           }
         >
-          <div
-            style={
-              Object {
-                "marginBottom": "25px",
+          <div>
+            <b>
+              MetaScore
+            </b>
+            <div
+              style={
+                Object {
+                  "display": "flex",
+                }
               }
-            }
-          >
-            <div>
-              <b>
-                MetaScore
-              </b>
-              <div
-                field="metaScore"
-                max={100}
-                min={0}
-                nodeKey="num"
+            >
+              <input
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
                 style={
                   Object {
-                    "display": "flex",
+                    "background": "rgba(255, 255, 255, 0.7)",
+                    "border": "solid 1px #efefef",
+                    "borderRadius": "30px",
+                    "boxSizing": "border-box",
+                    "display": "block",
+                    "margin": "0 auto",
+                    "outline": "none",
+                    "padding": "5px",
+                    "textIndent": "5px",
+                    "transition": "background 0.3s",
+                    "width": "100%",
                   }
                 }
-              >
-                <input
-                  className="contexture-search-box"
-                  onChange={[Function]}
-                  type="number"
-                  value=""
-                />
-                <div>
-                  -
-                </div>
-                <input
-                  className="contexture-search-box"
-                  onChange={[Function]}
-                  type="number"
-                  value={100}
-                />
+                type="number"
+                value=""
+              />
+              <div>
+                -
               </div>
-            </div>
-          </div>
-          <div
-            style={
-              Object {
-                "marginBottom": "25px",
-              }
-            }
-          >
-            <div>
-              <b>
-                Genre
-              </b>
-              <div
-                field="genres"
-              >
-                <input
-                  className="contexture-search-box"
-                  onChange={[Function]}
-                  placeholder="Find..."
-                  type="text"
-                  value=""
-                />
-              </div>
-            </div>
-          </div>
-          <div
-            style={Object {}}
-          >
-            <div>
-              <b>
-                Actors
-              </b>
-              <div
-                field="actors"
-              >
-                <input
-                  className="contexture-search-box"
-                  onChange={[Function]}
-                  placeholder="Find..."
-                  type="text"
-                  value=""
-                />
-              </div>
+              <input
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                style={
+                  Object {
+                    "background": "rgba(255, 255, 255, 0.7)",
+                    "border": "solid 1px #efefef",
+                    "borderRadius": "30px",
+                    "boxSizing": "border-box",
+                    "display": "block",
+                    "margin": "0 auto",
+                    "outline": "none",
+                    "padding": "5px",
+                    "textIndent": "5px",
+                    "transition": "background 0.3s",
+                    "width": "100%",
+                  }
+                }
+                type="number"
+                value={100}
+              />
             </div>
           </div>
         </div>
         <div
           style={
             Object {
-              "flex": 4,
+              "marginBottom": "25px",
             }
           }
         >
-          <div
-            style={
-              Object {
-                "textAlign": "center",
-              }
-            }
-          >
-            No Results
-          </div>
-          <div
-            style={
-              Object {
-                "alignItems": "baseline",
-                "display": "flex",
-                "justifyContent": "center",
-              }
-            }
-          />
-          <div
-            style={
-              Object {
-                "display": "flex",
-                "flexWrap": "wrap",
-                "justifyContent": "center",
-              }
-            }
-          />
           <div>
-            <span>
-              <a
-                onClick={[Function]}
-              >
-                &lt;
-              </a>
-            </span>
-            <span>
-              <a
-                onClick={undefined}
-              >
-                1
-              </a>
-            </span>
-            <span>
-              <a
-                onClick={[Function]}
-              >
-                &gt;
-              </a>
-            </span>
+            <b>
+              Genre
+            </b>
+            <div>
+              <input
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                placeholder="Find..."
+                style={
+                  Object {
+                    "background": "rgba(255, 255, 255, 0.7)",
+                    "border": "solid 1px #efefef",
+                    "borderRadius": "30px",
+                    "boxSizing": "border-box",
+                    "display": "block",
+                    "margin": "0 auto",
+                    "outline": "none",
+                    "padding": "5px",
+                    "textIndent": "5px",
+                    "transition": "background 0.3s",
+                    "width": "100%",
+                  }
+                }
+                value=""
+              />
+            </div>
           </div>
+        </div>
+        <div
+          style={Object {}}
+        >
+          <div>
+            <b>
+              Actors
+            </b>
+            <div>
+              <input
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                placeholder="Find..."
+                style={
+                  Object {
+                    "background": "rgba(255, 255, 255, 0.7)",
+                    "border": "solid 1px #efefef",
+                    "borderRadius": "30px",
+                    "boxSizing": "border-box",
+                    "display": "block",
+                    "margin": "0 auto",
+                    "outline": "none",
+                    "padding": "5px",
+                    "textIndent": "5px",
+                    "transition": "background 0.3s",
+                    "width": "100%",
+                  }
+                }
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "flex": 4,
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "textAlign": "center",
+            }
+          }
+        >
+          No Results
+        </div>
+        <div
+          style={
+            Object {
+              "alignItems": "baseline",
+              "display": "flex",
+              "justifyContent": "center",
+            }
+          }
+        />
+        <div
+          style={
+            Object {
+              "display": "flex",
+              "flexWrap": "wrap",
+              "justifyContent": "center",
+            }
+          }
+        />
+        <div>
+          <span>
+            <a
+              onClick={[Function]}
+            >
+              &lt;
+            </a>
+          </span>
+          <span>
+            <a
+              onClick={undefined}
+            >
+              1
+            </a>
+          </span>
+          <span>
+            <a
+              onClick={[Function]}
+            >
+              &gt;
+            </a>
+          </span>
         </div>
       </div>
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Index Explorer Advanced Search 1`] = `
 <div>
-  <style>
-    .contexture-search-box:focus {
-      background: rgba(255, 255, 255, 1);
-      outline: none;
-    }
-    .contexture-search-box {
-      background: rgba(255, 255, 255, 0.7);
-      transition: background 0.3s;
-     
-      margin: 0 auto;
-      border-radius: 30px;
-      border: 0;
-      display: block;
-      text-indent: 5px;
-      padding: 5px;
-      
-      width: 100%;
-      box-sizing: border-box;
-    }
-  </style>
   <div>
-    <div>
-      <input
-        onChange={[Function]}
-        style={
-          Object {
-            "border": "solid 1px #efefef",
-            "borderRadius": "50px",
-            "boxSizing": "border-box",
-            "outline": "none",
-            "padding": "5px 15px",
-            "width": "100%",
-          }
+    <input
+      onBlur={[Function]}
+      onChange={[Function]}
+      onFocus={[Function]}
+      style={
+        Object {
+          "background": "rgba(255, 255, 255, 0.7)",
+          "border": "solid 1px #efefef",
+          "borderRadius": "30px",
+          "boxSizing": "border-box",
+          "display": "block",
+          "margin": "0 auto",
+          "outline": "none",
+          "padding": "5px",
+          "textIndent": "5px",
+          "transition": "background 0.3s",
+          "width": "100%",
         }
-        value="https://public-es-demo.smartprocure.us/"
-      />
-      <div>
-        Loading...
-      </div>
+      }
+      value="https://public-es-demo.smartprocure.us/"
+    />
+    <div>
+      Loading...
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Layout Awaiter 1`] = `
 <div>
@@ -1395,7 +1446,7 @@ exports[`Storyshots Layout Awaiter 1`] = `
     Reject
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots Layout FilteredPicker 1`] = `
 <div>
@@ -1419,7 +1470,7 @@ exports[`Storyshots Layout FilteredPicker 1`] = `
     cdef
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Layout Highlight 1`] = `
 <div>
@@ -1431,7 +1482,7 @@ exports[`Storyshots Layout Highlight 1`] = `
   </div>
   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 </div>
-`
+`;
 
 exports[`Storyshots Layout Modal 1`] = `
 <div>
@@ -1441,7 +1492,7 @@ exports[`Storyshots Layout Modal 1`] = `
     Open Modal
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots Layout ModalPicker 1`] = `
 <div>
@@ -1451,7 +1502,7 @@ exports[`Storyshots Layout ModalPicker 1`] = `
     Pick
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots Layout Popover 1`] = `
 <div>
@@ -1461,7 +1512,7 @@ exports[`Storyshots Layout Popover 1`] = `
     Open Popover
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
 <div
@@ -1598,9 +1649,25 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                           }
                         >
                           <input
-                            className="contexture-search-box"
+                            onBlur={[Function]}
                             onChange={[Function]}
+                            onFocus={[Function]}
                             placeholder="Search"
+                            style={
+                              Object {
+                                "background": "rgba(255, 255, 255, 0.7)",
+                                "border": "solid 1px #efefef",
+                                "borderRadius": "30px",
+                                "boxSizing": "border-box",
+                                "display": "block",
+                                "margin": "0 auto",
+                                "outline": "none",
+                                "padding": "5px",
+                                "textIndent": "5px",
+                                "transition": "background 0.3s",
+                                "width": "100%",
+                              }
+                            }
                             value=""
                           />
                         </div>
@@ -1836,9 +1903,25 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                       }
                                     >
                                       <input
-                                        className="contexture-search-box"
+                                        onBlur={[Function]}
                                         onChange={[Function]}
+                                        onFocus={[Function]}
                                         placeholder="Search"
+                                        style={
+                                          Object {
+                                            "background": "rgba(255, 255, 255, 0.7)",
+                                            "border": "solid 1px #efefef",
+                                            "borderRadius": "30px",
+                                            "boxSizing": "border-box",
+                                            "display": "block",
+                                            "margin": "0 auto",
+                                            "outline": "none",
+                                            "padding": "5px",
+                                            "textIndent": "5px",
+                                            "transition": "background 0.3s",
+                                            "width": "100%",
+                                          }
+                                        }
                                         value=""
                                       />
                                     </div>
@@ -2013,9 +2096,25 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                       }
                                     >
                                       <input
-                                        className="contexture-search-box"
+                                        onBlur={[Function]}
                                         onChange={[Function]}
+                                        onFocus={[Function]}
                                         placeholder="Search"
+                                        style={
+                                          Object {
+                                            "background": "rgba(255, 255, 255, 0.7)",
+                                            "border": "solid 1px #efefef",
+                                            "borderRadius": "30px",
+                                            "boxSizing": "border-box",
+                                            "display": "block",
+                                            "margin": "0 auto",
+                                            "outline": "none",
+                                            "padding": "5px",
+                                            "textIndent": "5px",
+                                            "transition": "background 0.3s",
+                                            "width": "100%",
+                                          }
+                                        }
                                         value=""
                                       />
                                     </div>
@@ -2253,10 +2352,25 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                                 >
                                                   <div>
                                                     <input
-                                                      className="contexture-search-box"
+                                                      onBlur={[Function]}
                                                       onChange={[Function]}
+                                                      onFocus={[Function]}
                                                       placeholder="Find..."
-                                                      type="text"
+                                                      style={
+                                                        Object {
+                                                          "background": "rgba(255, 255, 255, 0.7)",
+                                                          "border": "solid 1px #efefef",
+                                                          "borderRadius": "30px",
+                                                          "boxSizing": "border-box",
+                                                          "display": "block",
+                                                          "margin": "0 auto",
+                                                          "outline": "none",
+                                                          "padding": "5px",
+                                                          "textIndent": "5px",
+                                                          "transition": "background 0.3s",
+                                                          "width": "100%",
+                                                        }
+                                                      }
                                                       value=""
                                                     />
                                                   </div>
@@ -2433,9 +2547,25 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                                   }
                                                 >
                                                   <input
-                                                    className="contexture-search-box"
+                                                    onBlur={[Function]}
                                                     onChange={[Function]}
+                                                    onFocus={[Function]}
                                                     placeholder="Search"
+                                                    style={
+                                                      Object {
+                                                        "background": "rgba(255, 255, 255, 0.7)",
+                                                        "border": "solid 1px #efefef",
+                                                        "borderRadius": "30px",
+                                                        "boxSizing": "border-box",
+                                                        "display": "block",
+                                                        "margin": "0 auto",
+                                                        "outline": "none",
+                                                        "padding": "5px",
+                                                        "textIndent": "5px",
+                                                        "transition": "background 0.3s",
+                                                        "width": "100%",
+                                                      }
+                                                    }
                                                     value=""
                                                   />
                                                 </div>
@@ -2622,9 +2752,25 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                           }
                         >
                           <input
-                            className="contexture-search-box"
+                            onBlur={[Function]}
                             onChange={[Function]}
+                            onFocus={[Function]}
                             placeholder="Search"
+                            style={
+                              Object {
+                                "background": "rgba(255, 255, 255, 0.7)",
+                                "border": "solid 1px #efefef",
+                                "borderRadius": "30px",
+                                "boxSizing": "border-box",
+                                "display": "block",
+                                "margin": "0 auto",
+                                "outline": "none",
+                                "padding": "5px",
+                                "textIndent": "5px",
+                                "transition": "background 0.3s",
+                                "width": "100%",
+                              }
+                            }
                             value=""
                           />
                         </div>
@@ -2887,8 +3033,24 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                         }
                                       >
                                         <input
-                                          className="contexture-search-box"
+                                          onBlur={[Function]}
                                           onChange={[Function]}
+                                          onFocus={[Function]}
+                                          style={
+                                            Object {
+                                              "background": "rgba(255, 255, 255, 0.7)",
+                                              "border": "solid 1px #efefef",
+                                              "borderRadius": "30px",
+                                              "boxSizing": "border-box",
+                                              "display": "block",
+                                              "margin": "0 auto",
+                                              "outline": "none",
+                                              "padding": "5px",
+                                              "textIndent": "5px",
+                                              "transition": "background 0.3s",
+                                              "width": "100%",
+                                            }
+                                          }
                                           type="number"
                                           value=""
                                         />
@@ -2896,8 +3058,24 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                           -
                                         </div>
                                         <input
-                                          className="contexture-search-box"
+                                          onBlur={[Function]}
                                           onChange={[Function]}
+                                          onFocus={[Function]}
+                                          style={
+                                            Object {
+                                              "background": "rgba(255, 255, 255, 0.7)",
+                                              "border": "solid 1px #efefef",
+                                              "borderRadius": "30px",
+                                              "boxSizing": "border-box",
+                                              "display": "block",
+                                              "margin": "0 auto",
+                                              "outline": "none",
+                                              "padding": "5px",
+                                              "textIndent": "5px",
+                                              "transition": "background 0.3s",
+                                              "width": "100%",
+                                            }
+                                          }
                                           type="number"
                                           value=""
                                         />
@@ -3075,9 +3253,25 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                       }
                                     >
                                       <input
-                                        className="contexture-search-box"
+                                        onBlur={[Function]}
                                         onChange={[Function]}
+                                        onFocus={[Function]}
                                         placeholder="Search"
+                                        style={
+                                          Object {
+                                            "background": "rgba(255, 255, 255, 0.7)",
+                                            "border": "solid 1px #efefef",
+                                            "borderRadius": "30px",
+                                            "boxSizing": "border-box",
+                                            "display": "block",
+                                            "margin": "0 auto",
+                                            "outline": "none",
+                                            "padding": "5px",
+                                            "textIndent": "5px",
+                                            "transition": "background 0.3s",
+                                            "width": "100%",
+                                          }
+                                        }
                                         value=""
                                       />
                                     </div>
@@ -3395,9 +3589,25 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                                   }
                                                 >
                                                   <input
-                                                    className="contexture-search-box"
+                                                    onBlur={[Function]}
                                                     onChange={[Function]}
+                                                    onFocus={[Function]}
                                                     placeholder="Search"
+                                                    style={
+                                                      Object {
+                                                        "background": "rgba(255, 255, 255, 0.7)",
+                                                        "border": "solid 1px #efefef",
+                                                        "borderRadius": "30px",
+                                                        "boxSizing": "border-box",
+                                                        "display": "block",
+                                                        "margin": "0 auto",
+                                                        "outline": "none",
+                                                        "padding": "5px",
+                                                        "textIndent": "5px",
+                                                        "transition": "background 0.3s",
+                                                        "width": "100%",
+                                                      }
+                                                    }
                                                     value=""
                                                   />
                                                 </div>
@@ -3750,9 +3960,25 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                       }
                                     >
                                       <input
-                                        className="contexture-search-box"
+                                        onBlur={[Function]}
                                         onChange={[Function]}
+                                        onFocus={[Function]}
                                         placeholder="Search"
+                                        style={
+                                          Object {
+                                            "background": "rgba(255, 255, 255, 0.7)",
+                                            "border": "solid 1px #efefef",
+                                            "borderRadius": "30px",
+                                            "boxSizing": "border-box",
+                                            "display": "block",
+                                            "margin": "0 auto",
+                                            "outline": "none",
+                                            "padding": "5px",
+                                            "textIndent": "5px",
+                                            "transition": "background 0.3s",
+                                            "width": "100%",
+                                          }
+                                        }
                                         value=""
                                       />
                                     </div>
@@ -3840,7 +4066,7 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
     Add Filter
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Examples One Filter 1`] = `
 <div
@@ -3960,9 +4186,25 @@ exports[`Storyshots QueryBuilder/Examples One Filter 1`] = `
                           }
                         >
                           <input
-                            className="contexture-search-box"
+                            onBlur={[Function]}
                             onChange={[Function]}
+                            onFocus={[Function]}
                             placeholder="Search"
+                            style={
+                              Object {
+                                "background": "rgba(255, 255, 255, 0.7)",
+                                "border": "solid 1px #efefef",
+                                "borderRadius": "30px",
+                                "boxSizing": "border-box",
+                                "display": "block",
+                                "margin": "0 auto",
+                                "outline": "none",
+                                "padding": "5px",
+                                "textIndent": "5px",
+                                "transition": "background 0.3s",
+                                "width": "100%",
+                              }
+                            }
                             value=""
                           />
                         </div>
@@ -4044,7 +4286,7 @@ exports[`Storyshots QueryBuilder/Examples One Filter 1`] = `
     Add Filter
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Examples One Filter on a misplaced root 1`] = `
 <div
@@ -4164,9 +4406,25 @@ exports[`Storyshots QueryBuilder/Examples One Filter on a misplaced root 1`] = `
                           }
                         >
                           <input
-                            className="contexture-search-box"
+                            onBlur={[Function]}
                             onChange={[Function]}
+                            onFocus={[Function]}
                             placeholder="Search"
+                            style={
+                              Object {
+                                "background": "rgba(255, 255, 255, 0.7)",
+                                "border": "solid 1px #efefef",
+                                "borderRadius": "30px",
+                                "boxSizing": "border-box",
+                                "display": "block",
+                                "margin": "0 auto",
+                                "outline": "none",
+                                "padding": "5px",
+                                "textIndent": "5px",
+                                "transition": "background 0.3s",
+                                "width": "100%",
+                              }
+                            }
                             value=""
                           />
                         </div>
@@ -4248,7 +4506,7 @@ exports[`Storyshots QueryBuilder/Examples One Filter on a misplaced root 1`] = `
     Add Filter
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
 <div
@@ -4369,10 +4627,25 @@ exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
                         >
                           <div>
                             <input
-                              className="contexture-search-box"
+                              onBlur={[Function]}
                               onChange={[Function]}
+                              onFocus={[Function]}
                               placeholder="Find..."
-                              type="text"
+                              style={
+                                Object {
+                                  "background": "rgba(255, 255, 255, 0.7)",
+                                  "border": "solid 1px #efefef",
+                                  "borderRadius": "30px",
+                                  "boxSizing": "border-box",
+                                  "display": "block",
+                                  "margin": "0 auto",
+                                  "outline": "none",
+                                  "padding": "5px",
+                                  "textIndent": "5px",
+                                  "transition": "background 0.3s",
+                                  "width": "100%",
+                                }
+                              }
                               value=""
                             />
                             <div
@@ -4513,7 +4786,7 @@ exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
     Add Filter
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Examples One Filter with fields 1`] = `
 <div
@@ -4664,9 +4937,25 @@ exports[`Storyshots QueryBuilder/Examples One Filter with fields 1`] = `
                           }
                         >
                           <input
-                            className="contexture-search-box"
+                            onBlur={[Function]}
                             onChange={[Function]}
+                            onFocus={[Function]}
                             placeholder="Search"
+                            style={
+                              Object {
+                                "background": "rgba(255, 255, 255, 0.7)",
+                                "border": "solid 1px #efefef",
+                                "borderRadius": "30px",
+                                "boxSizing": "border-box",
+                                "display": "block",
+                                "margin": "0 auto",
+                                "outline": "none",
+                                "padding": "5px",
+                                "textIndent": "5px",
+                                "transition": "background 0.3s",
+                                "width": "100%",
+                              }
+                            }
                             value=""
                           />
                         </div>
@@ -4748,7 +5037,7 @@ exports[`Storyshots QueryBuilder/Examples One Filter with fields 1`] = `
     Add Filter
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/AddPreview and 1`] = `
 <div
@@ -4788,7 +5077,7 @@ exports[`Storyshots QueryBuilder/Internals/AddPreview and 1`] = `
     </b>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/AddPreview not 1`] = `
 <div
@@ -4828,7 +5117,7 @@ exports[`Storyshots QueryBuilder/Internals/AddPreview not 1`] = `
     </b>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/AddPreview or 1`] = `
 <div
@@ -4868,7 +5157,7 @@ exports[`Storyshots QueryBuilder/Internals/AddPreview or 1`] = `
     </b>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/FilterContents FilterContents 1`] = `
 <div
@@ -4887,7 +5176,7 @@ exports[`Storyshots QueryBuilder/Internals/FilterContents FilterContents 1`] = `
     </button>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
 <div>
@@ -7144,7 +7433,7 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Group One Filter 1`] = `
 <div>
@@ -7319,7 +7608,7 @@ exports[`Storyshots QueryBuilder/Internals/Group One Filter 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Indentable and 1`] = `
 <div
@@ -7401,7 +7690,7 @@ exports[`Storyshots QueryBuilder/Internals/Indentable and 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Indentable not 1`] = `
 <div
@@ -7483,7 +7772,7 @@ exports[`Storyshots QueryBuilder/Internals/Indentable not 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Indentable or 1`] = `
 <div
@@ -7565,7 +7854,7 @@ exports[`Storyshots QueryBuilder/Internals/Indentable or 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Operator and 1`] = `
 <div>
@@ -7608,7 +7897,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator and 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Operator first and 1`] = `
 <div>
@@ -7645,7 +7934,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator first and 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Operator first not 1`] = `
 <div>
@@ -7688,7 +7977,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator first not 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Operator first or 1`] = `
 <div>
@@ -7725,7 +8014,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator first or 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Operator not 1`] = `
 <div>
@@ -7768,7 +8057,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator not 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Operator or 1`] = `
 <div>
@@ -7811,7 +8100,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator or 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/OperatorMenu OperatorMenu 1`] = `
 <div>
@@ -7896,7 +8185,7 @@ exports[`Storyshots QueryBuilder/Internals/OperatorMenu OperatorMenu 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Rule index 1`] = `
 <div>
@@ -8021,4 +8310,4 @@ exports[`Storyshots QueryBuilder/Internals/Rule index 1`] = `
     </div>
   </div>
 </div>
-`
+`;
