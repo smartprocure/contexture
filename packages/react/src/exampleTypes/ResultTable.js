@@ -6,7 +6,7 @@ import InjectTreeNode from '../utils/injectTreeNode'
 import Popover from '../layout/Popover'
 import { withStateLens } from '../utils/mobx-react-utils'
 
-let getRecord = x => _.get('_source', x) || x
+let getRecord = x => F.flattenObject(_.get('_source', x) || x)
 let getResults = _.get('context.response.results')
 let buildSchema = F.mapValuesIndexed((val, field) => ({
   field,
