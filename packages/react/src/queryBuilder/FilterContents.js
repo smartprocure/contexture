@@ -18,8 +18,6 @@ let FilterContents = inject(_.defaults)(
   observer(({ node, root, fields, types = {} }) => (
     <div
       style={{
-        // lineHeight: '30px',
-        // minHeight: '34px',
         display: 'flex',
         width: '100%',
       }}
