@@ -1,13 +1,13 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import styles from '../styles'
-import * as f from 'futil-js'
+import * as F from 'futil-js'
 let { fullscreen } = styles
 
 // Simple popover
 export default observer(
   ({ isOpen, children, style }) =>
-    f.view(isOpen) && (
+    F.view(isOpen) && (
       <div>
         <div
           style={{
@@ -22,7 +22,7 @@ export default observer(
         >
           {children}
         </div>
-        <div style={fullscreen} onClick={f.off(isOpen)} />
+        <div style={fullscreen} onClick={F.off(isOpen)} />
       </div>
     )
 )
