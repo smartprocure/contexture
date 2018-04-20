@@ -11,7 +11,7 @@ let toggleElement = (check, val, arr = []) =>
   (check ? _.pull : F.push)(val, arr)
 
 export default injectTreeNode(
-  observer(({ tree, node, hide = {}, TextInput='input' }) => (
+  observer(({ tree, node, hide = {}, TextInput = 'input' }) => (
     <div>
       {!hide.facetFilter && (
         <TextInput

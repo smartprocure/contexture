@@ -30,7 +30,7 @@ export let Input = withStateLens({ focusing: false })(
         margin: '0 auto',
         display: 'block',
         transition: 'background 0.3s',
-        background: `rgba(255, 255, 255, ${F.view(focusing) ? 1 : 0.7})`
+        background: `rgba(255, 255, 255, ${F.view(focusing) ? 1 : 0.7})`,
       }}
       {...focus(focusing)}
       {...x}

@@ -31,7 +31,7 @@ let {
   ResultPager,
   DateHistogram,
   TypeMap,
-} = ExampleTypes({Input})
+} = ExampleTypes({ Input })
 
 // Pre apply some props
 let Adder = partial(

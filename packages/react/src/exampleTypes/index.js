@@ -8,17 +8,19 @@ import ResultPager from './ResultPager'
 import DateHistogram from './DateHistogram'
 import { partial } from '../utils/mobx-react-utils'
 
-export default ({
-  Input = 'input',
-  TextInput = Input,
-  NumberInput = partial({type: 'number'}, Input),
-  DateInput = partial({type: 'date'}, Input),
-} = {}) => {
+export default (
+  {
+    Input = 'input',
+    TextInput = Input,
+    NumberInput = partial({ type: 'number' }, Input),
+    DateInput = partial({ type: 'date' }, Input),
+  } = {}
+) => {
   let Components = {
-    Facet: partial({TextInput}, Facet),
-    Number: partial({NumberInput}, Number),
-    Date: partial({DateInput}, Date),
-    Query: partial({TextInput}, Query),
+    Facet: partial({ TextInput }, Facet),
+    Number: partial({ NumberInput }, Number),
+    Date: partial({ DateInput }, Date),
+    Query: partial({ TextInput }, Query),
     ResultCount,
     ResultTable,
     ResultPager,
@@ -30,5 +32,5 @@ export default ({
     number: Components.Number,
     date: Components.Date,
   }
-  return {...Components, TypeMap}
+  return { ...Components, TypeMap }
 }

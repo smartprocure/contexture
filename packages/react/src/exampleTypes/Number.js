@@ -4,9 +4,9 @@ import { Flex } from '../layout/Flex'
 import { exampleTypes } from 'contexture-client'
 import injectTreeNode from '../utils/injectTreeNode'
 
-let numberInput = x => <input type='number' {...x} />
+let numberInput = x => <input type="number" {...x} />
 export default injectTreeNode(
-  observer(({ tree, node, NumberInput=numberInput }) => (
+  observer(({ tree, node, NumberInput = numberInput }) => (
     <Flex>
       <NumberInput
         value={node.min || ''}

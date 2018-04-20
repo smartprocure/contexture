@@ -4,9 +4,9 @@ import { Flex } from '../layout/Flex'
 import { exampleTypes } from 'contexture-client'
 import injectTreeNode from '../utils/injectTreeNode'
 
-let dateInput = x => <input type='date' {...x} />
+let dateInput = x => <input type="date" {...x} />
 export default injectTreeNode(
-  observer(({ tree, node, DateInput=dateInput }) => (
+  observer(({ tree, node, DateInput = dateInput }) => (
     <Flex>
       <DateInput
         value={node.from || ''}
