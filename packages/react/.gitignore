@@ -61,4 +61,7 @@ typings/
 coverage/
 jest_0/
 
+# ignore distribution folder
+dist/
+
 package-lock.json
