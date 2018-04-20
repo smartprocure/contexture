@@ -75,7 +75,7 @@
     "storybook-addon-jsx": "^5.3.0"
   },
   "dependencies": {
-    "futil-js": "^1.38.0",
+    "futil-js": "^1.44.0",
     "lodash": "^4.17.4",
     "mobx": "^4.2.0",
     "mobx-react": "^5.0.0",
