@@ -56,8 +56,12 @@ let updateEs = host => {
       F.extendOn(
         schemas,
         _.mapValues(
-          ({ esIndex, esType }) => ({
+          ({ esIndex, esType, notAnalyzedField }) => ({
             elasticsearch: { index: esIndex, type: esType },
+            modeMap: {
+              word: '',
+              autocomplete: `.${notAnalyzedField}`,
+            },
           }),
           x
         )

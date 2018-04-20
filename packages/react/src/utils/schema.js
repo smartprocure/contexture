@@ -17,6 +17,8 @@ export let applyDefaults = F.mapValuesIndexed((node, field) =>
   )
 )
 
+let firstValue = _.curry((field, data) => _.find(field, data)[field])
+
 let Tree = F.tree(x => x.properties)
 let flatten = _.flow(Tree.flatten(), _.omitBy(Tree.traverse))
 export let fromEsMapping = _.mapValues(
@@ -31,7 +33,7 @@ export let fromEsMapping = _.mapValues(
       'fields',
       _.flow(
         flatten,
-        _.mapValues(({ type }) => {
+        _.mapValues(({ type, fields }) => {
           let typeDefault = F.alias(type, {
             string: 'query',
             text: 'facet',
@@ -41,15 +43,20 @@ export let fromEsMapping = _.mapValues(
           })
           return {
             typeDefault,
-            // TODO: exists, bool, geo, text? //date auto
+            // TODO: exists, bool, geo, text
             typeOptions: {
               text: ['facet', 'query'],
             }[type] || [typeDefault],
+            notAnalyzedField: _.findKey({ type: 'keyword' }, fields)
           }
         }),
         applyDefaults
       )
-    )
+    ),
+    // TODO: Add contexture-elasticsearch support for per field notAnalyzedField 
+    schema => _.extend({
+      notAnalyzedField: firstValue('notAnalyzedField', schema.fields)
+    }, schema)
   )
 )
 export let getESSchemas = client =>
