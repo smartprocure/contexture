@@ -1,3 +1,6 @@
+# 1.0.1
+* Fixed an immutable issue. See: https://github.com/smartprocure/contexture-react/pull/31
+
 # 1.0.0
 * Rearranged exports
 * `example-types` are now exposed as `exampleTypes/` and are broken into separate files instead of `components.js`

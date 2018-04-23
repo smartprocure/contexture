@@ -22,7 +22,7 @@ let replaceOn = (list, from, to) => list.splice(list.indexOf(from), 1, to)
 
 let ContextureClientBridge = (Types, Tree) => {
   // not sure why reassignment is needed - its 2am and that makes it work... fix tomorrow!
-  Tree = Tree.addActions(({ flat }) => ({
+  Tree.addActions(({ flat }) => ({
     updatePath(node, to) {
       let from = node.path
       node.path = to
