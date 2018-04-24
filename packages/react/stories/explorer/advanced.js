@@ -50,22 +50,10 @@ let changeSchema = schema => {
 
 let updateEs = host => {
   state.url = host
-  updateClient({ host, apiVersion: '6.0' })
+  updateClient({ host })
   state.schemas = fromPromise(
     getESSchemas(es.client).then(x => {
-      F.extendOn(
-        schemas,
-        _.mapValues(
-          ({ esIndex, esType, notAnalyzedField }) => ({
-            elasticsearch: { index: esIndex, type: esType },
-            modeMap: {
-              word: '',
-              autocomplete: `.${notAnalyzedField}`,
-            },
-          }),
-          x
-        )
-      )
+      F.extendOn(schemas, x)
       changeSchema(_.keys(x)[0])
       return x
     })
