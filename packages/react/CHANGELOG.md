@@ -1,3 +1,7 @@
+# 1.1.0
+* Improved ES schema utils to account for mode map
+* Add display names to example type components
+
 # 1.0.1
 * Fixed an immutable issue. See: https://github.com/smartprocure/contexture-react/pull/31
 
