@@ -3,7 +3,7 @@ import { observer } from 'mobx-react'
 import injectTreeNode from '../utils/injectTreeNode'
 import { exampleTypes } from 'contexture-client'
 
-export default injectTreeNode(
+let ResultCount = injectTreeNode(
   observer(({ node }) => (
     <div style={{ textAlign: 'center' }}>
       {node.context.response.results.length
@@ -15,3 +15,6 @@ export default injectTreeNode(
   )),
   exampleTypes.results
 )
+ResultCount.displayName = 'ResultCount'
+
+export default ResultCount

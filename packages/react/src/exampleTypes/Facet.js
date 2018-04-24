@@ -10,7 +10,7 @@ import injectTreeNode from '../utils/injectTreeNode'
 let toggleElement = (check, val, arr = []) =>
   (check ? _.pull : F.push)(val, arr)
 
-export default injectTreeNode(
+let Facet = injectTreeNode(
   observer(({ tree, node, hide = {}, TextInput = 'input' }) => (
     <div>
       {!hide.facetFilter && (
@@ -49,3 +49,6 @@ export default injectTreeNode(
   )),
   exampleTypes.facet
 )
+Facet.displayName = 'Facet'
+
+export default Facet

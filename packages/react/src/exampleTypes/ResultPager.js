@@ -7,7 +7,7 @@ import InjectTreeNode from '../utils/injectTreeNode'
 let span = ({ children }) => <span>{children}</span>
 let a = ({ children, onClick }) => <a onClick={onClick}>{children}</a>
 
-export default InjectTreeNode(
+let ResultPager = InjectTreeNode(
   observer(({ node, tree, List = 'div', Item = span, Link = a }) => {
     let pages = Math.ceil(
       (node.context.response.totalRecords || 1) / node.pageSize
@@ -67,3 +67,6 @@ export default InjectTreeNode(
     )
   })
 )
+ResultPager.displayName = 'ResultPager'
+
+export default ResultPager
