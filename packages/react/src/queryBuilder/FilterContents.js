@@ -73,5 +73,6 @@ let FilterContents = inject(_.defaults)(
     </div>
   ))
 )
+FilterContents.displayName = 'FilterContents'
 
 export default FilterContents

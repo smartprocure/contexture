@@ -49,5 +49,6 @@ let OperatorMenu = ({ tree, parent, root, parentTree }) => (
     </div>
   </div>
 )
+OperatorMenu.displayName = 'OperatorMenu'
 
 export default Component(OperatorMenu)
