@@ -1,3 +1,8 @@
+# 1.1.0
+* Improved ES schema utils to account for mode map
+* Add display names to example type components
+* Add injectDefaults
+
 # 1.0.1
 * Fixed an immutable issue. See: https://github.com/smartprocure/contexture-react/pull/31
 
@@ -8,7 +13,7 @@
 * utils like injectTreeNode, mobx-react-utils, etc are available under `utils` instead of root
 * `SearchRoot` is now `QueryBuilder`
 * Popover show lens prop renamed to isOpen
-* Added `layout/Modal`
+* Added `layout/Modal`         
 * Rearranged storybook set up to split things into separate files with a folder hierarchy
 * Added IMDB storybook section
 * Added `layout/Awaiter`

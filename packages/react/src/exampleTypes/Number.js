@@ -5,7 +5,7 @@ import { exampleTypes } from 'contexture-client'
 import injectTreeNode from '../utils/injectTreeNode'
 
 let numberInput = x => <input type="number" {...x} />
-export default injectTreeNode(
+let NumberComponent = injectTreeNode(
   observer(({ tree, node, NumberInput = numberInput }) => (
     <Flex>
       <NumberInput
@@ -21,3 +21,6 @@ export default injectTreeNode(
   )),
   exampleTypes.number
 )
+NumberComponent.displayName = 'Number'
+
+export default NumberComponent

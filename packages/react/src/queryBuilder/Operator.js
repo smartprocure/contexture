@@ -27,6 +27,8 @@ let BlankOperator = ({ state, tree, child }) => (
       )}
   </div>
 )
+BlankOperator.displayName = 'BlankOperator'
+
 let OperatorLine = Component(({ tree, child, style }) => (
   <div
     style={{
@@ -37,6 +39,8 @@ let OperatorLine = Component(({ tree, child, style }) => (
     }}
   />
 ))
+OperatorLine.displayName = 'OperatorLine'
+
 let JoinOperator = ({ state, tree, child, parent }) => (
   <div>
     <div
@@ -57,6 +61,8 @@ let JoinOperator = ({ state, tree, child, parent }) => (
     <OperatorLine {...{ tree, child }} />
   </div>
 )
+JoinOperator.displayName = 'JoinOperator'
+
 let Operator = Component(
   () => ({
     state: lenservable({
@@ -82,7 +88,8 @@ let Operator = Component(
         <OperatorMenu {...{ tree, parent, root, parentTree }} />
       </Popover>
     </div>
-  )
+  ),
+  'Operator'
 )
 
 export default Operator

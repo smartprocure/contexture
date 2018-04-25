@@ -3,7 +3,7 @@ import { observer } from 'mobx-react'
 import injectTreeNode from '../utils/injectTreeNode'
 import { exampleTypes } from 'contexture-client'
 
-export default injectTreeNode(
+let Query = injectTreeNode(
   observer(({ tree, node, TextInput = 'input' }) => (
     <TextInput
       value={node.query || ''}
@@ -17,3 +17,6 @@ export default injectTreeNode(
   )),
   exampleTypes.query
 )
+Query.displayName = 'Query'
+
+export default Query

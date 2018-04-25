@@ -1,9 +1,5 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
-// For futil
-let stampKey = _.curry((key, x) =>
-  F.mapValuesIndexed((val, k) => ({ ...val, [key]: k }), x)
-)
 
 export let flagFields = _.flow(F.invertByArray, _.mapValues(F.flags))
 export let applyDefaults = F.mapValuesIndexed((node, field) =>
@@ -28,7 +24,7 @@ export let fromEsMapping = _.mapValues(
     _.omit(['_default_']),
     _.toPairs,
     // Capture esType
-    ([[esType, fields]]) => ({ fields, esType }),
+    ([[type, fields]]) => ({ fields, elasticsearch: { type } }),
     _.update(
       'fields',
       _.flow(
@@ -57,7 +53,10 @@ export let fromEsMapping = _.mapValues(
     schema =>
       _.extend(
         {
-          notAnalyzedField: firstValue('notAnalyzedField', schema.fields),
+          modeMap: {
+            word: '',
+            autocomplete: `.${firstValue('notAnalyzedField', schema.fields)}`,
+          },
         },
         schema
       )
@@ -72,7 +71,9 @@ export let getESSchemas = client =>
         F.invertByArray,
         _.mapValues(([x]) => schemas[x]),
         _.merge(schemas),
-        stampKey('esIndex')
+        F.mapValuesIndexed((val, index) =>
+          _.merge({ elasticsearch: { index } }, val)
+        )
       )(aliases)
     }
   )

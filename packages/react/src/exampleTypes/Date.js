@@ -5,7 +5,7 @@ import { exampleTypes } from 'contexture-client'
 import injectTreeNode from '../utils/injectTreeNode'
 
 let dateInput = x => <input type="date" {...x} />
-export default injectTreeNode(
+let DateComponent = injectTreeNode(
   observer(({ tree, node, DateInput = dateInput }) => (
     <Flex>
       <DateInput
@@ -21,3 +21,6 @@ export default injectTreeNode(
   )),
   exampleTypes.date
 )
+DateComponent.displayName = 'Date'
+
+export default DateComponent

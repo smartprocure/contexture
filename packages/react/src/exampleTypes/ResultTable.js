@@ -54,7 +54,7 @@ let Header = withStateLens({ popover: false })(
   ))
 )
 
-export default InjectTreeNode(
+let ResultTable = InjectTreeNode(
   observer(({ node, fields, infer, tree, path, Table = 'table' }) => {
     let mutate = tree.mutate(path)
     let schema = _.flow(
@@ -104,3 +104,6 @@ export default InjectTreeNode(
     )
   })
 )
+ResultTable.displayName = 'ResultTable'
+
+export default ResultTable

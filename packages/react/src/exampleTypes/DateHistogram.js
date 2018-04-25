@@ -5,7 +5,7 @@ import { exampleTypes } from 'contexture-client'
 import { Flex } from '../layout/Flex'
 import injectTreeNode from '../utils/injectTreeNode'
 
-export default injectTreeNode(
+let DateHistogram = injectTreeNode(
   observer(
     ({
       node,
@@ -36,3 +36,6 @@ export default injectTreeNode(
   ),
   exampleTypes.dateHistogram
 )
+DateHistogram.displayName = 'DateHistogram'
+
+export default DateHistogram
