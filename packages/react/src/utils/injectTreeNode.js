@@ -7,10 +7,11 @@ export default (
 ) =>
   injectDefaults(({ tree, node, group, path, ...props }) => {
     node = node || tree.getNode(path)
-    group = group || tree.tree.path
 
     // Dynamic add
     if (!node && type) {
+      group = group || _.get('tree.path', tree)
+
       // Lookup if already added
       if (!node && props.nodeKey) node = tree.getNode([...group, props.nodeKey])
 
