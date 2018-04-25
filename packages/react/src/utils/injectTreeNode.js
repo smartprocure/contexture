@@ -1,16 +1,16 @@
 import _ from 'lodash/fp'
-import { inject } from 'mobx-react'
+import { injectDefaults } from './mobx-react-utils'
+
 export default (
   render,
   { type, reactors, nodeProps = _.keys(reactors) } = {}
 ) =>
-  inject(({ tree: t, node: n }, { tree = t, path, node = n, ...props }) => {
+  injectDefaults(({ tree, node, group, path, ...props }) => {
     node = node || tree.getNode(path)
+    group = group || tree.tree.path
 
     // Dynamic add
     if (!node && type) {
-      let group = props.group || tree.tree.path
-
       // Lookup if already added
       if (!node && props.nodeKey) node = tree.getNode([...group, props.nodeKey])
 
@@ -20,8 +20,7 @@ export default (
         let newNode = {
           key,
           type,
-          ...(props.field && { field: props.field }),
-          ..._.pick(nodeProps, props),
+          ..._.pick(['field', ...nodeProps], props),
         }
         tree.add(group, newNode)
         // Can't be newNode because it's wrapped in observable, and add doesn't return the new node
