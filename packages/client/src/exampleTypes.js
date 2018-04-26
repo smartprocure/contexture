@@ -34,8 +34,8 @@ export default stampKey('type', {
       value: 'others',
     },
     defaults: {
-      value: ''
-    }
+      value: '',
+    },
   },
   query: {
     validate: x => x.query,
@@ -43,8 +43,8 @@ export default stampKey('type', {
       query: 'others',
     },
     defaults: {
-      query: ''
-    }
+      query: '',
+    },
   },
   mongoId: {
     validate: validateValues,
@@ -80,24 +80,24 @@ export default stampKey('type', {
     },
     defaults: {
       min: null,
-      max: null
-    }
+      max: null,
+    },
   },
   bool: {
     reactors: {
       value: 'others',
     },
     defaults: {
-      value: null
-    }
+      value: null,
+    },
   },
   exists: {
     reactors: {
       value: 'others',
     },
     defaults: {
-      value: null
-    }
+      value: null,
+    },
   },
   date: {
     validate: x => !_.isNil(x.from) || !_.isNil(x.to),
@@ -109,8 +109,8 @@ export default stampKey('type', {
     },
     defaults: {
       from: null,
-      to: null
-    }
+      to: null,
+    },
   },
   geo: {
     reactors: {
