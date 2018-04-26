@@ -33,11 +33,17 @@ export default stampKey('type', {
     reactors: {
       value: 'others',
     },
+    defaults: {
+      value: '',
+    },
   },
   query: {
     validate: x => x.query,
     reactors: {
       query: 'others',
+    },
+    defaults: {
+      query: '',
     },
   },
   mongoId: {
@@ -56,6 +62,7 @@ export default stampKey('type', {
       include: 'self',
     },
     defaults: {
+      // page: 1,
       pageSize: 10,
       context: {
         response: {
@@ -71,15 +78,25 @@ export default stampKey('type', {
       min: 'others',
       max: 'others',
     },
+    defaults: {
+      min: null,
+      max: null,
+    },
   },
   bool: {
     reactors: {
       value: 'others',
     },
+    defaults: {
+      value: null,
+    },
   },
   exists: {
     reactors: {
       value: 'others',
+    },
+    defaults: {
+      value: null,
     },
   },
   date: {
@@ -89,6 +106,10 @@ export default stampKey('type', {
       to: 'others',
       useDateMath: 'others',
       useRaw: 'others',
+    },
+    defaults: {
+      from: null,
+      to: null,
     },
   },
   geo: {
