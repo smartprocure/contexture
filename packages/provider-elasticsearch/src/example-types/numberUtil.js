@@ -31,7 +31,7 @@ module.exports = {
           filter: rangeFilter(field, min, max),
           aggs: {
             statistical: {
-              stats: {
+              extended_stats: {
                 field,
                 missing: 0,
               },
