@@ -1,4 +1,6 @@
-﻿### 0.8.4
+﻿### 0.8.5
+* Number types will now return extended instead of standard stats.
+### 0.8.4
 * Number types will interpret interval min or max null values as open left or right boundaries.
 ### 0.8.3
 * Fix regEx for words
