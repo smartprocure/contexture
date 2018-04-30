@@ -141,7 +141,7 @@ describe('number/filter', () => {
           },
           aggs: {
             statistical: {
-              stats: {
+              extended_stats: {
                 field: 'test',
                 missing: 0,
               },
