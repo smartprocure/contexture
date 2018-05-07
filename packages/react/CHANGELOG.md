@@ -1,3 +1,7 @@
+# 1.2.0
+* Add TermsStats example type and BarChart in Layout
+* Fix includes bug in results table
+
 # 1.1.0
 * Improved ES schema utils to account for mode map
 * Add display names to example type components
