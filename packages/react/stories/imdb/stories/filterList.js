@@ -30,6 +30,7 @@ let {
   ResultTable,
   ResultPager,
   DateHistogram,
+  TermsStats,
   TypeMap,
 } = ExampleTypes({ Input })
 
@@ -107,6 +108,13 @@ let tree = Contexture({
       value_field: 'imdbVotes',
       interval: '3650d',
     },
+    {
+      key: 'genreScores',
+      type: 'terms_stats',
+      key_field: 'genres',
+      value_field: 'metaScore',
+      order: 'sum'
+    }
   ],
 })
 
@@ -147,6 +155,7 @@ export default () => (
                 path={['searchRoot', 'releases']}
                 format={formatYear}
               />
+              <TermsStats path={['searchRoot', 'genreScores']} />
               <ResultTable
                 path={['searchRoot', 'results']}
                 fields={{
