@@ -1,3 +1,6 @@
+# 2.7.2
+* Add missing example type terms_stats
+
 # 2.7.1
 * Add missing example type defaults
 
