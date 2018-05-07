@@ -133,4 +133,18 @@ export default stampKey('type', {
       },
     },
   },
+  terms_stats: {
+    reactors: {
+      key_field: 'self',
+      value_field: 'self',
+      order: 'self',
+      sortDir: 'self',
+      size: 'self'
+    },
+    defaults: {
+      context: {
+        terms: []
+      },
+    },
+  }
 })
