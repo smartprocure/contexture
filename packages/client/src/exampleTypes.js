@@ -19,6 +19,7 @@ export default stampKey('type', {
       sort: 'self',
     },
     defaults: {
+      field: null,
       values: [],
       // mode: 'include',
       optionsFilter: '',
@@ -34,6 +35,7 @@ export default stampKey('type', {
       value: 'others',
     },
     defaults: {
+      field: null,
       value: '',
     },
   },
@@ -43,6 +45,7 @@ export default stampKey('type', {
       query: 'others',
     },
     defaults: {
+      field: null,
       query: '',
     },
   },
@@ -79,6 +82,7 @@ export default stampKey('type', {
       max: 'others',
     },
     defaults: {
+      field: null,
       min: null,
       max: null,
     },
@@ -88,6 +92,7 @@ export default stampKey('type', {
       value: 'others',
     },
     defaults: {
+      field: null,
       value: null,
     },
   },
@@ -96,6 +101,7 @@ export default stampKey('type', {
       value: 'others',
     },
     defaults: {
+      field: null,
       value: null,
     },
   },
@@ -108,6 +114,7 @@ export default stampKey('type', {
       useRaw: 'others',
     },
     defaults: {
+      field: null,
       from: null,
       to: null,
     },
@@ -139,12 +146,12 @@ export default stampKey('type', {
       value_field: 'self',
       order: 'self',
       sortDir: 'self',
-      size: 'self',
+      size: 'self'
     },
     defaults: {
       context: {
-        terms: [],
+        terms: []
       },
     },
-  },
+  }
 })
