@@ -1,3 +1,6 @@
+# 2.7.3
+* Make sure type has a default (undefined) and field has a default in relevant example types.
+
 # 2.7.2
 * Add missing example type terms_stats
 
