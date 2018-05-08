@@ -2,6 +2,7 @@
 * Add TermsStats example type and BarChart in Layout
 * Fix includes bug in results table
 * Add cardinality and show more to Facet
+* Add basic Save/Load in new debug panel to explorer story
 
 # 1.1.0
 * Improved ES schema utils to account for mode map
