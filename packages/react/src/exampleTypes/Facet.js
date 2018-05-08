@@ -46,7 +46,7 @@ let Facet = injectTreeNode(
         )
       }, _.get('context.options', node))}
       { !!node.context.cardinality && <div>Showing {_.min([node.size || 10, node.context.options.length])} of {node.context.cardinality}</div>}
-      { (node.context.cardinality > (node.size || 10)) && <a onClick={e => tree.mutate(
+      { (node.context.cardinality > (node.size || 10)) && <a onClick={() => tree.mutate(
         node.path, { size: (node.size || 10)  + 10 })
       }>View More</a>}
     </div>
