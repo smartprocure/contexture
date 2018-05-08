@@ -3,52 +3,54 @@ import _ from 'lodash/fp'
 import {observer} from 'mobx-react'
 import {Flex} from './Flex'
 
-let BarChart = ({
+let YAxis = ({height, borderColor, min, max}) => (
+  <div>
+    <div
+      key='legend'
+      style={{
+        height,
+        margin: '0 5px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        borderRight: `solid 1px ${borderColor()}`,
+        padding: '5px',
+      }}>
+      <div
+        style={{
+          borderTop: `solid 1px ${borderColor()}`,
+          textAlign: 'right',
+        }}>
+        {max}
+      </div>
+      <div
+        style={{
+          borderBottom: `solid 1px ${borderColor()}`,
+          textAlign: 'right',
+        }}>
+        {min}
+      </div>
+    </div>
+    <div style={{padding: '5px'}}>&nbsp;</div>
+  </div>
+)
+
+let BarChart = observer(({
   data,
   valueField,
-  height,
-  format,
   categoryField,
   background,
+  height = 100,
+  format = _.identity,
   gutter = 5,
-  yAxis,
+  yAxis = false,
 }) => {
   let values = _.map(valueField, data)
   let max = _.max(values)
   let min = _.min(values)
   return (
     <Flex style={{alignItems: 'flex-end', justifyContent: 'center'}}>
-      {yAxis && (
-        <div>
-          <div
-            key='legend'
-            style={{
-              height,
-              margin: '0 5px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              borderRight: `solid 1px ${background()}`,
-              padding: '5px',
-            }}>
-            <div
-              style={{
-                borderTop: `solid 1px ${background()}`,
-                textAlign: 'right',
-              }}>
-              {max}
-            </div>
-            <div
-              style={{
-                borderBottom: `solid 1px ${background()}`,
-                textAlign: 'right',
-              }}>
-              {min}
-            </div>
-          </div>
-          <div style={{padding: '5px'}}>&nbsp;</div>
-        </div>
-      )}
+      {yAxis && <YAxis {...{min, max, height, borderColor: background}} />}
       {_.map(
         x => (
           <div key={x.key}>
@@ -68,6 +70,7 @@ let BarChart = ({
       )}
     </Flex>
   )
-}
+})
+BarChart.displayName = 'BarChart'
 
-export default observer(BarChart)
+export default BarChart

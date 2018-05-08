@@ -9,17 +9,16 @@ let DateHistogram = injectTreeNode(
   observer(
     ({
       node,
-      format = _.identity,
-      height = 100,
       background = () => '#ccc',
+      ...props
     }) =>
       <BarChart
         data={node.context.entries}
         categoryField='key'
         valueField='count'
-        yAxis={false}
         gutter={0}
-        {...{format, height, background}}
+        {...{background}}
+        {...props}
       />
   ),
   exampleTypes.dateHistogram
