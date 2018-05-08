@@ -11,7 +11,9 @@ export let defaults = {
   context: null,
   missedUpdate: null,
   paused: null,
+  type: null
 }
+export let internalStateKeys = _.omit(['type'], defaults)
 
 export let initNode = (node, path, extend, types) => {
   runTypeFunction(types, 'init', node, extend)
