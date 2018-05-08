@@ -40,7 +40,7 @@ let ContextureClientBridge = (Types, Tree) => {
   }))
   return {
     getNode: Tree.getNode,
-    add: tree => Tree.add(tree.path, observable(blankNode())),
+    add: tree => Tree.add(tree.path, blankNode()),
     remove: (tree, node) => Tree.remove(node.path),
     join: (tree, join) => Tree.mutate(tree.path, { join }),
     mutate: Tree.mutate,
@@ -50,7 +50,7 @@ let ContextureClientBridge = (Types, Tree) => {
       let tree = Tree.getNode(parentPath)
       let index = tree.children.indexOf(node)
       Tree.remove(path)
-      Tree.add(parentPath, observable({ key, type, field }))
+      Tree.add(parentPath, { key, type, field })
       let newNode = Tree.getNode(path)
       // Move to same index
       tree.children.remove(newNode) // pop since add does a push
@@ -80,7 +80,7 @@ let ContextureClientBridge = (Types, Tree) => {
         node.join = oppositeJoin(node.join)
 
         Tree.reparentPaths(newGroup, node.path, newGroup.path)
-        Tree.add(node.path, observable(blankNode()))
+        Tree.add(node.path, blankNode())
       } else {
         let newGroup = observable({
           key: randomString(),
@@ -93,7 +93,7 @@ let ContextureClientBridge = (Types, Tree) => {
         Tree.updatePath(newGroup, [..._.dropRight(1, node.path), newGroup.key])
         Tree.reparentPaths(node, _.dropRight(1, node.path), newGroup.path)
 
-        if (!skipDefaultNode) Tree.add(newGroup.path, observable(blankNode()))
+        if (!skipDefaultNode) Tree.add(newGroup.path, blankNode())
 
         return newGroup
       }
