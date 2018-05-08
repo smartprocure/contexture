@@ -6,7 +6,7 @@ import { Flex } from './Flex'
 let YAxis = ({ height, borderColor, min, max }) => (
   <div>
     <div
-      key='legend'
+      key="legend"
       style={{
         height,
         margin: '0 5px',

@@ -8,8 +8,8 @@ let DateHistogram = injectTreeNode(
   observer(({ node, ...props }) => (
     <BarChart
       data={node.context.entries}
-      categoryField='key'
-      valueField='count'
+      categoryField="key"
+      valueField="count"
       gutter={0}
       {...props}
     />

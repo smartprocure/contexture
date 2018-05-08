@@ -8,7 +8,7 @@ let TermsStats = injectTreeNode(
   observer(({ node, ...props }) => (
     <BarChart
       data={node.context.terms}
-      categoryField='key'
+      categoryField="key"
       valueField={node.order}
       yAxis
       {...props}
