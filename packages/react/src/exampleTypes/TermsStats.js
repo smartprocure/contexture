@@ -5,13 +5,12 @@ import injectTreeNode from '../utils/injectTreeNode'
 import BarChart from '../layout/BarChart'
 
 let TermsStats = injectTreeNode(
-  observer(({ node, background = () => '#ccc', ...props }) => (
+  observer(({ node, ...props }) => (
     <BarChart
       data={node.context.terms}
       categoryField='key'
       valueField={node.order}
       yAxis
-      {...{ background }}
       {...props}
     />
   )),

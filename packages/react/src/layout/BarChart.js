@@ -43,7 +43,7 @@ let BarChart = observer(
     data,
     valueField,
     categoryField,
-    background,
+    background = () => '#ccc',
     height = 100,
     format = _.identity,
     gutter = 5,

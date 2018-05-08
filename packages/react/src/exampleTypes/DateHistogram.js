@@ -5,13 +5,12 @@ import injectTreeNode from '../utils/injectTreeNode'
 import BarChart from '../layout/BarChart'
 
 let DateHistogram = injectTreeNode(
-  observer(({ node, background = () => '#ccc', ...props }) => (
+  observer(({ node, ...props }) => (
     <BarChart
       data={node.context.entries}
       categoryField='key'
       valueField='count'
       gutter={0}
-      {...{ background }}
       {...props}
     />
   )),
