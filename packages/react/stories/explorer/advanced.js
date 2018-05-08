@@ -5,7 +5,7 @@ import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { Provider, observer } from 'mobx-react'
 
-import { Awaiter } from '../../src/layout/'
+import { Awaiter, Flex } from '../../src/layout/'
 import QueryBuilder from '../../src/queryBuilder/'
 import { getESSchemas } from '../../src/utils/schema'
 import ExampleTypes from '../../src/exampleTypes/'
@@ -18,7 +18,16 @@ let state = observable({
   url: '',
   schemas: null,
   tree: {},
+  savedSearch: '',
+  showDebug: false
 })
+let save = () => {
+  state.savedSearch = JSON.stringify(state.tree.serialize(), null, 2)
+}
+let load = () => {
+  state.tree = Contexture(JSON.parse(state.savedSearch))
+  state.tree.refresh()
+}
 
 let changeSchema = schema => {
   state.tree = Contexture({
@@ -83,6 +92,13 @@ let Story = observer(() => {
                     _.sortBy(_.identity, _.keys(schemas))
                   )}
                 </select>
+                <button onClick={save}>Save</button>
+                <button onClick={load}>Load</button>
+                <button onClick={F.flip(F.lensProp('showDebug', state))}>{state.showDebug ? 'Hide' : 'Show'} Dev Panel</button>
+                {state.showDebug && <Flex>
+                  <textarea style={{width:'50%'}} value={state.savedSearch} onChange={e => {state.savedSearch = e.target.value}} />
+                  <Debug style={{width:'50%'}} value={tree} />
+                </Flex>}
                 <Provider tree={tree} types={TypeMap}>
                   <div>
                     <QueryBuilder
@@ -93,7 +109,6 @@ let Story = observer(() => {
                     <ResultTable path={['root', 'results']} infer />
                   </div>
                 </Provider>
-                
               </div>
             )
           }
