@@ -146,12 +146,12 @@ export default stampKey('type', {
       value_field: 'self',
       order: 'self',
       sortDir: 'self',
-      size: 'self'
+      size: 'self',
     },
     defaults: {
       context: {
-        terms: []
+        terms: [],
       },
     },
-  }
+  },
 })
