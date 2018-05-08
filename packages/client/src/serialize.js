@@ -16,7 +16,9 @@ export default (tree, { search } = {}) =>
             if (!x.hasValue) x.markedForDeletion = true
           }
           _.each(unsetOn(_, x), [
-            ..._.keys(_.omit(search ? 'lastUpdateTime' : '', internalStateKeys)),
+            ..._.keys(
+              _.omit(search ? 'lastUpdateTime' : '', internalStateKeys)
+            ),
             ...getNilKeys(x),
           ])
         },

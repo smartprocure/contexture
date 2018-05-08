@@ -11,7 +11,7 @@ export let defaults = {
   context: null,
   missedUpdate: null,
   paused: null,
-  type: null
+  type: null,
 }
 export let internalStateKeys = _.omit(['type'], defaults)
 
