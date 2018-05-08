@@ -1,5 +1,4 @@
 import React from 'react'
-import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 import { exampleTypes } from 'contexture-client'
 import injectTreeNode from '../utils/injectTreeNode'
