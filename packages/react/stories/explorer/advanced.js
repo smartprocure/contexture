@@ -40,13 +40,7 @@ let changeSchema = schema => {
         key: 'criteria',
         type: 'group',
         join: 'and',
-        children: [
-          {
-            key: 'firstFilter',
-            type: null,
-            field: null,
-          },
-        ],
+        children: [{ key: 'firstFilter' }],
       },
       {
         key: 'results',

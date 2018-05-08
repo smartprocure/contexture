@@ -17,7 +17,7 @@ let randomString = () =>
 
 let { encode } = F.encoder('/') // todo get from client
 
-let blankNode = () => ({ key: randomString(), field: null })
+let blankNode = () => ({ key: randomString() })
 let replaceOn = (list, from, to) => list.splice(list.indexOf(from), 1, to)
 
 let ContextureClientBridge = (Types, Tree) => {
