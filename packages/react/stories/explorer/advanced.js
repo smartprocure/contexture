@@ -19,7 +19,7 @@ let state = observable({
   schemas: null,
   tree: {},
   savedSearch: '',
-  showDebug: false
+  showDebug: false,
 })
 let save = () => {
   state.savedSearch = JSON.stringify(state.tree.serialize(), null, 2)
@@ -88,11 +88,21 @@ let Story = observer(() => {
                 </select>
                 <button onClick={save}>Save</button>
                 <button onClick={load}>Load</button>
-                <button onClick={F.flip(F.lensProp('showDebug', state))}>{state.showDebug ? 'Hide' : 'Show'} Dev Panel</button>
-                {state.showDebug && <Flex>
-                  <textarea style={{width:'50%'}} value={state.savedSearch} onChange={e => {state.savedSearch = e.target.value}} />
-                  <Debug style={{width:'50%'}} value={tree} />
-                </Flex>}
+                <button onClick={F.flip(F.lensProp('showDebug', state))}>
+                  {state.showDebug ? 'Hide' : 'Show'} Dev Panel
+                </button>
+                {state.showDebug && (
+                  <Flex>
+                    <textarea
+                      style={{ width: '50%' }}
+                      value={state.savedSearch}
+                      onChange={e => {
+                        state.savedSearch = e.target.value
+                      }}
+                    />
+                    <Debug style={{ width: '50%' }} value={tree} />
+                  </Flex>
+                )}
                 <Provider tree={tree} types={TypeMap}>
                   <div>
                     <QueryBuilder
