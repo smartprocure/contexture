@@ -1,11 +1,11 @@
 import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
-import { get } from 'mobx'
 import { inject, observer } from 'mobx-react'
 import { ModalPicker, Modal, FilteredPicker, Dynamic } from '../layout/'
 import { fieldsToOptions } from '../FilterAdder'
 import { partial } from '../utils/mobx-react-utils'
+import { get } from '../utils/mobx-utils'
 
 let FieldPicker = partial(
   {
