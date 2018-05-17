@@ -654,7 +654,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
           <div
             style={
               Object {
-                "alignItems": "baseline",
+                "alignItems": "flex-end",
                 "display": "flex",
                 "justifyContent": "center",
               }
@@ -666,9 +666,13 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   Object {
                     "background": "#ccc",
                     "height": 25,
+                    "margin": "0 0px",
                   }
                 }
-              />
+                title={1}
+              >
+                 
+              </div>
               <div
                 style={
                   Object {
@@ -685,9 +689,13 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   Object {
                     "background": "#ccc",
                     "height": 75,
+                    "margin": "0 0px",
                   }
                 }
-              />
+                title={3}
+              >
+                 
+              </div>
               <div
                 style={
                   Object {
@@ -704,9 +712,13 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   Object {
                     "background": "#ccc",
                     "height": 50,
+                    "margin": "0 0px",
                   }
                 }
-              />
+                title={2}
+              >
+                 
+              </div>
               <div
                 style={
                   Object {
@@ -723,9 +735,13 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   Object {
                     "background": "#ccc",
                     "height": 100,
+                    "margin": "0 0px",
                   }
                 }
-              />
+                title={4}
+              >
+                 
+              </div>
               <div
                 style={
                   Object {
@@ -742,9 +758,13 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   Object {
                     "background": "#ccc",
                     "height": 25,
+                    "margin": "0 0px",
                   }
                 }
-              />
+                title={1}
+              >
+                 
+              </div>
               <div
                 style={
                   Object {
@@ -1355,7 +1375,7 @@ exports[`Storyshots IMDB Quick Start 1`] = `
         <div
           style={
             Object {
-              "alignItems": "baseline",
+              "alignItems": "flex-end",
               "display": "flex",
               "justifyContent": "center",
             }
@@ -1401,31 +1421,29 @@ exports[`Storyshots IMDB Quick Start 1`] = `
 
 exports[`Storyshots Index Explorer Advanced Search 1`] = `
 <div>
-  <div>
-    <input
-      onBlur={[Function]}
-      onChange={[Function]}
-      onFocus={[Function]}
-      style={
-        Object {
-          "background": "rgba(255, 255, 255, 0.7)",
-          "border": "solid 1px #efefef",
-          "borderRadius": "30px",
-          "boxSizing": "border-box",
-          "display": "block",
-          "margin": "0 auto",
-          "outline": "none",
-          "padding": "5px",
-          "textIndent": "5px",
-          "transition": "background 0.3s",
-          "width": "100%",
-        }
+  <input
+    onBlur={[Function]}
+    onChange={[Function]}
+    onFocus={[Function]}
+    style={
+      Object {
+        "background": "rgba(255, 255, 255, 0.7)",
+        "border": "solid 1px #efefef",
+        "borderRadius": "30px",
+        "boxSizing": "border-box",
+        "display": "block",
+        "margin": "0 auto",
+        "outline": "none",
+        "padding": "5px",
+        "textIndent": "5px",
+        "transition": "background 0.3s",
+        "width": "100%",
       }
-      value="https://public-es-demo.smartprocure.us/"
-    />
-    <div>
-      Loading...
-    </div>
+    }
+    value="https://public-es-demo.smartprocure.us/"
+  />
+  <div>
+    Loading...
   </div>
 </div>
 `

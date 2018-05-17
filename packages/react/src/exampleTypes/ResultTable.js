@@ -15,7 +15,7 @@ let buildSchema = F.mapValuesIndexed((val, field) => ({
   display: val.push && _.join(', '),
 }))
 let inferSchema = _.flow(getResults, _.head, getRecord, buildSchema)
-let getIncludes = (node, schema) =>
+let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
 
 let Header = withStateLens({ popover: false })(
@@ -53,6 +53,7 @@ let Header = withStateLens({ popover: false })(
     </th>
   ))
 )
+Header.displayName = 'Header'
 
 let ResultTable = InjectTreeNode(
   observer(({ node, fields, infer, tree, path, Table = 'table' }) => {

@@ -6,6 +6,7 @@ import SpacedList from './SpacedList'
 import TextHighlight from './TextHighlight'
 import { FilteredPicker, ModalPicker } from './Pickers'
 import Dynamic from './Dynamic'
+import BarChart from './BarChart'
 
 export {
   Awaiter,
@@ -17,4 +18,5 @@ export {
   FilteredPicker,
   ModalPicker,
   Dynamic,
+  BarChart,
 }

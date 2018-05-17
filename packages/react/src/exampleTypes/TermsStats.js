@@ -4,18 +4,18 @@ import { exampleTypes } from 'contexture-client'
 import injectTreeNode from '../utils/injectTreeNode'
 import BarChart from '../layout/BarChart'
 
-let DateHistogram = injectTreeNode(
+let TermsStats = injectTreeNode(
   observer(({ node, ...props }) => (
     <BarChart
-      data={node.context.entries}
+      data={node.context.terms}
       categoryField="key"
-      valueField="count"
-      gutter={0}
+      valueField={node.order}
+      yAxis
       {...props}
     />
   )),
-  exampleTypes.dateHistogram
+  exampleTypes.TermsStats
 )
-DateHistogram.displayName = 'DateHistogram'
+TermsStats.displayName = 'TermsStats'
 
-export default DateHistogram
+export default TermsStats
