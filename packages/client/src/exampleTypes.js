@@ -9,6 +9,47 @@ export let stampKey = _.curry((key, x) =>
 let validateValues = ({ value, values = [] }) => value || values.length
 
 export default stampKey('type', {
+  cardinality: {
+    reactors: {
+      value: 'others',
+    },
+    defaults: {
+      field: null,
+    },
+  },
+  esTwoLevelAggregation: {
+    validate: context =>
+      context.key_field &&
+      context.key_type &&
+      context.value_field &&
+      context.value_type,
+    reactors: {
+      value: 'others',
+    },
+    defaults: {
+      key_field: '',
+      key_type: '',
+      key_data: null,
+      value_field: '',
+      value_type: '',
+      value_data: null,
+    }
+  },
+  groupedMetric: {
+    validate: context =>
+      context.metric.type &&
+      !!(
+        /value_count|top_hits/.test(context.metric.type) || context.metric.field
+      ),
+    reactors: {
+      value: 'others',
+    },
+    defaults: {
+      metric: {
+        type: 'top_hits'
+      }
+    }
+  },
   facet: {
     validate: validateValues,
     reactors: {
