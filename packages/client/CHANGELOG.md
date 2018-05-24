@@ -1,3 +1,6 @@
+﻿# 2.8.0
+* Added more example types.
+
 # 2.7.3
 * Make sure type has a default (undefined) and field has a default in relevant example types.
 
