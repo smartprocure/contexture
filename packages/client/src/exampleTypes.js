@@ -22,6 +22,151 @@ let twoLevelMatch = {
 }
 
 export default stampKey('type', {
+  facet: {
+    validate: validateValues,
+    reactors: {
+      values: 'others',
+      mode: 'others',
+      size: 'self',
+      optionsFilter: 'self',
+      sort: 'self',
+    },
+    defaults: {
+      field: null,
+      values: [],
+      // mode: 'include',
+      optionsFilter: '',
+      context: {
+        options: [],
+        cardinality: null,
+      },
+    },
+  },
+  text: {
+    validate: validateValues,
+    reactors: {
+      value: 'others',
+    },
+    defaults: {
+      field: null,
+      value: '',
+    },
+  },
+  query: {
+    validate: x => x.query,
+    reactors: {
+      query: 'others',
+    },
+    defaults: {
+      field: null,
+      query: '',
+    },
+  },
+  mongoId: {
+    validate: validateValues,
+    reactors: {
+      values: 'others',
+    },
+  },
+  results: {
+    validate: () => false,
+    reactors: {
+      page: 'self',
+      pageSize: 'self',
+      sortField: 'self',
+      sortDir: 'self',
+      include: 'self',
+    },
+    defaults: {
+      // page: 1,
+      pageSize: 10,
+      context: {
+        response: {
+          results: [],
+          totalRecords: null,
+        },
+      },
+    },
+  },
+  number: {
+    validate: x => !_.isNil(x.min) || !_.isNil(x.max),
+    reactors: {
+      min: 'others',
+      max: 'others',
+    },
+    defaults: {
+      field: null,
+      min: null,
+      max: null,
+    },
+  },
+  bool: {
+    reactors: {
+      value: 'others',
+    },
+    defaults: {
+      field: null,
+      value: null,
+    },
+  },
+  exists: {
+    reactors: {
+      value: 'others',
+    },
+    defaults: {
+      field: null,
+      value: null,
+    },
+  },
+  date: {
+    validate: x => !_.isNil(x.from) || !_.isNil(x.to),
+    reactors: {
+      from: 'others',
+      to: 'others',
+      useDateMath: 'others',
+      useRaw: 'others',
+    },
+    defaults: {
+      field: null,
+      from: null,
+      to: null,
+    },
+  },
+  geo: {
+    reactors: {
+      location: 'others',
+      radius: 'others',
+      operator: 'others',
+    },
+  },
+  dateHistogram: {
+    reactors: {
+      key_field: 'self',
+      value_field: 'self',
+      interval: 'self',
+    },
+    defaults: {
+      context: {
+        entries: [],
+        maxDate: null,
+        minDate: null,
+      },
+    },
+  },
+  terms_stats: {
+    reactors: {
+      key_field: 'self',
+      value_field: 'self',
+      order: 'self',
+      sortDir: 'self',
+      size: 'self',
+    },
+    defaults: {
+      context: {
+        terms: [],
+      },
+    },
+  },
   cardinality: {
     reactors: {
       value: 'others',
@@ -167,151 +312,6 @@ export default stampKey('type', {
     defaults: {
       key_field: '',
       value_field: '',
-    },
-  },
-  facet: {
-    validate: validateValues,
-    reactors: {
-      values: 'others',
-      mode: 'others',
-      size: 'self',
-      optionsFilter: 'self',
-      sort: 'self',
-    },
-    defaults: {
-      field: null,
-      values: [],
-      // mode: 'include',
-      optionsFilter: '',
-      context: {
-        options: [],
-        cardinality: null,
-      },
-    },
-  },
-  text: {
-    validate: validateValues,
-    reactors: {
-      value: 'others',
-    },
-    defaults: {
-      field: null,
-      value: '',
-    },
-  },
-  query: {
-    validate: x => x.query,
-    reactors: {
-      query: 'others',
-    },
-    defaults: {
-      field: null,
-      query: '',
-    },
-  },
-  mongoId: {
-    validate: validateValues,
-    reactors: {
-      values: 'others',
-    },
-  },
-  results: {
-    validate: () => false,
-    reactors: {
-      page: 'self',
-      pageSize: 'self',
-      sortField: 'self',
-      sortDir: 'self',
-      include: 'self',
-    },
-    defaults: {
-      // page: 1,
-      pageSize: 10,
-      context: {
-        response: {
-          results: [],
-          totalRecords: null,
-        },
-      },
-    },
-  },
-  number: {
-    validate: x => !_.isNil(x.min) || !_.isNil(x.max),
-    reactors: {
-      min: 'others',
-      max: 'others',
-    },
-    defaults: {
-      field: null,
-      min: null,
-      max: null,
-    },
-  },
-  bool: {
-    reactors: {
-      value: 'others',
-    },
-    defaults: {
-      field: null,
-      value: null,
-    },
-  },
-  exists: {
-    reactors: {
-      value: 'others',
-    },
-    defaults: {
-      field: null,
-      value: null,
-    },
-  },
-  date: {
-    validate: x => !_.isNil(x.from) || !_.isNil(x.to),
-    reactors: {
-      from: 'others',
-      to: 'others',
-      useDateMath: 'others',
-      useRaw: 'others',
-    },
-    defaults: {
-      field: null,
-      from: null,
-      to: null,
-    },
-  },
-  geo: {
-    reactors: {
-      location: 'others',
-      radius: 'others',
-      operator: 'others',
-    },
-  },
-  dateHistogram: {
-    reactors: {
-      key_field: 'self',
-      value_field: 'self',
-      interval: 'self',
-    },
-    defaults: {
-      context: {
-        entries: [],
-        maxDate: null,
-        minDate: null,
-      },
-    },
-  },
-  terms_stats: {
-    reactors: {
-      key_field: 'self',
-      value_field: 'self',
-      order: 'self',
-      sortDir: 'self',
-      size: 'self',
-    },
-    defaults: {
-      context: {
-        terms: [],
-      },
     },
   },
 })
