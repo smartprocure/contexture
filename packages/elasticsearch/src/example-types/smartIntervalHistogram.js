@@ -4,7 +4,7 @@ let statsResults = require('./statistical').result
 let calcSmartInterval = require('../smartInterval').calcSmartInterval
 
 module.exports = {
-  validContext: context => context.field || context.field,
+  validContext: context => context.field,
   result(context, search) {
     let field = context.field
     let interval = context.interval
