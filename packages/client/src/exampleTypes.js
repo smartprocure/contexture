@@ -33,7 +33,7 @@ export default stampKey('type', {
       value_field: '',
       value_type: '',
       value_data: null,
-    }
+    },
   },
   groupedMetric: {
     validate: context =>
@@ -46,9 +46,9 @@ export default stampKey('type', {
     },
     defaults: {
       metric: {
-        type: 'top_hits'
-      }
-    }
+        type: 'top_hits',
+      },
+    },
   },
   facet: {
     validate: validateValues,
