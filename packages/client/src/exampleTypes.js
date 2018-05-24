@@ -8,6 +8,19 @@ export let stampKey = _.curry((key, x) =>
 
 let validateValues = ({ value, values = [] }) => value || values.length
 
+let twoLevelMatch = {
+  validate: context =>
+    !!(context.key_field && context.value_field && context.key_value),
+  reactors: {
+    value: 'others',
+  },
+  defaults: {
+    key_field: '',
+    value_field: '',
+    key_value: '',
+  },
+}
+
 export default stampKey('type', {
   cardinality: {
     reactors: {
@@ -48,6 +61,112 @@ export default stampKey('type', {
       metric: {
         type: 'top_hits',
       },
+    },
+  },
+  twoLevelMatch,
+  matchCardinality: twoLevelMatch,
+  matchStats: twoLevelMatch,
+  nLevelAggregation: {
+    reactors: {
+      value: 'others',
+    },
+    defaults: {
+      aggs: [],
+      reducers: [],
+      page: 0,
+      pageSize: 0,
+    },
+  },
+  nonzeroClusters: {
+    validate: context => context.field,
+    reactors: {
+      value: 'others',
+    },
+    defaults: {
+      field: '',
+    },
+  },
+  numberRangeHistogram: {
+    validate: context => !_.isNil(context.min) || !_.isNil(context.max),
+    reactors: {
+      value: 'others',
+    },
+    defaults: {
+      field: '',
+      min: 0,
+      max: 0,
+    },
+  },
+  percentileRanks: {
+    validate: context => context.field && context.config.values,
+    reactors: {
+      value: 'others',
+    },
+    defaults: {
+      field: '',
+      values: [],
+    },
+  },
+  percentiles: {
+    validate: context => context.field,
+    reactors: {
+      value: 'others',
+    },
+    defaults: {
+      field: '',
+    },
+  },
+  percentilesRange: {
+    validate: context => context.field,
+    reactors: {
+      value: 'others',
+    },
+    defaults: {
+      field: '',
+    },
+  },
+  smartIntervalHistogram: {
+    validate: context => context.field,
+    reactors: {
+      value: 'others',
+    },
+    defaults: {
+      field: '',
+    },
+  },
+  smartPercentileRanks: {
+    validate: context => context.field && context.values,
+    reactors: {
+      value: 'others',
+    },
+    defaults: {
+      field: '',
+      values: '',
+    },
+  },
+  statistical: {
+    reactors: {
+      value: 'others',
+    },
+  },
+  terms: {
+    reactors: {
+      value: 'others',
+    },
+  },
+  termsDelta: {
+    reactors: {
+      value: 'others',
+    },
+  },
+  termsStatsHits: {
+    validate: context => context.key_field && context.value_field,
+    reactors: {
+      value: 'others',
+    },
+    defaults: {
+      key_field: '',
+      value_field: '',
     },
   },
   facet: {
