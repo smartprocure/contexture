@@ -66,6 +66,8 @@ export let ContextTree = _.curry(
     let processEvent = F.flurry(
       getAffectedNodes(customReactors),
       _.each(n => {
+        // This is to prevent self reactors bubbling up and causing siblings to be marked for update when their parents are marked on self
+        // _might_ also be a bug and may need to just not traverse if it's children were in the bubble up path
         if (!_.some('markedForUpdate', n.children)) markForUpdate(n)
       })
     )
