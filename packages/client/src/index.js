@@ -58,7 +58,7 @@ export let ContextTree = _.curry(
     )
 
     // overwriting extend
-    extend = _.overSome([extend, onChange])
+    extend = _.over([extend, onChange])
 
     // Getting the Traversals
     let { markForUpdate, markLastUpdate, prepForUpdate } = traversals(extend)
