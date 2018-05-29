@@ -102,7 +102,7 @@ export let ContextTree = _.curry(
           onResult(decode(path), node, target)
           mergeWith((oldValue, newValue) => newValue, target, responseNode)
           extend(target, { updating: false })
-          target.updatingPromise.resolve()
+          target.updatingDeferred.resolve()
         }
       }, flattenTree(data))
     }
