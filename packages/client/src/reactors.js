@@ -31,6 +31,8 @@ export let StandardReactors = {
   },
   add: reactors.standardChange,
   remove(parent, node, { previous }, reactor) {
+    // BUG: Remove reactor should consider if anything else had a value because it makes it optional if it doesn't have one
+    // If it's in an OR group and now there's only 1 rule left that rule becomes required
     if (hasValue(previous)) return reactor('all')
   },
   paused(
