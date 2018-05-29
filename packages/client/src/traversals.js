@@ -4,7 +4,14 @@ import { Tree } from './util/tree'
 export default extend => ({
   markForUpdate: Tree.walk(x => {
     if (x.paused) extend(x, { missedUpdate: true })
-    else extend(x, { markedForUpdate: true, updatingPromise: F.defer() })
+    else {
+      let updatingDeferred = F.defer()
+      extend(x, {
+        markedForUpdate: true,
+        updatingPromise: updatingDeferred.promise,
+        updatingDeferred,
+      })
+    }
   }),
   markLastUpdate: time =>
     Tree.walk(child => {
