@@ -732,10 +732,10 @@ describe('lib', () => {
         types: {
           facet: {
             reactors: {
-              values: 'others'
-            }
-          }
-        }
+              values: 'others',
+            },
+          },
+        },
       },
       {
         key: 'root',
@@ -743,11 +743,11 @@ describe('lib', () => {
         children: [
           {
             key: 'a',
-            type: 'facet'
+            type: 'facet',
           },
           {
             key: 'b',
-            type: 'results'
+            type: 'results',
           },
         ],
       }

@@ -4,7 +4,10 @@ import { Tree } from './util/tree'
 import { internalStateKeys } from './node'
 
 let isFilterOnly = x => !x.children && (x.forceFilterOnly || !x.markedForUpdate)
-let getNilKeys = _.flow(_.pickBy(_.isNil), _.keys)
+let getNilKeys = _.flow(
+  _.pickBy(_.isNil),
+  _.keys
+)
 
 export default (tree, { search } = {}) =>
   _.flow(
