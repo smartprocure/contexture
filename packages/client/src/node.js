@@ -12,6 +12,7 @@ export let defaults = {
   missedUpdate: null,
   paused: null,
   type: null,
+  updatingPromise: null
 }
 export let internalStateKeys = _.omit(['type'], defaults)
 
