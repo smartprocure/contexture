@@ -1,4 +1,7 @@
-﻿# 2.8.0
+# 2.9.0
+* Add `updatingPromise` to nodes which can be used to await nodes being updated (planned for subquery/cascade use case)
+
+# 2.8.0
 * Added more example types.
 
 # 2.7.3
