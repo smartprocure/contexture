@@ -1,7 +1,5 @@
 let _ = require('lodash/fp')
-let utils = require('../luceneQueryUtils')
 let { parens } = require('futil-js')
-// luceneValidator = require('lib/luceneValidator/luceneValidator');
 
 let permutations = array => {
   let final = []
@@ -25,14 +23,14 @@ let permutations = array => {
   return final
 }
 
-let wordPermutations = word => _.map(_.join(''), permutations(word.split(' ')))
+let wordPermutations = word => _.map(_.join(' '), permutations(word.split(' ')))
 
 let limitResultsToCertainTags = tags => !!_.find('onlyShowTheseResults', tags)
 
 let wrapIf = _.curry(
   (pre, post, text, shouldWrap) => (shouldWrap ? `${pre}${text}${post}` : text)
 )
-let quoteIf = wrapIf('""', '""')
+let quoteIf = wrapIf('"', '"')
 
 let quoteAndTilde = _.curry(
   (tag, text) =>
@@ -40,6 +38,9 @@ let quoteAndTilde = _.curry(
     (tag.misspellings || tag.distance ? '~' : '') +
     (tag.distance || '')
 )
+
+let escapeSpecialChars = text =>
+  text.toString().replace(/([!*+\-=<>&|()[\]{}^~?:\\/"])/g, '\\$1')
 
 let tagsToQueryString = (tags, join) => {
   let shouldLimitToCertainWords = limitResultsToCertainTags(tags)
@@ -49,20 +50,22 @@ let tagsToQueryString = (tags, join) => {
         shouldLimitToCertainWords ? _.get('onlyShowTheseResults', tag) : true
     ),
     _.map(tag => {
-      let _tag = utils.luceneQueryProcessor(tag.word)
+      let _tag = escapeSpecialChars(tag.word)
 
       if (tag.distance === 'unlimited') {
-        parens(_tag.replace(/\s+/g, ' and '))
+        return parens(_tag.replace(/\s+/g, ' AND '))
       } else if (!tag.distance && tag.anyOrder) {
-        parens(_.map(wordPermutations(_tag), quoteAndTilde(tag)).join(' or '))
+        return parens(
+          _.map(quoteAndTilde(tag), wordPermutations(_tag)).join(' OR ')
+        )
       } else {
-        quoteAndTilde(tag, _tag)
+        return quoteAndTilde(tag, _tag)
       }
     }),
     tags => {
-      let joinedTags = tags.join({ all: ' and ', any: ' or ' }[join] || ' or ')
+      let joinedTags = tags.join({ all: ' AND ', any: ' OR ' }[join] || ' OR ')
       if (joinedTags.length)
-        return wrapIf('not (', ')', joinedTags, join === 'none')
+        return wrapIf('NOT (', ')', joinedTags, join === 'none')
       return ''
     }
   )(tags)
