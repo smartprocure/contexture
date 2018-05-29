@@ -13,6 +13,10 @@ export let mapValuesAsync = _.curry((f, d) => promisedProps(_.mapValues(f, d)))
 export let flowAsyncF = (...fns) => (...x) =>
   fns.slice(1).reduce((v, f) => v.then(f), Promise.resolve(fns[0](...x)))
 export let flowAsync = (...args) => {
-  if (args.length === 1) return _.flow(flowAsyncF, _.curryN(args[0]))
+  if (args.length === 1)
+    return _.flow(
+      flowAsyncF,
+      _.curryN(args[0])
+    )
   return flowAsyncF(...args)
 }
