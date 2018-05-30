@@ -34,6 +34,7 @@ describe('All Example Types', function() {
       'smartIntervalHistogram',
       'smartPercentileRanks',
       'statistical',
+      'tagsQuery',
       'terms',
       'termsDelta',
       'termsStatsHits',
