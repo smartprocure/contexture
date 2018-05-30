@@ -92,14 +92,21 @@ This is the general structure:
 When picking field reactors, you should use the `others` reactor for things that are used for filtering (formerly `data` properties), and `self` for things that are only used to determine that node's context result (formerly `config` properties).
 
 **NOTE** There are a few reserved words you can't use for type properties:
-- markedForUpdate
-- path
-- updating
-- paused
-- missedUpdate
-- hasValue
-- lastUpdateTime
-- context
+
+| Name | Type | Notes |
+| ---- | ---- | ----- |
+| path | `[string]` |  The array of keys from the root to get to this node |
+| markedForUpdate | `bool` | True when a node will be updated but the debonce time has not fully elapsed. |
+| updating | `bool` | True when a node is waiting for a service call (_after_ debounce has elasped)  |
+| paused | `bool` | Tracks whether a node is `paused`, which prevents it from requesting updates from the service |
+| missedUpdate | `bool` | Tracks when nodes would have asked for updates but didn't because they were paused |
+| hasValue | `bool` | Tracks when a node passed `validate`, which is used to determine if it participates in the search |
+| lastUpdateTime | `timestamp` | Last time this node was updated with results from the service |
+| context | `object` | Object which holds the contextual results from the server |
+| type | `string` | Represents the contexture node type |
+| key | `string` | Uniquely identifies this node in the tree, used to match results |
+| updatingPromise | `Promise` | Resolves when the node is done updating, and is reset as a new pending promise when markedForUpdate - be careful if relying on this as the promise property is replaced with a new value whenever it's marked for update. |
+| updatingDeferred | `Futil Deferred` | Interally used to resolve the updatingPromise |
 
 ### Run Time
 The following methods are exposed on an instantiated client
