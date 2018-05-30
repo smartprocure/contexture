@@ -11,6 +11,7 @@ import { initNode, hasContext, hasValue } from './node'
 import exampleTypes from './exampleTypes'
 import lens from './lens'
 import mockService from './mockService'
+import cascade from './cascade'
 
 let mergeWith = _.mergeWith.convert({ immutable: false })
 
@@ -31,7 +32,7 @@ let defaultService = () => {
 }
 
 // Export useful utils which might be needed for extending the core externally
-export { Tree, encode, decode, exampleTypes, hasContext, hasValue, mockService }
+export { Tree, encode, decode, exampleTypes, hasContext, hasValue, mockService, cascade }
 
 export let ContextTree = _.curry(
   (
