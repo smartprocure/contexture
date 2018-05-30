@@ -18,7 +18,7 @@ module.exports = {
       query_string: {
         query,
         default_operator: 'AND',
-        default_field: field + (context.exact ? '.exact' : '') || '_all',
+        default_field: field + (context.exact ? '.exact' : ''),
       },
     }
     if (context.exact) result.query_string.analyzer = 'exact'
