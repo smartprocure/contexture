@@ -1,29 +1,9 @@
 let _ = require('lodash/fp')
 let { parens } = require('futil-js')
+let Combinatorics = require('js-combinatorics')
 
-let permutations = array => {
-  let final = []
-  if (array.length > 8) throw new RangeError('Array length must be less than 8')
-
-  if (array.length === 2) {
-    let reverse = Array.from(array)
-    return [array, reverse.reverse()]
-  }
-  _.forEach(element => {
-    element = _.castArray(element)
-
-    let tail = _.without(element[0], array)
-    let partial = permutations(tail)
-
-    _.forEach(arr => {
-      final.push(element.concat(arr))
-    }, partial)
-  }, array)
-
-  return final
-}
-
-let wordPermutations = word => _.map(_.join(' '), permutations(word.split(' ')))
+let wordPermutations = word =>
+  _.map(_.join(' '), Combinatorics.permutation(word.split(' ')).toArray())
 
 let limitResultsToCertainTags = tags => !!_.find('onlyShowTheseResults', tags)
 
@@ -42,6 +22,27 @@ let quoteAndTilde = _.curry(
 let escapeSpecialChars = text =>
   text.toString().replace(/([!*+\-=<>&|()[\]{}^~?:\\/"])/g, '\\$1')
 
+let tagToQueryString = tag => {
+  let _tag = escapeSpecialChars(tag.word)
+
+  if (tag.distance === 'unlimited') {
+    return parens(_tag.replace(/\s+/g, ' AND '))
+  } else if (!tag.distance && tag.anyOrder) {
+    return parens(
+      _.map(quoteAndTilde(tag), wordPermutations(_tag)).join(' OR ')
+    )
+  } else {
+    return quoteAndTilde(tag, _tag)
+  }
+}
+
+let joinTags = join => tags => {
+  let joinedTags = tags.join({ all: ' AND ', any: ' OR ' }[join] || ' OR ')
+  if (joinedTags.length)
+    return wrapIf('NOT (', ')', joinedTags, join === 'none')
+  return ''
+}
+
 let tagsToQueryString = (tags, join) => {
   let shouldLimitToCertainWords = limitResultsToCertainTags(tags)
   return _.flow(
@@ -49,45 +50,40 @@ let tagsToQueryString = (tags, join) => {
       tag =>
         shouldLimitToCertainWords ? _.get('onlyShowTheseResults', tag) : true
     ),
-    _.map(tag => {
-      let _tag = escapeSpecialChars(tag.word)
-
-      if (tag.distance === 'unlimited') {
-        return parens(_tag.replace(/\s+/g, ' AND '))
-      } else if (!tag.distance && tag.anyOrder) {
-        return parens(
-          _.map(quoteAndTilde(tag), wordPermutations(_tag)).join(' OR ')
-        )
-      } else {
-        return quoteAndTilde(tag, _tag)
-      }
-    }),
-    tags => {
-      let joinedTags = tags.join({ all: ' AND ', any: ' OR ' }[join] || ' OR ')
-      if (joinedTags.length)
-        return wrapIf('NOT (', ')', joinedTags, join === 'none')
-      return ''
-    }
+    _.map(tagToQueryString),
+    joinTags(join)
   )(tags)
 }
 
+let hasValue = _.get('tags.length')
+
+let filter = context => {
+  let query = tagsToQueryString(context.tags, context.join)
+
+  // Drop .untouched
+  let field = context.field.replace('.untouched', '')
+
+  let result = {
+    query_string: {
+      query,
+      default_operator: 'AND',
+      default_field: field + (context.exact ? '.exact' : ''),
+    },
+  }
+  if (context.exact) result.query_string.analyzer = 'exact'
+
+  return result
+}
+
 module.exports = {
-  hasValue: _.get('tags.length'),
-  filter(context) {
-    let query = tagsToQueryString(context.tags, context.join)
-
-    // Drop .untouched
-    let field = context.field.replace('.untouched', '')
-
-    let result = {
-      query_string: {
-        query,
-        default_operator: 'AND',
-        default_field: field + (context.exact ? '.exact' : '') || '_all',
-      },
-    }
-    if (context.exact) result.query_string.analyzer = 'exact'
-
-    return result
-  },
+  wordPermutations,
+  limitResultsToCertainTags,
+  quoteIf,
+  quoteAndTilde,
+  escapeSpecialChars,
+  tagToQueryString,
+  joinTags,
+  tagsToQueryString,
+  hasValue,
+  filter,
 }
