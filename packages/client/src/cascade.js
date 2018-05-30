@@ -1,5 +1,4 @@
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
 import {getTypePropOrError} from './types'
 
 export default _.curry((types, from, fromPath, to, toPath) => {
