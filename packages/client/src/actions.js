@@ -14,6 +14,7 @@ export default ({
   async add(parentPath, node) {
     let target = getNode(parentPath)
     let path = [...parentPath, node.key]
+    // TODO: Does not currently call init on child nodes
     initNode(node, path, extend, types)
     target.children.push(node)
     // Need this nonsense to support the case where push actually mutates, e.g. a mobx observable tree

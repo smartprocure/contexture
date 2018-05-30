@@ -718,4 +718,46 @@ describe('lib', () => {
       ],
     })
   })
+  it('should support updatingPromise', async () => {
+    let spy = sinon.spy(mockService({}))
+    let service = async (...args) => {
+      // Add an artificial delay so we can see when updating starts
+      await Promise.delay(10)
+      return spy(...args)
+    }
+    let tree = lib.ContextTree(
+      {
+        debounce: 0,
+        service,
+        types: {
+          facet: {
+            reactors: {
+              values: 'others',
+            },
+          },
+        },
+      },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'a',
+            type: 'facet',
+          },
+          {
+            key: 'b',
+            type: 'results',
+          },
+        ],
+      }
+    )
+    tree.mutate(['root', 'a'], { values: [1] })
+    let node = tree.getNode(['root', 'b'])
+    // Allow updating to start (after debounce elaspses) but before the service finishes
+    await Promise.delay(5)
+    expect(node.updating).to.be.true
+    await node.updatingPromise
+    expect(node.updating).to.be.false
+  })
 })

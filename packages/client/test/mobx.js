@@ -221,9 +221,10 @@ describe('usage with mobx should generally work', () => {
       values: [],
     })
     expect(
-      _.flow(_.omit(['lastUpdateTime']), F.compactObject)(
-        treeUtils.lookup(['newEmptyFilter'], reactor.getCall(1).args[0])
-      )
+      _.flow(
+        _.omit(['lastUpdateTime']),
+        F.compactObject
+      )(treeUtils.lookup(['newEmptyFilter'], reactor.getCall(1).args[0]))
     ).to.deep.equal({
       key: 'newEmptyFilter',
       type: 'facet',
