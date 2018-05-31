@@ -63,14 +63,19 @@ export let ContextTree = _.curry(
     // Getting the Traversals
     let { markForUpdate, markLastUpdate, prepForUpdate } = traversals(extend)
 
-    let processEvent = F.flurry(
+    let processEvent = (event, getNode, types) => path => F.flurry(
       getAffectedNodes(customReactors),
       _.each(n => {
-        // This is to prevent self reactors bubbling up and causing siblings to be marked for update when their parents are marked on self
-        // _might_ also be a bug and may need to just not traverse if it's children were in the bubble up path
-        if (!_.some('markedForUpdate', n.children)) markForUpdate(n)
+        let isInPath = _.isEmpty(_.difference(n.path, event.path))
+        let isTarget = _.isEqual(n.path, event.path)
+        let isParentOfTarget = isInPath && !isTarget
+        if (isParentOfTarget){
+          markForUpdate(n)
+        }
+        else
+          Tree.walk(markForUpdate)(n)
       })
-    )
+    )(event, getNode, types, path)
 
     // Event Handling
     let dispatch = async event => {
