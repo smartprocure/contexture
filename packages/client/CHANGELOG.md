@@ -1,3 +1,6 @@
+# 2.9.1
+* Fix bug that incorrectly marked siblings for update if they were in nested groups.
+
 # 2.9.0
 * Add `updatingPromise` to nodes which can be used to await nodes being updated (planned for subquery/cascade use case)
 

@@ -2,7 +2,7 @@ import * as F from 'futil-js'
 import { Tree } from './util/tree'
 
 export default extend => ({
-  markForUpdate: Tree.walk(x => {
+  markForUpdate(x) {
     if (x.paused) extend(x, { missedUpdate: true })
     else {
       let updatingDeferred = F.defer()
@@ -12,7 +12,7 @@ export default extend => ({
         updatingDeferred,
       })
     }
-  }),
+  },
   markLastUpdate: time =>
     Tree.walk(child => {
       if (child.markedForUpdate) extend(child, { lastUpdateTime: time })
