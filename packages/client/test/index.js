@@ -8,6 +8,11 @@ const expect = chai.expect
 chai.use(sinonChai)
 import mockService from '../src/mockService'
 
+let addDelay = (delay, fn) => async (...args) => {
+  await Promise.delay(delay)
+  return fn(...args)
+}
+
 describe('lib', () => {
   describe('should generally work', () => {
     // TODO: make these generally self contained - some rely on previous test runs
@@ -94,6 +99,7 @@ describe('lib', () => {
       expect(dto).to.deep.equal({
         key: 'root',
         join: 'and',
+        lastUpdateTime: now,
         children: [
           {
             key: 'filter',
@@ -196,17 +202,18 @@ describe('lib', () => {
       await Tree.mutate(['root', 'filter'], {
         paused: true,
       })
+      // This shouldn't trigger a search because it's paused
       await Tree.mutate(['root', 'filter'], {
         size: 42,
       })
-      expect(service).to.have.callCount(1)
+      expect(service).to.have.callCount(0)
       expect(Tree.getNode(['root', 'filter']).paused).to.be.true
       expect(Tree.getNode(['root', 'filter']).missedUpdate).to.be.true
       // Unpause here should trigger this to run
       await Tree.mutate(['root', 'filter'], {
         paused: false,
       })
-      expect(service).to.have.callCount(2)
+      expect(service).to.have.callCount(1)
       expect(Tree.getNode(['root', 'filter']).paused).to.be.false
       expect(Tree.getNode(['root', 'filter']).missedUpdate).to.be.false
     })
@@ -645,6 +652,7 @@ describe('lib', () => {
     expect(dto).to.deep.equal({
       key: 'root',
       join: 'and',
+      lastUpdateTime: now,
       children: [
         {
           key: 'a',
@@ -759,5 +767,100 @@ describe('lib', () => {
     expect(node.updating).to.be.true
     await node.updatingPromise
     expect(node.updating).to.be.false
+  })
+  describe('Previously fixed bugs', () => {
+    it('should not incorrectly mark siblings for update when their parents are marked on self', async () => {
+      let service = addDelay(10, sinon.spy(mockService()))
+      let Tree = lib.ContextTree({ service, debounce: 1 })
+      let tree = Tree({
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'criteria',
+            join: 'and',
+            children: [
+              {
+                key: 'agencies',
+                field: 'Organization.Name',
+                type: 'facet',
+              },
+              {
+                key: 'vendors',
+                field: 'Vendor.Name',
+                type: 'facet',
+              },
+            ],
+          }
+        ],
+      })
+      await tree.mutate(['root', 'criteria', 'agencies'], { size: 12 })
+      expect(tree.getNode(['root', 'criteria', 'vendors']).lastUpdateTime).to.be.null
+    })
+    it('should not prevent siblings from updating', async () => {
+      let service = addDelay(10, sinon.spy(mockService()))
+      let Tree = lib.ContextTree({ service, debounce: 1 })
+      let tree = Tree({
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'analysis',
+            join: 'and',
+            children: [
+              {
+                key: 'results',
+                type: 'results',
+              },
+            ],
+          },
+          {
+            key: 'criteria1',
+            join: 'and',
+            children: [
+              {
+                key: 'agencies',
+                field: 'Organization.Name',
+                type: 'facet',
+                values: ['City of Deerfield'],
+                size: 24,
+              },
+              {
+                key: 'vendors',
+                field: 'Vendor.Name',
+                type: 'facet',
+                values: ['City of Deerfield'],
+                size: 24,
+              },
+            ],
+          },
+          {
+            key: 'criteria2',
+            join: 'and',
+            children: [
+              {
+                key: 'agencies2',
+                field: 'Organization.Name',
+                type: 'facet',
+                values: ['City of Deerfield'],
+                size: 24,
+              },
+              {
+                key: 'vendors2',
+                field: 'Vendor.Name',
+                type: 'facet',
+                values: ['City of Deerfield'],
+                size: 24,
+              },
+            ],
+          },
+        ],
+      })
+      tree.mutate(['root', 'criteria1', 'agencies'], { size: 12 })
+      await tree.mutate(['root', 'criteria2', 'agencies2'], { values: ['Other City'] })
+      // Previously, we would not mark for update if any children already were, which would prevent siblings
+      //  of things markedForUpdate from being correctly updated by other parts of the tree
+      expect(tree.getNode(['root', 'criteria1', 'vendors']).lastUpdateTime).to.not.be.null
+    })
   })
 })
