@@ -63,16 +63,17 @@ export let ContextTree = _.curry(
     // Getting the Traversals
     let { markForUpdate, markLastUpdate, prepForUpdate } = traversals(extend)
 
-    let processEvent = event => path => F.flurry(
-      getAffectedNodes(customReactors, getNode, types),
-      // Traverse children only if it's not a parent of the target
-      _.each(n => {
-        let isTarget = _.isEqual(n.path, event.path)
-        let isInPath = _.startsWith(n.path, event.path)
-        let isParentOfTarget = !isTarget && isInPath
-        F.unless(isParentOfTarget, Tree.walk)(markForUpdate)(n)
-      })
-    )(event, path)
+    let processEvent = event => path =>
+      F.flurry(
+        getAffectedNodes(customReactors, getNode, types),
+        // Traverse children only if it's not a parent of the target
+        _.each(n => {
+          let isTarget = _.isEqual(n.path, event.path)
+          let isInPath = _.startsWith(n.path, event.path)
+          let isParentOfTarget = !isTarget && isInPath
+          F.unless(isParentOfTarget, Tree.walk)(markForUpdate)(n)
+        })
+      )(event, path)
 
     // Event Handling
     let dispatch = async event => {

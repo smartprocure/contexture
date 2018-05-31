@@ -791,11 +791,12 @@ describe('lib', () => {
                 type: 'facet',
               },
             ],
-          }
+          },
         ],
       })
       await tree.mutate(['root', 'criteria', 'agencies'], { size: 12 })
-      expect(tree.getNode(['root', 'criteria', 'vendors']).lastUpdateTime).to.be.null
+      expect(tree.getNode(['root', 'criteria', 'vendors']).lastUpdateTime).to.be
+        .null
     })
     it('should not prevent siblings from updating', async () => {
       let service = addDelay(10, sinon.spy(mockService()))
@@ -857,10 +858,13 @@ describe('lib', () => {
         ],
       })
       tree.mutate(['root', 'criteria1', 'agencies'], { size: 12 })
-      await tree.mutate(['root', 'criteria2', 'agencies2'], { values: ['Other City'] })
+      await tree.mutate(['root', 'criteria2', 'agencies2'], {
+        values: ['Other City'],
+      })
       // Previously, we would not mark for update if any children already were, which would prevent siblings
       //  of things markedForUpdate from being correctly updated by other parts of the tree
-      expect(tree.getNode(['root', 'criteria1', 'vendors']).lastUpdateTime).to.not.be.null
+      expect(tree.getNode(['root', 'criteria1', 'vendors']).lastUpdateTime).to
+        .not.be.null
     })
   })
 })
