@@ -63,25 +63,23 @@ export let ContextTree = _.curry(
     // Getting the Traversals
     let { markForUpdate, markLastUpdate, prepForUpdate } = traversals(extend)
 
-    let processEvent = (event, getNode, types) => path => F.flurry(
-      getAffectedNodes(customReactors),
+    let processEvent = event => path => F.flurry(
+      getAffectedNodes(customReactors, getNode, types),
       _.each(n => {
+        // In theory, this fails for [a,b,c,d] vs [a,c,b,d] since order doesn't count on difference
         let isInPath = _.isEmpty(_.difference(n.path, event.path))
         let isTarget = _.isEqual(n.path, event.path)
         let isParentOfTarget = isInPath && !isTarget
-        if (isParentOfTarget){
-          markForUpdate(n)
-        }
-        else
-          Tree.walk(markForUpdate)(n)
+        if (isParentOfTarget) markForUpdate(n)
+        else Tree.walk(markForUpdate)(n)
       })
-    )(event, getNode, types, path)
+    )(event, path)
 
     // Event Handling
     let dispatch = async event => {
       log(`${event.type} event at ${event.path}`)
       await validate(runTypeFunction(types, 'validate'), extend, tree)
-      bubbleUp(processEvent(event, getNode, types), event.path)
+      bubbleUp(processEvent(event), event.path)
       await triggerUpdate()
     }
 
