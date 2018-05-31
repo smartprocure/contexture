@@ -1,47 +1,53 @@
 let _ = require('lodash/fp')
-let { parens } = require('futil-js')
+let { parens, quote } = require('futil-js')
 let Combinatorics = require('js-combinatorics')
 
-let wordPermutations = word =>
-  _.map(_.join(' '), Combinatorics.permutation(word.split(' ')).toArray())
-
-let limitResultsToCertainTags = tags => !!_.find('onlyShowTheseResults', tags)
-
-let wrapIf = _.curry(
-  (pre, post, text, shouldWrap) => (shouldWrap ? `${pre}${text}${post}` : text)
+// Split text into words and return array of string permutations
+let wordPermutations = _.flow(
+  _.split(/\s+/),
+  x => Combinatorics.permutation(x).toArray(),
+  _.map(_.join(' '))
 )
-let quoteIf = wrapIf('"', '"')
 
 let quoteAndTilde = _.curry(
   (tag, text) =>
-    quoteIf(text, tag.isPhrase) +
+    (tag.isPhrase ? quote(text) : text) +
     (tag.misspellings || tag.distance ? '~' : '') +
     (tag.distance || '')
 )
 
-let escapeSpecialChars = text =>
-  text.toString().replace(/([!*+\-=<>&|()[\]{}^~?:\\/"])/g, '\\$1')
+// https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#_reserved_characters
+let escapeReservedChars = text =>
+  text.toString().replace(/([+\-=&|><!(){}[\]^"~*?:\\/])/g, '\\$1')
 
 let tagToQueryString = tag => {
-  let _tag = escapeSpecialChars(tag.word)
+  let _tag = escapeReservedChars(tag.word)
 
   if (tag.distance === 'unlimited') {
     return parens(_tag.replace(/\s+/g, ' AND '))
   } else if (!tag.distance && tag.anyOrder) {
-    return parens(
-      _.map(quoteAndTilde(tag), wordPermutations(_tag)).join(' OR ')
-    )
+    return _.flow(
+      wordPermutations,
+      _.map(quoteAndTilde(tag)),
+      _.join(' OR '),
+      parens
+    )(_tag)
   } else {
     return quoteAndTilde(tag, _tag)
   }
 }
 
-let joinTags = join => tags => {
-  let joinedTags = tags.join({ all: ' AND ', any: ' OR ' }[join] || ' OR ')
-  if (joinedTags.length)
-    return wrapIf('NOT (', ')', joinedTags, join === 'none')
-  return ''
-}
+let joinTags = _.curry((join, tags) => {
+  if (!tags.length) return ''
+
+  let separator = { all: ' AND ', any: ' OR ' }[join] || ' OR '
+  let joinedTags = tags.join(separator)
+
+  if (join === 'none') return `NOT (${joinedTags})`
+  return joinedTags
+})
+
+let limitResultsToCertainTags = tags => _.find('onlyShowTheseResults', tags)
 
 let tagsToQueryString = (tags, join) => {
   let shouldLimitToCertainWords = limitResultsToCertainTags(tags)
@@ -78,9 +84,8 @@ let filter = context => {
 module.exports = {
   wordPermutations,
   limitResultsToCertainTags,
-  quoteIf,
   quoteAndTilde,
-  escapeSpecialChars,
+  escapeReservedChars,
   tagToQueryString,
   joinTags,
   tagsToQueryString,
