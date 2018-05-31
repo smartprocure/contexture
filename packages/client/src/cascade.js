@@ -1,10 +1,10 @@
 import _ from 'lodash/fp'
-import {getTypePropOrError} from './types'
+import { getTypePropOrError } from './types'
 
 export default _.curry((types, from, fromPath, to, toPath) => {
   let toNode = to.getNode(toPath)
   let fromNode = from.getNode(fromPath)
-  
+
   // Set validation dependency to block search
   toNode.validate = () => fromNode.updatingPromise.then(() => true)
 
