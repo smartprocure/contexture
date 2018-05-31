@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
-import { flattenTree, bubbleUp, Tree, encode, decode } from './util/tree'
+import { flatten, bubbleUp, Tree, encode, decode } from './util/tree'
 import { validate } from './validation'
 import { getAffectedNodes } from './reactors'
 import actions from './actions'
@@ -48,7 +48,7 @@ export let ContextTree = _.curry(
     tree
   ) => {
     let log = x => debug && console.info(x)
-    let flat = flattenTree(tree)
+    let flat = flatten(tree)
     let getNode = path => flat[encode(path)]
     let customReactors = {}
 
@@ -107,7 +107,7 @@ export let ContextTree = _.curry(
           extend(target, { updating: false })
           target.updatingDeferred.resolve()
         }
-      }, flattenTree(data))
+      }, flatten(data))
     }
 
     let TreeInstance = {
