@@ -68,10 +68,8 @@ export let StandardReactors = {
 let Reactor = (x, customReactors = {}) =>
   customReactors[x] || StandardReactors[x] || reactors[x] || _.noop
 
-export let getAffectedNodes = customReactors => (
+export let getAffectedNodes = (customReactors, lookup, types) => (
   { type, ...event },
-  lookup,
-  types,
   path
 ) => {
   let node = lookup(path)

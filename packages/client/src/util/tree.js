@@ -6,7 +6,7 @@ export let Tree = F.tree(
   F.when(_.isString, key => ({ key }))
 )
 
-export let flattenTree = Tree.flatten(F.propTreePath('key'))
+export let flatten = Tree.flatten(F.propTreePath('key'))
 export let { encode, decode } = F.slashEncoder
 
 export let bubbleUp = (f, path) =>
@@ -15,3 +15,6 @@ export let bubbleUp = (f, path) =>
     _.reverse,
     _.map(f)
   )(path)
+
+let isNotEqual = _.negate(_.isEqual)
+export let isParent = _.overEvery([isNotEqual, _.startsWith])

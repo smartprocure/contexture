@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
-import { flattenTree, bubbleUp, Tree, encode, decode } from './util/tree'
+import { flatten, bubbleUp, Tree, encode, decode, isParent } from './util/tree'
 import { validate } from './validation'
 import { getAffectedNodes } from './reactors'
 import actions from './actions'
@@ -48,7 +48,7 @@ export let ContextTree = _.curry(
     tree
   ) => {
     let log = x => debug && console.info(x)
-    let flat = flattenTree(tree)
+    let flat = flatten(tree)
     let getNode = path => flat[encode(path)]
     let customReactors = {}
 
@@ -63,20 +63,20 @@ export let ContextTree = _.curry(
     // Getting the Traversals
     let { markForUpdate, markLastUpdate, prepForUpdate } = traversals(extend)
 
-    let processEvent = F.flurry(
-      getAffectedNodes(customReactors),
-      _.each(n => {
-        // This is to prevent self reactors bubbling up and causing siblings to be marked for update when their parents are marked on self
-        // _might_ also be a bug and may need to just not traverse if it's children were in the bubble up path
-        if (!_.some('markedForUpdate', n.children)) markForUpdate(n)
-      })
-    )
+    let processEvent = event => path =>
+      F.flurry(
+        getAffectedNodes(customReactors, getNode, types),
+        // Mark children only if it's not a parent of the target so we don't incorrectly mark siblings
+        _.each(n => {
+          F.unless(isParent(n.path, event.path), Tree.walk)(markForUpdate)(n)
+        })
+      )(event, path)
 
     // Event Handling
     let dispatch = async event => {
       log(`${event.type} event at ${event.path}`)
       await validate(runTypeFunction(types, 'validate'), extend, tree)
-      bubbleUp(processEvent(event, getNode, types), event.path)
+      bubbleUp(processEvent(event), event.path)
       await triggerUpdate()
     }
 
@@ -104,7 +104,7 @@ export let ContextTree = _.curry(
           extend(target, { updating: false })
           target.updatingDeferred.resolve()
         }
-      }, flattenTree(data))
+      }, flatten(data))
     }
 
     let TreeInstance = {
