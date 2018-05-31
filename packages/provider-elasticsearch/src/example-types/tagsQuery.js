@@ -17,8 +17,11 @@ let quoteAndTilde = _.curry(
 )
 
 // https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#_reserved_characters
-let escapeReservedChars = text =>
-  text.toString().replace(/([+\-=&|><!(){}[\]^"~*?:\\/])/g, '\\$1')
+let escapeReservedChars = _.flow(
+  _.toString,
+  _.replace(/([+\-=&|!(){}[\]^"~*?:\\/])/g, '\\$1'),
+  _.replace(/[><]/g, '')
+)
 
 let tagToQueryString = tag => {
   let _tag = escapeReservedChars(tag.word)
