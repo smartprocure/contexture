@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
-import { flatten, bubbleUp, Tree, encode, decode } from './util/tree'
+import { flatten, bubbleUp, Tree, encode, decode, isParent } from './util/tree'
 import { validate } from './validation'
 import { getAffectedNodes } from './reactors'
 import actions from './actions'
@@ -68,10 +68,7 @@ export let ContextTree = _.curry(
         getAffectedNodes(customReactors, getNode, types),
         // Traverse children only if it's not a parent of the target
         _.each(n => {
-          let isTarget = _.isEqual(n.path, event.path)
-          let isInPath = _.startsWith(n.path, event.path)
-          let isParentOfTarget = !isTarget && isInPath
-          F.unless(isParentOfTarget, Tree.walk)(markForUpdate)(n)
+          F.unless(isParent(n.path, event.path), Tree.walk)(markForUpdate)(n)
         })
       )(event, path)
 
