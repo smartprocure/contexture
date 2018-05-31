@@ -54,9 +54,7 @@ describe('escapeReservedChars', () => {
     )
   })
   it('should remove unescapable reserved characters', () => {
-    expect(escapeReservedChars('1 < 2 > 1')).to.deep.equal(
-      '1  2  1'
-    )
+    expect(escapeReservedChars('1 < 2 > 1')).to.deep.equal('1  2  1')
   })
   it('should not escape non-reserved characters', () => {
     expect(escapeReservedChars(`I'm just a plain old sentence.`)).to.deep.equal(
