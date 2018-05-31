@@ -2,7 +2,7 @@ import * as F from 'futil-js'
 import { Tree } from './util/tree'
 
 export default extend => ({
-  markForUpdate: x => {
+  markForUpdate(x) {
     if (x.paused) extend(x, { missedUpdate: true })
     else {
       let updatingDeferred = F.defer()
