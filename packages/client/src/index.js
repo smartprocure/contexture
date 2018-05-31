@@ -66,7 +66,7 @@ export let ContextTree = _.curry(
     let processEvent = event => path =>
       F.flurry(
         getAffectedNodes(customReactors, getNode, types),
-        // Traverse children only if it's not a parent of the target
+        // Mark children only if it's not a parent of the target so we don't incorrectly mark siblings
         _.each(n => {
           F.unless(isParent(n.path, event.path), Tree.walk)(markForUpdate)(n)
         })
