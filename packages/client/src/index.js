@@ -65,13 +65,12 @@ export let ContextTree = _.curry(
 
     let processEvent = event => path => F.flurry(
       getAffectedNodes(customReactors, getNode, types),
+      // Traverse children only if it's not a parent of the target
       _.each(n => {
-        // In theory, this fails for [a,b,c,d] vs [a,c,b,d] since order doesn't count on difference
-        let isInPath = _.isEmpty(_.difference(n.path, event.path))
         let isTarget = _.isEqual(n.path, event.path)
-        let isParentOfTarget = isInPath && !isTarget
-        if (isParentOfTarget) markForUpdate(n)
-        else Tree.walk(markForUpdate)(n)
+        let isInPath = _.startsWith(n.path, event.path)
+        let isParentOfTarget = !isTarget && isInPath
+        F.unless(isParentOfTarget, Tree.walk)(markForUpdate)(n)
       })
     )(event, path)
 
