@@ -26,6 +26,7 @@ module.exports = {
   smartIntervalHistogram: require('./smartIntervalHistogram'),
   smartPercentileRanks: require('./smartPercentileRanks'),
   statistical: require('./statistical'),
+  tagsQuery: require('./tagsQuery'),
   terms: require('./terms'),
   termsDelta: require('./termsDelta'),
   termsStatsHits: require('./termsStatsHits'),
