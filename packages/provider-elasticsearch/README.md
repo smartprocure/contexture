@@ -243,6 +243,25 @@ Query represents a raw elasticsearch query_string.
   query: String, // The actual query
   exact: Boolean // Represents opting out of stemming. Currently assumes the presence of an `.exact` subfield and analyzer. Defaults to false.
 }
+
+```
+
+#### `tagsQuery`
+Tags represents one or more search terms.
+```js
+{
+  field: String,
+  tags: [
+          {
+            word: String, // Search term
+            misspellings: Boolean (optional), // Valid for single word search term
+            isPhrase: Boolean (optional), // Valid for multi-word search term
+            distance: Number (optional) // Valid for multi-word search term
+          }
+        ], // One or more objects
+  join: 'any|all|none', // One of these options
+  exact: Boolean // Represents opting out of stemming. Currently assumes the presence of an `.exact` subfield and analyzer. Defaults to false.
+}
 ```
 
 #### `text`
