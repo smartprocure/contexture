@@ -1,7 +1,7 @@
 let {
   wordPermutations,
   limitResultsToCertainTags,
-  quoteAndTilde,
+  addQuotesAndDistance,
   escapeReservedChars,
   joinTags,
   tagToQueryString,
@@ -31,19 +31,26 @@ describe('limitResultsToCertainTags', () => {
   })
 })
 
-describe('quoteAndTilde', () => {
+describe('addQuotesAndDistance', () => {
   it('should quote if is phrase', () => {
-    expect(quoteAndTilde({ isPhrase: true }, 'foo bar')).to.deep.equal(
+    expect(addQuotesAndDistance({ isPhrase: true }, 'foo bar')).to.deep.equal(
       `"foo bar"`
     )
   })
-  it('should quote and set distance', () => {
+  it('should quote and not set distance if distance is 0', () => {
     expect(
-      quoteAndTilde({ isPhrase: true, distance: 1 }, 'foo bar')
-    ).to.deep.equal(`"foo bar"~1`)
+      addQuotesAndDistance({ isPhrase: true, distance: 0 }, 'foo bar')
+    ).to.deep.equal(`"foo bar"`)
   })
-  it('should add tilde for misspellings', () => {
-    expect(quoteAndTilde({ misspellings: 1 }, 'foo')).to.deep.equal(`foo~`)
+  it('should quote and set distance if distance is > 0', () => {
+    expect(
+      addQuotesAndDistance({ isPhrase: true, distance: 2 }, 'foo bar')
+    ).to.deep.equal(`"foo bar"~2`)
+  })
+  it('should add ~1 for misspellings', () => {
+    expect(addQuotesAndDistance({ misspellings: true }, 'foo')).to.deep.equal(
+      `foo~1`
+    )
   })
 })
 
