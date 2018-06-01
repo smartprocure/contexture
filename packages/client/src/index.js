@@ -50,9 +50,9 @@ export let ContextTree = _.curry(
       types = exampleTypes,
       debounce = 500,
       onResult = _.noop,
+      onChange = _.noop,
       debug,
       extend = F.extendOn,
-      onChange = _.noop,
       snapshot = _.cloneDeep,
     },
     tree
@@ -74,7 +74,7 @@ export let ContextTree = _.curry(
     let { markForUpdate, markLastUpdate, prepForUpdate } = traversals(extend)
 
     let processEvent = event => path =>
-      F.flurry(
+      _.flow(
         getAffectedNodes(customReactors, getNode, types),
         // Mark children only if it's not a parent of the target so we don't incorrectly mark siblings
         _.each(n => {
