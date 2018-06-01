@@ -22,7 +22,10 @@ let processReducers = (results, reducers) => {
             ? _[op](_.get(config.field, item), config[op])
             : true
       )
-      let filter = _.flow(operation, _.filter)
+      let filter = _.flow(
+        operation,
+        _.filter
+      )
 
       if (hasFieldPlus('value'))
         filteredResults = _.filter({ [config.field]: config.value })(
@@ -80,7 +83,9 @@ module.exports = {
         if (context.page) {
           let offset = (context.page - 1) * context.pageSize
           return {
-            results: _.drop(offset)(reducedResults).slice(0, context.pageSize),
+            results: _
+              .drop(offset)(reducedResults)
+              .slice(0, context.pageSize),
             totalRecords: reducedResults.length,
           }
         }

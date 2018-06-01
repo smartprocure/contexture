@@ -14,11 +14,12 @@ module.exports = {
     // Drop .untouched
     let field = context.field.replace('.untouched', '')
 
+    // https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
     let result = {
       query_string: {
         query,
         default_operator: 'AND',
-        default_field: field + (context.exact ? '.exact' : '') || '_all',
+        default_field: field + (context.exact ? '.exact' : ''),
       },
     }
     if (context.exact) result.query_string.analyzer = 'exact'
