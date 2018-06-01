@@ -18,7 +18,8 @@ let addQuotesAndDistance = _.curry((tag, text) => {
   // Multiple words
   if (tag.isPhrase)
     return quote(text) + (tag.distance ? `~${tag.distance}` : '')
-  // Single word
+  // Single word.
+  // Note: ~1 for misspellings allows for the insertion, deletion or substitution of a single character, or transposition of two adjacent characters.
   return text + (tag.misspellings ? '~1' : '')
 })
 
