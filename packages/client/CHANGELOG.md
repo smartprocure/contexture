@@ -1,3 +1,8 @@
+# 2.10.0
+* Added `cascade` for piping search results from one node into the input of another
+* Allow `onChange` and `onResult` to be changed at runtime on the tree instance (before, it was only settable in initial config)
+* Fixed bug on markForUpdate that replaced promises before fulfillment
+
 # 2.9.1
 * Fix bug that incorrectly marked siblings for update if they were in nested groups.
 
