@@ -1,5 +1,6 @@
 let _ = require('lodash/fp')
-let { parens, quote } = require('futil-js')
+let F = require('futil-js')
+let { parens, quote } = F
 let Combinatorics = require('js-combinatorics')
 
 // Split text into words and return array of string permutations
@@ -9,12 +10,17 @@ let wordPermutations = _.flow(
   _.map(_.join(' '))
 )
 
-let quoteAndTilde = _.curry(
-  (tag, text) =>
-    (tag.isPhrase ? quote(text) : text) +
-    (tag.misspellings || tag.distance ? '~' : '') +
-    (tag.distance || '')
-)
+/*
+ * Quote phrases and set edit distance.
+ * See: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#_fuzziness
+ */
+let addQuotesAndDistance = _.curry((tag, text) => {
+  // Multiple words
+  if (tag.isPhrase)
+    return quote(text) + (tag.distance ? `~${tag.distance}` : '')
+  // Single word
+  return text + (tag.misspellings ? '~1' : '')
+})
 
 // https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#_reserved_characters
 let escapeReservedChars = _.flow(
@@ -31,12 +37,12 @@ let tagToQueryString = tag => {
   } else if (!tag.distance && tag.anyOrder) {
     return _.flow(
       wordPermutations,
-      _.map(quoteAndTilde(tag)),
+      _.map(addQuotesAndDistance(tag)),
       _.join(' OR '),
       parens
     )(_tag)
   } else {
-    return quoteAndTilde(tag, _tag)
+    return addQuotesAndDistance(tag, _tag)
   }
 }
 
@@ -52,17 +58,12 @@ let joinTags = _.curry((join, tags) => {
 
 let limitResultsToCertainTags = tags => _.find('onlyShowTheseResults', tags)
 
-let tagsToQueryString = (tags, join) => {
-  let shouldLimitToCertainWords = limitResultsToCertainTags(tags)
-  return _.flow(
-    _.filter(
-      tag =>
-        shouldLimitToCertainWords ? _.get('onlyShowTheseResults', tag) : true
-    ),
+let tagsToQueryString = (tags, join) =>
+  _.flow(
+    F.when(limitResultsToCertainTags, _.filter('onlyShowTheseResults')),
     _.map(tagToQueryString),
     joinTags(join)
   )(tags)
-}
 
 let hasValue = _.get('tags.length')
 
@@ -72,6 +73,7 @@ let filter = context => {
   // Drop .untouched
   let field = context.field.replace('.untouched', '')
 
+  // https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
   let result = {
     query_string: {
       query,
@@ -87,7 +89,7 @@ let filter = context => {
 module.exports = {
   wordPermutations,
   limitResultsToCertainTags,
-  quoteAndTilde,
+  addQuotesAndDistance,
   escapeReservedChars,
   tagToQueryString,
   joinTags,
