@@ -26,7 +26,9 @@ let addQuotesAndDistance = _.curry((tag, text) => {
 // https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#_reserved_characters
 let escapeReservedChars = _.flow(
   _.toString,
+  // Escape these characters
   _.replace(/([+\-=&|!(){}[\]^"~*?:\\/])/g, '\\$1'),
+  // Remove these characters
   _.replace(/[><]/g, '')
 )
 
