@@ -19,7 +19,7 @@ export let internalStateKeys = {
   ..._.omit(['type'], defaults),
   validate: null,
   onMarkForUpdate: null,
-  afterSearch: null
+  afterSearch: null,
 }
 
 export let initNode = (node, path, extend, types) => {

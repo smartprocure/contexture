@@ -868,21 +868,24 @@ describe('lib', () => {
     })
   })
   it('should support subquery', async () => {
-    let spy = sinon.spy(mockService({
-      mocks({ key, type }) {
-        if (type == 'facet')
-          return {
-            options: (({
-              c: [{name: 1}, {name: 2}],
-              a: [{name: 3}, {name: 4}],
-            })[key])
-          }
-        if (type == 'results')
-          return {
-            count: 1,
-            results: [{ title: 'some result' }],
-          }
-    }}))
+    let spy = sinon.spy(
+      mockService({
+        mocks({ key, type }) {
+          if (type == 'facet')
+            return {
+              options: {
+                c: [{ name: 1 }, { name: 2 }],
+                a: [{ name: 3 }, { name: 4 }],
+              }[key],
+            }
+          if (type == 'results')
+            return {
+              count: 1,
+              results: [{ title: 'some result' }],
+            }
+        },
+      })
+    )
     let service = addDelay(10, spy)
     let types = {
       facet: {
@@ -891,35 +894,32 @@ describe('lib', () => {
         getSubqueryValues: x => _.map('name', x.context.options),
         defaults: {
           context: {
-            options: []
-          }
-        }
+            options: [],
+          },
+        },
       },
     }
     let Tree = ContextureClient({ debounce: 1, service, types })
-    
+
     let tree1 = Tree({
       key: 'innerRoot',
       join: 'and',
-      children: [
-        { key: 'c', type: 'facet' },
-        { key: 'd', type: 'facet' }
-      ],
+      children: [{ key: 'c', type: 'facet' }, { key: 'd', type: 'facet' }],
     })
     let tree2 = Tree({
       key: 'root',
       join: 'and',
-      children: [
-        { key: 'a', type: 'facet' },
-        { key: 'b', type: 'results' },
-      ],
+      children: [{ key: 'a', type: 'facet' }, { key: 'b', type: 'results' }],
     })
-    
+
     subquery(types, tree1, ['innerRoot', 'c'], tree2, ['root', 'a'])
     await tree1.mutate(['innerRoot', 'd'], { values: ['test'] })
-    expect(tree1.getNode(['innerRoot', 'c']).context.options).to.deep.equal([{name:1}, {name:2}])
+    expect(tree1.getNode(['innerRoot', 'c']).context.options).to.deep.equal([
+      { name: 1 },
+      { name: 2 },
+    ])
     expect(tree2.getNode(['root', 'a']).values).to.deep.equal([1, 2])
-    
+
     // Mutate on tree1 will await the Subquery into tree2
     expect(spy).to.have.callCount(2)
 
