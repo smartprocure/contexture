@@ -1,5 +1,4 @@
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
 import { getTypePropOrError } from './types'
 
 // A subquery (in contexture-client) is about taking the output of one search and makng it the input for another search.
