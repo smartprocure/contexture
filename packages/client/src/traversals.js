@@ -12,6 +12,7 @@ export default extend => ({
         updatingDeferred,
       })
     }
+    return x
   },
   markLastUpdate: time =>
     Tree.walk(child => {

@@ -77,17 +77,19 @@ export let ContextTree = _.curry(
       _.flow(
         getAffectedNodes(customReactors, getNode, types),
         // Mark children only if it's not a parent of the target so we don't incorrectly mark siblings
-        _.each(n => {
-          F.unless(isParent(n.path, event.path), Tree.walk)(markForUpdate)(n)
-        })
+        _.flatMap(n => // flatMap because traversing children can create arrays
+          F.unless(isParent(n.path, event.path), Tree.toArrayBy)(markForUpdate)(n)
+        )
       )(event, path)
 
     // Event Handling
     let dispatch = async event => {
       log(`${event.type} event at ${event.path}`)
       await validate(runTypeFunction(types, 'validate'), extend, tree)
-      bubbleUp(processEvent(event), event.path)
+      let updatedNodes = _.flatten(bubbleUp(processEvent(event), event.path))
+      await Promise.all(_.invokeMap('onMarkForUpdate', updatedNodes))
       await triggerUpdate()
+      await Promise.all(_.invokeMap('afterSearch', updatedNodes))
     }
 
     let triggerUpdate = F.debounceAsync(debounce, async () => {
