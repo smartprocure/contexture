@@ -246,6 +246,7 @@ Query represents a raw elasticsearch query_string.
 ```
 
 #### `text`
+Text implements raw text analysis like starts with, ends with, etc. These are generally regex queries.
 
 
 
@@ -253,23 +254,59 @@ Query represents a raw elasticsearch query_string.
 These types don't do any filtering of their own and only have results. These often power charts or analytics pages.
 
 #### `cardinality`
+A cardinality aggregation. Returns the cardinality of a field.
+
 #### `dateHistogram`
+A nested stats aggregation inside a dateHistogram aggregation, with support for tweaking min/max bounds.
+
 #### `esTwoLevelAggregation`
+An attempt at a generic version of many of these types, which nests two aggregations - generally a metric inside a bucket.
+
 #### `groupedMetric`
+A more general version of esTwoLevelAggregation, used in analysis builders/pivot tables. It takes config for an array of buckets and a metric agg. The buckets are nested with the metric on the inside.
+
 #### `matchCardinality`
+A filters bucket which puts results into a pass and fail bucket, along with a cardinality metric nested inside.
+
 #### `matchStats`
+A filters bucket which puts results into a pass and fail bucket, along with a stats metric nested inside.
+
 #### `nLevelAggregation`
+An infinitely nestable tree of aggs along with some support for a pipeline of specific reducers.
+
 #### `nonzeroClusters`
+Starts with a smart interval histogram merges buckets with nonzero counts.
+
 #### `percentileRanks`
+An ES percentile_ranks aggregation.
+
 #### `percentiles`
+An ES percentiles aggregation.
+
 #### `percentilesRange`
+Does a range aggregation based on the result of a percentiles aggregation.
+
 #### `rangeStats`
+A stats aggregation in a range aggregation.
+
 #### `results`
+Search result "hits", with support for highlighting, paging, sorting, etc.
+
 #### `smartIntervalHistogram`
+A stats aggregation inside a histogram aggreation - divided into intelligent chunks based on the min and max and snapping to clean "smart" business friendly intervals (roughly 25% of powers of 10).
+
 #### `smartPercentileRanks`
+¯\_(ツ)_/¯ 
+
 #### `statistical`
+A stats aggregation.
+
 #### `terms`
+A terms aggregation.
+
 #### `termsDelta`
+Shows the difference in terms between a foreground filter and a background filter. Very useful e.g. for showing things like new term values for time series (e.g. what new values are new in the past 90 days).
+
 #### `termsStatsHits`
 This result type combines multiple ES aggregations (terms/stats/top_hits) to create a result set.
 On top of this the result set also allows for `details` configuration where a summary/details type of results can be achived.
