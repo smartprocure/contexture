@@ -869,7 +869,7 @@ describe('lib', () => {
   })
   it('should support subquery', async () => {
     let spy = sinon.spy(mockService({
-      mocks: ({ key, type }) => {
+      mocks({ key, type }) {
         if (type == 'facet')
           return {
             options: (({
