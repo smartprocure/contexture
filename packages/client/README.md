@@ -153,7 +153,7 @@ The client exposes a method to create subqueries between two trees as a top leve
 `(types, from, fromPath, to, toPath)`
 It takes `types` (just like the client itself), the tree and path of the source node, and then the tree and path of the target node.
 
-Client types need implement some properties to be used in a subquery:
+Client types need to implement these methods to be used in a subquery:
 
 | Function Name | Purpose | Explanation |
 | ------------- | ------- | ----------- |
