@@ -11,7 +11,7 @@ import { initNode, hasContext, hasValue } from './node'
 import exampleTypes from './exampleTypes'
 import lens from './lens'
 import mockService from './mockService'
-import cascade from './cascade'
+import subquery from './subquery'
 
 let mergeWith = _.mergeWith.convert({ immutable: false })
 
@@ -40,7 +40,7 @@ export {
   hasContext,
   hasValue,
   mockService,
-  cascade,
+  subquery,
 }
 
 export let ContextTree = _.curry(

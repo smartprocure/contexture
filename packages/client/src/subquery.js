@@ -23,17 +23,16 @@ export default _.curry((types, from, fromPath, to, toPath) => {
   // toNode.validate = () => fromNode.updatingPromise.then(() => true)
   
   // Gets results to use as input from the fromNode
-  let getCascadeValues = getTypePropOrError(types, 'getCascadeValues', fromNode)
+  let getSubqueryValues = getTypePropOrError(types, 'getSubqueryValues', fromNode)
   // Builds a mutate blob for the toNode based on the values from the previous method
-  let useCascadeValues = getTypePropOrError(types, 'useCascadeValues', toNode)
-  // cascade -> link search? pipeSearch?
-  
+  let useSubqueryValues = getTypePropOrError(types, 'useSubqueryValues', toNode)
+
   // Could also use onResult, but this is more direct and avoids having to cache
   //  the promise for this mutate action somewhere
   fromNode.afterSearch = () => 
     _.flow(
-      deltas => getCascadeValues(deltas, fromNode),
-      values => useCascadeValues(values, toNode),
+      deltas => getSubqueryValues(deltas, fromNode),
+      values => useSubqueryValues(values, toNode),
       to.mutate(toPath)
     )(fromNode)
 })
