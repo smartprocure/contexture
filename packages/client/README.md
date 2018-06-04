@@ -175,6 +175,8 @@ Here's an example implementation, using the `facet` example type:
 ##### Loading Indicators
 A change to the source node in a subquery will immediately mark the target node as marked for update, but will not execute it's search until after the source node has results and the debounce time passes.
 
+Since target nodes are immediately marked for update when source nodes are, this eliminates the "double loading spinner" issue we've seen in other implementations.
+
 Dispatches that result in subquery source nodes being updated will await the updates of the target nodes in their `afterSearch` methods - which means you can get a promise for when the whole thing finishes updating.
 
 
