@@ -61,8 +61,8 @@ The following config options are available:
 | service    | function                       | n/a          | **Required** Async function to actually get service results (from the contexture server). An exception will be thrown if this is not passed in. |
 | types      | ClientTypeSpec                 | exampleTypes | Configuration of available types (documented below) |
 | debounce   | number                         | 1            | How many milliseconds to globally debounce search |
-| onChange   | (node, changes) => {}          |  _.noop      | A hook to capture when the client changes any property on a node |
-| onResult   | (path, response, target) => {} |  _.noop      | A hook to capture when the client updates a node with results from the server |
+| onChange   | (node, changes) => {}          |  _.noop      | A hook to capture when the client changes any property on a node. Can be modified at run time by reassigning the property on a tree instance. |
+| onResult   | (path, response, target) => {} |  _.noop      | A hook to capture when the client updates a node with results from the server. Can be modified at run time by reassigning the property on a tree instance. |
 | debug      | boolean                        | false        | Debug mode will log all dispatched events and generally help debugging |
 | extend     | function                       | F.extendOn   | Used to mutate nodes internally |
 | snapshot   | function                       | _.cloneDeep  | Used to take snapshots |
@@ -108,6 +108,16 @@ When picking field reactors, you should use the `others` reactor for things that
 | updatingPromise | `Promise` | Resolves when the node is done updating, and is reset as a new pending promise when markedForUpdate - be careful if relying on this as the promise property is replaced with a new value whenever it's marked for update. |
 | updatingDeferred | `Futil Deferred` | Interally used to resolve the updatingPromise |
 
+#### Client Type Definition Config
+| Name | Type | Notes |
+| ---- | ---- | ----- |
+| init | | |
+| defaults | | |
+| validate | | |
+| reactors | | |
+| getSubqueryValues | | |
+| useSubqueryValues | | |
+
 ### Run Time
 The following methods are exposed on an instantiated client
 
@@ -123,6 +133,15 @@ The following methods are exposed on an instantiated client
 | tree | tree | A reference to the internal tree. If you mutate this, you should dispatch an appropriate event. |
 | addActions | `(({ getNode, flat, dispatch, snapshot, extend, types, initNode }) => {actionsMethods} ) => null` | *Experimental* A method for extending the client with new actions on a per instance basis. You pass in a function which takes an object containing internal helpers and returns an object with actions that get extended onto the tree instance. |
 | addReactors | `(() => {customReactors}) => null` | *Experimental* A method for adding new reactors on a per instance basis. You pass in a function which returns an object of new reactors to support (`{reactorName: reactorFunction}`). Reactors are passed `(parent, node, event, reactor, types, lookup)` and are expected to return an array of affected nodes. |
+
+#### Node Run Time
+The following methods can be added to individual nodes (just set them on the object returned by getNode)
+| Name | Signature | Description |
+| ---- | --------- | ----------- |
+| onMarkForUpdate | `async () => {}` | Called when a node is markedForUpdate (post validate), and will block the search until it resolves. Used internally by subquery. |
+| afterSearch | `async () => {}` | Called on nodes that were marked for update _after_ the the search finishes - kind of like a per-node onResult, but will block the dispatch until it resolves (useful for holding up dispatches for side effects that an application might want to have happen after a search). Used internally by subquery. |
+| validate | `async () => {}` | A per-node version of validate which will override the type specific validation method. |
+
 
 ### Top Level Exports
 A number of utilities are now exposed as top level exports. You can import them like:
