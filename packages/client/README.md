@@ -157,8 +157,8 @@ Client types need implement some properties to be used in a subquery:
 
 | Function Name | Purpose | Explanation |
 | ------------- | ------- | ----------- |
-| `getSubqueryValues` | To be used as a source node | Takes a node as input and should return a list of values (typically an array) |
-| `useSubqueryValues` | To be a target node | Takes a values list (the output of a getSubqueryValues call) and produces a changeset that is passed to a `mutate` action |
+| `getSubqueryValues` | To be used as a source node | Takes the new results for a node as input and should return a list of values (typically an array). Also takes the actual source node as the second parameter. |
+| `useSubqueryValues` | To be a target node | Takes a values list (the output of a getSubqueryValues call) and produces a changeset that is passed to a `mutate` action. Also takes the actual target node as the second parameter. |
 
 Here's an example implementation, using the `facet` example type:
 
