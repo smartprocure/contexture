@@ -871,14 +871,14 @@ describe('lib', () => {
     let spy = sinon.spy(
       mockService({
         mocks({ key, type }) {
-          if (type == 'facet')
+          if (type === 'facet')
             return {
               options: {
                 c: [{ name: 1 }, { name: 2 }],
                 a: [{ name: 3 }, { name: 4 }],
               }[key],
             }
-          if (type == 'results')
+          if (type === 'results')
             return {
               count: 1,
               results: [{ title: 'some result' }],
