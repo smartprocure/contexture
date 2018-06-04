@@ -2,6 +2,8 @@ import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { getTypePropOrError } from './types'
 
+// A subquery (in contexture-client) is about taking the output of one search and makng it the input for another search.
+// This is an in memory, cross-database, "select in" join on sources that don't need to be relational.
 export default _.curry((types, from, fromPath, to, toPath) => {
   let toNode = to.getNode(toPath)
   let fromNode = from.getNode(fromPath)

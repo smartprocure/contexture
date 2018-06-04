@@ -140,6 +140,39 @@ import { utilName } from 'contexture-client'
 | `hasValue` | An internal utility that checks if a node has a value and isn't in an error state. Used primarily in custom reactors to help figure out if other nodes would be affected by an event. |
 | `exampleTypes` | A set of example types. This will likely be split out in a future version to its own repo. |
 | `mockService` | Useful for mocking services during testing. Takes a config object of logInput, logOutput, and a mocks function which will should return results for a node as input (defaults to fixed results by type) and returns a function for use as a `service` for a contexture-client instance. |
+| `subquery` | A tool for creating a subquery. See the section below. |
+
+
+#### Subquery
+A subquery (in contexture-client) is about taking the output of one search and makng it the input for another search.
+This is an in memory, cross-database, "select in" join on sources that don't need to be relational.
+
+This works by providing a source node from which to **get** values, and a target to **use** those values.
+
+The client exposes a method to create subqueries between two trees as a top level export, with this signature:
+`(types, from, fromPath, to, toPath)`
+It takes `types` (just like the client itself), the tree and path of the source node, and then the tree and path of the target node.
+
+Client types need implement some properties to be used in a subquery:
+
+| Function Name | Purpose | Explanation |
+| ------------- | ------- | ----------- |
+| `getSubqueryValues` | To be used as a source node | Takes a node as input and should return a list of values (typically an array) |
+| `useSubqueryValues` | To be a target node | Takes a values list (the output of a getSubqueryValues call) and produces a changeset that is passed to a `mutate` action |
+
+Here's an example implementation, using the `facet` example type:
+
+```js
+{
+  facet: {
+    useSubqueryValues: x => ({ values: x }),
+    getSubqueryValues: x => _.map('name', x.context.options),
+    //...
+  }
+}
+```
+
+
 
 ### Extending the Client
 The client can be enhanced with new types, actions, and reactors.
