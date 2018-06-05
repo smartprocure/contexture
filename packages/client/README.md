@@ -133,7 +133,7 @@ The following methods are exposed on an instantiated client
 | tree | tree | A reference to the internal tree. If you mutate this, you should dispatch an appropriate event. |
 | addActions | `(({ getNode, flat, dispatch, snapshot, extend, types, initNode }) => {actionsMethods} ) => null` | *Experimental* A method for extending the client with new actions on a per instance basis. You pass in a function which takes an object containing internal helpers and returns an object with actions that get extended onto the tree instance. |
 | addReactors | `(() => {customReactors}) => null` | *Experimental* A method for adding new reactors on a per instance basis. You pass in a function which returns an object of new reactors to support (`{reactorName: reactorFunction}`). Reactors are passed `(parent, node, event, reactor, types, lookup)` and are expected to return an array of affected nodes. |
-| subquery | `(targetPath, sourceTree, sourcePath) => {}` | Sets up a subquery, using the types passed in to the client and assuming this tree instance is the target tree. For more info, see the [subquery](#Subquery) section below. |
+| subquery | `(targetPath, sourceTree, sourcePath, mapSubqueryValues?) => {}` | Sets up a subquery, using the types passed in to the client and assuming this tree instance is the target tree. For more info, see the [subquery](#Subquery) section below. |
 
 #### Node Run Time
 The following methods can be added to individual nodes (just set them on the object returned by getNode)
@@ -170,10 +170,11 @@ This is an in memory, cross-database, "select in" join on sources that don't nee
 This works by providing a source node from which to **get** values, and a target to **use** those values. Logic on how to get and use those values are defined in the client type definitions.
 
 The client exposes a method to create subqueries between two trees as a top level export, with this signature:
-`(types, targetTree, targetPath, sourceTree, sourcePath)`
+`(types, targetTree, targetPath, sourceTree, sourcePath, mapSubqueryValues?)`
 It takes `types` (to lookup type specific logic), the tree and path of the source node, and then the tree and path of the target node.
+Lastly, it can optionally take a function to override the type logic completely.
 
-Client types need to implement these methods to be used in a subquery:
+Client types need to implement these methods to be used in a subquery if mapSubqueryValues is not provided:
 
 | Function Name | Signature | Explanation |
 | ------------- | --------- | ----------- |
@@ -193,6 +194,8 @@ Here's an example implementation, using the `facet` example type:
   }
 }
 ```
+
+If you pass `mapSubqueryValues` as the last parameter, you can ignore the `types` parameter. It's signature is `(sourceNode, targetNode, types) => deltasForTargetNodeMutate`.
 
 ##### Loading Indicators
 A change to the source node in a subquery will immediately mark the target node as marked for update, but will not execute it's search until after the source node has results and the debounce time passes.
