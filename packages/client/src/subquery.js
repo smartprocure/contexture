@@ -1,6 +1,14 @@
 import _ from 'lodash/fp'
 import { getTypePropOrError } from './types'
 
+let typeBasedMapSubqueryValues = (fromNode, toNode, types) =>
+  _.flow(
+    // Looks up the function for fromNode's type to return a list of values (typically an array) from results
+    getTypePropOrError(types, 'subquery.getValues', fromNode),
+    // Looks up the function for toNode's type to return a changeset that can be passed to `mutate` from a list of a values list (the output of a subquery.getValues call)
+    values => getTypePropOrError(types, 'subquery.useValues', toNode)(values, toNode)
+  )(fromNode)
+
 // A subquery (in contexture-client) is about taking the output of one search and makng it the input for another search.
 // This is an in memory, cross-database, "select in" join on sources that don't need to be relational.
 export default _.curry((types, from, fromPath, to, toPath) => {
@@ -23,21 +31,13 @@ export default _.curry((types, from, fromPath, to, toPath) => {
   // This version would not mark toNode for update until fromNode is done:
   // toNode.validate = () => fromNode.updatingPromise.then(() => true)
 
-  // Looks up the function for fromNode's type to return a list of values (typically an array) from results
-  let getSubqueryValues = getTypePropOrError(
-    types,
-    'getSubqueryValues',
-    fromNode
-  )
-  // Looks up the function for toNode's type to return a changeset that can be passed to `mutate` from a list of a values list (the output of a getSubqueryValues call)
-  let useSubqueryValues = getTypePropOrError(types, 'useSubqueryValues', toNode)
+  let mapSubqueryValues = typeBasedMapSubqueryValues
 
   // Could also use onResult, but this is more direct and avoids having to cache
   // the promise for this mutate action somewhere
   fromNode.afterSearch = () =>
     _.flow(
-      deltas => getSubqueryValues(deltas, fromNode),
-      values => useSubqueryValues(values, toNode),
+      mapSubqueryValues,
       to.mutate(toPath)
-    )(fromNode)
+    )(fromNode, toNode, types)
 })

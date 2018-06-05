@@ -115,8 +115,8 @@ When picking field reactors, you should use the `others` reactor for things that
 | defaults | | |
 | validate | | |
 | reactors | | |
-| getSubqueryValues | | |
-| useSubqueryValues | | |
+| subquery.getValues | | |
+| subQuery.useValues | | |
 
 ### Run Time
 The following methods are exposed on an instantiated client
@@ -176,16 +176,18 @@ Client types need to implement these methods to be used in a subquery:
 
 | Function Name | Signature | Explanation |
 | ------------- | --------- | ----------- |
-| `getSubqueryValues` | (changes, fromNode) => inputValues | Allows a type to be a source node. Returns a list of values (typically an array) from new results for a node of this type. |
-| `useSubqueryValues` | (values, toNode) => valuesToMutate | Allows a type to be a target node. Returns a changeset that can be passed to `mutate` from a list of a values list (the output of a getSubqueryValues call) for a node of this type. |
+| `subquery.getValues` | (changes, fromNode) => inputValues | Allows a type to be a source node. Returns a list of values (typically an array) from new results for a node of this type. |
+| `subQuery.useValues` | (values, toNode) => valuesToMutate | Allows a type to be a target node. Returns a changeset that can be passed to `mutate` from a list of a values list (the output of a subquery.getValues call) for a node of this type. |
 
 Here's an example implementation, using the `facet` example type:
 
 ```js
 {
   facet: {
-    useSubqueryValues: x => ({ values: x }),
-    getSubqueryValues: x => _.map('name', x.context.options),
+    subQuery: {
+      useValues: x => ({ values: x }),
+      getValues: x => _.map('name', x.context.options)
+    },
     //...
   }
 }
