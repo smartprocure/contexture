@@ -890,8 +890,10 @@ describe('lib', () => {
     let types = {
       facet: {
         reactors: { values: 'others' },
-        useSubqueryValues: x => ({ values: x }),
-        getSubqueryValues: x => _.map('name', x.context.options),
+        subquery: {
+          useValues: x => ({ values: x }),
+          getValues: x => _.map('name', x.context.options),
+        },
         defaults: {
           context: {
             options: [],
