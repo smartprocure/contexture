@@ -914,7 +914,8 @@ describe('lib', () => {
       children: [{ key: 'a', type: 'facet' }, { key: 'b', type: 'results' }],
     })
 
-    subquery(types, tree2, ['root', 'a'], tree1, ['innerRoot', 'c'])
+    // subquery(types, tree2, ['root', 'a'], tree1, ['innerRoot', 'c'])
+    tree2.subquery(['root', 'a'], tree1, ['innerRoot', 'c'])
     let promise = tree1.mutate(['innerRoot', 'd'], { values: ['test'] })
 
     // Expect the toNode to be marked for update immediately

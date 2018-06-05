@@ -133,6 +133,7 @@ The following methods are exposed on an instantiated client
 | tree | tree | A reference to the internal tree. If you mutate this, you should dispatch an appropriate event. |
 | addActions | `(({ getNode, flat, dispatch, snapshot, extend, types, initNode }) => {actionsMethods} ) => null` | *Experimental* A method for extending the client with new actions on a per instance basis. You pass in a function which takes an object containing internal helpers and returns an object with actions that get extended onto the tree instance. |
 | addReactors | `(() => {customReactors}) => null` | *Experimental* A method for adding new reactors on a per instance basis. You pass in a function which returns an object of new reactors to support (`{reactorName: reactorFunction}`). Reactors are passed `(parent, node, event, reactor, types, lookup)` and are expected to return an array of affected nodes. |
+| subquery | `(targetPath, sourceTree, sourcePath) => {}` | Sets up a subquery, using the types passed in to the client and assuming this tree instance is the target tree. For more info, see the [subquery](#Subquery) section below. |
 
 #### Node Run Time
 The following methods can be added to individual nodes (just set them on the object returned by getNode)
