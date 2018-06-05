@@ -169,15 +169,15 @@ This is an in memory, cross-database, "select in" join on sources that don't nee
 This works by providing a source node from which to **get** values, and a target to **use** those values. Logic on how to get and use those values are defined in the client type definitions.
 
 The client exposes a method to create subqueries between two trees as a top level export, with this signature:
-`(types, from, fromPath, to, toPath)`
+`(types, targetTree, targetPath, sourceTree, sourcePath)`
 It takes `types` (to lookup type specific logic), the tree and path of the source node, and then the tree and path of the target node.
 
 Client types need to implement these methods to be used in a subquery:
 
 | Function Name | Signature | Explanation |
 | ------------- | --------- | ----------- |
-| `subquery.getValues` | (changes, fromNode) => inputValues | Allows a type to be a source node. Returns a list of values (typically an array) from new results for a node of this type. |
-| `subQuery.useValues` | (values, toNode) => valuesToMutate | Allows a type to be a target node. Returns a changeset that can be passed to `mutate` from a list of a values list (the output of a subquery.getValues call) for a node of this type. |
+| `subquery.getValues` | (sourceNode) => inputValues | Allows a type to be a source node. Returns a list of values (typically an array) from new results for a node of this type. |
+| `subQuery.useValues` | (values, targetNode) => valuesToMutate | Allows a type to be a target node. Returns a changeset that can be passed to `mutate` from a list of a values list (the output of a subquery.getValues call) for a node of this type. |
 
 Here's an example implementation, using the `facet` example type:
 
