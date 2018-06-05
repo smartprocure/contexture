@@ -913,7 +913,13 @@ describe('lib', () => {
     })
 
     subquery(types, tree1, ['innerRoot', 'c'], tree2, ['root', 'a'])
-    await tree1.mutate(['innerRoot', 'd'], { values: ['test'] })
+    let promise = tree1.mutate(['innerRoot', 'd'], { values: ['test'] })
+    
+    // Expect the toNode to be marked for update immediately
+    await Promise.delay(1)
+    expect(tree2.getNode(['root', 'a']).markedForUpdate).to.be.true
+    
+    await promise
     expect(tree1.getNode(['innerRoot', 'c']).context.options).to.deep.equal([
       { name: 1 },
       { name: 2 },
