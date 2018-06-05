@@ -1,8 +1,9 @@
 # 2.10.0
 * Added `subquery` for piping search results from one node into the input of another
+* Added `subquery.getValues` and `subquery.useValues` support for client types
 * Allow `onChange` and `onResult` to be changed at runtime on the tree instance (before, it was only settable in initial config)
 * Added `onMarkForUpdate` and `afterSearch` hooks
-* Fixed bug on markForUpdate that replaced promises before fulfillment
+* Fixed bug on `markForUpdate` that replaced promises before fulfillment
 
 # 2.9.1
 * Fix bug that incorrectly marked siblings for update if they were in nested groups.
