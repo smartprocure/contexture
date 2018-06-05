@@ -24,7 +24,11 @@ export default _.curry((types, from, fromPath, to, toPath) => {
   // toNode.validate = () => fromNode.updatingPromise.then(() => true)
 
   // Looks up the function for fromNode's type to return a list of values (typically an array) from results
-  let getSubqueryValues = getTypePropOrError(types, 'getSubqueryValues', fromNode)
+  let getSubqueryValues = getTypePropOrError(
+    types,
+    'getSubqueryValues',
+    fromNode
+  )
   // Looks up the function for toNode's type to return a changeset that can be passed to `mutate` from a list of a values list (the output of a getSubqueryValues call)
   let useSubqueryValues = getTypePropOrError(types, 'useSubqueryValues', toNode)
 
