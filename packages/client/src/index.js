@@ -139,6 +139,7 @@ export let ContextTree = _.curry(
 
     TreeInstance.addActions(actions)
     TreeInstance.lens = lens(TreeInstance)
+    TreeInstance.subquery = subquery(types, TreeInstance)
     return TreeInstance
   }
 )
