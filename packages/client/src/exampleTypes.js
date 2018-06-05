@@ -43,7 +43,7 @@ export default stampKey('type', {
     },
     subQuery: {
       useValues: x => ({ values: x }),
-      getValues: x => _.map('name', x.context.options)
+      getValues: x => _.map('name', x.context.options),
     },
   },
   text: {
