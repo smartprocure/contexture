@@ -2,7 +2,7 @@ import _ from 'lodash/fp'
 import chai from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
-import ContextureClient, { subquery, encode } from '../src'
+import ContextureClient, { encode } from '../src'
 import Promise from 'bluebird'
 const expect = chai.expect
 chai.use(sinonChai)
