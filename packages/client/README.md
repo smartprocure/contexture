@@ -163,21 +163,21 @@ import { utilName } from 'contexture-client'
 
 
 #### Subquery
-A subquery (in contexture-client) is about taking the output of one search and makng it the input for another search.
+A subquery (in contexture-client) is about taking the output of one search and making it the input for another search.
 This is an in memory, cross-database, "select in" join on sources that don't need to be relational.
 
-This works by providing a source node from which to **get** values, and a target to **use** those values.
+This works by providing a source node from which to **get** values, and a target to **use** those values. Logic on how to get and use those values are defined in the client type definitions.
 
 The client exposes a method to create subqueries between two trees as a top level export, with this signature:
 `(types, from, fromPath, to, toPath)`
-It takes `types` (just like the client itself), the tree and path of the source node, and then the tree and path of the target node.
+It takes `types` (to lookup type specific logic), the tree and path of the source node, and then the tree and path of the target node.
 
 Client types need to implement these methods to be used in a subquery:
 
-| Function Name | Purpose | Explanation |
-| ------------- | ------- | ----------- |
-| `getSubqueryValues` | To be used as a source node | Takes the new results for a node as input and should return a list of values (typically an array). Also takes the actual source node as the second parameter. |
-| `useSubqueryValues` | To be a target node | Takes a values list (the output of a getSubqueryValues call) and produces a changeset that is passed to a `mutate` action. Also takes the actual target node as the second parameter. |
+| Function Name | Signature | Explanation |
+| ------------- | --------- | ----------- |
+| `getSubqueryValues` | (changes, fromNode) => inputValues | Allows a type to be a source node. Returns a list of values (typically an array) from new results for a node of this type. |
+| `useSubqueryValues` | (values, toNode) => valuesToMutate | Allows a type to be a target node. Returns a changeset that can be passed to `mutate` from a list of a values list (the output of a getSubqueryValues call) for a node of this type. |
 
 Here's an example implementation, using the `facet` example type:
 

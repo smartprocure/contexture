@@ -67,7 +67,7 @@ export let ContextTree = _.curry(
       flat
     )
 
-    // overwriting extend
+    // Overwrite extend to report changes
     extend = _.over([extend, (a, b) => TreeInstance.onChange(a, b)])
 
     // Getting the Traversals
@@ -77,12 +77,9 @@ export let ContextTree = _.curry(
       _.flow(
         getAffectedNodes(customReactors, getNode, types),
         // Mark children only if it's not a parent of the target so we don't incorrectly mark siblings
-        _.flatMap((
-          n // flatMap because traversing children can create arrays
-        ) =>
-          F.unless(isParent(n.path, event.path), Tree.toArrayBy)(markForUpdate)(
-            n
-          )
+        // flatMap because traversing children can create arrays
+        _.flatMap(n =>
+          F.unless(isParent(n.path, event.path), Tree.toArrayBy)(markForUpdate)(n)
         )
       )(event, path)
 

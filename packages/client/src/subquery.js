@@ -17,23 +17,19 @@ export default _.curry((types, from, fromPath, to, toPath) => {
   }
 
   // Set validation dependency to block search, but uses onMarkForUpdate instead
-  //  so the toNode can be marked for update before fromNode resolves.
-  //  Validate blocks markedForUpdate but onMarkForUpdate does not.
+  // so the toNode can be marked for update before fromNode resolves.
+  // Validate blocks markedForUpdate but onMarkForUpdate does not.
   toNode.onMarkForUpdate = () => fromNode.updatingPromise
   // This version would not mark toNode for update until fromNode is done:
   // toNode.validate = () => fromNode.updatingPromise.then(() => true)
 
-  // Gets results to use as input from the fromNode
-  let getSubqueryValues = getTypePropOrError(
-    types,
-    'getSubqueryValues',
-    fromNode
-  )
-  // Builds a mutate blob for the toNode based on the values from the previous method
+  // Looks up the function for fromNode's type to return a list of values (typically an array) from results
+  let getSubqueryValues = getTypePropOrError(types, 'getSubqueryValues', fromNode)
+  // Looks up the function for toNode's type to return a changeset that can be passed to `mutate` from a list of a values list (the output of a getSubqueryValues call)
   let useSubqueryValues = getTypePropOrError(types, 'useSubqueryValues', toNode)
 
   // Could also use onResult, but this is more direct and avoids having to cache
-  //  the promise for this mutate action somewhere
+  // the promise for this mutate action somewhere
   fromNode.afterSearch = () =>
     _.flow(
       deltas => getSubqueryValues(deltas, fromNode),
