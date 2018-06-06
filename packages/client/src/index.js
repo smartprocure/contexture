@@ -94,6 +94,7 @@ export let ContextTree = _.curry(
       await Promise.all(_.invokeMap('onMarkForUpdate', updatedNodes))
       let affectsSelf = !!_.find({ path: event.path }, updatedNodes)
       // Skip triggerUpdate if disableAutoUpdate or it this dispatch affects the target node (to allow things like paging changes to always go through)
+      // The assumption here is that any event that affects the target node would likely be assumed to take effect immediately by end users
       // Also allow events to specify `autoUpdate:true` to let it through (e.g. search button event)
       // This approach is simpler than marking missedUpdate but not paused, but will trigger _all_ pending updates when an update goes through
       if (!TreeInstance.disableAutoUpdate || affectsSelf || event.autoUpdate)
