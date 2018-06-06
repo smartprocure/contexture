@@ -56,16 +56,17 @@ if you want to pre apply it with config.
 #### Config
 The following config options are available:
 
-| Name       | Type                           | Default      | Description |
-| ----       | ----                           | -------      | ----------- |
-| service    | function                       | n/a          | **Required** Async function to actually get service results (from the contexture server). An exception will be thrown if this is not passed in. |
-| types      | ClientTypeSpec                 | exampleTypes | Configuration of available types (documented below) |
-| debounce   | number                         | 1            | How many milliseconds to globally debounce search |
-| onChange   | (node, changes) => {}          |  _.noop      | A hook to capture when the client changes any property on a node. Can be modified at run time by reassigning the property on a tree instance. |
-| onResult   | (path, response, target) => {} |  _.noop      | A hook to capture when the client updates a node with results from the server. Can be modified at run time by reassigning the property on a tree instance. |
-| debug      | boolean                        | false        | Debug mode will log all dispatched events and generally help debugging |
-| extend     | function                       | F.extendOn   | Used to mutate nodes internally |
-| snapshot   | function                       | _.cloneDeep  | Used to take snapshots |
+| Name              | Type                           | Default      | Description |
+| ----              | ----                           | -------      | ----------- |
+| service           | function                       | n/a          | **Required** Async function to actually get service results (from the contexture server). An exception will be thrown if this is not passed in. |
+| types             | ClientTypeSpec                 | exampleTypes | Configuration of available types (documented below) |
+| debounce          | number                         | 1            | How many milliseconds to globally debounce search |
+| onChange          | (node, changes) => {}          |  _.noop      | A hook to capture when the client changes any property on a node. Can be modified at run time by reassigning the property on a tree instance. |
+| onResult          | (path, response, target) => {} |  _.noop      | A hook to capture when the client updates a node with results from the server. Can be modified at run time by reassigning the property on a tree instance. |
+| debug             | boolean                        | false        | Debug mode will log all dispatched events and generally help debugging |
+| extend            | function                       | F.extendOn   | Used to mutate nodes internally |
+| snapshot          | function                       | _.cloneDeep  | Used to take snapshots |
+| disableAutoUpdate | boolean                        | false        | Will disable automatically triggering updates at the end of dispatches, except for events that affect their target node. This is useful for a search button use case, similar to pausing the entire tree but always allowing through specific changes. This is typically used with the `triggerUpdate` action to kick off a dispatch that will update everything `markedForUpdate`. Can be changed at run time. | 
 
 #### Client Types
 Available types are passed in as config.
@@ -126,6 +127,7 @@ The following methods are exposed on an instantiated client
 | add | `async (path, newNode) -> await searchCompleted` | Adds a node to the tree as a child of the specified path. You can await this for when updates settle and relevant searches are completed. |
 | remove | `async path -> await searchCompleted` | Removes a node at the specified path. You can await this for when updates settle and relevant searches are completed. |
 | mutate | `async (path, deltas) -> await searchCompleted` | Mutates the node at the given path with the new values. You can await this for when updates settle and relevant searches are completed. |
+| triggerUpdate | `async () -> await searchCompleted` | Will trigger an update with a `none` reactor, updating only nodes that are already marked for update. This is useful when `disableAutoUpdate` is set to true. |
 | dispatch | `async event -> await searchCompleted` | A lower level, core method of interaction (called automatically by the actions above). You can await this for when updates settle and relevant searches are completed. |
 | getNode | `[path] -> node` | Lookup a node by a path (array of keys). |
 | serialize | `() => tree` | Returns a snapshot of the tree without any of the temporary state like updating flags. |

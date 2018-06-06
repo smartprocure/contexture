@@ -1,3 +1,6 @@
+# 2.11.0
+* Added `disableAutoUpdate` and `triggerUpdate` action
+
 # 2.10.0
 * Added `subquery` for piping search results from one node into the input of another
 * Added `subquery.getValues` and `subquery.useValues` support for client types

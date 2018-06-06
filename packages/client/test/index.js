@@ -936,4 +936,44 @@ describe('lib', () => {
     expect(tree2.getNode(['root', 'b']).updating).to.be.false
     expect(tree2.getNode(['root', 'b']).context.count).to.equal(1)
   })
+  it('should respect disableAutoUpdate', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({
+      service,
+      debounce: 1,
+      disableAutoUpdate: true,
+    })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'results',
+          type: 'results',
+        },
+        {
+          key: 'agencies',
+          field: 'Organization.Name',
+          type: 'facet',
+        },
+        {
+          key: 'vendors',
+          field: 'Vendor.Name',
+          type: 'facet',
+        },
+      ],
+    })
+    // With disableAutoUpdate, search should not go through
+    await tree.mutate(['root', 'agencies'], { values: ['Other City'] })
+    expect(service).to.not.have.been.called
+    // If it affects itself it will go through
+    await tree.mutate(['root', 'agencies'], { size: 12 })
+    expect(service).to.have.callCount(1)
+
+    // Trigger Update should also let searches through
+    await tree.mutate(['root', 'agencies'], { values: ['First City'] })
+    expect(service).to.have.callCount(1)
+    await tree.triggerUpdate()
+    expect(service).to.have.callCount(2)
+  })
 })
