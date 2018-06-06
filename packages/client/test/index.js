@@ -954,24 +954,24 @@ describe('lib', () => {
         {
           key: 'agencies',
           field: 'Organization.Name',
-          type: 'facet'
+          type: 'facet',
         },
         {
           key: 'vendors',
           field: 'Vendor.Name',
-          type: 'facet'
-        }
+          type: 'facet',
+        },
       ],
     })
     // With disableAutoUpdate, search should not go through
-    await tree.mutate(['root', 'agencies'], { values: ['Other City'], })
+    await tree.mutate(['root', 'agencies'], { values: ['Other City'] })
     expect(service).to.not.have.been.called
     // If it affects itself it will go through
     await tree.mutate(['root', 'agencies'], { size: 12 })
     expect(service).to.have.callCount(1)
-    
+
     // Trigger Update should also let searches through
-    await tree.mutate(['root', 'agencies'], { values: ['First City'], })
+    await tree.mutate(['root', 'agencies'], { values: ['First City'] })
     expect(service).to.have.callCount(1)
     await tree.triggerUpdate()
     expect(service).to.have.callCount(2)

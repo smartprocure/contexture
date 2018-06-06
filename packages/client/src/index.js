@@ -54,7 +54,7 @@ export let ContextTree = _.curry(
       debug,
       extend = F.extendOn,
       snapshot = _.cloneDeep,
-      disableAutoUpdate
+      disableAutoUpdate,
     },
     tree
   ) => {
@@ -142,7 +142,7 @@ export let ContextTree = _.curry(
       addReactors: create => F.extendOn(customReactors, create()),
       onResult,
       onChange,
-      disableAutoUpdate
+      disableAutoUpdate,
     }
 
     TreeInstance.addActions(actions)
