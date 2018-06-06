@@ -11,6 +11,7 @@ import { initNode, hasContext, hasValue } from './node'
 import exampleTypes from './exampleTypes'
 import lens from './lens'
 import mockService from './mockService'
+import subquery from './subquery'
 
 let mergeWith = _.mergeWith.convert({ immutable: false })
 
@@ -31,7 +32,16 @@ let defaultService = () => {
 }
 
 // Export useful utils which might be needed for extending the core externally
-export { Tree, encode, decode, exampleTypes, hasContext, hasValue, mockService }
+export {
+  Tree,
+  encode,
+  decode,
+  exampleTypes,
+  hasContext,
+  hasValue,
+  mockService,
+  subquery,
+}
 
 export let ContextTree = _.curry(
   (
@@ -40,9 +50,9 @@ export let ContextTree = _.curry(
       types = exampleTypes,
       debounce = 500,
       onResult = _.noop,
+      onChange = _.noop,
       debug,
       extend = F.extendOn,
-      onChange = _.noop,
       snapshot = _.cloneDeep,
     },
     tree
@@ -57,27 +67,32 @@ export let ContextTree = _.curry(
       flat
     )
 
-    // overwriting extend
-    extend = _.over([extend, onChange])
+    // Overwrite extend to report changes
+    extend = _.over([extend, (a, b) => TreeInstance.onChange(a, b)])
 
     // Getting the Traversals
     let { markForUpdate, markLastUpdate, prepForUpdate } = traversals(extend)
 
     let processEvent = event => path =>
-      F.flurry(
+      _.flow(
         getAffectedNodes(customReactors, getNode, types),
         // Mark children only if it's not a parent of the target so we don't incorrectly mark siblings
-        _.each(n => {
-          F.unless(isParent(n.path, event.path), Tree.walk)(markForUpdate)(n)
-        })
+        // flatMap because traversing children can create arrays
+        _.flatMap(n =>
+          F.unless(isParent(n.path, event.path), Tree.toArrayBy)(markForUpdate)(
+            n
+          )
+        )
       )(event, path)
 
     // Event Handling
     let dispatch = async event => {
       log(`${event.type} event at ${event.path}`)
       await validate(runTypeFunction(types, 'validate'), extend, tree)
-      bubbleUp(processEvent(event), event.path)
+      let updatedNodes = _.flatten(bubbleUp(processEvent(event), event.path))
+      await Promise.all(_.invokeMap('onMarkForUpdate', updatedNodes))
       await triggerUpdate()
+      await Promise.all(_.invokeMap('afterSearch', updatedNodes))
     }
 
     let triggerUpdate = F.debounceAsync(debounce, async () => {
@@ -99,7 +114,7 @@ export let ContextTree = _.curry(
         let target = flat[path]
         let responseNode = _.pick(['context', 'error'], node)
         if (target && !_.isEmpty(responseNode) && !isStale(node, target)) {
-          onResult(decode(path), node, target)
+          TreeInstance.onResult(decode(path), node, target)
           mergeWith((oldValue, newValue) => newValue, target, responseNode)
           extend(target, { updating: false })
           target.updatingDeferred.resolve()
@@ -118,10 +133,13 @@ export let ContextTree = _.curry(
           create({ getNode, flat, dispatch, snapshot, extend, types, initNode })
         ),
       addReactors: create => F.extendOn(customReactors, create()),
+      onResult,
+      onChange,
     }
 
     TreeInstance.addActions(actions)
     TreeInstance.lens = lens(TreeInstance)
+    TreeInstance.subquery = subquery(types, TreeInstance)
     return TreeInstance
   }
 )

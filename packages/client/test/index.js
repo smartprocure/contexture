@@ -2,7 +2,7 @@ import _ from 'lodash/fp'
 import chai from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
-import * as lib from '../src'
+import ContextureClient, { encode } from '../src'
 import Promise from 'bluebird'
 const expect = chai.expect
 chai.use(sinonChai)
@@ -31,7 +31,7 @@ describe('lib', () => {
       ],
     }
     let service = sinon.spy(mockService())
-    let Tree = lib.ContextTree({ service, debounce: 1 }, tree)
+    let Tree = ContextureClient({ service, debounce: 1 }, tree)
     it('should generally mutate', async () => {
       await Tree.mutate(['root', 'filter'], {
         values: ['a'],
@@ -220,7 +220,7 @@ describe('lib', () => {
     it('should handle groups being paused')
   })
   it('should throw if no service is provided', async () => {
-    let Tree = lib.ContextTree(
+    let Tree = ContextureClient(
       {
         debounce: 1,
       },
@@ -248,7 +248,7 @@ describe('lib', () => {
     throw Error('Should have thrown')
   })
   // it('should ignore searches where everything is filterOnly', () => {
-  //   let Tree = lib.contextTree({}, {
+  //   let Tree = ContextureClient({}, {
   //     key: 'root',
   //     children: [{
   //       key:'filter'
@@ -260,7 +260,7 @@ describe('lib', () => {
   // })
   it('should work', async () => {
     let service = sinon.spy(mockService())
-    let Tree = lib.ContextTree(
+    let Tree = ContextureClient(
       { service, debounce: 1 },
       {
         key: 'root',
@@ -370,7 +370,7 @@ describe('lib', () => {
     let spy = sinon.spy()
     // Just call the spy for `results`
     let onResult = path => _.isEqual(path, ['root', 'results']) && spy()
-    let Tree = lib.ContextTree(
+    let Tree = ContextureClient(
       {
         service,
         debounce: 1,
@@ -398,7 +398,7 @@ describe('lib', () => {
       [_.isEqual(['root', 'filter']), filterUpdated],
     ])
 
-    let Tree = lib.ContextTree(
+    let Tree = ContextureClient(
       {
         debounce: 1,
         types: {
@@ -444,7 +444,7 @@ describe('lib', () => {
     let testInit = sinon.spy((node, extend) =>
       extend(node, { isExtended: true })
     )
-    let Tree = lib.ContextTree(
+    let Tree = ContextureClient(
       {
         debounce: 1,
         types: {
@@ -467,7 +467,7 @@ describe('lib', () => {
     expect(Tree.getNode(['root', 'filter']).isExtended).to.be.true
   })
   it('should support custom type defaults', async () => {
-    let Tree = lib.ContextTree(
+    let Tree = ContextureClient(
       {
         debounce: 1,
         types: {
@@ -503,7 +503,7 @@ describe('lib', () => {
       [_.isEqual(['root', 'filter']), filterUpdated],
     ])
 
-    let Tree = lib.ContextTree(
+    let Tree = ContextureClient(
       {
         debounce: 1,
         types: {
@@ -579,7 +579,7 @@ describe('lib', () => {
       [_.isEqual(['root', 'filter']), filterUpdated],
     ])
 
-    let Tree = lib.ContextTree(
+    let Tree = ContextureClient(
       {
         debounce: 1,
         onResult,
@@ -613,7 +613,7 @@ describe('lib', () => {
   })
   it('should support custom actions', async () => {
     let service = sinon.spy(mockService({}))
-    let tree = lib.ContextTree(
+    let tree = ContextureClient(
       {
         debounce: 1,
         service,
@@ -640,8 +640,8 @@ describe('lib', () => {
         let node = getNode(path)
         node.key = newKey
         node.path.splice(-1, 1, newKey)
-        delete flat[lib.encode(path)]
-        flat[lib.encode(node.path)] = node
+        delete flat[encode(path)]
+        flat[encode(node.path)] = node
       },
     }))
     let node = tree.getNode(['root', 'b'])
@@ -676,7 +676,7 @@ describe('lib', () => {
   })
   it('should support custom reactors', async () => {
     let service = sinon.spy(mockService({}))
-    let tree = lib.ContextTree(
+    let tree = ContextureClient(
       {
         debounce: 1,
         service,
@@ -733,7 +733,7 @@ describe('lib', () => {
       await Promise.delay(10)
       return spy(...args)
     }
-    let tree = lib.ContextTree(
+    let tree = ContextureClient(
       {
         debounce: 0,
         service,
@@ -771,7 +771,7 @@ describe('lib', () => {
   describe('Previously fixed bugs', () => {
     it('should not incorrectly mark siblings for update when their parents are marked on self', async () => {
       let service = addDelay(10, sinon.spy(mockService()))
-      let Tree = lib.ContextTree({ service, debounce: 1 })
+      let Tree = ContextureClient({ service, debounce: 1 })
       let tree = Tree({
         key: 'root',
         join: 'and',
@@ -800,7 +800,7 @@ describe('lib', () => {
     })
     it('should not prevent siblings from updating', async () => {
       let service = addDelay(10, sinon.spy(mockService()))
-      let Tree = lib.ContextTree({ service, debounce: 1 })
+      let Tree = ContextureClient({ service, debounce: 1 })
       let tree = Tree({
         key: 'root',
         join: 'and',
@@ -866,5 +866,74 @@ describe('lib', () => {
       expect(tree.getNode(['root', 'criteria1', 'vendors']).lastUpdateTime).to
         .not.be.null
     })
+  })
+  it('should support subquery', async () => {
+    let spy = sinon.spy(
+      mockService({
+        mocks({ key, type }) {
+          if (type === 'facet')
+            return {
+              options: {
+                c: [{ name: 1 }, { name: 2 }],
+                a: [{ name: 3 }, { name: 4 }],
+              }[key],
+            }
+          if (type === 'results')
+            return {
+              count: 1,
+              results: [{ title: 'some result' }],
+            }
+        },
+      })
+    )
+    let service = addDelay(10, spy)
+    let types = {
+      facet: {
+        reactors: { values: 'others' },
+        subquery: {
+          useValues: x => ({ values: x }),
+          getValues: x => _.map('name', x.context.options),
+        },
+        defaults: {
+          context: {
+            options: [],
+          },
+        },
+      },
+    }
+    let Tree = ContextureClient({ debounce: 1, service, types })
+
+    let tree1 = Tree({
+      key: 'innerRoot',
+      join: 'and',
+      children: [{ key: 'c', type: 'facet' }, { key: 'd', type: 'facet' }],
+    })
+    let tree2 = Tree({
+      key: 'root',
+      join: 'and',
+      children: [{ key: 'a', type: 'facet' }, { key: 'b', type: 'results' }],
+    })
+
+    // subquery(types, tree2, ['root', 'a'], tree1, ['innerRoot', 'c'])
+    tree2.subquery(['root', 'a'], tree1, ['innerRoot', 'c'])
+    let promise = tree1.mutate(['innerRoot', 'd'], { values: ['test'] })
+
+    // Expect the toNode to be marked for update immediately
+    await Promise.delay(1)
+    expect(tree2.getNode(['root', 'a']).markedForUpdate).to.be.true
+
+    await promise
+    expect(tree1.getNode(['innerRoot', 'c']).context.options).to.deep.equal([
+      { name: 1 },
+      { name: 2 },
+    ])
+    expect(tree2.getNode(['root', 'a']).values).to.deep.equal([1, 2])
+
+    // Mutate on tree1 will await the Subquery into tree2
+    expect(spy).to.have.callCount(2)
+
+    expect(tree2.getNode(['root', 'b']).markedForUpdate).to.be.false
+    expect(tree2.getNode(['root', 'b']).updating).to.be.false
+    expect(tree2.getNode(['root', 'b']).context.count).to.equal(1)
   })
 })

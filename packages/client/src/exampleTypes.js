@@ -41,6 +41,10 @@ export default stampKey('type', {
         cardinality: null,
       },
     },
+    subQuery: {
+      useValues: x => ({ values: x }),
+      getValues: x => _.map('name', x.context.options),
+    },
   },
   text: {
     validate: validateValues,
