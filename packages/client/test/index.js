@@ -52,6 +52,7 @@ describe('lib', () => {
           {
             key: 'results',
             type: 'results',
+            page: 1,
             pageSize: 10,
             lastUpdateTime: now,
           },
@@ -83,6 +84,7 @@ describe('lib', () => {
           {
             key: 'results',
             type: 'results',
+            page: 1,
             pageSize: 10,
           },
         ],
@@ -316,6 +318,7 @@ describe('lib', () => {
               key: 'results',
               type: 'results',
               lastUpdateTime: now,
+              page: 1,
               pageSize: 10,
             },
           ],
@@ -975,5 +978,48 @@ describe('lib', () => {
     expect(service).to.have.callCount(1)
     await tree.triggerUpdate()
     expect(service).to.have.callCount(2)
+  })
+  it('should call onUpdateByOthers', async () => {
+    let service = sinon.spy(mockService())
+    let types = {
+      facet: {
+        reactors: { values: 'others' },
+        defaults: {
+          context: {
+            options: [],
+          },
+        },
+      },
+      results: {
+        onUpdateByOthers(node, extend) {
+          extend(node, { page: 1 })
+        },
+      },
+    }
+    let Tree = ContextureClient({ debounce: 1, service, types })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'results',
+          type: 'results',
+          page: 2,
+        },
+        {
+          key: 'agencies',
+          field: 'Organization.Name',
+          type: 'facet',
+        },
+        {
+          key: 'vendors',
+          field: 'Vendor.Name',
+          type: 'facet',
+        },
+      ],
+    })
+    await tree.mutate(['root', 'agencies'], { values: ['Other City'] })
+    expect(tree.getNode(['root', 'results']).page).to.equal(1)
+    expect(service).to.have.callCount(1)
   })
 })
