@@ -7,6 +7,7 @@ let reactors = {
     parent.join === 'or' ? [] : _.difference(parent.children, [node]),
   self: (parent, node) => [node],
   all: parent => parent.children,
+  none: () => [],
   standardChange(parent, node, { previous }, reactors) {
     let needUpdate = hasContext(node)
     let affectsOthers = hasValue(node) || hasValue(previous)
