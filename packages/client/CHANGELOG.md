@@ -1,3 +1,6 @@
+# 2.12.0
+* Added `onUpdateByOthers` hook and update results example type to use it
+
 # 2.11.0
 * Added `disableAutoUpdate` and `triggerUpdate` action
 
