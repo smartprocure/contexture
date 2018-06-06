@@ -91,9 +91,9 @@ export default stampKey('type', {
         },
       },
     },
-    onUpdateByOthers: (node, extend) => {
-      extend(node, {page: 1})
-    }
+    onUpdateByOthers(node, extend) {
+      extend(node, { page: 1 })
+    },
   },
   number: {
     validate: x => !_.isNil(x.min) || !_.isNil(x.max),
