@@ -112,11 +112,12 @@ When picking field reactors, you should use the `others` reactor for things that
 | updatingDeferred | `Futil Deferred` | Interally used to resolve the updatingPromise |
 
 #### Client Type Definition Config
+
 | Name | Type | Notes |
 | ---- | ---- | ----- |
 | init | `(node, extend) => {}` | Called when a node is added and when the tree is first initialized. Can be used to do stuff like extend the node with some default properties. |
 | defaults | `object` | Sugar over simply calling extend(node, {...}) in init |
-| validate | `async node => true || false || throw Exception()` | An async function that will block updates until it resolves. Return true to let the node participate in the search, false for it to be excluded, or throw to block the search completely. This can be used to block waiting for things like an API service that gets a value. |
+| validate | `async node => true/false/throw Exception()` | An async function that will block updates until it resolves. Return true to let the node participate in the search, false for it to be excluded, or throw to block the search completely. This can be used to block waiting for things like an API service that gets a value. |
 | reactors | `object` | An object of field names -> reactor names, primarily for use in `mutate` |
 | subquery.getValues | `(sourceNode) => inputValues` | See subquery section below |
 | subQuery.useValues | `(values, targetNode) => valuesToMutate` | See subquery section below |
@@ -142,6 +143,7 @@ The following methods are exposed on an instantiated client
 
 #### Node Run Time
 The following methods can be added to individual nodes (just set them on the object returned by getNode)
+
 | Name | Signature | Description |
 | ---- | --------- | ----------- |
 | onMarkForUpdate | `async () => {}` | Called when a node is markedForUpdate (post validate), and will block the search until it resolves. Used internally by subquery. |
