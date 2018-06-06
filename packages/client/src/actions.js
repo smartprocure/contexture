@@ -41,5 +41,5 @@ export default ({
     })
   }),
   refresh: path => dispatch({ type: 'refresh', path }),
-  triggerUpdate: () => dispatch({ type: 'none', path: [], autoUpdate: true })
+  triggerUpdate: () => dispatch({ type: 'none', path: [], autoUpdate: true }),
 })
