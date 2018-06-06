@@ -52,6 +52,7 @@ describe('lib', () => {
           {
             key: 'results',
             type: 'results',
+            page: 1,
             pageSize: 10,
             lastUpdateTime: now,
           },
@@ -83,6 +84,7 @@ describe('lib', () => {
           {
             key: 'results',
             type: 'results',
+            page: 1,
             pageSize: 10,
           },
         ],
@@ -316,6 +318,7 @@ describe('lib', () => {
               key: 'results',
               type: 'results',
               lastUpdateTime: now,
+              page: 1,
               pageSize: 10,
             },
           ],

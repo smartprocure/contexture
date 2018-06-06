@@ -92,6 +92,7 @@ describe('usage with mobx should generally work', () => {
           key: 'results',
           type: 'results',
           lastUpdateTime: now,
+          page: 1,
           pageSize: 10,
         },
       ],
