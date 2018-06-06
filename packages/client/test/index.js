@@ -996,7 +996,7 @@ describe('lib', () => {
         },
       },
     }
-    let Tree = ContextureClient({ debounce: 1, service, types, debug: true })
+    let Tree = ContextureClient({ debounce: 1, service, types })
     let tree = Tree({
       key: 'root',
       join: 'and',
