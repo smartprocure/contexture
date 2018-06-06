@@ -84,7 +84,9 @@ This is the general structure:
     reactors: {
       fieldName: 'reactor',
       field2...
-    }
+    },
+    // When marked for update by a dispatch to a different node
+    onUpdateByOthers: (node, extend) => { }
   },
   Type2....
 }
@@ -112,12 +114,13 @@ When picking field reactors, you should use the `others` reactor for things that
 #### Client Type Definition Config
 | Name | Type | Notes |
 | ---- | ---- | ----- |
-| init | | |
-| defaults | | |
-| validate | | |
-| reactors | | |
-| subquery.getValues | | |
-| subQuery.useValues | | |
+| init | `(node, extend) => {}` | Called when a node is added and when the tree is first initialized. Can be used to do stuff like extend the node with some default properties. |
+| defaults | `object` | Sugar over simply calling extend(node, {...}) in init |
+| validate | `async node => true || false || throw Exception()` | An async function that will block updates until it resolves. Return true to let the node participate in the search, false for it to be excluded, or throw to block the search completely. This can be used to block waiting for things like an API service that gets a value. |
+| reactors | `object` | An object of field names -> reactor names, primarily for use in `mutate` |
+| subquery.getValues | `(sourceNode) => inputValues` | See subquery section below |
+| subQuery.useValues | `(values, targetNode) => valuesToMutate` | See subquery section below |
+| onUpdateByOthers | `(node, extend) => {}` | Called when a node is markedForUpdate by an event dispatched to a different node, which should generically capture all events where something caused the relevant filters to change and exclude anything that only affects itself. This is typically used to do things like reset paging since that should be reset when relevant filters change. |
 
 ### Run Time
 The following methods are exposed on an instantiated client
