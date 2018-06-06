@@ -61,8 +61,8 @@ The following config options are available:
 | service    | function                       | n/a          | **Required** Async function to actually get service results (from the contexture core). An exception will be thrown if this is not passed in. |
 | types      | ClientTypeSpec                 | exampleTypes | Configuration of available types (documented below) |
 | debounce   | number                         | 1            | How many milliseconds to globally debounce search |
-| onChange   | (node, changes) => {}          |  _.noop      | A hook to capture when the client changes any property on a node |
-| onResult   | (path, response, target) => {} |  _.noop      | A hook to capture when the client updates a node with results from the server |
+| onChange   | (node, changes) => {}          |  _.noop      | A hook to capture when the client changes any property on a node. Can be modified at run time by reassigning the property on a tree instance. |
+| onResult   | (path, response, target) => {} |  _.noop      | A hook to capture when the client updates a node with results from the server. Can be modified at run time by reassigning the property on a tree instance. |
 | debug      | boolean                        | false        | Debug mode will log all dispatched events and generally help debugging |
 | extend     | function                       | F.extendOn   | Used to mutate nodes internally |
 | snapshot   | function                       | _.cloneDeep  | Used to take snapshots |
@@ -108,6 +108,16 @@ When picking field reactors, you should use the `others` reactor for things that
 | updatingPromise | `Promise` | Resolves when the node is done updating, and is reset as a new pending promise when markedForUpdate - be careful if relying on this as the promise property is replaced with a new value whenever it's marked for update. |
 | updatingDeferred | `Futil Deferred` | Interally used to resolve the updatingPromise |
 
+#### Client Type Definition Config
+| Name | Type | Notes |
+| ---- | ---- | ----- |
+| init | | |
+| defaults | | |
+| validate | | |
+| reactors | | |
+| subquery.getValues | | |
+| subQuery.useValues | | |
+
 ### Run Time
 The following methods are exposed on an instantiated client
 
@@ -123,6 +133,16 @@ The following methods are exposed on an instantiated client
 | tree | tree | A reference to the internal tree. If you mutate this, you should dispatch an appropriate event. |
 | addActions | `(({ getNode, flat, dispatch, snapshot, extend, types, initNode }) => {actionsMethods} ) => null` | *Experimental* A method for extending the client with new actions on a per instance basis. You pass in a function which takes an object containing internal helpers and returns an object with actions that get extended onto the tree instance. |
 | addReactors | `(() => {customReactors}) => null` | *Experimental* A method for adding new reactors on a per instance basis. You pass in a function which returns an object of new reactors to support (`{reactorName: reactorFunction}`). Reactors are passed `(parent, node, event, reactor, types, lookup)` and are expected to return an array of affected nodes. |
+| subquery | `(targetPath, sourceTree, sourcePath, mapSubqueryValues?) => {}` | Sets up a subquery, using the types passed in to the client and assuming this tree instance is the target tree. For more info, see the [subquery](#Subquery) section below. |
+
+#### Node Run Time
+The following methods can be added to individual nodes (just set them on the object returned by getNode)
+| Name | Signature | Description |
+| ---- | --------- | ----------- |
+| onMarkForUpdate | `async () => {}` | Called when a node is markedForUpdate (post validate), and will block the search until it resolves. Used internally by subquery. |
+| afterSearch | `async () => {}` | Called on nodes that were marked for update _after_ the the search finishes - kind of like a per-node onResult, but will block the dispatch until it resolves (useful for holding up dispatches for side effects that an application might want to have happen after a search). Used internally by subquery. |
+| validate | `async () => {}` | A per-node version of validate which will override the type specific validation method. |
+
 
 ### Top Level Exports
 A number of utilities are now exposed as top level exports. You can import them like:
@@ -140,6 +160,50 @@ import { utilName } from 'contexture-client'
 | `hasValue` | An internal utility that checks if a node has a value and isn't in an error state. Used primarily in custom reactors to help figure out if other nodes would be affected by an event. |
 | `exampleTypes` | A set of example types. This will likely be split out in a future version to its own repo. |
 | `mockService` | Useful for mocking services during testing. Takes a config object of logInput, logOutput, and a mocks function which will should return results for a node as input (defaults to fixed results by type) and returns a function for use as a `service` for a contexture-client instance. |
+| `subquery` | A tool for creating a subquery. See the section below. |
+
+
+#### Subquery
+A subquery (in contexture-client) is about taking the output of one search and making it the input for another search.
+This is an in memory, cross-database, "select in" join on sources that don't need to be relational.
+
+This works by providing a source node from which to **get** values, and a target to **use** those values. Logic on how to get and use those values are defined in the client type definitions.
+
+The client exposes a method to create subqueries between two trees as a top level export, with this signature:
+`(types, targetTree, targetPath, sourceTree, sourcePath, mapSubqueryValues?)`
+It takes `types` (to lookup type specific logic), the tree and path of the source node, and then the tree and path of the target node.
+Lastly, it can optionally take a function to override the type logic completely.
+
+Client types need to implement these methods to be used in a subquery if mapSubqueryValues is not provided:
+
+| Function Name | Signature | Explanation |
+| ------------- | --------- | ----------- |
+| `subquery.getValues` | (sourceNode) => inputValues | Allows a type to be a source node. Returns a list of values (typically an array) from new results for a node of this type. |
+| `subQuery.useValues` | (values, targetNode) => valuesToMutate | Allows a type to be a target node. Returns a changeset that can be passed to `mutate` from a list of a values list (the output of a subquery.getValues call) for a node of this type. |
+
+Here's an example implementation, using the `facet` example type:
+
+```js
+{
+  facet: {
+    subQuery: {
+      useValues: x => ({ values: x }),
+      getValues: x => _.map('name', x.context.options)
+    },
+    //...
+  }
+}
+```
+
+If you pass `mapSubqueryValues` as the last parameter, you can ignore the `types` parameter. It's signature is `(sourceNode, targetNode, types) => deltasForTargetNodeMutate`.
+
+##### Loading Indicators
+A change to the source node in a subquery will immediately mark the target node as marked for update, but will not execute it's search until after the source node has results and the debounce time passes.
+
+Since target nodes are immediately marked for update when source nodes are, this eliminates the "double loading spinner" issue we've seen in other implementations.
+
+Dispatches that result in subquery source nodes being updated will await the updates of the target nodes in their `afterSearch` methods - which means you can get a promise for when the whole thing finishes updating.
+
 
 ### Extending the Client
 The client can be enhanced with new types, actions, and reactors.
