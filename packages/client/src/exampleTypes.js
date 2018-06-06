@@ -82,7 +82,7 @@ export default stampKey('type', {
       include: 'self',
     },
     defaults: {
-      // page: 1,
+      page: 1,
       pageSize: 10,
       context: {
         response: {
@@ -90,6 +90,9 @@ export default stampKey('type', {
           totalRecords: null,
         },
       },
+    },
+    onUpdateByOthers(node, extend) {
+      extend(node, { page: 1 })
     },
   },
   number: {

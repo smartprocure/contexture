@@ -93,6 +93,13 @@ export let ContextTree = _.curry(
       let updatedNodes = _.flatten(bubbleUp(processEvent(event), event.path))
       await Promise.all(_.invokeMap('onMarkForUpdate', updatedNodes))
       let affectsSelf = !!_.find({ path: event.path }, updatedNodes)
+      if (!affectsSelf)
+        await Promise.all(
+          _.map(
+            n => runTypeFunction(types, 'onUpdateByOthers', n, extend),
+            updatedNodes
+          )
+        )
       // Skip triggerUpdate if disableAutoUpdate or it this dispatch affects the target node (to allow things like paging changes to always go through)
       // The assumption here is that any event that affects the target node would likely be assumed to take effect immediately by end users
       // Also allow events to specify `autoUpdate:true` to let it through (e.g. search button event)
