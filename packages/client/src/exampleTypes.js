@@ -82,7 +82,7 @@ export default stampKey('type', {
       include: 'self',
     },
     defaults: {
-      // page: 1,
+      page: 1,
       pageSize: 10,
       context: {
         response: {
@@ -91,6 +91,9 @@ export default stampKey('type', {
         },
       },
     },
+    onUpdateByOthers: (node, extend) => {
+      extend(node, {page: 1})
+    }
   },
   number: {
     validate: x => !_.isNil(x.min) || !_.isNil(x.max),
