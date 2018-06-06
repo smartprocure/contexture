@@ -991,12 +991,12 @@ describe('lib', () => {
         },
       },
       results: {
-        onUpdateByOthers: (node, extend) => {
-          extend(node, {page: 1})
-        }
-      }
+        onUpdateByOthers(node, extend) {
+          extend(node, { page: 1 })
+        },
+      },
     }
-    let Tree = ContextureClient({ debounce: 1, service, types, debug:true })
+    let Tree = ContextureClient({ debounce: 1, service, types, debug: true })
     let tree = Tree({
       key: 'root',
       join: 'and',
@@ -1004,18 +1004,18 @@ describe('lib', () => {
         {
           key: 'results',
           type: 'results',
-          page: 2
+          page: 2,
         },
         {
           key: 'agencies',
           field: 'Organization.Name',
-          type: 'facet'
+          type: 'facet',
         },
         {
           key: 'vendors',
           field: 'Vendor.Name',
-          type: 'facet'
-        }
+          type: 'facet',
+        },
       ],
     })
     await tree.mutate(['root', 'agencies'], { values: ['Other City'] })
