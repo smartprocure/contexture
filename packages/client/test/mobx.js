@@ -4,26 +4,33 @@ import _ from 'lodash/fp'
 import chai from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
-import * as lib from '../src'
-import { observable, reaction, toJS, extendObservable } from 'mobx'
+import ContextureClient from '../src'
+import { observable, reaction, toJS, set, action } from 'mobx'
 const expect = chai.expect
 chai.use(sinonChai)
 
-let treeUtils = Tree
-let ContextTreeMobx = (tree, service) =>
-  lib.ContextTree(
-    {
-      service,
-      debounce: 1,
+let ContextureMobx = x =>
+  _.flow(
+    observable,
+    ContextureClient({
       snapshot: toJS,
-      extend: extendObservable,
-    },
-    tree
+      extend: set,
+      ...x,
+    }),
+    // contexture-client here takes a whole observable tree and doesn't make initial values observable itself so we need to wrap new nodes in observable
+    F.updateOn('add', add =>
+      action((path, node) => add(path, observable(node)))
+    ),
+    F.updateOn('remove', action),
+    F.updateOn('mutate', action),
+    F.updateOn('refresh', action)
   )
+
+let treeUtils = Tree
 
 describe('usage with mobx should generally work', () => {
   // TODO: make these generally self contained - some rely on previous test runs
-  let tree = observable({
+  let tree = {
     key: 'root',
     join: 'and',
     children: [
@@ -40,7 +47,7 @@ describe('usage with mobx should generally work', () => {
         },
       },
     ],
-  })
+  }
   let responseData = {
     key: 'root',
     children: [
@@ -67,11 +74,12 @@ describe('usage with mobx should generally work', () => {
   }
   let service = sinon.spy(() => responseData)
 
-  let Tree = ContextTreeMobx(tree, service)
+  let Tree = ContextureMobx({ service, debounce: 1 })(tree)
+
   let reactor = sinon.spy()
 
   it('should generally mutate and have updated contexts', async () => {
-    let disposer = reaction(() => toJS(tree), reactor)
+    let disposer = reaction(() => toJS(Tree.tree), reactor)
     await Tree.mutate(['root', 'filter'], {
       values: ['a'],
     })
@@ -143,7 +151,7 @@ describe('usage with mobx should generally work', () => {
   it('should support add', async () => {
     reactor.reset()
     service.reset()
-    let disposer = reaction(() => toJS(tree), reactor)
+    let disposer = reaction(() => toJS(Tree.tree), reactor)
     await Tree.add(['root'], {
       key: 'newFilter',
       type: 'text',
@@ -176,7 +184,7 @@ describe('usage with mobx should generally work', () => {
   it('should support remove', async () => {
     reactor.reset()
     service.reset()
-    let disposer = reaction(() => toJS(tree), reactor)
+    let disposer = reaction(() => toJS(Tree.tree), reactor)
 
     await Tree.add(['root'], {
       key: 'newEmptyFilter',
@@ -252,7 +260,7 @@ describe('usage with mobx should generally work', () => {
   it('should support retrieving results with different array sizes', async () => {
     reactor.reset()
     service.reset()
-    let disposer = reaction(() => toJS(tree), reactor)
+    let disposer = reaction(() => toJS(Tree.tree), reactor)
 
     await Tree.mutate(['root', 'filter'], {
       values: [1, 2, 3],

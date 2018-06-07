@@ -1,3 +1,7 @@
+# 2.12.1
+* Catch case where unsolicited node responses from the service for nodes that have never been updated explode because of missing upatingPromise (but still log in debug mode)
+* Update mobx tests to use mobx 5
+
 # 2.12.0
 * Added `onUpdateByOthers` hook and update results example type to use it
 
