@@ -1,3 +1,7 @@
+# 1.2.1
+* Fix TermsStats export
+* Bump client dependency
+
 # 1.2.0
 * Add TermsStats example type and BarChart in Layout
 * Fix includes bug in results table
