@@ -26,7 +26,7 @@ export default (
     ResultTable,
     ResultPager,
     DateHistogram,
-    TermsStats
+    TermsStats,
   }
   let TypeMap = {
     facet: Components.Facet,
