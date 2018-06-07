@@ -1,5 +1,6 @@
 import _ from 'lodash/fp'
 import { injectDefaults } from './mobx-react-utils'
+import StripedLoader from './StripedLoader'
 
 export default (
   render,
@@ -32,5 +33,5 @@ export default (
     } else if (!node)
       throw Error(`Node not provided, and couldn't find node at ${path}`)
 
-  })(render)
     return { tree, node, loading: node.markedForUpdate || node.updating }
+  })(StripedLoader(render))
