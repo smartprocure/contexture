@@ -1419,6 +1419,23 @@ exports[`Storyshots IMDB Quick Start 1`] = `
 </div>
 `
 
+exports[`Storyshots IMDB Search Button 1`] = `
+<div
+  style={
+    Object {
+      "backgroundColor": "#333",
+      "borderRadius": "10px",
+      "color": "#AAA",
+      "padding": "20px",
+    }
+  }
+>
+  <div>
+    Loading...
+  </div>
+</div>
+`
+
 exports[`Storyshots Index Explorer Advanced Search 1`] = `
 <div>
   <input

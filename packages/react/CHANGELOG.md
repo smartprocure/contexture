@@ -1,3 +1,9 @@
+# 1.3.0
+* Add StripedLoader
+* Add `loading` to injectTreeNode to abstract updating vs markedForUpdate
+* Use StripedLoader in injectTreeNode automatically
+* Add SearchButton Story (uses disableAutoUpdate from contexture-client)
+
 # 1.2.1
 * Fix TermsStats export
 * Bump client dependency

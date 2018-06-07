@@ -14,3 +14,4 @@ export default () =>
     .addDecorator(story => <div style={demoBox}>{story()}</div>)
     .addWithJSX('Quick Start', require('./quickStart').default)
     .addWithJSX('Filter List', require('./filterList').default)
+    .addWithJSX('Search Button', require('./searchButton').default)

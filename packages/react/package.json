@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "React components for building contexture interfaces",
   "main": "index.js",
   "scripts": {
@@ -77,9 +77,9 @@
   "dependencies": {
     "futil-js": "^1.45.0",
     "lodash": "^4.17.4",
-    "mobx": "^4.2.0",
-    "mobx-react": "^5.0.0",
-    "mobx-utils": "^4.0.0",
+    "mobx": "^5.0.0",
+    "mobx-react": "^5.2.0",
+    "mobx-utils": "^5.0.0",
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4"
   }
