@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/smartprocure/contexture-client#readme",
   "dependencies": {
-    "futil-js": "^1.43.1",
+    "futil-js": "^1.49.0",
     "lodash": "^4.17.4"
   },
   "devDependencies": {
@@ -46,7 +46,7 @@
     "duti": "^0.9.3",
     "eslint": "^4.12.1",
     "eslint-config-smartprocure": "^1.1.0",
-    "mobx": "^3.3.2",
+    "mobx": "^5.0.0",
     "mocha": "^4.0.1",
     "nyc": "^11.2.1",
     "prettier": "^1.8.2",
