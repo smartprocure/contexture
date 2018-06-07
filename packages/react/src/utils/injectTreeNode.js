@@ -32,5 +32,5 @@ export default (
     } else if (!node)
       throw Error(`Node not provided, and couldn't find node at ${path}`)
 
-    return { tree, node }
   })(render)
+    return { tree, node, loading: node.markedForUpdate || node.updating }
