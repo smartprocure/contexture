@@ -131,7 +131,12 @@ export let ContextTree = _.curry(
           TreeInstance.onResult(decode(path), node, target)
           mergeWith((oldValue, newValue) => newValue, target, responseNode)
           extend(target, { updating: false })
-          target.updatingDeferred.resolve()
+          try {
+            target.updatingDeferred.resolve()
+          }
+          catch (e) {
+            log('Tried to resolve a node that had no updatingDeferred. This usually means there was unsolicited results from the server for a node that has never been udpated.')
+          }
         }
       }, flatten(data))
     }
