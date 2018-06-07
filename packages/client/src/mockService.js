@@ -1,5 +1,5 @@
 import * as F from 'futil-js'
-import { Tree } from '../src/util/tree'
+import { Tree } from './util/tree'
 
 export let defaultMocks = ({ type }) =>
   ({
