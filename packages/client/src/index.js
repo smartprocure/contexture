@@ -133,9 +133,10 @@ export let ContextTree = _.curry(
           extend(target, { updating: false })
           try {
             target.updatingDeferred.resolve()
-          }
-          catch (e) {
-            log('Tried to resolve a node that had no updatingDeferred. This usually means there was unsolicited results from the server for a node that has never been udpated.')
+          } catch (e) {
+            log(
+              'Tried to resolve a node that had no updatingDeferred. This usually means there was unsolicited results from the server for a node that has never been udpated.'
+            )
           }
         }
       }, flatten(data))
