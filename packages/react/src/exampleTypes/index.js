@@ -6,6 +6,7 @@ import ResultCount from './ResultCount'
 import ResultTable from './ResultTable'
 import ResultPager from './ResultPager'
 import DateHistogram from './DateHistogram'
+import TermsStats from './TermsStats'
 import { partial } from '../utils/mobx-react-utils'
 
 export default (
@@ -25,6 +26,7 @@ export default (
     ResultTable,
     ResultPager,
     DateHistogram,
+    TermsStats,
   }
   let TypeMap = {
     facet: Components.Facet,
