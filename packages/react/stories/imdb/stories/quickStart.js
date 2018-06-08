@@ -46,7 +46,9 @@ export default () => (
             format={formatYear}
           />
           <IMDBCards path={['root', 'results']} />
-          <ResultPager path={['root', 'results']} />
+          <Flex style={{ justifyContent: 'space-around' }}>
+            <ResultPager path={['root', 'results']} />
+          </Flex>
         </div>
       </Flex>
     </SpacedList>

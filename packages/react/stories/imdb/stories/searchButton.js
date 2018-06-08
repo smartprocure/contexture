@@ -133,7 +133,9 @@ export default () => (
                   infer
                 />
               </div>
-              <Pager path={['searchRoot', 'results']} />
+              <Flex style={{ justifyContent: 'space-around' }}>
+                <Pager path={['searchRoot', 'results']} />
+              </Flex>
             </div>
           </Flex>
         </SpacedList>
