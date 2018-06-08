@@ -6,15 +6,21 @@ import InjectTreeNode from '../utils/injectTreeNode'
 import Popover from '../layout/Popover'
 import { withStateLens } from '../utils/mobx-react-utils'
 
-let getRecord = x => F.flattenObject(_.get('_source', x) || x)
+// For futil?
+let onlyWhen = f => F.unless(f, () => {})
+let FlattenTreeLeaves = Tree => _.flow(Tree.flatten(), _.omitBy(Tree.traverse))
+let PlainObjectTree = F.tree(onlyWhen(_.isPlainObject))
+let flattenPlainObject = F.whenExists(FlattenTreeLeaves(PlainObjectTree))
+
+let getRecord = F.getOrReturn('_source')
 let getResults = _.get('context.response.results')
-let buildSchema = F.mapValuesIndexed((val, field) => ({
+let buildSchema = F.mapValuesIndexed((val, field, xx) => ({
   field,
   label: F.autoLabel(field),
   order: 0,
   display: val.push && _.join(', '),
 }))
-let inferSchema = _.flow(getResults, _.head, getRecord, buildSchema)
+let inferSchema = _.flow(getResults, _.head, getRecord, flattenPlainObject, buildSchema)
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
 
