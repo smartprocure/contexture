@@ -114,23 +114,25 @@ export default () => (
                 uniqueFields
               />
             </div>
-            <div style={{ flex: 4 }}>
+            <div style={{ flex: 4, maxWidth:'80%' }}>
               <ResultCount path={['searchRoot', 'results']} />
               <DateHistogram
                 path={['searchRoot', 'releases']}
                 format={formatYear}
               />
               <TermsStats path={['searchRoot', 'genreScores']} />
-              <ResultTable
-                path={['searchRoot', 'results']}
-                fields={{
-                  poster: {
-                    display: x => <img src={x} width="180" height="270" />,
-                    order: 1,
-                  },
-                }}
-                infer
-              />
+              <div style={{overflowX: 'auto'}}>
+                <ResultTable
+                  path={['searchRoot', 'results']}
+                  fields={{
+                    poster: {
+                      display: x => <img src={x} width="180" height="270" />,
+                      order: 1,
+                    },
+                  }}
+                  infer
+                />
+              </div>
               <Pager path={['searchRoot', 'results']} />
             </div>
           </Flex>
