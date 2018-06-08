@@ -1,3 +1,7 @@
+# 1.3.2
+* Support dots in field names in FilterList
+* Add basic search example for schema explorer, with loadable schema overrides
+
 # 1.3.1
 * Small styling improvements on charts and facet and refactoring
 * Fix result table schema auto detect bug when fields are arrays

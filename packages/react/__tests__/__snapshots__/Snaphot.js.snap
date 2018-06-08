@@ -1464,6 +1464,41 @@ exports[`Storyshots Index Explorer Advanced Search 1`] = `
 </div>
 `
 
+exports[`Storyshots Index Explorer Basic Search 1`] = `
+<div
+  style={
+    Object {
+      "background": "#f4f4f4",
+    }
+  }
+>
+  <input
+    onBlur={[Function]}
+    onChange={[Function]}
+    onFocus={[Function]}
+    style={
+      Object {
+        "background": "rgba(255, 255, 255, 0.7)",
+        "border": "solid 1px #efefef",
+        "borderRadius": "30px",
+        "boxSizing": "border-box",
+        "display": "block",
+        "margin": "0 auto",
+        "outline": "none",
+        "padding": "5px",
+        "textIndent": "5px",
+        "transition": "background 0.3s",
+        "width": "100%",
+      }
+    }
+    value="https://public-es-demo.smartprocure.us/"
+  />
+  <div>
+    Loading...
+  </div>
+</div>
+`
+
 exports[`Storyshots Layout Awaiter 1`] = `
 <div>
   <div>

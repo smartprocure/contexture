@@ -1,5 +1,6 @@
 import _ from 'lodash/fp'
 import React from 'react'
+import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { Provider } from 'mobx-react'
 import Contexture, { esClient } from '../utils/contexture'
@@ -75,6 +76,10 @@ let tree = Contexture({
 })
 tree.disableAutoUpdate = true
 
+let state = observable({
+  autoUpdate: false,
+})
+
 let schemas = fromPromise(
   getESSchemas(esClient).then(
     _.merge(_, {
@@ -109,8 +114,19 @@ export default () => (
               <div style={{ flex: 4 }}>
                 <Query path={['searchRoot', 'searchQuery']} />
               </div>
-              <div style={{ flex: 1, marginLeft: '5px' }}>
-                <Button onClick={tree.triggerUpdate}>Search</Button>
+              <div style={{ flex: 1, marginLeft: '5px', display: 'flex' }}>
+                <input
+                  type="checkbox"
+                  checked={state.autoUpdate}
+                  onChange={e => {
+                    let val = !!e.target.checked
+                    tree.disableAutoUpdate = !val
+                    state.autoUpdate = val
+                  }}
+                />
+                {!state.autoUpdate && (
+                  <Button onClick={tree.triggerUpdate}>Search</Button>
+                )}
               </div>
             </Flex>
             <Flex>
