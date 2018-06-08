@@ -5,61 +5,19 @@ import { Provider } from 'mobx-react'
 import Contexture, { esClient } from '../utils/contexture'
 import { getESSchemas } from '../../../src/utils/schema'
 import { partial } from '../../../src/utils/mobx-react-utils'
-import {
-  Flex,
-  Awaiter,
-  Modal,
-  SpacedList,
-  ModalPicker,
-  FilteredPicker,
-} from '../../../src/layout/'
+import { Flex, Awaiter, SpacedList } from '../../../src/layout/'
 import { FilterList } from '../../../src/FilterList'
-import FilterAdder from '../../../src/FilterAdder'
-import {
-  Button,
-  Input,
-  Highlight,
-  ListGroupItem,
-  PagerItem,
-  PagerList,
-} from '../../DemoControls'
+import { Button, Input } from '../../DemoControls'
 import ExampleTypes from '../../../src/exampleTypes/'
 let {
   Query,
   ResultCount,
   ResultTable,
-  ResultPager,
   DateHistogram,
   TermsStats,
   TypeMap,
 } = ExampleTypes({ Input })
-
-// Pre apply some props
-let Adder = partial(
-  {
-    Picker: partial(
-      {
-        Modal,
-        Button,
-        label: '+ Include Additional Filter',
-        Picker: partial(
-          { Input, Highlight, Item: ListGroupItem },
-          FilteredPicker
-        ),
-      },
-      ModalPicker
-    ),
-  },
-  FilterAdder
-)
-
-let Pager = partial(
-  {
-    Item: PagerItem,
-    List: PagerList,
-  },
-  ResultPager
-)
+import { Adder, Pager } from '../../DemoComponents'
 
 let formatYear = x => new Date(x).getFullYear() + 1
 
@@ -99,7 +57,6 @@ let tree = Contexture({
     {
       key: 'results',
       type: 'results',
-      pageSize: 6,
     },
     {
       key: 'releases',
