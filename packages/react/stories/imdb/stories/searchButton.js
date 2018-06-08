@@ -93,11 +93,11 @@ export default () => (
     {schemas => (
       <Provider tree={tree}>
         <SpacedList>
-          <Flex>
+          <Flex style={{ alignItems: 'center' }}>
             <div style={{ flex: 4 }}>
               <Query path={['searchRoot', 'searchQuery']} />
             </div>
-            <div style={{ flex: 1 }}>
+            <div style={{ flex: 1, marginLeft: '5px' }}>
               <Button onClick={tree.triggerUpdate}>Search</Button>
             </div>
           </Flex>
