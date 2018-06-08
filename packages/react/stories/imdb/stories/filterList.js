@@ -7,7 +7,7 @@ import { getESSchemas } from '../../../src/utils/schema'
 import { partial } from '../../../src/utils/mobx-react-utils'
 import { Flex, Awaiter, SpacedList } from '../../../src/layout/'
 import { FilterList } from '../../../src/FilterList'
-import { Button, Input } from '../../DemoControls'
+import { Button, Input, DarkBox } from '../../DemoControls'
 import ExampleTypes from '../../../src/exampleTypes/'
 let {
   Query,
@@ -88,50 +88,52 @@ let schemas = fromPromise(
 )
 
 export default () => (
-  <Awaiter promise={schemas}>
-    {schemas => (
-      <Provider tree={tree}>
-        <SpacedList>
-          <Query path={['searchRoot', 'searchQuery']} />
-          <Flex>
-            <div style={{ flex: 1 }}>
-              <FilterList
-                path={['searchRoot', 'criteria']}
-                fields={schemas.movies.fields}
-                typeComponents={TypeMap}
-              />
-              <Adder
-                path={['searchRoot', 'criteria']}
-                fields={schemas.movies.fields}
-                uniqueFields
-              />
-            </div>
-            <div style={{ flex: 4, maxWidth:'80%'  }}>
-              <ResultCount path={['searchRoot', 'results']} />
-              <DateHistogram
-                path={['searchRoot', 'releases']}
-                format={formatYear}
-              />
-              <TermsStats path={['searchRoot', 'genreScores']} />
-              <div style={{overflowX: 'auto'}}>
-                <ResultTable
-                  path={['searchRoot', 'results']}
-                  fields={{
-                    poster: {
-                      display: x => <img src={x} width="180" height="270" />,
-                      order: 1,
-                    },
-                  }}
-                  infer
+  <DarkBox>
+    <Awaiter promise={schemas}>
+      {schemas => (
+        <Provider tree={tree}>
+          <SpacedList>
+            <Query path={['searchRoot', 'searchQuery']} />
+            <Flex>
+              <div style={{ flex: 1 }}>
+                <FilterList
+                  path={['searchRoot', 'criteria']}
+                  fields={schemas.movies.fields}
+                  typeComponents={TypeMap}
+                />
+                <Adder
+                  path={['searchRoot', 'criteria']}
+                  fields={schemas.movies.fields}
+                  uniqueFields
                 />
               </div>
-              <Flex style={{ justifyContent: 'space-around' }}>
-                <Pager path={['searchRoot', 'results']} />
-              </Flex>
-            </div>
-          </Flex>
-        </SpacedList>
-      </Provider>
-    )}
-  </Awaiter>
+              <div style={{ flex: 4, maxWidth:'80%'  }}>
+                <ResultCount path={['searchRoot', 'results']} />
+                <DateHistogram
+                  path={['searchRoot', 'releases']}
+                  format={formatYear}
+                />
+                <TermsStats path={['searchRoot', 'genreScores']} />
+                <div style={{overflowX: 'auto'}}>
+                  <ResultTable
+                    path={['searchRoot', 'results']}
+                    fields={{
+                      poster: {
+                        display: x => <img src={x} width="180" height="270" />,
+                        order: 1,
+                      },
+                    }}
+                    infer
+                  />
+                </div>
+                <Flex style={{ justifyContent: 'space-around' }}>
+                  <Pager path={['searchRoot', 'results']} />
+                </Flex>
+              </div>
+            </Flex>
+          </SpacedList>
+        </Provider>
+      )}
+    </Awaiter>
+  </DarkBox>
 )
