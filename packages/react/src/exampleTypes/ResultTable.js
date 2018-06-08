@@ -20,7 +20,13 @@ let buildSchema = F.mapValuesIndexed((val, field) => ({
   order: 0,
   display: val.push && _.join(', '),
 }))
-let inferSchema = _.flow(getResults, _.head, getRecord, flattenPlainObject, buildSchema)
+let inferSchema = _.flow(
+  getResults,
+  _.head,
+  getRecord,
+  flattenPlainObject,
+  buildSchema
+)
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
 

@@ -126,14 +126,14 @@ export default () => (
                   uniqueFields
                 />
               </div>
-              <div style={{ flex: 4, maxWidth:'80%', ...whiteBox }}>
+              <div style={{ flex: 4, maxWidth: '80%', ...whiteBox }}>
                 <ResultCount path={['searchRoot', 'results']} />
                 <DateHistogram
                   path={['searchRoot', 'releases']}
                   format={formatYear}
                 />
                 <TermsStats path={['searchRoot', 'genreScores']} />
-                <div style={{overflowX: 'auto'}}>
+                <div style={{ overflowX: 'auto' }}>
                   <ResultTable
                     path={['searchRoot', 'results']}
                     fields={{

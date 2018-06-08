@@ -78,7 +78,7 @@ export let PagerItem = withStateLens({ hovering: false })(
   ))
 )
 
-export let DarkBox = props =>
+export let DarkBox = props => (
   <div
     {...props}
     style={{
@@ -88,3 +88,4 @@ export let DarkBox = props =>
       borderRadius: '10px',
     }}
   />
+)

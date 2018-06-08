@@ -38,7 +38,7 @@ export default () => (
               </div>
             </SpacedList>
           </div>
-          <div style={{ flex: 4, maxWidth:'80%'  }}>
+          <div style={{ flex: 4, maxWidth: '80%' }}>
             <ResultCount pageSize={6} nodeKey="results" />
             <DateHistogram
               key_field="released"

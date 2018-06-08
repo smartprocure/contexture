@@ -8,7 +8,7 @@ import {
   Highlight,
   ListGroupItem,
   PagerItem,
-  PagerList
+  PagerList,
 } from './DemoControls'
 
 // Pre apply some props
@@ -31,12 +31,6 @@ let Adder = partial(
 )
 
 let { ResultPager } = ExampleTypes({ Input })
-let Pager = partial(
-  { Item: PagerItem, List: PagerList },
-  ResultPager
-)
+let Pager = partial({ Item: PagerItem, List: PagerList }, ResultPager)
 
-export {
-  Adder,
-  Pager,
-}
+export { Adder, Pager }

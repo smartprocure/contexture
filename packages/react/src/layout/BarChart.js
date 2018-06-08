@@ -54,7 +54,10 @@ let BarChart = observer(
     let min = _.min(values)
     return (
       <Flex style={{ alignItems: 'flex-end', justifyContent: 'center' }}>
-        {yAxis && !!data.length && <YAxis {...{ min, max, height, borderColor: background }} />}
+        {yAxis &&
+          !!data.length && (
+            <YAxis {...{ min, max, height, borderColor: background }} />
+          )}
         {_.map(
           x => (
             <div key={x.key}>
