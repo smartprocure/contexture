@@ -1,3 +1,9 @@
+# 1.3.1
+* Small styling improvements on charts and facet and refactoring
+* Fix result table schema auto detect bug when fields are arrays
+* Improved storybook styling
+* Added new storybook demo theme (on search button)
+
 # 1.3.0
 * Add StripedLoader
 * Add `loading` to injectTreeNode to abstract updating vs markedForUpdate

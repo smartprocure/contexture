@@ -1360,6 +1360,7 @@ exports[`Storyshots IMDB Quick Start 1`] = `
         style={
           Object {
             "flex": 4,
+            "maxWidth": "80%",
           }
         }
       >
@@ -1390,28 +1391,37 @@ exports[`Storyshots IMDB Quick Start 1`] = `
             }
           }
         />
-        <div>
-          <span>
-            <a
-              onClick={[Function]}
-            >
-              &lt;
-            </a>
-          </span>
-          <span>
-            <a
-              onClick={undefined}
-            >
-              1
-            </a>
-          </span>
-          <span>
-            <a
-              onClick={[Function]}
-            >
-              &gt;
-            </a>
-          </span>
+        <div
+          style={
+            Object {
+              "display": "flex",
+              "justifyContent": "space-around",
+            }
+          }
+        >
+          <div>
+            <span>
+              <a
+                onClick={[Function]}
+              >
+                &lt;
+              </a>
+            </span>
+            <span>
+              <a
+                onClick={undefined}
+              >
+                1
+              </a>
+            </span>
+            <span>
+              <a
+                onClick={[Function]}
+              >
+                &gt;
+              </a>
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -1420,19 +1430,8 @@ exports[`Storyshots IMDB Quick Start 1`] = `
 `
 
 exports[`Storyshots IMDB Search Button 1`] = `
-<div
-  style={
-    Object {
-      "backgroundColor": "#333",
-      "borderRadius": "10px",
-      "color": "#AAA",
-      "padding": "20px",
-    }
-  }
->
-  <div>
-    Loading...
-  </div>
+<div>
+  Loading...
 </div>
 `
 

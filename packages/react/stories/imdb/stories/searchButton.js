@@ -4,62 +4,19 @@ import { fromPromise } from 'mobx-utils'
 import { Provider } from 'mobx-react'
 import Contexture, { esClient } from '../utils/contexture'
 import { getESSchemas } from '../../../src/utils/schema'
-import { partial } from '../../../src/utils/mobx-react-utils'
-import {
-  Flex,
-  Awaiter,
-  Modal,
-  SpacedList,
-  ModalPicker,
-  FilteredPicker,
-} from '../../../src/layout/'
+import { Flex, Awaiter, SpacedList } from '../../../src/layout/'
 import { FilterList } from '../../../src/FilterList'
-import FilterAdder from '../../../src/FilterAdder'
-import {
-  Button,
-  Input,
-  Highlight,
-  ListGroupItem,
-  PagerItem,
-  PagerList,
-} from '../../DemoControls'
+import { Button, Input } from '../../DemoControls'
 import ExampleTypes from '../../../src/exampleTypes/'
 let {
   Query,
   ResultCount,
   ResultTable,
-  ResultPager,
   DateHistogram,
   TermsStats,
   TypeMap,
 } = ExampleTypes({ Input })
-
-// Pre apply some props
-let Adder = partial(
-  {
-    Picker: partial(
-      {
-        Modal,
-        Button,
-        label: '+ Include Additional Filter',
-        Picker: partial(
-          { Input, Highlight, Item: ListGroupItem },
-          FilteredPicker
-        ),
-      },
-      ModalPicker
-    ),
-  },
-  FilterAdder
-)
-
-let Pager = partial(
-  {
-    Item: PagerItem,
-    List: PagerList,
-  },
-  ResultPager
-)
+import { Adder, Pager } from '../../DemoComponents'
 
 let formatYear = x => new Date(x).getFullYear() + 1
 
@@ -99,7 +56,6 @@ let tree = Contexture({
     {
       key: 'results',
       type: 'results',
-      pageSize: 6,
     },
     {
       key: 'releases',
@@ -131,53 +87,71 @@ let schemas = fromPromise(
   )
 )
 
+let blueBar = {
+  background: '#2a4466',
+  boxShadow: '0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28)',
+  padding: '10px',
+}
+let whiteBox = {
+  boxShadow: '0 1px 3px 0 rgba(0,0,0,.08)',
+  background: '#fff',
+  padding: '15px',
+  margin: '15px',
+}
+
 export default () => (
   <Awaiter promise={schemas}>
     {schemas => (
       <Provider tree={tree}>
-        <SpacedList>
-          <Flex>
-            <div style={{ flex: 4 }}>
-              <Query path={['searchRoot', 'searchQuery']} />
-            </div>
-            <div style={{ flex: 1 }}>
-              <Button onClick={tree.triggerUpdate}>Search</Button>
-            </div>
-          </Flex>
-          <Flex>
-            <div style={{ flex: 1 }}>
-              <FilterList
-                path={['searchRoot', 'criteria']}
-                fields={schemas.movies.fields}
-                typeComponents={TypeMap}
-              />
-              <Adder
-                path={['searchRoot', 'criteria']}
-                fields={schemas.movies.fields}
-                uniqueFields
-              />
-            </div>
-            <div style={{ flex: 4 }}>
-              <ResultCount path={['searchRoot', 'results']} />
-              <DateHistogram
-                path={['searchRoot', 'releases']}
-                format={formatYear}
-              />
-              <TermsStats path={['searchRoot', 'genreScores']} />
-              <ResultTable
-                path={['searchRoot', 'results']}
-                fields={{
-                  poster: {
-                    display: x => <img src={x} width="180" height="270" />,
-                    order: 1,
-                  },
-                }}
-                infer
-              />
-              <Pager path={['searchRoot', 'results']} />
-            </div>
-          </Flex>
-        </SpacedList>
+        <div style={{ background: '#f4f4f4' }}>
+          <SpacedList>
+            <Flex style={{ alignItems: 'center', ...blueBar }}>
+              <div style={{ flex: 4 }}>
+                <Query path={['searchRoot', 'searchQuery']} />
+              </div>
+              <div style={{ flex: 1, marginLeft: '5px' }}>
+                <Button onClick={tree.triggerUpdate}>Search</Button>
+              </div>
+            </Flex>
+            <Flex>
+              <div style={{ flex: 1, ...whiteBox }}>
+                <FilterList
+                  path={['searchRoot', 'criteria']}
+                  fields={schemas.movies.fields}
+                  typeComponents={TypeMap}
+                />
+                <Adder
+                  path={['searchRoot', 'criteria']}
+                  fields={schemas.movies.fields}
+                  uniqueFields
+                />
+              </div>
+              <div style={{ flex: 4, maxWidth: '80%', ...whiteBox }}>
+                <ResultCount path={['searchRoot', 'results']} />
+                <DateHistogram
+                  path={['searchRoot', 'releases']}
+                  format={formatYear}
+                />
+                <TermsStats path={['searchRoot', 'genreScores']} />
+                <div style={{ overflowX: 'auto' }}>
+                  <ResultTable
+                    path={['searchRoot', 'results']}
+                    fields={{
+                      poster: {
+                        display: x => <img src={x} width="180" height="270" />,
+                        order: 1,
+                      },
+                    }}
+                    infer
+                  />
+                </div>
+                <Flex style={{ justifyContent: 'space-around' }}>
+                  <Pager path={['searchRoot', 'results']} />
+                </Flex>
+              </div>
+            </Flex>
+          </SpacedList>
+        </div>
       </Provider>
     )}
   </Awaiter>

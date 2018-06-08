@@ -46,19 +46,22 @@ let Facet = injectTreeNode(
         )
       }, _.get('context.options', node))}
       {!!node.context.cardinality && (
-        <div>
+        <div style={{ textAlign: 'center' }}>
           Showing {_.min([node.size || 10, node.context.options.length])} of{' '}
           {node.context.cardinality}
         </div>
       )}
       {node.context.cardinality > (node.size || 10) && (
-        <a
-          onClick={() =>
-            tree.mutate(node.path, { size: (node.size || 10) + 10 })
-          }
-        >
-          View More
-        </a>
+        <div style={{ textAlign: 'center' }}>
+          <a
+            onClick={() =>
+              tree.mutate(node.path, { size: (node.size || 10) + 10 })
+            }
+            style={{ cursor: 'pointer' }}
+          >
+            View More
+          </a>
+        </div>
       )}
     </div>
   )),

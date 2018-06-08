@@ -77,3 +77,15 @@ export let PagerItem = withStateLens({ hovering: false })(
     />
   ))
 )
+
+export let DarkBox = props => (
+  <div
+    {...props}
+    style={{
+      backgroundColor: '#333',
+      color: '#AAA',
+      padding: '20px',
+      borderRadius: '10px',
+    }}
+  />
+)
