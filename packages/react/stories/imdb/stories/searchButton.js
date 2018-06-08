@@ -77,7 +77,7 @@ let tree = Contexture({
 tree.disableAutoUpdate = true
 
 let state = observable({
-  autoUpdate: false
+  autoUpdate: false,
 })
 
 let schemas = fromPromise(
@@ -115,12 +115,18 @@ export default () => (
                 <Query path={['searchRoot', 'searchQuery']} />
               </div>
               <div style={{ flex: 1, marginLeft: '5px', display: 'flex' }}>
-                <input type='checkbox' checked={state.autoUpdate} onChange={e => {
-                  let val = !!e.target.checked
-                  tree.disableAutoUpdate = !val
-                  state.autoUpdate = val
-                }} />
-                {!state.autoUpdate && <Button onClick={tree.triggerUpdate}>Search</Button>}
+                <input
+                  type="checkbox"
+                  checked={state.autoUpdate}
+                  onChange={e => {
+                    let val = !!e.target.checked
+                    tree.disableAutoUpdate = !val
+                    state.autoUpdate = val
+                  }}
+                />
+                {!state.autoUpdate && (
+                  <Button onClick={tree.triggerUpdate}>Search</Button>
+                )}
               </div>
             </Flex>
             <Flex>
