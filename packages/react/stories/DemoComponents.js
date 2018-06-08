@@ -1,4 +1,3 @@
-import React from 'react'
 import FilterAdder from '../src/FilterAdder'
 import ExampleTypes from '../src/exampleTypes/'
 import { partial } from '../src/utils/mobx-react-utils'

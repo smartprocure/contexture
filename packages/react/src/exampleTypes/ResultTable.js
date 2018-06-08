@@ -14,7 +14,7 @@ let flattenPlainObject = F.whenExists(FlattenTreeLeaves(PlainObjectTree))
 
 let getRecord = F.getOrReturn('_source')
 let getResults = _.get('context.response.results')
-let buildSchema = F.mapValuesIndexed((val, field, xx) => ({
+let buildSchema = F.mapValuesIndexed((val, field) => ({
   field,
   label: F.autoLabel(field),
   order: 0,

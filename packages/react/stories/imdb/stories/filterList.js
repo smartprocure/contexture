@@ -4,10 +4,9 @@ import { fromPromise } from 'mobx-utils'
 import { Provider } from 'mobx-react'
 import Contexture, { esClient } from '../utils/contexture'
 import { getESSchemas } from '../../../src/utils/schema'
-import { partial } from '../../../src/utils/mobx-react-utils'
 import { Flex, Awaiter, SpacedList } from '../../../src/layout/'
 import { FilterList } from '../../../src/FilterList'
-import { Button, Input, DarkBox } from '../../DemoControls'
+import { Input, DarkBox } from '../../DemoControls'
 import ExampleTypes from '../../../src/exampleTypes/'
 let {
   Query,
