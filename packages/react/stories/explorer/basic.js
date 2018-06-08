@@ -22,6 +22,7 @@ let state = observable({
   tree: {},
   savedSearch: '',
   showDebug: false,
+  overrides: {}
 })
 let save = () => {
   state.savedSearch = JSON.stringify(state.tree.serialize(), null, 2)
@@ -29,6 +30,9 @@ let save = () => {
 let load = () => {
   state.tree = Contexture(JSON.parse(state.savedSearch))
   state.tree.refresh()
+  state.schemas.then(schemas => {
+    F.mergeOn(schemas, overrideLookups(state.overrides))
+  })
 }
 
 let changeSchema = schema => {
@@ -52,6 +56,31 @@ let changeSchema = schema => {
     ],
   })
 }
+
+
+let textTruncate= {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  // WebkitLineClamp: '4',
+  // WebkitBoxOrient: 'vertical',
+  maxHeight: '100px',
+}
+let ClampedHTML = x => <div style={textTruncate} dangerouslySetInnerHTML={{ __html: x }} />
+
+let lookups = {
+  display: {
+    ClampedHTML
+  }
+}
+let overrideLookups =  _.each(
+  schema => {
+    _.each(field => {
+      F.eachIndexed((prop, propName) => {
+        let override = _.get([propName, prop], lookups)
+        field[propName] = override || prop
+      }, field)
+    }, schema.fields)
+  })
 
 let updateEs = host => {
   state.url = host
@@ -119,6 +148,13 @@ let Story = observer(() => {
                       />
                       <Debug style={{ width: '50%' }} value={tree} />
                     </Flex>
+                    Overrides:
+                    <textarea
+                      value={JSON.stringify(state.overrides)}
+                      onChange={e => {
+                        state.overrides = JSON.parse(e.target.value)
+                      }}
+                    />
                     <Provider tree={tree} types={TypeMap}>
                       <QueryBuilder
                         fields={schemas[tree.tree.schema].fields}
@@ -145,7 +181,7 @@ let Story = observer(() => {
                       <div style={{ flex: 4, maxWidth: '80%', ...whiteBox }}>
                         <ResultCount path={['root', 'results']} />
                         <div style={{ overflowX: 'auto' }}>
-                          <ResultTable path={['root', 'results']} infer />
+                          <ResultTable path={['root', 'results']} fields={schemas[tree.tree.schema].fields} />
                         </div>
                         <Flex style={{ justifyContent: 'space-around' }}>
                           <Pager path={['root', 'results']} />
