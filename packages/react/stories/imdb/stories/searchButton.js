@@ -88,57 +88,71 @@ let schemas = fromPromise(
   )
 )
 
+let blueBar = {
+  background: '#2a4466',
+  boxShadow: '0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28)',
+  padding: '10px',
+}
+let whiteBox = {
+  boxShadow: '0 1px 3px 0 rgba(0,0,0,.08)',
+  background: '#fff',
+  padding: '15px',
+  margin: '15px',
+}
+
 export default () => (
   <Awaiter promise={schemas}>
     {schemas => (
       <Provider tree={tree}>
-        <SpacedList>
-          <Flex style={{ alignItems: 'center' }}>
-            <div style={{ flex: 4 }}>
-              <Query path={['searchRoot', 'searchQuery']} />
-            </div>
-            <div style={{ flex: 1, marginLeft: '5px' }}>
-              <Button onClick={tree.triggerUpdate}>Search</Button>
-            </div>
-          </Flex>
-          <Flex>
-            <div style={{ flex: 1 }}>
-              <FilterList
-                path={['searchRoot', 'criteria']}
-                fields={schemas.movies.fields}
-                typeComponents={TypeMap}
-              />
-              <Adder
-                path={['searchRoot', 'criteria']}
-                fields={schemas.movies.fields}
-                uniqueFields
-              />
-            </div>
-            <div style={{ flex: 4, maxWidth:'80%' }}>
-              <ResultCount path={['searchRoot', 'results']} />
-              <DateHistogram
-                path={['searchRoot', 'releases']}
-                format={formatYear}
-              />
-              <TermsStats path={['searchRoot', 'genreScores']} />
-              <div style={{overflowX: 'auto'}}>
-                <ResultTable
-                  path={['searchRoot', 'results']}
-                  fields={{
-                    poster: {
-                      display: x => <img src={x} width="180" height="270" />,
-                      order: 1,
-                    },
-                  }}
-                  infer
+        <div style={{ background: '#f4f4f4' }}>
+          <SpacedList>
+            <Flex style={{ alignItems: 'center', ...blueBar }}>
+              <div style={{ flex: 4 }}>
+                <Query path={['searchRoot', 'searchQuery']} />
+              </div>
+              <div style={{ flex: 1, marginLeft: '5px' }}>
+                <Button onClick={tree.triggerUpdate}>Search</Button>
+              </div>
+            </Flex>
+            <Flex>
+              <div style={{ flex: 1, ...whiteBox }}>
+                <FilterList
+                  path={['searchRoot', 'criteria']}
+                  fields={schemas.movies.fields}
+                  typeComponents={TypeMap}
+                />
+                <Adder
+                  path={['searchRoot', 'criteria']}
+                  fields={schemas.movies.fields}
+                  uniqueFields
                 />
               </div>
-              <Flex style={{ justifyContent: 'space-around' }}>
-                <Pager path={['searchRoot', 'results']} />
-              </Flex>
-            </div>
-          </Flex>
-        </SpacedList>
+              <div style={{ flex: 4, maxWidth:'80%', ...whiteBox }}>
+                <ResultCount path={['searchRoot', 'results']} />
+                <DateHistogram
+                  path={['searchRoot', 'releases']}
+                  format={formatYear}
+                />
+                <TermsStats path={['searchRoot', 'genreScores']} />
+                <div style={{overflowX: 'auto'}}>
+                  <ResultTable
+                    path={['searchRoot', 'results']}
+                    fields={{
+                      poster: {
+                        display: x => <img src={x} width="180" height="270" />,
+                        order: 1,
+                      },
+                    }}
+                    infer
+                  />
+                </div>
+                <Flex style={{ justifyContent: 'space-around' }}>
+                  <Pager path={['searchRoot', 'results']} />
+                </Flex>
+              </div>
+            </Flex>
+          </SpacedList>
+        </div>
       </Provider>
     )}
   </Awaiter>
