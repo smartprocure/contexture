@@ -1,3 +1,6 @@
+﻿# 0.2.0
+- Added the `statistical` type.
+
 # 0.1.6
 - Fixed the text type using F.cascade with more than one parammeter.
 
