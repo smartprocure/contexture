@@ -10,19 +10,21 @@ module.exports = {
   }),
   result: (context, search) =>
     Promise.all([
-      search(_.compact([
-        {
-          $group: {
-            _id: `$${context.field}`,
-            count: {
-              $sum: 1,
+      search(
+        _.compact([
+          {
+            $group: {
+              _id: `$${context.field}`,
+              count: {
+                $sum: 1,
+              },
             },
           },
-        },
-        context.size !== 0 && {
-          $limit: context.size || 10,
-        },
-      ])),
+          context.size !== 0 && {
+            $limit: context.size || 10,
+          },
+        ])
+      ),
       search([
         {
           $group: {
