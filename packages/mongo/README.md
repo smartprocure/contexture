@@ -88,6 +88,12 @@ It also supports `dateMath` via `@elastic/datemath` (the same as supported by el
 ### `facet`
 ### `results`
 
+### `statistical`
+`statistical` will produce a list of statistical values in the
+`context` of the node. It does this by running `count: { $sum: 1 }`,
+`$max`, `$min`, `$avg` and `$sum` after running other available
+filters.
+
 ## Integration Tests
 
 This repository offers integration tests to practice and understand the example
