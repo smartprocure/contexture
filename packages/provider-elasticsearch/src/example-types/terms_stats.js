@@ -6,7 +6,7 @@ let { getField } = require('../fields')
 module.exports = {
   validContext: context => context.key_field && context.value_field,
   async result(context, search, schema) {
-    let field = getField(schema, context.key_field)
+    let field = getField(schema, context.key_field, context.fieldMode)
     let x = await esTwoLevel(
       _.merge(
         {

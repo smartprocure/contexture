@@ -83,9 +83,7 @@ module.exports = {
         if (context.page) {
           let offset = (context.page - 1) * context.pageSize
           return {
-            results: _
-              .drop(offset)(reducedResults)
-              .slice(0, context.pageSize),
+            results: _.drop(offset)(reducedResults).slice(0, context.pageSize),
             totalRecords: reducedResults.length,
           }
         }
