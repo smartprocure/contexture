@@ -18,7 +18,7 @@ let Adder = partial(
       {
         Modal,
         Button,
-        label: '+ Include Additional Filter',
+        label: 'Add Custom Filter',
         Picker: partial(
           { Input, Highlight, Item: ListGroupItem },
           FilteredPicker
