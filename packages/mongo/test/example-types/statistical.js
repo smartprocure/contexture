@@ -2,7 +2,7 @@ let { expect } = require('chai')
 let statistical = require('../../src/example-types/statistical')
 
 describe('statistical', () => {
-  describe('result should output the expected query', () => {
+  it('result should output the expected query', () => {
     let field = 'price'
     expect(
       statistical.result(
