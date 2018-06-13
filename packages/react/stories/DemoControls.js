@@ -89,3 +89,14 @@ export let DarkBox = props => (
     }}
   />
 )
+
+let textTruncate = {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  // WebkitLineClamp: '4',
+  // WebkitBoxOrient: 'vertical',
+  maxHeight: '100px',
+}
+export let ClampedHTML = x => (
+  <div style={textTruncate} dangerouslySetInnerHTML={{ __html: x }} />
+)
