@@ -1,21 +1,21 @@
 module.exports = {
-  result: (context, search) =>
+  result: ({ field }, search) =>
     search([
       {
         $group: {
           _id: {},
           count: { $sum: 1 },
           max: {
-            $max: `$${context.field}`,
+            $max: `$${field}`,
           },
           min: {
-            $min: `$${context.field}`,
+            $min: `$${field}`,
           },
           avg: {
-            $avg: `$${context.field}`,
+            $avg: `$${field}`,
           },
           sum: {
-            $sum: `$${context.field}`,
+            $sum: `$${field}`,
           },
         },
       },
