@@ -11,6 +11,19 @@ let toggleElement = (check, val, arr = []) =>
   (check ? _.pull : F.push)(val, arr)
 
 let CheckboxDefault = props => <input type='checkbox' {...props} />
+let RadioListDefault = ({value, onChange, options}) => (
+  <Flex style={{justifyContent: 'space-between', alignItems: 'baseline'}}>
+    {_.map(
+      x => (
+        <label key={x.value} onClick={() => onChange(x.value)}>
+          <input type='radio' checked={x.value == value} />
+          {x.label}
+        </label>
+      ),
+      options
+    )}
+  </Flex>
+)
 
 let SelectAll = observer(({node, tree, Checkbox}) => {
   let missingOptions = _.difference(
@@ -38,8 +51,29 @@ let SelectAll = observer(({node, tree, Checkbox}) => {
   )
 })
 let Facet = injectTreeNode(
-  observer(({ tree, node, hide = {}, TextInput = 'input', Checkbox=CheckboxDefault }) => (
+  observer(({
+    tree,
+    node,
+    hide = {},
+    TextInput = 'input',
+    Checkbox = CheckboxDefault, 
+    RadioList = RadioListDefault,
+  }) => (
     <div>
+      <RadioList
+        value={node.mode || 'include' } // Fix by changing defaults in client example type
+        onChange={mode => tree.mutate(node.path, {mode})}
+        options={[
+          {
+            label: 'Include',
+            value: 'include',
+          },
+          {
+            label: 'Exclude',
+            value: 'exclude',
+          },
+        ]}
+      />
       {!hide.facetFilter && (
         <TextInput
           value={node.optionsFilter}
