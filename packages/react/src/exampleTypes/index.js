@@ -15,10 +15,11 @@ export default (
     TextInput = Input,
     NumberInput = partial({ type: 'number' }, Input),
     DateInput = partial({ type: 'date' }, Input),
+    Checkbox = partial({ type: 'checkbox' }, 'input'),
   } = {}
 ) => {
   let Components = {
-    Facet: partial({ TextInput }, Facet),
+    Facet: partial({ TextInput, Checkbox }, Facet),
     Number: partial({ NumberInput }, Number),
     Date: partial({ DateInput }, Date),
     Query: partial({ TextInput }, Query),
