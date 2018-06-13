@@ -7,7 +7,7 @@ import injectTreeNode from '../utils/injectTreeNode'
 let dateInput = x => <input type="date" {...x} />
 let DateComponent = injectTreeNode(
   observer(({ tree, node, DateInput = dateInput }) => (
-    <Flex>
+    <Flex style={{ alignItems: 'center' }}>
       <DateInput
         value={node.from || ''}
         onChange={e => tree.mutate(node.path, { from: e.target.value })}
