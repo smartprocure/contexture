@@ -1,4 +1,7 @@
-﻿# 0.2.0
+﻿# 0.2.1
+- Improved the `facet` type, allowing for unlimited queries.
+
+# 0.2.0
 - Added the `statistical` type.
 
 # 0.1.6
