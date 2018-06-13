@@ -12,6 +12,31 @@ let toggleElement = (check, val, arr = []) =>
 
 let CheckboxDefault = props => <input type='checkbox' {...props} />
 
+let SelectAll = observer(({node, tree, Checkbox}) => {
+  let missingOptions = _.difference(
+    _.map('name', _.get('context.options', node)),
+    node.values
+  )
+  let allSelected = _.isEmpty(missingOptions)
+  return (
+    <Flex style={{justifyContent: 'space-between', alignItems: 'baseline'}}>
+      <Checkbox
+        checked={allSelected}
+        onChange={() => {
+          if (allSelected)
+            tree.mutate(node.path, {
+              values: [],
+            })
+          else
+            tree.mutate(node.path, {
+              values: node.values.concat(missingOptions),
+            })
+        }}
+      />
+      <div style={{flex: 2, padding: '0 5px'}}>Select All</div>
+    </Flex>
+  )
+})
 let Facet = injectTreeNode(
   observer(({ tree, node, hide = {}, TextInput = 'input', Checkbox=CheckboxDefault }) => (
     <div>
@@ -24,6 +49,7 @@ let Facet = injectTreeNode(
           placeholder="Find..."
         />
       )}
+      <SelectAll node={node} tree={tree} Checkbox={Checkbox} />
       {_.map(({ name, count }) => {
         let checked = _.includes(name, node.values)
         let toggle = () => {
@@ -40,10 +66,7 @@ let Facet = injectTreeNode(
               onChange={toggle}
               checked={checked}
             />
-            <div
-              style={{ flex: 2, paddingLeft: '5px', paddingRight: '5px' }}
-              onClick={toggle}
-             >
+            <div style={{ flex: 2, padding: '0 5px' }} onClick={toggle}>
               {name}
             </div>
             <div>{count}</div>
