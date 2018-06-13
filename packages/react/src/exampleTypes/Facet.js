@@ -59,7 +59,7 @@ let Facet = injectTreeNode(
     Checkbox = CheckboxDefault, 
     RadioList = RadioListDefault,
   }) => (
-    <div>
+    <div className='contexture-facet'>
       <RadioList
         value={node.mode || 'include' } // Fix by changing defaults in client example type
         onChange={mode => tree.mutate(node.path, {mode})}
