@@ -35,18 +35,18 @@ let Header = withStateLens({ popover: false })(
     <th>
       <a onClick={F.flip(popover)}>
         {label}{' '}
-        {field === node.sortField && (node.sortDir === 'asc' ? '^' : 'v')}
+        {field === node.sortField && (node.sortDir === 'asc' ? '▲' : '▼')}
       </a>
       <Popover isOpen={popover}>
         <div style={{ textAlign: 'left' }}>
           <div>
             <a onClick={() => mutate({ sortField: field, sortDir: 'asc' })}>
-              ^ Sort Ascending
+              ▲ Sort Ascending
             </a>
           </div>
           <div>
             <a onClick={() => mutate({ sortField: field, sortDir: 'desc' })}>
-              v Sort Descending
+              ▼ Sort Descending
             </a>
           </div>
           <div>
