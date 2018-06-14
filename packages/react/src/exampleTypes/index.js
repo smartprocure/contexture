@@ -1,6 +1,7 @@
 import Facet from './Facet'
 import Number from './Number'
 import Date from './Date'
+import DateRangePicker from './DateRangePicker'
 import Query from './Query'
 import ResultCount from './ResultCount'
 import ResultTable from './ResultTable'
@@ -23,6 +24,7 @@ export default (
     Facet: partial({ TextInput, Checkbox, RadioList }, Facet),
     Number: partial({ NumberInput }, Number),
     Date: partial({ DateInput }, Date),
+    DateRangePicker,
     Query: partial({ TextInput }, Query),
     ResultCount,
     ResultTable,
