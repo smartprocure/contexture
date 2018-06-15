@@ -1,5 +1,6 @@
 import Awaiter from './Awaiter'
 import { Flex } from './Flex'
+import { Grid } from './Grid'
 import Modal from './Modal'
 import Popover from './Popover'
 import SpacedList from './SpacedList'
@@ -12,6 +13,7 @@ import { Tag, TagsInput } from './TagsInput'
 export {
   Awaiter,
   Flex,
+  Grid,
   Modal,
   Popover,
   SpacedList,
