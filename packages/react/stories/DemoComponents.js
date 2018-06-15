@@ -1,36 +1,15 @@
-import FilterAdder from '../src/FilterAdder'
 import ExampleTypes from '../src/exampleTypes/'
 import { partial } from '../src/utils/mobx-react-utils'
-import { Modal, ModalPicker, FilteredPicker } from '../src/layout/'
+import ModalFilterAdder from '../src/ModalFilterAdder'
 import {
   Button,
   Input,
   Highlight,
-  ListGroupItem,
+  ListGroupItem as Item,
   PagerItem,
-  PagerList,
 } from './DemoControls'
 
-// Pre apply some props
-let Adder = partial(
-  {
-    Picker: partial(
-      {
-        Modal,
-        Button,
-        label: 'Add Custom Filter',
-        Picker: partial(
-          { Input, Highlight, Item: ListGroupItem },
-          FilteredPicker
-        ),
-      },
-      ModalPicker
-    ),
-  },
-  FilterAdder
-)
+export let Adder = ModalFilterAdder({ Button, Input, Highlight, Item })
 
-let { ResultPager } = ExampleTypes({ Input })
-let Pager = partial({ Item: PagerItem, List: PagerList }, ResultPager)
-
-export { Adder, Pager }
+let { ResultPager } = ExampleTypes({ })
+export let Pager = partial({ Item: PagerItem }, ResultPager)

@@ -2,7 +2,7 @@ import * as F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
 import { withStateLens, hover, focus } from '../src/utils/mobx-react-utils'
-import { Flex, TextHighlight } from '../src/layout/'
+import { TextHighlight } from '../src/layout/'
 
 export let Button = x => (
   <button
@@ -60,7 +60,6 @@ export let ListGroupItem = withStateLens({ hovering: false })(
   ))
 )
 
-export let PagerList = x => <Flex {...x} />
 export let PagerItem = withStateLens({ hovering: false })(
   observer(({ active, hovering, ...x }) => (
     <span
