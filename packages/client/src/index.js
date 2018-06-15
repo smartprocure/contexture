@@ -80,7 +80,7 @@ export let ContextTree = _.curry(
         // Mark children only if it's not a parent of the target so we don't incorrectly mark siblings
         // flatMap because traversing children can create arrays
         _.flatMap(n =>
-          F.unless(isParent(n.path, event.path), Tree.toArrayBy)(markForUpdate)(
+          F.unless(isParent(snapshot(n.path), event.path), Tree.toArrayBy)(markForUpdate)(
             n
           )
         )
