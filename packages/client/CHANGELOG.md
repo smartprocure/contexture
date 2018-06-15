@@ -1,5 +1,8 @@
-﻿# 2.12.2
+# 2.13.1
 * Small fix for MobX 4. Just making sure that observables are not used for comparing paths.
+
+# 2.13.0
+* Add tagsQuery example type
 
 # 2.12.1
 * Catch case where unsolicited node responses from the service for nodes that have never been updated explode because of missing upatingPromise (but still log in debug mode)
