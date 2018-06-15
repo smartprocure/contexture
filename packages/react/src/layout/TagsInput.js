@@ -62,7 +62,19 @@ let TagsInput = inject(() => ({
 )
 TagsInput.displayName = 'TagsInput'
 
+// Just uses an internal observable array
+let MockTagsInput = inject(() => {
+  let tags = observable([])
+  return {
+    tags,
+    addTag(tag) { tags.push(tag) },
+    removeTag(tag) { tags = _.without(tag, tags) },
+  }
+})(TagsInput)
+MockTagsInput.displayName = 'MockTagsInput'
+
 export {
   Tag,
-  TagsInput
+  TagsInput,
+  MockTagsInput
 }
