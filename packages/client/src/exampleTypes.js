@@ -41,7 +41,7 @@ export default stampKey('type', {
         cardinality: null,
       },
     },
-    subQuery: {
+    subquery: {
       useValues: x => ({ values: x }),
       getValues: x => _.map('name', x.context.options),
     },
@@ -82,6 +82,9 @@ export default stampKey('type', {
     validate: validateValues,
     reactors: {
       values: 'others',
+    },
+    subquery: {
+      useValues: x => ({ values: x }),
     },
   },
   results: {
