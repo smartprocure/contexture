@@ -1,6 +1,6 @@
 {
   "name": "contexture-client",
-  "version": "2.13.0",
+  "version": "2.13.1",
   "description": "The Contexture (aka ContextTree) Client",
   "main": "lib/contexture-client.js",
   "scripts": {
@@ -46,7 +46,7 @@
     "duti": "^0.9.3",
     "eslint": "^4.12.1",
     "eslint-config-smartprocure": "^1.1.0",
-    "mobx": "^5.0.0",
+    "mobx": "^4.3.1",
     "mocha": "^4.0.1",
     "nyc": "^11.2.1",
     "prettier": "^1.8.2",
