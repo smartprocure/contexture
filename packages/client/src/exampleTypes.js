@@ -70,12 +70,12 @@ export default stampKey('type', {
     validate: x => x.tags.length,
     reactors: {
       join: 'others',
-      tags: 'others'
+      tags: 'others',
     },
     defaults: {
       field: null,
       tags: [],
-      join: 'any'
+      join: 'any',
     },
   },
   mongoId: {
