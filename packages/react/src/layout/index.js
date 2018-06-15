@@ -7,6 +7,7 @@ import TextHighlight from './TextHighlight'
 import { FilteredPicker, ModalPicker } from './Pickers'
 import Dynamic from './Dynamic'
 import BarChart from './BarChart'
+import { Tag, TagsInput } from './TagsInput'
 
 export {
   Awaiter,
@@ -19,4 +20,6 @@ export {
   ModalPicker,
   Dynamic,
   BarChart,
+  Tag,
+  TagsInput
 }
