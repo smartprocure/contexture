@@ -1,3 +1,7 @@
+﻿# 2.13.2
+* exampleType's subquery option has to be lowercase.
+* Added subquery.useValues to the mongoId type.
+
 # 2.13.1
 * Small fix for MobX 4. Just making sure that observables are not used for comparing paths.
 
