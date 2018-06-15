@@ -66,6 +66,18 @@ export default stampKey('type', {
       query: '',
     },
   },
+  tagsQuery: {
+    validate: x => x.tags.length,
+    reactors: {
+      join: 'others',
+      tags: 'others',
+    },
+    defaults: {
+      field: null,
+      tags: [],
+      join: 'any',
+    },
+  },
   mongoId: {
     validate: validateValues,
     reactors: {

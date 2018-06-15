@@ -1,3 +1,6 @@
+# 2.13.0
+* Add tagsQuery example type
+
 # 2.12.1
 * Catch case where unsolicited node responses from the service for nodes that have never been updated explode because of missing upatingPromise (but still log in debug mode)
 * Update mobx tests to use mobx 5
