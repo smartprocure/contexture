@@ -1,3 +1,6 @@
+# 2.13.1
+* Small fix for MobX 4. Just making sure that observables are not used for comparing paths.
+
 # 2.13.0
 * Add tagsQuery example type
 

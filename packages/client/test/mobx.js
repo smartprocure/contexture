@@ -294,4 +294,9 @@ describe('usage with mobx should generally work', () => {
     ])
     disposer()
   })
+
+  it('should refresh properly', async () => {
+    await Tree.refresh(['root'])
+    expect(service).to.have.callCount(3)
+  })
 })
