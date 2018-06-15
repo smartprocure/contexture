@@ -4,9 +4,11 @@ import { observer } from 'mobx-react'
 import { Dynamic, SpacedList } from './layout'
 import InjectTreeNode from './utils/injectTreeNode'
 
+export let Label = x => <b style={{display: 'block', margin: '10px 0'}} {...x} />
+
 export let FieldLabel = InjectTreeNode(
   observer(({ node: { field } = {}, fields }) => (
-    <b>{_.get([field, 'label'], fields)}</b>
+    <Label>{_.get([field, 'label'], fields)}</Label>
   ))
 )
 
