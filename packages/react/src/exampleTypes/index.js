@@ -3,6 +3,7 @@ import Number from './Number'
 import Date from './Date'
 import DateRangePicker from './DateRangePicker'
 import Query from './Query'
+import TagsQuery from './TagsQuery'
 import ResultCount from './ResultCount'
 import ResultTable from './ResultTable'
 import ResultPager from './ResultPager'
@@ -17,7 +18,8 @@ export default (
     NumberInput = partial({ type: 'number' }, Input),
     DateInput = partial({ type: 'date' }, Input),
     Checkbox = partial({ type: 'checkbox' }, 'input'),
-    RadioList
+    RadioList,
+    TagsInput
   } = {}
 ) => {
   let Components = {
@@ -26,6 +28,7 @@ export default (
     Date: partial({ DateInput }, Date),
     DateRangePicker,
     Query: partial({ TextInput }, Query),
+    TagsQuery: partial({ TagsInput }, TagsQuery),
     ResultCount,
     ResultTable,
     ResultPager,
@@ -37,6 +40,7 @@ export default (
     query: Components.Query,
     number: Components.Number,
     date: Components.Date,
+    tagsQuery: Components.TagsQuery
   }
   return { ...Components, TypeMap }
 }
