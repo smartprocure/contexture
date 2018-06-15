@@ -16,7 +16,7 @@ let RadioListDefault = ({value, onChange, options}) => (
     {_.map(
       x => (
         <label key={x.value} onClick={() => onChange(x.value)}>
-          <input type='radio' checked={x.value == value} />
+          <input type='radio' checked={x.value == value} onChange={() => {}}/>
           {x.label}
         </label>
       ),
