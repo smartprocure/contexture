@@ -1,5 +1,8 @@
 {
   "extends": "smartprocure",
+  "parserOptions": {
+    "ecmaVersion": 2017
+  },
   "rules": {
     "no-unused-vars": 1
   }
