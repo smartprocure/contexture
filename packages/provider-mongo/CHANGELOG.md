@@ -1,4 +1,7 @@
-﻿# 0.2.1
+﻿# 0.2.2
+- Changed the `statistical` type so it wouldn't return an array.
+
+# 0.2.1
 - Improved the `facet` type, allowing for unlimited queries.
 
 # 0.2.0
