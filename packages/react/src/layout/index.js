@@ -23,5 +23,5 @@ export {
   Dynamic,
   BarChart,
   Tag,
-  TagsInput
+  TagsInput,
 }

@@ -6,30 +6,32 @@ import { exampleTypes } from 'contexture-client'
 import { bgJoin } from '../styles/generic'
 import { TagsInput as DefaultTagsInput } from '../layout/TagsInput'
 
-let tagToGroupJoin = x => ({
-  any: 'or',
-  all: 'and',
-  none: 'not'
-})[x]
+let tagToGroupJoin = x =>
+  ({
+    any: 'or',
+    all: 'and',
+    none: 'not',
+  }[x])
 let tagValueField = 'word'
-let TagsQuery = injectTreeNode(observer(
-  ({tree, node, TagsInput = DefaultTagsInput}) =>
+let TagsQuery = injectTreeNode(
+  observer(({ tree, node, TagsInput = DefaultTagsInput }) => (
     <TagsInput
       tags={_.map(tagValueField, node.tags)}
       addTag={tag => {
         tree.mutate(node.path, {
-          tags: [...node.tags, {[tagValueField]: tag, distance: 3}]
+          tags: [...node.tags, { [tagValueField]: tag, distance: 3 }],
         })
       }}
-      removeTag ={tag => {
+      removeTag={tag => {
         tree.mutate(node.path, {
-          tags: _.reject({[tagValueField]: tag}, node.tags)
+          tags: _.reject({ [tagValueField]: tag }, node.tags),
         })
       }}
       tagStyle={bgJoin(tagToGroupJoin(node.join || 'any'))}
     />
-), exampleTypes.tagsQuery)
+  )),
+  exampleTypes.tagsQuery
+)
 TagsQuery.displayName = 'TagsQuery'
-
 
 export default TagsQuery

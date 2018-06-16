@@ -168,7 +168,7 @@ let {
   ResultCount,
   ResultTable,
   DateHistogram,
-  TagsQuery
+  TagsQuery,
 } = ExampleTypes({ Input })
 
 export default () =>

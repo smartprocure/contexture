@@ -20,7 +20,7 @@ export default (
     Checkbox = partial({ type: 'checkbox' }, 'input'),
     RadioList,
     TagsInput,
-    Table
+    Table,
   } = {}
 ) => {
   let Components = {
@@ -41,7 +41,7 @@ export default (
     query: Components.Query,
     number: Components.Number,
     date: Components.Date,
-    tagsQuery: Components.TagsQuery
+    tagsQuery: Components.TagsQuery,
   }
   return { ...Components, TypeMap }
 }

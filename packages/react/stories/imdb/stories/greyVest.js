@@ -13,7 +13,7 @@ import {
   Adder,
   Button,
   Pager,
-  ExampleTypes
+  ExampleTypes,
 } from '../../../src/themes/greyVest'
 let {
   ResultCount,
@@ -39,7 +39,7 @@ let tree = Contexture({
       type: 'date',
       useDateMath: true,
     },
-    
+
     {
       key: 'titleContains',
       type: 'tagsQuery',
@@ -77,7 +77,16 @@ let tree = Contexture({
     {
       key: 'results',
       type: 'results',
-      include: ['poster', 'title', 'actors', 'genres', 'metaScore', 'rated', 'released', 'plot'],
+      include: [
+        'poster',
+        'title',
+        'actors',
+        'genres',
+        'metaScore',
+        'rated',
+        'released',
+        'plot',
+      ],
     },
   ],
 })
@@ -120,7 +129,7 @@ export default () => (
       {schemas => (
         <Provider tree={tree}>
           <div style={{ background: '#f4f4f4' }}>
-            <Grid gap="22px" columns="1fr 4fr" style={{margin: '0 22px'}}>
+            <Grid gap="22px" columns="1fr 4fr" style={{ margin: '0 22px' }}>
               <div>
                 <h1>Filters</h1>
                 <SpacedList>
@@ -167,17 +176,19 @@ export default () => (
                     }}
                   />
                   {!state.autoUpdate && (
-                    <Button onClick={tree.triggerUpdate} primary>Search</Button>
+                    <Button onClick={tree.triggerUpdate} primary>
+                      Search
+                    </Button>
                   )}
                 </Grid>
-                
+
                 <h1>
                   <Flex>
                     {/* Wrapping in Flex makes ResultCount not break lines when updaing */}
                     Results (<ResultCount path={['root', 'results']} />)
                   </Flex>
                 </h1>
-                  
+
                 <div className="gv-box">
                   <ResultTable
                     path={['root', 'results']}

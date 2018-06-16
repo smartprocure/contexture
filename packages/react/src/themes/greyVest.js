@@ -3,22 +3,21 @@ import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { observer } from 'mobx-react'
 import { partial, withStateLens, hover } from '../utils/mobx-react-utils'
-import {Flex, TextHighlight} from '../layout'
+import { Flex, TextHighlight } from '../layout'
 import ModalFilterAdder from '../ModalFilterAdder'
 import ExampleTypeConstructor from '../exampleTypes/'
 
-export let Input = 
-  x => (
-    <input
-      style={{ padding: '5px', textIndent: '5px', margin: '5px auto', }}
-      {...x}
-    />
-  )
+export let Input = x => (
+  <input
+    style={{ padding: '5px', textIndent: '5px', margin: '5px auto' }}
+    {...x}
+  />
+)
 
 // Low effort custom checkbox
-export let Checkbox = ({checked, onChange}) => (
+export let Checkbox = ({ checked, onChange }) => (
   <div
-    className='gv-input'
+    className="gv-input"
     style={{
       height: '24px',
       width: '24px',
@@ -29,7 +28,8 @@ export let Checkbox = ({checked, onChange}) => (
       margin: '2px',
       cursor: 'pointer',
     }}
-    onClick={() => onChange(!checked)}>
+    onClick={() => onChange(!checked)}
+  >
     {checked ? '✔' : String.fromCharCode(160)}
   </div>
 )
@@ -123,7 +123,7 @@ export let GVStyle = () => (
 )
 export let Table = x => <table className="gv-table" {...x} />
 
-export let Button = ({isActive, primary, style={}, ...x}) => (
+export let Button = ({ isActive, primary, style = {}, ...x }) => (
   <button
     style={{
       minWidth: '150px',
@@ -131,18 +131,22 @@ export let Button = ({isActive, primary, style={}, ...x}) => (
       margin: '5px',
       borderRadius: '50px',
       cursor: 'pointer',
-      ...(isActive && {borderColor: '#0076DE', color: '#0076DE'}),
-      ...(primary && {background: '#0076DE', color: '#FFF'}),
-      ...style
+      ...(isActive && { borderColor: '#0076DE', color: '#0076DE' }),
+      ...(primary && { background: '#0076DE', color: '#FFF' }),
+      ...style,
     }}
     {...x}
   />
 )
-export let ButtonRadio = ({value, onChange=() => {}, options}) => (
-  <Flex style={{justifyContent: 'space-between', alignItems: 'baseline'}}>
+export let ButtonRadio = ({ value, onChange = () => {}, options }) => (
+  <Flex style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
     {_.map(
       x => (
-        <Button key={x.value} isActive={x.value === value} onClick={() => onChange(x.value)}>
+        <Button
+          key={x.value}
+          isActive={x.value === value}
+          onClick={() => onChange(x.value)}
+        >
           {x.label}
         </Button>
       ),
@@ -177,7 +181,7 @@ export let Adder = ModalFilterAdder({
   Button,
   Input,
   Highlight,
-  Item: ListGroupItem
+  Item: ListGroupItem,
 })
 
 export let PagerItem = withStateLens({ hovering: false })(
@@ -186,10 +190,14 @@ export let PagerItem = withStateLens({ hovering: false })(
       style={{
         padding: '5px',
         background: F.view(hovering) ? '#f5f5f5' : 'white',
-        
+
         border: '2px solid #EDEDED',
         borderRadius: '4px',
-        ...(active && { fontWeight: 'bold', borderColor: '#0076DE', color: '#0076DE' }),
+        ...(active && {
+          fontWeight: 'bold',
+          borderColor: '#0076DE',
+          color: '#0076DE',
+        }),
         cursor: 'pointer',
       }}
       {...hover(hovering)}
@@ -198,5 +206,10 @@ export let PagerItem = withStateLens({ hovering: false })(
   ))
 )
 
-export let ExampleTypes = ExampleTypeConstructor({Input, Checkbox, RadioList: ButtonRadio, Table})
+export let ExampleTypes = ExampleTypeConstructor({
+  Input,
+  Checkbox,
+  RadioList: ButtonRadio,
+  Table,
+})
 export let Pager = partial({ Item: PagerItem }, ExampleTypes.ResultPager)
