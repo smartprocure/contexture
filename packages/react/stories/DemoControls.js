@@ -1,8 +1,10 @@
 import * as F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { withStateLens, hover, focus } from '../src/utils/mobx-react-utils'
+import { withStateLens, hover, focus, partial } from '../src/utils/mobx-react-utils'
 import { TextHighlight } from '../src/layout/'
+import ExampleTypes from '../src/exampleTypes/'
+import ModalFilterAdder from '../src/ModalFilterAdder'
 
 export let Button = x => (
   <button
@@ -99,3 +101,8 @@ let textTruncate = {
 export let ClampedHTML = x => (
   <div style={textTruncate} dangerouslySetInnerHTML={{ __html: x }} />
 )
+
+export let Adder = ModalFilterAdder({ Button, Input, Highlight, Item:ListGroupItem })
+
+let { ResultPager } = ExampleTypes({ })
+export let Pager = partial({ Item: PagerItem }, ResultPager)

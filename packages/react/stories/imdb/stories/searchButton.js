@@ -7,7 +7,7 @@ import Contexture, { esClient } from '../utils/contexture'
 import { getESSchemas } from '../../../src/utils/schema'
 import { Flex, Awaiter, SpacedList } from '../../../src/layout/'
 import { FilterList } from '../../../src/FilterList'
-import { Button, Input } from '../../DemoControls'
+import { Button, Input, Adder, Pager } from '../../DemoControls'
 import ExampleTypes from '../../../src/exampleTypes/'
 let {
   Query,
@@ -17,7 +17,6 @@ let {
   TermsStats,
   TypeMap,
 } = ExampleTypes({ Input })
-import { Adder, Pager } from '../../DemoComponents'
 
 let formatYear = x => new Date(x).getFullYear() + 1
 

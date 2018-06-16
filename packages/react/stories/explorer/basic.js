@@ -10,8 +10,7 @@ import QueryBuilder from '../../src/queryBuilder/'
 import { getESSchemas } from '../../src/utils/schema'
 import ExampleTypes from '../../src/exampleTypes/'
 import { FilterList } from '../../src/FilterList'
-import { Adder, Pager } from '../DemoComponents'
-import { Input, ClampedHTML } from '../DemoControls'
+import { Input, ClampedHTML, Adder, Pager } from '../DemoControls'
 let { ResultCount, ResultTable, TypeMap } = ExampleTypes({ Input })
 
 import Contexture, { es, schemas, updateClient } from './contexture'
