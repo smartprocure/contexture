@@ -19,7 +19,8 @@ export default (
     DateInput = partial({ type: 'date' }, Input),
     Checkbox = partial({ type: 'checkbox' }, 'input'),
     RadioList,
-    TagsInput
+    TagsInput,
+    Table
   } = {}
 ) => {
   let Components = {
@@ -29,8 +30,8 @@ export default (
     DateRangePicker,
     Query: partial({ TextInput }, Query),
     TagsQuery: partial({ TagsInput }, TagsQuery),
+    ResultTable: Table ? partial({ Table }, ResultTable) : ResultTable,
     ResultCount,
-    ResultTable,
     ResultPager,
     DateHistogram,
     TermsStats,
