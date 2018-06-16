@@ -7,7 +7,6 @@
 * Add ModalFilterAdder
 * Improve styling all around
 
-
 # 1.3.2
 * Support dots in field names in FilterList
 * Add basic search example for schema explorer, with loadable schema overrides
