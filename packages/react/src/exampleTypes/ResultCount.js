@@ -5,13 +5,13 @@ import { exampleTypes } from 'contexture-client'
 
 let ResultCount = injectTreeNode(
   observer(({ node }) => (
-    <div style={{ textAlign: 'center' }}>
+    <span>
       {node.context.response.results.length
-        ? `Viewing records ${node.context.response.startRecord} - ${
+        ? `${node.context.response.startRecord} - ${
             node.context.response.endRecord
           } out of ${node.context.response.totalRecords}`
         : 'No Results'}
-    </div>
+    </span>
   )),
   exampleTypes.results
 )

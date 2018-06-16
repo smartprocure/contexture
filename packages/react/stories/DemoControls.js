@@ -1,8 +1,15 @@
 import * as F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { withStateLens, hover, focus } from '../src/utils/mobx-react-utils'
-import { Flex, TextHighlight } from '../src/layout/'
+import {
+  withStateLens,
+  hover,
+  focus,
+  partial,
+} from '../src/utils/mobx-react-utils'
+import { TextHighlight } from '../src/layout/'
+import ExampleTypeConstructor from '../src/exampleTypes/'
+import ModalFilterAdder from '../src/ModalFilterAdder'
 
 export let Button = x => (
   <button
@@ -60,7 +67,6 @@ export let ListGroupItem = withStateLens({ hovering: false })(
   ))
 )
 
-export let PagerList = x => <Flex {...x} />
 export let PagerItem = withStateLens({ hovering: false })(
   observer(({ active, hovering, ...x }) => (
     <span
@@ -89,3 +95,25 @@ export let DarkBox = props => (
     }}
   />
 )
+
+let textTruncate = {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  // WebkitLineClamp: '4',
+  // WebkitBoxOrient: 'vertical',
+  maxHeight: '100px',
+}
+export let ClampedHTML = x => (
+  <div style={textTruncate} dangerouslySetInnerHTML={{ __html: x }} />
+)
+
+export let Adder = ModalFilterAdder({
+  Button,
+  Input,
+  Highlight,
+  Item: ListGroupItem,
+})
+
+export let ExampleTypes = ExampleTypeConstructor({ Input })
+let { ResultPager } = ExampleTypes
+export let Pager = partial({ Item: PagerItem }, ResultPager)

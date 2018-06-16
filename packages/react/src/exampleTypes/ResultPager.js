@@ -20,7 +20,7 @@ let ResultPager = InjectTreeNode(
             previous
             onClick={() => tree.mutate(node.path, { page: page - 1 })}
           >
-            {'<'}
+            {'←'}
           </Link>
         </Item>
         {_.reverse(
@@ -60,7 +60,7 @@ let ResultPager = InjectTreeNode(
         )}
         <Item disabled={!(page < pages)}>
           <Link next onClick={() => tree.mutate(node.path, { page: page + 1 })}>
-            {'>'}
+            {'→'}
           </Link>
         </Item>
       </List>

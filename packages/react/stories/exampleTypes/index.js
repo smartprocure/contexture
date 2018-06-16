@@ -36,6 +36,13 @@ let tree = observable({
     field: 'title',
     query: '',
   },
+  tagsQuery: {
+    key: 'tagsQuery',
+    path: ['tagsQuery'],
+    type: 'tagsQuery',
+    field: 'title',
+    tags: [],
+  },
   number: {
     key: 'searchNumber',
     path: ['number'],
@@ -161,6 +168,7 @@ let {
   ResultCount,
   ResultTable,
   DateHistogram,
+  TagsQuery,
 } = ExampleTypes({ Input })
 
 export default () =>
@@ -180,6 +188,7 @@ export default () =>
             <Flex>
               <div style={{ flex: 1 }}>
                 <SpacedList>
+                  <TagsQuery path={['tagsQuery']} />
                   <Facet path={['facet']} />
                   <Facet path={['facet']} />
                   <Number path={['number']} />

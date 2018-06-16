@@ -7,7 +7,7 @@ import injectTreeNode from '../utils/injectTreeNode'
 let numberInput = x => <input type="number" {...x} />
 let NumberComponent = injectTreeNode(
   observer(({ tree, node, NumberInput = numberInput }) => (
-    <Flex>
+    <Flex style={{ alignItems: 'center' }}>
       <NumberInput
         value={node.min || ''}
         onChange={e => tree.mutate(node.path, { min: e.target.value })}
