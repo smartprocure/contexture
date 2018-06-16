@@ -38,12 +38,7 @@ let TagsInput = inject(() => ({
           >
             {_.map(
               t => (
-                <TagComponent
-                  key={t}
-                  value={t}
-                  removeTag={removeTag}
-                  tagStyle={tagStyle}
-                />
+                <TagComponent key={t} value={t} {...{removeTag, tagStyle }} />
               ),
               tags
             )}
