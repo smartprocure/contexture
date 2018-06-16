@@ -107,7 +107,7 @@ exports[`Storyshots Docs CHANGELOG.md 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Docs README.md 1`] = `
 <div>
@@ -216,7 +216,7 @@ exports[`Storyshots Docs README.md 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Example Types Full Demo 1`] = `
 <div
@@ -284,115 +284,39 @@ exports[`Storyshots Example Types Full Demo 1`] = `
           }
         >
           <div>
-            <input
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              placeholder="Find..."
+            <label
+              className="tags-input"
               style={
                 Object {
-                  "background": "rgba(255, 255, 255, 0.7)",
-                  "border": "solid 1px #efefef",
-                  "borderRadius": "30px",
-                  "boxSizing": "border-box",
                   "display": "block",
-                  "margin": "0 auto",
-                  "outline": "none",
-                  "padding": "5px",
-                  "textIndent": "5px",
-                  "transition": "background 0.3s",
-                  "width": "100%",
-                }
-              }
-              value=""
-            />
-            <div
-              style={
-                Object {
-                  "alignItems": "baseline",
-                  "display": "flex",
-                  "justifyContent": "space-between",
                 }
               }
             >
-              <input
-                checked={true}
-                onChange={[Function]}
-                type="checkbox"
-              />
               <div
                 style={
                   Object {
-                    "flex": 2,
-                    "paddingLeft": "5px",
-                    "paddingRight": "5px",
+                    "alignItems": "center",
+                    "cursor": "text",
+                    "display": "flex",
+                    "flexWrap": "wrap",
                   }
                 }
               >
-                a
-              </div>
-              <div>
-                15
-              </div>
-            </div>
-            <div
-              style={
-                Object {
-                  "alignItems": "baseline",
-                  "display": "flex",
-                  "justifyContent": "space-between",
-                }
-              }
-            >
-              <input
-                checked={false}
-                onChange={[Function]}
-                type="checkbox"
-              />
-              <div
-                style={
-                  Object {
-                    "flex": 2,
-                    "paddingLeft": "5px",
-                    "paddingRight": "5px",
+                <input
+                  onChange={[Function]}
+                  onKeyDown={[Function]}
+                  placeholder="Search..."
+                  style={
+                    Object {
+                      "border": "none",
+                      "outline": "none",
+                      "width": "auto",
+                    }
                   }
-                }
-              >
-                b
+                  value=""
+                />
               </div>
-              <div>
-                3
-              </div>
-            </div>
-            <div
-              style={
-                Object {
-                  "alignItems": "baseline",
-                  "display": "flex",
-                  "justifyContent": "space-between",
-                }
-              }
-            >
-              <input
-                checked={false}
-                onChange={[Function]}
-                type="checkbox"
-              />
-              <div
-                style={
-                  Object {
-                    "flex": 2,
-                    "paddingLeft": "5px",
-                    "paddingRight": "5px",
-                  }
-                }
-              >
-                c
-              </div>
-              <div>
-                1
-              </div>
-            </div>
+            </label>
           </div>
         </div>
         <div
@@ -402,7 +326,39 @@ exports[`Storyshots Example Types Full Demo 1`] = `
             }
           }
         >
-          <div>
+          <div
+            className="contexture-facet"
+          >
+            <div
+              style={
+                Object {
+                  "alignItems": "baseline",
+                  "display": "flex",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <label
+                onClick={[Function]}
+              >
+                <input
+                  checked={true}
+                  onChange={[Function]}
+                  type="radio"
+                />
+                Include
+              </label>
+              <label
+                onClick={[Function]}
+              >
+                <input
+                  checked={false}
+                  onChange={[Function]}
+                  type="radio"
+                />
+                Exclude
+              </label>
+            </div>
             <input
               onBlur={[Function]}
               onChange={[Function]}
@@ -435,7 +391,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
               }
             >
               <input
-                checked={true}
+                checked={false}
                 onChange={[Function]}
                 type="checkbox"
               />
@@ -443,8 +399,33 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                 style={
                   Object {
                     "flex": 2,
-                    "paddingLeft": "5px",
-                    "paddingRight": "5px",
+                    "padding": "0 5px",
+                  }
+                }
+              >
+                Select All
+              </div>
+            </div>
+            <div
+              style={
+                Object {
+                  "alignItems": "baseline",
+                  "display": "flex",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <input
+                checked={true}
+                onChange={[Function]}
+                type="checkbox"
+              />
+              <div
+                onClick={[Function]}
+                style={
+                  Object {
+                    "flex": 2,
+                    "padding": "0 5px",
                   }
                 }
               >
@@ -469,11 +450,11 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                 type="checkbox"
               />
               <div
+                onClick={[Function]}
                 style={
                   Object {
                     "flex": 2,
-                    "paddingLeft": "5px",
-                    "paddingRight": "5px",
+                    "padding": "0 5px",
                   }
                 }
               >
@@ -498,11 +479,11 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                 type="checkbox"
               />
               <div
+                onClick={[Function]}
                 style={
                   Object {
                     "flex": 2,
-                    "paddingLeft": "5px",
-                    "paddingRight": "5px",
+                    "padding": "0 5px",
                   }
                 }
               >
@@ -512,6 +493,200 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                 1
               </div>
             </div>
+            <div
+              style={
+                Object {
+                  "display": "flex",
+                  "justifyContent": "space-between",
+                  "margin": "5px 0",
+                }
+              }
+            />
+          </div>
+        </div>
+        <div
+          style={
+            Object {
+              "marginBottom": "25px",
+            }
+          }
+        >
+          <div
+            className="contexture-facet"
+          >
+            <div
+              style={
+                Object {
+                  "alignItems": "baseline",
+                  "display": "flex",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <label
+                onClick={[Function]}
+              >
+                <input
+                  checked={true}
+                  onChange={[Function]}
+                  type="radio"
+                />
+                Include
+              </label>
+              <label
+                onClick={[Function]}
+              >
+                <input
+                  checked={false}
+                  onChange={[Function]}
+                  type="radio"
+                />
+                Exclude
+              </label>
+            </div>
+            <input
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              placeholder="Find..."
+              style={
+                Object {
+                  "background": "rgba(255, 255, 255, 0.7)",
+                  "border": "solid 1px #efefef",
+                  "borderRadius": "30px",
+                  "boxSizing": "border-box",
+                  "display": "block",
+                  "margin": "0 auto",
+                  "outline": "none",
+                  "padding": "5px",
+                  "textIndent": "5px",
+                  "transition": "background 0.3s",
+                  "width": "100%",
+                }
+              }
+              value=""
+            />
+            <div
+              style={
+                Object {
+                  "alignItems": "baseline",
+                  "display": "flex",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <input
+                checked={false}
+                onChange={[Function]}
+                type="checkbox"
+              />
+              <div
+                style={
+                  Object {
+                    "flex": 2,
+                    "padding": "0 5px",
+                  }
+                }
+              >
+                Select All
+              </div>
+            </div>
+            <div
+              style={
+                Object {
+                  "alignItems": "baseline",
+                  "display": "flex",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <input
+                checked={true}
+                onChange={[Function]}
+                type="checkbox"
+              />
+              <div
+                onClick={[Function]}
+                style={
+                  Object {
+                    "flex": 2,
+                    "padding": "0 5px",
+                  }
+                }
+              >
+                a
+              </div>
+              <div>
+                15
+              </div>
+            </div>
+            <div
+              style={
+                Object {
+                  "alignItems": "baseline",
+                  "display": "flex",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <input
+                checked={false}
+                onChange={[Function]}
+                type="checkbox"
+              />
+              <div
+                onClick={[Function]}
+                style={
+                  Object {
+                    "flex": 2,
+                    "padding": "0 5px",
+                  }
+                }
+              >
+                b
+              </div>
+              <div>
+                3
+              </div>
+            </div>
+            <div
+              style={
+                Object {
+                  "alignItems": "baseline",
+                  "display": "flex",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <input
+                checked={false}
+                onChange={[Function]}
+                type="checkbox"
+              />
+              <div
+                onClick={[Function]}
+                style={
+                  Object {
+                    "flex": 2,
+                    "padding": "0 5px",
+                  }
+                }
+              >
+                c
+              </div>
+              <div>
+                1
+              </div>
+            </div>
+            <div
+              style={
+                Object {
+                  "display": "flex",
+                  "justifyContent": "space-between",
+                  "margin": "5px 0",
+                }
+              }
+            />
           </div>
         </div>
         <div
@@ -524,6 +699,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
           <div
             style={
               Object {
+                "alignItems": "center",
                 "display": "flex",
               }
             }
@@ -583,6 +759,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
           <div
             style={
               Object {
+                "alignItems": "center",
                 "display": "flex",
               }
             }
@@ -784,15 +961,9 @@ exports[`Storyshots Example Types Full Demo 1`] = `
             }
           }
         >
-          <div
-            style={
-              Object {
-                "textAlign": "center",
-              }
-            }
-          >
-            Viewing records 1 - 1 out of 1
-          </div>
+          <span>
+            1 - 1 out of 1
+          </span>
         </div>
         <div
           style={Object {}}
@@ -911,7 +1082,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Example Types ResultTable Customizations 1`] = `
 <div>
@@ -1053,7 +1224,7 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
     </tbody>
   </table>
 </div>
-`
+`;
 
 exports[`Storyshots FilterAdder Example 1`] = `
 <div>
@@ -1075,7 +1246,7 @@ exports[`Storyshots FilterAdder Example 1`] = `
     Check action log to see adding being dispatched
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots FilterAdder With FilteredPickerModal 1`] = `
 <div>
@@ -1085,7 +1256,7 @@ exports[`Storyshots FilterAdder With FilteredPickerModal 1`] = `
     + Include Additional Filter
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots FilterList Example 1`] = `
 Array [
@@ -1097,7 +1268,14 @@ Array [
     }
   >
     <div>
-      <b>
+      <b
+        style={
+          Object {
+            "display": "block",
+            "margin": "10px 0",
+          }
+        }
+      >
         Field A
       </b>
       <div>
@@ -1113,7 +1291,14 @@ Array [
     }
   >
     <div>
-      <b>
+      <b
+        style={
+          Object {
+            "display": "block",
+            "margin": "10px 0",
+          }
+        }
+      >
         B Field
       </b>
       <div>
@@ -1125,7 +1310,14 @@ Array [
     style={Object {}}
   >
     <div>
-      <b>
+      <b
+        style={
+          Object {
+            "display": "block",
+            "margin": "10px 0",
+          }
+        }
+      >
         c
       </b>
       <div>
@@ -1134,13 +1326,13 @@ Array [
     </div>
   </div>,
 ]
-`
+`;
 
 exports[`Storyshots IMDB Advanced Search 1`] = `
 <div>
   Loading...
 </div>
-`
+`;
 
 exports[`Storyshots IMDB Filter List 1`] = `
 <div
@@ -1157,7 +1349,106 @@ exports[`Storyshots IMDB Filter List 1`] = `
     Loading...
   </div>
 </div>
-`
+`;
+
+exports[`Storyshots IMDB Grey Vest Theme 1`] = `
+<div
+  className="gv-body"
+>
+  <link
+    href="https://fonts.googleapis.com/css?family=Lato"
+    rel="stylesheet"
+  />
+  <style>
+    
+      h1 { font-size: 22px; }
+      
+      .gv-table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      .gv-table tbody tr {
+        border-bottom: solid 2px #EDEDED;
+        height: 100px;
+      }
+      .gv-table td, .gv-table th {
+        padding: 20px;
+        text-align: left;
+        min-width: 100px;
+      }
+      .gv-table thead tr {
+        border-bottom: solid 2px #9ABCDA;
+      }
+      
+      .gv-box {
+        border-radius: 4px;
+        background-color: #fff;
+        box-shadow: 0 2px 2px 0 #EDEDED;
+        padding: 15px;
+      }
+      
+      .gv-body, body {
+        margin: 0;
+        background: #f6f6f6;
+        font-family: Lato;
+        font-size: 16px;
+        color: #454545;
+      }
+      
+      .gv-input, .gv-body select, .gv-body button, .gv-body input {
+        outline: none;
+        font-size: 16px;
+        font-family: Lato;
+        
+        border: solid 2px #EDEDED;
+        background: #fff;
+        
+        display: block;
+        width: 100%;
+        
+        box-sizing: border-box;
+        height: 40px;
+      }
+      
+      .gv-body select, .gv-body input {
+        border-radius: 4px;
+      }
+      .gv-body select {
+        cursor: pointer;
+      }
+      
+      .gv-body .tags-input {
+        border: 2px solid #EBEBEB;
+        border-radius: 4px;
+        min-height: 40px;
+        padding: 5px;
+        box-sizing: border-box;
+        margin: 5px auto;
+        background: #fff;
+      }
+      /* To reach perfect 40px, remove real input padding because we have it on the fake one */
+      .gv-body .tags-input input {
+        padding: 0;
+        /* subtract padding (5+5) and borders (2+2) from 40 */
+        height: 26px;
+      }
+      .gv-body .tags-input-tag {
+        border-radius: 4px;
+        /* more than 3 and the tag will be taller than 26 */
+        padding: 3px;
+        margin: 0 2px;
+      }
+      
+      .contexture-facet a {
+        color: #0076de
+      }
+    
+  </style>
+  <div>
+    Loading...
+  </div>
+</div>
+`;
 
 exports[`Storyshots IMDB Quick Start 1`] = `
 <div
@@ -1231,6 +1522,7 @@ exports[`Storyshots IMDB Quick Start 1`] = `
             <div
               style={
                 Object {
+                  "alignItems": "center",
                   "display": "flex",
                 }
               }
@@ -1296,7 +1588,39 @@ exports[`Storyshots IMDB Quick Start 1`] = `
             <b>
               Genre
             </b>
-            <div>
+            <div
+              className="contexture-facet"
+            >
+              <div
+                style={
+                  Object {
+                    "alignItems": "baseline",
+                    "display": "flex",
+                    "justifyContent": "space-between",
+                  }
+                }
+              >
+                <label
+                  onClick={[Function]}
+                >
+                  <input
+                    checked={true}
+                    onChange={[Function]}
+                    type="radio"
+                  />
+                  Include
+                </label>
+                <label
+                  onClick={[Function]}
+                >
+                  <input
+                    checked={false}
+                    onChange={[Function]}
+                    type="radio"
+                  />
+                  Exclude
+                </label>
+              </div>
               <input
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -1319,6 +1643,40 @@ exports[`Storyshots IMDB Quick Start 1`] = `
                 }
                 value=""
               />
+              <div
+                style={
+                  Object {
+                    "alignItems": "baseline",
+                    "display": "flex",
+                    "justifyContent": "space-between",
+                  }
+                }
+              >
+                <input
+                  checked={true}
+                  onChange={[Function]}
+                  type="checkbox"
+                />
+                <div
+                  style={
+                    Object {
+                      "flex": 2,
+                      "padding": "0 5px",
+                    }
+                  }
+                >
+                  Select All
+                </div>
+              </div>
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "justifyContent": "space-between",
+                    "margin": "5px 0",
+                  }
+                }
+              />
             </div>
           </div>
         </div>
@@ -1329,7 +1687,39 @@ exports[`Storyshots IMDB Quick Start 1`] = `
             <b>
               Actors
             </b>
-            <div>
+            <div
+              className="contexture-facet"
+            >
+              <div
+                style={
+                  Object {
+                    "alignItems": "baseline",
+                    "display": "flex",
+                    "justifyContent": "space-between",
+                  }
+                }
+              >
+                <label
+                  onClick={[Function]}
+                >
+                  <input
+                    checked={true}
+                    onChange={[Function]}
+                    type="radio"
+                  />
+                  Include
+                </label>
+                <label
+                  onClick={[Function]}
+                >
+                  <input
+                    checked={false}
+                    onChange={[Function]}
+                    type="radio"
+                  />
+                  Exclude
+                </label>
+              </div>
               <input
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -1351,6 +1741,40 @@ exports[`Storyshots IMDB Quick Start 1`] = `
                   }
                 }
                 value=""
+              />
+              <div
+                style={
+                  Object {
+                    "alignItems": "baseline",
+                    "display": "flex",
+                    "justifyContent": "space-between",
+                  }
+                }
+              >
+                <input
+                  checked={true}
+                  onChange={[Function]}
+                  type="checkbox"
+                />
+                <div
+                  style={
+                    Object {
+                      "flex": 2,
+                      "padding": "0 5px",
+                    }
+                  }
+                >
+                  Select All
+                </div>
+              </div>
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "justifyContent": "space-between",
+                    "margin": "5px 0",
+                  }
+                }
               />
             </div>
           </div>
@@ -1364,15 +1788,9 @@ exports[`Storyshots IMDB Quick Start 1`] = `
           }
         }
       >
-        <div
-          style={
-            Object {
-              "textAlign": "center",
-            }
-          }
-        >
+        <span>
           No Results
-        </div>
+        </span>
         <div
           style={
             Object {
@@ -1404,7 +1822,7 @@ exports[`Storyshots IMDB Quick Start 1`] = `
               <a
                 onClick={[Function]}
               >
-                &lt;
+                ←
               </a>
             </span>
             <span>
@@ -1418,7 +1836,7 @@ exports[`Storyshots IMDB Quick Start 1`] = `
               <a
                 onClick={[Function]}
               >
-                &gt;
+                →
               </a>
             </span>
           </div>
@@ -1427,13 +1845,13 @@ exports[`Storyshots IMDB Quick Start 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots IMDB Search Button 1`] = `
 <div>
   Loading...
 </div>
-`
+`;
 
 exports[`Storyshots Index Explorer Advanced Search 1`] = `
 <div>
@@ -1462,7 +1880,7 @@ exports[`Storyshots Index Explorer Advanced Search 1`] = `
     Loading...
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Index Explorer Basic Search 1`] = `
 <div
@@ -1497,7 +1915,7 @@ exports[`Storyshots Index Explorer Basic Search 1`] = `
     Loading...
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Layout Awaiter 1`] = `
 <div>
@@ -1515,7 +1933,7 @@ exports[`Storyshots Layout Awaiter 1`] = `
     Reject
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots Layout FilteredPicker 1`] = `
 <div>
@@ -1539,7 +1957,7 @@ exports[`Storyshots Layout FilteredPicker 1`] = `
     cdef
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots Layout Highlight 1`] = `
 <div>
@@ -1551,7 +1969,7 @@ exports[`Storyshots Layout Highlight 1`] = `
   </div>
   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 </div>
-`
+`;
 
 exports[`Storyshots Layout Modal 1`] = `
 <div>
@@ -1561,7 +1979,7 @@ exports[`Storyshots Layout Modal 1`] = `
     Open Modal
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots Layout ModalPicker 1`] = `
 <div>
@@ -1571,7 +1989,7 @@ exports[`Storyshots Layout ModalPicker 1`] = `
     Pick
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots Layout Popover 1`] = `
 <div>
@@ -1581,7 +1999,7 @@ exports[`Storyshots Layout Popover 1`] = `
     Open Popover
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
 <div
@@ -2419,7 +2837,39 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                                     }
                                                   }
                                                 >
-                                                  <div>
+                                                  <div
+                                                    className="contexture-facet"
+                                                  >
+                                                    <div
+                                                      style={
+                                                        Object {
+                                                          "alignItems": "baseline",
+                                                          "display": "flex",
+                                                          "justifyContent": "space-between",
+                                                        }
+                                                      }
+                                                    >
+                                                      <label
+                                                        onClick={[Function]}
+                                                      >
+                                                        <input
+                                                          checked={true}
+                                                          onChange={[Function]}
+                                                          type="radio"
+                                                        />
+                                                        Include
+                                                      </label>
+                                                      <label
+                                                        onClick={[Function]}
+                                                      >
+                                                        <input
+                                                          checked={false}
+                                                          onChange={[Function]}
+                                                          type="radio"
+                                                        />
+                                                        Exclude
+                                                      </label>
+                                                    </div>
                                                     <input
                                                       onBlur={[Function]}
                                                       onChange={[Function]}
@@ -2441,6 +2891,40 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                                         }
                                                       }
                                                       value=""
+                                                    />
+                                                    <div
+                                                      style={
+                                                        Object {
+                                                          "alignItems": "baseline",
+                                                          "display": "flex",
+                                                          "justifyContent": "space-between",
+                                                        }
+                                                      }
+                                                    >
+                                                      <input
+                                                        checked={true}
+                                                        onChange={[Function]}
+                                                        type="checkbox"
+                                                      />
+                                                      <div
+                                                        style={
+                                                          Object {
+                                                            "flex": 2,
+                                                            "padding": "0 5px",
+                                                          }
+                                                        }
+                                                      >
+                                                        Select All
+                                                      </div>
+                                                    </div>
+                                                    <div
+                                                      style={
+                                                        Object {
+                                                          "display": "flex",
+                                                          "justifyContent": "space-between",
+                                                          "margin": "5px 0",
+                                                        }
+                                                      }
                                                     />
                                                   </div>
                                                 </div>
@@ -3097,6 +3581,7 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                       <div
                                         style={
                                           Object {
+                                            "alignItems": "center",
                                             "display": "flex",
                                           }
                                         }
@@ -4135,7 +4620,7 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
     Add Filter
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Examples One Filter 1`] = `
 <div
@@ -4355,7 +4840,7 @@ exports[`Storyshots QueryBuilder/Examples One Filter 1`] = `
     Add Filter
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Examples One Filter on a misplaced root 1`] = `
 <div
@@ -4575,7 +5060,7 @@ exports[`Storyshots QueryBuilder/Examples One Filter on a misplaced root 1`] = `
     Add Filter
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
 <div
@@ -4694,7 +5179,39 @@ exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
                             }
                           }
                         >
-                          <div>
+                          <div
+                            className="contexture-facet"
+                          >
+                            <div
+                              style={
+                                Object {
+                                  "alignItems": "baseline",
+                                  "display": "flex",
+                                  "justifyContent": "space-between",
+                                }
+                              }
+                            >
+                              <label
+                                onClick={[Function]}
+                              >
+                                <input
+                                  checked={true}
+                                  onChange={[Function]}
+                                  type="radio"
+                                />
+                                Include
+                              </label>
+                              <label
+                                onClick={[Function]}
+                              >
+                                <input
+                                  checked={false}
+                                  onChange={[Function]}
+                                  type="radio"
+                                />
+                                Exclude
+                              </label>
+                            </div>
                             <input
                               onBlur={[Function]}
                               onChange={[Function]}
@@ -4735,8 +5252,33 @@ exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
                                 style={
                                   Object {
                                     "flex": 2,
-                                    "paddingLeft": "5px",
-                                    "paddingRight": "5px",
+                                    "padding": "0 5px",
+                                  }
+                                }
+                              >
+                                Select All
+                              </div>
+                            </div>
+                            <div
+                              style={
+                                Object {
+                                  "alignItems": "baseline",
+                                  "display": "flex",
+                                  "justifyContent": "space-between",
+                                }
+                              }
+                            >
+                              <input
+                                checked={false}
+                                onChange={[Function]}
+                                type="checkbox"
+                              />
+                              <div
+                                onClick={[Function]}
+                                style={
+                                  Object {
+                                    "flex": 2,
+                                    "padding": "0 5px",
                                   }
                                 }
                               >
@@ -4761,11 +5303,11 @@ exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
                                 type="checkbox"
                               />
                               <div
+                                onClick={[Function]}
                                 style={
                                   Object {
                                     "flex": 2,
-                                    "paddingLeft": "5px",
-                                    "paddingRight": "5px",
+                                    "padding": "0 5px",
                                   }
                                 }
                               >
@@ -4775,6 +5317,15 @@ exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
                                 1
                               </div>
                             </div>
+                            <div
+                              style={
+                                Object {
+                                  "display": "flex",
+                                  "justifyContent": "space-between",
+                                  "margin": "5px 0",
+                                }
+                              }
+                            />
                           </div>
                         </div>
                       </div>
@@ -4855,7 +5406,7 @@ exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
     Add Filter
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Examples One Filter with fields 1`] = `
 <div
@@ -5106,7 +5657,7 @@ exports[`Storyshots QueryBuilder/Examples One Filter with fields 1`] = `
     Add Filter
   </button>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/AddPreview and 1`] = `
 <div
@@ -5146,7 +5697,7 @@ exports[`Storyshots QueryBuilder/Internals/AddPreview and 1`] = `
     </b>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/AddPreview not 1`] = `
 <div
@@ -5186,7 +5737,7 @@ exports[`Storyshots QueryBuilder/Internals/AddPreview not 1`] = `
     </b>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/AddPreview or 1`] = `
 <div
@@ -5226,7 +5777,7 @@ exports[`Storyshots QueryBuilder/Internals/AddPreview or 1`] = `
     </b>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/FilterContents FilterContents 1`] = `
 <div
@@ -5245,7 +5796,7 @@ exports[`Storyshots QueryBuilder/Internals/FilterContents FilterContents 1`] = `
     </button>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
 <div>
@@ -7502,7 +8053,7 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Group One Filter 1`] = `
 <div>
@@ -7677,7 +8228,7 @@ exports[`Storyshots QueryBuilder/Internals/Group One Filter 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Indentable and 1`] = `
 <div
@@ -7759,7 +8310,7 @@ exports[`Storyshots QueryBuilder/Internals/Indentable and 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Indentable not 1`] = `
 <div
@@ -7841,7 +8392,7 @@ exports[`Storyshots QueryBuilder/Internals/Indentable not 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Indentable or 1`] = `
 <div
@@ -7923,7 +8474,7 @@ exports[`Storyshots QueryBuilder/Internals/Indentable or 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Operator and 1`] = `
 <div>
@@ -7966,7 +8517,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator and 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Operator first and 1`] = `
 <div>
@@ -8003,7 +8554,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator first and 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Operator first not 1`] = `
 <div>
@@ -8046,7 +8597,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator first not 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Operator first or 1`] = `
 <div>
@@ -8083,7 +8634,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator first or 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Operator not 1`] = `
 <div>
@@ -8126,7 +8677,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator not 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Operator or 1`] = `
 <div>
@@ -8169,7 +8720,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator or 1`] = `
     <div />
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/OperatorMenu OperatorMenu 1`] = `
 <div>
@@ -8254,7 +8805,7 @@ exports[`Storyshots QueryBuilder/Internals/OperatorMenu OperatorMenu 1`] = `
     </div>
   </div>
 </div>
-`
+`;
 
 exports[`Storyshots QueryBuilder/Internals/Rule index 1`] = `
 <div>
@@ -8379,4 +8930,4 @@ exports[`Storyshots QueryBuilder/Internals/Rule index 1`] = `
     </div>
   </div>
 </div>
-`
+`;
