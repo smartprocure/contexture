@@ -7,7 +7,7 @@ import Contexture, { esClient } from '../utils/contexture'
 import { getESSchemas } from '../../../src/utils/schema'
 import { Flex, Awaiter, SpacedList } from '../../../src/layout/'
 import { FilterList } from '../../../src/FilterList'
-import { Button, Input, Adder, Pager, ExampleTypes } from '../../DemoControls'
+import { Button, Adder, Pager, ExampleTypes } from '../../DemoControls'
 let {
   Query,
   ResultCount,

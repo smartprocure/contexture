@@ -4,7 +4,7 @@ import {observable} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Flex} from './Flex'
 
-let Tag = ({value, removeTag, join, tagStyle}) => (
+let Tag = ({value, removeTag, tagStyle}) => (
   <div
     className='tags-input-tag'
     style={tagStyle}>

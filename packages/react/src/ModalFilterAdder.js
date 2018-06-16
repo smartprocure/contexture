@@ -1,4 +1,3 @@
-import React from 'react'
 import FilterAdder from '../src/FilterAdder'
 import { partial } from '../src/utils/mobx-react-utils'
 import { Modal, ModalPicker, FilteredPicker } from '../src/layout/'

@@ -142,7 +142,7 @@ export let ButtonRadio = ({value, onChange=() => {}, options}) => (
   <Flex style={{justifyContent: 'space-between', alignItems: 'baseline'}}>
     {_.map(
       x => (
-        <Button key={x.value} isActive={x.value == value} onClick={() => onChange(x.value)}>
+        <Button key={x.value} isActive={x.value === value} onClick={() => onChange(x.value)}>
           {x.label}
         </Button>
       ),
