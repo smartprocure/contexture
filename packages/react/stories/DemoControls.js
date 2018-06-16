@@ -3,7 +3,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { withStateLens, hover, focus, partial } from '../src/utils/mobx-react-utils'
 import { TextHighlight } from '../src/layout/'
-import ExampleTypes from '../src/exampleTypes/'
+import ExampleTypeConstructor from '../src/exampleTypes/'
 import ModalFilterAdder from '../src/ModalFilterAdder'
 
 export let Button = x => (
@@ -104,5 +104,6 @@ export let ClampedHTML = x => (
 
 export let Adder = ModalFilterAdder({ Button, Input, Highlight, Item:ListGroupItem })
 
-let { ResultPager } = ExampleTypes({ })
+export let ExampleTypes = ExampleTypeConstructor({ Input })
+let { ResultPager } = ExampleTypes
 export let Pager = partial({ Item: PagerItem }, ResultPager)

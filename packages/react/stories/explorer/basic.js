@@ -8,10 +8,9 @@ import { Provider, observer } from 'mobx-react'
 import { Awaiter, Flex } from '../../src/layout/'
 import QueryBuilder from '../../src/queryBuilder/'
 import { getESSchemas } from '../../src/utils/schema'
-import ExampleTypes from '../../src/exampleTypes/'
 import { FilterList } from '../../src/FilterList'
-import { Input, ClampedHTML, Adder, Pager } from '../DemoControls'
-let { ResultCount, ResultTable, TypeMap } = ExampleTypes({ Input })
+import { Input, ClampedHTML, Adder, Pager, ExampleTypes } from '../DemoControls'
+let { ResultCount, ResultTable, TypeMap } = ExampleTypes
 
 import Contexture, { es, schemas, updateClient } from './contexture'
 
