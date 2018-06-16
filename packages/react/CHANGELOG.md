@@ -1,3 +1,13 @@
+# 1.4.0
+* Add TagsQuery example component
+* Add DateRangePicker
+* Add Grey Vest theme
+* Add Select All and Include/Exclude to Facet
+* Add basic TagsInput and Grid to layout
+* Add ModalFilterAdder
+* Improve styling all around
+
+
 # 1.3.2
 * Support dots in field names in FilterList
 * Add basic search example for schema explorer, with loadable schema overrides
