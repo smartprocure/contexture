@@ -1,18 +1,22 @@
 let { expect } = require('chai')
 let _ = require('lodash/fp')
 let facet = require('../../src/example-types/facet')
- 
+
 describe('facet', () => {
   describe('facet.hasValue', () => {
     it('Should allow contexts with values', () => {
-      expect(facet.hasValue({
-        values: [1, 2]
-      })).to.equal(2)
+      expect(
+        facet.hasValue({
+          values: [1, 2],
+        })
+      ).to.equal(2)
     })
     it('Should not allow contexts with values', () => {
-      expect(facet.hasValue({
-        values: []
-      })).to.equal(0)
+      expect(
+        facet.hasValue({
+          values: [],
+        })
+      ).to.equal(0)
     })
   })
   describe('facet.result', () => {

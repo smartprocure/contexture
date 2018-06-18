@@ -6,9 +6,7 @@ let cleanFilter = _.flow(
 )
 
 module.exports = {
-  hasValue: context =>
-    _.isNumber(context.min) ||
-    _.isNumber(context.max),
+  hasValue: context => _.isNumber(context.min) || _.isNumber(context.max),
   filter: context => ({
     [context.field]: cleanFilter({
       $gte: context.min,

@@ -43,9 +43,12 @@ module.exports = {
     ]).spread((options, cardinality) => ({
       total: 'NOT SUPPORTED YET',
       cardinality: _.get('0.count', cardinality),
-      options: _.map(x => ({
-        name: x._id,
-        count: x.count,
-      }), options),
+      options: _.map(
+        x => ({
+          name: x._id,
+          count: x.count,
+        }),
+        options
+      ),
     })),
 }

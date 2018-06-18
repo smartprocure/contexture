@@ -20,143 +20,143 @@ describe('text', () => {
       ).to.be.false
     })
   }),
-  describe('text.filter', () => {
-    it('should check for values', () => {
-      var laserjetPrinterText = operator =>
-        text.filter({
-          key: 'test',
-          type: 'text',
-          field: 'description',
-          join: 'any',
-          operator,
-          values: ['laserjet', 'printer'],
+    describe('text.filter', () => {
+      it('should check for values', () => {
+        var laserjetPrinterText = operator =>
+          text.filter({
+            key: 'test',
+            type: 'text',
+            field: 'description',
+            join: 'any',
+            operator,
+            values: ['laserjet', 'printer'],
+          })
+        it('containsWord', () => {
+          expect(laserjetPrinterText('containsWord')).to.deep.equal({
+            $or: [
+              {
+                description: {
+                  $regex: 'laserjet',
+                  $options: 'i',
+                },
+              },
+              {
+                description: {
+                  $regex: 'printer',
+                  $options: 'i',
+                },
+              },
+            ],
+          })
         })
-      it('containsWord', () => {
-        expect(laserjetPrinterText('containsWord')).to.deep.equal({
-          $or: [
-            {
-              description: {
-                $regex: 'laserjet',
-                $options: 'i',
+        it('containsExact', () => {
+          expect(laserjetPrinterText('containsExact')).to.deep.equal({
+            $or: [
+              {
+                description: {
+                  $regex: '\\blaserjet\\b',
+                  $options: 'i',
+                },
               },
-            },
-            {
-              description: {
-                $regex: 'printer',
-                $options: 'i',
+              {
+                description: {
+                  $regex: '\\bprinter\\b',
+                  $options: 'i',
+                },
               },
-            },
-          ],
+            ],
+          })
         })
-      })
-      it('containsExact', () => {
-        expect(laserjetPrinterText('containsExact')).to.deep.equal({
-          $or: [
-            {
-              description: {
-                $regex: '\\blaserjet\\b',
-                $options: 'i',
+        it('startsWith', () => {
+          expect(laserjetPrinterText('startsWith')).to.deep.equal({
+            $or: [
+              {
+                description: {
+                  $regex: '^laserjet',
+                  $options: 'i',
+                },
               },
-            },
-            {
-              description: {
-                $regex: '\\bprinter\\b',
-                $options: 'i',
+              {
+                description: {
+                  $regex: '^printer',
+                  $options: 'i',
+                },
               },
-            },
-          ],
+            ],
+          })
         })
-      })
-      it('startsWith', () => {
-        expect(laserjetPrinterText('startsWith')).to.deep.equal({
-          $or: [
-            {
-              description: {
-                $regex: '^laserjet',
-                $options: 'i',
+        it('endsWith', () => {
+          expect(laserjetPrinterText('endsWith')).to.deep.equal({
+            $or: [
+              {
+                description: {
+                  $regex: 'laserjet$',
+                  $options: 'i',
+                },
               },
-            },
-            {
-              description: {
-                $regex: '^printer',
-                $options: 'i',
+              {
+                description: {
+                  $regex: 'printer$',
+                  $options: 'i',
+                },
               },
-            },
-          ],
+            ],
+          })
         })
-      })
-      it('endsWith', () => {
-        expect(laserjetPrinterText('endsWith')).to.deep.equal({
-          $or: [
-            {
-              description: {
-                $regex: 'laserjet$',
-                $options: 'i',
+        it('is', () => {
+          expect(laserjetPrinterText('is')).to.deep.equal({
+            $or: [
+              {
+                description: {
+                  $regex: '^laserjet$',
+                  $options: 'i',
+                },
               },
-            },
-            {
-              description: {
-                $regex: 'printer$',
-                $options: 'i',
+              {
+                description: {
+                  $regex: '^printer$',
+                  $options: 'i',
+                },
               },
-            },
-          ],
+            ],
+          })
         })
-      })
-      it('is', () => {
-        expect(laserjetPrinterText('is')).to.deep.equal({
-          $or: [
-            {
-              description: {
-                $regex: '^laserjet$',
-                $options: 'i',
+        it('wordStartsWith', () => {
+          expect(laserjetPrinterText('wordStartsWith')).to.deep.equal({
+            $or: [
+              {
+                description: {
+                  $regex: '\\blaserjet',
+                  $options: 'i',
+                },
               },
-            },
-            {
-              description: {
-                $regex: '^printer$',
-                $options: 'i',
+              {
+                description: {
+                  $regex: '\\bprinter',
+                  $options: 'i',
+                },
               },
-            },
-          ],
+            ],
+          })
         })
-      })
-      it('wordStartsWith', () => {
-        expect(laserjetPrinterText('wordStartsWith')).to.deep.equal({
-          $or: [
-            {
-              description: {
-                $regex: '\\blaserjet',
-                $options: 'i',
+        it('wordEndsWith', () => {
+          expect(laserjetPrinterText('wordEndsWith')).to.deep.equal({
+            $or: [
+              {
+                description: {
+                  $regex: 'laserjet\\b',
+                  $options: 'i',
+                },
               },
-            },
-            {
-              description: {
-                $regex: '\\bprinter',
-                $options: 'i',
+              {
+                description: {
+                  $regex: 'printer\\b',
+                  $options: 'i',
+                },
               },
-            },
-          ],
-        })
-      })
-      it('wordEndsWith', () => {
-        expect(laserjetPrinterText('wordEndsWith')).to.deep.equal({
-          $or: [
-            {
-              description: {
-                $regex: 'laserjet\\b',
-                $options: 'i',
-              },
-            },
-            {
-              description: {
-                $regex: 'printer\\b',
-                $options: 'i',
-              },
-            },
-          ],
+            ],
+          })
         })
       })
     })
-  })
 })
