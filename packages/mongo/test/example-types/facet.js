@@ -35,7 +35,7 @@ describe('facet', () => {
       let context = {
         field: 'myField',
       }
-      let result = await facet.result(context, search)
+      await facet.result(context, search)
       expect(queries[0][1].$limit).to.equal(10)
     })
     it('should allow unlimited queries', async () => {
@@ -44,7 +44,7 @@ describe('facet', () => {
         field: 'myField',
         size: 0,
       }
-      let result = await facet.result(context, search)
+      await facet.result(context, search)
       expect(queries[0][1]).to.equal(undefined)
     })
   })
