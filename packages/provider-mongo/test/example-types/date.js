@@ -13,23 +13,25 @@ let dateBuilder = data =>
   )
 
 describe('date', () => {
-  it('should check for values', () => {
-    expect(
-      !!date.hasValue(
-        dateBuilder({
-          from: '2017-09-28',
-        })
-      )
-    ).to.be.true
-    expect(
-      !!date.hasValue(
-        dateBuilder({
-          from: null,
-        })
-      )
-    ).to.be.false
+  describe('date.hasValue', () => {
+    it('should check for values', () => {
+      expect(
+        !!date.hasValue(
+          dateBuilder({
+            from: '2017-09-28',
+          })
+        )
+      ).to.be.true
+      expect(
+        !!date.hasValue(
+          dateBuilder({
+            from: null,
+          })
+        )
+      ).to.be.false
+    })
   })
-  describe('filter', () => {
+  describe('date.filter', () => {
     it('basic', () => {
       expect(
         date.filter(
