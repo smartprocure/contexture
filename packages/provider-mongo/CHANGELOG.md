@@ -1,4 +1,7 @@
-﻿# 0.2.2
+﻿# 0.2.3
+- Some more tests for the example-types.
+
+# 0.2.2
 - Changed the `statistical` type so it wouldn't return an array.
 
 # 0.2.1
