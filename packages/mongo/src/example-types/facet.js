@@ -1,8 +1,8 @@
-let _ = require('lodash')
+let _ = require('lodash/fp')
 let Promise = require('bluebird')
 
 module.exports = {
-  hasValue: context => _.get(context, 'values.length'),
+  hasValue: _.get('values.length'),
   filter: context => ({
     [context.field]: {
       [context.mode === 'exclude' ? '$nin' : '$in']: context.values,
@@ -42,10 +42,13 @@ module.exports = {
       ]),
     ]).spread((options, cardinality) => ({
       total: 'NOT SUPPORTED YET',
-      cardinality: _.get(cardinality, '0.count'),
-      options: _.map(options, x => ({
-        name: x._id,
-        count: x.count,
-      })),
+      cardinality: _.get('0.count', cardinality),
+      options: _.map(
+        x => ({
+          name: x._id,
+          count: x.count,
+        }),
+        options
+      ),
     })),
 }
