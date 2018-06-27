@@ -1034,6 +1034,7 @@ describe('lib', () => {
         },
       },
       results: {
+        reactors: { page: 'self' },
         onUpdateByOthers(node, extend) {
           extend(node, { page: 1 })
         },
