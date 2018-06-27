@@ -1022,7 +1022,7 @@ describe('lib', () => {
     expect(tree.getNode(['root', 'results']).page).to.equal(1)
     expect(service).to.have.callCount(1)
   })
-  it('mutating results page should call the service', async () => {
+  it('onUpdateByOthers should not block on self update', async () => {
     let service = sinon.spy(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({

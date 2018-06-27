@@ -299,4 +299,35 @@ describe('usage with mobx should generally work', () => {
     await Tree.refresh(['root'])
     expect(service).to.have.callCount(3)
   })
+  it('onUpdateByOthers should work with mobx (and not be called on self updates)', async () => {
+    service.reset()
+    let Tree = ContextureMobx({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'results',
+          type: 'results',
+          page: 1,
+        },
+        {
+          key: 'agencies',
+          field: 'Organization.Name',
+          type: 'facet',
+        },
+        {
+          key: 'vendors',
+          field: 'Vendor.Name',
+          type: 'facet',
+        },
+      ],
+    })
+    await tree.mutate(['root', 'results'], { page: 2 })
+    expect(tree.getNode(['root', 'results']).page).to.equal(2)
+    expect(service).to.have.callCount(1)
+    await tree.mutate(['root', 'agencies'], { values: ['Other City'] })
+    expect(tree.getNode(['root', 'results']).page).to.equal(1)
+    expect(service).to.have.callCount(2)
+  })
 })
