@@ -1047,7 +1047,7 @@ describe('lib', () => {
         {
           key: 'results',
           type: 'results',
-          page: 2,
+          page: 1,
         },
         {
           key: 'agencies',
