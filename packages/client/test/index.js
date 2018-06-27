@@ -1024,23 +1024,7 @@ describe('lib', () => {
   })
   it('mutating results page should call the service', async () => {
     let service = sinon.spy(mockService())
-    let types = {
-      facet: {
-        reactors: { values: 'others' },
-        defaults: {
-          context: {
-            options: [],
-          },
-        },
-      },
-      results: {
-        reactors: { page: 'self' },
-        onUpdateByOthers(node, extend) {
-          extend(node, { page: 1 })
-        },
-      },
-    }
-    let Tree = ContextureClient({ debounce: 1, service, types })
+    let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
       join: 'and',
