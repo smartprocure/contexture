@@ -1,3 +1,6 @@
+# 2.13.4
+* Fix error with mobx 4 usage where event path itself is an observable.
+
 # 2.13.3
 * Fix error when the entire tree is a mobx 4 observable by using snapshot in affectsSelf check
 
