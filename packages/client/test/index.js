@@ -1022,4 +1022,32 @@ describe('lib', () => {
     expect(tree.getNode(['root', 'results']).page).to.equal(1)
     expect(service).to.have.callCount(1)
   })
+  it('onUpdateByOthers should not block on self update', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'results',
+          type: 'results',
+          page: 1,
+        },
+        {
+          key: 'agencies',
+          field: 'Organization.Name',
+          type: 'facet',
+        },
+        {
+          key: 'vendors',
+          field: 'Vendor.Name',
+          type: 'facet',
+        },
+      ],
+    })
+    await tree.mutate(['root', 'results'], { page: 2 })
+    expect(tree.getNode(['root', 'results']).page).to.equal(2)
+    expect(service).to.have.callCount(1)
+  })
 })

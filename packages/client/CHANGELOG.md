@@ -1,4 +1,7 @@
-﻿# 2.13.2
+# 2.13.3
+* Fix error when the entire tree is a mobx 4 observable by using snapshot in affectsSelf check
+
+# 2.13.2
 * exampleType's subquery option has to be lowercase.
 * Added subquery.useValues to the mongoId type.
 
