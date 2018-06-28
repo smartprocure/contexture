@@ -95,7 +95,7 @@ export let ContextTree = _.curry(
       // Snapshot is for mobx 4 support because path being an obserable array means that `_.find({path: event.path})` throws an error
       let affectsSelf = !!_.flow(
         _.map(snapshot),
-        _.find({ path: event.path })
+        _.find({ path: snapshot(event.path) })
       )(updatedNodes)
       if (!affectsSelf)
         await Promise.all(

@@ -323,11 +323,13 @@ describe('usage with mobx should generally work', () => {
         },
       ],
     })
-    await tree.mutate(['root', 'results'], { page: 2 })
-    expect(tree.getNode(['root', 'results']).page).to.equal(2)
+    // Get the results node instead of passing an array in to test case where dispatched path is an observable array
+    let resultsNode = tree.getNode(['root', 'results'])
+    await tree.mutate(resultsNode.path, { page: 2 })
+    expect(tree.getNode(resultsNode.path).page).to.equal(2)
     expect(service).to.have.callCount(1)
     await tree.mutate(['root', 'agencies'], { values: ['Other City'] })
-    expect(tree.getNode(['root', 'results']).page).to.equal(1)
+    expect(tree.getNode(resultsNode.path).page).to.equal(1)
     expect(service).to.have.callCount(2)
   })
 })
