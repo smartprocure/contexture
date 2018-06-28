@@ -93,7 +93,10 @@ export let ContextTree = _.curry(
       let updatedNodes = _.flatten(bubbleUp(processEvent(event), event.path))
       await Promise.all(_.invokeMap('onMarkForUpdate', updatedNodes))
       // Snapshot is for mobx 4 support because path being an obserable array means that `_.find({path: event.path})` throws an error
-      let affectsSelf = !!_.flow(_.map(snapshot), _.find({ path: event.path }))(updatedNodes)
+      let affectsSelf = !!_.flow(
+        _.map(snapshot),
+        _.find({ path: event.path })
+      )(updatedNodes)
       if (!affectsSelf)
         await Promise.all(
           _.map(
