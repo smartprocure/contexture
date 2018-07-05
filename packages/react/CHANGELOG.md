@@ -1,3 +1,6 @@
+# 1.4.1
+* Downgrade mobx to 4 and move mobx deps to peer dependencies
+
 # 1.4.0
 * Add TagsQuery example component
 * Add DateRangePicker
