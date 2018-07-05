@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "React components for building contexture interfaces",
   "main": "index.js",
   "scripts": {
@@ -33,7 +33,7 @@
   "peerDependencies": {
     "mobx": "^4.3.1",
     "mobx-react": "^5.2.0",
-    "mobx-utils": "^5.0.0",
+    "mobx-utils": "^5.0.0"
   },
   "prettier": {
     "singleQuote": true,
