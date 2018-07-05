@@ -1,6 +1,6 @@
-import FilterAdder from '../src/FilterAdder'
-import { partial } from '../src/utils/mobx-react-utils'
-import { Modal, ModalPicker, FilteredPicker } from '../src/layout/'
+import FilterAdder from './FilterAdder'
+import { partial } from './utils/mobx-react-utils'
+import { Modal, ModalPicker, FilteredPicker } from './layout/'
 
 export default (
   { Item, Input, Button, Highlight, label = 'Add Custom Filter' } = {}
