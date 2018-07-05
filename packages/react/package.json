@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "React components for building contexture interfaces",
   "main": "index.js",
   "scripts": {
@@ -30,7 +30,11 @@
     "url": "https://github.com/smartprocure/contexture-react/issues"
   },
   "homepage": "https://github.com/smartprocure/contexture-react#readme",
-  "peerDependencies": {},
+  "peerDependencies": {
+    "mobx": "^4.3.1",
+    "mobx-react": "^5.2.0",
+    "mobx-utils": "^5.0.0"
+  },
   "prettier": {
     "singleQuote": true,
     "semi": false,
@@ -60,13 +64,16 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
     "contexture": "^0.2.1",
-    "contexture-client": "^2.13.0",
+    "contexture-client": "^2.13.4",
     "contexture-elasticsearch": "^0.9.1",
     "duti": "^0.9.3",
     "elasticsearch-browser": "^14.2.2",
     "eslint": "^4.12.1",
     "eslint-config-smartprocure": "^1.1.0",
     "jest": "^22.4.3",
+    "mobx": "^4.3.1",
+    "mobx-react": "^5.2.0",
+    "mobx-utils": "^5.0.0",
     "prettier": "^1.8.2",
     "raw-loader": "^0.5.1",
     "react": "^16.2.0",
@@ -77,9 +84,6 @@
   "dependencies": {
     "futil-js": "^1.45.0",
     "lodash": "^4.17.4",
-    "mobx": "^5.0.0",
-    "mobx-react": "^5.2.0",
-    "mobx-utils": "^5.0.0",
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4"
   }
