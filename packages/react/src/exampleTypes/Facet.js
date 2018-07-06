@@ -59,7 +59,7 @@ let Facet = injectTreeNode(
       TextInput = 'input',
       Checkbox = CheckboxDefault,
       RadioList = RadioListDefault,
-      display = x => x
+      display = x => x,
     }) => (
       <div className="contexture-facet">
         <RadioList
