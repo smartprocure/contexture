@@ -1,3 +1,4 @@
+import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
 import { observable, set } from 'mobx'
@@ -190,7 +191,7 @@ export default () =>
                 <SpacedList>
                   <TagsQuery path={['tagsQuery']} />
                   <Facet path={['facet']} />
-                  <Facet path={['facet']} />
+                  <Facet path={['facet']} display={F.autoLabel} />
                   <Number path={['number']} />
                   <Number path={['number']} />
                 </SpacedList>

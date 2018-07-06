@@ -1,3 +1,6 @@
+# 1.5.0
+* Add `display` support to `Facet` example type to format options
+
 # 1.4.2
 * Fix import paths
 
