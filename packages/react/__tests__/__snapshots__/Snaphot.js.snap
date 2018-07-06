@@ -614,7 +614,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   }
                 }
               >
-                a
+                A
               </div>
               <div>
                 15
@@ -643,7 +643,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   }
                 }
               >
-                b
+                B
               </div>
               <div>
                 3
@@ -672,7 +672,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   }
                 }
               >
-                c
+                C
               </div>
               <div>
                 1
