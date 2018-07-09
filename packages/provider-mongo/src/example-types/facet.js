@@ -12,6 +12,9 @@ module.exports = {
     Promise.all([
       search(
         _.compact([
+          // Unwind allows supporting array and non array fields - for non arrays, it will treat as an array with 1 value
+          // https://docs.mongodb.com/manual/reference/operator/aggregation/unwind/#non-array-field-path
+          { $unwind: `$${context.field}` },
           {
             $group: {
               _id: `$${context.field}`,
@@ -26,6 +29,7 @@ module.exports = {
         ])
       ),
       search([
+        { $unwind: `$${context.field}` },
         {
           $group: {
             _id: `$${context.field}`,
