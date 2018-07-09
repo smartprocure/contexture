@@ -40,7 +40,7 @@ describe('facet', () => {
         field: 'myField',
       }
       await facet.result(context, search)
-      expect(queries[0][1].$limit).to.equal(10)
+      expect(queries[0][2].$limit).to.equal(10)
     })
     it('should allow unlimited queries', async () => {
       queries = []
@@ -49,7 +49,7 @@ describe('facet', () => {
         size: 0,
       }
       await facet.result(context, search)
-      expect(queries[0][1]).to.equal(undefined)
+      expect(queries[0][2]).to.equal(undefined)
     })
   })
 })

@@ -1,4 +1,7 @@
-﻿# 0.2.3
+# 0.3.0
+- Add array support for `facet` example type.
+
+# 0.2.3
 - Some more tests for the example-types.
 
 # 0.2.2
