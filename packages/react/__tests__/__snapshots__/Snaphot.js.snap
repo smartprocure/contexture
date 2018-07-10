@@ -236,28 +236,32 @@ exports[`Storyshots Example Types Full Demo 1`] = `
       }
     }
   >
-    <input
-      onBlur={[Function]}
-      onChange={[Function]}
-      onFocus={[Function]}
-      placeholder="Search"
-      style={
-        Object {
-          "background": "rgba(255, 255, 255, 0.7)",
-          "border": "solid 1px #efefef",
-          "borderRadius": "30px",
-          "boxSizing": "border-box",
-          "display": "block",
-          "margin": "0 auto",
-          "outline": "none",
-          "padding": "5px",
-          "textIndent": "5px",
-          "transition": "background 0.3s",
-          "width": "100%",
+    <div
+      style={Object {}}
+    >
+      <input
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        placeholder="Search"
+        style={
+          Object {
+            "background": "rgba(255, 255, 255, 0.7)",
+            "border": "solid 1px #efefef",
+            "borderRadius": "30px",
+            "boxSizing": "border-box",
+            "display": "block",
+            "margin": "0 auto",
+            "outline": "none",
+            "padding": "5px",
+            "textIndent": "5px",
+            "transition": "background 0.3s",
+            "width": "100%",
+          }
         }
-      }
-      value=""
-    />
+        value=""
+      />
+    </div>
   </div>
   <div
     style={Object {}}
@@ -283,40 +287,44 @@ exports[`Storyshots Example Types Full Demo 1`] = `
             }
           }
         >
-          <div>
-            <label
-              className="tags-input"
-              style={
-                Object {
-                  "display": "block",
-                }
-              }
-            >
-              <div
+          <div
+            style={Object {}}
+          >
+            <div>
+              <label
+                className="tags-input"
                 style={
                   Object {
-                    "alignItems": "center",
-                    "cursor": "text",
-                    "display": "flex",
-                    "flexWrap": "wrap",
+                    "display": "block",
                   }
                 }
               >
-                <input
-                  onChange={[Function]}
-                  onKeyDown={[Function]}
-                  placeholder="Search..."
+                <div
                   style={
                     Object {
-                      "border": "none",
-                      "outline": "none",
-                      "width": "auto",
+                      "alignItems": "center",
+                      "cursor": "text",
+                      "display": "flex",
+                      "flexWrap": "wrap",
                     }
                   }
-                  value=""
-                />
-              </div>
-            </label>
+                >
+                  <input
+                    onChange={[Function]}
+                    onKeyDown={[Function]}
+                    placeholder="Search..."
+                    style={
+                      Object {
+                        "border": "none",
+                        "outline": "none",
+                        "width": "auto",
+                      }
+                    }
+                    value=""
+                  />
+                </div>
+              </label>
+            </div>
           </div>
         </div>
         <div
@@ -327,366 +335,185 @@ exports[`Storyshots Example Types Full Demo 1`] = `
           }
         >
           <div
-            className="contexture-facet"
+            style={Object {}}
           >
             <div
-              style={
-                Object {
-                  "alignItems": "baseline",
-                  "display": "flex",
-                  "justifyContent": "space-between",
-                }
-              }
+              className="contexture-facet"
             >
-              <label
-                onClick={[Function]}
+              <div
+                style={
+                  Object {
+                    "alignItems": "baseline",
+                    "display": "flex",
+                    "justifyContent": "space-between",
+                  }
+                }
               >
-                <input
-                  checked={true}
-                  onChange={[Function]}
-                  type="radio"
-                />
-                Include
-              </label>
-              <label
-                onClick={[Function]}
+                <label
+                  onClick={[Function]}
+                >
+                  <input
+                    checked={true}
+                    onChange={[Function]}
+                    type="radio"
+                  />
+                  Include
+                </label>
+                <label
+                  onClick={[Function]}
+                >
+                  <input
+                    checked={false}
+                    onChange={[Function]}
+                    type="radio"
+                  />
+                  Exclude
+                </label>
+              </div>
+              <input
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                placeholder="Find..."
+                style={
+                  Object {
+                    "background": "rgba(255, 255, 255, 0.7)",
+                    "border": "solid 1px #efefef",
+                    "borderRadius": "30px",
+                    "boxSizing": "border-box",
+                    "display": "block",
+                    "margin": "0 auto",
+                    "outline": "none",
+                    "padding": "5px",
+                    "textIndent": "5px",
+                    "transition": "background 0.3s",
+                    "width": "100%",
+                  }
+                }
+                value=""
+              />
+              <div
+                style={
+                  Object {
+                    "alignItems": "baseline",
+                    "display": "flex",
+                    "justifyContent": "space-between",
+                  }
+                }
               >
                 <input
                   checked={false}
                   onChange={[Function]}
-                  type="radio"
+                  type="checkbox"
                 />
-                Exclude
-              </label>
-            </div>
-            <input
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              placeholder="Find..."
-              style={
-                Object {
-                  "background": "rgba(255, 255, 255, 0.7)",
-                  "border": "solid 1px #efefef",
-                  "borderRadius": "30px",
-                  "boxSizing": "border-box",
-                  "display": "block",
-                  "margin": "0 auto",
-                  "outline": "none",
-                  "padding": "5px",
-                  "textIndent": "5px",
-                  "transition": "background 0.3s",
-                  "width": "100%",
-                }
-              }
-              value=""
-            />
-            <div
-              style={
-                Object {
-                  "alignItems": "baseline",
-                  "display": "flex",
-                  "justifyContent": "space-between",
-                }
-              }
-            >
-              <input
-                checked={false}
-                onChange={[Function]}
-                type="checkbox"
-              />
+                <div
+                  style={
+                    Object {
+                      "flex": 2,
+                      "padding": "0 5px",
+                    }
+                  }
+                >
+                  Select All
+                </div>
+              </div>
               <div
                 style={
                   Object {
-                    "flex": 2,
-                    "padding": "0 5px",
+                    "alignItems": "baseline",
+                    "display": "flex",
+                    "justifyContent": "space-between",
                   }
                 }
-              >
-                Select All
-              </div>
-            </div>
-            <div
-              style={
-                Object {
-                  "alignItems": "baseline",
-                  "display": "flex",
-                  "justifyContent": "space-between",
-                }
-              }
-            >
-              <input
-                checked={true}
-                onChange={[Function]}
-                type="checkbox"
-              />
-              <div
-                onClick={[Function]}
-                style={
-                  Object {
-                    "flex": 2,
-                    "padding": "0 5px",
-                  }
-                }
-              >
-                a
-              </div>
-              <div>
-                15
-              </div>
-            </div>
-            <div
-              style={
-                Object {
-                  "alignItems": "baseline",
-                  "display": "flex",
-                  "justifyContent": "space-between",
-                }
-              }
-            >
-              <input
-                checked={false}
-                onChange={[Function]}
-                type="checkbox"
-              />
-              <div
-                onClick={[Function]}
-                style={
-                  Object {
-                    "flex": 2,
-                    "padding": "0 5px",
-                  }
-                }
-              >
-                b
-              </div>
-              <div>
-                3
-              </div>
-            </div>
-            <div
-              style={
-                Object {
-                  "alignItems": "baseline",
-                  "display": "flex",
-                  "justifyContent": "space-between",
-                }
-              }
-            >
-              <input
-                checked={false}
-                onChange={[Function]}
-                type="checkbox"
-              />
-              <div
-                onClick={[Function]}
-                style={
-                  Object {
-                    "flex": 2,
-                    "padding": "0 5px",
-                  }
-                }
-              >
-                c
-              </div>
-              <div>
-                1
-              </div>
-            </div>
-            <div
-              style={
-                Object {
-                  "display": "flex",
-                  "justifyContent": "space-between",
-                  "margin": "5px 0",
-                }
-              }
-            />
-          </div>
-        </div>
-        <div
-          style={
-            Object {
-              "marginBottom": "25px",
-            }
-          }
-        >
-          <div
-            className="contexture-facet"
-          >
-            <div
-              style={
-                Object {
-                  "alignItems": "baseline",
-                  "display": "flex",
-                  "justifyContent": "space-between",
-                }
-              }
-            >
-              <label
-                onClick={[Function]}
               >
                 <input
                   checked={true}
                   onChange={[Function]}
-                  type="radio"
+                  type="checkbox"
                 />
-                Include
-              </label>
-              <label
-                onClick={[Function]}
+                <div
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "flex": 2,
+                      "padding": "0 5px",
+                    }
+                  }
+                >
+                  a
+                </div>
+                <div>
+                  15
+                </div>
+              </div>
+              <div
+                style={
+                  Object {
+                    "alignItems": "baseline",
+                    "display": "flex",
+                    "justifyContent": "space-between",
+                  }
+                }
               >
                 <input
                   checked={false}
                   onChange={[Function]}
-                  type="radio"
+                  type="checkbox"
                 />
-                Exclude
-              </label>
-            </div>
-            <input
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              placeholder="Find..."
-              style={
-                Object {
-                  "background": "rgba(255, 255, 255, 0.7)",
-                  "border": "solid 1px #efefef",
-                  "borderRadius": "30px",
-                  "boxSizing": "border-box",
-                  "display": "block",
-                  "margin": "0 auto",
-                  "outline": "none",
-                  "padding": "5px",
-                  "textIndent": "5px",
-                  "transition": "background 0.3s",
-                  "width": "100%",
-                }
-              }
-              value=""
-            />
-            <div
-              style={
-                Object {
-                  "alignItems": "baseline",
-                  "display": "flex",
-                  "justifyContent": "space-between",
-                }
-              }
-            >
-              <input
-                checked={false}
-                onChange={[Function]}
-                type="checkbox"
-              />
+                <div
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "flex": 2,
+                      "padding": "0 5px",
+                    }
+                  }
+                >
+                  b
+                </div>
+                <div>
+                  3
+                </div>
+              </div>
               <div
                 style={
                   Object {
-                    "flex": 2,
-                    "padding": "0 5px",
+                    "alignItems": "baseline",
+                    "display": "flex",
+                    "justifyContent": "space-between",
                   }
                 }
               >
-                Select All
+                <input
+                  checked={false}
+                  onChange={[Function]}
+                  type="checkbox"
+                />
+                <div
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "flex": 2,
+                      "padding": "0 5px",
+                    }
+                  }
+                >
+                  c
+                </div>
+                <div>
+                  1
+                </div>
               </div>
-            </div>
-            <div
-              style={
-                Object {
-                  "alignItems": "baseline",
-                  "display": "flex",
-                  "justifyContent": "space-between",
-                }
-              }
-            >
-              <input
-                checked={true}
-                onChange={[Function]}
-                type="checkbox"
-              />
               <div
-                onClick={[Function]}
                 style={
                   Object {
-                    "flex": 2,
-                    "padding": "0 5px",
+                    "display": "flex",
+                    "justifyContent": "space-between",
+                    "margin": "5px 0",
                   }
                 }
-              >
-                A
-              </div>
-              <div>
-                15
-              </div>
-            </div>
-            <div
-              style={
-                Object {
-                  "alignItems": "baseline",
-                  "display": "flex",
-                  "justifyContent": "space-between",
-                }
-              }
-            >
-              <input
-                checked={false}
-                onChange={[Function]}
-                type="checkbox"
               />
-              <div
-                onClick={[Function]}
-                style={
-                  Object {
-                    "flex": 2,
-                    "padding": "0 5px",
-                  }
-                }
-              >
-                B
-              </div>
-              <div>
-                3
-              </div>
             </div>
-            <div
-              style={
-                Object {
-                  "alignItems": "baseline",
-                  "display": "flex",
-                  "justifyContent": "space-between",
-                }
-              }
-            >
-              <input
-                checked={false}
-                onChange={[Function]}
-                type="checkbox"
-              />
-              <div
-                onClick={[Function]}
-                style={
-                  Object {
-                    "flex": 2,
-                    "padding": "0 5px",
-                  }
-                }
-              >
-                C
-              </div>
-              <div>
-                1
-              </div>
-            </div>
-            <div
-              style={
-                Object {
-                  "display": "flex",
-                  "justifyContent": "space-between",
-                  "margin": "5px 0",
-                }
-              }
-            />
           </div>
         </div>
         <div
@@ -697,120 +524,317 @@ exports[`Storyshots Example Types Full Demo 1`] = `
           }
         >
           <div
-            style={
-              Object {
-                "alignItems": "center",
-                "display": "flex",
-              }
-            }
+            style={Object {}}
           >
-            <input
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              style={
-                Object {
-                  "background": "rgba(255, 255, 255, 0.7)",
-                  "border": "solid 1px #efefef",
-                  "borderRadius": "30px",
-                  "boxSizing": "border-box",
-                  "display": "block",
-                  "margin": "0 auto",
-                  "outline": "none",
-                  "padding": "5px",
-                  "textIndent": "5px",
-                  "transition": "background 0.3s",
-                  "width": "100%",
+            <div
+              className="contexture-facet"
+            >
+              <div
+                style={
+                  Object {
+                    "alignItems": "baseline",
+                    "display": "flex",
+                    "justifyContent": "space-between",
+                  }
                 }
-              }
-              type="number"
-              value=""
-            />
-            <div>
-              -
+              >
+                <label
+                  onClick={[Function]}
+                >
+                  <input
+                    checked={true}
+                    onChange={[Function]}
+                    type="radio"
+                  />
+                  Include
+                </label>
+                <label
+                  onClick={[Function]}
+                >
+                  <input
+                    checked={false}
+                    onChange={[Function]}
+                    type="radio"
+                  />
+                  Exclude
+                </label>
+              </div>
+              <input
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                placeholder="Find..."
+                style={
+                  Object {
+                    "background": "rgba(255, 255, 255, 0.7)",
+                    "border": "solid 1px #efefef",
+                    "borderRadius": "30px",
+                    "boxSizing": "border-box",
+                    "display": "block",
+                    "margin": "0 auto",
+                    "outline": "none",
+                    "padding": "5px",
+                    "textIndent": "5px",
+                    "transition": "background 0.3s",
+                    "width": "100%",
+                  }
+                }
+                value=""
+              />
+              <div
+                style={
+                  Object {
+                    "alignItems": "baseline",
+                    "display": "flex",
+                    "justifyContent": "space-between",
+                  }
+                }
+              >
+                <input
+                  checked={false}
+                  onChange={[Function]}
+                  type="checkbox"
+                />
+                <div
+                  style={
+                    Object {
+                      "flex": 2,
+                      "padding": "0 5px",
+                    }
+                  }
+                >
+                  Select All
+                </div>
+              </div>
+              <div
+                style={
+                  Object {
+                    "alignItems": "baseline",
+                    "display": "flex",
+                    "justifyContent": "space-between",
+                  }
+                }
+              >
+                <input
+                  checked={true}
+                  onChange={[Function]}
+                  type="checkbox"
+                />
+                <div
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "flex": 2,
+                      "padding": "0 5px",
+                    }
+                  }
+                >
+                  A
+                </div>
+                <div>
+                  15
+                </div>
+              </div>
+              <div
+                style={
+                  Object {
+                    "alignItems": "baseline",
+                    "display": "flex",
+                    "justifyContent": "space-between",
+                  }
+                }
+              >
+                <input
+                  checked={false}
+                  onChange={[Function]}
+                  type="checkbox"
+                />
+                <div
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "flex": 2,
+                      "padding": "0 5px",
+                    }
+                  }
+                >
+                  B
+                </div>
+                <div>
+                  3
+                </div>
+              </div>
+              <div
+                style={
+                  Object {
+                    "alignItems": "baseline",
+                    "display": "flex",
+                    "justifyContent": "space-between",
+                  }
+                }
+              >
+                <input
+                  checked={false}
+                  onChange={[Function]}
+                  type="checkbox"
+                />
+                <div
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "flex": 2,
+                      "padding": "0 5px",
+                    }
+                  }
+                >
+                  C
+                </div>
+                <div>
+                  1
+                </div>
+              </div>
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "justifyContent": "space-between",
+                    "margin": "5px 0",
+                  }
+                }
+              />
             </div>
-            <input
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
+          </div>
+        </div>
+        <div
+          style={
+            Object {
+              "marginBottom": "25px",
+            }
+          }
+        >
+          <div
+            style={Object {}}
+          >
+            <div
               style={
                 Object {
-                  "background": "rgba(255, 255, 255, 0.7)",
-                  "border": "solid 1px #efefef",
-                  "borderRadius": "30px",
-                  "boxSizing": "border-box",
-                  "display": "block",
-                  "margin": "0 auto",
-                  "outline": "none",
-                  "padding": "5px",
-                  "textIndent": "5px",
-                  "transition": "background 0.3s",
-                  "width": "100%",
+                  "alignItems": "center",
+                  "display": "flex",
                 }
               }
-              type="number"
-              value={100}
-            />
+            >
+              <input
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                style={
+                  Object {
+                    "background": "rgba(255, 255, 255, 0.7)",
+                    "border": "solid 1px #efefef",
+                    "borderRadius": "30px",
+                    "boxSizing": "border-box",
+                    "display": "block",
+                    "margin": "0 auto",
+                    "outline": "none",
+                    "padding": "5px",
+                    "textIndent": "5px",
+                    "transition": "background 0.3s",
+                    "width": "100%",
+                  }
+                }
+                type="number"
+                value=""
+              />
+              <div>
+                -
+              </div>
+              <input
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                style={
+                  Object {
+                    "background": "rgba(255, 255, 255, 0.7)",
+                    "border": "solid 1px #efefef",
+                    "borderRadius": "30px",
+                    "boxSizing": "border-box",
+                    "display": "block",
+                    "margin": "0 auto",
+                    "outline": "none",
+                    "padding": "5px",
+                    "textIndent": "5px",
+                    "transition": "background 0.3s",
+                    "width": "100%",
+                  }
+                }
+                type="number"
+                value={100}
+              />
+            </div>
           </div>
         </div>
         <div
           style={Object {}}
         >
           <div
-            style={
-              Object {
-                "alignItems": "center",
-                "display": "flex",
-              }
-            }
+            style={Object {}}
           >
-            <input
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
+            <div
               style={
                 Object {
-                  "background": "rgba(255, 255, 255, 0.7)",
-                  "border": "solid 1px #efefef",
-                  "borderRadius": "30px",
-                  "boxSizing": "border-box",
-                  "display": "block",
-                  "margin": "0 auto",
-                  "outline": "none",
-                  "padding": "5px",
-                  "textIndent": "5px",
-                  "transition": "background 0.3s",
-                  "width": "100%",
+                  "alignItems": "center",
+                  "display": "flex",
                 }
               }
-              type="number"
-              value=""
-            />
-            <div>
-              -
+            >
+              <input
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                style={
+                  Object {
+                    "background": "rgba(255, 255, 255, 0.7)",
+                    "border": "solid 1px #efefef",
+                    "borderRadius": "30px",
+                    "boxSizing": "border-box",
+                    "display": "block",
+                    "margin": "0 auto",
+                    "outline": "none",
+                    "padding": "5px",
+                    "textIndent": "5px",
+                    "transition": "background 0.3s",
+                    "width": "100%",
+                  }
+                }
+                type="number"
+                value=""
+              />
+              <div>
+                -
+              </div>
+              <input
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                style={
+                  Object {
+                    "background": "rgba(255, 255, 255, 0.7)",
+                    "border": "solid 1px #efefef",
+                    "borderRadius": "30px",
+                    "boxSizing": "border-box",
+                    "display": "block",
+                    "margin": "0 auto",
+                    "outline": "none",
+                    "padding": "5px",
+                    "textIndent": "5px",
+                    "transition": "background 0.3s",
+                    "width": "100%",
+                  }
+                }
+                type="number"
+                value={100}
+              />
             </div>
-            <input
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              style={
-                Object {
-                  "background": "rgba(255, 255, 255, 0.7)",
-                  "border": "solid 1px #efefef",
-                  "borderRadius": "30px",
-                  "boxSizing": "border-box",
-                  "display": "block",
-                  "margin": "0 auto",
-                  "outline": "none",
-                  "padding": "5px",
-                  "textIndent": "5px",
-                  "transition": "background 0.3s",
-                  "width": "100%",
-                }
-              }
-              type="number"
-              value={100}
-            />
           </div>
         </div>
       </div>
@@ -829,127 +853,131 @@ exports[`Storyshots Example Types Full Demo 1`] = `
           }
         >
           <div
-            style={
-              Object {
-                "alignItems": "flex-end",
-                "display": "flex",
-                "justifyContent": "center",
-              }
-            }
+            style={Object {}}
           >
-            <div>
-              <div
-                style={
-                  Object {
-                    "background": "#ccc",
-                    "height": 25,
-                    "margin": "0 0px",
-                  }
+            <div
+              style={
+                Object {
+                  "alignItems": "flex-end",
+                  "display": "flex",
+                  "justifyContent": "center",
                 }
-                title={1}
-              >
-                 
+              }
+            >
+              <div>
+                <div
+                  style={
+                    Object {
+                      "background": "#ccc",
+                      "height": 25,
+                      "margin": "0 0px",
+                    }
+                  }
+                  title={1}
+                >
+                   
+                </div>
+                <div
+                  style={
+                    Object {
+                      "padding": "5px",
+                    }
+                  }
+                >
+                  1971
+                </div>
               </div>
-              <div
-                style={
-                  Object {
-                    "padding": "5px",
+              <div>
+                <div
+                  style={
+                    Object {
+                      "background": "#ccc",
+                      "height": 75,
+                      "margin": "0 0px",
+                    }
                   }
-                }
-              >
-                1971
+                  title={3}
+                >
+                   
+                </div>
+                <div
+                  style={
+                    Object {
+                      "padding": "5px",
+                    }
+                  }
+                >
+                  1980
+                </div>
               </div>
-            </div>
-            <div>
-              <div
-                style={
-                  Object {
-                    "background": "#ccc",
-                    "height": 75,
-                    "margin": "0 0px",
+              <div>
+                <div
+                  style={
+                    Object {
+                      "background": "#ccc",
+                      "height": 50,
+                      "margin": "0 0px",
+                    }
                   }
-                }
-                title={3}
-              >
-                 
+                  title={2}
+                >
+                   
+                </div>
+                <div
+                  style={
+                    Object {
+                      "padding": "5px",
+                    }
+                  }
+                >
+                  1990
+                </div>
               </div>
-              <div
-                style={
-                  Object {
-                    "padding": "5px",
+              <div>
+                <div
+                  style={
+                    Object {
+                      "background": "#ccc",
+                      "height": 100,
+                      "margin": "0 0px",
+                    }
                   }
-                }
-              >
-                1980
+                  title={4}
+                >
+                   
+                </div>
+                <div
+                  style={
+                    Object {
+                      "padding": "5px",
+                    }
+                  }
+                >
+                  2000
+                </div>
               </div>
-            </div>
-            <div>
-              <div
-                style={
-                  Object {
-                    "background": "#ccc",
-                    "height": 50,
-                    "margin": "0 0px",
+              <div>
+                <div
+                  style={
+                    Object {
+                      "background": "#ccc",
+                      "height": 25,
+                      "margin": "0 0px",
+                    }
                   }
-                }
-                title={2}
-              >
-                 
-              </div>
-              <div
-                style={
-                  Object {
-                    "padding": "5px",
+                  title={1}
+                >
+                   
+                </div>
+                <div
+                  style={
+                    Object {
+                      "padding": "5px",
+                    }
                   }
-                }
-              >
-                1990
-              </div>
-            </div>
-            <div>
-              <div
-                style={
-                  Object {
-                    "background": "#ccc",
-                    "height": 100,
-                    "margin": "0 0px",
-                  }
-                }
-                title={4}
-              >
-                 
-              </div>
-              <div
-                style={
-                  Object {
-                    "padding": "5px",
-                  }
-                }
-              >
-                2000
-              </div>
-            </div>
-            <div>
-              <div
-                style={
-                  Object {
-                    "background": "#ccc",
-                    "height": 25,
-                    "margin": "0 0px",
-                  }
-                }
-                title={1}
-              >
-                 
-              </div>
-              <div
-                style={
-                  Object {
-                    "padding": "5px",
-                  }
-                }
-              >
-                2010
+                >
+                  2010
+                </div>
               </div>
             </div>
           </div>
@@ -961,9 +989,13 @@ exports[`Storyshots Example Types Full Demo 1`] = `
             }
           }
         >
-          <span>
-            1 - 1 out of 1
-          </span>
+          <div
+            style={Object {}}
+          >
+            <span>
+              1 - 1 out of 1
+            </span>
+          </div>
         </div>
         <div
           style={Object {}}
@@ -977,105 +1009,109 @@ exports[`Storyshots Example Types Full Demo 1`] = `
               }
             }
           >
-            <table>
-              <thead>
-                <tr>
-                  <th>
-                    <a
-                      onClick={[Function]}
-                    >
-                      Id
-                       
-                    </a>
-                  </th>
-                  <th>
-                    <a
-                      onClick={[Function]}
-                    >
-                      Title
-                       
-                    </a>
-                  </th>
-                  <th>
-                    <a
-                      onClick={[Function]}
-                    >
-                      A
-                       
-                    </a>
-                  </th>
-                  <th>
-                    <a
-                      onClick={[Function]}
-                    >
-                      B
-                       
-                    </a>
-                  </th>
-                  <th>
-                    <a
-                      onClick={[Function]}
-                    >
-                      C
-                       
-                    </a>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    123
-                  </td>
-                  <td>
-                    Some Result
-                  </td>
-                  <td>
-                    1
-                  </td>
-                  <td>
-                    2
-                  </td>
-                  <td>
-                    3
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    124
-                  </td>
-                  <td>
-                    Some Other Result
-                  </td>
-                  <td>
-                    1
-                  </td>
-                  <td>
-                    4
-                  </td>
-                  <td>
-                    3
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    135
-                  </td>
-                  <td>
-                    A Different Result
-                  </td>
-                  <td>
-                    1
-                  </td>
-                  <td>
-                    2
-                  </td>
-                  <td>
-                    3
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div
+              style={Object {}}
+            >
+              <table>
+                <thead>
+                  <tr>
+                    <th>
+                      <a
+                        onClick={[Function]}
+                      >
+                        Id
+                         
+                      </a>
+                    </th>
+                    <th>
+                      <a
+                        onClick={[Function]}
+                      >
+                        Title
+                         
+                      </a>
+                    </th>
+                    <th>
+                      <a
+                        onClick={[Function]}
+                      >
+                        A
+                         
+                      </a>
+                    </th>
+                    <th>
+                      <a
+                        onClick={[Function]}
+                      >
+                        B
+                         
+                      </a>
+                    </th>
+                    <th>
+                      <a
+                        onClick={[Function]}
+                      >
+                        C
+                         
+                      </a>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      123
+                    </td>
+                    <td>
+                      Some Result
+                    </td>
+                    <td>
+                      1
+                    </td>
+                    <td>
+                      2
+                    </td>
+                    <td>
+                      3
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      124
+                    </td>
+                    <td>
+                      Some Other Result
+                    </td>
+                    <td>
+                      1
+                    </td>
+                    <td>
+                      4
+                    </td>
+                    <td>
+                      3
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      135
+                    </td>
+                    <td>
+                      A Different Result
+                    </td>
+                    <td>
+                      1
+                    </td>
+                    <td>
+                      2
+                    </td>
+                    <td>
+                      3
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -1104,144 +1140,152 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
             }
           
   </style>
-  <table
-    className="example-table"
+  <div
+    style={Object {}}
   >
-    <thead>
-      <tr>
-        <th>
-          <a
-            onClick={[Function]}
-          >
-            Title
-             
-          </a>
-        </th>
-        <th>
-          <a
-            onClick={[Function]}
-          >
-            Id
-             
-          </a>
-        </th>
-        <th>
-          <a
-            onClick={[Function]}
-          >
-            A
-             
-          </a>
-        </th>
-        <th>
-          <a
-            onClick={[Function]}
-          >
-            C
-             
-          </a>
-        </th>
-        <th>
-          <a
-            onClick={[Function]}
-          >
-            Field B
-             
-          </a>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td
-          style={
-            Object {
-              "color": "red",
+    <table
+      className="example-table"
+    >
+      <thead>
+        <tr>
+          <th>
+            <a
+              onClick={[Function]}
+            >
+              Title
+               
+            </a>
+          </th>
+          <th>
+            <a
+              onClick={[Function]}
+            >
+              Id
+               
+            </a>
+          </th>
+          <th>
+            <a
+              onClick={[Function]}
+            >
+              A
+               
+            </a>
+          </th>
+          <th>
+            <a
+              onClick={[Function]}
+            >
+              C
+               
+            </a>
+          </th>
+          <th>
+            <a
+              onClick={[Function]}
+            >
+              Field B
+               
+            </a>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td
+            style={
+              Object {
+                "color": "red",
+              }
             }
-          }
-        >
-          Some Result
-        </td>
-        <td>
-          123
-        </td>
-        <td>
-          1
-        </td>
-        <td>
-          3
-        </td>
-        <td>
-          2
-        </td>
-      </tr>
-      <tr>
-        <td
-          style={
-            Object {
-              "color": "red",
+          >
+            Some Result
+          </td>
+          <td>
+            123
+          </td>
+          <td>
+            1
+          </td>
+          <td>
+            3
+          </td>
+          <td>
+            2
+          </td>
+        </tr>
+        <tr>
+          <td
+            style={
+              Object {
+                "color": "red",
+              }
             }
-          }
-        >
-          Some Other Result
-        </td>
-        <td>
-          124
-        </td>
-        <td>
-          1
-        </td>
-        <td>
-          3
-        </td>
-        <td>
-          4
-        </td>
-      </tr>
-      <tr>
-        <td
-          style={
-            Object {
-              "color": "red",
+          >
+            Some Other Result
+          </td>
+          <td>
+            124
+          </td>
+          <td>
+            1
+          </td>
+          <td>
+            3
+          </td>
+          <td>
+            4
+          </td>
+        </tr>
+        <tr>
+          <td
+            style={
+              Object {
+                "color": "red",
+              }
             }
-          }
-        >
-          A Different Result
-        </td>
-        <td>
-          135
-        </td>
-        <td>
-          1
-        </td>
-        <td>
-          3
-        </td>
-        <td>
-          2
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          >
+            A Different Result
+          </td>
+          <td>
+            135
+          </td>
+          <td>
+            1
+          </td>
+          <td>
+            3
+          </td>
+          <td>
+            2
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 `
 
 exports[`Storyshots FilterAdder Example 1`] = `
 <div>
-  <select
-    onChange={[Function]}
+  <div
+    style={Object {}}
   >
-    <option
-      value="directors"
+    <select
+      onChange={[Function]}
     >
-      Directors
-    </option>
-    <option
-      value="runtimeMinutes"
-    >
-      Runtime Minutes
-    </option>
-  </select>
+      <option
+        value="directors"
+      >
+        Directors
+      </option>
+      <option
+        value="runtimeMinutes"
+      >
+        Runtime Minutes
+      </option>
+    </select>
+  </div>
   <div>
     Check action log to see adding being dispatched
   </div>
@@ -1249,17 +1293,23 @@ exports[`Storyshots FilterAdder Example 1`] = `
 `
 
 exports[`Storyshots FilterAdder With FilteredPickerModal 1`] = `
-<div>
-  <button
-    onClick={[Function]}
-  >
-    + Include Additional Filter
-  </button>
+<div
+  style={Object {}}
+>
+  <div>
+    <button
+      onClick={[Function]}
+    >
+      + Include Additional Filter
+    </button>
+  </div>
 </div>
 `
 
 exports[`Storyshots FilterList Example 1`] = `
-Array [
+<div
+  style={Object {}}
+>
   <div
     style={
       Object {
@@ -1268,21 +1318,25 @@ Array [
     }
   >
     <div>
-      <b
-        style={
-          Object {
-            "display": "block",
-            "margin": "10px 0",
-          }
-        }
+      <div
+        style={Object {}}
       >
-        Field A
-      </b>
+        <b
+          style={
+            Object {
+              "display": "block",
+              "margin": "10px 0",
+            }
+          }
+        >
+          Field A
+        </b>
+      </div>
       <div>
         A TYPE
       </div>
     </div>
-  </div>,
+  </div>
   <div
     style={
       Object {
@@ -1291,41 +1345,49 @@ Array [
     }
   >
     <div>
-      <b
-        style={
-          Object {
-            "display": "block",
-            "margin": "10px 0",
-          }
-        }
+      <div
+        style={Object {}}
       >
-        B Field
-      </b>
+        <b
+          style={
+            Object {
+              "display": "block",
+              "margin": "10px 0",
+            }
+          }
+        >
+          B Field
+        </b>
+      </div>
       <div>
         B TYPE
       </div>
     </div>
-  </div>,
+  </div>
   <div
     style={Object {}}
   >
     <div>
-      <b
-        style={
-          Object {
-            "display": "block",
-            "margin": "10px 0",
-          }
-        }
+      <div
+        style={Object {}}
       >
-        c
-      </b>
+        <b
+          style={
+            Object {
+              "display": "block",
+              "margin": "10px 0",
+            }
+          }
+        >
+          c
+        </b>
+      </div>
       <div>
         B TYPE
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `
 
 exports[`Storyshots IMDB Advanced Search 1`] = `
@@ -1468,28 +1530,32 @@ exports[`Storyshots IMDB Quick Start 1`] = `
       }
     }
   >
-    <input
-      onBlur={[Function]}
-      onChange={[Function]}
-      onFocus={[Function]}
-      placeholder="Search"
-      style={
-        Object {
-          "background": "rgba(255, 255, 255, 0.7)",
-          "border": "solid 1px #efefef",
-          "borderRadius": "30px",
-          "boxSizing": "border-box",
-          "display": "block",
-          "margin": "0 auto",
-          "outline": "none",
-          "padding": "5px",
-          "textIndent": "5px",
-          "transition": "background 0.3s",
-          "width": "100%",
+    <div
+      style={Object {}}
+    >
+      <input
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        placeholder="Search"
+        style={
+          Object {
+            "background": "rgba(255, 255, 255, 0.7)",
+            "border": "solid 1px #efefef",
+            "borderRadius": "30px",
+            "boxSizing": "border-box",
+            "display": "block",
+            "margin": "0 auto",
+            "outline": "none",
+            "padding": "5px",
+            "textIndent": "5px",
+            "transition": "background 0.3s",
+            "width": "100%",
+          }
         }
-      }
-      value=""
-    />
+        value=""
+      />
+    </div>
   </div>
   <div
     style={Object {}}
@@ -1520,60 +1586,64 @@ exports[`Storyshots IMDB Quick Start 1`] = `
               MetaScore
             </b>
             <div
-              style={
-                Object {
-                  "alignItems": "center",
-                  "display": "flex",
-                }
-              }
+              style={Object {}}
             >
-              <input
-                onBlur={[Function]}
-                onChange={[Function]}
-                onFocus={[Function]}
+              <div
                 style={
                   Object {
-                    "background": "rgba(255, 255, 255, 0.7)",
-                    "border": "solid 1px #efefef",
-                    "borderRadius": "30px",
-                    "boxSizing": "border-box",
-                    "display": "block",
-                    "margin": "0 auto",
-                    "outline": "none",
-                    "padding": "5px",
-                    "textIndent": "5px",
-                    "transition": "background 0.3s",
-                    "width": "100%",
+                    "alignItems": "center",
+                    "display": "flex",
                   }
                 }
-                type="number"
-                value=""
-              />
-              <div>
-                -
+              >
+                <input
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onFocus={[Function]}
+                  style={
+                    Object {
+                      "background": "rgba(255, 255, 255, 0.7)",
+                      "border": "solid 1px #efefef",
+                      "borderRadius": "30px",
+                      "boxSizing": "border-box",
+                      "display": "block",
+                      "margin": "0 auto",
+                      "outline": "none",
+                      "padding": "5px",
+                      "textIndent": "5px",
+                      "transition": "background 0.3s",
+                      "width": "100%",
+                    }
+                  }
+                  type="number"
+                  value=""
+                />
+                <div>
+                  -
+                </div>
+                <input
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onFocus={[Function]}
+                  style={
+                    Object {
+                      "background": "rgba(255, 255, 255, 0.7)",
+                      "border": "solid 1px #efefef",
+                      "borderRadius": "30px",
+                      "boxSizing": "border-box",
+                      "display": "block",
+                      "margin": "0 auto",
+                      "outline": "none",
+                      "padding": "5px",
+                      "textIndent": "5px",
+                      "transition": "background 0.3s",
+                      "width": "100%",
+                    }
+                  }
+                  type="number"
+                  value={100}
+                />
               </div>
-              <input
-                onBlur={[Function]}
-                onChange={[Function]}
-                onFocus={[Function]}
-                style={
-                  Object {
-                    "background": "rgba(255, 255, 255, 0.7)",
-                    "border": "solid 1px #efefef",
-                    "borderRadius": "30px",
-                    "boxSizing": "border-box",
-                    "display": "block",
-                    "margin": "0 auto",
-                    "outline": "none",
-                    "padding": "5px",
-                    "textIndent": "5px",
-                    "transition": "background 0.3s",
-                    "width": "100%",
-                  }
-                }
-                type="number"
-                value={100}
-              />
             </div>
           </div>
         </div>
@@ -1589,94 +1659,98 @@ exports[`Storyshots IMDB Quick Start 1`] = `
               Genre
             </b>
             <div
-              className="contexture-facet"
+              style={Object {}}
             >
               <div
-                style={
-                  Object {
-                    "alignItems": "baseline",
-                    "display": "flex",
-                    "justifyContent": "space-between",
-                  }
-                }
+                className="contexture-facet"
               >
-                <label
-                  onClick={[Function]}
-                >
-                  <input
-                    checked={true}
-                    onChange={[Function]}
-                    type="radio"
-                  />
-                  Include
-                </label>
-                <label
-                  onClick={[Function]}
-                >
-                  <input
-                    checked={false}
-                    onChange={[Function]}
-                    type="radio"
-                  />
-                  Exclude
-                </label>
-              </div>
-              <input
-                onBlur={[Function]}
-                onChange={[Function]}
-                onFocus={[Function]}
-                placeholder="Find..."
-                style={
-                  Object {
-                    "background": "rgba(255, 255, 255, 0.7)",
-                    "border": "solid 1px #efefef",
-                    "borderRadius": "30px",
-                    "boxSizing": "border-box",
-                    "display": "block",
-                    "margin": "0 auto",
-                    "outline": "none",
-                    "padding": "5px",
-                    "textIndent": "5px",
-                    "transition": "background 0.3s",
-                    "width": "100%",
+                <div
+                  style={
+                    Object {
+                      "alignItems": "baseline",
+                      "display": "flex",
+                      "justifyContent": "space-between",
+                    }
                   }
-                }
-                value=""
-              />
-              <div
-                style={
-                  Object {
-                    "alignItems": "baseline",
-                    "display": "flex",
-                    "justifyContent": "space-between",
-                  }
-                }
-              >
+                >
+                  <label
+                    onClick={[Function]}
+                  >
+                    <input
+                      checked={true}
+                      onChange={[Function]}
+                      type="radio"
+                    />
+                    Include
+                  </label>
+                  <label
+                    onClick={[Function]}
+                  >
+                    <input
+                      checked={false}
+                      onChange={[Function]}
+                      type="radio"
+                    />
+                    Exclude
+                  </label>
+                </div>
                 <input
-                  checked={true}
+                  onBlur={[Function]}
                   onChange={[Function]}
-                  type="checkbox"
+                  onFocus={[Function]}
+                  placeholder="Find..."
+                  style={
+                    Object {
+                      "background": "rgba(255, 255, 255, 0.7)",
+                      "border": "solid 1px #efefef",
+                      "borderRadius": "30px",
+                      "boxSizing": "border-box",
+                      "display": "block",
+                      "margin": "0 auto",
+                      "outline": "none",
+                      "padding": "5px",
+                      "textIndent": "5px",
+                      "transition": "background 0.3s",
+                      "width": "100%",
+                    }
+                  }
+                  value=""
                 />
                 <div
                   style={
                     Object {
-                      "flex": 2,
-                      "padding": "0 5px",
+                      "alignItems": "baseline",
+                      "display": "flex",
+                      "justifyContent": "space-between",
                     }
                   }
                 >
-                  Select All
+                  <input
+                    checked={true}
+                    onChange={[Function]}
+                    type="checkbox"
+                  />
+                  <div
+                    style={
+                      Object {
+                        "flex": 2,
+                        "padding": "0 5px",
+                      }
+                    }
+                  >
+                    Select All
+                  </div>
                 </div>
-              </div>
-              <div
-                style={
-                  Object {
-                    "display": "flex",
-                    "justifyContent": "space-between",
-                    "margin": "5px 0",
+                <div
+                  style={
+                    Object {
+                      "display": "flex",
+                      "justifyContent": "space-between",
+                      "margin": "5px 0",
+                    }
                   }
-                }
-              />
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -1688,94 +1762,98 @@ exports[`Storyshots IMDB Quick Start 1`] = `
               Actors
             </b>
             <div
-              className="contexture-facet"
+              style={Object {}}
             >
               <div
-                style={
-                  Object {
-                    "alignItems": "baseline",
-                    "display": "flex",
-                    "justifyContent": "space-between",
-                  }
-                }
+                className="contexture-facet"
               >
-                <label
-                  onClick={[Function]}
-                >
-                  <input
-                    checked={true}
-                    onChange={[Function]}
-                    type="radio"
-                  />
-                  Include
-                </label>
-                <label
-                  onClick={[Function]}
-                >
-                  <input
-                    checked={false}
-                    onChange={[Function]}
-                    type="radio"
-                  />
-                  Exclude
-                </label>
-              </div>
-              <input
-                onBlur={[Function]}
-                onChange={[Function]}
-                onFocus={[Function]}
-                placeholder="Find..."
-                style={
-                  Object {
-                    "background": "rgba(255, 255, 255, 0.7)",
-                    "border": "solid 1px #efefef",
-                    "borderRadius": "30px",
-                    "boxSizing": "border-box",
-                    "display": "block",
-                    "margin": "0 auto",
-                    "outline": "none",
-                    "padding": "5px",
-                    "textIndent": "5px",
-                    "transition": "background 0.3s",
-                    "width": "100%",
+                <div
+                  style={
+                    Object {
+                      "alignItems": "baseline",
+                      "display": "flex",
+                      "justifyContent": "space-between",
+                    }
                   }
-                }
-                value=""
-              />
-              <div
-                style={
-                  Object {
-                    "alignItems": "baseline",
-                    "display": "flex",
-                    "justifyContent": "space-between",
-                  }
-                }
-              >
+                >
+                  <label
+                    onClick={[Function]}
+                  >
+                    <input
+                      checked={true}
+                      onChange={[Function]}
+                      type="radio"
+                    />
+                    Include
+                  </label>
+                  <label
+                    onClick={[Function]}
+                  >
+                    <input
+                      checked={false}
+                      onChange={[Function]}
+                      type="radio"
+                    />
+                    Exclude
+                  </label>
+                </div>
                 <input
-                  checked={true}
+                  onBlur={[Function]}
                   onChange={[Function]}
-                  type="checkbox"
+                  onFocus={[Function]}
+                  placeholder="Find..."
+                  style={
+                    Object {
+                      "background": "rgba(255, 255, 255, 0.7)",
+                      "border": "solid 1px #efefef",
+                      "borderRadius": "30px",
+                      "boxSizing": "border-box",
+                      "display": "block",
+                      "margin": "0 auto",
+                      "outline": "none",
+                      "padding": "5px",
+                      "textIndent": "5px",
+                      "transition": "background 0.3s",
+                      "width": "100%",
+                    }
+                  }
+                  value=""
                 />
                 <div
                   style={
                     Object {
-                      "flex": 2,
-                      "padding": "0 5px",
+                      "alignItems": "baseline",
+                      "display": "flex",
+                      "justifyContent": "space-between",
                     }
                   }
                 >
-                  Select All
+                  <input
+                    checked={true}
+                    onChange={[Function]}
+                    type="checkbox"
+                  />
+                  <div
+                    style={
+                      Object {
+                        "flex": 2,
+                        "padding": "0 5px",
+                      }
+                    }
+                  >
+                    Select All
+                  </div>
                 </div>
-              </div>
-              <div
-                style={
-                  Object {
-                    "display": "flex",
-                    "justifyContent": "space-between",
-                    "margin": "5px 0",
+                <div
+                  style={
+                    Object {
+                      "display": "flex",
+                      "justifyContent": "space-between",
+                      "margin": "5px 0",
+                    }
                   }
-                }
-              />
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -1788,27 +1866,39 @@ exports[`Storyshots IMDB Quick Start 1`] = `
           }
         }
       >
-        <span>
-          No Results
-        </span>
         <div
-          style={
-            Object {
-              "alignItems": "flex-end",
-              "display": "flex",
-              "justifyContent": "center",
-            }
-          }
-        />
+          style={Object {}}
+        >
+          <span>
+            No Results
+          </span>
+        </div>
         <div
-          style={
-            Object {
-              "display": "flex",
-              "flexWrap": "wrap",
-              "justifyContent": "center",
+          style={Object {}}
+        >
+          <div
+            style={
+              Object {
+                "alignItems": "flex-end",
+                "display": "flex",
+                "justifyContent": "center",
+              }
             }
-          }
-        />
+          />
+        </div>
+        <div
+          style={Object {}}
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "flexWrap": "wrap",
+                "justifyContent": "center",
+              }
+            }
+          />
+        </div>
         <div
           style={
             Object {
@@ -1817,28 +1907,32 @@ exports[`Storyshots IMDB Quick Start 1`] = `
             }
           }
         >
-          <div>
-            <span>
-              <a
-                onClick={[Function]}
-              >
-                ←
-              </a>
-            </span>
-            <span>
-              <a
-                onClick={undefined}
-              >
-                1
-              </a>
-            </span>
-            <span>
-              <a
-                onClick={[Function]}
-              >
-                →
-              </a>
-            </span>
+          <div
+            style={Object {}}
+          >
+            <div>
+              <span>
+                <a
+                  onClick={[Function]}
+                >
+                  ←
+                </a>
+              </span>
+              <span>
+                <a
+                  onClick={undefined}
+                >
+                  1
+                </a>
+              </span>
+              <span>
+                <a
+                  onClick={[Function]}
+                >
+                  →
+                </a>
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -2135,28 +2229,32 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                             }
                           }
                         >
-                          <input
-                            onBlur={[Function]}
-                            onChange={[Function]}
-                            onFocus={[Function]}
-                            placeholder="Search"
-                            style={
-                              Object {
-                                "background": "rgba(255, 255, 255, 0.7)",
-                                "border": "solid 1px #efefef",
-                                "borderRadius": "30px",
-                                "boxSizing": "border-box",
-                                "display": "block",
-                                "margin": "0 auto",
-                                "outline": "none",
-                                "padding": "5px",
-                                "textIndent": "5px",
-                                "transition": "background 0.3s",
-                                "width": "100%",
+                          <div
+                            style={Object {}}
+                          >
+                            <input
+                              onBlur={[Function]}
+                              onChange={[Function]}
+                              onFocus={[Function]}
+                              placeholder="Search"
+                              style={
+                                Object {
+                                  "background": "rgba(255, 255, 255, 0.7)",
+                                  "border": "solid 1px #efefef",
+                                  "borderRadius": "30px",
+                                  "boxSizing": "border-box",
+                                  "display": "block",
+                                  "margin": "0 auto",
+                                  "outline": "none",
+                                  "padding": "5px",
+                                  "textIndent": "5px",
+                                  "transition": "background 0.3s",
+                                  "width": "100%",
+                                }
                               }
-                            }
-                            value=""
-                          />
+                              value=""
+                            />
+                          </div>
                         </div>
                       </div>
                       <div
@@ -2389,28 +2487,32 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                         }
                                       }
                                     >
-                                      <input
-                                        onBlur={[Function]}
-                                        onChange={[Function]}
-                                        onFocus={[Function]}
-                                        placeholder="Search"
-                                        style={
-                                          Object {
-                                            "background": "rgba(255, 255, 255, 0.7)",
-                                            "border": "solid 1px #efefef",
-                                            "borderRadius": "30px",
-                                            "boxSizing": "border-box",
-                                            "display": "block",
-                                            "margin": "0 auto",
-                                            "outline": "none",
-                                            "padding": "5px",
-                                            "textIndent": "5px",
-                                            "transition": "background 0.3s",
-                                            "width": "100%",
+                                      <div
+                                        style={Object {}}
+                                      >
+                                        <input
+                                          onBlur={[Function]}
+                                          onChange={[Function]}
+                                          onFocus={[Function]}
+                                          placeholder="Search"
+                                          style={
+                                            Object {
+                                              "background": "rgba(255, 255, 255, 0.7)",
+                                              "border": "solid 1px #efefef",
+                                              "borderRadius": "30px",
+                                              "boxSizing": "border-box",
+                                              "display": "block",
+                                              "margin": "0 auto",
+                                              "outline": "none",
+                                              "padding": "5px",
+                                              "textIndent": "5px",
+                                              "transition": "background 0.3s",
+                                              "width": "100%",
+                                            }
                                           }
-                                        }
-                                        value=""
-                                      />
+                                          value=""
+                                        />
+                                      </div>
                                     </div>
                                   </div>
                                   <div
@@ -2582,28 +2684,32 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                         }
                                       }
                                     >
-                                      <input
-                                        onBlur={[Function]}
-                                        onChange={[Function]}
-                                        onFocus={[Function]}
-                                        placeholder="Search"
-                                        style={
-                                          Object {
-                                            "background": "rgba(255, 255, 255, 0.7)",
-                                            "border": "solid 1px #efefef",
-                                            "borderRadius": "30px",
-                                            "boxSizing": "border-box",
-                                            "display": "block",
-                                            "margin": "0 auto",
-                                            "outline": "none",
-                                            "padding": "5px",
-                                            "textIndent": "5px",
-                                            "transition": "background 0.3s",
-                                            "width": "100%",
+                                      <div
+                                        style={Object {}}
+                                      >
+                                        <input
+                                          onBlur={[Function]}
+                                          onChange={[Function]}
+                                          onFocus={[Function]}
+                                          placeholder="Search"
+                                          style={
+                                            Object {
+                                              "background": "rgba(255, 255, 255, 0.7)",
+                                              "border": "solid 1px #efefef",
+                                              "borderRadius": "30px",
+                                              "boxSizing": "border-box",
+                                              "display": "block",
+                                              "margin": "0 auto",
+                                              "outline": "none",
+                                              "padding": "5px",
+                                              "textIndent": "5px",
+                                              "transition": "background 0.3s",
+                                              "width": "100%",
+                                            }
                                           }
-                                        }
-                                        value=""
-                                      />
+                                          value=""
+                                        />
+                                      </div>
                                     </div>
                                   </div>
                                   <div
@@ -2838,94 +2944,98 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                                   }
                                                 >
                                                   <div
-                                                    className="contexture-facet"
+                                                    style={Object {}}
                                                   >
                                                     <div
-                                                      style={
-                                                        Object {
-                                                          "alignItems": "baseline",
-                                                          "display": "flex",
-                                                          "justifyContent": "space-between",
-                                                        }
-                                                      }
+                                                      className="contexture-facet"
                                                     >
-                                                      <label
-                                                        onClick={[Function]}
-                                                      >
-                                                        <input
-                                                          checked={true}
-                                                          onChange={[Function]}
-                                                          type="radio"
-                                                        />
-                                                        Include
-                                                      </label>
-                                                      <label
-                                                        onClick={[Function]}
-                                                      >
-                                                        <input
-                                                          checked={false}
-                                                          onChange={[Function]}
-                                                          type="radio"
-                                                        />
-                                                        Exclude
-                                                      </label>
-                                                    </div>
-                                                    <input
-                                                      onBlur={[Function]}
-                                                      onChange={[Function]}
-                                                      onFocus={[Function]}
-                                                      placeholder="Find..."
-                                                      style={
-                                                        Object {
-                                                          "background": "rgba(255, 255, 255, 0.7)",
-                                                          "border": "solid 1px #efefef",
-                                                          "borderRadius": "30px",
-                                                          "boxSizing": "border-box",
-                                                          "display": "block",
-                                                          "margin": "0 auto",
-                                                          "outline": "none",
-                                                          "padding": "5px",
-                                                          "textIndent": "5px",
-                                                          "transition": "background 0.3s",
-                                                          "width": "100%",
+                                                      <div
+                                                        style={
+                                                          Object {
+                                                            "alignItems": "baseline",
+                                                            "display": "flex",
+                                                            "justifyContent": "space-between",
+                                                          }
                                                         }
-                                                      }
-                                                      value=""
-                                                    />
-                                                    <div
-                                                      style={
-                                                        Object {
-                                                          "alignItems": "baseline",
-                                                          "display": "flex",
-                                                          "justifyContent": "space-between",
-                                                        }
-                                                      }
-                                                    >
+                                                      >
+                                                        <label
+                                                          onClick={[Function]}
+                                                        >
+                                                          <input
+                                                            checked={true}
+                                                            onChange={[Function]}
+                                                            type="radio"
+                                                          />
+                                                          Include
+                                                        </label>
+                                                        <label
+                                                          onClick={[Function]}
+                                                        >
+                                                          <input
+                                                            checked={false}
+                                                            onChange={[Function]}
+                                                            type="radio"
+                                                          />
+                                                          Exclude
+                                                        </label>
+                                                      </div>
                                                       <input
-                                                        checked={true}
+                                                        onBlur={[Function]}
                                                         onChange={[Function]}
-                                                        type="checkbox"
+                                                        onFocus={[Function]}
+                                                        placeholder="Find..."
+                                                        style={
+                                                          Object {
+                                                            "background": "rgba(255, 255, 255, 0.7)",
+                                                            "border": "solid 1px #efefef",
+                                                            "borderRadius": "30px",
+                                                            "boxSizing": "border-box",
+                                                            "display": "block",
+                                                            "margin": "0 auto",
+                                                            "outline": "none",
+                                                            "padding": "5px",
+                                                            "textIndent": "5px",
+                                                            "transition": "background 0.3s",
+                                                            "width": "100%",
+                                                          }
+                                                        }
+                                                        value=""
                                                       />
                                                       <div
                                                         style={
                                                           Object {
-                                                            "flex": 2,
-                                                            "padding": "0 5px",
+                                                            "alignItems": "baseline",
+                                                            "display": "flex",
+                                                            "justifyContent": "space-between",
                                                           }
                                                         }
                                                       >
-                                                        Select All
+                                                        <input
+                                                          checked={true}
+                                                          onChange={[Function]}
+                                                          type="checkbox"
+                                                        />
+                                                        <div
+                                                          style={
+                                                            Object {
+                                                              "flex": 2,
+                                                              "padding": "0 5px",
+                                                            }
+                                                          }
+                                                        >
+                                                          Select All
+                                                        </div>
                                                       </div>
-                                                    </div>
-                                                    <div
-                                                      style={
-                                                        Object {
-                                                          "display": "flex",
-                                                          "justifyContent": "space-between",
-                                                          "margin": "5px 0",
+                                                      <div
+                                                        style={
+                                                          Object {
+                                                            "display": "flex",
+                                                            "justifyContent": "space-between",
+                                                            "margin": "5px 0",
+                                                          }
                                                         }
-                                                      }
-                                                    />
+                                                      />
+                                                    </div>
                                                   </div>
                                                 </div>
                                               </div>
@@ -3099,28 +3209,32 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                                     }
                                                   }
                                                 >
-                                                  <input
-                                                    onBlur={[Function]}
-                                                    onChange={[Function]}
-                                                    onFocus={[Function]}
-                                                    placeholder="Search"
-                                                    style={
-                                                      Object {
-                                                        "background": "rgba(255, 255, 255, 0.7)",
-                                                        "border": "solid 1px #efefef",
-                                                        "borderRadius": "30px",
-                                                        "boxSizing": "border-box",
-                                                        "display": "block",
-                                                        "margin": "0 auto",
-                                                        "outline": "none",
-                                                        "padding": "5px",
-                                                        "textIndent": "5px",
-                                                        "transition": "background 0.3s",
-                                                        "width": "100%",
+                                                  <div
+                                                    style={Object {}}
+                                                  >
+                                                    <input
+                                                      onBlur={[Function]}
+                                                      onChange={[Function]}
+                                                      onFocus={[Function]}
+                                                      placeholder="Search"
+                                                      style={
+                                                        Object {
+                                                          "background": "rgba(255, 255, 255, 0.7)",
+                                                          "border": "solid 1px #efefef",
+                                                          "borderRadius": "30px",
+                                                          "boxSizing": "border-box",
+                                                          "display": "block",
+                                                          "margin": "0 auto",
+                                                          "outline": "none",
+                                                          "padding": "5px",
+                                                          "textIndent": "5px",
+                                                          "transition": "background 0.3s",
+                                                          "width": "100%",
+                                                        }
                                                       }
-                                                    }
-                                                    value=""
-                                                  />
+                                                      value=""
+                                                    />
+                                                  </div>
                                                 </div>
                                               </div>
                                               <div
@@ -3304,28 +3418,32 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                             }
                           }
                         >
-                          <input
-                            onBlur={[Function]}
-                            onChange={[Function]}
-                            onFocus={[Function]}
-                            placeholder="Search"
-                            style={
-                              Object {
-                                "background": "rgba(255, 255, 255, 0.7)",
-                                "border": "solid 1px #efefef",
-                                "borderRadius": "30px",
-                                "boxSizing": "border-box",
-                                "display": "block",
-                                "margin": "0 auto",
-                                "outline": "none",
-                                "padding": "5px",
-                                "textIndent": "5px",
-                                "transition": "background 0.3s",
-                                "width": "100%",
+                          <div
+                            style={Object {}}
+                          >
+                            <input
+                              onBlur={[Function]}
+                              onChange={[Function]}
+                              onFocus={[Function]}
+                              placeholder="Search"
+                              style={
+                                Object {
+                                  "background": "rgba(255, 255, 255, 0.7)",
+                                  "border": "solid 1px #efefef",
+                                  "borderRadius": "30px",
+                                  "boxSizing": "border-box",
+                                  "display": "block",
+                                  "margin": "0 auto",
+                                  "outline": "none",
+                                  "padding": "5px",
+                                  "textIndent": "5px",
+                                  "transition": "background 0.3s",
+                                  "width": "100%",
+                                }
                               }
-                            }
-                            value=""
-                          />
+                              value=""
+                            />
+                          </div>
                         </div>
                       </div>
                       <div
@@ -3579,60 +3697,64 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                       }
                                     >
                                       <div
-                                        style={
-                                          Object {
-                                            "alignItems": "center",
-                                            "display": "flex",
-                                          }
-                                        }
+                                        style={Object {}}
                                       >
-                                        <input
-                                          onBlur={[Function]}
-                                          onChange={[Function]}
-                                          onFocus={[Function]}
+                                        <div
                                           style={
                                             Object {
-                                              "background": "rgba(255, 255, 255, 0.7)",
-                                              "border": "solid 1px #efefef",
-                                              "borderRadius": "30px",
-                                              "boxSizing": "border-box",
-                                              "display": "block",
-                                              "margin": "0 auto",
-                                              "outline": "none",
-                                              "padding": "5px",
-                                              "textIndent": "5px",
-                                              "transition": "background 0.3s",
-                                              "width": "100%",
+                                              "alignItems": "center",
+                                              "display": "flex",
                                             }
                                           }
-                                          type="number"
-                                          value=""
-                                        />
-                                        <div>
-                                          -
+                                        >
+                                          <input
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            style={
+                                              Object {
+                                                "background": "rgba(255, 255, 255, 0.7)",
+                                                "border": "solid 1px #efefef",
+                                                "borderRadius": "30px",
+                                                "boxSizing": "border-box",
+                                                "display": "block",
+                                                "margin": "0 auto",
+                                                "outline": "none",
+                                                "padding": "5px",
+                                                "textIndent": "5px",
+                                                "transition": "background 0.3s",
+                                                "width": "100%",
+                                              }
+                                            }
+                                            type="number"
+                                            value=""
+                                          />
+                                          <div>
+                                            -
+                                          </div>
+                                          <input
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            style={
+                                              Object {
+                                                "background": "rgba(255, 255, 255, 0.7)",
+                                                "border": "solid 1px #efefef",
+                                                "borderRadius": "30px",
+                                                "boxSizing": "border-box",
+                                                "display": "block",
+                                                "margin": "0 auto",
+                                                "outline": "none",
+                                                "padding": "5px",
+                                                "textIndent": "5px",
+                                                "transition": "background 0.3s",
+                                                "width": "100%",
+                                              }
+                                            }
+                                            type="number"
+                                            value=""
+                                          />
                                         </div>
-                                        <input
-                                          onBlur={[Function]}
-                                          onChange={[Function]}
-                                          onFocus={[Function]}
-                                          style={
-                                            Object {
-                                              "background": "rgba(255, 255, 255, 0.7)",
-                                              "border": "solid 1px #efefef",
-                                              "borderRadius": "30px",
-                                              "boxSizing": "border-box",
-                                              "display": "block",
-                                              "margin": "0 auto",
-                                              "outline": "none",
-                                              "padding": "5px",
-                                              "textIndent": "5px",
-                                              "transition": "background 0.3s",
-                                              "width": "100%",
-                                            }
-                                          }
-                                          type="number"
-                                          value=""
-                                        />
                                       </div>
                                     </div>
                                   </div>
@@ -3806,28 +3928,32 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                         }
                                       }
                                     >
-                                      <input
-                                        onBlur={[Function]}
-                                        onChange={[Function]}
-                                        onFocus={[Function]}
-                                        placeholder="Search"
-                                        style={
-                                          Object {
-                                            "background": "rgba(255, 255, 255, 0.7)",
-                                            "border": "solid 1px #efefef",
-                                            "borderRadius": "30px",
-                                            "boxSizing": "border-box",
-                                            "display": "block",
-                                            "margin": "0 auto",
-                                            "outline": "none",
-                                            "padding": "5px",
-                                            "textIndent": "5px",
-                                            "transition": "background 0.3s",
-                                            "width": "100%",
+                                      <div
+                                        style={Object {}}
+                                      >
+                                        <input
+                                          onBlur={[Function]}
+                                          onChange={[Function]}
+                                          onFocus={[Function]}
+                                          placeholder="Search"
+                                          style={
+                                            Object {
+                                              "background": "rgba(255, 255, 255, 0.7)",
+                                              "border": "solid 1px #efefef",
+                                              "borderRadius": "30px",
+                                              "boxSizing": "border-box",
+                                              "display": "block",
+                                              "margin": "0 auto",
+                                              "outline": "none",
+                                              "padding": "5px",
+                                              "textIndent": "5px",
+                                              "transition": "background 0.3s",
+                                              "width": "100%",
+                                            }
                                           }
-                                        }
-                                        value=""
-                                      />
+                                          value=""
+                                        />
+                                      </div>
                                     </div>
                                   </div>
                                   <div
@@ -4142,28 +4268,32 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                                     }
                                                   }
                                                 >
-                                                  <input
-                                                    onBlur={[Function]}
-                                                    onChange={[Function]}
-                                                    onFocus={[Function]}
-                                                    placeholder="Search"
-                                                    style={
-                                                      Object {
-                                                        "background": "rgba(255, 255, 255, 0.7)",
-                                                        "border": "solid 1px #efefef",
-                                                        "borderRadius": "30px",
-                                                        "boxSizing": "border-box",
-                                                        "display": "block",
-                                                        "margin": "0 auto",
-                                                        "outline": "none",
-                                                        "padding": "5px",
-                                                        "textIndent": "5px",
-                                                        "transition": "background 0.3s",
-                                                        "width": "100%",
+                                                  <div
+                                                    style={Object {}}
+                                                  >
+                                                    <input
+                                                      onBlur={[Function]}
+                                                      onChange={[Function]}
+                                                      onFocus={[Function]}
+                                                      placeholder="Search"
+                                                      style={
+                                                        Object {
+                                                          "background": "rgba(255, 255, 255, 0.7)",
+                                                          "border": "solid 1px #efefef",
+                                                          "borderRadius": "30px",
+                                                          "boxSizing": "border-box",
+                                                          "display": "block",
+                                                          "margin": "0 auto",
+                                                          "outline": "none",
+                                                          "padding": "5px",
+                                                          "textIndent": "5px",
+                                                          "transition": "background 0.3s",
+                                                          "width": "100%",
+                                                        }
                                                       }
-                                                    }
-                                                    value=""
-                                                  />
+                                                      value=""
+                                                    />
+                                                  </div>
                                                 </div>
                                               </div>
                                               <div
@@ -4513,28 +4643,32 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                         }
                                       }
                                     >
-                                      <input
-                                        onBlur={[Function]}
-                                        onChange={[Function]}
-                                        onFocus={[Function]}
-                                        placeholder="Search"
-                                        style={
-                                          Object {
-                                            "background": "rgba(255, 255, 255, 0.7)",
-                                            "border": "solid 1px #efefef",
-                                            "borderRadius": "30px",
-                                            "boxSizing": "border-box",
-                                            "display": "block",
-                                            "margin": "0 auto",
-                                            "outline": "none",
-                                            "padding": "5px",
-                                            "textIndent": "5px",
-                                            "transition": "background 0.3s",
-                                            "width": "100%",
+                                      <div
+                                        style={Object {}}
+                                      >
+                                        <input
+                                          onBlur={[Function]}
+                                          onChange={[Function]}
+                                          onFocus={[Function]}
+                                          placeholder="Search"
+                                          style={
+                                            Object {
+                                              "background": "rgba(255, 255, 255, 0.7)",
+                                              "border": "solid 1px #efefef",
+                                              "borderRadius": "30px",
+                                              "boxSizing": "border-box",
+                                              "display": "block",
+                                              "margin": "0 auto",
+                                              "outline": "none",
+                                              "padding": "5px",
+                                              "textIndent": "5px",
+                                              "transition": "background 0.3s",
+                                              "width": "100%",
+                                            }
                                           }
-                                        }
-                                        value=""
-                                      />
+                                          value=""
+                                        />
+                                      </div>
                                     </div>
                                   </div>
                                   <div
@@ -4739,28 +4873,32 @@ exports[`Storyshots QueryBuilder/Examples One Filter 1`] = `
                             }
                           }
                         >
-                          <input
-                            onBlur={[Function]}
-                            onChange={[Function]}
-                            onFocus={[Function]}
-                            placeholder="Search"
-                            style={
-                              Object {
-                                "background": "rgba(255, 255, 255, 0.7)",
-                                "border": "solid 1px #efefef",
-                                "borderRadius": "30px",
-                                "boxSizing": "border-box",
-                                "display": "block",
-                                "margin": "0 auto",
-                                "outline": "none",
-                                "padding": "5px",
-                                "textIndent": "5px",
-                                "transition": "background 0.3s",
-                                "width": "100%",
+                          <div
+                            style={Object {}}
+                          >
+                            <input
+                              onBlur={[Function]}
+                              onChange={[Function]}
+                              onFocus={[Function]}
+                              placeholder="Search"
+                              style={
+                                Object {
+                                  "background": "rgba(255, 255, 255, 0.7)",
+                                  "border": "solid 1px #efefef",
+                                  "borderRadius": "30px",
+                                  "boxSizing": "border-box",
+                                  "display": "block",
+                                  "margin": "0 auto",
+                                  "outline": "none",
+                                  "padding": "5px",
+                                  "textIndent": "5px",
+                                  "transition": "background 0.3s",
+                                  "width": "100%",
+                                }
                               }
-                            }
-                            value=""
-                          />
+                              value=""
+                            />
+                          </div>
                         </div>
                       </div>
                       <div
@@ -4959,28 +5097,32 @@ exports[`Storyshots QueryBuilder/Examples One Filter on a misplaced root 1`] = `
                             }
                           }
                         >
-                          <input
-                            onBlur={[Function]}
-                            onChange={[Function]}
-                            onFocus={[Function]}
-                            placeholder="Search"
-                            style={
-                              Object {
-                                "background": "rgba(255, 255, 255, 0.7)",
-                                "border": "solid 1px #efefef",
-                                "borderRadius": "30px",
-                                "boxSizing": "border-box",
-                                "display": "block",
-                                "margin": "0 auto",
-                                "outline": "none",
-                                "padding": "5px",
-                                "textIndent": "5px",
-                                "transition": "background 0.3s",
-                                "width": "100%",
+                          <div
+                            style={Object {}}
+                          >
+                            <input
+                              onBlur={[Function]}
+                              onChange={[Function]}
+                              onFocus={[Function]}
+                              placeholder="Search"
+                              style={
+                                Object {
+                                  "background": "rgba(255, 255, 255, 0.7)",
+                                  "border": "solid 1px #efefef",
+                                  "borderRadius": "30px",
+                                  "boxSizing": "border-box",
+                                  "display": "block",
+                                  "margin": "0 auto",
+                                  "outline": "none",
+                                  "padding": "5px",
+                                  "textIndent": "5px",
+                                  "transition": "background 0.3s",
+                                  "width": "100%",
+                                }
                               }
-                            }
-                            value=""
-                          />
+                              value=""
+                            />
+                          </div>
                         </div>
                       </div>
                       <div
@@ -5180,152 +5322,156 @@ exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
                           }
                         >
                           <div
-                            className="contexture-facet"
+                            style={Object {}}
                           >
                             <div
-                              style={
-                                Object {
-                                  "alignItems": "baseline",
-                                  "display": "flex",
-                                  "justifyContent": "space-between",
-                                }
-                              }
+                              className="contexture-facet"
                             >
-                              <label
-                                onClick={[Function]}
+                              <div
+                                style={
+                                  Object {
+                                    "alignItems": "baseline",
+                                    "display": "flex",
+                                    "justifyContent": "space-between",
+                                  }
+                                }
                               >
-                                <input
-                                  checked={true}
-                                  onChange={[Function]}
-                                  type="radio"
-                                />
-                                Include
-                              </label>
-                              <label
-                                onClick={[Function]}
+                                <label
+                                  onClick={[Function]}
+                                >
+                                  <input
+                                    checked={true}
+                                    onChange={[Function]}
+                                    type="radio"
+                                  />
+                                  Include
+                                </label>
+                                <label
+                                  onClick={[Function]}
+                                >
+                                  <input
+                                    checked={false}
+                                    onChange={[Function]}
+                                    type="radio"
+                                  />
+                                  Exclude
+                                </label>
+                              </div>
+                              <input
+                                onBlur={[Function]}
+                                onChange={[Function]}
+                                onFocus={[Function]}
+                                placeholder="Find..."
+                                style={
+                                  Object {
+                                    "background": "rgba(255, 255, 255, 0.7)",
+                                    "border": "solid 1px #efefef",
+                                    "borderRadius": "30px",
+                                    "boxSizing": "border-box",
+                                    "display": "block",
+                                    "margin": "0 auto",
+                                    "outline": "none",
+                                    "padding": "5px",
+                                    "textIndent": "5px",
+                                    "transition": "background 0.3s",
+                                    "width": "100%",
+                                  }
+                                }
+                                value=""
+                              />
+                              <div
+                                style={
+                                  Object {
+                                    "alignItems": "baseline",
+                                    "display": "flex",
+                                    "justifyContent": "space-between",
+                                  }
+                                }
                               >
                                 <input
                                   checked={false}
                                   onChange={[Function]}
-                                  type="radio"
+                                  type="checkbox"
                                 />
-                                Exclude
-                              </label>
-                            </div>
-                            <input
-                              onBlur={[Function]}
-                              onChange={[Function]}
-                              onFocus={[Function]}
-                              placeholder="Find..."
-                              style={
-                                Object {
-                                  "background": "rgba(255, 255, 255, 0.7)",
-                                  "border": "solid 1px #efefef",
-                                  "borderRadius": "30px",
-                                  "boxSizing": "border-box",
-                                  "display": "block",
-                                  "margin": "0 auto",
-                                  "outline": "none",
-                                  "padding": "5px",
-                                  "textIndent": "5px",
-                                  "transition": "background 0.3s",
-                                  "width": "100%",
-                                }
-                              }
-                              value=""
-                            />
-                            <div
-                              style={
-                                Object {
-                                  "alignItems": "baseline",
-                                  "display": "flex",
-                                  "justifyContent": "space-between",
-                                }
-                              }
-                            >
-                              <input
-                                checked={false}
-                                onChange={[Function]}
-                                type="checkbox"
-                              />
+                                <div
+                                  style={
+                                    Object {
+                                      "flex": 2,
+                                      "padding": "0 5px",
+                                    }
+                                  }
+                                >
+                                  Select All
+                                </div>
+                              </div>
                               <div
                                 style={
                                   Object {
-                                    "flex": 2,
-                                    "padding": "0 5px",
+                                    "alignItems": "baseline",
+                                    "display": "flex",
+                                    "justifyContent": "space-between",
                                   }
                                 }
                               >
-                                Select All
+                                <input
+                                  checked={false}
+                                  onChange={[Function]}
+                                  type="checkbox"
+                                />
+                                <div
+                                  onClick={[Function]}
+                                  style={
+                                    Object {
+                                      "flex": 2,
+                                      "padding": "0 5px",
+                                    }
+                                  }
+                                >
+                                  Option 1
+                                </div>
+                                <div>
+                                  2
+                                </div>
                               </div>
-                            </div>
-                            <div
-                              style={
-                                Object {
-                                  "alignItems": "baseline",
-                                  "display": "flex",
-                                  "justifyContent": "space-between",
-                                }
-                              }
-                            >
-                              <input
-                                checked={false}
-                                onChange={[Function]}
-                                type="checkbox"
-                              />
                               <div
-                                onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": 2,
-                                    "padding": "0 5px",
+                                    "alignItems": "baseline",
+                                    "display": "flex",
+                                    "justifyContent": "space-between",
                                   }
                                 }
                               >
-                                Option 1
+                                <input
+                                  checked={false}
+                                  onChange={[Function]}
+                                  type="checkbox"
+                                />
+                                <div
+                                  onClick={[Function]}
+                                  style={
+                                    Object {
+                                      "flex": 2,
+                                      "padding": "0 5px",
+                                    }
+                                  }
+                                >
+                                  Option 2
+                                </div>
+                                <div>
+                                  1
+                                </div>
                               </div>
-                              <div>
-                                2
-                              </div>
-                            </div>
-                            <div
-                              style={
-                                Object {
-                                  "alignItems": "baseline",
-                                  "display": "flex",
-                                  "justifyContent": "space-between",
-                                }
-                              }
-                            >
-                              <input
-                                checked={false}
-                                onChange={[Function]}
-                                type="checkbox"
-                              />
                               <div
-                                onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": 2,
-                                    "padding": "0 5px",
+                                    "display": "flex",
+                                    "justifyContent": "space-between",
+                                    "margin": "5px 0",
                                   }
                                 }
-                              >
-                                Option 2
-                              </div>
-                              <div>
-                                1
-                              </div>
+                              />
                             </div>
-                            <div
-                              style={
-                                Object {
-                                  "display": "flex",
-                                  "justifyContent": "space-between",
-                                  "margin": "5px 0",
-                                }
-                              }
-                            />
                           </div>
                         </div>
                       </div>
@@ -5556,28 +5702,32 @@ exports[`Storyshots QueryBuilder/Examples One Filter with fields 1`] = `
                             }
                           }
                         >
-                          <input
-                            onBlur={[Function]}
-                            onChange={[Function]}
-                            onFocus={[Function]}
-                            placeholder="Search"
-                            style={
-                              Object {
-                                "background": "rgba(255, 255, 255, 0.7)",
-                                "border": "solid 1px #efefef",
-                                "borderRadius": "30px",
-                                "boxSizing": "border-box",
-                                "display": "block",
-                                "margin": "0 auto",
-                                "outline": "none",
-                                "padding": "5px",
-                                "textIndent": "5px",
-                                "transition": "background 0.3s",
-                                "width": "100%",
+                          <div
+                            style={Object {}}
+                          >
+                            <input
+                              onBlur={[Function]}
+                              onChange={[Function]}
+                              onFocus={[Function]}
+                              placeholder="Search"
+                              style={
+                                Object {
+                                  "background": "rgba(255, 255, 255, 0.7)",
+                                  "border": "solid 1px #efefef",
+                                  "borderRadius": "30px",
+                                  "boxSizing": "border-box",
+                                  "display": "block",
+                                  "margin": "0 auto",
+                                  "outline": "none",
+                                  "padding": "5px",
+                                  "textIndent": "5px",
+                                  "transition": "background 0.3s",
+                                  "width": "100%",
+                                }
                               }
-                            }
-                            value=""
-                          />
+                              value=""
+                            />
+                          </div>
                         </div>
                       </div>
                       <div

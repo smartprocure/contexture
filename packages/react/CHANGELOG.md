@@ -1,3 +1,8 @@
+# 1.5.1
+* Support disabling pager items in grey vest
+* Don't rerender from StripedLoader when changing styles
+* Add basic IE11 grid support
+
 # 1.5.0
 * Add `display` support to `Facet` example type to format options
 
