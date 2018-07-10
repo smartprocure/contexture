@@ -55,16 +55,16 @@ describe('facet', () => {
       queries = []
       let context = {
         field: 'myField',
-        optionsFilter: 'cable'
+        optionsFilter: 'cable',
       }
       await facet.result(context, search)
       expect(queries[0][3]).to.deep.equal({
         $match: {
           _id: {
             $regex: 'cable',
-            $options: 'i'
-          }
-        }
+            $options: 'i',
+          },
+        },
       })
     })
   })
