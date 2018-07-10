@@ -185,12 +185,11 @@ export let Adder = ModalFilterAdder({
 })
 
 export let PagerItem = withStateLens({ hovering: false })(
-  observer(({ active, hovering, ...x }) => (
+  observer(({ active, hovering, disabled, ...x }) => (
     <span
       style={{
         padding: '5px',
-        background: F.view(hovering) ? '#f5f5f5' : 'white',
-
+        background: (F.view(hovering) || disabled) ? '#f5f5f5' : 'white',
         border: '2px solid #EDEDED',
         borderRadius: '4px',
         ...(active && {
@@ -198,7 +197,10 @@ export let PagerItem = withStateLens({ hovering: false })(
           borderColor: '#0076DE',
           color: '#0076DE',
         }),
-        cursor: 'pointer',
+        ...(disabled && {
+          pointerEvents: 'none'
+        }),
+        cursor: disabled ? 'not-allowed' : 'pointer',
       }}
       {...hover(hovering)}
       {...x}
