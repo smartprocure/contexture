@@ -189,7 +189,7 @@ export let PagerItem = withStateLens({ hovering: false })(
     <span
       style={{
         padding: '5px',
-        background: (F.view(hovering) || disabled) ? '#f5f5f5' : 'white',
+        background: F.view(hovering) || disabled ? '#f5f5f5' : 'white',
         border: '2px solid #EDEDED',
         borderRadius: '4px',
         ...(active && {
@@ -198,7 +198,7 @@ export let PagerItem = withStateLens({ hovering: false })(
           color: '#0076DE',
         }),
         ...(disabled && {
-          pointerEvents: 'none'
+          pointerEvents: 'none',
         }),
         cursor: disabled ? 'not-allowed' : 'pointer',
       }}

@@ -6,7 +6,7 @@ export let Grid = ({ style, columns, gap, ...x }) => (
       display: 'grid',
       ...(columns && {
         gridTemplateColumns: columns,
-        msGridTemplateColumns: columns
+        msGridTemplateColumns: columns,
       }),
       ...(gap && { gridGap: gap }),
       ...style,
