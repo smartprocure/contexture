@@ -26,6 +26,14 @@ module.exports = {
           context.size !== 0 && {
             $limit: context.size || 10,
           },
+          context.optionsFilter && {
+            $match: {
+              _id: {
+                $regex: context.optionsFilter,
+                $options: 'i',
+              },
+            },
+          },
         ])
       ),
       search([
