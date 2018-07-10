@@ -31,9 +31,9 @@ module.exports = {
               _id: {
                 $regex: context.optionsFilter,
                 $options: 'i',
-              }
-            }
-          }
+              },
+            },
+          },
         ])
       ),
       search([
