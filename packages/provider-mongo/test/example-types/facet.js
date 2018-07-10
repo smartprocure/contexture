@@ -51,5 +51,21 @@ describe('facet', () => {
       await facet.result(context, search)
       expect(queries[0][2]).to.equal(undefined)
     })
+    it('should support optionsFilter', async () => {
+      queries = []
+      let context = {
+        field: 'myField',
+        optionsFilter: 'cable'
+      }
+      await facet.result(context, search)
+      expect(queries[0][3]).to.deep.equal({
+        $match: {
+          _id: {
+            $regex: 'cable',
+            $options: 'i'
+          }
+        }
+      })
+    })
   })
 })
