@@ -1,68 +1,72 @@
+# 0.4.0
+* Add support for facet optionsFilter
+* Cleanup changelog
+
 # 0.3.0
-- Add array support for `facet` example type.
+* Add array support for `facet` example type
 
 # 0.2.3
-- Some more tests for the example-types.
+* Some more tests for the example-types
 
 # 0.2.2
-- Changed the `statistical` type so it wouldn't return an array.
+* Changed the `statistical` type so it wouldn't return an array
 
 # 0.2.1
-- Improved the `facet` type, allowing for unlimited queries.
+* Improved the `facet` type, allowing for unlimited queries
 
 # 0.2.0
-- Added the `statistical` type.
+* Added the `statistical` type
 
 # 0.1.6
-- Fixed the text type using F.cascade with more than one parammeter.
+* Fixed the text type using F.cascade with more than one parammeter
 
 # 0.1.5
-- Fixed the contexture version in our peerDependencies.
+* Fixed the contexture version in our peerDependencies
 
 # 0.1.4
-- Kill data and config, requiring contexture >= 0.40
+* Kill data and config, requiring contexture >= 0.40
 
 # 0.1.3
-- Refactoring exclude mongoId
+* Refactoring exclude mongoId
 
 # 0.1.2
-- Added the option to exclude on the mongoId type
+* Added the option to exclude on the mongoId type
 
 # 0.1.1
-- Fix bluebird regression and temporarily disable missing collection check
+* Fix bluebird regression and temporarily disable missing collection check
 
 # 0.1.0
-- Add `populate` support to results type, which performs `$lookup`s
+* Add `populate` support to results type, which performs `$lookup`s
 
 # 0.0.10
-- Add error for specified collection not being found
+* Add error for specified collection not being found
 
 # 0.0.9
 Added data.values support to mongoId
 
 # 0.0.8
-- Make sure types are available `contexture-mongo/types`.
-- Rename the default types to example types.
-- Made integration tests for the text and the mongoId example types.
+* Make sure types are available `contexture-mongo/types`
+* Rename the default types to example types
+* Made integration tests for the text and the mongoId example types
 
 # 0.0.7
-Using the native mongo driver, and renamed the expected model property
-to be collection.
+* Use the native mongo driver
+* Renamed the expected model property to be collection
 
 # 0.0.6
-Making sure we export the types.
+* Making sure we export the types
 
 # 0.0.5
-Add dev tooling around contributing
+* Add dev tooling around contributing
 
 # 0.0.4
-Add date documentation and missing mongoId dependencies
+* Add date documentation and missing mongoId dependencies
 
 # 0.0.3
-Add date unit tests and missing date dependencies
+* Add date unit tests and missing date dependencies
 
 # 0.0.2
-Fixed dependencies
+* Fixed dependencies
 
 # 0.0.1
-Initial Release
+* Initial Release
