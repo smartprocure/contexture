@@ -1,3 +1,6 @@
+# 0.5.0
+* Add `dateType ` support to date type (with `date`, `timestamp`, and `unix ` options)
+
 # 0.4.0
 * Add support for facet optionsFilter
 * Cleanup changelog
