@@ -60,5 +60,33 @@ describe('date', () => {
       })
     })
     // TODO: lastQuarter, thisQuarter, nextQuarter
+    it('ms timestamp', () => {
+      expect(
+        date.filter(
+          dateBuilder({
+            dateType: 'timestamp',
+            from: '2018-07-10',
+          })
+        )
+      ).to.deep.equal({
+        test: {
+          $gte: new Date('2018-07-10').getTime(),
+        },
+      })
+    })
+    it('unix timestamp', () => {
+      expect(
+        date.filter(
+          dateBuilder({
+            dateType: 'unix',
+            from: '2018-07-10',
+          })
+        )
+      ).to.deep.equal({
+        test: {
+          $gte: new Date('2018-07-10').getTime() / 1000,
+        },
+      })
+    })
   })
 })

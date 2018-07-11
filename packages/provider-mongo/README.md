@@ -1,4 +1,4 @@
-﻿# contexture-mongo
+# contexture-mongo
 Mongo Provider for Contexture
 
 ## Overview
@@ -81,7 +81,8 @@ The following operators are supported:
 
 ### `date`
 `date` is filter only and converts `{from, to}` to a `{$gte, $lte}` mongo date filter.
-It also supports `dateMath` via `@elastic/datemath` (the same as supported by elasticsearch) to provide time ranges as well as three custom strings `lastQuarter`, `thisQuarter`, and `nextQuarter` (which are calculated on the fly)
+It also supports `dateMath` via `@elastic/datemath` (the same as supported by elasticsearch) to provide time ranges as well as three custom strings `lastQuarter`, `thisQuarter`, and `nextQuarter` (which are calculated on the fly).
+If you have dates that aren't store as dates, you can use `dateType` to change how the dates are output. The default is `date`, but you can also set it to `unix` for seconds from epoch or `timestamp` for a timestamp with milliseconds.
 
 ### `number`
 ### `exists`
