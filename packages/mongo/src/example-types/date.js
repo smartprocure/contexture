@@ -28,11 +28,11 @@ module.exports = {
       from = datemath.parse(from)
       to = datemath.parse(to)
     }
-    
+
     let format = {
       date: x => x && moment.utc(x).toDate(),
       unix: x => x && moment.utc(x).unix(),
-      timestamp: x => x && (new Date(x).getTime())
+      timestamp: x => x && new Date(x).getTime(),
     }[dateType]
 
     return {
