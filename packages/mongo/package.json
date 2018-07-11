@@ -1,6 +1,6 @@
 {
   "name": "contexture-mongo",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Mongo Provider for Contexture",
   "main": "src/index.js",
   "scripts": {
