@@ -4,9 +4,8 @@ let datemath = require('@elastic/datemath')
 
 module.exports = {
   hasValue: context => context.from || context.to,
-  filter(context) {
-    let { from, to } = context
-    if (context.useDateMath) {
+  filter({ from, to, field, useDateMath, dateType = 'date' }) {
+    if (useDateMath) {
       if (from === 'thisQuarter') {
         from = moment()
           .quarter(moment().quarter())
@@ -29,11 +28,18 @@ module.exports = {
       from = datemath.parse(from)
       to = datemath.parse(to)
     }
+    
+    let format = {
+      date: x => x && moment.utc(x).toDate(),
+      unix: x => x && moment.utc(x).unix(),
+      timestamp: x => x && (new Date(x).getTime())
+    }[dateType]
+
     return {
-      [context.field]: _.pickBy(
+      [field]: _.pickBy(
         {
-          $gte: from && moment.utc(from).toDate(),
-          $lte: to && moment.utc(to).toDate(),
+          $gte: format(from),
+          $lte: format(to),
         },
         _.identity
       ),
