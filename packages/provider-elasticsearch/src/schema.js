@@ -1,10 +1,6 @@
 let _ = require('lodash/fp')
 let F = require('futil-js')
 
-let flagFields = _.flow(
-  F.invertByArray,
-  _.mapValues(F.flags)
-)
 let applyDefaults = F.mapValuesIndexed((node, field) =>
   _.defaults(
     {
