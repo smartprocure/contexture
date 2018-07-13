@@ -7,7 +7,6 @@ describe('All Example Types', function() {
   it('should load', () => {
     let types = Types()
     expect(_.keys(types)).to.have.members([
-      '__all',
       'bool',
       'cardinality',
       'date',
