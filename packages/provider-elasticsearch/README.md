@@ -1,4 +1,4 @@
-﻿# contexture-elasticsearch
+# contexture-elasticsearch
 Elasticsearch Provider for Contexture
 
 ## Usage
@@ -76,6 +76,11 @@ let process = Contexture({
   }
 })
 ```
+
+## Automatic Schema Detection
+As of 0.10.0, a `getSchemas` async method is exposed on an instantiated provider, which will read the elasticsearch mappings and aliases to automatically generate schemas.
+
+Generated schemas also include field definitions, which can leveraged with something like `exampleTypeSchemaMapping` to make them fit for consumption by dynamic field pickers such as the one in contexture-react.
 
 ## Default Types
 
