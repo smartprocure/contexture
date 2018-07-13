@@ -1,6 +1,7 @@
 let _ = require('lodash/fp')
 let Promise = require('bluebird')
 let deterministic_stringify = require('json-stable-stringify')
+let {getESSchemas} = require('./schema')
 
 let ElasticsearchProvider = (
   config = {
@@ -101,6 +102,7 @@ let ElasticsearchProvider = (
       return _.get([key, 'mappings', type, 'properties'], mapping)
     }
   },
+  getSchemas: () => getESSchemas(config.getClient()),
 })
 
 module.exports = ElasticsearchProvider
