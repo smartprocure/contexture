@@ -1,5 +1,4 @@
 let _ = require('lodash/fp')
-let F = require('futil-js')
 
 let { fromMappingsWithAliases } = require('../src/schema')
 let { exampleTypeSchemaMapping } = require('../src/example-types/schemaMapping')
