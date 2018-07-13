@@ -14,7 +14,7 @@ let processSchemas = _.flow(
   exampleTypeSchemaMapping
 )
 
-describe.only('schemas', () => {
+describe('schemas', () => {
   it('should work with imdb', () => {
     let result = processSchemas(imdbMapping, imdbAliases)
     //console.log(JSON.stringify(result))
