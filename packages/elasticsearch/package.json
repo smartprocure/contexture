@@ -1,10 +1,10 @@
 {
   "name": "contexture-elasticsearch",
-  "version": "0.9.1",
+  "version": "0.10.0",
   "description": "ElasticSearch Provider for Contexture",
   "main": "src/index.js",
   "scripts": {
-    "prepublish": "./node_modules/.bin/metagen src/example-types commonJS ./__all.js",
+    "prepublish": "./node_modules/.bin/metagen src/example-types commonJS ./__all.js --exclusions=__all.js,schemaMapping.js",
     "test": "./node_modules/mocha/bin/_mocha --recursive",
     "test-watch": "chokidar 'src/**/*.js' 'test/**/*.js' -c 'npm t'",
     "test-ci": "./node_modules/mocha/bin/_mocha --recursive --reporter json > test-results.json",
@@ -37,7 +37,7 @@
   "dependencies": {
     "@elastic/datemath": "^2.3.0",
     "bluebird": "^3.5.0",
-    "futil-js": "^1.32.0",
+    "futil-js": "^1.49.0",
     "js-combinatorics": "^0.5.3",
     "json-stable-stringify": "^1.0.1",
     "lodash": "^4.17.4",

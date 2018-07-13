@@ -1,5 +1,4 @@
 module.exports = {
-  __all: require('./__all'),
   bool: require('./bool'),
   cardinality: require('./cardinality'),
   date: require('./date'),
