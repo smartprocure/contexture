@@ -1,5 +1,4 @@
 module.exports = {
-  __all: require('./__all'),
   bool: require('./bool'),
   cardinality: require('./cardinality'),
   date: require('./date'),
@@ -23,7 +22,6 @@ module.exports = {
   query: require('./query'),
   rangeStats: require('./rangeStats'),
   results: require('./results'),
-  schemaMapping: require('./schemaMapping'),
   smartIntervalHistogram: require('./smartIntervalHistogram'),
   smartPercentileRanks: require('./smartPercentileRanks'),
   statistical: require('./statistical'),
@@ -33,5 +31,5 @@ module.exports = {
   termsStatsHits: require('./termsStatsHits'),
   terms_stats: require('./terms_stats'),
   text: require('./text'),
-  twoLevelMatch: require('./twoLevelMatch'),
+  twoLevelMatch: require('./twoLevelMatch')
 }
