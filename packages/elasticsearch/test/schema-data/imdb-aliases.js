@@ -1,7 +1,7 @@
 module.exports = {
-  "movies": {
-    "aliases": {
-      "imdb": {}
-    }
-  }
+  movies: {
+    aliases: {
+      imdb: {},
+    },
+  },
 }

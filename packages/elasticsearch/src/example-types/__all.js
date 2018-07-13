@@ -23,6 +23,7 @@ module.exports = {
   query: require('./query'),
   rangeStats: require('./rangeStats'),
   results: require('./results'),
+  schemaMapping: require('./schemaMapping'),
   smartIntervalHistogram: require('./smartIntervalHistogram'),
   smartPercentileRanks: require('./smartPercentileRanks'),
   statistical: require('./statistical'),

@@ -16,11 +16,13 @@ let addNodeType = x => {
     typeOptions: {
       text: ['facet', 'query'],
     }[type] || [typeDefault],
-    ...x
+    ...x,
   }
 }
-let exampleTypeSchemaMapping = _.mapValues(_.update('fields', _.mapValues(addNodeType)))
+let exampleTypeSchemaMapping = _.mapValues(
+  _.update('fields', _.mapValues(addNodeType))
+)
 
 module.exports = {
-  exampleTypeSchemaMapping
+  exampleTypeSchemaMapping,
 }
