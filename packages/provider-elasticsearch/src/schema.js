@@ -32,16 +32,16 @@ let fromEsIndexMapping = _.mapValues(
     _.omit(['_default_']),
     _.toPairs,
     // Capture esType
-    ([[type, fields]]) => ({fields, elasticsearch: {type}}),
+    ([[type, fields]]) => ({ fields, elasticsearch: { type } }),
     _.update(
       'fields',
       _.flow(
         flatten,
-        _.mapValues(({type, fields}) => ({
+        _.mapValues(({ type, fields }) => ({
           elasticsearch: F.compactObject({
             dataType: type,
             // Find the child notAnalyzedField to set up facet autocomplete vs word
-            notAnalyzedField: _.findKey({type: 'keyword'}, fields),
+            notAnalyzedField: _.findKey({ type: 'keyword' }, fields),
           }),
         })),
         applyDefaults
@@ -72,16 +72,16 @@ let fromMappingsWithAliases = (mappings, aliases) => {
     F.invertByArray,
     _.mapValues(([x]) => schemas[x]),
     _.merge(schemas),
-    F.mapValuesIndexed((val, index) => _.merge({elasticsearch: {index}}, val))
+    F.mapValuesIndexed((val, index) =>
+      _.merge({ elasticsearch: { index } }, val)
+    )
   )(aliases)
 }
-
 
 let getESSchemas = client =>
   Promise.all([client.indices.getMapping(), client.indices.getAlias()]).then(
     ([mappings, aliases]) => fromMappingsWithAliases(mappings, aliases)
   )
-  
 
 module.exports = {
   // flagFields,

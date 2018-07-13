@@ -1,452 +1,452 @@
 module.exports = {
-  "movies": {
-    "elasticsearch": {
-      "index": "movies",
-      "type": "movie"
+  movies: {
+    elasticsearch: {
+      index: 'movies',
+      type: 'movie',
     },
-    "modeMap": {
-      "word": "",
-      "autocomplete": ".keyword"
+    modeMap: {
+      word: '',
+      autocomplete: '.keyword',
     },
-    "fields": {
-      "actors": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+    fields: {
+      actors: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "actors",
-        "label": "Actors",
-        "order": 0
+        field: 'actors',
+        label: 'Actors',
+        order: 0,
       },
-      "awards": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      awards: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "awards",
-        "label": "Awards",
-        "order": 0
+        field: 'awards',
+        label: 'Awards',
+        order: 0,
       },
-      "countries": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      countries: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "countries",
-        "label": "Countries",
-        "order": 0
+        field: 'countries',
+        label: 'Countries',
+        order: 0,
       },
-      "directors": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      directors: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "directors",
-        "label": "Directors",
-        "order": 0
+        field: 'directors',
+        label: 'Directors',
+        order: 0,
       },
-      "genres": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      genres: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "genres",
-        "label": "Genres",
-        "order": 0
+        field: 'genres',
+        label: 'Genres',
+        order: 0,
       },
-      "imdbId": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      imdbId: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "imdbId",
-        "label": "Imdb Id",
-        "order": 0
+        field: 'imdbId',
+        label: 'Imdb Id',
+        order: 0,
       },
-      "imdbRating": {
-        "typeDefault": "number",
-        "typeOptions": ["number"],
-        "elasticsearch": {
-          "dataType": "float"
+      imdbRating: {
+        typeDefault: 'number',
+        typeOptions: ['number'],
+        elasticsearch: {
+          dataType: 'float',
         },
-        "field": "imdbRating",
-        "label": "Imdb Rating",
-        "order": 0
+        field: 'imdbRating',
+        label: 'Imdb Rating',
+        order: 0,
       },
-      "imdbVotes": {
-        "typeDefault": "number",
-        "typeOptions": ["number"],
-        "elasticsearch": {
-          "dataType": "long"
+      imdbVotes: {
+        typeDefault: 'number',
+        typeOptions: ['number'],
+        elasticsearch: {
+          dataType: 'long',
         },
-        "field": "imdbVotes",
-        "label": "Imdb Votes",
-        "order": 0
+        field: 'imdbVotes',
+        label: 'Imdb Votes',
+        order: 0,
       },
-      "languages": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      languages: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "languages",
-        "label": "Languages",
-        "order": 0
+        field: 'languages',
+        label: 'Languages',
+        order: 0,
       },
-      "metaScore": {
-        "typeDefault": "number",
-        "typeOptions": ["number"],
-        "elasticsearch": {
-          "dataType": "long"
+      metaScore: {
+        typeDefault: 'number',
+        typeOptions: ['number'],
+        elasticsearch: {
+          dataType: 'long',
         },
-        "field": "metaScore",
-        "label": "Meta Score",
-        "order": 0
+        field: 'metaScore',
+        label: 'Meta Score',
+        order: 0,
       },
-      "plot": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      plot: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "plot",
-        "label": "Plot",
-        "order": 0
+        field: 'plot',
+        label: 'Plot',
+        order: 0,
       },
-      "poster": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      poster: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "poster",
-        "label": "Poster",
-        "order": 0
+        field: 'poster',
+        label: 'Poster',
+        order: 0,
       },
-      "rated": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      rated: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "rated",
-        "label": "Rated",
-        "order": 0
+        field: 'rated',
+        label: 'Rated',
+        order: 0,
       },
-      "released": {
-        "typeDefault": "date",
-        "typeOptions": ["date"],
-        "elasticsearch": {
-          "dataType": "date"
+      released: {
+        typeDefault: 'date',
+        typeOptions: ['date'],
+        elasticsearch: {
+          dataType: 'date',
         },
-        "field": "released",
-        "label": "Released",
-        "order": 0
+        field: 'released',
+        label: 'Released',
+        order: 0,
       },
-      "runtimeMinutes": {
-        "typeDefault": "number",
-        "typeOptions": ["number"],
-        "elasticsearch": {
-          "dataType": "long"
+      runtimeMinutes: {
+        typeDefault: 'number',
+        typeOptions: ['number'],
+        elasticsearch: {
+          dataType: 'long',
         },
-        "field": "runtimeMinutes",
-        "label": "Runtime Minutes",
-        "order": 0
+        field: 'runtimeMinutes',
+        label: 'Runtime Minutes',
+        order: 0,
       },
-      "title": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      title: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "title",
-        "label": "Title",
-        "order": 0
+        field: 'title',
+        label: 'Title',
+        order: 0,
       },
-      "type": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      type: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "type",
-        "label": "Type",
-        "order": 0
+        field: 'type',
+        label: 'Type',
+        order: 0,
       },
-      "writers": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      writers: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "writers",
-        "label": "Writers",
-        "order": 0
+        field: 'writers',
+        label: 'Writers',
+        order: 0,
       },
-      "year": {
-        "typeDefault": "number",
-        "typeOptions": ["number"],
-        "elasticsearch": {
-          "dataType": "long"
+      year: {
+        typeDefault: 'number',
+        typeOptions: ['number'],
+        elasticsearch: {
+          dataType: 'long',
         },
-        "field": "year",
-        "label": "Year",
-        "order": 0
+        field: 'year',
+        label: 'Year',
+        order: 0,
       },
-      "yearEnded": {
-        "typeDefault": "number",
-        "typeOptions": ["number"],
-        "elasticsearch": {
-          "dataType": "long"
+      yearEnded: {
+        typeDefault: 'number',
+        typeOptions: ['number'],
+        elasticsearch: {
+          dataType: 'long',
         },
-        "field": "yearEnded",
-        "label": "Year Ended",
-        "order": 0
-      }
-    }
+        field: 'yearEnded',
+        label: 'Year Ended',
+        order: 0,
+      },
+    },
   },
-  "imdb": {
-    "elasticsearch": {
-      "index": "imdb",
-      "type": "movie"
+  imdb: {
+    elasticsearch: {
+      index: 'imdb',
+      type: 'movie',
     },
-    "modeMap": {
-      "word": "",
-      "autocomplete": ".keyword"
+    modeMap: {
+      word: '',
+      autocomplete: '.keyword',
     },
-    "fields": {
-      "actors": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+    fields: {
+      actors: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "actors",
-        "label": "Actors",
-        "order": 0
+        field: 'actors',
+        label: 'Actors',
+        order: 0,
       },
-      "awards": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      awards: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "awards",
-        "label": "Awards",
-        "order": 0
+        field: 'awards',
+        label: 'Awards',
+        order: 0,
       },
-      "countries": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      countries: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "countries",
-        "label": "Countries",
-        "order": 0
+        field: 'countries',
+        label: 'Countries',
+        order: 0,
       },
-      "directors": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      directors: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "directors",
-        "label": "Directors",
-        "order": 0
+        field: 'directors',
+        label: 'Directors',
+        order: 0,
       },
-      "genres": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      genres: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "genres",
-        "label": "Genres",
-        "order": 0
+        field: 'genres',
+        label: 'Genres',
+        order: 0,
       },
-      "imdbId": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      imdbId: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "imdbId",
-        "label": "Imdb Id",
-        "order": 0
+        field: 'imdbId',
+        label: 'Imdb Id',
+        order: 0,
       },
-      "imdbRating": {
-        "typeDefault": "number",
-        "typeOptions": ["number"],
-        "elasticsearch": {
-          "dataType": "float"
+      imdbRating: {
+        typeDefault: 'number',
+        typeOptions: ['number'],
+        elasticsearch: {
+          dataType: 'float',
         },
-        "field": "imdbRating",
-        "label": "Imdb Rating",
-        "order": 0
+        field: 'imdbRating',
+        label: 'Imdb Rating',
+        order: 0,
       },
-      "imdbVotes": {
-        "typeDefault": "number",
-        "typeOptions": ["number"],
-        "elasticsearch": {
-          "dataType": "long"
+      imdbVotes: {
+        typeDefault: 'number',
+        typeOptions: ['number'],
+        elasticsearch: {
+          dataType: 'long',
         },
-        "field": "imdbVotes",
-        "label": "Imdb Votes",
-        "order": 0
+        field: 'imdbVotes',
+        label: 'Imdb Votes',
+        order: 0,
       },
-      "languages": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      languages: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "languages",
-        "label": "Languages",
-        "order": 0
+        field: 'languages',
+        label: 'Languages',
+        order: 0,
       },
-      "metaScore": {
-        "typeDefault": "number",
-        "typeOptions": ["number"],
-        "elasticsearch": {
-          "dataType": "long"
+      metaScore: {
+        typeDefault: 'number',
+        typeOptions: ['number'],
+        elasticsearch: {
+          dataType: 'long',
         },
-        "field": "metaScore",
-        "label": "Meta Score",
-        "order": 0
+        field: 'metaScore',
+        label: 'Meta Score',
+        order: 0,
       },
-      "plot": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      plot: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "plot",
-        "label": "Plot",
-        "order": 0
+        field: 'plot',
+        label: 'Plot',
+        order: 0,
       },
-      "poster": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      poster: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "poster",
-        "label": "Poster",
-        "order": 0
+        field: 'poster',
+        label: 'Poster',
+        order: 0,
       },
-      "rated": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      rated: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "rated",
-        "label": "Rated",
-        "order": 0
+        field: 'rated',
+        label: 'Rated',
+        order: 0,
       },
-      "released": {
-        "typeDefault": "date",
-        "typeOptions": ["date"],
-        "elasticsearch": {
-          "dataType": "date"
+      released: {
+        typeDefault: 'date',
+        typeOptions: ['date'],
+        elasticsearch: {
+          dataType: 'date',
         },
-        "field": "released",
-        "label": "Released",
-        "order": 0
+        field: 'released',
+        label: 'Released',
+        order: 0,
       },
-      "runtimeMinutes": {
-        "typeDefault": "number",
-        "typeOptions": ["number"],
-        "elasticsearch": {
-          "dataType": "long"
+      runtimeMinutes: {
+        typeDefault: 'number',
+        typeOptions: ['number'],
+        elasticsearch: {
+          dataType: 'long',
         },
-        "field": "runtimeMinutes",
-        "label": "Runtime Minutes",
-        "order": 0
+        field: 'runtimeMinutes',
+        label: 'Runtime Minutes',
+        order: 0,
       },
-      "title": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      title: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "title",
-        "label": "Title",
-        "order": 0
+        field: 'title',
+        label: 'Title',
+        order: 0,
       },
-      "type": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      type: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "type",
-        "label": "Type",
-        "order": 0
+        field: 'type',
+        label: 'Type',
+        order: 0,
       },
-      "writers": {
-        "typeDefault": "facet",
-        "typeOptions": ["facet", "query"],
-        "elasticsearch": {
-          "dataType": "text",
-          "notAnalyzedField": "keyword"
+      writers: {
+        typeDefault: 'facet',
+        typeOptions: ['facet', 'query'],
+        elasticsearch: {
+          dataType: 'text',
+          notAnalyzedField: 'keyword',
         },
-        "field": "writers",
-        "label": "Writers",
-        "order": 0
+        field: 'writers',
+        label: 'Writers',
+        order: 0,
       },
-      "year": {
-        "typeDefault": "number",
-        "typeOptions": ["number"],
-        "elasticsearch": {
-          "dataType": "long"
+      year: {
+        typeDefault: 'number',
+        typeOptions: ['number'],
+        elasticsearch: {
+          dataType: 'long',
         },
-        "field": "year",
-        "label": "Year",
-        "order": 0
+        field: 'year',
+        label: 'Year',
+        order: 0,
       },
-      "yearEnded": {
-        "typeDefault": "number",
-        "typeOptions": ["number"],
-        "elasticsearch": {
-          "dataType": "long"
+      yearEnded: {
+        typeDefault: 'number',
+        typeOptions: ['number'],
+        elasticsearch: {
+          dataType: 'long',
         },
-        "field": "yearEnded",
-        "label": "Year Ended",
-        "order": 0
-      }
-    }
-  }
+        field: 'yearEnded',
+        label: 'Year Ended',
+        order: 0,
+      },
+    },
+  },
 }

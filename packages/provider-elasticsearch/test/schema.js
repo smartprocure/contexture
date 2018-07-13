@@ -1,15 +1,18 @@
 let _ = require('lodash/fp')
 let F = require('futil-js')
 
-let {fromMappingsWithAliases} = require('../src/schema')
-let {exampleTypeSchemaMapping} = require('../src/example-types/schemaMapping')
+let { fromMappingsWithAliases } = require('../src/schema')
+let { exampleTypeSchemaMapping } = require('../src/example-types/schemaMapping')
 let { expect } = require('chai')
 
 let imdbMapping = require('./schema-data/imdb-mapping')
 let imdbAliases = require('./schema-data/imdb-aliases')
 let imdbSchema = require('./schema-data/imdb-schema')
 
-let processSchemas = _.flow(fromMappingsWithAliases, exampleTypeSchemaMapping)
+let processSchemas = _.flow(
+  fromMappingsWithAliases,
+  exampleTypeSchemaMapping
+)
 
 describe.only('schemas', () => {
   it('should work with imdb', () => {
