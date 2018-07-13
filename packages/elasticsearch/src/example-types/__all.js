@@ -31,5 +31,5 @@ module.exports = {
   termsStatsHits: require('./termsStatsHits'),
   terms_stats: require('./terms_stats'),
   text: require('./text'),
-  twoLevelMatch: require('./twoLevelMatch')
+  twoLevelMatch: require('./twoLevelMatch'),
 }
