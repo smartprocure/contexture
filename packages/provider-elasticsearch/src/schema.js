@@ -61,13 +61,20 @@ let fromEsIndexMapping = _.mapValues(
   )
 )
 
+let copySchemasToAliases = schemas =>
+  _.flow(
+    _.mapValues(x => _.keys(x.aliases)),
+    F.invertByArray,
+    // Just takes the first index that matched the alias
+    _.mapValues(([x]) => schemas[x])
+  )
+
 let fromMappingsWithAliases = (mappings, aliases) => {
   let schemas = fromEsIndexMapping(mappings)
   return _.flow(
-    _.mapValues(x => _.keys(x.aliases)),
-    F.invertByArray,
-    _.mapValues(([x]) => schemas[x]),
+    copySchemasToAliases(schemas),
     _.merge(schemas),
+    // Apply indexes at the end so aliases don't get indexes for the non aliased mappings
     F.mapValuesIndexed((val, index) =>
       _.merge({ elasticsearch: { index } }, val)
     )
