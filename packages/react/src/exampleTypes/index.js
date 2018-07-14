@@ -10,6 +10,7 @@ import ResultPager from './ResultPager'
 import DateHistogram from './DateHistogram'
 import TermsStats from './TermsStats'
 import { partial } from '../utils/mobx-react-utils'
+import ModalDefault from '../layout/Modal'
 
 export default (
   {
@@ -20,7 +21,9 @@ export default (
     Checkbox = partial({ type: 'checkbox' }, 'input'),
     RadioList,
     TagsInput,
-    Table,
+    Table = 'table',
+    Modal = ModalDefault,
+    FieldPicker,
   } = {}
 ) => {
   let Components = {
@@ -30,7 +33,7 @@ export default (
     DateRangePicker,
     Query: partial({ TextInput }, Query),
     TagsQuery: partial({ TagsInput }, TagsQuery),
-    ResultTable: Table ? partial({ Table }, ResultTable) : ResultTable,
+    ResultTable: partial({ Table, Modal, FieldPicker }, ResultTable),
     ResultCount,
     ResultPager,
     DateHistogram,
