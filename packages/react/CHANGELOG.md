@@ -3,6 +3,7 @@
 * Improve ResultTable field drop down styling
 * Add Text example type
 * Add LensInput to layout
+* Export FilterAdder, ModalFilterAdder, FilterList components, and Layout components at the root for easier importing
 
 # 1.5.1
 * Support disabling pager items in grey vest
