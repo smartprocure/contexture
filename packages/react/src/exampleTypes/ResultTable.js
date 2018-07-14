@@ -32,7 +32,7 @@ let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
 
 let menuIconStyle = { display: 'inline-block', width: '1em', textAlign: 'center' }
-let popoverStyle = { textAlign: 'left', padding: '5px', fontWeight: 'normal' }
+let popoverStyle = { textAlign: 'left', padding: '5px', fontWeight: 'normal', cursor: 'pointer' }
 let Header = withStateLens({ popover: false, adding: false })(
   observer(({
     popover,
@@ -47,7 +47,7 @@ let Header = withStateLens({ popover: false, adding: false })(
     addOptions
   }) => {
     return (
-      <th>
+      <th style={{cursor: 'pointer'}}>
         <a onClick={F.flip(popover)}>
           {label}{' '}
           {field === node.sortField && (node.sortDir === 'asc' ? '▲' : '▼')}
