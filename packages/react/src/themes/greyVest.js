@@ -3,8 +3,7 @@ import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { observer } from 'mobx-react'
 import { partial, withStateLens, hover } from '../utils/mobx-react-utils'
-import { Flex, TextHighlight } from '../layout'
-import ModalFilterAdder from '../ModalFilterAdder'
+import { Flex, TextHighlight, FilteredPicker, ModalFilterAdder } from '../'
 import ExampleTypeConstructor from '../exampleTypes/'
 
 export let Input = x => (
@@ -71,7 +70,7 @@ export let GVStyle = () => (
         color: #454545;
       }
       
-      .gv-input, .gv-body select, .gv-body button, .gv-body input {
+      .gv-input, .gv-body select, .gv-body input {
         outline: none;
         font-size: 16px;
         font-family: Lato;
@@ -123,8 +122,15 @@ export let GVStyle = () => (
 )
 export let Table = x => <table className="gv-table" {...x} />
 
-export let Button = ({ isActive, primary, style = {}, ...x }) => (
-  <button
+export let Button = ({
+  isActive,
+  primary,
+  style = {},
+  as: As = 'button',
+  ...x
+}) => (
+  <As
+    className="gv-input"
     style={{
       minWidth: '150px',
       padding: '5px',
@@ -213,5 +219,9 @@ export let ExampleTypes = ExampleTypeConstructor({
   Checkbox,
   RadioList: ButtonRadio,
   Table,
+  FieldPicker: partial(
+    { Input, Highlight, Item: ListGroupItem },
+    FilteredPicker
+  ),
 })
 export let Pager = partial({ Item: PagerItem }, ExampleTypes.ResultPager)

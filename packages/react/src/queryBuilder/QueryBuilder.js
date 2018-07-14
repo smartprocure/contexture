@@ -39,6 +39,7 @@ let ContextureClientBridge = (Types, Tree) => {
     },
   }))
   return {
+    lens: Tree.lens,
     getNode: Tree.getNode,
     add: tree => Tree.add(tree.path, blankNode()),
     remove: (tree, node) => Tree.remove(node.path),

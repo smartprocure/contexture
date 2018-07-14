@@ -5,12 +5,10 @@ import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { Provider, observer } from 'mobx-react'
 
-import { Awaiter, Flex } from '../../src/layout/'
-import QueryBuilder from '../../src/queryBuilder/'
+import { Awaiter, Flex, QueryBuilder } from '../../src/'
 import { getESSchemas } from '../../src/utils/schema'
-import ExampleTypes from '../../src/exampleTypes/'
-import { Input } from '../DemoControls'
-let { ResultCount, ResultTable, TypeMap } = ExampleTypes({ Input })
+import { Input, ExampleTypes } from '../DemoControls'
+let { ResultCount, ResultTable, TypeMap } = ExampleTypes
 
 import Contexture, { es, schemas, updateClient } from './contexture'
 
@@ -110,7 +108,10 @@ let Story = observer(() => {
                       path={['root', 'criteria']}
                     />
                     <ResultCount path={['root', 'results']} />
-                    <ResultTable path={['root', 'results']} infer />
+                    <ResultTable
+                      path={['root', 'results']}
+                      fields={schemas[tree.tree.schema].fields}
+                    />
                   </div>
                 </Provider>
               </div>

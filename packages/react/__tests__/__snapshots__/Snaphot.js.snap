@@ -337,6 +337,64 @@ exports[`Storyshots Example Types Full Demo 1`] = `
           <div
             style={Object {}}
           >
+            <input
+              loading={undefined}
+              node={
+                Object {
+                  "field": "title",
+                  "key": "titleText",
+                  "path": Array [
+                    "titleText",
+                  ],
+                  "type": "text",
+                  "value": "",
+                }
+              }
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              path={
+                Array [
+                  "titleText",
+                ]
+              }
+              placeholder={undefined}
+              style={
+                Object {
+                  "background": "rgba(255, 255, 255, 0.7)",
+                  "border": "solid 1px #efefef",
+                  "borderRadius": "30px",
+                  "boxSizing": "border-box",
+                  "display": "block",
+                  "margin": "0 auto",
+                  "outline": "none",
+                  "padding": "5px",
+                  "textIndent": "5px",
+                  "transition": "background 0.3s",
+                  "width": "100%",
+                }
+              }
+              tree={
+                Object {
+                  "getNode": [Function],
+                  "lens": [Function],
+                  "mutate": [Function],
+                }
+              }
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          style={
+            Object {
+              "marginBottom": "25px",
+            }
+          }
+        >
+          <div
+            style={Object {}}
+          >
             <div
               className="contexture-facet"
             >
@@ -1015,7 +1073,13 @@ exports[`Storyshots Example Types Full Demo 1`] = `
               <table>
                 <thead>
                   <tr>
-                    <th>
+                    <th
+                      style={
+                        Object {
+                          "cursor": "pointer",
+                        }
+                      }
+                    >
                       <a
                         onClick={[Function]}
                       >
@@ -1023,7 +1087,13 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                          
                       </a>
                     </th>
-                    <th>
+                    <th
+                      style={
+                        Object {
+                          "cursor": "pointer",
+                        }
+                      }
+                    >
                       <a
                         onClick={[Function]}
                       >
@@ -1031,7 +1101,13 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                          
                       </a>
                     </th>
-                    <th>
+                    <th
+                      style={
+                        Object {
+                          "cursor": "pointer",
+                        }
+                      }
+                    >
                       <a
                         onClick={[Function]}
                       >
@@ -1039,7 +1115,13 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                          
                       </a>
                     </th>
-                    <th>
+                    <th
+                      style={
+                        Object {
+                          "cursor": "pointer",
+                        }
+                      }
+                    >
                       <a
                         onClick={[Function]}
                       >
@@ -1047,7 +1129,13 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                          
                       </a>
                     </th>
-                    <th>
+                    <th
+                      style={
+                        Object {
+                          "cursor": "pointer",
+                        }
+                      }
+                    >
                       <a
                         onClick={[Function]}
                       >
@@ -1143,12 +1231,16 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
   <div
     style={Object {}}
   >
-    <table
-      className="example-table"
-    >
+    <table>
       <thead>
         <tr>
-          <th>
+          <th
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
             <a
               onClick={[Function]}
             >
@@ -1156,7 +1248,13 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
                
             </a>
           </th>
-          <th>
+          <th
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
             <a
               onClick={[Function]}
             >
@@ -1164,7 +1262,13 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
                
             </a>
           </th>
-          <th>
+          <th
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
             <a
               onClick={[Function]}
             >
@@ -1172,7 +1276,13 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
                
             </a>
           </th>
-          <th>
+          <th
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
             <a
               onClick={[Function]}
             >
@@ -1180,7 +1290,13 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
                
             </a>
           </th>
-          <th>
+          <th
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
             <a
               onClick={[Function]}
             >
@@ -1457,7 +1573,7 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         color: #454545;
       }
       
-      .gv-input, .gv-body select, .gv-body button, .gv-body input {
+      .gv-input, .gv-body select, .gv-body input {
         outline: none;
         font-size: 16px;
         font-family: Lato;
@@ -4465,7 +4581,73 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                                       "width": "100%",
                                                     }
                                                   }
-                                                />
+                                                >
+                                                  <div
+                                                    style={Object {}}
+                                                  >
+                                                    <input
+                                                      loading={null}
+                                                      node={
+                                                        Object {
+                                                          "context": null,
+                                                          "error": null,
+                                                          "field": null,
+                                                          "hasValue": null,
+                                                          "key": "txt filter 4b",
+                                                          "lastUpdateTime": null,
+                                                          "markedForUpdate": null,
+                                                          "missedUpdate": null,
+                                                          "path": Array [
+                                                            "root",
+                                                            "group24",
+                                                            "group2",
+                                                            "txt filter 4b",
+                                                          ],
+                                                          "paused": null,
+                                                          "type": "text",
+                                                          "updating": null,
+                                                          "updatingDeferred": null,
+                                                          "updatingPromise": null,
+                                                          "value": "",
+                                                        }
+                                                      }
+                                                      onBlur={[Function]}
+                                                      onChange={[Function]}
+                                                      onFocus={[Function]}
+                                                      placeholder={undefined}
+                                                      style={
+                                                        Object {
+                                                          "background": "rgba(255, 255, 255, 0.7)",
+                                                          "border": "solid 1px #efefef",
+                                                          "borderRadius": "30px",
+                                                          "boxSizing": "border-box",
+                                                          "display": "block",
+                                                          "margin": "0 auto",
+                                                          "outline": "none",
+                                                          "padding": "5px",
+                                                          "textIndent": "5px",
+                                                          "transition": "background 0.3s",
+                                                          "width": "100%",
+                                                        }
+                                                      }
+                                                      tree={
+                                                        Object {
+                                                          "add": [Function],
+                                                          "adding": false,
+                                                          "getNode": [Function],
+                                                          "indent": [Function],
+                                                          "join": [Function],
+                                                          "lens": [Function],
+                                                          "move": [Function],
+                                                          "mutate": [Function],
+                                                          "remove": [Function],
+                                                          "typeChange": [Function],
+                                                        }
+                                                      }
+                                                      value=""
+                                                    />
+                                                  </div>
+                                                </div>
                                               </div>
                                               <div
                                                 style={

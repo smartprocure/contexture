@@ -7,9 +7,8 @@ import {
   focus,
   partial,
 } from '../src/utils/mobx-react-utils'
-import { TextHighlight } from '../src/layout/'
 import ExampleTypeConstructor from '../src/exampleTypes/'
-import ModalFilterAdder from '../src/ModalFilterAdder'
+import { TextHighlight, FilteredPicker, ModalFilterAdder } from '../src'
 
 export let Button = x => (
   <button
@@ -114,6 +113,17 @@ export let Adder = ModalFilterAdder({
   Item: ListGroupItem,
 })
 
-export let ExampleTypes = ExampleTypeConstructor({ Input })
+export let ExampleTypes = ExampleTypeConstructor({
+  Input,
+  Table: 'table',
+  FieldPicker: partial(
+    {
+      Input,
+      Highlight,
+      Item: ListGroupItem,
+    },
+    FilteredPicker
+  ),
+})
 let { ResultPager } = ExampleTypes
 export let Pager = partial({ Item: PagerItem }, ResultPager)
