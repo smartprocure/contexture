@@ -5,6 +5,7 @@ import { observer } from 'mobx-react'
 import InjectTreeNode from '../utils/injectTreeNode'
 import Popover from '../layout/Popover'
 import { withStateLens } from '../utils/mobx-react-utils'
+import { fieldsToOptions } from '../FilterAdder'
 
 // For futil?
 let onlyWhen = f => F.unless(f, () => {})
@@ -30,54 +31,80 @@ let inferSchema = _.flow(
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
 
-let Header = withStateLens({ popover: false })(
-  observer(({ popover, field: { field, label }, mutate, schema, node }) => (
-    <th>
-      <a onClick={F.flip(popover)}>
-        {label}{' '}
-        {field === node.sortField && (node.sortDir === 'asc' ? '▲' : '▼')}
-      </a>
-      <Popover isOpen={popover}>
-        <div style={{ textAlign: 'left' }}>
-          <div>
-            <a onClick={() => mutate({ sortField: field, sortDir: 'asc' })}>
-              ▲ Sort Ascending
-            </a>
-          </div>
-          <div>
-            <a onClick={() => mutate({ sortField: field, sortDir: 'desc' })}>
-              ▼ Sort Descending
-            </a>
-          </div>
-          <div>
-            <a
-              onClick={() =>
-                mutate({
-                  include: _.without([field], getIncludes(schema, node)),
-                })
-              }
+let menuIconStyle = { display: 'inline-block', width: '1em', textAlign: 'center' }
+let popoverStyle = { textAlign: 'left', padding: '5px', fontWeight: 'normal' }
+let Header = withStateLens({ popover: false, adding: false })(
+  observer(({
+    popover,
+    field: { field, label },
+    mutate,
+    schema,
+    node,
+    adding,
+    Modal,
+    FieldPicker
+  }) => {
+    let includes = getIncludes(schema, node)
+    let addOptions = _.reject(
+      x => _.contains(x.value, includes),
+      fieldsToOptions(schema)
+    )
+    return (
+      <th>
+        <a onClick={F.flip(popover)}>
+          {label}{' '}
+          {field === node.sortField && (node.sortDir === 'asc' ? '▲' : '▼')}
+        </a>
+        <Popover isOpen={popover}>
+          <div style={popoverStyle}>
+            <div onClick={() => mutate({ sortField: field, sortDir: 'asc' })}>
+              <span style={menuIconStyle}>▲</span> Sort Ascending
+            </div>
+            <div onClick={() => mutate({ sortField: field, sortDir: 'desc' })}>
+              <span style={menuIconStyle}>▼</span> Sort Descending
+            </div>
+            <div
+              onClick={() => mutate({ include: _.without([field], includes) })}
             >
-              x Remove Column
-            </a>
+              <span style={menuIconStyle}>x</span> Remove Column
+            </div>
+            {
+              Modal && FieldPicker && !!addOptions.length &&
+              <div onClick={F.on(adding)}>
+                <span style={menuIconStyle}>+</span> Add Column
+              </div>
+            }
           </div>
-        </div>
-      </Popover>
-    </th>
-  ))
+          {Modal && FieldPicker && <Modal isOpen={adding}>
+            <FieldPicker            
+              options={addOptions}
+              onChange={field =>{
+                let include = getIncludes(schema, node)
+                if (!_.contains(field, include))
+                  mutate({ include: [...include, field] })
+                F.off(adding)()
+              }}
+            />
+          </Modal>}
+        </Popover>
+      </th>
+    )
+  })
 )
 Header.displayName = 'Header'
 
 let ResultTable = InjectTreeNode(
-  observer(({ node, fields, infer, tree, path, Table = 'table' }) => {
+  observer(({ node, fields, infer, tree, path, Table = 'table', Modal, FieldPicker }) => {
     let mutate = tree.mutate(path)
     let schema = _.flow(
       _.merge(infer && inferSchema(node)),
       _.values,
-      _.orderBy('order', 'desc'),
-      _.filter(
-        x => _.isEmpty(node.include) || _.includes(x.field, node.include)
-      )
+      _.orderBy('order', 'desc')
     )(fields)
+    let visibleFields = _.filter(
+      x => _.isEmpty(node.include) || _.includes(x.field, node.include),
+      schema
+    )
     return (
       !!getResults(node).length && (
         <Table>
@@ -88,10 +115,10 @@ let ResultTable = InjectTreeNode(
                   <Header
                     key={x.field}
                     field={x}
-                    {...{ mutate, schema, node }}
+                    {...{ mutate, schema, node, Modal, FieldPicker }}
                   />
                 ),
-                schema
+                visibleFields
               )}
             </tr>
           </thead>
@@ -105,7 +132,7 @@ let ResultTable = InjectTreeNode(
                         {display(getRecord(x)[field], getRecord(x))}
                       </Cell>
                     ),
-                    schema
+                    visibleFields
                   )}
                 </tr>
               ),
