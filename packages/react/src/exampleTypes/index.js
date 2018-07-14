@@ -9,6 +9,7 @@ import ResultTable from './ResultTable'
 import ResultPager from './ResultPager'
 import DateHistogram from './DateHistogram'
 import TermsStats from './TermsStats'
+import Text from './Text'
 import { partial } from '../utils/mobx-react-utils'
 import ModalDefault from '../layout/Modal'
 
@@ -38,6 +39,7 @@ export default (
     ResultPager,
     DateHistogram,
     TermsStats,
+    Text: partial({ Input }, Text),
   }
   let TypeMap = {
     facet: Components.Facet,
@@ -45,6 +47,7 @@ export default (
     number: Components.Number,
     date: Components.Date,
     tagsQuery: Components.TagsQuery,
+    text: Components.Text
   }
   return { ...Components, TypeMap }
 }

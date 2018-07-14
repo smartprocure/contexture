@@ -1,6 +1,7 @@
 # 1.6.0
 * Add support for adding columns to `ResultTable` (note that it doesn't work with `infer`ed fields)
 * Improve ResultTable field drop down styling
+* Add Text example type
 * Add LensInput to layout
 
 # 1.5.1
