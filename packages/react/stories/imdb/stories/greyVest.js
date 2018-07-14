@@ -14,6 +14,8 @@ import {
   Button,
   Pager,
   ExampleTypes,
+  Checkbox,
+  ButtonRadio
 } from '../../../src/themes/greyVest'
 let {
   ResultCount,
@@ -128,79 +130,94 @@ export default () => (
     <Awaiter promise={schemas}>
       {schemas => (
         <Provider tree={tree}>
-          <div style={{ background: '#f4f4f4' }}>
-            <Grid gap="22px" columns="1fr 4fr" style={{ margin: '0 22px' }}>
-              <div>
-                <h1>Filters</h1>
-                <SpacedList>
-                  <div>
-                    <Label>Released</Label>
-                    <DateRangePicker
-                      path={['root', 'status']}
-                      ranges={[
-                        { label: 'All Time', from: '', to: '' },
-                        { label: 'This Year', from: 'now/y', to: '' },
-                        { label: 'Last Year', from: 'now-1y/y', to: 'now/y' },
-                      ]}
-                    />
-                  </div>
-                  <div>
-                    <Label>Title</Label>
-                    Contains
-                    <TagsQuery path={['root', 'titleContains']} />
-                    Does Not Contain
-                    <TagsQuery path={['root', 'titleDoesNotContain']} />
-                  </div>
-                  <FilterList
-                    path={['root', 'criteria']}
-                    fields={schemas.movies.fields}
-                    typeComponents={TypeMap}
+          <Grid gap="22px" columns="1fr 4fr" style={{ margin: '0 22px' }}>
+            <div>
+              <h1>Filters</h1>
+              <SpacedList>
+                <div>
+                  <Label>Released</Label>
+                  <DateRangePicker
+                    path={['root', 'status']}
+                    ranges={[
+                      { label: 'All Time', from: '', to: '' },
+                      { label: 'This Year', from: 'now/y', to: '' },
+                      { label: 'Last Year', from: 'now-1y/y', to: 'now/y' },
+                    ]}
                   />
-                  <Adder
-                    path={['root', 'criteria']}
-                    fields={schemas.movies.fields}
-                    uniqueFields
-                  />
-                </SpacedList>
-              </div>
-              <div>
-                <Grid columns="1fr 25px 150px">
-                  <TagsQuery path={['root', 'bar']} />
-                  <input
-                    type="checkbox"
+                </div>
+                <div>
+                  <Label>Title</Label>
+                  Contains
+                  <TagsQuery path={['root', 'titleContains']} />
+                  Does Not Contain
+                  <TagsQuery path={['root', 'titleDoesNotContain']} />
+                </div>
+                <FilterList
+                  path={['root', 'criteria']}
+                  fields={schemas.movies.fields}
+                  typeComponents={TypeMap}
+                />
+                <Adder
+                  path={['root', 'criteria']}
+                  fields={schemas.movies.fields}
+                  uniqueFields
+                />
+              </SpacedList>
+            </div>
+            <div>
+              <Grid columns="1fr 25px 150px" style={{ alignItems: 'center' }}>
+                <TagsQuery path={['root', 'bar']} />
+                <Checkbox
                     checked={state.autoUpdate}
-                    onChange={e => {
-                      let val = !!e.target.checked
+                    onChange={val => {
                       tree.disableAutoUpdate = !val
-                      state.autoUpdate = val
+                      state.autoUpdate = !!val
                     }}
                   />
-                  {!state.autoUpdate && (
-                    <Button onClick={tree.triggerUpdate} primary>
-                      Search
-                    </Button>
-                  )}
-                </Grid>
-
+                {!state.autoUpdate && (
+                  <Button onClick={tree.triggerUpdate} primary>
+                    Search
+                  </Button>
+                )}
+              </Grid>
+              <Flex
+                style={{
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
                 <h1>
                   <Flex>
                     {/* Wrapping in Flex makes ResultCount not break lines when updaing */}
                     Results (<ResultCount path={['root', 'results']} />)
                   </Flex>
                 </h1>
-
-                <div className="gv-box">
-                  <ResultTable
-                    path={['root', 'results']}
-                    fields={schemas[tree.tree.schema].fields}
+                <Flex>
+                  <ButtonRadio
+                    options={[
+                      {label: 'AutoSearch On', value: true},
+                      {label: 'AutoSearch Off', value: false}
+                    ]}
+                    value={state.autoUpdate}
+                    onChange={val => {
+                      tree.disableAutoUpdate = !val
+                      state.autoUpdate = !!val
+                    }}
                   />
-                  <Flex style={{ justifyContent: 'space-around' }}>
-                    <Pager path={['root', 'results']} />
-                  </Flex>
-                </div>
+                </Flex>
+              </Flex>
+              <div className="gv-box">
+                <ResultTable
+                  path={['root', 'results']}
+                  fields={schemas[tree.tree.schema].fields}
+                />
+                <Flex
+                  style={{ justifyContent: 'space-around', padding: '10px' }}
+                >
+                  <Pager path={['root', 'results']} />
+                </Flex>
               </div>
-            </Grid>
-          </div>
+            </div>
+          </Grid>
         </Provider>
       )}
     </Awaiter>
