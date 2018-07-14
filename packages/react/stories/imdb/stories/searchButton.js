@@ -83,6 +83,10 @@ let schemas = fromPromise(
     _.merge(_, {
       movies: {
         fields: {
+          poster: {
+            display: x => <img src={x} width="180" height="270" />,
+            order: 1,
+          },
           released: { label: 'Release Date' },
         },
       },
@@ -150,13 +154,7 @@ export default () => (
                 <div style={{ overflowX: 'auto' }}>
                   <ResultTable
                     path={['searchRoot', 'results']}
-                    fields={{
-                      poster: {
-                        display: x => <img src={x} width="180" height="270" />,
-                        order: 1,
-                      },
-                    }}
-                    infer
+                    fields={schemas.movies.fields}
                   />
                 </div>
                 <Flex style={{ justifyContent: 'space-around' }}>
