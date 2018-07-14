@@ -98,8 +98,15 @@ let ResultTable = InjectTreeNode(
     let isIncluded = x => _.isEmpty(node.include) || _.includes(x.field, node.include)
     let visibleFields = _.filter(isIncluded, schema)
     let hiddenFields = _.reject(isIncluded, schema)
-    let includes = getIncludes(schema, node)
-    let addOptions = fieldsToOptions(hiddenFields)
+    let headerProps = {
+      mutate,
+      schema,
+      node,
+      Modal,
+      FieldPicker,
+      includes: getIncludes(schema, node),
+      addOptions: fieldsToOptions(hiddenFields)
+    }
     
     return (
       !!getResults(node).length && (
@@ -107,13 +114,7 @@ let ResultTable = InjectTreeNode(
           <thead>
             <tr>
               {_.map(
-                x => (
-                  <Header
-                    key={x.field}
-                    field={x}
-                    {...{ mutate, schema, node, Modal, FieldPicker, includes, addOptions }}
-                  />
-                ),
+                x => (<Header key={x.field} field={x} {...headerProps} />),
                 visibleFields
               )}
             </tr>
