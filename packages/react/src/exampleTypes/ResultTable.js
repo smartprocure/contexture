@@ -42,13 +42,10 @@ let Header = withStateLens({ popover: false, adding: false })(
     node,
     adding,
     Modal,
-    FieldPicker
+    FieldPicker,
+    includes,
+    addOptions
   }) => {
-    let includes = getIncludes(schema, node)
-    let addOptions = _.reject(
-      x => _.contains(x.value, includes),
-      fieldsToOptions(schema)
-    )
     return (
       <th>
         <a onClick={F.flip(popover)}>
@@ -79,9 +76,8 @@ let Header = withStateLens({ popover: false, adding: false })(
             <FieldPicker            
               options={addOptions}
               onChange={field =>{
-                let include = getIncludes(schema, node)
-                if (!_.contains(field, include))
-                  mutate({ include: [...include, field] })
+                if (!_.contains(field, includes))
+                  mutate({ include: [...includes, field] })
                 F.off(adding)()
               }}
             />
@@ -101,10 +97,12 @@ let ResultTable = InjectTreeNode(
       _.values,
       _.orderBy('order', 'desc')
     )(fields)
-    let visibleFields = _.filter(
-      x => _.isEmpty(node.include) || _.includes(x.field, node.include),
-      schema
-    )
+    let isIncluded = x => _.isEmpty(node.include) || _.includes(x.field, node.include)
+    let visibleFields = _.filter(isIncluded, schema)
+    let hiddenFields = _.reject(isIncluded, schema)
+    let includes = getIncludes(schema, node)
+    let addOptions = fieldsToOptions(hiddenFields)
+    
     return (
       !!getResults(node).length && (
         <Table>
@@ -115,7 +113,7 @@ let ResultTable = InjectTreeNode(
                   <Header
                     key={x.field}
                     field={x}
-                    {...{ mutate, schema, node, Modal, FieldPicker }}
+                    {...{ mutate, schema, node, Modal, FieldPicker, includes, addOptions }}
                   />
                 ),
                 visibleFields
