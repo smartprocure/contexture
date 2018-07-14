@@ -108,36 +108,35 @@ let ResultTable = InjectTreeNode(
       addOptions: fieldsToOptions(hiddenFields)
     }
     
+    if (!getResults(node).length) return null
     return (
-      !!getResults(node).length && (
-        <Table>
-          <thead>
-            <tr>
-              {_.map(
-                x => (<Header key={x.field} field={x} {...headerProps} />),
-                visibleFields
-              )}
-            </tr>
-          </thead>
-          <tbody>
+      <Table>
+        <thead>
+          <tr>
             {_.map(
-              x => (
-                <tr key={x._id}>
-                  {_.map(
-                    ({ field, display = x => x, Cell = 'td' }) => (
-                      <Cell key={field}>
-                        {display(getRecord(x)[field], getRecord(x))}
-                      </Cell>
-                    ),
-                    visibleFields
-                  )}
-                </tr>
-              ),
-              getResults(node)
+              x => (<Header key={x.field} field={x} {...headerProps} />),
+              visibleFields
             )}
-          </tbody>
-        </Table>
-      )
+          </tr>
+        </thead>
+        <tbody>
+          {_.map(
+            x => (
+              <tr key={x._id}>
+                {_.map(
+                  ({ field, display = x => x, Cell = 'td' }) => (
+                    <Cell key={field}>
+                      {display(getRecord(x)[field], getRecord(x))}
+                    </Cell>
+                  ),
+                  visibleFields
+                )}
+              </tr>
+            ),
+            getResults(node)
+          )}
+        </tbody>
+      </Table>
     )
   })
 )
