@@ -4,7 +4,7 @@ import LensInput from '../layout/LensInput'
 
 let Text = injectTreeNode(
   inject((context, { tree, node, prop = 'value' }) => ({
-    lens: tree.lens(node.path, prop)
+    lens: tree.lens(node.path, prop),
   }))(LensInput)
 )
 

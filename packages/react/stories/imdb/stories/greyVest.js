@@ -11,7 +11,7 @@ import {
   Flex,
   Awaiter,
   SpacedList,
-  Grid
+  Grid,
 } from '../../../src'
 import {
   GVStyle,
@@ -20,7 +20,7 @@ import {
   Pager,
   ExampleTypes,
   Checkbox,
-  ButtonRadio
+  ButtonRadio,
 } from '../../../src/themes/greyVest'
 let {
   ResultCount,
@@ -173,12 +173,12 @@ export default () => (
               <Grid columns="1fr 25px 150px" style={{ alignItems: 'center' }}>
                 <TagsQuery path={['root', 'bar']} />
                 <Checkbox
-                    checked={state.autoUpdate}
-                    onChange={val => {
-                      tree.disableAutoUpdate = !val
-                      state.autoUpdate = !!val
-                    }}
-                  />
+                  checked={state.autoUpdate}
+                  onChange={val => {
+                    tree.disableAutoUpdate = !val
+                    state.autoUpdate = !!val
+                  }}
+                />
                 {!state.autoUpdate && (
                   <Button onClick={tree.triggerUpdate} primary>
                     Search
@@ -189,7 +189,8 @@ export default () => (
                 style={{
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                }}>
+                }}
+              >
                 <h1>
                   <Flex>
                     {/* Wrapping in Flex makes ResultCount not break lines when updaing */}
@@ -199,8 +200,8 @@ export default () => (
                 <Flex>
                   <ButtonRadio
                     options={[
-                      {label: 'AutoSearch On', value: true},
-                      {label: 'AutoSearch Off', value: false}
+                      { label: 'AutoSearch On', value: true },
+                      { label: 'AutoSearch Off', value: false },
                     ]}
                     value={state.autoUpdate}
                     onChange={val => {

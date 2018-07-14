@@ -116,11 +116,14 @@ export let Adder = ModalFilterAdder({
 export let ExampleTypes = ExampleTypeConstructor({
   Input,
   Table: 'table',
-  FieldPicker: partial({
-    Input,
-    Highlight,
-    Item: ListGroupItem
-  }, FilteredPicker)
+  FieldPicker: partial(
+    {
+      Input,
+      Highlight,
+      Item: ListGroupItem,
+    },
+    FilteredPicker
+  ),
 })
 let { ResultPager } = ExampleTypes
 export let Pager = partial({ Item: PagerItem }, ResultPager)

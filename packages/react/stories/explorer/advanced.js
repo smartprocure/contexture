@@ -108,7 +108,10 @@ let Story = observer(() => {
                       path={['root', 'criteria']}
                     />
                     <ResultCount path={['root', 'results']} />
-                    <ResultTable path={['root', 'results']} fields={schemas[tree.tree.schema].fields} />
+                    <ResultTable
+                      path={['root', 'results']}
+                      fields={schemas[tree.tree.schema].fields}
+                    />
                   </div>
                 </Provider>
               </div>

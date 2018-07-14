@@ -47,7 +47,7 @@ export default (
     number: Components.Number,
     date: Components.Date,
     tagsQuery: Components.TagsQuery,
-    text: Components.Text
+    text: Components.Text,
   }
   return { ...Components, TypeMap }
 }

@@ -122,9 +122,15 @@ export let GVStyle = () => (
 )
 export let Table = x => <table className="gv-table" {...x} />
 
-export let Button = ({ isActive, primary, style = {}, as: As = 'button', ...x }) => (
+export let Button = ({
+  isActive,
+  primary,
+  style = {},
+  as: As = 'button',
+  ...x
+}) => (
   <As
-    className='gv-input'
+    className="gv-input"
     style={{
       minWidth: '150px',
       padding: '5px',
@@ -213,6 +219,9 @@ export let ExampleTypes = ExampleTypeConstructor({
   Checkbox,
   RadioList: ButtonRadio,
   Table,
-  FieldPicker: partial({ Input, Highlight, Item: ListGroupItem }, FilteredPicker)
+  FieldPicker: partial(
+    { Input, Highlight, Item: ListGroupItem },
+    FilteredPicker
+  ),
 })
 export let Pager = partial({ Item: PagerItem }, ExampleTypes.ResultPager)

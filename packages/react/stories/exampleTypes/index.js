@@ -12,7 +12,6 @@ let treeLens = _.curry((tree, path, prop) => ({
   set: value => tree.mutate(path, { [prop]: value }),
 }))
 
-
 let tree = observable({
   facet: {
     key: 'facet',
