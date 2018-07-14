@@ -1,4 +1,5 @@
 # 0.6.0
+* `facet` options are sorted by count
 * `facet` options filter now translates words to intersection regexes
 * `facet` properly filters _before_ limiting (so filter works properly)
 
