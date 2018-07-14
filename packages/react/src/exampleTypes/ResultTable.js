@@ -15,18 +15,22 @@ let flattenPlainObject = F.whenExists(FlattenTreeLeaves(PlainObjectTree))
 
 let getRecord = F.getOrReturn('_source')
 let getResults = _.get('context.response.results')
-let buildSchema = F.mapValuesIndexed((val, field) => ({
-  field,
-  label: F.autoLabel(field),
-  order: 0,
-  display: val.push && _.join(', '),
-}))
+let applyDefaults = F.mapValuesIndexed((val, field) =>
+  _.defaults(
+    {
+      field,
+      label: F.autoLabel(field),
+      order: 0,
+      display: x => F.when(_.get('push'), _.join(', '))(x)
+    },
+    val
+  )
+)
 let inferSchema = _.flow(
   getResults,
   _.head,
   getRecord,
-  flattenPlainObject,
-  buildSchema
+  flattenPlainObject
 )
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
@@ -92,6 +96,7 @@ let ResultTable = InjectTreeNode(
     let mutate = tree.mutate(path)
     let schema = _.flow(
       _.merge(infer && inferSchema(node)),
+      applyDefaults,
       _.values,
       _.orderBy('order', 'desc')
     )(fields)
