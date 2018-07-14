@@ -1,3 +1,6 @@
+# 2.13.5
+* Fix bug preventing nodes without contexts from being marked as no longer updating.
+
 # 2.13.4
 * Fix error with mobx 4 usage where event path itself is an observable.
 
