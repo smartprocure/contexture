@@ -1,3 +1,7 @@
+# 1.6.0
+* Add support for adding columns to `ResultTable` (note that it doesn't work with `infer`ed fields)
+* Improve ResultTable field drop down styling
+
 # 1.5.1
 * Support disabling pager items in grey vest
 * Don't rerender from StripedLoader when changing styles
