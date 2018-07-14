@@ -9,6 +9,7 @@ import { FilteredPicker, ModalPicker } from './Pickers'
 import Dynamic from './Dynamic'
 import BarChart from './BarChart'
 import { Tag, TagsInput } from './TagsInput'
+import LensInput from './LensInput'
 
 export {
   Awaiter,
@@ -24,4 +25,5 @@ export {
   BarChart,
   Tag,
   TagsInput,
+  LensInput,
 }
