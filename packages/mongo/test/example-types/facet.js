@@ -40,7 +40,8 @@ describe('facet', () => {
         field: 'myField',
       }
       await facet.result(context, search)
-      expect(queries[0][2].$limit).to.equal(10)
+      let limitAgg = _.find('$limit', queries[0])
+      expect(limitAgg.$limit).to.equal(10)
     })
     it('should allow unlimited queries', async () => {
       queries = []
@@ -49,7 +50,8 @@ describe('facet', () => {
         size: 0,
       }
       await facet.result(context, search)
-      expect(queries[0][2]).to.equal(undefined)
+      let limitAgg = _.find('$limit', queries[0])
+      expect(limitAgg).to.be.undefined
     })
     it('should support optionsFilter', async () => {
       queries = []
@@ -58,14 +60,40 @@ describe('facet', () => {
         optionsFilter: 'cable',
       }
       await facet.result(context, search)
-      expect(queries[0][3]).to.deep.equal({
+      let filterAgg = _.find('$match', queries[0])
+      expect(filterAgg).to.deep.equal({
         $match: {
           _id: {
-            $regex: 'cable',
+            $regex: '.*(?=.*cable.*).*',
             $options: 'i',
           },
         },
       })
+      // Also make sure that options filtering happens _before_ limiting
+      let filterIndex = _.findIndex('$match', queries[0])
+      let limitIndex = _.findIndex('$limit', queries[0])
+      expect(limitIndex > filterIndex).to.be.true
+    })
+    it('should support optionsFilter with multiple words', async () => {
+      queries = []
+      let context = {
+        field: 'myField',
+        optionsFilter: 'cable usb',
+      }
+      await facet.result(context, search)
+      let filterAgg = _.find('$match', queries[0])
+      expect(filterAgg).to.deep.equal({
+        $match: {
+          _id: {
+            $regex: '.*(?=.*cable.*)(?=.*usb.*).*',
+            $options: 'i',
+          },
+        },
+      })
+      // Also make sure that options filtering happens _before_ limiting
+      let filterIndex = _.findIndex('$match', queries[0])
+      let limitIndex = _.findIndex('$limit', queries[0])
+      expect(limitIndex > filterIndex).to.be.true
     })
   })
 })
