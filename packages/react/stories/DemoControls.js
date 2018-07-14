@@ -7,9 +7,8 @@ import {
   focus,
   partial,
 } from '../src/utils/mobx-react-utils'
-import { TextHighlight, FilteredPicker } from '../src/layout/'
 import ExampleTypeConstructor from '../src/exampleTypes/'
-import ModalFilterAdder from '../src/ModalFilterAdder'
+import { TextHighlight, FilteredPicker, ModalFilterAdder } from '../src'
 
 export let Button = x => (
   <button
