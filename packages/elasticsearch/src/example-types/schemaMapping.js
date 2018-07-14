@@ -10,14 +10,16 @@ let addNodeType = x => {
     float: 'number',
     double: 'number',
   })
-  return {
-    typeDefault,
-    // TODO: exists, bool, geo, text
-    typeOptions: {
-      text: ['facet', 'query'],
-    }[type] || [typeDefault],
-    ...x,
-  }
+  return _.extend(
+    {
+      typeDefault,
+      // TODO: exists, bool, geo, text
+      typeOptions: {
+        text: ['facet', 'query'],
+      }[type] || [typeDefault],
+    },
+    x
+  )
 }
 let exampleTypeSchemaMapping = _.mapValues(
   _.update('fields', _.mapValues(addNodeType))

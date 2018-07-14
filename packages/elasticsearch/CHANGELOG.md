@@ -1,3 +1,6 @@
+# 0.10.1
+* Avoid object spread in mapping util to make browser usage easier
+
 # 0.10.0
 * Format CHANGELOG
 * Added `getSchemas`, a utility that reads from es mappings/aliases to automatically generate schemas (complete with field definitions as well)
