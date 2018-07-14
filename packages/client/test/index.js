@@ -869,6 +869,35 @@ describe('lib', () => {
       expect(tree.getNode(['root', 'criteria1', 'vendors']).lastUpdateTime).to
         .not.be.null
     })
+    it('should not keep nodes without results updating forever', async () => {
+      let service = sinon.spy(mockService())
+      let Tree = ContextureClient({ debounce: 1, service })
+      let tree = Tree({
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'results',
+            type: 'results',
+            page: 1,
+          },
+          {
+            key: 'agencies',
+            field: 'Organization.Name',
+            type: 'facet',
+          },
+          {
+            key: 'vendors',
+            field: 'Vendor.Name',
+            type: 'text',
+          },
+        ],
+      })
+      expect(!!tree.getNode(['root', 'vendors']).updating).to.be.false
+      await tree.mutate(['root', 'agencies'], { values: ['City of Deerfield'] })
+      // Since this is `text`, it won't get a context back but should still not be updating
+      expect(!!tree.getNode(['root', 'vendors']).updating).to.be.false
+    })
   })
   it('should support subquery', async () => {
     let spy = sinon.spy(
