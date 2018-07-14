@@ -42,7 +42,6 @@ let Header = withStateLens({ popover: false, adding: false })(
     popover,
     field: { field, label },
     mutate,
-    schema,
     node,
     adding,
     Modal,
@@ -107,7 +106,6 @@ let ResultTable = InjectTreeNode(
     let hiddenFields = _.reject(isIncluded, schema)
     let headerProps = {
       mutate,
-      schema,
       node,
       Modal,
       FieldPicker,

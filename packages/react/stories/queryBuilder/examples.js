@@ -1,6 +1,5 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { observable } from 'mobx'
 import { exampleTypes, mockService } from 'contexture-client'
 import ContextureMobx from '../../src/utils/contexture-mobx'
 import QueryBuilder from '../../src/queryBuilder/'
