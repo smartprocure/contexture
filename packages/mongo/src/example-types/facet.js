@@ -1,6 +1,15 @@
 let _ = require('lodash/fp')
 let Promise = require('bluebird')
 
+let buildRegex = _.flow(
+  _.replace(/\s\s+/g, ' '),
+  _.trim,
+  _.split(' '),
+  _.map(x => `(?=.*${x}.*)`),
+  _.join(''),
+  x => `.*${x}.*`
+)
+
 module.exports = {
   hasValue: _.get('values.length'),
   filter: context => ({
@@ -23,16 +32,17 @@ module.exports = {
               },
             },
           },
-          context.size !== 0 && {
-            $limit: context.size || 10,
-          },
+          { $sort: { count: -1 } },
           context.optionsFilter && {
             $match: {
               _id: {
-                $regex: context.optionsFilter,
+                $regex: buildRegex(context.optionsFilter),
                 $options: 'i',
               },
             },
+          },
+          context.size !== 0 && {
+            $limit: context.size || 10,
           },
         ])
       ),
@@ -53,7 +63,6 @@ module.exports = {
         },
       ]),
     ]).spread((options, cardinality) => ({
-      total: 'NOT SUPPORTED YET',
       cardinality: _.get('0.count', cardinality),
       options: _.map(
         x => ({
