@@ -7,7 +7,7 @@ import ExampleTypes from '../../../src/exampleTypes/'
 import { Awaiter } from '../../../src/layout/'
 import Contexture, { esClient } from '../utils/contexture'
 import { getESSchemas } from '../../../src/utils/schema'
-import { Input } from '../..//DemoControls'
+import { Input } from '../../DemoControls'
 let { ResultCount, ResultTable, TypeMap } = ExampleTypes({ Input })
 
 let tree = Contexture({
