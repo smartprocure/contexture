@@ -131,9 +131,11 @@ export let ContextTree = _.curry(
       F.eachIndexed((node, path) => {
         let target = flat[path]
         let responseNode = _.pick(['context', 'error'], node)
-        if (target && !_.isEmpty(responseNode) && !isStale(node, target)) {
-          TreeInstance.onResult(decode(path), node, target)
-          mergeWith((oldValue, newValue) => newValue, target, responseNode)
+        if (target && !isStale(node, target)) {
+          if (!_.isEmpty(responseNode)) {
+            TreeInstance.onResult(decode(path), node, target)
+            mergeWith((oldValue, newValue) => newValue, target, responseNode)
+          }
           extend(target, { updating: false })
           try {
             target.updatingDeferred.resolve()
