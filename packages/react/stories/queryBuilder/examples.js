@@ -4,9 +4,8 @@ import { observable } from 'mobx'
 import { exampleTypes, mockService } from 'contexture-client'
 import ContextureMobx from '../../src/utils/contexture-mobx'
 import QueryBuilder from '../../src/queryBuilder/'
-import ExampleTypes from '../../src/exampleTypes/'
-import { Input } from '../DemoControls'
-let { TypeMap } = ExampleTypes({ Input })
+import { ExampleTypes } from '../DemoControls'
+let { TypeMap } = ExampleTypes
 
 let Client = ContextureMobx({
   debug: true,
@@ -14,7 +13,7 @@ let Client = ContextureMobx({
   service: mockService(),
 })
 
-let Node = (type, key) => observable({ key, type })
+let Node = (type, key) => ({ key, type })
 
 export default () =>
   storiesOf('QueryBuilder/Examples', module)

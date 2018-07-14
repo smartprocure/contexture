@@ -5,7 +5,13 @@ import { observable, set } from 'mobx'
 import { Provider } from 'mobx-react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import treeLens from 'contexture-client/src/lens'
+
+// Lifted from contexture-client since it's not exported
+let treeLens = _.curry((tree, path, prop) => ({
+  get: () => _.get(prop, tree.getNode(path)),
+  set: value => tree.mutate(path, { [prop]: value }),
+}))
+
 
 let tree = observable({
   facet: {
