@@ -5,6 +5,7 @@ import { observable, set } from 'mobx'
 import { Provider } from 'mobx-react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
+import treeLens from 'contexture-client/src/lens'
 
 let tree = observable({
   facet: {
@@ -36,6 +37,13 @@ let tree = observable({
     type: 'query',
     field: 'title',
     query: '',
+  },
+  titleText: {
+    key: 'titleText',
+    path: ['titleText'],
+    type: 'text',
+    field: 'title',
+    value: '',
   },
   tagsQuery: {
     key: 'tagsQuery',
@@ -157,20 +165,21 @@ let testTree = {
     set(tree[path], blob)
   }),
 }
-import SpacedList from '../../src/layout/SpacedList'
+testTree.lens = treeLens(testTree)
+
 let formatYear = x => new Date(x).getFullYear() + 1
-import ExampleTypes from '../../src/exampleTypes/'
-import { Flex } from '../../src/layout/Flex'
-import { Input } from '../DemoControls'
+import { Flex, SpacedList } from '../../src/layout'
+import { ExampleTypes } from '../DemoControls'
 let {
   Facet,
   Number,
   Query,
+  Text,
   ResultCount,
   ResultTable,
   DateHistogram,
   TagsQuery,
-} = ExampleTypes({ Input })
+} = ExampleTypes
 
 export default () =>
   storiesOf('Example Types', module)
@@ -190,6 +199,7 @@ export default () =>
               <div style={{ flex: 1 }}>
                 <SpacedList>
                   <TagsQuery path={['tagsQuery']} />
+                  <Text path={['titleText']} />
                   <Facet path={['facet']} />
                   <Facet path={['facet']} display={F.autoLabel} />
                   <Number path={['number']} />
