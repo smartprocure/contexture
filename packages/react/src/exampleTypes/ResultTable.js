@@ -94,6 +94,8 @@ Header.displayName = 'Header'
 let ResultTable = InjectTreeNode(
   observer(({ node, fields, infer, tree, path, Table = 'table', Modal, FieldPicker }) => {
     let mutate = tree.mutate(path)
+    // NOTE infer + add columns does not work together (except for anything explicitly passed in)
+    //   When removing a field, it's not longer on the record, so infer can't pick it up since it runs per render
     let schema = _.flow(
       _.merge(infer && inferSchema(node)),
       applyDefaults,
