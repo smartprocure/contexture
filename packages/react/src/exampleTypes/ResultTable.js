@@ -45,47 +45,45 @@ let Header = withStateLens({ popover: false, adding: false })(
     FieldPicker,
     includes,
     addOptions
-  }) => {
-    return (
-      <th style={{cursor: 'pointer'}}>
-        <a onClick={F.flip(popover)}>
-          {label}{' '}
-          {field === node.sortField && (node.sortDir === 'asc' ? '▲' : '▼')}
-        </a>
-        <Popover isOpen={popover}>
-          <div style={popoverStyle}>
-            <div onClick={() => mutate({ sortField: field, sortDir: 'asc' })}>
-              <span style={menuIconStyle}>▲</span> Sort Ascending
-            </div>
-            <div onClick={() => mutate({ sortField: field, sortDir: 'desc' })}>
-              <span style={menuIconStyle}>▼</span> Sort Descending
-            </div>
-            <div
-              onClick={() => mutate({ include: _.without([field], includes) })}
-            >
-              <span style={menuIconStyle}>x</span> Remove Column
-            </div>
-            {
-              Modal && FieldPicker && !!addOptions.length &&
-              <div onClick={F.on(adding)}>
-                <span style={menuIconStyle}>+</span> Add Column
-              </div>
-            }
+  }) => (
+    <th style={{ cursor: 'pointer' }}>
+      <a onClick={F.flip(popover)}>
+        {label}{' '}
+        {field === node.sortField && (node.sortDir === 'asc' ? '▲' : '▼')}
+      </a>
+      <Popover isOpen={popover}>
+        <div style={popoverStyle}>
+          <div onClick={() => mutate({ sortField: field, sortDir: 'asc' })}>
+            <span style={menuIconStyle}>▲</span> Sort Ascending
           </div>
-          {Modal && FieldPicker && <Modal isOpen={adding}>
-            <FieldPicker            
-              options={addOptions}
-              onChange={field =>{
-                if (!_.contains(field, includes))
-                  mutate({ include: [...includes, field] })
-                F.off(adding)()
-              }}
-            />
-          </Modal>}
-        </Popover>
-      </th>
-    )
-  })
+          <div onClick={() => mutate({ sortField: field, sortDir: 'desc' })}>
+            <span style={menuIconStyle}>▼</span> Sort Descending
+          </div>
+          <div
+            onClick={() => mutate({ include: _.without([field], includes) })}
+          >
+            <span style={menuIconStyle}>x</span> Remove Column
+          </div>
+          {
+            Modal && FieldPicker && !!addOptions.length &&
+            <div onClick={F.on(adding)}>
+              <span style={menuIconStyle}>+</span> Add Column
+            </div>
+          }
+        </div>
+        {Modal && FieldPicker && <Modal isOpen={adding}>
+          <FieldPicker            
+            options={addOptions}
+            onChange={field =>{
+              if (!_.contains(field, includes))
+                mutate({ include: [...includes, field] })
+              F.off(adding)()
+            }}
+          />
+        </Modal>}
+      </Popover>
+    </th>
+  ))
 )
 Header.displayName = 'Header'
 
