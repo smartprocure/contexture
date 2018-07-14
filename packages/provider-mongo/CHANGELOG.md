@@ -1,3 +1,8 @@
+# 0.6.0
+* `facet` options are sorted by count
+* `facet` options filter now translates words to intersection regexes
+* `facet` properly filters _before_ limiting (so filter works properly)
+
 # 0.5.0
 * Add `dateType ` support to date type (with `date`, `timestamp`, and `unix ` options)
 
