@@ -74,18 +74,18 @@ describe('facet', () => {
       let limitIndex = _.findIndex('$limit', queries[0])
       expect(limitIndex > filterIndex).to.be.true
     })
-    it('should support optionsFilter with multiple words', async () => {
+    it('should support optionsFilter with multiple words and spaces', async () => {
       queries = []
       let context = {
-        field: 'myField',
-        optionsFilter: 'cable usb',
+        field: 'categoriesInfo',
+        optionsFilter: '  dis  comp    ',
       }
       await facet.result(context, search)
       let filterAgg = _.find('$match', queries[0])
       expect(filterAgg).to.deep.equal({
         $match: {
           _id: {
-            $regex: '.*(?=.*cable.*)(?=.*usb.*).*',
+            $regex: '.*(?=.*dis.*)(?=.*comp.*).*',
             $options: 'i',
           },
         },
