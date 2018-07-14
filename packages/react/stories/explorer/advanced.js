@@ -5,8 +5,7 @@ import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { Provider, observer } from 'mobx-react'
 
-import { Awaiter, Flex } from '../../src/layout/'
-import QueryBuilder from '../../src/queryBuilder/'
+import { Awaiter, Flex, QueryBuilder } from '../../src/'
 import { getESSchemas } from '../../src/utils/schema'
 import { Input, ExampleTypes } from '../DemoControls'
 let { ResultCount, ResultTable, TypeMap } = ExampleTypes

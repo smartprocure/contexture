@@ -5,10 +5,8 @@ import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { Provider, observer } from 'mobx-react'
 
-import { Awaiter, Flex } from '../../src/layout/'
-import QueryBuilder from '../../src/queryBuilder/'
+import { QueryBuilder, FilterList, Awaiter, Flex } from '../../src/'
 import { getESSchemas } from '../../src/utils/schema'
-import { FilterList } from '../../src/FilterList'
 import { Input, ClampedHTML, Adder, Pager, ExampleTypes } from '../DemoControls'
 let { ResultCount, ResultTable, TypeMap } = ExampleTypes
 

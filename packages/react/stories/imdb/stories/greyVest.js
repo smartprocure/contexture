@@ -5,9 +5,14 @@ import { fromPromise } from 'mobx-utils'
 import { Provider } from 'mobx-react'
 import Contexture, { esClient } from '../utils/contexture'
 import { getESSchemas } from '../../../src/utils/schema'
-import { Flex, Awaiter, SpacedList, Grid } from '../../../src/layout/'
-import { FilterList, Label } from '../../../src/FilterList'
-
+import {
+  FilterList,
+  Label,
+  Flex,
+  Awaiter,
+  SpacedList,
+  Grid
+} from '../../../src'
 import {
   GVStyle,
   Adder,

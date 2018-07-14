@@ -5,8 +5,7 @@ import { fromPromise } from 'mobx-utils'
 import { Provider } from 'mobx-react'
 import Contexture, { esClient } from '../utils/contexture'
 import { getESSchemas } from '../../../src/utils/schema'
-import { Flex, Awaiter, SpacedList } from '../../../src/layout/'
-import { FilterList } from '../../../src/FilterList'
+import { Flex, Awaiter, SpacedList, FilterList } from '../../../src'
 import { Button, Adder, Pager, ExampleTypes } from '../../DemoControls'
 let {
   Query,
