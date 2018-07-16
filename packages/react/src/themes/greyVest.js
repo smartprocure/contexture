@@ -12,7 +12,7 @@ export let Input = ({ style = {}, ...x }) => (
       padding: '5px',
       textIndent: '5px',
       margin: '5px auto',
-      ...style
+      ...style,
     }}
     {...x}
   />
@@ -31,7 +31,7 @@ export let Checkbox = ({ checked, onChange, style = {} }) => (
       alignItems: 'center',
       margin: '2px',
       cursor: 'pointer',
-      style
+      style,
     }}
     onClick={() => onChange(!checked)}
   >
@@ -150,7 +150,12 @@ export let Button = ({
     {...x}
   />
 )
-export let ButtonRadio = ({ value, onChange = () => {}, options, style = {} }) => (
+export let ButtonRadio = ({
+  value,
+  onChange = () => {},
+  options,
+  style = {},
+}) => (
   <Flex style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
     {_.map(
       x => (
