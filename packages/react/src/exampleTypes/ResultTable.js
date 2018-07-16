@@ -3,8 +3,8 @@ import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { observer } from 'mobx-react'
 import InjectTreeNode from '../utils/injectTreeNode'
-import Popover from '../layout/Popover'
-import { withStateLens } from '../utils/mobx-react-utils'
+import { Popover, Dynamic } from '../layout'
+import { withStateLens, hover } from '../utils/mobx-react-utils'
 import { fieldsToOptions } from '../FilterAdder'
 
 // For futil?
@@ -13,19 +13,26 @@ let FlattenTreeLeaves = Tree => _.flow(Tree.flatten(), _.omitBy(Tree.traverse))
 let PlainObjectTree = F.tree(onlyWhen(_.isPlainObject))
 let flattenPlainObject = F.whenExists(FlattenTreeLeaves(PlainObjectTree))
 
+let pushAt = _.curry((index, val, arr) => {
+  let result = _.clone(arr)
+  result.splice(index, 0, val)
+  return result
+})
+let moveIndex = (from, to, arr) =>
+  _.flow(
+    _.pullAt(from),
+    pushAt(to, arr[from])
+  )(arr)
+
 let getRecord = F.getOrReturn('_source')
 let getResults = _.get('context.response.results')
-let applyDefaults = F.mapValuesIndexed((val, field) =>
-  _.defaults(
-    {
-      field,
-      label: F.autoLabel(field),
-      order: 0,
-      display: x => F.when(_.get('push'), _.join(', '))(x),
-    },
-    val
-  )
-)
+let applyDefaults = F.mapValuesIndexed((val, field) => ({
+  field,
+  label: F.autoLabel(field),
+  order: 0,
+  display: x => F.when(_.get('push'), _.join(', '))(x),
+  ...val,
+}))
 let inferSchema = _.flow(getResults, _.head, getRecord, flattenPlainObject)
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
@@ -34,54 +41,105 @@ let menuIconStyle = {
   display: 'inline-block',
   width: '1em',
   textAlign: 'center',
+  marginRight: '5px'
 }
+let Icon = ({icon}) => <span style={menuIconStyle}>{icon}</span>
+
 let popoverStyle = {
   textAlign: 'left',
-  padding: '5px',
+  padding: '10px',
   fontWeight: 'normal',
   cursor: 'pointer',
+  userSelect: 'none',
 }
-let Header = withStateLens({ popover: false, adding: false })(
+
+let Header = withStateLens({ popover: false, adding: false, filtering: false })(
   observer(
     ({
+      // Local State
+      i,
       popover,
-      field: { field, label },
-      mutate,
-      node,
       adding,
+      filtering,
+      
+      // Components (providerable?)
       Modal,
       FieldPicker,
+      ListGroupItem: Item,
+      typeComponents,
+      
+      // Contextual
+      field: { field, label },
       includes,
       addOptions,
-    }) => (
-      <th style={{ cursor: 'pointer' }}>
-        <a onClick={F.flip(popover)}>
-          {label}{' '}
-          {field === node.sortField && (node.sortDir === 'asc' ? '▲' : '▼')}
-        </a>
-        <Popover isOpen={popover}>
-          <div style={popoverStyle}>
-            <div onClick={() => mutate({ sortField: field, sortDir: 'asc' })}>
-              <span style={menuIconStyle}>▲</span> Sort Ascending
-            </div>
-            <div onClick={() => mutate({ sortField: field, sortDir: 'desc' })}>
-              <span style={menuIconStyle}>▼</span> Sort Descending
-            </div>
-            <div
+      addFilter,
+      tree,
+      node,
+      mutate,
+      criteria,
+    }) => {
+      let filterNode = criteria && _.find({field}, tree.getNode(criteria).children)
+      let filter = () => {
+        if (!filterNode) addFilter(field)
+        F.flip(filtering)()
+      }
+      return (
+        <th style={{ cursor: 'pointer' }}>
+          <a onClick={F.flip(popover)} style={filterNode && filterNode.hasValue ? {
+            // TODO: make configurable
+            color: 'rgb(0, 118, 222)'
+            
+          } : {}}>
+            {label}{' '}
+            {field === node.sortField && (node.sortDir === 'asc' ? '▲' : '▼')}
+          </a>
+          <Popover isOpen={popover} style={popoverStyle}>
+            <Item onClick={() => mutate({ sortField: field, sortDir: 'asc' })}>
+              <Icon icon="▲" />
+              Sort Ascending
+            </Item>
+            <Item onClick={() => mutate({ sortField: field, sortDir: 'desc' })}>
+              <Icon icon="▼" />
+              Sort Descending
+            </Item>
+            <Item
+              onClick={() => mutate({ include: moveIndex(i, i - 1, [...includes]) })}
+            >
+              <Icon icon="←" />
+              Move Left
+            </Item>
+            <Item
+              onClick={() => mutate({ include: moveIndex(i, i + 1, [...includes]) })}
+            >
+              <Icon icon="→" />
+              Move Right
+            </Item>
+            <Item
               onClick={() => mutate({ include: _.without([field], includes) })}
             >
-              <span style={menuIconStyle}>x</span> Remove Column
+              <Icon icon="x" />
+              Remove Column
+            </Item>
+            {Modal && FieldPicker && !!addOptions.length && (
+              <Item onClick={F.on(adding)}>
+                <Icon icon="+" />
+                Add Column
+              </Item>
+            )}
+            {criteria && <div>
+              <Item onClick={filter}>
+                <Icon icon={filterNode ? F.view(filtering) ? 'V' : '>' : '+' } />
+                Filter
+              </Item>
+              {F.view(filtering) && filterNode && 
+                <Dynamic
+                  component={typeComponents[filterNode.type]}
+                  path={[...filterNode.path]}
+                />
+              }
             </div>
-            {Modal &&
-              FieldPicker &&
-              !!addOptions.length && (
-                <div onClick={F.on(adding)}>
-                  <span style={menuIconStyle}>+</span> Add Column
-                </div>
-              )}
-          </div>
-          {Modal &&
-            FieldPicker && (
+            }
+            {Modal && FieldPicker && (
               <Modal isOpen={adding}>
                 <FieldPicker
                   options={addOptions}
@@ -93,9 +151,10 @@ let Header = withStateLens({ popover: false, adding: false })(
                 />
               </Modal>
             )}
-        </Popover>
-      </th>
-    )
+          </Popover>
+        </th>
+      )
+    }
   )
 )
 Header.displayName = 'Header'
@@ -103,14 +162,22 @@ Header.displayName = 'Header'
 let ResultTable = InjectTreeNode(
   observer(
     ({
-      node,
+      // Props
       fields,
       infer,
-      tree,
       path,
+      criteria,
+      
+      // From Provider
+      node,
+      tree,
+
+      // Theme/Components      
       Table = 'table',
       Modal,
+      ListGroupItem,
       FieldPicker,
+      typeComponents
     }) => {
       let mutate = tree.mutate(path)
       // NOTE infer + add columns does not work together (except for anything explicitly passed in)
@@ -121,17 +188,29 @@ let ResultTable = InjectTreeNode(
         _.values,
         _.orderBy('order', 'desc')
       )(fields)
-      let isIncluded = x =>
-        _.isEmpty(node.include) || _.includes(x.field, node.include)
-      let visibleFields = _.filter(isIncluded, schema)
+      let includes = getIncludes(schema, node)
+      let isIncluded = x => _.includes(x.field, includes)
+      let visibleFields = _.map(field => _.find({field}, schema), includes)
       let hiddenFields = _.reject(isIncluded, schema)
+
       let headerProps = {
-        mutate,
-        node,
         Modal,
         FieldPicker,
-        includes: getIncludes(schema, node),
+        ListGroupItem,
+        typeComponents,
+        
+        includes,
         addOptions: fieldsToOptions(hiddenFields),
+        addFilter: field =>
+          tree.add(criteria, {
+            key: _.uniqueId('add'),
+            field,
+            type: _.find({field}, schema).typeDefault,
+          }),
+        tree,
+        node,
+        mutate,
+        criteria,
       }
 
       if (!getResults(node).length) return null
@@ -139,8 +218,9 @@ let ResultTable = InjectTreeNode(
         <Table>
           <thead>
             <tr>
-              {_.map(
-                x => <Header key={x.field} field={x} {...headerProps} />,
+              {F.mapIndexed(
+                (x, i) =>
+                  <Header key={x.field} field={x} i={i} {...headerProps} />,
                 visibleFields
               )}
             </tr>
