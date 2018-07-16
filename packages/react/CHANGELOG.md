@@ -1,3 +1,6 @@
+﻿# 1.6.1
+* Made Grey Vest able to compose styles.
+
 # 1.6.0
 * Add support for adding columns to `ResultTable` (note that it doesn't work with `infer`ed fields)
 * Improve ResultTable field drop down styling
