@@ -31,7 +31,7 @@ export let Checkbox = ({ checked, onChange, style = {} }) => (
       alignItems: 'center',
       margin: '2px',
       cursor: 'pointer',
-      style,
+      ...style,
     }}
     onClick={() => onChange(!checked)}
   >
