@@ -4,7 +4,7 @@ import * as F from 'futil-js'
 import { observer } from 'mobx-react'
 import InjectTreeNode from '../utils/injectTreeNode'
 import { Popover, Dynamic } from '../layout'
-import { withStateLens, hover } from '../utils/mobx-react-utils'
+import { withStateLens } from '../utils/mobx-react-utils'
 import { fieldsToOptions } from '../FilterAdder'
 import { loading } from '../styles/generic'
 
@@ -91,13 +91,13 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
       }
       return (
         <th style={{ cursor: 'pointer' }}>
-          <HeaderCellDefault
+          <HeaderCell
             onClick={F.flip(popover)}
             activeFilter={_.get('hasValue', filterNode)}
           >
             {label}{' '}
             {field === node.sortField && (node.sortDir === 'asc' ? '▲' : '▼')}
-          </HeaderCellDefault>
+          </HeaderCell>
           <Popover isOpen={popover} style={popoverStyle}>
             <Item onClick={() => mutate({ sortField: field, sortDir: 'asc' })}>
               <Icon icon="▲" />
