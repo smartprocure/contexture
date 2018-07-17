@@ -60,10 +60,8 @@ let HeaderCellDefault = observer(({ activeFilter, style, ...props }) => (
 
 let Header = withStateLens({ popover: false, adding: false, filtering: false })(
   observer(({ // Local State
-    i, popover, adding, filtering,
-    // Components (providerable?)
-    Modal, FieldPicker, ListGroupItem: Item, typeComponents, HeaderCell = HeaderCellDefault,
-    // Contextual
+    i, popover, adding, filtering, // Components (providerable?)
+    Modal, FieldPicker, ListGroupItem: Item, typeComponents, HeaderCell = HeaderCellDefault, // Contextual
     field: { field, label }, includes, addOptions, addFilter, tree, node, mutate, criteria }) => {
     let filterNode =
       criteria && _.find({ field }, tree.getNode(criteria).children)
@@ -180,10 +178,8 @@ let TableBody = observer(({ node, visibleFields }) => (
 
 let ResultTable = InjectTreeNode(
   observer(({ // Props
-    fields, infer, path, criteria,
-    // From Provider
-    node, tree,
-    // Theme/Components
+    fields, infer, path, criteria, // From Provider
+    node, tree, // Theme/Components
     Table = 'table', HeaderCell, Modal, ListGroupItem, FieldPicker, typeComponents }) => {
     let mutate = tree.mutate(path)
     // NOTE infer + add columns does not work together (except for anything explicitly passed in)
