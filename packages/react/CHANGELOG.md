@@ -1,3 +1,6 @@
+# 1.7.1
+* Republish with build (CI published failed due to revoked token)
+
 # 1.7.0
 * Add support for column filtering and reordering to `ResultTable`
 * Add support for `loadingAware` flag on injectTreeNode
