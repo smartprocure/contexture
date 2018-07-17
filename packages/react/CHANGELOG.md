@@ -1,3 +1,8 @@
+# 1.8.0
+* Add support for `mapNodeToProps` on `FilterList`
+* Add support for `displayBlank` on `Facet`, which defaults to <i>Not Specified</i>
+* Make the main npm script be `dist` to support importing direct from contexture-react
+
 # 1.7.2
 * Made Grey Vest able to compose styles.
 
