@@ -128,7 +128,7 @@ let schemas = fromPromise(
 export default () => (
   <div className="gv-body">
     <link
-      href="https://fonts.googleapis.com/css?family=Lato"
+      href="https://fonts.googleapis.com/css?family=Lato:400,700,900"
       rel="stylesheet"
     />
     <GVStyle />
@@ -215,6 +215,8 @@ export default () => (
                 <ResultTable
                   path={['root', 'results']}
                   fields={schemas[tree.tree.schema].fields}
+                  criteria={['root', 'criteria']}
+                  typeComponents={TypeMap}
                 />
                 <Flex
                   style={{ justifyContent: 'space-around', padding: '10px' }}

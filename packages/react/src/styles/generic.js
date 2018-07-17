@@ -43,6 +43,11 @@ export let bgStriped = {
   backgroundSize: '1rem 1rem',
 }
 
+export let loading = {
+  ...bgStriped,
+  opacity: 0.5,
+}
+
 // Search
 export let joinColor = join =>
   ({
