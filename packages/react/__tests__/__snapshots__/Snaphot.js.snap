@@ -1082,6 +1082,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                     >
                       <a
                         onClick={[Function]}
+                        style={Object {}}
                       >
                         Id
                          
@@ -1096,6 +1097,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                     >
                       <a
                         onClick={[Function]}
+                        style={Object {}}
                       >
                         Title
                          
@@ -1110,6 +1112,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                     >
                       <a
                         onClick={[Function]}
+                        style={Object {}}
                       >
                         A
                          
@@ -1124,6 +1127,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                     >
                       <a
                         onClick={[Function]}
+                        style={Object {}}
                       >
                         B
                          
@@ -1138,6 +1142,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                     >
                       <a
                         onClick={[Function]}
+                        style={Object {}}
                       >
                         C
                          
@@ -1145,7 +1150,9 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                     </th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody
+                  style={Object {}}
+                >
                   <tr>
                     <td>
                       123
@@ -1243,6 +1250,7 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
           >
             <a
               onClick={[Function]}
+              style={Object {}}
             >
               Title
                
@@ -1257,6 +1265,7 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
           >
             <a
               onClick={[Function]}
+              style={Object {}}
             >
               Id
                
@@ -1271,6 +1280,7 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
           >
             <a
               onClick={[Function]}
+              style={Object {}}
             >
               A
                
@@ -1285,6 +1295,7 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
           >
             <a
               onClick={[Function]}
+              style={Object {}}
             >
               C
                
@@ -1299,6 +1310,7 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
           >
             <a
               onClick={[Function]}
+              style={Object {}}
             >
               Field B
                
@@ -1306,7 +1318,9 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
           </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody
+        style={Object {}}
+      >
         <tr>
           <td
             style={
@@ -1534,7 +1548,7 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
   className="gv-body"
 >
   <link
-    href="https://fonts.googleapis.com/css?family=Lato"
+    href="https://fonts.googleapis.com/css?family=Lato:400,700,900"
     rel="stylesheet"
   />
   <style>
