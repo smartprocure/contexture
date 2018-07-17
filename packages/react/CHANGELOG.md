@@ -1,3 +1,9 @@
+# 1.7.0
+* Add support for column filtering and reordering to `ResultTable`
+* Add support for `loadingAware` flag on injectTreeNode
+* Make `ResultTable` loading indicator only apply to the body and not the headers
+* Make `ResultTable` HeaderCell configurable (includes `activeFilter` prop)
+
 # 1.6.0
 * Add support for adding columns to `ResultTable` (note that it doesn't work with `infer`ed fields)
 * Improve ResultTable field drop down styling
