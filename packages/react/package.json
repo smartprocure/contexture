@@ -2,7 +2,7 @@
   "name": "contexture-react",
   "version": "1.7.2",
   "description": "React components for building contexture interfaces",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "npm run storybook",
     "pre-build": "rm -rf ./dist",
