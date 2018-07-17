@@ -4,7 +4,7 @@ import StripedLoader from './StripedLoader'
 
 export default (
   render,
-  { type, reactors, nodeProps = _.keys(reactors) } = {}
+  { type, reactors, nodeProps = _.keys(reactors), loadingAware = false } = {}
 ) =>
   injectDefaults(({ tree, node, group, path, ...props }) => {
     node = node || tree.getNode(path)
@@ -33,5 +33,9 @@ export default (
     } else if (!node)
       throw Error(`Node not provided, and couldn't find node at ${path}`)
 
-    return { tree, node, loading: node.markedForUpdate || node.updating }
+    return {
+      tree,
+      node,
+      ...loadingAware ? {} :{ loading: node.markedForUpdate || node.updating }
+    }
   })(StripedLoader(render))
