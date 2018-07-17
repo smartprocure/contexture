@@ -6,6 +6,7 @@ import InjectTreeNode from '../utils/injectTreeNode'
 import { Popover, Dynamic } from '../layout'
 import { withStateLens, hover } from '../utils/mobx-react-utils'
 import { fieldsToOptions } from '../FilterAdder'
+import { loading } from '../styles/generic'
 
 // For futil?
 let onlyWhen = f => F.unless(f, () => {})
@@ -159,6 +160,27 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
 )
 Header.displayName = 'Header'
 
+// Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
+let TableBody = observer(({node, visibleFields}) => (
+  <tbody style={node.markedForUpdate || node.updating ? loading : {}}>
+    { !!getResults(node).length && _.map(
+      x => (
+        <tr key={x._id}>
+          {_.map(
+            ({ field, display = x => x, Cell = 'td' }) => (
+              <Cell key={field}>
+                {display(getRecord(x)[field], getRecord(x))}
+              </Cell>
+            ),
+            visibleFields
+          )}
+        </tr>
+      ),
+      getResults(node)
+    )}
+  </tbody>
+))
+
 let ResultTable = InjectTreeNode(
   observer(
     ({
@@ -213,7 +235,6 @@ let ResultTable = InjectTreeNode(
         criteria,
       }
 
-      if (!getResults(node).length) return null
       return (
         <Table>
           <thead>
@@ -225,27 +246,12 @@ let ResultTable = InjectTreeNode(
               )}
             </tr>
           </thead>
-          <tbody>
-            {_.map(
-              x => (
-                <tr key={x._id}>
-                  {_.map(
-                    ({ field, display = x => x, Cell = 'td' }) => (
-                      <Cell key={field}>
-                        {display(getRecord(x)[field], getRecord(x))}
-                      </Cell>
-                    ),
-                    visibleFields
-                  )}
-                </tr>
-              ),
-              getResults(node)
-            )}
-          </tbody>
+          <TableBody node={node} visibleFields={visibleFields} />
         </Table>
       )
     }
-  )
+  ),
+  { loadingAware: true }
 )
 ResultTable.displayName = 'ResultTable'
 
