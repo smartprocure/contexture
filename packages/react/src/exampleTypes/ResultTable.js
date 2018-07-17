@@ -60,9 +60,7 @@ let HeaderCellDefault = observer(({ activeFilter, style, ...props }) => (
 
 let Header = withStateLens({ popover: false, adding: false, filtering: false })(
   observer(({ // Local State
-    i, popover, adding, filtering, // Components (providerable?)
-    Modal, FieldPicker, ListGroupItem: Item, typeComponents, HeaderCell = HeaderCellDefault, // Contextual
-    field: { field, label }, includes, addOptions, addFilter, tree, node, mutate, criteria }) => {
+    i, popover, adding, filtering, Modal, FieldPicker, ListGroupItem: Item, typeComponents, HeaderCell = HeaderCellDefault, field: { field, label }, includes, addOptions, addFilter, tree, node, mutate, criteria }) => { // Components (providerable?) // Contextual
     let filterNode =
       criteria && _.find({ field }, tree.getNode(criteria).children)
     let filter = () => {
@@ -178,9 +176,7 @@ let TableBody = observer(({ node, visibleFields }) => (
 
 let ResultTable = InjectTreeNode(
   observer(({ // Props
-    fields, infer, path, criteria, // From Provider
-    node, tree, // Theme/Components
-    Table = 'table', HeaderCell, Modal, ListGroupItem, FieldPicker, typeComponents }) => {
+    fields, infer, path, criteria, node, tree, Table = 'table', HeaderCell, Modal, ListGroupItem, FieldPicker, typeComponents }) => { // From Provider // Theme/Components
     let mutate = tree.mutate(path)
     // NOTE infer + add columns does not work together (except for anything explicitly passed in)
     //   When removing a field, it's not longer on the record, so infer can't pick it up since it runs per render
