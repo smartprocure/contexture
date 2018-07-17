@@ -6,15 +6,20 @@ import { partial, withStateLens, hover } from '../utils/mobx-react-utils'
 import { Flex, TextHighlight, FilteredPicker, ModalFilterAdder } from '../'
 import ExampleTypeConstructor from '../exampleTypes/'
 
-export let Input = x => (
+export let Input = ({ style = {}, ...x }) => (
   <input
-    style={{ padding: '5px', textIndent: '5px', margin: '5px auto' }}
+    style={{
+      padding: '5px',
+      textIndent: '5px',
+      margin: '5px auto',
+      ...style,
+    }}
     {...x}
   />
 )
 
 // Low effort custom checkbox
-export let Checkbox = ({ checked, onChange }) => (
+export let Checkbox = ({ checked, onChange, style = {} }) => (
   <div
     className="gv-input"
     style={{
@@ -26,6 +31,7 @@ export let Checkbox = ({ checked, onChange }) => (
       alignItems: 'center',
       margin: '2px',
       cursor: 'pointer',
+      ...style,
     }}
     onClick={() => onChange(!checked)}
   >
@@ -144,7 +150,12 @@ export let Button = ({
     {...x}
   />
 )
-export let ButtonRadio = ({ value, onChange = () => {}, options }) => (
+export let ButtonRadio = ({
+  value,
+  onChange = () => {},
+  options,
+  style = {},
+}) => (
   <Flex style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
     {_.map(
       x => (
@@ -152,6 +163,7 @@ export let ButtonRadio = ({ value, onChange = () => {}, options }) => (
           key={x.value}
           isActive={x.value === value}
           onClick={() => onChange(x.value)}
+          style={style}
         >
           {x.label}
         </Button>
@@ -162,9 +174,9 @@ export let ButtonRadio = ({ value, onChange = () => {}, options }) => (
 )
 
 // Lifted from demo theme to prevent codependency
-export let Highlight = x => (
+export let Highlight = ({ style = {}, ...x }) => (
   <TextHighlight
-    Wrap={x => <b style={{ backgroundColor: 'yellow' }} {...x} />}
+    Wrap={x => <b style={{ backgroundColor: 'yellow', ...style }} {...x} />}
     {...x}
   />
 )
@@ -191,7 +203,7 @@ export let Adder = ModalFilterAdder({
 })
 
 export let PagerItem = withStateLens({ hovering: false })(
-  observer(({ active, hovering, disabled, ...x }) => (
+  observer(({ active, hovering, disabled, style = {}, ...x }) => (
     <span
       style={{
         padding: '5px',
@@ -207,6 +219,7 @@ export let PagerItem = withStateLens({ hovering: false })(
           pointerEvents: 'none',
         }),
         cursor: disabled ? 'not-allowed' : 'pointer',
+        ...style,
       }}
       {...hover(hovering)}
       {...x}

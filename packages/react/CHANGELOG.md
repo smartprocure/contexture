@@ -1,3 +1,6 @@
+# 1.7.2
+* Made Grey Vest able to compose styles.
+
 # 1.7.1
 * Republish with build (CI published failed due to revoked token)
 
