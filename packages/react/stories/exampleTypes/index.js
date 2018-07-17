@@ -26,6 +26,10 @@ let tree = observable({
           count: 15,
         },
         {
+          name: '',
+          count: 4
+        },
+        {
           name: 'b',
           count: 3,
         },
