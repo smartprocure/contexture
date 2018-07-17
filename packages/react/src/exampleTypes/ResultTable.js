@@ -54,6 +54,10 @@ let popoverStyle = {
   userSelect: 'none',
 }
 
+let HeaderCellDefault = observer(({ activeFilter, style, ...props }) => (
+  <a style={{...activeFilter ? { fontWeight: 900 } : {}, ...style}} {...props} />
+))
+
 let Header = withStateLens({ popover: false, adding: false, filtering: false })(
   observer(
     ({
@@ -68,6 +72,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
       FieldPicker,
       ListGroupItem: Item,
       typeComponents,
+      HeaderCell = HeaderCellDefault,
       
       // Contextual
       field: { field, label },
@@ -86,14 +91,13 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
       }
       return (
         <th style={{ cursor: 'pointer' }}>
-          <a onClick={F.flip(popover)} style={filterNode && filterNode.hasValue ? {
-            // TODO: make configurable
-            color: 'rgb(0, 118, 222)'
-            
-          } : {}}>
+          <HeaderCellDefault
+            onClick={F.flip(popover)}
+            activeFilter={_.get('hasValue', filterNode)}
+          >
             {label}{' '}
             {field === node.sortField && (node.sortDir === 'asc' ? '▲' : '▼')}
-          </a>
+          </HeaderCellDefault>
           <Popover isOpen={popover} style={popoverStyle}>
             <Item onClick={() => mutate({ sortField: field, sortDir: 'asc' })}>
               <Icon icon="▲" />
@@ -196,6 +200,7 @@ let ResultTable = InjectTreeNode(
 
       // Theme/Components      
       Table = 'table',
+      HeaderCell,
       Modal,
       ListGroupItem,
       FieldPicker,
@@ -220,6 +225,7 @@ let ResultTable = InjectTreeNode(
         FieldPicker,
         ListGroupItem,
         typeComponents,
+        HeaderCell,
         
         includes,
         addOptions: fieldsToOptions(hiddenFields),
