@@ -45,7 +45,7 @@ export let bgStriped = {
 
 export let loading = {
   ...bgStriped,
-  opacity: 0.5
+  opacity: 0.5,
 }
 
 // Search

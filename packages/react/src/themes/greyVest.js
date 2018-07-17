@@ -223,6 +223,6 @@ export let ExampleTypes = ExampleTypeConstructor({
     { Input, Highlight, Item: ListGroupItem },
     FilteredPicker
   ),
-  ListGroupItem
+  ListGroupItem,
 })
 export let Pager = partial({ Item: PagerItem }, ExampleTypes.ResultPager)

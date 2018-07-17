@@ -25,7 +25,7 @@ export default (
     Table = 'table',
     Modal = ModalDefault,
     FieldPicker,
-    ListGroupItem = 'div'
+    ListGroupItem = 'div',
   } = {}
 ) => {
   let Components = {
@@ -35,7 +35,10 @@ export default (
     DateRangePicker,
     Query: partial({ TextInput }, Query),
     TagsQuery: partial({ TagsInput }, TagsQuery),
-    ResultTable: partial({ Table, Modal, FieldPicker, ListGroupItem }, ResultTable),
+    ResultTable: partial(
+      { Table, Modal, FieldPicker, ListGroupItem },
+      ResultTable
+    ),
     ResultCount,
     ResultPager,
     DateHistogram,
