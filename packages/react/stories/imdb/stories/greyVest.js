@@ -191,12 +191,7 @@ export default () => (
                   alignItems: 'center',
                 }}
               >
-                <h1>
-                  <Flex>
-                    {/* Wrapping in Flex makes ResultCount not break lines when updaing */}
-                    Results (<ResultCount path={['root', 'results']} />)
-                  </Flex>
-                </h1>
+                <h1>Results (<ResultCount path={['root', 'results']} />)</h1>
                 <Flex>
                   <ButtonRadio
                     options={[
