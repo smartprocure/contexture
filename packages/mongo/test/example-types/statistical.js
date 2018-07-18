@@ -42,7 +42,7 @@ describe('statistical', () => {
             type: 'statistical',
             field,
           },
-          x => []
+          () => []
         )
       ).eql({
         count: 0,
