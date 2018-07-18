@@ -7,6 +7,7 @@ import { Popover, Dynamic } from '../layout'
 import { withStateLens } from '../utils/mobx-react-utils'
 import { fieldsToOptions } from '../FilterAdder'
 import { loading } from '../styles/generic'
+import { applyDefaults } from '../utils/schema'
 
 // For futil?
 let onlyWhen = f => F.unless(f, () => {})
@@ -24,13 +25,6 @@ let moveIndex = (from, to, arr) =>
 
 let getRecord = F.getOrReturn('_source')
 let getResults = _.get('context.response.results')
-let applyDefaults = F.mapValuesIndexed((val, field) => ({
-  field,
-  label: F.autoLabel(field),
-  order: 0,
-  display: x => F.when(_.get('push'), _.join(', '))(x),
-  ...val,
-}))
 let inferSchema = _.flow(getResults, _.head, getRecord, flattenPlainObject)
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
