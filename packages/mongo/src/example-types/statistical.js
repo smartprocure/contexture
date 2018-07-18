@@ -23,5 +23,11 @@ module.exports = {
           },
         },
       ])
-    ),
+    ) || {
+      count: 0,
+      avg: 0,
+      max: 0,
+      min: 0,
+      sum: 0,
+    },
 }
