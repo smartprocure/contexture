@@ -26,7 +26,7 @@ export default () => (
             <SpacedList>
               <div>
                 <b>MetaScore</b>
-                <Number nodeKey="num" field="metaScore" min={0} max={100} />
+                <Number field="metaScore" min={0} max={100} />
               </div>
               <div>
                 <b>Genre</b>
@@ -39,7 +39,7 @@ export default () => (
             </SpacedList>
           </div>
           <div style={{ flex: 4, maxWidth: '80%' }}>
-            <ResultCount pageSize={6} nodeKey="results" />
+            <ResultCount pageSize={6} />
             <DateHistogram
               key_field="released"
               value_field="imdbVotes"
