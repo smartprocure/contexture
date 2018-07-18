@@ -60,6 +60,7 @@ let Facet = injectTreeNode(
       Checkbox = CheckboxDefault,
       RadioList = RadioListDefault,
       display = x => x,
+      displayBlank = () => <i>Not Specified</i>,
     }) => (
       <div className="contexture-facet">
         <RadioList
@@ -103,7 +104,7 @@ let Facet = injectTreeNode(
             >
               <Checkbox onChange={toggle} checked={checked} />
               <div style={{ flex: 2, padding: '0 5px' }} onClick={toggle}>
-                {display(name)}
+                {display(name) || displayBlank()}
               </div>
               <div>{count}</div>
             </Flex>

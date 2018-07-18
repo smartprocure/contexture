@@ -527,6 +527,37 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                     }
                   }
                 >
+                  <i>
+                    Not Specified
+                  </i>
+                </div>
+                <div>
+                  4
+                </div>
+              </div>
+              <div
+                style={
+                  Object {
+                    "alignItems": "baseline",
+                    "display": "flex",
+                    "justifyContent": "space-between",
+                  }
+                }
+              >
+                <input
+                  checked={false}
+                  onChange={[Function]}
+                  type="checkbox"
+                />
+                <div
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "flex": 2,
+                      "padding": "0 5px",
+                    }
+                  }
+                >
                   b
                 </div>
                 <div>
@@ -691,6 +722,37 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                 </div>
                 <div>
                   15
+                </div>
+              </div>
+              <div
+                style={
+                  Object {
+                    "alignItems": "baseline",
+                    "display": "flex",
+                    "justifyContent": "space-between",
+                  }
+                }
+              >
+                <input
+                  checked={false}
+                  onChange={[Function]}
+                  type="checkbox"
+                />
+                <div
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "flex": 2,
+                      "padding": "0 5px",
+                    }
+                  }
+                >
+                  <i>
+                    Not Specified
+                  </i>
+                </div>
+                <div>
+                  4
                 </div>
               </div>
               <div
@@ -1048,7 +1110,11 @@ exports[`Storyshots Example Types Full Demo 1`] = `
           }
         >
           <div
-            style={Object {}}
+            style={
+              Object {
+                "display": "inline-block",
+              }
+            }
           >
             <span>
               1 - 1 out of 1
@@ -1693,17 +1759,14 @@ exports[`Storyshots IMDB Quick Start 1`] = `
     <div
       style={
         Object {
-          "display": "flex",
+          "display": "grid",
+          "gridGap": "5px",
+          "gridTemplateColumns": "1fr 4fr",
+          "msGridTemplateColumns": "1fr 4fr",
         }
       }
     >
-      <div
-        style={
-          Object {
-            "flex": 1,
-          }
-        }
-      >
+      <div>
         <div
           style={
             Object {
@@ -1988,21 +2051,7 @@ exports[`Storyshots IMDB Quick Start 1`] = `
           </div>
         </div>
       </div>
-      <div
-        style={
-          Object {
-            "flex": 4,
-            "maxWidth": "80%",
-          }
-        }
-      >
-        <div
-          style={Object {}}
-        >
-          <span>
-            No Results
-          </span>
-        </div>
+      <div>
         <div
           style={Object {}}
         >
@@ -2015,6 +2064,28 @@ exports[`Storyshots IMDB Quick Start 1`] = `
               }
             }
           />
+        </div>
+        <div
+          style={
+            Object {
+              "display": "flex",
+              "justifyContent": "space-around",
+            }
+          }
+        >
+          <h3>
+            <div
+              style={
+                Object {
+                  "display": "inline-block",
+                }
+              }
+            >
+              <span>
+                No Results
+              </span>
+            </div>
+          </h3>
         </div>
         <div
           style={Object {}}
@@ -2041,21 +2112,60 @@ exports[`Storyshots IMDB Quick Start 1`] = `
             style={Object {}}
           >
             <div>
-              <span>
+              <span
+                disabled={true}
+                onMouseOut={[Function]}
+                onMouseOver={[Function]}
+                style={
+                  Object {
+                    "background": "white",
+                    "border": "solid 1px #ccc",
+                    "color": "#444",
+                    "cursor": "pointer",
+                    "padding": "5px",
+                  }
+                }
+              >
                 <a
                   onClick={[Function]}
                 >
                   ←
                 </a>
               </span>
-              <span>
+              <span
+                onMouseOut={[Function]}
+                onMouseOver={[Function]}
+                style={
+                  Object {
+                    "background": "white",
+                    "border": "solid 1px #ccc",
+                    "color": "#444",
+                    "cursor": "pointer",
+                    "fontWeight": "bold",
+                    "padding": "5px",
+                  }
+                }
+              >
                 <a
                   onClick={undefined}
                 >
                   1
                 </a>
               </span>
-              <span>
+              <span
+                disabled={true}
+                onMouseOut={[Function]}
+                onMouseOver={[Function]}
+                style={
+                  Object {
+                    "background": "white",
+                    "border": "solid 1px #ccc",
+                    "color": "#444",
+                    "cursor": "pointer",
+                    "padding": "5px",
+                  }
+                }
+              >
                 <a
                   onClick={[Function]}
                 >

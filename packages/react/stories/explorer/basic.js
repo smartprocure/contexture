@@ -6,11 +6,10 @@ import { fromPromise } from 'mobx-utils'
 import { Provider, observer } from 'mobx-react'
 
 import { QueryBuilder, FilterList, Awaiter, Flex } from '../../src/'
-import { getESSchemas } from '../../src/utils/schema'
 import { Input, ClampedHTML, Adder, Pager, ExampleTypes } from '../DemoControls'
 let { ResultCount, ResultTable, TypeMap } = ExampleTypes
 
-import Contexture, { es, schemas, updateClient } from './contexture'
+import Contexture, { updateClient } from './contexture'
 
 let state = observable({
   url: '',
@@ -69,10 +68,8 @@ let overrideLookups = _.each(schema => {
 
 let updateEs = host => {
   state.url = host
-  updateClient({ host })
   state.schemas = fromPromise(
-    getESSchemas(es.client).then(x => {
-      F.extendOn(schemas, x)
+    updateClient({ host }).then(x => {
       changeSchema(_.keys(x)[0])
       return x
     })

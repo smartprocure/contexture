@@ -7,30 +7,11 @@ import { Popover, Dynamic } from '../layout'
 import { withStateLens } from '../utils/mobx-react-utils'
 import { fieldsToOptions } from '../FilterAdder'
 import { loading } from '../styles/generic'
-
-// For futil?
-let onlyWhen = f => F.unless(f, () => {})
-let FlattenTreeLeaves = Tree => _.flow(Tree.flatten(), _.omitBy(Tree.traverse))
-let PlainObjectTree = F.tree(onlyWhen(_.isPlainObject))
-let flattenPlainObject = F.whenExists(FlattenTreeLeaves(PlainObjectTree))
-
-let pushAt = _.curry((index, val, arr) => {
-  let result = _.clone(arr)
-  result.splice(index, 0, val)
-  return result
-})
-let moveIndex = (from, to, arr) =>
-  _.flow(_.pullAt(from), pushAt(to, arr[from]))(arr)
+import { applyDefaults } from '../utils/schema'
+import { flattenPlainObject, moveIndex } from '../utils/futil'
 
 let getRecord = F.getOrReturn('_source')
 let getResults = _.get('context.response.results')
-let applyDefaults = F.mapValuesIndexed((val, field) => ({
-  field,
-  label: F.autoLabel(field),
-  order: 0,
-  display: x => F.when(_.get('push'), _.join(', '))(x),
-  ...val,
-}))
 let inferSchema = _.flow(getResults, _.head, getRecord, flattenPlainObject)
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)

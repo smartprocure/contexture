@@ -13,7 +13,10 @@ let ResultCount = injectTreeNode(
         : 'No Results'}
     </span>
   )),
-  exampleTypes.results
+  {
+    ...exampleTypes.results,
+    style: { display: 'inline-block' },
+  }
 )
 ResultCount.displayName = 'ResultCount'
 

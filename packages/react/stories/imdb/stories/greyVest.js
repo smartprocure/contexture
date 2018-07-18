@@ -3,8 +3,7 @@ import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { Provider } from 'mobx-react'
-import Contexture, { esClient } from '../utils/contexture'
-import { getESSchemas } from '../../../src/utils/schema'
+import Contexture, { updateSchemas } from '../utils/contexture'
 import {
   FilterList,
   Label,
@@ -46,7 +45,6 @@ let tree = Contexture({
       type: 'date',
       useDateMath: true,
     },
-
     {
       key: 'titleContains',
       type: 'tagsQuery',
@@ -105,7 +103,7 @@ let state = observable({
 
 let divs = _.map(x => <div key={x}>{x}</div>)
 let schemas = fromPromise(
-  getESSchemas(esClient)
+  updateSchemas()
     .then(
       _.merge(_, {
         movies: {
@@ -192,10 +190,7 @@ export default () => (
                 }}
               >
                 <h1>
-                  <Flex>
-                    {/* Wrapping in Flex makes ResultCount not break lines when updaing */}
-                    Results (<ResultCount path={['root', 'results']} />)
-                  </Flex>
+                  Results (<ResultCount path={['root', 'results']} />)
                 </h1>
                 <Flex>
                   <ButtonRadio

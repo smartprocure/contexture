@@ -1,8 +1,8 @@
 {
   "name": "contexture-react",
-  "version": "1.7.2",
+  "version": "1.8.0",
   "description": "React components for building contexture interfaces",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "npm run storybook",
     "pre-build": "rm -rf ./dist",
@@ -66,7 +66,7 @@
     "babel-preset-stage-1": "^6.24.1",
     "contexture": "^0.2.1",
     "contexture-client": "^2.13.6",
-    "contexture-elasticsearch": "^0.10.0",
+    "contexture-elasticsearch": "^0.10.1",
     "duti": "^0.9.3",
     "elasticsearch-browser": "^14.2.2",
     "eslint": "^4.12.1",

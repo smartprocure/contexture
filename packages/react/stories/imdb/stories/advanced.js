@@ -3,8 +3,7 @@ import React from 'react'
 import { Provider } from 'mobx-react'
 import { fromPromise } from 'mobx-utils'
 import { QueryBuilder, Awaiter } from '../../../src'
-import Contexture, { esClient } from '../utils/contexture'
-import { getESSchemas } from '../../../src/utils/schema'
+import Contexture, { updateSchemas } from '../utils/contexture'
 import { ExampleTypes } from '../../DemoControls'
 let { ResultCount, ResultTable, TypeMap } = ExampleTypes
 
@@ -41,7 +40,7 @@ let tree = Contexture({
 })
 
 let schemas = fromPromise(
-  getESSchemas(esClient).then(
+  updateSchemas().then(
     _.merge(_, {
       movies: {
         fields: {
