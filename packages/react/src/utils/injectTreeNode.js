@@ -10,7 +10,7 @@ let autoKey = x => F.compactJoin(
 
 export default (
   render,
-  { type, reactors, nodeProps = _.keys(reactors), loadingAware = false } = {}
+  { type, reactors, nodeProps = _.keys(reactors), loadingAware = false, style } = {}
 ) =>
   injectDefaults(({ tree, node, group, path, ...props }) => {
     node = node || tree.getNode(path)
@@ -49,4 +49,4 @@ export default (
         ? {}
         : { loading: node.markedForUpdate || node.updating }),
     }
-  })(StripedLoader(render))
+  })(StripedLoader(render, style))
