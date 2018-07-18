@@ -68,10 +68,12 @@ let overrideLookups = _.each(schema => {
 
 let updateEs = host => {
   state.url = host
-  state.schemas = fromPromise(updateClient({ host }).then(x => {
-    changeSchema(_.keys(x)[0])
-    return x
-  }))
+  state.schemas = fromPromise(
+    updateClient({ host }).then(x => {
+      changeSchema(_.keys(x)[0])
+      return x
+    })
+  )
 }
 
 updateEs('https://public-es-demo.smartprocure.us/')

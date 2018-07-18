@@ -35,7 +35,7 @@ export let updateSchemas = _.memoize(async () => {
   console.log('Dynamically reading elasticsearch schemas')
   let result = typeMap.exampleTypeSchemaMapping(
     await elasticsearchProvider.getSchemas()
-  ) 
+  )
   F.mergeOn(schemas, result)
   return result
 })

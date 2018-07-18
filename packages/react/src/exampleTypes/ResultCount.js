@@ -15,9 +15,8 @@ let ResultCount = injectTreeNode(
   )),
   {
     ...exampleTypes.results,
-    style: { display: 'inline-block' }
+    style: { display: 'inline-block' },
   }
-    
 )
 ResultCount.displayName = 'ResultCount'
 

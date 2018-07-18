@@ -38,7 +38,9 @@ export default () => (
               format={formatYear}
             />
             <Flex style={{ justifyContent: 'space-around' }}>
-              <h3><ResultCount pageSize={6} /></h3>
+              <h3>
+                <ResultCount pageSize={6} />
+              </h3>
             </Flex>
             <IMDBCards path={['root', 'results']} />
             <Flex style={{ justifyContent: 'space-around' }}>

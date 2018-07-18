@@ -5,17 +5,23 @@ import { autoKey } from './dsl'
 
 export default (
   render,
-  { type, reactors, nodeProps = _.keys(reactors), loadingAware = false, style } = {}
+  {
+    type,
+    reactors,
+    nodeProps = _.keys(reactors),
+    loadingAware = false,
+    style,
+  } = {}
 ) =>
   injectDefaults(({ tree, node, group, path, ...props }) => {
     node = node || tree.getNode(path)
 
     // Not Found
     if (!node && path) throw Error(`Node not found at ${path}`)
-    
+
     // Dynamic add
     if (!node && type) {
-      let key = props.nodeKey || autoKey({type, ...props})
+      let key = props.nodeKey || autoKey({ type, ...props })
       group = group || _.get('tree.path', tree)
 
       // Lookup if already added

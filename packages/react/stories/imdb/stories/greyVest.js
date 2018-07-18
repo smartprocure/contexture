@@ -189,7 +189,9 @@ export default () => (
                   alignItems: 'center',
                 }}
               >
-                <h1>Results (<ResultCount path={['root', 'results']} />)</h1>
+                <h1>
+                  Results (<ResultCount path={['root', 'results']} />)
+                </h1>
                 <Flex>
                   <ButtonRadio
                     options={[

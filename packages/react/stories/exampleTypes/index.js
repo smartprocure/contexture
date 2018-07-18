@@ -27,7 +27,7 @@ let tree = observable({
         },
         {
           name: '',
-          count: 4
+          count: 4,
         },
         {
           name: 'b',
