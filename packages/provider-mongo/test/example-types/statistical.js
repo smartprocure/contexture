@@ -33,5 +33,24 @@ describe('statistical', () => {
         },
       })
     })
+    it('result should handle no results', async () => {
+      let field = 'price'
+      expect(
+        await statistical.result(
+          {
+            key: 'test',
+            type: 'statistical',
+            field,
+          },
+          () => []
+        )
+      ).eql({
+        count: 0,
+        avg: 0,
+        max: 0,
+        min: 0,
+        sum: 0,
+      })
+    })
   })
 })
