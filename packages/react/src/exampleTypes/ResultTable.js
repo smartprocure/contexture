@@ -8,20 +8,7 @@ import { withStateLens } from '../utils/mobx-react-utils'
 import { fieldsToOptions } from '../FilterAdder'
 import { loading } from '../styles/generic'
 import { applyDefaults } from '../utils/schema'
-
-// For futil?
-let onlyWhen = f => F.unless(f, () => {})
-let FlattenTreeLeaves = Tree => _.flow(Tree.flatten(), _.omitBy(Tree.traverse))
-let PlainObjectTree = F.tree(onlyWhen(_.isPlainObject))
-let flattenPlainObject = F.whenExists(FlattenTreeLeaves(PlainObjectTree))
-
-let pushAt = _.curry((index, val, arr) => {
-  let result = _.clone(arr)
-  result.splice(index, 0, val)
-  return result
-})
-let moveIndex = (from, to, arr) =>
-  _.flow(_.pullAt(from), pushAt(to, arr[from]))(arr)
+import { flattenPlainObject, moveIndex } from '../utils/futil'
 
 let getRecord = F.getOrReturn('_source')
 let getResults = _.get('context.response.results')

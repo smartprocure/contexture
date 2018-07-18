@@ -45,7 +45,6 @@ let tree = Contexture({
       type: 'date',
       useDateMath: true,
     },
-
     {
       key: 'titleContains',
       type: 'tagsQuery',

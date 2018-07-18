@@ -2,11 +2,7 @@ import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import { injectDefaults } from './mobx-react-utils'
 import StripedLoader from './StripedLoader'
-
-let autoKey = x => F.compactJoin(
-  '-',
-  [x.field, x.key_field, x.value_field, x.type]
-)
+import { autoKey } from './dsl'
 
 export default (
   render,
@@ -20,7 +16,7 @@ export default (
     
     // Dynamic add
     if (!node && type) {
-      let key = props.nodeKey ||  autoKey({type, ...props})
+      let key = props.nodeKey || autoKey({type, ...props})
       group = group || _.get('tree.path', tree)
 
       // Lookup if already added
