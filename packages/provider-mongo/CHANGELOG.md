@@ -1,3 +1,6 @@
+# 0.6.1
+* Fix bug in `statistical` when there are no results
+
 # 0.6.0
 * `facet` options are sorted by count
 * `facet` options filter now translates words to intersection regexes
