@@ -19,7 +19,7 @@ let elasticsearchProvider = contextureES({
 
 export let schemas = {}
 export let updateSchemas = async () => {
-  console.log('Dynamically reading elasticsearch schemas')
+  console.info('Dynamically reading elasticsearch schemas')
   let result = typeMap.exampleTypeSchemaMapping(
     await elasticsearchProvider.getSchemas()
   )
