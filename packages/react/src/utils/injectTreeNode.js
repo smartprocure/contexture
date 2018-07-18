@@ -1,4 +1,3 @@
-import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import { injectDefaults } from './mobx-react-utils'
 import StripedLoader from './StripedLoader'
