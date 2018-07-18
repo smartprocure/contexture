@@ -3,8 +3,7 @@ import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { Provider } from 'mobx-react'
-import Contexture, { esClient } from '../utils/contexture'
-import { getESSchemas } from '../../../src/utils/schema'
+import Contexture, { updateSchemas } from '../utils/contexture'
 import {
   FilterList,
   Label,
@@ -105,7 +104,7 @@ let state = observable({
 
 let divs = _.map(x => <div key={x}>{x}</div>)
 let schemas = fromPromise(
-  getESSchemas(esClient)
+  updateSchemas()
     .then(
       _.merge(_, {
         movies: {
