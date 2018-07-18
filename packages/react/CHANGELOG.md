@@ -2,6 +2,8 @@
 * Add support for `mapNodeToProps` on `FilterList`
 * Add support for `displayBlank` on `Facet`, which defaults to <i>Not Specified</i>
 * Make the main npm script be `dist` to support importing direct from contexture-react
+* Make inject tree node generate deterministic nodeKey if not provided
+* Make ResultCount be inline-block and add inject tree node style support
 
 # 1.7.2
 * Made Grey Vest able to compose styles.
