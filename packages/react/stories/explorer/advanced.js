@@ -6,11 +6,10 @@ import { fromPromise } from 'mobx-utils'
 import { Provider, observer } from 'mobx-react'
 
 import { Awaiter, Flex, QueryBuilder } from '../../src/'
-import { getESSchemas } from '../../src/utils/schema'
 import { Input, ExampleTypes } from '../DemoControls'
 let { ResultCount, ResultTable, TypeMap } = ExampleTypes
 
-import Contexture, { es, schemas, updateClient } from './contexture'
+import Contexture, { updateClient } from './contexture'
 
 let state = observable({
   url: '',
@@ -51,14 +50,10 @@ let changeSchema = schema => {
 
 let updateEs = host => {
   state.url = host
-  updateClient({ host })
-  state.schemas = fromPromise(
-    getESSchemas(es.client).then(x => {
-      F.extendOn(schemas, x)
-      changeSchema(_.keys(x)[0])
-      return x
-    })
-  )
+  state.schemas = fromPromise(updateClient({ host }).then(x => {
+    changeSchema(_.keys(x)[0])
+    return x
+  }))
 }
 
 updateEs('https://public-es-demo.smartprocure.us/')
