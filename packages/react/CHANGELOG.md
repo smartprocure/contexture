@@ -1,3 +1,6 @@
+# 1.8.1
+* Add Check List Demo (Results table with checkboxes)
+
 # 1.8.0
 * Add support for `mapNodeToProps` on `FilterList`
 * Add support for `displayBlank` on `Facet`, which defaults to <i>Not Specified</i>
