@@ -95,31 +95,33 @@ let schemas = fromPromise(
     .then(_.tap(() => tree.refresh(['root'])))
 )
 
-let CheckableResultTable =
-  observer(({ fields, selected, getValue, ...props }) => (
+let CheckableResultTable = observer(
+  ({ fields, selected, getValue, ...props }) => (
     <ResultTable
       fields={{
         _checkbox: {
           label: <Checkbox />,
           display: (x, y) => (
-            <Checkbox {...simpleCheckBoxValues(_.iteratee(getValue)(y), selected)} />
-          )
+            <Checkbox
+              {...simpleCheckBoxValues(_.iteratee(getValue)(y), selected)}
+            />
+          ),
         },
-        ...fields
+        ...fields,
       }}
       {...props}
     />
-  ))
+  )
+)
 
-
-let CheckboxResultTable = withStateLens({selected: [] })(
+let CheckboxResultTable = withStateLens({ selected: [] })(
   observer(({ selected, ...props }) => (
     <div>
       {JSON.stringify(F.view(selected))}
-      <CheckableResultTable {...{selected, ...props}} />
+      <CheckableResultTable {...{ selected, ...props }} />
     </div>
-)))
-
+  ))
+)
 
 export default () => (
   <div className="gv-body">
@@ -185,7 +187,7 @@ export default () => (
                   path={['root', 'results']}
                   criteria={['root', 'criteria']}
                   typeComponents={TypeMap}
-                  getValue='title'
+                  getValue="title"
                 />
                 <Flex
                   style={{ justifyContent: 'space-around', padding: '10px' }}

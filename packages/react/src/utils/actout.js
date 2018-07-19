@@ -25,9 +25,8 @@ export let simpleCheckBoxValues = (value, lens) => ({
     F.set(
       checked ? [...F.view(lens), value] : _.without([value], F.view(lens)),
       lens
-    )
+    ),
 })
-
 
 export let enter = f => e => e.key === 'Enter' && f()
 export let click = f => e => e.stopPropagation() || f(e)
