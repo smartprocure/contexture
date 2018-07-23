@@ -18,5 +18,15 @@ export let checkboxValues = (value, lens) => ({
     ),
 })
 
+// Just like checkboxValues, but without destructing event.target.checked
+export let simpleCheckBoxValues = (value, lens) => ({
+  checked: F.view(lens).includes(value),
+  onChange: checked =>
+    F.set(
+      checked ? [...F.view(lens), value] : _.without([value], F.view(lens)),
+      lens
+    ),
+})
+
 export let enter = f => e => e.key === 'Enter' && f()
 export let click = f => e => e.stopPropagation() || f(e)

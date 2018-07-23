@@ -6,6 +6,7 @@ import Query from './Query'
 import TagsQuery from './TagsQuery'
 import ResultCount from './ResultCount'
 import ResultTable from './ResultTable'
+import CheckableResultTable from './CheckableResultTable'
 import ResultPager from './ResultPager'
 import DateHistogram from './DateHistogram'
 import TermsStats from './TermsStats'
@@ -45,6 +46,13 @@ export default (
     TermsStats,
     Text: partial({ Input }, Text),
   }
+  Components.CheckableResultTable = partial(
+    {
+      ResultTable: Components.ResultTable,
+      Checkbox,
+    },
+    CheckableResultTable
+  )
   let TypeMap = {
     facet: Components.Facet,
     query: Components.Query,
