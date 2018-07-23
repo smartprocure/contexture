@@ -87,7 +87,6 @@ let schemas = fromPromise(
     .then(_.tap(() => tree.refresh(['root'])))
 )
 
-
 let CheckboxResultTable = withStateLens({ selected: [] })(
   observer(({ selected, ...props }) => (
     <div>

@@ -46,10 +46,13 @@ export default (
     TermsStats,
     Text: partial({ Input }, Text),
   }
-  Components.CheckableResultTable = partial({
-    ResultTable: Components.ResultTable,
-    Checkbox
-  }, CheckableResultTable)
+  Components.CheckableResultTable = partial(
+    {
+      ResultTable: Components.ResultTable,
+      Checkbox,
+    },
+    CheckableResultTable
+  )
   let TypeMap = {
     facet: Components.Facet,
     query: Components.Query,
