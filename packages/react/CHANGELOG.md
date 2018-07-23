@@ -1,5 +1,5 @@
-# 1.8.1
-* Add Check List Demo (Results table with checkboxes)
+# 1.9.0
+* Add CheckableResultsTable
 
 # 1.8.0
 * Add support for `mapNodeToProps` on `FilterList`
