@@ -3,7 +3,7 @@ import * as F from 'futil-js'
 import { observer } from 'mobx-react'
 
 export default observer(
-  ({ isOpen, children }) =>
+  ({ isOpen, children, style = {} }) =>
     F.view(isOpen) && (
       <div
         style={{
@@ -15,6 +15,8 @@ export default observer(
           backgroundColor: 'rgba(0,0,0,0.3)',
           padding: 50,
           overflow: 'scroll',
+          zIndex: 1,
+          ...style,
         }}
         onClick={F.off(isOpen)}
       >
