@@ -6,18 +6,10 @@ import { fromPromise } from 'mobx-utils'
 import { Provider, observer } from 'mobx-react'
 import Contexture, { updateSchemas } from '../utils/contexture'
 import { withStateLens } from '../../../src/utils/mobx-react-utils'
-import { simpleCheckBoxValues } from '../../../src/utils/actout'
 import { FilterList, Flex, Awaiter, SpacedList, Grid } from '../../../src'
-import {
-  GVStyle,
-  Adder,
-  Button,
-  Pager,
-  ExampleTypes,
-  Checkbox,
-  ButtonRadio,
-} from '../../../src/themes/greyVest'
-let { ResultCount, ResultTable, TypeMap, TagsQuery } = ExampleTypes
+import * as Theme from '../../../src/themes/greyVest'
+let { GVStyle, Adder, Button, Pager, ExampleTypes, ButtonRadio } = Theme
+let { ResultCount, CheckableResultTable, TypeMap, TagsQuery } = ExampleTypes
 
 let tree = Contexture({
   key: 'root',
@@ -95,24 +87,6 @@ let schemas = fromPromise(
     .then(_.tap(() => tree.refresh(['root'])))
 )
 
-let CheckableResultTable = observer(
-  ({ fields, selected, getValue, ...props }) => (
-    <ResultTable
-      fields={{
-        _checkbox: {
-          label: <Checkbox />,
-          display: (x, y) => (
-            <Checkbox
-              {...simpleCheckBoxValues(_.iteratee(getValue)(y), selected)}
-            />
-          ),
-        },
-        ...fields,
-      }}
-      {...props}
-    />
-  )
-)
 
 let CheckboxResultTable = withStateLens({ selected: [] })(
   observer(({ selected, ...props }) => (
