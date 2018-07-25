@@ -5,7 +5,7 @@ import { observer } from 'mobx-react'
 import { exampleTypes } from 'contexture-client'
 import { Flex } from '../layout/Flex'
 import injectTreeNode from '../utils/injectTreeNode'
-import { toggleElementBy } from '../utils/futil'
+import { checkBoxValues } from '../utils/actout'
 
 let CheckboxDefault = props => <input type="checkbox" {...props} />
 let RadioListDefault = ({ value, onChange, options }) => (
@@ -85,26 +85,23 @@ let Facet = injectTreeNode(
         )}
         <SelectAll node={node} tree={tree} Checkbox={Checkbox} />
         {_.map(({ name, count }) => {
-          let checked = _.includes(name, node.values)
-          let toggle = () => {
-            tree.mutate(node.path, {
-              values: toggleElementBy(checked, name, node.values || []),
-            })
-          }
+          let lens = tree.lens(node.path, 'values')
           return (
-            <Flex
+            <label
               key={name}
               style={{
                 justifyContent: 'space-between',
                 alignItems: 'baseline',
+                display: 'flex',
+                cursor: 'pointer'
               }}
             >
-              <Checkbox onChange={toggle} checked={checked} />
-              <div style={{ flex: 2, padding: '0 5px' }} onClick={toggle}>
+              <Checkbox {...checkBoxValues(name, lens)} />
+              <div style={{ flex: 2, padding: '0 5px' }}>
                 {display(name) || displayBlank()}
               </div>
               <div>{count}</div>
-            </Flex>
+            </label>
           )
         }, _.get('context.options', node))}
         <Flex style={{ justifyContent: 'space-between', margin: '5px 0' }}>
