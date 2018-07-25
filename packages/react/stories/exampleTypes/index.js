@@ -260,6 +260,12 @@ export default () =>
             b: {
               label: 'Field B',
               order: -2,
+              HeaderCell: ({ style, ...props }) => (
+                <th
+                  style={{ color: 'green', ...style }}
+                  {..._.omit('activeFilter', props)}
+                />
+              ),
             },
             title: {
               order: 1,

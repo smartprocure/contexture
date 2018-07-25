@@ -1,4 +1,10 @@
-﻿# 1.9.2
+# 1.9.3
+* Make grey vest checkbox use a real checkbox so the event api of onChange has parity with native
+* Make facet options clickable anywhere on the row, instead of just on the label/checkbox
+* Make ResultTable respect HeaderCell from field schema
+* Internal refactoring of futil candidates / actout util
+
+# 1.9.2
 * Removed min-width from gv-table thead tr
 
 # 1.9.1

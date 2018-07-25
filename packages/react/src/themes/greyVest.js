@@ -2,7 +2,8 @@ import React from 'react'
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { observer } from 'mobx-react'
-import { partial, withStateLens, hover } from '../utils/mobx-react-utils'
+import { hover } from '../utils/actout'
+import { partial, withStateLens } from '../utils/mobx-react-utils'
 import { Flex, TextHighlight, FilteredPicker, ModalFilterAdder } from '../'
 import ExampleTypeConstructor from '../exampleTypes/'
 
@@ -20,7 +21,7 @@ export let Input = ({ style = {}, ...x }) => (
 
 // Low effort custom checkbox
 export let Checkbox = ({ checked, onChange, style = {} }) => (
-  <div
+  <label
     className="gv-input"
     style={{
       height: '24px',
@@ -33,10 +34,14 @@ export let Checkbox = ({ checked, onChange, style = {} }) => (
       cursor: 'pointer',
       ...style,
     }}
-    onClick={() => onChange(!checked)}
   >
+    <input
+      type="checkbox"
+      style={{ display: 'none' }}
+      {...{ checked, onChange }}
+    />
     {checked ? '✔' : String.fromCharCode(160)}
-  </div>
+  </label>
 )
 
 export let GVStyle = () => (

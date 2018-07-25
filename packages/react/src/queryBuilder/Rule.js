@@ -1,5 +1,6 @@
 import React from 'react'
-import { Component, lenservable, hover } from '../utils/mobx-react-utils'
+import { hover } from '../utils/actout'
+import { Component, lenservable } from '../utils/mobx-react-utils'
 import styles from '../styles'
 import Indentable from './preview/Indentable'
 import FilterContents from './FilterContents'

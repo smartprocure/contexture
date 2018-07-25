@@ -358,7 +358,6 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   "titleText",
                 ]
               }
-              placeholder={undefined}
               style={
                 Object {
                   "background": "rgba(255, 255, 255, 0.7)",
@@ -475,10 +474,11 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   Select All
                 </div>
               </div>
-              <div
+              <label
                 style={
                   Object {
                     "alignItems": "baseline",
+                    "cursor": "pointer",
                     "display": "flex",
                     "justifyContent": "space-between",
                   }
@@ -490,7 +490,6 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   type="checkbox"
                 />
                 <div
-                  onClick={[Function]}
                   style={
                     Object {
                       "flex": 2,
@@ -503,11 +502,12 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                 <div>
                   15
                 </div>
-              </div>
-              <div
+              </label>
+              <label
                 style={
                   Object {
                     "alignItems": "baseline",
+                    "cursor": "pointer",
                     "display": "flex",
                     "justifyContent": "space-between",
                   }
@@ -519,7 +519,6 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   type="checkbox"
                 />
                 <div
-                  onClick={[Function]}
                   style={
                     Object {
                       "flex": 2,
@@ -534,11 +533,12 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                 <div>
                   4
                 </div>
-              </div>
-              <div
+              </label>
+              <label
                 style={
                   Object {
                     "alignItems": "baseline",
+                    "cursor": "pointer",
                     "display": "flex",
                     "justifyContent": "space-between",
                   }
@@ -550,7 +550,6 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   type="checkbox"
                 />
                 <div
-                  onClick={[Function]}
                   style={
                     Object {
                       "flex": 2,
@@ -563,11 +562,12 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                 <div>
                   3
                 </div>
-              </div>
-              <div
+              </label>
+              <label
                 style={
                   Object {
                     "alignItems": "baseline",
+                    "cursor": "pointer",
                     "display": "flex",
                     "justifyContent": "space-between",
                   }
@@ -579,7 +579,6 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   type="checkbox"
                 />
                 <div
-                  onClick={[Function]}
                   style={
                     Object {
                       "flex": 2,
@@ -592,7 +591,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                 <div>
                   1
                 </div>
-              </div>
+              </label>
               <div
                 style={
                   Object {
@@ -695,10 +694,11 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   Select All
                 </div>
               </div>
-              <div
+              <label
                 style={
                   Object {
                     "alignItems": "baseline",
+                    "cursor": "pointer",
                     "display": "flex",
                     "justifyContent": "space-between",
                   }
@@ -710,7 +710,6 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   type="checkbox"
                 />
                 <div
-                  onClick={[Function]}
                   style={
                     Object {
                       "flex": 2,
@@ -723,11 +722,12 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                 <div>
                   15
                 </div>
-              </div>
-              <div
+              </label>
+              <label
                 style={
                   Object {
                     "alignItems": "baseline",
+                    "cursor": "pointer",
                     "display": "flex",
                     "justifyContent": "space-between",
                   }
@@ -739,7 +739,6 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   type="checkbox"
                 />
                 <div
-                  onClick={[Function]}
                   style={
                     Object {
                       "flex": 2,
@@ -754,11 +753,12 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                 <div>
                   4
                 </div>
-              </div>
-              <div
+              </label>
+              <label
                 style={
                   Object {
                     "alignItems": "baseline",
+                    "cursor": "pointer",
                     "display": "flex",
                     "justifyContent": "space-between",
                   }
@@ -770,7 +770,6 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   type="checkbox"
                 />
                 <div
-                  onClick={[Function]}
                   style={
                     Object {
                       "flex": 2,
@@ -783,11 +782,12 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                 <div>
                   3
                 </div>
-              </div>
-              <div
+              </label>
+              <label
                 style={
                   Object {
                     "alignItems": "baseline",
+                    "cursor": "pointer",
                     "display": "flex",
                     "justifyContent": "space-between",
                   }
@@ -799,7 +799,6 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   type="checkbox"
                 />
                 <div
-                  onClick={[Function]}
                   style={
                     Object {
                       "flex": 2,
@@ -812,7 +811,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                 <div>
                   1
                 </div>
-              </div>
+              </label>
               <div
                 style={
                   Object {
@@ -1146,13 +1145,12 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                         }
                       }
                     >
-                      <a
+                      <span
                         onClick={[Function]}
-                        style={Object {}}
                       >
                         Id
                          
-                      </a>
+                      </span>
                     </th>
                     <th
                       style={
@@ -1161,13 +1159,12 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                         }
                       }
                     >
-                      <a
+                      <span
                         onClick={[Function]}
-                        style={Object {}}
                       >
                         Title
                          
-                      </a>
+                      </span>
                     </th>
                     <th
                       style={
@@ -1176,13 +1173,12 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                         }
                       }
                     >
-                      <a
+                      <span
                         onClick={[Function]}
-                        style={Object {}}
                       >
                         A
                          
-                      </a>
+                      </span>
                     </th>
                     <th
                       style={
@@ -1191,13 +1187,12 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                         }
                       }
                     >
-                      <a
+                      <span
                         onClick={[Function]}
-                        style={Object {}}
                       >
                         B
                          
-                      </a>
+                      </span>
                     </th>
                     <th
                       style={
@@ -1206,13 +1201,12 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                         }
                       }
                     >
-                      <a
+                      <span
                         onClick={[Function]}
-                        style={Object {}}
                       >
                         C
                          
-                      </a>
+                      </span>
                     </th>
                   </tr>
                 </thead>
@@ -1314,13 +1308,12 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
               }
             }
           >
-            <a
+            <span
               onClick={[Function]}
-              style={Object {}}
             >
               Title
                
-            </a>
+            </span>
           </th>
           <th
             style={
@@ -1329,13 +1322,12 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
               }
             }
           >
-            <a
+            <span
               onClick={[Function]}
-              style={Object {}}
             >
               Id
                
-            </a>
+            </span>
           </th>
           <th
             style={
@@ -1344,13 +1336,12 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
               }
             }
           >
-            <a
+            <span
               onClick={[Function]}
-              style={Object {}}
             >
               A
                
-            </a>
+            </span>
           </th>
           <th
             style={
@@ -1359,28 +1350,27 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
               }
             }
           >
-            <a
+            <span
               onClick={[Function]}
-              style={Object {}}
             >
               C
                
-            </a>
+            </span>
           </th>
           <th
             style={
               Object {
+                "color": "green",
                 "cursor": "pointer",
               }
             }
           >
-            <a
+            <span
               onClick={[Function]}
-              style={Object {}}
             >
               Field B
                
-            </a>
+            </span>
           </th>
         </tr>
       </thead>
@@ -4835,7 +4825,6 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                                       onBlur={[Function]}
                                                       onChange={[Function]}
                                                       onFocus={[Function]}
-                                                      placeholder={undefined}
                                                       style={
                                                         Object {
                                                           "background": "rgba(255, 255, 255, 0.7)",
@@ -5807,10 +5796,11 @@ exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
                                   Select All
                                 </div>
                               </div>
-                              <div
+                              <label
                                 style={
                                   Object {
                                     "alignItems": "baseline",
+                                    "cursor": "pointer",
                                     "display": "flex",
                                     "justifyContent": "space-between",
                                   }
@@ -5822,7 +5812,6 @@ exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
                                   type="checkbox"
                                 />
                                 <div
-                                  onClick={[Function]}
                                   style={
                                     Object {
                                       "flex": 2,
@@ -5835,11 +5824,12 @@ exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
                                 <div>
                                   2
                                 </div>
-                              </div>
-                              <div
+                              </label>
+                              <label
                                 style={
                                   Object {
                                     "alignItems": "baseline",
+                                    "cursor": "pointer",
                                     "display": "flex",
                                     "justifyContent": "space-between",
                                   }
@@ -5851,7 +5841,6 @@ exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
                                   type="checkbox"
                                 />
                                 <div
-                                  onClick={[Function]}
                                   style={
                                     Object {
                                       "flex": 2,
@@ -5864,7 +5853,7 @@ exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
                                 <div>
                                   1
                                 </div>
-                              </div>
+                              </label>
                               <div
                                 style={
                                   Object {
