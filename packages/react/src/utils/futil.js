@@ -36,7 +36,7 @@ export let setsWith = _.curry((f, lens) => x => F.set(_.iteratee(f)(x), lens))
 
 export let includeLens = (value, lens) => ({
   get: () => F.view(lens).includes(value),
-  set: x => F.set(toggleElementBy(!x, value, F.view(lens)), lens)
+  set: x => F.set(toggleElementBy(!x, value, F.view(lens)), lens),
 })
 
 // No longer used

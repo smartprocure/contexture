@@ -92,7 +92,7 @@ let Facet = injectTreeNode(
                 justifyContent: 'space-between',
                 alignItems: 'baseline',
                 display: 'flex',
-                cursor: 'pointer'
+                cursor: 'pointer',
               }}
             >
               <Checkbox {...checkBoxValues(name, lens)} />

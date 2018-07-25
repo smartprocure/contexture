@@ -35,7 +35,11 @@ export let Checkbox = ({ checked, onChange, style = {} }) => (
       ...style,
     }}
   >
-    <input type="checkbox" style={{display:'none'}} {...{checked, onChange}} />
+    <input
+      type="checkbox"
+      style={{ display: 'none' }}
+      {...{ checked, onChange }}
+    />
     {checked ? '✔' : String.fromCharCode(160)}
   </label>
 )
