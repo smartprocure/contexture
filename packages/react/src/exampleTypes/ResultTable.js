@@ -33,7 +33,7 @@ let popoverStyle = {
 }
 
 let HeaderCellDefault = observer(({ activeFilter, style, ...props }) => (
-  <a
+  <th
     style={{ ...(activeFilter ? { fontWeight: 900 } : {}), ...style }}
     {...props}
   />
@@ -41,8 +41,10 @@ let HeaderCellDefault = observer(({ activeFilter, style, ...props }) => (
 
 let Header = withStateLens({ popover: false, adding: false, filtering: false })(
   observer(({ // Local State
-    i, popover, adding, filtering, Modal, FieldPicker, ListGroupItem: Item, typeComponents, HeaderCell = HeaderCellDefault, field: { field, label }, includes, addOptions, addFilter, tree, node, mutate, criteria }) => {
+    i, popover, adding, filtering, Modal, FieldPicker, ListGroupItem: Item, typeComponents, HeaderCell = HeaderCellDefault, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria }) => {
     // Components (providerable?) // Contextual
+    let { field, label } = fieldSchema
+    HeaderCell = fieldSchema.HeaderCell || HeaderCell
     let filterNode =
       criteria && _.find({ field }, tree.getNode(criteria).children)
     let filter = () => {
@@ -50,14 +52,14 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
       F.flip(filtering)()
     }
     return (
-      <th style={{ cursor: 'pointer' }}>
-        <HeaderCell
-          onClick={F.flip(popover)}
-          activeFilter={_.get('hasValue', filterNode)}
-        >
+      <HeaderCell
+        style={{ cursor: 'pointer' }}
+        activeFilter={_.get('hasValue', filterNode)}
+      >
+        <span onClick={F.flip(popover)}>
           {label}{' '}
           {field === node.sortField && (node.sortDir === 'asc' ? '▲' : '▼')}
-        </HeaderCell>
+        </span>
         <Popover isOpen={popover} style={popoverStyle}>
           <Item onClick={() => mutate({ sortField: field, sortDir: 'asc' })}>
             <Icon icon="▲" />
@@ -128,7 +130,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
               </Modal>
             )}
         </Popover>
-      </th>
+      </HeaderCell>
     )
   })
 )
