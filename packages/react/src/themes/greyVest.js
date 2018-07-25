@@ -55,7 +55,6 @@ export let GVStyle = () => (
       .gv-table td, .gv-table th {
         padding: 20px;
         text-align: left;
-        min-width: 100px;
       }
       .gv-table thead tr {
         border-bottom: solid 2px #9ABCDA;

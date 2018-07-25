@@ -1,3 +1,6 @@
+﻿# 1.9.2
+* Removed min-width from gv-table thead tr
+
 # 1.9.1
 * The Modal should have zIndex:1
 
