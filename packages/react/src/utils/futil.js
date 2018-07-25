@@ -40,7 +40,4 @@ export let includeLens = (value, lens) => ({
 })
 
 // No longer used
-// export let flipperLens = lens => ({
-//   get: F.views(lens),
-//   set: F.flip(lens)
-// })
+// export let flipperLens = lens => _.extend(lens, { set: F.flip(lens) })
