@@ -30,3 +30,12 @@ export let simpleCheckBoxValues = (value, lens) => ({
 
 export let enter = f => e => e.key === 'Enter' && f()
 export let click = f => e => e.stopPropagation() || f(e)
+
+export let hover = lens => ({
+  onMouseOver: F.on(lens),
+  onMouseOut: F.off(lens),
+})
+export let focus = lens => ({
+  onFocus: F.on(lens),
+  onBlur: F.off(lens),
+})

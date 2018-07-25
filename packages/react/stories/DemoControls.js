@@ -1,12 +1,8 @@
 import * as F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
-import {
-  withStateLens,
-  hover,
-  focus,
-  partial,
-} from '../src/utils/mobx-react-utils'
+import { hover, focus } from '../src/utils/actout'
+import { withStateLens, partial, } from '../src/utils/mobx-react-utils'
 import ExampleTypeConstructor from '../src/exampleTypes/'
 import { TextHighlight, FilteredPicker, ModalFilterAdder } from '../src'
 
