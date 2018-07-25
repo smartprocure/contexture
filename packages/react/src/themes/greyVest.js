@@ -21,7 +21,7 @@ export let Input = ({ style = {}, ...x }) => (
 
 // Low effort custom checkbox
 export let Checkbox = ({ checked, onChange, style = {} }) => (
-  <div
+  <label
     className="gv-input"
     style={{
       height: '24px',
@@ -34,10 +34,10 @@ export let Checkbox = ({ checked, onChange, style = {} }) => (
       cursor: 'pointer',
       ...style,
     }}
-    onClick={() => onChange(!checked)}
   >
+    <input type="checkbox" style={{display:'none'}} {...{checked, onChange}} />
     {checked ? '✔' : String.fromCharCode(160)}
-  </div>
+  </label>
 )
 
 export let GVStyle = () => (

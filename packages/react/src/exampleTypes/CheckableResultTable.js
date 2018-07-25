@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
-import { simpleCheckBoxValues } from '../utils/actout'
+import { checkBoxValues } from '../utils/actout'
 
 // Extends ResultTable with a checkbox column
 // Writes to a lens called `selected`, using getValue to map the selected record to a value.
@@ -14,7 +14,7 @@ let CheckableResultTable = observer(
           label: <Checkbox />,
           display: (x, y) => (
             <Checkbox
-              {...simpleCheckBoxValues(_.iteratee(getValue)(y), selected)}
+              {...checkBoxValues(_.iteratee(getValue)(y), selected)}
             />
           ),
         },
