@@ -20,3 +20,9 @@ export let pushAt = _.curry((index, val, arr) => {
 })
 export let moveIndex = (from, to, arr) =>
   _.flow(_.pullAt(from), pushAt(to, arr[from]))(arr)
+
+// Immutable
+export let toggleElementBy = _.curry((check, val, arr) =>
+  (F.callOrReturn(check, val, arr) ? _.pull : F.push)(val, arr)
+)
+export let toggleElement = toggleElementBy(_.includes)

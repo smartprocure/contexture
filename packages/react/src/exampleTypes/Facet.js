@@ -5,10 +5,7 @@ import { observer } from 'mobx-react'
 import { exampleTypes } from 'contexture-client'
 import { Flex } from '../layout/Flex'
 import injectTreeNode from '../utils/injectTreeNode'
-
-// For futil-js
-let toggleElement = (check, val, arr = []) =>
-  (check ? _.pull : F.push)(val, arr)
+import { toggleElementBy } from '../utils/futil'
 
 let CheckboxDefault = props => <input type="checkbox" {...props} />
 let RadioListDefault = ({ value, onChange, options }) => (
@@ -91,7 +88,7 @@ let Facet = injectTreeNode(
           let checked = _.includes(name, node.values)
           let toggle = () => {
             tree.mutate(node.path, {
-              values: toggleElement(checked, name, node.values),
+              values: toggleElementBy(checked, name, node.values || []),
             })
           }
           return (
