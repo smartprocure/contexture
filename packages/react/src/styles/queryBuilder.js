@@ -111,7 +111,5 @@ export let styles = {
     border: `solid 1px black`,
     marginLeft: operatorWidth + ruleGutter, // Set to 0 on wrapHover to avoid jumping
     marginTop: `-${operatorHeight + lineWidth}px`,
-    boxShadow: '0 5px 10px rgba(0,0,0,.2)',
-    padding: '15px',
   },
 }
