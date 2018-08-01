@@ -56,7 +56,6 @@ export let GVStyle = () => (
       }
       .gv-table tbody tr {
         border-bottom: solid 2px #EDEDED;
-        height: 100px;
       }
       .gv-table td, .gv-table th {
         padding: 20px;
