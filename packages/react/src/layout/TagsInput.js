@@ -8,6 +8,7 @@ let Tag = ({ value, removeTag, tagStyle }) => (
   <div className="tags-input-tag" style={tagStyle}>
     {value}
     <span
+      className="tags-input-tag-remove"
       style={{
         paddingLeft: '10px',
         cursor: 'pointer',
