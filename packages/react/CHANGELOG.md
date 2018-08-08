@@ -1,3 +1,8 @@
+﻿# 1.9.4
+* Made the Popover component work properly when the parent component
+  can be horizontally scrolled and it's width exceeds the width of the
+  page.
+
 # 1.9.3
 * Make grey vest checkbox use a real checkbox so the event api of onChange has parity with native
 * Make facet options clickable anywhere on the row, instead of just on the label/checkbox
