@@ -47,7 +47,8 @@
   "jest": {
     "moduleNameMapper": {
       "\\.(md)$": "<rootDir>/__mocks__/fileMock.js"
-    }
+    },
+    "testURL": "http://localhost/"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.1",
