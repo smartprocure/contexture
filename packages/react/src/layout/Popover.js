@@ -8,7 +8,11 @@ let { fullscreen } = styles
 export default observer(
   ({ isOpen, children, style }) =>
     F.view(isOpen) && (
-      <div>
+      <div
+        style={{
+          position: 'relative',
+        }}
+      >
         <div
           style={{
             position: 'absolute',

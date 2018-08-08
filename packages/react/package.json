@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "1.9.3",
+  "version": "1.9.4",
   "description": "React components for building contexture interfaces",
   "main": "dist/index.js",
   "scripts": {
@@ -47,7 +47,8 @@
   "jest": {
     "moduleNameMapper": {
       "\\.(md)$": "<rootDir>/__mocks__/fileMock.js"
-    }
+    },
+    "testURL": "http://localhost/"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.1",
