@@ -1,4 +1,3 @@
-import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { Tree } from './util/tree'
 
