@@ -1,3 +1,7 @@
+﻿# 2.13.7
+* Fixed an issue when mutating groups would return an observable array
+  that we wouldn't be able to parse.
+
 # 2.13.6
 * Republish 2.13.5 which was published manually without building.
 
