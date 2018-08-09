@@ -332,4 +332,43 @@ describe('usage with mobx should generally work', () => {
     expect(tree.getNode(resultsNode.path).page).to.equal(1)
     expect(service).to.have.callCount(2)
   })
+  it('the markForUpdate traversal should not try to alter arrays', async () => {
+    // When a group node has the join "not" and is changed to something else,
+    // it triggers the reactor for "join", which then
+    // triggers the reactor of "all", which returns the children,
+    // which makes it so the array of children is sent to markForUpdate,
+    // which crashes since we can't call MobX's set() on an array.
+    //
+    // Our current solution is to ensure that we are working over an array
+    // (by checking if the input object is an array and wrapping it in an array if it's not),
+    // then we iterate the array with the markForUpdate traversal.
+    service.reset()
+    let Tree = ContextureMobx({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'results',
+          type: 'results',
+          page: 1,
+        },
+        {
+          key: 'subgroup',
+          type: 'group',
+          join: 'not',
+          children: [
+            {
+              key: 'facetic',
+              type: 'facet',
+              field: 'facetfield',
+              value: 'some value',
+            },
+          ],
+        },
+      ],
+    })
+    await tree.refresh(['root'])
+    await tree.mutate(['root', 'subgroup'], { join: 'and' })
+  })
 })
