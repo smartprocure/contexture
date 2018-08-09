@@ -333,7 +333,7 @@ describe('usage with mobx should generally work', () => {
     expect(service).to.have.callCount(2)
   })
   it(`should be possible to change a group's join property`, async () => {
-		// This wasn't possible before this PR: https://github.com/smartprocure/contexture-client/pull/74
+    // This wasn't possible before this PR: https://github.com/smartprocure/contexture-client/pull/74
     service.reset()
     let Tree = ContextureMobx({ debounce: 1, service })
     let tree = Tree({
