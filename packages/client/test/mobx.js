@@ -332,4 +332,35 @@ describe('usage with mobx should generally work', () => {
     expect(tree.getNode(resultsNode.path).page).to.equal(1)
     expect(service).to.have.callCount(2)
   })
+  it(`should be possible to change a group's join property`, async () => {
+    // This wasn't possible before this PR: https://github.com/smartprocure/contexture-client/pull/74
+    service.reset()
+    let Tree = ContextureMobx({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'results',
+          type: 'results',
+          page: 1,
+        },
+        {
+          key: 'subgroup',
+          type: 'group',
+          join: 'not',
+          children: [
+            {
+              key: 'facetic',
+              type: 'facet',
+              field: 'facetfield',
+              value: 'some value',
+            },
+          ],
+        },
+      ],
+    })
+    await tree.refresh(['root'])
+    await tree.mutate(['root', 'subgroup'], { join: 'and' })
+  })
 })
