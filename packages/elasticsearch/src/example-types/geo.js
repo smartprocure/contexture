@@ -7,26 +7,25 @@ let geo = ({
   },
 } = {}) => ({
   hasValue: context =>
-    !!(context.location && context.radius && context.operator),
+    !!((context.location || (context.latitude && context.longitude)) && context.radius && context.operator),
   filter: context =>
-    Promise.resolve(geocodeLocation(context.location))
-      .then(response => {
-        // Check for API key limit/expiration
-        if (response.error_message) {
-          throw response.error_message
+    Promise.resolve(context)
+      .then(context => {
+        if (context.latitude && context.longitude) {
+          return {
+            Latitude: context.latitude,
+            Longitude: context.longitude
+          }
+        } else {
+          return geocodeLocation(context.location)
         }
-
-        let geolocation = _.flow(
-          _.head,
-          _.get('geometry.location'),
-          result => result || { lat: 0, lng: 0 }
-        )(response.results)
+      }).then(response => {
 
         context._meta.preprocessorResult = response
 
         let result = {
           geo_distance: {
-            [context.field]: `${geolocation.lat},${geolocation.lng}`,
+            [context.field]: `${response.Latitude},${response.Longitude}`,
             distance: `${context.radius}mi`,
           },
         }
@@ -37,16 +36,16 @@ let geo = ({
             },
           }
         }
-
         return result
       })
       .catch(err =>
         console.error('An error occured within the geo provider: ', err)
       ),
   validContext: context =>
-    !!(context.location && context.radius > 0 && context.operator),
+    !!((context.location || (context.latitude && context.longitude)) && context.radius && context.operator),
   result: context => ({
-    place: _.get('_meta.preprocessorResult.results.0', context),
+    Latitude: _.get('_meta.preprocessorResult.latitude', context),
+    Longitude: _.get('_meta.preprocessorResult.longitude', context)
   }),
 })
 
