@@ -85,6 +85,9 @@ let tree = observable({
             a: 1,
             b: 2,
             c: 3,
+            nested: {
+              value: 4,
+            },
           },
           {
             _id: '124',
@@ -92,6 +95,9 @@ let tree = observable({
             a: 1,
             b: 4,
             c: 3,
+            nested: {
+              value: 5,
+            },
           },
           {
             _id: '135',
@@ -99,6 +105,9 @@ let tree = observable({
             a: 1,
             b: 2,
             c: 3,
+            nested: {
+              value: 6,
+            },
           },
         ],
         startRecord: 1,

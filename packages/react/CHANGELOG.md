@@ -1,4 +1,8 @@
-﻿# 1.9.4
+﻿# 1.9.5
+* Add support to ResultTable for displaying cell values from nested objects
+  when the cell value is not a simple object such a string/number.
+
+# 1.9.4
 * Made the Popover component work properly when the parent component
   can be horizontally scrolled and it's width exceeds the width of the
   page.
