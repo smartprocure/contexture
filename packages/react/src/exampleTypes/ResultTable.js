@@ -146,7 +146,7 @@ let TableBody = observer(({ node, visibleFields }) => (
             {_.map(
               ({ field, display = x => x, Cell = 'td' }) => (
                 <Cell key={field}>
-                  {display(getRecord(x)[field], getRecord(x))}
+                  {display(_.get(field, getRecord(x)), getRecord(x))}
                 </Cell>
               ),
               visibleFields
