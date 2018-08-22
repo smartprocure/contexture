@@ -11,7 +11,7 @@ module.exports = {
     _.mapValues(_.toNumber),
     _.some(x => !_.isNaN(x))
   ),
-  filter: ({field, min, max}) => ({
+  filter: ({ field, min, max }) => ({
     [field]: cleanFilter({
       $gte: min,
       $lte: max,
