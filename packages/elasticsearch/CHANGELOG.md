@@ -1,3 +1,6 @@
+# 0.10.2
+* Geo filter changes
+
 # 0.10.1
 * Avoid object spread in mapping util to make browser usage easier
 

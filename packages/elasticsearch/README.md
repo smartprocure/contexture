@@ -119,7 +119,7 @@ Output
 ```
 
 #### `geo`
-Represents a geographic radius search. Needs a geocodeLocation service passed in to it. Currently assumes it is a google maps geocoder search.
+Represents a geographic radius search. Needs a geocodeLocation service passed in to it. Currently assumes it is a HERE maps geocoder search.
 
 Input
 
@@ -134,7 +134,8 @@ Output
 
 ```js
 {
-  place: GeocodeLocationResponse
+  Latitude: Number
+  Longitude: Number
 }
 ```
 
