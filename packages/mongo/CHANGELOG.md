@@ -1,3 +1,6 @@
+# 0.6.2
+* `number` properly supports casting strings to numbers
+
 # 0.6.1
 * Fix bug in `statistical` when there are no results
 
