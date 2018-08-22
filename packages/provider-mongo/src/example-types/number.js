@@ -6,11 +6,15 @@ let cleanFilter = _.flow(
 )
 
 module.exports = {
-  hasValue: context => _.isNumber(context.min) || _.isNumber(context.max),
-  filter: context => ({
-    [context.field]: cleanFilter({
-      $gte: context.min,
-      $lte: context.max,
+  hasValue: _.flow(
+    _.pick(['min', 'max']),
+    _.mapValues(_.toNumber),
+    _.some(x => !_.isNaN(x))
+  ),
+  filter: ({ field, min, max }) => ({
+    [field]: cleanFilter({
+      $gte: min,
+      $lte: max,
     }),
   }),
 }
