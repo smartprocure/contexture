@@ -13,6 +13,7 @@ let twoLevelMatch = {
     !!(context.key_field && context.value_field && context.key_value),
   reactors: {
     value: 'others',
+    key_value: 'self',
   },
   defaults: {
     key_field: '',
