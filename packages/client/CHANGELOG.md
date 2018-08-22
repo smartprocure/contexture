@@ -1,4 +1,7 @@
-﻿# 2.13.7
+﻿# 2.14.0
+* Add twoLevelMatch/matchStats reactor of self for key_value field.
+
+# 2.13.7
 * Fixed an issue when mutating groups would return an observable array
   that we wouldn't be able to parse.
 
