@@ -1,5 +1,5 @@
 ﻿# 2.14.0
-* Add twoLevelMatch/matchStats reactor of self for key_value field
+* Add twoLevelMatch/matchStats reactor of self for key_value field.
 
 # 2.13.7
 * Fixed an issue when mutating groups would return an observable array
