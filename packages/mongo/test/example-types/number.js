@@ -6,11 +6,20 @@ describe('number', () => {
     it('Allows optionally either min or max', () => {
       expect(number.hasValue({ min: 1 })).to.equal(true)
       expect(number.hasValue({ max: 2 })).to.equal(true)
-    }),
-      it('Allows 0 on min and max', () => {
-        expect(number.hasValue({ min: 0 })).to.equal(true)
-        expect(number.hasValue({ max: 0 })).to.equal(true)
-      })
+    })
+    it('Allows 0 on min and max', () => {
+      expect(number.hasValue({ min: 0 })).to.equal(true)
+      expect(number.hasValue({ max: 0 })).to.equal(true)
+    })
+    it('Should handle numbers as strings', () => {
+      expect(number.hasValue({ min: '10001' })).to.equal(true)
+      expect(number.hasValue({ min: 'asda' })).to.equal(false)
+      expect(number.hasValue({})).to.equal(false)
+      expect(number.hasValue({ max: '10001' })).to.equal(true)
+      expect(number.hasValue({ max: 'asda' })).to.equal(false)
+      expect(number.hasValue({ min: '10001', max: 'asdfa' })).to.equal(true)
+      expect(number.hasValue({ min: '10asd001', max: '1001' })).to.equal(true)
+    })
   })
   describe('number.filter', () => {
     it('Should convert both min and max to valid numbers', () => {
