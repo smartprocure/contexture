@@ -1,6 +1,5 @@
 ﻿# 1.10.0
-* Add support for collapsing and pausing facet components in FilterList
-  when the cell value is not a simple object such a string/number.
+* Add support for collapsing and pausing facet components in FilterList.
 
 # 1.9.5
 * Add support to ResultTable for displaying cell values from nested objects
