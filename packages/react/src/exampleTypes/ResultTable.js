@@ -38,12 +38,13 @@ let HeaderCellDefault = observer(({ activeFilter, style, ...props }) => (
     {...props}
   />
 ))
+HeaderCellDefault.displayName = 'HeaderCellDefault'
 
 let Header = withStateLens({ popover: false, adding: false, filtering: false })(
   observer(({ // Local State
     i, popover, adding, filtering, Modal, FieldPicker, ListGroupItem: Item, typeComponents, HeaderCell = HeaderCellDefault, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria }) => {
     // Components (providerable?) // Contextual
-    let { field, label } = fieldSchema
+    let { disableFilter, field, label, typeDefault } = fieldSchema
     HeaderCell = fieldSchema.HeaderCell || HeaderCell
     let filterNode =
       criteria && _.find({ field }, tree.getNode(criteria).children)
@@ -99,7 +100,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
                 Add Column
               </Item>
             )}
-          {criteria && (
+          {criteria && (typeDefault || filterNode) && !disableFilter && (
             <div>
               <Item onClick={filter}>
                 <Icon
@@ -157,6 +158,7 @@ let TableBody = observer(({ node, visibleFields }) => (
       )}
   </tbody>
 ))
+TableBody.displayName = 'TableBody'
 
 let ResultTable = InjectTreeNode(
   observer(({ // Props

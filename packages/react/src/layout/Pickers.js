@@ -30,6 +30,7 @@ export let FilteredPicker = withStateLens({ filter: '' })(
     )
   )
 )
+FilteredPicker.displayName = 'FilteredPicker'
 
 export let ModalPicker = withStateLens({ isOpen: false })(
   observer(
@@ -57,3 +58,4 @@ export let ModalPicker = withStateLens({ isOpen: false })(
     )
   )
 )
+ModalPicker.displayName = 'ModalPicker'

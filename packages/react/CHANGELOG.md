@@ -1,4 +1,8 @@
-﻿# 1.9.5
+﻿# 1.10.0
+* Set `displayName` for components so they're visible in React dev tools.
+* Don't show `+ Filter` for column if `typeDefault` is not set or `disableFilter` is set to true.
+
+# 1.9.5
 * Add support to ResultTable for displaying cell values from nested objects
   when the cell value is not a simple object such a string/number.
 

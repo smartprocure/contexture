@@ -18,6 +18,7 @@ export let Input = ({ style = {}, ...x }) => (
     {...x}
   />
 )
+Input.displayName = 'Input'
 
 // Low effort custom checkbox
 export let Checkbox = ({ checked, onChange, style = {} }) => (

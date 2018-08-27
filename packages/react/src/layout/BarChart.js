@@ -37,6 +37,7 @@ let YAxis = ({ height, borderColor, min, max }) => (
     <div style={{ padding: '5px' }}>&nbsp;</div>
   </div>
 )
+YAxis.displayName = 'YAxis'
 
 let BarChart = observer(
   ({

@@ -2,7 +2,7 @@ import React from 'react'
 import * as F from 'futil-js'
 import { observer } from 'mobx-react'
 
-export default observer(
+let Modal = observer(
   ({ isOpen, children, style = {} }) =>
     F.view(isOpen) && (
       <div
@@ -37,3 +37,6 @@ export default observer(
       </div>
     )
 )
+Modal.displayName = 'Modal'
+
+export default Modal

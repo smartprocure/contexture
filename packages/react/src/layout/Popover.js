@@ -5,7 +5,7 @@ import * as F from 'futil-js'
 let { fullscreen } = styles
 
 // Simple popover
-export default observer(
+let Popover = observer(
   ({ isOpen, children, style }) =>
     F.view(isOpen) && (
       <div
@@ -30,3 +30,6 @@ export default observer(
       </div>
     )
 )
+Popover.displayName = 'Popover'
+
+export default Popover
