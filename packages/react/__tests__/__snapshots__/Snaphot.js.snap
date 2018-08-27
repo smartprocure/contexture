@@ -107,7 +107,7 @@ exports[`Storyshots Docs CHANGELOG.md 1`] = `
     </div>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots Docs README.md 1`] = `
 <div>
@@ -216,7 +216,7 @@ exports[`Storyshots Docs README.md 1`] = `
     </div>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots Example Types Full Demo 1`] = `
 <div
@@ -1296,7 +1296,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
     </div>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots Example Types ResultTable Customizations 1`] = `
 <div>
@@ -1496,7 +1496,7 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
     </table>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots FilterAdder Example 1`] = `
 <div>
@@ -1522,7 +1522,7 @@ exports[`Storyshots FilterAdder Example 1`] = `
     Check action log to see adding being dispatched
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots FilterAdder With FilteredPickerModal 1`] = `
 <div
@@ -1536,7 +1536,7 @@ exports[`Storyshots FilterAdder With FilteredPickerModal 1`] = `
     </button>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots FilterList Example 1`] = `
 <div
@@ -1659,13 +1659,13 @@ exports[`Storyshots FilterList Example 1`] = `
     </div>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots IMDB Advanced Search 1`] = `
 <div>
   Loading...
 </div>
-`;
+`
 
 exports[`Storyshots IMDB Check List 1`] = `
 <div
@@ -1763,7 +1763,7 @@ exports[`Storyshots IMDB Check List 1`] = `
     Loading...
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots IMDB Filter List 1`] = `
 <div
@@ -1780,7 +1780,7 @@ exports[`Storyshots IMDB Filter List 1`] = `
     Loading...
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots IMDB Grey Vest Theme 1`] = `
 <div
@@ -1878,7 +1878,7 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
     Loading...
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots IMDB Quick Start 1`] = `
 <div
@@ -2351,13 +2351,13 @@ exports[`Storyshots IMDB Quick Start 1`] = `
     </div>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots IMDB Search Button 1`] = `
 <div>
   Loading...
 </div>
-`;
+`
 
 exports[`Storyshots Index Explorer Advanced Search 1`] = `
 <div>
@@ -2386,7 +2386,7 @@ exports[`Storyshots Index Explorer Advanced Search 1`] = `
     Loading...
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots Index Explorer Basic Search 1`] = `
 <div
@@ -2421,7 +2421,7 @@ exports[`Storyshots Index Explorer Basic Search 1`] = `
     Loading...
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots Layout Awaiter 1`] = `
 <div>
@@ -2439,7 +2439,7 @@ exports[`Storyshots Layout Awaiter 1`] = `
     Reject
   </button>
 </div>
-`;
+`
 
 exports[`Storyshots Layout FilteredPicker 1`] = `
 <div>
@@ -2463,7 +2463,7 @@ exports[`Storyshots Layout FilteredPicker 1`] = `
     cdef
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots Layout Highlight 1`] = `
 <div>
@@ -2475,7 +2475,7 @@ exports[`Storyshots Layout Highlight 1`] = `
   </div>
   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 </div>
-`;
+`
 
 exports[`Storyshots Layout Modal 1`] = `
 <div>
@@ -2485,7 +2485,7 @@ exports[`Storyshots Layout Modal 1`] = `
     Open Modal
   </button>
 </div>
-`;
+`
 
 exports[`Storyshots Layout ModalPicker 1`] = `
 <div>
@@ -2495,7 +2495,7 @@ exports[`Storyshots Layout ModalPicker 1`] = `
     Pick
   </button>
 </div>
-`;
+`
 
 exports[`Storyshots Layout Popover 1`] = `
 <div>
@@ -2505,7 +2505,7 @@ exports[`Storyshots Layout Popover 1`] = `
     Open Popover
   </button>
 </div>
-`;
+`
 
 exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
 <div
@@ -5231,7 +5231,7 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
     Add Filter
   </button>
 </div>
-`;
+`
 
 exports[`Storyshots QueryBuilder/Examples One Filter 1`] = `
 <div
@@ -5455,7 +5455,7 @@ exports[`Storyshots QueryBuilder/Examples One Filter 1`] = `
     Add Filter
   </button>
 </div>
-`;
+`
 
 exports[`Storyshots QueryBuilder/Examples One Filter on a misplaced root 1`] = `
 <div
@@ -5679,7 +5679,7 @@ exports[`Storyshots QueryBuilder/Examples One Filter on a misplaced root 1`] = `
     Add Filter
   </button>
 </div>
-`;
+`
 
 exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
 <div
@@ -6029,7 +6029,7 @@ exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
     Add Filter
   </button>
 </div>
-`;
+`
 
 exports[`Storyshots QueryBuilder/Examples One Filter with fields 1`] = `
 <div
@@ -6284,7 +6284,7 @@ exports[`Storyshots QueryBuilder/Examples One Filter with fields 1`] = `
     Add Filter
   </button>
 </div>
-`;
+`
 
 exports[`Storyshots QueryBuilder/Internals/AddPreview and 1`] = `
 <div
@@ -6324,7 +6324,7 @@ exports[`Storyshots QueryBuilder/Internals/AddPreview and 1`] = `
     </b>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots QueryBuilder/Internals/AddPreview not 1`] = `
 <div
@@ -6364,7 +6364,7 @@ exports[`Storyshots QueryBuilder/Internals/AddPreview not 1`] = `
     </b>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots QueryBuilder/Internals/AddPreview or 1`] = `
 <div
@@ -6404,7 +6404,7 @@ exports[`Storyshots QueryBuilder/Internals/AddPreview or 1`] = `
     </b>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots QueryBuilder/Internals/FilterContents FilterContents 1`] = `
 <div
@@ -6423,7 +6423,7 @@ exports[`Storyshots QueryBuilder/Internals/FilterContents FilterContents 1`] = `
     </button>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
 <div>
@@ -8680,7 +8680,7 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
     </div>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots QueryBuilder/Internals/Group One Filter 1`] = `
 <div>
@@ -8855,7 +8855,7 @@ exports[`Storyshots QueryBuilder/Internals/Group One Filter 1`] = `
     </div>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots QueryBuilder/Internals/Indentable and 1`] = `
 <div
@@ -8937,7 +8937,7 @@ exports[`Storyshots QueryBuilder/Internals/Indentable and 1`] = `
     </div>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots QueryBuilder/Internals/Indentable not 1`] = `
 <div
@@ -9019,7 +9019,7 @@ exports[`Storyshots QueryBuilder/Internals/Indentable not 1`] = `
     </div>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots QueryBuilder/Internals/Indentable or 1`] = `
 <div
@@ -9101,7 +9101,7 @@ exports[`Storyshots QueryBuilder/Internals/Indentable or 1`] = `
     </div>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots QueryBuilder/Internals/Operator and 1`] = `
 <div>
@@ -9144,7 +9144,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator and 1`] = `
     <div />
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots QueryBuilder/Internals/Operator first and 1`] = `
 <div>
@@ -9181,7 +9181,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator first and 1`] = `
     <div />
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots QueryBuilder/Internals/Operator first not 1`] = `
 <div>
@@ -9224,7 +9224,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator first not 1`] = `
     <div />
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots QueryBuilder/Internals/Operator first or 1`] = `
 <div>
@@ -9261,7 +9261,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator first or 1`] = `
     <div />
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots QueryBuilder/Internals/Operator not 1`] = `
 <div>
@@ -9304,7 +9304,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator not 1`] = `
     <div />
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots QueryBuilder/Internals/Operator or 1`] = `
 <div>
@@ -9347,7 +9347,7 @@ exports[`Storyshots QueryBuilder/Internals/Operator or 1`] = `
     <div />
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots QueryBuilder/Internals/OperatorMenu OperatorMenu 1`] = `
 <div>
@@ -9432,7 +9432,7 @@ exports[`Storyshots QueryBuilder/Internals/OperatorMenu OperatorMenu 1`] = `
     </div>
   </div>
 </div>
-`;
+`
 
 exports[`Storyshots QueryBuilder/Internals/Rule index 1`] = `
 <div>
@@ -9557,4 +9557,4 @@ exports[`Storyshots QueryBuilder/Internals/Rule index 1`] = `
     </div>
   </div>
 </div>
-`;
+`
