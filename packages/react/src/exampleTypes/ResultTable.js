@@ -100,23 +100,25 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
                 Add Column
               </Item>
             )}
-          {criteria && (typeDefault || filterNode) && !disableFilter && (
-            <div>
-              <Item onClick={filter}>
-                <Icon
-                  icon={filterNode ? (F.view(filtering) ? 'V' : '>') : '+'}
-                />
-                Filter
-              </Item>
-              {F.view(filtering) &&
-                filterNode && (
-                  <Dynamic
-                    component={typeComponents[filterNode.type]}
-                    path={[...filterNode.path]}
+          {criteria &&
+            (typeDefault || filterNode) &&
+            !disableFilter && (
+              <div>
+                <Item onClick={filter}>
+                  <Icon
+                    icon={filterNode ? (F.view(filtering) ? 'V' : '>') : '+'}
                   />
-                )}
-            </div>
-          )}
+                  Filter
+                </Item>
+                {F.view(filtering) &&
+                  filterNode && (
+                    <Dynamic
+                      component={typeComponents[filterNode.type]}
+                      path={[...filterNode.path]}
+                    />
+                  )}
+              </div>
+            )}
           {Modal &&
             FieldPicker && (
               <Modal isOpen={adding}>
