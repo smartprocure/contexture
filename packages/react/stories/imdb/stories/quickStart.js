@@ -6,7 +6,7 @@ import IMDBCards from '../components/IMDBCards'
 import { DarkBox, Pager, ExampleTypes } from '../../DemoControls'
 let { Facet, Number, Query, ResultCount, DateHistogram } = ExampleTypes
 
-let formatYear = x => new Date(x).getFullYear() + 1
+let formatYear = x => new Date(x).getUTCFullYear()
 
 export default () => (
   <ContextureProvider schema="movies" types={types} service={service}>

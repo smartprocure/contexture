@@ -185,7 +185,7 @@ let testTree = {
 }
 testTree.lens = treeLens(testTree)
 
-let formatYear = x => new Date(x).getFullYear() + 1
+let formatYear = x => new Date(x).getUTCFullYear()
 import { Flex, SpacedList } from '../../src/layout'
 import { ExampleTypes } from '../DemoControls'
 let {

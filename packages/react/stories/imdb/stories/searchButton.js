@@ -15,7 +15,7 @@ let {
   TypeMap,
 } = ExampleTypes
 
-let formatYear = x => new Date(x).getFullYear() + 1
+let formatYear = x => new Date(x).getUTCFullYear()
 
 let tree = Contexture({
   key: 'searchRoot',
