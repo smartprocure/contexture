@@ -14,8 +14,12 @@ let NumberComponent = injectTreeNode(
       />
       <div>-</div>
       <NumberInput
-        value={node.max || ''}
-        onChange={e => tree.mutate(node.path, { max: e.target.value })}
+        value={node.max === Number.MAX_SAFE_INTEGER ? '' : node.max}
+        onChange={e =>
+          tree.mutate(node.path, {
+            max: e.target.value || Number.MAX_SAFE_INTEGER,
+          })
+        }
       />
     </Flex>
   )),
