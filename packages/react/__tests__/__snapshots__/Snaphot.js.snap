@@ -1560,19 +1560,7 @@ exports[`Storyshots FilterList Example 1`] = `
             }
           }
         >
-          <b
-            node={
-              Object {
-                "field": "a",
-                "path": Array [
-                  "a",
-                  "a",
-                ],
-                "type": "typeA",
-              }
-            }
-            tree={undefined}
-          >
+          <b>
             Field A
           </b>
         </div>
@@ -1600,19 +1588,7 @@ exports[`Storyshots FilterList Example 1`] = `
             }
           }
         >
-          <b
-            node={
-              Object {
-                "field": "b",
-                "path": Array [
-                  "a",
-                  "b",
-                ],
-                "type": "typeB",
-              }
-            }
-            tree={undefined}
-          >
+          <b>
             B Field
           </b>
         </div>
@@ -1636,19 +1612,7 @@ exports[`Storyshots FilterList Example 1`] = `
             }
           }
         >
-          <b
-            node={
-              Object {
-                "field": "c",
-                "path": Array [
-                  "a",
-                  "c",
-                ],
-                "type": "typeB",
-              }
-            }
-            tree={undefined}
-          >
+          <b>
             c
           </b>
         </div>
