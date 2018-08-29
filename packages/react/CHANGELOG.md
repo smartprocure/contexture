@@ -1,4 +1,8 @@
-﻿# 1.10.0
+﻿# 1.10.1
+* Added support for the display function of types (used by the results
+  table) to receive the whole result object, which includes the _id.
+
+# 1.10.0
 * Add support for collapsing and pausing facet components in FilterList.
 
 # 1.9.5
