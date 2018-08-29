@@ -10,7 +10,13 @@ import { loading } from '../styles/generic'
 import { applyDefaults } from '../utils/schema'
 import { flattenPlainObject, moveIndex } from '../utils/futil'
 
-let getRecord = F.getOrReturn('_source')
+let getRecord = x => (
+  _.get('_source', x) ? {
+    ..._.get('_source', x),
+    _id: _.get('_id', x)
+  } : x
+)
+
 let getResults = _.get('context.response.results')
 let inferSchema = _.flow(getResults, _.head, getRecord, flattenPlainObject)
 let getIncludes = (schema, node) =>
@@ -146,7 +152,7 @@ let TableBody = observer(({ node, visibleFields }) => (
             {_.map(
               ({ field, display = x => x, Cell = 'td' }) => (
                 <Cell key={field}>
-                  {display(_.get(field, getRecord(x)), getRecord(x), x)}
+                  {display(_.get(field, getRecord(x)), getRecord(x))}
                 </Cell>
               ),
               visibleFields
