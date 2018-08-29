@@ -1,3 +1,6 @@
+# 0.6.3
+* `number` properly handle empty string, null, undefined, and NaN
+
 # 0.6.2
 * `number` properly supports casting strings to numbers
 
