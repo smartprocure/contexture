@@ -1,6 +1,6 @@
 ﻿# 1.10.1
-* Added support for the display function of types (used by the results
-  table) to receive the whole result object, which includes the _id.
+* Added the availability to access the record's _id as part of the
+  results obtained from the getRecord function of ResultTable.
 
 # 1.10.0
 * Add support for collapsing and pausing facet components in FilterList.
