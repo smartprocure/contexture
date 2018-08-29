@@ -1321,7 +1321,9 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
   <div
     style={Object {}}
   >
-    <table>
+    <table
+      className="example-table"
+    >
       <thead>
         <tr>
           <th
