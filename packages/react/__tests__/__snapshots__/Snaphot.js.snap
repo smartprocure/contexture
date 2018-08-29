@@ -1003,7 +1003,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                     }
                   }
                 >
-                  1971
+                  1970
                 </div>
               </div>
               <div>
@@ -1026,7 +1026,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                     }
                   }
                 >
-                  1980
+                  1979
                 </div>
               </div>
               <div>
@@ -1049,7 +1049,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                     }
                   }
                 >
-                  1990
+                  1989
                 </div>
               </div>
               <div>
@@ -1072,7 +1072,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                     }
                   }
                 >
-                  2000
+                  1999
                 </div>
               </div>
               <div>
@@ -1095,7 +1095,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                     }
                   }
                 >
-                  2010
+                  2009
                 </div>
               </div>
             </div>
@@ -1553,16 +1553,17 @@ exports[`Storyshots FilterList Example 1`] = `
       <div
         style={Object {}}
       >
-        <b
+        <div
           style={
             Object {
-              "display": "block",
               "margin": "10px 0",
             }
           }
         >
-          Field A
-        </b>
+          <b>
+            Field A
+          </b>
+        </div>
       </div>
       <div>
         A TYPE
@@ -1580,16 +1581,17 @@ exports[`Storyshots FilterList Example 1`] = `
       <div
         style={Object {}}
       >
-        <b
+        <div
           style={
             Object {
-              "display": "block",
               "margin": "10px 0",
             }
           }
         >
-          B Field
-        </b>
+          <b>
+            B Field
+          </b>
+        </div>
       </div>
       <div>
         B TYPE
@@ -1603,16 +1605,17 @@ exports[`Storyshots FilterList Example 1`] = `
       <div
         style={Object {}}
       >
-        <b
+        <div
           style={
             Object {
-              "display": "block",
               "margin": "10px 0",
             }
           }
         >
-          c
-        </b>
+          <b>
+            c
+          </b>
+        </div>
       </div>
       <div>
         B TYPE
