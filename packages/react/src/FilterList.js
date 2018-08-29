@@ -1,16 +1,29 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import { observer } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 import { Dynamic, SpacedList } from './layout'
 import InjectTreeNode from './utils/injectTreeNode'
 
-export let Label = x => (
-  <b style={{ display: 'block', margin: '10px 0' }} {...x} />
+export let Label = inject(_.identity)(
+  observer(({ tree, node, ...x }) => (
+    <div style={{ margin: '10px 0' }}>
+      <b {...x} />
+      {tree &&
+        node && (
+          <span
+            style={{ float: 'right', marginRight: '5px', cursor: 'pointer' }}
+            onClick={() => tree.mutate(node.path, { paused: !node.paused })}
+          >
+            {node.paused ? '◀' : '▼'}
+          </span>
+        )}
+    </div>
+  ))
 )
 
 export let FieldLabel = InjectTreeNode(
-  observer(({ node: { field } = {}, fields }) => (
-    <Label>{_.get([field, 'label'], fields)}</Label>
+  observer(({ node, node: { field } = {}, fields }) => (
+    <Label node={node}>{_.get([field, 'label'], fields)}</Label>
   ))
 )
 
@@ -21,11 +34,13 @@ export let FilterList = InjectTreeNode(
         {node.children.map(child => (
           <div key={child.path}>
             <FieldLabel node={child} fields={fields} />
-            <Dynamic
-              component={types[child.type]}
-              path={[...child.path]}
-              {...mapNodeToProps(child, fields, types)}
-            />
+            {!child.paused && (
+              <Dynamic
+                component={types[child.type]}
+                path={[...child.path]}
+                {...mapNodeToProps(child, fields, types)}
+              />
+            )}
           </div>
         ))}
       </SpacedList>

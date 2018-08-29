@@ -65,3 +65,5 @@ jest_0/
 dist/
 
 package-lock.json
+
+.idea/
