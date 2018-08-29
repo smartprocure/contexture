@@ -10,12 +10,10 @@ import { loading } from '../styles/generic'
 import { applyDefaults } from '../utils/schema'
 import { flattenPlainObject, moveIndex } from '../utils/futil'
 
-let getRecord = x => (
-  _.get('_source', x) ? {
-    ..._.get('_source', x),
-    _id: _.get('_id', x)
-  } : x
-)
+let getRecord = F.when('_source', x => ({
+  _id: x._id,
+  ...x._source,
+}))
 
 let getResults = _.get('context.response.results')
 let inferSchema = _.flow(getResults, _.head, getRecord, flattenPlainObject)
