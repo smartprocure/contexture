@@ -64,6 +64,9 @@ jest_0/
 # ignore distribution folder
 dist/
 
+# ignore storybook related folders
+storybook-static/
+
 package-lock.json
 
 .idea/
