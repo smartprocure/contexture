@@ -1,5 +1,6 @@
 ﻿# 1.12.0
 * Don't show sort options for column in `ResultTable` if `disableSort` is set to true.
+* Hide column menu after clicking sort option.
 
 # 1.11.1
 * Fixed tests
