@@ -67,13 +67,23 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
         </span>
         <Popover isOpen={popover} style={popoverStyle}>
           {!disableSort && (
-            <Item onClick={() => mutate({ sortField: field, sortDir: 'asc' })}>
+            <Item
+              onClick={() => {
+                F.off(popover)()
+                mutate({ sortField: field, sortDir: 'asc' })
+              }}
+            >
               <Icon icon="▲" />
               Sort Ascending
             </Item>
           )}
           {!disableSort && (
-            <Item onClick={() => mutate({ sortField: field, sortDir: 'desc' })}>
+            <Item
+              onClick={() => {
+                F.off(popover)()
+                mutate({ sortField: field, sortDir: 'desc' })
+              }}
+            >
               <Icon icon="▼" />
               Sort Descending
             </Item>
