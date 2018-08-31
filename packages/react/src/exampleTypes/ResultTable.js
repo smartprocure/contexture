@@ -48,7 +48,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
   observer(({ // Local State
     i, popover, adding, filtering, Modal, FieldPicker, ListGroupItem: Item, typeComponents, HeaderCell = HeaderCellDefault, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria }) => {
     // Components (providerable?) // Contextual
-    let { disableFilter, field, label, typeDefault } = fieldSchema
+    let { disableFilter, disableSort, field, label, typeDefault } = fieldSchema
     HeaderCell = fieldSchema.HeaderCell || HeaderCell
     let filterNode =
       criteria && _.find({ field }, tree.getNode(criteria).children)
@@ -66,14 +66,28 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
           {field === node.sortField && (node.sortDir === 'asc' ? '▲' : '▼')}
         </span>
         <Popover isOpen={popover} style={popoverStyle}>
-          <Item onClick={() => mutate({ sortField: field, sortDir: 'asc' })}>
-            <Icon icon="▲" />
-            Sort Ascending
-          </Item>
-          <Item onClick={() => mutate({ sortField: field, sortDir: 'desc' })}>
-            <Icon icon="▼" />
-            Sort Descending
-          </Item>
+          {!disableSort && (
+            <Item
+              onClick={() => {
+                F.off(popover)()
+                mutate({ sortField: field, sortDir: 'asc' })
+              }}
+            >
+              <Icon icon="▲" />
+              Sort Ascending
+            </Item>
+          )}
+          {!disableSort && (
+            <Item
+              onClick={() => {
+                F.off(popover)()
+                mutate({ sortField: field, sortDir: 'desc' })
+              }}
+            >
+              <Icon icon="▼" />
+              Sort Descending
+            </Item>
+          )}
           <Item
             onClick={() =>
               mutate({ include: moveIndex(i, i - 1, [...includes]) })
