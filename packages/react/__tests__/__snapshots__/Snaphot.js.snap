@@ -1500,6 +1500,92 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
 </div>
 `
 
+exports[`Storyshots Example Types ResultTable Display Field Optional 1`] = `
+<div>
+  <style>
+    
+            .example-table tr:nth-child(even) {
+              background-color: rgba(0, 0, 0, 0.5)
+            }
+            .example-table {
+              background: white;
+              color: #444;
+              border-collapse: collapse;
+            }
+            .example-table td, .example-table th {
+              padding: 5px
+            }
+            .example-table thead {
+              border-bottom: solid 2px #ccc
+            }
+          
+  </style>
+  <div
+    style={Object {}}
+  >
+    <table
+      className="example-table"
+    >
+      <thead>
+        <tr>
+          <th
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <span
+              onClick={[Function]}
+            >
+              Title
+               
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody
+        style={Object {}}
+      >
+        <tr>
+          <td
+            style={
+              Object {
+                "color": "red",
+              }
+            }
+          >
+            Some Result
+          </td>
+        </tr>
+        <tr>
+          <td
+            style={
+              Object {
+                "color": "red",
+              }
+            }
+          >
+            Some Other Result
+          </td>
+        </tr>
+        <tr>
+          <td
+            style={
+              Object {
+                "color": "red",
+              }
+            }
+          >
+            A Different Result
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`
+
 exports[`Storyshots FilterAdder Example 1`] = `
 <div>
   <div
