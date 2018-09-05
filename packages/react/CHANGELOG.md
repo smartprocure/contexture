@@ -1,4 +1,7 @@
-﻿# 1.12.0
+# 1.13.0
+* Allow excluding results fields from visible ResultsTable columns using the fields property.
+
+# 1.12.0
 * Don't show sort options for column in `ResultTable` if `disableSort` is set to true.
 * Hide column menu after clicking sort option.
 

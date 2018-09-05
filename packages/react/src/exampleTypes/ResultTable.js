@@ -16,7 +16,12 @@ let getRecord = F.when('_source', x => ({
 }))
 
 let getResults = _.get('context.response.results')
-let inferSchema = _.flow(getResults, _.head, getRecord, flattenPlainObject)
+let inferSchema = _.flow(
+  getResults,
+  _.head,
+  getRecord,
+  flattenPlainObject
+)
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
 
@@ -195,7 +200,10 @@ let ResultTable = InjectTreeNode(
     )(fields)
     let includes = getIncludes(schema, node)
     let isIncluded = x => _.includes(x.field, includes)
-    let visibleFields = _.map(field => _.find({ field }, schema), includes)
+    let visibleFields = _.flow(
+      _.map(field => _.find({ field }, schema)),
+      _.compact
+    )(includes)
     let hiddenFields = _.reject(isIncluded, schema)
 
     let headerProps = {
