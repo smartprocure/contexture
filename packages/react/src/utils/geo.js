@@ -23,5 +23,5 @@ export let loadHereOptions = inputValue =>
         });
       } else {
         resolve([])
-      };
+      }
     })
