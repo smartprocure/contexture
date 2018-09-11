@@ -76,7 +76,7 @@ let tree = observable({
     type: 'geo',
     location: '',
     operator: 'within',
-    radius: 1
+    radius: 1,
   },
   results: {
     key: 'results',
@@ -206,7 +206,7 @@ let {
   ResultTable,
   DateHistogram,
   TagsQuery,
-  Geo
+  Geo,
 } = ExampleTypes
 
 const onBeforeRender = () => {
@@ -281,7 +281,11 @@ export default () =>
           <Provider tree={testTree}>
             <Flex style={{ flexFlow: 'column wrap' }}>
               <div style={{ flex: 1 }}>
-                <Geo placeholder='Enter address, city, state, zip or business name ...' loadOptions={loadHereOptions} path={['geo']} />
+                <Geo
+                  placeholder="Enter address, city, state, zip or business name ..."
+                  loadOptions={loadHereOptions}
+                  path={['geo']}
+                />
               </div>
             </Flex>
           </Provider>
