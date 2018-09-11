@@ -1,3 +1,6 @@
+# 1.13.1
+* Add geo filter.
+
 # 1.13.0
 * Allow excluding results fields from visible ResultsTable columns using the fields property.
 

@@ -1,5 +1,4 @@
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
 
 const hereConfig = {
   app_id:   'KzmI0fMwTyOG10rqZacS',   // YOUR APP_ID

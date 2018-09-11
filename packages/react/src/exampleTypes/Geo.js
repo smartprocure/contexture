@@ -33,7 +33,7 @@ let GeoComponent = injectTreeNode(
           cacheOptions
           escapeClearsValue
           placeholder={placeholder}
-          noOptionsMessage={x => ''}
+          noOptionsMessage={() => ''}
           styles={customStyles}
           loadOptions={loadOptions}
           onInputChange={newValue => {
