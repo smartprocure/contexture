@@ -5,6 +5,7 @@ import { observable, set } from 'mobx'
 import { Provider } from 'mobx-react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
+import { loadHereOptions } from '../../src/utils/geo'
 
 // Lifted from contexture-client since it's not exported
 let treeLens = _.curry((tree, path, prop) => ({
@@ -68,6 +69,14 @@ let tree = observable({
     field: 'metaScore',
     min: 0,
     max: 100,
+  },
+  geo: {
+    key: 'geoSearch',
+    path: ['geo'],
+    type: 'geo',
+    location: '',
+    operator: 'within',
+    radius: 1
   },
   results: {
     key: 'results',
@@ -197,6 +206,7 @@ let {
   ResultTable,
   DateHistogram,
   TagsQuery,
+  Geo
 } = ExampleTypes
 
 const onBeforeRender = () => {
@@ -228,6 +238,7 @@ export default () =>
                     <Facet path={['facet']} display={F.autoLabel} />
                     <Number path={['number']} />
                     <Number path={['number']} />
+                    <Geo loadOptions={loadHereOptions} path={['geo']} />
                   </SpacedList>
                 </div>
                 <div style={{ flex: 4 }}>
@@ -249,6 +260,30 @@ export default () =>
                 </div>
               </Flex>
             </SpacedList>
+          </Provider>
+        </div>
+      ),
+      {
+        onBeforeRender,
+      }
+    )
+    .addWithJSX(
+      'Geo filter & HERE maps',
+      () => (
+        <div
+          style={{
+            backgroundColor: '#333',
+            color: '#AAA',
+            padding: '20px',
+            borderRadius: '10px',
+          }}
+        >
+          <Provider tree={testTree}>
+            <Flex style={{ flexFlow: 'column wrap' }}>
+              <div style={{ flex: 1 }}>
+                <Geo placeholder='Enter address, city, state, zip or business name ...' loadOptions={loadHereOptions} path={['geo']} />
+              </div>
+            </Flex>
           </Provider>
         </div>
       ),

@@ -87,6 +87,7 @@
     "futil-js": "^1.45.0",
     "lodash": "^4.17.4",
     "react-dnd": "^2.5.4",
-    "react-dnd-html5-backend": "^2.5.4"
+    "react-dnd-html5-backend": "^2.5.4",
+    "react-select": "^2.0.0"
   }
 }
