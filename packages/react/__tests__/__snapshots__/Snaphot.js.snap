@@ -1010,7 +1010,8 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   type="number"
                   value={1}
                 />
-                 from
+                 
+                from
               </div>
               <div
                 style={
@@ -1545,7 +1546,8 @@ exports[`Storyshots Example Types Geo filter & HERE maps 1`] = `
               type="number"
               value={1}
             />
-             from
+             
+            from
           </div>
           <div
             style={
