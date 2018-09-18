@@ -1,3 +1,6 @@
+# 1.13.1
+* Only use needed provider in FilterList component.
+
 # 1.13.0
 * Allow excluding results fields from visible ResultsTable columns using the fields property.
 
