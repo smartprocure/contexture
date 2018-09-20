@@ -1,8 +1,8 @@
 import _ from 'lodash/fp'
 
 const hereConfig = {
-  app_id: 'KzmI0fMwTyOG10rqZacS', // YOUR APP_ID
-  app_code: 'PykXtnTUeH7DDM-RLlpwyA', // YOUR APP_CODE
+  app_id: 'KzmI0fMwTyOG10rqZacS',      // TEMP EMAIL USED - USE/GET YOUR APP_ID
+  app_code: 'PykXtnTUeH7DDM-RLlpwyA',  // TEMP EMAIL USED - USE/GET YOUR APP_CODE
   country: 'USA',
   url: 'http://autocomplete.geocoder.api.here.com/6.2/suggest.json',
 }
