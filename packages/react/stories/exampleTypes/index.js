@@ -6,6 +6,7 @@ import { Provider } from 'mobx-react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { loadHereOptions } from '../../src/utils/geo'
+import AsyncSelect from 'react-select/lib/Async'
 
 // Lifted from contexture-client since it's not exported
 let treeLens = _.curry((tree, path, prop) => ({
@@ -238,7 +239,7 @@ export default () =>
                     <Facet path={['facet']} display={F.autoLabel} />
                     <Number path={['number']} />
                     <Number path={['number']} />
-                    <Geo loadOptions={loadHereOptions} path={['geo']} />
+                    <Geo loadOptions={loadHereOptions} path={['geo']} AutoComplete={AsyncSelect} />
                   </SpacedList>
                 </div>
                 <div style={{ flex: 4 }}>
@@ -285,6 +286,7 @@ export default () =>
                   placeholder="Enter address, city, state, zip or business name ..."
                   loadOptions={loadHereOptions}
                   path={['geo']}
+                  AutoComplete={AsyncSelect}
                 />
               </div>
             </Flex>

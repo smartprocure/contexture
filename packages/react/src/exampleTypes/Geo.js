@@ -3,7 +3,6 @@ import { observer } from 'mobx-react'
 import { Flex } from '../layout/Flex'
 import { exampleTypes } from 'contexture-client'
 import injectTreeNode from '../utils/injectTreeNode'
-import AsyncSelect from 'react-select/lib/Async'
 
 const customStyles = {
   valueContainer: styles => ({
@@ -26,7 +25,7 @@ let selectInput = props => <select {...props}></select>
 let numberInput = props => <input type="number" {...props} />
 
 let GeoComponent = injectTreeNode(
-  observer(({ tree, node, loadOptions, SelectInput = selectInput, NumberInput = numberInput, placeholder = 'Address ...' }) => (
+  observer(({ tree, node, loadOptions, SelectInput = selectInput, NumberInput = numberInput, AutoComplete=null, placeholder = 'Address ...' }) => (
     <Flex style={{ flexFlow: 'column' }}>
       <SelectInput
         style={elementStyle}
@@ -49,7 +48,7 @@ let GeoComponent = injectTreeNode(
         from
       </div>
       <div style={elementStyle}>
-        <AsyncSelect
+        {AutoComplete && <AutoComplete
           cacheOptions
           escapeClearsValue
           placeholder={placeholder}
@@ -61,7 +60,8 @@ let GeoComponent = injectTreeNode(
             tree.mutate(node.path, { location: inputValue })
             return inputValue
           }}
-        />
+        />}
+        {!AutoComplete && <div>Autocomplete component is required!</div> }
       </div>
     </Flex>
   )),
