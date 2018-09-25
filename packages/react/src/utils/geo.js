@@ -7,29 +7,17 @@ const hereConfig = {
   url: 'http://autocomplete.geocoder.api.here.com/6.2/suggest.json',
 }
 
-export let loadHereOptions = inputValue =>
-  new Promise((resolve, reject) => {
-    if (inputValue.length > 2) {
-      fetch(
-        `${hereConfig.url}?app_id=${hereConfig.app_id}&app_code=${
-          hereConfig.app_code
-        }&country=${hereConfig.country}&query=${inputValue}`
-      )
-        .then(response => response.json())
-        .then(data => {
-          if (data.error) {
-            console.log(data.error)
-            reject(data.error)
-          } else {
-            resolve(
-              _.getOr([], 'suggestions', data).map(d => ({
-                label: d.label,
-                value: d.locationId,
-              }))
-            )
-          }
-        })
-    } else {
-      resolve([])
-    }
-  })
+export let loadHereOptions = async inputValue => {
+  if (inputValue.length <= 2) return []
+  let url = `${hereConfig.url}?app_id=${hereConfig.app_id}&app_code=${hereConfig.app_code}&country=${hereConfig.country}&query=${inputValue}`
+  let data = await (await fetch(url)).json()
+  if (data.error) {
+    console.error('loadHereOptions', data.error)
+    throw new Error(data.error)
+  } else {
+    return _.getOr([], 'suggestions', data).map(d => ({
+      label: d.label,
+      value: d.locationId,
+    }))
+  }
+}
