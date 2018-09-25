@@ -4,7 +4,7 @@ import { observer, inject } from 'mobx-react'
 import { Dynamic, SpacedList } from './layout'
 import InjectTreeNode from './utils/injectTreeNode'
 
-export let Label = inject('tree')(
+export let Label = inject(_.pick('tree'))(
   observer(({ tree, node, ...x }) => (
     <div style={{ margin: '10px 0' }}>
       <b {...x} />
