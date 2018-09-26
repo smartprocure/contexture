@@ -21,7 +21,7 @@ const elementStyle = {
 
 const operatorOptions = ['within', 'not within']
 
-let selectInput = props => <select {...props} />
+let selectInput = 'select'
 let numberInput = props => <input type="number" {...props} />
 
 let GeoComponent = injectTreeNode(
