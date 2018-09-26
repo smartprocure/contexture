@@ -1,3 +1,6 @@
+# 1.13.2
+* Only use needed provider in FilterList component.
+
 # 1.13.1
 * Updated duti to it's latest version.
 
