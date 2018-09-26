@@ -239,7 +239,11 @@ export default () =>
                     <Facet path={['facet']} display={F.autoLabel} />
                     <Number path={['number']} />
                     <Number path={['number']} />
-                    <Geo loadOptions={loadHereOptions} path={['geo']} AutoComplete={AsyncSelect} />
+                    <Geo
+                      loadOptions={loadHereOptions}
+                      path={['geo']}
+                      AutoComplete={AsyncSelect}
+                    />
                   </SpacedList>
                 </div>
                 <div style={{ flex: 4 }}>
