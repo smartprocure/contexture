@@ -16,7 +16,12 @@ let getRecord = F.when('_source', x => ({
 }))
 
 let getResults = _.get('context.response.results')
-let inferSchema = _.flow(getResults, _.head, getRecord, flattenPlainObject)
+let inferSchema = _.flow(
+  getResults,
+  _.head,
+  getRecord,
+  flattenPlainObject
+)
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
 

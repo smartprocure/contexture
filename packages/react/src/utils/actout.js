@@ -13,7 +13,10 @@ export let targetBinding = field => binding(field, `target.${field}`)
 // Makes binding react input value to observables really easy
 export let value = targetBinding('value')
 
-export let checkBoxValues = _.flow(includeLens, targetBinding('checked'))
+export let checkBoxValues = _.flow(
+  includeLens,
+  targetBinding('checked')
+)
 
 export let enter = f => e => e.key === 'Enter' && f()
 export let click = f => e => e.stopPropagation() || f(e)

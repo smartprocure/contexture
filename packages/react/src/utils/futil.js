@@ -8,7 +8,10 @@ export let onlyWhen = f => F.unless(f, () => {})
 
 // Tree
 export let FlattenTreeLeaves = Tree =>
-  _.flow(Tree.flatten(), _.omitBy(Tree.traverse))
+  _.flow(
+    Tree.flatten(),
+    _.omitBy(Tree.traverse)
+  )
 export let PlainObjectTree = F.tree(onlyWhen(_.isPlainObject))
 export let flattenPlainObject = F.whenExists(FlattenTreeLeaves(PlainObjectTree))
 
@@ -19,7 +22,10 @@ export let pushAt = _.curry((index, val, arr) => {
   return result
 })
 export let moveIndex = (from, to, arr) =>
-  _.flow(_.pullAt(from), pushAt(to, arr[from]))(arr)
+  _.flow(
+    _.pullAt(from),
+    pushAt(to, arr[from])
+  )(arr)
 
 // Immutable
 export let toggleElementBy = _.curry((check, val, arr) =>
