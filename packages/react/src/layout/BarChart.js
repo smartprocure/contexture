@@ -64,7 +64,7 @@ let BarChart = observer(
             <div key={x.key}>
               <div
                 style={{
-                  height: x[valueField] / max * height,
+                  height: (x[valueField] / max) * height,
                   background: background(x, max),
                   margin: `0 ${gutter}px`,
                 }}
