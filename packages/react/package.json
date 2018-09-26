@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "1.13.0",
+  "version": "1.13.1",
   "description": "React components for building contexture interfaces",
   "main": "dist/index.js",
   "scripts": {
@@ -68,7 +68,7 @@
     "contexture": "^0.2.1",
     "contexture-client": "^2.13.6",
     "contexture-elasticsearch": "^0.10.1",
-    "duti": "^0.9.3",
+    "duti": "latest",
     "elasticsearch-browser": "^14.2.2",
     "eslint": "^4.12.1",
     "eslint-config-smartprocure": "^1.1.0",

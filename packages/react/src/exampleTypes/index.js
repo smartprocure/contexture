@@ -14,21 +14,19 @@ import Text from './Text'
 import { partial } from '../utils/mobx-react-utils'
 import ModalDefault from '../layout/Modal'
 
-export default (
-  {
-    Input = 'input',
-    TextInput = Input,
-    NumberInput = partial({ type: 'number' }, Input),
-    DateInput = partial({ type: 'date' }, Input),
-    Checkbox = partial({ type: 'checkbox' }, 'input'),
-    RadioList,
-    TagsInput,
-    Table = 'table',
-    Modal = ModalDefault,
-    FieldPicker,
-    ListGroupItem = 'div',
-  } = {}
-) => {
+export default ({
+  Input = 'input',
+  TextInput = Input,
+  NumberInput = partial({ type: 'number' }, Input),
+  DateInput = partial({ type: 'date' }, Input),
+  Checkbox = partial({ type: 'checkbox' }, 'input'),
+  RadioList,
+  TagsInput,
+  Table = 'table',
+  Modal = ModalDefault,
+  FieldPicker,
+  ListGroupItem = 'div',
+} = {}) => {
   let Components = {
     Facet: partial({ TextInput, Checkbox, RadioList }, Facet),
     Number: partial({ NumberInput }, Number),
