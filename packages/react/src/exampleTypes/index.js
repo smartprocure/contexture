@@ -3,6 +3,7 @@ import Number from './Number'
 import Date from './Date'
 import DateRangePicker from './DateRangePicker'
 import Query from './Query'
+import Geo from './Geo'
 import TagsQuery from './TagsQuery'
 import ResultCount from './ResultCount'
 import ResultTable from './ResultTable'
@@ -42,6 +43,7 @@ export default ({
     ResultPager,
     DateHistogram,
     TermsStats,
+    Geo,
     Text: partial({ Input }, Text),
   }
   Components.CheckableResultTable = partial(
@@ -57,6 +59,7 @@ export default ({
     number: Components.Number,
     date: Components.Date,
     tagsQuery: Components.TagsQuery,
+    geo: Components.Geo,
     text: Components.Text,
   }
   return { ...Components, TypeMap }

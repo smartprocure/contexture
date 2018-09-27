@@ -1,3 +1,6 @@
+# 1.14.0
+* Add geo filter.
+
 # 1.13.2
 * Only use needed provider in FilterList component.
 
