@@ -189,6 +189,9 @@ export default stampKey('type', {
         terms: [],
       },
     },
+    subquery: {
+      getValues: x => _.map('key', x.context.terms),
+    },
   },
   cardinality: {
     reactors: {
