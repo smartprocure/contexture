@@ -44,7 +44,7 @@ let HighlightedColumn = withStateLens({ viewModal: false })(observer(({
   Cell = header ? 'th' : 'td',
   Table = 'table',
   Modal = null,
-	viewModal,
+  viewModal,
 }) => {
   let alsoHighlighted = _.difference(_.keys(highlight), visibleFields)
   return (highlight && !_.isEmpty(alsoHighlighted))
@@ -69,7 +69,7 @@ let HighlightedColumn = withStateLens({ viewModal: false })(observer(({
           ? 'Other Matches'
           : <div onClick={F.on(viewModal)}>
               This search also matched on the fields: {_.join(', ', _.map(_.startCase, alsoHighlighted))}.
-						  <br />
+              <br />
               <i>Click here to expand.</i>
             </div>}
       </Cell>
@@ -214,11 +214,11 @@ let TableBody = observer(({ node, visibleFields, Modal }) => (
               visibleFields
             )}
             <HighlightedColumn {...{
-							record: getRecord(x),
-							highlight: x.highlight,
-							visibleFields,
-							Modal,
-						}} />
+              record: getRecord(x),
+              highlight: x.highlight,
+              visibleFields,
+              Modal,
+            }} />
           </tr>
         ),
         getResults(node)
