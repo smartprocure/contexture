@@ -47,6 +47,11 @@ let HighlightedColumn = withStateLens({ viewModal: false })(observer(({
   viewModal,
 }) => {
   let alsoHighlighted = _.difference(_.keys(highlight), visibleFields)
+  let getConnector = i => {
+    let length = alsoHighlighted.length
+    return i === length - 1 ? '' :
+           i === length - 2 ? ' and ' : ', '
+  }
   return (highlight && !_.isEmpty(alsoHighlighted))
     ? <Cell key="highlight">
         {Modal && <Modal isOpen={viewModal}>
@@ -68,7 +73,7 @@ let HighlightedColumn = withStateLens({ viewModal: false })(observer(({
         {header
           ? 'Other Matches'
           : <div onClick={F.on(viewModal)}>
-              This search also matched on the fields: {_.join(', ', _.map(_.startCase, alsoHighlighted))}.
+              This search also matched on the fields: {F.mapIndexed((x, i) => <span><b>{_.startCase(x)}</b>{getConnector(i)}</span>, alsoHighlighted)}.
               <br />
               <i>Click here to expand.</i>
             </div>}

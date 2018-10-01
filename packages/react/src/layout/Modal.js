@@ -15,7 +15,7 @@ let Modal = observer(
           backgroundColor: 'rgba(0,0,0,0.3)',
           padding: 50,
           overflow: 'scroll',
-          zIndex: 1,
+          zIndex: 1000,
           ...style,
         }}
         onClick={F.off(isOpen)}
