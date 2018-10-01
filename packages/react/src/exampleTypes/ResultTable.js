@@ -39,7 +39,7 @@ let popoverStyle = {
 let HighlightedColumn = withStateLens({ viewModal: false })(observer(({
   visibleFields,
   node,
-  highlight = _.get('0.highlight', getResults(node).slice()),
+  highlight = _.result('slice.0.highlight', getResults(node)),
   header,
   Cell = header ? 'th' : 'td',
   Table = 'table',
