@@ -1,4 +1,7 @@
-﻿# 2.14.0
+﻿# 2.14.1
+* Duti upgrade.
+
+# 2.14.0
 * Add twoLevelMatch/matchStats reactor of self for key_value field.
 
 # 2.13.7
