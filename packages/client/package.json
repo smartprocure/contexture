@@ -43,7 +43,7 @@
     "chai": "^4.1.2",
     "chokidar": "^1.7.0",
     "chokidar-cli": "^1.2.0",
-    "duti": "^0.9.3",
+    "duti": "latest",
     "eslint": "^4.12.1",
     "eslint-config-smartprocure": "^1.1.0",
     "mobx": "^4.3.1",
