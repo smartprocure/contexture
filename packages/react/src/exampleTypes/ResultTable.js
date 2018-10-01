@@ -16,7 +16,12 @@ let getRecord = F.when('_source', x => ({
 }))
 
 let getResults = _.get('context.response.results')
-let inferSchema = _.flow(getResults, _.head, getRecord, flattenPlainObject)
+let inferSchema = _.flow(
+  getResults,
+  _.head,
+  getRecord,
+  flattenPlainObject
+)
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
 
@@ -36,50 +41,82 @@ let popoverStyle = {
   userSelect: 'none',
 }
 
-let HighlightedColumn = withStateLens({ viewModal: false })(observer(({
-  visibleFields,
-  node,
-  highlight = _.result('slice.0.highlight', getResults(node)),
-  header,
-  Cell = header ? 'th' : 'td',
-  Table = 'table',
-  Modal = null,
-  viewModal,
-}) => {
-  let alsoHighlighted = _.difference(_.keys(highlight), visibleFields)
-  let getConnector = i => {
-    let length = alsoHighlighted.length
-    return i === length - 1 ? '' :
-           i === length - 2 ? ' and ' : ', '
-  }
-  return (highlight && !_.isEmpty(alsoHighlighted))
-    ? <Cell key="highlight">
-        {Modal && <Modal isOpen={viewModal}>
-          <h3>Other Matching Fields</h3>
-          <Table>
-            <thead>
-              <tr>
-                {_.map(x => <th key={x}>{_.startCase(x)}</th>, alsoHighlighted)}
-              </tr>
-            </thead>
-            <thead>
-              <tr>
-                {_.map(([text]) => <td><TextHighlight pattern='rabbit' text={text.replace(/<[^>]*>/g, '')} Wrap='b' /></td>, _.values(highlight))}
-              </tr>
-            </thead>
-          </Table>
-          <button onClick={F.off(viewModal)}>Close</button>
-        </Modal>}
-        {header
-          ? 'Other Matches'
-          : <div onClick={F.on(viewModal)}>
-              This search also matched on the fields: {F.mapIndexed((x, i) => <span><b>{_.startCase(x)}</b>{getConnector(i)}</span>, alsoHighlighted)}.
-              <br />
+let HighlightedColumn = withStateLens({ viewModal: false })(
+  observer(
+    ({
+      visibleFields,
+      node,
+      highlight = _.result('slice.0.highlight', getResults(node)),
+      header,
+      Cell = header ? 'th' : 'td',
+      Table = 'table',
+      Modal = null,
+      viewModal,
+    }) => {
+      let alsoHighlighted = _.difference(_.keys(highlight), visibleFields)
+      let getConnector = i => {
+        let length = alsoHighlighted.length
+        return i === length - 1 ? '' : i === length - 2 ? ' and ' : ', '
+      }
+      return highlight && !_.isEmpty(alsoHighlighted) ? (
+        <Cell key="highlight">
+          {Modal && (
+            <Modal isOpen={viewModal}>
+              <h3>Other Matching Fields</h3>
+              <Table>
+                <thead>
+                  <tr>
+                    {_.map(
+                      x => (
+                        <th key={x}>{_.startCase(x)}</th>
+                      ),
+                      alsoHighlighted
+                    )}
+                  </tr>
+                </thead>
+                <thead>
+                  <tr>
+                    {_.map(
+                      ([text]) => (
+                        <td>
+                          <TextHighlight
+                            pattern="rabbit"
+                            text={text.replace(/<[^>]*>/g, '')}
+                            Wrap="b"
+                          />
+                        </td>
+                      ),
+                      _.values(highlight)
+                    )}
+                  </tr>
+                </thead>
+              </Table>
+              <button onClick={F.off(viewModal)}>Close</button>
+            </Modal>
+          )}
+          {header ? (
+            'Other Matches'
+          ) : (
+            <div onClick={F.on(viewModal)}>
+              This search also matched on the fields:{' '}
+              {F.mapIndexed(
+                (x, i) => (
+                  <span>
+                    <b>{_.startCase(x)}</b>
+                    {getConnector(i)}
+                  </span>
+                ),
+                alsoHighlighted
+              )}
+              .<br />
               <i>Click here to expand.</i>
-            </div>}
-      </Cell>
-    : null
-}))
+            </div>
+          )}
+        </Cell>
+      ) : null
+    }
+  )
+)
 HighlightedColumn.displayName = 'HighlightedColumn'
 
 let HeaderCellDefault = observer(({ activeFilter, style, ...props }) => (
@@ -218,12 +255,14 @@ let TableBody = observer(({ node, visibleFields, Modal }) => (
               ),
               visibleFields
             )}
-            <HighlightedColumn {...{
-              record: getRecord(x),
-              highlight: x.highlight,
-              visibleFields,
-              Modal,
-            }} />
+            <HighlightedColumn
+              {...{
+                record: getRecord(x),
+                highlight: x.highlight,
+                visibleFields,
+                Modal,
+              }}
+            />
           </tr>
         ),
         getResults(node)
