@@ -1,5 +1,8 @@
-﻿# 2.15.0
+# 2.15.0
 * Add subQuery/getValues support for terms_stats type.
+
+# 2.14.1
+* Duti upgrade.
 
 # 2.14.0
 * Add twoLevelMatch/matchStats reactor of self for key_value field.
