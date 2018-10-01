@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { observer } from 'mobx-react'
 import InjectTreeNode from '../utils/injectTreeNode'
-import { Popover, Dynamic } from '../layout'
+import { Popover, Dynamic, TextHighlight } from '../layout'
 import { withStateLens } from '../utils/mobx-react-utils'
 import { fieldsToOptions } from '../FilterAdder'
 import { loading } from '../styles/generic'
@@ -16,12 +16,7 @@ let getRecord = F.when('_source', x => ({
 }))
 
 let getResults = _.get('context.response.results')
-let inferSchema = _.flow(
-  getResults,
-  _.head,
-  getRecord,
-  flattenPlainObject
-)
+let inferSchema = _.flow(getResults, _.head, getRecord, flattenPlainObject)
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
 
@@ -40,6 +35,47 @@ let popoverStyle = {
   cursor: 'pointer',
   userSelect: 'none',
 }
+
+let HighlightedColumn = withStateLens({ viewModal: false })(observer(({
+  visibleFields,
+  node,
+  highlight = _.get('0.highlight', getResults(node).slice()),
+  header,
+  Cell = header ? 'th' : 'td',
+  Table = 'table',
+  Modal = null,
+	viewModal,
+}) => {
+  let alsoHighlighted = _.difference(_.keys(highlight), visibleFields)
+  return (highlight && !_.isEmpty(alsoHighlighted))
+    ? <Cell key="highlight">
+        {Modal && <Modal isOpen={viewModal}>
+          <h3>Other Matching Fields</h3>
+          <Table>
+            <thead>
+              <tr>
+                {_.map(x => <th key={x}>{_.startCase(x)}</th>, alsoHighlighted)}
+              </tr>
+            </thead>
+            <thead>
+              <tr>
+                {_.map(([text]) => <td><TextHighlight pattern='rabbit' text={text.replace(/<[^>]*>/g, '')} Wrap='b' /></td>, _.values(highlight))}
+              </tr>
+            </thead>
+          </Table>
+          <button onClick={F.off(viewModal)}>Close</button>
+        </Modal>}
+        {header
+          ? 'Other Matches'
+          : <div onClick={F.on(viewModal)}>
+              This search also matched on the fields: {_.join(', ', _.map(_.startCase, alsoHighlighted))}.
+						  <br />
+              <i>Click here to expand.</i>
+            </div>}
+      </Cell>
+    : null
+}))
+HighlightedColumn.displayName = 'HighlightedColumn'
 
 let HeaderCellDefault = observer(({ activeFilter, style, ...props }) => (
   <th
@@ -163,7 +199,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
 Header.displayName = 'Header'
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
-let TableBody = observer(({ node, visibleFields }) => (
+let TableBody = observer(({ node, visibleFields, Modal }) => (
   <tbody style={node.markedForUpdate || node.updating ? loading : {}}>
     {!!getResults(node).length &&
       _.map(
@@ -177,6 +213,12 @@ let TableBody = observer(({ node, visibleFields }) => (
               ),
               visibleFields
             )}
+            <HighlightedColumn {...{
+							record: getRecord(x),
+							highlight: x.highlight,
+							visibleFields,
+							Modal,
+						}} />
           </tr>
         ),
         getResults(node)
@@ -237,9 +279,10 @@ let ResultTable = InjectTreeNode(
               ),
               visibleFields
             )}
+            <HighlightedColumn header {...{ node, visibleFields }} />
           </tr>
         </thead>
-        <TableBody node={node} visibleFields={visibleFields} />
+        <TableBody node={node} visibleFields={visibleFields} Modal={Modal} />
       </Table>
     )
   }),
