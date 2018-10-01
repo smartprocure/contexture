@@ -8,6 +8,8 @@ const expect = chai.expect
 chai.use(sinonChai)
 import mockService from '../src/mockService'
 
+sinon.spy.reset = sinon.spy.resetHistory
+
 let addDelay = (delay, fn) => async (...args) => {
   await Promise.delay(delay)
   return fn(...args)
