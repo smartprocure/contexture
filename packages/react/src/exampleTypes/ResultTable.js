@@ -41,11 +41,10 @@ let popoverStyle = {
   userSelect: 'none',
 }
 
-let HeaderCellDefault = observer(({ activeFilter, style, ...props }) => (
-  <th
-    style={{ ...(activeFilter ? { fontWeight: 900 } : {}), ...style }}
-    {...props}
-  />
+let HeaderCellDefault = observer(({ activeFilter, style, children }) => (
+  <th style={{ ...(activeFilter ? { fontWeight: 900 } : {}), ...style }}>
+    {children}
+  </th>
 ))
 HeaderCellDefault.displayName = 'HeaderCellDefault'
 
