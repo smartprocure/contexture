@@ -42,9 +42,7 @@ let popoverStyle = {
 }
 
 let HeaderCellDefault = observer(({ activeFilter, style, children }) => (
-  <th
-    style={{ ...(activeFilter ? { fontWeight: 900 } : {}), ...style }}
-	>
+  <th style={{ ...(activeFilter ? { fontWeight: 900 } : {}), ...style }}>
     {children}
   </th>
 ))
