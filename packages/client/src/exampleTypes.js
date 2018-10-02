@@ -164,8 +164,8 @@ export default stampKey('type', {
       operator: 'others',
     },
     defaults: {
-      operator: 'within'
-    }
+      operator: 'within',
+    },
   },
   dateHistogram: {
     reactors: {
