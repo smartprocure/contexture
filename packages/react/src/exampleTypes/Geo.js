@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 import { Flex } from '../layout/Flex'
 import { exampleTypes } from 'contexture-client'
@@ -32,6 +33,7 @@ let GeoComponent = injectTreeNode(
       loadOptions,
       SelectInput = selectInput,
       NumberInput = numberInput,
+      GeoCodeLocation = _.noop,
       AutoComplete = null,
       placeholder = 'Address ...',
     }) => (
@@ -67,8 +69,18 @@ let GeoComponent = injectTreeNode(
               loadOptions={loadOptions}
               onInputChange={newValue => {
                 const inputValue = newValue.replace(/[^a-zA-Z0-9\s]+/g, '')
-                tree.mutate(node.path, { location: inputValue })
                 return inputValue
+              }}
+              onChange={async ({value}) => {
+                let data = await GeoCodeLocation(value)
+                if(data.lat && data.long && data.label) {
+                  tree.mutate(node.path, {
+                    latitude: data.latitude,
+                    longitude: data.longitude,
+                    location: data.location
+                  })
+                  debugger
+                }
               }}
             />
           )}
