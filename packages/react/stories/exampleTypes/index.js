@@ -5,7 +5,7 @@ import { observable, set } from 'mobx'
 import { Provider } from 'mobx-react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import { loadHereOptions } from '../../src/utils/geo'
+import { loadHereOptions, geoCodeLocation } from '../../src/utils/geo'
 import AsyncSelect from 'react-select/lib/Async'
 
 // Lifted from contexture-client since it's not exported
@@ -243,6 +243,7 @@ export default () =>
                       loadOptions={loadHereOptions}
                       path={['geo']}
                       AutoComplete={AsyncSelect}
+                      GeoCodeLocation={geoCodeLocation}
                     />
                   </SpacedList>
                 </div>
