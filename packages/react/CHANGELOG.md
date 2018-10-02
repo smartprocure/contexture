@@ -1,4 +1,7 @@
-﻿# 1.14.1
+﻿# 1.15.0
+* Added a column that shows the additional matching fields on ResultsTable.
+
+# 1.14.1
 * On ResultTable, fixed the HeaderCellDefault to receive only
   activeFilter, style, and children.
 
