@@ -23,9 +23,8 @@ function highlightResults(highlightFields, hit, pathToNested, include) {
       anyRegexesMatch(highlightFields.additionalExclusions, key) ||
       anyRegexesMatch(highlightFields.inline, key) ||
       anyRegexesMatch(highlightFields.nested, key)
-    // If the field is inline but is not in the includes, add it to the additionalFields
-    let inlineButNotIncluded = _.includes(_.difference(highlightFields.inline, include), key)
-    console.log({ key, inline: highlightFields.inline, include, inlineButNotIncluded, difference: _.difference(highlightFields.inline, include) })
+    // If we have an include array, and if the field is inline but is not in the includes, add it to the additionalFields
+    let inlineButNotIncluded = include && _.includes(_.difference(highlightFields.inline, include), key)
     if (inlineButNotIncluded || (additionalMatches && !additionalExclusionMatches)) {
       additionalFields.push({
         label: key,
