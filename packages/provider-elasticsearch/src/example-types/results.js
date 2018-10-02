@@ -59,7 +59,8 @@ module.exports = {
             highlightObject = highlightResults(
               schema.elasticsearch.highlight,
               hit,
-              schema.elasticsearch.nestedPath
+              schema.elasticsearch.nestedPath,
+              context.include
             )
             additionalFields = highlightObject.additionalFields
             // mainHighlighted  = highlightObject.mainHighlighted;
