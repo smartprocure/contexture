@@ -1,3 +1,6 @@
+# 2.15.1
+* Add defaults and more reactors for geo type.
+
 # 2.15.0
 * Add subQuery/getValues support for terms_stats type.
 
