@@ -1,3 +1,6 @@
+# 2.16.0
+* Make sure that afterSearch hook is called after triggerUpdate has executed.
+
 # 2.15.1
 * Add defaults and more reactors for geo type.
 
