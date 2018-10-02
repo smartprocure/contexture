@@ -73,7 +73,7 @@ let GeoComponent = injectTreeNode(
               }}
               onChange={async ({value}) => {
                 let data = await GeoCodeLocation(value)
-                if(data && data.lat && data.long && data.label) {
+                if(data && data.latitude && data.longitude && data.location) {
                   tree.mutate(node.path, {
                     latitude: data.latitude,
                     longitude: data.longitude,
