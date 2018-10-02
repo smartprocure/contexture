@@ -1,3 +1,7 @@
+﻿# 1.14.1
+* On ResultTable, fixed the HeaderCellDefault to receive only
+  activeFilter, style, and children.
+
 # 1.14.0
 * Add geo filter.
 

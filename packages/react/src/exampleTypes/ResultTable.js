@@ -119,11 +119,10 @@ let HighlightedColumn = withStateLens({ viewModal: false })(
 )
 HighlightedColumn.displayName = 'HighlightedColumn'
 
-let HeaderCellDefault = observer(({ activeFilter, style, ...props }) => (
-  <th
-    style={{ ...(activeFilter ? { fontWeight: 900 } : {}), ...style }}
-    {...props}
-  />
+let HeaderCellDefault = observer(({ activeFilter, style, children }) => (
+  <th style={{ ...(activeFilter ? { fontWeight: 900 } : {}), ...style }}>
+    {children}
+  </th>
 ))
 HeaderCellDefault.displayName = 'HeaderCellDefault'
 
