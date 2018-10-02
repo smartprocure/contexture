@@ -158,8 +158,13 @@ export default stampKey('type', {
   geo: {
     reactors: {
       location: 'others',
+      latitude: 'others',
+      longitude: 'others',
       radius: 'others',
       operator: 'others',
+    },
+    defaults: {
+      operator: 'within',
     },
   },
   dateHistogram: {
