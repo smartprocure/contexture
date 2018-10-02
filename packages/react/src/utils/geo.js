@@ -36,10 +36,12 @@ export let geoCodeLocation = async locationId => {
     throw new Error(data.error)
   } else {
     var position = _.get('Response.View.0.Result.0.Location.DisplayPosition', data)
-    var location = _.get('Response.View.0.Result.0.Location.Address.Label', data),
-        latitude  = position.Latitude,
-        longitude = position.Longitude
+    var location = _.get('Response.View.0.Result.0.Location.Address.Label', data)
   
-    return {location, latitude, longitude}
+    return {
+      location, 
+      latitude: position.Latitude, 
+      longitude: position.Longitude
+    }
   }
 }
