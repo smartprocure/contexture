@@ -1,4 +1,7 @@
-﻿# 1.14.1
+﻿# 1.14.2
+* Add the geo coding for the geo filter .
+
+# 1.14.1
 * On ResultTable, fixed the HeaderCellDefault to receive only
   activeFilter, style, and children.
 
