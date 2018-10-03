@@ -25,6 +25,7 @@ function highlightResults(highlightFields, hit, pathToNested, include) {
       anyRegexesMatch(highlightFields.nested, key)
     // If we have an include array, and if the field is inline but is not in the includes, add it to the additionalFields
     let inlineButNotIncluded = include && _.includes(_.difference(highlightFields.inline, include), key)
+
     if (inlineButNotIncluded || (additionalMatches && !additionalExclusionMatches)) {
       additionalFields.push({
         label: key,
