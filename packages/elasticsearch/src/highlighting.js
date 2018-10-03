@@ -10,7 +10,7 @@ function anyRegexesMatch(regexes, criteria) {
 }
 
 // TODO: Support multiple pathToNesteds...
-function highlightResults(highlightFields, hit, pathToNested) {
+function highlightResults(highlightFields, hit, pathToNested, include) {
   // TODO: Support Regex and Function basis for all options
 
   // Handle Results Highlighting
@@ -23,7 +23,14 @@ function highlightResults(highlightFields, hit, pathToNested) {
       anyRegexesMatch(highlightFields.additionalExclusions, key) ||
       anyRegexesMatch(highlightFields.inline, key) ||
       anyRegexesMatch(highlightFields.nested, key)
-    if (additionalMatches && !additionalExclusionMatches) {
+    // If we have an include array, and if the field is inline but is not in the includes, add it to the additionalFields
+    let inlineButNotIncluded =
+      include && _.includes(_.difference(highlightFields.inline, include), key)
+
+    if (
+      inlineButNotIncluded ||
+      (additionalMatches && !additionalExclusionMatches)
+    ) {
       additionalFields.push({
         label: key,
         value: value[0],

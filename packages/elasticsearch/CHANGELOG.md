@@ -1,3 +1,6 @@
+﻿# 0.11.0
+* Additional highlighted fields should include fields that are missing from the result include array.
+
 # 0.10.2
 * Geo filter changes
 
