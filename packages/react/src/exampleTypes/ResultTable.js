@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { observer } from 'mobx-react'
 import InjectTreeNode from '../utils/injectTreeNode'
-import { Popover, Dynamic, TextHighlight } from '../layout'
+import { Popover, Dynamic } from '../layout'
 import { withStateLens } from '../utils/mobx-react-utils'
 import { fieldsToOptions } from '../FilterAdder'
 import { loading } from '../styles/generic'
@@ -44,50 +44,33 @@ let popoverStyle = {
 let HighlightedColumn = withStateLens({ viewModal: false })(
   observer(
     ({
-      visibleFields,
       node,
-      highlight = _.result('slice.0.highlight', getResults(node)),
+      results = _.result('slice', getResults(node)),
+      additionalFields = _.result('0.additionalFields.slice', results),
       header,
       Cell = header ? 'th' : 'td',
       Table = 'table',
       Modal = null,
       viewModal,
     }) => {
-      let alsoHighlighted = _.difference(_.keys(highlight), visibleFields)
       let getConnector = i => {
-        let length = alsoHighlighted.length
+        let length = additionalFields.length
         return i === length - 1 ? '' : i === length - 2 ? ' and ' : ', '
       }
-      return highlight && !_.isEmpty(alsoHighlighted) ? (
-        <Cell key="highlight">
+      return !_.isEmpty(additionalFields) ? (
+        <Cell key="additionalFields">
           {Modal && (
             <Modal isOpen={viewModal}>
               <h3>Other Matching Fields</h3>
               <Table>
                 <thead>
                   <tr>
-                    {_.map(
-                      x => (
-                        <th key={x}>{_.startCase(x)}</th>
-                      ),
-                      alsoHighlighted
-                    )}
+                    {_.map(({ label }) => <th key={label}>{label}</th>, additionalFields)}
                   </tr>
                 </thead>
                 <thead>
                   <tr>
-                    {_.map(
-                      ([text]) => (
-                        <td>
-                          <TextHighlight
-                            pattern="rabbit"
-                            text={text.replace(/<[^>]*>/g, '')}
-                            Wrap="b"
-                          />
-                        </td>
-                      ),
-                      _.values(highlight)
-                    )}
+                    {_.map(({ value }) => <td dangerouslySetInnerHTML={{ __html: value }}/>, additionalFields)}
                   </tr>
                 </thead>
               </Table>
@@ -100,13 +83,13 @@ let HighlightedColumn = withStateLens({ viewModal: false })(
             <div onClick={F.on(viewModal)}>
               This search also matched on the fields:{' '}
               {F.mapIndexed(
-                (x, i) => (
+                ({ label }, i) => (
                   <span>
-                    <b>{_.startCase(x)}</b>
+                    <b>{label}</b>
                     {getConnector(i)}
                   </span>
                 ),
-                alsoHighlighted
+                additionalFields
               )}
               .<br />
               <i>Click here to expand.</i>
@@ -256,9 +239,8 @@ let TableBody = observer(({ node, visibleFields, Modal }) => (
             )}
             <HighlightedColumn
               {...{
-                record: getRecord(x),
-                highlight: x.highlight,
-                visibleFields,
+                node,
+                additionalFields: _.result('additionalFields.slice', x),
                 Modal,
               }}
             />
@@ -322,7 +304,7 @@ let ResultTable = InjectTreeNode(
               ),
               visibleFields
             )}
-            <HighlightedColumn header {...{ node, visibleFields }} />
+            <HighlightedColumn header node={node} />
           </tr>
         </thead>
         <TableBody node={node} visibleFields={visibleFields} Modal={Modal} />
