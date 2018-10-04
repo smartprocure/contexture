@@ -73,7 +73,7 @@ let Table = inject(() => ({
                             : 'expand'
                         }.display`,
                         details
-                      )(_.get(field, x))}
+                      )(_.get(field, x), x)}
                     </td>
                   ),
                   columns
