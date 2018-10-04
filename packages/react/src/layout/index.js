@@ -10,6 +10,7 @@ import Dynamic from './Dynamic'
 import BarChart from './BarChart'
 import { Tag, TagsInput } from './TagsInput'
 import LensInput from './LensInput'
+import Table from './Table'
 
 export {
   Awaiter,
@@ -26,4 +27,5 @@ export {
   Tag,
   TagsInput,
   LensInput,
+  Table,
 }

@@ -70,6 +70,31 @@ let tree = Contexture({
   ],
 })
 
+let termDetailsTree = _.memoize(term => {
+  let termTree = Contexture({
+    key: 'detailRoot',
+    type: 'group',
+    schema: 'movies',
+    children: [
+      {
+        key: 'detailFacet',
+        type: 'facet',
+        field: 'genres',
+      },
+      {
+        key: 'results',
+        type: 'results',
+        sortField: 'metaScore',
+        order: 'desc',
+        pageSize: 50,
+      },
+    ],
+  })
+
+  termTree.mutate(['detailRoot', 'detailFacet'], { values: [term] })
+  return termTree
+})
+
 let schemas = fromPromise(
   updateSchemas().then(
     _.merge(_, {
@@ -108,7 +133,80 @@ export default () => (
                   path={['searchRoot', 'releases']}
                   format={formatYear}
                 />
-                <TermsStats path={['searchRoot', 'genreScores']} />
+                <TermsStats
+                  path={['searchRoot', 'genreScores']}
+                  layout="table"
+                  tableAttrs={{ style: { margin: 'auto' } }}
+                  columns={[
+                    {
+                      field: 'key',
+                      label: 'Genre',
+                    },
+                    {
+                      field: 'count',
+                      label: 'Found',
+                    },
+                    {
+                      field: 'key',
+                      label: '',
+                      details: {
+                        expand: {
+                          display: x =>
+                            `Show top 50 based on meta score for ${x} ▼`,
+                        },
+                        collapse: {
+                          display: x =>
+                            `Hide top 50 based on meta score for ${x} ▲`,
+                        },
+                        component(x) {
+                          return (
+                            <Provider tree={termDetailsTree(x)}>
+                              <React.Fragment>
+                                <ResultTable
+                                  path={['detailRoot', 'results']}
+                                  fields={_.pick(
+                                    ['title', 'year', 'genres'],
+                                    schemas.movies.fields
+                                  )}
+                                />
+                                <Flex
+                                  style={{
+                                    justifyContent: 'space-around',
+                                    marginTop: 10,
+                                    marginBottom: 10,
+                                  }}
+                                >
+                                  <Pager path={['detailRoot', 'results']} />
+                                </Flex>
+                              </React.Fragment>
+                            </Provider>
+                          )
+                        },
+                      },
+                    },
+                    // example of doing another detail section for the same field with different detail content
+                    {
+                      field: 'key',
+                      label: () => <strong>Custom Header</strong>,
+                      details: {
+                        expand: {
+                          display: () => 'Expand me ▼',
+                        },
+                        collapse: {
+                          display: () => 'Hide me ▲',
+                        },
+                        component(x) {
+                          return (
+                            <div>
+                              I just expand and show my parent value, which is{' '}
+                              <strong>{x}</strong>
+                            </div>
+                          )
+                        },
+                      },
+                    },
+                  ]}
+                />
                 <div style={{ overflowX: 'auto' }}>
                   <ResultTable
                     path={['searchRoot', 'results']}

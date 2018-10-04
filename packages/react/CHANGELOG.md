@@ -1,3 +1,6 @@
+﻿# 1.19.0
+* Add table layout support for terms stats type.
+
 # 1.18.0
 * Support best range for Number component
 
@@ -20,7 +23,7 @@
 * Update futil and remove actout in favor of domLens
 
 # 1.14.2
-* Add the geo coding for the geo filter .
+* Add the geo coding for the geo filter.
 
 # 1.14.1
 * On ResultTable, fixed the HeaderCellDefault to receive only
