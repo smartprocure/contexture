@@ -48,7 +48,7 @@ let TagsInput = inject(() => ({
               onChange={e => {
                 state.currentInput = e.target.value
               }}
-              onBlur={e => {
+              onBlur={() => {
                 if (
                   state.currentInput &&
                   !_.includes(state.currentInput, tags)
