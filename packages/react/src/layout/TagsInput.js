@@ -49,7 +49,10 @@ let TagsInput = inject(() => ({
                 state.currentInput = e.target.value
               }}
               onBlur={e => {
-                if (state.currentInput && !_.includes(state.currentInput, tags)) {
+                if (
+                  state.currentInput &&
+                  !_.includes(state.currentInput, tags)
+                ) {
                   addTag(state.currentInput)
                   state.currentInput = ''
                 }
@@ -57,6 +60,7 @@ let TagsInput = inject(() => ({
               onKeyDown={e => {
                 if (
                   (e.key === 'Enter' || e.key === 'Tab') &&
+                  state.currentInput &&
                   !_.includes(state.currentInput, tags)
                 ) {
                   addTag(state.currentInput)
