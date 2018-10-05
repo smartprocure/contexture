@@ -52,12 +52,8 @@ let HighlightedColumn = withStateLens({ viewModal: false })(
       Table = 'table',
       Modal = null,
       viewModal,
-    }) => {
-      let getConnector = i => {
-        let length = additionalFields.length
-        return i === length - 1 ? '' : i === length - 2 ? ' and ' : ', '
-      }
-      return !_.isEmpty(additionalFields) ? (
+    }) =>
+      !_.isEmpty(additionalFields) ? (
         <Cell key="additionalFields">
           {Modal && (
             <Modal isOpen={viewModal}>
@@ -66,9 +62,7 @@ let HighlightedColumn = withStateLens({ viewModal: false })(
                 <thead>
                   <tr>
                     {_.map(
-                      ({ label }) => (
-                        <th key={label}>{label}</th>
-                      ),
+                      ({ label }) => <th key={label}>{label}</th>,
                       additionalFields
                     )}
                   </tr>
@@ -92,22 +86,16 @@ let HighlightedColumn = withStateLens({ viewModal: false })(
           ) : (
             <div onClick={F.on(viewModal)}>
               This search also matched on the fields:{' '}
-              {F.mapIndexed(
-                ({ label }, i) => (
-                  <span>
-                    <b>{label}</b>
-                    {getConnector(i)}
-                  </span>
-                ),
-                additionalFields
-              )}
+              {_.flow(
+                _.map(({ label }) => <b>{label}</b>),
+                F.intersperse(F.differentLast(() => ', ', () => ' and '))
+              )(additionalFields)}
               .<br />
               <i>Click here to expand.</i>
             </div>
           )}
         </Cell>
       ) : null
-    }
   )
 )
 HighlightedColumn.displayName = 'HighlightedColumn'
