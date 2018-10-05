@@ -1,5 +1,6 @@
 let _ = require('lodash/fp')
 let Promise = require('bluebird')
+let { ObjectID } = require('mongodb')
 
 let buildRegex = _.flow(
   _.replace(/\s\s+/g, ' '),
@@ -14,7 +15,8 @@ module.exports = {
   hasValue: _.get('values.length'),
   filter: context => ({
     [context.field]: {
-      [context.mode === 'exclude' ? '$nin' : '$in']: context.values,
+      [context.mode === 'exclude' ? '$nin' : '$in']:
+        context.isMongoId ? _.map(ObjectID, context.values) : context.values,
     },
   }),
   result: (context, search) =>
