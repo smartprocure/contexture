@@ -27,7 +27,7 @@ let TagsInput = inject(() => ({
   }),
 }))(
   observer(
-    ({ tags, state, addTag, removeTag, tagStyle, TagComponent = Tag }) => (
+    ({ tags, state, addTag, removeTag, submit = _.noop, tagStyle, TagComponent = Tag }) => (
       <div>
         <label style={{ display: 'block' }} className="tags-input">
           <Flex
@@ -58,6 +58,8 @@ let TagsInput = inject(() => ({
                 }
               }}
               onKeyDown={e => {
+                if (e.key === 'Enter' && !state.currentInput)
+                  submit()
                 if (
                   (e.key === 'Enter' || e.key === 'Tab') &&
                   state.currentInput &&
