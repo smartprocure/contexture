@@ -8,6 +8,7 @@ let Tag = ({ value, removeTag, tagStyle }) => (
   <div className="tags-input-tag" style={tagStyle}>
     {value}
     <span
+      className="tags-input-tag-remove"
       style={{
         paddingLeft: '10px',
         cursor: 'pointer',
@@ -26,7 +27,15 @@ let TagsInput = inject(() => ({
   }),
 }))(
   observer(
-    ({ tags, state, addTag, removeTag, tagStyle, TagComponent = Tag }) => (
+    ({
+      tags,
+      state,
+      addTag,
+      removeTag,
+      submit = _.noop,
+      tagStyle,
+      TagComponent = Tag,
+    }) => (
       <div>
         <label style={{ display: 'block' }} className="tags-input">
           <Flex
@@ -47,9 +56,20 @@ let TagsInput = inject(() => ({
               onChange={e => {
                 state.currentInput = e.target.value
               }}
+              onBlur={() => {
+                if (
+                  state.currentInput &&
+                  !_.includes(state.currentInput, tags)
+                ) {
+                  addTag(state.currentInput)
+                  state.currentInput = ''
+                }
+              }}
               onKeyDown={e => {
+                if (e.key === 'Enter' && !state.currentInput) submit()
                 if (
                   (e.key === 'Enter' || e.key === 'Tab') &&
+                  state.currentInput &&
                   !_.includes(state.currentInput, tags)
                 ) {
                   addTag(state.currentInput)

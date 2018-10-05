@@ -1,5 +1,5 @@
 import React from 'react'
-import { hover } from '../utils/actout'
+import F from 'futil-js'
 import { Component, lenservable } from '../utils/mobx-react-utils'
 import styles from '../styles'
 import Indentable from './preview/Indentable'
@@ -23,7 +23,7 @@ let Rule = ({ state, node, tree, root, connectDragSource, isDragging }) =>
             ...(isDragging && { opacity: 0.25 }),
             ...(state.ruleHover && { background: 'rgba(0, 0, 0, 0.05)' }),
           }}
-          {...hover(state.lens.ruleHover)}
+          {...F.domLens.hover(state.lens.ruleHover)}
         >
           <FilterContents {...{ node, root }} />
           <div
@@ -33,7 +33,7 @@ let Rule = ({ state, node, tree, root, connectDragSource, isDragging }) =>
             }}
           >
             <button
-              {...hover(state.lens.indentHover)}
+              {...F.domLens.hover(state.lens.indentHover)}
               style={{
                 color: styles.joinColor(oppositeJoin(tree.join)),
                 ...styles.btn,
@@ -44,7 +44,7 @@ let Rule = ({ state, node, tree, root, connectDragSource, isDragging }) =>
               >
             </button>
             <button
-              {...hover(state.lens.removeHover)}
+              {...F.domLens.hover(state.lens.removeHover)}
               style={{
                 ...styles.btn,
                 ...styles.roundedLeft0,

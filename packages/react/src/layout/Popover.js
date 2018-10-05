@@ -18,9 +18,13 @@ let Popover = observer(
             position: 'absolute',
             zIndex: 100,
             background: 'white',
-            borderRadius: 5,
-            padding: 5,
-            boxShadow: '0 5px 10px rgba(0,0,0,.2)',
+            textAlign: 'left',
+            fontWeight: 'normal',
+            padding: 10,
+
+            borderRadius: '4px',
+            boxShadow: '0 2px 4px 0 #ededed',
+            border: '1px solid #ebebeb',
             ...style,
           }}
         >

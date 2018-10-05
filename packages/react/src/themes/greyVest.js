@@ -1,10 +1,15 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
+import F from 'futil-js'
 import { observer } from 'mobx-react'
-import { hover } from '../utils/actout'
 import { partial, withStateLens } from '../utils/mobx-react-utils'
-import { Flex, TextHighlight, FilteredPicker, ModalFilterAdder } from '../'
+import {
+  Flex,
+  TextHighlight,
+  FilteredPicker,
+  ModalFilterAdder,
+  TagsInput,
+} from '../'
 import ExampleTypeConstructor from '../exampleTypes/'
 
 export let Input = ({ style = {}, ...x }) => (
@@ -45,6 +50,21 @@ export let Checkbox = ({ checked, onChange, style = {} }) => (
   </label>
 )
 
+export let Fonts = () => (
+  <div>
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:400,600,700,900"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+      integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+      crossorigin="anonymous"
+    />
+  </div>
+)
+
 export let GVStyle = () => (
   <style>
     {`
@@ -56,7 +76,6 @@ export let GVStyle = () => (
       }
       .gv-table tbody tr {
         border-bottom: solid 2px #EDEDED;
-        height: 100px;
       }
       .gv-table td, .gv-table th {
         padding: 20px;
@@ -107,22 +126,31 @@ export let GVStyle = () => (
         border: 2px solid #EBEBEB;
         border-radius: 4px;
         min-height: 40px;
-        padding: 5px;
         box-sizing: border-box;
         margin: 5px auto;
         background: #fff;
+        /* Arbitrary theme design */
+        padding: 7px;
       }
       /* To reach perfect 40px, remove real input padding because we have it on the fake one */
       .gv-body .tags-input input {
         padding: 0;
         /* subtract padding (5+5) and borders (2+2) from 40 */
         height: 26px;
+        /* Arbitrary theme design */
+        padding-left: 7px;
       }
       .gv-body .tags-input-tag {
         border-radius: 4px;
-        /* more than 3 and the tag will be taller than 26 */
-        padding: 3px;
         margin: 0 2px;
+        /* Arbitrary theme design */
+        padding: 3px 8px 5px 6px;
+        font-size: 15px;
+      }
+      .gv-body .tags-input-tag-remove {
+        /* Arbitrary theme design */
+        padding-left: 8px;
+        font-size: 10px;
       }
       
       .contexture-facet a {
@@ -194,7 +222,7 @@ export let ListGroupItem = withStateLens({ hovering: false })(
         borderRadius: '4px',
         ...(F.view(hovering) && { backgroundColor: '#f5f5f5' }),
       }}
-      {...hover(hovering)}
+      {...F.domLens.hover(hovering)}
       {...x}
     />
   ))
@@ -226,11 +254,23 @@ export let PagerItem = withStateLens({ hovering: false })(
         cursor: disabled ? 'not-allowed' : 'pointer',
         ...style,
       }}
-      {...hover(hovering)}
+      {...F.domLens.hover(hovering)}
       {...x}
     />
   ))
 )
+
+let TagComponent = ({ value, removeTag, tagStyle }) => (
+  <div className="tags-input-tag" style={tagStyle}>
+    {value}
+    <span
+      className="tags-input-tag-remove fa fa-times"
+      style={{ cursor: 'pointer' }}
+      onClick={() => removeTag(value)}
+    />
+  </div>
+)
+TagComponent.displayName = 'GVTag'
 
 export let ExampleTypes = ExampleTypeConstructor({
   Input,
@@ -242,5 +282,6 @@ export let ExampleTypes = ExampleTypeConstructor({
     FilteredPicker
   ),
   ListGroupItem,
+  TagsInput: partial({ TagComponent }, TagsInput),
 })
 export let Pager = partial({ Item: PagerItem }, ExampleTypes.ResultPager)

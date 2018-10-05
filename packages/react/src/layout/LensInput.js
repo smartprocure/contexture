@@ -1,9 +1,9 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import { value } from '../utils/actout'
+import F from 'futil-js'
 
 let LensInput = observer(({ lens, Input, ...x }) => (
-  <Input {...value(lens)} {...x} />
+  <Input {...F.domLens.value(lens)} {...x} />
 ))
 LensInput.displayName = 'LensInput'
 

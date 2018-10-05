@@ -28,6 +28,7 @@ let TagsQuery = injectTreeNode(
         })
       }}
       tagStyle={bgJoin(tagToGroupJoin(node.join || 'any'))}
+      submit={tree.triggerUpdate}
     />
   )),
   exampleTypes.tagsQuery

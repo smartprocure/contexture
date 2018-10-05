@@ -8,7 +8,7 @@ import { withStateLens } from '../utils/mobx-react-utils'
 import { fieldsToOptions } from '../FilterAdder'
 import { loading } from '../styles/generic'
 import { applyDefaults } from '../utils/schema'
-import { flattenPlainObject, moveIndex } from '../utils/futil'
+import { flattenPlainObject } from '../utils/futil'
 
 let getRecord = F.when('_source', x => ({
   _id: x._id,
@@ -94,7 +94,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
           )}
           <Item
             onClick={() =>
-              mutate({ include: moveIndex(i, i - 1, [...includes]) })
+              mutate({ include: F.moveIndex(i, i - 1, [...includes]) })
             }
           >
             <Icon icon="←" />
@@ -102,7 +102,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
           </Item>
           <Item
             onClick={() =>
-              mutate({ include: moveIndex(i, i + 1, [...includes]) })
+              mutate({ include: F.moveIndex(i, i + 1, [...includes]) })
             }
           >
             <Icon icon="→" />

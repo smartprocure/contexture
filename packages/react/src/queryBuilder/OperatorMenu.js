@@ -1,7 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
-import { hover } from '../utils/actout'
+import F from 'futil-js'
 import { Component } from '../utils/mobx-react-utils'
 import styles from '../styles'
 import { oppositeJoin } from '../utils/search'
@@ -14,7 +13,7 @@ let OperatorMenu = ({ tree, parent, root, parentTree }) => (
         tree.join !== join && (
           <div
             key={join}
-            {...hover(x => (parent.joinHover = x && join))}
+            {...F.domLens.hover(x => (parent.joinHover = x && join))}
             style={{ ...btn, ...bgJoin(join) }}
             onClick={() => root.join(tree, join)}
           >
@@ -30,7 +29,7 @@ let OperatorMenu = ({ tree, parent, root, parentTree }) => (
           color: joinColor(oppositeJoin((parentTree || tree).join)),
           marginTop: 5,
         }}
-        {...hover(parent.lens.wrapHover)}
+        {...F.domLens.hover(parent.lens.wrapHover)}
         onClick={() => {
           root.indent(parentTree, tree)
           F.off(parent.lens.wrapHover)()
@@ -41,7 +40,7 @@ let OperatorMenu = ({ tree, parent, root, parentTree }) => (
     </div>
     <div>
       <div
-        {...hover(parent.lens.removeHover)}
+        {...F.domLens.hover(parent.lens.removeHover)}
         style={{ ...btn, marginTop: 5 }}
         onClick={() => root.remove(parentTree, tree)}
       >
