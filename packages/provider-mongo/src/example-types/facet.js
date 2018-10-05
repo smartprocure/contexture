@@ -15,8 +15,9 @@ module.exports = {
   hasValue: _.get('values.length'),
   filter: context => ({
     [context.field]: {
-      [context.mode === 'exclude' ? '$nin' : '$in']:
-        context.isMongoId ? _.map(ObjectID, context.values) : context.values,
+      [context.mode === 'exclude' ? '$nin' : '$in']: context.isMongoId
+        ? _.map(ObjectID, context.values)
+        : context.values,
     },
   }),
   result: (context, search) =>

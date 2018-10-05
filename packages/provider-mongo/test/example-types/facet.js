@@ -98,10 +98,13 @@ describe('facet', () => {
     it('should support isMongoId', async () => {
       let context = {
         field: 'field',
-        values: ['5a4ea8052c635b002ade8e45', '5a4ea8052c635b002ade8e45']
+        values: ['5a4ea8052c635b002ade8e45', '5a4ea8052c635b002ade8e45'],
       }
       let result = await facet.filter(context)
-      expect(result.field.$in.map(x => x.toString())).to.deep.equal(['5a4ea8052c635b002ade8e45', '5a4ea8052c635b002ade8e45'])
+      expect(result.field.$in.map(x => x.toString())).to.deep.equal([
+        '5a4ea8052c635b002ade8e45',
+        '5a4ea8052c635b002ade8e45',
+      ])
     })
   })
 })
