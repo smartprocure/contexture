@@ -41,17 +41,17 @@ let popoverStyle = {
   userSelect: 'none',
 }
 
-let HighlightedColumnHeader = observer(({
-  node,
-  results = _.result('slice', getResults(node)),
-  additionalFields = _.result('0.additionalFields.slice', results),
-  Cell = 'th',
-}) =>
-  !_.isEmpty(additionalFields) ? (
-    <Cell key="additionalFields">
-      Other Matches
-    </Cell>
-  ) : null)
+let HighlightedColumnHeader = observer(
+  ({
+    node,
+    results = _.result('slice', getResults(node)),
+    additionalFields = _.result('0.additionalFields.slice', results),
+    Cell = 'th',
+  }) =>
+    !_.isEmpty(additionalFields) ? (
+      <Cell key="additionalFields">Other Matches</Cell>
+    ) : null
+)
 HighlightedColumnHeader.displayName = 'HighlightedColumnHeader'
 
 let HighlightedColumn = withStateLens({ viewModal: false })(
@@ -239,8 +239,8 @@ let TableBody = observer(({ node, visibleFields, Modal, Table }) => (
               {...{
                 node,
                 additionalFields: _.result('additionalFields.slice', x),
-								Modal,
-								Table,
+                Modal,
+                Table,
               }}
             />
           </tr>
@@ -306,7 +306,12 @@ let ResultTable = InjectTreeNode(
             <HighlightedColumnHeader node={node} />
           </tr>
         </thead>
-        <TableBody node={node} visibleFields={visibleFields} Modal={Modal} Table={Table} />
+        <TableBody
+          node={node}
+          visibleFields={visibleFields}
+          Modal={Modal}
+          Table={Table}
+        />
       </Table>
     )
   }),
