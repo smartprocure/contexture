@@ -1,5 +1,5 @@
 # 1.15.0
-* GreyVest Tag design styline
+* GreyVest: Tag design styline
 * GreyVest: Add Fonts to greyVest (including font awesome)
 * TagsQuery: Add tag onBlur
 * TagsQuery: Prevent creating empty tags
