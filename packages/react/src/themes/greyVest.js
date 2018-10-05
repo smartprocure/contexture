@@ -255,8 +255,7 @@ let TagComponent = ({ value, removeTag, tagStyle }) => (
       className="tags-input-tag-remove fa fa-times"
       style={{ cursor: 'pointer' }}
       onClick={() => removeTag(value)}
-    >
-    </span>
+     />
   </div>
 )
 TagComponent.displayName = 'GVTag'
