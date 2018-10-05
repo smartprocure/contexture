@@ -41,6 +41,65 @@ let popoverStyle = {
   userSelect: 'none',
 }
 
+let HighlightedColumnHeader = observer(
+  ({
+    node,
+    results = _.result('slice', getResults(node)),
+    additionalFields = _.result('0.additionalFields.slice', results),
+    Cell = 'th',
+  }) =>
+    !_.isEmpty(additionalFields) ? (
+      <Cell key="additionalFields">Other Matches</Cell>
+    ) : null
+)
+HighlightedColumnHeader.displayName = 'HighlightedColumnHeader'
+
+let HighlightedColumn = withStateLens({ viewModal: false })(
+  observer(
+    ({
+      node,
+      results = _.result('slice', getResults(node)),
+      additionalFields = _.result('0.additionalFields.slice', results),
+      Cell = 'td',
+      Table = 'table',
+      Modal = null,
+      viewModal,
+    }) =>
+      !_.isEmpty(additionalFields) ? (
+        <Cell key="additionalFields">
+          {Modal && (
+            <Modal isOpen={viewModal}>
+              <h3>Other Matching Fields</h3>
+              <Table>
+                <tbody>
+                  {_.map(
+                    ({ label, value }) => (
+                      <tr>
+                        <td key={label}>{label}</td>
+                        <td dangerouslySetInnerHTML={{ __html: value }} />
+                      </tr>
+                    ),
+                    additionalFields
+                  )}
+                </tbody>
+              </Table>
+            </Modal>
+          )}
+          <div onClick={F.on(viewModal)}>
+            This search also matched on the fields:{' '}
+            {_.flow(
+              _.map(({ label }) => <b>{label}</b>),
+              F.intersperse(F.differentLast(() => ', ', () => ' and '))
+            )(additionalFields)}
+            .<br />
+            <i>Click here to expand.</i>
+          </div>
+        </Cell>
+      ) : null
+  )
+)
+HighlightedColumn.displayName = 'HighlightedColumn'
+
 let HeaderCellDefault = observer(({ activeFilter, style, children }) => (
   <th style={{ ...(activeFilter ? { fontWeight: 900 } : {}), ...style }}>
     {children}
@@ -162,7 +221,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
 Header.displayName = 'Header'
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
-let TableBody = observer(({ node, visibleFields }) => (
+let TableBody = observer(({ node, visibleFields, Modal, Table }) => (
   <tbody style={node.markedForUpdate || node.updating ? loading : {}}>
     {!!getResults(node).length &&
       _.map(
@@ -176,6 +235,14 @@ let TableBody = observer(({ node, visibleFields }) => (
               ),
               visibleFields
             )}
+            <HighlightedColumn
+              {...{
+                node,
+                additionalFields: _.result('additionalFields.slice', x),
+                Modal,
+                Table,
+              }}
+            />
           </tr>
         ),
         getResults(node)
@@ -236,9 +303,15 @@ let ResultTable = InjectTreeNode(
               ),
               visibleFields
             )}
+            <HighlightedColumnHeader node={node} />
           </tr>
         </thead>
-        <TableBody node={node} visibleFields={visibleFields} />
+        <TableBody
+          node={node}
+          visibleFields={visibleFields}
+          Modal={Modal}
+          Table={Table}
+        />
       </Table>
     )
   }),

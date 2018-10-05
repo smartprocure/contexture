@@ -1,3 +1,6 @@
+# 1.16.0
+* Added a column that shows the additional matching fields on ResultsTable.
+
 # 1.15.0
 * GreyVest: Tag design styline
 * GreyVest: Add Fonts to greyVest (including font awesome)
