@@ -1,7 +1,6 @@
-import * as F from 'futil-js'
+import F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { hover, focus } from '../src/utils/actout'
 import { withStateLens, partial } from '../src/utils/mobx-react-utils'
 import ExampleTypeConstructor from '../src/exampleTypes/'
 import { TextHighlight, FilteredPicker, ModalFilterAdder } from '../src'
@@ -34,7 +33,7 @@ export let Input = withStateLens({ focusing: false })(
         transition: 'background 0.3s',
         background: `rgba(255, 255, 255, ${F.view(focusing) ? 1 : 0.7})`,
       }}
-      {...focus(focusing)}
+      {...F.domLens.focus(focusing)}
       {...x}
     />
   ))
@@ -56,7 +55,7 @@ export let ListGroupItem = withStateLens({ hovering: false })(
         borderRadius: '4px',
         ...(F.view(hovering) && { backgroundColor: '#f5f5f5' }),
       }}
-      {...hover(hovering)}
+      {...F.domLens.hover(hovering)}
       {...x}
     />
   ))
@@ -73,7 +72,7 @@ export let PagerItem = withStateLens({ hovering: false })(
         ...(active && { fontWeight: 'bold' }),
         cursor: 'pointer',
       }}
-      {...hover(hovering)}
+      {...F.domLens.hover(hovering)}
       {...x}
     />
   ))

@@ -1,8 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
+import F from 'futil-js'
 import { observer } from 'mobx-react'
-import { hover } from '../utils/actout'
 import { partial, withStateLens } from '../utils/mobx-react-utils'
 import { Flex, TextHighlight, FilteredPicker, ModalFilterAdder } from '../'
 import ExampleTypeConstructor from '../exampleTypes/'
@@ -193,7 +192,7 @@ export let ListGroupItem = withStateLens({ hovering: false })(
         borderRadius: '4px',
         ...(F.view(hovering) && { backgroundColor: '#f5f5f5' }),
       }}
-      {...hover(hovering)}
+      {...F.domLens.hover(hovering)}
       {...x}
     />
   ))
@@ -225,7 +224,7 @@ export let PagerItem = withStateLens({ hovering: false })(
         cursor: disabled ? 'not-allowed' : 'pointer',
         ...style,
       }}
-      {...hover(hovering)}
+      {...F.domLens.hover(hovering)}
       {...x}
     />
   ))
