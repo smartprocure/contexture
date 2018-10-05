@@ -41,14 +41,26 @@ let popoverStyle = {
   userSelect: 'none',
 }
 
+let HighlightedColumnHeader = observer(({
+  node,
+  results = _.result('slice', getResults(node)),
+  additionalFields = _.result('0.additionalFields.slice', results),
+  Cell = 'th',
+}) =>
+  !_.isEmpty(additionalFields) ? (
+    <Cell key="additionalFields">
+      Other Matches
+    </Cell>
+  ) : null)
+HighlightedColumnHeader.displayName = 'HighlightedColumnHeader'
+
 let HighlightedColumn = withStateLens({ viewModal: false })(
   observer(
     ({
       node,
       results = _.result('slice', getResults(node)),
       additionalFields = _.result('0.additionalFields.slice', results),
-      header,
-      Cell = header ? 'th' : 'td',
+      Cell = 'td',
       Table = 'table',
       Modal = null,
       viewModal,
@@ -59,41 +71,29 @@ let HighlightedColumn = withStateLens({ viewModal: false })(
             <Modal isOpen={viewModal}>
               <h3>Other Matching Fields</h3>
               <Table>
-                <thead>
-                  <tr>
-                    {_.map(
-                      ({ label }) => <th key={label}>{label}</th>,
-                      additionalFields
-                    )}
-                  </tr>
-                </thead>
-                <thead>
-                  <tr>
-                    {_.map(
-                      ({ value }) => (
+                <tbody>
+                  {_.map(
+                    ({ label, value }) => (
+                      <tr>
+                        <td key={label}>{label}</td>
                         <td dangerouslySetInnerHTML={{ __html: value }} />
-                      ),
-                      additionalFields
-                    )}
-                  </tr>
-                </thead>
+                      </tr>
+                    ),
+                    additionalFields
+                  )}
+                </tbody>
               </Table>
-              <button onClick={F.off(viewModal)}>Close</button>
             </Modal>
           )}
-          {header ? (
-            'Other Matches'
-          ) : (
-            <div onClick={F.on(viewModal)}>
-              This search also matched on the fields:{' '}
-              {_.flow(
-                _.map(({ label }) => <b>{label}</b>),
-                F.intersperse(F.differentLast(() => ', ', () => ' and '))
-              )(additionalFields)}
-              .<br />
-              <i>Click here to expand.</i>
-            </div>
-          )}
+          <div onClick={F.on(viewModal)}>
+            This search also matched on the fields:{' '}
+            {_.flow(
+              _.map(({ label }) => <b>{label}</b>),
+              F.intersperse(F.differentLast(() => ', ', () => ' and '))
+            )(additionalFields)}
+            .<br />
+            <i>Click here to expand.</i>
+          </div>
         </Cell>
       ) : null
   )
@@ -221,7 +221,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
 Header.displayName = 'Header'
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
-let TableBody = observer(({ node, visibleFields, Modal }) => (
+let TableBody = observer(({ node, visibleFields, Modal, Table }) => (
   <tbody style={node.markedForUpdate || node.updating ? loading : {}}>
     {!!getResults(node).length &&
       _.map(
@@ -239,7 +239,8 @@ let TableBody = observer(({ node, visibleFields, Modal }) => (
               {...{
                 node,
                 additionalFields: _.result('additionalFields.slice', x),
-                Modal,
+								Modal,
+								Table,
               }}
             />
           </tr>
@@ -302,10 +303,10 @@ let ResultTable = InjectTreeNode(
               ),
               visibleFields
             )}
-            <HighlightedColumn header node={node} />
+            <HighlightedColumnHeader node={node} />
           </tr>
         </thead>
-        <TableBody node={node} visibleFields={visibleFields} Modal={Modal} />
+        <TableBody node={node} visibleFields={visibleFields} Modal={Modal} Table={Table} />
       </Table>
     )
   }),
