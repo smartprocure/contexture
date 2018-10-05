@@ -1,4 +1,7 @@
-﻿# 0.11.1
+﻿# 0.11.2
+* Added tests to the recent highlighting changes.
+
+# 0.11.1
 * Fixes to `findBestRange` in number type
 
 # 0.11.0
