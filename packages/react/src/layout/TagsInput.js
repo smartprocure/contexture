@@ -49,7 +49,7 @@ let TagsInput = inject(() => ({
                 state.currentInput = e.target.value
               }}
               onBlur={e => {
-                if (!_.includes(state.currentInput, tags)) {
+                if (state.currentInput && !_.includes(state.currentInput, tags)) {
                   addTag(state.currentInput)
                   state.currentInput = ''
                 }
