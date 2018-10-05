@@ -1,3 +1,6 @@
+﻿# 0.7.0
+* Added support for Mongo ObjectIDs to teh facet example type.
+
 # 0.6.3
 * `number` properly handle empty string, null, undefined, and NaN
 
