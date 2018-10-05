@@ -21,7 +21,7 @@ let Popover = observer(
             textAlign: 'left',
             fontWeight: 'normal',
             padding: 10,
-            
+
             borderRadius: '4px',
             boxShadow: '0 2px 4px 0 #ededed',
             border: '1px solid #ebebeb',

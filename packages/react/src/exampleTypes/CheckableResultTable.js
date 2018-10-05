@@ -13,7 +13,9 @@ let CheckableResultTable = observer(
         _checkbox: {
           label: <Checkbox />,
           display: (x, y) => (
-            <Checkbox {...F.domLens.checkboxValues(_.iteratee(getValue)(y), selected)} />
+            <Checkbox
+              {...F.domLens.checkboxValues(_.iteratee(getValue)(y), selected)}
+            />
           ),
         },
         ...fields,

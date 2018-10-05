@@ -3,7 +3,13 @@ import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
 import { partial, withStateLens } from '../utils/mobx-react-utils'
-import { Flex, TextHighlight, FilteredPicker, ModalFilterAdder, TagsInput } from '../'
+import {
+  Flex,
+  TextHighlight,
+  FilteredPicker,
+  ModalFilterAdder,
+  TagsInput,
+} from '../'
 import ExampleTypeConstructor from '../exampleTypes/'
 
 export let Input = ({ style = {}, ...x }) => (
@@ -44,14 +50,20 @@ export let Checkbox = ({ checked, onChange, style = {} }) => (
   </label>
 )
 
-export let Fonts = () =>
+export let Fonts = () => (
   <div>
     <link
       href="https://fonts.googleapis.com/css?family=Lato:400,600,700,900"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+      integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+      crossorigin="anonymous"
+    />
   </div>
+)
 
 export let GVStyle = () => (
   <style>
@@ -255,7 +267,7 @@ let TagComponent = ({ value, removeTag, tagStyle }) => (
       className="tags-input-tag-remove fa fa-times"
       style={{ cursor: 'pointer' }}
       onClick={() => removeTag(value)}
-     />
+    />
   </div>
 )
 TagComponent.displayName = 'GVTag'
@@ -270,6 +282,6 @@ export let ExampleTypes = ExampleTypeConstructor({
     FilteredPicker
   ),
   ListGroupItem,
-  TagsInput: partial({ TagComponent }, TagsInput)
+  TagsInput: partial({ TagComponent }, TagsInput),
 })
 export let Pager = partial({ Item: PagerItem }, ExampleTypes.ResultPager)
