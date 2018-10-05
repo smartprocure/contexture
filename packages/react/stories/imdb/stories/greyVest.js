@@ -13,6 +13,7 @@ import {
   Grid,
 } from '../../../src'
 import {
+  Fonts,
   GVStyle,
   Adder,
   Button,
@@ -125,10 +126,7 @@ let schemas = fromPromise(
 
 export default () => (
   <div className="gv-body">
-    <link
-      href="https://fonts.googleapis.com/css?family=Lato:400,700,900"
-      rel="stylesheet"
-    />
+    <Fonts />
     <GVStyle />
     <Awaiter promise={schemas}>
       {schemas => (

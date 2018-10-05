@@ -1,5 +1,17 @@
-﻿# 1.15.0
+# 1.16.0
 * Added a column that shows the additional matching fields on ResultsTable.
+
+# 1.15.0
+* GreyVest: Tag design styline
+* GreyVest: Add Fonts to greyVest (including font awesome)
+* TagsQuery: Add tag onBlur
+* TagsQuery: Prevent creating empty tags
+* TagsQuery: Call triggerUpdate on submit
+* TagsInput: Introduce "submit" concept (pressing enter with no contents in tags input)
+* TagsInput: Add a class to the tags input remove button
+* ResultsTable: Remove default table row height of 100
+* Popover: Tweak default styling
+* Update futil and remove actout in favor of domLens
 
 # 1.14.2
 * Add the geo coding for the geo filter .

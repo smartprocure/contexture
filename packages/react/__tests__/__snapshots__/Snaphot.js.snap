@@ -310,6 +310,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   }
                 >
                   <input
+                    onBlur={[Function]}
                     onChange={[Function]}
                     onKeyDown={[Function]}
                     placeholder="Search..."
@@ -2168,7 +2169,6 @@ exports[`Storyshots IMDB Check List 1`] = `
       }
       .gv-table tbody tr {
         border-bottom: solid 2px #EDEDED;
-        height: 100px;
       }
       .gv-table td, .gv-table th {
         padding: 20px;
@@ -2219,22 +2219,31 @@ exports[`Storyshots IMDB Check List 1`] = `
         border: 2px solid #EBEBEB;
         border-radius: 4px;
         min-height: 40px;
-        padding: 5px;
         box-sizing: border-box;
         margin: 5px auto;
         background: #fff;
+        /* Arbitrary theme design */
+        padding: 7px;
       }
       /* To reach perfect 40px, remove real input padding because we have it on the fake one */
       .gv-body .tags-input input {
         padding: 0;
         /* subtract padding (5+5) and borders (2+2) from 40 */
         height: 26px;
+        /* Arbitrary theme design */
+        padding-left: 7px;
       }
       .gv-body .tags-input-tag {
         border-radius: 4px;
-        /* more than 3 and the tag will be taller than 26 */
-        padding: 3px;
         margin: 0 2px;
+        /* Arbitrary theme design */
+        padding: 3px 8px 5px 6px;
+        font-size: 15px;
+      }
+      .gv-body .tags-input-tag-remove {
+        /* Arbitrary theme design */
+        padding-left: 8px;
+        font-size: 10px;
       }
       
       .contexture-facet a {
@@ -2269,10 +2278,18 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
 <div
   className="gv-body"
 >
-  <link
-    href="https://fonts.googleapis.com/css?family=Lato:400,700,900"
-    rel="stylesheet"
-  />
+  <div>
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:400,600,700,900"
+      rel="stylesheet"
+    />
+    <link
+      crossorigin="anonymous"
+      href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+      integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+      rel="stylesheet"
+    />
+  </div>
   <style>
     
       h1 { font-size: 22px; }
@@ -2283,7 +2300,6 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
       }
       .gv-table tbody tr {
         border-bottom: solid 2px #EDEDED;
-        height: 100px;
       }
       .gv-table td, .gv-table th {
         padding: 20px;
@@ -2334,22 +2350,31 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         border: 2px solid #EBEBEB;
         border-radius: 4px;
         min-height: 40px;
-        padding: 5px;
         box-sizing: border-box;
         margin: 5px auto;
         background: #fff;
+        /* Arbitrary theme design */
+        padding: 7px;
       }
       /* To reach perfect 40px, remove real input padding because we have it on the fake one */
       .gv-body .tags-input input {
         padding: 0;
         /* subtract padding (5+5) and borders (2+2) from 40 */
         height: 26px;
+        /* Arbitrary theme design */
+        padding-left: 7px;
       }
       .gv-body .tags-input-tag {
         border-radius: 4px;
-        /* more than 3 and the tag will be taller than 26 */
-        padding: 3px;
         margin: 0 2px;
+        /* Arbitrary theme design */
+        padding: 3px 8px 5px 6px;
+        font-size: 15px;
+      }
+      .gv-body .tags-input-tag-remove {
+        /* Arbitrary theme design */
+        padding-left: 8px;
+        font-size: 10px;
       }
       
       .contexture-facet a {

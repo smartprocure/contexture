@@ -1,11 +1,10 @@
 import React from 'react'
-import * as F from 'futil-js'
+import F from 'futil-js'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { observer } from 'mobx-react'
 import { fromPromise } from 'mobx-utils'
 import { withStateLens } from '../src/utils/mobx-react-utils'
-import { value } from '../src/utils/actout'
 import Popover from '../src/layout/Popover'
 import Modal from '../src/layout/Modal'
 import Awaiter from '../src/layout/Awaiter'
@@ -36,7 +35,7 @@ let HighlightDemo = withStateLens({ filter: '' })(
   observer(({ filter }) => (
     <div>
       <div>
-        <input {...value(filter)} />
+        <input {...F.domLens.value(filter)} />
       </div>
       <TextHighlight text={lipsum} pattern={F.view(filter)} />
     </div>

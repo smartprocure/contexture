@@ -1,10 +1,10 @@
 import React from 'react'
 import _ from 'lodash/fp'
+import F from 'futil-js'
 import { observer } from 'mobx-react'
 import { exampleTypes } from 'contexture-client'
 import { Flex } from '../layout/Flex'
 import injectTreeNode from '../utils/injectTreeNode'
-import { checkBoxValues } from '../utils/actout'
 
 let CheckboxDefault = props => <input type="checkbox" {...props} />
 let RadioListDefault = ({ value, onChange, options }) => (
@@ -95,7 +95,7 @@ let Facet = injectTreeNode(
                 cursor: 'pointer',
               }}
             >
-              <Checkbox {...checkBoxValues(name, lens)} />
+              <Checkbox {...F.domLens.checkboxValues(name, lens)} />
               <div style={{ flex: 2, padding: '0 5px' }}>
                 {display(name) || displayBlank()}
               </div>
