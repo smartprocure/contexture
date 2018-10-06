@@ -4,13 +4,13 @@ import { observer } from 'mobx-react'
 import { exampleTypes } from 'contexture-client'
 import injectTreeNode from '../utils/injectTreeNode'
 import BarChart from '../layout/BarChart'
-import Table from '../layout/Table'
+import ExpandableTable from '../layout/ExpandableTable'
 
 let TermsStats = injectTreeNode(
   observer(
     ({ node, layout, ...props }) =>
       layout === 'table' ? (
-        <Table
+        <ExpandableTable
           {...props}
           data={node.context.terms}
           columns={

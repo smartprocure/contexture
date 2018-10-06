@@ -158,7 +158,7 @@ export default () => (
                           display: x =>
                             `Hide top 50 based on meta score for ${x} ▲`,
                         },
-                        component(x) {
+                        Component(x) {
                           return (
                             <Provider tree={termDetailsTree(x)}>
                               <React.Fragment>
@@ -195,7 +195,7 @@ export default () => (
                         collapse: {
                           display: () => 'Hide me ▲',
                         },
-                        component(x) {
+                        Component(x) {
                           return (
                             <div>
                               I just expand and show my parent value, which is{' '}
