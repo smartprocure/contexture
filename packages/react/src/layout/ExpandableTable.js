@@ -5,35 +5,30 @@ import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
 
 let ExpandableTable = inject(() => {
-  let state = observable({
-    expandedRows: [],
-  })
-
-  return _.extend(state, {
+  let state = {
+    expanded: observable(new Map()),
     onClick(field, keyField, record, index, details) {
       let key = record[keyField]
       let indexedField = `${field}${index}`
-      let expandedRow = state.expandedRows.find(row => row.key === key)
-      if (!expandedRow) {
-        state.expandedRows.push({
+      let theExpanded = state.expanded.get(key)
+
+      if (_.get('indexedField', theExpanded) !== indexedField) {
+        state.expanded.set(key, {
           key,
           record,
           field,
           indexedField,
           details,
         })
-      } else if (expandedRow.indexedField !== indexedField) {
-        expandedRow.field = field
-        expandedRow.indexedField = indexedField
-        expandedRow.details = details
       } else {
-        state.expandedRows.remove(expandedRow)
+        state.expanded.delete(key)
       }
     },
-  })
+  }
+  return state
 })(
   observer(
-    ({ data, columns, recordKey = 'key', expandedRows, onClick, ...props }) => (
+    ({ data, columns, recordKey = 'key', expanded, onClick, ...props }) => (
       <table {...props.tableAttrs}>
         <thead>
           <tr>
@@ -67,10 +62,9 @@ let ExpandableTable = inject(() => {
                         {_.getOr(
                           display,
                           `${
-                            expandedRows.find(
-                              row =>
-                                row.key === x[recordKey] &&
-                                row.indexedField === `${field}${i}`
+                            _.isEqual(
+                              _.get('indexedField', expanded.get(x[recordKey])),
+                              `${field}${i}`
                             )
                               ? 'collapse'
                               : 'expand'
@@ -84,7 +78,7 @@ let ExpandableTable = inject(() => {
                 </tr>
                 {/* See if there is a details component to render for the column value when row expanded */}
                 {_.flow(
-                  key => expandedRows.find(row => row.key === key),
+                  key => expanded.get(key),
                   expandedRow =>
                     _.get('details.Component', expandedRow) && (
                       <tr>
