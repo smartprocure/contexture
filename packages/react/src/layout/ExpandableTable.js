@@ -10,9 +10,9 @@ let ExpandableTable = inject(() => {
     onClick(field, keyField, record, index, details) {
       let key = record[keyField]
       let indexedField = `${field}${index}`
-      let theExpanded = state.expanded.get(key)
+      let expandedRow = state.expanded.get(key)
 
-      if (_.get('indexedField', theExpanded) !== indexedField) {
+      if (_.get('indexedField', expandedRow) !== indexedField) {
         state.expanded.set(key, {
           key,
           record,
