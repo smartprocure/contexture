@@ -1,4 +1,4 @@
-﻿# 1.16.0
+# 1.17.0
 * Added support for mapNodeToProps on ResultTable.
 
 # 1.16.0
