@@ -192,7 +192,8 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
                   Filter
                 </Item>
                 {F.view(filtering) &&
-                  filterNode && !filterNode.paused && (
+                  filterNode &&
+                  !filterNode.paused && (
                     <Dynamic
                       component={typeComponents[filterNode.type]}
                       path={[...filterNode.path]}
