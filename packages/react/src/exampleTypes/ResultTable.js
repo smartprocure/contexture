@@ -109,7 +109,7 @@ HeaderCellDefault.displayName = 'HeaderCellDefault'
 
 let Header = withStateLens({ popover: false, adding: false, filtering: false })(
   observer(({ // Local State
-    i, popover, adding, filtering, Modal, FieldPicker, ListGroupItem: Item, typeComponents, HeaderCell = HeaderCellDefault, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria }) => {
+    i, popover, adding, filtering, Modal, FieldPicker, ListGroupItem: Item, typeComponents, HeaderCell = HeaderCellDefault, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria, mapNodeToProps, fields }) => {
     // Components (providerable?) // Contextual
     let { disableFilter, disableSort, field, label, typeDefault } = fieldSchema
     HeaderCell = fieldSchema.HeaderCell || HeaderCell
@@ -192,10 +192,11 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
                   Filter
                 </Item>
                 {F.view(filtering) &&
-                  filterNode && (
+                  filterNode && !filterNode.paused && (
                     <Dynamic
                       component={typeComponents[filterNode.type]}
                       path={[...filterNode.path]}
+                      {...mapNodeToProps(filterNode, fields, typeComponents)}
                     />
                   )}
               </div>
@@ -253,7 +254,7 @@ TableBody.displayName = 'TableBody'
 
 let ResultTable = InjectTreeNode(
   observer(({ // Props
-    fields, infer, path, criteria, node, tree, Table = 'table', HeaderCell, Modal, ListGroupItem, FieldPicker, typeComponents }) => {
+    fields, infer, path, criteria, node, tree, Table = 'table', HeaderCell, Modal, ListGroupItem, FieldPicker, typeComponents, mapNodeToProps }) => {
     // From Provider // Theme/Components
     let mutate = tree.mutate(path)
     // NOTE infer + add columns does not work together (except for anything explicitly passed in)
@@ -278,6 +279,8 @@ let ResultTable = InjectTreeNode(
       ListGroupItem,
       typeComponents,
       HeaderCell,
+      mapNodeToProps,
+      fields,
 
       includes,
       addOptions: fieldsToOptions(hiddenFields),
