@@ -1,0 +1,84 @@
+{
+  "name": "contexture-export",
+  "version": "0.0.0",
+  "description": "Contexture Exports",
+  "main": "index.js",
+  "scripts": {
+    "danger": "duti",
+    "lint": "eslint dangerfile.js src/*.js test/*.js",
+    "lint:ci": "npm run lint -- -o lint-results.json -f json",
+    "lint-fix": "eslint dangerfile.js src/*.js test/*.js --fix",
+    "fmt": "prettier --write *.js; prettier --write '{src,test}/**/*.js'",
+    "duti:fix": "npm run fmt && npm run lint-fix && npm run fmt",
+    "test": "jest --",
+    "test:watch": "jest --watch --",
+    "test:ci": "jest --coverage --json --outputFile=test-results.json",
+    "coverage": "jest --coverage --"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://sadasant@github.com/smartprocure/contexture-export.git"
+  },
+  "author": "SmartProcure",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smartprocure/contexture-export/issues"
+  },
+  "homepage": "https://github.com/smartprocure/contexture-export#readme",
+  "dependencies": {
+    "futil": "^1.55.0",
+    "lodash": "^4.17.11",
+    "moment": "^2.22.2",
+    "numeral": "^2.0.6",
+    "objects-to-csv": "^1.1.0",
+    "smart-truncate": "^1.0.1"
+  },
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.6.0",
+    "babel-loader": "^8.0.4",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "eslint": "^5.6.1",
+    "eslint-config-smartprocure": "^1.2.0",
+    "jest": "^23.6.0",
+    "jest-cli": "^23.6.0",
+    "prettier": "^1.14.3"
+  },
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/test/setup.js"
+    ],
+    "testMatch": [
+      "<rootDir>/**/*.test.js"
+    ],
+    "collectCoverageFrom": [
+      "<rootDir>/src/**/*.{js,jsx}",
+      "!**/node_modules/**"
+    ],
+    "collectCoverage": true,
+    "coverageThreshold": {
+      "global": {
+        "branches": 0,
+        "functions": 0,
+        "lines": 0,
+        "statements": 0
+      }
+    }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false,
+    "trailingComma": "es5"
+  },
+  "babel": {
+    "presets": [
+      "env",
+      "stage-2",
+      "stage-3"
+    ]
+  }
+}
