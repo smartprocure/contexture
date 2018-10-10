@@ -70,6 +70,7 @@ let tree = observable({
     field: 'metaScore',
     min: 0,
     max: 100,
+    findBestRange: true,
   },
   geo: {
     key: 'geoSearch',

@@ -17,6 +17,7 @@ import ModalDefault from '../layout/Modal'
 
 export default ({
   Input = 'input',
+  Button = 'button',
   TextInput = Input,
   NumberInput = partial({ type: 'number' }, Input),
   DateInput = partial({ type: 'date' }, Input),
@@ -30,7 +31,7 @@ export default ({
 } = {}) => {
   let Components = {
     Facet: partial({ TextInput, Checkbox, RadioList }, Facet),
-    Number: partial({ NumberInput }, Number),
+    Number: partial({ NumberInput, Button }, Number),
     Date: partial({ DateInput }, Date),
     DateRangePicker,
     Query: partial({ TextInput }, Query),

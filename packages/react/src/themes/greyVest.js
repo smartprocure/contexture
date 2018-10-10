@@ -273,6 +273,7 @@ let TagComponent = ({ value, removeTag, tagStyle }) => (
 TagComponent.displayName = 'GVTag'
 
 export let ExampleTypes = ExampleTypeConstructor({
+  Button,
   Input,
   Checkbox,
   RadioList: ButtonRadio,

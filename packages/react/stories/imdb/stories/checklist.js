@@ -31,6 +31,7 @@ let tree = Contexture({
           field: 'metaScore',
           min: 0,
           max: 100,
+          findBestRange: true,
         },
         {
           key: 'searchFacet',

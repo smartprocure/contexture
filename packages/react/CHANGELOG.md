@@ -1,3 +1,6 @@
+# 1.18.0
+* Support best range for Number component
+
 # 1.17.0
 * Added support for mapNodeToProps on ResultTable.
 
