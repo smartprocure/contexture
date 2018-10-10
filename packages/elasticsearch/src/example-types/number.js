@@ -10,7 +10,7 @@ module.exports = {
       min,
       max,
       percentileInterval = 1,
-      rangeThreshold,
+      rangeThreshold = 0.1,
       findBestRange = false,
     },
     search
@@ -25,7 +25,10 @@ module.exports = {
       let maxIteration = 10
       let iterationCount = 1
 
-      while (hasMaxOutlier || hasMaxOutlier || iterationCount <= maxIteration) {
+      while (
+        (hasMinOutlier || hasMaxOutlier) &&
+        iterationCount <= maxIteration
+      ) {
         results = await util.getStatisticalResults(
           search,
           field,

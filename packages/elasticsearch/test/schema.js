@@ -8,10 +8,7 @@ let imdbMapping = require('./schema-data/imdb-mapping')
 let imdbAliases = require('./schema-data/imdb-aliases')
 let imdbSchema = require('./schema-data/imdb-schema')
 
-let processSchemas = _.flow(
-  fromMappingsWithAliases,
-  exampleTypeSchemaMapping
-)
+let processSchemas = _.flow(fromMappingsWithAliases, exampleTypeSchemaMapping)
 
 describe('schemas', () => {
   it('should work with imdb', () => {

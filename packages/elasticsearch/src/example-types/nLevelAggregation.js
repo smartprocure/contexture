@@ -22,10 +22,7 @@ let processReducers = (results, reducers) => {
             ? _[op](_.get(config.field, item), config[op])
             : true
       )
-      let filter = _.flow(
-        operation,
-        _.filter
-      )
+      let filter = _.flow(operation, _.filter)
 
       if (hasFieldPlus('value'))
         filteredResults = _.filter({ [config.field]: config.value })(
