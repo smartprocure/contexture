@@ -835,61 +835,75 @@ exports[`Storyshots Example Types Full Demo 1`] = `
           <div
             style={Object {}}
           >
-            <div
-              style={
-                Object {
-                  "alignItems": "center",
-                  "display": "flex",
-                }
-              }
-            >
-              <input
-                onBlur={[Function]}
-                onChange={[Function]}
-                onFocus={[Function]}
+            <div>
+              <div
                 style={
                   Object {
-                    "background": "rgba(255, 255, 255, 0.7)",
-                    "border": "solid 1px #efefef",
-                    "borderRadius": "30px",
-                    "boxSizing": "border-box",
-                    "display": "block",
-                    "margin": "0 auto",
-                    "outline": "none",
-                    "padding": "5px",
-                    "textIndent": "5px",
-                    "transition": "background 0.3s",
-                    "width": "100%",
+                    "alignItems": "center",
+                    "display": "flex",
                   }
                 }
-                type="number"
-                value=""
-              />
-              <div>
-                -
+              >
+                <input
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onFocus={[Function]}
+                  style={
+                    Object {
+                      "background": "rgba(255, 255, 255, 0.7)",
+                      "border": "solid 1px #efefef",
+                      "borderRadius": "30px",
+                      "boxSizing": "border-box",
+                      "display": "block",
+                      "margin": "0 auto",
+                      "outline": "none",
+                      "padding": "5px",
+                      "textIndent": "5px",
+                      "transition": "background 0.3s",
+                      "width": "100%",
+                    }
+                  }
+                  type="number"
+                  value=""
+                />
+                <div>
+                  -
+                </div>
+                <input
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onFocus={[Function]}
+                  style={
+                    Object {
+                      "background": "rgba(255, 255, 255, 0.7)",
+                      "border": "solid 1px #efefef",
+                      "borderRadius": "30px",
+                      "boxSizing": "border-box",
+                      "display": "block",
+                      "margin": "0 auto",
+                      "outline": "none",
+                      "padding": "5px",
+                      "textIndent": "5px",
+                      "transition": "background 0.3s",
+                      "width": "100%",
+                    }
+                  }
+                  type="number"
+                  value={100}
+                />
               </div>
-              <input
-                onBlur={[Function]}
-                onChange={[Function]}
-                onFocus={[Function]}
-                style={
-                  Object {
-                    "background": "rgba(255, 255, 255, 0.7)",
-                    "border": "solid 1px #efefef",
-                    "borderRadius": "30px",
-                    "boxSizing": "border-box",
-                    "display": "block",
-                    "margin": "0 auto",
-                    "outline": "none",
-                    "padding": "5px",
-                    "textIndent": "5px",
-                    "transition": "background 0.3s",
-                    "width": "100%",
+              <div>
+                <button
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "width": "100%",
+                    }
                   }
-                }
-                type="number"
-                value={100}
-              />
+                >
+                  Find best range
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -903,61 +917,75 @@ exports[`Storyshots Example Types Full Demo 1`] = `
           <div
             style={Object {}}
           >
-            <div
-              style={
-                Object {
-                  "alignItems": "center",
-                  "display": "flex",
-                }
-              }
-            >
-              <input
-                onBlur={[Function]}
-                onChange={[Function]}
-                onFocus={[Function]}
+            <div>
+              <div
                 style={
                   Object {
-                    "background": "rgba(255, 255, 255, 0.7)",
-                    "border": "solid 1px #efefef",
-                    "borderRadius": "30px",
-                    "boxSizing": "border-box",
-                    "display": "block",
-                    "margin": "0 auto",
-                    "outline": "none",
-                    "padding": "5px",
-                    "textIndent": "5px",
-                    "transition": "background 0.3s",
-                    "width": "100%",
+                    "alignItems": "center",
+                    "display": "flex",
                   }
                 }
-                type="number"
-                value=""
-              />
-              <div>
-                -
+              >
+                <input
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onFocus={[Function]}
+                  style={
+                    Object {
+                      "background": "rgba(255, 255, 255, 0.7)",
+                      "border": "solid 1px #efefef",
+                      "borderRadius": "30px",
+                      "boxSizing": "border-box",
+                      "display": "block",
+                      "margin": "0 auto",
+                      "outline": "none",
+                      "padding": "5px",
+                      "textIndent": "5px",
+                      "transition": "background 0.3s",
+                      "width": "100%",
+                    }
+                  }
+                  type="number"
+                  value=""
+                />
+                <div>
+                  -
+                </div>
+                <input
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onFocus={[Function]}
+                  style={
+                    Object {
+                      "background": "rgba(255, 255, 255, 0.7)",
+                      "border": "solid 1px #efefef",
+                      "borderRadius": "30px",
+                      "boxSizing": "border-box",
+                      "display": "block",
+                      "margin": "0 auto",
+                      "outline": "none",
+                      "padding": "5px",
+                      "textIndent": "5px",
+                      "transition": "background 0.3s",
+                      "width": "100%",
+                    }
+                  }
+                  type="number"
+                  value={100}
+                />
               </div>
-              <input
-                onBlur={[Function]}
-                onChange={[Function]}
-                onFocus={[Function]}
-                style={
-                  Object {
-                    "background": "rgba(255, 255, 255, 0.7)",
-                    "border": "solid 1px #efefef",
-                    "borderRadius": "30px",
-                    "boxSizing": "border-box",
-                    "display": "block",
-                    "margin": "0 auto",
-                    "outline": "none",
-                    "padding": "5px",
-                    "textIndent": "5px",
-                    "transition": "background 0.3s",
-                    "width": "100%",
+              <div>
+                <button
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "width": "100%",
+                    }
                   }
-                }
-                type="number"
-                value={100}
-              />
+                >
+                  Find best range
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -2461,61 +2489,64 @@ exports[`Storyshots IMDB Quick Start 1`] = `
             <div
               style={Object {}}
             >
-              <div
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "display": "flex",
-                  }
-                }
-              >
-                <input
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onFocus={[Function]}
+              <div>
+                <div
                   style={
                     Object {
-                      "background": "rgba(255, 255, 255, 0.7)",
-                      "border": "solid 1px #efefef",
-                      "borderRadius": "30px",
-                      "boxSizing": "border-box",
-                      "display": "block",
-                      "margin": "0 auto",
-                      "outline": "none",
-                      "padding": "5px",
-                      "textIndent": "5px",
-                      "transition": "background 0.3s",
-                      "width": "100%",
+                      "alignItems": "center",
+                      "display": "flex",
                     }
                   }
-                  type="number"
-                  value=""
-                />
-                <div>
-                  -
+                >
+                  <input
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onFocus={[Function]}
+                    style={
+                      Object {
+                        "background": "rgba(255, 255, 255, 0.7)",
+                        "border": "solid 1px #efefef",
+                        "borderRadius": "30px",
+                        "boxSizing": "border-box",
+                        "display": "block",
+                        "margin": "0 auto",
+                        "outline": "none",
+                        "padding": "5px",
+                        "textIndent": "5px",
+                        "transition": "background 0.3s",
+                        "width": "100%",
+                      }
+                    }
+                    type="number"
+                    value=""
+                  />
+                  <div>
+                    -
+                  </div>
+                  <input
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onFocus={[Function]}
+                    style={
+                      Object {
+                        "background": "rgba(255, 255, 255, 0.7)",
+                        "border": "solid 1px #efefef",
+                        "borderRadius": "30px",
+                        "boxSizing": "border-box",
+                        "display": "block",
+                        "margin": "0 auto",
+                        "outline": "none",
+                        "padding": "5px",
+                        "textIndent": "5px",
+                        "transition": "background 0.3s",
+                        "width": "100%",
+                      }
+                    }
+                    type="number"
+                    value={100}
+                  />
                 </div>
-                <input
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onFocus={[Function]}
-                  style={
-                    Object {
-                      "background": "rgba(255, 255, 255, 0.7)",
-                      "border": "solid 1px #efefef",
-                      "borderRadius": "30px",
-                      "boxSizing": "border-box",
-                      "display": "block",
-                      "margin": "0 auto",
-                      "outline": "none",
-                      "padding": "5px",
-                      "textIndent": "5px",
-                      "transition": "background 0.3s",
-                      "width": "100%",
-                    }
-                  }
-                  type="number"
-                  value={100}
-                />
+                <div />
               </div>
             </div>
           </div>
@@ -4619,61 +4650,64 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                       <div
                                         style={Object {}}
                                       >
-                                        <div
-                                          style={
-                                            Object {
-                                              "alignItems": "center",
-                                              "display": "flex",
-                                            }
-                                          }
-                                        >
-                                          <input
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
+                                        <div>
+                                          <div
                                             style={
                                               Object {
-                                                "background": "rgba(255, 255, 255, 0.7)",
-                                                "border": "solid 1px #efefef",
-                                                "borderRadius": "30px",
-                                                "boxSizing": "border-box",
-                                                "display": "block",
-                                                "margin": "0 auto",
-                                                "outline": "none",
-                                                "padding": "5px",
-                                                "textIndent": "5px",
-                                                "transition": "background 0.3s",
-                                                "width": "100%",
+                                                "alignItems": "center",
+                                                "display": "flex",
                                               }
                                             }
-                                            type="number"
-                                            value=""
-                                          />
-                                          <div>
-                                            -
+                                          >
+                                            <input
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onFocus={[Function]}
+                                              style={
+                                                Object {
+                                                  "background": "rgba(255, 255, 255, 0.7)",
+                                                  "border": "solid 1px #efefef",
+                                                  "borderRadius": "30px",
+                                                  "boxSizing": "border-box",
+                                                  "display": "block",
+                                                  "margin": "0 auto",
+                                                  "outline": "none",
+                                                  "padding": "5px",
+                                                  "textIndent": "5px",
+                                                  "transition": "background 0.3s",
+                                                  "width": "100%",
+                                                }
+                                              }
+                                              type="number"
+                                              value=""
+                                            />
+                                            <div>
+                                              -
+                                            </div>
+                                            <input
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onFocus={[Function]}
+                                              style={
+                                                Object {
+                                                  "background": "rgba(255, 255, 255, 0.7)",
+                                                  "border": "solid 1px #efefef",
+                                                  "borderRadius": "30px",
+                                                  "boxSizing": "border-box",
+                                                  "display": "block",
+                                                  "margin": "0 auto",
+                                                  "outline": "none",
+                                                  "padding": "5px",
+                                                  "textIndent": "5px",
+                                                  "transition": "background 0.3s",
+                                                  "width": "100%",
+                                                }
+                                              }
+                                              type="number"
+                                              value=""
+                                            />
                                           </div>
-                                          <input
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            style={
-                                              Object {
-                                                "background": "rgba(255, 255, 255, 0.7)",
-                                                "border": "solid 1px #efefef",
-                                                "borderRadius": "30px",
-                                                "boxSizing": "border-box",
-                                                "display": "block",
-                                                "margin": "0 auto",
-                                                "outline": "none",
-                                                "padding": "5px",
-                                                "textIndent": "5px",
-                                                "transition": "background 0.3s",
-                                                "width": "100%",
-                                              }
-                                            }
-                                            type="number"
-                                            value=""
-                                          />
+                                          <div />
                                         </div>
                                       </div>
                                     </div>
