@@ -16,10 +16,7 @@ let firstValue = _.curry((field, data) => _.get(field, _.find(field, data)))
 
 let Tree = F.tree(x => x.properties)
 // flatLeaves should auto detect reject vs omit (or just more general obj vs arr method)
-let flatten = _.flow(
-  Tree.flatten(),
-  _.omitBy(Tree.traverse)
-)
+let flatten = _.flow(Tree.flatten(), _.omitBy(Tree.traverse))
 
 let fromEsIndexMapping = _.mapValues(
   _.flow(
