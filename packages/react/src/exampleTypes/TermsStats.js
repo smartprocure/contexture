@@ -1,37 +1,19 @@
-import _ from 'lodash/fp'
 import React from 'react'
 import { observer } from 'mobx-react'
 import { exampleTypes } from 'contexture-client'
 import injectTreeNode from '../utils/injectTreeNode'
 import BarChart from '../layout/BarChart'
-import ExpandableTable from '../layout/ExpandableTable'
 
 let TermsStats = injectTreeNode(
-  observer(
-    ({ node, layout, ...props }) =>
-      layout === 'table' ? (
-        <ExpandableTable
-          {...props}
-          data={node.context.terms}
-          columns={
-            props.columns ||
-            _.flow(
-              _.first,
-              _.keys,
-              _.map(field => ({ field }))
-            )(node.context.terms)
-          }
-        />
-      ) : (
-        <BarChart
-          data={node.context.terms}
-          categoryField="key"
-          valueField={node.order}
-          yAxis
-          {...props}
-        />
-      )
-  ),
+  observer(({ node, ...props }) => (
+    <BarChart
+      data={node.context.terms}
+      categoryField="key"
+      valueField={node.order}
+      yAxis
+      {...props}
+    />
+  )),
   exampleTypes.TermsStats
 )
 TermsStats.displayName = 'TermsStats'

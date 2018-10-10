@@ -10,7 +10,7 @@ let {
   ResultCount,
   ResultTable,
   DateHistogram,
-  TermsStats,
+  TermsStatsTable,
   TypeMap,
 } = ExampleTypes
 
@@ -133,9 +133,8 @@ export default () => (
                   path={['searchRoot', 'releases']}
                   format={formatYear}
                 />
-                <TermsStats
+                <TermsStatsTable
                   path={['searchRoot', 'genreScores']}
-                  layout="table"
                   tableAttrs={{ style: { margin: 'auto' } }}
                   columns={[
                     {
