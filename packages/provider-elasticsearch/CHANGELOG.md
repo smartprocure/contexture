@@ -1,4 +1,7 @@
-﻿# 0.11.0
+﻿# 0.11.1
+* Fixes to `findBestRange` in number type
+
+# 0.11.0
 * Additional highlighted fields should include fields that are missing from the result include array.
 
 # 0.10.2
