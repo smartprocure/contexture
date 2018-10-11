@@ -14,6 +14,8 @@ let {
   TypeMap,
 } = ExampleTypes
 
+import { Column } from './../../../src/layout/ExpandableTable'
+
 let formatYear = x => new Date(x).getUTCFullYear()
 
 let tree = Contexture({
@@ -136,76 +138,58 @@ export default () => (
                 <TermsStatsTable
                   path={['searchRoot', 'genreScores']}
                   tableAttrs={{ style: { margin: 'auto' } }}
-                  columns={[
-                    {
-                      field: 'key',
-                      label: 'Genre',
-                    },
-                    {
-                      field: 'count',
-                      label: 'Found',
-                    },
-                    {
-                      field: 'key',
-                      label: '',
-                      details: {
-                        expand: {
-                          display: x =>
-                            `Show top 50 based on meta score for ${x} ▼`,
-                        },
-                        collapse: {
-                          display: x =>
-                            `Hide top 50 based on meta score for ${x} ▲`,
-                        },
-                        Component(x) {
-                          return (
-                            <Provider tree={termDetailsTree(x)}>
-                              <React.Fragment>
-                                <ResultTable
-                                  path={['detailRoot', 'results']}
-                                  fields={_.pick(
-                                    ['title', 'year', 'genres'],
-                                    schemas.movies.fields
-                                  )}
-                                />
-                                <Flex
-                                  style={{
-                                    justifyContent: 'space-around',
-                                    marginTop: 10,
-                                    marginBottom: 10,
-                                  }}
-                                >
-                                  <Pager path={['detailRoot', 'results']} />
-                                </Flex>
-                              </React.Fragment>
-                            </Provider>
-                          )
-                        },
-                      },
-                    },
-                    // example of doing another detail section for the same field with different detail content
-                    {
-                      field: 'key',
-                      label: () => <strong>Custom Header</strong>,
-                      details: {
-                        expand: {
-                          display: () => 'Expand me ▼',
-                        },
-                        collapse: {
-                          display: () => 'Hide me ▲',
-                        },
-                        Component(x) {
-                          return (
-                            <div>
-                              I just expand and show my parent value, which is{' '}
-                              <strong>{x}</strong>
-                            </div>
-                          )
-                        },
-                      },
-                    },
-                  ]}
-                />
+                >
+                  <Column field="key" label="Genre" />
+                  <Column field="count" label="Found" />
+                  <Column
+                    field="key"
+                    label=""
+                    expand={{
+                      display: x =>
+                        `Show top 50 based on meta score for ${x} ▼`,
+                    }}
+                    collapse={{
+                      display: x =>
+                        `Hide top 50 based on meta score for ${x} ▲`,
+                    }}
+                  >
+                    {x => (
+                      <Provider tree={termDetailsTree(x)}>
+                        <div>
+                          <ResultTable
+                            path={['detailRoot', 'results']}
+                            fields={_.pick(
+                              ['title', 'year', 'genres'],
+                              schemas.movies.fields
+                            )}
+                          />
+                          <Flex
+                            style={{
+                              justifyContent: 'space-around',
+                              marginTop: 10,
+                              marginBottom: 10,
+                            }}
+                          >
+                            <Pager path={['detailRoot', 'results']} />
+                          </Flex>
+                        </div>
+                      </Provider>
+                    )}
+                  </Column>
+                  <Column
+                    field="key"
+                    label={() => <strong>Custom Header</strong>}
+                    expand={{ display: () => 'Expand me ▼' }}
+                    collapse={{ display: () => 'Hide me ▲' }}
+                  >
+                    {x => (
+                      <div>
+                        I just expand and show my parent value, which is{' '}
+                        <strong>{x}</strong>
+                      </div>
+                    )}
+                  </Column>
+                </TermsStatsTable>
                 <div style={{ overflowX: 'auto' }}>
                   <ResultTable
                     path={['searchRoot', 'results']}

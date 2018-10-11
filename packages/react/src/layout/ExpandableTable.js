@@ -4,7 +4,10 @@ import React from 'react'
 import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
 
-let ExpandableTable = inject(() => {
+export let Column = _.identity
+Column.displayName = 'Column'
+
+let ExpandableTable = inject((stores, props) => {
   let state = {
     expanded: observable(new Map()),
     onClick(field, keyField, record, index, details) {
@@ -23,6 +26,16 @@ let ExpandableTable = inject(() => {
         state.expanded.delete(key)
       }
     },
+    columns: _.map(
+      ({ props }) => ({
+        ..._.pick(['field', 'label', 'display'], props),
+        details: F.compactObject({
+          ..._.pick(['expand', 'collapse'], props),
+          Component: props.children,
+        }),
+      }),
+      _.castArray(props.children)
+    ),
   }
   return state
 })(
@@ -80,7 +93,7 @@ let ExpandableTable = inject(() => {
                   key => expanded.get(key),
                   expandedRow =>
                     _.get('details.Component', expandedRow) && (
-                      <tr>
+                      <tr align="center">
                         <td colSpan={columns.length}>
                           {expandedRow.details.Component(
                             _.get(expandedRow.field, expandedRow.record),
