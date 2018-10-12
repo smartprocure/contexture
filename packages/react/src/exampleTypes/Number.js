@@ -20,10 +20,11 @@ let NumberComponent = injectTreeNode(
         />
       </Flex>
       <div>
-        {node.findBestRange && (
+        {node.showBestRange && (
           <Button
             style={{ width: '100%' }}
-            onClick={() => {
+            onClick={async () => {
+              await tree.mutate(node.path, { findBestRange: true })
               tree.mutate(node.path, {
                 min: _.get('context.bestRange.min', node),
                 max: _.get('context.bestRange.max', node),
