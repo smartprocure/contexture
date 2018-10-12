@@ -1,4 +1,7 @@
-﻿# 2.16.1
+﻿# 2.17.0
+* Added self reactor for `findBestRange` on `number` type
+
+# 2.16.1
 * Facet should have mode 'include' by default.
 
 # 2.16.0
