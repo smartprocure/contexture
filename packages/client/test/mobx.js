@@ -93,6 +93,7 @@ describe('usage with mobx should generally work', () => {
           key: 'filter',
           type: 'facet',
           values: ['a'],
+          mode: 'include',
           filterOnly: true,
           optionsFilter: '',
         },
@@ -114,6 +115,7 @@ describe('usage with mobx should generally work', () => {
       type: 'facet',
       values: ['a'],
       hasValue: 1,
+      mode: 'include',
       path: ['root', 'filter'],
       context: {
         options: [],
@@ -171,6 +173,7 @@ describe('usage with mobx should generally work', () => {
     ).to.deep.equal({
       key: 'newFilterWithValue',
       type: 'facet',
+      mode: 'include',
       values: 'asdf',
       path: ['root', 'newFilterWithValue'],
       context: {
@@ -225,6 +228,7 @@ describe('usage with mobx should generally work', () => {
     ).to.deep.equal({
       key: 'newEmptyFilter',
       type: 'facet',
+      mode: 'include',
       path: ['root', 'newEmptyFilter'],
       context: {},
       values: [],
@@ -237,6 +241,7 @@ describe('usage with mobx should generally work', () => {
     ).to.deep.equal({
       key: 'newEmptyFilter',
       type: 'facet',
+      mode: 'include',
       context: {},
       path: ['root', 'newEmptyFilter'],
       values: [],
