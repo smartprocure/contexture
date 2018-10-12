@@ -47,6 +47,7 @@ describe('lib', () => {
           {
             key: 'filter',
             type: 'facet',
+            mode: 'include',
             values: ['a'],
             filterOnly: true,
             optionsFilter: '',
@@ -80,6 +81,7 @@ describe('lib', () => {
           {
             key: 'filter',
             type: 'facet',
+            mode: 'include',
             values: ['a'],
             optionsFilter: '',
           },
@@ -110,6 +112,7 @@ describe('lib', () => {
             type: 'facet',
             values: ['a'],
             size: 10,
+            mode: 'include',
             lastUpdateTime: now,
             optionsFilter: '',
           },
@@ -335,6 +338,7 @@ describe('lib', () => {
               field: 'Organization.Name',
               type: 'facet',
               values: ['City of Deerfield'],
+              mode: 'include',
               size: 24,
               filterOnly: true,
               optionsFilter: '',
