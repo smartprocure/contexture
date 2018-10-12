@@ -116,6 +116,7 @@ export default stampKey('type', {
     reactors: {
       min: 'others',
       max: 'others',
+      findBestRange: 'self',
     },
     defaults: {
       field: null,
