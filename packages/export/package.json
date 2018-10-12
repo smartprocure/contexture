@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "danger": "duti",
-    "lint": "eslint dangerfile.js src/*.js test/*.js",
+    "lint": "eslint src/*.js test/*.js",
     "lint:ci": "npm run lint -- -o lint-results.json -f json",
-    "lint-fix": "eslint dangerfile.js src/*.js test/*.js --fix",
+    "lint-fix": "eslint src/*.js test/*.js --fix",
     "fmt": "prettier --write *.js; prettier --write '{src,test}/**/*.js'",
     "duti:fix": "npm run fmt && npm run lint-fix && npm run fmt",
     "test": "jest --",
