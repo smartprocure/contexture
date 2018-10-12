@@ -1,3 +1,6 @@
+﻿# 2.16.1
+* Facet should have mode 'include' by default.
+
 # 2.16.0
 * Make sure that afterSearch hook is called after triggerUpdate has executed.
 

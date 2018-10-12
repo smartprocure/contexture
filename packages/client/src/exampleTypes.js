@@ -35,7 +35,7 @@ export default stampKey('type', {
     defaults: {
       field: null,
       values: [],
-      // mode: 'include',
+      mode: 'include',
       optionsFilter: '',
       context: {
         options: [],
