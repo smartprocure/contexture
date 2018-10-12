@@ -26,7 +26,7 @@ export default stampKey('type', {
   facet: {
     init(node, extend) {
       extend(node, {
-        mode: node.mode || 'include'
+        mode: node.mode || 'include',
       })
     },
     validate: validateValues,
