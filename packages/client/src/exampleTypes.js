@@ -24,6 +24,11 @@ let twoLevelMatch = {
 
 export default stampKey('type', {
   facet: {
+    init(node, extend) {
+      extend(node, {
+        mode: node.mode || 'include'
+      })
+    },
     validate: validateValues,
     reactors: {
       values: 'others',
