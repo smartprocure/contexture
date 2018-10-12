@@ -22,7 +22,7 @@ jobs:
           command: npm run lint:ci
       - run:
           name: test
-          command: npm run cicoverage
+          command: npm run coverage
       - run:
           name: pre-danger
           command: git config user.email "decrapifier@govspend.com" && git config user.name "Decrapifier" && git config push.default upstream && git branch -u origin/$CIRCLE_BRANCH
