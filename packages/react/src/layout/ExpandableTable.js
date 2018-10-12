@@ -7,21 +7,18 @@ import { observer, inject } from 'mobx-react'
 export let Column = _.identity
 Column.displayName = 'Column'
 
-let ExpandedSection = observer(({ recordKey, columnCount, expanded }) =>
-  _.flow(
-    key => expanded.get(key),
-    expandedRow =>
-      _.getOr(null, 'details.Component', expandedRow) && (
-        <tr align="center">
-          <td colSpan={columnCount}>
-            {expandedRow.details.Component(
-              _.get(expandedRow.field, expandedRow.record),
-              expandedRow.record
-            )}
-          </td>
-        </tr>
-      )
-  )(recordKey)
+let ExpandedSection = observer(
+  ({ columnCount, expandedRow }) =>
+    _.getOr(null, 'details.Component', expandedRow) && (
+      <tr align="center">
+        <td colSpan={columnCount}>
+          {expandedRow.details.Component(
+            _.get(expandedRow.field, expandedRow.record),
+            expandedRow.record
+          )}
+        </td>
+      </tr>
+    )
 )
 
 let TableBodyState = () => {
@@ -85,11 +82,12 @@ let TableBody = inject(TableBodyState)(
               )}
             </tr>
             {/* See if there is a details component to render for the column value when row expanded */}
-            <ExpandedSection
-              recordKey={x[recordKey]}
-              expanded={expanded}
-              columnCount={columns.length}
-            />
+            {expanded.has(x[recordKey]) && (
+              <ExpandedSection
+                expandedRow={expanded.get(x[recordKey])}
+                columnCount={columns.length}
+              />
+            )}
           </React.Fragment>
         ),
         data
