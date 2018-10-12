@@ -24,8 +24,11 @@ let NumberComponent = injectTreeNode(
           <Button
             style={{ width: '100%' }}
             onClick={async () => {
+              // Calculate best range
               await tree.mutate(node.path, { findBestRange: true })
+              // Disable best range so the calculation isn't run anymore
               tree.mutate(node.path, {
+                findBestRange: false,
                 min: _.get('context.bestRange.min', node),
                 max: _.get('context.bestRange.max', node),
               })
