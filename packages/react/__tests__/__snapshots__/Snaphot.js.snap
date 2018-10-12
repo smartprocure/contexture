@@ -892,18 +892,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   value={100}
                 />
               </div>
-              <div>
-                <button
-                  onClick={[Function]}
-                  style={
-                    Object {
-                      "width": "100%",
-                    }
-                  }
-                >
-                  Find best range
-                </button>
-              </div>
+              <div />
             </div>
           </div>
         </div>
@@ -974,18 +963,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   value={100}
                 />
               </div>
-              <div>
-                <button
-                  onClick={[Function]}
-                  style={
-                    Object {
-                      "width": "100%",
-                    }
-                  }
-                >
-                  Find best range
-                </button>
-              </div>
+              <div />
             </div>
           </div>
         </div>
