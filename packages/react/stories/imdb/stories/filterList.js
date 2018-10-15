@@ -67,6 +67,7 @@ let tree = Contexture({
       type: 'terms_stats',
       key_field: 'genres',
       value_field: 'metaScore',
+      filter: '',
       order: 'sum',
     },
   ],
@@ -136,6 +137,9 @@ export default () => (
                   format={formatYear}
                 />
                 <TermsStatsTable
+                  infer
+                  fields={_.pick(['genres'], schemas.movies.fields)}
+                  criteria={['searchRoot', 'criteria']}
                   path={['searchRoot', 'genreScores']}
                   tableAttrs={{ style: { margin: 'auto' } }}
                 >

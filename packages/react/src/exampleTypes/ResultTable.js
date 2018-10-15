@@ -10,19 +10,8 @@ import { loading } from '../styles/generic'
 import { applyDefaults } from '../utils/schema'
 import { flattenPlainObject } from '../utils/futil'
 import DefaultIcon from '../DefaultIcon'
+import { getRecord, getResults, inferSchema } from '../utils/schema'
 
-let getRecord = F.when('_source', x => ({
-  _id: x._id,
-  ...x._source,
-}))
-
-let getResults = _.get('context.response.results')
-let inferSchema = _.flow(
-  getResults,
-  _.head,
-  getRecord,
-  flattenPlainObject
-)
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
 
