@@ -28,6 +28,7 @@ let TermsStatsTable = injectTreeNode(
           expand={{
             display: (value, record) => <div>
               <button onClick={async () => {
+                // TODO: Could this be smaller?
                 let schema = _.flow(
                   _.merge(infer && inferSchema(node)),
                   applyDefaults,
@@ -51,7 +52,7 @@ let TermsStatsTable = injectTreeNode(
                   values: [..._.castArray(filter.values.slice()), record.key]
                 })
               }}>Add as Filter</button>
-              <button>Open Profile</button>
+              <button>Open Profile (TODO)</button>
             </div>
           }}
           />
