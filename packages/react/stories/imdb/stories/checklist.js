@@ -31,7 +31,6 @@ let tree = Contexture({
           field: 'metaScore',
           min: 0,
           max: 100,
-          showBestRange: true,
         },
         {
           key: 'searchFacet',
@@ -115,6 +114,9 @@ export default () => (
                   path={['root', 'criteria']}
                   fields={schemas.movies.fields}
                   typeComponents={TypeMap}
+                  mapNodeToProps={field =>
+                    field.key === 'searchNumber' ? { showBestRange: true } : {}
+                  }
                 />
                 <Adder
                   path={['root', 'criteria']}

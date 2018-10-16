@@ -1,4 +1,7 @@
-﻿# 1.19.0
+﻿# 1.20.0
+* Moved showBestRange from tree to prop on Number component.
+
+# 1.19.0
 * Add table layout support for terms stats type.
 
 # 1.18.0

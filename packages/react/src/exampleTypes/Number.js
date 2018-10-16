@@ -6,7 +6,7 @@ import { exampleTypes } from 'contexture-client'
 import injectTreeNode from '../utils/injectTreeNode'
 
 let NumberComponent = injectTreeNode(
-  observer(({ tree, node, NumberInput, Button }) => (
+  observer(({ tree, node, NumberInput, Button, showBestRange = false }) => (
     <div>
       <Flex style={{ alignItems: 'center' }}>
         <NumberInput
@@ -20,7 +20,7 @@ let NumberComponent = injectTreeNode(
         />
       </Flex>
       <div>
-        {node.showBestRange && (
+        {showBestRange && (
           <Button
             style={{ width: '100%' }}
             onClick={async () => {
