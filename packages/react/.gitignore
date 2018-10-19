@@ -67,4 +67,6 @@ dist/
 # ignore storybook related folders
 storybook-static/
 
+test-results.json
+
 .idea/
