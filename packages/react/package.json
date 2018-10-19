@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "1.20.0",
+  "version": "1.20.1",
   "description": "React components for building contexture interfaces",
   "main": "dist/index.js",
   "scripts": {
@@ -18,7 +18,7 @@
     "test-u": "jest --coverage --u",
     "test-ci": "npm t -- --json --outputFile=test-results.json",
     "duti": "duti",
-    "fmt": "prettier --write '{src,stories,__tests__,.storybook}/**/*'",
+    "fmt": "prettier --write '{src,stories,__tests__/Snapshot.js,.storybook}/**/*'",
     "duti:fix": "npm run lint-fix && npm run fmt"
   },
   "repository": {

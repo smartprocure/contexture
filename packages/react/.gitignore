@@ -67,6 +67,6 @@ dist/
 # ignore storybook related folders
 storybook-static/
 
-package-lock.json
+test-results.json
 
 .idea/
