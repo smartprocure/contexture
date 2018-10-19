@@ -33,7 +33,7 @@ export let FilterList = InjectTreeNode(
   observer(
     ({ node, typeComponents: types, fields, mapNodeToProps = _.noop }) => (
       <SpacedList>
-        {node.children.map(child => (
+        {_.map(child => (
           <div key={child.path}>
             <FieldLabel node={child} fields={fields} />
             {!child.paused && (
@@ -44,7 +44,7 @@ export let FilterList = InjectTreeNode(
               />
             )}
           </div>
-        ))}
+        ), node.children)}
       </SpacedList>
     )
   )
