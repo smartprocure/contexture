@@ -1,4 +1,8 @@
-﻿# 1.20.0
+﻿# 1.20.1
+* IE11 fixes. On IE11, React's children object doesn't have a `map`
+  method.
+
+# 1.20.0
 * Moved showBestRange from tree to prop on Number component.
 
 # 1.19.0
