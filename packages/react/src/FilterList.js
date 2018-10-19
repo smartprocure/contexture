@@ -33,18 +33,21 @@ export let FilterList = InjectTreeNode(
   observer(
     ({ node, typeComponents: types, fields, mapNodeToProps = _.noop }) => (
       <SpacedList>
-        {_.map(child => (
-          <div key={child.path}>
-            <FieldLabel node={child} fields={fields} />
-            {!child.paused && (
-              <Dynamic
-                component={types[child.type]}
-                path={[...child.path]}
-                {...mapNodeToProps(child, fields, types)}
-              />
-            )}
-          </div>
-        ), node.children)}
+        {_.map(
+          child => (
+            <div key={child.path}>
+              <FieldLabel node={child} fields={fields} />
+              {!child.paused && (
+                <Dynamic
+                  component={types[child.type]}
+                  path={[...child.path]}
+                  {...mapNodeToProps(child, fields, types)}
+                />
+              )}
+            </div>
+          ),
+          node.children
+        )}
       </SpacedList>
     )
   )

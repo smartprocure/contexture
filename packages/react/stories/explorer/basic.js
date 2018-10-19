@@ -108,9 +108,7 @@ let Story = observer(() => {
                     onChange={e => changeSchema(e.target.value)}
                   >
                     {_.map(
-                      x => (
-                        <option key={x}>{x}</option>
-                      ),
+                      x => <option key={x}>{x}</option>,
                       _.sortBy(_.identity, _.keys(schemas))
                     )}
                   </select>
