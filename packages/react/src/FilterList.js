@@ -40,7 +40,7 @@ export let FilterList = InjectTreeNode(
               {!child.paused && (
                 <Dynamic
                   component={types[child.type]}
-                  path={[...child.path]}
+                  path={child.path.slice()}
                   {...mapNodeToProps(child, fields, types)}
                 />
               )}
