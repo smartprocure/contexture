@@ -1,4 +1,11 @@
-﻿# 1.20.1
+﻿# 1.20.2
+* IE11 fixes. Our last build was using map wrong in one of the
+  occurrences (I messed up the parenthesis). Besides that, I found that
+  the compiled code out of `[...child.path]` (where child.path is an
+  array) would break on IE11. This is due to `child.path` being an
+  observable array.
+
+# 1.20.1
 * IE11 fixes. On IE11, React's children object doesn't have a `map`
   method.
 
