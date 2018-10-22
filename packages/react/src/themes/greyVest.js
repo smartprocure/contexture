@@ -127,6 +127,10 @@ export let GVStyle = () => (
         padding: 20px;
         text-align: left;
       }
+      .gv-table th > span {
+        display: flex;
+        align-items: center;
+      }
       
       .gv-box {
         border-radius: 4px;
@@ -353,6 +357,7 @@ export let GVStyle = () => (
         border-radius: 3px;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
+        padding: 5px;
       }
     `}
   </style>
@@ -407,7 +412,11 @@ export let ListGroupItem = withStateLens({ hovering: false })(
     <div
       style={{
         cursor: 'pointer',
-        padding: '10px 15px',
+        padding: '2.5px 5px',
+        display: 'grid',
+        gridGap: '5px',
+        gridTemplateColumns: '20px 1fr',
+        alignItems: 'center',
         whiteSpace: 'nowrap',
         fontSize: 13,
         ...(F.view(hovering) && { color: '#0076de' }),
@@ -417,6 +426,25 @@ export let ListGroupItem = withStateLens({ hovering: false })(
     />
   ))
 )
+
+
+let SmallIcon = ({icon}) => <i className="material-icons" style={{fontSize:20}}>{icon}</i>
+let iconMap = {
+  SortAscending:  () => <SmallIcon icon="expand_less" />,
+  SortDescending:  () => <SmallIcon icon="expand_more" />,
+  MoveLeft:  () => <SmallIcon icon="chevron_left" />,
+  MoveRight:  () => <SmallIcon icon="chevron_right" />,
+  RemoveColumn:  () => <SmallIcon icon="remove" />,
+  AddColumn:  () => <SmallIcon icon="add" />,
+  FilterExpand:  () => <SmallIcon icon="filter_list" />,
+  FilterCollapse:  () => <SmallIcon icon="filter_list" />,
+  FilterAdd:  () => <SmallIcon icon="filter_list" />,
+  TableColumnMenu:  () => <IconButton><SmallIcon icon="more_vert" /></IconButton>,
+}
+let Icon = ({ icon }) => {
+  let C = iconMap[icon]
+  return C ? <C /> : null
+}
 
 export let Adder = ModalFilterAdder({
   Button,
@@ -461,6 +489,7 @@ let TagComponent = ({ value, removeTag, tagStyle }) => (
   </div>
 )
 
+
 export let ExampleTypes = ExampleTypeConstructor({
   Button,
   Input,
@@ -473,6 +502,7 @@ export let ExampleTypes = ExampleTypeConstructor({
   ),
   ListGroupItem,
   TagsInput: partial({ TagComponent }, TagsInput),
+  Icon
 })
 export let Pager = props => <div className='gv-pager gv-box'>
   <ExampleTypes.ResultPager Item={PagerItem} {...props} />

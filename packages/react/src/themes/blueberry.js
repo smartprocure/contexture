@@ -226,6 +226,11 @@ export let ListGroupItem = withStateLens({ hovering: false })(
         cursor: 'pointer',
         padding: '10px 15px',
         borderRadius: '4px',
+        display: 'grid',
+        gridGap: '5px',
+        gridTemplateColumns: '20px 1fr',
+        alignItems: 'center',
+        whiteSpace: 'nowrap',
         ...(F.view(hovering) && { backgroundColor: '#f5f5f5' }),
       }}
       {...F.domLens.hover(hovering)}

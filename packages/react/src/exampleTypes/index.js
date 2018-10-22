@@ -29,6 +29,7 @@ export default ({
   Modal = ModalDefault,
   FieldPicker,
   ListGroupItem = 'div',
+  Icon,
 } = {}) => {
   let Components = {
     Facet: partial({ TextInput, Checkbox, RadioList }, Facet),
@@ -38,7 +39,7 @@ export default ({
     Query: partial({ TextInput }, Query),
     TagsQuery: partial({ TagsInput }, TagsQuery),
     ResultTable: partial(
-      { Table, Modal, FieldPicker, ListGroupItem },
+      { Table, Modal, FieldPicker, ListGroupItem, Icon },
       ResultTable
     ),
     ResultCount,
