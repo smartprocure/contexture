@@ -1,6 +1,6 @@
 {
   "name": "contexture-client",
-  "version": "2.17.1",
+  "version": "2.17.2",
   "description": "The Contexture (aka ContextTree) Client",
   "main": "lib/contexture-client.js",
   "scripts": {

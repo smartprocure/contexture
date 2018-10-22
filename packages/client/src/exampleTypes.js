@@ -194,6 +194,7 @@ export default stampKey('type', {
     defaults: {
       context: {
         terms: [],
+        filter: '',
       },
     },
     subquery: {
