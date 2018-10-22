@@ -53,42 +53,80 @@ export let Checkbox = ({ checked, onChange, style = {} }) => (
 export let Fonts = () => (
   <div>
     <link
-      href="https://fonts.googleapis.com/css?family=Lato:400,600,700,900"
+      href="https://fonts.googleapis.com/css?family=Lato:400,600"
       rel="stylesheet"
     />
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
       integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-      crossorigin="anonymous"
+      crossOrigin="anonymous"
     />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet" />
+    
   </div>
 )
+
+export let IconButton = ({className, primary, ...props}) => 
+  <div
+    className={`gv-icon-button ${className || ''} ${primary ? 'primary' : ''}`}
+    {...props}
+  />
+
+export default IconButton
 
 export let GVStyle = () => (
   <style>
     {`
-      h1 { font-size: 22px; }
+      h1 {
+        font-family: Lato;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 1.3;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        /*font-size: 22px;*/
+        margin: 30px 0;
+      }
       
+      /* Button */
+      .gv-button {
+        padding: 11px 22px 12px 25px;
+        border-radius: 3px;
+        background-color: #e3e5e6;
+      
+        border: none;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        cursor: pointer;
+        /* margin 5px ????? */
+      }
+      .gv-button.active, .gv-button.primary {
+        background-color: #0076de;
+        color: #fff;
+      }
+
+      
+      /* Table */
       .gv-table {
         border-collapse: collapse;
         width: 100%;
       }
       .gv-table tbody tr {
-        border-bottom: solid 2px #EDEDED;
+        border-bottom: solid 2px rgba(237, 237, 237, 0.43);
       }
       .gv-table td, .gv-table th {
         padding: 20px;
         text-align: left;
       }
-      .gv-table thead tr {
-        border-bottom: solid 2px #9ABCDA;
-      }
       
       .gv-box {
         border-radius: 4px;
         background-color: #fff;
-        box-shadow: 0 2px 2px 0 #EDEDED;
+        box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         padding: 15px;
       }
       
@@ -130,7 +168,7 @@ export let GVStyle = () => (
         margin: 5px auto;
         background: #fff;
         /* Arbitrary theme design */
-        padding: 7px;
+        padding: 15px;
       }
       /* To reach perfect 40px, remove real input padding because we have it on the fake one */
       .gv-body .tags-input input {
@@ -141,10 +179,10 @@ export let GVStyle = () => (
         padding-left: 7px;
       }
       .gv-body .tags-input-tag {
-        border-radius: 4px;
         margin: 0 2px;
         /* Arbitrary theme design */
-        padding: 3px 8px 5px 6px;
+        border-radius: 2px;
+        padding: 5px 13px 7px 15px;
         font-size: 15px;
       }
       .gv-body .tags-input-tag-remove {
@@ -153,8 +191,152 @@ export let GVStyle = () => (
         font-size: 10px;
       }
       
+      /* Pager */
+      .gv-pager {
+        position: relative;
+        top: 50px;
+      }
+      .gv-pager-item {
+        padding: 5px;
+        width: 30px;
+        background: white;
+        border-radius: 2px;
+        cursor: pointer;
+        display: inline-block;
+        box-sizing: border-box;
+        text-align: center;
+        margin: 0 2.5px;
+      }
+      .gv-pager-item:hover, .gv-pager-item.disabled {
+         background: #f5f5f5;
+      }
+      .gv-pager-item.active {
+        background-color: #0076de;
+        color: #fff;
+      }
+      .gv-pager-item.disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+      
+      /* Icon Button */
+      .gv-icon-button {
+        border-radius: 100px;
+        width: 20px;
+        height: 20px;
+        padding: 5px;
+        cursor: pointer;
+        color: #9b9b9b;
+        display: inline-block;
+      }
+      .gv-icon-button i {
+        width: 20px;
+        height: 20px;
+        font-size: 20px;
+      }
+      .gv-icon-button:hover {
+        background-color: rgba(216, 216, 216, 0.4);
+        color: #000;
+      }
+      .gv-icon-button.active, .gv-icon-button.primary {
+        background-color: #0076de;
+        color: #fff;
+      }
+      
+
+      /* Button Group Border Radii */
+      .gv-button-group > :first-child {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+      .gv-button-group > :last-child {
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+      }
+      
+      
+      /* Search Bar + Button */
+      .gv-search-bar {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-gap: 30px;
+        position: sticky;
+        top: 5px;
+        /*background: #f6f6f6;*/
+      }
+      .gv-search-bar .gv-box {
+        padding: 0;
+      }
+      .gv-search-bar .tags-input {
+        margin: 0;
+        border: none;
+      }
+      .gv-search-button {
+        font-size: 18px;
+      }
+
+      
       .contexture-facet a {
         color: #0076de
+      }
+      
+      
+      /* Tabs */     
+      .gv-tab-container .gv-tab {
+        display: inline-block;
+        padding: 15px 40px 16px 40px;
+        background-color: #e0e0e3;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        vertical-align: bottom;
+        border-left: solid 1px #c4c5ca;
+        transition: background-color 0.1s linear;
+      }
+      .gv-tab.active + .gv-tab {
+        border-left: none;
+      }
+      .gv-tab:last-child {
+        border-radius: 0 4px 0 0;
+      }
+      .gv-tab:first-child {
+        border-radius: 4px 0 0 0;
+        border-left: none;
+      }
+      .gv-tab.active, .gv-tab.active:hover {
+        background-color: #fff;
+        font-size: 18px;
+        padding: 22px 40px 23px 40px;
+        border-radius: 4px 4px 0 0 !important;
+        /* white box shadow trick from http://dev.housetrip.com/2012/06/15/good-looking-css-tabs/ */
+        box-shadow: 0 10px 0 0 #fff, 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+        border-left: none;
+      }
+      .gv-tab:hover {
+        background-color: rgba(147,149,160, 0.5);
+      }
+      
+      
+      /* Filter List */
+      .filter-list-item {
+        border-bottom: solid 1px rgba(216, 216, 216, 0.3);
+        padding-bottom: 30px;
+        margin-bottom: 30px;
+        margin-left: -30px;
+        margin-right: -30px;
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+      .filter-field-label {
+        font-size: 18px;
+        font-weight: 600;
+      }
+      .filter-field-label-icon {
+        color: #9b9b9b;
+      }
+      
+      .filter-list-item-contents {
+        margin-top: 15px
       }
     `}
   </style>
@@ -164,25 +346,16 @@ export let Table = x => <table className="gv-table" {...x} />
 export let Button = ({
   isActive,
   primary,
-  style = {},
   as: As = 'button',
+  className,
   ...x
 }) => (
   <As
-    className="gv-input"
-    style={{
-      minWidth: '150px',
-      padding: '5px',
-      margin: '5px',
-      borderRadius: '50px',
-      cursor: 'pointer',
-      ...(isActive && { borderColor: '#0076DE', color: '#0076DE' }),
-      ...(primary && { background: '#0076DE', color: '#FFF' }),
-      ...style,
-    }}
+    className={`gv-button ${isActive ? 'active' : ''} ${primary ? 'primary' : ''} ${className || ''}`}
     {...x}
   />
 )
+
 export let ButtonRadio = ({
   value,
   onChange = () => {},
@@ -233,32 +406,32 @@ export let Adder = ModalFilterAdder({
   Input,
   Highlight,
   Item: ListGroupItem,
-})
-
-export let PagerItem = withStateLens({ hovering: false })(
-  observer(({ active, hovering, disabled, style = {}, ...x }) => (
+  label: (
     <span
       style={{
-        padding: '5px',
-        background: F.view(hovering) || disabled ? '#f5f5f5' : 'white',
-        border: '2px solid #EDEDED',
-        borderRadius: '4px',
-        ...(active && {
-          fontWeight: 'bold',
-          borderColor: '#0076DE',
-          color: '#0076DE',
-        }),
-        ...(disabled && {
-          pointerEvents: 'none',
-        }),
-        cursor: disabled ? 'not-allowed' : 'pointer',
-        ...style,
-      }}
-      {...F.domLens.hover(hovering)}
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      }}>
+      Add Custom Filter
+      <i className="material-icons" style={{opacity: 0.4}}>
+        filter_list
+      </i>
+    </span>
+  ),
+})
+
+export let PagerItem =
+  observer(
+    ({ active, disabled, ...x }) =>
+      <span
+        className={
+          `gv-pager-item ${disabled ? 'disabled' : ''} ${active ? 'active' : ''}`
+        }
       {...x}
     />
-  ))
-)
+  )
+  
 
 let TagComponent = ({ value, removeTag, tagStyle }) => (
   <div className="tags-input-tag" style={tagStyle}>
@@ -270,7 +443,6 @@ let TagComponent = ({ value, removeTag, tagStyle }) => (
     />
   </div>
 )
-TagComponent.displayName = 'GVTag'
 
 export let ExampleTypes = ExampleTypeConstructor({
   Button,
@@ -285,4 +457,26 @@ export let ExampleTypes = ExampleTypeConstructor({
   ListGroupItem,
   TagsInput: partial({ TagComponent }, TagsInput),
 })
-export let Pager = partial({ Item: PagerItem }, ExampleTypes.ResultPager)
+export let Pager = props => <div className='gv-pager gv-box'>
+  <ExampleTypes.ResultPager Item={PagerItem} {...props} />
+</div>
+
+
+let Tabs = ({value, onChange = () => {}, options}) => (
+  <div className='gv-tab-container'>
+    {_.map(
+      x => (
+        <div
+          key={x.value}
+          className={`gv-tab ${x.value === value ? 'active' : ''}`}
+          onClick={() => onChange(x.value)}>
+          {x.label}
+        </div>
+      ),
+      options
+    )}
+  </div>
+)
+Tabs.displayName = 'Tabs'
+Tabs = observer(Tabs)
+export { Tabs }
