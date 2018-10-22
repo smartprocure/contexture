@@ -1,24 +1,20 @@
 import _ from 'lodash/fp'
+import F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
 import { exampleTypes } from 'contexture-client'
 import injectTreeNode from '../utils/injectTreeNode'
 import ExpandableTable, { Column } from '../layout/ExpandableTable'
-import { applyDefaults, inferSchema } from '../utils/schema'
 
 let TermsStatsTable = injectTreeNode(
-  observer(({ infer, fields, node, criteria, tree, children, ...props }) => (
+  observer(({ node, criteria, tree, children, MoreControls='div', Input='input', ...props }) => (
     <div>
       <div>
         Filter:
-        <input
+        <Input
           type="text"
           value={node.filter}
-          onChange={async e => {
-            await tree.mutate(node.path, { filter: e.target.value })
-            // TODO: This seems like a contexture-client issue. We shouldn't need this line:
-            await tree.refresh(node.path)
-          }}
+          {...F.domLens.value(tree.lens(node.path, 'filter'))}
           />
       </div>
       <ExpandableTable {...{ ...props, children: [
@@ -28,14 +24,6 @@ let TermsStatsTable = injectTreeNode(
           expand={{
             display: (value, record) => <div>
               <button onClick={async () => {
-                // TODO: Could this be smaller?
-                let schema = _.flow(
-                  _.merge(infer && inferSchema(node)),
-                  applyDefaults,
-                  _.values,
-                  _.orderBy('order', 'desc')
-                )(fields)
-
                 let field = node.key_field
                 let filter = criteria && _.find({ field }, tree.getNode(criteria).children)
 
@@ -43,16 +31,17 @@ let TermsStatsTable = injectTreeNode(
                   await tree.add(criteria, {
                     key: _.uniqueId('add'),
                     field,
-                    type: _.find({ field }, schema).typeDefault,
+                    type: 'facet',
                   })
                   filter = _.find({ field }, tree.getNode(criteria).children)
                 }
 
                 await tree.mutate(filter.path, {
-                  values: [..._.castArray(filter.values.slice()), record.key]
+                  mode: 'include',
+                  values: [record.key]
                 })
               }}>Add as Filter</button>
-              <button>Open Profile (TODO)</button>
+              <MoreControls />
             </div>
           }}
           />

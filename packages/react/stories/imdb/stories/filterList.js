@@ -137,8 +137,6 @@ export default () => (
                   format={formatYear}
                 />
                 <TermsStatsTable
-                  infer
-                  fields={_.pick(['genres'], schemas.movies.fields)}
                   criteria={['searchRoot', 'criteria']}
                   path={['searchRoot', 'genreScores']}
                   tableAttrs={{ style: { margin: 'auto' } }}
