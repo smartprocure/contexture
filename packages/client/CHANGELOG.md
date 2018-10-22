@@ -1,4 +1,7 @@
-﻿# 2.17.1
+﻿# 2.17.2
+* Added a default `filter` property in the `terms_stats` type.
+
+# 2.17.1
 * Added a `self` reactor to `terms_stats`'s filter property.
 
 # 2.17.0
