@@ -9,6 +9,7 @@ import { fieldsToOptions } from '../FilterAdder'
 import { loading } from '../styles/generic'
 import { applyDefaults } from '../utils/schema'
 import { flattenPlainObject } from '../utils/futil'
+import DefaultIcon from '../DefaultIcon'
 
 let getRecord = F.when('_source', x => ({
   _id: x._id,
@@ -24,26 +25,6 @@ let inferSchema = _.flow(
 )
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
-
-let AsciiIcon = ({ icon }) => <span>{icon}</span>
-
-let iconMap = {
-  SortAscending:  () => <AsciiIcon icon="▲" />,
-  SortDescending:  () => <AsciiIcon icon="▼" />,
-  MoveLeft:  () => <AsciiIcon icon="←" />,
-  MoveRight:  () => <AsciiIcon icon="→" />,
-  RemoveColumn:  () => <AsciiIcon icon="x" />,
-  AddColumn:  () => <AsciiIcon icon="+" />,
-  FilterExpand:  () => <AsciiIcon icon=">" />,
-  FilterCollapse:  () => <AsciiIcon icon="V" />,
-  FilterAdd:  () => <AsciiIcon icon="+" />,
-  TableColumnMenu:  () => <AsciiIcon icon=":" />,
-}
-let DefaultIcon = ({ icon }) => {
-  let C = iconMap[icon]
-  return C ? <C /> : null
-}
-
 
 let popoverStyle = {
   userSelect: 'none',
