@@ -1,4 +1,7 @@
-﻿# 2.17.0
+﻿# 2.17.1
+* Added a `self` reactor to `terms_stats`'s filter property.
+
+# 2.17.0
 * Added self reactor for `findBestRange` on `number` type
 
 # 2.16.1

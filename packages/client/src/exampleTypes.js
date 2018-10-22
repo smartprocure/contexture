@@ -184,6 +184,7 @@ export default stampKey('type', {
   },
   terms_stats: {
     reactors: {
+      filter: 'self',
       key_field: 'self',
       value_field: 'self',
       order: 'self',
