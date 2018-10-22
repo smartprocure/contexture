@@ -9,6 +9,7 @@ import {
   FilteredPicker,
   ModalFilterAdder,
   TagsInput,
+  FilterList as BaseFilterList
 } from '../'
 import ExampleTypeConstructor from '../exampleTypes/'
 
@@ -440,6 +441,8 @@ let iconMap = {
   FilterCollapse:  () => <SmallIcon icon="filter_list" />,
   FilterAdd:  () => <SmallIcon icon="filter_list" />,
   TableColumnMenu:  () => <IconButton><SmallIcon icon="more_vert" /></IconButton>,
+  FilterListExpand:  () => <SmallIcon icon="add" />,
+  FilterListCollapse:  () => <SmallIcon icon="remove" />,
 }
 let Icon = ({ icon }) => {
   let C = iconMap[icon]
@@ -527,3 +530,5 @@ let Tabs = ({value, onChange = () => {}, options}) => (
 Tabs.displayName = 'Tabs'
 Tabs = observer(Tabs)
 export { Tabs }
+
+export let FilterList = partial({ Icon }, BaseFilterList)

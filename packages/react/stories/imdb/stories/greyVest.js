@@ -5,7 +5,6 @@ import { fromPromise } from 'mobx-utils'
 import { Provider } from 'mobx-react'
 import Contexture, { updateSchemas } from '../utils/contexture'
 import {
-  FilterList,
   Label,
   Flex,
   Awaiter,
@@ -13,6 +12,7 @@ import {
   Grid,
 } from '../../../src'
 import {
+  FilterList,
   Fonts,
   GVStyle,
   Adder,
