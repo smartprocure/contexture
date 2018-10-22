@@ -30,14 +30,15 @@ export let Checkbox = ({ checked, onChange, style = {} }) => (
   <label
     className="gv-input"
     style={{
-      height: '24px',
-      width: '24px',
-      borderRadius: '4px',
+      height: '20px',
+      width: '20px',
+      borderRadius: '3px',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
       margin: '2px',
       cursor: 'pointer',
+      ...checked ? {backgroundColor: '#ebebeb'} : {},
       ...style,
     }}
   >
@@ -46,14 +47,18 @@ export let Checkbox = ({ checked, onChange, style = {} }) => (
       style={{ display: 'none' }}
       {...{ checked, onChange }}
     />
-    {checked ? '✔' : String.fromCharCode(160)}
+    {checked ? <i className="material-icons"
+    style={{
+      fontSize: 14,
+      fontWeight: 'bold',
+    }}>check</i> : String.fromCharCode(160)}
   </label>
 )
 
 export let Fonts = () => (
   <div>
     <link
-      href="https://fonts.googleapis.com/css?family=Lato:400,600"
+      href="https://fonts.googleapis.com/css?family=Lato:300,400,700"
       rel="stylesheet"
     />
     <link
@@ -82,7 +87,7 @@ export let GVStyle = () => (
       h1 {
         font-family: Lato;
         font-size: 20px;
-        font-weight: 600;
+        font-weight: bold;
         line-height: 1.3;
         letter-spacing: 3px;
         text-transform: uppercase;
@@ -98,7 +103,7 @@ export let GVStyle = () => (
       
         border: none;
         font-size: 14px;
-        font-weight: 600;
+        font-weight: bold;
         letter-spacing: 2px;
         text-transform: uppercase;
         cursor: pointer;
@@ -279,7 +284,9 @@ export let GVStyle = () => (
       .contexture-facet a {
         color: #0076de
       }
-      
+      .contexture-facet {
+        font-size: 14px;
+      }
       
       /* Tabs */     
       .gv-tab-container .gv-tab {
@@ -287,7 +294,7 @@ export let GVStyle = () => (
         padding: 15px 40px 16px 40px;
         background-color: #e0e0e3;
         font-size: 16px;
-        font-weight: 600;
+        font-weight: bold;
         cursor: pointer;
         vertical-align: bottom;
         border-left: solid 1px #c4c5ca;
@@ -318,6 +325,9 @@ export let GVStyle = () => (
       
       
       /* Filter List */
+      .filter-list.gv-box {
+        padding: 30px;
+      }
       .filter-list-item {
         border-bottom: solid 1px rgba(216, 216, 216, 0.3);
         padding-bottom: 30px;
@@ -329,7 +339,7 @@ export let GVStyle = () => (
       }
       .filter-field-label {
         font-size: 18px;
-        font-weight: 600;
+        font-weight: bold;
       }
       .filter-field-label-icon {
         color: #9b9b9b;
@@ -337,6 +347,12 @@ export let GVStyle = () => (
       
       .filter-list-item-contents {
         margin-top: 15px
+      }
+      
+      .popover {
+        border-radius: 3px;
+        box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+        border: solid 1px #f1f1f1;
       }
     `}
   </style>
@@ -392,8 +408,9 @@ export let ListGroupItem = withStateLens({ hovering: false })(
       style={{
         cursor: 'pointer',
         padding: '10px 15px',
-        borderRadius: '4px',
-        ...(F.view(hovering) && { backgroundColor: '#f5f5f5' }),
+        whiteSpace: 'nowrap',
+        fontSize: 13,
+        ...(F.view(hovering) && { color: '#0076de' }),
       }}
       {...F.domLens.hover(hovering)}
       {...x}

@@ -14,16 +14,13 @@ let Popover = observer(
         }}
       >
         <div
+          className='popover'
           style={{
             position: 'absolute',
             zIndex: 100,
-            background: 'white',
-            textAlign: 'left',
             fontWeight: 'normal',
-            padding: 10,
-
-            borderRadius: '4px',
-            boxShadow: '0 2px 4px 0 #ededed',
+            textAlign: 'left',
+            background: 'white',
             border: '1px solid #ebebeb',
             ...style,
           }}

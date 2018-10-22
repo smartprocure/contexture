@@ -97,6 +97,7 @@ let tree = Contexture({
         'released',
         'plot',
       ],
+      sortField: ''
     },
     {
       key: 'genreScores',
