@@ -1,22 +1,18 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import { observer, inject } from 'mobx-react'
-import { Dynamic, SpacedList } from './layout'
+import { Dynamic } from './layout'
 import InjectTreeNode from './utils/injectTreeNode'
 
 export let Label = inject(_.pick('tree'))(
   observer(({ tree, node, ...x }) => (
-    <div style={{ margin: '10px 0' }}>
-      <b {...x} />
-      {tree &&
-        node && (
-          <span
-            style={{ float: 'right', marginRight: '5px', cursor: 'pointer' }}
-            onClick={() => tree.mutate(node.path, { paused: !node.paused })}
-          >
-            {node.paused ? '◀' : '▼'}
-          </span>
-        )}
+    <div
+      className='filter-field-label'
+      style={{ cursor: 'pointer', display: 'flex', justifyContent:'space-between' }}
+      onClick={() => tree && node && tree.mutate(node.path, { paused: !node.paused })}
+    >
+      <span {...x} />
+      {tree && node && <span className='filter-field-label-icon'>{node.paused ? '◀' : '▼'}</span>}
     </div>
   ))
 )
@@ -32,23 +28,25 @@ FieldLabel.displayName = 'FieldLabel'
 export let FilterList = InjectTreeNode(
   observer(
     ({ node, typeComponents: types, fields, mapNodeToProps = _.noop }) => (
-      <SpacedList>
+      <div>
         {_.map(
           child => (
-            <div key={child.path}>
+            <div key={child.path} className="filter-list-item">
               <FieldLabel node={child} fields={fields} />
               {!child.paused && (
-                <Dynamic
-                  component={types[child.type]}
-                  path={child.path.slice()}
-                  {...mapNodeToProps(child, fields, types)}
-                />
+                <div className='filter-list-item-contents'>
+                  <Dynamic
+                    component={types[child.type]}
+                    path={child.path.slice()}
+                    {...mapNodeToProps(child, fields, types)}
+                  />
+                </div>
               )}
             </div>
           ),
           node.children
         )}
-      </SpacedList>
+      </div>
     )
   )
 )
