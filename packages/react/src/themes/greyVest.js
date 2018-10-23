@@ -308,6 +308,7 @@ export let GVStyle = () => (
         display: flex;
         align-items: center;
         padding: 15px 30px;
+        background-color: #fff;
       }
       .gv-search-toolbar .gv-icon-button {
         margin-right: 20px;
