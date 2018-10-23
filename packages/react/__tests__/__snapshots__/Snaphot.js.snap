@@ -1361,6 +1361,9 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                       >
                         Id
                          
+                        <span>
+                          :
+                        </span>
                       </span>
                     </th>
                     <th
@@ -1375,6 +1378,9 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                       >
                         Title
                          
+                        <span>
+                          :
+                        </span>
                       </span>
                     </th>
                     <th
@@ -1389,6 +1395,9 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                       >
                         A
                          
+                        <span>
+                          :
+                        </span>
                       </span>
                     </th>
                     <th
@@ -1403,6 +1412,9 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                       >
                         B
                          
+                        <span>
+                          :
+                        </span>
                       </span>
                     </th>
                     <th
@@ -1417,6 +1429,9 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                       >
                         C
                          
+                        <span>
+                          :
+                        </span>
                       </span>
                     </th>
                     <th
@@ -1431,6 +1446,9 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                       >
                         Nested Value
                          
+                        <span>
+                          :
+                        </span>
                       </span>
                     </th>
                   </tr>
@@ -1776,6 +1794,9 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
             >
               Title
                
+              <span>
+                :
+              </span>
             </span>
           </th>
           <th
@@ -1790,6 +1811,9 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
             >
               Id
                
+              <span>
+                :
+              </span>
             </span>
           </th>
           <th
@@ -1804,6 +1828,9 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
             >
               A
                
+              <span>
+                :
+              </span>
             </span>
           </th>
           <th
@@ -1818,6 +1845,9 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
             >
               C
                
+              <span>
+                :
+              </span>
             </span>
           </th>
           <th
@@ -1832,6 +1862,9 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
             >
               Nested Value
                
+              <span>
+                :
+              </span>
             </span>
           </th>
           <th
@@ -1847,6 +1880,9 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
             >
               Field B
                
+              <span>
+                :
+              </span>
             </span>
           </th>
         </tr>
@@ -1978,6 +2014,9 @@ exports[`Storyshots Example Types ResultTable Display Field Optional 1`] = `
             >
               Title
                
+              <span>
+                :
+              </span>
             </span>
           </th>
         </tr>
@@ -2068,83 +2107,95 @@ exports[`Storyshots FilterList Example 1`] = `
 <div
   style={Object {}}
 >
-  <div
-    style={
-      Object {
-        "marginBottom": "25px",
-      }
-    }
-  >
-    <div>
+  <div>
+    <div
+      className="filter-list-item"
+    >
       <div
         style={Object {}}
       >
         <div
+          className="filter-field-label"
+          onClick={[Function]}
           style={
             Object {
-              "margin": "10px 0",
+              "cursor": "pointer",
+              "display": "flex",
+              "justifyContent": "space-between",
             }
           }
         >
-          <b>
+          <span>
             Field A
-          </b>
+          </span>
         </div>
       </div>
-      <div>
-        A TYPE
+      <div
+        className="filter-list-item-contents"
+      >
+        <div>
+          A TYPE
+        </div>
       </div>
     </div>
-  </div>
-  <div
-    style={
-      Object {
-        "marginBottom": "25px",
-      }
-    }
-  >
-    <div>
+    <div
+      className="filter-list-item"
+    >
       <div
         style={Object {}}
       >
         <div
+          className="filter-field-label"
+          onClick={[Function]}
           style={
             Object {
-              "margin": "10px 0",
+              "cursor": "pointer",
+              "display": "flex",
+              "justifyContent": "space-between",
             }
           }
         >
-          <b>
+          <span>
             B Field
-          </b>
+          </span>
         </div>
       </div>
-      <div>
-        B TYPE
+      <div
+        className="filter-list-item-contents"
+      >
+        <div>
+          B TYPE
+        </div>
       </div>
     </div>
-  </div>
-  <div
-    style={Object {}}
-  >
-    <div>
+    <div
+      className="filter-list-item"
+    >
       <div
         style={Object {}}
       >
         <div
+          className="filter-field-label"
+          onClick={[Function]}
           style={
             Object {
-              "margin": "10px 0",
+              "cursor": "pointer",
+              "display": "flex",
+              "justifyContent": "space-between",
             }
           }
         >
-          <b>
+          <span>
             c
-          </b>
+          </span>
         </div>
       </div>
-      <div>
-        B TYPE
+      <div
+        className="filter-list-item-contents"
+      >
+        <div>
+          B TYPE
+        </div>
       </div>
     </div>
   </div>
@@ -2154,6 +2205,126 @@ exports[`Storyshots FilterList Example 1`] = `
 exports[`Storyshots IMDB Advanced Search 1`] = `
 <div>
   Loading...
+</div>
+`;
+
+exports[`Storyshots IMDB Blueberry Theme 1`] = `
+<div
+  className="bb-body"
+>
+  <div>
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:400,600,700,900"
+      rel="stylesheet"
+    />
+    <link
+      crossorigin="anonymous"
+      href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+      integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+      rel="stylesheet"
+    />
+  </div>
+  <style>
+    
+      h1 { font-size: 22px; }
+      
+      .bb-table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      .bb-table tbody tr {
+        border-bottom: solid 2px #EDEDED;
+      }
+      .bb-table td, .bb-table th {
+        padding: 20px;
+        text-align: left;
+      }
+      .bb-table thead tr {
+        border-bottom: solid 2px #9ABCDA;
+      }
+      
+      .bb-box {
+        border-radius: 4px;
+        background-color: #fff;
+        box-shadow: 0 2px 2px 0 #EDEDED;
+        padding: 15px;
+      }
+      
+      .bb-body, body {
+        margin: 0;
+        background: #f6f6f6;
+        font-family: Lato;
+        font-size: 16px;
+        color: #454545;
+      }
+      
+      .bb-input, .bb-body select, .bb-body input {
+        outline: none;
+        font-size: 16px;
+        font-family: Lato;
+        
+        border: solid 2px #EDEDED;
+        background: #fff;
+        
+        display: block;
+        width: 100%;
+        
+        box-sizing: border-box;
+        height: 40px;
+      }
+      
+      .bb-body select, .bb-body input {
+        border-radius: 4px;
+      }
+      .bb-body select {
+        cursor: pointer;
+      }
+      
+      .bb-body .tags-input {
+        border: 2px solid #EBEBEB;
+        border-radius: 4px;
+        min-height: 40px;
+        box-sizing: border-box;
+        margin: 5px auto;
+        background: #fff;
+        /* Arbitrary theme design */
+        padding: 7px;
+      }
+      /* To reach perfect 40px, remove real input padding because we have it on the fake one */
+      .bb-body .tags-input input {
+        padding: 0;
+        /* subtract padding (5+5) and borders (2+2) from 40 */
+        height: 26px;
+        /* Arbitrary theme design */
+        padding-left: 7px;
+      }
+      .bb-body .tags-input-tag {
+        border-radius: 4px;
+        margin: 0 2px;
+        /* Arbitrary theme design */
+        padding: 3px 8px 5px 6px;
+        font-size: 15px;
+      }
+      .bb-body .tags-input-tag-remove {
+        /* Arbitrary theme design */
+        padding-left: 8px;
+        font-size: 10px;
+      }
+      
+      .contexture-facet a {
+        color: #0076de
+      }
+      
+      .popover {
+        border-radius: 4px;
+        box-shadow: 0 2px 4px 0 #ededed;
+        border: 1px solid #ebebeb;
+      }
+    
+  </style>
+  <div>
+    Loading...
+  </div>
 </div>
 `;
 
@@ -2167,27 +2338,58 @@ exports[`Storyshots IMDB Check List 1`] = `
   />
   <style>
     
-      h1 { font-size: 22px; }
+      h1 {
+        font-family: Lato;
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 1.3;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        /*font-size: 22px;*/
+        margin: 30px 0;
+      }
       
+      /* Button */
+      .gv-button {
+        padding: 11px 22px 12px 25px;
+        border-radius: 3px;
+        background-color: #e3e5e6;
+      
+        border: none;
+        font-size: 14px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        cursor: pointer;
+        /* margin 5px ????? */
+      }
+      .gv-button.active, .gv-button.primary {
+        background-color: #0076de;
+        color: #fff;
+      }
+
+      
+      /* Table */
       .gv-table {
         border-collapse: collapse;
         width: 100%;
       }
       .gv-table tbody tr {
-        border-bottom: solid 2px #EDEDED;
+        border-bottom: solid 2px rgba(237, 237, 237, 0.43);
       }
       .gv-table td, .gv-table th {
         padding: 20px;
         text-align: left;
       }
-      .gv-table thead tr {
-        border-bottom: solid 2px #9ABCDA;
+      .gv-table th &gt; span {
+        display: flex;
+        align-items: center;
       }
       
       .gv-box {
         border-radius: 4px;
         background-color: #fff;
-        box-shadow: 0 2px 2px 0 #EDEDED;
+        box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         padding: 15px;
       }
       
@@ -2229,7 +2431,7 @@ exports[`Storyshots IMDB Check List 1`] = `
         margin: 5px auto;
         background: #fff;
         /* Arbitrary theme design */
-        padding: 7px;
+        padding: 15px;
       }
       /* To reach perfect 40px, remove real input padding because we have it on the fake one */
       .gv-body .tags-input input {
@@ -2240,10 +2442,10 @@ exports[`Storyshots IMDB Check List 1`] = `
         padding-left: 7px;
       }
       .gv-body .tags-input-tag {
-        border-radius: 4px;
         margin: 0 2px;
         /* Arbitrary theme design */
-        padding: 3px 8px 5px 6px;
+        border-radius: 2px;
+        padding: 5px 13px 7px 15px;
         font-size: 15px;
       }
       .gv-body .tags-input-tag-remove {
@@ -2252,8 +2454,192 @@ exports[`Storyshots IMDB Check List 1`] = `
         font-size: 10px;
       }
       
+      /* Pager */
+      .gv-pager {
+        position: relative;
+        top: 50px;
+      }
+      .gv-pager-item {
+        padding: 5px;
+        width: 30px;
+        background: white;
+        border-radius: 2px;
+        cursor: pointer;
+        display: inline-block;
+        box-sizing: border-box;
+        text-align: center;
+        margin: 0 2.5px;
+      }
+      .gv-pager-item:hover, .gv-pager-item.disabled {
+         background: #f5f5f5;
+      }
+      .gv-pager-item.active {
+        background-color: #0076de;
+        color: #fff;
+      }
+      .gv-pager-item.disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+      
+      /* Icon Button */
+      .gv-icon-button {
+        border-radius: 100px;
+        width: 20px;
+        height: 20px;
+        padding: 5px;
+        cursor: pointer;
+        color: #9b9b9b;
+        display: inline-block;
+        transition: background-color .1s linear, color .1s linear;
+      }
+      .gv-icon-button i {
+        width: 20px;
+        height: 20px;
+        font-size: 20px;
+      }
+      .gv-icon-button:hover {
+        background-color: rgba(216, 216, 216, 0.4);
+        color: #000;
+      }
+      .gv-icon-button.active, .gv-icon-button.primary {
+        background-color: #0076de;
+        color: #fff;
+      }
+      
+
+      /* Button Group Border Radii */
+      .gv-button-group {
+        border-radius: 3px;
+        display: flex;
+        overflow: hidden;
+      }
+      .gv-button-group &gt; :first-child {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+      .gv-button-group &gt; :last-child {
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+      }
+      
+      
+      /* Search Bar + Button */
+      .gv-search-bar {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-gap: 30px;
+        position: sticky;
+        top: 5px;
+        /*background: #f6f6f6;*/
+      }
+      .gv-search-bar .gv-box {
+        padding: 0;
+      }
+      .gv-search-bar &gt; .gv-button-group {
+        box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+      }
+      .gv-search-bar .tags-input {
+        margin: 0;
+        border: none;
+      }
+      .gv-search-button {
+        font-size: 18px;
+      }
+      .gv-search-toolbar {
+        display: flex;
+        align-items: center;
+        padding: 15px 30px;
+        background-color: #fff;
+      }
+      .gv-search-toolbar .gv-icon-button {
+        margin-right: 20px;
+      }
+      .gv-search-toolbar .gv-icon-button:last-child {
+        margin-right: 0;
+      }
+      
+      
       .contexture-facet a {
         color: #0076de
+      }
+      .contexture-facet {
+        font-size: 14px;
+      }
+      
+      /* Tabs */     
+      .gv-tab-container .gv-tab {
+        display: inline-block;
+        padding: 15px 40px 16px 40px;
+        background-color: #e0e0e3;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        vertical-align: bottom;
+        border-left: solid 1px #c4c5ca;
+        transition: background-color 0.1s linear;
+      }
+      .gv-tab.active + .gv-tab {
+        border-left: none;
+      }
+      .gv-tab:last-child {
+        border-radius: 0 4px 0 0;
+      }
+      .gv-tab:first-child {
+        border-radius: 4px 0 0 0;
+        border-left: none;
+      }
+      .gv-tab.active, .gv-tab.active:hover {
+        background-color: #fff;
+        font-size: 18px;
+        padding: 22px 40px 23px 40px;
+        border-radius: 4px 4px 0 0 !important;
+        /* white box shadow trick from http://dev.housetrip.com/2012/06/15/good-looking-css-tabs/ */
+        box-shadow: 0 10px 0 0 #fff, 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+        border-left: none;
+      }
+      .gv-tab:hover {
+        background-color: rgba(147,149,160, 0.5);
+      }
+      
+      
+      /* Filter List */
+      .filter-list.gv-box {
+        padding: 30px;
+      }
+      .filter-list-item {
+        border-bottom: solid 1px rgba(216, 216, 216, 0.3);
+        padding-bottom: 30px;
+        margin-bottom: 30px;
+        margin-left: -30px;
+        margin-right: -30px;
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+      .filter-field-label {
+        font-size: 18px;
+        font-weight: bold;
+      }
+      .filter-field-label-icon {
+        color: #9b9b9b;
+      }
+      
+      .filter-list-item-contents {
+        margin-top: 15px
+      }
+      
+      .gv-grid {
+        display: grid;
+        grid-template-columns: 1fr 4fr;
+        grid-gap: 40px;
+        margin: 0 40px;
+      }
+      
+      .popover {
+        border-radius: 3px;
+        box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+        border: solid 1px #f1f1f1;
+        padding: 5px;
       }
     
   </style>
@@ -2286,39 +2672,74 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
 >
   <div>
     <link
-      href="https://fonts.googleapis.com/css?family=Lato:400,600,700,900"
+      href="https://fonts.googleapis.com/css?family=Lato:300,400,700"
       rel="stylesheet"
     />
     <link
-      crossorigin="anonymous"
+      crossOrigin="anonymous"
       href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
       integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
   </div>
   <style>
     
-      h1 { font-size: 22px; }
+      h1 {
+        font-family: Lato;
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 1.3;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        /*font-size: 22px;*/
+        margin: 30px 0;
+      }
       
+      /* Button */
+      .gv-button {
+        padding: 11px 22px 12px 25px;
+        border-radius: 3px;
+        background-color: #e3e5e6;
+      
+        border: none;
+        font-size: 14px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        cursor: pointer;
+        /* margin 5px ????? */
+      }
+      .gv-button.active, .gv-button.primary {
+        background-color: #0076de;
+        color: #fff;
+      }
+
+      
+      /* Table */
       .gv-table {
         border-collapse: collapse;
         width: 100%;
       }
       .gv-table tbody tr {
-        border-bottom: solid 2px #EDEDED;
+        border-bottom: solid 2px rgba(237, 237, 237, 0.43);
       }
       .gv-table td, .gv-table th {
         padding: 20px;
         text-align: left;
       }
-      .gv-table thead tr {
-        border-bottom: solid 2px #9ABCDA;
+      .gv-table th &gt; span {
+        display: flex;
+        align-items: center;
       }
       
       .gv-box {
         border-radius: 4px;
         background-color: #fff;
-        box-shadow: 0 2px 2px 0 #EDEDED;
+        box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         padding: 15px;
       }
       
@@ -2360,7 +2781,7 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         margin: 5px auto;
         background: #fff;
         /* Arbitrary theme design */
-        padding: 7px;
+        padding: 15px;
       }
       /* To reach perfect 40px, remove real input padding because we have it on the fake one */
       .gv-body .tags-input input {
@@ -2371,10 +2792,10 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         padding-left: 7px;
       }
       .gv-body .tags-input-tag {
-        border-radius: 4px;
         margin: 0 2px;
         /* Arbitrary theme design */
-        padding: 3px 8px 5px 6px;
+        border-radius: 2px;
+        padding: 5px 13px 7px 15px;
         font-size: 15px;
       }
       .gv-body .tags-input-tag-remove {
@@ -2383,8 +2804,192 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         font-size: 10px;
       }
       
+      /* Pager */
+      .gv-pager {
+        position: relative;
+        top: 50px;
+      }
+      .gv-pager-item {
+        padding: 5px;
+        width: 30px;
+        background: white;
+        border-radius: 2px;
+        cursor: pointer;
+        display: inline-block;
+        box-sizing: border-box;
+        text-align: center;
+        margin: 0 2.5px;
+      }
+      .gv-pager-item:hover, .gv-pager-item.disabled {
+         background: #f5f5f5;
+      }
+      .gv-pager-item.active {
+        background-color: #0076de;
+        color: #fff;
+      }
+      .gv-pager-item.disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+      
+      /* Icon Button */
+      .gv-icon-button {
+        border-radius: 100px;
+        width: 20px;
+        height: 20px;
+        padding: 5px;
+        cursor: pointer;
+        color: #9b9b9b;
+        display: inline-block;
+        transition: background-color .1s linear, color .1s linear;
+      }
+      .gv-icon-button i {
+        width: 20px;
+        height: 20px;
+        font-size: 20px;
+      }
+      .gv-icon-button:hover {
+        background-color: rgba(216, 216, 216, 0.4);
+        color: #000;
+      }
+      .gv-icon-button.active, .gv-icon-button.primary {
+        background-color: #0076de;
+        color: #fff;
+      }
+      
+
+      /* Button Group Border Radii */
+      .gv-button-group {
+        border-radius: 3px;
+        display: flex;
+        overflow: hidden;
+      }
+      .gv-button-group &gt; :first-child {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+      .gv-button-group &gt; :last-child {
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+      }
+      
+      
+      /* Search Bar + Button */
+      .gv-search-bar {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-gap: 30px;
+        position: sticky;
+        top: 5px;
+        /*background: #f6f6f6;*/
+      }
+      .gv-search-bar .gv-box {
+        padding: 0;
+      }
+      .gv-search-bar &gt; .gv-button-group {
+        box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+      }
+      .gv-search-bar .tags-input {
+        margin: 0;
+        border: none;
+      }
+      .gv-search-button {
+        font-size: 18px;
+      }
+      .gv-search-toolbar {
+        display: flex;
+        align-items: center;
+        padding: 15px 30px;
+        background-color: #fff;
+      }
+      .gv-search-toolbar .gv-icon-button {
+        margin-right: 20px;
+      }
+      .gv-search-toolbar .gv-icon-button:last-child {
+        margin-right: 0;
+      }
+      
+      
       .contexture-facet a {
         color: #0076de
+      }
+      .contexture-facet {
+        font-size: 14px;
+      }
+      
+      /* Tabs */     
+      .gv-tab-container .gv-tab {
+        display: inline-block;
+        padding: 15px 40px 16px 40px;
+        background-color: #e0e0e3;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        vertical-align: bottom;
+        border-left: solid 1px #c4c5ca;
+        transition: background-color 0.1s linear;
+      }
+      .gv-tab.active + .gv-tab {
+        border-left: none;
+      }
+      .gv-tab:last-child {
+        border-radius: 0 4px 0 0;
+      }
+      .gv-tab:first-child {
+        border-radius: 4px 0 0 0;
+        border-left: none;
+      }
+      .gv-tab.active, .gv-tab.active:hover {
+        background-color: #fff;
+        font-size: 18px;
+        padding: 22px 40px 23px 40px;
+        border-radius: 4px 4px 0 0 !important;
+        /* white box shadow trick from http://dev.housetrip.com/2012/06/15/good-looking-css-tabs/ */
+        box-shadow: 0 10px 0 0 #fff, 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+        border-left: none;
+      }
+      .gv-tab:hover {
+        background-color: rgba(147,149,160, 0.5);
+      }
+      
+      
+      /* Filter List */
+      .filter-list.gv-box {
+        padding: 30px;
+      }
+      .filter-list-item {
+        border-bottom: solid 1px rgba(216, 216, 216, 0.3);
+        padding-bottom: 30px;
+        margin-bottom: 30px;
+        margin-left: -30px;
+        margin-right: -30px;
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+      .filter-field-label {
+        font-size: 18px;
+        font-weight: bold;
+      }
+      .filter-field-label-icon {
+        color: #9b9b9b;
+      }
+      
+      .filter-list-item-contents {
+        margin-top: 15px
+      }
+      
+      .gv-grid {
+        display: grid;
+        grid-template-columns: 1fr 4fr;
+        grid-gap: 40px;
+        margin: 0 40px;
+      }
+      
+      .popover {
+        border-radius: 3px;
+        box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+        border: solid 1px #f1f1f1;
+        padding: 5px;
       }
     
   </style>
