@@ -8,7 +8,12 @@ import { withStateLens } from '../utils/mobx-react-utils'
 import { fieldsToOptions } from '../FilterAdder'
 import { loading } from '../styles/generic'
 import DefaultIcon from '../DefaultIcon'
-import { applyDefaults, getRecord, getResults, inferSchema } from '../utils/schema'
+import {
+  applyDefaults,
+  getRecord,
+  getResults,
+  inferSchema,
+} from '../utils/schema'
 
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
