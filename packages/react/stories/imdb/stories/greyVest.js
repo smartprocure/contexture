@@ -4,30 +4,26 @@ import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { Provider } from 'mobx-react'
 import Contexture, { updateSchemas } from '../utils/contexture'
+import { Label, Flex, Awaiter } from '../../../src'
 import {
   FilterList,
-  Label,
-  Flex,
-  Awaiter,
-  SpacedList,
-  Grid,
-} from '../../../src'
-import {
   Fonts,
   GVStyle,
   Adder,
   Button,
   Pager,
   ExampleTypes,
-  Checkbox,
-  ButtonRadio,
+  IconButton,
+  Tabs,
 } from '../../../src/themes/greyVest'
+import { Column } from './../../../src/layout/ExpandableTable'
 let {
   ResultCount,
   ResultTable,
   TypeMap,
   TagsQuery,
   DateRangePicker,
+  TermsStatsTable,
 } = ExampleTypes
 
 let tree = Contexture({
@@ -47,20 +43,20 @@ let tree = Contexture({
       useDateMath: true,
     },
     {
-      key: 'titleContains',
-      type: 'tagsQuery',
-      field: 'title',
-    },
-    {
-      key: 'titleDoesNotContain',
-      type: 'tagsQuery',
-      field: 'title',
-      join: 'none',
-    },
-    {
       key: 'criteria',
       type: 'group',
       children: [
+        {
+          key: 'titleContains',
+          type: 'tagsQuery',
+          field: 'title',
+        },
+        {
+          key: 'titleDoesNotContain',
+          type: 'tagsQuery',
+          field: 'title',
+          join: 'none',
+        },
         {
           key: 'searchNumber',
           type: 'number',
@@ -93,6 +89,14 @@ let tree = Contexture({
         'released',
         'plot',
       ],
+      sortField: '',
+    },
+    {
+      key: 'genreScores',
+      type: 'terms_stats',
+      key_field: 'genres',
+      value_field: 'metaScore',
+      order: 'sum',
     },
   ],
 })
@@ -100,6 +104,32 @@ tree.disableAutoUpdate = true
 
 let state = observable({
   autoUpdate: false,
+  tab: 'results',
+})
+
+let termDetailsTree = _.memoize(term => {
+  let termTree = Contexture({
+    key: 'detailRoot',
+    type: 'group',
+    schema: 'movies',
+    children: [
+      {
+        key: 'detailFacet',
+        type: 'facet',
+        field: 'genres',
+      },
+      {
+        key: 'results',
+        type: 'results',
+        sortField: 'metaScore',
+        order: 'desc',
+        pageSize: 5,
+      },
+    ],
+  })
+
+  termTree.mutate(['detailRoot', 'detailFacet'], { values: [term] })
+  return termTree
 })
 
 let divs = _.map(x => <div key={x}>{x}</div>)
@@ -131,94 +161,155 @@ export default () => (
     <Awaiter promise={schemas}>
       {schemas => (
         <Provider tree={tree}>
-          <Grid gap="22px" columns="1fr 4fr" style={{ margin: '0 22px' }}>
+          <div className="gv-grid">
             <div>
               <h1>Filters</h1>
-              <SpacedList>
-                <div>
+              <div className="gv-box filter-list">
+                <div className="filter-list-item">
                   <Label>Released</Label>
-                  <DateRangePicker
-                    path={['root', 'status']}
-                    ranges={[
-                      { label: 'All Time', from: '', to: '' },
-                      { label: 'This Year', from: 'now/y', to: '' },
-                      { label: 'Last Year', from: 'now-1y/y', to: 'now/y' },
-                    ]}
-                  />
-                </div>
-                <div>
-                  <Label>Title</Label>
-                  Contains
-                  <TagsQuery path={['root', 'titleContains']} />
-                  Does Not Contain
-                  <TagsQuery path={['root', 'titleDoesNotContain']} />
+                  <div className="filter-list-item-contents">
+                    <DateRangePicker
+                      path={['root', 'status']}
+                      ranges={[
+                        { label: 'All Time', from: '', to: '' },
+                        { label: 'This Year', from: 'now/y', to: '' },
+                        { label: 'Last Year', from: 'now-1y/y', to: 'now/y' },
+                      ]}
+                    />
+                  </div>
                 </div>
                 <FilterList
                   path={['root', 'criteria']}
                   fields={schemas.movies.fields}
                   typeComponents={TypeMap}
+                  mapNodeToLabel={({ key }) =>
+                    ({
+                      titleContains: 'Title Contains',
+                      titleDoesNotContain: 'Title Does Not Contain',
+                    }[key])
+                  }
                 />
                 <Adder
                   path={['root', 'criteria']}
                   fields={schemas.movies.fields}
                   uniqueFields
                 />
-              </SpacedList>
-            </div>
-            <div>
-              <Grid columns="1fr 25px 150px" style={{ alignItems: 'center' }}>
-                <TagsQuery path={['root', 'bar']} />
-                <Checkbox
-                  checked={state.autoUpdate}
-                  onChange={val => {
-                    tree.disableAutoUpdate = !val
-                    state.autoUpdate = !!val
-                  }}
-                />
-                {!state.autoUpdate && (
-                  <Button onClick={tree.triggerUpdate} primary>
-                    Search
-                  </Button>
-                )}
-              </Grid>
-              <Flex
-                style={{
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-              >
-                <h1>
-                  Results (<ResultCount path={['root', 'results']} />)
-                </h1>
-                <Flex>
-                  <ButtonRadio
-                    options={[
-                      { label: 'AutoSearch On', value: true },
-                      { label: 'AutoSearch Off', value: false },
-                    ]}
-                    value={state.autoUpdate}
-                    onChange={val => {
-                      tree.disableAutoUpdate = !val
-                      state.autoUpdate = !!val
-                    }}
-                  />
-                </Flex>
-              </Flex>
-              <div className="gv-box">
-                <ResultTable
-                  path={['root', 'results']}
-                  fields={schemas[tree.tree.schema].fields}
-                  criteria={['root', 'criteria']}
-                  typeComponents={TypeMap}
-                />
-                <Flex
-                  style={{ justifyContent: 'space-around', padding: '10px' }}
-                >
-                  <Pager path={['root', 'results']} />
-                </Flex>
               </div>
             </div>
-          </Grid>
+            <div>
+              <h1>Search Movies</h1>
+              <div className="gv-search-bar">
+                <div className="gv-box">
+                  <TagsQuery path={['root', 'bar']} />
+                </div>
+                <div className="gv-button-group">
+                  <Button
+                    className="gv-search-button"
+                    onClick={tree.triggerUpdate}
+                    primary
+                  >
+                    Search
+                  </Button>
+                  <div className="gv-search-toolbar">
+                    <IconButton
+                      onClick={() => {
+                        window.location.reload()
+                      }}
+                      title="New Search"
+                    >
+                      <i className="material-icons">fiber_new</i>
+                    </IconButton>
+                    <IconButton
+                      title="Auto Update"
+                      primary={state.autoUpdate}
+                      onClick={() => {
+                        state.autoUpdate = !state.autoUpdate
+                        tree.disableAutoUpdate = !state.autoUpdate
+                      }}
+                    >
+                      <i className="material-icons">autorenew</i>
+                    </IconButton>
+                  </div>
+                </div>
+              </div>
+              <h1>Search Results</h1>
+              <Tabs
+                options={[
+                  {
+                    value: 'results',
+                    label: (
+                      <span>
+                        Movies (<ResultCount path={['root', 'results']} />)
+                      </span>
+                    ),
+                  },
+                  {
+                    value: 'analytics',
+                    label: 'Analytics',
+                  },
+                ]}
+                value={state.tab}
+                onChange={x => {
+                  state.tab = x
+                }}
+              />
+              {state.tab === 'results' && (
+                <div className="gv-box">
+                  <ResultTable
+                    path={['root', 'results']}
+                    fields={schemas[tree.tree.schema].fields}
+                    criteria={['root', 'criteria']}
+                    typeComponents={TypeMap}
+                  />
+                  <Flex
+                    style={{ justifyContent: 'space-around', padding: '10px' }}
+                  >
+                    <Pager path={['root', 'results']} />
+                  </Flex>
+                </div>
+              )}
+              {state.tab === 'analytics' && (
+                <div className="gv-box">
+                  <TermsStatsTable
+                    path={['root', 'genreScores']}
+                    tableAttrs={{ className: 'gv-table' }}
+                  >
+                    <Column field="key" label="Genre" />
+                    <Column field="count" label="Found" />
+                    <Column
+                      field="key"
+                      label=""
+                      expand={{ display: x => `Show results for ${x} +` }}
+                      collapse={{ display: x => `Hide results for ${x} -` }}
+                    >
+                      {x => (
+                        <Provider tree={termDetailsTree(x)}>
+                          <div>
+                            <ResultTable
+                              path={['detailRoot', 'results']}
+                              fields={_.pick(
+                                ['title', 'year', 'genres'],
+                                schemas.movies.fields
+                              )}
+                            />
+                            <Flex
+                              style={{
+                                justifyContent: 'space-around',
+                                top: -50,
+                                position: 'relative',
+                              }}
+                            >
+                              <Pager path={['detailRoot', 'results']} />
+                            </Flex>
+                          </div>
+                        </Provider>
+                      )}
+                    </Column>
+                  </TermsStatsTable>
+                </div>
+              )}
+            </div>
+          </div>
         </Provider>
       )}
     </Awaiter>

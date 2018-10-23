@@ -1,4 +1,16 @@
-﻿# 1.20.2
+# 1.21.0
+* GreyVest: Complete design overhaul, now looks a bit more "material" like
+* GreyVest: Add IconButton
+* GreyVest: Add Tabs
+* GreyVest: Add SearchBar
+* GreyVest: Add gv-grid
+* ResultsTable: Make Icons Customizable
+* FilterList: Make Icons Customizable
+* FilterList: Add mapNodeToLabel
+* Popover: Fewer default styles (allows it to look better in GreyVest)
+* Add Blueberry theme (snapshot of < 1.21 Grey Vest)
+
+# 1.20.2
 * IE11 fixes. Our last build was using map wrong in one of the
   occurrences (I messed up the parenthesis). Besides that, I found that
   the compiled code out of `[...child.path]` (where child.path is an

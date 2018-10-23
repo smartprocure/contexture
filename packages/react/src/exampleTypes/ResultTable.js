@@ -9,6 +9,7 @@ import { fieldsToOptions } from '../FilterAdder'
 import { loading } from '../styles/generic'
 import { applyDefaults } from '../utils/schema'
 import { flattenPlainObject } from '../utils/futil'
+import DefaultIcon from '../DefaultIcon'
 
 let getRecord = F.when('_source', x => ({
   _id: x._id,
@@ -25,19 +26,7 @@ let inferSchema = _.flow(
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
 
-let menuIconStyle = {
-  display: 'inline-block',
-  width: '1em',
-  textAlign: 'center',
-  marginRight: '5px',
-}
-let Icon = ({ icon }) => <span style={menuIconStyle}>{icon}</span>
-
 let popoverStyle = {
-  textAlign: 'left',
-  padding: '10px',
-  fontWeight: 'normal',
-  cursor: 'pointer',
   userSelect: 'none',
 }
 
@@ -109,7 +98,7 @@ HeaderCellDefault.displayName = 'HeaderCellDefault'
 
 let Header = withStateLens({ popover: false, adding: false, filtering: false })(
   observer(({ // Local State
-    i, popover, adding, filtering, Modal, FieldPicker, ListGroupItem: Item, typeComponents, HeaderCell = HeaderCellDefault, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria, mapNodeToProps, fields }) => {
+    i, popover, adding, filtering, Modal, FieldPicker, ListGroupItem: Item, typeComponents, HeaderCell = HeaderCellDefault, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria, mapNodeToProps, fields, Icon }) => {
     // Components (providerable?) // Contextual
     let { disableFilter, disableSort, field, label, typeDefault } = fieldSchema
     HeaderCell = fieldSchema.HeaderCell || HeaderCell
@@ -126,7 +115,12 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
       >
         <span onClick={F.flip(popover)}>
           {label}{' '}
-          {field === node.sortField && (node.sortDir === 'asc' ? '▲' : '▼')}
+          {field === node.sortField && (
+            <Icon
+              icon={node.sortDir === 'asc' ? 'SortAscending' : 'SortDescending'}
+            />
+          )}
+          <Icon icon="TableColumnMenu" />
         </span>
         <Popover isOpen={popover} style={popoverStyle}>
           {!disableSort && (
@@ -136,7 +130,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
                 mutate({ sortField: field, sortDir: 'asc' })
               }}
             >
-              <Icon icon="▲" />
+              <Icon icon="SortAscending" />
               Sort Ascending
             </Item>
           )}
@@ -147,7 +141,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
                 mutate({ sortField: field, sortDir: 'desc' })
               }}
             >
-              <Icon icon="▼" />
+              <Icon icon="SortDescending" />
               Sort Descending
             </Item>
           )}
@@ -156,7 +150,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
               mutate({ include: F.moveIndex(i, i - 1, [...includes]) })
             }
           >
-            <Icon icon="←" />
+            <Icon icon="MoveLeft" />
             Move Left
           </Item>
           <Item
@@ -164,20 +158,20 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
               mutate({ include: F.moveIndex(i, i + 1, [...includes]) })
             }
           >
-            <Icon icon="→" />
+            <Icon icon="MoveRight" />
             Move Right
           </Item>
           <Item
             onClick={() => mutate({ include: _.without([field], includes) })}
           >
-            <Icon icon="x" />
+            <Icon icon="RemoveColumn" />
             Remove Column
           </Item>
           {Modal &&
             FieldPicker &&
             !!addOptions.length && (
               <Item onClick={F.on(adding)}>
-                <Icon icon="+" />
+                <Icon icon="AddColumn" />
                 Add Column
               </Item>
             )}
@@ -187,9 +181,15 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
               <div>
                 <Item onClick={filter}>
                   <Icon
-                    icon={filterNode ? (F.view(filtering) ? 'V' : '>') : '+'}
+                    icon={
+                      filterNode
+                        ? F.view(filtering)
+                          ? 'FilterCollapse'
+                          : 'FilterExpand'
+                        : 'FilterAdd'
+                    }
                   />
-                  Filter
+                  Filter Options
                 </Item>
                 {F.view(filtering) &&
                   filterNode &&
@@ -255,7 +255,7 @@ TableBody.displayName = 'TableBody'
 
 let ResultTable = InjectTreeNode(
   observer(({ // Props
-    fields, infer, path, criteria, node, tree, Table = 'table', HeaderCell, Modal, ListGroupItem, FieldPicker, typeComponents, mapNodeToProps }) => {
+    fields, infer, path, criteria, node, tree, Table = 'table', HeaderCell, Modal, ListGroupItem, FieldPicker, typeComponents, mapNodeToProps = () => {}, Icon = DefaultIcon }) => {
     // From Provider // Theme/Components
     let mutate = tree.mutate(path)
     // NOTE infer + add columns does not work together (except for anything explicitly passed in)
@@ -280,6 +280,7 @@ let ResultTable = InjectTreeNode(
       ListGroupItem,
       typeComponents,
       HeaderCell,
+      Icon,
       mapNodeToProps,
       fields,
 
