@@ -238,6 +238,7 @@ export let GVStyle = () => (
         cursor: pointer;
         color: #9b9b9b;
         display: inline-block;
+        transition: background-color .1s linear, color .1s linear;
       }
       .gv-icon-button i {
         width: 20px;
