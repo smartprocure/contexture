@@ -9,7 +9,8 @@ import {
   FilteredPicker,
   ModalFilterAdder,
   TagsInput,
-  FilterList as BaseFilterList
+  FilterList as BaseFilterList,
+  Dynamic
 } from '../'
 import ExampleTypeConstructor from '../exampleTypes/'
 
@@ -471,10 +472,7 @@ let iconMap = {
   FilterListExpand:  () => <SmallIcon icon="add" />,
   FilterListCollapse:  () => <SmallIcon icon="remove" />,
 }
-let Icon = ({ icon }) => {
-  let C = iconMap[icon]
-  return C ? <C /> : null
-}
+let Icon = ({ icon }) => <Dynamic component={iconMap[icon]} />
 
 export let Adder = ModalFilterAdder({
   Button,

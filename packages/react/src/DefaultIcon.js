@@ -1,4 +1,5 @@
 import React from 'react'
+import {Dynamic} from './'
 
 let iconMap = {
   SortAscending:  () => <span>▲</span>,
@@ -15,8 +16,6 @@ let iconMap = {
   FilterListCollapse:  () => <span>▼</span>,
   
 }
-let DefaultIcon = ({ icon }) => {
-  let C = iconMap[icon]
-  return C ? <C /> : null
-}
+let DefaultIcon = ({ icon }) => <Dynamic component={iconMap[icon]} />
+
 export default DefaultIcon
