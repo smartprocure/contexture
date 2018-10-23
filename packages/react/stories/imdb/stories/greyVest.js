@@ -209,15 +209,14 @@ export default () => (
                 <div className="gv-box">
                   <TagsQuery path={['root', 'bar']} />
                 </div>
-                <Flex className="gv-button-group">
+                <div className="gv-button-group">
                   <Button className="gv-search-button" onClick={tree.triggerUpdate} primary>
                       Search
                   </Button>
-                  <Flex className='gv-box' style={{ padding: '15px 30px', alignItems:'center'}}>
+                  <div className='gv-search-toolbar'>
                     <IconButton
                       onClick={() => { window.location.reload() }}
                       title="New Search"
-                      style={{ marginRight: '20px' }}
                     >
                       <i className="material-icons">fiber_new</i>
                     </IconButton>
@@ -231,8 +230,8 @@ export default () => (
                     >
                       <i className="material-icons">autorenew</i>
                     </IconButton>
-                  </Flex>
-                </Flex>
+                  </div>
+                </div>
               </div>
               <h1>Search Results</h1>
               <Tabs

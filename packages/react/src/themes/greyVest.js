@@ -256,6 +256,11 @@ export let GVStyle = () => (
       
 
       /* Button Group Border Radii */
+      .gv-button-group {
+        border-radius: 3px;
+        display: flex;
+        overflow: hidden;
+      }
       .gv-button-group > :first-child {
         border-top-right-radius: 0px;
         border-bottom-right-radius: 0px;
@@ -278,6 +283,9 @@ export let GVStyle = () => (
       .gv-search-bar .gv-box {
         padding: 0;
       }
+      .gv-search-bar > .gv-button-group {
+        box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+      }
       .gv-search-bar .tags-input {
         margin: 0;
         border: none;
@@ -285,7 +293,18 @@ export let GVStyle = () => (
       .gv-search-button {
         font-size: 18px;
       }
-
+      .gv-search-toolbar {
+        display: flex;
+        align-items: center;
+        padding: 15px 30px;
+      }
+      .gv-search-toolbar .gv-icon-button {
+        margin-right: 20px;
+      }
+      .gv-search-toolbar .gv-icon-button:last-child {
+        margin-right: 0;
+      }
+      
       
       .contexture-facet a {
         color: #0076de
