@@ -253,7 +253,7 @@ export default () => (
                   state.tab = x
                 }}
               />
-              {state.tab == 'results' && (
+              {state.tab === 'results' && (
                 <div className="gv-box">
                   <ResultTable
                     path={['root', 'results']}
@@ -268,7 +268,7 @@ export default () => (
                   </Flex>
                 </div>
               )}
-              {state.tab == 'analytics' && (
+              {state.tab === 'analytics' && (
                 <div className="gv-box">
                   <TermsStatsTable
                     path={['root', 'genreScores']}
