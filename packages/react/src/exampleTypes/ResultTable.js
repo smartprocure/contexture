@@ -7,7 +7,6 @@ import { Popover, Dynamic } from '../layout'
 import { withStateLens } from '../utils/mobx-react-utils'
 import { fieldsToOptions } from '../FilterAdder'
 import { loading } from '../styles/generic'
-import { flattenPlainObject } from '../utils/futil'
 import DefaultIcon from '../DefaultIcon'
 import { applyDefaults, getRecord, getResults, inferSchema } from '../utils/schema'
 
