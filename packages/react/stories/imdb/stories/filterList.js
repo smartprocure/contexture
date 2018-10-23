@@ -67,7 +67,6 @@ let tree = Contexture({
       type: 'terms_stats',
       key_field: 'genres',
       value_field: 'metaScore',
-      filter: '',
       order: 'sum',
     },
   ],
