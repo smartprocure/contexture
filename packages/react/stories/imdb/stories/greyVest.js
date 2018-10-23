@@ -4,13 +4,7 @@ import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { Provider } from 'mobx-react'
 import Contexture, { updateSchemas } from '../utils/contexture'
-import {
-  Label,
-  Flex,
-  Awaiter,
-  SpacedList,
-  Grid,
-} from '../../../src'
+import { Label, Flex, Awaiter } from '../../../src'
 import {
   FilterList,
   Fonts,
@@ -19,8 +13,6 @@ import {
   Button,
   Pager,
   ExampleTypes,
-  Checkbox,
-  ButtonRadio,
   IconButton,
   Tabs
 } from '../../../src/themes/greyVest'
@@ -170,7 +162,7 @@ export default () => (
     <Awaiter promise={schemas}>
       {schemas => (
         <Provider tree={tree}>
-          <Grid gap="40px" columns="1fr 4fr" style={{ margin: '0 40px' }}>
+          <div className='gv-grid'>
             <div>
               <h1>Filters</h1>
               <div className='gv-box filter-list'>
@@ -301,7 +293,7 @@ export default () => (
                 </TermsStatsTable>
               </div>}
             </div>
-          </Grid>
+          </div>
         </Provider>
       )}
     </Awaiter>

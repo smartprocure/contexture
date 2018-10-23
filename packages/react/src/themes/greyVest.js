@@ -374,6 +374,13 @@ export let GVStyle = () => (
         margin-top: 15px
       }
       
+      .gv-grid {
+        display: grid;
+        grid-template-columns: 1fr 4fr;
+        grid-gap: 40px;
+        margin: 0 40px;
+      }
+      
       .popover {
         border-radius: 3px;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
