@@ -115,8 +115,12 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
       >
         <span onClick={F.flip(popover)}>
           {label}{' '}
-          {field === node.sortField && <Icon icon={node.sortDir === 'asc' ?'SortAscending' : 'SortDescending'} />}
-          <Icon icon='TableColumnMenu' />
+          {field === node.sortField && (
+            <Icon
+              icon={node.sortDir === 'asc' ? 'SortAscending' : 'SortDescending'}
+            />
+          )}
+          <Icon icon="TableColumnMenu" />
         </span>
         <Popover isOpen={popover} style={popoverStyle}>
           {!disableSort && (
@@ -177,7 +181,13 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
               <div>
                 <Item onClick={filter}>
                   <Icon
-                    icon={filterNode ? (F.view(filtering) ? 'FilterCollapse' : 'FilterExpand') : 'FilterAdd'}
+                    icon={
+                      filterNode
+                        ? F.view(filtering)
+                          ? 'FilterCollapse'
+                          : 'FilterExpand'
+                        : 'FilterAdd'
+                    }
                   />
                   Filter Options
                 </Item>
@@ -245,7 +255,7 @@ TableBody.displayName = 'TableBody'
 
 let ResultTable = InjectTreeNode(
   observer(({ // Props
-    fields, infer, path, criteria, node, tree, Table = 'table', HeaderCell, Modal, ListGroupItem, FieldPicker, typeComponents, mapNodeToProps=()=>{}, Icon=DefaultIcon }) => {
+    fields, infer, path, criteria, node, tree, Table = 'table', HeaderCell, Modal, ListGroupItem, FieldPicker, typeComponents, mapNodeToProps = () => {}, Icon = DefaultIcon }) => {
     // From Provider // Theme/Components
     let mutate = tree.mutate(path)
     // NOTE infer + add columns does not work together (except for anything explicitly passed in)

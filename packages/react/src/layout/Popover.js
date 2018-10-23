@@ -14,7 +14,7 @@ let Popover = observer(
         }}
       >
         <div
-          className='popover'
+          className="popover"
           style={{
             position: 'absolute',
             zIndex: 100,

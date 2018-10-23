@@ -14,7 +14,7 @@ import {
   Pager,
   ExampleTypes,
   IconButton,
-  Tabs
+  Tabs,
 } from '../../../src/themes/greyVest'
 import { Column } from './../../../src/layout/ExpandableTable'
 let {
@@ -89,7 +89,7 @@ let tree = Contexture({
         'released',
         'plot',
       ],
-      sortField: ''
+      sortField: '',
     },
     {
       key: 'genreScores',
@@ -104,7 +104,7 @@ tree.disableAutoUpdate = true
 
 let state = observable({
   autoUpdate: false,
-  tab: 'results'
+  tab: 'results',
 })
 
 let termDetailsTree = _.memoize(term => {
@@ -131,7 +131,6 @@ let termDetailsTree = _.memoize(term => {
   termTree.mutate(['detailRoot', 'detailFacet'], { values: [term] })
   return termTree
 })
-
 
 let divs = _.map(x => <div key={x}>{x}</div>)
 let schemas = fromPromise(
@@ -162,13 +161,13 @@ export default () => (
     <Awaiter promise={schemas}>
       {schemas => (
         <Provider tree={tree}>
-          <div className='gv-grid'>
+          <div className="gv-grid">
             <div>
               <h1>Filters</h1>
-              <div className='gv-box filter-list'>
-                <div className='filter-list-item'>
+              <div className="gv-box filter-list">
+                <div className="filter-list-item">
                   <Label>Released</Label>
-                  <div className='filter-list-item-contents'>
+                  <div className="filter-list-item-contents">
                     <DateRangePicker
                       path={['root', 'status']}
                       ranges={[
@@ -183,10 +182,12 @@ export default () => (
                   path={['root', 'criteria']}
                   fields={schemas.movies.fields}
                   typeComponents={TypeMap}
-                  mapNodeToLabel={({key}) => ({
-                    titleContains: 'Title Contains',
-                    titleDoesNotContain: 'Title Does Not Contain'
-                  })[key]}
+                  mapNodeToLabel={({ key }) =>
+                    ({
+                      titleContains: 'Title Contains',
+                      titleDoesNotContain: 'Title Does Not Contain',
+                    }[key])
+                  }
                 />
                 <Adder
                   path={['root', 'criteria']}
@@ -202,12 +203,18 @@ export default () => (
                   <TagsQuery path={['root', 'bar']} />
                 </div>
                 <div className="gv-button-group">
-                  <Button className="gv-search-button" onClick={tree.triggerUpdate} primary>
-                      Search
+                  <Button
+                    className="gv-search-button"
+                    onClick={tree.triggerUpdate}
+                    primary
+                  >
+                    Search
                   </Button>
-                  <div className='gv-search-toolbar'>
+                  <div className="gv-search-toolbar">
                     <IconButton
-                      onClick={() => { window.location.reload() }}
+                      onClick={() => {
+                        window.location.reload()
+                      }}
                       title="New Search"
                     >
                       <i className="material-icons">fiber_new</i>
@@ -230,68 +237,77 @@ export default () => (
                 options={[
                   {
                     value: 'results',
-                    label: <span>Movies (<ResultCount path={['root', 'results']} />)</span>
+                    label: (
+                      <span>
+                        Movies (<ResultCount path={['root', 'results']} />)
+                      </span>
+                    ),
                   },
                   {
                     value: 'analytics',
-                    label: 'Analytics'
-                  }
+                    label: 'Analytics',
+                  },
                 ]}
                 value={state.tab}
-                onChange={x => {state.tab = x}}
+                onChange={x => {
+                  state.tab = x
+                }}
               />
-              {state.tab == 'results' && <div className="gv-box">
-                <ResultTable
-                  path={['root', 'results']}
-                  fields={schemas[tree.tree.schema].fields}
-                  criteria={['root', 'criteria']}
-                  typeComponents={TypeMap}
-                />
-                <Flex
-                  style={{ justifyContent: 'space-around', padding: '10px' }}
-                >
-                  <Pager path={['root', 'results']} />
-                </Flex>
-              </div>
-              }
-              {state.tab == 'analytics' && <div className='gv-box'>
-                <TermsStatsTable
-                  path={['root', 'genreScores']}
-                  tableAttrs={{ className: 'gv-table' }}
-                >
-                  <Column field="key" label="Genre" />
-                  <Column field="count" label="Found" />
-                  <Column
-                    field="key"
-                    label=""
-                    expand={{ display: x => `Show results for ${x} +` }}
-                    collapse={{ display: x => `Hide results for ${x} -` }}
+              {state.tab == 'results' && (
+                <div className="gv-box">
+                  <ResultTable
+                    path={['root', 'results']}
+                    fields={schemas[tree.tree.schema].fields}
+                    criteria={['root', 'criteria']}
+                    typeComponents={TypeMap}
+                  />
+                  <Flex
+                    style={{ justifyContent: 'space-around', padding: '10px' }}
                   >
-                    {x => (
-                      <Provider tree={termDetailsTree(x)}>
-                        <div>
-                          <ResultTable
-                            path={['detailRoot', 'results']}
-                            fields={_.pick(
-                              ['title', 'year', 'genres'],
-                              schemas.movies.fields
-                            )}
-                          />
-                          <Flex
-                            style={{
-                              justifyContent: 'space-around',
-                              top:-50,
-                              position: 'relative'
-                            }}
-                          >
-                            <Pager path={['detailRoot', 'results']} />
-                          </Flex>
-                        </div>
-                      </Provider>
-                    )}
-                  </Column>
-                </TermsStatsTable>
-              </div>}
+                    <Pager path={['root', 'results']} />
+                  </Flex>
+                </div>
+              )}
+              {state.tab == 'analytics' && (
+                <div className="gv-box">
+                  <TermsStatsTable
+                    path={['root', 'genreScores']}
+                    tableAttrs={{ className: 'gv-table' }}
+                  >
+                    <Column field="key" label="Genre" />
+                    <Column field="count" label="Found" />
+                    <Column
+                      field="key"
+                      label=""
+                      expand={{ display: x => `Show results for ${x} +` }}
+                      collapse={{ display: x => `Hide results for ${x} -` }}
+                    >
+                      {x => (
+                        <Provider tree={termDetailsTree(x)}>
+                          <div>
+                            <ResultTable
+                              path={['detailRoot', 'results']}
+                              fields={_.pick(
+                                ['title', 'year', 'genres'],
+                                schemas.movies.fields
+                              )}
+                            />
+                            <Flex
+                              style={{
+                                justifyContent: 'space-around',
+                                top: -50,
+                                position: 'relative',
+                              }}
+                            >
+                              <Pager path={['detailRoot', 'results']} />
+                            </Flex>
+                          </div>
+                        </Provider>
+                      )}
+                    </Column>
+                  </TermsStatsTable>
+                </div>
+              )}
             </div>
           </div>
         </Provider>

@@ -10,7 +10,7 @@ import {
   ModalFilterAdder,
   TagsInput,
   FilterList as BaseFilterList,
-  Dynamic
+  Dynamic,
 } from '../'
 import ExampleTypeConstructor from '../exampleTypes/'
 
@@ -40,7 +40,7 @@ export let Checkbox = ({ checked, onChange, style = {} }) => (
       alignItems: 'center',
       margin: '2px',
       cursor: 'pointer',
-      ...checked ? {backgroundColor: '#ebebeb'} : {},
+      ...(checked ? { backgroundColor: '#ebebeb' } : {}),
       ...style,
     }}
   >
@@ -49,11 +49,19 @@ export let Checkbox = ({ checked, onChange, style = {} }) => (
       style={{ display: 'none' }}
       {...{ checked, onChange }}
     />
-    {checked ? <i className="material-icons"
-    style={{
-      fontSize: 14,
-      fontWeight: 'bold',
-    }}>check</i> : String.fromCharCode(160)}
+    {checked ? (
+      <i
+        className="material-icons"
+        style={{
+          fontSize: 14,
+          fontWeight: 'bold',
+        }}
+      >
+        check
+      </i>
+    ) : (
+      String.fromCharCode(160)
+    )}
   </label>
 )
 
@@ -69,17 +77,19 @@ export let Fonts = () => (
       integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
       crossOrigin="anonymous"
     />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet" />
-    
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
   </div>
 )
 
-export let IconButton = ({className, primary, ...props}) => 
+export let IconButton = ({ className, primary, ...props }) => (
   <div
     className={`gv-icon-button ${className || ''} ${primary ? 'primary' : ''}`}
     {...props}
   />
+)
 
 export default IconButton
 
@@ -401,7 +411,9 @@ export let Button = ({
   ...x
 }) => (
   <As
-    className={`gv-button ${isActive ? 'active' : ''} ${primary ? 'primary' : ''} ${className || ''}`}
+    className={`gv-button ${isActive ? 'active' : ''} ${
+      primary ? 'primary' : ''
+    } ${className || ''}`}
     {...x}
   />
 )
@@ -456,21 +468,28 @@ export let ListGroupItem = withStateLens({ hovering: false })(
   ))
 )
 
-
-let SmallIcon = ({icon}) => <i className="material-icons" style={{fontSize:20}}>{icon}</i>
+let SmallIcon = ({ icon }) => (
+  <i className="material-icons" style={{ fontSize: 20 }}>
+    {icon}
+  </i>
+)
 let iconMap = {
-  SortAscending:  () => <SmallIcon icon="expand_less" />,
-  SortDescending:  () => <SmallIcon icon="expand_more" />,
-  MoveLeft:  () => <SmallIcon icon="chevron_left" />,
-  MoveRight:  () => <SmallIcon icon="chevron_right" />,
-  RemoveColumn:  () => <SmallIcon icon="remove" />,
-  AddColumn:  () => <SmallIcon icon="add" />,
-  FilterExpand:  () => <SmallIcon icon="filter_list" />,
-  FilterCollapse:  () => <SmallIcon icon="filter_list" />,
-  FilterAdd:  () => <SmallIcon icon="filter_list" />,
-  TableColumnMenu:  () => <IconButton><SmallIcon icon="more_vert" /></IconButton>,
-  FilterListExpand:  () => <SmallIcon icon="add" />,
-  FilterListCollapse:  () => <SmallIcon icon="remove" />,
+  SortAscending: () => <SmallIcon icon="expand_less" />,
+  SortDescending: () => <SmallIcon icon="expand_more" />,
+  MoveLeft: () => <SmallIcon icon="chevron_left" />,
+  MoveRight: () => <SmallIcon icon="chevron_right" />,
+  RemoveColumn: () => <SmallIcon icon="remove" />,
+  AddColumn: () => <SmallIcon icon="add" />,
+  FilterExpand: () => <SmallIcon icon="filter_list" />,
+  FilterCollapse: () => <SmallIcon icon="filter_list" />,
+  FilterAdd: () => <SmallIcon icon="filter_list" />,
+  TableColumnMenu: () => (
+    <IconButton>
+      <SmallIcon icon="more_vert" />
+    </IconButton>
+  ),
+  FilterListExpand: () => <SmallIcon icon="add" />,
+  FilterListCollapse: () => <SmallIcon icon="remove" />,
 }
 let Icon = ({ icon }) => <Dynamic component={iconMap[icon]} />
 
@@ -485,26 +504,24 @@ export let Adder = ModalFilterAdder({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-      }}>
+      }}
+    >
       Add Custom Filter
-      <i className="material-icons" style={{opacity: 0.4}}>
+      <i className="material-icons" style={{ opacity: 0.4 }}>
         filter_list
       </i>
     </span>
   ),
 })
 
-export let PagerItem =
-  observer(
-    ({ active, disabled, ...x }) =>
-      <span
-        className={
-          `gv-pager-item ${disabled ? 'disabled' : ''} ${active ? 'active' : ''}`
-        }
-      {...x}
-    />
-  )
-  
+export let PagerItem = observer(({ active, disabled, ...x }) => (
+  <span
+    className={`gv-pager-item ${disabled ? 'disabled' : ''} ${
+      active ? 'active' : ''
+    }`}
+    {...x}
+  />
+))
 
 let TagComponent = ({ value, removeTag, tagStyle }) => (
   <div className="tags-input-tag" style={tagStyle}>
@@ -516,7 +533,6 @@ let TagComponent = ({ value, removeTag, tagStyle }) => (
     />
   </div>
 )
-
 
 export let ExampleTypes = ExampleTypeConstructor({
   Button,
@@ -530,21 +546,23 @@ export let ExampleTypes = ExampleTypeConstructor({
   ),
   ListGroupItem,
   TagsInput: partial({ TagComponent }, TagsInput),
-  Icon
+  Icon,
 })
-export let Pager = props => <div className='gv-pager gv-box'>
-  <ExampleTypes.ResultPager Item={PagerItem} {...props} />
-</div>
+export let Pager = props => (
+  <div className="gv-pager gv-box">
+    <ExampleTypes.ResultPager Item={PagerItem} {...props} />
+  </div>
+)
 
-
-let Tabs = ({value, onChange = () => {}, options}) => (
-  <div className='gv-tab-container'>
+let Tabs = ({ value, onChange = () => {}, options }) => (
+  <div className="gv-tab-container">
     {_.map(
       x => (
         <div
           key={x.value}
           className={`gv-tab ${x.value === value ? 'active' : ''}`}
-          onClick={() => onChange(x.value)}>
+          onClick={() => onChange(x.value)}
+        >
           {x.label}
         </div>
       ),
