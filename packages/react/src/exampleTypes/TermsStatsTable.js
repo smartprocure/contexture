@@ -22,53 +22,57 @@ let TermsStatsTable = injectTreeNode(
           Filter:
           <Input
             type="text"
-            value={node.filter}
             {...F.domLens.value(tree.lens(node.path, 'filter'))}
           />
         </div>
         <ExpandableTable
           {...{
             ...props,
-            children: [
-              ...children,
-              <Column
-                label="Controls"
-                expand={{
-                  display: (value, record) => (
-                    <div>
-                      <button
-                        onClick={async () => {
-                          let field = node.key_field
-                          let filter =
-                            criteria &&
-                            _.find({ field }, tree.getNode(criteria).children)
+            children: criteria
+              ? [
+                  ...children,
+                  <Column
+                    label="Controls"
+                    expand={{
+                      display: (value, record) => (
+                        <div>
+                          <button
+                            onClick={async () => {
+                              let field = node.key_field
+                              let filter =
+                                criteria &&
+                                _.find(
+                                  { field },
+                                  tree.getNode(criteria).children
+                                )
 
-                          if (!filter) {
-                            await tree.add(criteria, {
-                              key: _.uniqueId('add'),
-                              field,
-                              type: 'facet',
-                            })
-                            filter = _.find(
-                              { field },
-                              tree.getNode(criteria).children
-                            )
-                          }
+                              if (!filter) {
+                                await tree.add(criteria, {
+                                  key: _.uniqueId('add'),
+                                  field,
+                                  type: 'facet',
+                                })
+                                filter = _.find(
+                                  { field },
+                                  tree.getNode(criteria).children
+                                )
+                              }
 
-                          await tree.mutate(filter.path, {
-                            mode: 'include',
-                            values: [record.key],
-                          })
-                        }}
-                      >
-                        Add as Filter
-                      </button>
-                      <MoreControls />
-                    </div>
-                  ),
-                }}
-              />,
-            ],
+                              await tree.mutate(filter.path, {
+                                mode: 'include',
+                                values: [record.key],
+                              })
+                            }}
+                          >
+                            Add as Filter
+                          </button>
+                          <MoreControls />
+                        </div>
+                      ),
+                    }}
+                  />,
+                ]
+              : children,
           }}
           data={node.context.terms}
         />
