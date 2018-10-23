@@ -51,20 +51,20 @@ let tree = Contexture({
       useDateMath: true,
     },
     {
-      key: 'titleContains',
-      type: 'tagsQuery',
-      field: 'title',
-    },
-    {
-      key: 'titleDoesNotContain',
-      type: 'tagsQuery',
-      field: 'title',
-      join: 'none',
-    },
-    {
       key: 'criteria',
       type: 'group',
       children: [
+        {
+          key: 'titleContains',
+          type: 'tagsQuery',
+          field: 'title',
+        },
+        {
+          key: 'titleDoesNotContain',
+          type: 'tagsQuery',
+          field: 'title',
+          join: 'none',
+        },
         {
           key: 'searchNumber',
           type: 'number',
@@ -187,19 +187,14 @@ export default () => (
                     />
                   </div>
                 </div>
-                <div className='filter-list-item'>
-                  <Label>Title</Label>
-                  <div className='filter-list-item-contents'>
-                    Contains
-                    <TagsQuery path={['root', 'titleContains']} />
-                    Does Not Contain
-                    <TagsQuery path={['root', 'titleDoesNotContain']} />
-                  </div>
-                </div>
                 <FilterList
                   path={['root', 'criteria']}
                   fields={schemas.movies.fields}
                   typeComponents={TypeMap}
+                  mapNodeToLabel={({key}) => ({
+                    titleContains: 'Title Contains',
+                    titleDoesNotContain: 'Title Does Not Contain'
+                  })[key]}
                 />
                 <Adder
                   path={['root', 'criteria']}

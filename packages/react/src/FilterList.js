@@ -22,20 +22,20 @@ export let Label = inject(_.pick('tree'))(
 Label.displayName = 'Label'
 
 export let FieldLabel = InjectTreeNode(
-  observer(({ node, node: { field } = {}, fields, Icon }) => (
-    <Label node={node} Icon={Icon}>{_.get([field, 'label'], fields)}</Label>
+  observer(({ node, node: { field } = {}, fields, Icon, label }) => (
+    <Label node={node} Icon={Icon}>{label || _.get([field, 'label'], fields)}</Label>
   ))
 )
 FieldLabel.displayName = 'FieldLabel'
 
 export let FilterList = InjectTreeNode(
   observer(
-    ({ node, typeComponents: types, fields, mapNodeToProps = _.noop, Icon=DefaultIcon }) => (
+    ({ node, typeComponents: types, fields, mapNodeToProps = _.noop, mapNodeToLabel = _.noop, Icon=DefaultIcon }) => (
       <div>
         {_.map(
           child => (
             <div key={child.path} className="filter-list-item">
-              <FieldLabel node={child} fields={fields} Icon={Icon} />
+              <FieldLabel node={child} fields={fields} Icon={Icon} label={mapNodeToLabel(child, fields, types)} />
               {!child.paused && (
                 <div className='filter-list-item-contents'>
                   <Dynamic
