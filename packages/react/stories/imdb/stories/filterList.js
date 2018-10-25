@@ -136,6 +136,7 @@ export default () => (
                   format={formatYear}
                 />
                 <TermsStatsTable
+                  criteria={['searchRoot', 'criteria']}
                   path={['searchRoot', 'genreScores']}
                   tableAttrs={{ style: { margin: 'auto' } }}
                 >

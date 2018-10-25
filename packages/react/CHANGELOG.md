@@ -1,3 +1,8 @@
+﻿# 1.22.0
+* Improved the Table Layout for terms_stats to allow users to search
+  the terms_stats results, use the results as filters to their
+  searches and anything else through the use of custom parameters.
+
 # 1.21.0
 * GreyVest: Complete design overhaul, now looks a bit more "material" like
 * GreyVest: Add IconButton

@@ -7,22 +7,14 @@ import { Popover, Dynamic } from '../layout'
 import { withStateLens } from '../utils/mobx-react-utils'
 import { fieldsToOptions } from '../FilterAdder'
 import { loading } from '../styles/generic'
-import { applyDefaults } from '../utils/schema'
-import { flattenPlainObject } from '../utils/futil'
 import DefaultIcon from '../DefaultIcon'
-
-let getRecord = F.when('_source', x => ({
-  _id: x._id,
-  ...x._source,
-}))
-
-let getResults = _.get('context.response.results')
-let inferSchema = _.flow(
-  getResults,
-  _.head,
+import {
+  applyDefaults,
   getRecord,
-  flattenPlainObject
-)
+  getResults,
+  inferSchema,
+} from '../utils/schema'
+
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
 
