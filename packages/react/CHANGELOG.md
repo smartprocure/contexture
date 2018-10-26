@@ -1,4 +1,7 @@
-﻿# 1.22.0
+﻿# 1.23.0
+* Added optional formatter to number type
+
+# 1.22.0
 * Improved the Table Layout for terms_stats to allow users to search
   the terms_stats results, use the results as filters to their
   searches and anything else through the use of custom parameters.
