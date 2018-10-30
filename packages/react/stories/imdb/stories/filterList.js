@@ -1,7 +1,8 @@
 import _ from 'lodash/fp'
 import React from 'react'
+import { observable, autorun } from 'mobx'
 import { fromPromise } from 'mobx-utils'
-import { Provider } from 'mobx-react'
+import { Provider, observer, inject } from 'mobx-react'
 import Contexture, { updateSchemas } from '../utils/contexture'
 import { FilterList, Flex, Awaiter, SpacedList } from '../../../src'
 import { DarkBox, Adder, Pager, ExampleTypes } from '../../DemoControls'
@@ -109,7 +110,14 @@ let schemas = fromPromise(
   )
 )
 
-export default () => (
+const Story = inject(() => {
+  let state = observable({
+    selected: []
+  })
+  state.getValue = x => x.key
+  autorun(() => console.info(state.selected.slice()))
+  return state
+})(observer(({ selected, getValue }) => (
   <DarkBox>
     <Awaiter promise={schemas}>
       {schemas => (
@@ -139,6 +147,10 @@ export default () => (
                   criteria={['searchRoot', 'criteria']}
                   path={['searchRoot', 'genreScores']}
                   tableAttrs={{ style: { margin: 'auto' } }}
+                  Checkbox={() => <input type="checkbox"/>}
+                  checkable
+                  selected={selected}
+                  getValue={getValue}
                 >
                   <Column field="key" label="Genre" />
                   <Column field="count" label="Found" />
@@ -213,4 +225,6 @@ export default () => (
       )}
     </Awaiter>
   </DarkBox>
-)
+)))
+
+export default () => <Story />
