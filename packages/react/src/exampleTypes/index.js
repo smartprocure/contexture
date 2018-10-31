@@ -12,6 +12,7 @@ import ResultPager from './ResultPager'
 import DateHistogram from './DateHistogram'
 import TermsStats from './TermsStats'
 import TermsStatsTable from './TermsStatsTable'
+import CheckableTermsStatsTable from './CheckableTermsStatsTable'
 import Text from './Text'
 import { partial } from '../utils/mobx-react-utils'
 import ModalDefault from '../layout/Modal'
@@ -47,6 +48,7 @@ export default ({
     DateHistogram,
     TermsStats,
     TermsStatsTable,
+    CheckableTermsStatsTable,
     Geo,
     Text: partial({ Input }, Text),
   }

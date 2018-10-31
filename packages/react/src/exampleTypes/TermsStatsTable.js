@@ -15,10 +15,6 @@ let TermsStatsTable = injectTreeNode(
       children,
       MoreControls = 'div',
       Input = 'input',
-      Checkbox,
-      checkable,
-      getValue,
-      selected,
       ...props
     }) => (
       <div>
@@ -33,19 +29,7 @@ let TermsStatsTable = injectTreeNode(
           {...{
             ...props,
             children: criteria
-              ? _.compact([
-                  (
-                    checkable ? <Column
-                    label=""
-                    expand={{
-                      display: (x, y) => (
-                        <Checkbox
-                          {...F.domLens.checkboxValues(_.iteratee(getValue)(y), selected)}
-                        />
-                      )
-                    }}
-                    /> : undefined
-                  ),
+              ? [
                   ...children,
                   <Column
                     label="Controls"
@@ -87,7 +71,7 @@ let TermsStatsTable = injectTreeNode(
                       ),
                     }}
                   />,
-                ])
+                ]
               : children,
           }}
           data={node.context.terms}
