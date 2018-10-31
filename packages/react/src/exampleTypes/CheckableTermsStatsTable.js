@@ -6,40 +6,26 @@ import { Column } from '../layout/ExpandableTable'
 import TermsStatsTable from './TermsStatsTable'
 
 let CheckableTermsStatsTable = observer(
-  ({
-    criteria,
-    children,
-    Checkbox,
-    checkable,
-    getValue,
-    selected,
-    ...props
-  }) => (
+  ({ children, Checkbox, getValue, selected, ...props }) => (
     <TermsStatsTable
       {...{
         ...props,
-        children: criteria
-          ? _.compact([
-              checkable ? (
-                <Column
-                  label=""
-                  expand={{
-                    display: (x, y) => (
-                      <Checkbox
-                        {...F.domLens.checkboxValues(
-                          _.iteratee(getValue)(y),
-                          selected
-                        )}
-                      />
-                    ),
-                  }}
+        children: [
+          <Column
+            label=""
+            expand={{
+              display: (x, y) => (
+                <Checkbox
+                  {...F.domLens.checkboxValues(
+                    _.iteratee(getValue)(y),
+                    selected
+                  )}
                 />
-              ) : (
-                undefined
               ),
-              ...children,
-            ])
-          : children,
+            }}
+          />,
+          ...children,
+        ],
       }}
     />
   )

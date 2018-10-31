@@ -149,7 +149,6 @@ const Story = inject(() => {
                     path={['searchRoot', 'genreScores']}
                     tableAttrs={{ style: { margin: 'auto' } }}
                     Checkbox={() => <input type="checkbox" />}
-                    checkable
                     selected={selected}
                     getValue={getValue}
                   >
