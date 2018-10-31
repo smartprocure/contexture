@@ -1,4 +1,5 @@
 import _ from 'lodash/fp'
+import F from 'futil-js'
 import React from 'react'
 import { observable, autorun } from 'mobx'
 import { fromPromise } from 'mobx-utils'
@@ -116,9 +117,9 @@ const Story = inject(() => {
   })
   state.getValue = x => x.key
   autorun(() => console.info(state.selected.slice()))
-  return state
+  return { state }
 })(
-  observer(({ selected, getValue }) => (
+  observer(({ state }) => (
     <DarkBox>
       <Awaiter promise={schemas}>
         {schemas => (
@@ -148,9 +149,9 @@ const Story = inject(() => {
                     criteria={['searchRoot', 'criteria']}
                     path={['searchRoot', 'genreScores']}
                     tableAttrs={{ style: { margin: 'auto' } }}
-                    Checkbox={() => <input type="checkbox" />}
-                    selected={selected}
-                    getValue={getValue}
+                    Checkbox={props => <input type="checkbox" {...props} />}
+                    selected={F.lensProp('selected', state)}
+                    getValue={state.getValue}
                   >
                     <Column field="key" label="Genre" />
                     <Column field="count" label="Found" />

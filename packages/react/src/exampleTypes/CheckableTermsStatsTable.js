@@ -13,16 +13,11 @@ let CheckableTermsStatsTable = observer(
         children: [
           <Column
             label=""
-            expand={{
-              display: (x, y) => (
-                <Checkbox
-                  {...F.domLens.checkboxValues(
-                    _.iteratee(getValue)(y),
-                    selected
-                  )}
-                />
-              ),
-            }}
+            display={(x, y) => (
+              <Checkbox
+                {...F.domLens.checkboxValues(_.iteratee(getValue)(y), selected)}
+              />
+            )}
           />,
           ...children,
         ],
