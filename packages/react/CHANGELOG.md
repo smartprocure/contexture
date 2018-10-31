@@ -1,4 +1,7 @@
-﻿# 1.23.0
+﻿# 1.24.0
+* Added CheckableTermsStatsTable
+
+# 1.23.0
 * Added optional formatter to number type
 
 # 1.22.0

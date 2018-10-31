@@ -1,7 +1,9 @@
 import _ from 'lodash/fp'
+import F from 'futil-js'
 import React from 'react'
+import { observable, autorun } from 'mobx'
 import { fromPromise } from 'mobx-utils'
-import { Provider } from 'mobx-react'
+import { Provider, observer, inject } from 'mobx-react'
 import Contexture, { updateSchemas } from '../utils/contexture'
 import { FilterList, Flex, Awaiter, SpacedList } from '../../../src'
 import { DarkBox, Adder, Pager, ExampleTypes } from '../../DemoControls'
@@ -10,7 +12,7 @@ let {
   ResultCount,
   ResultTable,
   DateHistogram,
-  TermsStatsTable,
+  CheckableTermsStatsTable,
   TypeMap,
 } = ExampleTypes
 
@@ -109,108 +111,124 @@ let schemas = fromPromise(
   )
 )
 
-export default () => (
-  <DarkBox>
-    <Awaiter promise={schemas}>
-      {schemas => (
-        <Provider tree={tree}>
-          <SpacedList>
-            <Query path={['searchRoot', 'searchQuery']} />
-            <Flex>
-              <div style={{ flex: 1 }}>
-                <FilterList
-                  path={['searchRoot', 'criteria']}
-                  fields={schemas.movies.fields}
-                  typeComponents={TypeMap}
-                />
-                <Adder
-                  path={['searchRoot', 'criteria']}
-                  fields={schemas.movies.fields}
-                  uniqueFields
-                />
-              </div>
-              <div style={{ flex: 4, maxWidth: '80%' }}>
-                <ResultCount path={['searchRoot', 'results']} />
-                <DateHistogram
-                  path={['searchRoot', 'releases']}
-                  format={formatYear}
-                />
-                <TermsStatsTable
-                  criteria={['searchRoot', 'criteria']}
-                  path={['searchRoot', 'genreScores']}
-                  tableAttrs={{ style: { margin: 'auto' } }}
-                >
-                  <Column field="key" label="Genre" />
-                  <Column field="count" label="Found" />
-                  <Column
-                    field="key"
-                    label=""
-                    expand={{
-                      display: x =>
-                        `Show top 50 based on meta score for ${x} ▼`,
-                    }}
-                    collapse={{
-                      display: x =>
-                        `Hide top 50 based on meta score for ${x} ▲`,
-                    }}
-                  >
-                    {x => (
-                      <Provider tree={termDetailsTree(x)}>
-                        <div>
-                          <ResultTable
-                            path={['detailRoot', 'results']}
-                            fields={_.pick(
-                              ['title', 'year', 'genres'],
-                              schemas.movies.fields
-                            )}
-                          />
-                          <Flex
-                            style={{
-                              justifyContent: 'space-around',
-                              marginTop: 10,
-                              marginBottom: 10,
-                            }}
-                          >
-                            <Pager path={['detailRoot', 'results']} />
-                          </Flex>
-                        </div>
-                      </Provider>
-                    )}
-                  </Column>
-                  <Column
-                    field="key"
-                    label={() => <strong>Custom Header</strong>}
-                    expand={{ display: () => 'Expand me ▼' }}
-                    collapse={{ display: () => 'Hide me ▲' }}
-                  >
-                    {x => (
-                      <div>
-                        I just expand and show my parent value, which is{' '}
-                        <strong>{x}</strong>
-                      </div>
-                    )}
-                  </Column>
-                </TermsStatsTable>
-                <div style={{ overflowX: 'auto' }}>
-                  <ResultTable
-                    path={['searchRoot', 'results']}
-                    fields={{
-                      poster: {
-                        display: x => <img src={x} width="180" height="270" />,
-                        order: 1,
-                      },
-                    }}
-                    infer
+const Story = inject(() => {
+  let state = observable({
+    selected: [],
+  })
+  state.getValue = x => x.key
+  autorun(() => console.info(state.selected.slice()))
+  return { state }
+})(
+  observer(({ state }) => (
+    <DarkBox>
+      <Awaiter promise={schemas}>
+        {schemas => (
+          <Provider tree={tree}>
+            <SpacedList>
+              <Query path={['searchRoot', 'searchQuery']} />
+              <Flex>
+                <div style={{ flex: 1 }}>
+                  <FilterList
+                    path={['searchRoot', 'criteria']}
+                    fields={schemas.movies.fields}
+                    typeComponents={TypeMap}
+                  />
+                  <Adder
+                    path={['searchRoot', 'criteria']}
+                    fields={schemas.movies.fields}
+                    uniqueFields
                   />
                 </div>
-                <Flex style={{ justifyContent: 'space-around' }}>
-                  <Pager path={['searchRoot', 'results']} />
-                </Flex>
-              </div>
-            </Flex>
-          </SpacedList>
-        </Provider>
-      )}
-    </Awaiter>
-  </DarkBox>
+                <div style={{ flex: 4, maxWidth: '80%' }}>
+                  <ResultCount path={['searchRoot', 'results']} />
+                  <DateHistogram
+                    path={['searchRoot', 'releases']}
+                    format={formatYear}
+                  />
+                  <CheckableTermsStatsTable
+                    criteria={['searchRoot', 'criteria']}
+                    path={['searchRoot', 'genreScores']}
+                    tableAttrs={{ style: { margin: 'auto' } }}
+                    Checkbox={props => <input type="checkbox" {...props} />}
+                    selected={F.lensProp('selected', state)}
+                    getValue={state.getValue}
+                  >
+                    <Column field="key" label="Genre" />
+                    <Column field="count" label="Found" />
+                    <Column
+                      field="key"
+                      label=""
+                      expand={{
+                        display: x =>
+                          `Show top 50 based on meta score for ${x} ▼`,
+                      }}
+                      collapse={{
+                        display: x =>
+                          `Hide top 50 based on meta score for ${x} ▲`,
+                      }}
+                    >
+                      {x => (
+                        <Provider tree={termDetailsTree(x)}>
+                          <div>
+                            <ResultTable
+                              path={['detailRoot', 'results']}
+                              fields={_.pick(
+                                ['title', 'year', 'genres'],
+                                schemas.movies.fields
+                              )}
+                            />
+                            <Flex
+                              style={{
+                                justifyContent: 'space-around',
+                                marginTop: 10,
+                                marginBottom: 10,
+                              }}
+                            >
+                              <Pager path={['detailRoot', 'results']} />
+                            </Flex>
+                          </div>
+                        </Provider>
+                      )}
+                    </Column>
+                    <Column
+                      field="key"
+                      label={() => <strong>Custom Header</strong>}
+                      expand={{ display: () => 'Expand me ▼' }}
+                      collapse={{ display: () => 'Hide me ▲' }}
+                    >
+                      {x => (
+                        <div>
+                          I just expand and show my parent value, which is{' '}
+                          <strong>{x}</strong>
+                        </div>
+                      )}
+                    </Column>
+                  </CheckableTermsStatsTable>
+                  <div style={{ overflowX: 'auto' }}>
+                    <ResultTable
+                      path={['searchRoot', 'results']}
+                      fields={{
+                        poster: {
+                          display: x => (
+                            <img src={x} width="180" height="270" />
+                          ),
+                          order: 1,
+                        },
+                      }}
+                      infer
+                    />
+                  </div>
+                  <Flex style={{ justifyContent: 'space-around' }}>
+                    <Pager path={['searchRoot', 'results']} />
+                  </Flex>
+                </div>
+              </Flex>
+            </SpacedList>
+          </Provider>
+        )}
+      </Awaiter>
+    </DarkBox>
+  ))
 )
+
+export default () => <Story />
