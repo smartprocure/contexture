@@ -4,6 +4,7 @@
 * Facet: Add formatCount support
 * Facet: Make the select all label clickable
 * GreyVest: Increase spacing between facet options and left alight include toggle
+* ExpandableTable: Add expanded class to rows that are expanded
 
 # 1.24.0
 * Added CheckableTermsStatsTable

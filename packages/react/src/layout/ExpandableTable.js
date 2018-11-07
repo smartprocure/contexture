@@ -51,7 +51,11 @@ let TableBody = inject(TableBodyState)(
       {_.map(
         x => (
           <React.Fragment key={x[recordKey]}>
-            <tr {...x.rowAttrs} key={x[recordKey]}>
+            <tr
+              {...x.rowAttrs}
+              key={x[recordKey]}
+              className={_.getOr('', 'rowAttrs.className', x) + (expanded.has(x[recordKey]) ? 'expanded' : '')}
+            >
               {F.mapIndexed(
                 ({ field, display = x => x, details = {} }, i) => (
                   <td
