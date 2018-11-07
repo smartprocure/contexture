@@ -3,12 +3,12 @@
 * TagsInput: Add custom placeholder support
 * Facet: Add formatCount support
 * Facet: Make the select all label clickable
-* GreyVest: Increase spacing between facet options and left alight include toggle
 * ExpandableTable: Add expanded class to rows that are expanded
-* GreyVest: Give nested tables a grey background
 * ResultPager: Add a clamped +/-5 page button
 * ResultPager: Add support for paging Icon overrides
-* Result Pager: hide pager if only 1 page and support className override
+* ResultPager: hide pager if only 1 page and support className override
+* GreyVest: Increase spacing between facet options and left alight include toggle
+* GreyVest: Give nested tables a grey background
 * GreyVest ResultPager: hide disabled items, add margin between left/right page and +/-5 page, use chevron icons 
 * GreyVest: Update tab padding
 
