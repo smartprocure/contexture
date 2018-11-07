@@ -357,7 +357,7 @@ export let GVStyle = () => (
       /* Tabs */     
       .gv-tab-container .gv-tab {
         display: inline-block;
-        padding: 15px 40px 16px 40px;
+        padding: 15px 20px;
         background-color: #e0e0e3;
         font-size: 16px;
         font-weight: bold;
@@ -379,7 +379,7 @@ export let GVStyle = () => (
       .gv-tab.active, .gv-tab.active:hover {
         background-color: #fff;
         font-size: 18px;
-        padding: 22px 40px 23px 40px;
+        padding: 15px 30px;
         border-radius: 4px 4px 0 0 !important;
         /* white box shadow trick from http://dev.housetrip.com/2012/06/15/good-looking-css-tabs/ */
         box-shadow: 0 10px 0 0 #fff, 0 2px 10px 0 rgba(39, 44, 65, 0.1);

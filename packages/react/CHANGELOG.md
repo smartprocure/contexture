@@ -10,6 +10,7 @@
 * ResultPager: Add support for paging Icon overrides
 * Result Pager: hide pager if only 1 page and support className override
 * GreyVest ResultPager: hide disabled items, add margin between left/right page and +/-5 page, use chevron icons 
+* GreyVest: Update tab padding
 
 # 1.24.0
 * Added CheckableTermsStatsTable
