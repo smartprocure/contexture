@@ -8,6 +8,7 @@
 * GreyVest: Give nested tables a grey background
 * ResultPager: Add a clamped +/-5 page button
 * ResultPager: Add support for paging Icon overrides
+* Result Pager: hide pager if only 1 page and support className override
 * GreyVest ResultPager: hide disabled items, add margin between left/right page and +/-5 page, use chevron icons 
 
 # 1.24.0

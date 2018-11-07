@@ -9,13 +9,13 @@ let span = ({ children }) => <span>{children}</span>
 let a = ({ children, onClick }) => <a onClick={onClick}>{children}</a>
 
 let ResultPager = InjectTreeNode(
-  observer(({ node, tree, Item = span, Link = a, Icon = DefaultIcon }) => {
+  observer(({ node, tree, Item = span, Link = a, Icon = DefaultIcon, className='' }) => {
     let pages = Math.ceil(
       (node.context.response.totalRecords || 1) / node.pageSize
     )
     let page = node.page || 1
-    return (
-      <div className='contexture-result-pager'>
+    return pages > 1 && (
+      <div className={`${className} contexture-result-pager`}>
         <Item disabled={!(page > 1)}>
           <Link
             previous

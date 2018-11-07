@@ -583,9 +583,8 @@ export let ExampleTypes = ExampleTypeConstructor({
   Icon,
 })
 export let Pager = props => (
-  <div className="gv-pager gv-box">
-    <ExampleTypes.ResultPager Item={PagerItem} {...props} />
-  </div>
+  <ExampleTypes.ResultPager Item={PagerItem} {...props}
+    className="gv-pager gv-box"/>
 )
 
 let Tabs = ({ value, onChange = () => {}, options }) => (
