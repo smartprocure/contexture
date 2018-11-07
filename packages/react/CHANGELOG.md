@@ -5,6 +5,7 @@
 * Facet: Make the select all label clickable
 * GreyVest: Increase spacing between facet options and left alight include toggle
 * ExpandableTable: Add expanded class to rows that are expanded
+* GreyVest: Give nested tables a grey background
 
 # 1.24.0
 * Added CheckableTermsStatsTable

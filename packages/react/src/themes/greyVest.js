@@ -150,6 +150,11 @@ export let GVStyle = () => (
         align-items: center;
       }
       
+      /* Nested Table */
+      .gv-table .expanded, .gv-table .expanded + tr {
+        background: rgba(237, 237, 237, 0.5)
+      }
+      
       .gv-box {
         border-radius: 4px;
         background-color: #fff;
