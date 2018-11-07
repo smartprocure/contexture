@@ -29,6 +29,7 @@ let CheckableResultTable = InjectTreeNode(
         <ResultTable
           fields={{
             _checkbox: {
+              hideMenu: true,
               label: <Checkbox checked={allChecked} onChange={checkAll} />,
               display: (x, y) => (
                 <Checkbox
