@@ -238,8 +238,9 @@ export let GVStyle = () => (
         box-sizing: border-box;
         text-align: center;
         margin: 0 2.5px;
+        color: #9b9b9b;
       }
-      .gv-pager-item:hover, .gv-pager-item.disabled {
+      .gv-pager-item:hover {
          background: #f5f5f5;
       }
       .gv-pager-item.active {
@@ -249,6 +250,20 @@ export let GVStyle = () => (
       .gv-pager-item.disabled {
         cursor: not-allowed;
         pointer-events: none;
+      }
+      .contexture-result-pager {
+        display: flex;
+        align-items: center;
+      }
+      .contexture-result-pager .gv-pager-item:first-child {
+        margin-right: 20px;
+      }
+      .contexture-result-pager .gv-pager-item:last-child {
+        margin-left: 20px;
+      }
+      .contexture-result-pager .gv-pager-item:first-child.disabled,
+      .contexture-result-pager .gv-pager-item:last-child.disabled {
+        display: none;
       }
       
       /* Icon Button */
@@ -505,6 +520,10 @@ let iconMap = {
   ),
   FilterListExpand: () => <SmallIcon icon="add" />,
   FilterListCollapse: () => <SmallIcon icon="remove" />,
+  PreviousPage: () => <SmallIcon icon="chevron_left" />,
+  NextPage: () => <SmallIcon icon="chevron_right" />,
+  Previous5Pages: () => <span>...</span>,
+  Next5Pages: () => <span>...</span>
 }
 let Icon = ({ icon }) => <Dynamic component={iconMap[icon]} />
 
