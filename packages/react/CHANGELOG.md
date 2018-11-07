@@ -6,6 +6,8 @@
 * GreyVest: Increase spacing between facet options and left alight include toggle
 * ExpandableTable: Add expanded class to rows that are expanded
 * GreyVest: Give nested tables a grey background
+* ResultPager: Add a clamped +/-5 page button
+* ResultPager: Add support for paging Icon overrides
 
 # 1.24.0
 * Added CheckableTermsStatsTable
