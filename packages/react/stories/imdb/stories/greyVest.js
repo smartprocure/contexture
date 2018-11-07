@@ -200,7 +200,10 @@ export default () => (
               <h1>Search Movies</h1>
               <div className="gv-search-bar">
                 <div className="gv-box">
-                  <TagsQuery path={['root', 'bar']} />
+                  <TagsQuery
+                    path={['root', 'bar']}
+                    placeholder="Enter search here..."
+                  />
                 </div>
                 <div className="gv-button-group">
                   <Button
