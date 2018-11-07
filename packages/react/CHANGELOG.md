@@ -1,6 +1,7 @@
 # 1.25.0
 * TagsQuery: Add custom placeholder support
 * TagsInput: Add custom placeholder support
+* Facet: Add formatCount support
 
 # 1.24.0
 * Added CheckableTermsStatsTable

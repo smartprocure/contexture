@@ -57,21 +57,13 @@ let Facet = injectTreeNode(
       RadioList = RadioListDefault,
       display = x => x,
       displayBlank = () => <i>Not Specified</i>,
+      formatCount = x => x
     }) => (
       <div className="contexture-facet">
         <RadioList
           value={node.mode || 'include'} // Fix by changing defaults in client example type
           onChange={mode => tree.mutate(node.path, { mode })}
-          options={[
-            {
-              label: 'Include',
-              value: 'include',
-            },
-            {
-              label: 'Exclude',
-              value: 'exclude',
-            },
-          ]}
+          options={F.autoLabelOptions(['include', 'exclude'])}
         />
         {!hide.facetFilter && (
           <TextInput
@@ -99,7 +91,7 @@ let Facet = injectTreeNode(
               <div style={{ flex: 2, padding: '0 5px' }}>
                 {display(name) || displayBlank()}
               </div>
-              <div>{count}</div>
+              <div>{formatCount(count)}</div>
             </label>
           )
         }, _.get('context.options', node))}
