@@ -3,28 +3,41 @@ import F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
 import { Column } from '../layout/ExpandableTable'
+import InjectTreeNode from '../utils/injectTreeNode'
 import TermsStatsTable from './TermsStatsTable'
 
-let CheckableTermsStatsTable = observer(
-  ({ children, Checkbox, getValue, selected, ...props }) => (
-    <TermsStatsTable
-      {...{
-        ...props,
-        children: [
-          <Column
-            label=""
-            display={(x, y) => (
-              <Checkbox
-                {...F.domLens.checkboxValues(_.iteratee(getValue)(y), selected)}
-              />
-            )}
-          />,
-          ...children,
-        ],
-      }}
-    />
-  )
+let CheckableTermsStatsTable = InjectTreeNode(
+  observer(({ node, children, Checkbox, getValue, selected, ...props }) => {
+    let results = _.result('context.terms.slice', node)
+    let allChecked = results.length === F.view(selected).length
+    let checkAll = F.sets(
+      allChecked ? [] : _.map(_.iteratee(getValue), results),
+      selected
+    )
+    return (
+      <TermsStatsTable
+        {...{
+          ...props,
+          children: [
+            <Column
+              label={<Checkbox checked={allChecked} onChange={checkAll} />}
+              display={(x, y) => (
+                <Checkbox
+                  {...F.domLens.checkboxValues(
+                    _.iteratee(getValue)(y),
+                    selected
+                  )}
+                />
+              )}
+            />,
+            ...children,
+          ],
+        }}
+      />
+    )
+  })
 )
+
 CheckableTermsStatsTable.displayName = 'CheckableTermsStatsTable'
 
 export default CheckableTermsStatsTable

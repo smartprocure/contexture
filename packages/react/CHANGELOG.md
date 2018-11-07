@@ -1,4 +1,4 @@
-# 1.25.0
+# 1.26.0
 * TagsQuery: Add custom placeholder support
 * TagsInput: Add custom placeholder support
 * Facet: Add formatCount support
@@ -11,6 +11,10 @@
 * GreyVest: Give nested tables a grey background
 * GreyVest ResultPager: hide disabled items, add margin between left/right page and +/-5 page, use chevron icons 
 * GreyVest: Update tab padding
+
+# 1.25.0
+* Made the checkable tables capable of selecting all the visible results.
+* Remove the three dots from the results table.
 
 # 1.24.0
 * Added CheckableTermsStatsTable

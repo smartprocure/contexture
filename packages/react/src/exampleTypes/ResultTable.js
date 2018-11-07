@@ -92,7 +92,14 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
   observer(({ // Local State
     i, popover, adding, filtering, Modal, FieldPicker, ListGroupItem: Item, typeComponents, HeaderCell = HeaderCellDefault, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria, mapNodeToProps, fields, Icon }) => {
     // Components (providerable?) // Contextual
-    let { disableFilter, disableSort, field, label, typeDefault } = fieldSchema
+    let {
+      disableFilter,
+      disableSort,
+      field,
+      label,
+      hideMenu,
+      typeDefault,
+    } = fieldSchema
     HeaderCell = fieldSchema.HeaderCell || HeaderCell
     let filterNode =
       criteria && _.find({ field }, tree.getNode(criteria).children)
@@ -112,7 +119,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
               icon={node.sortDir === 'asc' ? 'SortAscending' : 'SortDescending'}
             />
           )}
-          <Icon icon="TableColumnMenu" />
+          {hideMenu ? null : <Icon icon="TableColumnMenu" />}
         </span>
         <Popover isOpen={popover} style={popoverStyle}>
           {!disableSort && (
