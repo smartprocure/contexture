@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 import F from 'futil-js'
 import InjectTreeNode from '../utils/injectTreeNode'
-import { getResults } from '../utils/schema'
+import { getResults, getRecord } from '../utils/schema'
 
 // Extends ResultTable with a checkbox column
 // Writes to a lens called `selected`, using getValue to map the selected record to a value.
@@ -18,7 +18,7 @@ let CheckableResultTable = InjectTreeNode(
           ? []
           : _.map(
               _.flow(
-                _.get('_source'),
+                getRecord,
                 _.iteratee(getValue)
               ),
               results
