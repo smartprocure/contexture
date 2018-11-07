@@ -324,6 +324,9 @@ export let GVStyle = () => (
       .contexture-facet {
         font-size: 14px;
       }
+      .contexture-facet > label {
+        margin: 5px 0;
+      }
       
       /* Tabs */     
       .gv-tab-container .gv-tab {
