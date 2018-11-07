@@ -14,7 +14,7 @@ import {
 } from '../'
 import ExampleTypeConstructor from '../exampleTypes/'
 
-export let Input = ({ className = '', style, type='text', ...x }) => (
+export let Input = ({ className = '', style, type = 'text', ...x }) => (
   <input
     className={`${className} gv-input`}
     style={{
@@ -465,7 +465,7 @@ export let ButtonRadio = ({
   options,
   style = {},
 }) => (
-  <Flex className='gv-button-radio' style={{ alignItems: 'baseline' }}>
+  <Flex className="gv-button-radio" style={{ alignItems: 'baseline' }}>
     {_.map(
       x => (
         <Button
@@ -534,7 +534,7 @@ let iconMap = {
   PreviousPage: () => <SmallIcon icon="chevron_left" />,
   NextPage: () => <SmallIcon icon="chevron_right" />,
   Previous5Pages: () => <span>...</span>,
-  Next5Pages: () => <span>...</span>
+  Next5Pages: () => <span>...</span>,
 }
 let Icon = ({ icon }) => <Dynamic component={iconMap[icon]} />
 
@@ -594,8 +594,11 @@ export let ExampleTypes = ExampleTypeConstructor({
   Icon,
 })
 export let Pager = props => (
-  <ExampleTypes.ResultPager Item={PagerItem} {...props}
-    className="gv-pager gv-box"/>
+  <ExampleTypes.ResultPager
+    Item={PagerItem}
+    {...props}
+    className="gv-pager gv-box"
+  />
 )
 
 let Tabs = ({ value, onChange = () => {}, options }) => (

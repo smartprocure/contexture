@@ -17,7 +17,7 @@ let iconMap = {
   NextPage: () => <span>→</span>,
   PreviousPage: () => <span>←</span>,
   Previous5Pages: () => <span>⇜</span>,
-  Next5Pages: () => <span>⇝</span>
+  Next5Pages: () => <span>⇝</span>,
 }
 let DefaultIcon = ({ icon }) => <Dynamic component={iconMap[icon]} />
 

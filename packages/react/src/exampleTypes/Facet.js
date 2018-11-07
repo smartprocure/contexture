@@ -64,7 +64,7 @@ let Facet = injectTreeNode(
       RadioList = RadioListDefault,
       display = x => x,
       displayBlank = () => <i>Not Specified</i>,
-      formatCount = x => x
+      formatCount = x => x,
     }) => (
       <div className="contexture-facet">
         <RadioList
@@ -102,7 +102,10 @@ let Facet = injectTreeNode(
             </label>
           )
         }, _.get('context.options', node))}
-        <Flex className='contexture-facet-cardinality' style={{ justifyContent: 'space-between' }}>
+        <Flex
+          className="contexture-facet-cardinality"
+          style={{ justifyContent: 'space-between' }}
+        >
           {!!node.context.cardinality && (
             <div>
               Showing {_.min([node.size || 10, node.context.options.length])} of{' '}

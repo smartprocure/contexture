@@ -54,7 +54,10 @@ let TableBody = inject(TableBodyState)(
             <tr
               {...x.rowAttrs}
               key={x[recordKey]}
-              className={_.getOr('', 'rowAttrs.className', x) + (expanded.has(x[recordKey]) ? 'expanded' : '')}
+              className={
+                _.getOr('', 'rowAttrs.className', x) +
+                (expanded.has(x[recordKey]) ? 'expanded' : '')
+              }
             >
               {F.mapIndexed(
                 ({ field, display = x => x, details = {} }, i) => (
