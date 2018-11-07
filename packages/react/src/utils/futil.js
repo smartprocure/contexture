@@ -12,3 +12,6 @@ export let FlattenTreeLeaves = Tree =>
   )
 export let PlainObjectTree = F.tree(onlyWhen(_.isPlainObject))
 export let flattenPlainObject = F.whenExists(FlattenTreeLeaves(PlainObjectTree))
+
+// Array
+export let len = _.get('length')

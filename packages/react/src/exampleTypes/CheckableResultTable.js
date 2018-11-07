@@ -4,6 +4,7 @@ import { observer } from 'mobx-react'
 import F from 'futil-js'
 import InjectTreeNode from '../utils/injectTreeNode'
 import { getResults, getRecord } from '../utils/schema'
+import { len } from '../utils/futil'
 
 // Extends ResultTable with a checkbox column
 // Writes to a lens called `selected`, using getValue to map the selected record to a value.
@@ -12,7 +13,7 @@ let CheckableResultTable = InjectTreeNode(
   observer(
     ({ node, fields, selected, getValue, Checkbox, ResultTable, ...props }) => {
       let results = getResults(node).slice()
-      let allChecked = results.length === F.view(selected).length
+      let allChecked = len(results) === len(F.view(selected))
       let checkAll = F.sets(
         allChecked
           ? []
