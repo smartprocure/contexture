@@ -125,6 +125,12 @@ export let GVStyle = () => (
         background-color: #0076de;
         color: #fff;
       }
+      .gv-button-radio > .gv-button {
+        margin-right: 20px;
+      }
+      .gv-button-radio > .gv-button:last-child {
+        margin-right: 0;
+      }
 
       
       /* Table */
@@ -391,7 +397,7 @@ export let GVStyle = () => (
       
       .gv-grid {
         display: grid;
-        grid-template-columns: 1fr 4fr;
+        grid-template-columns: 400px 1fr;
         grid-gap: 40px;
         margin: 0 40px;
       }
@@ -428,7 +434,7 @@ export let ButtonRadio = ({
   options,
   style = {},
 }) => (
-  <Flex style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
+  <Flex className='gv-button-radio' style={{ alignItems: 'baseline' }}>
     {_.map(
       x => (
         <Button

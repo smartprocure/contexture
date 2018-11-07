@@ -2,6 +2,8 @@
 * TagsQuery: Add custom placeholder support
 * TagsInput: Add custom placeholder support
 * Facet: Add formatCount support
+* Facet: Make the select all label clickable
+* GreyVest: Increase spacing between facet options and left alight include toggle
 
 # 1.24.0
 * Added CheckableTermsStatsTable
