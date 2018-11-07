@@ -1,4 +1,8 @@
-﻿# 1.24.0
+﻿# 1.25.0
+* Made the checkable tables capable of selecting all the visible results.
+* Remove the three dots from the results table.
+
+# 1.24.0
 * Added CheckableTermsStatsTable
 
 # 1.23.0
