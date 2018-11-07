@@ -28,7 +28,14 @@ let SelectAll = observer(({ node, tree, Checkbox }) => {
   )
   let allSelected = _.isEmpty(missingOptions)
   return (
-    <Flex style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
+    <label
+      style={{
+        justifyContent: 'space-between',
+        alignItems: 'baseline',
+        display: 'flex',
+        cursor: 'pointer',
+      }}
+    >
       <Checkbox
         checked={allSelected}
         onChange={() => {
@@ -43,7 +50,7 @@ let SelectAll = observer(({ node, tree, Checkbox }) => {
         }}
       />
       <div style={{ flex: 2, padding: '0 5px' }}>Select All</div>
-    </Flex>
+    </label>
   )
 })
 let Facet = injectTreeNode(
