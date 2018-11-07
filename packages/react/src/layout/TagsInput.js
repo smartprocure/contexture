@@ -35,6 +35,7 @@ let TagsInput = inject(() => ({
       submit = _.noop,
       tagStyle,
       TagComponent = Tag,
+      placeholder="Search..."
     }) => (
       <div>
         <label style={{ display: 'block' }} className="tags-input">
@@ -85,7 +86,7 @@ let TagsInput = inject(() => ({
                 }
               }}
               value={state.currentInput}
-              placeholder="Search..."
+              placeholder={placeholder}
             />
           </Flex>
         </label>

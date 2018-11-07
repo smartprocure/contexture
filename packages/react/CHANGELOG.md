@@ -1,4 +1,7 @@
-﻿# 1.24.0
+# 1.25.0
+* TagsInput: Add custom placeholder support
+
+# 1.24.0
 * Added CheckableTermsStatsTable
 
 # 1.23.0
