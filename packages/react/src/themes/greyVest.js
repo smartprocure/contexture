@@ -14,14 +14,13 @@ import {
 } from '../'
 import ExampleTypeConstructor from '../exampleTypes/'
 
-export let Input = ({ style = {}, ...x }) => (
+export let Input = ({ className = '', style, type = 'text', ...x }) => (
   <input
+    className={`${className} gv-input`}
     style={{
-      padding: '5px',
-      textIndent: '5px',
-      margin: '5px auto',
       ...style,
     }}
+    type={type}
     {...x}
   />
 )
@@ -30,15 +29,13 @@ Input.displayName = 'Input'
 // Low effort custom checkbox
 export let Checkbox = ({ checked, onChange, style = {} }) => (
   <label
-    className="gv-input"
+    className="gv-input gv-checkbox"
     style={{
       height: '20px',
       width: '20px',
       borderRadius: '3px',
       display: 'flex',
       justifyContent: 'center',
-      alignItems: 'center',
-      margin: '2px',
       cursor: 'pointer',
       ...(checked ? { backgroundColor: '#ebebeb' } : {}),
       ...style,
@@ -125,6 +122,12 @@ export let GVStyle = () => (
         background-color: #0076de;
         color: #fff;
       }
+      .gv-button-radio > .gv-button {
+        margin-right: 20px;
+      }
+      .gv-button-radio > .gv-button:last-child {
+        margin-right: 0;
+      }
 
       
       /* Table */
@@ -144,6 +147,11 @@ export let GVStyle = () => (
         align-items: center;
       }
       
+      /* Nested Table */
+      .gv-table .expanded, .gv-table .expanded + tr {
+        background: rgba(237, 237, 237, 0.5)
+      }
+      
       .gv-box {
         border-radius: 4px;
         background-color: #fff;
@@ -159,6 +167,11 @@ export let GVStyle = () => (
         color: #454545;
       }
       
+      .gv-input[type="text"] {
+        padding: 5px;
+        text-indent: 5px;
+        margin: 5px auto;
+      }
       .gv-input, .gv-body select, .gv-body input {
         outline: none;
         font-size: 16px;
@@ -227,8 +240,9 @@ export let GVStyle = () => (
         box-sizing: border-box;
         text-align: center;
         margin: 0 2.5px;
+        color: #9b9b9b;
       }
-      .gv-pager-item:hover, .gv-pager-item.disabled {
+      .gv-pager-item:hover {
          background: #f5f5f5;
       }
       .gv-pager-item.active {
@@ -238,6 +252,20 @@ export let GVStyle = () => (
       .gv-pager-item.disabled {
         cursor: not-allowed;
         pointer-events: none;
+      }
+      .contexture-result-pager {
+        display: flex;
+        align-items: center;
+      }
+      .contexture-result-pager .gv-pager-item:first-child {
+        margin-right: 20px;
+      }
+      .contexture-result-pager .gv-pager-item:last-child {
+        margin-left: 20px;
+      }
+      .contexture-result-pager .gv-pager-item:first-child.disabled,
+      .contexture-result-pager .gv-pager-item:last-child.disabled {
+        display: none;
       }
       
       /* Icon Button */
@@ -324,11 +352,23 @@ export let GVStyle = () => (
       .contexture-facet {
         font-size: 14px;
       }
+      .contexture-facet > label {
+        margin: 5px 0;
+      }
+      .contexture-facet .gv-checkbox {
+        margin: 0 10px;
+      }
+      .contexture-facet > .gv-input[type="text"] {
+        margin: 20px 0;
+      }
+      .contexture-facet-cardinality {
+        margin: 10px 0;
+      }
       
       /* Tabs */     
       .gv-tab-container .gv-tab {
         display: inline-block;
-        padding: 15px 40px 16px 40px;
+        padding: 15px 20px;
         background-color: #e0e0e3;
         font-size: 16px;
         font-weight: bold;
@@ -350,7 +390,7 @@ export let GVStyle = () => (
       .gv-tab.active, .gv-tab.active:hover {
         background-color: #fff;
         font-size: 18px;
-        padding: 22px 40px 23px 40px;
+        padding: 15px 30px;
         border-radius: 4px 4px 0 0 !important;
         /* white box shadow trick from http://dev.housetrip.com/2012/06/15/good-looking-css-tabs/ */
         box-shadow: 0 10px 0 0 #fff, 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -388,7 +428,7 @@ export let GVStyle = () => (
       
       .gv-grid {
         display: grid;
-        grid-template-columns: 1fr 4fr;
+        grid-template-columns: 400px 1fr;
         grid-gap: 40px;
         margin: 0 40px;
       }
@@ -425,7 +465,7 @@ export let ButtonRadio = ({
   options,
   style = {},
 }) => (
-  <Flex style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
+  <Flex className="gv-button-radio" style={{ alignItems: 'baseline' }}>
     {_.map(
       x => (
         <Button
@@ -491,6 +531,10 @@ let iconMap = {
   ),
   FilterListExpand: () => <SmallIcon icon="add" />,
   FilterListCollapse: () => <SmallIcon icon="remove" />,
+  PreviousPage: () => <SmallIcon icon="chevron_left" />,
+  NextPage: () => <SmallIcon icon="chevron_right" />,
+  Previous5Pages: () => <span>...</span>,
+  Next5Pages: () => <span>...</span>,
 }
 let Icon = ({ icon }) => <Dynamic component={iconMap[icon]} />
 
@@ -550,9 +594,11 @@ export let ExampleTypes = ExampleTypeConstructor({
   Icon,
 })
 export let Pager = props => (
-  <div className="gv-pager gv-box">
-    <ExampleTypes.ResultPager Item={PagerItem} {...props} />
-  </div>
+  <ExampleTypes.ResultPager
+    Item={PagerItem}
+    {...props}
+    className="gv-pager gv-box"
+  />
 )
 
 let Tabs = ({ value, onChange = () => {}, options }) => (

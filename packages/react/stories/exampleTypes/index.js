@@ -235,7 +235,7 @@ export default () =>
                   <SpacedList>
                     <TagsQuery path={['tagsQuery']} />
                     <Text path={['titleText']} />
-                    <Facet path={['facet']} />
+                    <Facet path={['facet']} formatCount={x => `(${x})`} />
                     <Facet path={['facet']} display={F.autoLabel} />
                     <Number path={['number']} />
                     <Number path={['number']} />

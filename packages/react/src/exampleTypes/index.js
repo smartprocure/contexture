@@ -44,7 +44,7 @@ export default ({
       ResultTable
     ),
     ResultCount,
-    ResultPager,
+    ResultPager: partial({ Icon }, ResultPager),
     DateHistogram,
     TermsStats,
     TermsStatsTable,

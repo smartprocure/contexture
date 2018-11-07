@@ -28,7 +28,14 @@ let SelectAll = observer(({ node, tree, Checkbox }) => {
   )
   let allSelected = _.isEmpty(missingOptions)
   return (
-    <Flex style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
+    <label
+      style={{
+        justifyContent: 'space-between',
+        alignItems: 'baseline',
+        display: 'flex',
+        cursor: 'pointer',
+      }}
+    >
       <Checkbox
         checked={allSelected}
         onChange={() => {
@@ -43,7 +50,7 @@ let SelectAll = observer(({ node, tree, Checkbox }) => {
         }}
       />
       <div style={{ flex: 2, padding: '0 5px' }}>Select All</div>
-    </Flex>
+    </label>
   )
 })
 let Facet = injectTreeNode(
@@ -57,21 +64,13 @@ let Facet = injectTreeNode(
       RadioList = RadioListDefault,
       display = x => x,
       displayBlank = () => <i>Not Specified</i>,
+      formatCount = x => x,
     }) => (
       <div className="contexture-facet">
         <RadioList
           value={node.mode || 'include'} // Fix by changing defaults in client example type
           onChange={mode => tree.mutate(node.path, { mode })}
-          options={[
-            {
-              label: 'Include',
-              value: 'include',
-            },
-            {
-              label: 'Exclude',
-              value: 'exclude',
-            },
-          ]}
+          options={F.autoLabelOptions(['include', 'exclude'])}
         />
         {!hide.facetFilter && (
           <TextInput
@@ -99,11 +98,14 @@ let Facet = injectTreeNode(
               <div style={{ flex: 2, padding: '0 5px' }}>
                 {display(name) || displayBlank()}
               </div>
-              <div>{count}</div>
+              <div>{formatCount(count)}</div>
             </label>
           )
         }, _.get('context.options', node))}
-        <Flex style={{ justifyContent: 'space-between', margin: '5px 0' }}>
+        <Flex
+          className="contexture-facet-cardinality"
+          style={{ justifyContent: 'space-between' }}
+        >
           {!!node.context.cardinality && (
             <div>
               Showing {_.min([node.size || 10, node.context.options.length])} of{' '}

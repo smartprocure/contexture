@@ -1,4 +1,19 @@
-﻿# 1.25.0
+# 1.26.0
+* TagsQuery: Add custom placeholder support
+* TagsInput: Add custom placeholder support
+* Facet: Add formatCount support
+* Facet: Make the select all label clickable
+* ExpandableTable: Add expanded class to rows that are expanded
+* ResultPager: Add a clamped +/-5 page button
+* ResultPager: Add support for paging Icon overrides
+* ResultPager: hide pager if only 1 page and support className override
+* GreyVest: Increase spacing between facet options and left alight include toggle
+* GreyVest: Give nested tables a grey background
+* GreyVest ResultPager: hide disabled items, add margin between left/right page and +/-5 page, use chevron icons 
+* GreyVest: Update tab padding
+* GreyVest: Facet spacing tweaks
+
+# 1.25.0
 * Made the checkable tables capable of selecting all the visible results.
 * Remove the three dots from the results table.
 
