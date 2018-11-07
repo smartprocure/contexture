@@ -102,7 +102,7 @@ let Facet = injectTreeNode(
             </label>
           )
         }, _.get('context.options', node))}
-        <Flex style={{ justifyContent: 'space-between', margin: '5px 0' }}>
+        <Flex className='contexture-facet-cardinality' style={{ justifyContent: 'space-between' }}>
           {!!node.context.cardinality && (
             <div>
               Showing {_.min([node.size || 10, node.context.options.length])} of{' '}

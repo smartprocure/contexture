@@ -14,14 +14,13 @@ import {
 } from '../'
 import ExampleTypeConstructor from '../exampleTypes/'
 
-export let Input = ({ style = {}, ...x }) => (
+export let Input = ({ className = '', style, type='text', ...x }) => (
   <input
+    className={`${className} gv-input`}
     style={{
-      padding: '5px',
-      textIndent: '5px',
-      margin: '5px auto',
       ...style,
     }}
+    type={type}
     {...x}
   />
 )
@@ -30,15 +29,13 @@ Input.displayName = 'Input'
 // Low effort custom checkbox
 export let Checkbox = ({ checked, onChange, style = {} }) => (
   <label
-    className="gv-input"
+    className="gv-input gv-checkbox"
     style={{
       height: '20px',
       width: '20px',
       borderRadius: '3px',
       display: 'flex',
       justifyContent: 'center',
-      alignItems: 'center',
-      margin: '2px',
       cursor: 'pointer',
       ...(checked ? { backgroundColor: '#ebebeb' } : {}),
       ...style,
@@ -170,6 +167,11 @@ export let GVStyle = () => (
         color: #454545;
       }
       
+      .gv-input[type="text"] {
+        padding: 5px;
+        text-indent: 5px;
+        margin: 5px auto;
+      }
       .gv-input, .gv-body select, .gv-body input {
         outline: none;
         font-size: 16px;
@@ -352,6 +354,15 @@ export let GVStyle = () => (
       }
       .contexture-facet > label {
         margin: 5px 0;
+      }
+      .contexture-facet .gv-checkbox {
+        margin: 0 10px;
+      }
+      .contexture-facet > .gv-input[type="text"] {
+        margin: 20px 0;
+      }
+      .contexture-facet-cardinality {
+        margin: 10px 0;
       }
       
       /* Tabs */     
