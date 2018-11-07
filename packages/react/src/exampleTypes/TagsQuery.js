@@ -14,7 +14,7 @@ let tagToGroupJoin = x =>
   }[x])
 let tagValueField = 'word'
 let TagsQuery = injectTreeNode(
-  observer(({ tree, node, TagsInput = DefaultTagsInput }) => (
+  observer(({ tree, node, TagsInput = DefaultTagsInput, placeholder }) => (
     <TagsInput
       tags={_.map(tagValueField, node.tags)}
       addTag={tag => {
@@ -29,6 +29,7 @@ let TagsQuery = injectTreeNode(
       }}
       tagStyle={bgJoin(tagToGroupJoin(node.join || 'any'))}
       submit={tree.triggerUpdate}
+      placeholder={placeholder}
     />
   )),
   exampleTypes.tagsQuery

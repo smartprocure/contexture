@@ -1,4 +1,5 @@
 # 1.25.0
+* TagsQuery: Add custom placeholder support
 * TagsInput: Add custom placeholder support
 
 # 1.24.0
