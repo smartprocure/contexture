@@ -107,13 +107,14 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
       if (!filterNode) addFilter(field)
       F.flip(filtering)()
     }
+    let Label = label
     return (
       <HeaderCell
         style={{ cursor: 'pointer' }}
         activeFilter={_.get('hasValue', filterNode)}
       >
         <span onClick={F.flip(popover)}>
-          {label}{' '}
+          {_.isFunction(label) ? <Label /> : label}{' '}
           {field === node.sortField && (
             <Icon
               icon={node.sortDir === 'asc' ? 'SortAscending' : 'SortDescending'}
