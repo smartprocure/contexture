@@ -1,3 +1,6 @@
+﻿# 1.26.1
+* Replaced all uses of `partial` with `defaultProps` from recompose.
+
 # 1.26.0
 * TagsQuery: Add custom placeholder support
 * TagsInput: Add custom placeholder support

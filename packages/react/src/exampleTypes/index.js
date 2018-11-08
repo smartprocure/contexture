@@ -14,16 +14,16 @@ import TermsStats from './TermsStats'
 import TermsStatsTable from './TermsStatsTable'
 import CheckableTermsStatsTable from './CheckableTermsStatsTable'
 import Text from './Text'
-import { partial } from '../utils/mobx-react-utils'
+import { defaultProps } from 'recompose'
 import ModalDefault from '../layout/Modal'
 
 export default ({
   Input = 'input',
   Button = 'button',
   TextInput = Input,
-  NumberInput = partial({ type: 'number' }, Input),
-  DateInput = partial({ type: 'date' }, Input),
-  Checkbox = partial({ type: 'checkbox' }, 'input'),
+  NumberInput = defaultProps({ type: 'number' })(Input),
+  DateInput = defaultProps({ type: 'date' })(Input),
+  Checkbox = defaultProps({ type: 'checkbox' })('input'),
   RadioList,
   TagsInput,
   Table = 'table',
@@ -33,32 +33,32 @@ export default ({
   Icon,
 } = {}) => {
   let Components = {
-    Facet: partial({ TextInput, Checkbox, RadioList }, Facet),
-    Number: partial({ NumberInput, Button }, Number),
-    Date: partial({ DateInput }, Date),
+    Facet: defaultProps({ TextInput, Checkbox, RadioList })(Facet),
+    Number: defaultProps({ NumberInput, Button })(Number),
+    Date: defaultProps({ DateInput })(Date),
     DateRangePicker,
-    Query: partial({ TextInput }, Query),
-    TagsQuery: partial({ TagsInput }, TagsQuery),
-    ResultTable: partial(
-      { Table, Modal, FieldPicker, ListGroupItem, Icon },
-      ResultTable
-    ),
+    Query: defaultProps({ TextInput })(Query),
+    TagsQuery: defaultProps({ TagsInput })(TagsQuery),
+    ResultTable: defaultProps({
+      Table,
+      Modal,
+      FieldPicker,
+      ListGroupItem,
+      Icon,
+    })(ResultTable),
     ResultCount,
-    ResultPager: partial({ Icon }, ResultPager),
+    ResultPager: defaultProps({ Icon })(ResultPager),
     DateHistogram,
     TermsStats,
     TermsStatsTable,
     CheckableTermsStatsTable,
     Geo,
-    Text: partial({ Input }, Text),
+    Text: defaultProps({ Input })(Text),
   }
-  Components.CheckableResultTable = partial(
-    {
-      ResultTable: Components.ResultTable,
-      Checkbox,
-    },
-    CheckableResultTable
-  )
+  Components.CheckableResultTable = defaultProps({
+    ResultTable: Components.ResultTable,
+    Checkbox,
+  })(CheckableResultTable)
   let TypeMap = {
     facet: Components.Facet,
     query: Components.Query,

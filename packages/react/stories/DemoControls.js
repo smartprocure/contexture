@@ -1,7 +1,8 @@
 import F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { withStateLens, partial } from '../src/utils/mobx-react-utils'
+import { withStateLens } from '../src/utils/mobx-react-utils'
+import { defaultProps } from 'recompose'
 import ExampleTypeConstructor from '../src/exampleTypes/'
 import { TextHighlight, FilteredPicker, ModalFilterAdder } from '../src'
 
@@ -111,14 +112,11 @@ export let Adder = ModalFilterAdder({
 export let ExampleTypes = ExampleTypeConstructor({
   Input,
   Table: 'table',
-  FieldPicker: partial(
-    {
-      Input,
-      Highlight,
-      Item: ListGroupItem,
-    },
-    FilteredPicker
-  ),
+  FieldPicker: defaultProps({
+    Input,
+    Highlight,
+    Item: ListGroupItem,
+  })(FilteredPicker),
 })
 let { ResultPager } = ExampleTypes
-export let Pager = partial({ Item: PagerItem }, ResultPager)
+export let Pager = defaultProps({ Item: PagerItem })(ResultPager)

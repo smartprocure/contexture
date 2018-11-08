@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "1.26.0",
+  "version": "1.26.1",
   "description": "React components for building contexture interfaces",
   "main": "dist/index.js",
   "scripts": {
@@ -89,6 +89,7 @@
     "futil-js": "^1.55.0",
     "lodash": "^4.17.4",
     "react-dnd": "^2.5.4",
-    "react-dnd-html5-backend": "^2.5.4"
+    "react-dnd-html5-backend": "^2.5.4",
+    "recompose": "^0.30.0"
   }
 }

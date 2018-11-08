@@ -2,7 +2,8 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
-import { partial, withStateLens } from '../utils/mobx-react-utils'
+import { defaultProps } from 'recompose'
+import { withStateLens } from '../utils/mobx-react-utils'
 import {
   Flex,
   TextHighlight,
@@ -585,12 +586,11 @@ export let ExampleTypes = ExampleTypeConstructor({
   Checkbox,
   RadioList: ButtonRadio,
   Table,
-  FieldPicker: partial(
-    { Input, Highlight, Item: ListGroupItem },
+  FieldPicker: defaultProps({ Input, Highlight, Item: ListGroupItem })(
     FilteredPicker
   ),
   ListGroupItem,
-  TagsInput: partial({ TagComponent }, TagsInput),
+  TagsInput: defaultProps({ TagComponent })(TagsInput),
   Icon,
 })
 export let Pager = props => (
@@ -617,8 +617,10 @@ let Tabs = ({ value, onChange = () => {}, options }) => (
     )}
   </div>
 )
+
 Tabs.displayName = 'Tabs'
 Tabs = observer(Tabs)
+
 export { Tabs }
 
-export let FilterList = partial({ Icon }, BaseFilterList)
+export let FilterList = defaultProps({ Icon })(BaseFilterList)
