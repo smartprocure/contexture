@@ -1,4 +1,7 @@
-﻿# 1.26.1
+﻿# 1.26.2
+* Small performance improvement on CheckableResultsTable.
+
+# 1.26.1
 * Replaced all uses of `partial` with `defaultProps` from recompose.
 
 # 1.26.0
