@@ -1,6 +1,6 @@
 import FilterAdder from './FilterAdder'
-import { partial } from './utils/mobx-react-utils'
 import { Modal, ModalPicker, FilteredPicker } from './layout/'
+import { defaultProps } from 'recompose'
 
 export default ({
   Item,
@@ -9,17 +9,11 @@ export default ({
   Highlight,
   label = 'Add Custom Filter',
 } = {}) =>
-  partial(
-    {
-      Picker: partial(
-        {
-          Modal,
-          Button,
-          label,
-          Picker: partial({ Input, Highlight, Item }, FilteredPicker),
-        },
-        ModalPicker
-      ),
-    },
-    FilterAdder
-  )
+  defaultProps({
+    Picker: defaultProps({
+      Modal,
+      Button,
+      label,
+      Picker: defaultProps({ Input, Highlight, Item })(FilteredPicker),
+    })(ModalPicker),
+  })(FilterAdder)

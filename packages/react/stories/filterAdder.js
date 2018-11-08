@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import FilterAdder from '../src/FilterAdder'
 import { applyDefaults } from '../src/utils/schema'
-import { partial } from '../src/utils/mobx-react-utils'
+import { defaultProps } from 'recompose'
 import Modal from '../src/layout/Modal'
 import { ModalPicker, FilteredPicker } from '../src/layout/Pickers'
 
@@ -21,19 +21,13 @@ let Select = ({ options, onChange }) => (
   </select>
 )
 
-let Adder = partial(
-  {
-    Picker: partial(
-      {
-        Modal,
-        label: '+ Include Additional Filter',
-        Picker: FilteredPicker,
-      },
-      ModalPicker
-    ),
-  },
-  FilterAdder
-)
+let Adder = defaultProps({
+  Picker: defaultProps({
+    Modal,
+    label: '+ Include Additional Filter',
+    Picker: FilteredPicker,
+  })(ModalPicker),
+})(FilterAdder)
 
 let mockTree = {
   add: action('add'),

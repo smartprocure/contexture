@@ -21,9 +21,5 @@ export let lenservable = x => {
 
 export let withStateLens = state => inject(() => F.lensOf(observable(state)))
 
-export let partial = _.curry((x, y) =>
-  inject((stores, props) => _.merge(x, props))(y)
-)
-
 export let injectDefaults = f =>
   inject((stores, props) => f(_.defaults(stores, props)))

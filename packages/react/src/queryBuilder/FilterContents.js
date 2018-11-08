@@ -4,16 +4,13 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 import { ModalPicker, Modal, FilteredPicker, Dynamic } from '../layout/'
 import { fieldsToOptions } from '../FilterAdder'
-import { partial } from '../utils/mobx-react-utils'
+import { defaultProps } from 'recompose'
 import { get } from '../utils/mobx-utils'
 
-let FieldPicker = partial(
-  {
-    Modal,
-    Picker: FilteredPicker,
-  },
-  ModalPicker
-)
+let FieldPicker = defaultProps({
+  Modal,
+  Picker: FilteredPicker,
+})(ModalPicker)
 
 let FilterContents = inject(_.defaults)(
   observer(({ node, root, fields, types = {} }) => {
