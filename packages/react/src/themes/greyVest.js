@@ -539,25 +539,21 @@ let iconMap = {
 }
 let Icon = ({ icon }) => <Dynamic component={iconMap[icon]} />
 
+let AddLabel = (
+  <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+    Add Custom Filter
+    <i className="material-icons" style={{ opacity: 0.4 }}>
+      filter_list
+    </i>
+  </Flex>
+)
+
 export let Adder = ModalFilterAdder({
   Button,
   Input,
   Highlight,
   Item: ListGroupItem,
-  label: (
-    <span
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      }}
-    >
-      Add Custom Filter
-      <i className="material-icons" style={{ opacity: 0.4 }}>
-        filter_list
-      </i>
-    </span>
-  ),
+  label: AddLabel,
 })
 
 export let PagerItem = observer(({ active, disabled, ...x }) => (
