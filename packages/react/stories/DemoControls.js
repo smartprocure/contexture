@@ -4,7 +4,7 @@ import { observer } from 'mobx-react'
 import { withStateLens } from '../src/utils/mobx-react-utils'
 import { defaultProps } from 'recompose'
 import ExampleTypeConstructor from '../src/exampleTypes/'
-import { TextHighlight, FilteredPicker, ModalFilterAdder } from '../src'
+import { TextHighlight, NestedPicker, ModalFilterAdder } from '../src'
 
 export let Button = x => (
   <button
@@ -116,7 +116,7 @@ export let ExampleTypes = ExampleTypeConstructor({
     Input,
     Highlight,
     Item: ListGroupItem,
-  })(FilteredPicker),
+  })(NestedPicker),
 })
 let { ResultPager } = ExampleTypes
 export let Pager = defaultProps({ Item: PagerItem })(ResultPager)

@@ -7,7 +7,7 @@ import { defaultProps } from 'recompose'
 import {
   Flex,
   TextHighlight,
-  FilteredPicker,
+  NestedFiltered,
   ModalFilterAdder,
   TagsInput,
 } from '../'
@@ -290,7 +290,7 @@ export let ExampleTypes = ExampleTypeConstructor({
   RadioList: ButtonRadio,
   Table,
   FieldPicker: defaultProps({ Input, Highlight, Item: ListGroupItem })(
-    FilteredPicker
+    NestedFiltered
   ),
   ListGroupItem,
   TagsInput: defaultProps({ TagComponent })(TagsInput),

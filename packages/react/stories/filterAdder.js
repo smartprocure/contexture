@@ -6,7 +6,7 @@ import FilterAdder from '../src/FilterAdder'
 import { applyDefaults } from '../src/utils/schema'
 import { defaultProps } from 'recompose'
 import Modal from '../src/layout/Modal'
-import { ModalPicker, FilteredPicker } from '../src/layout/Pickers'
+import { ModalPicker, NestedPicker } from '../src'
 
 let Select = ({ options, onChange }) => (
   <select onChange={e => onChange(e.target.value)}>
@@ -25,7 +25,7 @@ let Adder = defaultProps({
   Picker: defaultProps({
     Modal,
     label: '+ Include Additional Filter',
-    Picker: FilteredPicker,
+    Picker: NestedPicker,
   })(ModalPicker),
 })(FilterAdder)
 
@@ -54,7 +54,7 @@ export default () => {
         <div>Check action log to see adding being dispatched</div>
       </div>
     ))
-    .addWithJSX('With FilteredPickerModal', () => (
+    .addWithJSX('With NestedPickerModal', () => (
       <Adder
         tree={mockTree}
         path={['path']}

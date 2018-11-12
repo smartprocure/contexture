@@ -7,7 +7,7 @@ import { withStateLens } from '../utils/mobx-react-utils'
 import {
   Flex,
   TextHighlight,
-  FilteredPicker,
+  NestedPicker,
   ModalFilterAdder,
   TagsInput,
   FilterList as BaseFilterList,
@@ -583,7 +583,7 @@ export let ExampleTypes = ExampleTypeConstructor({
   RadioList: ButtonRadio,
   Table,
   FieldPicker: defaultProps({ Input, Highlight, Item: ListGroupItem })(
-    FilteredPicker
+    NestedPicker
   ),
   ListGroupItem,
   TagsInput: defaultProps({ TagComponent })(TagsInput),
