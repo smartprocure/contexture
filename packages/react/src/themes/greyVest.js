@@ -440,6 +440,13 @@ export let GVStyle = () => (
         border: solid 1px #f1f1f1;
         padding: 5px;
       }
+      
+      .panel-tree-picker > div {
+        border-right: solid 1px #eef0f1;
+      }
+      .panel-tree-picker > div:last-child {
+        border-right: none;
+      }
     `}
   </style>
 )
@@ -548,11 +555,34 @@ let AddLabel = (
   </Flex>
 )
 
+let FilterListItem = observer(({ active, disabled, hasChildren, children, ...props }) => (
+  <div
+    style={{
+      padding: '10px 40px',
+      cursor: 'pointer',
+      fontSize: 18,
+      background: active ? '#ebebeb' : '#fff',
+      color: disabled ? '#9b9b9b' : '#000',
+    }}
+    {...props}
+  >
+    {hasChildren
+    ? <Flex style={{alignItems: 'center'}}>
+        {children}
+        <i className="material-icons" style={{fontSize: 20}}>
+          chevron_right
+        </i>
+      </Flex>
+    : children}
+  </div>
+))
+
+
 export let Adder = ModalFilterAdder({
   Button,
   Input,
   Highlight,
-  Item: ListGroupItem,
+  Item: FilterListItem,
   label: AddLabel,
 })
 
@@ -582,7 +612,7 @@ export let ExampleTypes = ExampleTypeConstructor({
   Checkbox,
   RadioList: ButtonRadio,
   Table,
-  FieldPicker: defaultProps({ Input, Highlight, Item: ListGroupItem })(
+  FieldPicker: defaultProps({ Input, Highlight, Item: FilterListItem })(
     NestedPicker
   ),
   ListGroupItem,
