@@ -93,32 +93,28 @@ let wrapPicker = _.flow(
   observer,
   withStateLens({ filter: '' })
 )
-let NestedPicker =
-  ({
-    options,
-    onChange,
-    filter,
-    Input = 'input',
-    Highlight = TextHighlight,
-    Item = 'div',
-  }) => (
-    <div>
-      <Input
-        {...F.domLens.value(filter)}
-        placeholder="Enter filter keyword..."
+let NestedPicker = ({
+  options,
+  onChange,
+  filter,
+  Input = 'input',
+  Highlight = TextHighlight,
+  Item = 'div',
+}) => (
+  <div>
+    <Input {...F.domLens.value(filter)} placeholder="Enter filter keyword..." />
+    {F.view(filter) ? (
+      <FilteredSection
+        options={matchLabel(F.view(filter))(options)}
+        onClick={onChange}
+        highlight={F.view(filter)}
+        Highlight={Highlight}
+        Item={Item}
       />
-      {F.view(filter) ? (
-        <FilteredSection
-          options={matchLabel(F.view(filter))(options)}
-          onClick={onChange}
-          highlight={F.view(filter)}
-          Highlight={Highlight}
-          Item={Item}
-        />
-      ) : (
-        <PanelTreePicker options={options} onChange={onChange} Item={Item} />
-      )}
-    </div>
-  )
+    ) : (
+      <PanelTreePicker options={options} onChange={onChange} Item={Item} />
+    )}
+  </div>
+)
 
 export default wrapPicker(NestedPicker)
