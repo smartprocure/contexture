@@ -8,7 +8,7 @@ export default ({
   Button,
   Highlight,
   label = 'Add Custom Filter',
-  Picker = NestedPicker
+  Picker = NestedPicker,
 } = {}) =>
   defaultProps({
     Picker: defaultProps({

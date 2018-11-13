@@ -1,32 +1,33 @@
 import React from 'react'
 import F from 'futil-js'
 import _ from 'lodash/fp'
-import {inject, observer} from 'mobx-react'
-import {observable} from 'mobx'
+import { inject, observer } from 'mobx-react'
+import { observable } from 'mobx'
 import { withStateLens } from '../utils/mobx-react-utils'
 import TextHighlight from './TextHighlight'
 
-
 // Unflatten by with support for arrays (allow dots in paths) and not needing a _.keyBy first
-let unflattenObjectBy = _.curry(
-  (iteratee, x) => _.zipObjectDeep(F.mapIndexed(iteratee, x), _.values(x))
+let unflattenObjectBy = _.curry((iteratee, x) =>
+  _.zipObjectDeep(F.mapIndexed(iteratee, x), _.values(x))
 )
 
 let isField = x => x.typeDefault
 
-let FilteredSection = observer(({ options, onClick, highlight, Highlight, Item }) =>
-  <div>
-    {F.mapIndexed(
-      (option, field) => (
-        <Item key={field} onClick={() => onClick(option.value)}>
-           <Highlight text={option.label} pattern={highlight} />
-        </Item>
-      ),
-      options
-    )}
-  </div>
+let FilteredSection = observer(
+  ({ options, onClick, highlight, Highlight, Item }) => (
+    <div>
+      {F.mapIndexed(
+        (option, field) => (
+          <Item key={field} onClick={() => onClick(option.value)}>
+            <Highlight text={option.label} pattern={highlight} />
+          </Item>
+        ),
+        options
+      )}
+    </div>
+  )
 )
-let Section = observer(({options, onClick, selected, Item}) => (
+let Section = observer(({ options, onClick, selected, Item }) => (
   <div>
     {F.mapIndexed(
       (item, key) => (
@@ -35,7 +36,8 @@ let Section = observer(({options, onClick, selected, Item}) => (
           onClick={() => onClick(item.value || key, item)}
           active={selected === key}
           disabled={selected && selected !== key}
-          hasChildren={!isField(item)}>
+          hasChildren={!isField(item)}
+        >
           {isField(item) ? item.shortLabel || item.label : _.startCase(key)}
         </Item>
       ),
@@ -44,12 +46,11 @@ let Section = observer(({options, onClick, selected, Item}) => (
   </div>
 ))
 
-
 let toNested = _.flow(
   _.map(x => _.defaults({ path: x.value }, x)),
   unflattenObjectBy('path')
 )
-let PanelTreePicker = inject((store, {onChange, options}) => {
+let PanelTreePicker = inject((store, { onChange, options }) => {
   let x = {
     state: observable({ selected: [] }),
     nestedOptions: toNested(options),
@@ -62,8 +63,8 @@ let PanelTreePicker = inject((store, {onChange, options}) => {
 })(
   observer(({ select, state, nestedOptions, Item }) => (
     <div
-      className='panel-tree-picker'
-      style={{display: 'inline-flex', width: '100%', overflow: 'scroll'}}
+      className="panel-tree-picker"
+      style={{ display: 'inline-flex', width: '100%', overflow: 'scroll' }}
     >
       <Section
         options={nestedOptions}
@@ -88,26 +89,35 @@ let PanelTreePicker = inject((store, {onChange, options}) => {
 )
 
 let matchLabel = str => _.filter(x => F.matchAllWords(str)(x.label))
-let wrapPicker = _.flow(observer, withStateLens({ filter: '' }))
-export default wrapPicker(({ 
-  options,
-  onChange,
-  filter,
-  Input = 'input',
-  Highlight = TextHighlight,
-  Item = 'div'
-}) => (
-  <div>
-    <Input {...F.domLens.value(filter)} placeholder='Enter filter keyword...' />
-    {F.view(filter)
-      ? <FilteredSection
+let wrapPicker = _.flow(
+  observer,
+  withStateLens({ filter: '' })
+)
+export default wrapPicker(
+  ({
+    options,
+    onChange,
+    filter,
+    Input = 'input',
+    Highlight = TextHighlight,
+    Item = 'div',
+  }) => (
+    <div>
+      <Input
+        {...F.domLens.value(filter)}
+        placeholder="Enter filter keyword..."
+      />
+      {F.view(filter) ? (
+        <FilteredSection
           options={matchLabel(F.view(filter))(options)}
           onClick={onChange}
           highlight={F.view(filter)}
           Highlight={Highlight}
           Item={Item}
         />
-      : <PanelTreePicker options={options} onChange={onChange} Item={Item} />
-    }
-  </div>
-))
+      ) : (
+        <PanelTreePicker options={options} onChange={onChange} Item={Item} />
+      )}
+    </div>
+  )
+)
