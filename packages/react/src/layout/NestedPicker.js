@@ -56,21 +56,21 @@ let PanelTreePicker = inject((store, { onChange, options }) => {
   let x = {
     state: observable({ selected: [] }),
     nestedOptions: toNested(options),
-    select: level => (key, field) => {
+    selectAtLevel: _.curry((level, key, field) => {
       if (isField(field)) onChange(field.value)
       else x.state.selected.splice(level, x.state.selected.length - level, key)
-    },
+    }),
   }
   return x
 })(
-  observer(({ select, state, nestedOptions, Item }) => (
+  observer(({ selectAtLevel, state, nestedOptions, Item }) => (
     <div
       className="panel-tree-picker"
       style={{ display: 'inline-flex', width: '100%', overflow: 'scroll' }}
     >
       <Section
         options={nestedOptions}
-        onClick={select(0)}
+        onClick={selectAtLevel(0)}
         selected={state.selected[0]}
         Item={Item}
       />
@@ -79,7 +79,7 @@ let PanelTreePicker = inject((store, { onChange, options }) => {
           <Section
             key={index}
             options={_.get(state.selected.slice(0, index + 1), nestedOptions)}
-            onClick={select(index + 1)}
+            onClick={selectAtLevel(index + 1)}
             selected={state.selected[index + 1]}
             Item={Item}
           />
