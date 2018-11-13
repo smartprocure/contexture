@@ -93,7 +93,7 @@ let wrapPicker = _.flow(
   observer,
   withStateLens({ filter: '' })
 )
-export default wrapPicker(
+let NestedPicker =
   ({
     options,
     onChange,
@@ -120,4 +120,5 @@ export default wrapPicker(
       )}
     </div>
   )
-)
+
+export default wrapPicker(NestedPicker)
