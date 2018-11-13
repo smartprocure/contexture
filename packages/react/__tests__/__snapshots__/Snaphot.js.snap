@@ -2091,7 +2091,7 @@ exports[`Storyshots FilterAdder Example 1`] = `
 </div>
 `;
 
-exports[`Storyshots FilterAdder With FilteredPickerModal 1`] = `
+exports[`Storyshots FilterAdder With NestedPickerModal 1`] = `
 <div
   style={Object {}}
 >
@@ -2686,6 +2686,13 @@ exports[`Storyshots IMDB Check List 1`] = `
         border: solid 1px #f1f1f1;
         padding: 5px;
       }
+      
+      .panel-tree-picker &gt; div {
+        border-right: solid 1px #eef0f1;
+      }
+      .panel-tree-picker &gt; div:last-child {
+        border-right: none;
+      }
     
   </style>
   <div>
@@ -3078,6 +3085,13 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+      }
+      
+      .panel-tree-picker &gt; div {
+        border-right: solid 1px #eef0f1;
+      }
+      .panel-tree-picker &gt; div:last-child {
+        border-right: none;
       }
     
   </style>
@@ -3590,30 +3604,6 @@ exports[`Storyshots Layout Awaiter 1`] = `
 </div>
 `;
 
-exports[`Storyshots Layout FilteredPicker 1`] = `
-<div>
-  <input
-    onChange={[Function]}
-    value=""
-  />
-  <div
-    onClick={[Function]}
-  >
-    abcd
-  </div>
-  <div
-    onClick={[Function]}
-  >
-    bcde
-  </div>
-  <div
-    onClick={[Function]}
-  >
-    cdef
-  </div>
-</div>
-`;
-
 exports[`Storyshots Layout Highlight 1`] = `
 <div>
   <div>
@@ -3643,6 +3633,53 @@ exports[`Storyshots Layout ModalPicker 1`] = `
   >
     Pick
   </button>
+</div>
+`;
+
+exports[`Storyshots Layout NestedPicker 1`] = `
+<div>
+  <input
+    onChange={[Function]}
+    placeholder="Enter filter keyword..."
+    value=""
+  />
+  <div
+    className="panel-tree-picker"
+    style={
+      Object {
+        "display": "inline-flex",
+        "overflow": "scroll",
+        "width": "100%",
+      }
+    }
+  >
+    <div>
+      <div
+        active={false}
+        disabled={undefined}
+        hasChildren={true}
+        onClick={[Function]}
+      >
+        Abcd
+      </div>
+      <div
+        active={false}
+        disabled={undefined}
+        hasChildren={true}
+        onClick={[Function]}
+      >
+        Bcde
+      </div>
+      <div
+        active={false}
+        disabled={undefined}
+        hasChildren={true}
+        onClick={[Function]}
+      >
+        Cdef
+      </div>
+    </div>
+  </div>
 </div>
 `;
 
