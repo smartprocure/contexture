@@ -60,7 +60,7 @@ let PanelTreePicker = inject((store, {onChange, options}) => {
   }
   return x
 })(
-  observer(({ options, select, state, nestedOptions, Item }) => (
+  observer(({ select, state, nestedOptions, Item }) => (
     <div
       className='panel-tree-picker'
       style={{display: 'inline-flex', width: '100%', overflow: 'scroll'}}
