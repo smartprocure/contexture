@@ -27,6 +27,7 @@ let FilteredSection = observer(
     </div>
   )
 )
+FilteredSection.displayName = 'FilteredSection'
 let Section = observer(({ options, onClick, selected, Item }) => (
   <div>
     {F.mapIndexed(
@@ -45,6 +46,7 @@ let Section = observer(({ options, onClick, selected, Item }) => (
     )}
   </div>
 ))
+Section.displayName = 'Section'
 
 let toNested = _.flow(
   _.map(x => _.defaults({ path: x.value }, x)),
@@ -87,12 +89,9 @@ let PanelTreePicker = inject((store, { onChange, options }) => {
     </div>
   ))
 )
+PanelTreePicker.displayName = 'PanelTreePicker'
 
 let matchLabel = str => _.filter(x => F.matchAllWords(str)(x.label))
-let wrapPicker = _.flow(
-  observer,
-  withStateLens({ filter: '' })
-)
 let NestedPicker = ({
   options,
   onChange,
@@ -116,5 +115,8 @@ let NestedPicker = ({
     )}
   </div>
 )
-
+let wrapPicker = _.flow(
+  observer,
+  withStateLens({ filter: '' })
+)
 export default wrapPicker(NestedPicker)
