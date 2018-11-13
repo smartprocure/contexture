@@ -1,35 +1,7 @@
-import _ from 'lodash/fp'
 import F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
 import { withStateLens } from '../utils/mobx-react-utils'
-import TextHighlight from './TextHighlight'
-
-export let FilteredPicker = withStateLens({ filter: '' })(
-  observer(
-    ({
-      options,
-      onChange,
-      filter,
-      Input = 'input',
-      Item = 'div',
-      Highlight = TextHighlight,
-    }) => (
-      <div>
-        <Input {...F.domLens.value(filter)} />
-        {_.map(
-          ({ value, label }) => (
-            <Item key={value} onClick={() => onChange(value)}>
-              <Highlight text={label} pattern={F.view(filter)} />
-            </Item>
-          ),
-          _.filter(x => F.matchAllWords(F.view(filter))(x.label), options)
-        )}
-      </div>
-    )
-  )
-)
-FilteredPicker.displayName = 'FilteredPicker'
 
 export let ModalPicker = withStateLens({ isOpen: false })(
   observer(

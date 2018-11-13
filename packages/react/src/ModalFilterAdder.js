@@ -1,5 +1,5 @@
 import FilterAdder from './FilterAdder'
-import { Modal, ModalPicker, FilteredPicker } from './layout/'
+import { Modal, ModalPicker, NestedPicker } from './layout/'
 import { defaultProps } from 'recompose'
 
 export default ({
@@ -8,12 +8,13 @@ export default ({
   Button,
   Highlight,
   label = 'Add Custom Filter',
+  Picker = NestedPicker,
 } = {}) =>
   defaultProps({
     Picker: defaultProps({
       Modal,
       Button,
       label,
-      Picker: defaultProps({ Input, Highlight, Item })(FilteredPicker),
+      Picker: defaultProps({ Input, Highlight, Item })(Picker),
     })(ModalPicker),
   })(FilterAdder)

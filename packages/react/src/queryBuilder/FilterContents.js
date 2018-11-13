@@ -2,14 +2,14 @@ import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
 import { inject, observer } from 'mobx-react'
-import { ModalPicker, Modal, FilteredPicker, Dynamic } from '../layout/'
+import { ModalPicker, Modal, NestedPicker, Dynamic } from '../layout/'
 import { fieldsToOptions } from '../FilterAdder'
 import { defaultProps } from 'recompose'
 import { get } from '../utils/mobx-utils'
 
 let FieldPicker = defaultProps({
   Modal,
-  Picker: FilteredPicker,
+  Picker: NestedPicker,
 })(ModalPicker)
 
 let FilterContents = inject(_.defaults)(

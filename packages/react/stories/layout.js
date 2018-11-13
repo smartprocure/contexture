@@ -9,7 +9,7 @@ import Popover from '../src/layout/Popover'
 import Modal from '../src/layout/Modal'
 import Awaiter from '../src/layout/Awaiter'
 import TextHighlight from '../src/layout/TextHighlight'
-import { FilteredPicker, ModalPicker } from '../src/layout/Pickers'
+import { NestedPicker, ModalPicker } from '../src'
 
 let ModalDemo = withStateLens({ isOpen: false })(
   observer(({ isOpen }) => (
@@ -64,8 +64,8 @@ export default () => {
         </div>
       )
     })
-    .addWithJSX('FilteredPicker', () => (
-      <FilteredPicker
+    .addWithJSX('NestedPicker', () => (
+      <NestedPicker
         options={['abcd', 'bcde', 'cdef'].map(x => ({ label: x, value: x }))}
         onChange={action(`picked`)}
       />
@@ -75,7 +75,7 @@ export default () => {
         options={['abcd', 'bcde', 'cdef'].map(x => ({ label: x, value: x }))}
         onChange={action('picked')}
         label="Pick"
-        Picker={FilteredPicker}
+        Picker={NestedPicker}
         Modal={Modal}
       />
     ))

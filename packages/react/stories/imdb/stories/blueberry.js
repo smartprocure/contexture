@@ -117,6 +117,9 @@ let schemas = fromPromise(
             title: { order: 1 },
             genres: { display: divs },
             actors: { display: divs },
+            imdbId: { path: ['Imdb', 'imdbId'] },
+            imdbRating: { path: ['Imdb', 'imdbRating'] },
+            imdbVotes: { path: ['Imdb', 'imdbVotes'] },
           },
         },
       })

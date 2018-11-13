@@ -1,4 +1,9 @@
-﻿# 1.26.2
+# 1.27.0
+* Added nested support to the field picker. To nest options, add a `path` prop on fields before passing along to an Adder (which is also used by ResultsTable)
+* Fixed Modal max-width to be fit-content instead of arbitrarily 500px
+* Allow overriding the Picker in ModalFilterAdder
+
+# 1.26.2
 * Small performance improvement on CheckableResultsTable.
 
 # 1.26.1
