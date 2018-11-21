@@ -3190,31 +3190,31 @@ var CSVStream = exports.CSVStream = function () {
                           logger('CSVStream', records + chunk.length + ' of ' + totalRecords);
 
                           chunk = format(formatRules)(chunk);
-                          cleanValues = _fp2.default.map(function (y) {
-                            return '"' + y.replace(/"/g, '') + '"';
-                          });
+                          cleanValues = _fp2.default.flow(_fp2.default.map(function (y) {
+                            return _fp2.default.includes(',', y) ? '"' + y.replace(/"/g, '') + '"' : y;
+                          }), _fp2.default.join(','));
                           csv = _fp2.default.map(function (x) {
                             return cleanValues(_fp2.default.values(x));
                           }, chunk);
 
-
                           if (!records) {
                             csv = [cleanValues(_fp2.default.keys(_fp2.default.head(chunk)))].concat((0, _toConsumableArray3.default)(csv));
                           }
+                          csv = csv.join('\n');
 
                           records += chunk.length;
-                          _context4.next = 8;
+                          _context4.next = 9;
                           return targetStream.write(csv);
 
-                        case 8:
-                          _context4.next = 10;
+                        case 9:
+                          _context4.next = 11;
                           return onWrite({
                             chunk: chunk,
                             records: records,
                             totalRecords: totalRecords
                           });
 
-                        case 10:
+                        case 11:
                         case 'end':
                           return _context4.stop();
                       }
