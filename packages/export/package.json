@@ -1,9 +1,10 @@
 {
   "name": "contexture-export",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Contexture Exports",
-  "main": "src/index.js",
+  "main": "lib/contexture-export.js",
   "scripts": {
+    "build": "webpack",
     "danger": "duti",
     "lint": "eslint src/*.js test/*.js",
     "lint:ci": "npm run lint -- -o lint-results.json -f json",
@@ -13,7 +14,8 @@
     "test": "jest --",
     "test:watch": "jest --watch --",
     "test:ci": "jest --coverage --json --outputFile=test-results.json",
-    "coverage": "jest --coverage --"
+    "coverage": "jest --coverage --",
+    "prepublish": "webpack"
   },
   "repository": {
     "type": "git",
@@ -25,9 +27,11 @@
     "url": "https://github.com/smartprocure/contexture-export/issues"
   },
   "homepage": "https://github.com/smartprocure/contexture-export#readme",
-  "dependencies": {
+  "peerDependencies": {
     "futil": "^1.55.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.11"
+  },
+  "dependencies": {
     "moment": "^2.22.2",
     "numeral": "^2.0.6",
     "objects-to-csv": "^1.1.0",
@@ -48,7 +52,8 @@
     "eslint-config-smartprocure": "^1.2.0",
     "jest": "^23.6.0",
     "jest-cli": "^23.6.0",
-    "prettier": "^1.14.3"
+    "prettier": "^1.14.3",
+    "webpack": "^4.26.0"
   },
   "jest": {
     "setupFiles": [
