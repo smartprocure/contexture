@@ -81,10 +81,9 @@ describe('exportStrategies', () => {
       expect(stream.write.mock.calls).toEqual([
         [
           `First Prop,Second Property
-FIRST,SECOND
-`,
+FIRST,SECOND`,
         ],
-        ['FIRST,SECOND\n'],
+        ['FIRST,SECOND'],
       ])
       expect(onWrite.mock.calls).toEqual([
         [

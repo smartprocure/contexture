@@ -1,6 +1,5 @@
 import F from 'futil'
 import _ from 'lodash/fp'
-import ObjectsToCsv from 'objects-to-csv'
 
 // Paged export strategy,
 // it will continuously call getNext until hasNext returns false.
@@ -92,16 +91,15 @@ export const CSVStream = async ({
       logger('CSVStream', `${records + chunk.length} of ${totalRecords}`)
 
       chunk = format(formatRules)(chunk)
-      let csv = await new ObjectsToCsv(chunk).toString()
-
-      // Records will have a truthy value if we're not on the first
-      // page. When that's the case, we want to remove the header of the CSV
-      // so that it doesn't appear multiple times throughout the file.
-      if (records)
-        csv = csv
-          .split('\n')
-          .slice(1)
-          .join('\n')
+      let cleanValues = _.flow(
+        _.map(y => (_.includes(',', y) ? `"${y.replace(/"/g, '')}"` : y)),
+        _.join(',')
+      )
+      let csv = _.map(x => cleanValues(_.values(x)), chunk)
+      if (!records) {
+        csv = [cleanValues(_.keys(_.head(chunk))), ...csv]
+      }
+      csv = csv.join('\n')
 
       records += chunk.length
       await targetStream.write(csv)
