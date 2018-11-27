@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 
-const hereConfig = {
+const defaultHereConfig = {
   app_id: 'KzmI0fMwTyOG10rqZacS', // TEMP EMAIL USED - USE/GET YOUR APP_ID
   app_code: 'PykXtnTUeH7DDM-RLlpwyA', // TEMP EMAIL USED - USE/GET YOUR APP_CODE
   country: 'USA',
@@ -8,7 +8,7 @@ const hereConfig = {
   geoCoding: 'http://geocoder.api.here.com/6.2/geocode.json?gen=9',
 }
 
-export let loadHereOptions = async inputValue => {
+export let loadHereOptions = async (inputValue, hereConfig = defaultHereConfig) => {
   if (inputValue.length <= 2) return []
   let { autocomplete: url, app_id, app_code, country } = hereConfig
   let apiUrl = `${url}?app_id=${app_id}&app_code=${app_code}&country=${country}&query=${inputValue}`
@@ -25,7 +25,7 @@ export let loadHereOptions = async inputValue => {
     }))
   }
 }
-export let geoCodeLocation = async locationId => {
+export let geoCodeLocation = async (locationId, hereConfig = defaultHereConfig) => {
   let { geoCoding: url, app_id, app_code } = hereConfig
   let apiUrl = `${url}&app_id=${app_id}&app_code=${app_code}&locationid=${locationId}`
 
