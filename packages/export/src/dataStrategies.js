@@ -20,7 +20,7 @@ export const results = ({
   sortField,
   sortDir,
 }) => {
-  let formatTree = ({ pageSize, page, scrollId, tree }) => ({
+  let formatTree = ({ pageSize, page, scrollId }) => ({
     ..._.pick(['schema', 'join'], tree),
     type: 'group',
     key: 'limitedSearchRoot',
@@ -43,7 +43,7 @@ export const results = ({
   let scrollId = null
   let getNext = async () => {
     let result = getTreeResults(
-      await service(formatTree({ page, pageSize, scrollId, tree }))
+      await service(formatTree({ page, pageSize, scrollId }))
     )
     scrollId = result.context.scrollId
     page++
@@ -51,13 +51,14 @@ export const results = ({
   }
 
   const getTotalRecords = async () => {
-    let data = await service(formatTree({ pageSize: 1, page: 1, tree }))
+    let data = await service(formatTree({ pageSize: 1, page: 1 }))
     let totalRecords = getTreeResults(data).context.response.totalRecords
     let expectedRecords = totalPages * pageSize
     return totalRecords < expectedRecords ? totalRecords : expectedRecords
   }
 
   return {
+    formatTree,
     getTotalRecords,
     hasNext: () => page <= totalPages,
     getNext,
@@ -76,7 +77,7 @@ export const terms_stats = ({
   size = 100,
   sortDir,
 }) => {
-  let formatTree = ({ tree }) => ({
+  let formatTree = () => ({
     ..._.pick(['schema', 'join'], tree),
     type: 'group',
     key: 'limitedSearchRoot',
@@ -95,12 +96,13 @@ export const terms_stats = ({
 
   let done = false
   let getNext = async () => {
-    let result = getTreeResults(await service(formatTree({ tree })))
+    let result = getTreeResults(await service(formatTree()))
     done = true
     return result.context.terms
   }
 
   return {
+    formatTree,
     async getTotalRecords() {
       return size
     },
