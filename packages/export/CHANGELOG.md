@@ -1,4 +1,7 @@
-﻿# 0.1.0
+﻿# 0.1.1
+* Exposed formatTree.
+
+# 0.1.0
 * This project is now compiled with webpack.
 
 # 0.0.2
