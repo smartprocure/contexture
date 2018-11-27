@@ -8,7 +8,10 @@ const defaultHereConfig = {
   geoCoding: 'http://geocoder.api.here.com/6.2/geocode.json?gen=9',
 }
 
-export let loadHereOptions = async (inputValue, hereConfig = defaultHereConfig) => {
+export let loadHereOptions = async (
+  inputValue,
+  hereConfig = defaultHereConfig
+) => {
   if (inputValue.length <= 2) return []
   let { autocomplete: url, app_id, app_code, country } = hereConfig
   let apiUrl = `${url}?app_id=${app_id}&app_code=${app_code}&country=${country}&query=${inputValue}`
@@ -25,7 +28,10 @@ export let loadHereOptions = async (inputValue, hereConfig = defaultHereConfig) 
     }))
   }
 }
-export let geoCodeLocation = async (locationId, hereConfig = defaultHereConfig) => {
+export let geoCodeLocation = async (
+  locationId,
+  hereConfig = defaultHereConfig
+) => {
   let { geoCoding: url, app_id, app_code } = hereConfig
   let apiUrl = `${url}&app_id=${app_id}&app_code=${app_code}&locationid=${locationId}`
 
