@@ -1,3 +1,7 @@
+﻿# 1.27.2
+* TermsStatsTable now accepts a custom Filter property, to optionally
+  replace its entire filter.
+
 # 1.27.1
 * GeoFilter util now accepts parameter for its hereMaps configuration
 

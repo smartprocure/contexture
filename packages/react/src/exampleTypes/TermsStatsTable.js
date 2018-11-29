@@ -6,6 +6,13 @@ import { exampleTypes } from 'contexture-client'
 import injectTreeNode from '../utils/injectTreeNode'
 import ExpandableTable, { Column } from '../layout/ExpandableTable'
 
+let SimpleFilter = observer(({ Input = 'input', ...props }) => (
+  <div>
+    Filter:
+    <Input type="text" {...props} />
+  </div>
+))
+
 let TermsStatsTable = injectTreeNode(
   observer(
     ({
@@ -15,16 +22,14 @@ let TermsStatsTable = injectTreeNode(
       children,
       MoreControls = 'div',
       Input = 'input',
+      Filter = SimpleFilter,
       ...props
     }) => (
       <div>
-        <div>
-          Filter:
-          <Input
-            type="text"
-            {...F.domLens.value(tree.lens(node.path, 'filter'))}
-          />
-        </div>
+        <Filter
+          Input={Input}
+          {...F.domLens.value(tree.lens(node.path, 'filter'))}
+        />
         <ExpandableTable
           {...{
             ...props,
