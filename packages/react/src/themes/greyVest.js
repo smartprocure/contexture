@@ -118,10 +118,17 @@ export let GVStyle = () => (
         text-transform: uppercase;
         cursor: pointer;
         /* margin 5px ????? */
+        transition: background-color .25s linear;
       }
       .gv-button.active, .gv-button.primary {
         background-color: #0076de;
         color: #fff;
+      }
+      .gv-button.success {
+        background-color: #5bb85b !important;
+      }
+      .gv-button.danger {
+        background-color: #d75050 !important;
       }
       .gv-button-radio > .gv-button {
         margin-right: 20px;
