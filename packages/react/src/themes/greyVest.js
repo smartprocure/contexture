@@ -454,6 +454,10 @@ export let GVStyle = () => (
       .panel-tree-picker > div:last-child {
         border-right: none;
       }
+      
+      .gv-text-error {
+        color: #D75050;
+      }
     `}
   </style>
 )
@@ -660,3 +664,8 @@ Tabs = observer(Tabs)
 export { Tabs }
 
 export let FilterList = defaultProps({ Icon })(BaseFilterList)
+
+// Error Text / List General Components
+let ErrorText = ({children}) => <div className="gv-text-error">{children}</div>
+export let ErrorList = ({children}) =>
+  _.map(e => <ErrorText key={e}>{e}</ErrorText>, _.castArray(children))
