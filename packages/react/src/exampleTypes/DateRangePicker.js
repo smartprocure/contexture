@@ -1,26 +1,9 @@
 import React from 'react'
+import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 import { exampleTypes } from 'contexture-client'
 import injectTreeNode from '../utils/injectTreeNode'
-import _ from 'lodash/fp'
-
-let DefaultSelect = ({ options, value, onChange }) => (
-  <select
-    value={value}
-    onChange={e => {
-      onChange(e.target.value)
-    }}
-  >
-    {_.map(
-      x => (
-        <option key={x.value} value={x.value}>
-          {x.label}
-        </option>
-      ),
-      options
-    )}
-  </select>
-)
+import DefaultSelect from '../layout/Select'
 
 let DateComponent = injectTreeNode(
   observer(({ tree, node, ranges, Select = DefaultSelect }) => (
