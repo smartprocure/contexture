@@ -13,6 +13,7 @@ import {
   FilterList as BaseFilterList,
   Dynamic,
 } from '../'
+import DefaultSelect from '../layout/Select'
 import ExampleTypeConstructor from '../exampleTypes/'
 
 export let Input = ({ className = '', style, type = 'text', ...x }) => (
@@ -25,7 +26,6 @@ export let Input = ({ className = '', style, type = 'text', ...x }) => (
     {...x}
   />
 )
-Input.displayName = 'Input'
 
 // Low effort custom checkbox
 export let Checkbox = ({ checked, onChange, style = {} }) => (
@@ -62,6 +62,67 @@ export let Checkbox = ({ checked, onChange, style = {} }) => (
     )}
   </label>
 )
+
+export let Textarea = observer(props => (
+  <textarea className="gv-input" {...props} />
+))
+Textarea.displayName = 'Textarea'
+
+export let Select = observer(props => (
+  <DefaultSelect className="gv-input" {...props} />
+))
+Select.displayName = 'Select'
+
+export let CheckboxList = observer(({ options, value, onChange, ...props }) => (
+  <div {...props}>
+    {_.map(
+      option => (
+        <label
+          key={option.value}
+          style={{ display: 'flex', cursor: 'pointer', marginRight: 25 }}
+        >
+          <Checkbox
+            {...F.domLens.checkboxValues(option.value, {
+              get: () => value,
+              set: onChange,
+            })}
+          />
+          <div style={{ paddingLeft: 15 }}>{option.label}</div>
+        </label>
+      ),
+      options
+    )}
+  </div>
+))
+CheckboxList.displayName = 'CheckboxList'
+
+export let RadioList = observer(({ options, value, onChange, ...props }) => (
+  <div {...props}>
+    {_.map(
+      option => (
+        <label style={{ cursor: 'pointer', marginRight: 25 }}>
+          <input
+            type="radio"
+            style={{
+              marginRight: 10,
+              display: 'inline-block',
+              width: 'auto',
+              height: 'auto',
+            }}
+            onChange={e => {
+              onChange(e.target.value)
+            }}
+            value={option.value}
+            checked={value === option.value}
+          />
+          {option.label}
+        </label>
+      ),
+      options
+    )}
+  </div>
+))
+RadioList.displayName = 'RadioList'
 
 export let Fonts = () => (
   <div>
@@ -118,10 +179,17 @@ export let GVStyle = () => (
         text-transform: uppercase;
         cursor: pointer;
         /* margin 5px ????? */
+        transition: background-color .25s linear;
       }
       .gv-button.active, .gv-button.primary {
         background-color: #0076de;
         color: #fff;
+      }
+      .gv-button.success {
+        background-color: #5bb85b !important;
+      }
+      .gv-button.danger {
+        background-color: #d75050 !important;
       }
       .gv-button-radio > .gv-button {
         margin-right: 20px;
@@ -168,7 +236,7 @@ export let GVStyle = () => (
         color: #454545;
       }
       
-      .gv-input[type="text"] {
+      .gv-input[type="text"], textarea.gv-input, .gv-input[type="number"], .gv-input[type="date"] {
         padding: 5px;
         text-indent: 5px;
         margin: 5px auto;
@@ -188,7 +256,7 @@ export let GVStyle = () => (
         height: 40px;
       }
       
-      .gv-body select, .gv-body input {
+      .gv-body select, .gv-body input, .gv-body textarea {
         border-radius: 4px;
       }
       .gv-body select {
@@ -447,6 +515,10 @@ export let GVStyle = () => (
       .panel-tree-picker > div:last-child {
         border-right: none;
       }
+      
+      .gv-text-error {
+        color: #D75050;
+      }
     `}
   </style>
 )
@@ -516,6 +588,7 @@ export let ListGroupItem = withStateLens({ hovering: false })(
     />
   ))
 )
+ListGroupItem.displayName = 'ListGroupItem'
 
 let SmallIcon = ({ icon }) => (
   <i className="material-icons" style={{ fontSize: 20 }}>
@@ -580,6 +653,7 @@ let FilterListItem = observer(
     </div>
   )
 )
+FilterListItem.displayName = 'FilterListItem'
 
 export let Adder = ModalFilterAdder({
   Button,
@@ -597,6 +671,7 @@ export let PagerItem = observer(({ active, disabled, ...x }) => (
     {...x}
   />
 ))
+PagerItem.displayName = 'PagerItem'
 
 let TagComponent = ({ value, removeTag, tagStyle }) => (
   <div className="tags-input-tag" style={tagStyle}>
@@ -653,3 +728,10 @@ Tabs = observer(Tabs)
 export { Tabs }
 
 export let FilterList = defaultProps({ Icon })(BaseFilterList)
+
+// Error Text / List General Components
+let ErrorText = ({ children }) => (
+  <div className="gv-text-error">{children}</div>
+)
+export let ErrorList = ({ children }) =>
+  _.map(e => <ErrorText key={e}>{e}</ErrorText>, _.castArray(children))

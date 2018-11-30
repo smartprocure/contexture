@@ -1,4 +1,12 @@
-﻿# 1.27.2
+# 1.28.0
+* Factor out Select layout compnent
+* GreyVest: Add danger and success button colors
+* GreyVest: Add error text and error list
+* GreyVest: Textarea and Selects
+* GreyVest: CheckboxList and RadioList
+* GreyVest: Add missing display names
+
+# 1.27.2
 * TermsStatsTable now accepts a custom Filter property, to optionally
   replace its entire filter.
 

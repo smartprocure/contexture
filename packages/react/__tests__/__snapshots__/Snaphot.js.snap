@@ -2364,10 +2364,17 @@ exports[`Storyshots IMDB Check List 1`] = `
         text-transform: uppercase;
         cursor: pointer;
         /* margin 5px ????? */
+        transition: background-color .25s linear;
       }
       .gv-button.active, .gv-button.primary {
         background-color: #0076de;
         color: #fff;
+      }
+      .gv-button.success {
+        background-color: #5bb85b !important;
+      }
+      .gv-button.danger {
+        background-color: #d75050 !important;
       }
       .gv-button-radio &gt; .gv-button {
         margin-right: 20px;
@@ -2414,7 +2421,7 @@ exports[`Storyshots IMDB Check List 1`] = `
         color: #454545;
       }
       
-      .gv-input[type="text"] {
+      .gv-input[type="text"], textarea.gv-input, .gv-input[type="number"], .gv-input[type="date"] {
         padding: 5px;
         text-indent: 5px;
         margin: 5px auto;
@@ -2434,7 +2441,7 @@ exports[`Storyshots IMDB Check List 1`] = `
         height: 40px;
       }
       
-      .gv-body select, .gv-body input {
+      .gv-body select, .gv-body input, .gv-body textarea {
         border-radius: 4px;
       }
       .gv-body select {
@@ -2692,6 +2699,10 @@ exports[`Storyshots IMDB Check List 1`] = `
       }
       .panel-tree-picker &gt; div:last-child {
         border-right: none;
+      }
+      
+      .gv-text-error {
+        color: #D75050;
       }
     
   </style>
@@ -2764,10 +2775,17 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         text-transform: uppercase;
         cursor: pointer;
         /* margin 5px ????? */
+        transition: background-color .25s linear;
       }
       .gv-button.active, .gv-button.primary {
         background-color: #0076de;
         color: #fff;
+      }
+      .gv-button.success {
+        background-color: #5bb85b !important;
+      }
+      .gv-button.danger {
+        background-color: #d75050 !important;
       }
       .gv-button-radio &gt; .gv-button {
         margin-right: 20px;
@@ -2814,7 +2832,7 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         color: #454545;
       }
       
-      .gv-input[type="text"] {
+      .gv-input[type="text"], textarea.gv-input, .gv-input[type="number"], .gv-input[type="date"] {
         padding: 5px;
         text-indent: 5px;
         margin: 5px auto;
@@ -2834,7 +2852,7 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         height: 40px;
       }
       
-      .gv-body select, .gv-body input {
+      .gv-body select, .gv-body input, .gv-body textarea {
         border-radius: 4px;
       }
       .gv-body select {
@@ -3092,6 +3110,10 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
       }
       .panel-tree-picker &gt; div:last-child {
         border-right: none;
+      }
+      
+      .gv-text-error {
+        color: #D75050;
       }
     
   </style>
