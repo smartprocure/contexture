@@ -26,7 +26,6 @@ export let Input = ({ className = '', style, type = 'text', ...x }) => (
     {...x}
   />
 )
-Input.displayName = 'Input'
 
 // Low effort custom checkbox
 export let Checkbox = ({ checked, onChange, style = {} }) => (
@@ -67,10 +66,12 @@ export let Checkbox = ({ checked, onChange, style = {} }) => (
 export let Textarea = observer(props => (
   <textarea className="gv-input" {...props} />
 ))
+Textarea.displayName = 'Textarea'
 
 export let Select = observer(props => (
   <DefaultSelect className="gv-input" {...props} />
 ))
+Select.displayName = 'Select'
 
 export let CheckboxList = observer(({ options, value, onChange, ...props }) => (
   <div {...props}>
@@ -93,6 +94,7 @@ export let CheckboxList = observer(({ options, value, onChange, ...props }) => (
     )}
   </div>
 ))
+CheckboxList.displayName = 'CheckboxList'
 
 export let RadioList = observer(({ options, value, onChange, ...props }) => (
   <div {...props}>
@@ -111,7 +113,7 @@ export let RadioList = observer(({ options, value, onChange, ...props }) => (
               onChange(e.target.value)
             }}
             value={option.value}
-            checked={value == option.value}
+            checked={value === option.value}
           />
           {option.label}
         </label>
@@ -120,6 +122,7 @@ export let RadioList = observer(({ options, value, onChange, ...props }) => (
     )}
   </div>
 ))
+RadioList.displayName = 'RadioList'
 
 export let Fonts = () => (
   <div>
@@ -585,6 +588,7 @@ export let ListGroupItem = withStateLens({ hovering: false })(
     />
   ))
 )
+ListGroupItem.displayName = 'ListGroupItem'
 
 let SmallIcon = ({ icon }) => (
   <i className="material-icons" style={{ fontSize: 20 }}>
@@ -649,6 +653,7 @@ let FilterListItem = observer(
     </div>
   )
 )
+FilterListItem.displayName = 'FilterListItem'
 
 export let Adder = ModalFilterAdder({
   Button,
@@ -666,6 +671,7 @@ export let PagerItem = observer(({ active, disabled, ...x }) => (
     {...x}
   />
 ))
+PagerItem.displayName = 'PagerItem'
 
 let TagComponent = ({ value, removeTag, tagStyle }) => (
   <div className="tags-input-tag" style={tagStyle}>
