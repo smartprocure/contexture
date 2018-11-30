@@ -72,6 +72,42 @@ export let Select = observer(props =>
   <DefaultSelect className='gv-input' {...props} />
 )
 
+export let CheckboxList = observer(({options, value, onChange, ...props}) =>
+  <div {...props}>
+    {_.map(option => (
+      <label
+        key={option.value}
+        style={{ display: 'flex', cursor: 'pointer', marginRight: 25 }}
+      >
+        <Checkbox {...F.domLens.checkboxValues(option.value, {get: () => value, set: onChange})} />
+        <div style={{ paddingLeft: 15 }}>
+          {option.label}
+        </div>
+      </label>
+    ), options)}
+  </div>
+)
+
+export let RadioList = observer(({options, value, onChange, ...props}) =>
+  <div {...props}>
+    {_.map(
+      option => (
+        <label style= {{ cursor: 'pointer', marginRight: 25 }}>
+          <input
+            type="radio"
+            style= {{ marginRight: 10, display: 'inline-block', width: 'auto', height: 'auto' }}
+            onChange={e => { onChange(e.target.value) }}
+            value={option.value}
+            checked={value == option.value}
+          />
+          {option.label}
+        </label>
+      ),
+      options
+    )}
+  </div>
+)
+
 export let Fonts = () => (
   <div>
     <link
