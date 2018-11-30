@@ -64,39 +64,52 @@ export let Checkbox = ({ checked, onChange, style = {} }) => (
   </label>
 )
 
-export let Textarea = observer(props => 
-  <textarea className='gv-input' {...props} />
-)
+export let Textarea = observer(props => (
+  <textarea className="gv-input" {...props} />
+))
 
-export let Select = observer(props => 
-  <DefaultSelect className='gv-input' {...props} />
-)
+export let Select = observer(props => (
+  <DefaultSelect className="gv-input" {...props} />
+))
 
-export let CheckboxList = observer(({options, value, onChange, ...props}) =>
-  <div {...props}>
-    {_.map(option => (
-      <label
-        key={option.value}
-        style={{ display: 'flex', cursor: 'pointer', marginRight: 25 }}
-      >
-        <Checkbox {...F.domLens.checkboxValues(option.value, {get: () => value, set: onChange})} />
-        <div style={{ paddingLeft: 15 }}>
-          {option.label}
-        </div>
-      </label>
-    ), options)}
-  </div>
-)
-
-export let RadioList = observer(({options, value, onChange, ...props}) =>
+export let CheckboxList = observer(({ options, value, onChange, ...props }) => (
   <div {...props}>
     {_.map(
       option => (
-        <label style= {{ cursor: 'pointer', marginRight: 25 }}>
+        <label
+          key={option.value}
+          style={{ display: 'flex', cursor: 'pointer', marginRight: 25 }}
+        >
+          <Checkbox
+            {...F.domLens.checkboxValues(option.value, {
+              get: () => value,
+              set: onChange,
+            })}
+          />
+          <div style={{ paddingLeft: 15 }}>{option.label}</div>
+        </label>
+      ),
+      options
+    )}
+  </div>
+))
+
+export let RadioList = observer(({ options, value, onChange, ...props }) => (
+  <div {...props}>
+    {_.map(
+      option => (
+        <label style={{ cursor: 'pointer', marginRight: 25 }}>
           <input
             type="radio"
-            style= {{ marginRight: 10, display: 'inline-block', width: 'auto', height: 'auto' }}
-            onChange={e => { onChange(e.target.value) }}
+            style={{
+              marginRight: 10,
+              display: 'inline-block',
+              width: 'auto',
+              height: 'auto',
+            }}
+            onChange={e => {
+              onChange(e.target.value)
+            }}
             value={option.value}
             checked={value == option.value}
           />
@@ -106,7 +119,7 @@ export let RadioList = observer(({options, value, onChange, ...props}) =>
       options
     )}
   </div>
-)
+))
 
 export let Fonts = () => (
   <div>
@@ -711,6 +724,8 @@ export { Tabs }
 export let FilterList = defaultProps({ Icon })(BaseFilterList)
 
 // Error Text / List General Components
-let ErrorText = ({children}) => <div className="gv-text-error">{children}</div>
-export let ErrorList = ({children}) =>
+let ErrorText = ({ children }) => (
+  <div className="gv-text-error">{children}</div>
+)
+export let ErrorList = ({ children }) =>
   _.map(e => <ErrorText key={e}>{e}</ErrorText>, _.castArray(children))
