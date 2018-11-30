@@ -13,6 +13,7 @@ import {
   FilterList as BaseFilterList,
   Dynamic,
 } from '../'
+import DefaultSelect from '../layout/Select'
 import ExampleTypeConstructor from '../exampleTypes/'
 
 export let Input = ({ className = '', style, type = 'text', ...x }) => (
@@ -65,6 +66,10 @@ export let Checkbox = ({ checked, onChange, style = {} }) => (
 
 export let Textarea = observer(props => 
   <textarea className='gv-input' {...props} />
+)
+
+export let Select = observer(props => 
+  <DefaultSelect className='gv-input' {...props} />
 )
 
 export let Fonts = () => (
