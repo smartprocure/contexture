@@ -63,6 +63,10 @@ export let Checkbox = ({ checked, onChange, style = {} }) => (
   </label>
 )
 
+export let Textarea = observer(props => 
+  <textarea className='gv-input' {...props} />
+)
+
 export let Fonts = () => (
   <div>
     <link
@@ -175,7 +179,7 @@ export let GVStyle = () => (
         color: #454545;
       }
       
-      .gv-input[type="text"] {
+      .gv-input[type="text"], textarea.gv-input, .gv-input[type="number"], .gv-input[type="date"] {
         padding: 5px;
         text-indent: 5px;
         margin: 5px auto;
@@ -195,7 +199,7 @@ export let GVStyle = () => (
         height: 40px;
       }
       
-      .gv-body select, .gv-body input {
+      .gv-body select, .gv-body input, .gv-body textarea {
         border-radius: 4px;
       }
       .gv-body select {
