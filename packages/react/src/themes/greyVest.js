@@ -386,6 +386,7 @@ export let GVStyle = () => (
         grid-gap: 30px;
         position: sticky;
         top: 5px;
+        z-index: 1;
         /*background: #f6f6f6;*/
       }
       .gv-search-bar .gv-box {

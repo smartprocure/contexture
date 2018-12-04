@@ -1,3 +1,6 @@
+# 1.28.1
+* Add z-index to `sticky` search-bar
+
 # 1.28.0
 * Factor out Select layout compnent
 * GreyVest: Add danger and success button colors
