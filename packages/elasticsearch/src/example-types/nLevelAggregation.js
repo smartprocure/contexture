@@ -16,11 +16,10 @@ let processReducers = (results, reducers) => {
         (currentConfig, other) =>
           _.has(other, currentConfig) && _.has('field', currentConfig)
       )(config)
-      let operation = _.curry(
-        (op, item) =>
-          _.isNumber(config[op])
-            ? _[op](_.get(config.field, item), config[op])
-            : true
+      let operation = _.curry((op, item) =>
+        _.isNumber(config[op])
+          ? _[op](_.get(config.field, item), config[op])
+          : true
       )
       let filter = _.flow(
         operation,
