@@ -15,7 +15,7 @@ let BlankOperator = ({ state, tree, child }) => (
         borderBottomColor: styles.joinColor(tree.join),
       }}
     />
-    {child.join &&
+    {child.children &&
       child.join !== 'not' && (
         <div
           style={{
@@ -33,7 +33,7 @@ let OperatorLine = Component(({ tree, child, style }) => (
   <div
     style={{
       ...styles.operatorLine,
-      ...(child.join && child.join !== 'not' && styles.operatorLineExtended),
+      ...(child.children && child.join !== 'not' && styles.operatorLineExtended),
       ...styles.bgJoin(tree),
       ...style,
     }}

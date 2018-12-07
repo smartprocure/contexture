@@ -36,7 +36,7 @@ let GroupItem = FilterDragSource(args => {
           {...{ tree, child, root, parentTree, index, parent: state }}
         />
       )}
-      {child.join ? (
+      {child.children ? (
         <Group tree={child} root={root} parentTree={tree} />
       ) : (
         <Rule {...{ ...args, node: child }} />
