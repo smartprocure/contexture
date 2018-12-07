@@ -5,7 +5,7 @@ import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { Provider } from 'mobx-react'
 import Contexture, { updateSchemas } from '../utils/contexture'
-import { Label, Flex, Awaiter, QueryBuilder } from '../../../src'
+import { Label, Flex, Awaiter } from '../../../src'
 import {
   FilterList,
   Fonts,
@@ -16,6 +16,7 @@ import {
   ExampleTypes,
   IconButton,
   Tabs,
+  QueryBuilder
 } from '../../../src/themes/greyVest'
 import { Column } from './../../../src/layout/ExpandableTable'
 let {
