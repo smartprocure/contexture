@@ -15,6 +15,7 @@ import {
 } from '../'
 import DefaultSelect from '../layout/Select'
 import ExampleTypeConstructor from '../exampleTypes/'
+import QueryBuilderComponent from '../queryBuilder'
 
 export let Input = ({ className = '', style, type = 'text', ...x }) => (
   <input
@@ -239,7 +240,6 @@ export let GVStyle = () => (
       .gv-input[type="text"], textarea.gv-input, .gv-input[type="number"], .gv-input[type="date"] {
         padding: 5px;
         text-indent: 5px;
-        margin: 5px auto;
       }
       .gv-input, .gv-body select, .gv-body input {
         outline: none;
@@ -268,7 +268,6 @@ export let GVStyle = () => (
         border-radius: 4px;
         min-height: 40px;
         box-sizing: border-box;
-        margin: 5px auto;
         background: #fff;
         /* Arbitrary theme design */
         padding: 15px;
@@ -744,3 +743,6 @@ let ErrorText = ({ children }) => (
 )
 export let ErrorList = ({ children }) =>
   _.map(e => <ErrorText key={e}>{e}</ErrorText>, _.castArray(children))
+
+
+export let QueryBuilder = defaultProps({ Button })(QueryBuilderComponent)
