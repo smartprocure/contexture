@@ -5,11 +5,10 @@ let Combinatorics = require('js-combinatorics')
 let toSafeRegex = caseSensitive =>
   _.flow(
     _.replace(/[.?+*|{}[\]()]/g, '\\$&'),
-    _.map(
-      x =>
-        !caseSensitive && x.match(/[A-Za-z]/)
-          ? `[${_.toUpper(x)}${_.toLower(x)}]`
-          : x
+    _.map(x =>
+      !caseSensitive && x.match(/[A-Za-z]/)
+        ? `[${_.toUpper(x)}${_.toLower(x)}]`
+        : x
     ),
     _.join('')
   )

@@ -1,3 +1,6 @@
+# 0.12.0
+* Add geo_point type default on example type mapping
+
 ﻿# 0.11.2
 * Added tests to the recent highlighting changes.
 
