@@ -13,7 +13,7 @@ let FieldPicker = defaultProps({
 })(ModalPicker)
 
 let FilterContents = inject(_.defaults)(
-  observer(({ node, root, fields, types = {} }) => {
+  observer(({ node, root, fields, types = {}, ContextureButton = 'button' }) => {
     // `get` allows us to create a dependency on field before we know it exists (because the client will only add it if it's a type that uses it as it wouldn't make sense for something like `results`)
     let nodeField = get(node, 'field')
     return (
@@ -24,6 +24,7 @@ let FilterContents = inject(_.defaults)(
         }}
       >
         <FieldPicker
+          Button={ContextureButton}
           label={
             nodeField ? _.get([nodeField, 'label'], fields) : 'Pick a Field'
           }
