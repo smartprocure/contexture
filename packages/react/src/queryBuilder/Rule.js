@@ -21,7 +21,7 @@ let Rule = ({ state, node, tree, root, connectDragSource, isDragging }) =>
               ...styles.bgStriped,
             }),
             ...(isDragging && { opacity: 0.25 }),
-            ...(state.ruleHover && { background: 'rgba(0, 0, 0, 0.05)' }),
+            ...(state.ruleHover && { background: styles.background }),
           }}
           {...F.domLens.hover(state.lens.ruleHover)}
         >
