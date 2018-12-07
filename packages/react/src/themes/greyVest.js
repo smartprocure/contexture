@@ -744,5 +744,4 @@ let ErrorText = ({ children }) => (
 export let ErrorList = ({ children }) =>
   _.map(e => <ErrorText key={e}>{e}</ErrorText>, _.castArray(children))
 
-
 export let QueryBuilder = defaultProps({ Button })(QueryBuilderComponent)

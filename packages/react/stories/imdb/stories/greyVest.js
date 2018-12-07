@@ -16,7 +16,7 @@ import {
   ExampleTypes,
   IconButton,
   Tabs,
-  QueryBuilder
+  QueryBuilder,
 } from '../../../src/themes/greyVest'
 import { Column } from './../../../src/layout/ExpandableTable'
 let {
