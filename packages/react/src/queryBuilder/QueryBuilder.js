@@ -111,19 +111,17 @@ export default DDContext(
         ...ContextureClientBridge(types, tree),
       }),
     }),
-    ({ state, path, fields, types = {} }) => (
-      <Provider fields={fields} types={types}>
+    ({ state, path, fields, types = {}, Button = 'button' }) => (
+      <Provider fields={fields} types={types} ContextureButton={Button}>
         <div style={{ background }}>
           <Group tree={state.getNode(path)} root={state} isRoot={true} />
-          <button
-            type="button"
-            style={styles.btn}
+          <Button
             onClick={() => {
               state.adding = !state.adding
             }}
           >
             {state.adding ? 'Cancel' : 'Add Filter'}
-          </button>
+          </Button>
         </div>
       </Provider>
     ),

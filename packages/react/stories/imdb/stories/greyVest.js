@@ -1,4 +1,5 @@
 import _ from 'lodash/fp'
+import F from 'futil-js'
 import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
@@ -15,6 +16,7 @@ import {
   ExampleTypes,
   IconButton,
   Tabs,
+  QueryBuilder,
 } from '../../../src/themes/greyVest'
 import { Column } from './../../../src/layout/ExpandableTable'
 let {
@@ -45,17 +47,25 @@ let tree = Contexture({
     {
       key: 'criteria',
       type: 'group',
+      join: 'and',
       children: [
         {
-          key: 'titleContains',
-          type: 'tagsQuery',
-          field: 'title',
-        },
-        {
-          key: 'titleDoesNotContain',
-          type: 'tagsQuery',
-          field: 'title',
-          join: 'none',
+          key: 'titleGroup',
+          type: 'group',
+          join: 'or',
+          children: [
+            {
+              key: 'titleContains',
+              type: 'tagsQuery',
+              field: 'title',
+            },
+            {
+              key: 'titleDoesNotContain',
+              type: 'tagsQuery',
+              field: 'title',
+              join: 'none',
+            },
+          ],
         },
         {
           key: 'searchNumber',
@@ -104,6 +114,7 @@ tree.disableAutoUpdate = true
 
 let state = observable({
   autoUpdate: false,
+  showBuilder: false,
   tab: 'results',
 })
 
@@ -164,41 +175,54 @@ export default () => (
     <Awaiter promise={schemas}>
       {schemas => (
         <Provider tree={tree}>
-          <div className="gv-grid">
-            <div>
-              <h1>Filters</h1>
-              <div className="gv-box filter-list">
-                <div className="filter-list-item">
-                  <Label>Released</Label>
-                  <div className="filter-list-item-contents">
-                    <DateRangePicker
-                      path={['root', 'status']}
-                      ranges={[
-                        { label: 'All Time', from: '', to: '' },
-                        { label: 'This Year', from: 'now/y', to: '' },
-                        { label: 'Last Year', from: 'now-1y/y', to: 'now/y' },
-                      ]}
-                    />
+          <div
+            className="gv-grid"
+            style={state.showBuilder ? { gridTemplateColumns: '1fr' } : {}}
+          >
+            {state.showBuilder || (
+              <div>
+                <Flex style={{ alignItems: 'center' }}>
+                  <h1>Filters</h1>
+                  <IconButton
+                    title="Open Builder"
+                    onClick={F.flip('showBuilder', state)}
+                  >
+                    <i className="material-icons">build</i>
+                  </IconButton>
+                </Flex>
+                <div className="gv-box filter-list">
+                  <div className="filter-list-item">
+                    <Label>Released</Label>
+                    <div className="filter-list-item-contents">
+                      <DateRangePicker
+                        path={['root', 'status']}
+                        ranges={[
+                          { label: 'All Time', from: '', to: '' },
+                          { label: 'This Year', from: 'now/y', to: '' },
+                          { label: 'Last Year', from: 'now-1y/y', to: 'now/y' },
+                        ]}
+                      />
+                    </div>
                   </div>
+                  <FilterList
+                    path={['root', 'criteria']}
+                    fields={schemas.movies.fields}
+                    typeComponents={TypeMap}
+                    mapNodeToLabel={({ key }) =>
+                      ({
+                        titleContains: 'Title Contains',
+                        titleDoesNotContain: 'Title Does Not Contain',
+                      }[key])
+                    }
+                  />
+                  <Adder
+                    path={['root', 'criteria']}
+                    fields={schemas.movies.fields}
+                    uniqueFields
+                  />
                 </div>
-                <FilterList
-                  path={['root', 'criteria']}
-                  fields={schemas.movies.fields}
-                  typeComponents={TypeMap}
-                  mapNodeToLabel={({ key }) =>
-                    ({
-                      titleContains: 'Title Contains',
-                      titleDoesNotContain: 'Title Does Not Contain',
-                    }[key])
-                  }
-                />
-                <Adder
-                  path={['root', 'criteria']}
-                  fields={schemas.movies.fields}
-                  uniqueFields
-                />
               </div>
-            </div>
+            )}
             <div>
               <h1>Search Movies</h1>
               <div className="gv-search-bar">
@@ -238,6 +262,24 @@ export default () => (
                   </div>
                 </div>
               </div>
+              {state.showBuilder && (
+                <div>
+                  <Flex style={{ alignItems: 'center' }}>
+                    <h1>Builder</h1>
+                    <IconButton
+                      title="Open Builder"
+                      onClick={F.flip('showBuilder', state)}
+                    >
+                      <i className="material-icons">build</i>
+                    </IconButton>
+                  </Flex>
+                  <QueryBuilder
+                    types={TypeMap}
+                    fields={schemas.movies.fields}
+                    path={['root', 'criteria']}
+                  />
+                </div>
+              )}
               <h1>Search Results</h1>
               <Tabs
                 options={[

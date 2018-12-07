@@ -7,7 +7,7 @@ import {
 } from './generic'
 
 // Style Configuration
-export let background = '#f0f8ff'
+export let background = 'rgb(247, 247, 247)' //'#f0f8ff'
 // let background = '#fff'
 // let operatorHeight = 50
 let operatorHeight = 35
