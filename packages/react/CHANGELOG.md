@@ -3,7 +3,10 @@
 * QueryBuilder: Fix support for TagsQuery (was checking for join instead of children)
 * QueryBuilder: Make Rule hover same as background
 * QueryBuilder: Change default background
+* QueryBuilder: Pass along button component prop
 * GreyVest: Theme FilterList groups properly
+* GreyVest: Prefill QueryBuilder with gv button
+* GreyVest: Remove extra default margins on inputs
 * IMDB GreyVest Story: Add a toggle to switch between FilterList and QueryBuilder in real time
 
 # 1.28.1
