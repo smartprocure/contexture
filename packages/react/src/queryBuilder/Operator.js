@@ -33,7 +33,9 @@ let OperatorLine = Component(({ tree, child, style }) => (
   <div
     style={{
       ...styles.operatorLine,
-      ...(child.children && child.join !== 'not' && styles.operatorLineExtended),
+      ...(child.children &&
+        child.join !== 'not' &&
+        styles.operatorLineExtended),
       ...styles.bgJoin(tree),
       ...style,
     }}

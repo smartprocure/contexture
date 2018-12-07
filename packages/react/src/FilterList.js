@@ -4,7 +4,7 @@ import { observer, inject } from 'mobx-react'
 import { Dynamic } from './layout'
 import InjectTreeNode from './utils/injectTreeNode'
 import DefaultIcon from './DefaultIcon'
-import {bdJoin} from './styles/generic'
+import { bdJoin } from './styles/generic'
 
 export let Label = inject(_.pick('tree'))(
   observer(({ tree, node, Icon, ...x }) => (
@@ -52,39 +52,42 @@ export let FilterList = InjectTreeNode(
       mapNodeToLabel = _.noop,
       Icon = DefaultIcon,
       className,
-      style
+      style,
     }) => (
       <div style={style} className={className}>
         {_.map(
-          child => child.children
-          ? <FilterList
-              key={child.path}
-              node={child}
-              typeComponents={types}
-              fields={fields}
-              mapNodeToProps={mapNodeToProps}
-              mapNodeToLabel={mapNodeToLabel}
-              Icon={Icon}
-              className={'filter-list-group'}
-              style={bdJoin(child)}
-            />
-          : <div key={child.path} className="filter-list-item">
-              <FieldLabel
+          child =>
+            child.children ? (
+              <FilterList
+                key={child.path}
                 node={child}
+                typeComponents={types}
                 fields={fields}
+                mapNodeToProps={mapNodeToProps}
+                mapNodeToLabel={mapNodeToLabel}
                 Icon={Icon}
-                label={mapNodeToLabel(child, fields, types)}
+                className={'filter-list-group'}
+                style={bdJoin(child)}
               />
-              {!child.paused && (
-                <div className="filter-list-item-contents">
-                  <Dynamic
-                    component={types[child.type]}
-                    path={child.path.slice()}
-                    {...mapNodeToProps(child, fields, types)}
-                  />
-                </div>
-              )}
-            </div>,
+            ) : (
+              <div key={child.path} className="filter-list-item">
+                <FieldLabel
+                  node={child}
+                  fields={fields}
+                  Icon={Icon}
+                  label={mapNodeToLabel(child, fields, types)}
+                />
+                {!child.paused && (
+                  <div className="filter-list-item-contents">
+                    <Dynamic
+                      component={types[child.type]}
+                      path={child.path.slice()}
+                      {...mapNodeToProps(child, fields, types)}
+                    />
+                  </div>
+                )}
+              </div>
+            ),
           node.children
         )}
       </div>

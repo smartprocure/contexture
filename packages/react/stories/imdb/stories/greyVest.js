@@ -64,7 +64,7 @@ let tree = Contexture({
               field: 'title',
               join: 'none',
             },
-          ]
+          ],
         },
         {
           key: 'searchNumber',
@@ -174,47 +174,54 @@ export default () => (
     <Awaiter promise={schemas}>
       {schemas => (
         <Provider tree={tree}>
-          <div className="gv-grid" style={state.showBuilder ? {gridTemplateColumns: '1fr'} : {}}>
-            {state.showBuilder || <div>
-              <Flex style={{ alignItems: 'center' }}>
-                <h1>Filters</h1>
-                <IconButton title="Open Builder" onClick={F.flip('showBuilder', state)}>
-                  <i className="material-icons">build</i>
-                </IconButton>
-              </Flex>                
-              <div className="gv-box filter-list">
-                <div className="filter-list-item">
-                  <Label>Released</Label>
-                  <div className="filter-list-item-contents">
-                    <DateRangePicker
-                      path={['root', 'status']}
-                      ranges={[
-                        { label: 'All Time', from: '', to: '' },
-                        { label: 'This Year', from: 'now/y', to: '' },
-                        { label: 'Last Year', from: 'now-1y/y', to: 'now/y' },
-                      ]}
-                    />
+          <div
+            className="gv-grid"
+            style={state.showBuilder ? { gridTemplateColumns: '1fr' } : {}}
+          >
+            {state.showBuilder || (
+              <div>
+                <Flex style={{ alignItems: 'center' }}>
+                  <h1>Filters</h1>
+                  <IconButton
+                    title="Open Builder"
+                    onClick={F.flip('showBuilder', state)}
+                  >
+                    <i className="material-icons">build</i>
+                  </IconButton>
+                </Flex>
+                <div className="gv-box filter-list">
+                  <div className="filter-list-item">
+                    <Label>Released</Label>
+                    <div className="filter-list-item-contents">
+                      <DateRangePicker
+                        path={['root', 'status']}
+                        ranges={[
+                          { label: 'All Time', from: '', to: '' },
+                          { label: 'This Year', from: 'now/y', to: '' },
+                          { label: 'Last Year', from: 'now-1y/y', to: 'now/y' },
+                        ]}
+                      />
+                    </div>
                   </div>
+                  <FilterList
+                    path={['root', 'criteria']}
+                    fields={schemas.movies.fields}
+                    typeComponents={TypeMap}
+                    mapNodeToLabel={({ key }) =>
+                      ({
+                        titleContains: 'Title Contains',
+                        titleDoesNotContain: 'Title Does Not Contain',
+                      }[key])
+                    }
+                  />
+                  <Adder
+                    path={['root', 'criteria']}
+                    fields={schemas.movies.fields}
+                    uniqueFields
+                  />
                 </div>
-                <FilterList
-                  path={['root', 'criteria']}
-                  fields={schemas.movies.fields}
-                  typeComponents={TypeMap}
-                  mapNodeToLabel={({ key }) =>
-                    ({
-                      titleContains: 'Title Contains',
-                      titleDoesNotContain: 'Title Does Not Contain',
-                    }[key])
-                  }
-                />
-                <Adder
-                  path={['root', 'criteria']}
-                  fields={schemas.movies.fields}
-                  uniqueFields
-                />
               </div>
-            </div>
-            }
+            )}
             <div>
               <h1>Search Movies</h1>
               <div className="gv-search-bar">
@@ -254,11 +261,14 @@ export default () => (
                   </div>
                 </div>
               </div>
-              {state.showBuilder &&
+              {state.showBuilder && (
                 <div>
                   <Flex style={{ alignItems: 'center' }}>
                     <h1>Builder</h1>
-                    <IconButton title="Open Builder" onClick={F.flip('showBuilder', state)}>
+                    <IconButton
+                      title="Open Builder"
+                      onClick={F.flip('showBuilder', state)}
+                    >
                       <i className="material-icons">build</i>
                     </IconButton>
                   </Flex>
@@ -267,7 +277,8 @@ export default () => (
                     fields={schemas.movies.fields}
                     path={['root', 'criteria']}
                   />
-                </div>}
+                </div>
+              )}
               <h1>Search Results</h1>
               <Tabs
                 options={[
