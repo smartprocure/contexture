@@ -493,9 +493,17 @@ export let GVStyle = () => (
       }
       
       .filter-list-item-contents {
-        margin-top: 15px
+        margin-top: 15px;
       }
       
+      .filter-list-group {
+        border-left: solid 2px;
+        padding-left: 35px; /* 30 for filter-list-item + 5 space */
+        margin-left: -30px;
+        margin-top: -25px; /* -30 for filter-list-item + 5 space */
+        padding-top: 30px;
+      }
+
       .gv-grid {
         display: grid;
         grid-template-columns: 400px 1fr;
