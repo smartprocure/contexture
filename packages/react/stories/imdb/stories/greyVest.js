@@ -45,17 +45,25 @@ let tree = Contexture({
     {
       key: 'criteria',
       type: 'group',
+      join: 'and',
       children: [
         {
-          key: 'titleContains',
-          type: 'tagsQuery',
-          field: 'title',
-        },
-        {
-          key: 'titleDoesNotContain',
-          type: 'tagsQuery',
-          field: 'title',
-          join: 'none',
+          key: 'titleGroup',
+          type: 'group',
+          join: 'or',
+          children: [
+            {
+              key: 'titleContains',
+              type: 'tagsQuery',
+              field: 'title',
+            },
+            {
+              key: 'titleDoesNotContain',
+              type: 'tagsQuery',
+              field: 'title',
+              join: 'none',
+            },
+          ]
         },
         {
           key: 'searchNumber',
