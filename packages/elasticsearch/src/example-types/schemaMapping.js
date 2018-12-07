@@ -9,6 +9,7 @@ let addNodeType = x => {
     long: 'number',
     float: 'number',
     double: 'number',
+    geo_point: 'geo',
   })
   return _.extend(
     {
