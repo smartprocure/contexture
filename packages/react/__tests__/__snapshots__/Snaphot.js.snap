@@ -2427,7 +2427,6 @@ exports[`Storyshots IMDB Check List 1`] = `
       .gv-input[type="text"], textarea.gv-input, .gv-input[type="number"], .gv-input[type="date"] {
         padding: 5px;
         text-indent: 5px;
-        margin: 5px auto;
       }
       .gv-input, .gv-body select, .gv-body input {
         outline: none;
@@ -2456,7 +2455,6 @@ exports[`Storyshots IMDB Check List 1`] = `
         border-radius: 4px;
         min-height: 40px;
         box-sizing: border-box;
-        margin: 5px auto;
         background: #fff;
         /* Arbitrary theme design */
         padding: 15px;
@@ -2847,7 +2845,6 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
       .gv-input[type="text"], textarea.gv-input, .gv-input[type="number"], .gv-input[type="date"] {
         padding: 5px;
         text-indent: 5px;
-        margin: 5px auto;
       }
       .gv-input, .gv-body select, .gv-body input {
         outline: none;
@@ -2876,7 +2873,6 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         border-radius: 4px;
         min-height: 40px;
         box-sizing: border-box;
-        margin: 5px auto;
         background: #fff;
         /* Arbitrary theme design */
         padding: 15px;
@@ -6449,17 +6445,6 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
   </div>
   <button
     onClick={[Function]}
-    style={
-      Object {
-        "background": "white",
-        "border": "1px solid #ccc",
-        "borderRadius": 5000,
-        "display": "inline-block",
-        "padding": ".5rem 1rem",
-        "textAlign": "center",
-      }
-    }
-    type="button"
   >
     Add Filter
   </button>
@@ -6673,17 +6658,6 @@ exports[`Storyshots QueryBuilder/Examples One Filter 1`] = `
   </div>
   <button
     onClick={[Function]}
-    style={
-      Object {
-        "background": "white",
-        "border": "1px solid #ccc",
-        "borderRadius": 5000,
-        "display": "inline-block",
-        "padding": ".5rem 1rem",
-        "textAlign": "center",
-      }
-    }
-    type="button"
   >
     Add Filter
   </button>
@@ -6897,17 +6871,6 @@ exports[`Storyshots QueryBuilder/Examples One Filter on a misplaced root 1`] = `
   </div>
   <button
     onClick={[Function]}
-    style={
-      Object {
-        "background": "white",
-        "border": "1px solid #ccc",
-        "borderRadius": 5000,
-        "display": "inline-block",
-        "padding": ".5rem 1rem",
-        "textAlign": "center",
-      }
-    }
-    type="button"
   >
     Add Filter
   </button>
@@ -7248,17 +7211,6 @@ exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
   </div>
   <button
     onClick={[Function]}
-    style={
-      Object {
-        "background": "white",
-        "border": "1px solid #ccc",
-        "borderRadius": 5000,
-        "display": "inline-block",
-        "padding": ".5rem 1rem",
-        "textAlign": "center",
-      }
-    }
-    type="button"
   >
     Add Filter
   </button>
@@ -7503,17 +7455,6 @@ exports[`Storyshots QueryBuilder/Examples One Filter with fields 1`] = `
   </div>
   <button
     onClick={[Function]}
-    style={
-      Object {
-        "background": "white",
-        "border": "1px solid #ccc",
-        "borderRadius": 5000,
-        "display": "inline-block",
-        "padding": ".5rem 1rem",
-        "textAlign": "center",
-      }
-    }
-    type="button"
   >
     Add Filter
   </button>
