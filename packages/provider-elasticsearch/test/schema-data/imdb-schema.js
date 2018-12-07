@@ -11,7 +11,7 @@ module.exports = {
     fields: {
       actors: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -22,7 +22,7 @@ module.exports = {
       },
       awards: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -33,7 +33,7 @@ module.exports = {
       },
       countries: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -44,7 +44,7 @@ module.exports = {
       },
       directors: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -55,7 +55,7 @@ module.exports = {
       },
       genres: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -66,7 +66,7 @@ module.exports = {
       },
       imdbId: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -97,7 +97,7 @@ module.exports = {
       },
       languages: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -118,7 +118,7 @@ module.exports = {
       },
       plot: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -129,7 +129,7 @@ module.exports = {
       },
       poster: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -140,7 +140,7 @@ module.exports = {
       },
       rated: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -171,7 +171,7 @@ module.exports = {
       },
       title: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -182,7 +182,7 @@ module.exports = {
       },
       type: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -193,7 +193,7 @@ module.exports = {
       },
       writers: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -236,7 +236,7 @@ module.exports = {
     fields: {
       actors: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -247,7 +247,7 @@ module.exports = {
       },
       awards: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -258,7 +258,7 @@ module.exports = {
       },
       countries: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -269,7 +269,7 @@ module.exports = {
       },
       directors: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -280,7 +280,7 @@ module.exports = {
       },
       genres: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -291,7 +291,7 @@ module.exports = {
       },
       imdbId: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -322,7 +322,7 @@ module.exports = {
       },
       languages: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -343,7 +343,7 @@ module.exports = {
       },
       plot: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -354,7 +354,7 @@ module.exports = {
       },
       poster: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -365,7 +365,7 @@ module.exports = {
       },
       rated: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -396,7 +396,7 @@ module.exports = {
       },
       title: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -407,7 +407,7 @@ module.exports = {
       },
       type: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
@@ -418,7 +418,7 @@ module.exports = {
       },
       writers: {
         typeDefault: 'facet',
-        typeOptions: ['facet', 'query'],
+        typeOptions: ['facet', 'tagsQuery'],
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
