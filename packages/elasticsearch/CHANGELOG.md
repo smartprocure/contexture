@@ -1,7 +1,10 @@
+# 0.12.1
+* Use tagsQuery instead of facet if there is no nested notAnalyzedField
+
 # 0.12.0
 * Add geo_point type default on example type mapping
 
-﻿# 0.11.2
+# 0.11.2
 * Added tests to the recent highlighting changes.
 
 # 0.11.1
