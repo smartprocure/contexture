@@ -3,9 +3,10 @@ let F = require('futil-js')
 
 let addNodeType = x => {
   let type = x.elasticsearch.dataType
+  let hasNested = x.elasticsearch.notAnalyzedField
   let typeDefault = F.alias(type, {
     string: 'query',
-    text: 'facet',
+    text: hasNested ? 'facet' : 'tagsQuery',
     long: 'number',
     float: 'number',
     double: 'number',
@@ -14,9 +15,9 @@ let addNodeType = x => {
   return _.extend(
     {
       typeDefault,
-      // TODO: exists, bool, geo, text
+      // TODO: exists, bool
       typeOptions: {
-        text: ['facet', 'query'],
+        text: hasNested ? ['facet', 'tagsQuery'] : null,
       }[type] || [typeDefault],
     },
     x
