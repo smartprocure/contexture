@@ -1,10 +1,11 @@
 import _ from 'lodash/fp'
+import F from 'futil-js'
 import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { Provider } from 'mobx-react'
 import Contexture, { updateSchemas } from '../utils/contexture'
-import { Label, Flex, Awaiter } from '../../../src'
+import { Label, Flex, Awaiter, QueryBuilder } from '../../../src'
 import {
   FilterList,
   Fonts,
@@ -112,6 +113,7 @@ tree.disableAutoUpdate = true
 
 let state = observable({
   autoUpdate: false,
+  showBuilder: false,
   tab: 'results',
 })
 
@@ -172,9 +174,14 @@ export default () => (
     <Awaiter promise={schemas}>
       {schemas => (
         <Provider tree={tree}>
-          <div className="gv-grid">
-            <div>
-              <h1>Filters</h1>
+          <div className="gv-grid" style={state.showBuilder ? {gridTemplateColumns: '1fr'} : {}}>
+            {state.showBuilder || <div>
+              <Flex style={{ alignItems: 'center' }}>
+                <h1>Filters</h1>
+                <IconButton title="Open Builder" onClick={F.flip('showBuilder', state)}>
+                  <i className="material-icons">build</i>
+                </IconButton>
+              </Flex>                
               <div className="gv-box filter-list">
                 <div className="filter-list-item">
                   <Label>Released</Label>
@@ -207,6 +214,7 @@ export default () => (
                 />
               </div>
             </div>
+            }
             <div>
               <h1>Search Movies</h1>
               <div className="gv-search-bar">
@@ -246,6 +254,20 @@ export default () => (
                   </div>
                 </div>
               </div>
+              {state.showBuilder &&
+                <div>
+                  <Flex style={{ alignItems: 'center' }}>
+                    <h1>Builder</h1>
+                    <IconButton title="Open Builder" onClick={F.flip('showBuilder', state)}>
+                      <i className="material-icons">build</i>
+                    </IconButton>
+                  </Flex>
+                  <QueryBuilder
+                    types={TypeMap}
+                    fields={schemas.movies.fields}
+                    path={['root', 'criteria']}
+                  />
+                </div>}
               <h1>Search Results</h1>
               <Tabs
                 options={[
