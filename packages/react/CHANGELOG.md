@@ -1,6 +1,8 @@
+# 1.29.1
+* ResultTable: Fix an issue with default node to props map
+
 # 1.29.0
 * FilterList: Add support for groups, allowing it to render anything QueryBuilder can!
-* ResultTable: Fix an issue with default node to props map
 * QueryBuilder: Fix support for TagsQuery (was checking for join instead of children)
 * QueryBuilder: Make Rule hover same as background
 * QueryBuilder: Change default background
