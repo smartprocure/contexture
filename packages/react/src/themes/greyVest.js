@@ -269,19 +269,27 @@ export let GVStyle = () => (
         min-height: 40px;
         box-sizing: border-box;
         background: #fff;
-        /* Arbitrary theme design */
-        padding: 15px;
+        /* 7/8px is for 15px between tags and border */
+        padding-left: 7px;
+        padding-right: 8px;
+        padding-top: 7px;
+        padding-bottom: 8px;
+      }
+      .gv-body .tags-input input,
+      .gv-body .tags-input-tag  {
+        /* 7/8px is for 15px between tags and border */
+        margin-left: 8px;
+        margin-right: 7px;
+        margin-top: 8px;
+        margin-bottom: 7px;
       }
       /* To reach perfect 40px, remove real input padding because we have it on the fake one */
       .gv-body .tags-input input {
         padding: 0;
         /* subtract padding (5+5) and borders (2+2) from 40 */
         height: 26px;
-        /* Arbitrary theme design */
-        padding-left: 7px;
       }
       .gv-body .tags-input-tag {
-        margin: 0 2px;
         /* Arbitrary theme design */
         border-radius: 2px;
         padding: 5px 13px 7px 15px;
