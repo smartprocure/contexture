@@ -1,3 +1,6 @@
+# 1.29.1
+* [GreyVest] Fix TagsInput tag spacing
+
 # 1.29.0
 * FilterList: Add support for groups, allowing it to render anything QueryBuilder can!
 * QueryBuilder: Fix support for TagsQuery (was checking for join instead of children)
