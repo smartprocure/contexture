@@ -35,7 +35,7 @@ let TermsStatsTable = injectTreeNode(
             ...props,
             children: criteria
               ? [
-                  ...children,
+                  ..._.compact(children),
                   <Column
                     label="Controls"
                     expand={{
@@ -77,7 +77,7 @@ let TermsStatsTable = injectTreeNode(
                     }}
                   />,
                 ]
-              : children,
+              : _.compact(children),
           }}
           data={node.context.terms}
         />

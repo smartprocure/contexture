@@ -1,5 +1,13 @@
-# 1.29.1
+# 1.29.3
 * ResultTable: Fix an issue with default node to props map
+
+# 1.29.2
+* TermsStatsTable: Fixed potential crash if any of the children were null
+  (such as if a children was either a component or null, which is
+  valid React and JSX).
+
+# 1.29.1
+* GreyVest: Fix TagsInput tag spacing
 
 # 1.29.0
 * FilterList: Add support for groups, allowing it to render anything QueryBuilder can!
