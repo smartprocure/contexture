@@ -110,7 +110,8 @@ export const terms_stats = ({
           formatTree({
             key: 'cardinality',
             type: 'cardinality',
-            field: `${key_field}.untouched`,
+            field: key_field,
+            fieldMode: 'autocomplete'
           })
         )
       )
