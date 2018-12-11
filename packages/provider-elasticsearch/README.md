@@ -1,4 +1,4 @@
-# contexture-elasticsearch
+﻿# contexture-elasticsearch
 Elasticsearch Provider for Contexture
 
 ## Usage
@@ -280,6 +280,26 @@ These types don't do any filtering of their own and only have results. These oft
 
 #### `cardinality`
 A cardinality aggregation. Returns the cardinality of a field.
+
+Input
+
+| Name            | Type                            | Default           | Description |
+| ----            | ----                            | -------           | ----------- |
+| `field`         | string                          | None, *required*  | The field it's operating on |
+| `fieldMode`     | `autocomplete`/`word`/`suggest` | word              | Whether to look at the entire field (autocomplete), the analyzed words in the field, or magic suggestions. This generally means switching field/analyzers but abstracts that lower level es/index knowledge away from the client. |
+
+Output
+
+```
+{
+  cardinality: {
+    cardinality: {
+      field: String,
+    },
+  },
+}
+```
+ 
 
 #### `dateHistogram`
 A nested stats aggregation inside a dateHistogram aggregation, with support for tweaking min/max bounds.
