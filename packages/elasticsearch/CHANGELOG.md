@@ -1,3 +1,6 @@
+﻿# 0.12.2
+* Added support for fieldMode on the cardinality type.
+
 # 0.12.1
 * Use tagsQuery instead of facet if there is no nested notAnalyzedField
 

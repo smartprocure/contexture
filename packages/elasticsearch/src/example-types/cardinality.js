@@ -1,10 +1,13 @@
+let { getField } = require('../fields')
+
 module.exports = {
-  result: (context, search) =>
+  result: (context, search, schema) =>
     search({
       aggs: {
         cardinality: {
           cardinality: {
-            field: context.field || context.config.field,
+            // fieldMode defaults to 'word' for backwards compatibility
+            field: getField(schema, context.field || context.config.field, context.fieldMode || 'word'),
           },
         },
       },
