@@ -1443,7 +1443,8 @@ var terms_stats = exports.terms_stats = function terms_stats(_ref5) {
                 return service(formatTree({
                   key: 'cardinality',
                   type: 'cardinality',
-                  field: key_field + '.untouched'
+                  field: key_field,
+                  fieldMode: 'autocomplete'
                 }));
 
               case 3:
