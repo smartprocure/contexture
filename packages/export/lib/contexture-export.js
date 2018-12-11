@@ -1277,8 +1277,7 @@ var results = exports.results = function results(_ref) {
   var formatTree = function formatTree(_ref2) {
     var pageSize = _ref2.pageSize,
         page = _ref2.page,
-        scrollId = _ref2.scrollId,
-        tree = _ref2.tree;
+        scrollId = _ref2.scrollId;
     return (0, _extends3.default)({}, _fp2.default.pick(['schema', 'join'], tree), {
       type: 'group',
       key: 'limitedSearchRoot',
@@ -1306,7 +1305,7 @@ var results = exports.results = function results(_ref) {
             case 0:
               _context.t0 = getTreeResults;
               _context.next = 3;
-              return service(formatTree({ page: page, pageSize: pageSize, scrollId: scrollId, tree: tree }));
+              return service(formatTree({ page: page, pageSize: pageSize, scrollId: scrollId }));
 
             case 3:
               _context.t1 = _context.sent;
@@ -1337,7 +1336,7 @@ var results = exports.results = function results(_ref) {
           switch (_context2.prev = _context2.next) {
             case 0:
               _context2.next = 2;
-              return service(formatTree({ pageSize: 1, page: 1, tree: tree }));
+              return service(formatTree({ pageSize: 1, page: 1 }));
 
             case 2:
               data = _context2.sent;
@@ -1359,6 +1358,7 @@ var results = exports.results = function results(_ref) {
   }();
 
   return {
+    formatTree: formatTree,
     getTotalRecords: getTotalRecords,
     hasNext: function hasNext() {
       return page <= totalPages;
@@ -1380,25 +1380,17 @@ var terms_stats = exports.terms_stats = function terms_stats(_ref5) {
       size = _ref5$size === undefined ? 100 : _ref5$size,
       sortDir = _ref5.sortDir;
 
-  var formatTree = function formatTree(_ref6) {
-    var tree = _ref6.tree;
+  var formatTree = function formatTree(analysisNode) {
     return (0, _extends3.default)({}, _fp2.default.pick(['schema', 'join'], tree), {
       type: 'group',
       key: 'limitedSearchRoot',
-      children: [(0, _utils.setFilterOnly)(tree), {
-        key: 'stats',
-        type: 'terms_stats',
-        key_field: key_field,
-        value_field: value_field,
-        size: size,
-        sortDir: sortDir
-      }]
+      children: [(0, _utils.setFilterOnly)(tree), analysisNode]
     });
   };
 
   var done = false;
   var getNext = function () {
-    var _ref7 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3() {
+    var _ref6 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3() {
       var result;
       return _regenerator2.default.wrap(function _callee3$(_context3) {
         while (1) {
@@ -1406,7 +1398,14 @@ var terms_stats = exports.terms_stats = function terms_stats(_ref5) {
             case 0:
               _context3.t0 = getTreeResults;
               _context3.next = 3;
-              return service(formatTree({ tree: tree }));
+              return service(formatTree({
+                key: 'stats',
+                type: 'terms_stats',
+                key_field: key_field,
+                value_field: value_field,
+                size: size,
+                sortDir: sortDir
+              }));
 
             case 3:
               _context3.t1 = _context3.sent;
@@ -1424,22 +1423,35 @@ var terms_stats = exports.terms_stats = function terms_stats(_ref5) {
     }));
 
     return function getNext() {
-      return _ref7.apply(this, arguments);
+      return _ref6.apply(this, arguments);
     };
   }();
 
   return {
+    formatTree: formatTree,
     getTotalRecords: function getTotalRecords() {
       var _this = this;
 
       return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4() {
+        var result;
         return _regenerator2.default.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                return _context4.abrupt('return', size);
+                _context4.t0 = getTreeResults;
+                _context4.next = 3;
+                return service(formatTree({
+                  key: 'cardinality',
+                  type: 'cardinality',
+                  field: key_field + '.untouched'
+                }));
 
-              case 1:
+              case 3:
+                _context4.t1 = _context4.sent;
+                result = (0, _context4.t0)(_context4.t1);
+                return _context4.abrupt('return', _fp2.default.get('context.value', result));
+
+              case 6:
               case 'end':
                 return _context4.stop();
             }

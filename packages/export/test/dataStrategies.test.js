@@ -73,6 +73,7 @@ describe('dataStrategies', () => {
       jest.fn(tree => {
         _.last(tree.children).context = {
           terms: simpleRecords,
+          value: 1337,
         }
         return tree
       })
