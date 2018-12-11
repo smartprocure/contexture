@@ -111,7 +111,7 @@ export const terms_stats = ({
             key: 'cardinality',
             type: 'cardinality',
             field: key_field,
-            fieldMode: 'autocomplete'
+            fieldMode: 'autocomplete',
           })
         )
       )
