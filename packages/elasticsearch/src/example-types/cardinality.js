@@ -8,10 +8,12 @@ module.exports = {
         cardinality: {
           cardinality: {
             // fieldMode defaults to 'word' for backwards compatibility
-            field: context.fieldMode ? getField(schema, field, context.fieldMode) : field,
+            field: context.fieldMode
+              ? getField(schema, field, context.fieldMode)
+              : field,
           },
         },
       },
     }).then(results => results.aggregations.cardinality)
-  }
+  },
 }
