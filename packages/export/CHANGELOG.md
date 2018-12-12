@@ -1,4 +1,7 @@
-﻿# 0.1.1
+﻿# 0.1.2
+* Fixed getTotalRecords in the terms_stats dataStrategy.
+
+# 0.1.1
 * Exposed formatTree.
 
 # 0.1.0

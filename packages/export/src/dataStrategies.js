@@ -77,26 +77,27 @@ export const terms_stats = ({
   size = 100,
   sortDir,
 }) => {
-  let formatTree = () => ({
+  let formatTree = analysisNode => ({
     ..._.pick(['schema', 'join'], tree),
     type: 'group',
     key: 'limitedSearchRoot',
-    children: [
-      setFilterOnly(tree),
-      {
-        key: 'stats',
-        type: 'terms_stats',
-        key_field,
-        value_field,
-        size,
-        sortDir,
-      },
-    ],
+    children: [setFilterOnly(tree), analysisNode],
   })
 
   let done = false
   let getNext = async () => {
-    let result = getTreeResults(await service(formatTree()))
+    let result = getTreeResults(
+      await service(
+        formatTree({
+          key: 'stats',
+          type: 'terms_stats',
+          key_field,
+          value_field,
+          size,
+          sortDir,
+        })
+      )
+    )
     done = true
     return result.context.terms
   }
@@ -104,7 +105,17 @@ export const terms_stats = ({
   return {
     formatTree,
     async getTotalRecords() {
-      return size
+      let result = getTreeResults(
+        await service(
+          formatTree({
+            key: 'cardinality',
+            type: 'cardinality',
+            field: key_field,
+            fieldMode: 'autocomplete',
+          })
+        )
+      )
+      return _.get('context.value', result)
     },
     hasNext: () => !done,
     getNext,
