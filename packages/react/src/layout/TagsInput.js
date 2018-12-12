@@ -1,11 +1,13 @@
 import React from 'react'
 import _ from 'lodash/fp'
+import F from 'futil-js'
 import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import { Flex } from './Flex'
+import Popover from './Popover'
 
-let Tag = ({ value, removeTag, tagStyle }) => (
-  <div className="tags-input-tag" style={tagStyle}>
+let Tag = ({ value, removeTag, tagStyle, onClick }) => (
+  <div className="tags-input-tag" style={tagStyle} onClick={onClick}>
     {value}
     <span
       className="tags-input-tag-remove"
@@ -36,8 +38,11 @@ let TagsInput = inject(() => ({
       tagStyle,
       TagComponent = Tag,
       placeholder = 'Search...',
-    }) => (
-      <div>
+      splitCommas,
+    }) => {
+      if (splitCommas)
+        addTag = _.flow(_.split(','), _.tap(x => console.log(x)), _.map(addTag))    
+      return <div>
         <label style={{ display: 'block' }} className="tags-input">
           <Flex
             style={{
@@ -69,7 +74,7 @@ let TagsInput = inject(() => ({
               onKeyDown={e => {
                 if (e.key === 'Enter' && !state.currentInput) submit()
                 if (
-                  (e.key === 'Enter' || e.key === 'Tab') &&
+                  (e.key === 'Enter' || e.key === 'Tab' || (splitCommas && e.key === ',')) &&
                   state.currentInput &&
                   !_.includes(state.currentInput, tags)
                 ) {
@@ -91,7 +96,7 @@ let TagsInput = inject(() => ({
           </Flex>
         </label>
       </div>
-    )
+    }
   )
 )
 TagsInput.displayName = 'TagsInput'

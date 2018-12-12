@@ -16,6 +16,7 @@ let tagValueField = 'word'
 let TagsQuery = injectTreeNode(
   observer(({ tree, node, TagsInput = DefaultTagsInput, placeholder }) => (
     <TagsInput
+      splitCommas
       tags={_.map(tagValueField, node.tags)}
       addTag={tag => {
         tree.mutate(node.path, {
