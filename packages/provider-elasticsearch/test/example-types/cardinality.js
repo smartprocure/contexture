@@ -36,4 +36,50 @@ describe('cardinality', () => {
         },
       ]
     ))
+  it('should allow fieldMode', () => {
+    statsTest(
+      {
+        key: 'test',
+        type: 'cardinality',
+        field: 'Organization.Name.untouched',
+        fieldMode: 'word',
+      },
+      {
+        value: 471,
+      },
+      [
+        {
+          aggs: {
+            cardinality: {
+              cardinality: {
+                field: 'Organization.Name',
+              },
+            },
+          },
+        },
+      ]
+    )
+    statsTest(
+      {
+        key: 'test',
+        type: 'cardinality',
+        field: 'Organization.Name.untouched',
+        fieldMode: 'autocomplete',
+      },
+      {
+        value: 471,
+      },
+      [
+        {
+          aggs: {
+            cardinality: {
+              cardinality: {
+                field: 'Organization.Name.untouched',
+              },
+            },
+          },
+        },
+      ]
+    )
+  })
 })
