@@ -15,7 +15,7 @@ let NumberComponent = injectTreeNode(
       showBestRange = false,
       formatter = _.identity,
     }) => (
-      <div>
+      <div className="contexture-number">
         <Flex style={{ alignItems: 'center' }}>
           <NumberInput
             value={formatter(node.min) || ''}
