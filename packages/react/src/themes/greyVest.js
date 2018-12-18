@@ -703,7 +703,7 @@ export let ExampleTypes = ExampleTypeConstructor({
   Button,
   Input,
   Checkbox,
-  RadioList: ButtonRadio,
+  RadioList,
   Table,
   FieldPicker: defaultProps({ Input, Highlight, Item: FilterListItem })(
     NestedPicker
