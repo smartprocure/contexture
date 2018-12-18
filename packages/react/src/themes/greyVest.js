@@ -277,6 +277,22 @@ export let GVStyle = () => (
         font-size: 10px;
       }
       
+      /* Tags Popover */
+      .gv-body .tags-input-popover {
+        /* counteract default popover padding */
+        margin: -5px;
+      }
+      .gv-body .tags-input-popover > div {
+        border-bottom: solid 1px rgba(216, 216, 216, 0.3);
+        padding: 15px;
+      }
+      .gv-body .tags-input-popover .popover-item:first-child {
+        padding-top: 0;
+      }
+      .gv-body .tags-input-popover .popover-item {
+        padding-top: 10px;
+      }
+
       /* Pager */
       .gv-pager {
         position: relative;
@@ -510,6 +526,13 @@ export let GVStyle = () => (
       
       .gv-text-error {
         color: #D75050;
+      }
+
+      .gv-body .labeled-checkbox {
+        display: flex;
+      }
+      .gv-body .labeled-checkbox > span {
+        padding-left: 10px;
       }
     `}
   </style>
