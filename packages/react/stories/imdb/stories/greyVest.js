@@ -174,8 +174,8 @@ export default () => (
   <div className="gv-body">
     <Fonts />
     <GVStyle />
-    <Input ref={e => (input = e)}/>
-    <Button onClick={() => (input.focus())}>Focus Input</Button>
+    <Input ref={e => (input = e)} />
+    <Button onClick={() => input.focus()}>Focus Input</Button>
     <Awaiter promise={schemas}>
       {schemas => (
         <Provider tree={tree}>
