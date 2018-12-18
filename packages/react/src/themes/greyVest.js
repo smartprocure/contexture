@@ -14,6 +14,7 @@ import {
   Dynamic,
 } from '../'
 import DefaultSelect from '../layout/Select'
+import RadioList from '../layout/RadioList'
 import ExampleTypeConstructor from '../exampleTypes/'
 import QueryBuilderComponent from '../queryBuilder'
 
@@ -97,33 +98,7 @@ export let CheckboxList = observer(({ options, value, onChange, ...props }) => (
 ))
 CheckboxList.displayName = 'CheckboxList'
 
-export let RadioList = observer(({ options, value, onChange, ...props }) => (
-  <div {...props}>
-    {_.map(
-      option => (
-        <label style={{ cursor: 'pointer', marginRight: 25 }}>
-          <input
-            type="radio"
-            style={{
-              marginRight: 10,
-              display: 'inline-block',
-              width: 'auto',
-              height: 'auto',
-            }}
-            onChange={e => {
-              onChange(e.target.value)
-            }}
-            value={option.value}
-            checked={value === option.value}
-          />
-          {option.label}
-        </label>
-      ),
-      options
-    )}
-  </div>
-))
-RadioList.displayName = 'RadioList'
+export { RadioList }
 
 export let Fonts = () => (
   <div>
