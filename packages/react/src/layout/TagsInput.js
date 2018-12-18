@@ -6,8 +6,8 @@ import { observer, inject } from 'mobx-react'
 import { Flex } from './Flex'
 import Popover from './Popover'
 
-let Tag = ({ value, removeTag, tagStyle, onClick }) => (
-  <div className="tags-input-tag" style={tagStyle} onClick={onClick}>
+let Tag = observer(({ value, removeTag, tagStyle, onClick }) => (
+  <div className="tags-input-tag" style={F.callOrReturn(tagStyle, value)} onClick={onClick}>
     {value}
     <span
       className="tags-input-tag-remove"
@@ -20,12 +20,14 @@ let Tag = ({ value, removeTag, tagStyle, onClick }) => (
       x
     </span>
   </div>
-)
+))
 Tag.displayName = 'Tag'
 
 let TagsInput = inject(() => ({
   state: observable({
     currentInput: '',
+    selectedTag: null,
+    popoverOpen: false
   }),
 }))(
   observer(
@@ -39,6 +41,7 @@ let TagsInput = inject(() => ({
       TagComponent = Tag,
       placeholder = 'Search...',
       splitCommas,
+      PopoverContents
     }) => {
       if (splitCommas)
         addTag = _.flow(_.split(','), _.tap(x => console.log(x)), _.map(addTag))    
@@ -53,7 +56,14 @@ let TagsInput = inject(() => ({
           >
             {_.map(
               t => (
-                <TagComponent key={t} value={t} {...{ removeTag, tagStyle }} />
+                <TagComponent
+                  key={t}
+                  value={t} 
+                  {...{ removeTag, tagStyle }}
+                  onClick={() => {
+                    state.popoverOpen = true
+                    state.selectedTag = t
+                  }} />
               ),
               tags
             )}
@@ -95,6 +105,10 @@ let TagsInput = inject(() => ({
             />
           </Flex>
         </label>
+        {PopoverContents && <Popover isOpen={F.lensProp('popoverOpen', state)}>
+            <PopoverContents tag={state.selectedTag} />
+        </Popover>
+        }
       </div>
     }
   )
