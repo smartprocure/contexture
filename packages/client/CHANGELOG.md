@@ -1,4 +1,8 @@
-﻿# 2.17.2
+# 2.17.3
+* Added defaults and reactors for `text`'s `values`, `operator`, and `join` (and remove the old `value` ones).
+* Added default and reactor for `tagsQuery`'s `exact` flag.
+
+# 2.17.2
 * Added a default `filter` property in the `terms_stats` type.
 
 # 2.17.1
