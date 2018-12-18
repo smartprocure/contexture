@@ -50,11 +50,13 @@ export default stampKey('type', {
   text: {
     validate: validateValues,
     reactors: {
-      value: 'others',
+      values: 'others',
+      join: 'others',
     },
     defaults: {
       field: null,
-      value: '',
+      values: [],
+      join: 'any'
     },
   },
   query: {
@@ -72,11 +74,13 @@ export default stampKey('type', {
     reactors: {
       join: 'others',
       tags: 'others',
+      exact: 'others,
     },
     defaults: {
       field: null,
       tags: [],
       join: 'any',
+      exact: false,
     },
   },
   mongoId: {
