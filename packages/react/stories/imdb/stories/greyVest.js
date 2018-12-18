@@ -7,6 +7,7 @@ import { Provider } from 'mobx-react'
 import Contexture, { updateSchemas } from '../utils/contexture'
 import { Label, Flex, Awaiter } from '../../../src'
 import {
+  Input,
   FilterList,
   Fonts,
   GVStyle,
@@ -167,11 +168,14 @@ let schemas = fromPromise(
     )
     .then(_.tap(() => tree.refresh(['root'])))
 )
+let input
 
 export default () => (
   <div className="gv-body">
     <Fonts />
     <GVStyle />
+    <Input ref={e => (input = e)}/>
+    <Button onClick={() => (input.focus())}>Focus Input</Button>
     <Awaiter promise={schemas}>
       {schemas => (
         <Provider tree={tree}>

@@ -17,16 +17,17 @@ import DefaultSelect from '../layout/Select'
 import ExampleTypeConstructor from '../exampleTypes/'
 import QueryBuilderComponent from '../queryBuilder'
 
-export let Input = ({ className = '', style, type = 'text', ...x }) => (
+export let Input = React.forwardRef(({ className = '', style, type = 'text', ...x }, ref) => (
   <input
     className={`${className} gv-input`}
     style={{
       ...style,
     }}
     type={type}
+    ref={ref}
     {...x}
   />
-)
+))
 
 // Low effort custom checkbox
 export let Checkbox = ({ checked, onChange, style = {} }) => (
