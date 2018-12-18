@@ -3150,6 +3150,17 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
       }
     
   </style>
+  <input
+    className=" gv-input"
+    style={Object {}}
+    type="text"
+  />
+  <button
+    className="gv-button   "
+    onClick={[Function]}
+  >
+    Focus Input
+  </button>
   <div>
     Loading...
   </div>
