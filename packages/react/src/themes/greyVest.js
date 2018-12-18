@@ -269,6 +269,7 @@ export let GVStyle = () => (
         border-radius: 2px;
         padding: 5px 13px 7px 15px;
         font-size: 15px;
+        cursor: pointer;
       }
       .gv-body .tags-input-tag-remove {
         /* Arbitrary theme design */
@@ -664,16 +665,16 @@ export let PagerItem = observer(({ active, disabled, ...x }) => (
 ))
 PagerItem.displayName = 'PagerItem'
 
-let TagComponent = ({ value, removeTag, tagStyle }) => (
-  <div className="tags-input-tag" style={tagStyle}>
+let TagComponent = observer(({ value, removeTag, tagStyle, onClick }) => (
+  <div className="tags-input-tag" style={F.callOrReturn(tagStyle, value)} onClick={onClick}>
     {value}
     <span
       className="tags-input-tag-remove fa fa-times"
-      style={{ cursor: 'pointer' }}
       onClick={() => removeTag(value)}
     />
   </div>
-)
+))
+TagComponent.displayName = 'TagComponent'
 
 export let ExampleTypes = ExampleTypeConstructor({
   Button,
