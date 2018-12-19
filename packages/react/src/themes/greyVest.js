@@ -433,6 +433,10 @@ export let GVStyle = () => (
       .contexture-facet-cardinality {
         margin: 10px 0;
       }
+
+      .contexture-number-best-range {
+        margin-top: 15px;
+      }
       
       /* Tabs */     
       .gv-tab-container .gv-tab {

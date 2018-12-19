@@ -27,8 +27,8 @@ let NumberComponent = injectTreeNode(
             onChange={e => tree.mutate(node.path, { max: e.target.value })}
           />
         </Flex>
-        <div>
-          {showBestRange && (
+        {showBestRange && (
+          <div className="contexture-number-best-range">
             <Button
               style={{ width: '100%' }}
               onClick={async () => {
@@ -44,8 +44,8 @@ let NumberComponent = injectTreeNode(
             >
               Find best range
             </Button>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     )
   ),
