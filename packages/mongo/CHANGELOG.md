@@ -1,5 +1,5 @@
 ﻿# 0.7.1
-* The Results type now allows unlimited results by setting pageSize to any negative number.
+* The Results type now allows unlimited results by setting pageSize to zero.
 
 # 0.7.0
 * Added support for Mongo ObjectIDs to teh facet example type.
