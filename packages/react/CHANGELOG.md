@@ -1,3 +1,6 @@
+# 1.30.0
+* Allow passing ref to Input, Textarea, Select in greyVest
+
 # 1.29.3
 * ResultTable: Fix an issue with default node to props map
 
