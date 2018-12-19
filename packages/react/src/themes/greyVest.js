@@ -434,6 +434,9 @@ export let GVStyle = () => (
         margin: 10px 0;
       }
 
+      .contexture-number-separator {
+        margin: 0 10px;
+      }
       .contexture-number-best-range {
         margin-top: 15px;
       }
