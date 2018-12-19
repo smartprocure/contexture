@@ -11,8 +11,11 @@ module.exports = {
       sortDir = 'desc',
       populate,
     } = context
+
     page -= 1
+    if (pageSize < 0) pageSize = 0
     let startRecord = page * pageSize
+
     let sort = {
       [sortField]: sortDir === 'asc' ? 1 : -1,
     }
@@ -26,7 +29,7 @@ module.exports = {
           {
             $skip: startRecord,
           },
-          {
+          pageSize && {
             $limit: pageSize,
           },
           ...F.mapIndexed((x, as) => {
