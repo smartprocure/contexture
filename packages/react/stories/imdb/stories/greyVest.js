@@ -180,11 +180,7 @@ export default () => (
     <GVStyle />
     <Input ref={e => (input = e)} />
     <Textarea ref={e => (textArea = e)} />
-    <Select
-      ref={e => {
-        select = e
-      }}
-    />
+    <Select ref={e => (select = e)} />
     <Button onClick={() => input.focus()}>Focus Input</Button>
     <Button onClick={() => textArea.focus()}>Focus Text Area</Button>
     <Button onClick={() => select.focus()}>Focus Select</Button>
