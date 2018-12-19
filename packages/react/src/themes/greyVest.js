@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
-import { observer } from 'mobx-react'
+import { Observer, observer } from 'mobx-react'
 import { defaultProps } from 'recompose'
 import { withStateLens } from '../utils/mobx-react-utils'
 import {
@@ -17,17 +17,19 @@ import DefaultSelect from '../layout/Select'
 import ExampleTypeConstructor from '../exampleTypes/'
 import QueryBuilderComponent from '../queryBuilder'
 
-export let Input = React.forwardRef(({ className = '', style, type = 'text', ...x }, ref) => (
-  <input
-    className={`${className} gv-input`}
-    style={{
-      ...style,
-    }}
-    type={type}
-    ref={ref}
-    {...x}
-  />
-))
+export let Input = React.forwardRef(
+  ({ className = '', style, type = 'text', ...x }, ref) => (
+    <input
+      className={`${className} gv-input`}
+      style={{
+        ...style,
+      }}
+      type={type}
+      ref={ref}
+      {...x}
+    />
+  )
+)
 
 // Low effort custom checkbox
 export let Checkbox = ({ checked, onChange, style = {} }) => (
@@ -65,13 +67,17 @@ export let Checkbox = ({ checked, onChange, style = {} }) => (
   </label>
 )
 
-export let Textarea = observer(props => (
-  <textarea className="gv-input" {...props} />
+export let Textarea = React.forwardRef((props, ref) => (
+  <Observer>
+    {() => <textarea className="gv-input" {...props} ref={ref} />}
+  </Observer>
 ))
 Textarea.displayName = 'Textarea'
 
-export let Select = observer(props => (
-  <DefaultSelect className="gv-input" {...props} />
+export let Select = React.forwardRef((props, ref) => (
+  <Observer>
+    {() => <DefaultSelect className="gv-input" {...props} ref={ref} />}
+  </Observer>
 ))
 Select.displayName = 'Select'
 
