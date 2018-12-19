@@ -3155,11 +3155,35 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
     style={Object {}}
     type="text"
   />
+  <textarea
+    className="gv-input"
+  />
+  <select
+    className="gv-input"
+  >
+    <option
+      value=""
+    >
+      Please Select...
+    </option>
+  </select>
   <button
     className="gv-button   "
     onClick={[Function]}
   >
     Focus Input
+  </button>
+  <button
+    className="gv-button   "
+    onClick={[Function]}
+  >
+    Focus Text Area
+  </button>
+  <button
+    className="gv-button   "
+    onClick={[Function]}
+  >
+    Focus Select
   </button>
   <div>
     Loading...
