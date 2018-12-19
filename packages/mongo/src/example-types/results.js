@@ -28,7 +28,7 @@ module.exports = {
           {
             $skip: startRecord,
           },
-          (pageSize >= 0) && {
+          pageSize >= 0 && {
             $limit: pageSize,
           },
           ...F.mapIndexed((x, as) => {
