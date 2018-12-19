@@ -14,7 +14,6 @@ import {
   Dynamic,
 } from '../'
 import DefaultSelect from '../layout/Select'
-import RadioList from '../layout/RadioList'
 import ExampleTypeConstructor from '../exampleTypes/'
 import QueryBuilderComponent from '../queryBuilder'
 
@@ -98,7 +97,32 @@ export let CheckboxList = observer(({ options, value, onChange, ...props }) => (
 ))
 CheckboxList.displayName = 'CheckboxList'
 
-export { RadioList }
+let RadioList = observer(({ options, value, onChange, className = '', ...props }) => (
+  <div className={`gv-radio-list ${className}`} {...props}>
+    {_.map(
+      option => (
+        <label className="gv-radio-option" key={option.value}>
+          <input
+            type="radio"
+            style={{ display: 'none' }}
+            onChange={e => {
+              onChange(e.target.value)
+            }}
+            value={option.value}
+            checked={value === option.value}
+          />
+          <div className="gv-radio">
+            <div className={`gv-radio-dot ${value === option.value ? 'active' : ''}`}>
+            </div>
+          </div>
+          <div className="gv-radio-label">{option.label}</div>
+        </label>
+      ),
+      options
+    )}
+  </div>
+))
+RadioList.displayName = 'RadioList'
 
 export let Fonts = () => (
   <div>
@@ -237,6 +261,38 @@ export let GVStyle = () => (
       .gv-body select {
         cursor: pointer;
       }
+
+
+      /* Radio Buttons */
+      .gv-radio {
+        width: 16px;
+        height: 16px;
+        background: #FFFFFF;
+        border: 2px solid #EDEDED;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .gv-radio-dot.active {
+        width: 14px;
+        height: 14px;
+        background: #007AFF;  
+        border-radius: 50%;
+      }
+      .gv-radio-label {
+        padding-left: 10px;
+      }
+      .gv-radio-option {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        margin-right: 25px;
+      }
+      .gv-radio-list {
+        display: flex;
+      }
+
       
       .gv-body .tags-input {
         border: 2px solid #EBEBEB;
