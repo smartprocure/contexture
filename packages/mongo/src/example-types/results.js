@@ -13,8 +13,7 @@ module.exports = {
     } = context
 
     page -= 1
-    if (pageSize < 0) pageSize = 0
-    let startRecord = page * pageSize
+    let startRecord = page * (pageSize < 0 ? 0 : pageSize)
 
     let sort = {
       [sortField]: sortDir === 'asc' ? 1 : -1,
@@ -29,7 +28,7 @@ module.exports = {
           {
             $skip: startRecord,
           },
-          pageSize && {
+          (pageSize >= 0) && {
             $limit: pageSize,
           },
           ...F.mapIndexed((x, as) => {
