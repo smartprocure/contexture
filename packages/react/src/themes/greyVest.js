@@ -19,15 +19,19 @@ import QueryBuilderComponent from '../queryBuilder'
 
 export let Input = React.forwardRef(
   ({ className = '', style, type = 'text', ...x }, ref) => (
-    <input
-      className={`${className} gv-input`}
-      style={{
-        ...style,
-      }}
-      type={type}
-      ref={ref}
-      {...x}
-    />
+    <Observer>
+      {() => (
+        <input
+          className={`${className} gv-input`}
+          style={{
+            ...style,
+          }}
+          type={type}
+          ref={ref}
+          {...x}
+        />
+      )}
+    </Observer>
   )
 )
 
