@@ -1,5 +1,6 @@
 # 2.17.3
-* Added defaults and reactors for `text`'s `values`, `operator`, and `join` (and remove the old `value` ones).
+* Added defaults and reactors for `text`'s `operator`.
+* Added `tagsText`, which is just like text but supports an array of values.
 * Added default and reactor for `tagsQuery`'s `exact` flag.
 
 # 2.17.2
