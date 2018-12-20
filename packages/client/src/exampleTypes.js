@@ -55,7 +55,7 @@ export default stampKey('type', {
     },
     defaults: {
       field: null,
-      values: '',
+      value: '',
       operator: 'containsWord'
     },
   },
