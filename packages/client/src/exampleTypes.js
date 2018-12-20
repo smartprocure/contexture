@@ -50,13 +50,27 @@ export default stampKey('type', {
   text: {
     validate: validateValues,
     reactors: {
+      value: 'others',
+      operator: 'others',
+    },
+    defaults: {
+      field: null,
+      values: '',
+      operator: 'containsWord'
+    },
+  },
+  tagsText: {
+    validate: validateValues,
+    reactors: {
       values: 'others',
       join: 'others',
+      operator: 'others',
     },
     defaults: {
       field: null,
       values: [],
-      join: 'any'
+      join: 'any',
+      operator: 'containsWord',
     },
   },
   query: {
