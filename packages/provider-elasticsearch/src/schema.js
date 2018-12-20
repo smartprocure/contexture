@@ -70,7 +70,9 @@ let copySchemasToAliases = schemas =>
   )
 
 let fromMappingsWithAliases = (mappings, aliases) => {
-  let schemas = fromEsIndexMapping(mappings)
+  // Apparently mappings can sometimes be empty, so omit them to be safe
+  let safeMappings = _.omitBy(index => _.isEmpty(index.mappings), mappings)
+  let schemas = fromEsIndexMapping(safeMappings)
   return _.flow(
     copySchemasToAliases(schemas),
     _.merge(schemas),
