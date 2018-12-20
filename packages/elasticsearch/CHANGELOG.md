@@ -1,4 +1,7 @@
-﻿# 0.12.2
+﻿# 0.12.3
+* Apparently mappings can sometimes be empty, so omit them from schema processing to be safe
+
+# 0.12.2
 * Added support for fieldMode on the cardinality type.
 
 # 0.12.1
