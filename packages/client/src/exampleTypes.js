@@ -51,10 +51,26 @@ export default stampKey('type', {
     validate: validateValues,
     reactors: {
       value: 'others',
+      operator: 'others',
     },
     defaults: {
       field: null,
       value: '',
+      operator: 'containsWord',
+    },
+  },
+  tagsText: {
+    validate: validateValues,
+    reactors: {
+      values: 'others',
+      join: 'others',
+      operator: 'others',
+    },
+    defaults: {
+      field: null,
+      values: [],
+      join: 'any',
+      operator: 'containsWord',
     },
   },
   query: {
@@ -72,11 +88,13 @@ export default stampKey('type', {
     reactors: {
       join: 'others',
       tags: 'others',
+      exact: 'others',
     },
     defaults: {
       field: null,
       tags: [],
       join: 'any',
+      exact: false,
     },
   },
   mongoId: {
