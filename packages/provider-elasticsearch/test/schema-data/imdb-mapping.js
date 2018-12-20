@@ -145,4 +145,7 @@ module.exports = {
       },
     },
   },
+  weirdEmptyIndexThatWeWillNowIgnore: {
+    mappings: {}
+  }
 }
