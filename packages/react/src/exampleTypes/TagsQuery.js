@@ -19,6 +19,7 @@ let TagsQuery = ({
   Checkbox = CheckboxDefault,
   RadioList = DefaultRadioList,
   Select = DefaultSelect,
+  Button = 'button',
   placeholder
 }) => {
   let getTag = tag => _.find({ [tagValueField]: tag }, node.tags)
@@ -42,8 +43,7 @@ let TagsQuery = ({
               />
             </div>
             <div className="popover-item">
-              <a
-                href="#"
+              <Button
                 onClick={() =>{
                   tree.mutate(node.path, {
                     tags: _.map(tag => {
@@ -55,7 +55,7 @@ let TagsQuery = ({
                 }}
               >
                 Apply to all keywords
-              </a>
+              </Button>
             </div>
           </React.Fragment>}
           <label className="popover-item labeled-checkbox">

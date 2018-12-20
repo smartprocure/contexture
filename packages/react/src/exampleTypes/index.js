@@ -38,7 +38,7 @@ export default ({
     Date: defaultProps({ DateInput })(Date),
     DateRangePicker,
     Query: defaultProps({ TextInput })(Query),
-    TagsQuery: defaultProps({ TagsInput, Checkbox, RadioList })(TagsQuery),
+    TagsQuery: defaultProps({ TagsInput, Checkbox, RadioList, Button })(TagsQuery),
     ResultTable: defaultProps({
       Table,
       Modal,
