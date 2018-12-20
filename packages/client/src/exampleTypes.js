@@ -88,7 +88,7 @@ export default stampKey('type', {
     reactors: {
       join: 'others',
       tags: 'others',
-      exact: 'others,
+      exact: 'others',
     },
     defaults: {
       field: null,
