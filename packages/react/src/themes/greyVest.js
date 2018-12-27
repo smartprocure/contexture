@@ -123,8 +123,7 @@ let RadioList = observer(({ options, value, onChange, className = '', ...props }
             checked={value === option.value}
           />
           <div className="gv-radio">
-            <div className={`gv-radio-dot ${value === option.value ? 'active' : ''}`}>
-            </div>
+            <div className={`gv-radio-dot ${value === option.value ? 'active' : ''}`} />
           </div>
           <div className="gv-radio-label">{option.label}</div>
         </label>
