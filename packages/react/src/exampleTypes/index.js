@@ -16,6 +16,7 @@ import CheckableTermsStatsTable from './CheckableTermsStatsTable'
 import Text from './Text'
 import { defaultProps } from 'recompose'
 import ModalDefault from '../layout/Modal'
+import DefaultSelect from '../layout/Select'
 
 export default ({
   Input = 'input',
@@ -31,6 +32,7 @@ export default ({
   FieldPicker,
   ListGroupItem = 'div',
   Icon,
+  Select = DefaultSelect
 } = {}) => {
   let Components = {
     Facet: defaultProps({ TextInput, Checkbox, RadioList })(Facet),
@@ -54,6 +56,7 @@ export default ({
     CheckableTermsStatsTable,
     Geo,
     Text: defaultProps({ Input })(Text),
+    TagsText: defaultProps({ TagsInput, Select })(TagsText)
   }
   Components.CheckableResultTable = defaultProps({
     ResultTable: Components.ResultTable,
