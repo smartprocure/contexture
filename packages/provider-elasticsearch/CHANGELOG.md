@@ -1,4 +1,7 @@
-﻿# 0.12.3
+﻿# 0.13.0
+* Add `tagsText` example type
+
+# 0.12.3
 * Apparently mappings can sometimes be empty, so omit them from schema processing to be safe
 
 # 0.12.2
