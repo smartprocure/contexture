@@ -1,18 +1,25 @@
 import React from 'react'
-import { observer } from 'mobx-react'
+import { Observer } from 'mobx-react'
 import _ from 'lodash/fp'
 
-let Select = ({ options, placeholder = 'Please Select...', ...props }) => (
-  <select {...props}>
-    <option value="">{placeholder}</option>
-    {_.map(
-      x => (
-        <option key={x.value} value={x.value}>
-          {x.label}
-        </option>
-      ),
-      options
-    )}
-  </select>
+let Select = React.forwardRef(
+  ({ options, placeholder = 'Please Select...', ...props }, ref) => (
+    <Observer>
+      {() => (
+        <select {...props} ref={ref}>
+          <option value="">{placeholder}</option>
+          {_.map(
+            x => (
+              <option key={x.value} value={x.value}>
+                {x.label}
+              </option>
+            ),
+            options
+          )}
+        </select>
+      )}
+    </Observer>
+  )
 )
-export default observer(Select)
+
+export default Select
