@@ -1,5 +1,6 @@
 # 1.31.0
 * TagsQuery: Add tag popover with support for changing join, per tag distance (0 vs 3 distance as "fuzzy" v "exact"), exact toggle, per tag disabling, and an apply distance to all tags link
+* TagsText: Add Support
 * TagsInput: Add tag popover support
 * TagsInput: Add splitCommas prop to automatically split tags on comma (on paste and as you type)
 * Number: More classNames added for styling hooks
