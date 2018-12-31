@@ -1272,7 +1272,8 @@ var results = exports.results = function results(_ref) {
       totalPages = _ref$totalPages === undefined ? 100 : _ref$totalPages,
       include = _ref.include,
       sortField = _ref.sortField,
-      sortDir = _ref.sortDir;
+      sortDir = _ref.sortDir,
+      highlight = _ref.highlight;
 
   var formatTree = function formatTree(_ref2) {
     var pageSize = _ref2.pageSize,
@@ -1290,7 +1291,8 @@ var results = exports.results = function results(_ref) {
         sortField: sortField,
         sortDir: sortDir,
         scroll: true,
-        scrollId: scrollId
+        scrollId: scrollId,
+        highlight: highlight
       }]
     });
   };

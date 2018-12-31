@@ -19,6 +19,7 @@ export const results = ({
   include,
   sortField,
   sortDir,
+  highlight,
 }) => {
   let formatTree = ({ pageSize, page, scrollId }) => ({
     ..._.pick(['schema', 'join'], tree),
@@ -36,6 +37,7 @@ export const results = ({
         sortDir,
         scroll: true,
         scrollId,
+        highlight,
       },
     ],
   })

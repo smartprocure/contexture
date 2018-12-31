@@ -1,4 +1,7 @@
-﻿# 0.1.2
+﻿# 0.1.3
+* Pass `highlight` to results dataStrategy
+
+# 0.1.2
 * Fixed getTotalRecords in the terms_stats dataStrategy.
 
 # 0.1.1
