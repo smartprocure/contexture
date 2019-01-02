@@ -1,4 +1,7 @@
-﻿# 0.7.1
+﻿# 0.8.0
+* Add `tagsText` example type
+
+# 0.7.1
 * The Results type now allows unlimited results by setting pageSize to zero.
 
 # 0.7.0
