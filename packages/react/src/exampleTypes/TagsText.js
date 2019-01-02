@@ -2,8 +2,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
-import { inject } from 'mobx-react'
-import { observer } from 'mobx-react'
+import { inject, observer } from 'mobx-react'
 
 import injectTreeNode from '../utils/injectTreeNode'
 import { bgJoin } from '../styles/generic'

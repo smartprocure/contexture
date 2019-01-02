@@ -44,7 +44,7 @@ let TagsInput = inject(() => ({
       PopoverContents
     }) => {
       if (splitCommas)
-        addTag = _.flow(_.split(','), _.tap(x => console.log(x)), _.map(addTag))    
+        addTag = _.flow(_.split(','), _.map(addTag))    
       return <div>
         <label style={{ display: 'block' }} className="tags-input">
           <Flex
