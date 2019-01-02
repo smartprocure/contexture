@@ -11,7 +11,7 @@ let DateComponent = injectTreeNode(
       value={(_.find({ from: node.from, to: node.to }, ranges) || {}).label}
       onChange={event => {
         let value = _.get('target.value', event)
-        if(value) {
+        if (value) {
           let { from, to } = _.find({ label: value }, ranges)
           tree.mutate(node.path, { from, to })
         }
