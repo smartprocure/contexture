@@ -1,3 +1,6 @@
+# 1.30.1
+* Fix the DateRangePicker OnChange issue
+
 # 1.30.0
 * Allow passing ref to Input, Textarea, Select in greyVest
 
