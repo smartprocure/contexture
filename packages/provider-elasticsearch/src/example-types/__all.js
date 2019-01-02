@@ -26,6 +26,7 @@ module.exports = {
   smartPercentileRanks: require('./smartPercentileRanks'),
   statistical: require('./statistical'),
   tagsQuery: require('./tagsQuery'),
+  tagsText: require('./tagsText'),
   terms: require('./terms'),
   termsDelta: require('./termsDelta'),
   termsStatsHits: require('./termsStatsHits'),
