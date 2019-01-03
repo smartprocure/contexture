@@ -7,6 +7,7 @@
 * Layout: Added RadioList base component
 * GreyVest: Added Custom RadioList (and used in Facet)
 * GreyVest: Better styling on Number
+* FilterList: Better error handling for missing types and labels
 
 # 1.30.0
 * Allow passing ref to Input, Textarea, Select in greyVest
