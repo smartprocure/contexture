@@ -33,7 +33,7 @@ export default ({
   FieldPicker,
   ListGroupItem = 'div',
   Icon,
-  Select = DefaultSelect
+  Select = DefaultSelect,
 } = {}) => {
   let Components = {
     Facet: defaultProps({ TextInput, Checkbox, RadioList })(Facet),
@@ -41,7 +41,9 @@ export default ({
     Date: defaultProps({ DateInput })(Date),
     DateRangePicker,
     Query: defaultProps({ TextInput })(Query),
-    TagsQuery: defaultProps({ TagsInput, Checkbox, RadioList, Button })(TagsQuery),
+    TagsQuery: defaultProps({ TagsInput, Checkbox, RadioList, Button })(
+      TagsQuery
+    ),
     ResultTable: defaultProps({
       Table,
       Modal,
@@ -57,7 +59,7 @@ export default ({
     CheckableTermsStatsTable,
     Geo,
     Text: defaultProps({ Input })(Text),
-    TagsText: defaultProps({ TagsInput, Select })(TagsText)
+    TagsText: defaultProps({ TagsInput, Select })(TagsText),
   }
   Components.CheckableResultTable = defaultProps({
     ResultTable: Components.ResultTable,

@@ -8,7 +8,7 @@ import { bgJoin } from '../styles/generic'
 import { TagsInput as DefaultTagsInput } from '../layout/TagsInput'
 import DefaultRadioList from '../layout/RadioList'
 import DefaultSelect from '../layout/Select'
-import TagsJoinPicker, {tagToGroupJoin} from './TagsJoinPicker'
+import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
 let CheckboxDefault = props => <input type="checkbox" {...props} />
 
 let tagValueField = 'word'
@@ -20,10 +20,10 @@ let TagsQuery = ({
   RadioList = DefaultRadioList,
   Select = DefaultSelect,
   Button = 'button',
-  placeholder
+  placeholder,
 }) => {
   let getTag = tag => _.find({ [tagValueField]: tag }, node.tags)
-  let TagQueryPopever = observer(({tag}) => {
+  let TagQueryPopever = observer(({ tag }) => {
     let tagInstance = getTag(tag)
     return (
       <div className="tags-input-popover">
@@ -31,39 +31,41 @@ let TagsQuery = ({
           <div className="popover-item">
             Keyword: <span className="filter-field-label">{tag}</span>
           </div>
-          {_.includes(' ', tag) && <React.Fragment>
-            <div className="popover-item">
-              <RadioList
-                options={F.autoLabelOptions(['fuzzy', 'exact'])}
-                value={tagInstance.distance ? 'fuzzy' : 'exact'}
-                onChange={value => {
-                  tagInstance.distance = value === 'fuzzy' ? 3 : 0
-                  tree.mutate(node.path, { tags: [...node.tags] })
-                }}
-              />
-            </div>
-            <div className="popover-item">
-              <Button
-                onClick={() =>{
-                  tree.mutate(node.path, {
-                    tags: _.map(tag => {
-                      if (_.includes(' ', tag[tagValueField]))
-                        tag.distance = tagInstance.distance
-                      return tag
-                    }, node.tags)
-                  })
-                }}
-              >
-                Apply to all keywords
-              </Button>
-            </div>
-          </React.Fragment>}
+          {_.includes(' ', tag) && (
+            <React.Fragment>
+              <div className="popover-item">
+                <RadioList
+                  options={F.autoLabelOptions(['fuzzy', 'exact'])}
+                  value={tagInstance.distance ? 'fuzzy' : 'exact'}
+                  onChange={value => {
+                    tagInstance.distance = value === 'fuzzy' ? 3 : 0
+                    tree.mutate(node.path, { tags: [...node.tags] })
+                  }}
+                />
+              </div>
+              <div className="popover-item">
+                <Button
+                  onClick={() => {
+                    tree.mutate(node.path, {
+                      tags: _.map(tag => {
+                        if (_.includes(' ', tag[tagValueField]))
+                          tag.distance = tagInstance.distance
+                        return tag
+                      }, node.tags),
+                    })
+                  }}
+                >
+                  Apply to all keywords
+                </Button>
+              </div>
+            </React.Fragment>
+          )}
           <label className="popover-item labeled-checkbox">
             <Checkbox
               checked={tagInstance.onlyShowTheseResults}
               onChange={e => {
                 tagInstance.onlyShowTheseResults = e.target.checked
-                tree.mutate(node.path, {tags: [...node.tags]})
+                tree.mutate(node.path, { tags: [...node.tags] })
               }}
             />
             <span>Only view this keyword</span>
@@ -73,7 +75,9 @@ let TagsQuery = ({
           <label className="popover-item labeled-checkbox">
             <Checkbox
               checked={!node.exact}
-              onChange={e => tree.mutate(node.path, {exact: !e.target.checked})}
+              onChange={e =>
+                tree.mutate(node.path, { exact: !e.target.checked })
+              }
             />
             <span>Enable stemming</span>
           </label>
@@ -87,29 +91,35 @@ let TagsQuery = ({
   let tagStyle = tag => {
     let tagInstance = getTag(tag)
     return {
-      ...(tagInstance.distance ? {} : {fontWeight:'bold'}),
+      ...(tagInstance.distance ? {} : { fontWeight: 'bold' }),
       ...bgJoin(tagToGroupJoin(node.join)),
-      opacity: tagInstance.onlyShowTheseResults || !_.find('onlyShowTheseResults', node.tags) ? 1 : 0.5
+      opacity:
+        tagInstance.onlyShowTheseResults ||
+        !_.find('onlyShowTheseResults', node.tags)
+          ? 1
+          : 0.5,
     }
   }
-  return <TagsInput
-    splitCommas
-    tags={_.map(tagValueField, node.tags)}
-    addTag={tag => {
-      tree.mutate(node.path, {
-        tags: [...node.tags, { [tagValueField]: tag, distance: 3 }],
-      })
-    }}
-    removeTag={tag => {
-      tree.mutate(node.path, {
-        tags: _.reject({ [tagValueField]: tag }, node.tags),
-      })
-    }}
-    tagStyle={tagStyle}
-    submit={tree.triggerUpdate}
-    placeholder={placeholder}
-    PopoverContents={TagQueryPopever}
-  />
+  return (
+    <TagsInput
+      splitCommas
+      tags={_.map(tagValueField, node.tags)}
+      addTag={tag => {
+        tree.mutate(node.path, {
+          tags: [...node.tags, { [tagValueField]: tag, distance: 3 }],
+        })
+      }}
+      removeTag={tag => {
+        tree.mutate(node.path, {
+          tags: _.reject({ [tagValueField]: tag }, node.tags),
+        })
+      }}
+      tagStyle={tagStyle}
+      submit={tree.triggerUpdate}
+      placeholder={placeholder}
+      PopoverContents={TagQueryPopever}
+    />
+  )
 }
-    
+
 export default injectTreeNode(observer(TagsQuery), exampleTypes.tagsQuery)

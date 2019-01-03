@@ -42,9 +42,11 @@ export let FieldLabel = InjectTreeNode(
 )
 FieldLabel.displayName = 'FieldLabel'
 
-export let DefaultMissingTypeComponent = InjectTreeNode(
-  ({node = {}}) => <div>Type <b>{node.type}</b> is not supported (for key <i>{node.key}</i>)</div>
-)
+export let DefaultMissingTypeComponent = InjectTreeNode(({ node = {} }) => (
+  <div>
+    Type <b>{node.type}</b> is not supported (for key <i>{node.key}</i>)
+  </div>
+))
 
 export let FilterList = InjectTreeNode(
   observer(
@@ -57,7 +59,7 @@ export let FilterList = InjectTreeNode(
       Icon = DefaultIcon,
       className,
       style,
-      MissingTypeComponent = DefaultMissingTypeComponent
+      MissingTypeComponent = DefaultMissingTypeComponent,
     }) => (
       <div style={style} className={className}>
         {_.map(

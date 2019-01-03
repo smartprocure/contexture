@@ -109,30 +109,36 @@ export let CheckboxList = observer(({ options, value, onChange, ...props }) => (
 ))
 CheckboxList.displayName = 'CheckboxList'
 
-let RadioList = observer(({ options, value, onChange, className = '', ...props }) => (
-  <div className={`gv-radio-list ${className}`} {...props}>
-    {_.map(
-      option => (
-        <label className="gv-radio-option" key={option.value}>
-          <input
-            type="radio"
-            style={{ display: 'none' }}
-            onChange={e => {
-              onChange(e.target.value)
-            }}
-            value={option.value}
-            checked={value === option.value}
-          />
-          <div className="gv-radio">
-            <div className={`gv-radio-dot ${value === option.value ? 'active' : ''}`} />
-          </div>
-          <div className="gv-radio-label">{option.label}</div>
-        </label>
-      ),
-      options
-    )}
-  </div>
-))
+let RadioList = observer(
+  ({ options, value, onChange, className = '', ...props }) => (
+    <div className={`gv-radio-list ${className}`} {...props}>
+      {_.map(
+        option => (
+          <label className="gv-radio-option" key={option.value}>
+            <input
+              type="radio"
+              style={{ display: 'none' }}
+              onChange={e => {
+                onChange(e.target.value)
+              }}
+              value={option.value}
+              checked={value === option.value}
+            />
+            <div className="gv-radio">
+              <div
+                className={`gv-radio-dot ${
+                  value === option.value ? 'active' : ''
+                }`}
+              />
+            </div>
+            <div className="gv-radio-label">{option.label}</div>
+          </label>
+        ),
+        options
+      )}
+    </div>
+  )
+)
 RadioList.displayName = 'RadioList'
 
 export let Fonts = () => (
@@ -763,7 +769,11 @@ export let PagerItem = observer(({ active, disabled, ...x }) => (
 PagerItem.displayName = 'PagerItem'
 
 let TagComponent = observer(({ value, removeTag, tagStyle, onClick }) => (
-  <div className="tags-input-tag" style={F.callOrReturn(tagStyle, value)} onClick={onClick}>
+  <div
+    className="tags-input-tag"
+    style={F.callOrReturn(tagStyle, value)}
+    onClick={onClick}
+  >
     {value}
     <span
       className="tags-input-tag-remove fa fa-times"
@@ -816,10 +826,14 @@ Tabs = observer(Tabs)
 
 export { Tabs }
 
-export let MissingTypeComponent = InjectTreeNode(
-  ({node = {}}) => <ErrorText>Type <b>{node.type}</b> is not supported (for key <i>{node.key}</i>)</ErrorText>
+export let MissingTypeComponent = InjectTreeNode(({ node = {} }) => (
+  <ErrorText>
+    Type <b>{node.type}</b> is not supported (for key <i>{node.key}</i>)
+  </ErrorText>
+))
+export let FilterList = defaultProps({ Icon, MissingTypeComponent })(
+  BaseFilterList
 )
-export let FilterList = defaultProps({ Icon, MissingTypeComponent })(BaseFilterList)
 
 // Error Text / List General Components
 let ErrorText = ({ children }) => (

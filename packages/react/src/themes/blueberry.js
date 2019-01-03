@@ -273,7 +273,11 @@ export let PagerItem = withStateLens({ hovering: false })(
 )
 
 let TagComponent = observer(({ value, removeTag, tagStyle, onClick }) => (
-  <div className="tags-input-tag" style={F.callOrReturn(tagStyle, value)} onClick={onClick}>
+  <div
+    className="tags-input-tag"
+    style={F.callOrReturn(tagStyle, value)}
+    onClick={onClick}
+  >
     {value}
     <span
       className="tags-input-tag-remove fa fa-times"

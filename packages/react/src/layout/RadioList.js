@@ -6,7 +6,10 @@ let RadioList = ({ options, value, onChange, ...props }) => (
   <div {...props}>
     {_.map(
       option => (
-        <label key={option.value} style={{ cursor: 'pointer', marginRight: 25 }}>
+        <label
+          key={option.value}
+          style={{ cursor: 'pointer', marginRight: 25 }}
+        >
           <input
             type="radio"
             style={{
