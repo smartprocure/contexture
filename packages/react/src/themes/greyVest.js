@@ -4,6 +4,7 @@ import F from 'futil-js'
 import { Observer, observer } from 'mobx-react'
 import { defaultProps } from 'recompose'
 import { withStateLens } from '../utils/mobx-react-utils'
+import InjectTreeNode from '../utils/injectTreeNode'
 import {
   Flex,
   TextHighlight,
@@ -815,7 +816,10 @@ Tabs = observer(Tabs)
 
 export { Tabs }
 
-export let FilterList = defaultProps({ Icon })(BaseFilterList)
+export let MissingTypeComponent = InjectTreeNode(
+  ({node = {}}) => <ErrorText>Type <b>{node.type}</b> is not supported (for key <i>{node.key}</i>)</ErrorText>
+)
+export let FilterList = defaultProps({ Icon, MissingTypeComponent })(BaseFilterList)
 
 // Error Text / List General Components
 let ErrorText = ({ children }) => (
