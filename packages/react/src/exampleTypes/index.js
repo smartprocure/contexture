@@ -69,6 +69,7 @@ export default ({
     number: Components.Number,
     date: Components.Date,
     tagsQuery: Components.TagsQuery,
+    tagsText: Components.TagsText,
     geo: Components.Geo,
     text: Components.Text,
   }
