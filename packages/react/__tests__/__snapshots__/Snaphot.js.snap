@@ -837,7 +837,9 @@ exports[`Storyshots Example Types Full Demo 1`] = `
           <div
             style={Object {}}
           >
-            <div>
+            <div
+              className="contexture-number"
+            >
               <div
                 style={
                   Object {
@@ -868,7 +870,9 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   type="number"
                   value=""
                 />
-                <div>
+                <div
+                  className="contexture-number-separator"
+                >
                   -
                 </div>
                 <input
@@ -894,7 +898,6 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   value={100}
                 />
               </div>
-              <div />
             </div>
           </div>
         </div>
@@ -908,7 +911,9 @@ exports[`Storyshots Example Types Full Demo 1`] = `
           <div
             style={Object {}}
           >
-            <div>
+            <div
+              className="contexture-number"
+            >
               <div
                 style={
                   Object {
@@ -939,7 +944,9 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   type="number"
                   value=""
                 />
-                <div>
+                <div
+                  className="contexture-number-separator"
+                >
                   -
                 </div>
                 <input
@@ -965,7 +972,6 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                   value={100}
                 />
               </div>
-              <div />
             </div>
           </div>
         </div>
@@ -2341,6 +2347,38 @@ exports[`Storyshots Grey Vest Refs 1`] = `
       .gv-body select {
         cursor: pointer;
       }
+
+
+      /* Radio Buttons */
+      .gv-radio {
+        width: 16px;
+        height: 16px;
+        background: #FFFFFF;
+        border: 2px solid #EDEDED;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .gv-radio-dot.active {
+        width: 14px;
+        height: 14px;
+        background: #007AFF;  
+        border-radius: 50%;
+      }
+      .gv-radio-label {
+        padding-left: 10px;
+      }
+      .gv-radio-option {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        margin-right: 25px;
+      }
+      .gv-radio-list {
+        display: flex;
+      }
+
       
       .gv-body .tags-input {
         border: 2px solid #EBEBEB;
@@ -2373,6 +2411,7 @@ exports[`Storyshots Grey Vest Refs 1`] = `
         border-radius: 2px;
         padding: 5px 13px 7px 15px;
         font-size: 15px;
+        cursor: pointer;
       }
       .gv-body .tags-input-tag-remove {
         /* Arbitrary theme design */
@@ -2380,6 +2419,22 @@ exports[`Storyshots Grey Vest Refs 1`] = `
         font-size: 10px;
       }
       
+      /* Tags Popover */
+      .gv-body .tags-input-popover {
+        /* counteract default popover padding */
+        margin: -5px;
+      }
+      .gv-body .tags-input-popover &gt; div {
+        border-bottom: solid 1px rgba(216, 216, 216, 0.3);
+        padding: 15px;
+      }
+      .gv-body .tags-input-popover .popover-item:first-child {
+        padding-top: 0;
+      }
+      .gv-body .tags-input-popover .popover-item {
+        padding-top: 10px;
+      }
+
       /* Pager */
       .gv-pager {
         position: relative;
@@ -2520,6 +2575,13 @@ exports[`Storyshots Grey Vest Refs 1`] = `
       .contexture-facet-cardinality {
         margin: 10px 0;
       }
+
+      .contexture-number-separator {
+        margin: 0 10px;
+      }
+      .contexture-number-best-range {
+        margin-top: 15px;
+      }
       
       /* Tabs */     
       .gv-tab-container .gv-tab {
@@ -2613,6 +2675,13 @@ exports[`Storyshots Grey Vest Refs 1`] = `
       
       .gv-text-error {
         color: #D75050;
+      }
+
+      .gv-body .labeled-checkbox {
+        display: flex;
+      }
+      .gv-body .labeled-checkbox &gt; span {
+        padding-left: 10px;
       }
     
   </style>
@@ -2896,6 +2965,38 @@ exports[`Storyshots IMDB Check List 1`] = `
       .gv-body select {
         cursor: pointer;
       }
+
+
+      /* Radio Buttons */
+      .gv-radio {
+        width: 16px;
+        height: 16px;
+        background: #FFFFFF;
+        border: 2px solid #EDEDED;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .gv-radio-dot.active {
+        width: 14px;
+        height: 14px;
+        background: #007AFF;  
+        border-radius: 50%;
+      }
+      .gv-radio-label {
+        padding-left: 10px;
+      }
+      .gv-radio-option {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        margin-right: 25px;
+      }
+      .gv-radio-list {
+        display: flex;
+      }
+
       
       .gv-body .tags-input {
         border: 2px solid #EBEBEB;
@@ -2928,6 +3029,7 @@ exports[`Storyshots IMDB Check List 1`] = `
         border-radius: 2px;
         padding: 5px 13px 7px 15px;
         font-size: 15px;
+        cursor: pointer;
       }
       .gv-body .tags-input-tag-remove {
         /* Arbitrary theme design */
@@ -2935,6 +3037,22 @@ exports[`Storyshots IMDB Check List 1`] = `
         font-size: 10px;
       }
       
+      /* Tags Popover */
+      .gv-body .tags-input-popover {
+        /* counteract default popover padding */
+        margin: -5px;
+      }
+      .gv-body .tags-input-popover &gt; div {
+        border-bottom: solid 1px rgba(216, 216, 216, 0.3);
+        padding: 15px;
+      }
+      .gv-body .tags-input-popover .popover-item:first-child {
+        padding-top: 0;
+      }
+      .gv-body .tags-input-popover .popover-item {
+        padding-top: 10px;
+      }
+
       /* Pager */
       .gv-pager {
         position: relative;
@@ -3075,6 +3193,13 @@ exports[`Storyshots IMDB Check List 1`] = `
       .contexture-facet-cardinality {
         margin: 10px 0;
       }
+
+      .contexture-number-separator {
+        margin: 0 10px;
+      }
+      .contexture-number-best-range {
+        margin-top: 15px;
+      }
       
       /* Tabs */     
       .gv-tab-container .gv-tab {
@@ -3168,6 +3293,13 @@ exports[`Storyshots IMDB Check List 1`] = `
       
       .gv-text-error {
         color: #D75050;
+      }
+
+      .gv-body .labeled-checkbox {
+        display: flex;
+      }
+      .gv-body .labeled-checkbox &gt; span {
+        padding-left: 10px;
       }
     
   </style>
@@ -3322,6 +3454,38 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
       .gv-body select {
         cursor: pointer;
       }
+
+
+      /* Radio Buttons */
+      .gv-radio {
+        width: 16px;
+        height: 16px;
+        background: #FFFFFF;
+        border: 2px solid #EDEDED;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .gv-radio-dot.active {
+        width: 14px;
+        height: 14px;
+        background: #007AFF;  
+        border-radius: 50%;
+      }
+      .gv-radio-label {
+        padding-left: 10px;
+      }
+      .gv-radio-option {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        margin-right: 25px;
+      }
+      .gv-radio-list {
+        display: flex;
+      }
+
       
       .gv-body .tags-input {
         border: 2px solid #EBEBEB;
@@ -3354,6 +3518,7 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         border-radius: 2px;
         padding: 5px 13px 7px 15px;
         font-size: 15px;
+        cursor: pointer;
       }
       .gv-body .tags-input-tag-remove {
         /* Arbitrary theme design */
@@ -3361,6 +3526,22 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         font-size: 10px;
       }
       
+      /* Tags Popover */
+      .gv-body .tags-input-popover {
+        /* counteract default popover padding */
+        margin: -5px;
+      }
+      .gv-body .tags-input-popover &gt; div {
+        border-bottom: solid 1px rgba(216, 216, 216, 0.3);
+        padding: 15px;
+      }
+      .gv-body .tags-input-popover .popover-item:first-child {
+        padding-top: 0;
+      }
+      .gv-body .tags-input-popover .popover-item {
+        padding-top: 10px;
+      }
+
       /* Pager */
       .gv-pager {
         position: relative;
@@ -3501,6 +3682,13 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
       .contexture-facet-cardinality {
         margin: 10px 0;
       }
+
+      .contexture-number-separator {
+        margin: 0 10px;
+      }
+      .contexture-number-best-range {
+        margin-top: 15px;
+      }
       
       /* Tabs */     
       .gv-tab-container .gv-tab {
@@ -3595,6 +3783,13 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
       .gv-text-error {
         color: #D75050;
       }
+
+      .gv-body .labeled-checkbox {
+        display: flex;
+      }
+      .gv-body .labeled-checkbox &gt; span {
+        padding-left: 10px;
+      }
     
   </style>
   <div>
@@ -3676,7 +3871,9 @@ exports[`Storyshots IMDB Quick Start 1`] = `
             <div
               style={Object {}}
             >
-              <div>
+              <div
+                className="contexture-number"
+              >
                 <div
                   style={
                     Object {
@@ -3707,7 +3904,9 @@ exports[`Storyshots IMDB Quick Start 1`] = `
                     type="number"
                     value=""
                   />
-                  <div>
+                  <div
+                    className="contexture-number-separator"
+                  >
                     -
                   </div>
                   <input
@@ -3733,7 +3932,6 @@ exports[`Storyshots IMDB Quick Start 1`] = `
                     value={100}
                   />
                 </div>
-                <div />
               </div>
             </div>
           </div>
@@ -5800,7 +5998,9 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                       <div
                                         style={Object {}}
                                       >
-                                        <div>
+                                        <div
+                                          className="contexture-number"
+                                        >
                                           <div
                                             style={
                                               Object {
@@ -5831,7 +6031,9 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                               type="number"
                                               value=""
                                             />
-                                            <div>
+                                            <div
+                                              className="contexture-number-separator"
+                                            >
                                               -
                                             </div>
                                             <input
@@ -5857,7 +6059,6 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                               value=""
                                             />
                                           </div>
-                                          <div />
                                         </div>
                                       </div>
                                     </div>
@@ -6585,6 +6786,7 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                                           "lastUpdateTime": null,
                                                           "markedForUpdate": null,
                                                           "missedUpdate": null,
+                                                          "operator": "containsWord",
                                                           "path": Array [
                                                             "root",
                                                             "group24",
