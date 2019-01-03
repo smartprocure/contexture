@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { Component, lenservable } from '../utils/mobx-react-utils'
 import styles from '../styles'
@@ -85,7 +86,7 @@ let Group = Component(
                   )}
                 </div>
               ),
-              tree.children.slice()
+              _.toArray(tree.children)
             )}
             {/*<FilterMoveTarget index={tree.children.length} tree={tree} /> */}
             {root.adding && (
