@@ -4,6 +4,7 @@ import F from 'futil-js'
 import { Observer, observer } from 'mobx-react'
 import { defaultProps } from 'recompose'
 import { withStateLens } from '../utils/mobx-react-utils'
+import InjectTreeNode from '../utils/injectTreeNode'
 import {
   Flex,
   TextHighlight,
@@ -108,32 +109,36 @@ export let CheckboxList = observer(({ options, value, onChange, ...props }) => (
 ))
 CheckboxList.displayName = 'CheckboxList'
 
-export let RadioList = observer(({ options, value, onChange, ...props }) => (
-  <div {...props}>
-    {_.map(
-      option => (
-        <label style={{ cursor: 'pointer', marginRight: 25 }}>
-          <input
-            type="radio"
-            style={{
-              marginRight: 10,
-              display: 'inline-block',
-              width: 'auto',
-              height: 'auto',
-            }}
-            onChange={e => {
-              onChange(e.target.value)
-            }}
-            value={option.value}
-            checked={value === option.value}
-          />
-          {option.label}
-        </label>
-      ),
-      options
-    )}
-  </div>
-))
+let RadioList = observer(
+  ({ options, value, onChange, className = '', ...props }) => (
+    <div className={`gv-radio-list ${className}`} {...props}>
+      {_.map(
+        option => (
+          <label className="gv-radio-option" key={option.value}>
+            <input
+              type="radio"
+              style={{ display: 'none' }}
+              onChange={e => {
+                onChange(e.target.value)
+              }}
+              value={option.value}
+              checked={value === option.value}
+            />
+            <div className="gv-radio">
+              <div
+                className={`gv-radio-dot ${
+                  value === option.value ? 'active' : ''
+                }`}
+              />
+            </div>
+            <div className="gv-radio-label">{option.label}</div>
+          </label>
+        ),
+        options
+      )}
+    </div>
+  )
+)
 RadioList.displayName = 'RadioList'
 
 export let Fonts = () => (
@@ -273,6 +278,38 @@ export let GVStyle = () => (
       .gv-body select {
         cursor: pointer;
       }
+
+
+      /* Radio Buttons */
+      .gv-radio {
+        width: 16px;
+        height: 16px;
+        background: #FFFFFF;
+        border: 2px solid #EDEDED;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .gv-radio-dot.active {
+        width: 14px;
+        height: 14px;
+        background: #007AFF;  
+        border-radius: 50%;
+      }
+      .gv-radio-label {
+        padding-left: 10px;
+      }
+      .gv-radio-option {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        margin-right: 25px;
+      }
+      .gv-radio-list {
+        display: flex;
+      }
+
       
       .gv-body .tags-input {
         border: 2px solid #EBEBEB;
@@ -305,6 +342,7 @@ export let GVStyle = () => (
         border-radius: 2px;
         padding: 5px 13px 7px 15px;
         font-size: 15px;
+        cursor: pointer;
       }
       .gv-body .tags-input-tag-remove {
         /* Arbitrary theme design */
@@ -312,6 +350,22 @@ export let GVStyle = () => (
         font-size: 10px;
       }
       
+      /* Tags Popover */
+      .gv-body .tags-input-popover {
+        /* counteract default popover padding */
+        margin: -5px;
+      }
+      .gv-body .tags-input-popover > div {
+        border-bottom: solid 1px rgba(216, 216, 216, 0.3);
+        padding: 15px;
+      }
+      .gv-body .tags-input-popover .popover-item:first-child {
+        padding-top: 0;
+      }
+      .gv-body .tags-input-popover .popover-item {
+        padding-top: 10px;
+      }
+
       /* Pager */
       .gv-pager {
         position: relative;
@@ -452,6 +506,13 @@ export let GVStyle = () => (
       .contexture-facet-cardinality {
         margin: 10px 0;
       }
+
+      .contexture-number-separator {
+        margin: 0 10px;
+      }
+      .contexture-number-best-range {
+        margin-top: 15px;
+      }
       
       /* Tabs */     
       .gv-tab-container .gv-tab {
@@ -545,6 +606,13 @@ export let GVStyle = () => (
       
       .gv-text-error {
         color: #D75050;
+      }
+
+      .gv-body .labeled-checkbox {
+        display: flex;
+      }
+      .gv-body .labeled-checkbox > span {
+        padding-left: 10px;
       }
     `}
   </style>
@@ -700,22 +768,26 @@ export let PagerItem = observer(({ active, disabled, ...x }) => (
 ))
 PagerItem.displayName = 'PagerItem'
 
-let TagComponent = ({ value, removeTag, tagStyle }) => (
-  <div className="tags-input-tag" style={tagStyle}>
+let TagComponent = observer(({ value, removeTag, tagStyle, onClick }) => (
+  <div
+    className="tags-input-tag"
+    style={F.callOrReturn(tagStyle, value)}
+    onClick={onClick}
+  >
     {value}
     <span
       className="tags-input-tag-remove fa fa-times"
-      style={{ cursor: 'pointer' }}
       onClick={() => removeTag(value)}
     />
   </div>
-)
+))
+TagComponent.displayName = 'TagComponent'
 
 export let ExampleTypes = ExampleTypeConstructor({
   Button,
   Input,
   Checkbox,
-  RadioList: ButtonRadio,
+  RadioList,
   Table,
   FieldPicker: defaultProps({ Input, Highlight, Item: FilterListItem })(
     NestedPicker
@@ -754,7 +826,14 @@ Tabs = observer(Tabs)
 
 export { Tabs }
 
-export let FilterList = defaultProps({ Icon })(BaseFilterList)
+export let MissingTypeComponent = InjectTreeNode(({ node = {} }) => (
+  <ErrorText>
+    Type <b>{node.type}</b> is not supported (for key <i>{node.key}</i>)
+  </ErrorText>
+))
+export let FilterList = defaultProps({ Icon, MissingTypeComponent })(
+  BaseFilterList
+)
 
 // Error Text / List General Components
 let ErrorText = ({ children }) => (

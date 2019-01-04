@@ -68,6 +68,11 @@ let tree = Contexture({
           ],
         },
         {
+          key: 'titleText',
+          type: 'tagsText',
+          field: 'title',
+        },
+        {
           key: 'searchNumber',
           type: 'number',
           field: 'metaScore',
@@ -83,6 +88,11 @@ let tree = Contexture({
           key: 'searchActors',
           type: 'facet',
           field: 'actors',
+        },
+        {
+          key: 'IntentionallyBrokenNode',
+          type: 'IntentionallyMissingType',
+          field: 'missingField',
         },
       ],
     },

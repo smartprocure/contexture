@@ -15,20 +15,20 @@ let NumberComponent = injectTreeNode(
       showBestRange = false,
       formatter = _.identity,
     }) => (
-      <div>
+      <div className="contexture-number">
         <Flex style={{ alignItems: 'center' }}>
           <NumberInput
             value={formatter(node.min) || ''}
             onChange={e => tree.mutate(node.path, { min: e.target.value })}
           />
-          <div>-</div>
+          <div className="contexture-number-separator">-</div>
           <NumberInput
             value={formatter(node.max) || ''}
             onChange={e => tree.mutate(node.path, { max: e.target.value })}
           />
         </Flex>
-        <div>
-          {showBestRange && (
+        {showBestRange && (
+          <div className="contexture-number-best-range">
             <Button
               style={{ width: '100%' }}
               onClick={async () => {
@@ -44,8 +44,8 @@ let NumberComponent = injectTreeNode(
             >
               Find best range
             </Button>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     )
   ),

@@ -36,11 +36,17 @@ Label.displayName = 'Label'
 export let FieldLabel = InjectTreeNode(
   observer(({ node, node: { field } = {}, fields, Icon, label }) => (
     <Label node={node} Icon={Icon}>
-      {label || _.get([field, 'label'], fields)}
+      {label || _.get([field, 'label'], fields) || field}
     </Label>
   ))
 )
 FieldLabel.displayName = 'FieldLabel'
+
+export let DefaultMissingTypeComponent = InjectTreeNode(({ node = {} }) => (
+  <div>
+    Type <b>{node.type}</b> is not supported (for key <i>{node.key}</i>)
+  </div>
+))
 
 export let FilterList = InjectTreeNode(
   observer(
@@ -53,6 +59,7 @@ export let FilterList = InjectTreeNode(
       Icon = DefaultIcon,
       className,
       style,
+      MissingTypeComponent = DefaultMissingTypeComponent,
     }) => (
       <div style={style} className={className}>
         {_.map(
@@ -80,7 +87,7 @@ export let FilterList = InjectTreeNode(
                 {!child.paused && (
                   <div className="filter-list-item-contents">
                     <Dynamic
-                      component={types[child.type]}
+                      component={types[child.type] || MissingTypeComponent}
                       path={_.toArray(child.path)}
                       {...mapNodeToProps(child, fields, types)}
                     />
