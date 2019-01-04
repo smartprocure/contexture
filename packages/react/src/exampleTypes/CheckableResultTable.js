@@ -7,7 +7,7 @@ import { length } from '../utils/futil'
 import InjectTreeNode from '../utils/injectTreeNode'
 
 let Label = observer(({ node, Checkbox, selected, getValue }) => {
-  let results = getResults(node).slice()
+  let results = _.toArray(getResults(node))
   let allChecked = length(results) === length(F.view(selected))
   let checkAll = F.sets(
     allChecked

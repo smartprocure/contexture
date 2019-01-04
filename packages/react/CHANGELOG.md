@@ -9,6 +9,9 @@
 * GreyVest: Better styling on Number
 * FilterList: Better error handling for missing types and labels
 
+# 1.30.2
+* Use `_.toArray` instead of `.slice()` to protect against undefined values.
+
 # 1.30.1
 * Fix the DateRangePicker OnChange issue
 
