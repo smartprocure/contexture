@@ -223,12 +223,12 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
 Header.displayName = 'Header'
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
-let TableBody = observer(({ node, visibleFields, Modal, Table }) => (
+let TableBody = observer(({ node, visibleFields, Modal, Table, Row }) => (
   <tbody style={node.markedForUpdate || node.updating ? loading : {}}>
     {!!getResults(node).length &&
       _.map(
         x => (
-          <tr key={x._id}>
+          <Row key={x._id}>
             {_.map(
               ({ field, display = x => x, Cell = 'td' }) => (
                 <Cell key={field}>
@@ -245,7 +245,7 @@ let TableBody = observer(({ node, visibleFields, Modal, Table }) => (
                 Table,
               }}
             />
-          </tr>
+          </Row>
         ),
         getResults(node)
       )}
@@ -255,7 +255,7 @@ TableBody.displayName = 'TableBody'
 
 let ResultTable = InjectTreeNode(
   observer(({ // Props
-    fields, infer, path, criteria, node, tree, Table = 'table', HeaderCell, Modal, ListGroupItem, FieldPicker, typeComponents, mapNodeToProps = () => ({}), Icon = DefaultIcon }) => {
+    fields, infer, path, criteria, node, tree, Table = 'table', HeaderCell, Modal, ListGroupItem, FieldPicker, typeComponents, mapNodeToProps = () => ({}), Icon = DefaultIcon, Row = 'tr' }) => {
     // From Provider // Theme/Components
     let mutate = tree.mutate(path)
     // NOTE infer + add columns does not work together (except for anything explicitly passed in)
@@ -312,6 +312,7 @@ let ResultTable = InjectTreeNode(
           </tr>
         </thead>
         <TableBody
+          Row={Row}
           node={node}
           visibleFields={visibleFields}
           Modal={Modal}

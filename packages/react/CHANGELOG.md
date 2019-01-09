@@ -1,3 +1,6 @@
+# 1.32.1
+* ResultTable now exposes a Row property.
+
 # 1.32.0
 * improves checkbox and label stylign in Facet example type
 
