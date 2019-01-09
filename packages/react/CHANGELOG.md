@@ -1,8 +1,11 @@
-# 1.32.1
+# 1.32.2
 * Fixes second occurence of baseline aligned checkbox labels
 
+# 1.32.1
+* ResultTable now exposes a Row property.
+
 # 1.32.0
-* improves checkbox and label stylign in Facet example type
+* improves checkbox and label styling in Facet example type
 
 # 1.31.0
 * TagsQuery: Add tag popover with support for changing join, per tag distance (0 vs 3 distance as "fuzzy" v "exact"), exact toggle, per tag disabling, and an apply distance to all tags link
