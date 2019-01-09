@@ -1,4 +1,4 @@
-# 1.33.0
+# 1.32.1
 * Fixes second occurence of baseline aligned checkbox labels
 
 # 1.32.0
