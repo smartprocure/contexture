@@ -479,7 +479,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
               <label
                 style={
                   Object {
-                    "alignItems": "baseline",
+                    "alignItems": "center",
                     "cursor": "pointer",
                     "display": "flex",
                     "justifyContent": "space-between",
@@ -508,7 +508,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
               <label
                 style={
                   Object {
-                    "alignItems": "baseline",
+                    "alignItems": "center",
                     "cursor": "pointer",
                     "display": "flex",
                     "justifyContent": "space-between",
@@ -539,7 +539,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
               <label
                 style={
                   Object {
-                    "alignItems": "baseline",
+                    "alignItems": "center",
                     "cursor": "pointer",
                     "display": "flex",
                     "justifyContent": "space-between",
@@ -568,7 +568,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
               <label
                 style={
                   Object {
-                    "alignItems": "baseline",
+                    "alignItems": "center",
                     "cursor": "pointer",
                     "display": "flex",
                     "justifyContent": "space-between",
@@ -700,7 +700,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
               <label
                 style={
                   Object {
-                    "alignItems": "baseline",
+                    "alignItems": "center",
                     "cursor": "pointer",
                     "display": "flex",
                     "justifyContent": "space-between",
@@ -729,7 +729,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
               <label
                 style={
                   Object {
-                    "alignItems": "baseline",
+                    "alignItems": "center",
                     "cursor": "pointer",
                     "display": "flex",
                     "justifyContent": "space-between",
@@ -760,7 +760,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
               <label
                 style={
                   Object {
-                    "alignItems": "baseline",
+                    "alignItems": "center",
                     "cursor": "pointer",
                     "display": "flex",
                     "justifyContent": "space-between",
@@ -789,7 +789,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
               <label
                 style={
                   Object {
-                    "alignItems": "baseline",
+                    "alignItems": "center",
                     "cursor": "pointer",
                     "display": "flex",
                     "justifyContent": "space-between",
@@ -6786,7 +6786,6 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                                           "lastUpdateTime": null,
                                                           "markedForUpdate": null,
                                                           "missedUpdate": null,
-                                                          "operator": "containsWord",
                                                           "path": Array [
                                                             "root",
                                                             "group24",
@@ -7746,7 +7745,7 @@ exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
                               <label
                                 style={
                                   Object {
-                                    "alignItems": "baseline",
+                                    "alignItems": "center",
                                     "cursor": "pointer",
                                     "display": "flex",
                                     "justifyContent": "space-between",
@@ -7775,7 +7774,7 @@ exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
                               <label
                                 style={
                                   Object {
-                                    "alignItems": "baseline",
+                                    "alignItems": "center",
                                     "cursor": "pointer",
                                     "display": "flex",
                                     "justifyContent": "space-between",
