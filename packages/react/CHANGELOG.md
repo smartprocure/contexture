@@ -1,3 +1,6 @@
+# 1.33.0
+* Fixes second occurence of baseline aligned checkbox labels
+
 # 1.32.0
 * improves checkbox and label stylign in Facet example type
 

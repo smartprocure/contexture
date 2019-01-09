@@ -89,7 +89,7 @@ let Facet = injectTreeNode(
               key={name}
               style={{
                 justifyContent: 'space-between',
-                alignItems: 'baseline',
+                alignItems: 'center',
                 display: 'flex',
                 cursor: 'pointer',
               }}
