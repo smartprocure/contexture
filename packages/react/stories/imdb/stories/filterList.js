@@ -154,7 +154,8 @@ const Story = inject(() => {
                     getValue={state.getValue}
                   >
                     <Column field="key" label="Genre" />
-                    <Column field="count" label="Found" />
+                    <Column field="count" label="Found" enableSort />
+                    <Column field="avg" label="Average" enableSort />
                     <Column
                       field="key"
                       label=""

@@ -1,3 +1,6 @@
+# 1.33.0
+* Add sorting capability to TermsStatsTable
+
 # 1.32.2
 * Fixes second occurence of baseline aligned checkbox labels
 

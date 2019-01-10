@@ -80,6 +80,20 @@ let TermsStatsTable = injectTreeNode(
               : _.compact(children),
           }}
           data={node.context.terms}
+          sortField={node.order}
+          sortDir={node.sortDir}
+          columnSort={column => {
+            if (column.field !== 'key' && column.enableSort) {
+              tree.mutate(node.path, {
+                order: column.field,
+                sortDir:
+                  node.order === column.field &&
+                  _.getOr('asc', 'sortDir', node) === 'asc'
+                    ? 'desc'
+                    : 'asc',
+              })
+            }
+          }}
         />
       </div>
     )
