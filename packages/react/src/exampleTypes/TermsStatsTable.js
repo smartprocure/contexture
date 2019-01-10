@@ -87,8 +87,7 @@ let TermsStatsTable = injectTreeNode(
               tree.mutate(node.path, {
                 order: column.field,
                 sortDir:
-                  node.order === column.field &&
-                  _.getOr('asc', 'sortDir', node) === 'asc'
+                  node.order === column.field && node.sortDir === 'asc'
                     ? 'desc'
                     : 'asc',
               })
