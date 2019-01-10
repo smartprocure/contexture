@@ -55,8 +55,10 @@ export default ({
     ResultPager: defaultProps({ Icon })(ResultPager),
     DateHistogram,
     TermsStats,
-    TermsStatsTable,
-    CheckableTermsStatsTable,
+    TermsStatsTable: defaultProps({ Button })(TermsStatsTable),
+    CheckableTermsStatsTable: defaultProps({ Button })(
+      CheckableTermsStatsTable
+    ),
     Geo,
     Text: defaultProps({ Input })(Text),
     TagsText: defaultProps({ TagsInput, Select })(TagsText),
