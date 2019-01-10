@@ -109,7 +109,7 @@ export let CheckboxList = observer(({ options, value, onChange, ...props }) => (
 ))
 CheckboxList.displayName = 'CheckboxList'
 
-let RadioList = observer(
+export let RadioList = observer(
   ({ options, value, onChange, className = '', ...props }) => (
     <div className={`gv-radio-list ${className}`} {...props}>
       {_.map(
