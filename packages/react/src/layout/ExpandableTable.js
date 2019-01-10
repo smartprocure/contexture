@@ -106,7 +106,7 @@ let TableBody = inject(TableBodyState)(
 let TableState = (stores, props) => ({
   columns: _.map(
     ({ props }) => ({
-      ..._.pick(['field', 'label', 'display'], props),
+      ..._.pick(['field', 'label', 'display', 'enableSort'], props),
       details: F.compactObject({
         ..._.pick(['expand', 'collapse'], props),
         Component: props.children,
@@ -117,23 +117,44 @@ let TableState = (stores, props) => ({
 })
 
 let ExpandableTable = inject(TableState)(
-  observer(({ data, columns, recordKey = 'key', ...props }) => (
-    <table {...props.tableAttrs}>
-      <thead>
-        <tr>
-          {F.mapIndexed(
-            (c, i) => (
-              <th key={`${c.field}${i}`}>
-                {F.callOrReturn(_.getOr(F.autoLabel(c.field), 'label', c))}
-              </th>
-            ),
-            columns
-          )}
-        </tr>
-      </thead>
-      <TableBody columns={columns} data={data} recordKey={recordKey} />
-    </table>
-  ))
+  observer(
+    ({
+      data,
+      columns,
+      recordKey = 'key',
+      sortField,
+      sortDir,
+      columnSort = _.identity,
+      ...props
+    }) => (
+      <table {...props.tableAttrs}>
+        <thead>
+          <tr>
+            {F.mapIndexed(
+              (c, i) => (
+                <th
+                  key={`${c.field}${i}`}
+                  {...c.enableSort && {
+                    onClick: () => columnSort(c),
+                    style: { cursor: 'pointer', textDecoration: 'underline' },
+                  }}
+                >
+                  {F.callOrReturn(_.getOr(F.autoLabel(c.field), 'label', c))}
+                  {c.enableSort && c.field === sortField && sortDir
+                    ? sortDir === 'asc'
+                      ? '▲'
+                      : '▼'
+                    : ''}
+                </th>
+              ),
+              columns
+            )}
+          </tr>
+        </thead>
+        <TableBody columns={columns} data={data} recordKey={recordKey} />
+      </table>
+    )
+  )
 )
 
 ExpandableTable.displayName = 'ExpandableTable'

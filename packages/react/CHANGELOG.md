@@ -1,3 +1,6 @@
+# 1.33.0
+* Add sorting capability to TermsStatsTable. Allow passing theme Button component to TermsStatsTable. Allow overriding the filter field and a value transformer for the filter field for TermsStatsTable.
+
 # 1.32.2
 * Fixes second occurence of baseline aligned checkbox labels
 

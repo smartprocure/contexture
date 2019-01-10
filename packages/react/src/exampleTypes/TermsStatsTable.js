@@ -18,8 +18,11 @@ let TermsStatsTable = injectTreeNode(
     ({
       node,
       criteria,
+      criteriaField,
+      criteriaGetValue = _.identity,
       tree,
       children,
+      Button,
       MoreControls = 'div',
       Input = 'input',
       Filter = SimpleFilter,
@@ -41,9 +44,9 @@ let TermsStatsTable = injectTreeNode(
                     expand={{
                       display: (value, record) => (
                         <div>
-                          <button
+                          <Button
                             onClick={async () => {
-                              let field = node.key_field
+                              let field = criteriaField || node.key_field
                               let filter =
                                 criteria &&
                                 _.find(
@@ -65,12 +68,12 @@ let TermsStatsTable = injectTreeNode(
 
                               await tree.mutate(filter.path, {
                                 mode: 'include',
-                                values: [record.key],
+                                values: [criteriaGetValue(record.key)],
                               })
                             }}
                           >
                             Add as Filter
-                          </button>
+                          </Button>
                           <MoreControls />
                         </div>
                       ),
@@ -80,6 +83,19 @@ let TermsStatsTable = injectTreeNode(
               : _.compact(children),
           }}
           data={node.context.terms}
+          sortField={node.order}
+          sortDir={node.sortDir}
+          columnSort={column => {
+            if (column.field !== 'key' && column.enableSort) {
+              tree.mutate(node.path, {
+                order: column.field,
+                sortDir:
+                  node.order === column.field && node.sortDir === 'asc'
+                    ? 'desc'
+                    : 'asc',
+              })
+            }
+          }}
         />
       </div>
     )
