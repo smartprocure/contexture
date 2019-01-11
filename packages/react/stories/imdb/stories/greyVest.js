@@ -71,7 +71,6 @@ let tree = Contexture({
           key: 'titleText',
           type: 'tagsText',
           field: 'title',
-          paused: true,
         },
         {
           key: 'searchNumber',
@@ -84,6 +83,7 @@ let tree = Contexture({
           key: 'searchFacet',
           type: 'facet',
           field: 'genres',
+          paused: true,
         },
         {
           key: 'searchActors',
