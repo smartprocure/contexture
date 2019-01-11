@@ -1,6 +1,6 @@
 # 1.33.2
 * Filters should now work for all columns in the Results Table component, even for the one paused in the greyVest example i.e. `Title`.
-* Addee launch configuration for VSCode in conjunction with Chrome Debugger for components.
+* Added launch configuration for VSCode in conjunction with Chrome Debugger for components.
 
 # 1.33.1
 * Export RadioList from greyvest theme

@@ -105,7 +105,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
       criteria && _.find({ field }, tree.getNode(criteria).children)
     let filter = () => {
       if (!filterNode) addFilter(field)
-      filterNode.paused = false
+      tree.mutate(filterNode.path, { paused: false })
       F.flip(filtering)()
     }
     let Label = label
