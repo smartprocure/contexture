@@ -161,6 +161,26 @@ describe('results', () => {
       }),
     ])
   })
+  it('should add ".untouched" suffix from schema notAnalyzedField', () => {
+    let sortField = 'test.field'
+    F.extendOn(context, { sortField })
+    F.extendOn(schema, {
+      fields: {
+        [sortField]: {
+          elasticsearch: {
+            notAnalyzedField: 'untouched',
+          },
+        },
+      },
+    })
+    return resultsTest(context, [
+      _.extend(expectedCalls[0], {
+        sort: {
+          [`${sortField}.untouched`]: 'desc',
+        },
+      }),
+    ])
+  })
   it('should strip ".untouched" from sortField config when sortMode config is "word"', () => {
     let sortField = 'test.field'
     F.extendOn(context, { sortField, sortMode: 'word' })
