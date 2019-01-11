@@ -63,7 +63,7 @@ let tree = Contexture({
               key: 'titleDoesNotContain',
               type: 'tagsQuery',
               field: 'title',
-              join: 'none'
+              join: 'none',
             },
           ],
         },
@@ -71,7 +71,7 @@ let tree = Contexture({
           key: 'titleText',
           type: 'tagsText',
           field: 'title',
-          paused: true
+          paused: true,
         },
         {
           key: 'searchNumber',
