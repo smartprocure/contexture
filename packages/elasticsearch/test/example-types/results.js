@@ -161,7 +161,7 @@ describe('results', () => {
       }),
     ])
   })
-  it('should add ".untouched" suffix from sortField', () => {
+  it('should add ".untouched" suffix from schema notAnalyzedField', () => {
     let sortField = 'test.field'
     F.extendOn(context, { sortField })
     F.extendOn(schema, {
