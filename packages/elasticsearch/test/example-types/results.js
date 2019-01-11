@@ -163,15 +163,15 @@ describe('results', () => {
   })
   it('should add ".untouched" suffix from sortField', () => {
     let sortField = 'test.field'
-    F.extendOn(context, { sortField: sortField })
+    F.extendOn(context, { sortField })
     F.extendOn(schema, {
       fields: {
         [sortField]: {
-            elasticsearch: {
-              notAnalyzedField: 'untouched'
-          }
-        }
-      }
+          elasticsearch: {
+            notAnalyzedField: 'untouched',
+          },
+        },
+      },
     })
     return resultsTest(context, [
       _.extend(expectedCalls[0], {
