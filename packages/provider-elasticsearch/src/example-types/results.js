@@ -3,7 +3,10 @@ let _ = require('lodash/fp')
 let highlightResults = require('../highlighting').highlightResults
 
 let getSortField = (context, schema) => {
-  let suffix = _.get([context.sortField, 'elasticsearch', 'notAnalyzedField'], schema.fields)
+  let suffix = _.get(
+    [context.sortField, 'elasticsearch', 'notAnalyzedField'],
+    schema.fields
+  )
   return suffix ? `${context.sortField}.${suffix}` : context.sortField
 }
 module.exports = {
