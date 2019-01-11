@@ -1,3 +1,6 @@
+# 2.18.0
+* Added validate function to `geo` example type
+
 # 2.17.3
 * Added defaults and reactors for `text`'s `operator`.
 * Added `tagsText`, which is just like text but supports an array of values.
