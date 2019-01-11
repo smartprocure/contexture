@@ -2,19 +2,16 @@ let F = require('futil-js')
 let _ = require('lodash/fp')
 let highlightResults = require('../highlighting').highlightResults
 
-let sortModeMap = {
-  field: '.untouched',
-  word: '',
+let getSortField = (context, schema) => {
+  let suffix = _.get([context.sortField, 'elasticsearch', 'notAnalyzedField'], schema.fields)
+  return suffix ? `${context.sortField}.${suffix}` : context.sortField
 }
-let getSortField = context =>
-  _.replace('.untouched', '', context.sortField) +
-  _.getOr('', context.sortMode, sortModeMap)
 module.exports = {
   result(context, search, schema) {
     let page = (context.page || 1) - 1
     let pageSize = context.pageSize || 10
     let startRecord = page * pageSize
-    let sortField = context.sortField ? getSortField(context) : '_score'
+    let sortField = context.sortField ? getSortField(context, schema) : '_score'
     let sortDir = context.sortDir || 'desc'
     let result = {
       from: startRecord,
