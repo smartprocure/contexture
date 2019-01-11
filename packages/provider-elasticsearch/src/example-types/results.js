@@ -4,14 +4,21 @@ let highlightResults = require('../highlighting').highlightResults
 
 const sortModeMap = {
   field: '.untouched',
-  word: ''
+  word: '',
 }
 const getSortField = (context, schema) => {
-  let suffix = _.get([context.sortField, 'elasticsearch', 'notAnalyzedField'], schema.fields)
+  let suffix = _.get(
+    [context.sortField, 'elasticsearch', 'notAnalyzedField'],
+    schema.fields
+  )
   if (!suffix) {
-    context.sortField = _.replace('.untouched', '', context.sortField) + _.getOr('', context.sortMode, sortModeMap)
+    context.sortField =
+      _.replace('.untouched', '', context.sortField) +
+      _.getOr('', context.sortMode, sortModeMap)
   }
-  return suffix && !_.endsWith(`.${suffix}`, context.sortField) ? `${context.sortField}.${suffix}` : context.sortField
+  return suffix && !_.endsWith(`.${suffix}`, context.sortField)
+    ? `${context.sortField}.${suffix}`
+    : context.sortField
 }
 module.exports = {
   result(context, search, schema) {
