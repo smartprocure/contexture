@@ -4,7 +4,7 @@ let highlightResults = require('../highlighting').highlightResults
 
 let getSortField = (context, schema) => {
   let suffix = _.get([context.sortField, 'elasticsearch', 'notAnalyzedField'], schema.fields)
-  return suffix ? `${context.sortField}.${suffix}` : context.sortField
+  return suffix && !_.endsWith(`.${suffix}`, context.sortField) ? `${context.sortField}.${suffix}` : context.sortField
 }
 module.exports = {
   result(context, search, schema) {
