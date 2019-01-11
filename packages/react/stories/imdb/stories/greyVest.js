@@ -83,6 +83,7 @@ let tree = Contexture({
           key: 'searchFacet',
           type: 'facet',
           field: 'genres',
+          paused: true,
         },
         {
           key: 'searchActors',

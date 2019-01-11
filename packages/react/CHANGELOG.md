@@ -1,3 +1,7 @@
+# 1.33.2
+* ResultsTable: Inline filtering on paused nodes will now be un-paused instead of silently failing.
+* GreyVest: Added a paused node example.
+
 # 1.33.1
 * Export RadioList from greyvest theme
 
