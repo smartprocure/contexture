@@ -1,4 +1,7 @@
-﻿# 0.13.0
+﻿# 0.13.1
+* For the results example type Determine the sort field path by inspecting the `notAnalyzedField` property in the ES schema for the field in context.
+
+# 0.13.0
 * Add `tagsText` example type
 
 # 0.12.3
