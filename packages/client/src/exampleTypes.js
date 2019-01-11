@@ -175,6 +175,8 @@ export default stampKey('type', {
     },
   },
   geo: {
+    validate: x =>
+      !!((x.location || (x.latitude && x.longitude)) && x.radius && x.operator),
     reactors: {
       location: 'others',
       latitude: 'others',
