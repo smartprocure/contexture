@@ -10,15 +10,16 @@ let addNodeType = x => {
     long: 'number',
     float: 'number',
     double: 'number',
+    integer: 'number',
     geo_point: 'geo',
+    boolean: 'bool',
   })
   return _.extend(
     {
       typeDefault,
-      // TODO: exists, bool
       typeOptions: {
-        text: hasNested ? ['facet', 'tagsQuery'] : null,
-      }[type] || [typeDefault],
+        text: hasNested ? ['facet', 'tagsQuery', 'exists'] : null,
+      }[type] || [typeDefault, 'exists'],
     },
     x
   )
