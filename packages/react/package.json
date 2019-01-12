@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "1.33.2",
+  "version": "1.34.0",
   "description": "React components for building contexture interfaces",
   "main": "dist/index.js",
   "scripts": {
@@ -67,7 +67,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
     "contexture": "^0.2.1",
-    "contexture-client": "^2.17.3",
+    "contexture-client": "^2.18.0",
     "contexture-elasticsearch": "^0.10.2",
     "duti": "latest",
     "elasticsearch-browser": "^14.2.2",

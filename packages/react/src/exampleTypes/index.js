@@ -6,6 +6,8 @@ import Query from './Query'
 import Geo from './Geo'
 import TagsQuery from './TagsQuery'
 import TagsText from './TagsText'
+import Exists from './Exists'
+import Bool from './Bool'
 import ResultCount from './ResultCount'
 import ResultTable from './ResultTable'
 import CheckableResultTable from './CheckableResultTable'
@@ -44,6 +46,8 @@ export default ({
     TagsQuery: defaultProps({ TagsInput, Checkbox, RadioList, Button })(
       TagsQuery
     ),
+    Exists: defaultProps({ RadioList })(Exists),
+    Bool: defaultProps({ RadioList })(Bool),
     ResultTable: defaultProps({
       Table,
       Modal,
@@ -76,6 +80,8 @@ export default ({
     tagsText: Components.TagsText,
     geo: Components.Geo,
     text: Components.Text,
+    exists: Components.Exists,
+    bool: Components.Bool,
   }
   return { ...Components, TypeMap }
 }

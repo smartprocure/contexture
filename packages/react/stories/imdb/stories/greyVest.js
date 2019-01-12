@@ -95,6 +95,26 @@ let tree = Contexture({
           type: 'IntentionallyMissingType',
           field: 'missingField',
         },
+        {
+          key: 'ExistsAndBoolDemo',
+          type: 'group',
+          join: 'or',
+          children: [
+            {
+              key: 'missingField',
+              type: 'exists',
+              field: 'Missing Field',
+              value: false,
+            },
+            {
+              // The IMDB index doesn't have a bool type, but that's ok because this is in an OR
+              key: 'missingBool',
+              type: 'bool',
+              field: 'Missing Bool',
+              value: false,
+            },
+          ],
+        },
       ],
     },
     {
