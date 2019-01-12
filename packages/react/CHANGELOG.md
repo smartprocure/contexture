@@ -1,3 +1,6 @@
+﻿# 1.34.1
+* Fixed inconsistent column header for the highlighted records on the ResultTable.
+
 # 1.34.0
 * Add Bool and Exists example types with GreyVest example
 
