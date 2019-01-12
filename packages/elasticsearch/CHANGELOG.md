@@ -1,4 +1,8 @@
-﻿# 0.13.1
+# 0.14.0
+* Adds mapping for boolean and integer ES types
+* Adds exists as a type option for all fields
+
+# 0.13.1
 * For the results example type Determine the sort field path by inspecting the `notAnalyzedField` property in the ES schema for the field in context.
 
 # 0.13.0
