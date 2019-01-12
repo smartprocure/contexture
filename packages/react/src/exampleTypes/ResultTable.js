@@ -25,11 +25,15 @@ let popoverStyle = {
 let HighlightedColumnHeader = observer(
   ({
     node,
-    results = _.result('slice', getResults(node)),
-    additionalFields = _.result('0.additionalFields.slice', results),
     Cell = 'th',
+    results = _.result('slice', getResults(node)),
+    hasAdditionalFields = !_.flow(
+      _.map('additionalFields'),
+      _.compact,
+      _.isEmpty
+    )(results),
   }) =>
-    !_.isEmpty(additionalFields) ? (
+    hasAdditionalFields ? (
       <Cell key="additionalFields">Other Matches</Cell>
     ) : null
 )
