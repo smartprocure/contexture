@@ -106,7 +106,7 @@ $exports.store = store;
 /* 2 */
 /***/ (function(module, exports) {
 
-var core = module.exports = { version: '2.6.0' };
+var core = module.exports = { version: '2.5.7' };
 if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 
@@ -1390,79 +1390,98 @@ var terms_stats = exports.terms_stats = function terms_stats(_ref5) {
     });
   };
 
+  var getTotalRecords = _fp2.default.memoize((0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3() {
+    var result;
+    return _regenerator2.default.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            _context3.t0 = getTreeResults;
+            _context3.next = 3;
+            return service(formatTree({
+              key: 'cardinality',
+              type: 'cardinality',
+              field: key_field,
+              fieldMode: 'autocomplete'
+            }));
+
+          case 3:
+            _context3.t1 = _context3.sent;
+            result = (0, _context3.t0)(_context3.t1);
+            return _context3.abrupt('return', _fp2.default.get('context.value', result));
+
+          case 6:
+          case 'end':
+            return _context3.stop();
+        }
+      }
+    }, _callee3, undefined);
+  })));
+
   var done = false;
   var getNext = function () {
-    var _ref6 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3() {
+    var _ref7 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4() {
       var result;
-      return _regenerator2.default.wrap(function _callee3$(_context3) {
+      return _regenerator2.default.wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
-              _context3.t0 = getTreeResults;
-              _context3.next = 3;
-              return service(formatTree({
+              _context4.t0 = getTreeResults;
+              _context4.t1 = service;
+              _context4.t2 = formatTree;
+              _context4.t3 = key_field;
+              _context4.t4 = value_field;
+              _context4.t5 = size;
+
+              if (_context4.t5) {
+                _context4.next = 10;
+                break;
+              }
+
+              _context4.next = 9;
+              return getTotalRecords();
+
+            case 9:
+              _context4.t5 = _context4.sent;
+
+            case 10:
+              _context4.t6 = _context4.t5;
+              _context4.t7 = sortDir;
+              _context4.t8 = {
                 key: 'stats',
                 type: 'terms_stats',
-                key_field: key_field,
-                value_field: value_field,
-                size: size,
-                sortDir: sortDir
-              }));
+                key_field: _context4.t3,
+                value_field: _context4.t4,
+                size: _context4.t6,
+                sortDir: _context4.t7
+              };
+              _context4.t9 = (0, _context4.t2)(_context4.t8);
+              _context4.next = 16;
+              return (0, _context4.t1)(_context4.t9);
 
-            case 3:
-              _context3.t1 = _context3.sent;
-              result = (0, _context3.t0)(_context3.t1);
+            case 16:
+              _context4.t10 = _context4.sent;
+              result = (0, _context4.t0)(_context4.t10);
 
               done = true;
-              return _context3.abrupt('return', result.context.terms);
+              return _context4.abrupt('return', result.context.terms);
 
-            case 7:
+            case 20:
             case 'end':
-              return _context3.stop();
+              return _context4.stop();
           }
         }
-      }, _callee3, undefined);
+      }, _callee4, undefined);
     }));
 
     return function getNext() {
-      return _ref6.apply(this, arguments);
+      return _ref7.apply(this, arguments);
     };
   }();
 
   return {
     formatTree: formatTree,
-    getTotalRecords: function getTotalRecords() {
-      var _this = this;
-
-      return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4() {
-        var result;
-        return _regenerator2.default.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _context4.t0 = getTreeResults;
-                _context4.next = 3;
-                return service(formatTree({
-                  key: 'cardinality',
-                  type: 'cardinality',
-                  field: key_field,
-                  fieldMode: 'autocomplete'
-                }));
-
-              case 3:
-                _context4.t1 = _context4.sent;
-                result = (0, _context4.t0)(_context4.t1);
-                return _context4.abrupt('return', _fp2.default.get('context.value', result));
-
-              case 6:
-              case 'end':
-                return _context4.stop();
-            }
-          }
-        }, _callee4, _this);
-      }))();
-    },
-
+    getTotalRecords: getTotalRecords,
     hasNext: function hasNext() {
       return !done;
     },

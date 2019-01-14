@@ -1,6 +1,6 @@
 {
   "name": "contexture-export",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Contexture Exports",
   "main": "lib/contexture-export.js",
   "scripts": {

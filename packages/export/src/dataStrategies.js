@@ -86,6 +86,20 @@ export const terms_stats = ({
     children: [setFilterOnly(tree), analysisNode],
   })
 
+  let getTotalRecords = _.memoize(async () => {
+    let result = getTreeResults(
+      await service(
+        formatTree({
+          key: 'cardinality',
+          type: 'cardinality',
+          field: key_field,
+          fieldMode: 'autocomplete',
+        })
+      )
+    )
+    return _.get('context.value', result)
+  })
+
   let done = false
   let getNext = async () => {
     let result = getTreeResults(
@@ -95,7 +109,7 @@ export const terms_stats = ({
           type: 'terms_stats',
           key_field,
           value_field,
-          size,
+          size: size || (await getTotalRecords()),
           sortDir,
         })
       )
@@ -106,19 +120,7 @@ export const terms_stats = ({
 
   return {
     formatTree,
-    async getTotalRecords() {
-      let result = getTreeResults(
-        await service(
-          formatTree({
-            key: 'cardinality',
-            type: 'cardinality',
-            field: key_field,
-            fieldMode: 'autocomplete',
-          })
-        )
-      )
-      return _.get('context.value', result)
-    },
+    getTotalRecords,
     hasNext: () => !done,
     getNext,
   }
