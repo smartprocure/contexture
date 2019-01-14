@@ -1,4 +1,10 @@
-﻿# 1.34.1
+﻿# 1.34.2
+* ResultTable: Lookup field labels in ResultTable other matches
+* ResultTable: Dont highlight field names
+* ResultTable: Fix other matches cursor
+* GreyVest: Add inline title highlighting and additional writers highlighting
+
+# 1.34.1
 * Fixed inconsistent column header for the highlighted records on the ResultTable.
 
 # 1.34.0
