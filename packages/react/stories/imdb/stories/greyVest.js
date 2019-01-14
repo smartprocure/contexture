@@ -186,7 +186,7 @@ let schemas = fromPromise(
               display: x => <img src={x} width="180" height="270" />,
               order: 2,
             },
-            title: { order: 1 },
+            title: { order: 1, display: x => <span dangerouslySetInnerHTML={{ __html: x }} /> },
             genres: { display: divs },
             actors: { display: divs },
             imdbId: { path: ['Imdb', 'imdbId'] },
