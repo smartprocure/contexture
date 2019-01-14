@@ -26,8 +26,8 @@ export let schemas = {
       type: 'movie',
       highlight: {
         inline: ['title'],
-        additional: 'writers'
-      }
+        additional: 'writers',
+      },
     },
     modeMap: {
       word: '',

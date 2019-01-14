@@ -52,7 +52,7 @@ let HighlightedColumn = withStateLens({ viewModal: false })(
       Table = 'table',
       Modal = null,
       viewModal,
-      schema
+      schema,
     }) =>
       !_.isEmpty(additionalFields) ? (
         <Cell key="additionalFields">
@@ -232,35 +232,37 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
 Header.displayName = 'Header'
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
-let TableBody = observer(({ node, visibleFields, Modal, Table, Row, schema }) => (
-  <tbody style={node.markedForUpdate || node.updating ? loading : {}}>
-    {!!getResults(node).length &&
-      _.map(
-        x => (
-          <Row key={x._id}>
-            {_.map(
-              ({ field, display = x => x, Cell = 'td' }) => (
-                <Cell key={field}>
-                  {display(_.get(field, getRecord(x)), getRecord(x))}
-                </Cell>
-              ),
-              visibleFields
-            )}
-            <HighlightedColumn
-              {...{
-                node,
-                additionalFields: _.result('additionalFields.slice', x),
-                Modal,
-                Table,
-                schema
-              }}
-            />
-          </Row>
-        ),
-        getResults(node)
-      )}
-  </tbody>
-))
+let TableBody = observer(
+  ({ node, visibleFields, Modal, Table, Row, schema }) => (
+    <tbody style={node.markedForUpdate || node.updating ? loading : {}}>
+      {!!getResults(node).length &&
+        _.map(
+          x => (
+            <Row key={x._id}>
+              {_.map(
+                ({ field, display = x => x, Cell = 'td' }) => (
+                  <Cell key={field}>
+                    {display(_.get(field, getRecord(x)), getRecord(x))}
+                  </Cell>
+                ),
+                visibleFields
+              )}
+              <HighlightedColumn
+                {...{
+                  node,
+                  additionalFields: _.result('additionalFields.slice', x),
+                  Modal,
+                  Table,
+                  schema,
+                }}
+              />
+            </Row>
+          ),
+          getResults(node)
+        )}
+    </tbody>
+  )
+)
 TableBody.displayName = 'TableBody'
 
 let ResultTable = InjectTreeNode(
