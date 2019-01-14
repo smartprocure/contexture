@@ -91,7 +91,8 @@ Let's see what are the available Data Strategies:
   - `value_field`: Related to the ES aggregations
     (terms/stats/top_hits).
   - `size`: Indicates the maximum number of records that will be
-    obtained. Defaults to 100, but can be set to `Infinite`.
+    obtained. Defaults to 100, but can be set to `0` to get all the
+    possible results.
   - `sortDir`: Specifies in which direction the data will be sorted
     (`asc` or `desc`).  This is relevant to the `results` type. It's
     undefined by default (which is valid).

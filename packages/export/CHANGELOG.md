@@ -1,4 +1,7 @@
-﻿# 0.1.3
+﻿# 0.1.4
+* Fixed terms_stats so that size 0 means get all the results (just like how terms_stats works).
+
+# 0.1.3
 * Pass `highlight` to results dataStrategy
 
 # 0.1.2
