@@ -39,6 +39,9 @@ let HighlightedColumnHeader = observer(
 )
 HighlightedColumnHeader.displayName = 'HighlightedColumnHeader'
 
+let labelForField = (schema, field) =>
+  _.getOr(field, 'label', _.find({ field }, schema))
+
 let HighlightedColumn = withStateLens({ viewModal: false })(
   observer(
     ({
@@ -49,6 +52,7 @@ let HighlightedColumn = withStateLens({ viewModal: false })(
       Table = 'table',
       Modal = null,
       viewModal,
+      schema,
     }) =>
       !_.isEmpty(additionalFields) ? (
         <Cell key="additionalFields">
@@ -60,7 +64,7 @@ let HighlightedColumn = withStateLens({ viewModal: false })(
                   {_.map(
                     ({ label, value }) => (
                       <tr>
-                        <td key={label}>{label}</td>
+                        <td key={label}>{labelForField(schema, label)}</td>
                         <td dangerouslySetInnerHTML={{ __html: value }} />
                       </tr>
                     ),
@@ -70,10 +74,10 @@ let HighlightedColumn = withStateLens({ viewModal: false })(
               </Table>
             </Modal>
           )}
-          <div onClick={F.on(viewModal)}>
+          <div style={{ cursor: 'pointer' }} onClick={F.on(viewModal)}>
             This search also matched on the fields:{' '}
             {_.flow(
-              _.map(({ label }) => <b>{label}</b>),
+              _.map(({ label }) => labelForField(schema, label)),
               F.intersperse(F.differentLast(() => ', ', () => ' and '))
             )(additionalFields)}
             .<br />
@@ -228,34 +232,37 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
 Header.displayName = 'Header'
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
-let TableBody = observer(({ node, visibleFields, Modal, Table, Row }) => (
-  <tbody style={node.markedForUpdate || node.updating ? loading : {}}>
-    {!!getResults(node).length &&
-      _.map(
-        x => (
-          <Row key={x._id}>
-            {_.map(
-              ({ field, display = x => x, Cell = 'td' }) => (
-                <Cell key={field}>
-                  {display(_.get(field, getRecord(x)), getRecord(x))}
-                </Cell>
-              ),
-              visibleFields
-            )}
-            <HighlightedColumn
-              {...{
-                node,
-                additionalFields: _.result('additionalFields.slice', x),
-                Modal,
-                Table,
-              }}
-            />
-          </Row>
-        ),
-        getResults(node)
-      )}
-  </tbody>
-))
+let TableBody = observer(
+  ({ node, visibleFields, Modal, Table, Row, schema }) => (
+    <tbody style={node.markedForUpdate || node.updating ? loading : {}}>
+      {!!getResults(node).length &&
+        _.map(
+          x => (
+            <Row key={x._id}>
+              {_.map(
+                ({ field, display = x => x, Cell = 'td' }) => (
+                  <Cell key={field}>
+                    {display(_.get(field, getRecord(x)), getRecord(x))}
+                  </Cell>
+                ),
+                visibleFields
+              )}
+              <HighlightedColumn
+                {...{
+                  node,
+                  additionalFields: _.result('additionalFields.slice', x),
+                  Modal,
+                  Table,
+                  schema,
+                }}
+              />
+            </Row>
+          ),
+          getResults(node)
+        )}
+    </tbody>
+  )
+)
 TableBody.displayName = 'TableBody'
 
 let ResultTable = InjectTreeNode(
@@ -322,6 +329,7 @@ let ResultTable = InjectTreeNode(
           visibleFields={visibleFields}
           Modal={Modal}
           Table={Table}
+          schema={schema}
         />
       </Table>
     )
