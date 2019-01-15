@@ -18,10 +18,10 @@ import {
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
 
-const getColumnIndexes = (computeNewIndex, field, visibleFields, includes) => {
+const getColumnIndexes = (computeNextIndex, field, visibleFields, includes) => {
   let visibleFieldIndex = _.findIndex({ field }, visibleFields)
   let nextField = _.flow(
-    _.nth(computeNewIndex(visibleFieldIndex)),
+    _.nth(computeNextIndex(visibleFieldIndex)),
     _.get('field')
   )(visibleFields)
   return [_.indexOf(field, includes), _.indexOf(nextField, includes)]
