@@ -340,7 +340,10 @@ export default () => (
                 <div className="gv-box">
                   <ResultTable
                     path={['root', 'results']}
-                    fields={_.omit(['imdbId'], schemas[tree.tree.schema].fields)}
+                    fields={_.omit(
+                      ['imdbId'],
+                      schemas[tree.tree.schema].fields
+                    )}
                     criteria={['root', 'criteria']}
                     typeComponents={TypeMap}
                   />

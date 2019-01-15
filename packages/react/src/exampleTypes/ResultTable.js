@@ -121,10 +121,12 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
       let nextField = _.flow(
         _.nth(computeNewIndex(visibleFieldIndex)),
         _.get('field')
-        )(visibleFields)
-      let currentIndex = _.findIndex(x => x ===  field, [...includes])
-      let nextFieldIndex = _.findIndex(x => x ===  nextField, [...includes])
-      mutate({ include: F.moveIndex(currentIndex, nextFieldIndex, [...includes]) })
+      )(visibleFields)
+      let currentIndex = _.findIndex(x => x === field, [...includes])
+      let nextFieldIndex = _.findIndex(x => x === nextField, [...includes])
+      mutate({
+        include: F.moveIndex(currentIndex, nextFieldIndex, [...includes]),
+      })
     }
     let Label = label
     return (
@@ -164,19 +166,11 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
               Sort Descending
             </Item>
           )}
-          <Item
-            onClick={() =>
-              moveColumn(i => i - 1, field, visibleFields)
-            }
-          >
+          <Item onClick={() => moveColumn(i => i - 1, field, visibleFields)}>
             <Icon icon="MoveLeft" />
             Move Left
           </Item>
-          <Item
-            onClick={() =>
-              moveColumn(i => i + 1, field, visibleFields)
-            }
-          >
+          <Item onClick={() => moveColumn(i => i + 1, field, visibleFields)}>
             <Icon icon="MoveRight" />
             Move Right
           </Item>
