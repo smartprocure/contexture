@@ -18,6 +18,18 @@ import {
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
 
+const getColumnIndexes = (computeNewIndex, field, visibleFields, includes) => {
+  let visibleFieldIndex = _.findIndex({ field }, visibleFields)
+  let nextField = _.flow(
+    _.nth(computeNewIndex(visibleFieldIndex)),
+    _.get('field')
+  )(visibleFields)
+  return [
+    _.indexOf(field, [...includes]),
+    _.indexOf(nextField, [...includes])
+  ]
+}
+
 let popoverStyle = {
   userSelect: 'none',
 }
@@ -117,15 +129,9 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
       F.flip(filtering)()
     }
     const moveColumn = (computeNewIndex, field, visibleFields) => {
-      let visibleFieldIndex = _.findIndex(x => x.field === field, visibleFields)
-      let nextField = _.flow(
-        _.nth(computeNewIndex(visibleFieldIndex)),
-        _.get('field')
-      )(visibleFields)
-      let currentIndex = _.findIndex(x => x === field, [...includes])
-      let nextFieldIndex = _.findIndex(x => x === nextField, [...includes])
+      let indexes = getColumnIndexes(computeNewIndex, field, visibleFields, includes)
       mutate({
-        include: F.moveIndex(currentIndex, nextFieldIndex, [...includes]),
+        include: F.moveIndex(_.head(indexes), _.last(indexes), [...includes]),
       })
     }
     let Label = label

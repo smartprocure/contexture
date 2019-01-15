@@ -129,6 +129,7 @@ let tree = Contexture({
         'metaScore',
         'rated',
         'released',
+        'runtimeMinutes',
         'plot',
       ],
       sortField: '',
@@ -341,7 +342,7 @@ export default () => (
                   <ResultTable
                     path={['root', 'results']}
                     fields={_.omit(
-                      ['imdbId'],
+                      ['imdbId', 'runtimeMinutes'],
                       schemas[tree.tree.schema].fields
                     )}
                     criteria={['root', 'criteria']}
