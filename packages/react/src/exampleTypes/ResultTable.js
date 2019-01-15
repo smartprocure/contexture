@@ -133,7 +133,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
         includes
       )
       mutate({
-        include: F.moveIndex(_.head(indexes), _.last(indexes), [...includes]),
+        include: F.moveIndex(_.head(indexes), _.last(indexes), includes),
       })
     }
     let Label = label
