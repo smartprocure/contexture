@@ -121,6 +121,7 @@ let tree = Contexture({
       key: 'results',
       type: 'results',
       include: [
+        'imdbId',
         'poster',
         'title',
         'actors',
@@ -339,7 +340,7 @@ export default () => (
                 <div className="gv-box">
                   <ResultTable
                     path={['root', 'results']}
-                    fields={schemas[tree.tree.schema].fields}
+                    fields={_.omit(['imdbId'], schemas[tree.tree.schema].fields)}
                     criteria={['root', 'criteria']}
                     typeComponents={TypeMap}
                   />

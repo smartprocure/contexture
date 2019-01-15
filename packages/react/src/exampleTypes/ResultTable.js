@@ -98,7 +98,7 @@ HeaderCellDefault.displayName = 'HeaderCellDefault'
 
 let Header = withStateLens({ popover: false, adding: false, filtering: false })(
   observer(({ // Local State
-    i, popover, adding, filtering, Modal, FieldPicker, ListGroupItem: Item, typeComponents, HeaderCell = HeaderCellDefault, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria, mapNodeToProps, fields, Icon }) => {
+    i, popover, adding, filtering, Modal, FieldPicker, ListGroupItem: Item, typeComponents, HeaderCell = HeaderCellDefault, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria, mapNodeToProps, fields, visibleFields, Icon }) => {
     // Components (providerable?) // Contextual
     let {
       disableFilter,
@@ -115,6 +115,16 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
       if (!filterNode) addFilter(field)
       tree.mutate(filterNode.path, { paused: false })
       F.flip(filtering)()
+    }
+    const moveColumn = (computeNewIndex, field, visibleFields) => {
+      let visibleFieldIndex = _.findIndex(x => x.field === field, visibleFields)
+      let nextField = _.flow(
+        _.nth(computeNewIndex(visibleFieldIndex)),
+        _.get('field')
+        )(visibleFields)
+      let currentIndex = _.findIndex(x => x ===  field, [...includes])
+      let nextFieldIndex = _.findIndex(x => x ===  nextField, [...includes])
+      mutate({ include: F.moveIndex(currentIndex, nextFieldIndex, [...includes]) })
     }
     let Label = label
     return (
@@ -156,7 +166,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
           )}
           <Item
             onClick={() =>
-              mutate({ include: F.moveIndex(i, i - 1, [...includes]) })
+              moveColumn(i => i - 1, field, visibleFields)
             }
           >
             <Icon icon="MoveLeft" />
@@ -164,7 +174,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
           </Item>
           <Item
             onClick={() =>
-              mutate({ include: F.moveIndex(i, i + 1, [...includes]) })
+              moveColumn(i => i + 1, field, visibleFields)
             }
           >
             <Icon icon="MoveRight" />
@@ -295,7 +305,7 @@ let ResultTable = InjectTreeNode(
       Icon,
       mapNodeToProps,
       fields,
-
+      visibleFields,
       includes,
       addOptions: fieldsToOptions(hiddenFields),
       addFilter: field =>
