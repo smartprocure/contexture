@@ -14,7 +14,7 @@ let unflattenObjectBy = _.curry((iteratee, x) =>
 let isField = x => x.typeDefault
 
 let FilteredSection = observer(
-  ({ options, onClick, highlight, Highlight, Item }) => (
+  ({ options, onClick, highlight, Highlight, Item = 'div' }) => (
     <div>
       {F.mapIndexed(
         (option, field) => (
@@ -28,20 +28,29 @@ let FilteredSection = observer(
   )
 )
 FilteredSection.displayName = 'FilteredSection'
-let Section = observer(({ options, onClick, selected, Item }) => (
+let Section = observer(({ options, onClick, selected, Item = 'div' }) => (
   <div>
     {F.mapIndexed(
-      (item, key) => (
-        <Item
-          key={key}
-          onClick={() => onClick(item.value || key, item)}
-          active={selected === key}
-          disabled={selected && selected !== key}
-          hasChildren={!isField(item)}
-        >
-          {isField(item) ? item.shortLabel || item.label : _.startCase(key)}
-        </Item>
-      ),
+      (item, key) =>
+        Item === 'div' ? (
+          <div
+            key={key}
+            onClick={() => onClick(item.value || key, item)}
+            disabled={selected && selected !== key}
+          >
+            {isField(item) ? item.shortLabel || item.label : _.startCase(key)}
+          </div>
+        ) : (
+          <Item
+            key={key}
+            onClick={() => onClick(item.value || key, item)}
+            disabled={selected && selected !== key}
+            active={selected === key}
+            hasChildren={!isField(item)}
+          >
+            {isField(item) ? item.shortLabel || item.label : _.startCase(key)}
+          </Item>
+        ),
       options
     )}
   </div>
@@ -98,7 +107,7 @@ let NestedPicker = ({
   filter,
   Input = 'input',
   Highlight = TextHighlight,
-  Item = 'div',
+  Item,
 }) => (
   <div>
     <Input {...F.domLens.value(filter)} placeholder="Enter filter keyword..." />
