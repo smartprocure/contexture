@@ -24,10 +24,7 @@ const getColumnIndexes = (computeNewIndex, field, visibleFields, includes) => {
     _.nth(computeNewIndex(visibleFieldIndex)),
     _.get('field')
   )(visibleFields)
-  return [
-    _.indexOf(field, [...includes]),
-    _.indexOf(nextField, [...includes])
-  ]
+  return [_.indexOf(field, [...includes]), _.indexOf(nextField, [...includes])]
 }
 
 let popoverStyle = {
@@ -129,7 +126,12 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
       F.flip(filtering)()
     }
     const moveColumn = (computeNewIndex, field, visibleFields) => {
-      let indexes = getColumnIndexes(computeNewIndex, field, visibleFields, includes)
+      let indexes = getColumnIndexes(
+        computeNewIndex,
+        field,
+        visibleFields,
+        includes
+      )
       mutate({
         include: F.moveIndex(_.head(indexes), _.last(indexes), [...includes]),
       })
