@@ -24,7 +24,7 @@ const getColumnIndexes = (computeNewIndex, field, visibleFields, includes) => {
     _.nth(computeNewIndex(visibleFieldIndex)),
     _.get('field')
   )(visibleFields)
-  return [_.indexOf(field, [...includes]), _.indexOf(nextField, [...includes])]
+  return [_.indexOf(field, includes), _.indexOf(nextField, includes)]
 }
 
 let popoverStyle = {
