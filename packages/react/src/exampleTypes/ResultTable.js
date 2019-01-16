@@ -18,6 +18,27 @@ import {
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
 
+const moveColumn = (
+  mutate,
+  computeNextIndex,
+  field,
+  visibleFields,
+  includes
+) => {
+  let visibleFieldIndex = _.findIndex({ field }, visibleFields)
+  let nextField = _.flow(
+    _.nth(computeNextIndex(visibleFieldIndex)),
+    _.get('field')
+  )(visibleFields)
+  mutate({
+    include: F.moveIndex(
+      _.indexOf(field, includes),
+      _.indexOf(nextField, includes),
+      includes
+    ),
+  })
+}
+
 let popoverStyle = {
   userSelect: 'none',
 }
@@ -98,7 +119,7 @@ HeaderCellDefault.displayName = 'HeaderCellDefault'
 
 let Header = withStateLens({ popover: false, adding: false, filtering: false })(
   observer(({ // Local State
-    i, popover, adding, filtering, Modal, FieldPicker, ListGroupItem: Item, typeComponents, HeaderCell = HeaderCellDefault, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria, mapNodeToProps, fields, Icon }) => {
+    popover, adding, filtering, Modal, FieldPicker, ListGroupItem: Item, typeComponents, HeaderCell = HeaderCellDefault, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria, mapNodeToProps, fields, visibleFields, Icon }) => {
     // Components (providerable?) // Contextual
     let {
       disableFilter,
@@ -156,7 +177,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
           )}
           <Item
             onClick={() =>
-              mutate({ include: F.moveIndex(i, i - 1, [...includes]) })
+              moveColumn(mutate, i => i - 1, field, visibleFields, includes)
             }
           >
             <Icon icon="MoveLeft" />
@@ -164,7 +185,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
           </Item>
           <Item
             onClick={() =>
-              mutate({ include: F.moveIndex(i, i + 1, [...includes]) })
+              moveColumn(mutate, i => i + 1, field, visibleFields, includes)
             }
           >
             <Icon icon="MoveRight" />
@@ -295,7 +316,7 @@ let ResultTable = InjectTreeNode(
       Icon,
       mapNodeToProps,
       fields,
-
+      visibleFields,
       includes,
       addOptions: fieldsToOptions(hiddenFields),
       addFilter: field =>
@@ -315,8 +336,8 @@ let ResultTable = InjectTreeNode(
         <thead>
           <tr>
             {F.mapIndexed(
-              (x, i) => (
-                <Header key={x.field} field={x} i={i} {...headerProps} />
+              x => (
+                <Header key={x.field} field={x} {...headerProps} />
               ),
               visibleFields
             )}

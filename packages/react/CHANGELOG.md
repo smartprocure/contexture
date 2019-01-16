@@ -1,4 +1,8 @@
-﻿# 1.34.2
+﻿# 1.34.3
+* ResultTable: Implemented a more robust algorithm to move columns.
+* GreyVest: Included a hidden field 'imdbId' to test the new move columns algorithm.
+
+# 1.34.2
 * ResultTable: Lookup field labels in ResultTable other matches
 * ResultTable: Dont highlight field names
 * ResultTable: Fix other matches cursor
