@@ -18,14 +18,24 @@ import {
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
 
-const moveColumn = (mutate, computeNextIndex, field, visibleFields, includes) => {
+const moveColumn = (
+  mutate,
+  computeNextIndex,
+  field,
+  visibleFields,
+  includes
+) => {
   let visibleFieldIndex = _.findIndex({ field }, visibleFields)
   let nextField = _.flow(
     _.nth(computeNextIndex(visibleFieldIndex)),
     _.get('field')
   )(visibleFields)
   mutate({
-    include: F.moveIndex(_.indexOf(field, includes), _.indexOf(nextField, includes), includes),
+    include: F.moveIndex(
+      _.indexOf(field, includes),
+      _.indexOf(nextField, includes),
+      includes
+    ),
   })
 }
 
@@ -165,11 +175,19 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
               Sort Descending
             </Item>
           )}
-          <Item onClick={() => moveColumn(mutate, i => i - 1, field, visibleFields, includes)}>
+          <Item
+            onClick={() =>
+              moveColumn(mutate, i => i - 1, field, visibleFields, includes)
+            }
+          >
             <Icon icon="MoveLeft" />
             Move Left
           </Item>
-          <Item onClick={() => moveColumn(mutate, i => i + 1, field, visibleFields, includes)}>
+          <Item
+            onClick={() =>
+              moveColumn(mutate, i => i + 1, field, visibleFields, includes)
+            }
+          >
             <Icon icon="MoveRight" />
             Move Right
           </Item>
