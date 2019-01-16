@@ -18,13 +18,15 @@ import {
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
 
-const getColumnIndexes = (computeNextIndex, field, visibleFields, includes) => {
+const moveColumn = (mutate, computeNextIndex, field, visibleFields, includes) => {
   let visibleFieldIndex = _.findIndex({ field }, visibleFields)
   let nextField = _.flow(
     _.nth(computeNextIndex(visibleFieldIndex)),
     _.get('field')
   )(visibleFields)
-  return [_.indexOf(field, includes), _.indexOf(nextField, includes)]
+  mutate({
+    include: F.moveIndex(_.indexOf(field, includes), _.indexOf(nextField, includes), includes),
+  })
 }
 
 let popoverStyle = {
@@ -125,17 +127,6 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
       tree.mutate(filterNode.path, { paused: false })
       F.flip(filtering)()
     }
-    const moveColumn = (computeNewIndex, field, visibleFields) => {
-      let indexes = getColumnIndexes(
-        computeNewIndex,
-        field,
-        visibleFields,
-        includes
-      )
-      mutate({
-        include: F.moveIndex(_.head(indexes), _.last(indexes), includes),
-      })
-    }
     let Label = label
     return (
       <HeaderCell
@@ -174,11 +165,11 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
               Sort Descending
             </Item>
           )}
-          <Item onClick={() => moveColumn(i => i - 1, field, visibleFields)}>
+          <Item onClick={() => moveColumn(mutate, i => i - 1, field, visibleFields, includes)}>
             <Icon icon="MoveLeft" />
             Move Left
           </Item>
-          <Item onClick={() => moveColumn(i => i + 1, field, visibleFields)}>
+          <Item onClick={() => moveColumn(mutate, i => i + 1, field, visibleFields, includes)}>
             <Icon icon="MoveRight" />
             Move Right
           </Item>

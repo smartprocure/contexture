@@ -122,6 +122,7 @@ let tree = Contexture({
       type: 'results',
       include: [
         'imdbId',
+        'runtimeMinutes',
         'poster',
         'title',
         'actors',
@@ -129,7 +130,6 @@ let tree = Contexture({
         'metaScore',
         'rated',
         'released',
-        'runtimeMinutes',
         'plot',
       ],
       sortField: '',
