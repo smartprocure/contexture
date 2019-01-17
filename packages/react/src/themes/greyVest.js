@@ -253,9 +253,8 @@ export let GVStyle = () => (
         color: #454545;
       }
       
-      .gv-input[type="text"], textarea.gv-input, .gv-input[type="number"], .gv-input[type="date"] {
-        padding: 5px;
-        text-indent: 5px;
+      input.gv-input, textarea.gv-input {
+        padding: 10px;
       }
       .gv-input, .gv-body select, .gv-body input {
         outline: none;

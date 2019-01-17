@@ -1,4 +1,9 @@
-﻿# 1.34.3
+﻿# 1.34.4
+* QueryBuilder: Fix weird spacing caused by flex instead of grid
+* GreyVest: Fix input indentation
+* ResultTable: Fix "double click" issue when inline filtering on a node that needs to be added
+
+# 1.34.3
 * ResultTable: Implemented a more robust algorithm to move columns.
 * GreyVest: Included a hidden field 'imdbId' to test the new move columns algorithm.
 

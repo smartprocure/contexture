@@ -2322,9 +2322,8 @@ exports[`Storyshots Grey Vest Refs 1`] = `
         color: #454545;
       }
       
-      .gv-input[type="text"], textarea.gv-input, .gv-input[type="number"], .gv-input[type="date"] {
-        padding: 5px;
-        text-indent: 5px;
+      input.gv-input, textarea.gv-input {
+        padding: 10px;
       }
       .gv-input, .gv-body select, .gv-body input {
         outline: none;
@@ -2940,9 +2939,8 @@ exports[`Storyshots IMDB Check List 1`] = `
         color: #454545;
       }
       
-      .gv-input[type="text"], textarea.gv-input, .gv-input[type="number"], .gv-input[type="date"] {
-        padding: 5px;
-        text-indent: 5px;
+      input.gv-input, textarea.gv-input {
+        padding: 10px;
       }
       .gv-input, .gv-body select, .gv-body input {
         outline: none;
@@ -3429,9 +3427,8 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         color: #454545;
       }
       
-      .gv-input[type="text"], textarea.gv-input, .gv-input[type="number"], .gv-input[type="date"] {
-        padding: 5px;
-        text-indent: 5px;
+      input.gv-input, textarea.gv-input {
+        padding: 10px;
       }
       .gv-input, .gv-body select, .gv-body input {
         outline: none;
@@ -4505,7 +4502,9 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                       <div
                         style={
                           Object {
-                            "display": "flex",
+                            "display": "grid",
+                            "gridTemplateColumns": "auto auto 1fr",
+                            "msGridTemplateColumns": "auto auto 1fr",
                             "width": "100%",
                           }
                         }
@@ -4763,7 +4762,9 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                   <div
                                     style={
                                       Object {
-                                        "display": "flex",
+                                        "display": "grid",
+                                        "gridTemplateColumns": "auto auto 1fr",
+                                        "msGridTemplateColumns": "auto auto 1fr",
                                         "width": "100%",
                                       }
                                     }
@@ -4960,7 +4961,9 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                   <div
                                     style={
                                       Object {
-                                        "display": "flex",
+                                        "display": "grid",
+                                        "gridTemplateColumns": "auto auto 1fr",
+                                        "msGridTemplateColumns": "auto auto 1fr",
                                         "width": "100%",
                                       }
                                     }
@@ -5219,7 +5222,9 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                               <div
                                                 style={
                                                   Object {
-                                                    "display": "flex",
+                                                    "display": "grid",
+                                                    "gridTemplateColumns": "auto auto 1fr",
+                                                    "msGridTemplateColumns": "auto auto 1fr",
                                                     "width": "100%",
                                                   }
                                                 }
@@ -5486,7 +5491,9 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                               <div
                                                 style={
                                                   Object {
-                                                    "display": "flex",
+                                                    "display": "grid",
+                                                    "gridTemplateColumns": "auto auto 1fr",
+                                                    "msGridTemplateColumns": "auto auto 1fr",
                                                     "width": "100%",
                                                   }
                                                 }
@@ -5695,7 +5702,9 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                       <div
                         style={
                           Object {
-                            "display": "flex",
+                            "display": "grid",
+                            "gridTemplateColumns": "auto auto 1fr",
+                            "msGridTemplateColumns": "auto auto 1fr",
                             "width": "100%",
                           }
                         }
@@ -5973,7 +5982,9 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                   <div
                                     style={
                                       Object {
-                                        "display": "flex",
+                                        "display": "grid",
+                                        "gridTemplateColumns": "auto auto 1fr",
+                                        "msGridTemplateColumns": "auto auto 1fr",
                                         "width": "100%",
                                       }
                                     }
@@ -6211,7 +6222,9 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                   <div
                                     style={
                                       Object {
-                                        "display": "flex",
+                                        "display": "grid",
+                                        "gridTemplateColumns": "auto auto 1fr",
+                                        "msGridTemplateColumns": "auto auto 1fr",
                                         "width": "100%",
                                       }
                                     }
@@ -6551,7 +6564,9 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                               <div
                                                 style={
                                                   Object {
-                                                    "display": "flex",
+                                                    "display": "grid",
+                                                    "gridTemplateColumns": "auto auto 1fr",
+                                                    "msGridTemplateColumns": "auto auto 1fr",
                                                     "width": "100%",
                                                   }
                                                 }
@@ -6749,7 +6764,9 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                               <div
                                                 style={
                                                   Object {
-                                                    "display": "flex",
+                                                    "display": "grid",
+                                                    "gridTemplateColumns": "auto auto 1fr",
+                                                    "msGridTemplateColumns": "auto auto 1fr",
                                                     "width": "100%",
                                                   }
                                                 }
@@ -6992,7 +7009,9 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                   <div
                                     style={
                                       Object {
-                                        "display": "flex",
+                                        "display": "grid",
+                                        "gridTemplateColumns": "auto auto 1fr",
+                                        "msGridTemplateColumns": "auto auto 1fr",
                                         "width": "100%",
                                       }
                                     }
@@ -7211,7 +7230,9 @@ exports[`Storyshots QueryBuilder/Examples One Filter 1`] = `
                       <div
                         style={
                           Object {
-                            "display": "flex",
+                            "display": "grid",
+                            "gridTemplateColumns": "auto auto 1fr",
+                            "msGridTemplateColumns": "auto auto 1fr",
                             "width": "100%",
                           }
                         }
@@ -7424,7 +7445,9 @@ exports[`Storyshots QueryBuilder/Examples One Filter on a misplaced root 1`] = `
                       <div
                         style={
                           Object {
-                            "display": "flex",
+                            "display": "grid",
+                            "gridTemplateColumns": "auto auto 1fr",
+                            "msGridTemplateColumns": "auto auto 1fr",
                             "width": "100%",
                           }
                         }
@@ -7637,7 +7660,9 @@ exports[`Storyshots QueryBuilder/Examples One Filter with facet options 1`] = `
                       <div
                         style={
                           Object {
-                            "display": "flex",
+                            "display": "grid",
+                            "gridTemplateColumns": "auto auto 1fr",
+                            "msGridTemplateColumns": "auto auto 1fr",
                             "width": "100%",
                           }
                         }
@@ -7977,7 +8002,9 @@ exports[`Storyshots QueryBuilder/Examples One Filter with fields 1`] = `
                       <div
                         style={
                           Object {
-                            "display": "flex",
+                            "display": "grid",
+                            "gridTemplateColumns": "auto auto 1fr",
+                            "msGridTemplateColumns": "auto auto 1fr",
                             "width": "100%",
                           }
                         }
@@ -8250,7 +8277,9 @@ exports[`Storyshots QueryBuilder/Internals/FilterContents FilterContents 1`] = `
 <div
   style={
     Object {
-      "display": "flex",
+      "display": "grid",
+      "gridTemplateColumns": "auto auto 1fr",
+      "msGridTemplateColumns": "auto auto 1fr",
       "width": "100%",
     }
   }
@@ -8371,7 +8400,9 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
                       <div
                         style={
                           Object {
-                            "display": "flex",
+                            "display": "grid",
+                            "gridTemplateColumns": "auto auto 1fr",
+                            "msGridTemplateColumns": "auto auto 1fr",
                             "width": "100%",
                           }
                         }
@@ -8602,7 +8633,9 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
                                   <div
                                     style={
                                       Object {
-                                        "display": "flex",
+                                        "display": "grid",
+                                        "gridTemplateColumns": "auto auto 1fr",
+                                        "msGridTemplateColumns": "auto auto 1fr",
                                         "width": "100%",
                                       }
                                     }
@@ -8772,7 +8805,9 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
                                   <div
                                     style={
                                       Object {
-                                        "display": "flex",
+                                        "display": "grid",
+                                        "gridTemplateColumns": "auto auto 1fr",
+                                        "msGridTemplateColumns": "auto auto 1fr",
                                         "width": "100%",
                                       }
                                     }
@@ -9004,7 +9039,9 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
                                               <div
                                                 style={
                                                   Object {
-                                                    "display": "flex",
+                                                    "display": "grid",
+                                                    "gridTemplateColumns": "auto auto 1fr",
+                                                    "msGridTemplateColumns": "auto auto 1fr",
                                                     "width": "100%",
                                                   }
                                                 }
@@ -9175,7 +9212,9 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
                                               <div
                                                 style={
                                                   Object {
-                                                    "display": "flex",
+                                                    "display": "grid",
+                                                    "gridTemplateColumns": "auto auto 1fr",
+                                                    "msGridTemplateColumns": "auto auto 1fr",
                                                     "width": "100%",
                                                   }
                                                 }
@@ -9357,7 +9396,9 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
                       <div
                         style={
                           Object {
-                            "display": "flex",
+                            "display": "grid",
+                            "gridTemplateColumns": "auto auto 1fr",
+                            "msGridTemplateColumns": "auto auto 1fr",
                             "width": "100%",
                           }
                         }
@@ -9608,7 +9649,9 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
                                   <div
                                     style={
                                       Object {
-                                        "display": "flex",
+                                        "display": "grid",
+                                        "gridTemplateColumns": "auto auto 1fr",
+                                        "msGridTemplateColumns": "auto auto 1fr",
                                         "width": "100%",
                                       }
                                     }
@@ -9779,7 +9822,9 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
                                   <div
                                     style={
                                       Object {
-                                        "display": "flex",
+                                        "display": "grid",
+                                        "gridTemplateColumns": "auto auto 1fr",
+                                        "msGridTemplateColumns": "auto auto 1fr",
                                         "width": "100%",
                                       }
                                     }
@@ -10092,7 +10137,9 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
                                               <div
                                                 style={
                                                   Object {
-                                                    "display": "flex",
+                                                    "display": "grid",
+                                                    "gridTemplateColumns": "auto auto 1fr",
+                                                    "msGridTemplateColumns": "auto auto 1fr",
                                                     "width": "100%",
                                                   }
                                                 }
@@ -10263,7 +10310,9 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
                                               <div
                                                 style={
                                                   Object {
-                                                    "display": "flex",
+                                                    "display": "grid",
+                                                    "gridTemplateColumns": "auto auto 1fr",
+                                                    "msGridTemplateColumns": "auto auto 1fr",
                                                     "width": "100%",
                                                   }
                                                 }
@@ -10440,7 +10489,9 @@ exports[`Storyshots QueryBuilder/Internals/Group Multiple Filters 1`] = `
                                   <div
                                     style={
                                       Object {
-                                        "display": "flex",
+                                        "display": "grid",
+                                        "gridTemplateColumns": "auto auto 1fr",
+                                        "msGridTemplateColumns": "auto auto 1fr",
                                         "width": "100%",
                                       }
                                     }
@@ -10611,7 +10662,9 @@ exports[`Storyshots QueryBuilder/Internals/Group One Filter 1`] = `
                       <div
                         style={
                           Object {
-                            "display": "flex",
+                            "display": "grid",
+                            "gridTemplateColumns": "auto auto 1fr",
+                            "msGridTemplateColumns": "auto auto 1fr",
                             "width": "100%",
                           }
                         }
@@ -11292,7 +11345,9 @@ exports[`Storyshots QueryBuilder/Internals/Rule index 1`] = `
           <div
             style={
               Object {
-                "display": "flex",
+                "display": "grid",
+                "gridTemplateColumns": "auto auto 1fr",
+                "msGridTemplateColumns": "auto auto 1fr",
                 "width": "100%",
               }
             }

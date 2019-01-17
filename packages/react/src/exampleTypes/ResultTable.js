@@ -134,6 +134,8 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
       criteria && _.find({ field }, tree.getNode(criteria).children)
     let filter = () => {
       if (!filterNode) addFilter(field)
+      filterNode =
+        criteria && _.find({ field }, tree.getNode(criteria).children)
       tree.mutate(filterNode.path, { paused: false })
       F.flip(filtering)()
     }
