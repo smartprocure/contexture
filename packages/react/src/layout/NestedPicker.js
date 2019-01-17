@@ -13,8 +13,11 @@ let unflattenObjectBy = _.curry((iteratee, x) =>
 
 let isField = x => x.typeDefault
 
-const div = ({ children, onClick, disabled }) =>
-  <div onClick={onClick} disabled={disabled}>{children}</div>
+const DefaultItem = ({ children, onClick, disabled }) => (
+  <div onClick={onClick} disabled={disabled}>
+    {children}
+  </div>
+)
 
 let FilteredSection = observer(
   ({ options, onClick, highlight, Highlight, Item }) => (
@@ -45,7 +48,7 @@ let Section = observer(({ options, onClick, selected, Item }) => (
         >
           {isField(item) ? item.shortLabel || item.label : _.startCase(key)}
         </Item>
-        ),
+      ),
       options
     )}
   </div>
@@ -102,7 +105,7 @@ let NestedPicker = ({
   filter,
   Input = 'input',
   Highlight = TextHighlight,
-  Item = div,
+  Item = DefaultItem,
 }) => (
   <div>
     <Input {...F.domLens.value(filter)} placeholder="Enter filter keyword..." />
