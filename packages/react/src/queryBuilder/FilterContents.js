@@ -2,7 +2,7 @@ import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
 import { inject, observer } from 'mobx-react'
-import { ModalPicker, Modal, NestedPicker, Dynamic } from '../layout/'
+import { ModalPicker, Modal, NestedPicker, Dynamic, Grid } from '../layout/'
 import { fieldsToOptions } from '../FilterAdder'
 import { defaultProps } from 'recompose'
 import { get } from '../utils/mobx-utils'
@@ -18,12 +18,7 @@ let FilterContents = inject(_.defaults)(
       // `get` allows us to create a dependency on field before we know it exists (because the client will only add it if it's a type that uses it as it wouldn't make sense for something like `results`)
       let nodeField = get(node, 'field')
       return (
-        <div
-          style={{
-            display: 'flex',
-            width: '100%',
-          }}
-        >
+        <Grid columns="auto auto 1fr" style={{ width: '100%' }}>
           <FieldPicker
             Button={ContextureButton}
             label={
@@ -73,7 +68,7 @@ let FilterContents = inject(_.defaults)(
               <Dynamic component={types[node.type]} node={node} tree={root} />
             </div>
           )}
-        </div>
+        </Grid>
       )
     }
   )
