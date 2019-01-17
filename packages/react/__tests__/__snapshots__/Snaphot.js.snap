@@ -4352,25 +4352,19 @@ exports[`Storyshots Layout NestedPicker 1`] = `
   >
     <div>
       <div
-        active={false}
         disabled={undefined}
-        hasChildren={true}
         onClick={[Function]}
       >
         Abcd
       </div>
       <div
-        active={false}
         disabled={undefined}
-        hasChildren={true}
         onClick={[Function]}
       >
         Bcde
       </div>
       <div
-        active={false}
         disabled={undefined}
-        hasChildren={true}
         onClick={[Function]}
       >
         Cdef

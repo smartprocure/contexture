@@ -1,4 +1,7 @@
-﻿# 1.34.4
+# 1.34.5
+* NestedPicker: Whitelist props for a React DOM element when a custom Item is not being passed
+
+# 1.34.4
 * QueryBuilder: Fix weird spacing caused by flex instead of grid
 * GreyVest: Fix input indentation
 * ResultTable: Fix "double click" issue when inline filtering on a node that needs to be added
