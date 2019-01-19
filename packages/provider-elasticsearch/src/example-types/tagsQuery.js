@@ -16,7 +16,7 @@ let wordPermutations = _.flow(
  */
 let addQuotesAndDistance = _.curry((tag, text) => {
   // Multiple words
-  if (tag.isPhrase || _.includes(' ', tag.word)) {
+  if (_.includes(' ', text)) {
     return quote(text) + (tag.distance ? `~${tag.distance}` : '')
   }
   // Single word.
