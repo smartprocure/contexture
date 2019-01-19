@@ -32,10 +32,12 @@ describe('limitResultsToCertainTags', () => {
 })
 
 describe('addQuotesAndDistance', () => {
+  it('should work as `isPhrase` if text includes empty space', () => {
+    let tag = { word: 'foo bar' }
+    expect(addQuotesAndDistance(tag, 'foo bar')).to.deep.equal(`"foo bar"`)
+  })
   it('should quote if is phrase', () => {
-    expect(addQuotesAndDistance({ isPhrase: true }, 'foo bar')).to.deep.equal(
-      `"foo bar"`
-    )
+    expect(addQuotesAndDistance({ isPhrase: true }, 'foo bar')).to.deep.equal(`"foo bar"`)
   })
   it('should quote and not set distance if distance is 0', () => {
     expect(

@@ -1,3 +1,6 @@
+# 0.14.1
+* Fixes tagQuery isPhrase
+
 # 0.14.0
 * Adds mapping for boolean and integer ES types
 * Adds exists as a type option for all fields
