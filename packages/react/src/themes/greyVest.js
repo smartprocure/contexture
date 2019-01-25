@@ -684,8 +684,12 @@ export let ListGroupItem = withStateLens({ hovering: false })(
 )
 ListGroupItem.displayName = 'ListGroupItem'
 
-let SmallIcon = ({ icon }) => (
-  <i className="material-icons" style={{ fontSize: 20 }}>
+let SmallIcon = ({ icon, className, ...props }) => (
+  <i
+    className={`material-icons ${className}`}
+    style={{ fontSize: 20 }}
+    {...props}
+  >
     {icon}
   </i>
 )
@@ -710,8 +714,17 @@ let iconMap = {
   NextPage: () => <SmallIcon icon="chevron_right" />,
   Previous5Pages: () => <span>...</span>,
   Next5Pages: () => <span>...</span>,
+  Refresh: props => (
+    <SmallIcon
+      {...props}
+      icon="refresh"
+      className={`animated pulse slow infinite ${props.className || ''}`.trim()}
+    />
+  ),
 }
-let Icon = ({ icon }) => <Dynamic component={iconMap[icon]} />
+let Icon = ({ icon, ...props }) => (
+  <Dynamic component={iconMap[icon]} {...props} />
+)
 
 let AddLabel = (
   <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>

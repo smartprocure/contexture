@@ -1,3 +1,7 @@
+# 1.35.0
+* FilterList: Add refresh icon to filter label when there is a pending update in the associated tree
+* TermsStatsTable: Make the criteria column have a blank header caption by default
+
 # 1.34.5
 * NestedPicker: Whitelist props for a React DOM element when a custom Item is not being passed
 

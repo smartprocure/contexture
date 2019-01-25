@@ -1,5 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
+import F from 'futil-js'
 import { observer, inject } from 'mobx-react'
 import { Dynamic } from './layout'
 import InjectTreeNode from './utils/injectTreeNode'
@@ -23,6 +24,20 @@ export let Label = inject(_.pick('tree'))(
       {tree &&
         node && (
           <span className="filter-field-label-icon">
+            {!node.updating &&
+              _.get('disableAutoUpdate', tree) &&
+              _.some(
+                treeNode => treeNode !== node && treeNode.markedForUpdate,
+                F.treeToArray(_.get('children'))(tree.tree)
+              ) && (
+                <Icon
+                  icon="Refresh"
+                  onClick={e => {
+                    e.stopPropagation()
+                    tree.triggerUpdate()
+                  }}
+                />
+              )}
             <Icon
               icon={node.paused ? 'FilterListExpand' : 'FilterListCollapse'}
             />

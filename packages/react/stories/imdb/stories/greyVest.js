@@ -206,6 +206,10 @@ let schemas = fromPromise(
 
 export default () => (
   <div className="gv-body">
+    <link
+      href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+      rel="stylesheet"
+    />
     <Fonts />
     <GVStyle />
     <Awaiter promise={schemas}>
@@ -235,7 +239,11 @@ export default () => (
                         ranges={[
                           { label: 'All Time', from: '', to: '' },
                           { label: 'This Year', from: 'now/y', to: '' },
-                          { label: 'Last Year', from: 'now-1y/y', to: 'now/y' },
+                          {
+                            label: 'Last Year',
+                            from: 'now-1y/y',
+                            to: 'now/y',
+                          },
                         ]}
                       />
                     </div>
@@ -349,7 +357,10 @@ export default () => (
                     typeComponents={TypeMap}
                   />
                   <Flex
-                    style={{ justifyContent: 'space-around', padding: '10px' }}
+                    style={{
+                      justifyContent: 'space-around',
+                      padding: '10px',
+                    }}
                   >
                     <Pager path={['root', 'results']} />
                   </Flex>

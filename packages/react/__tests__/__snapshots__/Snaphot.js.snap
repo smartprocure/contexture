@@ -3328,6 +3328,10 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
 <div
   className="gv-body"
 >
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    rel="stylesheet"
+  />
   <div>
     <link
       href="https://fonts.googleapis.com/css?family=Lato:300,400,700"
