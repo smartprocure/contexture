@@ -1,3 +1,6 @@
+# 1.34.6
+# GreyVest: remove `position: sticky` from search bar
+
 # 1.34.5
 * NestedPicker: Whitelist props for a React DOM element when a custom Item is not being passed
 
