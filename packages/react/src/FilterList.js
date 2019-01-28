@@ -1,20 +1,14 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
-import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import { Dynamic } from './layout'
 import InjectTreeNode from './utils/injectTreeNode'
 import DefaultIcon from './DefaultIcon'
 import { bdJoin } from './styles/generic'
 
-let LabelState = ({ tree }) => ({
-  tree,
-  state: observable({ refreshHover: false }),
-})
-
-export let Label = inject(LabelState)(
-  observer(({ tree, node, Icon, state, ...x }) => (
+export let Label = inject(_.pick('tree'))(
+  observer(({ tree, node, Icon, ...x }) => (
     <div
       className={`filter-field-label ${
         _.get('hasValue', node) ? 'filter-field-has-value' : ''
@@ -42,11 +36,7 @@ export let Label = inject(LabelState)(
               ) && (
                 <Icon
                   icon="Refresh"
-                  className={`filter-field-icon-refresh ${
-                    state.refreshHover ? 'filter-field-icon-hover' : ''
-                  }`.trim()}
-                  onMouseOver={() => (state.refreshHover = true)}
-                  onMouseOut={() => (state.refreshHover = false)}
+                  className="filter-field-icon-refresh"
                   onClick={e => {
                     e.stopPropagation()
                     tree.triggerUpdate()

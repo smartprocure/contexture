@@ -2642,10 +2642,8 @@ exports[`Storyshots Grey Vest Refs 1`] = `
       }
       .filter-field-has-value .filter-field-icon-refresh {
         color: #0076de;
-        padding: 2px;
-        border-radius: 15px;
       }
-      .filter-field-has-value .filter-field-icon-refresh.filter-field-icon-hover {
+      .filter-field-has-value .filter-field-icon-refresh:hover {
         color: #f6f6f6;
         background-color: #0076de;
       }
@@ -3269,10 +3267,8 @@ exports[`Storyshots IMDB Check List 1`] = `
       }
       .filter-field-has-value .filter-field-icon-refresh {
         color: #0076de;
-        padding: 2px;
-        border-radius: 15px;
       }
-      .filter-field-has-value .filter-field-icon-refresh.filter-field-icon-hover {
+      .filter-field-has-value .filter-field-icon-refresh:hover {
         color: #f6f6f6;
         background-color: #0076de;
       }
@@ -3771,10 +3767,8 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
       }
       .filter-field-has-value .filter-field-icon-refresh {
         color: #0076de;
-        padding: 2px;
-        border-radius: 15px;
       }
-      .filter-field-has-value .filter-field-icon-refresh.filter-field-icon-hover {
+      .filter-field-has-value .filter-field-icon-refresh:hover {
         color: #f6f6f6;
         background-color: #0076de;
       }

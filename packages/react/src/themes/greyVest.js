@@ -573,10 +573,8 @@ export let GVStyle = () => (
       }
       .filter-field-has-value .filter-field-icon-refresh {
         color: #0076de;
-        padding: 2px;
-        border-radius: 15px;
       }
-      .filter-field-has-value .filter-field-icon-refresh.filter-field-icon-hover {
+      .filter-field-has-value .filter-field-icon-refresh:hover {
         color: #f6f6f6;
         background-color: #0076de;
       }
@@ -728,7 +726,8 @@ let iconMap = {
     <SmallIcon
       {...props}
       icon="refresh"
-      className={`animated pulse slow infinite ${props.className || ''}`.trim()}
+      className={`animated pulse slow infinite gv-icon-button ${props.className ||
+        ''}`.trim()}
     />
   ),
 }
