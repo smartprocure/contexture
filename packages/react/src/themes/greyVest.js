@@ -215,7 +215,6 @@ export let GVStyle = () => (
         margin-right: 0;
       }
 
-      
       /* Table */
       .gv-table {
         border-collapse: collapse;
@@ -569,7 +568,18 @@ export let GVStyle = () => (
       .filter-field-label-icon {
         color: #9b9b9b;
       }
-      
+      .filter-field-has-value {
+        color: #0076de;
+      }
+      .filter-field-has-value .filter-field-icon-refresh {
+        color: #0076de;
+        padding: 2px;
+        border-radius: 15px;
+      }
+      .filter-field-has-value .filter-field-icon-refresh.filter-field-icon-hover {
+        color: #f6f6f6;
+        background-color: #0076de;
+      }
       .filter-list-item-contents {
         margin-top: 15px;
       }
@@ -684,9 +694,9 @@ export let ListGroupItem = withStateLens({ hovering: false })(
 )
 ListGroupItem.displayName = 'ListGroupItem'
 
-let SmallIcon = ({ icon, className, ...props }) => (
+let SmallIcon = ({ icon, className = '', ...props }) => (
   <i
-    className={`material-icons ${className}`}
+    className={`material-icons ${className}`.trim()}
     style={{ fontSize: 20 }}
     {...props}
   >

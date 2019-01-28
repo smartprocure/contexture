@@ -1,16 +1,24 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
+import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import { Dynamic } from './layout'
 import InjectTreeNode from './utils/injectTreeNode'
 import DefaultIcon from './DefaultIcon'
 import { bdJoin } from './styles/generic'
 
-export let Label = inject(_.pick('tree'))(
-  observer(({ tree, node, Icon, ...x }) => (
+let LabelState = ({ tree }) => ({
+  tree,
+  state: observable({ refreshHover: false }),
+})
+
+export let Label = inject(LabelState)(
+  observer(({ tree, node, Icon, state, ...x }) => (
     <div
-      className="filter-field-label"
+      className={`filter-field-label ${
+        _.get('hasValue', node) ? 'filter-field-has-value' : ''
+      }`.trim()}
       style={{
         cursor: 'pointer',
         display: 'flex',
@@ -25,7 +33,8 @@ export let Label = inject(_.pick('tree'))(
         node && (
           <span className="filter-field-label-icon">
             {!node.updating &&
-              _.get('disableAutoUpdate', tree) &&
+              !!node.hasValue &&
+              tree.disableAutoUpdate &&
               // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
               _.some(
                 treeNode => treeNode !== node && treeNode.markedForUpdate,
@@ -33,6 +42,11 @@ export let Label = inject(_.pick('tree'))(
               ) && (
                 <Icon
                   icon="Refresh"
+                  className={`filter-field-icon-refresh ${
+                    state.refreshHover ? 'filter-field-icon-hover' : ''
+                  }`.trim()}
+                  onMouseOver={() => (state.refreshHover = true)}
+                  onMouseOut={() => (state.refreshHover = false)}
                   onClick={e => {
                     e.stopPropagation()
                     tree.triggerUpdate()
