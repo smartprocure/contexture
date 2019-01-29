@@ -613,6 +613,19 @@ export let GVStyle = () => (
       .gv-body .labeled-checkbox > span {
         padding-left: 10px;
       }
+
+      .react-date-picker__wrapper {
+        border: 2px solid #ededed!important;
+        border-radius: 4px;
+      }
+      .react-date-picker__inputGroup__input {
+        min-width: 20px!important;
+        text-align: center;
+        border: none!important;
+      }
+      .react-date-picker__inputGroup__year {
+        min-width: 40px!important;
+      }
     `}
   </style>
 )

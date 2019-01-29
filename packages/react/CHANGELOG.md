@@ -1,3 +1,6 @@
+#1.35.0
+* ExampleTypes/Date: use `react-date-picker` with HTML5 opt-out
+
 # 1.34.5
 * NestedPicker: Whitelist props for a React DOM element when a custom Item is not being passed
 
