@@ -1,3 +1,6 @@
+# 0.14.2
+* Only select field values that are arrays when mapping indices to aliases in copySchemasToAliases
+
 # 0.14.1
 * Fixes tagQuery isPhrase
 

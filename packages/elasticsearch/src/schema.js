@@ -65,6 +65,8 @@ let copySchemasToAliases = schemas =>
   _.flow(
     _.mapValues(x => _.keys(x.aliases)),
     F.invertByArray,
+    // only select field values which are arrays
+    _.pickBy(_.isArray),
     // Just takes the first index that matched the alias
     _.mapValues(([x]) => schemas[x])
   )
