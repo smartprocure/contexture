@@ -180,7 +180,6 @@ let DateComponent = injectTreeNode(
                 onChange={date => tree.mutate(node.path, { to: date })}
                 calendarType="US"
               />
-              {Picker === DatePicker && <DatePickerDefaultStyle />}
             </Flex>
           )}
           {tree.getNode(node.path).useDateMath && (
