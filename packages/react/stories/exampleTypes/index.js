@@ -127,11 +127,11 @@ let tree = observable({
     },
   },
   date: {
-    from: new Date(new Date().getTime() - (30 * 24 * 60 * 60 * 1000)),
+    from: new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000),
     to: new Date(),
     field: 'test',
     path: ['date'],
-    type: 'date'
+    type: 'date',
   },
   dateHistogram: {
     key: 'releases',
@@ -214,7 +214,7 @@ let {
   ResultTable,
   DateHistogram,
   TagsQuery,
-  Geo
+  Geo,
 } = ExampleTypes
 
 const onBeforeRender = () => {
@@ -280,26 +280,21 @@ export default () =>
         onBeforeRender,
       }
     )
-    .addWithJSX(
-      'Date Filter',
-      () => (
-        <div
-          style={{
-            backgroundColor: '#333',
-            color: '#AAA',
-            padding: '20px',
-            borderRadius: '10px',
-            minHeight: '200px'
-          }}
-        >
-          <Provider tree={testTree}>
-            <ExampleTypes.Date
-              path={['date']}
-            />
-          </Provider>
-        </div>
-      )
-    )
+    .addWithJSX('Date Filter', () => (
+      <div
+        style={{
+          backgroundColor: '#333',
+          color: '#AAA',
+          padding: '20px',
+          borderRadius: '10px',
+          minHeight: '200px',
+        }}
+      >
+        <Provider tree={testTree}>
+          <ExampleTypes.Date path={['date']} />
+        </Provider>
+      </div>
+    ))
     .addWithJSX(
       'Geo filter & HERE maps',
       () => (
