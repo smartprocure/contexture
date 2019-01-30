@@ -1,3 +1,6 @@
+# 1.35.1
+# GreyVest: remove `position: sticky` from search bar
+
 # 1.35.0
 * FilterList: Add refresh icon to filter label when there is a pending update in the associated tree. Add css class to customize filter label display when the filter has value(s).
 * TermsStatsTable: Make the criteria column have a blank header caption by default
