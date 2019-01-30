@@ -2695,6 +2695,9 @@ exports[`Storyshots Grey Vest Refs 1`] = `
       .react-date-picker__inputGroup__year {
         min-width: 40px!important;
       }
+      .react-calendar__month-view__days__day--weekend {
+        color: #0076de;
+      }
     
   </style>
   <input
@@ -3325,6 +3328,9 @@ exports[`Storyshots IMDB Check List 1`] = `
       .react-date-picker__inputGroup__year {
         min-width: 40px!important;
       }
+      .react-calendar__month-view__days__day--weekend {
+        color: #0076de;
+      }
     
   </style>
   <div>
@@ -3825,6 +3831,9 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
       }
       .react-date-picker__inputGroup__year {
         min-width: 40px!important;
+      }
+      .react-calendar__month-view__days__day--weekend {
+        color: #0076de;
       }
     
   </style>

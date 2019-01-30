@@ -626,6 +626,9 @@ export let GVStyle = () => (
       .react-date-picker__inputGroup__year {
         min-width: 40px!important;
       }
+      .react-calendar__month-view__days__day--weekend {
+        color: #0076de;
+      }
     `}
   </style>
 )
