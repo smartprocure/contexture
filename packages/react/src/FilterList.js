@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer, inject } from 'mobx-react'
-import { Dynamic } from './layout'
+import { Flex, Dynamic } from './layout'
 import InjectTreeNode from './utils/injectTreeNode'
 import DefaultIcon from './DefaultIcon'
 import { bdJoin } from './styles/generic'
@@ -25,28 +25,31 @@ export let Label = inject(_.pick('tree'))(
       <span {...x} />
       {tree &&
         node && (
-          <span className="filter-field-label-icon">
+          <Flex
+            className="filter-field-label-icon"
+            style={{ alignItems: 'center' }}
+          >
             {!node.updating &&
-              !!node.hasValue &&
               tree.disableAutoUpdate &&
               // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
               _.some(
                 treeNode => treeNode !== node && treeNode.markedForUpdate,
                 F.treeToArray(_.get('children'))(tree.tree)
               ) && (
-                <Icon
-                  icon="Refresh"
+                <div
                   className="filter-field-icon-refresh"
                   onClick={e => {
                     e.stopPropagation()
                     tree.triggerUpdate()
                   }}
-                />
+                >
+                  <Icon icon="Refresh" />
+                </div>
               )}
             <Icon
               icon={node.paused ? 'FilterListExpand' : 'FilterListCollapse'}
             />
-          </span>
+          </Flex>
         )}
     </div>
   ))

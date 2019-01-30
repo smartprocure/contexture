@@ -18,7 +18,7 @@ export let iconMap = {
   PreviousPage: () => <span>←</span>,
   Previous5Pages: () => <span>⇜</span>,
   Next5Pages: () => <span>⇝</span>,
-  Refresh: ({ onClick }) => <span onClick={onClick}>⟳</span>,
+  Refresh: () => <span>⟳</span>,
 }
 let DefaultIcon = ({ icon, onClick }) => (
   <Dynamic component={iconMap[icon]} onClick={onClick} />

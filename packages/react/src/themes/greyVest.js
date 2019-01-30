@@ -571,10 +571,10 @@ export let GVStyle = () => (
       .filter-field-has-value {
         color: #0076de;
       }
-      .filter-field-has-value .filter-field-icon-refresh {
+      .filter-field-icon-refresh .gv-icon-button {
         color: #0076de;
       }
-      .filter-field-has-value .filter-field-icon-refresh:hover {
+      .filter-field-icon-refresh .gv-icon-button:hover {
         color: #f6f6f6;
         background-color: #0076de;
       }
@@ -722,13 +722,10 @@ let iconMap = {
   NextPage: () => <SmallIcon icon="chevron_right" />,
   Previous5Pages: () => <span>...</span>,
   Next5Pages: () => <span>...</span>,
-  Refresh: props => (
-    <SmallIcon
-      {...props}
-      icon="refresh"
-      className={`animated pulse slow infinite gv-icon-button ${props.className ||
-        ''}`.trim()}
-    />
+  Refresh: () => (
+    <IconButton className="animated pulse slow infinite">
+      <SmallIcon icon="refresh" />
+    </IconButton>
   ),
 }
 let Icon = ({ icon, ...props }) => (
