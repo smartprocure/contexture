@@ -328,7 +328,7 @@ exports[`Storyshots Example Types Date Filter 1`] = `
                   }
                 }
                 type="date"
-                value="2018-12-30"
+                value=""
               />
               
               <input
@@ -345,7 +345,7 @@ exports[`Storyshots Example Types Date Filter 1`] = `
                 placeholder="--"
                 required={null}
                 type="number"
-                value={12}
+                value=""
               />
               <span
                 className="react-date-picker__inputGroup__divider"
@@ -366,7 +366,7 @@ exports[`Storyshots Example Types Date Filter 1`] = `
                 placeholder="--"
                 required={null}
                 type="number"
-                value={30}
+                value=""
               />
               <span
                 className="react-date-picker__inputGroup__divider"
@@ -388,7 +388,7 @@ exports[`Storyshots Example Types Date Filter 1`] = `
                 required={null}
                 step={1}
                 type="number"
-                value={2018}
+                value=""
               />
               
             </div>
@@ -498,7 +498,7 @@ exports[`Storyshots Example Types Date Filter 1`] = `
                   }
                 }
                 type="date"
-                value="2019-01-29"
+                value=""
               />
               
               <input
@@ -515,7 +515,7 @@ exports[`Storyshots Example Types Date Filter 1`] = `
                 placeholder="--"
                 required={null}
                 type="number"
-                value={1}
+                value=""
               />
               <span
                 className="react-date-picker__inputGroup__divider"
@@ -536,7 +536,7 @@ exports[`Storyshots Example Types Date Filter 1`] = `
                 placeholder="--"
                 required={null}
                 type="number"
-                value={29}
+                value=""
               />
               <span
                 className="react-date-picker__inputGroup__divider"
@@ -558,7 +558,7 @@ exports[`Storyshots Example Types Date Filter 1`] = `
                 required={null}
                 step={1}
                 type="number"
-                value={2019}
+                value=""
               />
               
             </div>
