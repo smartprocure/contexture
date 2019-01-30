@@ -2284,7 +2284,6 @@ exports[`Storyshots Grey Vest Refs 1`] = `
         margin-right: 0;
       }
 
-      
       /* Table */
       .gv-table {
         border-collapse: collapse;
@@ -2638,7 +2637,16 @@ exports[`Storyshots Grey Vest Refs 1`] = `
       .filter-field-label-icon {
         color: #9b9b9b;
       }
-      
+      .filter-field-has-value {
+        color: #0076de;
+      }
+      .filter-field-icon-refresh .gv-icon-button {
+        color: #0076de;
+      }
+      .filter-field-icon-refresh .gv-icon-button:hover {
+        color: #f6f6f6;
+        background-color: #0076de;
+      }
       .filter-list-item-contents {
         margin-top: 15px;
       }
@@ -2901,7 +2909,6 @@ exports[`Storyshots IMDB Check List 1`] = `
         margin-right: 0;
       }
 
-      
       /* Table */
       .gv-table {
         border-collapse: collapse;
@@ -3255,7 +3262,16 @@ exports[`Storyshots IMDB Check List 1`] = `
       .filter-field-label-icon {
         color: #9b9b9b;
       }
-      
+      .filter-field-has-value {
+        color: #0076de;
+      }
+      .filter-field-icon-refresh .gv-icon-button {
+        color: #0076de;
+      }
+      .filter-field-icon-refresh .gv-icon-button:hover {
+        color: #f6f6f6;
+        background-color: #0076de;
+      }
       .filter-list-item-contents {
         margin-top: 15px;
       }
@@ -3328,6 +3344,10 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
 <div
   className="gv-body"
 >
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    rel="stylesheet"
+  />
   <div>
     <link
       href="https://fonts.googleapis.com/css?family=Lato:300,400,700"
@@ -3389,7 +3409,6 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         margin-right: 0;
       }
 
-      
       /* Table */
       .gv-table {
         border-collapse: collapse;
@@ -3743,7 +3762,16 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
       .filter-field-label-icon {
         color: #9b9b9b;
       }
-      
+      .filter-field-has-value {
+        color: #0076de;
+      }
+      .filter-field-icon-refresh .gv-icon-button {
+        color: #0076de;
+      }
+      .filter-field-icon-refresh .gv-icon-button:hover {
+        color: #f6f6f6;
+        background-color: #0076de;
+      }
       .filter-list-item-contents {
         margin-top: 15px;
       }

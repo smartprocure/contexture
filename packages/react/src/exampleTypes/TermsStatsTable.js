@@ -19,6 +19,7 @@ let TermsStatsTable = injectTreeNode(
       node,
       criteria,
       criteriaField,
+      criteriaFieldLabel = '',
       criteriaGetValue = _.identity,
       tree,
       children,
@@ -40,7 +41,7 @@ let TermsStatsTable = injectTreeNode(
               ? [
                   ..._.compact(children),
                   <Column
-                    label="Controls"
+                    label={criteriaFieldLabel}
                     expand={{
                       display: (value, record) => (
                         <div>
@@ -65,10 +66,12 @@ let TermsStatsTable = injectTreeNode(
                                   tree.getNode(criteria).children
                                 )
                               }
-
                               await tree.mutate(filter.path, {
                                 mode: 'include',
-                                values: [criteriaGetValue(record.key)],
+                                values: _.uniq([
+                                  ..._.getOr([], 'values', filter),
+                                  criteriaGetValue(record.key),
+                                ]),
                               })
                             }}
                           >
