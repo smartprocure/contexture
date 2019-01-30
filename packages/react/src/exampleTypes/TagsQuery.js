@@ -92,7 +92,7 @@ let TagsQuery = ({
     let tagInstance = getTag(tag)
     return {
       ...(tagInstance.distance ? {} : { fontWeight: 'bold' }),
-      ...bgJoin(tagToGroupJoin(node.join)),
+      ...bgJoin(tagToGroupJoin(_.get('join', node))),
       opacity:
         tagInstance.onlyShowTheseResults ||
         !_.find('onlyShowTheseResults', node.tags)
