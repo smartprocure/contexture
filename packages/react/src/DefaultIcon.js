@@ -1,7 +1,7 @@
 import React from 'react'
 import { Dynamic } from './'
 
-let iconMap = {
+export let iconMap = {
   SortAscending: () => <span>▲</span>,
   SortDescending: () => <span>▼</span>,
   MoveLeft: () => <span>←</span>,
@@ -18,7 +18,10 @@ let iconMap = {
   PreviousPage: () => <span>←</span>,
   Previous5Pages: () => <span>⇜</span>,
   Next5Pages: () => <span>⇝</span>,
+  Refresh: () => <span>⟳</span>,
 }
-let DefaultIcon = ({ icon }) => <Dynamic component={iconMap[icon]} />
+let DefaultIcon = ({ icon, onClick }) => (
+  <Dynamic component={iconMap[icon]} onClick={onClick} />
+)
 
 export default DefaultIcon

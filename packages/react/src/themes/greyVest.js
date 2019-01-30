@@ -215,7 +215,6 @@ export let GVStyle = () => (
         margin-right: 0;
       }
 
-      
       /* Table */
       .gv-table {
         border-collapse: collapse;
@@ -568,7 +567,16 @@ export let GVStyle = () => (
       .filter-field-label-icon {
         color: #9b9b9b;
       }
-      
+      .filter-field-has-value {
+        color: #0076de;
+      }
+      .filter-field-icon-refresh .gv-icon-button {
+        color: #0076de;
+      }
+      .filter-field-icon-refresh .gv-icon-button:hover {
+        color: #f6f6f6;
+        background-color: #0076de;
+      }
       .filter-list-item-contents {
         margin-top: 15px;
       }
@@ -709,8 +717,15 @@ let iconMap = {
   NextPage: () => <SmallIcon icon="chevron_right" />,
   Previous5Pages: () => <span>...</span>,
   Next5Pages: () => <span>...</span>,
+  Refresh: () => (
+    <IconButton className="animated pulse slow infinite">
+      <SmallIcon icon="refresh" />
+    </IconButton>
+  ),
 }
-let Icon = ({ icon }) => <Dynamic component={iconMap[icon]} />
+let Icon = ({ icon, ...props }) => (
+  <Dynamic component={iconMap[icon]} {...props} />
+)
 
 let AddLabel = (
   <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
