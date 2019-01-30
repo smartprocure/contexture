@@ -368,6 +368,9 @@ exports[`Storyshots Example Types Date Filter 1`] = `
                 type="number"
                 value={30}
               />
+              <span
+                className="react-date-picker__inputGroup__divider"
+              >
                 /
               </span>
               <input
