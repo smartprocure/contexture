@@ -218,6 +218,430 @@ exports[`Storyshots Docs README.md 1`] = `
 </div>
 `;
 
+exports[`Storyshots Example Types Date Filter 1`] = `
+<div
+  style={
+    Object {
+      "backgroundColor": "#333",
+      "borderRadius": "10px",
+      "color": "#AAA",
+      "minHeight": "200px",
+      "padding": "20px",
+    }
+  }
+>
+  <div
+    style={Object {}}
+  >
+    <div>
+      <div
+        style={
+          Object {
+            "marginBottom": 10,
+          }
+        }
+      >
+        <label
+          style={
+            Object {
+              "cursor": "pointer",
+              "marginRight": 25,
+            }
+          }
+        >
+          <input
+            checked={true}
+            onChange={[Function]}
+            style={
+              Object {
+                "display": "inline-block",
+                "height": "auto",
+                "marginRight": 10,
+                "width": "auto",
+              }
+            }
+            type="radio"
+            value="exact"
+          />
+          Exact
+        </label>
+        <label
+          style={
+            Object {
+              "cursor": "pointer",
+              "marginRight": 25,
+            }
+          }
+        >
+          <input
+            checked={false}
+            onChange={[Function]}
+            style={
+              Object {
+                "display": "inline-block",
+                "height": "auto",
+                "marginRight": 10,
+                "width": "auto",
+              }
+            }
+            type="radio"
+            value="rolling"
+          />
+          Rolling
+        </label>
+      </div>
+      <div
+        style={
+          Object {
+            "alignItems": "center",
+            "display": "flex",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <div
+          className="react-date-picker react-date-picker--closed react-date-picker--enabled"
+          onFocus={[Function]}
+        >
+          <div
+            className="react-date-picker__wrapper"
+          >
+            <div
+              className="react-date-picker__inputGroup"
+              onClick={[Function]}
+              role="presentation"
+            >
+              <input
+                disabled={undefined}
+                max="275760-09-12"
+                min="-271821-04-19"
+                name="date"
+                onChange={[Function]}
+                onFocus={[Function]}
+                required={undefined}
+                style={
+                  Object {
+                    "left": "-9999px",
+                    "position": "absolute",
+                    "top": "-9999px",
+                    "visibility": "hidden",
+                  }
+                }
+                type="date"
+                value="2018-12-30"
+              />
+              
+              <input
+                autoComplete="off"
+                className="react-date-picker__inputGroup__input react-date-picker__inputGroup__month"
+                disabled={undefined}
+                max={12}
+                min={1}
+                name="month"
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                placeholder="--"
+                required={null}
+                type="number"
+                value={12}
+              />
+              <span
+                className="react-date-picker__inputGroup__divider"
+              >
+                /
+              </span>
+              <input
+                autoComplete="off"
+                className="react-date-picker__inputGroup__input react-date-picker__inputGroup__day"
+                disabled={undefined}
+                max={31}
+                min={1}
+                name="day"
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                placeholder="--"
+                required={null}
+                type="number"
+                value={30}
+              />
+              <span
+                className="react-date-picker__inputGroup__divider"
+              >
+                /
+              </span>
+              <input
+                autoComplete="off"
+                className="react-date-picker__inputGroup__input react-date-picker__inputGroup__year"
+                disabled={undefined}
+                max={275760}
+                min={1000}
+                name="year"
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                placeholder="----"
+                required={null}
+                step={1}
+                type="number"
+                value={2018}
+              />
+              
+            </div>
+            <button
+              className="react-date-picker__clear-button react-date-picker__button"
+              disabled={undefined}
+              onClick={[Function]}
+              onFocus={[Function]}
+              type="button"
+            >
+              <svg
+                height="19"
+                viewBox="0 0 19 19"
+                width="19"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                  stroke="black"
+                  strokeWidth="2"
+                >
+                  <line
+                    x1="4"
+                    x2="15"
+                    y1="4"
+                    y2="15"
+                  />
+                  <line
+                    x1="15"
+                    x2="4"
+                    y1="4"
+                    y2="15"
+                  />
+                </g>
+              </svg>
+            </button>
+            <button
+              className="react-date-picker__calendar-button react-date-picker__button"
+              disabled={undefined}
+              onBlur={undefined}
+              onClick={[Function]}
+              onFocus={[Function]}
+              type="button"
+            >
+              <svg
+                height="19"
+                viewBox="0 0 19 19"
+                width="19"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                  stroke="black"
+                  strokeWidth="2"
+                >
+                  <rect
+                    fill="none"
+                    height="15"
+                    width="15"
+                    x="2"
+                    y="2"
+                  />
+                  <line
+                    x1="6"
+                    x2="6"
+                    y1="0"
+                    y2="4"
+                  />
+                  <line
+                    x1="13"
+                    x2="13"
+                    y1="0"
+                    y2="4"
+                  />
+                </g>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div>
+          -
+        </div>
+        <div
+          className="react-date-picker react-date-picker--closed react-date-picker--enabled"
+          onFocus={[Function]}
+        >
+          <div
+            className="react-date-picker__wrapper"
+          >
+            <div
+              className="react-date-picker__inputGroup"
+              onClick={[Function]}
+              role="presentation"
+            >
+              <input
+                disabled={undefined}
+                max="275760-09-12"
+                min="-271821-04-19"
+                name="date"
+                onChange={[Function]}
+                onFocus={[Function]}
+                required={undefined}
+                style={
+                  Object {
+                    "left": "-9999px",
+                    "position": "absolute",
+                    "top": "-9999px",
+                    "visibility": "hidden",
+                  }
+                }
+                type="date"
+                value="2019-01-29"
+              />
+              
+              <input
+                autoComplete="off"
+                className="react-date-picker__inputGroup__input react-date-picker__inputGroup__month"
+                disabled={undefined}
+                max={12}
+                min={1}
+                name="month"
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                placeholder="--"
+                required={null}
+                type="number"
+                value={1}
+              />
+              <span
+                className="react-date-picker__inputGroup__divider"
+              >
+                /
+              </span>
+              <input
+                autoComplete="off"
+                className="react-date-picker__inputGroup__input react-date-picker__inputGroup__day"
+                disabled={undefined}
+                max={31}
+                min={1}
+                name="day"
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                placeholder="--"
+                required={null}
+                type="number"
+                value={29}
+              />
+              <span
+                className="react-date-picker__inputGroup__divider"
+              >
+                /
+              </span>
+              <input
+                autoComplete="off"
+                className="react-date-picker__inputGroup__input react-date-picker__inputGroup__year"
+                disabled={undefined}
+                max={275760}
+                min={1000}
+                name="year"
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                placeholder="----"
+                required={null}
+                step={1}
+                type="number"
+                value={2019}
+              />
+              
+            </div>
+            <button
+              className="react-date-picker__clear-button react-date-picker__button"
+              disabled={undefined}
+              onClick={[Function]}
+              onFocus={[Function]}
+              type="button"
+            >
+              <svg
+                height="19"
+                viewBox="0 0 19 19"
+                width="19"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                  stroke="black"
+                  strokeWidth="2"
+                >
+                  <line
+                    x1="4"
+                    x2="15"
+                    y1="4"
+                    y2="15"
+                  />
+                  <line
+                    x1="15"
+                    x2="4"
+                    y1="4"
+                    y2="15"
+                  />
+                </g>
+              </svg>
+            </button>
+            <button
+              className="react-date-picker__calendar-button react-date-picker__button"
+              disabled={undefined}
+              onBlur={undefined}
+              onClick={[Function]}
+              onFocus={[Function]}
+              type="button"
+            >
+              <svg
+                height="19"
+                viewBox="0 0 19 19"
+                width="19"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                  stroke="black"
+                  strokeWidth="2"
+                >
+                  <rect
+                    fill="none"
+                    height="15"
+                    width="15"
+                    x="2"
+                    y="2"
+                  />
+                  <line
+                    x1="6"
+                    x2="6"
+                    y1="0"
+                    y2="4"
+                  />
+                  <line
+                    x1="13"
+                    x2="13"
+                    y1="0"
+                    y2="4"
+                  />
+                </g>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Storyshots Example Types Full Demo 1`] = `
 <div
   style={
@@ -2682,6 +3106,19 @@ exports[`Storyshots Grey Vest Refs 1`] = `
       .gv-body .labeled-checkbox &gt; span {
         padding-left: 10px;
       }
+
+      .react-date-picker__wrapper {
+        border: 2px solid #ededed!important;
+        border-radius: 4px;
+      }
+      .react-date-picker__inputGroup__input {
+        min-width: 20px!important;
+        text-align: center;
+        border: none!important;
+      }
+      .react-date-picker__inputGroup__year {
+        min-width: 40px!important;
+      }
     
   </style>
   <input
@@ -3299,6 +3736,19 @@ exports[`Storyshots IMDB Check List 1`] = `
       .gv-body .labeled-checkbox &gt; span {
         padding-left: 10px;
       }
+
+      .react-date-picker__wrapper {
+        border: 2px solid #ededed!important;
+        border-radius: 4px;
+      }
+      .react-date-picker__inputGroup__input {
+        min-width: 20px!important;
+        text-align: center;
+        border: none!important;
+      }
+      .react-date-picker__inputGroup__year {
+        min-width: 40px!important;
+      }
     
   </style>
   <div>
@@ -3786,6 +4236,19 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
       }
       .gv-body .labeled-checkbox &gt; span {
         padding-left: 10px;
+      }
+
+      .react-date-picker__wrapper {
+        border: 2px solid #ededed!important;
+        border-radius: 4px;
+      }
+      .react-date-picker__inputGroup__input {
+        min-width: 20px!important;
+        text-align: center;
+        border: none!important;
+      }
+      .react-date-picker__inputGroup__year {
+        min-width: 40px!important;
       }
     
   </style>

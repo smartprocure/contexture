@@ -5,6 +5,10 @@ module.exports = {
         test: /\.md$/,
         use: 'raw-loader',
       },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      }
     ],
   },
 }

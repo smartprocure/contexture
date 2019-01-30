@@ -46,7 +46,8 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "\\.(md)$": "<rootDir>/__mocks__/fileMock.js"
+      "\\.(md)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less|sass)$": "<rootDir>/__mocks__/styleMock.js"
     },
     "testURL": "http://localhost/"
   },
