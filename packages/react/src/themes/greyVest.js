@@ -692,12 +692,8 @@ export let ListGroupItem = withStateLens({ hovering: false })(
 )
 ListGroupItem.displayName = 'ListGroupItem'
 
-let SmallIcon = ({ icon, className = '', ...props }) => (
-  <i
-    className={`material-icons ${className}`.trim()}
-    style={{ fontSize: 20 }}
-    {...props}
-  >
+let SmallIcon = ({ icon }) => (
+  <i className="material-icons" style={{ fontSize: 20 }}>
     {icon}
   </i>
 )
