@@ -127,8 +127,8 @@ let tree = observable({
     },
   },
   date: {
-    from: new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000),
-    to: new Date(),
+    from: new Date(1546221029572),
+    to: new Date(1548813046825),
     field: 'test',
     path: ['date'],
     type: 'date',
