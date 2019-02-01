@@ -86,7 +86,7 @@ export const terms_stats = ({
     children: [setFilterOnly(tree), analysisNode],
   })
 
-  let getTotalRecords = _.memoize(async () => {
+  let getTotalRecords = async () => {
     let result = getTreeResults(
       await service(
         formatTree({
@@ -98,7 +98,7 @@ export const terms_stats = ({
       )
     )
     return _.get('context.value', result)
-  })
+  }
 
   let done = false
   let getNext = async () => {

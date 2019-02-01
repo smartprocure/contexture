@@ -1,4 +1,9 @@
-﻿# 0.1.4
+﻿# 0.1.5
+* Fixed terms_stats getTotalRecords so it doesn't use _.memoize.
+  Memoize behaves weirdly with async functions (probably because this
+  is compiled).
+
+# 0.1.4
 * Fixed terms_stats so that size 0 means get all the results (just like how terms_stats works).
 
 # 0.1.3
