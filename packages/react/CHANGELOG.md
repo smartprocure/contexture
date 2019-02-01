@@ -1,5 +1,15 @@
-#1.35.0
+# 1.36.0
 * ExampleTypes/Date: use `react-date-picker` with HTML5 opt-out
+
+# 1.35.1
+# GreyVest: remove `position: sticky` from search bar
+
+# 1.35.0
+* FilterList: Add refresh icon to filter label when there is a pending update in the associated tree. Add css class to customize filter label display when the filter has value(s).
+* TermsStatsTable: Make the criteria column have a blank header caption by default
+
+# 1.34.6
+* TagsQuery: check existence of `node` before looking for `node.join`
 
 # 1.34.5
 * NestedPicker: Whitelist props for a React DOM element when a custom Item is not being passed
