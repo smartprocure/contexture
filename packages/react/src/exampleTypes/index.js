@@ -40,7 +40,7 @@ export default ({
   let Components = {
     Facet: defaultProps({ TextInput, Checkbox, RadioList })(Facet),
     Number: defaultProps({ NumberInput, Button })(Number),
-    Date: defaultProps(DateInput ? { DateInput } : { DateInput: defaultProps({ type: 'date' })(Input), setHtml5Dates: true })(Date),
+    Date: defaultProps(DateInput ? { DateInput, RadioList, Select } : { DateInput: defaultProps({ type: 'date' })(Input), RadioList, Select, setHtml5Dates: true })(Date),
     DateRangePicker,
     Query: defaultProps({ TextInput })(Query),
     TagsQuery: defaultProps({ TagsInput, Checkbox, RadioList, Button })(

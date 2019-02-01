@@ -3,7 +3,6 @@ import { observer } from 'mobx-react'
 import { Flex } from '../layout/Flex'
 import { exampleTypes } from 'contexture-client'
 import injectTreeNode from '../utils/injectTreeNode'
-import RadioList from '../layout/RadioList'
 import F from 'futil-js'
 import _ from 'lodash/fp'
 import moment from 'moment'
@@ -133,7 +132,7 @@ let setDateInput = (node, endpoint, setHtml5Dates) => {
 }
 
 let DateComponent = injectTreeNode(
-  observer(({ tree, node, DateInput, excludeRollingRanges = [], setHtml5Dates }) => {
+  observer(({ tree, node, DateInput, RadioList, Select, excludeRollingRanges = [], setHtml5Dates }) => {
     let rollingOpts = _.reject(
       opt => _.includes(opt.type, excludeRollingRanges),
       allRollingOpts
@@ -183,20 +182,13 @@ let DateComponent = injectTreeNode(
           </Flex>
         )}
         {tree.getNode(node.path).useDateMath && (
-          <select onChange={e => handleRollingSelection(e.target.value)}>
-            {F.mapIndexed(
-              (opt, idx) => (
-                <option
-                  key={_.kebabCase(opt.label)}
-                  value={idx}
-                  selected={rollingOptIsSelected(node, opt)}
-                >
-                  {opt.label}
-                </option>
-              ),
+          <Select
+            onChange={e => handleRollingSelection(e.target.value)}
+            options={F.mapIndexed(
+              (opt, idx) => ({ label: opt.label, value: idx, selected: rollingOptIsSelected(node, opt) }),
               rollingOpts
             )}
-          </select>
+          />
         )}
       </div>
     )
