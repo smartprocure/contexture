@@ -36,7 +36,7 @@ export default ({
   ListGroupItem = 'div',
   Icon,
   Select = DefaultSelect,
-  DatePicker
+  DatePicker,
 } = {}) => {
   let Components = {
     Facet: defaultProps({ TextInput, Checkbox, RadioList })(Facet),

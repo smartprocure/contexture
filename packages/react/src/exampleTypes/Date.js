@@ -120,54 +120,50 @@ let allRollingOpts = [
   },
 ]
 
-let rollingOptIsSelected = (node, opt) => node.from === opt.value.from && node.to === opt.value.to
+let rollingOptIsSelected = (node, opt) =>
+  node.from === opt.value.from && node.to === opt.value.to
 
 let DateComponent = injectTreeNode(
-  observer(
-    ({
-      tree,
-      node,
-      DatePicker,
-      excludeRollingRanges = [],
-    }) => {
-      let rollingOpts = _.reject(
-        opt => _.includes(opt.type, excludeRollingRanges),
-        allRollingOpts
-      )
+  observer(({ tree, node, DatePicker, excludeRollingRanges = [] }) => {
+    let rollingOpts = _.reject(
+      opt => _.includes(opt.type, excludeRollingRanges),
+      allRollingOpts
+    )
 
-      let handleRollingSelection = idx => {
-        let range = rollingOpts[idx].value
-        tree.mutate(node.path, range)
-      }
+    let handleRollingSelection = idx => {
+      let range = rollingOpts[idx].value
+      tree.mutate(node.path, range)
+    }
 
-      return (
-        <div>
-          <RadioList
-            options={F.autoLabelOptions(['exact', 'rolling'])}
-            value={node.useDateMath ? 'rolling' : 'exact'}
-            style={{ marginBottom: 10 }}
-            onChange={mode => {
-              tree.mutate(
-                node.path,
-                mode === 'rolling'
-                  ? {
-                      useDateMath: true,
-                      from: '',
-                      to: '',
-                    }
-                  : {
-                      useDateMath: false,
-                      from: null,
-                      to: null,
-                    }
-              )
-            }}
-          />
-          {!tree.getNode(node.path).useDateMath && (
-            <Flex
-              style={{ justifyContent: 'space-between', alignItems: 'center' }}
-            >
-              {!!DatePicker && <React.Fragment>
+    return (
+      <div>
+        <RadioList
+          options={F.autoLabelOptions(['exact', 'rolling'])}
+          value={node.useDateMath ? 'rolling' : 'exact'}
+          style={{ marginBottom: 10 }}
+          onChange={mode => {
+            tree.mutate(
+              node.path,
+              mode === 'rolling'
+                ? {
+                    useDateMath: true,
+                    from: '',
+                    to: '',
+                  }
+                : {
+                    useDateMath: false,
+                    from: null,
+                    to: null,
+                  }
+            )
+          }}
+        />
+        {!tree.getNode(node.path).useDateMath && (
+          <Flex
+            style={{ justifyContent: 'space-between', alignItems: 'center' }}
+          >
+            {!!DatePicker && (
+              <React.Fragment>
                 <DatePicker
                   value={node.from ? new Date(node.from) : null}
                   onChange={date => tree.mutate(node.path, { from: date })}
@@ -179,36 +175,44 @@ let DateComponent = injectTreeNode(
                   onChange={date => tree.mutate(node.path, { to: date })}
                   calendarType="US"
                 />
-              </React.Fragment>}
-              {!DatePicker && <React.Fragment>
+              </React.Fragment>
+            )}
+            {!DatePicker && (
+              <React.Fragment>
                 <Html5DateInput
                   value={node.from || ''}
-                  onChange={e => tree.mutate(node.path, { from: e.target.value })}
+                  onChange={e =>
+                    tree.mutate(node.path, { from: e.target.value })
+                  }
                 />
                 <div>-</div>
                 <Html5DateInput
                   value={node.to || ''}
                   onChange={e => tree.mutate(node.path, { to: e.target.value })}
                 />
-              </React.Fragment>}
-            </Flex>
-          )}
-          {tree.getNode(node.path).useDateMath && (
-            <select onChange={e => handleRollingSelection(e.target.value)}>
-              {F.mapIndexed(
-                (opt, idx) => (
-                  <option key={_.kebabCase(opt.label)} value={idx} selected={rollingOptIsSelected(node, opt)}>
-                    {opt.label}
-                  </option>
-                ),
-                rollingOpts
-              )}
-            </select>
-          )}
-        </div>
-      )
-    }
-  ),
+              </React.Fragment>
+            )}
+          </Flex>
+        )}
+        {tree.getNode(node.path).useDateMath && (
+          <select onChange={e => handleRollingSelection(e.target.value)}>
+            {F.mapIndexed(
+              (opt, idx) => (
+                <option
+                  key={_.kebabCase(opt.label)}
+                  value={idx}
+                  selected={rollingOptIsSelected(node, opt)}
+                >
+                  {opt.label}
+                </option>
+              ),
+              rollingOpts
+            )}
+          </select>
+        )}
+      </div>
+    )
+  }),
   exampleTypes.date
 )
 DateComponent.displayName = 'Date'
