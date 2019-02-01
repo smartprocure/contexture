@@ -120,6 +120,8 @@ let allRollingOpts = [
   },
 ]
 
+let rollingOptIsSelected = (node, opt) => node.from === opt.value.from && node.to === opt.value.to
+
 let DateComponent = injectTreeNode(
   observer(
     ({
@@ -195,7 +197,7 @@ let DateComponent = injectTreeNode(
             <select onChange={e => handleRollingSelection(e.target.value)}>
               {F.mapIndexed(
                 (opt, idx) => (
-                  <option key={_.kebabCase(opt.label)} value={idx}>
+                  <option key={_.kebabCase(opt.label)} value={idx} selected={rollingOptIsSelected(node, opt)}>
                     {opt.label}
                   </option>
                 ),
