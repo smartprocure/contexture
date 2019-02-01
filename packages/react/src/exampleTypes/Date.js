@@ -142,7 +142,7 @@ let DateComponent = injectTreeNode(
         <div>
           <RadioList
             options={F.autoLabelOptions(['exact', 'rolling'])}
-            value={tree.getNode(node.path).useDateMath ? 'rolling' : 'exact'}
+            value={node.useDateMath ? 'rolling' : 'exact'}
             style={{ marginBottom: 10 }}
             onChange={mode => {
               tree.mutate(
