@@ -1390,33 +1390,39 @@ var terms_stats = exports.terms_stats = function terms_stats(_ref5) {
     });
   };
 
-  var getTotalRecords = _fp2.default.memoize((0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3() {
-    var result;
-    return _regenerator2.default.wrap(function _callee3$(_context3) {
-      while (1) {
-        switch (_context3.prev = _context3.next) {
-          case 0:
-            _context3.t0 = getTreeResults;
-            _context3.next = 3;
-            return service(formatTree({
-              key: 'cardinality',
-              type: 'cardinality',
-              field: key_field,
-              fieldMode: 'autocomplete'
-            }));
+  var getTotalRecords = function () {
+    var _ref6 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3() {
+      var result;
+      return _regenerator2.default.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.t0 = getTreeResults;
+              _context3.next = 3;
+              return service(formatTree({
+                key: 'cardinality',
+                type: 'cardinality',
+                field: key_field,
+                fieldMode: 'autocomplete'
+              }));
 
-          case 3:
-            _context3.t1 = _context3.sent;
-            result = (0, _context3.t0)(_context3.t1);
-            return _context3.abrupt('return', _fp2.default.get('context.value', result));
+            case 3:
+              _context3.t1 = _context3.sent;
+              result = (0, _context3.t0)(_context3.t1);
+              return _context3.abrupt('return', _fp2.default.get('context.value', result));
 
-          case 6:
-          case 'end':
-            return _context3.stop();
+            case 6:
+            case 'end':
+              return _context3.stop();
+          }
         }
-      }
-    }, _callee3, undefined);
-  })));
+      }, _callee3, undefined);
+    }));
+
+    return function getTotalRecords() {
+      return _ref6.apply(this, arguments);
+    };
+  }();
 
   var done = false;
   var getNext = function () {
