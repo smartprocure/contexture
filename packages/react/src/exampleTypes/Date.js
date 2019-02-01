@@ -121,7 +121,12 @@ let allRollingOpts = [
 let rollingOptIsSelected = (node, opt) =>
   node.from === opt.value.from && node.to === opt.value.to
 
-let toDateObj = data => _.isDate(data) ? data : (data.target ? new Date(data.target.value) : new Date(data))
+let toDateObj = data =>
+  _.isDate(data)
+    ? data
+    : data.target
+      ? new Date(data.target.value)
+      : new Date(data)
 
 let setDateInput = (node, endpoint, setHtml5Dates) => {
   let val = node[endpoint]
@@ -132,67 +137,85 @@ let setDateInput = (node, endpoint, setHtml5Dates) => {
 }
 
 let DateComponent = injectTreeNode(
-  observer(({ tree, node, DateInput, RadioList, Select, excludeRollingRanges = [], setHtml5Dates }) => {
-    let rollingOpts = _.reject(
-      opt => _.includes(opt.type, excludeRollingRanges),
-      allRollingOpts
-    )
+  observer(
+    ({
+      tree,
+      node,
+      DateInput,
+      RadioList,
+      Select,
+      excludeRollingRanges = [],
+      setHtml5Dates,
+    }) => {
+      let rollingOpts = _.reject(
+        opt => _.includes(opt.type, excludeRollingRanges),
+        allRollingOpts
+      )
 
-    let handleRollingSelection = idx => {
-      let range = rollingOpts[idx].value
-      tree.mutate(node.path, range)
-    }
+      let handleRollingSelection = idx => {
+        let range = rollingOpts[idx].value
+        tree.mutate(node.path, range)
+      }
 
-    return (
-      <div>
-        <RadioList
-          options={F.autoLabelOptions(['exact', 'rolling'])}
-          value={node.useDateMath ? 'rolling' : 'exact'}
-          style={{ marginBottom: 10 }}
-          onChange={mode => {
-            tree.mutate(
-              node.path,
-              mode === 'rolling'
-                ? {
-                    useDateMath: true,
-                    from: '',
-                    to: '',
-                  }
-                : {
-                    useDateMath: false,
-                    from: null,
-                    to: null,
-                  }
-            )
-          }}
-        />
-        {!tree.getNode(node.path).useDateMath && (
-          <Flex
-            style={{ justifyContent: 'space-between', alignItems: 'center' }}
-          >
-            <DateInput
-              value={setDateInput(node, 'from', setHtml5Dates)}
-              onChange={date => tree.mutate(node.path, { from: toDateObj(date) })}
-            />
-            <div>-</div>
-            <DateInput
-              value={setDateInput(node, 'to', setHtml5Dates)}
-              onChange={date => tree.mutate(node.path, { to: toDateObj(date) })}
-            />
-          </Flex>
-        )}
-        {tree.getNode(node.path).useDateMath && (
-          <Select
-            onChange={e => handleRollingSelection(e.target.value)}
-            options={F.mapIndexed(
-              (opt, idx) => ({ label: opt.label, value: idx, selected: rollingOptIsSelected(node, opt) }),
-              rollingOpts
-            )}
+      return (
+        <div>
+          <RadioList
+            options={F.autoLabelOptions(['exact', 'rolling'])}
+            value={node.useDateMath ? 'rolling' : 'exact'}
+            style={{ marginBottom: 10 }}
+            onChange={mode => {
+              tree.mutate(
+                node.path,
+                mode === 'rolling'
+                  ? {
+                      useDateMath: true,
+                      from: '',
+                      to: '',
+                    }
+                  : {
+                      useDateMath: false,
+                      from: null,
+                      to: null,
+                    }
+              )
+            }}
           />
-        )}
-      </div>
-    )
-  }),
+          {!tree.getNode(node.path).useDateMath && (
+            <Flex
+              style={{ justifyContent: 'space-between', alignItems: 'center' }}
+            >
+              <DateInput
+                value={setDateInput(node, 'from', setHtml5Dates)}
+                onChange={date =>
+                  tree.mutate(node.path, { from: toDateObj(date) })
+                }
+              />
+              <div>-</div>
+              <DateInput
+                value={setDateInput(node, 'to', setHtml5Dates)}
+                onChange={date =>
+                  tree.mutate(node.path, { to: toDateObj(date) })
+                }
+              />
+            </Flex>
+          )}
+          {tree.getNode(node.path).useDateMath && (
+            <Select
+              onChange={e => handleRollingSelection(e.target.value)}
+              options={F.mapIndexed(
+                (opt, idx) => ({
+                  label: opt.label,
+                  value: idx,
+                  selected: rollingOptIsSelected(node, opt),
+                }),
+                rollingOpts
+              )}
+            />
+          )}
+        </div>
+      )
+    }
+  ),
   exampleTypes.date
 )
 DateComponent.displayName = 'Date'
