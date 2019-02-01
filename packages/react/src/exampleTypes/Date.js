@@ -3,7 +3,6 @@ import { observer } from 'mobx-react'
 import { Flex } from '../layout/Flex'
 import { exampleTypes } from 'contexture-client'
 import injectTreeNode from '../utils/injectTreeNode'
-import DatePicker from 'react-date-picker'
 import RadioList from '../layout/RadioList'
 import F from 'futil-js'
 import _ from 'lodash/fp'
@@ -126,11 +125,10 @@ let DateComponent = injectTreeNode(
     ({
       tree,
       node,
-      CustomPicker,
-      useJSPicker = true,
+      DatePicker,
       excludeRollingRanges = [],
     }) => {
-      let Picker = CustomPicker || (useJSPicker ? DatePicker : html5DateInput)
+      let Picker = DatePicker || html5DateInput
 
       let rollingOpts = _.reject(
         opt => _.includes(opt.type, excludeRollingRanges),

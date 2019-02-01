@@ -17,6 +17,7 @@ import {
 import DefaultSelect from '../layout/Select'
 import ExampleTypeConstructor from '../exampleTypes/'
 import QueryBuilderComponent from '../queryBuilder'
+import DatePicker from 'react-date-picker'
 
 export let Input = React.forwardRef(
   ({ className = '', style, type = 'text', ...x }, ref) => (
@@ -810,6 +811,7 @@ export let ExampleTypes = ExampleTypeConstructor({
   ListGroupItem,
   TagsInput: defaultProps({ TagComponent })(TagsInput),
   Icon,
+  DatePicker
 })
 export let Pager = props => (
   <ExampleTypes.ResultPager

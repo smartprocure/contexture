@@ -36,11 +36,12 @@ export default ({
   ListGroupItem = 'div',
   Icon,
   Select = DefaultSelect,
+  DatePicker
 } = {}) => {
   let Components = {
     Facet: defaultProps({ TextInput, Checkbox, RadioList })(Facet),
     Number: defaultProps({ NumberInput, Button })(Number),
-    Date: defaultProps({ DateInput })(Date),
+    Date: defaultProps({ DateInput, DatePicker })(Date),
     DateRangePicker,
     Query: defaultProps({ TextInput })(Query),
     TagsQuery: defaultProps({ TagsInput, Checkbox, RadioList, Button })(
