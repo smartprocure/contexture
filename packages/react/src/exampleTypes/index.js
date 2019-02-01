@@ -26,7 +26,7 @@ export default ({
   Button = 'button',
   TextInput = Input,
   NumberInput = defaultProps({ type: 'number' })(Input),
-  DateInput = defaultProps({ type: 'date' })(Input),
+  DateInput,
   Checkbox = defaultProps({ type: 'checkbox' })('input'),
   RadioList,
   TagsInput,
@@ -35,13 +35,12 @@ export default ({
   FieldPicker,
   ListGroupItem = 'div',
   Icon,
-  Select = DefaultSelect,
-  DatePicker,
+  Select = DefaultSelect
 } = {}) => {
   let Components = {
     Facet: defaultProps({ TextInput, Checkbox, RadioList })(Facet),
     Number: defaultProps({ NumberInput, Button })(Number),
-    Date: defaultProps({ DateInput, DatePicker })(Date),
+    Date: defaultProps(DateInput ? { DateInput } : { DateInput: defaultProps({ type: 'date' })(Input), setHtml5Dates: true })(Date),
     DateRangePicker,
     Query: defaultProps({ TextInput })(Query),
     TagsQuery: defaultProps({ TagsInput, Checkbox, RadioList, Button })(

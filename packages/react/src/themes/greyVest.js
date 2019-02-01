@@ -825,7 +825,7 @@ export let ExampleTypes = ExampleTypeConstructor({
   ListGroupItem,
   TagsInput: defaultProps({ TagComponent })(TagsInput),
   Icon,
-  DatePicker,
+  DateInput: defaultProps({ calendarType: 'US'})(DatePicker),
 })
 export let Pager = props => (
   <ExampleTypes.ResultPager
