@@ -7,7 +7,7 @@ import RadioList from '../layout/RadioList'
 import F from 'futil-js'
 import _ from 'lodash/fp'
 
-let html5DateInput = x => <input type="date" {...x} />
+let Html5DateInput = x => <input type="date" {...x} />
 
 let allRollingOpts = [
   { type: 'all', label: 'All Dates', value: { from: '', to: '' } },
@@ -128,8 +128,6 @@ let DateComponent = injectTreeNode(
       DatePicker,
       excludeRollingRanges = [],
     }) => {
-      let Picker = DatePicker || html5DateInput
-
       let rollingOpts = _.reject(
         opt => _.includes(opt.type, excludeRollingRanges),
         allRollingOpts
@@ -167,17 +165,30 @@ let DateComponent = injectTreeNode(
             <Flex
               style={{ justifyContent: 'space-between', alignItems: 'center' }}
             >
-              <Picker
-                value={node.from ? new Date(node.from) : null}
-                onChange={date => tree.mutate(node.path, { from: date })}
-                calendarType="US"
-              />
-              <div>-</div>
-              <Picker
-                value={node.to ? new Date(node.to) : null}
-                onChange={date => tree.mutate(node.path, { to: date })}
-                calendarType="US"
-              />
+              {!!DatePicker && <React.Fragment>
+                <DatePicker
+                  value={node.from ? new Date(node.from) : null}
+                  onChange={date => tree.mutate(node.path, { from: date })}
+                  calendarType="US"
+                />
+                <div>-</div>
+                <DatePicker
+                  value={node.to ? new Date(node.to) : null}
+                  onChange={date => tree.mutate(node.path, { to: date })}
+                  calendarType="US"
+                />
+              </React.Fragment>}
+              {!DatePicker && <React.Fragment>
+                <Html5DateInput
+                  value={node.from || ''}
+                  onChange={e => tree.mutate(node.path, { from: e.target.value })}
+                />
+                <div>-</div>
+                <Html5DateInput
+                  value={node.to || ''}
+                  onChange={e => tree.mutate(node.path, { to: e.target.value })}
+                />
+              </React.Fragment>}
             </Flex>
           )}
           {tree.getNode(node.path).useDateMath && (
