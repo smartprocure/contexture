@@ -61,6 +61,11 @@ const format = (
   return _.map(
     _.flow(
       F.flattenObject,
+      // Extending each element with properties that might be missing
+      x => ({
+        ..._.mapValues(() => '', rules),
+        ...x,
+      }),
       _.toPairs,
       propertyFormatter,
       _.fromPairs

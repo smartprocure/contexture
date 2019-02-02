@@ -1,4 +1,8 @@
-﻿# 0.1.5
+﻿# 0.1.6
+* Fixing missing columns. Now, colums will be added as long as there
+  are format rules for them.
+
+# 0.1.5
 * Fixed terms_stats getTotalRecords so it doesn't use _.memoize.
   Memoize behaves weirdly with async functions (probably because this
   is compiled).
