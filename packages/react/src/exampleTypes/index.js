@@ -20,13 +20,14 @@ import Text from './Text'
 import { defaultProps } from 'recompose'
 import ModalDefault from '../layout/Modal'
 import DefaultSelect from '../layout/Select'
+import WrappedDateInput from '../layout/WrappedDateInput'
 
 export default ({
   Input = 'input',
   Button = 'button',
   TextInput = Input,
   NumberInput = defaultProps({ type: 'number' })(Input),
-  DateInput,
+  DateInput = WrappedDateInput,
   Checkbox = defaultProps({ type: 'checkbox' })('input'),
   RadioList,
   TagsInput,
@@ -40,15 +41,7 @@ export default ({
   let Components = {
     Facet: defaultProps({ TextInput, Checkbox, RadioList })(Facet),
     Number: defaultProps({ NumberInput, Button })(Number),
-    Date: defaultProps(
-      DateInput
-        ? { DateInput, RadioList, Select }
-        : {
-            DateInput: defaultProps({ type: 'date' })(Input),
-            RadioList,
-            Select,
-          }
-    )(Date),
+    Date: defaultProps({ DateInput, RadioList, Select })(Date),
     DateRangePicker,
     Query: defaultProps({ TextInput })(Query),
     TagsQuery: defaultProps({ TagsInput, Checkbox, RadioList, Button })(
