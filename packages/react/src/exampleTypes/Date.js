@@ -128,13 +128,7 @@ let toDateObj = data =>
       ? new Date(data.target.value)
       : new Date(data)
 
-let setDateInput = (node, endpoint, setHtml5Dates) => {
-  let val = node[endpoint]
-  if (!val) {
-    return setHtml5Dates ? '' : null
-  }
-  return setHtml5Dates ? moment(val).format('YYYY-MM-DD') : new Date(val)
-}
+let toHTML5DateString = (node, endpoint) => node[endpoint] ? moment(node[endpoint]).format('YYYY-MM-DD') : ''
 
 let DateComponent = injectTreeNode(
   observer(
@@ -145,7 +139,6 @@ let DateComponent = injectTreeNode(
       RadioList,
       Select,
       excludeRollingRanges = [],
-      setHtml5Dates,
     }) => {
       let rollingOpts = _.reject(
         opt => _.includes(opt.type, excludeRollingRanges),
@@ -180,26 +173,26 @@ let DateComponent = injectTreeNode(
               )
             }}
           />
-          {!tree.getNode(node.path).useDateMath && (
+          {!node.useDateMath && (
             <Flex
               style={{ justifyContent: 'space-between', alignItems: 'center' }}
             >
               <DateInput
-                value={setDateInput(node, 'from', setHtml5Dates)}
+                value={toHTML5DateString(node, 'from')}
                 onChange={date =>
                   tree.mutate(node.path, { from: toDateObj(date) })
                 }
               />
               <div>-</div>
               <DateInput
-                value={setDateInput(node, 'to', setHtml5Dates)}
+                value={toHTML5DateString(node, 'to')}
                 onChange={date =>
                   tree.mutate(node.path, { to: toDateObj(date) })
                 }
               />
             </Flex>
           )}
-          {tree.getNode(node.path).useDateMath && (
+          {node.useDateMath && (
             <Select
               onChange={e => handleRollingSelection(e.target.value)}
               options={F.mapIndexed(

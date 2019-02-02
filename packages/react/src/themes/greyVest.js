@@ -813,6 +813,15 @@ let TagComponent = observer(({ value, removeTag, tagStyle, onClick }) => (
 ))
 TagComponent.displayName = 'TagComponent'
 
+let WrappedDatePicker = observer(({ value, onChange, calendarType = 'US' }) => (
+  <DatePicker
+    value={value ? new Date(value) : null}
+    onChange={onChange}
+    calendarType={calendarType}
+  />
+))
+WrappedDatePicker.displayName = 'WrappedDatePicker'
+
 export let ExampleTypes = ExampleTypeConstructor({
   Button,
   Input,
@@ -825,7 +834,7 @@ export let ExampleTypes = ExampleTypeConstructor({
   ListGroupItem,
   TagsInput: defaultProps({ TagComponent })(TagsInput),
   Icon,
-  DateInput: defaultProps({ calendarType: 'US' })(DatePicker),
+  DateInput: WrappedDatePicker,
 })
 export let Pager = props => (
   <ExampleTypes.ResultPager

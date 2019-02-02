@@ -47,7 +47,6 @@ export default ({
             DateInput: defaultProps({ type: 'date' })(Input),
             RadioList,
             Select,
-            setHtml5Dates: true,
           }
     )(Date),
     DateRangePicker,
