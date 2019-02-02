@@ -128,7 +128,8 @@ let toDateObj = data =>
       ? new Date(data.target.value)
       : new Date(data)
 
-let toHTML5DateString = (node, endpoint) => node[endpoint] ? moment(node[endpoint]).format('YYYY-MM-DD') : ''
+let toHTML5DateString = (node, endpoint) =>
+  node[endpoint] ? moment(node[endpoint]).format('YYYY-MM-DD') : ''
 
 let DateComponent = injectTreeNode(
   observer(
