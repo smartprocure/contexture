@@ -817,7 +817,9 @@ TagComponent.displayName = 'TagComponent'
 let WrappedDatePicker = observer(({ value, onChange, calendarType = 'US' }) => (
   <DatePicker
     value={value ? new Date(value) : null}
-    onChange={date => onChange({ target: { value: moment(date).format('YYYY-MM-DD') }})}
+    onChange={date =>
+      onChange({ target: { value: moment(date).format('YYYY-MM-DD') } })
+    }
     calendarType={calendarType}
   />
 ))
