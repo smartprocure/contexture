@@ -169,16 +169,12 @@ let DateComponent = injectTreeNode(
             >
               <DateInput
                 value={node.from}
-                onChange={date =>
-                  tree.mutate(node.path, { from: date })
-                }
+                onChange={date => tree.mutate(node.path, { from: date })}
               />
               <div>-</div>
               <DateInput
                 value={node.to}
-                onChange={date =>
-                  tree.mutate(node.path, { to: date })
-                }
+                onChange={date => tree.mutate(node.path, { to: date })}
               />
             </Flex>
           )}
