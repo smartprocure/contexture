@@ -17,6 +17,7 @@ import {
 import DefaultSelect from '../layout/Select'
 import ExampleTypeConstructor from '../exampleTypes/'
 import QueryBuilderComponent from '../queryBuilder'
+import DatePicker from 'react-date-picker'
 
 export let Input = React.forwardRef(
   ({ className = '', style, type = 'text', ...x }, ref) => (
@@ -620,6 +621,22 @@ export let GVStyle = () => (
       .gv-body .labeled-checkbox > span {
         padding-left: 10px;
       }
+
+      .react-date-picker__wrapper {
+        border: 2px solid #ededed!important;
+        border-radius: 4px;
+      }
+      .react-date-picker__inputGroup__input {
+        min-width: 20px!important;
+        text-align: center;
+        border: none!important;
+      }
+      .react-date-picker__inputGroup__year {
+        min-width: 40px!important;
+      }
+      .react-calendar__month-view__days__day--weekend {
+        color: #0076de;
+      }
     `}
   </style>
 )
@@ -808,6 +825,7 @@ export let ExampleTypes = ExampleTypeConstructor({
   ListGroupItem,
   TagsInput: defaultProps({ TagComponent })(TagsInput),
   Icon,
+  DateInput: defaultProps({ calendarType: 'US' })(DatePicker),
 })
 export let Pager = props => (
   <ExampleTypes.ResultPager

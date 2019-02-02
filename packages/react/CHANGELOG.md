@@ -1,3 +1,6 @@
+# 1.36.0
+* ExampleTypes/Date: use `react-date-picker` with HTML5 opt-out
+
 # 1.35.1
 # GreyVest: remove `position: sticky` from search bar
 
