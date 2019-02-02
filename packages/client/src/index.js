@@ -104,13 +104,13 @@ export let ContextTree = _.curry(
             updatedNodes
           )
         )
+
       // Skip triggerUpdate if disableAutoUpdate or it this dispatch affects the target node (to allow things like paging changes to always go through)
       // The assumption here is that any event that affects the target node would likely be assumed to take effect immediately by end users
       // Also allow events to specify `autoUpdate:true` to let it through (e.g. search button event)
       // This approach is simpler than marking missedUpdate but not paused, but will trigger _all_ pending updates when an update goes through
       if (!TreeInstance.disableAutoUpdate || affectsSelf || event.autoUpdate) {
         await triggerUpdate()
-        await Promise.all(_.invokeMap('afterSearch', updatedNodes))
       }
     }
 
@@ -120,33 +120,38 @@ export let ContextTree = _.curry(
       markLastUpdate(now)(tree)
       let dto = serialize(snapshot(tree), { search: true })
       prepForUpdate(tree)
-      processResponse(await service(dto, now))
+      await processResponse(await service(dto, now))
     })
 
-    let processResponse = data => {
+    let processResponse = async data => {
       // TODO: Remove these 3 deprecated lines in 3.0. Errors will just be on the tree so no need to wrap in `data` to allow `error`
       data = _.isEmpty(data.data) ? data : data.data
       let { error } = data
       if (error) extend(tree, { error })
 
-      F.eachIndexed((node, path) => {
-        let target = flat[path]
-        let responseNode = _.pick(['context', 'error'], node)
-        if (target && !isStale(node, target)) {
-          if (!_.isEmpty(responseNode)) {
-            TreeInstance.onResult(decode(path), node, target)
-            mergeWith((oldValue, newValue) => newValue, target, responseNode)
+      await Promise.all(
+        F.mapIndexed(async (node, path) => {
+          let target = flat[path]
+          let responseNode = _.pick(['context', 'error'], node)
+          if (target && !isStale(node, target)) {
+            if (!_.isEmpty(responseNode)) {
+              TreeInstance.onResult(decode(path), node, target)
+              mergeWith((oldValue, newValue) => newValue, target, responseNode)
+            }
+            extend(target, { updating: false })
+            try {
+              target.updatingDeferred.resolve()
+            } catch (e) {
+              log(
+                'Tried to resolve a node that had no updatingDeferred. This usually means there was unsolicited results from the server for a node that has never been udpated.'
+              )
+            }
+            if (!_.isEmpty(responseNode)) {
+              await F.maybeCall(target.afterSearch)
+            }
           }
-          extend(target, { updating: false })
-          try {
-            target.updatingDeferred.resolve()
-          } catch (e) {
-            log(
-              'Tried to resolve a node that had no updatingDeferred. This usually means there was unsolicited results from the server for a node that has never been udpated.'
-            )
-          }
-        }
-      }, flatten(data))
+        }, flatten(data))
+      )
     }
 
     let TreeInstance = {
