@@ -18,6 +18,7 @@ import DefaultSelect from '../layout/Select'
 import ExampleTypeConstructor from '../exampleTypes/'
 import QueryBuilderComponent from '../queryBuilder'
 import DatePicker from 'react-date-picker'
+import moment from 'moment'
 
 export let Input = React.forwardRef(
   ({ className = '', style, type = 'text', ...x }, ref) => (
@@ -816,7 +817,7 @@ TagComponent.displayName = 'TagComponent'
 let WrappedDatePicker = observer(({ value, onChange, calendarType = 'US' }) => (
   <DatePicker
     value={value ? new Date(value) : null}
-    onChange={onChange}
+    onChange={date => onChange({ target: { value: moment(date).format('YYYY-MM-DD') }})}
     calendarType={calendarType}
   />
 ))

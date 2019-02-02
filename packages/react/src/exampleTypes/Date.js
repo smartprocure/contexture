@@ -121,13 +121,6 @@ let allRollingOpts = [
 let rollingOptIsSelected = (node, opt) =>
   node.from === opt.value.from && node.to === opt.value.to
 
-let toDateObj = data =>
-  _.isDate(data)
-    ? data
-    : data.target
-      ? new Date(data.target.value)
-      : new Date(data)
-
 let toHTML5DateString = (node, endpoint) =>
   node[endpoint] ? moment(node[endpoint]).format('YYYY-MM-DD') : ''
 
@@ -180,15 +173,15 @@ let DateComponent = injectTreeNode(
             >
               <DateInput
                 value={toHTML5DateString(node, 'from')}
-                onChange={date =>
-                  tree.mutate(node.path, { from: toDateObj(date) })
+                onChange={e =>
+                  tree.mutate(node.path, { from: new Date(e.target.value) })
                 }
               />
               <div>-</div>
               <DateInput
                 value={toHTML5DateString(node, 'to')}
-                onChange={date =>
-                  tree.mutate(node.path, { to: toDateObj(date) })
+                onChange={e =>
+                  tree.mutate(node.path, { to: new Date(e.target.value) })
                 }
               />
             </Flex>
