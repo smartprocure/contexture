@@ -5,7 +5,6 @@ import { exampleTypes } from 'contexture-client'
 import injectTreeNode from '../utils/injectTreeNode'
 import F from 'futil-js'
 import _ from 'lodash/fp'
-import moment from 'moment'
 
 let allRollingOpts = [
   { type: 'all', label: 'All Dates', value: { from: '', to: '' } },

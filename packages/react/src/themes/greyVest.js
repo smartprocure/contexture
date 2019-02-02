@@ -18,7 +18,6 @@ import DefaultSelect from '../layout/Select'
 import ExampleTypeConstructor from '../exampleTypes/'
 import QueryBuilderComponent from '../queryBuilder'
 import DatePicker from 'react-date-picker'
-import moment from 'moment'
 
 export let Input = React.forwardRef(
   ({ className = '', style, type = 'text', ...x }, ref) => (
