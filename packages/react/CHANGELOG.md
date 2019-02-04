@@ -1,3 +1,6 @@
+# 1.37.1
+* Add support for fields with dots in schema utils for defaultNodeProps lookup
+
 # 1.37.0
 * Add Layout -> Portal
 * Layout -> Modal: Wrap in Portal

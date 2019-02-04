@@ -25,4 +25,4 @@ export let inferSchema = _.flow(
 )
 
 export let DefaultNodeProps = (field, fields, type) =>
-  _.get(`${field}.defaultNodeProps.${type}`, fields)
+  _.get([field, 'defaultNodeProps', type], fields)
