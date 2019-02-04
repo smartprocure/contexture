@@ -153,6 +153,55 @@ describe('facet', () => {
         ]
       ))
 
+    it('size 0', () =>
+      facetTest(
+        {
+          key: 'test',
+          type: 'facet',
+          field: 'testField.untouched',
+          values: ['a'],
+          size: 0,
+        },
+        {
+          cardinality: 10,
+          options: [
+            {
+              name: 'a',
+              count: 10,
+            },
+            {
+              name: 'b',
+              count: 10,
+            },
+            {
+              name: 'c',
+              count: 10,
+            },
+          ],
+        },
+        [
+          {
+            aggs: {
+              facetOptions: {
+                terms: {
+                  field: 'testField.untouched',
+                  size: (2**31) - 1,
+                  order: {
+                    _count: 'desc',
+                  },
+                },
+              },
+              facetCardinality: {
+                cardinality: {
+                  field: 'testField.untouched',
+                  precision_threshold: 5000,
+                },
+              },
+            },
+          },
+        ]
+      ))
+
     it('missing values', () =>
       facetTest(
         {
