@@ -1,4 +1,7 @@
-﻿# 2.18.1
+﻿# 2.19.0
+* Add `subquery` and `savedSearch` example types.
+
+# 2.18.1
 * Fixed deep bug: afterSearch should be called at the moment we
   receive new values. This would cause nodes previously marked for
   update to not call afterSearch because these nodes weren't marked by
