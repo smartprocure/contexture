@@ -369,19 +369,20 @@ export default stampKey('type', {
     },
   },
   subquery: {
-    validate: node => node.localField && node.foreignField && (node.search || node.searchId),
+    validate: node =>
+      node.localField && node.foreignField && (node.search || node.searchId),
     reactors: {
       localField: 'others',
       foreignField: 'others',
       search: 'others',
-      searchId: 'others'
-    } 
+      searchId: 'others',
+    },
   },
   savedSearch: {
     validate: node => node.search || node.searchId,
     reactors: {
       search: 'others',
-      searchId: 'others'
-    } 
-  }
+      searchId: 'others',
+    },
+  },
 })
