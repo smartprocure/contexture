@@ -12,6 +12,7 @@ import BarChart from './BarChart'
 import { Tag, TagsInput } from './TagsInput'
 import LensInput from './LensInput'
 import ExpandableTable from './ExpandableTable'
+import Portal from './Portal'
 
 export {
   Awaiter,
@@ -29,4 +30,5 @@ export {
   TagsInput,
   LensInput,
   ExpandableTable,
+  Portal
 }
