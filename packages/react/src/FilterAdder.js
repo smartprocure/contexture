@@ -7,8 +7,10 @@ export let fieldsToOptions = _.map(x => ({ value: x.field, ...x }))
 
 let getGroupFields = (path, tree) => _.map('field', tree.getNode(path).children)
 
+let DefaultNodeProps = (field, fields) => fields[field].defaultNodeProps
+
 export default InjectTreeNode(
-  observer(({ tree, path, fields, Picker, uniqueFields }) => {
+  observer(({ tree, path, fields, Picker, uniqueFields, defaultNodeProps = DefaultNodeProps }) => {
     let options = fieldsToOptions(fields)
     if (uniqueFields) {
       options = _.reject(
@@ -24,6 +26,7 @@ export default InjectTreeNode(
             key: _.uniqueId('add'),
             field,
             type: fields[field].typeDefault,
+            ...defaultNodeProps(field, fields, tree)
           })
         }}
       />

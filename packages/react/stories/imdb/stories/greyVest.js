@@ -197,6 +197,9 @@ let schemas = fromPromise(
             imdbId: { path: ['Imdb', 'imdbId'] },
             imdbRating: { path: ['Imdb', 'imdbRating'] },
             imdbVotes: { path: ['Imdb', 'imdbVotes'] },
+            year: {
+              defaultNodeProps: { min: 2005 }
+            }
           },
         },
       })
