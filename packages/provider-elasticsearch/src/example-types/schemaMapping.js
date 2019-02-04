@@ -18,7 +18,7 @@ let addNodeType = x => {
     {
       typeDefault,
       typeOptions: {
-        text: hasNested ? ['facet', 'tagsQuery', 'exists'] : null,
+        text: hasNested ? ['facet', 'tagsQuery', 'tagsText', 'exists'] : null,
       }[type] || [typeDefault, 'exists'],
     },
     x
