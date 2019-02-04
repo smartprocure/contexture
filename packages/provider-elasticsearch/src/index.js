@@ -54,8 +54,8 @@ let ElasticsearchProvider = (
         index: schema.elasticsearch.index,
 
         // Scroll Support
-        scroll: context.config.scroll,
-        // searchType:         context.config.searchType
+        scroll: context.scroll === true ? '2m' : context.scroll,
+        // searchType:         context.searchType
       },
       config.request,
       request,
@@ -72,17 +72,17 @@ let ElasticsearchProvider = (
     })
 
     // Required for scroll since 2.1.0 ES
-    if (context.config.scroll) {
+    if (context.scroll) {
       request.body.sort = ['_doc']
-      request.size = context.config.size
+      request.size = context.size
     }
     // Run Search
-    let scrollId = context.config.scrollId
+    let scrollId = context.scrollId
     let client = config.getClient()
     // If we have scrollId then keep scrolling if not search
     let result = scrollId
       ? client.scroll({
-          scroll: context.config.scroll,
+          scroll: context.scroll,
           scrollId,
         })
       : client.search(request)
