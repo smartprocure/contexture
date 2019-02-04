@@ -381,8 +381,8 @@ export default stampKey('type', {
       searchId: null,
       search: null,
       localField: null,
-      foreignField: null, 
-    }
+      foreignField: null,
+    },
   },
   savedSearch: {
     validate: node => node.search || node.searchId,
