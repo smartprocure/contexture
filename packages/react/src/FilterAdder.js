@@ -31,12 +31,7 @@ let FilterAdder = ({
           key: _.uniqueId('add'),
           field,
           type: fields[field].typeDefault,
-          ...defaultNodeProps(
-            field,
-            fields,
-            fields[field].typeDefault,
-            tree
-          ),
+          ...defaultNodeProps(field, fields, fields[field].typeDefault, tree),
         })
       }}
     />
