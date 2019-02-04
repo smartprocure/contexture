@@ -1,3 +1,9 @@
+# 1.37.0
+* Add Layout -> Portal
+* Layout -> Modal: Wrap in Portal
+* FilterAdder: Add defaultNodeProps support
+* GreyVest: Add defaultNodeProps example for `year` (sets `min` to 2005 when type is `number`)
+
 # 1.36.0
 * ExampleTypes/Date: use `react-date-picker` with HTML5 opt-out
 
