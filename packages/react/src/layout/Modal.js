@@ -3,7 +3,7 @@ import * as F from 'futil-js'
 import { observer } from 'mobx-react'
 import Portal from './Portal'
 
-let Modal = ({ isOpen, children, style = {} }) =>
+let Modal = ({ isOpen, children, style = {} }) => (
   <Portal>
     {F.view(isOpen) && (
       <div
@@ -38,6 +38,6 @@ let Modal = ({ isOpen, children, style = {} }) =>
       </div>
     )}
   </Portal>
-
+)
 
 export default observer(Modal)

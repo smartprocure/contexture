@@ -22,7 +22,12 @@ let { encode } = F.encoder('/') // todo get from client
 let blankNode = () => ({ key: randomString() })
 let replaceOn = (list, from, to) => list.splice(list.indexOf(from), 1, to)
 
-let ContextureClientBridge = (Types, Tree, fields, defaultNodeProps = DefaultNodeProps) => {
+let ContextureClientBridge = (
+  Types,
+  Tree,
+  fields,
+  defaultNodeProps = DefaultNodeProps
+) => {
   // not sure why reassignment is needed - its 2am and that makes it work... fix tomorrow!
   Tree.addActions(({ flat }) => ({
     updatePath(node, to) {
@@ -57,7 +62,7 @@ let ContextureClientBridge = (Types, Tree, fields, defaultNodeProps = DefaultNod
         key,
         type,
         field,
-        ...defaultNodeProps(field, fields, type, tree)
+        ...defaultNodeProps(field, fields, type, tree),
       })
       let newNode = Tree.getNode(path)
       // Move to same index
@@ -111,7 +116,10 @@ let ContextureClientBridge = (Types, Tree, fields, defaultNodeProps = DefaultNod
 
 export default DDContext(
   Component(
-    ({ tree: iTree, types: iTypes }, { types = iTypes, tree = iTree, fields, defaultNodeProps }) => ({
+    (
+      { tree: iTree, types: iTypes },
+      { types = iTypes, tree = iTree, fields, defaultNodeProps }
+    ) => ({
       types,
       state: observable({
         adding: false,

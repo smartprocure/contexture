@@ -30,5 +30,5 @@ export {
   TagsInput,
   LensInput,
   ExpandableTable,
-  Portal
+  Portal,
 }
