@@ -1,3 +1,10 @@
+# 0.15.0
+* Globally check for `notAnalyzedField` from field util instead of just results
+* Fix scan/scroll on latest core (don't check `config`)
+* Support `scroll: true` which now defaults to 2m instead of exploding
+* Support tagsText in typeOptions for text fields
+* Facet: Add explicit size:0 support (which sets it to es's max integer size of `2^31 - 1`)
+
 # 0.14.2
 * Only select field values that are arrays when mapping indices to aliases in copySchemasToAliases
 
