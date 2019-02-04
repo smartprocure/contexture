@@ -54,7 +54,7 @@ let ElasticsearchProvider = (
         index: schema.elasticsearch.index,
 
         // Scroll Support
-        scroll: context.scroll,
+        scroll: context.scroll === true ? '2m' : context.scroll,
         // searchType:         context.searchType
       },
       config.request,
