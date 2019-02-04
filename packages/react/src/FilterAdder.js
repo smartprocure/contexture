@@ -2,12 +2,11 @@ import _ from 'lodash/fp'
 import React from 'react'
 import { observer } from 'mobx-react'
 import InjectTreeNode from './utils/injectTreeNode'
+import { DefaultNodeProps } from './utils/schema'
 
 export let fieldsToOptions = _.map(x => ({ value: x.field, ...x }))
 
 let getGroupFields = (path, tree) => _.map('field', tree.getNode(path).children)
-
-let DefaultNodeProps = (field, fields) => fields[field].defaultNodeProps
 
 export default InjectTreeNode(
   observer(({ tree, path, fields, Picker, uniqueFields, defaultNodeProps = DefaultNodeProps }) => {
@@ -26,7 +25,7 @@ export default InjectTreeNode(
             key: _.uniqueId('add'),
             field,
             type: fields[field].typeDefault,
-            ...defaultNodeProps(field, fields, tree)
+            ...defaultNodeProps(field, fields, fields[field].typeDefault, tree)
           })
         }}
       />
