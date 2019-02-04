@@ -9,8 +9,8 @@ module.exports = {
     let pageSize = context.pageSize || 10
     let startRecord = page * pageSize
     let sortField = context.sortField
-      // default to word (aka '') for backwards compatibility
-      ? getField(schema, context.sortField, context.sortMode || 'word')
+      ? // default to word (aka '') for backwards compatibility
+        getField(schema, context.sortField, context.sortMode || 'word')
       : '_score'
     let sortDir = context.sortDir || 'desc'
     let result = {
