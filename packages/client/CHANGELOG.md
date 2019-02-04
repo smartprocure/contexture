@@ -1,4 +1,7 @@
-﻿# 2.19.0
+﻿# 2.19.1
+* Add missing defaults for `subquery` and `savedSearch` example types.
+
+# 2.19.0
 * Add `subquery` and `savedSearch` example types.
 
 # 2.18.1

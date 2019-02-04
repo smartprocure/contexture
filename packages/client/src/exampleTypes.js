@@ -377,12 +377,22 @@ export default stampKey('type', {
       search: 'others',
       searchId: 'others',
     },
+    defaults: {
+      searchId: null,
+      search: null,
+      localField: null,
+      foreignField: null, 
+    }
   },
   savedSearch: {
     validate: node => node.search || node.searchId,
     reactors: {
       search: 'others',
       searchId: 'others',
+    },
+    defaults: {
+      searchId: null,
+      search: null,
     },
   },
 })
