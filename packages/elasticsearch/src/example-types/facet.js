@@ -4,7 +4,7 @@ let { buildRegexQueryForWords, buildRegexForWords } = require('../regex')
 let { getField } = require('../fields')
 
 // https://www.elastic.co/guide/en/elasticsearch/reference/current/number.html#number
-const elasticsearchIntegerMax = (2**31) - 1
+const elasticsearchIntegerMax = 2 ** 31 - 1
 
 module.exports = {
   hasValue: context => _.get('values.length', context),
@@ -47,7 +47,9 @@ module.exports = {
             {
               field,
               // Size 0 no longer supported natively by ES: https://github.com/elastic/elasticsearch/issues/18838
-              size: context.size || (context.size === 0 ? elasticsearchIntegerMax : 10),
+              size:
+                context.size ||
+                (context.size === 0 ? elasticsearchIntegerMax : 10),
               order: {
                 term: { _term: 'asc' },
                 count: { _count: 'desc' },

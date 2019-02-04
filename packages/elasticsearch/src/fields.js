@@ -9,10 +9,9 @@ let modeMap = {
   suggest: 'shingle',
 }
 module.exports = {
-  getField: (schema, field, fieldMode = 'autocomplete') => {
-    if (schema.getField)
-      return schema.getField(schema, field, fieldMode)
-    
+  getField(schema, field, fieldMode = 'autocomplete') {
+    if (schema.getField) return schema.getField(schema, field, fieldMode)
+
     let fieldName = (schema.rawFieldName || rawFieldName)(field)
     // Maintains backwards compatibility with "modeMap" approach
     let suffix = schema.fields
@@ -21,5 +20,5 @@ module.exports = {
     return _.endsWith(suffix, fieldName)
       ? fieldName
       : F.compactJoin('.', [fieldName, suffix])
-  }
+  },
 }

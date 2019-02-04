@@ -185,7 +185,7 @@ describe('facet', () => {
               facetOptions: {
                 terms: {
                   field: 'testField.untouched',
-                  size: (2**31) - 1,
+                  size: 2 ** 31 - 1,
                   order: {
                     _count: 'desc',
                   },
