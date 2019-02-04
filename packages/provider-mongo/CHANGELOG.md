@@ -1,4 +1,7 @@
-﻿# 0.8.0
+﻿# 0.8.1
+* Remove uneccessary contexture peer dependency (which causes an issue since minor revisions are breaking in semver at 0.x)
+
+# 0.8.0
 * Add `tagsText` example type
 
 # 0.7.1
