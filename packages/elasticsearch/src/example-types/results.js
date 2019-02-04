@@ -1,31 +1,17 @@
 let F = require('futil-js')
 let _ = require('lodash/fp')
 let highlightResults = require('../highlighting').highlightResults
+let { getField } = require('../fields')
 
-const sortModeMap = {
-  field: '.untouched',
-  word: '',
-}
-const getSortField = (context, schema) => {
-  let suffix = _.get(
-    [context.sortField, 'elasticsearch', 'notAnalyzedField'],
-    schema.fields
-  )
-  if (!suffix) {
-    context.sortField =
-      _.replace('.untouched', '', context.sortField) +
-      _.getOr('', context.sortMode, sortModeMap)
-  }
-  return suffix && !_.endsWith(`.${suffix}`, context.sortField)
-    ? `${context.sortField}.${suffix}`
-    : context.sortField
-}
 module.exports = {
   result(context, search, schema) {
     let page = (context.page || 1) - 1
     let pageSize = context.pageSize || 10
     let startRecord = page * pageSize
-    let sortField = context.sortField ? getSortField(context, schema) : '_score'
+    let sortField = context.sortField
+      // default to word (aka '') for backwards compatibility
+      ? getField(schema, context.sortField, context.sortMode || 'word')
+      : '_score'
     let sortDir = context.sortDir || 'desc'
     let result = {
       from: startRecord,
