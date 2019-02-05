@@ -82,7 +82,7 @@ let ElasticsearchProvider = (
     // If we have scrollId then keep scrolling if not search
     let result = scrollId
       ? client.scroll({
-          scroll: context.scroll,
+          scroll: context.scroll === true ? '2m' : context.scroll,
           scrollId,
         })
       : client.search(request)
