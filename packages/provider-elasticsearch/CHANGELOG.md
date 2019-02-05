@@ -1,3 +1,6 @@
+# 0.15.1
+* Fix scroll for subsequent scroll requests
+
 # 0.15.0
 * Globally check for `notAnalyzedField` from field util instead of just results
 * Fix scan/scroll on latest core (don't check `config`)
