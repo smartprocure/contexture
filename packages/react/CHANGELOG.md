@@ -1,3 +1,6 @@
+# 1.37.2
+* Fix Date Picker styling in grey vest to match grey vest theme
+
 # 1.37.1
 * Add support for fields with dots in schema utils for defaultNodeProps lookup
 

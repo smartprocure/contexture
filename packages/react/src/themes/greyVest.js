@@ -622,6 +622,17 @@ export let GVStyle = () => (
         padding-left: 10px;
       }
 
+      /* Reset to standard */
+      .react-date-picker * {
+        font-size: 16px;
+      }
+      .react-date-picker abbr {
+        text-decoration-line: none;
+        font-size: 11px;
+      }
+      .react-date-picker, .react-date-picker__wrapper {
+        width: 100%;
+      }
       .react-date-picker__wrapper {
         border: 2px solid #ededed!important;
         border-radius: 4px;
@@ -631,11 +642,29 @@ export let GVStyle = () => (
         text-align: center;
         border: none!important;
       }
+      .react-date-picker__inputGroup__input::placeholder {
+        opacity: 0.5;
+      }
       .react-date-picker__inputGroup__year {
         min-width: 40px!important;
       }
       .react-calendar__month-view__days__day--weekend {
-        color: #0076de;
+        color: #000;
+      }
+      .react-calendar__month-view__days__day--neighboringMonth {
+        color: #969696;
+      }
+      .react-calendar__navigation {
+        margin-bottom: 0;
+      }
+      /* GV BOX it up */
+      .react-calendar {
+        border: 2px solid #ededed;
+        border-radius: 4px;
+        background-color: #fff;
+        box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+        padding: 15px;
+        width: 400px !important;
       }
     `}
   </style>
@@ -825,7 +854,7 @@ export let ExampleTypes = ExampleTypeConstructor({
   ListGroupItem,
   TagsInput: defaultProps({ TagComponent })(TagsInput),
   Icon,
-  DateInput: defaultProps({ calendarType: 'US' })(DatePicker),
+  DateInput: defaultProps({ calendarType: 'US', calendarIcon: null, clearIcon: null })(DatePicker),
 })
 export let Pager = props => (
   <ExampleTypes.ResultPager
