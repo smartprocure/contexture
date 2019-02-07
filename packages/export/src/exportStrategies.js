@@ -73,6 +73,38 @@ const format = (
   )
 }
 
+// Escape quotes and quote cell
+let transformCell = _.flow(
+  _.replace(/"/g, '""'),
+  x => `"${x}"`
+)
+
+// Convert array of objects to array of arrays
+export let convertData = (data, columnKeys) => {
+  // Extract data from object
+  let transformRow = row => _.map(key => _.get(key, row), columnKeys)
+  return _.map(transformRow, data)
+}
+
+// Takes an array of column keys and returns an array of column names
+export let convertColumns = columnKeys => _.map(_.startCase, columnKeys)
+
+// Extract keys from first row
+export let extractKeysFromFirstRow = _.flow(
+  _.first,
+  _.keys
+)
+
+let transformRow = _.flow(
+  _.map(transformCell),
+  _.join(',')
+)
+
+export let rowsToCSV = _.flow(
+  _.map(transformRow),
+  _.join('\n')
+)
+
 // CSVStream is an export strategy that uses the stream strategy,
 // but customizes each of the data chunks using the provided formatRules through the format function above.
 export const CSVStream = async ({
@@ -83,6 +115,7 @@ export const CSVStream = async ({
   logger = console.info,
 }) => {
   let records = 0
+  let columnKeys = []
   let totalRecords = await strategy.getTotalRecords()
 
   await onWrite({
@@ -95,15 +128,16 @@ export const CSVStream = async ({
       logger('CSVStream', `${records + chunk.length} of ${totalRecords}`)
 
       chunk = format(formatRules)(chunk)
-      let cleanValues = _.flow(
-        _.map(y => (_.includes(',', y) ? `"${y.replace(/"/g, '')}"` : y)),
-        _.join(',')
-      )
-      let csv = _.map(x => cleanValues(_.values(x)), chunk)
+      // Extract column names from first object
+      if (_.isEmpty(columnKeys)) columnKeys = extractKeysFromFirstRow(chunk)
+      // Convert data to CSV rows
+      let rows = convertData(chunk, columnKeys)
+      // Prepend columns on first pass
       if (!records) {
-        csv = [cleanValues(_.keys(_.head(chunk))), ...csv]
+        rows = [convertColumns(columnKeys), ...rows]
       }
-      csv = csv.join('\n')
+      // Convert rows to a single CSV string
+      let csv = rowsToCSV(rows)
 
       records += chunk.length
       await targetStream.write(csv)

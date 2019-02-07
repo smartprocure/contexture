@@ -1,4 +1,7 @@
-﻿# 0.1.6
+﻿# 0.1.7
+* Better CSV processing.
+
+# 0.1.6
 * Fixing missing columns. Now, colums will be added as long as there
   are format rules for them.
 

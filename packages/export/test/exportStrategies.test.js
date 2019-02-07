@@ -80,10 +80,10 @@ describe('exportStrategies', () => {
       })
       expect(stream.write.mock.calls).toEqual([
         [
-          `First Prop,Second Property
-FIRST,SECOND`,
+          `"First Prop","Second Property"
+"FIRST","SECOND"`,
         ],
-        ['FIRST,SECOND'],
+        ['"FIRST","SECOND"'],
       ])
       expect(onWrite.mock.calls).toEqual([
         [
@@ -125,6 +125,37 @@ FIRST,SECOND`,
         ['CSVStream', '2 of 4'],
       ])
       expect(stream.end).toHaveBeenCalled()
+    })
+  })
+  describe('utils', () => {
+    let {
+      convertData,
+      convertColumns,
+      rowsToCSV,
+      extractKeysFromFirstRow,
+    } = exportStrategies
+    let columnKeys = ['name', 'age']
+    let chunk = [
+      { name: 'Bob "Bobby" Brown', age: 36 },
+      { name: 'Joe Blow', age: 40 },
+    ]
+    it('extractKeysFromFirstRow', () => {
+      expect(extractKeysFromFirstRow(chunk)).toEqual(['name', 'age'])
+    })
+    it('convertData', () => {
+      expect(convertData(chunk, columnKeys)).toEqual([
+        ['Bob "Bobby" Brown', 36],
+        ['Joe Blow', 40],
+      ])
+    })
+    it('convertColumns', () => {
+      expect(convertColumns(columnKeys)).toEqual(['Name', 'Age'])
+    })
+    it('rowsToCSV', () => {
+      let rows = [['Name', 'Age'], ['Bob "Bobby" Brown', 36], ['Joe Blow', 40]]
+      expect(rowsToCSV(rows)).toEqual(`"Name","Age"
+"Bob ""Bobby"" Brown","36"
+"Joe Blow","40"`)
     })
   })
 })
