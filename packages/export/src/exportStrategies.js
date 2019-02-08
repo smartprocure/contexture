@@ -102,7 +102,8 @@ let transformRow = _.flow(
 
 export let rowsToCSV = _.flow(
   _.map(transformRow),
-  _.join('\n')
+  _.join('\n'),
+  x => `${x}\n`
 )
 
 // CSVStream is an export strategy that uses the stream strategy,
@@ -127,11 +128,12 @@ export const CSVStream = async ({
     async write(chunk) {
       logger('CSVStream', `${records + chunk.length} of ${totalRecords}`)
 
-      chunk = format(formatRules)(chunk)
+      let formattedData = format(formatRules)(chunk)
       // Extract column names from first object
-      if (_.isEmpty(columnKeys)) columnKeys = extractKeysFromFirstRow(chunk)
+      if (_.isEmpty(columnKeys))
+        columnKeys = extractKeysFromFirstRow(formattedData)
       // Convert data to CSV rows
-      let rows = convertData(chunk, columnKeys)
+      let rows = convertData(formattedData, columnKeys)
       // Prepend columns on first pass
       if (!records) {
         rows = [convertColumns(columnKeys), ...rows]
@@ -142,7 +144,7 @@ export const CSVStream = async ({
       records += chunk.length
       await targetStream.write(csv)
       await onWrite({
-        chunk,
+        chunk: formattedData,
         records,
         totalRecords,
       })

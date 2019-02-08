@@ -81,9 +81,13 @@ describe('exportStrategies', () => {
       expect(stream.write.mock.calls).toEqual([
         [
           `"First Prop","Second Property"
-"FIRST","SECOND"`,
+"FIRST","SECOND"
+`,
         ],
-        ['"FIRST","SECOND"'],
+        [
+          `"FIRST","SECOND"
+`,
+        ],
       ])
       expect(onWrite.mock.calls).toEqual([
         [
@@ -155,7 +159,8 @@ describe('exportStrategies', () => {
       let rows = [['Name', 'Age'], ['Bob "Bobby" Brown', 36], ['Joe Blow', 40]]
       expect(rowsToCSV(rows)).toEqual(`"Name","Age"
 "Bob ""Bobby"" Brown","36"
-"Joe Blow","40"`)
+"Joe Blow","40"
+`)
     })
   })
 })
