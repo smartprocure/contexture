@@ -24,10 +24,11 @@ let Modal = observer(
           style={{
             backgroundColor: '#fff',
             borderRadius: 5,
-            maxWidth: 'fit-content',
+            maxWidth: 640,
+            overflowX: 'scroll',
             // minHeight: 300,
             margin: '0 auto',
-            padding: 30,
+            border: '30px solid white',
             color: '#555',
           }}
           onClick={e => e.stopPropagation()}
