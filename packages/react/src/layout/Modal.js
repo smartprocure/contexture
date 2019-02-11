@@ -1,10 +1,11 @@
 import React from 'react'
 import * as F from 'futil-js'
 import { observer } from 'mobx-react'
+import Portal from './Portal'
 
-let Modal = observer(
-  ({ isOpen, children, style = {} }) =>
-    F.view(isOpen) && (
+let Modal = ({ isOpen, children, style = {} }) => (
+  <Portal>
+    {F.view(isOpen) && (
       <div
         style={{
           position: 'fixed',
@@ -36,8 +37,8 @@ let Modal = observer(
           {children}
         </div>
       </div>
-    )
+    )}
+  </Portal>
 )
-Modal.displayName = 'Modal'
 
-export default Modal
+export default observer(Modal)

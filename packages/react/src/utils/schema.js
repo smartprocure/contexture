@@ -10,16 +10,19 @@ export let applyDefaults = F.mapValuesIndexed((val, field) => ({
   ...val,
 }))
 
-export const getRecord = F.when('_source', x => ({
+export let getRecord = F.when('_source', x => ({
   _id: x._id,
   ...x._source,
 }))
 
-export const getResults = _.get('context.response.results')
+export let getResults = _.get('context.response.results')
 
-export const inferSchema = _.flow(
+export let inferSchema = _.flow(
   getResults,
   _.head,
   getRecord,
   flattenPlainObject
 )
+
+export let DefaultNodeProps = (field, fields, type) =>
+  _.get([field, 'defaultNodeProps', type], fields)

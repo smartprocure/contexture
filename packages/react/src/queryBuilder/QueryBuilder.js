@@ -9,6 +9,8 @@ import Group from './Group'
 import styles from '../styles'
 import { oppositeJoin } from '../utils/search'
 import treeUtils from '../utils/tree'
+import { DefaultNodeProps } from '../utils/schema'
+
 let { background } = styles
 let randomString = () =>
   Math.random()
@@ -20,7 +22,12 @@ let { encode } = F.encoder('/') // todo get from client
 let blankNode = () => ({ key: randomString() })
 let replaceOn = (list, from, to) => list.splice(list.indexOf(from), 1, to)
 
-let ContextureClientBridge = (Types, Tree) => {
+let ContextureClientBridge = (
+  Types,
+  Tree,
+  fields,
+  defaultNodeProps = DefaultNodeProps
+) => {
   // not sure why reassignment is needed - its 2am and that makes it work... fix tomorrow!
   Tree.addActions(({ flat }) => ({
     updatePath(node, to) {
@@ -51,7 +58,12 @@ let ContextureClientBridge = (Types, Tree) => {
       let tree = Tree.getNode(parentPath)
       let index = tree.children.indexOf(node)
       Tree.remove(path)
-      Tree.add(parentPath, { key, type, field })
+      Tree.add(parentPath, {
+        key,
+        type,
+        field,
+        ...defaultNodeProps(field, fields, type, tree),
+      })
       let newNode = Tree.getNode(path)
       // Move to same index
       tree.children.remove(newNode) // pop since add does a push
@@ -104,11 +116,14 @@ let ContextureClientBridge = (Types, Tree) => {
 
 export default DDContext(
   Component(
-    ({ tree: iTree, types: iTypes }, { types = iTypes, tree = iTree }) => ({
+    (
+      { tree: iTree, types: iTypes },
+      { types = iTypes, tree = iTree, fields, defaultNodeProps }
+    ) => ({
       types,
       state: observable({
         adding: false,
-        ...ContextureClientBridge(types, tree),
+        ...ContextureClientBridge(types, tree, fields, defaultNodeProps),
       }),
     }),
     ({ state, path, fields, types = {}, Button = 'button' }) => (
