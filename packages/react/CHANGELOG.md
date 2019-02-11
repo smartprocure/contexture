@@ -1,3 +1,6 @@
+# 1.37.3
+* Update default modal styling
+
 # 1.37.2
 * Fix Date Picker styling in grey vest to match grey vest theme
 
