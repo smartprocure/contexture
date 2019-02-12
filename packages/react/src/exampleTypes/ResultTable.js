@@ -219,7 +219,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
                         : 'FilterAdd'
                     }
                   />
-                  Filter Options
+                  Filter
                 </Item>
                 {F.view(filtering) &&
                   filterNode &&
