@@ -20,19 +20,20 @@ let Modal = ({ isOpen, children, style = {} }) => (
           ...style,
         }}
         onClick={F.off(isOpen)}
+        className='default-modal-bg'
       >
         <div
           style={{
             backgroundColor: '#fff',
             borderRadius: 5,
-            maxWidth: 640,
-            overflowX: 'scroll',
+            maxWidth: 'fit-content',
+            padding: 30,
             // minHeight: 300,
             margin: '0 auto',
-            border: '30px solid white',
             color: '#555',
           }}
           onClick={e => e.stopPropagation()}
+          className='default-modal-wrap'
         >
           {children}
         </div>
