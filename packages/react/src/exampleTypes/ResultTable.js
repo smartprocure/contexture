@@ -97,10 +97,13 @@ let HighlightedColumn = withStateLens({ viewModal: false })(
               </Table>
             </Modal>
           )}
-          <a href onClick={e => {
-            e.preventDefault()
-            F.on(viewModal)()
-          }}>
+          <a
+            href
+            onClick={e => {
+              e.preventDefault()
+              F.on(viewModal)()
+            }}
+          >
             Matched {_.size(additionalFields)} other field(s)
           </a>
         </Cell>
