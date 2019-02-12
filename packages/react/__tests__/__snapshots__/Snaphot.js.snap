@@ -1483,6 +1483,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                     <td>
                       4
                     </td>
+                    <td />
                   </tr>
                   <tr>
                     <td>
@@ -1503,6 +1504,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                     <td>
                       5
                     </td>
+                    <td />
                   </tr>
                   <tr>
                     <td>
@@ -1523,6 +1525,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                     <td>
                       6
                     </td>
+                    <td />
                   </tr>
                 </tbody>
               </table>
@@ -1923,6 +1926,7 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
           <td>
             2
           </td>
+          <td />
         </tr>
         <tr>
           <td
@@ -1949,6 +1953,7 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
           <td>
             4
           </td>
+          <td />
         </tr>
         <tr>
           <td
@@ -1975,6 +1980,7 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
           <td>
             2
           </td>
+          <td />
         </tr>
       </tbody>
     </table>
@@ -2042,6 +2048,7 @@ exports[`Storyshots Example Types ResultTable Display Field Optional 1`] = `
           >
             Some Result
           </td>
+          <td />
         </tr>
         <tr>
           <td
@@ -2053,6 +2060,7 @@ exports[`Storyshots Example Types ResultTable Display Field Optional 1`] = `
           >
             Some Other Result
           </td>
+          <td />
         </tr>
         <tr>
           <td
@@ -2064,6 +2072,7 @@ exports[`Storyshots Example Types ResultTable Display Field Optional 1`] = `
           >
             A Different Result
           </td>
+          <td />
         </tr>
       </tbody>
     </table>
