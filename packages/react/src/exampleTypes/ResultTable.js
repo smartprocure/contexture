@@ -75,8 +75,9 @@ let HighlightedColumn = withStateLens({ viewModal: false })(
       viewModal,
       schema,
     }) =>
-      !_.isEmpty(additionalFields) ? (
-        <Cell key="additionalFields">
+      _.isEmpty(additionalFields)
+      ? <Cell key="additionalFields" />
+      : <Cell key="additionalFields">
           {Modal && (
             <Modal isOpen={viewModal}>
               <h3>Other Matching Fields</h3>
@@ -96,16 +97,10 @@ let HighlightedColumn = withStateLens({ viewModal: false })(
             </Modal>
           )}
           <div style={{ cursor: 'pointer' }} onClick={F.on(viewModal)}>
-            This search also matched on the fields:{' '}
-            {_.flow(
-              _.map(({ label }) => labelForField(schema, label)),
-              F.intersperse(F.differentLast(() => ', ', () => ' and '))
-            )(additionalFields)}
-            .<br />
+            Matched {_.size(additionalFields)} other field(s.<br />
             <i>Click here to expand.</i>
           </div>
         </Cell>
-      ) : null
   )
 )
 HighlightedColumn.displayName = 'HighlightedColumn'
