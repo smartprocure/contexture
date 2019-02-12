@@ -1,5 +1,5 @@
 # 1.38.1
-* Short other matches text even and make it a proper link
+* Short other matches text and make it a proper link
 
 # 1.38.0
 * Change Other Matches column not to list every matching field to save space
