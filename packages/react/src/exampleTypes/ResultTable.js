@@ -97,7 +97,7 @@ let HighlightedColumn = withStateLens({ viewModal: false })(
             </Modal>
           )}
           <div style={{ cursor: 'pointer' }} onClick={F.on(viewModal)}>
-            Matched {_.size(additionalFields)} other field(s.<br />
+            Matched {_.size(additionalFields)} other field(s).<br />
             <i>Click here to expand.</i>
           </div>
         </Cell>
