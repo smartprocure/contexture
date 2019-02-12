@@ -75,9 +75,10 @@ let HighlightedColumn = withStateLens({ viewModal: false })(
       viewModal,
       schema,
     }) =>
-      _.isEmpty(additionalFields)
-      ? <Cell key="additionalFields" />
-      : <Cell key="additionalFields">
+      _.isEmpty(additionalFields) ? (
+        <Cell key="additionalFields" />
+      ) : (
+        <Cell key="additionalFields">
           {Modal && (
             <Modal isOpen={viewModal}>
               <h3>Other Matching Fields</h3>
@@ -97,10 +98,12 @@ let HighlightedColumn = withStateLens({ viewModal: false })(
             </Modal>
           )}
           <div style={{ cursor: 'pointer' }} onClick={F.on(viewModal)}>
-            Matched {_.size(additionalFields)} other field(s).<br />
+            Matched {_.size(additionalFields)} other field(s).
+            <br />
             <i>Click here to expand.</i>
           </div>
         </Cell>
+      )
   )
 )
 HighlightedColumn.displayName = 'HighlightedColumn'
