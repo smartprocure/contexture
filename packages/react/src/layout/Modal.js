@@ -20,7 +20,7 @@ let Modal = ({ isOpen, children, style = {} }) => (
           ...style,
         }}
         onClick={F.off(isOpen)}
-        className='default-modal-bg'
+        className="default-modal-bg"
       >
         <div
           style={{
@@ -33,7 +33,7 @@ let Modal = ({ isOpen, children, style = {} }) => (
             color: '#555',
           }}
           onClick={e => e.stopPropagation()}
-          className='default-modal-wrap'
+          className="default-modal-wrap"
         >
           {children}
         </div>
