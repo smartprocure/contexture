@@ -15,8 +15,11 @@ let Modal = ({ isOpen, children, style = {} }) => (
           right: 0,
           backgroundColor: 'rgba(0,0,0,0.3)',
           padding: 50,
-          overflow: 'scroll',
+          overflowY: 'scroll',
           zIndex: 1000,
+          display: 'flex',
+          justifyContent: 'space-around',
+          alignItems: 'flex-start',
           ...style,
         }}
         onClick={F.off(isOpen)}
@@ -25,12 +28,6 @@ let Modal = ({ isOpen, children, style = {} }) => (
         <div
           style={{
             backgroundColor: '#fff',
-            borderRadius: 5,
-            maxWidth: 'fit-content',
-            padding: 30,
-            // minHeight: 300,
-            margin: '0 auto',
-            color: '#555',
           }}
           onClick={e => e.stopPropagation()}
           className="default-modal-wrap"
