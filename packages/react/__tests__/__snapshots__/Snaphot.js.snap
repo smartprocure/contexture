@@ -2743,6 +2743,14 @@ exports[`Storyshots Grey Vest Refs 1`] = `
         padding: 15px;
         width: 400px !important;
       }
+
+      /* Modals */
+      .default-modal-wrap {
+        width: auto;
+        max-width: 640px!important;
+        border: 30px solid white;
+        overflow-x: scroll;
+      }
     
   </style>
   <input
@@ -3412,6 +3420,14 @@ exports[`Storyshots IMDB Check List 1`] = `
         padding: 15px;
         width: 400px !important;
       }
+
+      /* Modals */
+      .default-modal-wrap {
+        width: auto;
+        max-width: 640px!important;
+        border: 30px solid white;
+        overflow-x: scroll;
+      }
     
   </style>
   <div>
@@ -3955,6 +3971,14 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         padding: 15px;
         width: 400px !important;
+      }
+
+      /* Modals */
+      .default-modal-wrap {
+        width: auto;
+        max-width: 640px!important;
+        border: 30px solid white;
+        overflow-x: scroll;
       }
     
   </style>
