@@ -1,5 +1,11 @@
-# 1.38.1
+# 1.38.3
 * Update default modal styling
+
+# 1.38.2
+* Fix `a` tag on Other Matches column to have a blank href
+
+# 1.38.1
+* Short other matches text and make it a proper link
 
 # 1.38.0
 * Change Other Matches column not to list every matching field to save space
