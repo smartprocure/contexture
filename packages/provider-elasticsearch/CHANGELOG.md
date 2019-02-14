@@ -1,3 +1,6 @@
+# 0.15.2
+* Fix typo on `tagsText` example type
+
 # 0.15.1
 * Fix scroll for subsequent scroll requests
 
