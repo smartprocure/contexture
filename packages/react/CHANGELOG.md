@@ -1,3 +1,6 @@
+# 1.38.2
+* Fix `a` tag on Other Matches column to have a blank href
+
 # 1.38.1
 * Short other matches text and make it a proper link
 
