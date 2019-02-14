@@ -670,7 +670,7 @@ export let GVStyle = () => (
       /* Modals */
       .default-modal-wrap {
         width: auto;
-        max-width: 640px!important;
+        max-width: 640px;
         border: 30px solid white;
         overflow-x: scroll;
       }
