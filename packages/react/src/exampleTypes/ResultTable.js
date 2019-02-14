@@ -84,8 +84,8 @@ let HighlightedColumn = withStateLens({ viewModal: false })(
                 <tbody>
                   {_.map(
                     ({ label, value }) => (
-                      <tr>
-                        <td key={label}>{labelForField(schema, label)}</td>
+                      <tr key={label}>
+                        <td>{labelForField(schema, label)}</td>
                         <td dangerouslySetInnerHTML={{ __html: value }} />
                       </tr>
                     ),

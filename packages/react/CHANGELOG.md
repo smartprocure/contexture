@@ -1,3 +1,6 @@
+# 1.37.3
+* Fix unique key React warning in ResultTable's HighlightedColumn tr
+
 # 1.37.2
 * Fix Date Picker styling in grey vest to match grey vest theme
 
