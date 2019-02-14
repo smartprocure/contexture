@@ -2747,7 +2747,7 @@ exports[`Storyshots Grey Vest Refs 1`] = `
       /* Modals */
       .default-modal-wrap {
         width: auto;
-        max-width: 640px!important;
+        max-width: 640px;
         border: 30px solid white;
         overflow-x: scroll;
       }
@@ -3424,7 +3424,7 @@ exports[`Storyshots IMDB Check List 1`] = `
       /* Modals */
       .default-modal-wrap {
         width: auto;
-        max-width: 640px!important;
+        max-width: 640px;
         border: 30px solid white;
         overflow-x: scroll;
       }
@@ -3976,7 +3976,7 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
       /* Modals */
       .default-modal-wrap {
         width: auto;
-        max-width: 640px!important;
+        max-width: 640px;
         border: 30px solid white;
         overflow-x: scroll;
       }
