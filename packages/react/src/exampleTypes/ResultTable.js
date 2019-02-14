@@ -98,7 +98,7 @@ let HighlightedColumn = withStateLens({ viewModal: false })(
             </Modal>
           )}
           <a
-            href
+            href=""
             onClick={e => {
               e.preventDefault()
               F.on(viewModal)()
