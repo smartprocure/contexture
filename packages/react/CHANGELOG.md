@@ -1,3 +1,6 @@
+# 1.38.5
+* Pass along NumberInput to `Geo` example type
+
 # 1.38.4
 * Fix unique key React warning in ResultTable's HighlightedColumn tr
 
