@@ -1,3 +1,6 @@
+# 1.38.3
+* Update default modal styling
+
 # 1.38.2
 * Fix `a` tag on Other Matches column to have a blank href
 
