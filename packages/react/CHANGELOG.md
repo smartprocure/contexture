@@ -1,3 +1,6 @@
+# 1.38.4
+* Fix unique key React warning in ResultTable's HighlightedColumn tr
+
 # 1.38.3
 * Update default modal styling
 
