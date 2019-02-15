@@ -666,6 +666,14 @@ export let GVStyle = () => (
         padding: 15px;
         width: 400px !important;
       }
+
+      /* Modals */
+      .default-modal-wrap {
+        width: auto;
+        max-width: 640px;
+        border: 30px solid white;
+        overflow-x: scroll;
+      }
     `}
   </style>
 )

@@ -1,5 +1,19 @@
-# 1.37.3
+# 1.38.4
 * Fix unique key React warning in ResultTable's HighlightedColumn tr
+
+# 1.38.3
+* Update default modal styling
+
+# 1.38.2
+* Fix `a` tag on Other Matches column to have a blank href
+
+# 1.38.1
+* Short other matches text and make it a proper link
+
+# 1.38.0
+* Change Other Matches column not to list every matching field to save space
+* Fix Other Matches column rendering when there are no other matches
+* Rename "Filter Options" in `ResultTable` to "Filter"
 
 # 1.37.2
 * Fix Date Picker styling in grey vest to match grey vest theme
