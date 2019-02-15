@@ -64,7 +64,7 @@ export default ({
     CheckableTermsStatsTable: defaultProps({ Button })(
       CheckableTermsStatsTable
     ),
-    Geo,
+    Geo: defaultProps({ NumberInput })(Geo),
     Text: defaultProps({ Input })(Text),
     TagsText: defaultProps({ TagsInput, Select })(TagsText),
   }
