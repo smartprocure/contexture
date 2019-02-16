@@ -772,7 +772,7 @@ let iconMap = {
   Previous5Pages: () => <span>...</span>,
   Next5Pages: () => <span>...</span>,
   Refresh: () => (
-    <IconButton className="animated pulse slow infinite">
+    <IconButton className="animated pulse slow infinite" style={{animationDuration: '800ms'}}>
       <SmallIcon icon="refresh" />
     </IconButton>
   ),
