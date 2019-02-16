@@ -1,3 +1,6 @@
+# 1.38.6
+* GreyVest: Fix Refresh icon button pulse speed
+
 # 1.38.5
 * Pass along NumberInput to `Geo` example type
 
