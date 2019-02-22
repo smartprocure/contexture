@@ -30,10 +30,8 @@ Tag.displayName = 'Tag'
 
 // We're only using withState to preserve the state between renders, since
 // inject doesn't do that for us.
-let TagsInput = withState(
-  'state',
-  'setState',
-  () => observable({
+let TagsInput = withState('state', 'setState', () =>
+  observable({
     currentInput: '',
     selectedTag: null,
     popoverOpen: false,
