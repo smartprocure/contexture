@@ -100,6 +100,7 @@ export default stampKey('type', {
   mongoId: {
     validate: validateValues,
     reactors: {
+      value: 'others',
       values: 'others',
     },
     subquery: {
