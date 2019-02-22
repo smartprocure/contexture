@@ -1,3 +1,6 @@
+# 1.39.1
+* TagsInput: Preserve state between renders
+
 # 1.39.0
 * New example type: mongoId; equivalent to a "text" example type
 
