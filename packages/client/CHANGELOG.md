@@ -1,4 +1,7 @@
-﻿# 2.19.1
+﻿# 2.19.2
+* Add `value` reactor for `mongoId` example type
+
+# 2.19.1
 * Add missing defaults for `subquery` and `savedSearch` example types.
 
 # 2.19.0
