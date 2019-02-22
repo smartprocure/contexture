@@ -33,7 +33,7 @@ Tag.displayName = 'Tag'
 let TagsInput = withState(
   'state',
   'setState',
-  observable({
+  () => observable({
     currentInput: '',
     selectedTag: null,
     popoverOpen: false,
