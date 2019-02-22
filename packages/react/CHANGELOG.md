@@ -1,3 +1,6 @@
+# 1.39.0
+* New example type: mongoId; equivalent to a "text" example type
+
 # 1.38.6
 * GreyVest: Fix Refresh icon button pulse speed
 

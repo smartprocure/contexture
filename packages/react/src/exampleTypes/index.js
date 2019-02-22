@@ -81,6 +81,7 @@ export default ({
     tagsText: Components.TagsText,
     geo: Components.Geo,
     text: Components.Text,
+    mongoId: Components.Text,
     exists: Components.Exists,
     bool: Components.Bool,
   }
