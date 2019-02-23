@@ -53,7 +53,7 @@ let HighlightedColumnHeader = observer(
       _.compact,
       _.isEmpty
     )(results),
-    showOtherMatches
+    showOtherMatches,
   }) =>
     hasAdditionalFields && showOtherMatches ? (
       <Cell key="additionalFields">Other Matches</Cell>
@@ -74,7 +74,7 @@ let HighlightedColumn = withStateLens({ viewModal: false })(
       Table = 'table',
       Modal = null,
       viewModal,
-      schema
+      schema,
     }) =>
       _.isEmpty(additionalFields) ? (
         <Cell key="additionalFields" />
@@ -273,15 +273,17 @@ let TableBody = observer(
                 ),
                 visibleFields
               )}
-              {showOtherMatches && <HighlightedColumn
-                {...{
-                  node,
-                  additionalFields: _.result('additionalFields.slice', x),
-                  Modal,
-                  Table,
-                  schema
-                }}
-              />}
+              {showOtherMatches && (
+                <HighlightedColumn
+                  {...{
+                    node,
+                    additionalFields: _.result('additionalFields.slice', x),
+                    Modal,
+                    Table,
+                    schema,
+                  }}
+                />
+              )}
             </Row>
           ),
           getResults(node)
@@ -346,7 +348,10 @@ let ResultTable = InjectTreeNode(
               ),
               visibleFields
             )}
-            <HighlightedColumnHeader node={node} showOtherMatches={showOtherMatches} />
+            <HighlightedColumnHeader
+              node={node}
+              showOtherMatches={showOtherMatches}
+            />
           </tr>
         </thead>
         <TableBody
