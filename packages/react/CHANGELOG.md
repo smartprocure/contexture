@@ -1,3 +1,6 @@
+# 1.40.0
+* Hide other matches column in ResultTable by default, expose boolean prop to enable it
+
 # 1.39.0
 * New example type: mongoId; equivalent to a "text" example type
 

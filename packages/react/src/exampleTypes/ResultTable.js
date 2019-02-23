@@ -53,8 +53,9 @@ let HighlightedColumnHeader = observer(
       _.compact,
       _.isEmpty
     )(results),
+    showOtherMatches
   }) =>
-    hasAdditionalFields ? (
+    hasAdditionalFields && showOtherMatches ? (
       <Cell key="additionalFields">Other Matches</Cell>
     ) : null
 )
@@ -74,6 +75,7 @@ let HighlightedColumn = withStateLens({ viewModal: false })(
       Modal = null,
       viewModal,
       schema,
+      showOtherMatches
     }) =>
       _.isEmpty(additionalFields) ? (
         <Cell key="additionalFields" />
@@ -258,7 +260,7 @@ Header.displayName = 'Header'
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
 let TableBody = observer(
-  ({ node, visibleFields, Modal, Table, Row, schema }) => (
+  ({ node, visibleFields, Modal, Table, Row, schema, showOtherMatches }) => (
     <tbody style={node.markedForUpdate || node.updating ? loading : {}}>
       {!!getResults(node).length &&
         _.map(
@@ -272,15 +274,15 @@ let TableBody = observer(
                 ),
                 visibleFields
               )}
-              <HighlightedColumn
+              {showOtherMatches && <HighlightedColumn
                 {...{
                   node,
                   additionalFields: _.result('additionalFields.slice', x),
                   Modal,
                   Table,
-                  schema,
+                  schema
                 }}
-              />
+              />}
             </Row>
           ),
           getResults(node)
@@ -292,7 +294,7 @@ TableBody.displayName = 'TableBody'
 
 let ResultTable = InjectTreeNode(
   observer(({ // Props
-    fields, infer, path, criteria, node, tree, Table = 'table', HeaderCell, Modal, ListGroupItem, FieldPicker, typeComponents, mapNodeToProps = () => ({}), Icon = DefaultIcon, Row = 'tr' }) => {
+    fields, infer, path, criteria, node, tree, Table = 'table', HeaderCell, Modal, ListGroupItem, FieldPicker, typeComponents, mapNodeToProps = () => ({}), Icon = DefaultIcon, Row = 'tr', showOtherMatches = false }) => {
     // From Provider // Theme/Components
     let mutate = tree.mutate(path)
     // NOTE infer + add columns does not work together (except for anything explicitly passed in)
@@ -345,7 +347,7 @@ let ResultTable = InjectTreeNode(
               ),
               visibleFields
             )}
-            <HighlightedColumnHeader node={node} />
+            <HighlightedColumnHeader node={node} showOtherMatches={showOtherMatches} />
           </tr>
         </thead>
         <TableBody
@@ -355,6 +357,7 @@ let ResultTable = InjectTreeNode(
           Modal={Modal}
           Table={Table}
           schema={schema}
+          showOtherMatches={showOtherMatches}
         />
       </Table>
     )
