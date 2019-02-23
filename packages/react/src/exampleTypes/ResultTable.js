@@ -74,8 +74,7 @@ let HighlightedColumn = withStateLens({ viewModal: false })(
       Table = 'table',
       Modal = null,
       viewModal,
-      schema,
-      showOtherMatches
+      schema
     }) =>
       _.isEmpty(additionalFields) ? (
         <Cell key="additionalFields" />
