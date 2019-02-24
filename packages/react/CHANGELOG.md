@@ -1,3 +1,6 @@
+# 1.39.1
+* even horizontal padding on .gv-button
+
 # 1.39.0
 * New example type: mongoId; equivalent to a "text" example type
 
