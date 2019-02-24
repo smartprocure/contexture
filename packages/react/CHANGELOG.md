@@ -1,3 +1,6 @@
+# 1.40.0
+* FieldPicker options sortable, default alpha by label
+
 # 1.39.0
 * New example type: mongoId; equivalent to a "text" example type
 
