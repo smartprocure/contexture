@@ -106,7 +106,7 @@ let NestedPicker = ({
   Input = 'input',
   Highlight = TextHighlight,
   Item = DefaultItem,
-  sort = _.sortBy(F.cascade(['shortLabel', 'label', 'value']))
+  sort = _.sortBy(F.cascade(['shortLabel', 'label', 'value'])),
 }) => (
   <div>
     <Input {...F.domLens.value(filter)} placeholder="Enter filter keyword..." />
@@ -119,7 +119,11 @@ let NestedPicker = ({
         Item={Item}
       />
     ) : (
-      <PanelTreePicker options={sort(options)} onChange={onChange} Item={Item} />
+      <PanelTreePicker
+        options={sort(options)}
+        onChange={onChange}
+        Item={Item}
+      />
     )}
   </div>
 )
