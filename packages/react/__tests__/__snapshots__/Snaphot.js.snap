@@ -2297,7 +2297,7 @@ exports[`Storyshots Grey Vest Refs 1`] = `
       
       /* Button */
       .gv-button {
-        padding: 11px 22px 12px 25px;
+        padding: 11px 22px 12px 22px;
         border-radius: 3px;
         background-color: #e3e5e6;
       
@@ -2989,7 +2989,7 @@ exports[`Storyshots IMDB Check List 1`] = `
       
       /* Button */
       .gv-button {
-        padding: 11px 22px 12px 25px;
+        padding: 11px 22px 12px 22px;
         border-radius: 3px;
         background-color: #e3e5e6;
       
@@ -3556,7 +3556,7 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
       
       /* Button */
       .gv-button {
-        padding: 11px 22px 12px 25px;
+        padding: 11px 22px 12px 22px;
         border-radius: 3px;
         background-color: #e3e5e6;
       
