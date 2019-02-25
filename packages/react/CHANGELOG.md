@@ -1,3 +1,6 @@
+# 1.39.3
+* FieldPicker options sortable, default alpha by label
+
 # 1.39.2
 * TagsInput: Preserve state between renders
 
