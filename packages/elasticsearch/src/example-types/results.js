@@ -31,7 +31,9 @@ module.exports = {
     let highlight =
       _.getOr(true, 'highlight', context) && schema.elasticsearch.highlight
     if (highlight) {
-      let schemaHiglightFields = _.flatten(_.values(schema.elasticsearch.highlight))
+      let schemaHiglightFields = _.flatten(
+        _.values(schema.elasticsearch.highlight)
+      )
       let highlightFields = _.get('showOtherMatches', context)
         ? schemaHiglightFields
         : _.intersection(context.include, schemaHiglightFields)
