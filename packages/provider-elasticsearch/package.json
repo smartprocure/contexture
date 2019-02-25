@@ -1,6 +1,6 @@
 {
   "name": "contexture-elasticsearch",
-  "version": "0.15.2",
+  "version": "0.15.3",
   "description": "ElasticSearch Provider for Contexture",
   "main": "src/index.js",
   "scripts": {
