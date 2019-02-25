@@ -1,3 +1,6 @@
+# 1.39.2
+* TagsInput: Preserve state between renders
+
 # 1.39.1
 * even horizontal padding on .gv-button
 
