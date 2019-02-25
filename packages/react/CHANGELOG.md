@@ -1,3 +1,7 @@
+# 1.40.0
+* New style "gv-link-button", to use a button in place of an <a> tag with no 
+  href
+
 # 1.39.3
 * FieldPicker options sortable, default alpha by label
 
