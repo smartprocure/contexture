@@ -1,3 +1,7 @@
+# 1.40.0
+* New style "gv-link-button", to use a button in place of an <a> tag with no 
+  href
+
 # 1.39.0
 * New example type: mongoId; equivalent to a "text" example type
 

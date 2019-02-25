@@ -97,15 +97,15 @@ let HighlightedColumn = withStateLens({ viewModal: false })(
               </Table>
             </Modal>
           )}
-          <a
-            href=""
+          <button
+            className="gv-link-button"
             onClick={e => {
               e.preventDefault()
               F.on(viewModal)()
             }}
           >
             Matched {_.size(additionalFields)} other field(s)
-          </a>
+          </button>
         </Cell>
       )
   )
