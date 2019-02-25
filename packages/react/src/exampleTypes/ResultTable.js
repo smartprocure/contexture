@@ -53,9 +53,8 @@ let HighlightedColumnHeader = observer(
       _.compact,
       _.isEmpty
     )(results),
-    showOtherMatches,
   }) =>
-    hasAdditionalFields && showOtherMatches ? (
+    hasAdditionalFields && node.showOtherMatches ? (
       <Cell key="additionalFields">Other Matches</Cell>
     ) : null
 )
@@ -259,7 +258,7 @@ Header.displayName = 'Header'
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
 let TableBody = observer(
-  ({ node, visibleFields, Modal, Table, Row, schema, showOtherMatches }) => (
+  ({ node, visibleFields, Modal, Table, Row, schema }) => (
     <tbody style={node.markedForUpdate || node.updating ? loading : {}}>
       {!!getResults(node).length &&
         _.map(
@@ -273,7 +272,7 @@ let TableBody = observer(
                 ),
                 visibleFields
               )}
-              {showOtherMatches && (
+              {node.showOtherMatches && (
                 <HighlightedColumn
                   {...{
                     node,
@@ -295,7 +294,7 @@ TableBody.displayName = 'TableBody'
 
 let ResultTable = InjectTreeNode(
   observer(({ // Props
-    fields, infer, path, criteria, node, tree, Table = 'table', HeaderCell, Modal, ListGroupItem, FieldPicker, typeComponents, mapNodeToProps = () => ({}), Icon = DefaultIcon, Row = 'tr', showOtherMatches = false }) => {
+    fields, infer, path, criteria, node, tree, Table = 'table', HeaderCell, Modal, ListGroupItem, FieldPicker, typeComponents, mapNodeToProps = () => ({}), Icon = DefaultIcon, Row = 'tr' }) => {
     // From Provider // Theme/Components
     let mutate = tree.mutate(path)
     // NOTE infer + add columns does not work together (except for anything explicitly passed in)
@@ -350,7 +349,6 @@ let ResultTable = InjectTreeNode(
             )}
             <HighlightedColumnHeader
               node={node}
-              showOtherMatches={showOtherMatches}
             />
           </tr>
         </thead>
@@ -361,7 +359,6 @@ let ResultTable = InjectTreeNode(
           Modal={Modal}
           Table={Table}
           schema={schema}
-          showOtherMatches={showOtherMatches}
         />
       </Table>
     )
