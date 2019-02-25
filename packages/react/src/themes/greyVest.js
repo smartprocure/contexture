@@ -186,7 +186,7 @@ export let GVStyle = () => (
       
       /* Button */
       .gv-button {
-        padding: 11px 22px 12px 25px;
+        padding: 11px 22px 12px 22px;
         border-radius: 3px;
         background-color: #e3e5e6;
       

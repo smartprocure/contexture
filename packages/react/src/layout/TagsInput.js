@@ -1,6 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
+import { withState } from 'recompose'
 import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import { Flex } from './Flex'
@@ -27,13 +28,15 @@ let Tag = observer(({ value, removeTag, tagStyle, onClick }) => (
 ))
 Tag.displayName = 'Tag'
 
-let TagsInput = inject(() => ({
-  state: observable({
+// We're only using withState to preserve the state between renders, since
+// inject doesn't do that for us.
+let TagsInput = withState('state', 'setState', () =>
+  observable({
     currentInput: '',
     selectedTag: null,
     popoverOpen: false,
-  }),
-}))(
+  })
+)(
   observer(
     ({
       tags,
