@@ -347,9 +347,7 @@ let ResultTable = InjectTreeNode(
               ),
               visibleFields
             )}
-            <HighlightedColumnHeader
-              node={node}
-            />
+            <HighlightedColumnHeader node={node} />
           </tr>
         </thead>
         <TableBody
