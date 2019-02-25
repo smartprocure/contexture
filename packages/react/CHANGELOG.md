@@ -1,5 +1,18 @@
+# 1.41.0
+* implement otherMatches bool on results node, default to false
+
 # 1.40.0
-* Hide other matches column in ResultTable by default, expose boolean prop to enable it
+* New style "gv-link-button", to use a button in place of an <a> tag with no 
+  href
+
+# 1.39.3
+* FieldPicker options sortable, default alpha by label
+
+# 1.39.2
+* TagsInput: Preserve state between renders
+
+# 1.39.1
+* even horizontal padding on .gv-button
 
 # 1.39.0
 * New example type: mongoId; equivalent to a "text" example type

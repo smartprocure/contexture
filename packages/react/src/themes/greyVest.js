@@ -186,7 +186,7 @@ export let GVStyle = () => (
       
       /* Button */
       .gv-button {
-        padding: 11px 22px 12px 25px;
+        padding: 11px 22px 12px 22px;
         border-radius: 3px;
         background-color: #e3e5e6;
       
@@ -214,6 +214,21 @@ export let GVStyle = () => (
       }
       .gv-button-radio > .gv-button:last-child {
         margin-right: 0;
+      }
+      .gv-link-button {
+        /* Same as a contexture-themed link */
+        color: #0076DE;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        text-decoration: underline;
+        display: inline;
+        margin: 0;
+        padding: 0;
+      }
+      .gv-link-button:hover,
+      .gv-link-button:focus {
+        text-decoration: none;
       }
 
       /* Table */
