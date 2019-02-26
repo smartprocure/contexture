@@ -3,7 +3,6 @@ import OutsideClickHandler from 'react-outside-click-handler'
 import { observer } from 'mobx-react'
 import styles from '../styles'
 import * as F from 'futil-js'
-let { fullscreen } = styles
 
 // Simple popover
 let Popover = observer(
@@ -29,7 +28,6 @@ let Popover = observer(
           >
             {children}
           </div>
-          <div style={fullscreen} onClick={F.off(isOpen)} />
         </div>
       </OutsideClickHandler>
     )
