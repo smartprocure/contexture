@@ -1,7 +1,6 @@
 import React from 'react'
 import OutsideClickHandler from 'react-outside-click-handler'
 import { observer } from 'mobx-react'
-import styles from '../styles'
 import * as F from 'futil-js'
 
 // Simple popover
