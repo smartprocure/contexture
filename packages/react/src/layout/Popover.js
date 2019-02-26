@@ -9,7 +9,7 @@ let { fullscreen } = styles
 let Popover = observer(
   ({ isOpen, children, style }) =>
     F.view(isOpen) && (
-      <OutsideClickHandler onOutsideClick={F.flip(isOpen)}>
+      <OutsideClickHandler onOutsideClick={F.off(isOpen)}>
         <div
           style={{
             position: 'relative',
