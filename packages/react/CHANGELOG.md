@@ -1,3 +1,6 @@
+﻿# 1.40.1
+* Popovers now close when users click outside of them.
+
 # 1.40.0
 * New style "gv-link-button", to use a button in place of an <a> tag with no 
   href
