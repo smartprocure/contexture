@@ -1,3 +1,6 @@
+# 1.41.1
+* GreyVest: shorten animation duration for the refresh icon
+
 # 1.41.0
 * implement otherMatches bool on results node, default to false
 
