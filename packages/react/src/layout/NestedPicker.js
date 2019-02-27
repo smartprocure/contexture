@@ -35,6 +35,8 @@ let FilteredSection = observer(
 )
 FilteredSection.displayName = 'FilteredSection'
 
+let getItemLabel = item => isField(item) ? item.shortLabel || item.label : _.startCase(item._key)
+
 let Section = observer(({ options, onClick, selected, Item }) => (
   <div>
     {_.map(
@@ -46,14 +48,12 @@ let Section = observer(({ options, onClick, selected, Item }) => (
           disabled={selected && selected !== item._key}
           hasChildren={!isField(item)}
         >
-          {isField(item)
-            ? item.shortLabel || item.label
-            : _.startCase(item._key)}
+          {getItemLabel(item)}
         </Item>
       ),
       _.flow(
         F.unkeyBy('_key'),
-        _.sortBy(item => _.toLower(item._key))
+        _.sortBy(getItemLabel)
       )(options)
     )}
   </div>
