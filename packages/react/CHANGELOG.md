@@ -1,5 +1,8 @@
-﻿# 1.41.3
+﻿# 1.41.4
 * ResultTable needs to prevent the popover from closing if a modal is open.
+
+# 1.41.3
+* Hotfix: do not trigger a tag popover when removing a tag in a search input
 
 # 1.41.2
 * Fix an issue sorting nested FieldPicker contents
