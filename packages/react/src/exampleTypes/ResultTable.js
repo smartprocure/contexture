@@ -54,7 +54,7 @@ let HighlightedColumnHeader = observer(
       _.isEmpty
     )(results),
   }) =>
-    hasAdditionalFields ? (
+    hasAdditionalFields && node.showOtherMatches ? (
       <Cell key="additionalFields">Other Matches</Cell>
     ) : null
 )
@@ -272,15 +272,17 @@ let TableBody = observer(
                 ),
                 visibleFields
               )}
-              <HighlightedColumn
-                {...{
-                  node,
-                  additionalFields: _.result('additionalFields.slice', x),
-                  Modal,
-                  Table,
-                  schema,
-                }}
-              />
+              {node.showOtherMatches && (
+                <HighlightedColumn
+                  {...{
+                    node,
+                    additionalFields: _.result('additionalFields.slice', x),
+                    Modal,
+                    Table,
+                    schema,
+                  }}
+                />
+              )}
             </Row>
           ),
           getResults(node)

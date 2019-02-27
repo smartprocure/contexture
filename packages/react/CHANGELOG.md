@@ -1,4 +1,7 @@
-﻿# 1.40.1
+# 1.41.0
+* implement otherMatches bool on results node, default to false
+
+# 1.40.1
 * Popovers now close when users click outside of them.
 
 # 1.40.0
