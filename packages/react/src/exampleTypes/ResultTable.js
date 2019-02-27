@@ -156,7 +156,18 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
           )}
           {hideMenu ? null : <Icon icon="TableColumnMenu" />}
         </span>
-        <Popover isOpen={popover} style={popoverStyle}>
+        <Popover
+          isOpen={{
+            get() {
+              return F.view(popover)
+            },
+            set(x) {
+              // Only turn off the popover if adding is not true
+              if (!F.view(adding) && _.isBoolean(x)) F.set(x)(popover)
+            },
+          }}
+          style={popoverStyle}
+        >
           {!disableSort && (
             <Item
               onClick={() => {
