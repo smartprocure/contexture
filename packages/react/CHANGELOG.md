@@ -1,4 +1,7 @@
-﻿# 1.40.1
+﻿# 1.40.2
+* ResultTable needs to prevent the popover from closing if a modal is open.
+
+# 1.40.1
 * Popovers now close when users click outside of them.
 
 # 1.40.0

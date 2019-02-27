@@ -156,7 +156,18 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
           )}
           {hideMenu ? null : <Icon icon="TableColumnMenu" />}
         </span>
-        <Popover isOpen={popover} style={popoverStyle}>
+        <Popover
+          isOpen={x => {
+            // This prevents the popover to close if a modal is open
+            if (document.getElementsByClassName('default-modal-bg').length)
+              return
+            if (_.isBoolean(x)) {
+              return F.off(popover)()
+            }
+            return F.view(popover)
+          }}
+          style={popoverStyle}
+        >
           {!disableSort && (
             <Item
               onClick={() => {
