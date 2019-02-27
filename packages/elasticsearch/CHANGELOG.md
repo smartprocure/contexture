@@ -1,4 +1,4 @@
-# 0.15.3
+# 0.16.0
 * Restrict results context highlighting to includes unless context.showOtherMatches
 
 # 0.15.2
