@@ -35,21 +35,27 @@ let FilteredSection = observer(
 )
 FilteredSection.displayName = 'FilteredSection'
 
+let getItemLabel = item =>
+  isField(item) ? item.shortLabel || item.label : _.startCase(item._key)
+
 let Section = observer(({ options, onClick, selected, Item }) => (
   <div>
-    {F.mapIndexed(
-      (item, key) => (
+    {_.map(
+      item => (
         <Item
-          key={key}
-          onClick={() => onClick(item.value || key, item)}
-          active={selected === key}
-          disabled={selected && selected !== key}
+          key={item._key}
+          onClick={() => onClick(item.value || item._key, item)}
+          active={selected === item._key}
+          disabled={selected && selected !== item._key}
           hasChildren={!isField(item)}
         >
-          {isField(item) ? item.shortLabel || item.label : _.startCase(key)}
+          {getItemLabel(item)}
         </Item>
       ),
-      options
+      _.flow(
+        F.unkeyBy('_key'),
+        _.sortBy(getItemLabel)
+      )(options)
     )}
   </div>
 ))
@@ -106,24 +112,19 @@ let NestedPicker = ({
   Input = 'input',
   Highlight = TextHighlight,
   Item = DefaultItem,
-  sort = _.sortBy(F.cascade(['shortLabel', 'label', 'value'])),
 }) => (
   <div>
     <Input {...F.domLens.value(filter)} placeholder="Enter filter keyword..." />
     {F.view(filter) ? (
       <FilteredSection
-        options={matchLabel(F.view(filter))(sort(options))}
+        options={matchLabel(F.view(filter))(options)}
         onClick={onChange}
         highlight={F.view(filter)}
         Highlight={Highlight}
         Item={Item}
       />
     ) : (
-      <PanelTreePicker
-        options={sort(options)}
-        onChange={onChange}
-        Item={Item}
-      />
+      <PanelTreePicker options={options} onChange={onChange} Item={Item} />
     )}
   </div>
 )

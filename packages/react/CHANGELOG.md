@@ -1,3 +1,6 @@
+﻿# 1.41.2
+* Fix an issue sorting nested FieldPicker contents
+
 # 1.41.1
 * GreyVest: shorten animation duration for the refresh icon
 
