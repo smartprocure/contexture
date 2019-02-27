@@ -789,7 +789,7 @@ let iconMap = {
   Refresh: () => (
     <IconButton
       className="animated pulse slow infinite"
-      style={{ animationDuration: '800ms' }}
+      style={{ animationDuration: '500ms' }}
     >
       <SmallIcon icon="refresh" />
     </IconButton>

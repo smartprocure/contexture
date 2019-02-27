@@ -1,5 +1,11 @@
-﻿# 1.40.2
+﻿# 1.41.2
 * Fix an issue sorting nested FieldPicker contents
+
+# 1.41.1
+* GreyVest: shorten animation duration for the refresh icon
+
+# 1.41.0
+* implement otherMatches bool on results node, default to false
 
 # 1.40.1
 * Popovers now close when users click outside of them.
