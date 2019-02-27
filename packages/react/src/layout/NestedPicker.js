@@ -35,7 +35,8 @@ let FilteredSection = observer(
 )
 FilteredSection.displayName = 'FilteredSection'
 
-let getItemLabel = item => isField(item) ? item.shortLabel || item.label : _.startCase(item._key)
+let getItemLabel = item =>
+  isField(item) ? item.shortLabel || item.label : _.startCase(item._key)
 
 let Section = observer(({ options, onClick, selected, Item }) => (
   <div>
