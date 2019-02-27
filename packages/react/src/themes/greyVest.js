@@ -862,7 +862,10 @@ let TagComponent = observer(({ value, removeTag, tagStyle, onClick }) => (
     {value}
     <span
       className="tags-input-tag-remove fa fa-times"
-      onClick={() => removeTag(value)}
+      onClick={e => {
+        e.stopPropagation()
+        removeTag(value)
+      }}
     />
   </div>
 ))

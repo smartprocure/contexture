@@ -1,4 +1,7 @@
-﻿# 1.41.2
+﻿# 1.41.3
+* Hotfix: do not trigger a tag popover when removing a tag in a search input
+
+# 1.41.2
 * Fix an issue sorting nested FieldPicker contents
 
 # 1.41.1
