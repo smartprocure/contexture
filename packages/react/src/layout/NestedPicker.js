@@ -38,7 +38,7 @@ FilteredSection.displayName = 'FilteredSection'
 let Section = observer(({ options, onClick, selected, Item }) => (
   <div>
     {_.map(
-      (item) => (
+      item => (
         <Item
           key={item._key}
           onClick={() => onClick(item.value || item._key, item)}
@@ -46,12 +46,14 @@ let Section = observer(({ options, onClick, selected, Item }) => (
           disabled={selected && selected !== item._key}
           hasChildren={!isField(item)}
         >
-          {isField(item) ? item.shortLabel || item.label : _.startCase(item._key)}
+          {isField(item)
+            ? item.shortLabel || item.label
+            : _.startCase(item._key)}
         </Item>
       ),
       _.flow(
         F.unkeyBy('_key'),
-        _.sortBy(item => _.toLower(item._key)),
+        _.sortBy(item => _.toLower(item._key))
       )(options)
     )}
   </div>
@@ -121,11 +123,7 @@ let NestedPicker = ({
         Item={Item}
       />
     ) : (
-      <PanelTreePicker
-        options={options}
-        onChange={onChange}
-        Item={Item}
-      />
+      <PanelTreePicker options={options} onChange={onChange} Item={Item} />
     )}
   </div>
 )
