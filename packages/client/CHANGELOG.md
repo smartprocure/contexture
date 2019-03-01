@@ -1,4 +1,7 @@
-﻿# 2.19.2
+﻿# 2.20.0
+* Add `clear` action to reset a node's value to its defaults
+
+# 2.19.2
 * Add `value` reactor for `mongoId` example type
 
 # 2.19.1

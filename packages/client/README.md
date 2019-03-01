@@ -131,6 +131,7 @@ The following methods are exposed on an instantiated client
 | add | `async (path, newNode) -> await searchCompleted` | Adds a node to the tree as a child of the specified path. You can await this for when updates settle and relevant searches are completed. |
 | remove | `async path -> await searchCompleted` | Removes a node at the specified path. You can await this for when updates settle and relevant searches are completed. |
 | mutate | `async (path, deltas) -> await searchCompleted` | Mutates the node at the given path with the new values. You can await this for when updates settle and relevant searches are completed. |
+| clear | `async path -> await searchCompleted` | Resets the node's values to those given on the node type's `defaults` (except `field`)
 | triggerUpdate | `async () -> await searchCompleted` | Will trigger an update with a `none` reactor, updating only nodes that are already marked for update. This is useful when `disableAutoUpdate` is set to true. |
 | dispatch | `async event -> await searchCompleted` | A lower level, core method of interaction (called automatically by the actions above). You can await this for when updates settle and relevant searches are completed. |
 | getNode | `[path] -> node` | Lookup a node by a path (array of keys). |
