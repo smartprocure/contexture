@@ -360,8 +360,8 @@ export let GVStyle = () => (
       }
       .gv-body .tags-input-tag-remove {
         /* Arbitrary theme design */
-        padding-left: 8px;
-        font-size: 10px;
+        padding-left: 10px;
+        font-size: 13px;
       }
       
       /* Tags Popover */
