@@ -2462,8 +2462,8 @@ exports[`Storyshots Grey Vest Refs 1`] = `
       }
       .gv-body .tags-input-tag-remove {
         /* Arbitrary theme design */
-        padding-left: 8px;
-        font-size: 10px;
+        padding-left: 10px;
+        font-size: 13px;
       }
       
       /* Tags Popover */
@@ -3154,8 +3154,8 @@ exports[`Storyshots IMDB Check List 1`] = `
       }
       .gv-body .tags-input-tag-remove {
         /* Arbitrary theme design */
-        padding-left: 8px;
-        font-size: 10px;
+        padding-left: 10px;
+        font-size: 13px;
       }
       
       /* Tags Popover */
@@ -3721,8 +3721,8 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
       }
       .gv-body .tags-input-tag-remove {
         /* Arbitrary theme design */
-        padding-left: 8px;
-        font-size: 10px;
+        padding-left: 10px;
+        font-size: 13px;
       }
       
       /* Tags Popover */
