@@ -1,4 +1,7 @@
-﻿# 1.41.4
+﻿# 1.41.5
+* CSS changes in regards to the tags remove size "button".
+
+# 1.41.4
 * ResultTable needs to prevent the popover from closing if a modal is open.
 
 # 1.41.3
