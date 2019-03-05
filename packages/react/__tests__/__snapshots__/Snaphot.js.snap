@@ -2791,7 +2791,7 @@ exports[`Storyshots Grey Vest Refs 1`] = `
         width: auto;
         max-width: 640px;
         border: 30px solid white;
-        overflow-x: scroll;
+        overflow-x: auto;
       }
     
   </style>
@@ -3483,7 +3483,7 @@ exports[`Storyshots IMDB Check List 1`] = `
         width: auto;
         max-width: 640px;
         border: 30px solid white;
-        overflow-x: scroll;
+        overflow-x: auto;
       }
     
   </style>
@@ -4050,7 +4050,7 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         width: auto;
         max-width: 640px;
         border: 30px solid white;
-        overflow-x: scroll;
+        overflow-x: auto;
       }
     
   </style>
@@ -4610,7 +4610,7 @@ exports[`Storyshots Layout NestedPicker 1`] = `
     style={
       Object {
         "display": "inline-flex",
-        "overflow": "scroll",
+        "overflow": "auto",
         "width": "100%",
       }
     }

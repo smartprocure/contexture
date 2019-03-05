@@ -15,7 +15,7 @@ let Modal = ({ isOpen, children, style = {} }) => (
           right: 0,
           backgroundColor: 'rgba(0,0,0,0.3)',
           padding: 50,
-          overflowY: 'scroll',
+          overflowY: 'auto',
           zIndex: 1000,
           display: 'flex',
           justifyContent: 'space-around',
