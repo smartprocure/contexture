@@ -102,6 +102,7 @@ describe('results', () => {
     delete context.exclude
   })
   it('should highlight additionalFields if showOtherMatches is set', async () => {
+    schema.elasticsearch.highlight = { test: ['field'] }
     service[0].hits.hits[0].anotherField = 'test another field'
     F.extendOn(context, { showOtherMatches: true, include: 'anotherField', highlight: true })
     expectedResult.response.results[0].anotherField = 'test another field'
@@ -118,10 +119,24 @@ describe('results', () => {
         sort: {
           _score: 'desc',
         },
+        highlight: {
+          fields: {
+            field: {}
+          },
+          number_of_fragments: 0,
+          post_tags: [
+            "</b>"
+          ],
+          pre_tags: [
+            "<b>"
+          ],
+          require_field_match: false
+        }
       }),
     ])
   })
   it('should not highlight additionalFields if showOtherMatches is not set', async () => {
+    schema.elasticsearch.highlight = { test: ['field'] }
     service[0].hits.hits[0].anotherField = 'test another field'
     F.extendOn(context, { include: 'anotherField', highlight: true })
     expectedResult.response.results[0].anotherField = 'test another field'
@@ -138,6 +153,17 @@ describe('results', () => {
         sort: {
           _score: 'desc',
         },
+        highlight: {
+          fields: {},
+          number_of_fragments: 0,
+          post_tags: [
+            "</b>"
+          ],
+          pre_tags: [
+            "<b>"
+          ],
+          require_field_match: false
+        }
       }),
     ])
   })
