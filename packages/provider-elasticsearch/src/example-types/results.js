@@ -30,7 +30,6 @@ module.exports = {
     if (context.exclude) result._source.excludes = context.exclude
     let highlight =
       _.getOr(true, 'highlight', context) && schema.elasticsearch.highlight
-    console.log({ highlight })
     if (highlight) {
       let schemaHiglightFields = _.flatten(
         _.values(schema.elasticsearch.highlight)
