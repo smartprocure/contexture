@@ -105,8 +105,16 @@ describe('results', () => {
     service[0].hits.hits[0].anotherField = 'test another field'
     F.extendOn(context, { showOtherMatches: true, include: 'anotherField', highlight: true })
     expectedResult.response.results[0].anotherField = 'test another field'
+    expectedResult.response.results[0].hit = {
+      _id: 'test-id',
+      field: 'test field',
+      anotherField: 'test another field'
+    }
     await resultsTest(context, [
       _.extend(expectedCalls[0], {
+        _source: {
+          includes: 'anotherField',
+        },
         sort: {
           _score: 'desc',
         },
@@ -117,8 +125,16 @@ describe('results', () => {
     service[0].hits.hits[0].anotherField = 'test another field'
     F.extendOn(context, { include: 'anotherField', highlight: true })
     expectedResult.response.results[0].anotherField = 'test another field'
+    expectedResult.response.results[0].hit = {
+      _id: 'test-id',
+      field: 'test field',
+      anotherField: 'test another field'
+    }
     await resultsTest(context, [
       _.extend(expectedCalls[0], {
+        _source: {
+          includes: 'anotherField',
+        },
         sort: {
           _score: 'desc',
         },
