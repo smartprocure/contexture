@@ -104,12 +104,16 @@ describe('results', () => {
   it('should highlight additionalFields if showOtherMatches is set', async () => {
     schema.elasticsearch.highlight = { test: ['field'] }
     service[0].hits.hits[0].anotherField = 'test another field'
-    F.extendOn(context, { showOtherMatches: true, include: 'anotherField', highlight: true })
+    F.extendOn(context, {
+      showOtherMatches: true,
+      include: 'anotherField',
+      highlight: true,
+    })
     expectedResult.response.results[0].anotherField = 'test another field'
     expectedResult.response.results[0].hit = {
       _id: 'test-id',
       field: 'test field',
-      anotherField: 'test another field'
+      anotherField: 'test another field',
     }
     await resultsTest(context, [
       _.extend(expectedCalls[0], {
@@ -121,17 +125,13 @@ describe('results', () => {
         },
         highlight: {
           fields: {
-            field: {}
+            field: {},
           },
           number_of_fragments: 0,
-          post_tags: [
-            "</b>"
-          ],
-          pre_tags: [
-            "<b>"
-          ],
-          require_field_match: false
-        }
+          post_tags: ['</b>'],
+          pre_tags: ['<b>'],
+          require_field_match: false,
+        },
       }),
     ])
   })
@@ -143,7 +143,7 @@ describe('results', () => {
     expectedResult.response.results[0].hit = {
       _id: 'test-id',
       field: 'test field',
-      anotherField: 'test another field'
+      anotherField: 'test another field',
     }
     await resultsTest(context, [
       _.extend(expectedCalls[0], {
@@ -156,14 +156,10 @@ describe('results', () => {
         highlight: {
           fields: {},
           number_of_fragments: 0,
-          post_tags: [
-            "</b>"
-          ],
-          pre_tags: [
-            "<b>"
-          ],
-          require_field_match: false
-        }
+          post_tags: ['</b>'],
+          pre_tags: ['<b>'],
+          require_field_match: false,
+        },
       }),
     ])
   })
