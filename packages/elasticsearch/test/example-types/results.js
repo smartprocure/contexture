@@ -21,7 +21,7 @@ describe('results', () => {
             {
               _id: 'test-id',
               field: 'test field',
-            }
+            },
           ],
         },
       },
@@ -143,7 +143,7 @@ describe('results', () => {
   it('should sort on sortField config', async () => {
     let sortField = 'test.field'
     F.extendOn(context, { sortField })
-    await  resultsTest(context, [
+    await resultsTest(context, [
       _.extend(expectedCalls[0], {
         sort: {
           [context.sortField]: 'desc',
