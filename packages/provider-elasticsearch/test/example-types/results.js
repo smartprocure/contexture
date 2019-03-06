@@ -101,6 +101,30 @@ describe('results', () => {
     ])
     delete context.exclude
   })
+  it('should highlight additionalFields if showOtherMatches is set', async () => {
+    service[0].hits.hits[0].anotherField = 'test another field'
+    F.extendOn(context, { showOtherMatches: true, include: 'anotherField', highlight: true })
+    expectedResult.response.results[0].anotherField = 'test another field'
+    await resultsTest(context, [
+      _.extend(expectedCalls[0], {
+        sort: {
+          _score: 'desc',
+        },
+      }),
+    ])
+  })
+  it('should not highlight additionalFields if showOtherMatches is not set', async () => {
+    service[0].hits.hits[0].anotherField = 'test another field'
+    F.extendOn(context, { include: 'anotherField', highlight: true })
+    expectedResult.response.results[0].anotherField = 'test another field'
+    await resultsTest(context, [
+      _.extend(expectedCalls[0], {
+        sort: {
+          _score: 'desc',
+        },
+      }),
+    ])
+  })
   it('should sort on "_score: desc" with no sortField config', async () =>
     await resultsTest(context, [
       _.extend(expectedCalls[0], {
