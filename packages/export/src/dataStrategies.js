@@ -20,27 +20,32 @@ export const results = ({
   sortField,
   sortDir,
   highlight,
+  scroll,
 }) => {
-  let formatTree = ({ pageSize, page, scrollId }) => ({
-    ..._.pick(['schema', 'join'], tree),
-    type: 'group',
-    key: 'limitedSearchRoot',
-    children: [
-      setFilterOnly(tree),
-      {
-        key: 'results',
-        type: 'results',
-        pageSize,
-        page,
-        include,
-        sortField,
-        sortDir,
-        scroll: true,
-        scrollId,
-        highlight,
-      },
-    ],
-  })
+  let formatTree = ({ pageSize, page, scrollId }) => {
+    let resultsConfig = {
+      key: 'results',
+      type: 'results',
+      pageSize,
+      page,
+      include,
+      sortField,
+      sortDir,
+      highlight,
+    }
+
+    if (scroll) {
+      resultsConfig.scroll = true
+      resultsConfig.scrollId = scrollId
+    }
+
+    return {
+      ..._.pick(['schema', 'join'], tree),
+      type: 'group',
+      key: 'limitedSearchRoot',
+      children: [setFilterOnly(tree), resultsConfig],
+    }
+  }
 
   let scrollId = null
   let getNext = async () => {
