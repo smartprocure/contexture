@@ -34,7 +34,7 @@ export const results = ({
       highlight,
     }
 
-    if (scroll !== false) {
+    if (scroll) {
       resultsConfig.scroll = true
       resultsConfig.scrollId = scrollId
     }
