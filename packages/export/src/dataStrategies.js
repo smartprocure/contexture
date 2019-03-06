@@ -20,7 +20,7 @@ export const results = ({
   sortField,
   sortDir,
   highlight,
-  scroll
+  scroll,
 }) => {
   let formatTree = ({ pageSize, page, scrollId }) => {
     let resultsConfig = {
@@ -43,10 +43,7 @@ export const results = ({
       ..._.pick(['schema', 'join'], tree),
       type: 'group',
       key: 'limitedSearchRoot',
-      children: [
-        setFilterOnly(tree),
-        resultsConfig,
-      ],
+      children: [setFilterOnly(tree), resultsConfig],
     }
   }
 
