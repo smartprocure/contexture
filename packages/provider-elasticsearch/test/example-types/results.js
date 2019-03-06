@@ -168,7 +168,7 @@ describe('results', () => {
     ])
   })
   it('should sort on "_score: desc" with no sortField config', async () =>
-    await resultsTest(context, [
+   resultsTest(context, [
       _.extend(expectedCalls[0], {
         sort: {
           _score: 'desc',
