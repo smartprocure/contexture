@@ -1,4 +1,7 @@
-﻿# 0.1.7
+﻿# 0.1.8
+* Elasticsearch scrolling off by default in results strategy
+
+# 0.1.7
 * Better CSV processing.
 
 # 0.1.6
