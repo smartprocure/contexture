@@ -7,5 +7,6 @@ let Text = injectTreeNode(
     lens: tree.lens(node.path, prop),
   }))(LensInput)
 )
+Text.displayName = 'Text'
 
 export default Text

@@ -46,6 +46,6 @@ export default (
     return {
       tree,
       node,
-      ...(loadingAware ? {} : { loading: node.updating }),
+      ...(loadingAware ? { loading: node.updating } : {}),
     }
   })(StripedLoader(render, style))

@@ -1,4 +1,8 @@
-﻿# 1.41.5
+# 1.41.6
+* Text example type: set display name
+* StripedLoader: do not forward loading prop to child component
+
+# 1.41.5
 * CSS changes in regards to the tags remove size "button".
 
 # 1.41.4

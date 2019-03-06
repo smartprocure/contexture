@@ -339,7 +339,6 @@ exports[`Storyshots Example Types Full Demo 1`] = `
             style={Object {}}
           >
             <input
-              loading={undefined}
               node={
                 Object {
                   "field": "title",
@@ -7049,7 +7048,6 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                                     style={Object {}}
                                                   >
                                                     <input
-                                                      loading={null}
                                                       node={
                                                         Object {
                                                           "context": null,
