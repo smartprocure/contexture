@@ -133,11 +133,13 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
     } = fieldSchema
     HeaderCell = fieldSchema.HeaderCell || HeaderCell
     let filterNode =
-      criteria && _.find({ field }, tree.getNode(criteria).children)
+      criteria &&
+      _.find({ field }, _.getOr([], 'children', tree.getNode(criteria)))
     let filter = () => {
       if (!filterNode) addFilter(field)
       filterNode =
-        criteria && _.find({ field }, tree.getNode(criteria).children)
+        criteria &&
+        _.find({ field }, _.getOr([], 'children', tree.getNode(criteria)))
       tree.mutate(filterNode.path, { paused: false })
       F.flip(filtering)()
     }

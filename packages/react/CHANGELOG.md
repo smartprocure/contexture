@@ -1,3 +1,6 @@
+# 1.43.0
+* FilterList: Ability to delete a filter
+
 # 1.42.1
 * Downgrade danger peer dependency
 

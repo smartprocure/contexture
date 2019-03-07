@@ -129,7 +129,9 @@ export default DDContext(
     ({ state, path, fields, types = {}, Button = 'button' }) => (
       <Provider fields={fields} types={types} ContextureButton={Button}>
         <div style={{ background }}>
-          <Group tree={state.getNode(path)} root={state} isRoot={true} />
+          {state.getNode(path) && (
+            <Group tree={state.getNode(path)} root={state} isRoot={true} />
+          )}
           <Button
             onClick={() => {
               state.adding = !state.adding
@@ -141,5 +143,6 @@ export default DDContext(
       </Provider>
     ),
     'QueryBuilder'
-  )
+  ),
+  { allowEmptyNode: true }
 )

@@ -46,13 +46,14 @@ export let Label = inject(_.pick('tree'))(
                   }}
                 >
                   {/* If only contexture-client diffed the tree before sending a request... */}
-                  {node.hasValue ? (
+                  {(node.hasValue || false) && (
                     <Item onClick={() => tree.clear(node.path)}>
                       Clear Filter
                     </Item>
-                  ) : (
-                    ''
                   )}
+                  <Item onClick={() => tree.remove(node.path)}>
+                    Delete Filter
+                  </Item>
                 </Popover>
               </span>
               {
@@ -153,10 +154,11 @@ export let FilterList = InjectTreeNode(
                 )}
               </div>
             ),
-          node.children
+          _.getOr([], 'children', node)
         )}
       </div>
     )
-  )
+  ),
+  { allowEmptyNode: true }
 )
 FilterList.displayName = 'FilterList'

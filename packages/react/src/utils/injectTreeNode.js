@@ -10,6 +10,7 @@ export default (
     reactors,
     nodeProps = _.keys(reactors),
     loadingAware = false,
+    allowEmptyNode = false,
     style,
   } = {}
 ) =>
@@ -17,7 +18,8 @@ export default (
     node = node || tree.getNode(path)
 
     // Not Found
-    if (!node && path) throw Error(`Node not found at ${path}`)
+    if (!node && path && !allowEmptyNode)
+      throw Error(`Node not found at ${path}`)
 
     // Dynamic add
     if (!node && type) {
@@ -40,12 +42,12 @@ export default (
 
         if (!node) throw Error(`Unable to add node ${JSON.stringify(newNode)}`)
       }
-    } else if (!node)
+    } else if (!node && !allowEmptyNode)
       throw Error(`Node not provided, and couldn't find node at ${path}`)
 
     return {
       tree,
       node,
-      ...(loadingAware ? { loading: node.updating } : {}),
+      ...(loadingAware ? { loading: node && node.updating } : {}),
     }
   })(StripedLoader(render, style))

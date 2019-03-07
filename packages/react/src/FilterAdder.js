@@ -6,10 +6,11 @@ import { DefaultNodeProps } from './utils/schema'
 
 export let fieldsToOptions = _.map(x => ({ value: x.field, ...x }))
 
-let getGroupFields = (path, tree) => _.map('field', tree.getNode(path).children)
+let getGroupFields = node => _.map('field', _.getOr([], 'children', node))
 
 let FilterAdder = ({
   tree,
+  node,
   path,
   fields,
   Picker,
@@ -18,10 +19,7 @@ let FilterAdder = ({
 }) => {
   let options = fieldsToOptions(fields)
   if (uniqueFields) {
-    options = _.reject(
-      x => _.includes(x.field, getGroupFields(path, tree)),
-      options
-    )
+    options = _.reject(x => _.includes(x.field, getGroupFields(node)), options)
   }
   return (
     <Picker
@@ -38,4 +36,4 @@ let FilterAdder = ({
   )
 }
 
-export default InjectTreeNode(observer(FilterAdder))
+export default InjectTreeNode(observer(FilterAdder), { allowEmptyNode: true })
