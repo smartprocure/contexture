@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "1.41.6",
+  "version": "1.41.7",
   "description": "React components for building contexture interfaces",
   "main": "dist/index.js",
   "scripts": {
@@ -70,7 +70,7 @@
     "contexture": "^0.2.1",
     "contexture-client": "^2.18.0",
     "contexture-elasticsearch": "^0.10.2",
-    "duti": "latest",
+    "duti": "^0.15.0",
     "elasticsearch-browser": "^14.2.2",
     "eslint": "^4.12.1",
     "eslint-config-smartprocure": "^1.1.0",
@@ -87,6 +87,7 @@
     "storybook-addon-jsx": "^5.3.0"
   },
   "dependencies": {
+    "danger": "^7.0.14",
     "futil-js": "^1.55.0",
     "lodash": "^4.17.4",
     "react-date-picker": "^7.2.0",

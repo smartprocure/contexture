@@ -1,3 +1,6 @@
+# 1.41.y
+* Add danger as a peer dependency
+
 # 1.41.6
 * Text example type: set display name
 * StripedLoader: do not forward loading prop to child component
