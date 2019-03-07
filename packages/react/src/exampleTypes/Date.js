@@ -180,11 +180,12 @@ let DateComponent = injectTreeNode(
           )}
           {node.useDateMath && (
             <Select
+              value={`${node.from}-${node.to}`}
               onChange={e => handleRollingSelection(e.target.value)}
-              options={F.mapIndexed(
-                (opt, idx) => ({
+              options={F.map(
+                opt => ({
                   label: opt.label,
-                  value: idx,
+                  value: `${opt.value.from}-${opt.value.to}`,
                   selected: rollingOptIsSelected(node, opt),
                 }),
                 rollingOpts

@@ -1,3 +1,6 @@
+# 1.43.1
+* Date example type: correctly initialize select component.
+
 # 1.43.0
 * FilterList: Ability to delete a filter
 
