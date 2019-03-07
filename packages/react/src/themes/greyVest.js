@@ -183,13 +183,13 @@ export let GVStyle = () => (
         /*font-size: 22px;*/
         margin: 30px 0;
       }
-      
+
       /* Button */
       .gv-button {
         padding: 11px 22px 12px 22px;
         border-radius: 3px;
         background-color: #e3e5e6;
-      
+
         border: none;
         font-size: 14px;
         font-weight: bold;
@@ -247,19 +247,19 @@ export let GVStyle = () => (
         display: flex;
         align-items: center;
       }
-      
+
       /* Nested Table */
       .gv-table .expanded, .gv-table .expanded + tr {
         background: rgba(237, 237, 237, 0.5)
       }
-      
+
       .gv-box {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         padding: 15px;
       }
-      
+
       .gv-body, body {
         margin: 0;
         background: #f6f6f6;
@@ -267,7 +267,7 @@ export let GVStyle = () => (
         font-size: 16px;
         color: #454545;
       }
-      
+
       input.gv-input, textarea.gv-input {
         padding: 10px;
       }
@@ -275,17 +275,17 @@ export let GVStyle = () => (
         outline: none;
         font-size: 16px;
         font-family: Lato;
-        
+
         border: solid 2px #EDEDED;
         background: #fff;
-        
+
         display: block;
         width: 100%;
-        
+
         box-sizing: border-box;
         height: 40px;
       }
-      
+
       .gv-body select, .gv-body input, .gv-body textarea {
         border-radius: 4px;
       }
@@ -308,7 +308,7 @@ export let GVStyle = () => (
       .gv-radio-dot.active {
         width: 14px;
         height: 14px;
-        background: #007AFF;  
+        background: #007AFF;
         border-radius: 50%;
       }
       .gv-radio-label {
@@ -324,7 +324,7 @@ export let GVStyle = () => (
         display: flex;
       }
 
-      
+
       .gv-body .tags-input {
         border: 2px solid #EBEBEB;
         border-radius: 4px;
@@ -363,7 +363,7 @@ export let GVStyle = () => (
         padding-left: 10px;
         font-size: 13px;
       }
-      
+
       /* Tags Popover */
       .gv-body .tags-input-popover {
         /* counteract default popover padding */
@@ -422,7 +422,7 @@ export let GVStyle = () => (
       .contexture-result-pager .gv-pager-item:last-child.disabled {
         display: none;
       }
-      
+
       /* Icon Button */
       .gv-icon-button {
         border-radius: 100px;
@@ -447,7 +447,7 @@ export let GVStyle = () => (
         background-color: #0076de;
         color: #fff;
       }
-      
+
 
       /* Button Group Border Radii */
       .gv-button-group {
@@ -463,8 +463,8 @@ export let GVStyle = () => (
         border-top-left-radius: 0px;
         border-bottom-left-radius: 0px;
       }
-      
-      
+
+
       /* Search Bar + Button */
       .gv-search-bar {
         display: grid;
@@ -499,8 +499,8 @@ export let GVStyle = () => (
       .gv-search-toolbar .gv-icon-button:last-child {
         margin-right: 0;
       }
-      
-      
+
+
       .contexture-facet a {
         color: #0076de
       }
@@ -526,8 +526,8 @@ export let GVStyle = () => (
       .contexture-number-best-range {
         margin-top: 15px;
       }
-      
-      /* Tabs */     
+
+      /* Tabs */
       .gv-tab-container .gv-tab {
         display: inline-block;
         padding: 15px 20px;
@@ -561,8 +561,8 @@ export let GVStyle = () => (
       .gv-tab:hover {
         background-color: rgba(147,149,160, 0.5);
       }
-      
-      
+
+
       /* Filter List */
       .filter-list.gv-box {
         padding: 30px;
@@ -596,7 +596,7 @@ export let GVStyle = () => (
       .filter-list-item-contents {
         margin-top: 15px;
       }
-      
+
       .filter-list-group {
         border-left: solid 2px;
         padding-left: 35px; /* 30 for filter-list-item + 5 space */
@@ -611,21 +611,21 @@ export let GVStyle = () => (
         grid-gap: 40px;
         margin: 0 40px;
       }
-      
+
       .popover {
         border-radius: 3px;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
       }
-      
+
       .panel-tree-picker > div {
         border-right: solid 1px #eef0f1;
       }
       .panel-tree-picker > div:last-child {
         border-right: none;
       }
-      
+
       .gv-text-error {
         color: #D75050;
       }
@@ -739,24 +739,36 @@ export let Highlight = ({ style = {}, ...x }) => (
     {...x}
   />
 )
-export let ListGroupItem = withStateLens({ hovering: false })(
-  observer(({ hovering, ...x }) => (
+
+export let ListItem = withStateLens({ hovering: false })(
+  observer(({ hovering, style = {}, ...x }) => (
     <div
       style={{
         cursor: 'pointer',
         padding: '2.5px 5px',
-        display: 'grid',
-        gridGap: '5px',
-        gridTemplateColumns: '20px 1fr',
-        alignItems: 'center',
         whiteSpace: 'nowrap',
         fontSize: 13,
+        color: 'initial',
         ...(F.view(hovering) && { color: '#0076de' }),
+        ...style,
       }}
       {...F.domLens.hover(hovering)}
       {...x}
     />
   ))
+)
+ListItem.displayName = 'ListItem'
+
+export let ListGroupItem = props => (
+  <ListItem
+    style={{
+      display: 'grid',
+      gridGap: '5px',
+      gridTemplateColumns: '20px 1fr',
+      alignItems: 'center',
+    }}
+    {...props}
+  />
 )
 ListGroupItem.displayName = 'ListGroupItem'
 
@@ -924,7 +936,7 @@ export let MissingTypeComponent = InjectTreeNode(({ node = {} }) => (
     Type <b>{node.type}</b> is not supported (for key <i>{node.key}</i>)
   </ErrorText>
 ))
-export let FilterList = defaultProps({ Icon, MissingTypeComponent })(
+export let FilterList = defaultProps({ Icon, ListItem, MissingTypeComponent })(
   BaseFilterList
 )
 

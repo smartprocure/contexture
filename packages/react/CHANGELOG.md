@@ -1,3 +1,6 @@
+# 1.42.0
+* FilterList: Ability to clear a filter
+
 # 1.41.7
 * Add danger as a peer dependency
 

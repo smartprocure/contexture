@@ -2163,6 +2163,7 @@ exports[`Storyshots FilterList Example 1`] = `
           onClick={[Function]}
           style={
             Object {
+              "alignItems": "center",
               "cursor": "pointer",
               "display": "flex",
               "justifyContent": "space-between",
@@ -2193,6 +2194,7 @@ exports[`Storyshots FilterList Example 1`] = `
           onClick={[Function]}
           style={
             Object {
+              "alignItems": "center",
               "cursor": "pointer",
               "display": "flex",
               "justifyContent": "space-between",
@@ -2223,6 +2225,7 @@ exports[`Storyshots FilterList Example 1`] = `
           onClick={[Function]}
           style={
             Object {
+              "alignItems": "center",
               "cursor": "pointer",
               "display": "flex",
               "justifyContent": "space-between",
@@ -2284,13 +2287,13 @@ exports[`Storyshots Grey Vest Refs 1`] = `
         /*font-size: 22px;*/
         margin: 30px 0;
       }
-      
+
       /* Button */
       .gv-button {
         padding: 11px 22px 12px 22px;
         border-radius: 3px;
         background-color: #e3e5e6;
-      
+
         border: none;
         font-size: 14px;
         font-weight: bold;
@@ -2348,19 +2351,19 @@ exports[`Storyshots Grey Vest Refs 1`] = `
         display: flex;
         align-items: center;
       }
-      
+
       /* Nested Table */
       .gv-table .expanded, .gv-table .expanded + tr {
         background: rgba(237, 237, 237, 0.5)
       }
-      
+
       .gv-box {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         padding: 15px;
       }
-      
+
       .gv-body, body {
         margin: 0;
         background: #f6f6f6;
@@ -2368,7 +2371,7 @@ exports[`Storyshots Grey Vest Refs 1`] = `
         font-size: 16px;
         color: #454545;
       }
-      
+
       input.gv-input, textarea.gv-input {
         padding: 10px;
       }
@@ -2376,17 +2379,17 @@ exports[`Storyshots Grey Vest Refs 1`] = `
         outline: none;
         font-size: 16px;
         font-family: Lato;
-        
+
         border: solid 2px #EDEDED;
         background: #fff;
-        
+
         display: block;
         width: 100%;
-        
+
         box-sizing: border-box;
         height: 40px;
       }
-      
+
       .gv-body select, .gv-body input, .gv-body textarea {
         border-radius: 4px;
       }
@@ -2409,7 +2412,7 @@ exports[`Storyshots Grey Vest Refs 1`] = `
       .gv-radio-dot.active {
         width: 14px;
         height: 14px;
-        background: #007AFF;  
+        background: #007AFF;
         border-radius: 50%;
       }
       .gv-radio-label {
@@ -2425,7 +2428,7 @@ exports[`Storyshots Grey Vest Refs 1`] = `
         display: flex;
       }
 
-      
+
       .gv-body .tags-input {
         border: 2px solid #EBEBEB;
         border-radius: 4px;
@@ -2464,7 +2467,7 @@ exports[`Storyshots Grey Vest Refs 1`] = `
         padding-left: 10px;
         font-size: 13px;
       }
-      
+
       /* Tags Popover */
       .gv-body .tags-input-popover {
         /* counteract default popover padding */
@@ -2523,7 +2526,7 @@ exports[`Storyshots Grey Vest Refs 1`] = `
       .contexture-result-pager .gv-pager-item:last-child.disabled {
         display: none;
       }
-      
+
       /* Icon Button */
       .gv-icon-button {
         border-radius: 100px;
@@ -2548,7 +2551,7 @@ exports[`Storyshots Grey Vest Refs 1`] = `
         background-color: #0076de;
         color: #fff;
       }
-      
+
 
       /* Button Group Border Radii */
       .gv-button-group {
@@ -2564,8 +2567,8 @@ exports[`Storyshots Grey Vest Refs 1`] = `
         border-top-left-radius: 0px;
         border-bottom-left-radius: 0px;
       }
-      
-      
+
+
       /* Search Bar + Button */
       .gv-search-bar {
         display: grid;
@@ -2600,8 +2603,8 @@ exports[`Storyshots Grey Vest Refs 1`] = `
       .gv-search-toolbar .gv-icon-button:last-child {
         margin-right: 0;
       }
-      
-      
+
+
       .contexture-facet a {
         color: #0076de
       }
@@ -2627,8 +2630,8 @@ exports[`Storyshots Grey Vest Refs 1`] = `
       .contexture-number-best-range {
         margin-top: 15px;
       }
-      
-      /* Tabs */     
+
+      /* Tabs */
       .gv-tab-container .gv-tab {
         display: inline-block;
         padding: 15px 20px;
@@ -2662,8 +2665,8 @@ exports[`Storyshots Grey Vest Refs 1`] = `
       .gv-tab:hover {
         background-color: rgba(147,149,160, 0.5);
       }
-      
-      
+
+
       /* Filter List */
       .filter-list.gv-box {
         padding: 30px;
@@ -2697,7 +2700,7 @@ exports[`Storyshots Grey Vest Refs 1`] = `
       .filter-list-item-contents {
         margin-top: 15px;
       }
-      
+
       .filter-list-group {
         border-left: solid 2px;
         padding-left: 35px; /* 30 for filter-list-item + 5 space */
@@ -2712,21 +2715,21 @@ exports[`Storyshots Grey Vest Refs 1`] = `
         grid-gap: 40px;
         margin: 0 40px;
       }
-      
+
       .popover {
         border-radius: 3px;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
       }
-      
+
       .panel-tree-picker &gt; div {
         border-right: solid 1px #eef0f1;
       }
       .panel-tree-picker &gt; div:last-child {
         border-right: none;
       }
-      
+
       .gv-text-error {
         color: #D75050;
       }
@@ -2976,13 +2979,13 @@ exports[`Storyshots IMDB Check List 1`] = `
         /*font-size: 22px;*/
         margin: 30px 0;
       }
-      
+
       /* Button */
       .gv-button {
         padding: 11px 22px 12px 22px;
         border-radius: 3px;
         background-color: #e3e5e6;
-      
+
         border: none;
         font-size: 14px;
         font-weight: bold;
@@ -3040,19 +3043,19 @@ exports[`Storyshots IMDB Check List 1`] = `
         display: flex;
         align-items: center;
       }
-      
+
       /* Nested Table */
       .gv-table .expanded, .gv-table .expanded + tr {
         background: rgba(237, 237, 237, 0.5)
       }
-      
+
       .gv-box {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         padding: 15px;
       }
-      
+
       .gv-body, body {
         margin: 0;
         background: #f6f6f6;
@@ -3060,7 +3063,7 @@ exports[`Storyshots IMDB Check List 1`] = `
         font-size: 16px;
         color: #454545;
       }
-      
+
       input.gv-input, textarea.gv-input {
         padding: 10px;
       }
@@ -3068,17 +3071,17 @@ exports[`Storyshots IMDB Check List 1`] = `
         outline: none;
         font-size: 16px;
         font-family: Lato;
-        
+
         border: solid 2px #EDEDED;
         background: #fff;
-        
+
         display: block;
         width: 100%;
-        
+
         box-sizing: border-box;
         height: 40px;
       }
-      
+
       .gv-body select, .gv-body input, .gv-body textarea {
         border-radius: 4px;
       }
@@ -3101,7 +3104,7 @@ exports[`Storyshots IMDB Check List 1`] = `
       .gv-radio-dot.active {
         width: 14px;
         height: 14px;
-        background: #007AFF;  
+        background: #007AFF;
         border-radius: 50%;
       }
       .gv-radio-label {
@@ -3117,7 +3120,7 @@ exports[`Storyshots IMDB Check List 1`] = `
         display: flex;
       }
 
-      
+
       .gv-body .tags-input {
         border: 2px solid #EBEBEB;
         border-radius: 4px;
@@ -3156,7 +3159,7 @@ exports[`Storyshots IMDB Check List 1`] = `
         padding-left: 10px;
         font-size: 13px;
       }
-      
+
       /* Tags Popover */
       .gv-body .tags-input-popover {
         /* counteract default popover padding */
@@ -3215,7 +3218,7 @@ exports[`Storyshots IMDB Check List 1`] = `
       .contexture-result-pager .gv-pager-item:last-child.disabled {
         display: none;
       }
-      
+
       /* Icon Button */
       .gv-icon-button {
         border-radius: 100px;
@@ -3240,7 +3243,7 @@ exports[`Storyshots IMDB Check List 1`] = `
         background-color: #0076de;
         color: #fff;
       }
-      
+
 
       /* Button Group Border Radii */
       .gv-button-group {
@@ -3256,8 +3259,8 @@ exports[`Storyshots IMDB Check List 1`] = `
         border-top-left-radius: 0px;
         border-bottom-left-radius: 0px;
       }
-      
-      
+
+
       /* Search Bar + Button */
       .gv-search-bar {
         display: grid;
@@ -3292,8 +3295,8 @@ exports[`Storyshots IMDB Check List 1`] = `
       .gv-search-toolbar .gv-icon-button:last-child {
         margin-right: 0;
       }
-      
-      
+
+
       .contexture-facet a {
         color: #0076de
       }
@@ -3319,8 +3322,8 @@ exports[`Storyshots IMDB Check List 1`] = `
       .contexture-number-best-range {
         margin-top: 15px;
       }
-      
-      /* Tabs */     
+
+      /* Tabs */
       .gv-tab-container .gv-tab {
         display: inline-block;
         padding: 15px 20px;
@@ -3354,8 +3357,8 @@ exports[`Storyshots IMDB Check List 1`] = `
       .gv-tab:hover {
         background-color: rgba(147,149,160, 0.5);
       }
-      
-      
+
+
       /* Filter List */
       .filter-list.gv-box {
         padding: 30px;
@@ -3389,7 +3392,7 @@ exports[`Storyshots IMDB Check List 1`] = `
       .filter-list-item-contents {
         margin-top: 15px;
       }
-      
+
       .filter-list-group {
         border-left: solid 2px;
         padding-left: 35px; /* 30 for filter-list-item + 5 space */
@@ -3404,21 +3407,21 @@ exports[`Storyshots IMDB Check List 1`] = `
         grid-gap: 40px;
         margin: 0 40px;
       }
-      
+
       .popover {
         border-radius: 3px;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
       }
-      
+
       .panel-tree-picker &gt; div {
         border-right: solid 1px #eef0f1;
       }
       .panel-tree-picker &gt; div:last-child {
         border-right: none;
       }
-      
+
       .gv-text-error {
         color: #D75050;
       }
@@ -3543,13 +3546,13 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         /*font-size: 22px;*/
         margin: 30px 0;
       }
-      
+
       /* Button */
       .gv-button {
         padding: 11px 22px 12px 22px;
         border-radius: 3px;
         background-color: #e3e5e6;
-      
+
         border: none;
         font-size: 14px;
         font-weight: bold;
@@ -3607,19 +3610,19 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         display: flex;
         align-items: center;
       }
-      
+
       /* Nested Table */
       .gv-table .expanded, .gv-table .expanded + tr {
         background: rgba(237, 237, 237, 0.5)
       }
-      
+
       .gv-box {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         padding: 15px;
       }
-      
+
       .gv-body, body {
         margin: 0;
         background: #f6f6f6;
@@ -3627,7 +3630,7 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         font-size: 16px;
         color: #454545;
       }
-      
+
       input.gv-input, textarea.gv-input {
         padding: 10px;
       }
@@ -3635,17 +3638,17 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         outline: none;
         font-size: 16px;
         font-family: Lato;
-        
+
         border: solid 2px #EDEDED;
         background: #fff;
-        
+
         display: block;
         width: 100%;
-        
+
         box-sizing: border-box;
         height: 40px;
       }
-      
+
       .gv-body select, .gv-body input, .gv-body textarea {
         border-radius: 4px;
       }
@@ -3668,7 +3671,7 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
       .gv-radio-dot.active {
         width: 14px;
         height: 14px;
-        background: #007AFF;  
+        background: #007AFF;
         border-radius: 50%;
       }
       .gv-radio-label {
@@ -3684,7 +3687,7 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         display: flex;
       }
 
-      
+
       .gv-body .tags-input {
         border: 2px solid #EBEBEB;
         border-radius: 4px;
@@ -3723,7 +3726,7 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         padding-left: 10px;
         font-size: 13px;
       }
-      
+
       /* Tags Popover */
       .gv-body .tags-input-popover {
         /* counteract default popover padding */
@@ -3782,7 +3785,7 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
       .contexture-result-pager .gv-pager-item:last-child.disabled {
         display: none;
       }
-      
+
       /* Icon Button */
       .gv-icon-button {
         border-radius: 100px;
@@ -3807,7 +3810,7 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         background-color: #0076de;
         color: #fff;
       }
-      
+
 
       /* Button Group Border Radii */
       .gv-button-group {
@@ -3823,8 +3826,8 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         border-top-left-radius: 0px;
         border-bottom-left-radius: 0px;
       }
-      
-      
+
+
       /* Search Bar + Button */
       .gv-search-bar {
         display: grid;
@@ -3859,8 +3862,8 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
       .gv-search-toolbar .gv-icon-button:last-child {
         margin-right: 0;
       }
-      
-      
+
+
       .contexture-facet a {
         color: #0076de
       }
@@ -3886,8 +3889,8 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
       .contexture-number-best-range {
         margin-top: 15px;
       }
-      
-      /* Tabs */     
+
+      /* Tabs */
       .gv-tab-container .gv-tab {
         display: inline-block;
         padding: 15px 20px;
@@ -3921,8 +3924,8 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
       .gv-tab:hover {
         background-color: rgba(147,149,160, 0.5);
       }
-      
-      
+
+
       /* Filter List */
       .filter-list.gv-box {
         padding: 30px;
@@ -3956,7 +3959,7 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
       .filter-list-item-contents {
         margin-top: 15px;
       }
-      
+
       .filter-list-group {
         border-left: solid 2px;
         padding-left: 35px; /* 30 for filter-list-item + 5 space */
@@ -3971,21 +3974,21 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         grid-gap: 40px;
         margin: 0 40px;
       }
-      
+
       .popover {
         border-radius: 3px;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
       }
-      
+
       .panel-tree-picker &gt; div {
         border-right: solid 1px #eef0f1;
       }
       .panel-tree-picker &gt; div:last-child {
         border-right: none;
       }
-      
+
       .gv-text-error {
         color: #D75050;
       }
