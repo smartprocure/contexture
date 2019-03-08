@@ -1,3 +1,6 @@
+# 1.43.7
+* Fix Date example type component's select
+
 # 1.43.6
 * Geo filter address formatting house # fix.
 
