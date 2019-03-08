@@ -1,3 +1,6 @@
+# 1.43.2
+* Hide scrollbars when the content fits
+
 # 1.43.1
 * Date example type: correctly initialize select component.
 

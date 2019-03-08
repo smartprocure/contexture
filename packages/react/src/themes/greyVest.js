@@ -687,7 +687,7 @@ export let GVStyle = () => (
         width: auto;
         max-width: 640px;
         border: 30px solid white;
-        overflow-x: scroll;
+        overflow-x: auto;
       }
     `}
   </style>
