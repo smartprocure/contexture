@@ -1,3 +1,6 @@
+# 1.43.3
+* Add "Applies to all keywords" text
+
 # 1.43.2
 * Hide scrollbars when the content fits
 

@@ -72,6 +72,9 @@ let TagsQuery = ({
           </label>
         </div>
         <div>
+          <div style={{paddingBottom: '15px'}}>
+            <small><b>Applies to all keywords:</b></small>
+          </div>
           <label className="popover-item labeled-checkbox">
             <Checkbox
               checked={!node.exact}
