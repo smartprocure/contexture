@@ -31,7 +31,12 @@ module.exports = {
     let highlight =
       _.getOr(true, 'highlight', context) && schema.elasticsearch.highlight
     if (highlight) {
-      let highlightFields = _.flatten(_.values(schema.elasticsearch.highlight))
+      let schemaHiglightFields = _.flatten(
+        _.values(schema.elasticsearch.highlight)
+      )
+      let highlightFields = _.get('showOtherMatches', context)
+        ? schemaHiglightFields
+        : _.intersection(context.include, schemaHiglightFields)
       F.extendOn(result, {
         highlight: {
           pre_tags: ['<b>'],
