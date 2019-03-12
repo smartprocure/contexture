@@ -1,3 +1,6 @@
+# 0.16.0
+* Restrict results context highlighting to includes unless context.showOtherMatches
+
 # 0.15.2
 * Fix typo on `tagsText` example type
 
