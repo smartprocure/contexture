@@ -1,3 +1,6 @@
+# 1.43.4
+* Implemented support for setting bucket size on term stats via term stats table component.
+
 # 1.43.3
 * Add "Applies to all keywords" text
 

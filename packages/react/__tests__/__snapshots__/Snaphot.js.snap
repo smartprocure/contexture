@@ -2806,11 +2806,13 @@ exports[`Storyshots Grey Vest Refs 1`] = `
   <select
     className="gv-input"
   >
+    (() =&gt; if (placeholder) 
     <option
       value=""
     >
       Please Select...
     </option>
+    )()
   </select>
   <button
     className="gv-button   "

@@ -5,14 +5,35 @@ import { observer } from 'mobx-react'
 import { exampleTypes } from 'contexture-client'
 import injectTreeNode from '../utils/injectTreeNode'
 import ExpandableTable, { Column } from '../layout/ExpandableTable'
+import { Flex } from '../layout/Flex'
+import Select from '../layout/Select'
 
+let toolBarStyle = { justifyContent: 'space-between', alignItems: 'center' }
+let SimpleLabel = ({ text }) => (
+  <label style={{ paddingRight: '5px' }}>{text}</label>
+)
 let SimpleFilter = observer(({ Input = 'input', ...props }) => (
-  <div>
-    Filter:
+  <Flex style={{ ...toolBarStyle, width: '75%' }}>
+    <SimpleLabel text="Filter:" />
     <Input type="text" {...props} />
-  </div>
+  </Flex>
 ))
-
+let SelectSize = observer(
+  ({ node, tree, options = [10, 25, 50, 100, 500, 1000] }) => (
+    <Flex style={toolBarStyle}>
+      <SimpleLabel text="Size:" />
+      <Select
+        onChange={e => {
+          tree.mutate(node.path, { size: e.target.value })
+        }}
+        value={_.getOr(25, 'size', node)}
+        placeholder={null}
+        style={{ width: '100px' }}
+        options={_.map(x => ({ value: x, label: x }), options)}
+      />
+    </Flex>
+  )
+)
 let TermsStatsTable = injectTreeNode(
   observer(
     ({
@@ -27,13 +48,17 @@ let TermsStatsTable = injectTreeNode(
       MoreControls = 'div',
       Input = 'input',
       Filter = SimpleFilter,
+      sizeOptions,
       ...props
     }) => (
       <div>
-        <Filter
-          Input={Input}
-          {...F.domLens.value(tree.lens(node.path, 'filter'))}
-        />
+        <Flex style={toolBarStyle}>
+          <Filter
+            Input={Input}
+            {...F.domLens.value(tree.lens(node.path, 'filter'))}
+          />
+          <SelectSize node={node} tree={tree} options={sizeOptions} />
+        </Flex>
         <ExpandableTable
           {...{
             ...props,

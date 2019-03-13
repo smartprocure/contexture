@@ -140,6 +140,7 @@ let tree = Contexture({
       key_field: 'genres',
       value_field: 'metaScore',
       order: 'sum',
+      size: 25,
     },
   ],
 })
@@ -374,6 +375,7 @@ export default () => (
                   <TermsStatsTable
                     path={['root', 'genreScores']}
                     tableAttrs={{ className: 'gv-table' }}
+                    sizeOptions={[10, 25, 50]}
                   >
                     <Column field="key" label="Genre" />
                     <Column field="count" label="Found" />
