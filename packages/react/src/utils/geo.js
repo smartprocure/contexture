@@ -9,7 +9,16 @@ const defaultHereConfig = {
 }
 
 let formatAddress = ({ address, matchLevel }) => {
-  let { country, district, city, state, street, county, postalCode, houseNumber } = address
+  let {
+    country,
+    district,
+    city,
+    state,
+    street,
+    county,
+    postalCode,
+    houseNumber,
+  } = address
   switch (matchLevel) {
     case 'country':
       return country
