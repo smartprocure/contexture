@@ -10,25 +10,19 @@ const defaultHereConfig = {
 
 let formatAddress = ({ address, matchLevel }) => {
   let { country, district, city, state, street, county, postalCode, houseNumber } = address
-  switch (matchLevel) {
-    case 'country':
-      return country
-    case 'district':
-      return `${district} ${city} ${state}`
-    case 'city':
-      return `${city} ${county} ${state}`
-    case 'houseNumber':
-      return `${houseNumber} ${street} ${city}, ${state}`
-    case 'county':
-      return `${county}, ${state}`
-    case 'state':
-      return `${state}, ${country}`
-    case 'postalCode':
-      return `${city} ${county}, ${state}, ${postalCode}`
-    case 'street':
-    case 'intersection':
-      return `${street} ${city}, ${county}, ${state}`
+  street = `${street} ${city}, ${county}, ${state}`
+  let geoLevel = {
+    country,
+    district: `${district} ${city} ${state}`,
+    city: `${city} ${county} ${state}`,
+    houseNumber: `${houseNumber} ${street} ${city}, ${state}`,
+    county: `${county}, ${state}`,
+    state: `${state}, ${country}`,
+    postalCode: `${city} ${county}, ${state}, ${postalCode}`,
+    street,
+    intersection: street
   }
+  return geoLevel[matchLevel]
 }
 export let loadHereOptions = async (
   inputValue,
