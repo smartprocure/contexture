@@ -1,3 +1,6 @@
+# 1.43.6
+* Geo filter address formatting house # fix.
+
 # 1.43.5
 * Geo filter address formatting adjustments.
 
