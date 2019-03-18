@@ -120,13 +120,14 @@ let allRollingOpts = [
 let rollingOptIsSelected = (node, opt) =>
   node.from === opt.range.from && node.to === opt.range.to
 
-let rollingRangeToString = ({ from, to }) => `${from}-${to}`
+let rollingRangeToString = ({ from, to }) => `${from}::${to}`
 
 let rollingRangeFromString = _.flow(
-  _.split('-'),
-  ([from, to]) => {
-    from, to
-  }
+  _.split('::'),
+  ([from, to]) => ({
+    from,
+    to,
+  })
 )
 
 let DateComponent = injectTreeNode(
@@ -191,7 +192,7 @@ let DateComponent = injectTreeNode(
               options={F.map(
                 opt => ({
                   label: opt.label,
-                  value: rollingRangeToString(opt.value),
+                  value: rollingRangeToString(opt.range),
                   selected: rollingOptIsSelected(node, opt),
                 }),
                 rollingOpts
