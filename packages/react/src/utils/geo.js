@@ -24,7 +24,7 @@ let formatAddress = ({ address, matchLevel }) => {
     country,
     district: `${district} ${city} ${state}`,
     city: `${city} ${county} ${state}`,
-    houseNumber: `${houseNumber} ${street} ${city}, ${state}`,
+    houseNumber: `${houseNumber} ${street}`,
     county: `${county}, ${state}`,
     state: `${state}, ${country}`,
     postalCode: `${city} ${county}, ${state}, ${postalCode}`,
