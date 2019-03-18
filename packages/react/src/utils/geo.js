@@ -9,7 +9,16 @@ const defaultHereConfig = {
 }
 
 let formatAddress = ({ address, matchLevel }) => {
-  let { country, district, city, state, street, county, postalCode, houseNumber } = address
+  let {
+    country,
+    district,
+    city,
+    state,
+    street,
+    county,
+    postalCode,
+    houseNumber,
+  } = address
   street = `${street} ${city}, ${county}, ${state}`
   let geoLevel = {
     country,
@@ -20,7 +29,7 @@ let formatAddress = ({ address, matchLevel }) => {
     state: `${state}, ${country}`,
     postalCode: `${city} ${county}, ${state}, ${postalCode}`,
     street,
-    intersection: street
+    intersection: street,
   }
   return geoLevel[matchLevel]
 }
