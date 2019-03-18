@@ -8,6 +8,31 @@ const defaultHereConfig = {
   geoCoding: 'http://geocoder.api.here.com/6.2/geocode.json?gen=9',
 }
 
+let formatAddress = ({ address, matchLevel }) => {
+  let {
+    country,
+    district,
+    city,
+    state,
+    street,
+    county,
+    postalCode,
+    houseNumber,
+  } = address
+  street = `${street} ${city}, ${county}, ${state}`
+  let geoLevel = {
+    country,
+    district: `${district} ${city} ${state}`,
+    city: `${city} ${county} ${state}`,
+    houseNumber: `${houseNumber} ${street} ${city}, ${state}`,
+    county: `${county}, ${state}`,
+    state: `${state}, ${country}`,
+    postalCode: `${city} ${county}, ${state}, ${postalCode}`,
+    street,
+    intersection: street,
+  }
+  return geoLevel[matchLevel]
+}
 export let loadHereOptions = async (
   inputValue,
   hereConfig = defaultHereConfig
@@ -23,7 +48,7 @@ export let loadHereOptions = async (
     throw new Error(data.error)
   } else {
     return _.getOr([], 'suggestions', data).map(d => ({
-      label: d.label,
+      label: formatAddress(d),
       value: d.locationId,
     }))
   }

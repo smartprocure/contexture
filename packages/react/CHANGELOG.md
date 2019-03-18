@@ -1,3 +1,6 @@
+# 1.43.5
+* Geo filter address formatting adjustments.
+
 # 1.43.4
 * Implemented support for setting bucket size on term stats via term stats table component.
 
