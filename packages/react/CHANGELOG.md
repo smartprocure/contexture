@@ -1,3 +1,6 @@
+# 1.43.7
+* Set overflow: auto on table's horizontal axis
+
 # 1.43.6
 * Geo filter address formatting house # fix.
 
