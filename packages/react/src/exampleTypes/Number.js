@@ -14,18 +14,34 @@ let NumberComponent = injectTreeNode(
       Button,
       showBestRange = false,
       formatter = _.identity,
-      significantDigits
+      significantDigits,
     }) => (
       <div className="contexture-number">
         <Flex style={{ alignItems: 'center' }}>
           <NumberInput
             value={formatter(node.min) || ''}
-            onChange={e => tree.mutate(node.path, { min: significantDigits ? Math.round(e.target.value * Math.pow(10, significantDigits)) / Math.pow(10, significantDigits) : e.target.value })}
+            onChange={e =>
+              tree.mutate(node.path, {
+                min: significantDigits
+                  ? Math.round(
+                      e.target.value * Math.pow(10, significantDigits)
+                    ) / Math.pow(10, significantDigits)
+                  : e.target.value,
+              })
+            }
           />
           <div className="contexture-number-separator">-</div>
           <NumberInput
             value={formatter(node.max) || ''}
-            onChange={e => tree.mutate(node.path, { max: significantDigits ? Math.round(e.target.value * Math.pow(10, significantDigits)) / Math.pow(10, significantDigits) : e.target.value })}
+            onChange={e =>
+              tree.mutate(node.path, {
+                max: significantDigits
+                  ? Math.round(
+                      e.target.value * Math.pow(10, significantDigits)
+                    ) / Math.pow(10, significantDigits)
+                  : e.target.value,
+              })
+            }
           />
         </Flex>
         {showBestRange && (
