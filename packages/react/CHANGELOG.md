@@ -1,3 +1,6 @@
+# 1.44.0
+* Number component allows rounding decimal expansions to n digits with `signficantDigits` prop
+
 # 1.43.6
 * Geo filter address formatting house # fix.
 
