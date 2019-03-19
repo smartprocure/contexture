@@ -692,7 +692,11 @@ export let GVStyle = () => (
     `}
   </style>
 )
-export let Table = x => <table className="gv-table" {...x} />
+export let Table = x => (
+  <div style={{ overflow: 'auto' }}>
+    <table className="gv-table" {...x} />
+  </div>
+)
 
 export let Button = ({
   isActive,
