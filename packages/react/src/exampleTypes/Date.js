@@ -7,118 +7,128 @@ import F from 'futil-js'
 import _ from 'lodash/fp'
 
 let allRollingOpts = [
-  { type: 'all', label: 'All Dates', value: { from: '', to: '' } },
-  { type: 'past', label: 'Last 3 Days', value: { from: 'now-3d', to: 'now' } },
-  { type: 'past', label: 'Last 7 Days', value: { from: 'now-7d', to: 'now' } },
+  { type: 'all', label: 'All Dates', range: { from: '', to: '' } },
+  { type: 'past', label: 'Last 3 Days', range: { from: 'now-3d', to: 'now' } },
+  { type: 'past', label: 'Last 7 Days', range: { from: 'now-7d', to: 'now' } },
   {
     type: 'past',
     label: 'Last 30 Days',
-    value: { from: 'now-30d', to: 'now' },
+    range: { from: 'now-30d', to: 'now' },
   },
   {
     type: 'past',
     label: 'Last 90 Days',
-    value: { from: 'now-90d', to: 'now' },
+    range: { from: 'now-90d', to: 'now' },
   },
   {
     type: 'past',
     label: 'Last 180 Days',
-    value: { from: 'now-180d', to: 'now' },
+    range: { from: 'now-180d', to: 'now' },
   },
   {
     type: 'past',
     label: 'Last 12 Months',
-    value: { from: 'now/d-12M', to: 'now' },
+    range: { from: 'now/d-12M', to: 'now' },
   },
   {
     type: 'past',
     label: 'Last 24 Months',
-    value: { from: 'now/d-24M', to: 'now' },
+    range: { from: 'now/d-24M', to: 'now' },
   },
   {
     type: 'past',
     label: 'Last 36 Months',
-    value: { from: 'now/d-36M', to: 'now' },
+    range: { from: 'now/d-36M', to: 'now' },
   },
   {
     type: 'past',
     label: 'Last 48 Months',
-    value: { from: 'now/d-48M', to: 'now' },
+    range: { from: 'now/d-48M', to: 'now' },
   },
   {
     type: 'past',
     label: 'Last 60 Months',
-    value: { from: 'now/d-60M', to: 'now' },
+    range: { from: 'now/d-60M', to: 'now' },
   },
   {
     type: 'past',
     label: 'Last Calendar Month',
-    value: { from: 'now-1M/M', to: 'now/M-1d' },
+    range: { from: 'now-1M/M', to: 'now/M-1d' },
   },
   {
     type: 'past',
     label: 'Last Calendar Quarter',
-    value: { from: 'lastQuarter', to: 'lastQuarter' },
+    range: { from: 'lastQuarter', to: 'lastQuarter' },
   },
   {
     type: 'past',
     label: 'Last Calendar Year',
-    value: { from: 'now-1y/y', to: 'now/y-1d' },
+    range: { from: 'now-1y/y', to: 'now/y-1d' },
   },
   {
     type: 'present',
     label: 'This Calendar Month',
-    value: { from: 'now/M', to: 'now' },
+    range: { from: 'now/M', to: 'now' },
   },
   {
     type: 'present',
     label: 'This Calendar Quarter',
-    value: { from: 'thisQuarter', to: 'thisQuarter' },
+    range: { from: 'thisQuarter', to: 'thisQuarter' },
   },
   {
     type: 'present',
     label: 'This Calendar Year',
-    value: { from: 'now/y', to: 'now' },
+    range: { from: 'now/y', to: 'now' },
   },
   {
     type: 'future',
     label: 'Next Calendar Month',
-    value: { from: 'now+1M/M', to: 'now+2M/M' },
+    range: { from: 'now+1M/M', to: 'now+2M/M' },
   },
   {
     type: 'future',
     label: 'Next Calendar Quarter',
-    value: { from: 'nextQuarter', to: 'nextQuarter' },
+    range: { from: 'nextQuarter', to: 'nextQuarter' },
   },
   {
     type: 'future',
     label: 'Next Calendar Year',
-    value: { from: 'now+1y/y', to: 'now+2y/y' },
+    range: { from: 'now+1y/y', to: 'now+2y/y' },
   },
   {
     type: 'future',
     label: 'Next 30 Days',
-    value: { from: 'now/d', to: 'now/d+30d' },
+    range: { from: 'now/d', to: 'now/d+30d' },
   },
   {
     type: 'future',
     label: 'Next 12 Months',
-    value: { from: 'now/d', to: 'now/d+12M' },
+    range: { from: 'now/d', to: 'now/d+12M' },
   },
   {
     type: 'future',
     label: 'Next 24 Months',
-    value: { from: 'now/d', to: 'now/d+24M' },
+    range: { from: 'now/d', to: 'now/d+24M' },
   },
   {
     type: 'future',
     label: 'Next 36 Months',
-    value: { from: 'now/d', to: 'now/d+36M' },
+    range: { from: 'now/d', to: 'now/d+36M' },
   },
 ]
 
 let rollingOptIsSelected = (node, opt) =>
-  node.from === opt.value.from && node.to === opt.value.to
+  node.from === opt.range.from && node.to === opt.range.to
+
+let rollingRangeToString = ({ from, to }) => `${from}::${to}`
+
+let rollingRangeFromString = _.flow(
+  _.split('::'),
+  ([from, to]) => ({
+    from,
+    to,
+  })
+)
 
 let DateComponent = injectTreeNode(
   observer(
@@ -134,11 +144,6 @@ let DateComponent = injectTreeNode(
         opt => _.includes(opt.type, excludeRollingRanges),
         allRollingOpts
       )
-
-      let handleRollingSelection = idx => {
-        let range = rollingOpts[idx].value
-        tree.mutate(node.path, range)
-      }
 
       return (
         <div>
@@ -180,12 +185,14 @@ let DateComponent = injectTreeNode(
           )}
           {node.useDateMath && (
             <Select
-              value={`${node.from}-${node.to}`}
-              onChange={e => handleRollingSelection(e.target.value)}
+              value={rollingRangeToString(node)}
+              onChange={e =>
+                tree.mutate(node.path, rollingRangeFromString(e.target.value))
+              }
               options={F.map(
                 opt => ({
                   label: opt.label,
-                  value: `${opt.value.from}-${opt.value.to}`,
+                  value: rollingRangeToString(opt.range),
                   selected: rollingOptIsSelected(node, opt),
                 }),
                 rollingOpts
