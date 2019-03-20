@@ -1,4 +1,7 @@
-﻿# 2.20.0
+﻿# 2.21.0
+* Serialize a node's `paused` field
+
+# 2.20.0
 * Add `clear` action to reset a node's value to its defaults
 
 # 2.19.2
