@@ -1,3 +1,6 @@
+# 1.43.9
+* Preserve geo filter dropdown state across renders
+
 # 1.43.8
 * Set overflow: auto on table's horizontal axis
 
