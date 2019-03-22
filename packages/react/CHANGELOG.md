@@ -1,3 +1,6 @@
+# 1.43.10
+* Fix loading styles for all components
+
 # 1.43.9
 * TagsInput: edit tag when backspace is pressed and no input is present.
 

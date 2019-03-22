@@ -9,7 +9,6 @@ export default (
     type,
     reactors,
     nodeProps = _.keys(reactors),
-    loadingAware = false,
     allowEmptyNode = false,
     style,
   } = {}
@@ -45,9 +44,5 @@ export default (
     } else if (!node && !allowEmptyNode)
       throw Error(`Node not provided, and couldn't find node at ${path}`)
 
-    return {
-      tree,
-      node,
-      ...(loadingAware ? { loading: node && node.updating } : {}),
-    }
+    return { tree, node }
   })(StripedLoader(render, style))

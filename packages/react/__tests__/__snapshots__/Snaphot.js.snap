@@ -1477,9 +1477,7 @@ exports[`Storyshots Example Types Full Demo 1`] = `
                     </th>
                   </tr>
                 </thead>
-                <tbody
-                  style={Object {}}
-                >
+                <tbody>
                   <tr>
                     <td>
                       123
@@ -1928,9 +1926,7 @@ exports[`Storyshots Example Types ResultTable Customizations 1`] = `
           </th>
         </tr>
       </thead>
-      <tbody
-        style={Object {}}
-      >
+      <tbody>
         <tr>
           <td
             style={
@@ -2062,9 +2058,7 @@ exports[`Storyshots Example Types ResultTable Display Field Optional 1`] = `
           </th>
         </tr>
       </thead>
-      <tbody
-        style={Object {}}
-      >
+      <tbody>
         <tr>
           <td
             style={
