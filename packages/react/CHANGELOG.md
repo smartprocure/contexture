@@ -1,3 +1,6 @@
+# 1.43.9
+* Ability to override the Loading component in injectTreeNode
+
 # 1.43.8
 * Set overflow: auto on table's horizontal axis
 
