@@ -44,5 +44,5 @@ export default (
     } else if (!node && !allowEmptyNode)
       throw Error(`Node not provided, and couldn't find node at ${path}`)
 
-    return { tree, node }
+    return { tree, node, isLoading: node && node.updating }
   })(StripedLoader(render, style))
