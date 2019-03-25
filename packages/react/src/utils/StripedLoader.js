@@ -4,7 +4,9 @@ import { loading } from '../styles/generic'
 
 let StripedLoader = (Component, style = {}) =>
   observer(props => (
-    <div style={{ ...style, ...(props.node && props.node.updating && loading) }}>
+    <div
+      style={{ ...style, ...(props.node && props.node.updating && loading) }}
+    >
       <Component {...props} />
     </div>
   ))
