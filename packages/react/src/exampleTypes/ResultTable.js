@@ -6,7 +6,6 @@ import InjectTreeNode from '../utils/injectTreeNode'
 import { Popover, Dynamic } from '../layout'
 import { withStateLens } from '../utils/mobx-react-utils'
 import { fieldsToOptions } from '../FilterAdder'
-import { loading } from '../styles/generic'
 import DefaultIcon from '../DefaultIcon'
 import {
   applyDefaults,
@@ -272,7 +271,7 @@ Header.displayName = 'Header'
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
 let TableBody = observer(
   ({ node, visibleFields, Modal, Table, Row, schema }) => (
-    <tbody style={node.markedForUpdate || node.updating ? loading : {}}>
+    <tbody>
       {!!getResults(node).length &&
         _.map(
           x => (
@@ -373,8 +372,7 @@ let ResultTable = InjectTreeNode(
         />
       </Table>
     )
-  }),
-  { loadingAware: true }
+  })
 )
 ResultTable.displayName = 'ResultTable'
 

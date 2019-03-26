@@ -111,7 +111,10 @@ let TagsInput = withState('state', 'setState', () =>
                     !state.currentInput &&
                     tags.length
                   ) {
-                    removeTag(_.last(tags))
+                    let last = _.last(tags)
+                    removeTag(last)
+                    state.currentInput = last
+                    e.preventDefault()
                   }
                 }}
                 value={state.currentInput}

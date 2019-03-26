@@ -70,13 +70,8 @@ export let geoCodeLocation = async (
       'Response.View.0.Result.0.Location.DisplayPosition',
       data
     )
-    var location = _.get(
-      'Response.View.0.Result.0.Location.Address.Label',
-      data
-    )
 
     return {
-      location,
       latitude: position.Latitude,
       longitude: position.Longitude,
     }
