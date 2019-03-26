@@ -1,5 +1,11 @@
-# 1.43.9
+# 1.43.11
 * Ability to override the Loading component in injectTreeNode
+
+# 1.43.10
+* Fix loading styles for all components
+
+# 1.43.9
+* TagsInput: edit tag when backspace is pressed and no input is present.
 
 # 1.43.8
 * Set overflow: auto on table's horizontal axis

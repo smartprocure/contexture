@@ -11,13 +11,13 @@ export default (
     type,
     reactors,
     nodeProps = _.keys(reactors),
-    loadingAware = false,
     allowEmptyNode = false,
     style,
   } = {}
 ) =>
   _.flow(
     inject(({ theme = {} }) => ({
+      // TODO: Update README when the API for Loading components change
       Loading: (theme.Loading || StripedLoader)(render, style),
     })),
     injectDefaults(({ tree, node, group, path, ...props }) => {
@@ -52,10 +52,6 @@ export default (
       } else if (!node && !allowEmptyNode)
         throw Error(`Node not provided, and couldn't find node at ${path}`)
 
-      return {
-        tree,
-        node,
-        ...(loadingAware ? { loading: node && node.updating } : {}),
-      }
+      return { tree, node, isLoading: node && node.updating }
     })
   )(({ Loading, ...props }) => <Loading {...props} />)
