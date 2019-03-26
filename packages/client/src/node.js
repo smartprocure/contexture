@@ -16,7 +16,7 @@ export let defaults = {
   updatingDeferred: null,
 }
 export let internalStateKeys = {
-  ..._.omit(['type'], defaults),
+  ..._.omit(['type', 'paused'], defaults),
   validate: null,
   onMarkForUpdate: null,
   afterSearch: null,
