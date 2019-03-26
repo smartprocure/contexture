@@ -1,5 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
+import lo from 'lodash'
 import { observer } from 'mobx-react'
 import { Flex } from '../layout/Flex'
 import { exampleTypes } from 'contexture-client'
@@ -23,11 +24,7 @@ let NumberComponent = injectTreeNode(
             onChange={e =>
               tree.mutate(node.path, {
                 min: significantDigits
-                  ? _.toNumber(
-                      _.toNumber(_.getOr('', 'target.value', e)).toFixed(
-                        significantDigits
-                      )
-                    )
+                  ? lo.round(e.target.value, significantDigits)
                   : e.target.value,
               })
             }
@@ -38,11 +35,7 @@ let NumberComponent = injectTreeNode(
             onChange={e =>
               tree.mutate(node.path, {
                 max: significantDigits
-                  ? _.toNumber(
-                      _.toNumber(_.getOr('', 'target.value', e)).toFixed(
-                        significantDigits
-                      )
-                    )
+                  ? lo.round(e.target.value, significantDigits)
                   : e.target.value,
               })
             }
