@@ -1,3 +1,6 @@
+# 1.43.11
+* Ability to override the Loading component in injectTreeNode
+
 # 1.43.10
 * Fix loading styles for all components
 
