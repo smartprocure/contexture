@@ -1,3 +1,6 @@
+# 1.44.0
+* Number component allows rounding decimal expansions to n digits with `signficantDigits` prop
+
 # 1.43.11
 * Ability to override the Loading component in injectTreeNode
 
