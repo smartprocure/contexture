@@ -23,7 +23,11 @@ let NumberComponent = injectTreeNode(
             onChange={e =>
               tree.mutate(node.path, {
                 min: significantDigits
-                  ? _.toNumber(_.toNumber(_.getOr('', 'target.value', e)).toFixed(significantDigits))
+                  ? _.toNumber(
+                      _.toNumber(_.getOr('', 'target.value', e)).toFixed(
+                        significantDigits
+                      )
+                    )
                   : e.target.value,
               })
             }
@@ -34,7 +38,11 @@ let NumberComponent = injectTreeNode(
             onChange={e =>
               tree.mutate(node.path, {
                 max: significantDigits
-                  ? _.toNumber(_.toNumber(_.getOr('', 'target.value', e)).toFixed(significantDigits))
+                  ? _.toNumber(
+                      _.toNumber(_.getOr('', 'target.value', e)).toFixed(
+                        significantDigits
+                      )
+                    )
                   : e.target.value,
               })
             }
