@@ -1,3 +1,7 @@
+# 1.45.0
+* Preserve geo filter dropdown state across renders.
+* Do not return `location` from `utils/geo.js:loadHereOptions`
+
 # 1.44.0
 * Number component allows rounding decimal expansions to n digits with `signficantDigits` prop
 

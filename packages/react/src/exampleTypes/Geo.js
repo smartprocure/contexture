@@ -63,6 +63,7 @@ let GeoComponent = injectTreeNode(
             <AutoComplete
               cacheOptions
               escapeClearsValue
+              defaultInputValue={node.location}
               placeholder={placeholder}
               noOptionsMessage={() => ''}
               styles={customStyles}
@@ -71,13 +72,13 @@ let GeoComponent = injectTreeNode(
                 const inputValue = newValue.replace(/[^a-zA-Z0-9\s]+/g, '')
                 return inputValue
               }}
-              onChange={async ({ value }) => {
+              onChange={async ({ label, value }) => {
                 let data = await GeoCodeLocation(value)
-                if (data && data.latitude && data.longitude && data.location) {
+                if (data && data.latitude && data.longitude) {
                   tree.mutate(node.path, {
                     latitude: data.latitude,
                     longitude: data.longitude,
-                    location: data.location,
+                    location: label,
                   })
                 }
               }}
