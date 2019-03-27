@@ -1,5 +1,11 @@
-# 1.43.11
+# 1.44.1
 * Preserve geo filter dropdown state across renders
+
+# 1.44.0
+* Number component allows rounding decimal expansions to n digits with `signficantDigits` prop
+
+# 1.43.11
+* Ability to override the Loading component in injectTreeNode
 
 # 1.43.10
 * Fix loading styles for all components

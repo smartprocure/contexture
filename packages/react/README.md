@@ -15,6 +15,15 @@ React components for building contexture interfaces
 
 The most complete example is the [`SearchRoot` multifield story](https://smartprocure.github.io/contexture-react/?selectedKind=SearchRoot&selectedStory=Multiple%20Filters)
 
+Warning: we currently support a very alpha and unstable theming API that is bound to change without notice. Use it like:
+```js
+import { Provider } from 'mobx-react'
+<Provider theme={ ... }>
+    ...
+</Provider>
+```
+Documentation around overridable components is coming later...
+
 # Version History/Changelog
 
 See our

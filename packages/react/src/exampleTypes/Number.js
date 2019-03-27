@@ -1,5 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
+import { round } from 'lodash'
 import { observer } from 'mobx-react'
 import { Flex } from '../layout/Flex'
 import { exampleTypes } from 'contexture-client'
@@ -14,17 +15,30 @@ let NumberComponent = injectTreeNode(
       Button,
       showBestRange = false,
       formatter = _.identity,
+      significantDigits,
     }) => (
       <div className="contexture-number">
         <Flex style={{ alignItems: 'center' }}>
           <NumberInput
             value={formatter(node.min) || ''}
-            onChange={e => tree.mutate(node.path, { min: e.target.value })}
+            onChange={e =>
+              tree.mutate(node.path, {
+                min: significantDigits
+                  ? round(e.target.value, significantDigits)
+                  : e.target.value,
+              })
+            }
           />
           <div className="contexture-number-separator">-</div>
           <NumberInput
             value={formatter(node.max) || ''}
-            onChange={e => tree.mutate(node.path, { max: e.target.value })}
+            onChange={e =>
+              tree.mutate(node.path, {
+                max: significantDigits
+                  ? round(e.target.value, significantDigits)
+                  : e.target.value,
+              })
+            }
           />
         </Flex>
         {showBestRange && (

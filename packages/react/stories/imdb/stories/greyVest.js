@@ -201,6 +201,7 @@ let schemas = fromPromise(
             year: {
               defaultNodeProps: { number: { min: 2005 } },
             },
+            metaScore: { significantDigits: 2 },
           },
         },
       })
@@ -262,6 +263,10 @@ export default () => (
                         titleDoesNotContain: 'Title Does Not Contain',
                       }[key])
                     }
+                    mapNodeToProps={(
+                      { field },
+                      { metaScore: { significantDigits } }
+                    ) => (field === 'metaScore' ? { significantDigits } : {})}
                   />
                   <Adder
                     path={['root', 'criteria']}
