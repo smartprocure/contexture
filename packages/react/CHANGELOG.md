@@ -1,5 +1,6 @@
 # 1.45.1
 # round findBestRange result if significantDigits is set in Number component
+# Number component supports setting significantDigits: 0
 
 # 1.45.0
 * Preserve geo filter dropdown state across renders.
