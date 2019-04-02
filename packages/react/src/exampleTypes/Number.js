@@ -48,10 +48,7 @@ let NumberComponent = injectTreeNode(
               onClick={async () => {
                 // Calculate best range
                 await tree.mutate(node.path, { findBestRange: true })
-                let { min, max } = _.pick(
-                  ['min', 'max'],
-                  _.get('context.bestRange', node)
-                )
+                let { min, max } = _.get('context.bestRange', node)
                 if (_.isNumber(significantDigits)) {
                   min = round(min, significantDigits)
                   max = round(max, significantDigits)
