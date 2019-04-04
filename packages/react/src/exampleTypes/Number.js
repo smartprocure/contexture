@@ -23,7 +23,7 @@ let NumberComponent = injectTreeNode(
             value={formatter(node.min) || ''}
             onChange={e =>
               tree.mutate(node.path, {
-                min: significantDigits
+                min: _.isNumber(significantDigits)
                   ? round(e.target.value, significantDigits)
                   : e.target.value,
               })
@@ -34,7 +34,7 @@ let NumberComponent = injectTreeNode(
             value={formatter(node.max) || ''}
             onChange={e =>
               tree.mutate(node.path, {
-                max: significantDigits
+                max: _.isNumber(significantDigits)
                   ? round(e.target.value, significantDigits)
                   : e.target.value,
               })
@@ -48,11 +48,16 @@ let NumberComponent = injectTreeNode(
               onClick={async () => {
                 // Calculate best range
                 await tree.mutate(node.path, { findBestRange: true })
+                let { min, max } = _.get('context.bestRange', node)
+                if (_.isNumber(significantDigits)) {
+                  min = round(min, significantDigits)
+                  max = round(max, significantDigits)
+                }
                 // Disable best range so the calculation isn't run anymore
                 tree.mutate(node.path, {
                   findBestRange: false,
-                  min: _.get('context.bestRange.min', node),
-                  max: _.get('context.bestRange.max', node),
+                  min,
+                  max,
                 })
               }}
             >

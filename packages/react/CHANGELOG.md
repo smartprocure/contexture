@@ -1,3 +1,7 @@
+# 1.45.1
+* Round findBestRange result if significantDigits is set in Number component
+* Number component supports setting significantDigits: 0
+
 # 1.45.0
 * Preserve geo filter dropdown state across renders.
 * Do not return `location` from `utils/geo.js:loadHereOptions`
