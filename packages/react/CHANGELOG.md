@@ -1,3 +1,6 @@
+# 1.45.2
+* Minor styling changes to search toolbar and search toolbar icons
+
 # 1.45.1
 * Round findBestRange result if significantDigits is set in Number component
 * Number component supports setting significantDigits: 0
