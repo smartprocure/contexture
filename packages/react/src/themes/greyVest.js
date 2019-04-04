@@ -426,13 +426,14 @@ export let GVStyle = () => (
       /* Icon Button */
       .gv-icon-button {
         border-radius: 100px;
-        width: 20px;
-        height: 20px;
         padding: 5px;
         cursor: pointer;
         color: #9b9b9b;
         display: inline-block;
         transition: background-color .1s linear, color .1s linear;
+      }
+      .gv-icon-button > * {
+        vertical-align: middle;
       }
       .gv-icon-button i {
         width: 20px;
@@ -490,11 +491,11 @@ export let GVStyle = () => (
       .gv-search-toolbar {
         display: flex;
         align-items: center;
-        padding: 15px 30px;
+        padding: 15px;
         background-color: #fff;
       }
       .gv-search-toolbar .gv-icon-button {
-        margin-right: 20px;
+        margin-right: 5px;
       }
       .gv-search-toolbar .gv-icon-button:last-child {
         margin-right: 0;
