@@ -10,7 +10,7 @@ import {
   TextHighlight,
   NestedPicker,
   ModalFilterAdder,
-  TagsInput,
+  TagsInput as BaseTagsInput,
   FilterList as BaseFilterList,
   Dynamic,
 } from '../'
@@ -891,6 +891,8 @@ export let TagComponent = observer(
 )
 TagComponent.displayName = 'TagComponent'
 
+export let TagsInput = defaultProps({ TagComponent })(TagsInput)
+
 export let ExampleTypes = ExampleTypeConstructor({
   Button,
   Input,
@@ -901,7 +903,7 @@ export let ExampleTypes = ExampleTypeConstructor({
     NestedPicker
   ),
   ListGroupItem,
-  TagsInput: defaultProps({ TagComponent })(TagsInput),
+  TagsInput,
   Icon,
   DateInput: defaultProps({
     calendarType: 'US',
