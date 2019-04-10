@@ -1,3 +1,6 @@
+# 1.45.3
+* Export TagComponent from greyVest theme
+
 # 1.45.2
 * Minor styling changes to search toolbar and search toolbar icons
 

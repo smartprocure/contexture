@@ -870,22 +870,25 @@ export let PagerItem = observer(({ active, disabled, ...x }) => (
 ))
 PagerItem.displayName = 'PagerItem'
 
-let TagComponent = observer(({ value, removeTag, tagStyle, onClick }) => (
-  <div
-    className="tags-input-tag"
-    style={F.callOrReturn(tagStyle, value)}
-    onClick={onClick}
-  >
-    {value}
-    <span
-      className="tags-input-tag-remove fa fa-times"
-      onClick={e => {
-        e.stopPropagation()
-        removeTag(value)
-      }}
-    />
-  </div>
-))
+export let TagComponent = observer(
+  ({ value, removeTag, onClick, tagStyle }) => (
+    <div
+      className="tags-input-tag"
+      style={F.callOrReturn(tagStyle, value)}
+      onClick={onClick}
+    >
+      {value}
+      <span
+        className="tags-input-tag-remove fa fa-times"
+        style={{ verticalAlign: 'middle' }}
+        onClick={e => {
+          e.stopPropagation()
+          removeTag(value)
+        }}
+      />
+    </div>
+  )
+)
 TagComponent.displayName = 'TagComponent'
 
 export let ExampleTypes = ExampleTypeConstructor({
