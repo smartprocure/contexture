@@ -7,24 +7,23 @@ import { observer, inject } from 'mobx-react'
 import { Flex } from './Flex'
 import Popover from './Popover'
 
-let Tag = observer(({ value, removeTag, tagStyle, onClick }) => (
-  <div
+let Tag = observer(({ value, removeTag, tagStyle, removeIcon, onClick }) => (
+  <Flex
     className="tags-input-tag"
-    style={F.callOrReturn(tagStyle, value)}
+    style={{ ...F.callOrReturn(tagStyle, value), alignItems: 'center' }}
     onClick={onClick}
   >
     {value}
     <span
-      className="tags-input-tag-remove"
-      style={{
-        paddingLeft: '10px',
-        cursor: 'pointer',
+      style={{ cursor: 'pointer' }}
+      onClick={e => {
+        e.stopPropagation()
+        removeTag(value)
       }}
-      onClick={() => removeTag(value)}
     >
-      x
+      {removeIcon || <span className="tags-input-tag-remove">x</span>}
     </span>
-  </div>
+  </Flex>
 ))
 Tag.displayName = 'Tag'
 
