@@ -10,7 +10,8 @@ import {
   TextHighlight,
   NestedPicker,
   ModalFilterAdder,
-  TagsInput,
+  Tag,
+  TagsInput as BaseTagsInput,
   FilterList as BaseFilterList,
   Dynamic,
 } from '../'
@@ -337,31 +338,30 @@ export let GVStyle = () => (
         padding-top: 7px;
         padding-bottom: 8px;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag  {
+      .gv-body .tags-input input {
         /* 7/8px is for 15px between tags and border */
         margin-left: 8px;
         margin-right: 7px;
         margin-top: 8px;
         margin-bottom: 7px;
-      }
-      /* To reach perfect 40px, remove real input padding because we have it on the fake one */
-      .gv-body .tags-input input {
+        /* To reach perfect 40px, remove real input padding because we have it on the fake one */
         padding: 0;
         /* subtract padding (5+5) and borders (2+2) from 40 */
         height: 26px;
       }
       .gv-body .tags-input-tag {
         /* Arbitrary theme design */
+        margin-left: 8px;
+        margin-right: 7px;
         border-radius: 2px;
         padding: 5px 13px 7px 15px;
         font-size: 15px;
-        cursor: pointer;
       }
       .gv-body .tags-input-tag-remove {
         /* Arbitrary theme design */
         padding-left: 10px;
         font-size: 13px;
+        vertical-align: middle;
       }
 
       /* Tags Popover */
@@ -870,23 +870,10 @@ export let PagerItem = observer(({ active, disabled, ...x }) => (
 ))
 PagerItem.displayName = 'PagerItem'
 
-let TagComponent = observer(({ value, removeTag, tagStyle, onClick }) => (
-  <div
-    className="tags-input-tag"
-    style={F.callOrReturn(tagStyle, value)}
-    onClick={onClick}
-  >
-    {value}
-    <span
-      className="tags-input-tag-remove fa fa-times"
-      onClick={e => {
-        e.stopPropagation()
-        removeTag(value)
-      }}
-    />
-  </div>
-))
-TagComponent.displayName = 'TagComponent'
+let TagComponent = defaultProps({
+  removeIcon: <span className="tags-input-tag-remove fa fa-times" />,
+})(Tag)
+export let TagsInput = defaultProps({ TagComponent })(BaseTagsInput)
 
 export let ExampleTypes = ExampleTypeConstructor({
   Button,
@@ -898,7 +885,7 @@ export let ExampleTypes = ExampleTypeConstructor({
     NestedPicker
   ),
   ListGroupItem,
-  TagsInput: defaultProps({ TagComponent })(TagsInput),
+  TagsInput,
   Icon,
   DateInput: defaultProps({
     calendarType: 'US',

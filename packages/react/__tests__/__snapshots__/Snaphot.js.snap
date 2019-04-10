@@ -2435,31 +2435,30 @@ exports[`Storyshots Grey Vest Refs 1`] = `
         padding-top: 7px;
         padding-bottom: 8px;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag  {
+      .gv-body .tags-input input {
         /* 7/8px is for 15px between tags and border */
         margin-left: 8px;
         margin-right: 7px;
         margin-top: 8px;
         margin-bottom: 7px;
-      }
-      /* To reach perfect 40px, remove real input padding because we have it on the fake one */
-      .gv-body .tags-input input {
+        /* To reach perfect 40px, remove real input padding because we have it on the fake one */
         padding: 0;
         /* subtract padding (5+5) and borders (2+2) from 40 */
         height: 26px;
       }
       .gv-body .tags-input-tag {
         /* Arbitrary theme design */
+        margin-left: 8px;
+        margin-right: 7px;
         border-radius: 2px;
         padding: 5px 13px 7px 15px;
         font-size: 15px;
-        cursor: pointer;
       }
       .gv-body .tags-input-tag-remove {
         /* Arbitrary theme design */
         padding-left: 10px;
         font-size: 13px;
+        vertical-align: middle;
       }
 
       /* Tags Popover */
@@ -3130,31 +3129,30 @@ exports[`Storyshots IMDB Check List 1`] = `
         padding-top: 7px;
         padding-bottom: 8px;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag  {
+      .gv-body .tags-input input {
         /* 7/8px is for 15px between tags and border */
         margin-left: 8px;
         margin-right: 7px;
         margin-top: 8px;
         margin-bottom: 7px;
-      }
-      /* To reach perfect 40px, remove real input padding because we have it on the fake one */
-      .gv-body .tags-input input {
+        /* To reach perfect 40px, remove real input padding because we have it on the fake one */
         padding: 0;
         /* subtract padding (5+5) and borders (2+2) from 40 */
         height: 26px;
       }
       .gv-body .tags-input-tag {
         /* Arbitrary theme design */
+        margin-left: 8px;
+        margin-right: 7px;
         border-radius: 2px;
         padding: 5px 13px 7px 15px;
         font-size: 15px;
-        cursor: pointer;
       }
       .gv-body .tags-input-tag-remove {
         /* Arbitrary theme design */
         padding-left: 10px;
         font-size: 13px;
+        vertical-align: middle;
       }
 
       /* Tags Popover */
@@ -3698,31 +3696,30 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         padding-top: 7px;
         padding-bottom: 8px;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag  {
+      .gv-body .tags-input input {
         /* 7/8px is for 15px between tags and border */
         margin-left: 8px;
         margin-right: 7px;
         margin-top: 8px;
         margin-bottom: 7px;
-      }
-      /* To reach perfect 40px, remove real input padding because we have it on the fake one */
-      .gv-body .tags-input input {
+        /* To reach perfect 40px, remove real input padding because we have it on the fake one */
         padding: 0;
         /* subtract padding (5+5) and borders (2+2) from 40 */
         height: 26px;
       }
       .gv-body .tags-input-tag {
         /* Arbitrary theme design */
+        margin-left: 8px;
+        margin-right: 7px;
         border-radius: 2px;
         padding: 5px 13px 7px 15px;
         font-size: 15px;
-        cursor: pointer;
       }
       .gv-body .tags-input-tag-remove {
         /* Arbitrary theme design */
         padding-left: 10px;
         font-size: 13px;
+        vertical-align: middle;
       }
 
       /* Tags Popover */
