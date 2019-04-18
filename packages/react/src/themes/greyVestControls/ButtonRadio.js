@@ -2,7 +2,7 @@ import React from 'react'
 import Button from './Button'
 import {Flex} from '../../'
 
-export let ButtonRadio = ({
+let ButtonRadio = ({
   value,
   onChange = () => {},
   options,
@@ -24,3 +24,4 @@ export let ButtonRadio = ({
     )}
   </Flex>
 )
+export default ButtonRadio
