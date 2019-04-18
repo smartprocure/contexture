@@ -32,6 +32,7 @@ import Button from './greyVestControls/Button'
 import ButtonRadio from './greyVestControls/ButtonRadio'
 import Tabs from './greyVestControls/TabList'
 import ErrorList from './greyVestControls/ErrorList'
+import ErrorText from './greyVestControls/ErrorText'
 
 export {
   Input,
