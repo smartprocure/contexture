@@ -42,41 +42,39 @@ let HighlightDemo = withStateLens({ filter: '' })(
   ))
 )
 
-export default () => {
-  storiesOf('Non Search Components|Layout', module)
-    .addWithJSX('Popover', () => <PopoverDemo />)
-    .addWithJSX('Modal', () => <ModalDemo />)
-    .addWithJSX('Highlight', () => <HighlightDemo />)
-    .addWithJSX('Awaiter', () => {
-      let resolve
-      let reject
-      let p = fromPromise(
-        new Promise((_resolve, _reject) => {
-          resolve = _resolve
-          reject = _reject
-        })
-      )
-      return (
-        <div>
-          <Awaiter promise={p}>{x => <div>{x}</div>}</Awaiter>
-          <button onClick={() => resolve('async value')}>Resolve</button>
-          <button onClick={() => reject('some error')}>Reject</button>
-        </div>
-      )
-    })
-    .addWithJSX('NestedPicker', () => (
-      <NestedPicker
-        options={['abcd', 'bcde', 'cdef'].map(x => ({ label: x, value: x }))}
-        onChange={action(`picked`)}
-      />
-    ))
-    .addWithJSX('ModalPicker', () => (
-      <ModalPicker
-        options={['abcd', 'bcde', 'cdef'].map(x => ({ label: x, value: x }))}
-        onChange={action('picked')}
-        label="Pick"
-        Picker={NestedPicker}
-        Modal={Modal}
-      />
-    ))
-}
+storiesOf('Non Search Components|Layout', module)
+  .addWithJSX('Popover', () => <PopoverDemo />)
+  .addWithJSX('Modal', () => <ModalDemo />)
+  .addWithJSX('Highlight', () => <HighlightDemo />)
+  .addWithJSX('Awaiter', () => {
+    let resolve
+    let reject
+    let p = fromPromise(
+      new Promise((_resolve, _reject) => {
+        resolve = _resolve
+        reject = _reject
+      })
+    )
+    return (
+      <div>
+        <Awaiter promise={p}>{x => <div>{x}</div>}</Awaiter>
+        <button onClick={() => resolve('async value')}>Resolve</button>
+        <button onClick={() => reject('some error')}>Reject</button>
+      </div>
+    )
+  })
+  .addWithJSX('NestedPicker', () => (
+    <NestedPicker
+      options={['abcd', 'bcde', 'cdef'].map(x => ({ label: x, value: x }))}
+      onChange={action(`picked`)}
+    />
+  ))
+  .addWithJSX('ModalPicker', () => (
+    <ModalPicker
+      options={['abcd', 'bcde', 'cdef'].map(x => ({ label: x, value: x }))}
+      onChange={action('picked')}
+      label="Pick"
+      Picker={NestedPicker}
+      Modal={Modal}
+    />
+  ))

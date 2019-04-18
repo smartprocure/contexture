@@ -14,13 +14,3 @@ storiesOf('Developer Notes|Docs', module)
       () => null
     )
   )
-
-require('./queryBuilder/examples').default()
-require('./queryBuilder/internals/').default()
-require('./exampleTypes/').default()
-require('./filterList').default()
-require('./filterAdder').default()
-require('./layout').default()
-require('./imdb/stories/').default()
-require('./explorer/').default()
-require('./greyVest/').default()

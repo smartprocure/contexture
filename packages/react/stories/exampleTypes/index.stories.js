@@ -214,184 +214,183 @@ const onBeforeRender = () => {
   testTree.getNode(['results']).include = null
 }
 
-export default () =>
-  storiesOf('Example Types', module)
-    .addWithJSX(
-      'Full Demo',
-      () => (
-        <div
-          style={{
-            backgroundColor: '#333',
-            color: '#AAA',
-            padding: '20px',
-            borderRadius: '10px',
-          }}
-        >
-          <Provider tree={testTree}>
-            <SpacedList>
-              <Query path={['query']} />
-              <Flex>
-                <div style={{ flex: 1 }}>
-                  <SpacedList>
-                    <TagsQuery path={['tagsQuery']} />
-                    <Text path={['titleText']} />
-                    <Facet path={['facet']} formatCount={x => `(${x})`} />
-                    <Facet path={['facet']} display={F.autoLabel} />
-                    <Number path={['number']} />
-                    <Number path={['number']} />
-                    <Geo
-                      loadOptions={loadHereOptions}
-                      path={['geo']}
-                      AutoComplete={AsyncSelect}
-                      GeoCodeLocation={geoCodeLocation}
-                    />
-                  </SpacedList>
-                </div>
-                <div style={{ flex: 4 }}>
-                  <SpacedList>
-                    <DateHistogram
-                      path={['dateHistogram']}
-                      format={formatYear}
-                    />
-                    <ResultCount path={['results']} />
-                    <Flex
-                      style={{
-                        alignItems: 'baseline',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      <ResultTable path={['results']} infer />
-                    </Flex>
-                  </SpacedList>
-                </div>
-              </Flex>
-            </SpacedList>
-          </Provider>
-        </div>
-      ),
-      {
-        onBeforeRender,
-      }
-    )
-    .addWithJSX(
-      'Geo filter & HERE maps',
-      () => (
-        <div
-          style={{
-            backgroundColor: '#333',
-            color: '#AAA',
-            padding: '20px',
-            borderRadius: '10px',
-          }}
-        >
-          <Provider tree={testTree}>
-            <Flex style={{ flexFlow: 'column wrap' }}>
+storiesOf('Example Types', module)
+  .addWithJSX(
+    'Full Demo',
+    () => (
+      <div
+        style={{
+          backgroundColor: '#333',
+          color: '#AAA',
+          padding: '20px',
+          borderRadius: '10px',
+        }}
+      >
+        <Provider tree={testTree}>
+          <SpacedList>
+            <Query path={['query']} />
+            <Flex>
               <div style={{ flex: 1 }}>
-                <Geo
-                  placeholder="Enter address, city, state, zip or business name ..."
-                  loadOptions={loadHereOptions}
-                  path={['geo']}
-                  AutoComplete={AsyncSelect}
-                />
+                <SpacedList>
+                  <TagsQuery path={['tagsQuery']} />
+                  <Text path={['titleText']} />
+                  <Facet path={['facet']} formatCount={x => `(${x})`} />
+                  <Facet path={['facet']} display={F.autoLabel} />
+                  <Number path={['number']} />
+                  <Number path={['number']} />
+                  <Geo
+                    loadOptions={loadHereOptions}
+                    path={['geo']}
+                    AutoComplete={AsyncSelect}
+                    GeoCodeLocation={geoCodeLocation}
+                  />
+                </SpacedList>
+              </div>
+              <div style={{ flex: 4 }}>
+                <SpacedList>
+                  <DateHistogram
+                    path={['dateHistogram']}
+                    format={formatYear}
+                  />
+                  <ResultCount path={['results']} />
+                  <Flex
+                    style={{
+                      alignItems: 'baseline',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <ResultTable path={['results']} infer />
+                  </Flex>
+                </SpacedList>
               </div>
             </Flex>
-          </Provider>
-        </div>
-      ),
-      {
-        onBeforeRender,
-      }
-    )
-    .addWithJSX(
-      'ResultTable Customizations',
-      () => (
+          </SpacedList>
+        </Provider>
+      </div>
+    ),
+    {
+      onBeforeRender,
+    }
+  )
+  .addWithJSX(
+    'Geo filter & HERE maps',
+    () => (
+      <div
+        style={{
+          backgroundColor: '#333',
+          color: '#AAA',
+          padding: '20px',
+          borderRadius: '10px',
+        }}
+      >
+        <Provider tree={testTree}>
+          <Flex style={{ flexFlow: 'column wrap' }}>
+            <div style={{ flex: 1 }}>
+              <Geo
+                placeholder="Enter address, city, state, zip or business name ..."
+                loadOptions={loadHereOptions}
+                path={['geo']}
+                AutoComplete={AsyncSelect}
+              />
+            </div>
+          </Flex>
+        </Provider>
+      </div>
+    ),
+    {
+      onBeforeRender,
+    }
+  )
+  .addWithJSX(
+    'ResultTable Customizations',
+    () => (
+      <div>
+        <style>
+          {`
+          .example-table tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0.5)
+          }
+          .example-table {
+            background: white;
+            color: #444;
+            border-collapse: collapse;
+          }
+          .example-table td, .example-table th {
+            padding: 5px
+          }
+          .example-table thead {
+            border-bottom: solid 2px #ccc
+          }
+        `}
+        </style>
+        <ResultTable
+          tree={testTree}
+          path={['results']}
+          Table={x => <table className="example-table" {...x} />}
+          infer
+          fields={{
+            b: {
+              label: 'Field B',
+              order: -2,
+              HeaderCell: ({ style, ...props }) => (
+                <th
+                  style={{ color: 'green', ...style }}
+                  {..._.omit('activeFilter', props)}
+                />
+              ),
+            },
+            title: {
+              order: 1,
+              Cell: x => <td style={{ color: 'red' }} {...x} />,
+            },
+          }}
+        />
+      </div>
+    ),
+    {
+      onBeforeRender,
+    }
+  )
+  .addWithJSX(
+    'ResultTable Display Field Optional',
+    () => {
+      testTree.getNode(['results']).include = ['title', 'a', 'b']
+      return (
         <div>
           <style>
             {`
-            .example-table tr:nth-child(even) {
-              background-color: rgba(0, 0, 0, 0.5)
-            }
-            .example-table {
-              background: white;
-              color: #444;
-              border-collapse: collapse;
-            }
-            .example-table td, .example-table th {
-              padding: 5px
-            }
-            .example-table thead {
-              border-bottom: solid 2px #ccc
-            }
-          `}
+          .example-table tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0.5)
+          }
+          .example-table {
+            background: white;
+            color: #444;
+            border-collapse: collapse;
+          }
+          .example-table td, .example-table th {
+            padding: 5px
+          }
+          .example-table thead {
+            border-bottom: solid 2px #ccc
+          }
+        `}
           </style>
           <ResultTable
             tree={testTree}
             path={['results']}
             Table={x => <table className="example-table" {...x} />}
-            infer
             fields={{
-              b: {
-                label: 'Field B',
-                order: -2,
-                HeaderCell: ({ style, ...props }) => (
-                  <th
-                    style={{ color: 'green', ...style }}
-                    {..._.omit('activeFilter', props)}
-                  />
-                ),
-              },
               title: {
-                order: 1,
                 Cell: x => <td style={{ color: 'red' }} {...x} />,
               },
             }}
           />
         </div>
-      ),
-      {
-        onBeforeRender,
-      }
-    )
-    .addWithJSX(
-      'ResultTable Display Field Optional',
-      () => {
+      )
+    },
+    {
+      onBeforeRender() {
         testTree.getNode(['results']).include = ['title', 'a', 'b']
-        return (
-          <div>
-            <style>
-              {`
-            .example-table tr:nth-child(even) {
-              background-color: rgba(0, 0, 0, 0.5)
-            }
-            .example-table {
-              background: white;
-              color: #444;
-              border-collapse: collapse;
-            }
-            .example-table td, .example-table th {
-              padding: 5px
-            }
-            .example-table thead {
-              border-bottom: solid 2px #ccc
-            }
-          `}
-            </style>
-            <ResultTable
-              tree={testTree}
-              path={['results']}
-              Table={x => <table className="example-table" {...x} />}
-              fields={{
-                title: {
-                  Cell: x => <td style={{ color: 'red' }} {...x} />,
-                },
-              }}
-            />
-          </div>
-        )
       },
-      {
-        onBeforeRender() {
-          testTree.getNode(['results']).include = ['title', 'a', 'b']
-        },
-      }
-    )
+    }
+  )

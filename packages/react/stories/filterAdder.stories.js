@@ -34,28 +34,12 @@ let mockTree = {
   // if falsey, injectTreeNode assumes an error
   getNode: () => true,
 }
-export default () => {
-  storiesOf('FilterAdder', module)
-    .addWithJSX('Example', () => (
-      <div>
-        <FilterAdder
-          Picker={Select}
-          tree={mockTree}
-          path={['path']}
-          fields={applyDefaults({
-            directors: {
-              typeDefault: 'facet',
-            },
-            runtimeMinutes: {
-              typeDefault: 'number',
-            },
-          })}
-        />
-        <div>Check action log to see adding being dispatched</div>
-      </div>
-    ))
-    .addWithJSX('With NestedPickerModal', () => (
-      <Adder
+
+storiesOf('FilterAdder', module)
+  .addWithJSX('Example', () => (
+    <div>
+      <FilterAdder
+        Picker={Select}
         tree={mockTree}
         path={['path']}
         fields={applyDefaults({
@@ -67,5 +51,20 @@ export default () => {
           },
         })}
       />
-    ))
-}
+      <div>Check action log to see adding being dispatched</div>
+    </div>
+  ))
+  .addWithJSX('With NestedPickerModal', () => (
+    <Adder
+      tree={mockTree}
+      path={['path']}
+      fields={applyDefaults({
+        directors: {
+          typeDefault: 'facet',
+        },
+        runtimeMinutes: {
+          typeDefault: 'number',
+        },
+      })}
+    />
+  ))
