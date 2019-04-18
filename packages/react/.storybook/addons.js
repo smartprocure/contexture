@@ -1,6 +1,3 @@
-import '@storybook/addon-options/register'
-import '@storybook/addon-links/register'
 import 'storybook-addon-jsx/register'
 import '@storybook/addon-actions/register'
-import '@storybook/addon-console'
-import '@storybook/addon-info'
+import '@storybook/addon-storysource/register'

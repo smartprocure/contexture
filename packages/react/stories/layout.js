@@ -43,7 +43,7 @@ let HighlightDemo = withStateLens({ filter: '' })(
 )
 
 export default () => {
-  storiesOf('Layout', module)
+  storiesOf('Non Search Components|Layout', module)
     .addWithJSX('Popover', () => <PopoverDemo />)
     .addWithJSX('Modal', () => <ModalDemo />)
     .addWithJSX('Highlight', () => <HighlightDemo />)

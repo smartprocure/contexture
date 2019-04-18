@@ -2,7 +2,7 @@ import 'babel-polyfill'
 import { storiesOf } from '@storybook/react'
 
 export default () =>
-  storiesOf('IMDB', module)
+  storiesOf('Live Demos|IMDB', module)
     .addWithJSX('Advanced Search', require('./advanced').default)
     .addWithJSX('Quick Start', require('./quickStart').default)
     .addWithJSX('Check List', require('./checklist').default)
