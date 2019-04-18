@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
-import { Observer, observer } from 'mobx-react'
+import { observer } from 'mobx-react'
 import { defaultProps } from 'recompose'
 import { withStateLens } from '../utils/mobx-react-utils'
 import InjectTreeNode from '../utils/injectTreeNode'
@@ -15,161 +15,39 @@ import {
   FilterList as BaseFilterList,
   Dynamic,
 } from '../'
-import DefaultSelect from '../layout/Select'
 import ExampleTypeConstructor from '../exampleTypes/'
 import QueryBuilderComponent from '../queryBuilder'
 import DatePicker from 'react-date-picker'
 
-export let Input = React.forwardRef(
-  ({ className = '', style, type = 'text', ...x }, ref) => (
-    <Observer>
-      {() => (
-        <input
-          className={`${className} gv-input`}
-          style={{
-            ...style,
-          }}
-          type={type}
-          ref={ref}
-          {...x}
-        />
-      )}
-    </Observer>
-  )
-)
+import Input from './greyVestControls/Input'
+import Checkbox from './greyVestControls/Checkbox'
+import Textarea from './greyVestControls/Textarea'
+import Select from './greyVestControls/Select'
+import CheckboxList from './greyVestControls/CheckboxList'
+import RadioList from './greyVestControls/RadioList'
+import Fonts from './greyVestControls/Fonts'
+import IconButton from './greyVestControls/IconButton'
+import Table from './greyVestControls/Table'
+import Button from './greyVestControls/Button'
+import ButtonRadio from './greyVestControls/ButtonRadio'
+import Tabs from './greyVestControls/TabList'
+import ErrorList from './greyVestControls/ErrorList'
 
-// Low effort custom checkbox
-export let Checkbox = ({ checked, onChange, style = {} }) => (
-  <label
-    className="gv-input gv-checkbox"
-    style={{
-      height: '20px',
-      width: '20px',
-      borderRadius: '3px',
-      display: 'flex',
-      justifyContent: 'center',
-      cursor: 'pointer',
-      ...(checked ? { backgroundColor: '#ebebeb' } : {}),
-      ...style,
-    }}
-  >
-    <input
-      type="checkbox"
-      style={{ display: 'none' }}
-      {...{ checked, onChange }}
-    />
-    {checked ? (
-      <i
-        className="material-icons"
-        style={{
-          fontSize: 14,
-          fontWeight: 'bold',
-        }}
-      >
-        check
-      </i>
-    ) : (
-      String.fromCharCode(160)
-    )}
-  </label>
-)
-
-export let Textarea = React.forwardRef((props, ref) => (
-  <Observer>
-    {() => <textarea className="gv-input" {...props} ref={ref} />}
-  </Observer>
-))
-Textarea.displayName = 'Textarea'
-
-export let Select = React.forwardRef((props, ref) => (
-  <Observer>
-    {() => <DefaultSelect className="gv-input" {...props} ref={ref} />}
-  </Observer>
-))
-Select.displayName = 'Select'
-
-export let CheckboxList = observer(({ options, value, onChange, ...props }) => (
-  <div {...props}>
-    {_.map(
-      option => (
-        <label
-          key={option.value}
-          style={{ display: 'flex', cursor: 'pointer', marginRight: 25 }}
-        >
-          <Checkbox
-            {...F.domLens.checkboxValues(option.value, {
-              get: () => value,
-              set: onChange,
-            })}
-          />
-          <div style={{ paddingLeft: 15 }}>{option.label}</div>
-        </label>
-      ),
-      options
-    )}
-  </div>
-))
-CheckboxList.displayName = 'CheckboxList'
-
-export let RadioList = observer(
-  ({ options, value, onChange, className = '', ...props }) => (
-    <div className={`gv-radio-list ${className}`} {...props}>
-      {_.map(
-        option => (
-          <label className="gv-radio-option" key={option.value}>
-            <input
-              type="radio"
-              style={{ display: 'none' }}
-              onChange={e => {
-                onChange(e.target.value)
-              }}
-              value={option.value}
-              checked={value === option.value}
-            />
-            <div className="gv-radio">
-              <div
-                className={`gv-radio-dot ${
-                  value === option.value ? 'active' : ''
-                }`}
-              />
-            </div>
-            <div className="gv-radio-label">{option.label}</div>
-          </label>
-        ),
-        options
-      )}
-    </div>
-  )
-)
-RadioList.displayName = 'RadioList'
-
-export let Fonts = () => (
-  <div>
-    <link
-      href="https://fonts.googleapis.com/css?family=Lato:300,400,700"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
-      integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-      crossOrigin="anonymous"
-    />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-  </div>
-)
-
-export let IconButton = ({ className, primary, ...props }) => (
-  <div
-    className={`gv-icon-button ${className || ''} ${primary ? 'primary' : ''}`}
-    {...props}
-  />
-)
-
-export default IconButton
+export {
+  Input,
+  Checkbox,
+  Textarea,
+  Select,
+  CheckboxList,
+  RadioList,
+  Fonts,
+  IconButton,
+  Table,
+  Button,
+  ButtonRadio,
+  Tabs,
+  ErrorList
+}
 
 export let GVStyle = () => (
   <style>
@@ -693,49 +571,7 @@ export let GVStyle = () => (
     `}
   </style>
 )
-export let Table = x => (
-  <div style={{ overflow: 'auto' }}>
-    <table className="gv-table" {...x} />
-  </div>
-)
 
-export let Button = ({
-  isActive,
-  primary,
-  as: As = 'button',
-  className,
-  ...x
-}) => (
-  <As
-    className={`gv-button ${isActive ? 'active' : ''} ${
-      primary ? 'primary' : ''
-    } ${className || ''}`}
-    {...x}
-  />
-)
-
-export let ButtonRadio = ({
-  value,
-  onChange = () => {},
-  options,
-  style = {},
-}) => (
-  <Flex className="gv-button-radio" style={{ alignItems: 'baseline' }}>
-    {_.map(
-      x => (
-        <Button
-          key={x.value}
-          isActive={x.value === value}
-          onClick={() => onChange(x.value)}
-          style={style}
-        >
-          {x.label}
-        </Button>
-      ),
-      options
-    )}
-  </Flex>
-)
 
 // Lifted from demo theme to prevent codependency
 export let Highlight = ({ style = {}, ...x }) => (
@@ -901,28 +737,6 @@ export let Pager = props => (
   />
 )
 
-let Tabs = ({ value, onChange = () => {}, options }) => (
-  <div className="gv-tab-container">
-    {_.map(
-      x => (
-        <div
-          key={x.value}
-          className={`gv-tab ${x.value === value ? 'active' : ''}`}
-          onClick={() => onChange(x.value)}
-        >
-          {x.label}
-        </div>
-      ),
-      options
-    )}
-  </div>
-)
-
-Tabs.displayName = 'Tabs'
-Tabs = observer(Tabs)
-
-export { Tabs }
-
 export let MissingTypeComponent = InjectTreeNode(({ node = {} }) => (
   <ErrorText>
     Type <b>{node.type}</b> is not supported (for key <i>{node.key}</i>)
@@ -931,12 +745,5 @@ export let MissingTypeComponent = InjectTreeNode(({ node = {} }) => (
 export let FilterList = defaultProps({ Icon, ListItem, MissingTypeComponent })(
   BaseFilterList
 )
-
-// Error Text / List General Components
-let ErrorText = ({ children }) => (
-  <div className="gv-text-error">{children}</div>
-)
-export let ErrorList = ({ children }) =>
-  _.map(e => <ErrorText key={e}>{e}</ErrorText>, _.castArray(children))
 
 export let QueryBuilder = defaultProps({ Button })(QueryBuilderComponent)
