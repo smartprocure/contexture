@@ -3,7 +3,7 @@ import { Component } from '../../utils/mobx-react-utils'
 import styles from '../../styles'
 
 let AddPreview = ({ join, style, onClick }) => (
-  <div style={{ background: styles.background }} onClick={onClick}>
+  <div style={{ background: styles.background }} onClick={() => onClick(join)}>
     <div
       style={{
         ...styles.indentPreview,
