@@ -46,7 +46,7 @@ export {
   Button,
   ButtonRadio,
   Tabs,
-  ErrorList
+  ErrorList,
 }
 
 export let GVStyle = () => (
@@ -571,7 +571,6 @@ export let GVStyle = () => (
     `}
   </style>
 )
-
 
 // Lifted from demo theme to prevent codependency
 export let Highlight = ({ style = {}, ...x }) => (

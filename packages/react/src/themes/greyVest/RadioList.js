@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 
-let RadioList =  ({ options, value, onChange, className = '', ...props }) => (
+let RadioList = ({ options, value, onChange, className = '', ...props }) => (
   <div className={`gv-radio-list ${className}`} {...props}>
     {_.map(
       option => (

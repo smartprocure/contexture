@@ -190,13 +190,12 @@ export default (f = _.identity) => {
   }
   testTree.lens = treeLens(testTree)
 
-  let r =  f(testTree)
+  let r = f(testTree)
 
   let Obj = function() {
     return r
   }
   Obj.prototype.toString = () => 'THIS IS A CONTEXTURE TEST TREE'
-  
-  return new Obj()
 
+  return new Obj()
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Observer } from 'mobx-react'
 
-let Input =  ({ className = '', style, type = 'text', ...x }, ref) => (
+let Input = ({ className = '', style, type = 'text', ...x }, ref) => (
   <Observer>
     {() => (
       <input
