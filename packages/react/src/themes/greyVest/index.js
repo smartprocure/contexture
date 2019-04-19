@@ -3,8 +3,8 @@ import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
 import { defaultProps } from 'recompose'
-import { withStateLens } from '../utils/mobx-react-utils'
-import InjectTreeNode from '../utils/injectTreeNode'
+import { withStateLens } from '../../utils/mobx-react-utils'
+import InjectTreeNode from '../../utils/injectTreeNode'
 import {
   Flex,
   TextHighlight,
@@ -14,25 +14,25 @@ import {
   TagsInput as BaseTagsInput,
   FilterList as BaseFilterList,
   Dynamic,
-} from '../'
-import ExampleTypeConstructor from '../exampleTypes/'
-import QueryBuilderComponent from '../queryBuilder'
+} from '../../'
+import ExampleTypeConstructor from '../../exampleTypes/'
+import QueryBuilderComponent from '../../queryBuilder'
 import DatePicker from 'react-date-picker'
 
-import Input from './greyVestControls/Input'
-import Checkbox from './greyVestControls/Checkbox'
-import Textarea from './greyVestControls/Textarea'
-import Select from './greyVestControls/Select'
-import CheckboxList from './greyVestControls/CheckboxList'
-import RadioList from './greyVestControls/RadioList'
-import Fonts from './greyVestControls/Fonts'
-import IconButton from './greyVestControls/IconButton'
-import Table from './greyVestControls/Table'
-import Button from './greyVestControls/Button'
-import ButtonRadio from './greyVestControls/ButtonRadio'
-import Tabs from './greyVestControls/TabList'
-import ErrorList from './greyVestControls/ErrorList'
-import ErrorText from './greyVestControls/ErrorText'
+import Input from './Input'
+import Checkbox from './Checkbox'
+import Textarea from './Textarea'
+import Select from './Select'
+import CheckboxList from './CheckboxList'
+import RadioList from './RadioList'
+import Fonts from './Fonts'
+import IconButton from './IconButton'
+import Table from './Table'
+import Button from './Button'
+import ButtonRadio from './ButtonRadio'
+import Tabs from './TabList'
+import ErrorList from './ErrorList'
+import ErrorText from './ErrorText'
 
 export {
   Input,
