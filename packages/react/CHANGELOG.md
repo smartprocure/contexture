@@ -1,6 +1,7 @@
 # 1.46.0
 * Update dependencies: babel 7, storybook 5, other dev dependencies
-* Clean up storybook in general
+* Clean up storybook in general, streamlining storybook creation
+* Add Story source addon
 * Split grey vest into separate files
 
 # 1.45.3
