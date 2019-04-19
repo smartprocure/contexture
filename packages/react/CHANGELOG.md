@@ -1,3 +1,8 @@
+# 1.46.0
+* Update dependencies: babel 7, storybook 5, other dev dependencies
+* Clean up storybook in general
+* Split grey vest into separate files
+
 # 1.45.3
 * Export styled TagsInput from greyVest theme
 
