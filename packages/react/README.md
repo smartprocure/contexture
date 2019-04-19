@@ -1,20 +1,23 @@
 ## contexture-react
+`contexture-react` is a suite of react components for building contexture interfaces
+
 
 [![CircleCI](https://circleci.com/gh/smartprocure/contexture-react.svg?style=svg)](https://circleci.com/gh/smartprocure/contexture-react)
 [![Greenkeeper badge](https://badges.greenkeeper.io/smartprocure/contexture-react.svg)](https://greenkeeper.io/)
 [![npm version](https://badge.fury.io/js/contexture-react.svg)](https://badge.fury.io/js/contexture-react)
 ![dependencies](https://david-dm.org/smartprocure/contexture-react.svg)
-
 [![Storybook](https://img.shields.io/badge/BUILT_WITH-STORYBOOK-f1618c.svg?style=for-the-badge)](https://smartprocure.github.io/contexture-react)
 
-React components for building contexture interfaces
 
 # Documentation
 
-* [Storybook](https://smartprocure.github.io/contexture-react)
+Documentation is largely provided via our [Storybook](https://smartprocure.github.io/contexture-react).
 
-The most complete example is the [`SearchRoot` multifield story](https://smartprocure.github.io/contexture-react/?selectedKind=SearchRoot&selectedStory=Multiple%20Filters)
+**The most complete example is the [Live Demo using IMDB data and the Grey Vest theme](https://smartprocure.github.io/contexture-react/?path=/story/live-demos-imdb--grey-vest-theme)**
 
+
+
+## Theming
 Warning: we currently support a very alpha and unstable theming API that is bound to change without notice. Use it like:
 ```js
 import { Provider } from 'mobx-react'
@@ -24,16 +27,16 @@ import { Provider } from 'mobx-react'
 ```
 Documentation around overridable components is coming later...
 
-# Version History/Changelog
+## Installing
+
+`npm i contexture-react`
+
+## Version History/Changelog
 
 See our
 [changelog](https://github.com/smartprocure/contexture-react/blob/master/CHANGELOG.md)
 
-# Installing
-
-`npm i contexture-react`
-
-# Notes on this repository
+## Notes on this repository
 
 This project was scaffolded generally following this link:
 https://medium.com/@efreyreg/create-react-component-libraries-with-storybook-and-styled-jsx-8999f423f06b
@@ -42,7 +45,7 @@ In general, the two directories of interset are `/src` which contains the
 component source, and `/stories` which contain the storybook stories (which also
 function as snapshot tests)
 
-# Cross Browser Testing
+## Cross Browser Testing
 
 Cross browser testing is done using BrowserStack thanks to their awesome support for open source projects!
 
