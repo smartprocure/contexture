@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 
 let RadioList =  ({ options, value, onChange, className = '', ...props }) => (

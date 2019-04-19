@@ -1,5 +1,4 @@
 import * as F from 'futil-js'
-import _ from 'lodash/fp'
 import React from 'react'
 import { Provider } from 'mobx-react'
 import { storiesOf } from '@storybook/react'

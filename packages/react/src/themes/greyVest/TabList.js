@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash/fp'
 import {observer} from 'mobx-react'
 
 let TabList = ({ value, onChange = () => {}, options }) => (
