@@ -123,10 +123,7 @@ storiesOf('QueryBuilder/Examples', module)
           {
             key: 'group2',
             join: 'not',
-            children: [
-              Node('number', 'filter 5a'),
-              Node('query', 'filter 5b'),
-            ],
+            children: [Node('number', 'filter 5a'), Node('query', 'filter 5b')],
           },
           {
             key: 'group24',
