@@ -5,6 +5,7 @@
 * Add replace action
 * Support nested add, nested remove, add at index
 * Add `initObject` config support
+* Entire test suite is now run against both the native JS and mobx client
 
 # 2.21.0
 * Serialize a node's `paused` field
