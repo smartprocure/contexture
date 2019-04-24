@@ -128,8 +128,8 @@ The following methods are exposed on an instantiated client
 
 | Name | Signature | Description |
 | ---- | --------- | ----------- |
-| add | `async (path, newNode) -> await searchCompleted` | Adds a node to the tree as a child of the specified path. You can await this for when updates settle and relevant searches are completed. |
-| remove | `async path -> await searchCompleted` | Removes a node at the specified path. You can await this for when updates settle and relevant searches are completed. |
+| add | `async (path, newNode, {index}) -> await searchCompleted` | Adds a node to the tree as a child of the specified path. You can await this for when updates settle and relevant searches are completed. You can optionally pass an options object as the third param to specify the index where to add the node. The node can be a group with children. |
+| remove | `async path -> await searchCompleted` | Removes a node at the specified path. You can await this for when updates settle and relevant searches are completed. Will also remove children of the target node. |
 | mutate | `async (path, deltas) -> await searchCompleted` | Mutates the node at the given path with the new values. You can await this for when updates settle and relevant searches are completed. |
 | clear | `async path -> await searchCompleted` | Resets the node's values to those given on the node type's `defaults` (except `field`)
 | triggerUpdate | `async () -> await searchCompleted` | Will trigger an update with a `none` reactor, updating only nodes that are already marked for update. This is useful when `disableAutoUpdate` is set to true. |
@@ -141,6 +141,15 @@ The following methods are exposed on an instantiated client
 | addActions | `(({ getNode, flat, dispatch, snapshot, extend, types, initNode }) => {actionsMethods} ) => null` | *Experimental* A method for extending the client with new actions on a per instance basis. You pass in a function which takes an object containing internal helpers and returns an object with actions that get extended onto the tree instance. |
 | addReactors | `(() => {customReactors}) => null` | *Experimental* A method for adding new reactors on a per instance basis. You pass in a function which returns an object of new reactors to support (`{reactorName: reactorFunction}`). Reactors are passed `(parent, node, event, reactor, types, lookup)` and are expected to return an array of affected nodes. |
 | subquery | `(targetPath, sourceTree, sourcePath, mapSubqueryValues?) => {}` | Sets up a subquery, using the types passed in to the client and assuming this tree instance is the target tree. For more info, see the [subquery](#Subquery) section below. |
+| replace | `async (path, node) -> await searchCompleted` | Replaces a the node at the given path with the new node. You can await this for when updates settle and relevant searches are completed. |
+| indent | `async (path, newNode) -> await searchCompleted` | Indents the node at the provided path by either `indentInPlace` or `indentReplace` depending on whether the target is the root node or not. You can await this for when updates settle and relevant searches are completed. |
+| indentReplace | `async (path, newNode) -> await searchCompleted` | Indents the node at the provided path by replacing it with a group described by `newNode` with the target node as its children. You can await this for when updates settle and relevant searches are completed. |
+| indentInPlace | `async (path, newNode) -> await searchCompleted` | Indents the node at the provided path by mutating it into the node described by `newNode` with the target node as its children. You can await this for when updates settle and relevant searches are completed. This is most useful for indenting the root node of a tree. |
+| move | `async (path, { path, index }) -> await searchCompleted` | Moves the node at the provided path (first argument) to the target location provided in the second parameter. If the target path is not specified, it will default to the current node's group. If the target index isn't provided, it will default to moving to the end of the target group. You can await this for when updates settle and relevant searches are completed. Useful for drag and drop query builder interfaces that let you move nodes around in and between groups. |
+| pauseNested | `async (path) -> await searchCompleted` | Recursively set paused to true for the node at the path and all it's children. You can await this for when updates settle and relevant searches are completed. |
+| unpauseNested | `async (path) -> await searchCompleted` | Recursively set paused to false for the node at the path and all it's children. You can await this for when updates settle and relevant searches are completed. |
+| setPauseNested | `async (path, value) -> await searchCompleted` | Recursively set paused to the passed in `value` for the node at the path and all it's children. You can await this for when updates settle and relevant searches are completed. |
+| isPausedNested | `async (path) -> bool` | Returns a bool for whether the node at the path and all of its children are paused. |
 
 #### Node Run Time
 The following methods can be added to individual nodes (just set them on the object returned by getNode)
