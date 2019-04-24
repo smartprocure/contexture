@@ -80,6 +80,44 @@ export default ({
     return add(parentPath, node, index)
   }
 
+  let shallowCloneNode = node => ({
+    ...node,
+    children: [...node.children]
+  })
+
+  // indent in place should make node key be the new key and put root _inside_ the thing
+  // like replace/indent, used at root level
+  let indentInPlace = async (path, newNode) => {
+    // Clone the root node since we'll be modifying it in place in the tree
+    let node = shallowCloneNode(getNode(path))
+
+    // Remove all children (they'll be readded at the end when we add the shallow clone)
+    await Promise.all(_.map(child => remove(child.path), node.children))
+    
+    // Mutate existing root into new root
+    await mutate(path, {
+      ...newNode,
+      path: [newNode.key]
+    })
+    
+    // Replace flat tree references to root
+    flat[encode([newNode.key])] = flat[encode(path)]
+    delete flat[encode(path)]
+    
+    // Add original root as a child of the new root
+    await add([newNode.key], node)
+  }
+  let indentReplace = async (path, newNode) =>
+    replace(path, {
+      ...newNode,
+      children: [getNode(path)]
+    })
+
+  let indent = async (path, newNode) =>
+    _.size(path) > 1
+      ? indentReplace(path, newNode)
+      : indentInPlace(path, newNode)
+
   return {
     add,
     remove,
@@ -88,5 +126,8 @@ export default ({
     triggerUpdate,
     clear,
     replace,
+    indentInPlace,
+    indentReplace,
+    indent,
   }
 }

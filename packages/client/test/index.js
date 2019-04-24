@@ -1233,4 +1233,98 @@ describe('lib', () => {
     expect(tree.getNode(['root', 'criteria'])).to.not.exist
     expect(tree.getNode(['root', 'criteria1']).values).to.deep.equal([])
   })
+  it('should indent replace', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'results',
+          type: 'results',
+          page: 1,
+        },
+        {
+          key: 'criteria',
+          children: [
+            {
+              key: 'filter1',
+              type: 'facet',
+              field: 'field1'
+            },
+            {
+              key: 'filter2',
+              type: 'facet',
+              field: 'field2'
+            }
+          ]
+        }
+      ]
+    })
+    await tree.indentReplace(['root', 'results'], {
+      key: 'analytics',
+      join: 'and',
+    })
+    
+    expect(tree.getNode(['root', 'analytics'])).to.exist
+    expect(tree.getNode(['root', 'results'])).not.to.exist
+    expect(tree.getNode(['root', 'analytics', 'results'])).to.exist
+  })
+  it('should indent root', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        { key: 'results', type: 'results', page: 1 },
+        {
+          key: 'criteria',
+          children: [
+            { key: 'filter1', type: 'facet', field: 'field1' },
+            { key: 'filter2', type: 'facet', field: 'field2' }
+          ]
+        }
+      ]
+    })
+    await tree.indentInPlace(['root'], { key: 'newRootChild', join: 'or' })
+    
+    expect(tree.getNode(['newRootChild'])).to.exist
+    expect(tree.getNode(['newRootChild']).join).to.equal('or')
+    expect(tree.getNode(['newRootChild', 'root'])).to.exist
+    expect(tree.getNode(['newRootChild', 'root', 'results'])).to.exist
+    expect(tree.getNode(['newRootChild', 'root', 'criteria']).path).to.deep.equal(['newRootChild', 'root', 'criteria'])
+  })
+  it('should indent', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        { key: 'results', type: 'results', page: 1 },
+        {
+          key: 'criteria',
+          children: [
+            { key: 'filter1', type: 'facet', field: 'field1' },
+            { key: 'filter2', type: 'facet', field: 'field2' }
+          ]
+        }
+      ]
+    })
+    await tree.indent(['root', 'results'], { key: 'analytics', join: 'and' })
+    
+    expect(tree.getNode(['root', 'analytics'])).to.exist
+    expect(tree.getNode(['root', 'results'])).not.to.exist
+    expect(tree.getNode(['root', 'analytics', 'results'])).to.exist
+
+    await tree.indentInPlace(['root'], { key: 'newRootChild', join: 'or' })
+    
+    expect(tree.getNode(['newRootChild'])).to.exist
+    expect(tree.getNode(['newRootChild']).join).to.equal('or')
+    expect(tree.getNode(['newRootChild', 'root'])).to.exist
+    expect(tree.getNode(['newRootChild', 'root', 'analytics', 'results'])).to.exist
+    expect(tree.getNode(['newRootChild', 'root', 'criteria']).path).to.deep.equal(['newRootChild', 'root', 'criteria'])
+  })
 })
