@@ -1200,4 +1200,37 @@ describe('lib', () => {
     expect(tree.getNode(['root', 'criteria'])).to.not.exist
     expect(tree.getNode(['root', 'criteria', 'filter1'])).to.not.exist
   })
+  it('should replace', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'results',
+          type: 'results',
+          page: 1,
+        },
+        {
+          key: 'criteria',
+          children: [
+            {
+              key: 'filter1',
+              type: 'facet',
+              field: 'field1'
+            },
+            {
+              key: 'filter2',
+              type: 'facet',
+              field: 'field2'
+            }
+          ]
+        }
+      ]
+    })
+    await tree.replace(['root', 'criteria'], { key: 'criteria1', type: 'facet' })
+    expect(tree.getNode(['root', 'criteria'])).to.not.exist
+    expect(tree.getNode(['root', 'criteria1']).values).to.deep.equal([])
+  })
 })

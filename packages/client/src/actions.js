@@ -72,6 +72,13 @@ export default ({
       path,
       _.omit(['field'], getTypeProp(types, 'defaults', getNode(path)))
     )
+  
+  let replace = (path, node) => {
+    let parentPath = _.dropRight(1, path)
+    let index = _.findIndex(getNode(path), getNode(parentPath).children)
+    remove(path)
+    return add(parentPath, node, index)
+  }
 
   return {
     add,
@@ -80,5 +87,6 @@ export default ({
     refresh,
     triggerUpdate,
     clear,
+    replace,
   }
 }
