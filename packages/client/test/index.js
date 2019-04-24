@@ -1108,7 +1108,7 @@ describe('lib', () => {
       key: 'filter1',
       type: 'facet',
       field: 'field1'
-    }, 1)
+    }, { index: 1 })
 
     let keys = _.map('key', tree.tree.children)
     expect(keys).to.deep.equal(['results', 'filter1', 'analytics'])
