@@ -6,25 +6,18 @@ import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import ContextureClient from '../src'
 import { observable, reaction, toJS, set, action } from 'mobx'
+import mockService from '../src/mockService'
 const expect = chai.expect
 chai.use(sinonChai)
 
-let ContextureMobx = x =>
-  _.flow(
-    observable,
-    ContextureClient({
-      snapshot: toJS,
-      extend: set,
-      ...x,
-    }),
-    // contexture-client here takes a whole observable tree and doesn't make initial values observable itself so we need to wrap new nodes in observable
-    F.updateOn('add', add =>
-      action((path, node) => add(path, observable(node)))
-    ),
-    F.updateOn('remove', action),
-    F.updateOn('mutate', action),
-    F.updateOn('refresh', action)
-  )
+let mobxAdapter = { snapshot: toJS, extend: set, initObject: observable }
+let ContextureMobx = x => ContextureClient({ ...mobxAdapter, ...x })
+    //,
+    // F.updateOn('add', action),
+    // F.updateOn('remove', action),
+    // F.updateOn('mutate', action),
+    // F.updateOn('refresh', action)
+  // )
 
 let treeUtils = Tree
 
@@ -412,5 +405,89 @@ describe('usage with mobx should generally work', () => {
     observableNode = observable(observableNode)
     tree.children.push(observableNode)
     expect(tree.children[2]).to.equal(observableNode)
+  })
+
+  it('should support add at index', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureMobx({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'results',
+          type: 'results',
+          page: 1,
+        },
+        {
+          key: 'analytics',
+          type: 'results',
+          page: 1,
+        },
+      ],
+    })
+    await tree.add(
+      ['root'],
+      {
+        key: 'filter1',
+        type: 'facet',
+        field: 'field1',
+      },
+      { index: 1 }
+    )
+
+    let keys = _.map('key', tree.tree.children)
+    expect(keys).to.deep.equal(['results', 'filter1', 'analytics'])
+  })
+  it('should support add with children', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureMobx({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'results',
+          type: 'results',
+          page: 1,
+        },
+      ],
+    })
+    await tree.add(['root'], {
+      key: 'criteria',
+      children: [
+        {
+          key: 'filter1',
+          type: 'facet',
+          field: 'field1',
+        },
+        {
+          key: 'filter2',
+          type: 'facet',
+          field: 'field2',
+        },
+      ],
+    })
+    let filter1Get = tree.getNode(['root', 'criteria', 'filter1'])
+    let filter1Direct = tree.getNode(['root', 'criteria']).children[0]
+    expect(filter1Direct).to.exist
+    expect(filter1Direct.path).to.deep.equal(['root', 'criteria', 'filter1'])
+    expect(filter1Get).to.equal(filter1Direct)
+
+    // Check initNode worked and added default props
+    expect(filter1Get.values).to.deep.equal([])
+    expect(filter1Get.path).to.deep.equal(['root', 'criteria', 'filter1'])
+
+    // "move" to another node location and make sure everything is updated
+    await tree.mutate(['root', 'criteria', 'filter1'], { values: [1, 2, 3] })
+    await tree.remove(['root', 'criteria', 'filter1'])
+    expect(tree.getNode(['root', 'criteria', 'filter1'])).not.to.exist
+    expect(filter1Direct).to.exist
+    await tree.add(['root'], filter1Direct)
+
+    let newlyAddedNode = tree.getNode(['root', 'filter1'])
+    expect(newlyAddedNode).to.exist
+    expect(newlyAddedNode.path).to.deep.equal(['root', 'filter1'])
+    expect(newlyAddedNode.values).to.deep.equal([1, 2, 3])
   })
 })
