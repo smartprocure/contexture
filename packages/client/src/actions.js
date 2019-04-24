@@ -18,7 +18,7 @@ export default ({
   extend,
   initNode,
 }) => {
-  let add = async (parentPath, node, index) => {
+  let add = async (parentPath, node, { index } = {}) => {
     Tree.walk((node, index, [parent = {}]) => {
       let path = [..._.toArray(parent.path || parentPath), node.key]
       initNode(node, path, extend, types)
@@ -77,7 +77,7 @@ export default ({
     let parentPath = _.dropRight(1, path)
     let index = _.findIndex(getNode(path), getNode(parentPath).children)
     remove(path)
-    return add(parentPath, node, index)
+    return add(parentPath, node, { index })
   }
 
   let shallowCloneNode = node => ({
@@ -131,7 +131,7 @@ export default ({
     else {
       return Promise.all([
         remove(path),
-        add(targetPath, node, targetIndex)
+        add(targetPath, node, { index: targetIndex })
       ])
     }
   }
