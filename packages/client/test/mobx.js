@@ -389,24 +389,25 @@ describe('usage with mobx should generally work', () => {
       field: 'facetfield',
       value: 'some value',
     })
-    expect(tree.getNode(['root', 'filter 2']))
-      .to.equal(tree.tree.children[1])
+    expect(tree.getNode(['root', 'filter 2'])).to.equal(tree.tree.children[1])
   })
   it('Test that pushing into an observable array converts array items to observables different from what was pushed', () => {
     let tree = observable({
       key: 'a',
-      children: [{
-        key: 'b'
-      }]
+      children: [
+        {
+          key: 'b',
+        },
+      ],
     })
     let plainNode = {
-      key: 'c'
+      key: 'c',
     }
     tree.children.push(plainNode)
     expect(tree.children[1]).not.to.equal(plainNode)
 
     let observableNode = {
-      key: 'd'
+      key: 'd',
     }
     observableNode = observable(observableNode)
     tree.children.push(observableNode)

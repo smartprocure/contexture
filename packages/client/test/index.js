@@ -1100,15 +1100,19 @@ describe('lib', () => {
         {
           key: 'analytics',
           type: 'results',
-          page: 1
-        }
+          page: 1,
+        },
       ],
     })
-    await tree.add(['root'], {
-      key: 'filter1',
-      type: 'facet',
-      field: 'field1'
-    }, { index: 1 })
+    await tree.add(
+      ['root'],
+      {
+        key: 'filter1',
+        type: 'facet',
+        field: 'field1',
+      },
+      { index: 1 }
+    )
 
     let keys = _.map('key', tree.tree.children)
     expect(keys).to.deep.equal(['results', 'filter1', 'analytics'])
@@ -1133,21 +1137,21 @@ describe('lib', () => {
         {
           key: 'filter1',
           type: 'facet',
-          field: 'field1'
+          field: 'field1',
         },
         {
           key: 'filter2',
           type: 'facet',
-          field: 'field2'
-        }
-      ]
+          field: 'field2',
+        },
+      ],
     })
     let filter1Get = tree.getNode(['root', 'criteria', 'filter1'])
     let filter1Direct = tree.getNode(['root', 'criteria']).children[0]
     expect(filter1Direct).to.exist
     expect(filter1Direct.path).to.deep.equal(['root', 'criteria', 'filter1'])
     expect(filter1Get).to.equal(filter1Direct)
-    
+
     // Check initNode worked and added default props
     expect(filter1Get.values).to.deep.equal([])
     expect(filter1Get.path).to.deep.equal(['root', 'criteria', 'filter1'])
@@ -1185,16 +1189,16 @@ describe('lib', () => {
             {
               key: 'filter1',
               type: 'facet',
-              field: 'field1'
+              field: 'field1',
             },
             {
               key: 'filter2',
               type: 'facet',
-              field: 'field2'
-            }
-          ]
-        }
-      ]
+              field: 'field2',
+            },
+          ],
+        },
+      ],
     })
     await tree.remove(['root', 'criteria'])
     expect(tree.getNode(['root', 'criteria'])).to.not.exist
@@ -1218,18 +1222,21 @@ describe('lib', () => {
             {
               key: 'filter1',
               type: 'facet',
-              field: 'field1'
+              field: 'field1',
             },
             {
               key: 'filter2',
               type: 'facet',
-              field: 'field2'
-            }
-          ]
-        }
-      ]
+              field: 'field2',
+            },
+          ],
+        },
+      ],
     })
-    await tree.replace(['root', 'criteria'], { key: 'criteria1', type: 'facet' })
+    await tree.replace(['root', 'criteria'], {
+      key: 'criteria1',
+      type: 'facet',
+    })
     expect(tree.getNode(['root', 'criteria'])).to.not.exist
     expect(tree.getNode(['root', 'criteria1']).values).to.deep.equal([])
   })
@@ -1251,22 +1258,22 @@ describe('lib', () => {
             {
               key: 'filter1',
               type: 'facet',
-              field: 'field1'
+              field: 'field1',
             },
             {
               key: 'filter2',
               type: 'facet',
-              field: 'field2'
-            }
-          ]
-        }
-      ]
+              field: 'field2',
+            },
+          ],
+        },
+      ],
     })
     await tree.indentReplace(['root', 'results'], {
       key: 'analytics',
       join: 'and',
     })
-    
+
     expect(tree.getNode(['root', 'analytics'])).to.exist
     expect(tree.getNode(['root', 'results'])).not.to.exist
     expect(tree.getNode(['root', 'analytics', 'results'])).to.exist
@@ -1283,18 +1290,20 @@ describe('lib', () => {
           key: 'criteria',
           children: [
             { key: 'filter1', type: 'facet', field: 'field1' },
-            { key: 'filter2', type: 'facet', field: 'field2' }
-          ]
-        }
-      ]
+            { key: 'filter2', type: 'facet', field: 'field2' },
+          ],
+        },
+      ],
     })
     await tree.indentInPlace(['root'], { key: 'newRootChild', join: 'or' })
-    
+
     expect(tree.getNode(['newRootChild'])).to.exist
     expect(tree.getNode(['newRootChild']).join).to.equal('or')
     expect(tree.getNode(['newRootChild', 'root'])).to.exist
     expect(tree.getNode(['newRootChild', 'root', 'results'])).to.exist
-    expect(tree.getNode(['newRootChild', 'root', 'criteria']).path).to.deep.equal(['newRootChild', 'root', 'criteria'])
+    expect(
+      tree.getNode(['newRootChild', 'root', 'criteria']).path
+    ).to.deep.equal(['newRootChild', 'root', 'criteria'])
   })
   it('should indent', async () => {
     let service = sinon.spy(mockService())
@@ -1308,24 +1317,27 @@ describe('lib', () => {
           key: 'criteria',
           children: [
             { key: 'filter1', type: 'facet', field: 'field1' },
-            { key: 'filter2', type: 'facet', field: 'field2' }
-          ]
-        }
-      ]
+            { key: 'filter2', type: 'facet', field: 'field2' },
+          ],
+        },
+      ],
     })
     await tree.indent(['root', 'results'], { key: 'analytics', join: 'and' })
-    
+
     expect(tree.getNode(['root', 'analytics'])).to.exist
     expect(tree.getNode(['root', 'results'])).not.to.exist
     expect(tree.getNode(['root', 'analytics', 'results'])).to.exist
 
     await tree.indentInPlace(['root'], { key: 'newRootChild', join: 'or' })
-    
+
     expect(tree.getNode(['newRootChild'])).to.exist
     expect(tree.getNode(['newRootChild']).join).to.equal('or')
     expect(tree.getNode(['newRootChild', 'root'])).to.exist
-    expect(tree.getNode(['newRootChild', 'root', 'analytics', 'results'])).to.exist
-    expect(tree.getNode(['newRootChild', 'root', 'criteria']).path).to.deep.equal(['newRootChild', 'root', 'criteria'])
+    expect(tree.getNode(['newRootChild', 'root', 'analytics', 'results'])).to
+      .exist
+    expect(
+      tree.getNode(['newRootChild', 'root', 'criteria']).path
+    ).to.deep.equal(['newRootChild', 'root', 'criteria'])
   })
   it('should move', async () => {
     let service = sinon.spy(mockService())
@@ -1339,20 +1351,28 @@ describe('lib', () => {
           key: 'criteria',
           children: [
             { key: 'filter1', type: 'facet', field: 'field1', values: [1, 2] },
-            { key: 'filter2', type: 'facet', field: 'field2' }
-          ]
-        }
-      ]
+            { key: 'filter2', type: 'facet', field: 'field2' },
+          ],
+        },
+      ],
     })
-    expect(tree.getNode(['root', 'criteria']).children[0].key).to.equal('filter1')
-    expect(tree.getNode(['root', 'criteria']).children[1].key).to.equal('filter2')
+    expect(tree.getNode(['root', 'criteria']).children[0].key).to.equal(
+      'filter1'
+    )
+    expect(tree.getNode(['root', 'criteria']).children[1].key).to.equal(
+      'filter2'
+    )
 
     await tree.move(['root', 'criteria', 'filter1'], { index: 1 })
-    expect(tree.getNode(['root', 'criteria']).children[0].key).to.equal('filter2')
-    expect(tree.getNode(['root', 'criteria']).children[1].key).to.equal('filter1')
+    expect(tree.getNode(['root', 'criteria']).children[0].key).to.equal(
+      'filter2'
+    )
+    expect(tree.getNode(['root', 'criteria']).children[1].key).to.equal(
+      'filter1'
+    )
     expect(service).to.have.not.been.called
 
-    await tree.move(['root', 'criteria', 'filter1'], {path: ['root']})
+    await tree.move(['root', 'criteria', 'filter1'], { path: ['root'] })
     expect(tree.getNode(['root', 'criteria', 'filter1'])).to.not.exist
     expect(tree.getNode(['root', 'filter1'])).to.exist
     expect(service).to.have.callCount(1)
@@ -1369,10 +1389,10 @@ describe('lib', () => {
           key: 'criteria',
           children: [
             { key: 'filter1', type: 'facet', field: 'field1', values: [1, 2] },
-            { key: 'filter2', type: 'facet', field: 'field2' }
-          ]
-        }
-      ]
+            { key: 'filter2', type: 'facet', field: 'field2' },
+          ],
+        },
+      ],
     })
     expect(tree.isPausedNested(['root', 'criteria'])).to.be.false
     expect(tree.getNode(['root', 'criteria', 'filter1']).paused).to.not.be.true
