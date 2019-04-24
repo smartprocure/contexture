@@ -4,6 +4,7 @@
 * Add indent action (and indentReplace/indentInPlace)
 * Add replace action
 * Support nested add, nested remove, add at index
+* Add `initObject` config support
 
 # 2.21.0
 * Serialize a node's `paused` field
