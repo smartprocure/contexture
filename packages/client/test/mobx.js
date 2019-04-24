@@ -5,8 +5,7 @@ import chai from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import ContextureClient from '../src'
-import { observable, reaction, toJS, set, action } from 'mobx'
-import mockService from '../src/mockService'
+import { observable, reaction, toJS, set } from 'mobx'
 const expect = chai.expect
 chai.use(sinonChai)
 
