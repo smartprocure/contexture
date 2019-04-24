@@ -1167,9 +1167,6 @@ describe('lib', () => {
     expect(newlyAddedNode).to.exist
     expect(newlyAddedNode.path).to.deep.equal(['root', 'filter1'])
     expect(newlyAddedNode.values).to.deep.equal([1, 2, 3])
-
-    // TODO - better error adding to paths that don't exist, maybe generic action builder?
-    //     also make sure doubel init node isn't an issue for move(which will be remove+add)
   })
   it('should remove children from flat array', async () => {
     let service = sinon.spy(mockService())
