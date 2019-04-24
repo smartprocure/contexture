@@ -1357,4 +1357,37 @@ describe('lib', () => {
     expect(tree.getNode(['root', 'filter1'])).to.exist
     expect(service).to.have.callCount(1)
   })
+  it('should support pause actions', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        { key: 'results', type: 'results', page: 1 },
+        {
+          key: 'criteria',
+          children: [
+            { key: 'filter1', type: 'facet', field: 'field1', values: [1, 2] },
+            { key: 'filter2', type: 'facet', field: 'field2' }
+          ]
+        }
+      ]
+    })
+    expect(tree.isPausedNested(['root', 'criteria'])).to.be.false
+    expect(tree.getNode(['root', 'criteria', 'filter1']).paused).to.not.be.true
+    expect(tree.getNode(['root', 'criteria', 'filter2']).paused).to.not.be.true
+    await tree.pauseNested(['root', 'criteria'])
+    expect(tree.isPausedNested(['root', 'criteria'])).to.be.true
+    expect(tree.getNode(['root', 'criteria', 'filter1']).paused).to.be.true
+    expect(tree.getNode(['root', 'criteria', 'filter2']).paused).to.be.true
+    await tree.unpauseNested(['root', 'criteria'])
+    expect(tree.isPausedNested(['root', 'criteria'])).to.be.false
+    expect(tree.getNode(['root', 'criteria', 'filter1']).paused).to.be.false
+    expect(tree.getNode(['root', 'criteria', 'filter2']).paused).to.be.false
+    await tree.setPausedNested(['root', 'criteria'], true)
+    expect(tree.isPausedNested(['root', 'criteria'])).to.be.true
+    expect(tree.getNode(['root', 'criteria', 'filter1']).paused).to.be.true
+    expect(tree.getNode(['root', 'criteria', 'filter2']).paused).to.be.true
+  })
 })

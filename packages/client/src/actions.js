@@ -136,6 +136,25 @@ export default ({
     }
   }
 
+  let mutateNested = (path, payload) =>
+    _.flow(
+      getNode,
+      Tree.toArrayBy(
+        node => mutate(node.path.slice(), payload)
+      ),
+      x => Promise.all(x)
+    )(path)
+
+  let pauseNested = path => mutateNested(path, { paused: true })
+  let unpauseNested = path => mutateNested(path, { paused: false })
+  let setPausedNested = (path, paused) => mutateNested(path, { paused })
+
+  let isPausedNested = _.flow(
+    getNode,
+    Tree.leaves,
+    _.every('paused')
+  )
+
   return {
     add,
     remove,
@@ -148,5 +167,9 @@ export default ({
     indentReplace,
     indent,
     move,
+    isPausedNested,
+    pauseNested,
+    unpauseNested,
+    setPausedNested,
   }
 }
