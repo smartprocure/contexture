@@ -1085,4 +1085,119 @@ describe('lib', () => {
     expect(tree.getNode(['root', 'results']).page).to.equal(2)
     expect(service).to.have.callCount(1)
   })
+  it('should support add at index', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'results',
+          type: 'results',
+          page: 1,
+        },
+        {
+          key: 'analytics',
+          type: 'results',
+          page: 1
+        }
+      ],
+    })
+    await tree.add(['root'], {
+      key: 'filter1',
+      type: 'facet',
+      field: 'field1'
+    }, 1)
+
+    let keys = _.map('key', tree.tree.children)
+    expect(keys).to.deep.equal(['results', 'filter1', 'analytics'])
+  })
+  it('should support add with children', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'results',
+          type: 'results',
+          page: 1,
+        },
+      ],
+    })
+    await tree.add(['root'], {
+      key: 'criteria',
+      children: [
+        {
+          key: 'filter1',
+          type: 'facet',
+          field: 'field1'
+        },
+        {
+          key: 'filter2',
+          type: 'facet',
+          field: 'field2'
+        }
+      ]
+    })
+    let filter1Get = tree.getNode(['root', 'criteria', 'filter1'])
+    let filter1Direct = tree.getNode(['root', 'criteria']).children[0]
+    expect(filter1Direct).to.exist
+    expect(filter1Direct.path).to.deep.equal(['root', 'criteria', 'filter1'])
+    expect(filter1Get).to.equal(filter1Direct)
+    
+    // Check initNode worked and added default props
+    expect(filter1Get.values).to.deep.equal([])
+    expect(filter1Get.path).to.deep.equal(['root', 'criteria', 'filter1'])
+
+    // "move" to another node location and make sure everything is updated
+    await tree.mutate(['root', 'criteria', 'filter1'], { values: [1, 2, 3] })
+    await tree.remove(['root', 'criteria', 'filter1'])
+    expect(tree.getNode(['root', 'criteria', 'filter1'])).not.to.exist
+    expect(filter1Direct).to.exist
+    await tree.add(['root'], filter1Direct)
+
+    let newlyAddedNode = tree.getNode(['root', 'filter1'])
+    expect(newlyAddedNode).to.exist
+    expect(newlyAddedNode.path).to.deep.equal(['root', 'filter1'])
+    expect(newlyAddedNode.values).to.deep.equal([1, 2, 3])
+
+    // TODO - better error adding to paths that don't exist, maybe generic action builder?
+    //     also make sure doubel init node isn't an issue for move(which will be remove+add)
+  })
+  it('should remove children from flat array', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'results',
+          type: 'results',
+          page: 1,
+        },
+        {
+          key: 'criteria',
+          children: [
+            {
+              key: 'filter1',
+              type: 'facet',
+              field: 'field1'
+            },
+            {
+              key: 'filter2',
+              type: 'facet',
+              field: 'field2'
+            }
+          ]
+        }
+      ]
+    })
+    await tree.remove(['root', 'criteria'])
+    expect(tree.getNode(['root', 'criteria'])).to.not.exist
+    expect(tree.getNode(['root', 'criteria', 'filter1'])).to.not.exist
+  })
 })
