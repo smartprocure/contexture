@@ -4,9 +4,16 @@ import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import ContextureClient, { encode } from '../src'
 import Promise from 'bluebird'
+import mockService from '../src/mockService'
+import { observable, toJS, set } from 'mobx'
 const expect = chai.expect
 chai.use(sinonChai)
-import mockService from '../src/mockService'
+
+let mobxAdapter = { snapshot: toJS, extend: set, initObject: observable }
+let ContextureMobx = _.curry((x, y) =>
+  ContextureClient({ ...mobxAdapter, ...x })(y)
+)
+
 
 sinon.spy.reset = sinon.spy.resetHistory
 
@@ -15,7 +22,7 @@ let addDelay = (delay, fn) => async (...args) => {
   return fn(...args)
 }
 
-describe('lib', () => {
+let AllTests = (ContextureClient) => {
   describe('should generally work', () => {
     // TODO: make these generally self contained - some rely on previous test runs
     let tree = {
@@ -1407,4 +1414,7 @@ describe('lib', () => {
     expect(tree.getNode(['root', 'criteria', 'filter1']).paused).to.be.true
     expect(tree.getNode(['root', 'criteria', 'filter2']).paused).to.be.true
   })
-})
+}
+
+describe('lib', () => AllTests(ContextureClient))
+describe('mobx', () => AllTests(ContextureMobx))

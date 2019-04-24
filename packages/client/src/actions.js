@@ -77,7 +77,8 @@ export default ({
 
   let replace = (path, node) => {
     let parentPath = _.dropRight(1, path)
-    let index = _.findIndex(getNode(path), getNode(parentPath).children)
+    // Snapshot is for mobx 4 support since observable nodes apparently throw errors
+    let index = _.findIndex(snapshot(getNode(path)), getNode(parentPath).children)
     remove(path)
     return add(parentPath, node, { index })
   }
