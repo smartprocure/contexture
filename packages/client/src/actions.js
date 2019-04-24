@@ -1,7 +1,13 @@
 import _ from 'lodash/fp'
 import { pullOn } from 'futil-js'
-import { encode } from './util/tree'
+import { encode, Tree } from './util/tree'
 import { getTypeProp } from './types'
+
+let pushOrSpliceOn = (array, item, index)  => {
+  if (index === undefined) array.push(item)
+  else array.splice(index, 0, item)
+  return array
+}
 
 export default ({
   getNode,
@@ -12,22 +18,34 @@ export default ({
   extend,
   initNode,
 }) => {
-  let add = async (parentPath, node) => {
+  let add = async (parentPath, node, index) => {
+    Tree.walk((node, index, [parent = {}]) => {
+      let path = [..._.toArray(parent.path || parentPath), node.key]
+      initNode(node, path, extend, types)
+      flat[encode(path)] = node
+    })(node)
+    
     let target = getNode(parentPath)
-    let path = [...parentPath, node.key]
-    // TODO: Does not currently call init on child nodes
-    initNode(node, path, extend, types)
-    target.children.push(node)
+    
+    // consider moving this in the tree walk? it could work for al children too but would be exgra work for chilren
+    pushOrSpliceOn(target.children, node, index)
     // Need this nonsense to support the case where push actually mutates, e.g. a mobx observable tree
-    flat[encode(path)] = target.children[target.children.length - 1]
-    return dispatch({ type: 'add', path, node })
+    // flat[encode(path)] = target.children[index]
+    
+    return dispatch({ type: 'add', path: _.toArray(node.path), node })
   }
 
   let remove = async path => {
     let previous = getNode(path)
-    let parent = getNode(_.dropRight(1, path))
+    let parentPath = _.dropRight(1, path)
+    let parent = getNode(parentPath)
     pullOn(previous, parent.children)
-    delete flat[encode(path)]
+    
+    Tree.walk((node, index, [parent = {}]) => {
+      let path = [...parent.path || parentPath, node.key]
+      delete flat[encode(path)]
+    })(previous)
+
     return dispatch({ type: 'remove', path, previous })
   }
 
