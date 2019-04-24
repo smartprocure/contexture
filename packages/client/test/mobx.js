@@ -11,12 +11,12 @@ chai.use(sinonChai)
 
 let mobxAdapter = { snapshot: toJS, extend: set, initObject: observable }
 let ContextureMobx = x => ContextureClient({ ...mobxAdapter, ...x })
-    //,
-    // F.updateOn('add', action),
-    // F.updateOn('remove', action),
-    // F.updateOn('mutate', action),
-    // F.updateOn('refresh', action)
-  // )
+//,
+// F.updateOn('add', action),
+// F.updateOn('remove', action),
+// F.updateOn('mutate', action),
+// F.updateOn('refresh', action)
+// )
 
 let treeUtils = Tree
 

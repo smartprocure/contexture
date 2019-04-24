@@ -17,7 +17,7 @@ export default ({
   types,
   extend,
   initNode,
-  initObject
+  initObject,
 }) => {
   let add = async (parentPath, node, { index } = {}) => {
     node = initObject(node)
@@ -78,7 +78,10 @@ export default ({
   let replace = (path, node) => {
     let parentPath = _.dropRight(1, path)
     // Snapshot is for mobx 4 support since observable nodes apparently throw errors
-    let index = _.findIndex(snapshot(getNode(path)), getNode(parentPath).children)
+    let index = _.findIndex(
+      snapshot(getNode(path)),
+      getNode(parentPath).children
+    )
     remove(path)
     return add(parentPath, node, { index })
   }
