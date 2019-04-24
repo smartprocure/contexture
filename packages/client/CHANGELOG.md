@@ -1,4 +1,11 @@
-﻿# 2.21.0
+﻿# 2.22.0
+* Add nested pause actions (pauseNested, unpauseNested, setPausedNested, isPausedNested)
+* Add move action
+* Add indent action (and indentReplace/indentInPlace)
+* Add replace action
+* Support nested add, nested remove, add at index
+
+# 2.21.0
 * Serialize a node's `paused` field
 
 # 2.20.0
