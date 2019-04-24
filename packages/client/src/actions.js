@@ -118,6 +118,24 @@ export default ({
       ? indentReplace(path, newNode)
       : indentInPlace(path, newNode)
 
+  let move = (path, { path: targetPath, index: targetIndex } = {}) => {
+    let parentPath = _.dropRight(1, path)
+    targetPath = targetPath || parentPath
+    
+    let node = getNode(path)
+    if (_.isEqual(parentPath, targetPath)) {
+      // Same group, no dispatch or updating of paths needed - just rearrange children
+      pullOn(node, getNode(parentPath).children)
+      pushOrSpliceOn(getNode(targetPath).children, node, targetIndex)
+    }
+    else {
+      return Promise.all([
+        remove(path),
+        add(targetPath, node, targetIndex)
+      ])
+    }
+  }
+
   return {
     add,
     remove,
@@ -129,5 +147,6 @@ export default ({
     indentInPlace,
     indentReplace,
     indent,
+    move,
   }
 }

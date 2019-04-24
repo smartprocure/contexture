@@ -1327,4 +1327,34 @@ describe('lib', () => {
     expect(tree.getNode(['newRootChild', 'root', 'analytics', 'results'])).to.exist
     expect(tree.getNode(['newRootChild', 'root', 'criteria']).path).to.deep.equal(['newRootChild', 'root', 'criteria'])
   })
+  it('should move', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        { key: 'results', type: 'results', page: 1 },
+        {
+          key: 'criteria',
+          children: [
+            { key: 'filter1', type: 'facet', field: 'field1', values: [1, 2] },
+            { key: 'filter2', type: 'facet', field: 'field2' }
+          ]
+        }
+      ]
+    })
+    expect(tree.getNode(['root', 'criteria']).children[0].key).to.equal('filter1')
+    expect(tree.getNode(['root', 'criteria']).children[1].key).to.equal('filter2')
+
+    await tree.move(['root', 'criteria', 'filter1'], { index: 1 })
+    expect(tree.getNode(['root', 'criteria']).children[0].key).to.equal('filter2')
+    expect(tree.getNode(['root', 'criteria']).children[1].key).to.equal('filter1')
+    expect(service).to.have.not.been.called
+
+    await tree.move(['root', 'criteria', 'filter1'], {path: ['root']})
+    expect(tree.getNode(['root', 'criteria', 'filter1'])).to.not.exist
+    expect(tree.getNode(['root', 'filter1'])).to.exist
+    expect(service).to.have.callCount(1)
+  })
 })
