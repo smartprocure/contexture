@@ -14,7 +14,6 @@ let ContextureMobx = _.curry((x, y) =>
   ContextureClient({ ...mobxAdapter, ...x })(y)
 )
 
-
 sinon.spy.reset = sinon.spy.resetHistory
 
 let addDelay = (delay, fn) => async (...args) => {
@@ -22,7 +21,7 @@ let addDelay = (delay, fn) => async (...args) => {
   return fn(...args)
 }
 
-let AllTests = (ContextureClient) => {
+let AllTests = ContextureClient => {
   describe('should generally work', () => {
     // TODO: make these generally self contained - some rely on previous test runs
     let tree = {
