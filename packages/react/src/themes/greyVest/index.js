@@ -410,6 +410,12 @@ export let GVStyle = () => (
         margin-top: 15px;
       }
 
+      /* Min Height here is to align better in QueryBuilder */
+      .contexture-bool > .gv-radio-list,
+      .contexture-exists > .gv-radio-list {
+        min-height: 40px;
+      }
+
       /* Tabs */
       .gv-tab-container .gv-tab {
         display: inline-block;
@@ -741,9 +747,12 @@ export let Pager = props => (
 )
 
 export let MissingTypeComponent = InjectTreeNode(({ node = {} }) => (
-  <ErrorText>
-    Type <b>{node.type}</b> is not supported (for key <i>{node.key}</i>)
-  </ErrorText>
+  // Min Height here is to align better in QueryBuilder
+  <Flex style={{ minHeight: '40px', alignItems: 'center' }}>
+    <ErrorText>
+      Type <b>{node.type}</b> is not supported (for key <i>{node.key}</i>)
+    </ErrorText>
+  </Flex>
 ))
 export let FilterList = defaultProps({ Icon, ListItem, MissingTypeComponent })(
   BaseFilterList
