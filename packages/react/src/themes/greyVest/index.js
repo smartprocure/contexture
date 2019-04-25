@@ -759,4 +759,4 @@ export let FilterList = defaultProps({ Icon, ListItem, MissingTypeComponent })(
   BaseFilterList
 )
 
-export let QueryBuilder = defaultProps({ Button })(QueryBuilderComponent)
+export let QueryBuilder = defaultProps({ Button, MissingTypeComponent })(QueryBuilderComponent)
