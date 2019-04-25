@@ -108,6 +108,7 @@ export let DefaultMissingTypeComponent = InjectTreeNode(({ node = {} }) => (
 export let FilterList = InjectTreeNode(
   observer(
     ({
+      tree,
       node,
       typeComponents: types = {},
       fields,
@@ -125,6 +126,7 @@ export let FilterList = InjectTreeNode(
             child.children ? (
               <FilterList
                 key={child.path}
+                tree={tree}
                 node={child}
                 typeComponents={types}
                 fields={fields}
@@ -137,6 +139,7 @@ export let FilterList = InjectTreeNode(
             ) : (
               <div key={child.path} className="filter-list-item">
                 <FieldLabel
+                  tree={tree}
                   node={child}
                   fields={fields}
                   Icon={Icon}
@@ -147,6 +150,8 @@ export let FilterList = InjectTreeNode(
                   <div className="filter-list-item-contents">
                     <Dynamic
                       component={types[child.type] || MissingTypeComponent}
+                      tree={tree}
+                      node={child}
                       path={_.toArray(child.path)}
                       {...mapNodeToProps(child, fields, types)}
                     />
