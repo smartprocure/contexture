@@ -17,6 +17,9 @@ let FilterContents = inject(_.defaults)(
     ({ node, root, fields, types = {}, ContextureButton = 'button' }) => {
       // `get` allows us to create a dependency on field before we know it exists (because the client will only add it if it's a type that uses it as it wouldn't make sense for something like `results`)
       let nodeField = get(node, 'field')
+      let typeOptions = _.get([nodeField, 'typeOptions'], fields) || []
+      if (!_.includes(node.type, typeOptions))
+        typeOptions = [...typeOptions, node.type]
       return (
         <Grid columns="auto auto 1fr" style={{ width: '100%' }}>
           <FieldPicker
@@ -49,7 +52,7 @@ let FilterContents = inject(_.defaults)(
                       disabled: node.type,
                     },
                     ...F.autoLabelOptions(
-                      _.get([nodeField, 'typeOptions'], fields)
+                      typeOptions
                     ),
                   ]
                 )}
