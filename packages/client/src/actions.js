@@ -22,7 +22,7 @@ export default ({
   let add = async (parentPath, node, { index } = {}) => {
     node = initObject(node)
     Tree.walk((node, index, [parent = {}]) => {
-      let path = [..._.toArray(parent.path || parentPath), node.key]
+      let path = [...(parent.path || parentPath), node.key]
       initNode(node, path, extend, types)
       flat[encode(path)] = node
     })(node)
