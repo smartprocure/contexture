@@ -427,6 +427,7 @@ export let GVStyle = () => (
         vertical-align: bottom;
         border-left: solid 1px #c4c5ca;
         transition: background-color 0.1s linear;
+        text-align: center;
       }
       .gv-tab.active + .gv-tab {
         border-left: none;
