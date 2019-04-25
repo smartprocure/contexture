@@ -109,7 +109,7 @@ export let FilterList = InjectTreeNode(
   observer(
     ({
       node,
-      typeComponents: types,
+      typeComponents: types = {},
       fields,
       mapNodeToProps = _.noop,
       mapNodeToLabel = _.noop,

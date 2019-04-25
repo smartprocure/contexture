@@ -120,7 +120,7 @@ HeaderCellDefault.displayName = 'HeaderCellDefault'
 
 let Header = withStateLens({ popover: false, adding: false, filtering: false })(
   observer(({ // Local State
-    popover, adding, filtering, Modal, FieldPicker, ListGroupItem: Item, typeComponents, HeaderCell = HeaderCellDefault, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria, mapNodeToProps, fields, visibleFields, Icon }) => {
+    popover, adding, filtering, Modal, FieldPicker, ListGroupItem: Item, typeComponents = {}, HeaderCell = HeaderCellDefault, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria, mapNodeToProps, fields, visibleFields, Icon }) => {
     // Components (providerable?) // Contextual
     let {
       disableFilter,
