@@ -20,12 +20,13 @@ let FilterContents = inject(_.defaults)(
       let typeOptions = _.get([nodeField, 'typeOptions'], fields) || []
       if (!_.includes(node.type, typeOptions))
         typeOptions = [...typeOptions, node.type]
+      let nodeLabel = _.get([nodeField, 'label'], fields) || nodeField
       return (
         <Grid columns="auto auto 1fr" style={{ width: '100%' }}>
           <FieldPicker
             Button={ContextureButton}
             label={
-              nodeField ? _.get([nodeField, 'label'], fields) : 'Pick a Field'
+              nodeField ? nodeLabel : 'Pick a Field'
             }
             options={fieldsToOptions(fields)}
             // TODO: consider type options in case this isn't safe, e.g. a field/type change action
