@@ -33,6 +33,7 @@ import Tabs from './TabList'
 import ErrorList from './ErrorList'
 import ErrorText from './ErrorText'
 import Box from './Box'
+import LinkButton from './LinkButton'
 
 export {
   Input,
@@ -49,6 +50,7 @@ export {
   Tabs,
   ErrorList,
   Box,
+  LinkButton
 }
 
 export let GVStyle = () => (
