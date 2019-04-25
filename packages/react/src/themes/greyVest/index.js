@@ -32,6 +32,7 @@ import ButtonRadio from './ButtonRadio'
 import Tabs from './TabList'
 import ErrorList from './ErrorList'
 import ErrorText from './ErrorText'
+import Box from './Box'
 
 export {
   Input,
@@ -47,6 +48,7 @@ export {
   ButtonRadio,
   Tabs,
   ErrorList,
+  Box,
 }
 
 export let GVStyle = () => (
