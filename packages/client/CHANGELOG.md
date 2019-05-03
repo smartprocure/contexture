@@ -1,7 +1,7 @@
 ﻿# 2.22.0
-* Add nested pause actions (pauseNested, unpauseNested, setPausedNested, isPausedNested)
+* Add nested pause actions (pauseNested, unpauseNested, isPausedNested)
 * Add move action
-* Add indent action (and indentReplace/indentInPlace)
+* Add wrapInGroup action
 * Add replace action
 * Support nested add, nested remove, add at index
 * Add `initObject` config support

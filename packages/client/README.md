@@ -147,7 +147,6 @@ The following methods are exposed on an instantiated client
 | move | `async (path, { path, index }) -> await searchCompleted` | Moves the node at the provided path (first argument) to the target location provided in the second parameter. If the target path is not specified, it will default to the current node's group. If the target index isn't provided, it will default to moving to the end of the target group. You can await this for when updates settle and relevant searches are completed. Useful for drag and drop query builder interfaces that let you move nodes around in and between groups. |
 | pauseNested | `async (path) -> await searchCompleted` | Recursively set paused to true for the node at the path and all its children. You can await this for when updates settle and relevant searches are completed. |
 | unpauseNested | `async (path) -> await searchCompleted` | Recursively set paused to false for the node at the path and all its children. You can await this for when updates settle and relevant searches are completed. |
-| setPauseNested | `async (path, value) -> await searchCompleted` | Recursively set paused to the passed in `value` for the node at the path and all its children. You can await this for when updates settle and relevant searches are completed. |
 | isPausedNested | `async (path) -> bool` | Returns a bool for whether the node at the path and all of its children are paused. |
 
 #### Node Run Time
