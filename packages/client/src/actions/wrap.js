@@ -44,5 +44,5 @@ export default ({ getNode, flat }, { mutate, replace, remove, add }) => {
     wrapInGroupInPlace,
     wrapInGroupReplace,
     wrapInGroup,
-  }  
+  }
 }
