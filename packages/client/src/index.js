@@ -55,9 +55,11 @@ export let ContextTree = _.curry(
       extend = F.extendOn,
       snapshot = _.cloneDeep,
       disableAutoUpdate,
+      initObject = _.identity,
     },
     tree
   ) => {
+    tree = initObject(tree)
     let log = x => debug && console.info(x)
     let flat = flatten(tree)
     let getNode = path => flat[encode(path)]
@@ -162,7 +164,16 @@ export let ContextTree = _.curry(
       addActions: create =>
         F.extendOn(
           TreeInstance,
-          create({ getNode, flat, dispatch, snapshot, extend, types, initNode })
+          create({
+            getNode,
+            flat,
+            dispatch,
+            snapshot,
+            extend,
+            types,
+            initNode,
+            initObject,
+          })
         ),
       addReactors: create => F.extendOn(customReactors, create()),
       onResult,

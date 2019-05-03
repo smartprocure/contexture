@@ -1,4 +1,13 @@
-﻿# 2.21.0
+﻿# 2.22.0
+* Add nested pause actions (pauseNested, unpauseNested, isPausedNested)
+* Add move action
+* Add wrapInGroup action
+* Add replace action
+* Support nested add, nested remove, add at index
+* Add `initObject` config support
+* Entire test suite is now run against both the native JS and mobx client
+
+# 2.21.0
 * Serialize a node's `paused` field
 
 # 2.20.0
