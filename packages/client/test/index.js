@@ -1412,10 +1412,6 @@ let AllTests = ContextureClient => {
     expect(tree.isPausedNested(['root', 'criteria'])).to.be.false
     expect(tree.getNode(['root', 'criteria', 'filter1']).paused).to.be.false
     expect(tree.getNode(['root', 'criteria', 'filter2']).paused).to.be.false
-    await tree.setPausedNested(['root', 'criteria'], true)
-    expect(tree.isPausedNested(['root', 'criteria'])).to.be.true
-    expect(tree.getNode(['root', 'criteria', 'filter1']).paused).to.be.true
-    expect(tree.getNode(['root', 'criteria', 'filter2']).paused).to.be.true
   })
 }
 
