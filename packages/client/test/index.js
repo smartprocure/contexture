@@ -5,6 +5,7 @@ import sinonChai from 'sinon-chai'
 import ContextureClient, { encode } from '../src'
 import Promise from 'bluebird'
 import mockService from '../src/mockService'
+import wrap from '../src/actions/wrap'
 import { observable, toJS, set } from 'mobx'
 const expect = chai.expect
 chai.use(sinonChai)
@@ -1243,7 +1244,7 @@ let AllTests = ContextureClient => {
     expect(tree.getNode(['root', 'criteria'])).to.not.exist
     expect(tree.getNode(['root', 'criteria1']).values).to.deep.equal([])
   })
-  it('should indent replace', async () => {
+  it('should wrapInGroup replace', async () => {
     let service = sinon.spy(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
@@ -1272,7 +1273,8 @@ let AllTests = ContextureClient => {
         },
       ],
     })
-    await tree.indentReplace(['root', 'results'], {
+    tree.addActions(config => wrap(config, tree))
+    await tree.wrapInGroupReplace(['root', 'results'], {
       key: 'analytics',
       join: 'and',
     })
@@ -1281,7 +1283,7 @@ let AllTests = ContextureClient => {
     expect(tree.getNode(['root', 'results'])).not.to.exist
     expect(tree.getNode(['root', 'analytics', 'results'])).to.exist
   })
-  it('should indent root', async () => {
+  it('should wrapInGroup root', async () => {
     let service = sinon.spy(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
@@ -1298,7 +1300,8 @@ let AllTests = ContextureClient => {
         },
       ],
     })
-    await tree.indentInPlace(['root'], { key: 'newRootChild', join: 'or' })
+    tree.addActions(config => wrap(config, tree))
+    await tree.wrapInGroupInPlace(['root'], { key: 'newRootChild', join: 'or' })
 
     expect(tree.getNode(['newRootChild'])).to.exist
     expect(tree.getNode(['newRootChild']).join).to.equal('or')
@@ -1308,7 +1311,7 @@ let AllTests = ContextureClient => {
       tree.getNode(['newRootChild', 'root', 'criteria']).path
     ).to.deep.equal(['newRootChild', 'root', 'criteria'])
   })
-  it('should indent', async () => {
+  it('should wrapInGroup', async () => {
     let service = sinon.spy(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
@@ -1325,13 +1328,14 @@ let AllTests = ContextureClient => {
         },
       ],
     })
-    await tree.indent(['root', 'results'], { key: 'analytics', join: 'and' })
+    tree.addActions(config => wrap(config, tree))
+    await tree.wrapInGroup(['root', 'results'], { key: 'analytics', join: 'and' })
 
     expect(tree.getNode(['root', 'analytics'])).to.exist
     expect(tree.getNode(['root', 'results'])).not.to.exist
     expect(tree.getNode(['root', 'analytics', 'results'])).to.exist
 
-    await tree.indentInPlace(['root'], { key: 'newRootChild', join: 'or' })
+    await tree.wrapInGroupInPlace(['root'], { key: 'newRootChild', join: 'or' })
 
     expect(tree.getNode(['newRootChild'])).to.exist
     expect(tree.getNode(['newRootChild']).join).to.equal('or')
