@@ -89,7 +89,7 @@ export default config => {
     return add(parentPath, node, { index })
   }
 
-  let { wrapInGroup } = wrap(config, {mutate, replace, add})
+  let { wrapInGroup } = wrap(config, { mutate, replace, add })
 
   let move = (path, { path: targetPath, index: targetIndex } = {}) => {
     let parentPath = _.dropRight(1, path)
@@ -118,7 +118,10 @@ export default config => {
   let pauseNested = path => mutateNested(path, { paused: true })
   let unpauseNested = path => mutateNested(path, { paused: false })
 
-  let nodeLeaves = _.flow(getNode, Tree.leaves)
+  let nodeLeaves = _.flow(
+    getNode,
+    Tree.leaves
+  )
   let isPausedNested = _.flow(
     nodeLeaves,
     _.every('paused')

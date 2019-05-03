@@ -1329,7 +1329,10 @@ let AllTests = ContextureClient => {
       ],
     })
     tree.addActions(config => wrap(config, tree))
-    await tree.wrapInGroup(['root', 'results'], { key: 'analytics', join: 'and' })
+    await tree.wrapInGroup(['root', 'results'], {
+      key: 'analytics',
+      join: 'and',
+    })
 
     expect(tree.getNode(['root', 'analytics'])).to.exist
     expect(tree.getNode(['root', 'results'])).not.to.exist
