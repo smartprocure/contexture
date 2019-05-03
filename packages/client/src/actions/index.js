@@ -1,7 +1,8 @@
 import _ from 'lodash/fp'
 import { pullOn } from 'futil-js'
-import { encode, Tree } from './util/tree'
-import { getTypeProp } from './types'
+import { encode, Tree } from '../util/tree'
+import { getTypeProp } from '../types'
+import wrap from './wrap'
 
 let pushOrSpliceOn = (array, item, index) => {
   if (index === undefined) array.push(item)
@@ -9,16 +10,18 @@ let pushOrSpliceOn = (array, item, index) => {
   return array
 }
 
-export default ({
-  getNode,
-  flat,
-  dispatch,
-  snapshot,
-  types,
-  extend,
-  initNode,
-  initObject,
-}) => {
+export default config => {
+  let {
+    getNode,
+    flat,
+    dispatch,
+    snapshot,
+    types,
+    extend,
+    initNode,
+    initObject,
+  } = config
+
   let add = async (parentPath, node, { index } = {}) => {
     node = initObject(node)
     Tree.walk((node, index, [parent = {}]) => {
@@ -91,38 +94,7 @@ export default ({
     children: [...node.children],
   })
 
-  // indent in place should make node key be the new key and put root _inside_ the thing
-  // like replace/indent, used at root level
-  let indentInPlace = async (path, newNode) => {
-    // Clone the root node since we'll be modifying it in place in the tree
-    let node = shallowCloneNode(getNode(path))
-
-    // Remove all children (they'll be readded at the end when we add the shallow clone)
-    await Promise.all(_.map(child => remove(child.path), node.children))
-
-    // Mutate existing root into new root
-    await mutate(path, {
-      ...newNode,
-      path: [newNode.key],
-    })
-
-    // Replace flat tree references to root
-    flat[encode([newNode.key])] = flat[encode(path)]
-    delete flat[encode(path)]
-
-    // Add original root as a child of the new root
-    await add([newNode.key], node)
-  }
-  let indentReplace = async (path, newNode) =>
-    replace(path, {
-      ...newNode,
-      children: [getNode(path)],
-    })
-
-  let indent = async (path, newNode) =>
-    _.size(path) > 1
-      ? indentReplace(path, newNode)
-      : indentInPlace(path, newNode)
+  let { wrapInGroup } = wrap(config, {mutate, replace, add})
 
   let move = (path, { path: targetPath, index: targetIndex } = {}) => {
     let parentPath = _.dropRight(1, path)
@@ -152,9 +124,9 @@ export default ({
   let unpauseNested = path => mutateNested(path, { paused: false })
   let setPausedNested = (path, paused) => mutateNested(path, { paused })
 
+  let nodeLeaves = _.flow(getNode, Tree.leaves)
   let isPausedNested = _.flow(
-    getNode,
-    Tree.leaves,
+    nodeLeaves,
     _.every('paused')
   )
 
@@ -166,9 +138,7 @@ export default ({
     triggerUpdate,
     clear,
     replace,
-    indentInPlace,
-    indentReplace,
-    indent,
+    wrapInGroup,
     move,
     isPausedNested,
     pauseNested,
