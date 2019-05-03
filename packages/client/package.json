@@ -1,6 +1,6 @@
 {
   "name": "contexture-client",
-  "version": "2.21.0",
+  "version": "2.22.0",
   "description": "The Contexture (aka ContextTree) Client",
   "main": "lib/contexture-client.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "lint-ci": "npm run lint -- -o lint-results.json -f json",
     "lint-fix": "npm run lint -- --fix",
     "test": "babel-node ./node_modules/mocha/bin/_mocha",
-    "test-watch": "chokidar 'src/*.js' 'test/*.js' -c 'npm t'",
+    "test-watch": "chokidar 'src/**/*.js' 'test/*.js' -c 'npm t'",
     "coverage": "nyc --require babel-core/register node_modules/.bin/mocha test",
     "test-ci": "babel-node ./node_modules/mocha/bin/_mocha --reporter json > test-results.json",
     "cicoverage": "nyc --reporter=lcov --require babel-core/register node_modules/.bin/mocha test --reporter json > test-results.json",

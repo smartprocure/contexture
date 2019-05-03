@@ -4,9 +4,16 @@ import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import ContextureClient, { encode } from '../src'
 import Promise from 'bluebird'
+import mockService from '../src/mockService'
+import wrap from '../src/actions/wrap'
+import { observable, toJS, set } from 'mobx'
 const expect = chai.expect
 chai.use(sinonChai)
-import mockService from '../src/mockService'
+
+let mobxAdapter = { snapshot: toJS, extend: set, initObject: observable }
+let ContextureMobx = _.curry((x, y) =>
+  ContextureClient({ ...mobxAdapter, ...x })(y)
+)
 
 sinon.spy.reset = sinon.spy.resetHistory
 
@@ -15,7 +22,7 @@ let addDelay = (delay, fn) => async (...args) => {
   return fn(...args)
 }
 
-describe('lib', () => {
+let AllTests = ContextureClient => {
   describe('should generally work', () => {
     // TODO: make these generally self contained - some rely on previous test runs
     let tree = {
@@ -1085,4 +1092,331 @@ describe('lib', () => {
     expect(tree.getNode(['root', 'results']).page).to.equal(2)
     expect(service).to.have.callCount(1)
   })
-})
+  it('should support add at index', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'results',
+          type: 'results',
+          page: 1,
+        },
+        {
+          key: 'analytics',
+          type: 'results',
+          page: 1,
+        },
+      ],
+    })
+    await tree.add(
+      ['root'],
+      {
+        key: 'filter1',
+        type: 'facet',
+        field: 'field1',
+      },
+      { index: 1 }
+    )
+
+    let keys = _.map('key', tree.tree.children)
+    expect(keys).to.deep.equal(['results', 'filter1', 'analytics'])
+  })
+  it('should support add with children', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'results',
+          type: 'results',
+          page: 1,
+        },
+      ],
+    })
+    await tree.add(['root'], {
+      key: 'criteria',
+      children: [
+        {
+          key: 'filter1',
+          type: 'facet',
+          field: 'field1',
+        },
+        {
+          key: 'filter2',
+          type: 'facet',
+          field: 'field2',
+        },
+      ],
+    })
+    let filter1Get = tree.getNode(['root', 'criteria', 'filter1'])
+    let filter1Direct = tree.getNode(['root', 'criteria']).children[0]
+    expect(filter1Direct).to.exist
+    expect(filter1Direct.path).to.deep.equal(['root', 'criteria', 'filter1'])
+    expect(filter1Get).to.equal(filter1Direct)
+
+    // Check initNode worked and added default props
+    expect(filter1Get.values).to.deep.equal([])
+    expect(filter1Get.path).to.deep.equal(['root', 'criteria', 'filter1'])
+
+    // "move" to another node location and make sure everything is updated
+    await tree.mutate(['root', 'criteria', 'filter1'], { values: [1, 2, 3] })
+    await tree.remove(['root', 'criteria', 'filter1'])
+    expect(tree.getNode(['root', 'criteria', 'filter1'])).not.to.exist
+    expect(filter1Direct).to.exist
+    await tree.add(['root'], filter1Direct)
+
+    let newlyAddedNode = tree.getNode(['root', 'filter1'])
+    expect(newlyAddedNode).to.exist
+    expect(newlyAddedNode.path).to.deep.equal(['root', 'filter1'])
+    expect(newlyAddedNode.values).to.deep.equal([1, 2, 3])
+  })
+  it('should remove children from flat array', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'results',
+          type: 'results',
+          page: 1,
+        },
+        {
+          key: 'criteria',
+          children: [
+            {
+              key: 'filter1',
+              type: 'facet',
+              field: 'field1',
+            },
+            {
+              key: 'filter2',
+              type: 'facet',
+              field: 'field2',
+            },
+          ],
+        },
+      ],
+    })
+    await tree.remove(['root', 'criteria'])
+    expect(tree.getNode(['root', 'criteria'])).to.not.exist
+    expect(tree.getNode(['root', 'criteria', 'filter1'])).to.not.exist
+  })
+  it('should replace', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'results',
+          type: 'results',
+          page: 1,
+        },
+        {
+          key: 'criteria',
+          children: [
+            {
+              key: 'filter1',
+              type: 'facet',
+              field: 'field1',
+            },
+            {
+              key: 'filter2',
+              type: 'facet',
+              field: 'field2',
+            },
+          ],
+        },
+      ],
+    })
+    await tree.replace(['root', 'criteria'], {
+      key: 'criteria1',
+      type: 'facet',
+    })
+    expect(tree.getNode(['root', 'criteria'])).to.not.exist
+    expect(tree.getNode(['root', 'criteria1']).values).to.deep.equal([])
+  })
+  it('should wrapInGroup replace', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'results',
+          type: 'results',
+          page: 1,
+        },
+        {
+          key: 'criteria',
+          children: [
+            {
+              key: 'filter1',
+              type: 'facet',
+              field: 'field1',
+            },
+            {
+              key: 'filter2',
+              type: 'facet',
+              field: 'field2',
+            },
+          ],
+        },
+      ],
+    })
+    tree.addActions(config => wrap(config, tree))
+    await tree.wrapInGroupReplace(['root', 'results'], {
+      key: 'analytics',
+      join: 'and',
+    })
+
+    expect(tree.getNode(['root', 'analytics'])).to.exist
+    expect(tree.getNode(['root', 'results'])).not.to.exist
+    expect(tree.getNode(['root', 'analytics', 'results'])).to.exist
+  })
+  it('should wrapInGroup root', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        { key: 'results', type: 'results', page: 1 },
+        {
+          key: 'criteria',
+          children: [
+            { key: 'filter1', type: 'facet', field: 'field1' },
+            { key: 'filter2', type: 'facet', field: 'field2' },
+          ],
+        },
+      ],
+    })
+    tree.addActions(config => wrap(config, tree))
+    await tree.wrapInGroupInPlace(['root'], { key: 'newRootChild', join: 'or' })
+
+    expect(tree.getNode(['newRootChild'])).to.exist
+    expect(tree.getNode(['newRootChild']).join).to.equal('or')
+    expect(tree.getNode(['newRootChild', 'root'])).to.exist
+    expect(tree.getNode(['newRootChild', 'root', 'results'])).to.exist
+    expect(
+      tree.getNode(['newRootChild', 'root', 'criteria']).path
+    ).to.deep.equal(['newRootChild', 'root', 'criteria'])
+  })
+  it('should wrapInGroup', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        { key: 'results', type: 'results', page: 1 },
+        {
+          key: 'criteria',
+          children: [
+            { key: 'filter1', type: 'facet', field: 'field1' },
+            { key: 'filter2', type: 'facet', field: 'field2' },
+          ],
+        },
+      ],
+    })
+    tree.addActions(config => wrap(config, tree))
+    await tree.wrapInGroup(['root', 'results'], {
+      key: 'analytics',
+      join: 'and',
+    })
+
+    expect(tree.getNode(['root', 'analytics'])).to.exist
+    expect(tree.getNode(['root', 'results'])).not.to.exist
+    expect(tree.getNode(['root', 'analytics', 'results'])).to.exist
+
+    await tree.wrapInGroupInPlace(['root'], { key: 'newRootChild', join: 'or' })
+
+    expect(tree.getNode(['newRootChild'])).to.exist
+    expect(tree.getNode(['newRootChild']).join).to.equal('or')
+    expect(tree.getNode(['newRootChild', 'root'])).to.exist
+    expect(tree.getNode(['newRootChild', 'root', 'analytics', 'results'])).to
+      .exist
+    expect(
+      tree.getNode(['newRootChild', 'root', 'criteria']).path
+    ).to.deep.equal(['newRootChild', 'root', 'criteria'])
+  })
+  it('should move', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        { key: 'results', type: 'results', page: 1 },
+        {
+          key: 'criteria',
+          children: [
+            { key: 'filter1', type: 'facet', field: 'field1', values: [1, 2] },
+            { key: 'filter2', type: 'facet', field: 'field2' },
+          ],
+        },
+      ],
+    })
+    expect(tree.getNode(['root', 'criteria']).children[0].key).to.equal(
+      'filter1'
+    )
+    expect(tree.getNode(['root', 'criteria']).children[1].key).to.equal(
+      'filter2'
+    )
+
+    await tree.move(['root', 'criteria', 'filter1'], { index: 1 })
+    expect(tree.getNode(['root', 'criteria']).children[0].key).to.equal(
+      'filter2'
+    )
+    expect(tree.getNode(['root', 'criteria']).children[1].key).to.equal(
+      'filter1'
+    )
+    expect(service).to.have.not.been.called
+
+    await tree.move(['root', 'criteria', 'filter1'], { path: ['root'] })
+    expect(tree.getNode(['root', 'criteria', 'filter1'])).to.not.exist
+    expect(tree.getNode(['root', 'filter1'])).to.exist
+    expect(service).to.have.callCount(1)
+  })
+  it('should support pause actions', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        { key: 'results', type: 'results', page: 1 },
+        {
+          key: 'criteria',
+          children: [
+            { key: 'filter1', type: 'facet', field: 'field1', values: [1, 2] },
+            { key: 'filter2', type: 'facet', field: 'field2' },
+          ],
+        },
+      ],
+    })
+    expect(tree.isPausedNested(['root', 'criteria'])).to.be.false
+    expect(tree.getNode(['root', 'criteria', 'filter1']).paused).to.not.be.true
+    expect(tree.getNode(['root', 'criteria', 'filter2']).paused).to.not.be.true
+    await tree.pauseNested(['root', 'criteria'])
+    expect(tree.isPausedNested(['root', 'criteria'])).to.be.true
+    expect(tree.getNode(['root', 'criteria', 'filter1']).paused).to.be.true
+    expect(tree.getNode(['root', 'criteria', 'filter2']).paused).to.be.true
+    await tree.unpauseNested(['root', 'criteria'])
+    expect(tree.isPausedNested(['root', 'criteria'])).to.be.false
+    expect(tree.getNode(['root', 'criteria', 'filter1']).paused).to.be.false
+    expect(tree.getNode(['root', 'criteria', 'filter2']).paused).to.be.false
+  })
+}
+
+describe('lib', () => AllTests(ContextureClient))
+describe('mobx', () => AllTests(ContextureMobx))
