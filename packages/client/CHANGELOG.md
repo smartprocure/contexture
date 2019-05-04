@@ -1,4 +1,7 @@
-﻿# 2.22.0
+﻿# 2.22.1
+* Fix bug with replace not inserting at the right index with mobx
+
+# 2.22.0
 * Add nested pause actions (pauseNested, unpauseNested, isPausedNested)
 * Add move action
 * Add wrapInGroup action

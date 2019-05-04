@@ -1243,6 +1243,8 @@ let AllTests = ContextureClient => {
     })
     expect(tree.getNode(['root', 'criteria'])).to.not.exist
     expect(tree.getNode(['root', 'criteria1']).values).to.deep.equal([])
+    // Confirm it's at the right index
+    expect(tree.tree.children[1].key).to.deep.equal('criteria1')
   })
   it('should wrapInGroup replace', async () => {
     let service = sinon.spy(mockService())
