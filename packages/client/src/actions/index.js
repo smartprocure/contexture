@@ -80,9 +80,8 @@ export default config => {
 
   let replace = (path, node) => {
     let parentPath = _.dropRight(1, path)
-    // Snapshot is for mobx 4 support since observable nodes apparently throw errors
     let index = _.findIndex(
-      snapshot(getNode(path)),
+      x => x === getNode(path),
       getNode(parentPath).children
     )
     remove(path)
