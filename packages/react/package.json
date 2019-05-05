@@ -83,7 +83,7 @@
     "babel-jest": "^23.4.2",
     "babel-plugin-require-context-hook": "^1.0.0",
     "contexture": "^0.2.1",
-    "contexture-client": "^2.20.0",
+    "contexture-client": "^2.22.1",
     "contexture-elasticsearch": "^0.10.2",
     "danger": "^6.1.13",
     "duti": "^0.15.0",
