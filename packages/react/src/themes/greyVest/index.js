@@ -746,6 +746,16 @@ export let Pager = props => (
   />
 )
 
+export let PagedResultTable = InjectTreeNode(observer(({ tree, node, ...props }) => (
+  <>
+    <ExampleTypes.ResultTable tree={tree} node={node} {...props} />
+    <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>
+      <Pager tree={tree} node={node} />
+    </Flex>
+  </>
+)))
+PagedResultTable.displayName = 'PagedResultTable'
+
 export let MissingTypeComponent = InjectTreeNode(({ node = {} }) => (
   // Min Height here is to align better in QueryBuilder
   <Flex style={{ minHeight: '40px', alignItems: 'center' }}>
