@@ -397,7 +397,7 @@ export let GVStyle = () => (
         margin: 0 10px;
       }
       .contexture-facet > .gv-input[type="text"] {
-        margin: 20px 0;
+        margin-bottom: 10px;
       }
       .contexture-facet-cardinality {
         margin: 10px 0;
@@ -411,8 +411,7 @@ export let GVStyle = () => (
       }
 
       /* Min Height here is to align better in QueryBuilder */
-      .contexture-bool > .gv-radio-list,
-      .contexture-exists > .gv-radio-list {
+       .gv-radio-list {
         min-height: 40px;
       }
 
