@@ -117,8 +117,14 @@ let ContextureClientBridge = (
 export default DDContext(
   Component(
     (
-      { tree: iTree, types: iTypes },
-      { types = iTypes, tree = iTree, fields, defaultNodeProps }
+      { tree: iTree, types: iTypes, typeComponents: iTypeComponents },
+      {
+        typeComponents = iTypeComponents,
+        types = iTypes || typeComponents,
+        tree = iTree,
+        fields,
+        defaultNodeProps,
+      }
     ) => ({
       types,
       state: observable({
@@ -126,8 +132,19 @@ export default DDContext(
         ...ContextureClientBridge(types, tree, fields, defaultNodeProps),
       }),
     }),
-    ({ state, path, fields, types = {}, Button = 'button' }) => (
-      <Provider fields={fields} types={types} ContextureButton={Button}>
+    ({
+      state,
+      path,
+      fields,
+      types = {},
+      Button = 'button',
+      mapNodeToProps,
+      MissingTypeComponent,
+    }) => (
+      <Provider
+        ContextureButton={Button}
+        {...{ fields, types, mapNodeToProps, MissingTypeComponent }}
+      >
         <div style={{ background }}>
           {state.getNode(path) && (
             <Group tree={state.getNode(path)} root={state} isRoot={true} />

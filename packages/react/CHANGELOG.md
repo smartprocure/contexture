@@ -1,3 +1,23 @@
+# 1.47.0
+## New Components
+* GreyVest: Add Box
+* GreyVest: Add LinkButton
+* GreyVest: Added PagedResultTable
+
+## API Improvements
+* ResultTable: Make typeComponents optional
+* FilterList: Make typeComponents optional
+* FilterList: Fix bug with usage without Provider
+* QueryBuilder: Add support for mapNodeToProps and MissingTypeComponent
+* QueryBuilder: Allow typeComponents as an alias for types to match the FilterList API
+
+## Styling/Design Improvements
+* ResultCount: Remove Paging Info
+* GreyVest: Styling improvements - center tabs, improve query builder styling to set things to a min height of 40px
+* QueryBuilder -> FilterContents: Handle Nodes with types missing from typeOptions (by adding the current type to the drop down)
+* QueryBuilder -> FilterContents: Show field if there is not label instead of a blank button
+* GreyVest: Improve radio list styling (for advanced search)
+
 # 1.46.0
 * Update dependencies: babel 7, storybook 5, other dev dependencies
 * Clean up storybook in general, streamlining storybook creation

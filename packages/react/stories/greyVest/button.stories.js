@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions'
 import { Button, Fonts, GVStyle } from './../../src/themes/greyVest'
 
 storiesOf('Non Search Components|Grey Vest/Button', module)
-  .addWithJSX('Basic', () => (
+  .addWithJSX('Basic Usage', () => (
     <div>
       <Fonts />
       <GVStyle />

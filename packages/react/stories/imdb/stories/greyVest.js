@@ -17,6 +17,7 @@ import {
   IconButton,
   Tabs,
   QueryBuilder,
+  PagedResultTable,
 } from '../../../src/themes/greyVest'
 import { Column } from './../../../src/layout/ExpandableTable'
 let {
@@ -219,7 +220,7 @@ export default () => (
     <GVStyle />
     <Awaiter promise={schemas}>
       {schemas => (
-        <Provider tree={tree}>
+        <Provider treee={tree}>
           <div
             className="gv-grid"
             style={state.showBuilder ? { gridTemplateColumns: '1fr' } : {}}
@@ -240,6 +241,7 @@ export default () => (
                     <Label>Released</Label>
                     <div className="filter-list-item-contents">
                       <DateRangePicker
+                        tree={tree}
                         path={['root', 'status']}
                         ranges={[
                           { label: 'All Time', from: '', to: '' },
@@ -254,6 +256,7 @@ export default () => (
                     </div>
                   </div>
                   <FilterList
+                    tree={tree}
                     path={['root', 'criteria']}
                     fields={schemas.movies.fields}
                     typeComponents={TypeMap}
@@ -269,6 +272,7 @@ export default () => (
                     ) => (field === 'metaScore' ? { significantDigits } : {})}
                   />
                   <Adder
+                    tree={tree}
                     path={['root', 'criteria']}
                     fields={schemas.movies.fields}
                     uniqueFields
@@ -281,6 +285,7 @@ export default () => (
               <div className="gv-search-bar">
                 <div className="gv-box">
                   <TagsQuery
+                    tree={tree}
                     path={['root', 'bar']}
                     placeholder="Enter search here..."
                   />
@@ -327,9 +332,14 @@ export default () => (
                     </IconButton>
                   </Flex>
                   <QueryBuilder
-                    types={TypeMap}
+                    tree={tree}
+                    typeComponents={TypeMap}
                     fields={schemas.movies.fields}
                     path={['root', 'criteria']}
+                    mapNodeToProps={(
+                      { field },
+                      { metaScore: { significantDigits } }
+                    ) => (field === 'metaScore' ? { significantDigits } : {})}
                   />
                 </div>
               )}
@@ -340,7 +350,8 @@ export default () => (
                     value: 'results',
                     label: (
                       <span>
-                        Movies (<ResultCount path={['root', 'results']} />)
+                        Movies (
+                        <ResultCount tree={tree} path={['root', 'results']} />)
                       </span>
                     ),
                   },
@@ -356,7 +367,8 @@ export default () => (
               />
               {state.tab === 'results' && (
                 <div className="gv-box">
-                  <ResultTable
+                  <PagedResultTable
+                    tree={tree}
                     path={['root', 'results']}
                     fields={_.omit(
                       ['imdbId', 'runtimeMinutes'],
@@ -365,19 +377,12 @@ export default () => (
                     criteria={['root', 'criteria']}
                     typeComponents={TypeMap}
                   />
-                  <Flex
-                    style={{
-                      justifyContent: 'space-around',
-                      padding: '10px',
-                    }}
-                  >
-                    <Pager path={['root', 'results']} />
-                  </Flex>
                 </div>
               )}
               {state.tab === 'analytics' && (
                 <div className="gv-box">
                   <TermsStatsTable
+                    tree={tree}
                     path={['root', 'genreScores']}
                     tableAttrs={{ className: 'gv-table' }}
                     sizeOptions={[10, 25, 50]}

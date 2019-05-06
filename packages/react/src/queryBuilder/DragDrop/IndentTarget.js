@@ -28,21 +28,20 @@ export let FilterIndentTarget = FilterDropTarget(FilterIndentSpec)(
   }) =>
     connectDropTarget(
       <div>
-        {!child.children &&
-          canDrop && (
-            <div
-              style={{
-                width: '50%',
-                marginLeft: '50%',
-                height: 50,
-                position: 'fixed',
-                ...(dragItem.node === child
-                  ? styles.bgStriped
-                  : styles.bgPreview(oppositeJoin(tree.join))),
-                zIndex: 100,
-              }}
-            />
-          )}
+        {!child.children && canDrop && (
+          <div
+            style={{
+              width: '50%',
+              marginLeft: '50%',
+              height: 50,
+              position: 'fixed',
+              ...(dragItem.node === child
+                ? styles.bgStriped
+                : styles.bgPreview(oppositeJoin(tree.join))),
+              zIndex: 100,
+            }}
+          />
+        )}
       </div>
     )
 )

@@ -120,7 +120,7 @@ HeaderCellDefault.displayName = 'HeaderCellDefault'
 
 let Header = withStateLens({ popover: false, adding: false, filtering: false })(
   observer(({ // Local State
-    popover, adding, filtering, Modal, FieldPicker, ListGroupItem: Item, typeComponents, HeaderCell = HeaderCellDefault, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria, mapNodeToProps, fields, visibleFields, Icon }) => {
+    popover, adding, filtering, Modal, FieldPicker, ListGroupItem: Item, typeComponents = {}, HeaderCell = HeaderCellDefault, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria, mapNodeToProps, fields, visibleFields, Icon }) => {
     // Components (providerable?) // Contextual
     let {
       disableFilter,
@@ -213,54 +213,47 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
             <Icon icon="RemoveColumn" />
             Remove Column
           </Item>
-          {Modal &&
-            FieldPicker &&
-            !!addOptions.length && (
-              <Item onClick={F.on(adding)}>
-                <Icon icon="AddColumn" />
-                Add Column
-              </Item>
-            )}
-          {criteria &&
-            (typeDefault || filterNode) &&
-            !disableFilter && (
-              <div>
-                <Item onClick={filter}>
-                  <Icon
-                    icon={
-                      filterNode
-                        ? F.view(filtering)
-                          ? 'FilterCollapse'
-                          : 'FilterExpand'
-                        : 'FilterAdd'
-                    }
-                  />
-                  Filter
-                </Item>
-                {F.view(filtering) &&
-                  filterNode &&
-                  !filterNode.paused && (
-                    <Dynamic
-                      component={typeComponents[filterNode.type]}
-                      path={_.toArray(filterNode.path)}
-                      {...mapNodeToProps(filterNode, fields, typeComponents)}
-                    />
-                  )}
-              </div>
-            )}
-          {Modal &&
-            FieldPicker && (
-              <Modal isOpen={adding}>
-                <FieldPicker
-                  options={addOptions}
-                  onChange={field => {
-                    if (!_.contains(field, includes))
-                      mutate({ include: [...includes, field] })
-                    F.off(adding)()
-                  }}
+          {Modal && FieldPicker && !!addOptions.length && (
+            <Item onClick={F.on(adding)}>
+              <Icon icon="AddColumn" />
+              Add Column
+            </Item>
+          )}
+          {criteria && (typeDefault || filterNode) && !disableFilter && (
+            <div>
+              <Item onClick={filter}>
+                <Icon
+                  icon={
+                    filterNode
+                      ? F.view(filtering)
+                        ? 'FilterCollapse'
+                        : 'FilterExpand'
+                      : 'FilterAdd'
+                  }
                 />
-              </Modal>
-            )}
+                Filter
+              </Item>
+              {F.view(filtering) && filterNode && !filterNode.paused && (
+                <Dynamic
+                  component={typeComponents[filterNode.type]}
+                  path={_.toArray(filterNode.path)}
+                  {...mapNodeToProps(filterNode, fields, typeComponents)}
+                />
+              )}
+            </div>
+          )}
+          {Modal && FieldPicker && (
+            <Modal isOpen={adding}>
+              <FieldPicker
+                options={addOptions}
+                onChange={field => {
+                  if (!_.contains(field, includes))
+                    mutate({ include: [...includes, field] })
+                  F.off(adding)()
+                }}
+              />
+            </Modal>
+          )}
         </Popover>
       </HeaderCell>
     )

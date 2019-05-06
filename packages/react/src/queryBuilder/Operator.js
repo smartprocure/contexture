@@ -15,16 +15,15 @@ let BlankOperator = ({ state, tree, child }) => (
         borderBottomColor: styles.joinColor(tree.join),
       }}
     />
-    {child.children &&
-      child.join !== 'not' && (
-        <div
-          style={{
-            ...styles.operatorLine,
-            ...styles.blankOperatorLineExtended,
-            ...styles.bgJoin(tree),
-          }}
-        />
-      )}
+    {child.children && child.join !== 'not' && (
+      <div
+        style={{
+          ...styles.operatorLine,
+          ...styles.blankOperatorLineExtended,
+          ...styles.bgJoin(tree),
+        }}
+      />
+    )}
   </div>
 )
 BlankOperator.displayName = 'BlankOperator'

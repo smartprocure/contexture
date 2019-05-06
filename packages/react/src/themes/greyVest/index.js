@@ -32,6 +32,8 @@ import ButtonRadio from './ButtonRadio'
 import Tabs from './TabList'
 import ErrorList from './ErrorList'
 import ErrorText from './ErrorText'
+import Box from './Box'
+import LinkButton from './LinkButton'
 
 export {
   Input,
@@ -47,6 +49,8 @@ export {
   ButtonRadio,
   Tabs,
   ErrorList,
+  Box,
+  LinkButton,
 }
 
 export let GVStyle = () => (
@@ -393,7 +397,7 @@ export let GVStyle = () => (
         margin: 0 10px;
       }
       .contexture-facet > .gv-input[type="text"] {
-        margin: 20px 0;
+        margin-bottom: 10px;
       }
       .contexture-facet-cardinality {
         margin: 10px 0;
@@ -404,6 +408,11 @@ export let GVStyle = () => (
       }
       .contexture-number-best-range {
         margin-top: 15px;
+      }
+
+      /* Min Height here is to align better in QueryBuilder */
+       .gv-radio-list {
+        min-height: 40px;
       }
 
       /* Tabs */
@@ -417,6 +426,7 @@ export let GVStyle = () => (
         vertical-align: bottom;
         border-left: solid 1px #c4c5ca;
         transition: background-color 0.1s linear;
+        text-align: center;
       }
       .gv-tab.active + .gv-tab {
         border-left: none;
@@ -736,13 +746,30 @@ export let Pager = props => (
   />
 )
 
+export let PagedResultTable = InjectTreeNode(
+  observer(({ tree, node, ...props }) => (
+    <>
+      <ExampleTypes.ResultTable tree={tree} node={node} {...props} />
+      <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>
+        <Pager tree={tree} node={node} />
+      </Flex>
+    </>
+  ))
+)
+PagedResultTable.displayName = 'PagedResultTable'
+
 export let MissingTypeComponent = InjectTreeNode(({ node = {} }) => (
-  <ErrorText>
-    Type <b>{node.type}</b> is not supported (for key <i>{node.key}</i>)
-  </ErrorText>
+  // Min Height here is to align better in QueryBuilder
+  <Flex style={{ minHeight: '40px', alignItems: 'center' }}>
+    <ErrorText>
+      Type <b>{node.type}</b> is not supported (for key <i>{node.key}</i>)
+    </ErrorText>
+  </Flex>
 ))
 export let FilterList = defaultProps({ Icon, ListItem, MissingTypeComponent })(
   BaseFilterList
 )
 
-export let QueryBuilder = defaultProps({ Button })(QueryBuilderComponent)
+export let QueryBuilder = defaultProps({ Button, MissingTypeComponent })(
+  QueryBuilderComponent
+)
