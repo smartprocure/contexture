@@ -1,4 +1,3 @@
-import React from 'react'
 import { observer } from 'mobx-react'
 import injectTreeNode from '../utils/injectTreeNode'
 import { exampleTypes } from 'contexture-client'
