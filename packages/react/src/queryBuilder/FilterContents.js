@@ -12,11 +12,11 @@ let FieldPicker = defaultProps({
   Picker: NestedPicker,
 })(ModalPicker)
 
-let DefaultMissingTypeComponent = (({ node = {} }) => (
+let DefaultMissingTypeComponent = ({ node = {} }) => (
   <div>
     Type <b>{node.type}</b> is not supported (for key <i>{node.key}</i>)
   </div>
-))
+)
 
 let FilterContents = inject(_.defaults)(
   observer(

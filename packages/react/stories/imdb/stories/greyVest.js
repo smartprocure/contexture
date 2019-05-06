@@ -17,7 +17,7 @@ import {
   IconButton,
   Tabs,
   QueryBuilder,
-  PagedResultTable
+  PagedResultTable,
 } from '../../../src/themes/greyVest'
 import { Column } from './../../../src/layout/ExpandableTable'
 let {
@@ -285,7 +285,7 @@ export default () => (
               <div className="gv-search-bar">
                 <div className="gv-box">
                   <TagsQuery
-                  tree={tree}
+                    tree={tree}
                     path={['root', 'bar']}
                     placeholder="Enter search here..."
                   />
@@ -336,7 +336,6 @@ export default () => (
                     typeComponents={TypeMap}
                     fields={schemas.movies.fields}
                     path={['root', 'criteria']}
-
                     mapNodeToProps={(
                       { field },
                       { metaScore: { significantDigits } }
@@ -351,7 +350,8 @@ export default () => (
                     value: 'results',
                     label: (
                       <span>
-                        Movies (<ResultCount tree={tree} path={['root', 'results']} />)
+                        Movies (
+                        <ResultCount tree={tree} path={['root', 'results']} />)
                       </span>
                     ),
                   },

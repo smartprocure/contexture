@@ -50,7 +50,7 @@ export {
   Tabs,
   ErrorList,
   Box,
-  LinkButton
+  LinkButton,
 }
 
 export let GVStyle = () => (
@@ -746,14 +746,16 @@ export let Pager = props => (
   />
 )
 
-export let PagedResultTable = InjectTreeNode(observer(({ tree, node, ...props }) => (
-  <>
-    <ExampleTypes.ResultTable tree={tree} node={node} {...props} />
-    <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>
-      <Pager tree={tree} node={node} />
-    </Flex>
-  </>
-)))
+export let PagedResultTable = InjectTreeNode(
+  observer(({ tree, node, ...props }) => (
+    <>
+      <ExampleTypes.ResultTable tree={tree} node={node} {...props} />
+      <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>
+        <Pager tree={tree} node={node} />
+      </Flex>
+    </>
+  ))
+)
 PagedResultTable.displayName = 'PagedResultTable'
 
 export let MissingTypeComponent = InjectTreeNode(({ node = {} }) => (
@@ -768,4 +770,6 @@ export let FilterList = defaultProps({ Icon, ListItem, MissingTypeComponent })(
   BaseFilterList
 )
 
-export let QueryBuilder = defaultProps({ Button, MissingTypeComponent })(QueryBuilderComponent)
+export let QueryBuilder = defaultProps({ Button, MissingTypeComponent })(
+  QueryBuilderComponent
+)

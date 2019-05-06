@@ -123,14 +123,14 @@ export default DDContext(
         types = iTypes || typeComponents,
         tree = iTree,
         fields,
-        defaultNodeProps
+        defaultNodeProps,
       }
     ) => ({
       types,
       state: observable({
         adding: false,
-        ...ContextureClientBridge(types, tree, fields, defaultNodeProps)
-      })
+        ...ContextureClientBridge(types, tree, fields, defaultNodeProps),
+      }),
     }),
     ({
       state,
@@ -139,7 +139,7 @@ export default DDContext(
       types = {},
       Button = 'button',
       mapNodeToProps,
-      MissingTypeComponent
+      MissingTypeComponent,
     }) => (
       <Provider
         ContextureButton={Button}
