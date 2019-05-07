@@ -16,7 +16,6 @@ import {
 } from '../../'
 import ExampleTypeConstructor from '../../exampleTypes/'
 import QueryBuilderComponent from '../../queryBuilder'
-import DatePicker from 'react-date-picker'
 
 import Input from './Input'
 import Checkbox from './Checkbox'
@@ -34,6 +33,7 @@ import ErrorList from './ErrorList'
 import ErrorText from './ErrorText'
 import Box from './Box'
 import LinkButton from './LinkButton'
+import DateInput from './DateInput'
 
 export {
   Input,
@@ -732,11 +732,7 @@ export let ExampleTypes = ExampleTypeConstructor({
   ListGroupItem,
   TagsInput,
   Icon,
-  DateInput: defaultProps({
-    calendarType: 'US',
-    calendarIcon: null,
-    clearIcon: null,
-  })(DatePicker),
+  DateInput,
 })
 export let Pager = props => (
   <ExampleTypes.ResultPager
