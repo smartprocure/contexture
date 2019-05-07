@@ -4,7 +4,7 @@ import Rule from '../../../src/queryBuilder/Rule'
 import { Provider } from 'mobx-react'
 
 export default (parent, root, DnDDecorator) =>
-  storiesOf('QueryBuilder/Internals/Rule', module)
+  storiesOf('Search Components (Unthemed)|QueryBuilder/Internals/Rule', module)
     .addDecorator(DnDDecorator)
     .addWithJSX('index', () => (
       <Provider

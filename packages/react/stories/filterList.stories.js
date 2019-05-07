@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { FilterList } from '../src/FilterList'
 
-storiesOf('FilterList', module).addWithJSX('Example', () => (
+storiesOf('Search Components (Unthemed)|FilterList', module).addWithJSX('Example', () => (
   <FilterList
     node={{
       children: [

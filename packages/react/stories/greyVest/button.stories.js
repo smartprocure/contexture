@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { Button, Fonts, GVStyle } from './../../src/themes/greyVest'
 
-storiesOf('Non Search Components|Grey Vest/Button', module)
+storiesOf('Components (Grey Vest)|Button', module)
   .addWithJSX('Basic Usage', () => (
     <div>
       <Fonts />

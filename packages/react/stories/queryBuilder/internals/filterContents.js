@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import FilterContents from '../../../src/queryBuilder/FilterContents'
 
 export default (parent, root) =>
-  storiesOf('QueryBuilder/Internals/FilterContents', module).addWithJSX(
+  storiesOf('Search Components (Unthemed)|QueryBuilder/Internals/FilterContents', module).addWithJSX(
     'FilterContents',
     () => (
       <FilterContents
