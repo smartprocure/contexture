@@ -1,3 +1,6 @@
+# 1.47.1
+* DateInput: Always convert input to Date
+
 # 1.47.0
 ## New Components
 * GreyVest: Add Box

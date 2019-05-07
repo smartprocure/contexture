@@ -92,6 +92,13 @@ let tree = Contexture({
           field: 'actors',
         },
         {
+          key: 'date',
+          type: 'date',
+          field: 'released',
+          from: '2011-01-01T05:00:00.000Z',
+          to: '2018-01-01T05:00:00.000Z',
+        },
+        {
           key: 'IntentionallyBrokenNode',
           type: 'IntentionallyMissingType',
           field: 'missingField',
