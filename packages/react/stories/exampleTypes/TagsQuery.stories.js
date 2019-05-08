@@ -21,4 +21,3 @@ storiesOf('Search Components (Unthemed)|Example Types/Tags Query', module)
       <TagsQuery tree={treeWithTags} path={['tagsQuery']} />
     </div>
   ))
-
