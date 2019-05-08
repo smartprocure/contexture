@@ -29,8 +29,13 @@ module.exports = {
     if (context.include) result._source.includes = context.include
     if (context.exclude) result._source.excludes = context.exclude
 
-    let highlight = _.getOr(true, 'highlight', context) && schema.elasticsearch.highlight
-    let inlineAliases = _.getOr({}, 'elasticsearch.highlight.inlineAliases', schema)
+    let highlight =
+      _.getOr(true, 'highlight', context) && schema.elasticsearch.highlight
+    let inlineAliases = _.getOr(
+      {},
+      'elasticsearch.highlight.inlineAliases',
+      schema
+    )
 
     if (highlight) {
       // Only take the fields that matter to highlighting which are the inline, inlineAliases and additionalFields sections
@@ -39,14 +44,14 @@ module.exports = {
         _.values,
         _.flatten,
         _.concat(_.keys(inlineAliases)),
-        _.uniq(),
+        _.uniq()
       )(schema.elasticsearch.highlight)
 
       let highlightFields = _.flow(
         // intersect with context.include so we only highlight fields we specified in the context
         _.intersection(context.include),
         // concat the inlineAliases KEYS so they are part of the highlight.fields object so we highlight on them in the ES response
-        _.concat(_.values(inlineAliases)),
+        _.concat(_.values(inlineAliases))
       )(schemaHiglightFields)
 
       F.extendOn(result, {
