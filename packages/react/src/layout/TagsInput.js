@@ -10,7 +10,7 @@ import Popover from './Popover'
 let Tag = observer(({ value, removeTag, tagStyle, removeIcon, onClick }) => (
   <div
     className="tags-input-tag"
-    style={F.callOrReturn(tagStyle, value)}
+    style={{ ...F.callOrReturn(tagStyle, value), cursor: 'pointer' }}
     onClick={onClick}
   >
     <span style={{ marginRight: 10 }}>{value}</span>
@@ -54,11 +54,12 @@ let TagsInput = withState('state', 'setState', () =>
           _.map(addTag)
         )
       return (
-        <div className="tags-input">
+        <div className="tags-input" style={{ height: '100%' }}>
           <Flex
             style={{
-              flexWrap: 'wrap',
+              cursor: 'text',
               alignItems: 'center',
+              flexWrap: 'wrap',
               height: '100%',
             }}
           >
@@ -77,7 +78,12 @@ let TagsInput = withState('state', 'setState', () =>
               tags
             )}
             <input
-              style={{ flex: 1, marginLeft: 10 }}
+              style={{
+                border: 'none',
+                outline: 'none',
+                flex: 1,
+                marginLeft: 10,
+              }}
               onChange={e => {
                 state.currentInput = e.target.value
               }}

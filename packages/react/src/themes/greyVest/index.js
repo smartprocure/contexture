@@ -215,19 +215,17 @@ export let GVStyle = () => (
         box-sizing: border-box;
         background: #fff;
         padding: 3px;
-        cursor: text;
       }
       .gv-body .tags-input input {
         height: 30px;
-        border: none;
-        outline: none;
         margin: 3px;
       }
       .gv-body .tags-input-tag {
+        box-sizing: border-box;
+        height: 30px;
         margin: 3px;
         border-radius: 2px;
         padding: 5px 13px 7px 13px;
-        cursor: pointer;
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
@@ -349,6 +347,10 @@ export let GVStyle = () => (
       }
       .gv-search-bar > .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+      }
+      .gv-search-bar .gv-box .tags-input {
+        margin: 0;
+        border: none;
       }
       .gv-search-button {
         font-size: 18px;
