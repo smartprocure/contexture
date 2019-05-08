@@ -225,7 +225,7 @@ export let GVStyle = () => (
         height: 30px;
         margin: 3px;
         border-radius: 2px;
-        padding: 5px 13px 7px 13px;
+        padding: 0px 15px 2px 15px;
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;

@@ -8,9 +8,13 @@ import { Flex } from './Flex'
 import Popover from './Popover'
 
 let Tag = observer(({ value, removeTag, tagStyle, removeIcon, onClick }) => (
-  <div
+  <Flex
     className="tags-input-tag"
-    style={{ ...F.callOrReturn(tagStyle, value), cursor: 'pointer' }}
+    style={{
+      ...F.callOrReturn(tagStyle, value),
+      alignItems: 'center',
+      cursor: 'pointer',
+    }}
     onClick={onClick}
   >
     <span style={{ marginRight: 10 }}>{value}</span>
@@ -22,7 +26,7 @@ let Tag = observer(({ value, removeTag, tagStyle, removeIcon, onClick }) => (
     >
       {removeIcon || <span className="tags-input-tag-remove">x</span>}
     </span>
-  </div>
+  </Flex>
 ))
 Tag.displayName = 'Tag'
 

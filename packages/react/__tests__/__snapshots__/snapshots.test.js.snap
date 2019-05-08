@@ -179,19 +179,17 @@ exports[`Storyshots Components (Grey Vest)|Box Default 1`] = `
         box-sizing: border-box;
         background: #fff;
         padding: 3px;
-        cursor: text;
       }
       .gv-body .tags-input input {
         height: 30px;
-        border: none;
-        outline: none;
         margin: 3px;
       }
       .gv-body .tags-input-tag {
+        box-sizing: border-box;
+        height: 30px;
         margin: 3px;
         border-radius: 2px;
-        padding: 5px 13px 7px 13px;
-        cursor: pointer;
+        padding: 0px 15px 2px 15px;
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
@@ -313,6 +311,10 @@ exports[`Storyshots Components (Grey Vest)|Box Default 1`] = `
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+      }
+      .gv-search-bar .gv-box .tags-input {
+        margin: 0;
+        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -714,19 +716,17 @@ exports[`Storyshots Components (Grey Vest)|Button Active 1`] = `
         box-sizing: border-box;
         background: #fff;
         padding: 3px;
-        cursor: text;
       }
       .gv-body .tags-input input {
         height: 30px;
-        border: none;
-        outline: none;
         margin: 3px;
       }
       .gv-body .tags-input-tag {
+        box-sizing: border-box;
+        height: 30px;
         margin: 3px;
         border-radius: 2px;
-        padding: 5px 13px 7px 13px;
-        cursor: pointer;
+        padding: 0px 15px 2px 15px;
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
@@ -848,6 +848,10 @@ exports[`Storyshots Components (Grey Vest)|Button Active 1`] = `
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+      }
+      .gv-search-bar .gv-box .tags-input {
+        margin: 0;
+        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -1250,19 +1254,17 @@ exports[`Storyshots Components (Grey Vest)|Button As Div 1`] = `
         box-sizing: border-box;
         background: #fff;
         padding: 3px;
-        cursor: text;
       }
       .gv-body .tags-input input {
         height: 30px;
-        border: none;
-        outline: none;
         margin: 3px;
       }
       .gv-body .tags-input-tag {
+        box-sizing: border-box;
+        height: 30px;
         margin: 3px;
         border-radius: 2px;
-        padding: 5px 13px 7px 13px;
-        cursor: pointer;
+        padding: 0px 15px 2px 15px;
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
@@ -1384,6 +1386,10 @@ exports[`Storyshots Components (Grey Vest)|Button As Div 1`] = `
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+      }
+      .gv-search-bar .gv-box .tags-input {
+        margin: 0;
+        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -1786,19 +1792,17 @@ exports[`Storyshots Components (Grey Vest)|Button Basic Usage 1`] = `
         box-sizing: border-box;
         background: #fff;
         padding: 3px;
-        cursor: text;
       }
       .gv-body .tags-input input {
         height: 30px;
-        border: none;
-        outline: none;
         margin: 3px;
       }
       .gv-body .tags-input-tag {
+        box-sizing: border-box;
+        height: 30px;
         margin: 3px;
         border-radius: 2px;
-        padding: 5px 13px 7px 13px;
-        cursor: pointer;
+        padding: 0px 15px 2px 15px;
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
@@ -1920,6 +1924,10 @@ exports[`Storyshots Components (Grey Vest)|Button Basic Usage 1`] = `
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+      }
+      .gv-search-bar .gv-box .tags-input {
+        margin: 0;
+        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -2322,19 +2330,17 @@ exports[`Storyshots Components (Grey Vest)|Button Primary 1`] = `
         box-sizing: border-box;
         background: #fff;
         padding: 3px;
-        cursor: text;
       }
       .gv-body .tags-input input {
         height: 30px;
-        border: none;
-        outline: none;
         margin: 3px;
       }
       .gv-body .tags-input-tag {
+        box-sizing: border-box;
+        height: 30px;
         margin: 3px;
         border-radius: 2px;
-        padding: 5px 13px 7px 13px;
-        cursor: pointer;
+        padding: 0px 15px 2px 15px;
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
@@ -2456,6 +2462,10 @@ exports[`Storyshots Components (Grey Vest)|Button Primary 1`] = `
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+      }
+      .gv-search-bar .gv-box .tags-input {
+        margin: 0;
+        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -2858,19 +2868,17 @@ exports[`Storyshots Components (Grey Vest)|LinkButton Default 1`] = `
         box-sizing: border-box;
         background: #fff;
         padding: 3px;
-        cursor: text;
       }
       .gv-body .tags-input input {
         height: 30px;
-        border: none;
-        outline: none;
         margin: 3px;
       }
       .gv-body .tags-input-tag {
+        box-sizing: border-box;
+        height: 30px;
         margin: 3px;
         border-radius: 2px;
-        padding: 5px 13px 7px 13px;
-        cursor: pointer;
+        padding: 0px 15px 2px 15px;
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
@@ -2992,6 +3000,10 @@ exports[`Storyshots Components (Grey Vest)|LinkButton Default 1`] = `
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+      }
+      .gv-search-bar .gv-box .tags-input {
+        margin: 0;
+        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -3402,19 +3414,17 @@ exports[`Storyshots Components (Grey Vest)|Refs Default 1`] = `
         box-sizing: border-box;
         background: #fff;
         padding: 3px;
-        cursor: text;
       }
       .gv-body .tags-input input {
         height: 30px;
-        border: none;
-        outline: none;
         margin: 3px;
       }
       .gv-body .tags-input-tag {
+        box-sizing: border-box;
+        height: 30px;
         margin: 3px;
         border-radius: 2px;
-        padding: 5px 13px 7px 13px;
-        cursor: pointer;
+        padding: 0px 15px 2px 15px;
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
@@ -3536,6 +3546,10 @@ exports[`Storyshots Components (Grey Vest)|Refs Default 1`] = `
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+      }
+      .gv-search-bar .gv-box .tags-input {
+        margin: 0;
+        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -4393,19 +4407,17 @@ exports[`Storyshots Live Demos|IMDB Check List 1`] = `
         box-sizing: border-box;
         background: #fff;
         padding: 3px;
-        cursor: text;
       }
       .gv-body .tags-input input {
         height: 30px;
-        border: none;
-        outline: none;
         margin: 3px;
       }
       .gv-body .tags-input-tag {
+        box-sizing: border-box;
+        height: 30px;
         margin: 3px;
         border-radius: 2px;
-        padding: 5px 13px 7px 13px;
-        cursor: pointer;
+        padding: 0px 15px 2px 15px;
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
@@ -4527,6 +4539,10 @@ exports[`Storyshots Live Demos|IMDB Check List 1`] = `
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+      }
+      .gv-search-bar .gv-box .tags-input {
+        margin: 0;
+        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -4949,19 +4965,17 @@ exports[`Storyshots Live Demos|IMDB Grey Vest Theme 1`] = `
         box-sizing: border-box;
         background: #fff;
         padding: 3px;
-        cursor: text;
       }
       .gv-body .tags-input input {
         height: 30px;
-        border: none;
-        outline: none;
         margin: 3px;
       }
       .gv-body .tags-input-tag {
+        box-sizing: border-box;
+        height: 30px;
         margin: 3px;
         border-radius: 2px;
-        padding: 5px 13px 7px 13px;
-        cursor: pointer;
+        padding: 0px 15px 2px 15px;
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
@@ -5083,6 +5097,10 @@ exports[`Storyshots Live Demos|IMDB Grey Vest Theme 1`] = `
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+      }
+      .gv-search-bar .gv-box .tags-input {
+        margin: 0;
+        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -5998,19 +6016,17 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
         box-sizing: border-box;
         background: #fff;
         padding: 3px;
-        cursor: text;
       }
       .gv-body .tags-input input {
         height: 30px;
-        border: none;
-        outline: none;
         margin: 3px;
       }
       .gv-body .tags-input-tag {
+        box-sizing: border-box;
+        height: 30px;
         margin: 3px;
         border-radius: 2px;
-        padding: 5px 13px 7px 13px;
-        cursor: pointer;
+        padding: 0px 15px 2px 15px;
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
@@ -6132,6 +6148,10 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+      }
+      .gv-search-bar .gv-box .tags-input {
+        margin: 0;
+        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -6355,11 +6375,17 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
   >
     <div
       className="tags-input"
+      style={
+        Object {
+          "height": "100%",
+        }
+      }
     >
       <div
         style={
           Object {
             "alignItems": "center",
+            "cursor": "text",
             "display": "flex",
             "flexWrap": "wrap",
             "height": "100%",
@@ -6371,8 +6397,11 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
           onClick={[Function]}
           style={
             Object {
+              "alignItems": "center",
               "background": "#5cb85c",
               "color": "white",
+              "cursor": "pointer",
+              "display": "flex",
               "fontWeight": "bold",
               "opacity": 1,
             }
@@ -6400,8 +6429,11 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
           onClick={[Function]}
           style={
             Object {
+              "alignItems": "center",
               "background": "#5cb85c",
               "color": "white",
+              "cursor": "pointer",
+              "display": "flex",
               "fontWeight": "bold",
               "opacity": 1,
             }
@@ -6429,8 +6461,11 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
           onClick={[Function]}
           style={
             Object {
+              "alignItems": "center",
               "background": "#5cb85c",
               "color": "white",
+              "cursor": "pointer",
+              "display": "flex",
               "fontWeight": "bold",
               "opacity": 1,
             }
@@ -6458,8 +6493,11 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
           onClick={[Function]}
           style={
             Object {
+              "alignItems": "center",
               "background": "#5cb85c",
               "color": "white",
+              "cursor": "pointer",
+              "display": "flex",
               "fontWeight": "bold",
               "opacity": 1,
             }
@@ -6489,8 +6527,10 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
           placeholder="Search..."
           style={
             Object {
+              "border": "none",
               "flex": 1,
               "marginLeft": 10,
+              "outline": "none",
             }
           }
           value=""
@@ -6682,19 +6722,17 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
         box-sizing: border-box;
         background: #fff;
         padding: 3px;
-        cursor: text;
       }
       .gv-body .tags-input input {
         height: 30px;
-        border: none;
-        outline: none;
         margin: 3px;
       }
       .gv-body .tags-input-tag {
+        box-sizing: border-box;
+        height: 30px;
         margin: 3px;
         border-radius: 2px;
-        padding: 5px 13px 7px 13px;
-        cursor: pointer;
+        padding: 0px 15px 2px 15px;
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
@@ -6816,6 +6854,10 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+      }
+      .gv-search-bar .gv-box .tags-input {
+        margin: 0;
+        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -7046,11 +7088,17 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
     >
       <div
         className="tags-input"
+        style={
+          Object {
+            "height": "100%",
+          }
+        }
       >
         <div
           style={
             Object {
               "alignItems": "center",
+              "cursor": "text",
               "display": "flex",
               "flexWrap": "wrap",
               "height": "100%",
@@ -7062,8 +7110,11 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
             onClick={[Function]}
             style={
               Object {
+                "alignItems": "center",
                 "background": "#5cb85c",
                 "color": "white",
+                "cursor": "pointer",
+                "display": "flex",
                 "fontWeight": "bold",
                 "opacity": 1,
               }
@@ -7091,8 +7142,11 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
             onClick={[Function]}
             style={
               Object {
+                "alignItems": "center",
                 "background": "#5cb85c",
                 "color": "white",
+                "cursor": "pointer",
+                "display": "flex",
                 "fontWeight": "bold",
                 "opacity": 1,
               }
@@ -7120,8 +7174,11 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
             onClick={[Function]}
             style={
               Object {
+                "alignItems": "center",
                 "background": "#5cb85c",
                 "color": "white",
+                "cursor": "pointer",
+                "display": "flex",
                 "fontWeight": "bold",
                 "opacity": 1,
               }
@@ -7149,8 +7206,11 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
             onClick={[Function]}
             style={
               Object {
+                "alignItems": "center",
                 "background": "#5cb85c",
                 "color": "white",
+                "cursor": "pointer",
+                "display": "flex",
                 "fontWeight": "bold",
                 "opacity": 1,
               }
@@ -7180,8 +7240,10 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
             placeholder="Search..."
             style={
               Object {
+                "border": "none",
                 "flex": 1,
                 "marginLeft": 10,
+                "outline": "none",
               }
             }
             value=""
@@ -7275,11 +7337,17 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           >
             <div
               className="tags-input"
+              style={
+                Object {
+                  "height": "100%",
+                }
+              }
             >
               <div
                 style={
                   Object {
                     "alignItems": "center",
+                    "cursor": "text",
                     "display": "flex",
                     "flexWrap": "wrap",
                     "height": "100%",
@@ -7293,8 +7361,10 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
                   placeholder="Search..."
                   style={
                     Object {
+                      "border": "none",
                       "flex": 1,
                       "marginLeft": 10,
+                      "outline": "none",
                     }
                   }
                   value=""
