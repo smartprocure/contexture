@@ -1,3 +1,6 @@
+# 1.47.2
+* Storybook: Organize categories
+
 # 1.47.1
 * DateInput: Always convert input to Date
 
