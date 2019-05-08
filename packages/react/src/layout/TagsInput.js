@@ -14,15 +14,18 @@ let Tag = observer(({ value, removeTag, tagStyle, removeIcon, onClick }) => (
       ...F.callOrReturn(tagStyle, value),
       alignItems: 'center',
       cursor: 'pointer',
+      margin: 3,
+      borderRadius: '2px',
     }}
     onClick={onClick}
   >
-    <span style={{ marginRight: 10 }}>{value}</span>
+    <span style={{ padding: '0px 5px 1px 10px' }}>{value}</span>
     <span
       onClick={e => {
         e.stopPropagation()
         removeTag(value)
       }}
+      style={{ padding: '0px 10px 1px 5px' }}
     >
       {removeIcon || <span className="tags-input-tag-remove">x</span>}
     </span>
@@ -65,6 +68,7 @@ let TagsInput = withState('state', 'setState', () =>
               alignItems: 'center',
               flexWrap: 'wrap',
               height: '100%',
+              padding: 3,
             }}
           >
             {_.map(
@@ -86,7 +90,7 @@ let TagsInput = withState('state', 'setState', () =>
                 border: 'none',
                 outline: 'none',
                 flex: 1,
-                marginLeft: 10,
+                margin: 3,
               }}
               onChange={e => {
                 state.currentInput = e.target.value

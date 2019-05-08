@@ -209,23 +209,17 @@ export let GVStyle = () => (
 
 
       /* Tags Input */
+      .gv-body .tags-input > * {
+        box-sizing: border-box;
+      }
       .gv-body .tags-input {
         border: 2px solid #EBEBEB;
         border-radius: 4px;
-        box-sizing: border-box;
         background: #fff;
-        padding: 3px;
       }
-      .gv-body .tags-input input {
-        height: 30px;
-        margin: 3px;
-      }
+      .gv-body .tags-input input,
       .gv-body .tags-input-tag {
-        box-sizing: border-box;
         height: 30px;
-        margin: 3px;
-        border-radius: 2px;
-        padding: 0px 15px 2px 15px;
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
