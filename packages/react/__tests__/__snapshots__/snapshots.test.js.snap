@@ -172,42 +172,29 @@ exports[`Storyshots Components (Grey Vest)|Box Default 1`] = `
       }
 
 
+      /* Tags Input */
       .gv-body .tags-input {
         border: 2px solid #EBEBEB;
         border-radius: 4px;
-        min-height: 40px;
         box-sizing: border-box;
         background: #fff;
-        /* 7/8px is for 15px between tags and border */
-        padding-left: 7px;
-        padding-right: 8px;
-        padding-top: 7px;
-        padding-bottom: 8px;
+        padding: 3px;
+        cursor: text;
       }
       .gv-body .tags-input input {
-        /* 7/8px is for 15px between tags and border */
-        margin-left: 8px;
-        margin-right: 7px;
-        margin-top: 8px;
-        margin-bottom: 7px;
-        /* To reach perfect 40px, remove real input padding because we have it on the fake one */
-        padding: 0;
-        /* subtract padding (5+5) and borders (2+2) from 40 */
-        height: 26px;
+        height: 30px;
+        border: none;
+        outline: none;
+        margin: 3px;
       }
       .gv-body .tags-input-tag {
-        /* Arbitrary theme design */
-        margin-left: 8px;
-        margin-right: 7px;
+        margin: 3px;
         border-radius: 2px;
-        padding: 5px 13px 7px 15px;
-        font-size: 15px;
+        padding: 5px 13px 7px 13px;
+        cursor: pointer;
       }
       .gv-body .tags-input-tag-remove {
-        /* Arbitrary theme design */
-        padding-left: 10px;
-        font-size: 13px;
-        vertical-align: middle;
+        font-size: 12px;
       }
 
       /* Tags Popover */
@@ -326,10 +313,6 @@ exports[`Storyshots Components (Grey Vest)|Box Default 1`] = `
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -724,42 +707,29 @@ exports[`Storyshots Components (Grey Vest)|Button Active 1`] = `
       }
 
 
+      /* Tags Input */
       .gv-body .tags-input {
         border: 2px solid #EBEBEB;
         border-radius: 4px;
-        min-height: 40px;
         box-sizing: border-box;
         background: #fff;
-        /* 7/8px is for 15px between tags and border */
-        padding-left: 7px;
-        padding-right: 8px;
-        padding-top: 7px;
-        padding-bottom: 8px;
+        padding: 3px;
+        cursor: text;
       }
       .gv-body .tags-input input {
-        /* 7/8px is for 15px between tags and border */
-        margin-left: 8px;
-        margin-right: 7px;
-        margin-top: 8px;
-        margin-bottom: 7px;
-        /* To reach perfect 40px, remove real input padding because we have it on the fake one */
-        padding: 0;
-        /* subtract padding (5+5) and borders (2+2) from 40 */
-        height: 26px;
+        height: 30px;
+        border: none;
+        outline: none;
+        margin: 3px;
       }
       .gv-body .tags-input-tag {
-        /* Arbitrary theme design */
-        margin-left: 8px;
-        margin-right: 7px;
+        margin: 3px;
         border-radius: 2px;
-        padding: 5px 13px 7px 15px;
-        font-size: 15px;
+        padding: 5px 13px 7px 13px;
+        cursor: pointer;
       }
       .gv-body .tags-input-tag-remove {
-        /* Arbitrary theme design */
-        padding-left: 10px;
-        font-size: 13px;
-        vertical-align: middle;
+        font-size: 12px;
       }
 
       /* Tags Popover */
@@ -878,10 +848,6 @@ exports[`Storyshots Components (Grey Vest)|Button Active 1`] = `
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -1277,42 +1243,29 @@ exports[`Storyshots Components (Grey Vest)|Button As Div 1`] = `
       }
 
 
+      /* Tags Input */
       .gv-body .tags-input {
         border: 2px solid #EBEBEB;
         border-radius: 4px;
-        min-height: 40px;
         box-sizing: border-box;
         background: #fff;
-        /* 7/8px is for 15px between tags and border */
-        padding-left: 7px;
-        padding-right: 8px;
-        padding-top: 7px;
-        padding-bottom: 8px;
+        padding: 3px;
+        cursor: text;
       }
       .gv-body .tags-input input {
-        /* 7/8px is for 15px between tags and border */
-        margin-left: 8px;
-        margin-right: 7px;
-        margin-top: 8px;
-        margin-bottom: 7px;
-        /* To reach perfect 40px, remove real input padding because we have it on the fake one */
-        padding: 0;
-        /* subtract padding (5+5) and borders (2+2) from 40 */
-        height: 26px;
+        height: 30px;
+        border: none;
+        outline: none;
+        margin: 3px;
       }
       .gv-body .tags-input-tag {
-        /* Arbitrary theme design */
-        margin-left: 8px;
-        margin-right: 7px;
+        margin: 3px;
         border-radius: 2px;
-        padding: 5px 13px 7px 15px;
-        font-size: 15px;
+        padding: 5px 13px 7px 13px;
+        cursor: pointer;
       }
       .gv-body .tags-input-tag-remove {
-        /* Arbitrary theme design */
-        padding-left: 10px;
-        font-size: 13px;
-        vertical-align: middle;
+        font-size: 12px;
       }
 
       /* Tags Popover */
@@ -1431,10 +1384,6 @@ exports[`Storyshots Components (Grey Vest)|Button As Div 1`] = `
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -1830,42 +1779,29 @@ exports[`Storyshots Components (Grey Vest)|Button Basic Usage 1`] = `
       }
 
 
+      /* Tags Input */
       .gv-body .tags-input {
         border: 2px solid #EBEBEB;
         border-radius: 4px;
-        min-height: 40px;
         box-sizing: border-box;
         background: #fff;
-        /* 7/8px is for 15px between tags and border */
-        padding-left: 7px;
-        padding-right: 8px;
-        padding-top: 7px;
-        padding-bottom: 8px;
+        padding: 3px;
+        cursor: text;
       }
       .gv-body .tags-input input {
-        /* 7/8px is for 15px between tags and border */
-        margin-left: 8px;
-        margin-right: 7px;
-        margin-top: 8px;
-        margin-bottom: 7px;
-        /* To reach perfect 40px, remove real input padding because we have it on the fake one */
-        padding: 0;
-        /* subtract padding (5+5) and borders (2+2) from 40 */
-        height: 26px;
+        height: 30px;
+        border: none;
+        outline: none;
+        margin: 3px;
       }
       .gv-body .tags-input-tag {
-        /* Arbitrary theme design */
-        margin-left: 8px;
-        margin-right: 7px;
+        margin: 3px;
         border-radius: 2px;
-        padding: 5px 13px 7px 15px;
-        font-size: 15px;
+        padding: 5px 13px 7px 13px;
+        cursor: pointer;
       }
       .gv-body .tags-input-tag-remove {
-        /* Arbitrary theme design */
-        padding-left: 10px;
-        font-size: 13px;
-        vertical-align: middle;
+        font-size: 12px;
       }
 
       /* Tags Popover */
@@ -1984,10 +1920,6 @@ exports[`Storyshots Components (Grey Vest)|Button Basic Usage 1`] = `
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -2383,42 +2315,29 @@ exports[`Storyshots Components (Grey Vest)|Button Primary 1`] = `
       }
 
 
+      /* Tags Input */
       .gv-body .tags-input {
         border: 2px solid #EBEBEB;
         border-radius: 4px;
-        min-height: 40px;
         box-sizing: border-box;
         background: #fff;
-        /* 7/8px is for 15px between tags and border */
-        padding-left: 7px;
-        padding-right: 8px;
-        padding-top: 7px;
-        padding-bottom: 8px;
+        padding: 3px;
+        cursor: text;
       }
       .gv-body .tags-input input {
-        /* 7/8px is for 15px between tags and border */
-        margin-left: 8px;
-        margin-right: 7px;
-        margin-top: 8px;
-        margin-bottom: 7px;
-        /* To reach perfect 40px, remove real input padding because we have it on the fake one */
-        padding: 0;
-        /* subtract padding (5+5) and borders (2+2) from 40 */
-        height: 26px;
+        height: 30px;
+        border: none;
+        outline: none;
+        margin: 3px;
       }
       .gv-body .tags-input-tag {
-        /* Arbitrary theme design */
-        margin-left: 8px;
-        margin-right: 7px;
+        margin: 3px;
         border-radius: 2px;
-        padding: 5px 13px 7px 15px;
-        font-size: 15px;
+        padding: 5px 13px 7px 13px;
+        cursor: pointer;
       }
       .gv-body .tags-input-tag-remove {
-        /* Arbitrary theme design */
-        padding-left: 10px;
-        font-size: 13px;
-        vertical-align: middle;
+        font-size: 12px;
       }
 
       /* Tags Popover */
@@ -2537,10 +2456,6 @@ exports[`Storyshots Components (Grey Vest)|Button Primary 1`] = `
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -2936,42 +2851,29 @@ exports[`Storyshots Components (Grey Vest)|LinkButton Default 1`] = `
       }
 
 
+      /* Tags Input */
       .gv-body .tags-input {
         border: 2px solid #EBEBEB;
         border-radius: 4px;
-        min-height: 40px;
         box-sizing: border-box;
         background: #fff;
-        /* 7/8px is for 15px between tags and border */
-        padding-left: 7px;
-        padding-right: 8px;
-        padding-top: 7px;
-        padding-bottom: 8px;
+        padding: 3px;
+        cursor: text;
       }
       .gv-body .tags-input input {
-        /* 7/8px is for 15px between tags and border */
-        margin-left: 8px;
-        margin-right: 7px;
-        margin-top: 8px;
-        margin-bottom: 7px;
-        /* To reach perfect 40px, remove real input padding because we have it on the fake one */
-        padding: 0;
-        /* subtract padding (5+5) and borders (2+2) from 40 */
-        height: 26px;
+        height: 30px;
+        border: none;
+        outline: none;
+        margin: 3px;
       }
       .gv-body .tags-input-tag {
-        /* Arbitrary theme design */
-        margin-left: 8px;
-        margin-right: 7px;
+        margin: 3px;
         border-radius: 2px;
-        padding: 5px 13px 7px 15px;
-        font-size: 15px;
+        padding: 5px 13px 7px 13px;
+        cursor: pointer;
       }
       .gv-body .tags-input-tag-remove {
-        /* Arbitrary theme design */
-        padding-left: 10px;
-        font-size: 13px;
-        vertical-align: middle;
+        font-size: 12px;
       }
 
       /* Tags Popover */
@@ -3090,10 +2992,6 @@ exports[`Storyshots Components (Grey Vest)|LinkButton Default 1`] = `
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -3497,42 +3395,29 @@ exports[`Storyshots Components (Grey Vest)|Refs Default 1`] = `
       }
 
 
+      /* Tags Input */
       .gv-body .tags-input {
         border: 2px solid #EBEBEB;
         border-radius: 4px;
-        min-height: 40px;
         box-sizing: border-box;
         background: #fff;
-        /* 7/8px is for 15px between tags and border */
-        padding-left: 7px;
-        padding-right: 8px;
-        padding-top: 7px;
-        padding-bottom: 8px;
+        padding: 3px;
+        cursor: text;
       }
       .gv-body .tags-input input {
-        /* 7/8px is for 15px between tags and border */
-        margin-left: 8px;
-        margin-right: 7px;
-        margin-top: 8px;
-        margin-bottom: 7px;
-        /* To reach perfect 40px, remove real input padding because we have it on the fake one */
-        padding: 0;
-        /* subtract padding (5+5) and borders (2+2) from 40 */
-        height: 26px;
+        height: 30px;
+        border: none;
+        outline: none;
+        margin: 3px;
       }
       .gv-body .tags-input-tag {
-        /* Arbitrary theme design */
-        margin-left: 8px;
-        margin-right: 7px;
+        margin: 3px;
         border-radius: 2px;
-        padding: 5px 13px 7px 15px;
-        font-size: 15px;
+        padding: 5px 13px 7px 13px;
+        cursor: pointer;
       }
       .gv-body .tags-input-tag-remove {
-        /* Arbitrary theme design */
-        padding-left: 10px;
-        font-size: 13px;
-        vertical-align: middle;
+        font-size: 12px;
       }
 
       /* Tags Popover */
@@ -3651,10 +3536,6 @@ exports[`Storyshots Components (Grey Vest)|Refs Default 1`] = `
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -4505,42 +4386,29 @@ exports[`Storyshots Live Demos|IMDB Check List 1`] = `
       }
 
 
+      /* Tags Input */
       .gv-body .tags-input {
         border: 2px solid #EBEBEB;
         border-radius: 4px;
-        min-height: 40px;
         box-sizing: border-box;
         background: #fff;
-        /* 7/8px is for 15px between tags and border */
-        padding-left: 7px;
-        padding-right: 8px;
-        padding-top: 7px;
-        padding-bottom: 8px;
+        padding: 3px;
+        cursor: text;
       }
       .gv-body .tags-input input {
-        /* 7/8px is for 15px between tags and border */
-        margin-left: 8px;
-        margin-right: 7px;
-        margin-top: 8px;
-        margin-bottom: 7px;
-        /* To reach perfect 40px, remove real input padding because we have it on the fake one */
-        padding: 0;
-        /* subtract padding (5+5) and borders (2+2) from 40 */
-        height: 26px;
+        height: 30px;
+        border: none;
+        outline: none;
+        margin: 3px;
       }
       .gv-body .tags-input-tag {
-        /* Arbitrary theme design */
-        margin-left: 8px;
-        margin-right: 7px;
+        margin: 3px;
         border-radius: 2px;
-        padding: 5px 13px 7px 15px;
-        font-size: 15px;
+        padding: 5px 13px 7px 13px;
+        cursor: pointer;
       }
       .gv-body .tags-input-tag-remove {
-        /* Arbitrary theme design */
-        padding-left: 10px;
-        font-size: 13px;
-        vertical-align: middle;
+        font-size: 12px;
       }
 
       /* Tags Popover */
@@ -4659,10 +4527,6 @@ exports[`Storyshots Live Demos|IMDB Check List 1`] = `
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -5078,42 +4942,29 @@ exports[`Storyshots Live Demos|IMDB Grey Vest Theme 1`] = `
       }
 
 
+      /* Tags Input */
       .gv-body .tags-input {
         border: 2px solid #EBEBEB;
         border-radius: 4px;
-        min-height: 40px;
         box-sizing: border-box;
         background: #fff;
-        /* 7/8px is for 15px between tags and border */
-        padding-left: 7px;
-        padding-right: 8px;
-        padding-top: 7px;
-        padding-bottom: 8px;
+        padding: 3px;
+        cursor: text;
       }
       .gv-body .tags-input input {
-        /* 7/8px is for 15px between tags and border */
-        margin-left: 8px;
-        margin-right: 7px;
-        margin-top: 8px;
-        margin-bottom: 7px;
-        /* To reach perfect 40px, remove real input padding because we have it on the fake one */
-        padding: 0;
-        /* subtract padding (5+5) and borders (2+2) from 40 */
-        height: 26px;
+        height: 30px;
+        border: none;
+        outline: none;
+        margin: 3px;
       }
       .gv-body .tags-input-tag {
-        /* Arbitrary theme design */
-        margin-left: 8px;
-        margin-right: 7px;
+        margin: 3px;
         border-radius: 2px;
-        padding: 5px 13px 7px 15px;
-        font-size: 15px;
+        padding: 5px 13px 7px 13px;
+        cursor: pointer;
       }
       .gv-body .tags-input-tag-remove {
-        /* Arbitrary theme design */
-        padding-left: 10px;
-        font-size: 13px;
-        vertical-align: middle;
+        font-size: 12px;
       }
 
       /* Tags Popover */
@@ -5232,10 +5083,6 @@ exports[`Storyshots Live Demos|IMDB Grey Vest Theme 1`] = `
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -5475,7 +5322,11 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
     }
   >
     <div
-      style={Object {}}
+      style={
+        Object {
+          "display": "contents",
+        }
+      }
     >
       <input
         onBlur={[Function]}
@@ -5527,7 +5378,11 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
               MetaScore
             </b>
             <div
-              style={Object {}}
+              style={
+                Object {
+                  "display": "contents",
+                }
+              }
             >
               <div
                 className="contexture-number"
@@ -5606,7 +5461,11 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
               Genre
             </b>
             <div
-              style={Object {}}
+              style={
+                Object {
+                  "display": "contents",
+                }
+              }
             >
               <div
                 className="contexture-facet"
@@ -5710,7 +5569,11 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
               Actors
             </b>
             <div
-              style={Object {}}
+              style={
+                Object {
+                  "display": "contents",
+                }
+              }
             >
               <div
                 className="contexture-facet"
@@ -5809,7 +5672,11 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
       </div>
       <div>
         <div
-          style={Object {}}
+          style={
+            Object {
+              "display": "contents",
+            }
+          }
         >
           <div
             style={
@@ -5833,7 +5700,7 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
             <div
               style={
                 Object {
-                  "display": "inline-block",
+                  "display": "contents",
                 }
               }
             >
@@ -5842,7 +5709,11 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
           </h3>
         </div>
         <div
-          style={Object {}}
+          style={
+            Object {
+              "display": "contents",
+            }
+          }
         >
           <div
             style={
@@ -5863,7 +5734,11 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
           }
         >
           <div
-            style={Object {}}
+            style={
+              Object {
+                "display": "contents",
+              }
+            }
           />
         </div>
       </div>
@@ -5942,6 +5817,1382 @@ exports[`Storyshots Live Demos|Index Explorer Basic Search 1`] = `
 </div>
 `;
 
+exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Default 1`] = `
+<div
+  className="gv-body"
+>
+  <div>
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:300,400,700"
+      rel="stylesheet"
+    />
+    <link
+      crossOrigin="anonymous"
+      href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+      integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+  </div>
+  <style>
+    
+      h1 {
+        font-family: Lato;
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 1.3;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        /*font-size: 22px;*/
+        margin: 30px 0;
+      }
+
+      /* Button */
+      .gv-button {
+        padding: 11px 22px 12px 22px;
+        border-radius: 3px;
+        background-color: #e3e5e6;
+
+        border: none;
+        font-size: 14px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        cursor: pointer;
+        /* margin 5px ????? */
+        transition: background-color .25s linear;
+      }
+      .gv-button.active, .gv-button.primary {
+        background-color: #0076de;
+        color: #fff;
+      }
+      .gv-button.success {
+        background-color: #5bb85b !important;
+      }
+      .gv-button.danger {
+        background-color: #d75050 !important;
+      }
+      .gv-button-radio &gt; .gv-button {
+        margin-right: 20px;
+      }
+      .gv-button-radio &gt; .gv-button:last-child {
+        margin-right: 0;
+      }
+      .gv-link-button {
+        /* Same as a contexture-themed link */
+        color: #0076DE;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        text-decoration: underline;
+        display: inline;
+        margin: 0;
+        padding: 0;
+      }
+      .gv-link-button:hover,
+      .gv-link-button:focus {
+        text-decoration: none;
+      }
+
+      /* Table */
+      .gv-table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      .gv-table tbody tr {
+        border-bottom: solid 2px rgba(237, 237, 237, 0.43);
+      }
+      .gv-table td, .gv-table th {
+        padding: 20px;
+        text-align: left;
+      }
+      .gv-table th &gt; span {
+        display: flex;
+        align-items: center;
+      }
+
+      /* Nested Table */
+      .gv-table .expanded, .gv-table .expanded + tr {
+        background: rgba(237, 237, 237, 0.5)
+      }
+
+      .gv-box {
+        border-radius: 4px;
+        background-color: #fff;
+        box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+        padding: 15px;
+      }
+
+      .gv-body, body {
+        margin: 0;
+        background: #f6f6f6;
+        font-family: Lato;
+        font-size: 16px;
+        color: #454545;
+      }
+
+      input.gv-input, textarea.gv-input {
+        padding: 10px;
+      }
+      .gv-input, .gv-body select, .gv-body input {
+        outline: none;
+        font-size: 16px;
+        font-family: Lato;
+
+        border: solid 2px #EDEDED;
+        background: #fff;
+
+        display: block;
+        width: 100%;
+
+        box-sizing: border-box;
+        height: 40px;
+      }
+
+      .gv-body select, .gv-body input, .gv-body textarea {
+        border-radius: 4px;
+      }
+      .gv-body select {
+        cursor: pointer;
+      }
+
+
+      /* Radio Buttons */
+      .gv-radio {
+        width: 16px;
+        height: 16px;
+        background: #FFFFFF;
+        border: 2px solid #EDEDED;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .gv-radio-dot.active {
+        width: 14px;
+        height: 14px;
+        background: #007AFF;
+        border-radius: 50%;
+      }
+      .gv-radio-label {
+        padding-left: 10px;
+      }
+      .gv-radio-option {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        margin-right: 25px;
+      }
+      .gv-radio-list {
+        display: flex;
+      }
+
+
+      /* Tags Input */
+      .gv-body .tags-input {
+        border: 2px solid #EBEBEB;
+        border-radius: 4px;
+        box-sizing: border-box;
+        background: #fff;
+        padding: 3px;
+        cursor: text;
+      }
+      .gv-body .tags-input input {
+        height: 30px;
+        border: none;
+        outline: none;
+        margin: 3px;
+      }
+      .gv-body .tags-input-tag {
+        margin: 3px;
+        border-radius: 2px;
+        padding: 5px 13px 7px 13px;
+        cursor: pointer;
+      }
+      .gv-body .tags-input-tag-remove {
+        font-size: 12px;
+      }
+
+      /* Tags Popover */
+      .gv-body .tags-input-popover {
+        /* counteract default popover padding */
+        margin: -5px;
+      }
+      .gv-body .tags-input-popover &gt; div {
+        border-bottom: solid 1px rgba(216, 216, 216, 0.3);
+        padding: 15px;
+      }
+      .gv-body .tags-input-popover .popover-item:first-child {
+        padding-top: 0;
+      }
+      .gv-body .tags-input-popover .popover-item {
+        padding-top: 10px;
+      }
+
+      /* Pager */
+      .gv-pager {
+        position: relative;
+        top: 50px;
+      }
+      .gv-pager-item {
+        padding: 5px;
+        width: 30px;
+        background: white;
+        border-radius: 2px;
+        cursor: pointer;
+        display: inline-block;
+        box-sizing: border-box;
+        text-align: center;
+        margin: 0 2.5px;
+        color: #9b9b9b;
+      }
+      .gv-pager-item:hover {
+         background: #f5f5f5;
+      }
+      .gv-pager-item.active {
+        background-color: #0076de;
+        color: #fff;
+      }
+      .gv-pager-item.disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+      .contexture-result-pager {
+        display: flex;
+        align-items: center;
+      }
+      .contexture-result-pager .gv-pager-item:first-child {
+        margin-right: 20px;
+      }
+      .contexture-result-pager .gv-pager-item:last-child {
+        margin-left: 20px;
+      }
+      .contexture-result-pager .gv-pager-item:first-child.disabled,
+      .contexture-result-pager .gv-pager-item:last-child.disabled {
+        display: none;
+      }
+
+      /* Icon Button */
+      .gv-icon-button {
+        border-radius: 100px;
+        padding: 5px;
+        cursor: pointer;
+        color: #9b9b9b;
+        display: inline-block;
+        transition: background-color .1s linear, color .1s linear;
+      }
+      .gv-icon-button &gt; * {
+        vertical-align: middle;
+      }
+      .gv-icon-button i {
+        width: 20px;
+        height: 20px;
+        font-size: 20px;
+      }
+      .gv-icon-button:hover {
+        background-color: rgba(216, 216, 216, 0.4);
+        color: #000;
+      }
+      .gv-icon-button.active, .gv-icon-button.primary {
+        background-color: #0076de;
+        color: #fff;
+      }
+
+
+      /* Button Group Border Radii */
+      .gv-button-group {
+        border-radius: 3px;
+        display: flex;
+        overflow: hidden;
+      }
+      .gv-button-group &gt; :first-child {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+      .gv-button-group &gt; :last-child {
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+      }
+
+
+      /* Search Bar + Button */
+      .gv-search-bar {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-gap: 30px;
+        top: 5px;
+        z-index: 1;
+        /*background: #f6f6f6;*/
+      }
+      .gv-search-bar .gv-box {
+        padding: 0;
+      }
+      .gv-search-bar &gt; .gv-button-group {
+        box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+      }
+      .gv-search-button {
+        font-size: 18px;
+      }
+      .gv-search-toolbar {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        background-color: #fff;
+      }
+      .gv-search-toolbar .gv-icon-button {
+        margin-right: 5px;
+      }
+      .gv-search-toolbar .gv-icon-button:last-child {
+        margin-right: 0;
+      }
+
+
+      .contexture-facet a {
+        color: #0076de
+      }
+      .contexture-facet {
+        font-size: 14px;
+      }
+      .contexture-facet &gt; label {
+        margin: 5px 0;
+      }
+      .contexture-facet .gv-checkbox {
+        margin: 0 10px;
+      }
+      .contexture-facet &gt; .gv-input[type="text"] {
+        margin-bottom: 10px;
+      }
+      .contexture-facet-cardinality {
+        margin: 10px 0;
+      }
+
+      .contexture-number-separator {
+        margin: 0 10px;
+      }
+      .contexture-number-best-range {
+        margin-top: 15px;
+      }
+
+      /* Min Height here is to align better in QueryBuilder */
+       .gv-radio-list {
+        min-height: 40px;
+      }
+
+      /* Tabs */
+      .gv-tab-container .gv-tab {
+        display: inline-block;
+        padding: 15px 20px;
+        background-color: #e0e0e3;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        vertical-align: bottom;
+        border-left: solid 1px #c4c5ca;
+        transition: background-color 0.1s linear;
+        text-align: center;
+      }
+      .gv-tab.active + .gv-tab {
+        border-left: none;
+      }
+      .gv-tab:last-child {
+        border-radius: 0 4px 0 0;
+      }
+      .gv-tab:first-child {
+        border-radius: 4px 0 0 0;
+        border-left: none;
+      }
+      .gv-tab.active, .gv-tab.active:hover {
+        background-color: #fff;
+        font-size: 18px;
+        padding: 15px 30px;
+        border-radius: 4px 4px 0 0 !important;
+        /* white box shadow trick from http://dev.housetrip.com/2012/06/15/good-looking-css-tabs/ */
+        box-shadow: 0 10px 0 0 #fff, 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+        border-left: none;
+      }
+      .gv-tab:hover {
+        background-color: rgba(147,149,160, 0.5);
+      }
+
+
+      /* Filter List */
+      .filter-list.gv-box {
+        padding: 30px;
+      }
+      .filter-list-item {
+        border-bottom: solid 1px rgba(216, 216, 216, 0.3);
+        padding-bottom: 30px;
+        margin-bottom: 30px;
+        margin-left: -30px;
+        margin-right: -30px;
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+      .filter-field-label {
+        font-size: 18px;
+        font-weight: bold;
+      }
+      .filter-field-label-icon {
+        color: #9b9b9b;
+      }
+      .filter-field-has-value {
+        color: #0076de;
+      }
+      .filter-field-icon-refresh .gv-icon-button {
+        color: #0076de;
+      }
+      .filter-field-icon-refresh .gv-icon-button:hover {
+        color: #f6f6f6;
+        background-color: #0076de;
+      }
+      .filter-list-item-contents {
+        margin-top: 15px;
+      }
+
+      .filter-list-group {
+        border-left: solid 2px;
+        padding-left: 35px; /* 30 for filter-list-item + 5 space */
+        margin-left: -30px;
+        margin-top: -25px; /* -30 for filter-list-item + 5 space */
+        padding-top: 30px;
+      }
+
+      .gv-grid {
+        display: grid;
+        grid-template-columns: 400px 1fr;
+        grid-gap: 40px;
+        margin: 0 40px;
+      }
+
+      .popover {
+        border-radius: 3px;
+        box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+        border: solid 1px #f1f1f1;
+        padding: 5px;
+      }
+
+      .panel-tree-picker &gt; div {
+        border-right: solid 1px #eef0f1;
+      }
+      .panel-tree-picker &gt; div:last-child {
+        border-right: none;
+      }
+
+      .gv-text-error {
+        color: #D75050;
+      }
+
+      .gv-body .labeled-checkbox {
+        display: flex;
+      }
+      .gv-body .labeled-checkbox &gt; span {
+        padding-left: 10px;
+      }
+
+      /* Reset to standard */
+      .react-date-picker * {
+        font-size: 16px;
+      }
+      .react-date-picker abbr {
+        text-decoration-line: none;
+        font-size: 11px;
+      }
+      .react-date-picker, .react-date-picker__wrapper {
+        width: 100%;
+      }
+      .react-date-picker__wrapper {
+        border: 2px solid #ededed!important;
+        border-radius: 4px;
+      }
+      .react-date-picker__inputGroup__input {
+        min-width: 20px!important;
+        text-align: center;
+        border: none!important;
+      }
+      .react-date-picker__inputGroup__input::placeholder {
+        opacity: 0.5;
+      }
+      .react-date-picker__inputGroup__year {
+        min-width: 40px!important;
+      }
+      .react-calendar__month-view__days__day--weekend {
+        color: #000;
+      }
+      .react-calendar__month-view__days__day--neighboringMonth {
+        color: #969696;
+      }
+      .react-calendar__navigation {
+        margin-bottom: 0;
+      }
+      /* GV BOX it up */
+      .react-calendar {
+        border: 2px solid #ededed;
+        border-radius: 4px;
+        background-color: #fff;
+        box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+        padding: 15px;
+        width: 400px !important;
+      }
+
+      /* Modals */
+      .default-modal-wrap {
+        width: auto;
+        max-width: 640px;
+        border: 30px solid white;
+        overflow-x: auto;
+      }
+    
+  </style>
+  <div
+    style={
+      Object {
+        "display": "contents",
+      }
+    }
+  >
+    <div
+      className="tags-input"
+    >
+      <div
+        style={
+          Object {
+            "alignItems": "center",
+            "display": "flex",
+            "flexWrap": "wrap",
+            "height": "100%",
+          }
+        }
+      >
+        <div
+          className="tags-input-tag"
+          onClick={[Function]}
+          style={
+            Object {
+              "background": "#5cb85c",
+              "color": "white",
+              "fontWeight": "bold",
+              "opacity": 1,
+            }
+          }
+        >
+          <span
+            style={
+              Object {
+                "marginRight": 10,
+              }
+            }
+          >
+            (1) This is a tag
+          </span>
+          <span
+            onClick={[Function]}
+          >
+            <span
+              className="tags-input-tag-remove fa fa-times"
+            />
+          </span>
+        </div>
+        <div
+          className="tags-input-tag"
+          onClick={[Function]}
+          style={
+            Object {
+              "background": "#5cb85c",
+              "color": "white",
+              "fontWeight": "bold",
+              "opacity": 1,
+            }
+          }
+        >
+          <span
+            style={
+              Object {
+                "marginRight": 10,
+              }
+            }
+          >
+            (2) This is a tag
+          </span>
+          <span
+            onClick={[Function]}
+          >
+            <span
+              className="tags-input-tag-remove fa fa-times"
+            />
+          </span>
+        </div>
+        <div
+          className="tags-input-tag"
+          onClick={[Function]}
+          style={
+            Object {
+              "background": "#5cb85c",
+              "color": "white",
+              "fontWeight": "bold",
+              "opacity": 1,
+            }
+          }
+        >
+          <span
+            style={
+              Object {
+                "marginRight": 10,
+              }
+            }
+          >
+            (3) This is a tag
+          </span>
+          <span
+            onClick={[Function]}
+          >
+            <span
+              className="tags-input-tag-remove fa fa-times"
+            />
+          </span>
+        </div>
+        <div
+          className="tags-input-tag"
+          onClick={[Function]}
+          style={
+            Object {
+              "background": "#5cb85c",
+              "color": "white",
+              "fontWeight": "bold",
+              "opacity": 1,
+            }
+          }
+        >
+          <span
+            style={
+              Object {
+                "marginRight": 10,
+              }
+            }
+          >
+            (4) This is a tag
+          </span>
+          <span
+            onClick={[Function]}
+          >
+            <span
+              className="tags-input-tag-remove fa fa-times"
+            />
+          </span>
+        </div>
+        <input
+          onBlur={[Function]}
+          onChange={[Function]}
+          onKeyDown={[Function]}
+          placeholder="Search..."
+          style={
+            Object {
+              "flex": 1,
+              "marginLeft": 10,
+            }
+          }
+          value=""
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Responsive 1`] = `
+<div
+  className="gv-body"
+>
+  <div>
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:300,400,700"
+      rel="stylesheet"
+    />
+    <link
+      crossOrigin="anonymous"
+      href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+      integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+  </div>
+  <style>
+    
+      h1 {
+        font-family: Lato;
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 1.3;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        /*font-size: 22px;*/
+        margin: 30px 0;
+      }
+
+      /* Button */
+      .gv-button {
+        padding: 11px 22px 12px 22px;
+        border-radius: 3px;
+        background-color: #e3e5e6;
+
+        border: none;
+        font-size: 14px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        cursor: pointer;
+        /* margin 5px ????? */
+        transition: background-color .25s linear;
+      }
+      .gv-button.active, .gv-button.primary {
+        background-color: #0076de;
+        color: #fff;
+      }
+      .gv-button.success {
+        background-color: #5bb85b !important;
+      }
+      .gv-button.danger {
+        background-color: #d75050 !important;
+      }
+      .gv-button-radio &gt; .gv-button {
+        margin-right: 20px;
+      }
+      .gv-button-radio &gt; .gv-button:last-child {
+        margin-right: 0;
+      }
+      .gv-link-button {
+        /* Same as a contexture-themed link */
+        color: #0076DE;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        text-decoration: underline;
+        display: inline;
+        margin: 0;
+        padding: 0;
+      }
+      .gv-link-button:hover,
+      .gv-link-button:focus {
+        text-decoration: none;
+      }
+
+      /* Table */
+      .gv-table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      .gv-table tbody tr {
+        border-bottom: solid 2px rgba(237, 237, 237, 0.43);
+      }
+      .gv-table td, .gv-table th {
+        padding: 20px;
+        text-align: left;
+      }
+      .gv-table th &gt; span {
+        display: flex;
+        align-items: center;
+      }
+
+      /* Nested Table */
+      .gv-table .expanded, .gv-table .expanded + tr {
+        background: rgba(237, 237, 237, 0.5)
+      }
+
+      .gv-box {
+        border-radius: 4px;
+        background-color: #fff;
+        box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+        padding: 15px;
+      }
+
+      .gv-body, body {
+        margin: 0;
+        background: #f6f6f6;
+        font-family: Lato;
+        font-size: 16px;
+        color: #454545;
+      }
+
+      input.gv-input, textarea.gv-input {
+        padding: 10px;
+      }
+      .gv-input, .gv-body select, .gv-body input {
+        outline: none;
+        font-size: 16px;
+        font-family: Lato;
+
+        border: solid 2px #EDEDED;
+        background: #fff;
+
+        display: block;
+        width: 100%;
+
+        box-sizing: border-box;
+        height: 40px;
+      }
+
+      .gv-body select, .gv-body input, .gv-body textarea {
+        border-radius: 4px;
+      }
+      .gv-body select {
+        cursor: pointer;
+      }
+
+
+      /* Radio Buttons */
+      .gv-radio {
+        width: 16px;
+        height: 16px;
+        background: #FFFFFF;
+        border: 2px solid #EDEDED;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .gv-radio-dot.active {
+        width: 14px;
+        height: 14px;
+        background: #007AFF;
+        border-radius: 50%;
+      }
+      .gv-radio-label {
+        padding-left: 10px;
+      }
+      .gv-radio-option {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        margin-right: 25px;
+      }
+      .gv-radio-list {
+        display: flex;
+      }
+
+
+      /* Tags Input */
+      .gv-body .tags-input {
+        border: 2px solid #EBEBEB;
+        border-radius: 4px;
+        box-sizing: border-box;
+        background: #fff;
+        padding: 3px;
+        cursor: text;
+      }
+      .gv-body .tags-input input {
+        height: 30px;
+        border: none;
+        outline: none;
+        margin: 3px;
+      }
+      .gv-body .tags-input-tag {
+        margin: 3px;
+        border-radius: 2px;
+        padding: 5px 13px 7px 13px;
+        cursor: pointer;
+      }
+      .gv-body .tags-input-tag-remove {
+        font-size: 12px;
+      }
+
+      /* Tags Popover */
+      .gv-body .tags-input-popover {
+        /* counteract default popover padding */
+        margin: -5px;
+      }
+      .gv-body .tags-input-popover &gt; div {
+        border-bottom: solid 1px rgba(216, 216, 216, 0.3);
+        padding: 15px;
+      }
+      .gv-body .tags-input-popover .popover-item:first-child {
+        padding-top: 0;
+      }
+      .gv-body .tags-input-popover .popover-item {
+        padding-top: 10px;
+      }
+
+      /* Pager */
+      .gv-pager {
+        position: relative;
+        top: 50px;
+      }
+      .gv-pager-item {
+        padding: 5px;
+        width: 30px;
+        background: white;
+        border-radius: 2px;
+        cursor: pointer;
+        display: inline-block;
+        box-sizing: border-box;
+        text-align: center;
+        margin: 0 2.5px;
+        color: #9b9b9b;
+      }
+      .gv-pager-item:hover {
+         background: #f5f5f5;
+      }
+      .gv-pager-item.active {
+        background-color: #0076de;
+        color: #fff;
+      }
+      .gv-pager-item.disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+      .contexture-result-pager {
+        display: flex;
+        align-items: center;
+      }
+      .contexture-result-pager .gv-pager-item:first-child {
+        margin-right: 20px;
+      }
+      .contexture-result-pager .gv-pager-item:last-child {
+        margin-left: 20px;
+      }
+      .contexture-result-pager .gv-pager-item:first-child.disabled,
+      .contexture-result-pager .gv-pager-item:last-child.disabled {
+        display: none;
+      }
+
+      /* Icon Button */
+      .gv-icon-button {
+        border-radius: 100px;
+        padding: 5px;
+        cursor: pointer;
+        color: #9b9b9b;
+        display: inline-block;
+        transition: background-color .1s linear, color .1s linear;
+      }
+      .gv-icon-button &gt; * {
+        vertical-align: middle;
+      }
+      .gv-icon-button i {
+        width: 20px;
+        height: 20px;
+        font-size: 20px;
+      }
+      .gv-icon-button:hover {
+        background-color: rgba(216, 216, 216, 0.4);
+        color: #000;
+      }
+      .gv-icon-button.active, .gv-icon-button.primary {
+        background-color: #0076de;
+        color: #fff;
+      }
+
+
+      /* Button Group Border Radii */
+      .gv-button-group {
+        border-radius: 3px;
+        display: flex;
+        overflow: hidden;
+      }
+      .gv-button-group &gt; :first-child {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+      .gv-button-group &gt; :last-child {
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+      }
+
+
+      /* Search Bar + Button */
+      .gv-search-bar {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-gap: 30px;
+        top: 5px;
+        z-index: 1;
+        /*background: #f6f6f6;*/
+      }
+      .gv-search-bar .gv-box {
+        padding: 0;
+      }
+      .gv-search-bar &gt; .gv-button-group {
+        box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+      }
+      .gv-search-button {
+        font-size: 18px;
+      }
+      .gv-search-toolbar {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        background-color: #fff;
+      }
+      .gv-search-toolbar .gv-icon-button {
+        margin-right: 5px;
+      }
+      .gv-search-toolbar .gv-icon-button:last-child {
+        margin-right: 0;
+      }
+
+
+      .contexture-facet a {
+        color: #0076de
+      }
+      .contexture-facet {
+        font-size: 14px;
+      }
+      .contexture-facet &gt; label {
+        margin: 5px 0;
+      }
+      .contexture-facet .gv-checkbox {
+        margin: 0 10px;
+      }
+      .contexture-facet &gt; .gv-input[type="text"] {
+        margin-bottom: 10px;
+      }
+      .contexture-facet-cardinality {
+        margin: 10px 0;
+      }
+
+      .contexture-number-separator {
+        margin: 0 10px;
+      }
+      .contexture-number-best-range {
+        margin-top: 15px;
+      }
+
+      /* Min Height here is to align better in QueryBuilder */
+       .gv-radio-list {
+        min-height: 40px;
+      }
+
+      /* Tabs */
+      .gv-tab-container .gv-tab {
+        display: inline-block;
+        padding: 15px 20px;
+        background-color: #e0e0e3;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        vertical-align: bottom;
+        border-left: solid 1px #c4c5ca;
+        transition: background-color 0.1s linear;
+        text-align: center;
+      }
+      .gv-tab.active + .gv-tab {
+        border-left: none;
+      }
+      .gv-tab:last-child {
+        border-radius: 0 4px 0 0;
+      }
+      .gv-tab:first-child {
+        border-radius: 4px 0 0 0;
+        border-left: none;
+      }
+      .gv-tab.active, .gv-tab.active:hover {
+        background-color: #fff;
+        font-size: 18px;
+        padding: 15px 30px;
+        border-radius: 4px 4px 0 0 !important;
+        /* white box shadow trick from http://dev.housetrip.com/2012/06/15/good-looking-css-tabs/ */
+        box-shadow: 0 10px 0 0 #fff, 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+        border-left: none;
+      }
+      .gv-tab:hover {
+        background-color: rgba(147,149,160, 0.5);
+      }
+
+
+      /* Filter List */
+      .filter-list.gv-box {
+        padding: 30px;
+      }
+      .filter-list-item {
+        border-bottom: solid 1px rgba(216, 216, 216, 0.3);
+        padding-bottom: 30px;
+        margin-bottom: 30px;
+        margin-left: -30px;
+        margin-right: -30px;
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+      .filter-field-label {
+        font-size: 18px;
+        font-weight: bold;
+      }
+      .filter-field-label-icon {
+        color: #9b9b9b;
+      }
+      .filter-field-has-value {
+        color: #0076de;
+      }
+      .filter-field-icon-refresh .gv-icon-button {
+        color: #0076de;
+      }
+      .filter-field-icon-refresh .gv-icon-button:hover {
+        color: #f6f6f6;
+        background-color: #0076de;
+      }
+      .filter-list-item-contents {
+        margin-top: 15px;
+      }
+
+      .filter-list-group {
+        border-left: solid 2px;
+        padding-left: 35px; /* 30 for filter-list-item + 5 space */
+        margin-left: -30px;
+        margin-top: -25px; /* -30 for filter-list-item + 5 space */
+        padding-top: 30px;
+      }
+
+      .gv-grid {
+        display: grid;
+        grid-template-columns: 400px 1fr;
+        grid-gap: 40px;
+        margin: 0 40px;
+      }
+
+      .popover {
+        border-radius: 3px;
+        box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+        border: solid 1px #f1f1f1;
+        padding: 5px;
+      }
+
+      .panel-tree-picker &gt; div {
+        border-right: solid 1px #eef0f1;
+      }
+      .panel-tree-picker &gt; div:last-child {
+        border-right: none;
+      }
+
+      .gv-text-error {
+        color: #D75050;
+      }
+
+      .gv-body .labeled-checkbox {
+        display: flex;
+      }
+      .gv-body .labeled-checkbox &gt; span {
+        padding-left: 10px;
+      }
+
+      /* Reset to standard */
+      .react-date-picker * {
+        font-size: 16px;
+      }
+      .react-date-picker abbr {
+        text-decoration-line: none;
+        font-size: 11px;
+      }
+      .react-date-picker, .react-date-picker__wrapper {
+        width: 100%;
+      }
+      .react-date-picker__wrapper {
+        border: 2px solid #ededed!important;
+        border-radius: 4px;
+      }
+      .react-date-picker__inputGroup__input {
+        min-width: 20px!important;
+        text-align: center;
+        border: none!important;
+      }
+      .react-date-picker__inputGroup__input::placeholder {
+        opacity: 0.5;
+      }
+      .react-date-picker__inputGroup__year {
+        min-width: 40px!important;
+      }
+      .react-calendar__month-view__days__day--weekend {
+        color: #000;
+      }
+      .react-calendar__month-view__days__day--neighboringMonth {
+        color: #969696;
+      }
+      .react-calendar__navigation {
+        margin-bottom: 0;
+      }
+      /* GV BOX it up */
+      .react-calendar {
+        border: 2px solid #ededed;
+        border-radius: 4px;
+        background-color: #fff;
+        box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+        padding: 15px;
+        width: 400px !important;
+      }
+
+      /* Modals */
+      .default-modal-wrap {
+        width: auto;
+        max-width: 640px;
+        border: 30px solid white;
+        overflow-x: auto;
+      }
+    
+  </style>
+  <div
+    style={
+      Object {
+        "maxWidth": 500,
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "display": "contents",
+        }
+      }
+    >
+      <div
+        className="tags-input"
+      >
+        <div
+          style={
+            Object {
+              "alignItems": "center",
+              "display": "flex",
+              "flexWrap": "wrap",
+              "height": "100%",
+            }
+          }
+        >
+          <div
+            className="tags-input-tag"
+            onClick={[Function]}
+            style={
+              Object {
+                "background": "#5cb85c",
+                "color": "white",
+                "fontWeight": "bold",
+                "opacity": 1,
+              }
+            }
+          >
+            <span
+              style={
+                Object {
+                  "marginRight": 10,
+                }
+              }
+            >
+              (1) This is a tag
+            </span>
+            <span
+              onClick={[Function]}
+            >
+              <span
+                className="tags-input-tag-remove fa fa-times"
+              />
+            </span>
+          </div>
+          <div
+            className="tags-input-tag"
+            onClick={[Function]}
+            style={
+              Object {
+                "background": "#5cb85c",
+                "color": "white",
+                "fontWeight": "bold",
+                "opacity": 1,
+              }
+            }
+          >
+            <span
+              style={
+                Object {
+                  "marginRight": 10,
+                }
+              }
+            >
+              (2) This is a tag
+            </span>
+            <span
+              onClick={[Function]}
+            >
+              <span
+                className="tags-input-tag-remove fa fa-times"
+              />
+            </span>
+          </div>
+          <div
+            className="tags-input-tag"
+            onClick={[Function]}
+            style={
+              Object {
+                "background": "#5cb85c",
+                "color": "white",
+                "fontWeight": "bold",
+                "opacity": 1,
+              }
+            }
+          >
+            <span
+              style={
+                Object {
+                  "marginRight": 10,
+                }
+              }
+            >
+              (3) This is a tag
+            </span>
+            <span
+              onClick={[Function]}
+            >
+              <span
+                className="tags-input-tag-remove fa fa-times"
+              />
+            </span>
+          </div>
+          <div
+            className="tags-input-tag"
+            onClick={[Function]}
+            style={
+              Object {
+                "background": "#5cb85c",
+                "color": "white",
+                "fontWeight": "bold",
+                "opacity": 1,
+              }
+            }
+          >
+            <span
+              style={
+                Object {
+                  "marginRight": 10,
+                }
+              }
+            >
+              (4) This is a tag
+            </span>
+            <span
+              onClick={[Function]}
+            >
+              <span
+                className="tags-input-tag-remove fa fa-times"
+              />
+            </span>
+          </div>
+          <input
+            onBlur={[Function]}
+            onChange={[Function]}
+            onKeyDown={[Function]}
+            placeholder="Search..."
+            style={
+              Object {
+                "flex": 1,
+                "marginLeft": 10,
+              }
+            }
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
 <div
   style={
@@ -5961,7 +7212,11 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
     }
   >
     <div
-      style={Object {}}
+      style={
+        Object {
+          "display": "contents",
+        }
+      }
     >
       <input
         onBlur={[Function]}
@@ -6012,43 +7267,39 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           }
         >
           <div
-            style={Object {}}
+            style={
+              Object {
+                "display": "contents",
+              }
+            }
           >
-            <div>
-              <label
-                className="tags-input"
+            <div
+              className="tags-input"
+            >
+              <div
                 style={
                   Object {
-                    "display": "block",
+                    "alignItems": "center",
+                    "display": "flex",
+                    "flexWrap": "wrap",
+                    "height": "100%",
                   }
                 }
               >
-                <div
+                <input
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onKeyDown={[Function]}
+                  placeholder="Search..."
                   style={
                     Object {
-                      "alignItems": "center",
-                      "cursor": "text",
-                      "display": "flex",
-                      "flexWrap": "wrap",
+                      "flex": 1,
+                      "marginLeft": 10,
                     }
                   }
-                >
-                  <input
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    onKeyDown={[Function]}
-                    placeholder="Search..."
-                    style={
-                      Object {
-                        "border": "none",
-                        "outline": "none",
-                        "width": "auto",
-                      }
-                    }
-                    value=""
-                  />
-                </div>
-              </label>
+                  value=""
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -6060,7 +7311,11 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           }
         >
           <div
-            style={Object {}}
+            style={
+              Object {
+                "display": "contents",
+              }
+            }
           >
             <input
               node={
@@ -6116,7 +7371,11 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           }
         >
           <div
-            style={Object {}}
+            style={
+              Object {
+                "display": "contents",
+              }
+            }
           >
             <div
               className="contexture-facet"
@@ -6337,7 +7596,11 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           }
         >
           <div
-            style={Object {}}
+            style={
+              Object {
+                "display": "contents",
+              }
+            }
           >
             <div
               className="contexture-facet"
@@ -6558,7 +7821,11 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           }
         >
           <div
-            style={Object {}}
+            style={
+              Object {
+                "display": "contents",
+              }
+            }
           >
             <div
               className="contexture-number"
@@ -6632,7 +7899,11 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           }
         >
           <div
-            style={Object {}}
+            style={
+              Object {
+                "display": "contents",
+              }
+            }
           >
             <div
               className="contexture-number"
@@ -6702,7 +7973,11 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           style={Object {}}
         >
           <div
-            style={Object {}}
+            style={
+              Object {
+                "display": "contents",
+              }
+            }
           >
             <div
               style={
@@ -6899,7 +8174,11 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           }
         >
           <div
-            style={Object {}}
+            style={
+              Object {
+                "display": "contents",
+              }
+            }
           >
             <div
               style={
@@ -7038,7 +8317,7 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           <div
             style={
               Object {
-                "display": "inline-block",
+                "display": "contents",
               }
             }
           >
@@ -7058,7 +8337,11 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
             }
           >
             <div
-              style={Object {}}
+              style={
+                Object {
+                  "display": "contents",
+                }
+              }
             >
               <table>
                 <thead>
@@ -7266,7 +8549,11 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Geo filter & HERE
       }
     >
       <div
-        style={Object {}}
+        style={
+          Object {
+            "display": "contents",
+          }
+        }
       >
         <div
           style={
@@ -7472,7 +8759,11 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/ResultTable Custo
         
   </style>
   <div
-    style={Object {}}
+    style={
+      Object {
+        "display": "contents",
+      }
+    }
   >
     <table
       className="example-table"
@@ -7690,7 +8981,11 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/ResultTable Displ
         
   </style>
   <div
-    style={Object {}}
+    style={
+      Object {
+        "display": "contents",
+      }
+    }
   >
     <table
       className="example-table"
@@ -7759,7 +9054,11 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/ResultTable Displ
 exports[`Storyshots Search Components (Unthemed)|FilterAdder Example 1`] = `
 <div>
   <div
-    style={Object {}}
+    style={
+      Object {
+        "display": "contents",
+      }
+    }
   >
     <select
       onChange={[Function]}
@@ -7784,7 +9083,11 @@ exports[`Storyshots Search Components (Unthemed)|FilterAdder Example 1`] = `
 
 exports[`Storyshots Search Components (Unthemed)|FilterAdder With NestedPickerModal 1`] = `
 <div
-  style={Object {}}
+  style={
+    Object {
+      "display": "contents",
+    }
+  }
 >
   <div>
     <button
@@ -7798,14 +9101,22 @@ exports[`Storyshots Search Components (Unthemed)|FilterAdder With NestedPickerMo
 
 exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
 <div
-  style={Object {}}
+  style={
+    Object {
+      "display": "contents",
+    }
+  }
 >
   <div>
     <div
       className="filter-list-item"
     >
       <div
-        style={Object {}}
+        style={
+          Object {
+            "display": "contents",
+          }
+        }
       >
         <div
           className="filter-field-label"
@@ -7836,7 +9147,11 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
       className="filter-list-item"
     >
       <div
-        style={Object {}}
+        style={
+          Object {
+            "display": "contents",
+          }
+        }
       >
         <div
           className="filter-field-label"
@@ -7867,7 +9182,11 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
       className="filter-list-item"
     >
       <div
-        style={Object {}}
+        style={
+          Object {
+            "display": "contents",
+          }
+        }
       >
         <div
           className="filter-field-label"
@@ -8035,7 +9354,11 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                           }
                         >
                           <div
-                            style={Object {}}
+                            style={
+                              Object {
+                                "display": "contents",
+                              }
+                            }
                           >
                             <input
                               onBlur={[Function]}
@@ -8295,7 +9618,11 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                       }
                                     >
                                       <div
-                                        style={Object {}}
+                                        style={
+                                          Object {
+                                            "display": "contents",
+                                          }
+                                        }
                                       >
                                         <input
                                           onBlur={[Function]}
@@ -8494,7 +9821,11 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                       }
                                     >
                                       <div
-                                        style={Object {}}
+                                        style={
+                                          Object {
+                                            "display": "contents",
+                                          }
+                                        }
                                       >
                                         <input
                                           onBlur={[Function]}
@@ -8755,7 +10086,11 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                   }
                                                 >
                                                   <div
-                                                    style={Object {}}
+                                                    style={
+                                                      Object {
+                                                        "display": "contents",
+                                                      }
+                                                    }
                                                   >
                                                     <div
                                                       className="contexture-facet"
@@ -9024,7 +10359,11 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                   }
                                                 >
                                                   <div
-                                                    style={Object {}}
+                                                    style={
+                                                      Object {
+                                                        "display": "contents",
+                                                      }
+                                                    }
                                                   >
                                                     <input
                                                       onBlur={[Function]}
@@ -9235,7 +10574,11 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                           }
                         >
                           <div
-                            style={Object {}}
+                            style={
+                              Object {
+                                "display": "contents",
+                              }
+                            }
                           >
                             <input
                               onBlur={[Function]}
@@ -9515,7 +10858,11 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                       }
                                     >
                                       <div
-                                        style={Object {}}
+                                        style={
+                                          Object {
+                                            "display": "contents",
+                                          }
+                                        }
                                       >
                                         <div
                                           className="contexture-number"
@@ -9755,7 +11102,11 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                       }
                                     >
                                       <div
-                                        style={Object {}}
+                                        style={
+                                          Object {
+                                            "display": "contents",
+                                          }
+                                        }
                                       >
                                         <input
                                           onBlur={[Function]}
@@ -10097,7 +11448,11 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                   }
                                                 >
                                                   <div
-                                                    style={Object {}}
+                                                    style={
+                                                      Object {
+                                                        "display": "contents",
+                                                      }
+                                                    }
                                                   >
                                                     <input
                                                       onBlur={[Function]}
@@ -10297,7 +11652,11 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                   }
                                                 >
                                                   <div
-                                                    style={Object {}}
+                                                    style={
+                                                      Object {
+                                                        "display": "contents",
+                                                      }
+                                                    }
                                                   >
                                                     <input
                                                       node={
@@ -10541,7 +11900,11 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                       }
                                     >
                                       <div
-                                        style={Object {}}
+                                        style={
+                                          Object {
+                                            "display": "contents",
+                                          }
+                                        }
                                       >
                                         <input
                                           onBlur={[Function]}
@@ -10762,7 +12125,11 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter 1`] = `
                           }
                         >
                           <div
-                            style={Object {}}
+                            style={
+                              Object {
+                                "display": "contents",
+                              }
+                            }
                           >
                             <input
                               onBlur={[Function]}
@@ -10977,7 +12344,11 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter on a mi
                           }
                         >
                           <div
-                            style={Object {}}
+                            style={
+                              Object {
+                                "display": "contents",
+                              }
+                            }
                           >
                             <input
                               onBlur={[Function]}
@@ -11192,7 +12563,11 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter with fa
                           }
                         >
                           <div
-                            style={Object {}}
+                            style={
+                              Object {
+                                "display": "contents",
+                              }
+                            }
                           >
                             <div
                               className="contexture-facet"
@@ -11563,7 +12938,11 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter with fi
                           }
                         >
                           <div
-                            style={Object {}}
+                            style={
+                              Object {
+                                "display": "contents",
+                              }
+                            }
                           >
                             <input
                               onBlur={[Function]}
