@@ -1,3 +1,6 @@
+# 1.47.2
+* Fix Checkbox dependency in CheckboxList
+
 # 1.47.1
 * DateInput: Always convert input to Date
 
