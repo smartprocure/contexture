@@ -1,5 +1,8 @@
-# 1.47.2
+# 1.47.3
 * Storybook: Organize categories
+
+# 1.47.2
+* Fix Checkbox dependency in CheckboxList
 
 # 1.47.1
 * DateInput: Always convert input to Date
