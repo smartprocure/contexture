@@ -35,6 +35,7 @@ import Box from './Box'
 import LinkButton from './LinkButton'
 import TreePauseButton from './TreePauseButton'
 import ToggleFiltersButton from './ToggleFiltersButton'
+export {default as SearchLayout} from './SearchLayout'
 import DateInput from './DateInput'
 
 export {
@@ -500,11 +501,20 @@ export let GVStyle = () => (
         padding-top: 30px;
       }
 
-      .gv-grid {
+      .gv-search-layout-basic,
+      .gv-search-layout-builder,
+      .gv-search-layout-resultsOnly {
         display: grid;
-        grid-template-columns: 400px 1fr;
         grid-gap: 40px;
         margin: 0 40px;
+        margin-bottom: 50px;
+      }
+      .gv-search-layout-basic {
+        grid-template-columns: minmax(250px, 400px) minmax(0, 1fr);
+      }
+      .gv-search-layout-builder,
+      .gv-search-layout-resultsOnly {
+        grid-template-columns: minmax(0, 1fr);
       }
 
       .popover {
