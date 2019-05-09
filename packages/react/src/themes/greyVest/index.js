@@ -782,6 +782,17 @@ export let FilterList = defaultProps({ Icon, ListItem, MissingTypeComponent })(
   BaseFilterList
 )
 
+export let AddableFilterList = props =>
+  <>
+    <FilterList {...props} />
+    <Adder {...props} uniqueFields />
+  </>
+
+export let FiltersBox = props => 
+  <div className="gv-box filter-list">
+    <AddableFilterList {...props} />
+  </div>
+
 export let QueryBuilder = defaultProps({ Button, MissingTypeComponent })(
   QueryBuilderComponent
 )
