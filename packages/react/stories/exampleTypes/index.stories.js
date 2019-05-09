@@ -22,7 +22,7 @@ let {
   Geo,
 } = ExampleTypes
 
-storiesOf('Example Types', module)
+storiesOf('Search Components (Unthemed)|Example Types', module)
   .addWithJSX('Full Demo', () => (
     <div
       style={{

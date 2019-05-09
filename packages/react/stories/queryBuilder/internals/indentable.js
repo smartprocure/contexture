@@ -3,7 +3,10 @@ import { storiesOf } from '@storybook/react'
 import Indentable from '../../../src/queryBuilder/preview/Indentable'
 
 export default () =>
-  storiesOf('QueryBuilder/Internals/Indentable', module)
+  storiesOf(
+    'Search Components (Unthemed)|QueryBuilder/Internals/Indentable',
+    module
+  )
     .addWithJSX('and', () => (
       <Indentable indent={() => true} tree={{ join: 'and' }}>
         <div style={{ height: '100px' }}>Contents</div>

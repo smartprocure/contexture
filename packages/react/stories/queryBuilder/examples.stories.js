@@ -14,7 +14,7 @@ let Client = ContextureMobx({
 
 let Node = (type, key) => ({ key, type })
 
-storiesOf('QueryBuilder/Examples', module)
+storiesOf('Search Components (Unthemed)|QueryBuilder', module)
   .addWithJSX('One Filter', () => (
     <QueryBuilder
       tree={Client({

@@ -6,7 +6,7 @@ import { LinkButton } from './../../src/themes/greyVest'
 
 let click = action('clicked')
 
-storiesOf('Non Search Components|Grey Vest', module)
+storiesOf('Components (Grey Vest)|LinkButton', module)
   .addDecorator(decorator)
   .addWithJSX('LinkButton', () => (
     <LinkButton onClick={() => click()}>Click</LinkButton>

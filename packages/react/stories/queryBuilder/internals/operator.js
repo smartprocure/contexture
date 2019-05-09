@@ -17,7 +17,10 @@ let operatorStory = (join, index, root) => () => (
   />
 )
 export default (parent, root, DnDDecorator) =>
-  storiesOf('QueryBuilder/Internals/Operator', module)
+  storiesOf(
+    'Search Components (Unthemed)|QueryBuilder/Internals/Operator',
+    module
+  )
     .addDecorator(DnDDecorator)
     .addWithJSX('and', operatorStory('and', 1, root))
     .addWithJSX('or', operatorStory('or', 1, root))
