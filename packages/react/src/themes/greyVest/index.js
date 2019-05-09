@@ -33,6 +33,7 @@ import ErrorList from './ErrorList'
 import ErrorText from './ErrorText'
 import Box from './Box'
 import LinkButton from './LinkButton'
+import ToggleFiltersButton from './ToggleFiltersButton'
 import DateInput from './DateInput'
 
 export {
@@ -51,6 +52,7 @@ export {
   ErrorList,
   Box,
   LinkButton,
+  ToggleFiltersButton,
 }
 
 export let GVStyle = () => (

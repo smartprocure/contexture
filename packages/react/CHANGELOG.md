@@ -1,3 +1,4 @@
+* GreyVest: Add ToggleFiltersButton
 * FilterList: Fix bug with node actions not working without Provider
 * GreyVest -> TabList: Pass `from` as second param to onChange
 * GreyVest: Storybook refactoring (add decorator)
