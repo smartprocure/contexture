@@ -1,10 +1,10 @@
 import React from 'react'
 import { Fonts, GVStyle } from './../../src/themes/greyVest'
 
-export default storyFn =>
+export default Story => (
   <div className="gv-body">
     <Fonts />
     <GVStyle />
-    {storyFn()}
+    <Story />
   </div>
-
+)
