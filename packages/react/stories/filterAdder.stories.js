@@ -35,7 +35,7 @@ let mockTree = {
   getNode: () => true,
 }
 
-storiesOf('FilterAdder', module)
+storiesOf('Search Components (Unthemed)|FilterAdder', module)
   .addWithJSX('Example', () => (
     <div>
       <FilterAdder

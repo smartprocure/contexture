@@ -20,6 +20,9 @@
 ## Styling/Design Improvements
 * GreyVest -> Button: Remove css outline
 
+# 1.47.3
+* Storybook: Organize categories
+
 # 1.47.2
 * Fix Checkbox dependency in CheckboxList
 

@@ -1,7 +1,7 @@
 import 'babel-polyfill'
 import { storiesOf } from '@storybook/react'
 
-storiesOf('Non Search Components|Grey Vest', module).addWithJSX(
-  'Refs',
+storiesOf('Components (Grey Vest)|Refs', module).addWithJSX(
+  'Default',
   require('./refs').default
 )
