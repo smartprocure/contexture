@@ -37,10 +37,10 @@ export let Tabs = ({
 }) => {
   let childrenArray = React.Children.toArray(children)
   let options = _.flow(
-    _.filter(child => child.type == Tab || child.type == TabOption),
+    _.filter(child => child.type === Tab || child.type === TabOption),
     F.mapIndexed(({ type, props }, i) => ({
       value: props.value || i,
-      label: type == Tab ? props.label : props.children
+      label: type === Tab ? props.label : props.children
     }))
   )(childrenArray)
   
@@ -56,7 +56,7 @@ export let Tabs = ({
   let content = _.flow(
     _.filter.convert({ cap: false })(
       ({ type, props }, i) =>
-        (type == Tab || type == TabContent) &&
+        (type === Tab || type === TabContent) &&
         (value === props.value || value === i)
     ),
     F.mapIndexed(({ props }, i) => (
