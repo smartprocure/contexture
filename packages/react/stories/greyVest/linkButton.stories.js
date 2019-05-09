@@ -8,6 +8,6 @@ let click = action('clicked')
 
 storiesOf('Non Search Components|Grey Vest', module)
   .addDecorator(decorator)
-  .addWithJSX('LinkButton', () =>
+  .addWithJSX('LinkButton', () => (
     <LinkButton onClick={() => click()}>Click</LinkButton>
-  )
+  ))

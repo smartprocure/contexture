@@ -5,6 +5,4 @@ import { Box } from './../../src/themes/greyVest'
 
 storiesOf('Non Search Components|Grey Vest', module)
   .addDecorator(decorator)
-  .addWithJSX('Box', () => (
-    <Box>Box Contents</Box>
-  ))
+  .addWithJSX('Box', () => <Box>Box Contents</Box>)
