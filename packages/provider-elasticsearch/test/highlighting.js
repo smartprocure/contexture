@@ -1,7 +1,7 @@
 let highlighting = require('../src/highlighting')
 let { expect } = require('chai')
 
-describe.only('highlighting', () => {
+describe('highlighting', () => {
   describe('highlightResults', () => {
     it('should work with includes', () => {
       let highlightFields = { inline: ['title', 'description', 'summary'] }

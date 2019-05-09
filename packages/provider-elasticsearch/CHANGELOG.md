@@ -1,4 +1,4 @@
-# 0.16.1
+# 0.17.0
 * Add support for "inlineAliases" when dealing with ES highlight response
 
 # 0.16.0
