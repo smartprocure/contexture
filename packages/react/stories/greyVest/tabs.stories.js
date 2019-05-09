@@ -69,7 +69,7 @@ Used in conjunction with TabOption as an alternative to a combined Tab.
 
 let state = observable({ tab: 'results' })
 
-storiesOf('Non Search Components|Grey Vest/Tabs', module)
+storiesOf('Components (Grey Vest)|Tabs', module)
   .addDecorator(decorator)
   .add(
     'Docs',
