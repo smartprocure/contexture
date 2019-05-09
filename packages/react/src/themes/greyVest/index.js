@@ -81,6 +81,7 @@ export let GVStyle = () => (
         background-color: #e3e5e6;
 
         border: none;
+        outline: none;
         font-size: 14px;
         font-weight: bold;
         letter-spacing: 2px;
