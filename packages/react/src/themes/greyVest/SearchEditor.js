@@ -8,10 +8,7 @@ import TreePauseButton from './TreePauseButton'
 import ToggleFiltersButton from './ToggleFiltersButton'
 
 let SearchEditor = ({ mode, setMode, children, QueryBuilder, FiltersBox }) => {
-  let trees = _.flow(
-    React.Children.toArray,
-    _.map(x => x.props || x)
-  )(children)
+  let trees = React.Children.map(children, x => x.props)
   let SearchGroupComponent = mode === 'builder' ? QueryBuilder : FiltersBox
   let marginTop = { marginTop: 15 }
   return mode === 'resultsOnly' ? null : (

@@ -7,10 +7,7 @@ let setPausedNested = (tree, path, value) =>
   tree[`${value ? '' : 'un'}pauseNested`](path)
 
 let TreePauseButton = ({ children }) => {
-  let trees = _.flow(
-    React.Children.toArray,
-    _.map(x => x.props || x)
-  )(children)
+  let trees = React.Children.map(children, x => x.props)
   let allPaused = _.every(({ tree, path }) => tree.isPausedNested(path), trees)
   let flip = () =>
     _.each(({ tree, path }) => setPausedNested(tree, path, !allPaused), trees)
