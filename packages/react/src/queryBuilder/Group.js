@@ -77,7 +77,7 @@ let Group = Component(
           >
             {F.mapIndexed(
               (child, index) => (
-                <div key={child.key}>
+                <div key={child.key + index}>
                   <FilterIndentTarget {...{ ...args, child, index }} />
                   {/*<FilterMoveTarget index={index} tree={tree} />*/}
                   <GroupItem {...{ ...args, child, index }} />
