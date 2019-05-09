@@ -10,7 +10,6 @@ import ToggleFiltersButton from './ToggleFiltersButton'
 let SearchEditor = ({ mode, setMode, children, QueryBuilder, FiltersBox }) => {
   let trees = React.Children.map(children, x => x.props)
   let SearchGroupComponent = mode === 'builder' ? QueryBuilder : FiltersBox
-  let marginTop = { marginTop: 15 }
   return mode === 'resultsOnly' ? null : (
     <div>
       <Flex style={{ alignItems: 'center' }}>
@@ -36,7 +35,7 @@ let SearchEditor = ({ mode, setMode, children, QueryBuilder, FiltersBox }) => {
         trees
       )}
       {mode === 'basic' && (
-        <LinkButton onClick={() => setMode('builder')} style={marginTop}>
+        <LinkButton onClick={() => setMode('builder')} style={{ marginTop: 15 }}>
           Switch to Advanced Search Builder
         </LinkButton>
       )}
