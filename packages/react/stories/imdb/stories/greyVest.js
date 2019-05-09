@@ -19,7 +19,7 @@ import {
   SearchLayout,
   SearchEditor,
   SearchTree,
-  ToggleFiltersButton
+  ToggleFiltersButton,
 } from '../../../src/themes/greyVest'
 import { Column } from './../../../src/layout/ExpandableTable'
 let {
@@ -157,7 +157,7 @@ tree.disableAutoUpdate = true
 
 let state = observable({
   autoUpdate: false,
-  mode: 'basic'
+  mode: 'basic',
 })
 
 let termDetailsTree = _.memoize(term => {
@@ -192,11 +192,11 @@ let overrides = {
       released: { label: 'Release Date' },
       poster: {
         display: x => <img src={x} width="180" height="270" />,
-        order: 2
+        order: 2,
       },
       title: {
         order: 1,
-        display: x => <span dangerouslySetInnerHTML={{ __html: x }} />
+        display: x => <span dangerouslySetInnerHTML={{ __html: x }} />,
       },
       genres: { display: divs },
       actors: { display: divs },
@@ -204,9 +204,9 @@ let overrides = {
       imdbRating: { path: ['Imdb', 'imdbRating'] },
       imdbVotes: { path: ['Imdb', 'imdbVotes'] },
       year: { defaultNodeProps: { number: { min: 2005 } } },
-      metaScore: { significantDigits: 2 }
-    }
-  }
+      metaScore: { significantDigits: 2 },
+    },
+  },
 }
 let schemas = fromPromise(
   updateSchemas()
@@ -214,12 +214,15 @@ let schemas = fromPromise(
     .then(_.tap(() => tree.refresh(['root'])))
 )
 
-
 // (f, g) -> (x, y) -> {...f(x, y), ...g(x, y)}
-let mergeOverAll = fns => _.flow(_.over(fns), _.mergeAll)
+let mergeOverAll = fns =>
+  _.flow(
+    _.over(fns),
+    _.mergeAll
+  )
 
 let componentForType = TypeMap => ({ type }) => ({ component: TypeMap[type] })
-let schemaProps =  props => ({ field }, fields) => _.pick(props, fields[field])
+let schemaProps = props => ({ field }, fields) => _.pick(props, fields[field])
 
 let mapNodeToProps = mergeOverAll([
   componentForType(TypeMap),
@@ -233,10 +236,10 @@ let mapNodeToProps = mergeOverAll([
         {
           label: 'Last Year',
           from: 'now-1y/y',
-          to: 'now/y'
-        }
-      ]
-    }
+          to: 'now/y',
+        },
+      ],
+    },
 ])
 
 export default () => (
@@ -259,7 +262,8 @@ export default () => (
                 ({
                   titleContains: 'Title Contains',
                   titleDoesNotContain: 'Title Does Not Contain',
-                }[key])}
+                }[key])
+              }
               mapNodeToProps={mapNodeToProps}
             />
           </SearchEditor>

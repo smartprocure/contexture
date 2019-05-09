@@ -5,7 +5,14 @@ import { action } from '@storybook/addon-actions'
 import { observable } from 'mobx'
 import { Observer } from 'mobx-react'
 import decorator from './decorator'
-import { Tabs, Tab, TabOption, TabContent, ButtonRadio, Button } from './../../src/themes/greyVest'
+import {
+  Tabs,
+  Tab,
+  TabOption,
+  TabContent,
+  ButtonRadio,
+  Button,
+} from './../../src/themes/greyVest'
 
 let tabDocs = `
 # Overview
@@ -64,37 +71,28 @@ let state = observable({ tab: 'results' })
 
 storiesOf('Non Search Components|Grey Vest/Tabs', module)
   .addDecorator(decorator)
-  .add('Docs', withInfo({ text: tabDocs, inline: true, source: false, header: false })(
-    () => null
-  ))
+  .add(
+    'Docs',
+    withInfo({ text: tabDocs, inline: true, source: false, header: false })(
+      () => null
+    )
+  )
   .addWithJSX('Base Usage', () => (
     <Tabs>
-      <Tab label="Tab One">
-        Tab One Contents
-      </Tab>
-      <Tab label="Tab Two">
-        Tab Two Contents
-      </Tab>
+      <Tab label="Tab One">Tab One Contents</Tab>
+      <Tab label="Tab Two">Tab Two Contents</Tab>
     </Tabs>
   ))
   .addWithJSX('Anonymous Values', () => (
     <Tabs defaultValue={0}>
-      <Tab label="First Tab">
-        First Tab Contents
-      </Tab>
-      <Tab label="Second Tab">
-        Second Tab Contents
-      </Tab>
+      <Tab label="First Tab">First Tab Contents</Tab>
+      <Tab label="Second Tab">Second Tab Contents</Tab>
     </Tabs>
   ))
   .addWithJSX('TabOption and TabContent', () => (
     <Tabs>
-      <TabOption value="results">
-        Results
-      </TabOption>
-      <TabContent value="results">
-        Results Tables
-      </TabContent>
+      <TabOption value="results">Results</TabOption>
+      <TabContent value="results">Results Tables</TabContent>
       <Tab value="analytics" label="Analytics">
         Charts and Stuff
       </Tab>
@@ -102,9 +100,7 @@ storiesOf('Non Search Components|Grey Vest/Tabs', module)
   ))
   .addWithJSX('Tab Render Function', () => (
     <Tabs>
-      <Tab label="Analytics">
-        Charts and Stuff
-      </Tab>
+      <Tab label="Analytics">Charts and Stuff</Tab>
       <Tab label="Analytics2" value="tab 2">
         {tab => `Current tab is ${tab}`}
       </Tab>
@@ -122,24 +118,27 @@ storiesOf('Non Search Components|Grey Vest/Tabs', module)
   ))
   .addWithJSX('Controlled', () => (
     <Observer>
-      {() => <>
-        <Button onClick={() => (state.tab = 'analytics')}>Change from {state.tab} to analytics</Button>
-        <Tabs 
-          onChange={(x, y) => {
-            state.tab = x
-            action('change tab')(x, y)
-          }}
-          value={state.tab}
-        >
-          <Tab value="results" label="Results">
-            Results Tables
-          </Tab>    
-          <Tab value="analytics" label="Analytics">
-            Charts and Stuff
-          </Tab>
-        </Tabs>
-      </>
-      }
+      {() => (
+        <>
+          <Button onClick={() => (state.tab = 'analytics')}>
+            Change from {state.tab} to analytics
+          </Button>
+          <Tabs
+            onChange={(x, y) => {
+              state.tab = x
+              action('change tab')(x, y)
+            }}
+            value={state.tab}
+          >
+            <Tab value="results" label="Results">
+              Results Tables
+            </Tab>
+            <Tab value="analytics" label="Analytics">
+              Charts and Stuff
+            </Tab>
+          </Tabs>
+        </>
+      )}
     </Observer>
   ))
   .addWithJSX('Custom TabList and TabPanel', () => (
@@ -152,4 +151,3 @@ storiesOf('Non Search Components|Grey Vest/Tabs', module)
       </Tab>
     </Tabs>
   ))
-  

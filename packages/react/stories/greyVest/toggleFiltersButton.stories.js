@@ -10,5 +10,4 @@ storiesOf('Components (Grey Vest)|ToggleFiltersButton', module)
   .addDecorator(decorator)
   .addWithJSX('Basic Usage', () => (
     <ToggleFiltersButton onClick={() => click()} />
-  )
-)
+  ))

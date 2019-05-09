@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import decorator from './decorator'
@@ -24,4 +23,3 @@ storiesOf('Components (Grey Vest)|Search Layout', module)
       <Box>Results</Box>
     </SearchLayout>
   ))
-

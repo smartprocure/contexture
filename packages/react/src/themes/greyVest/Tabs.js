@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import TabList from './TabList'
@@ -40,14 +40,13 @@ export let Tabs = ({
     _.filter(child => child.type === Tab || child.type === TabOption),
     F.mapIndexed(({ type, props }, i) => ({
       value: props.value || i,
-      label: type === Tab ? props.label : props.children
+      label: type === Tab ? props.label : props.children,
     }))
   )(childrenArray)
-  
+
   let [value, setValue] = useState(defaultValue || options[0].value)
   // Allow controlled state
-  if (!_.isNil(props.value) && props.value !== value)
-    setValue(props.value)
+  if (!_.isNil(props.value) && props.value !== value) setValue(props.value)
   let handleChange = (to, from) => {
     onChange(to, from)
     setValue(to)

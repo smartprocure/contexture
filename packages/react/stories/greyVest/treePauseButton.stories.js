@@ -9,9 +9,13 @@ let pauseWith = action('set paused')
 
 let state = observable({ paused: true })
 let tree = {
-  pauseNested() { pauseWith(state.paused = true) },
-  unpauseNested() { pauseWith(state.paused = false) },
-  isPausedNested: () => state.paused
+  pauseNested() {
+    pauseWith((state.paused = true))
+  },
+  unpauseNested() {
+    pauseWith((state.paused = false))
+  },
+  isPausedNested: () => state.paused,
 }
 
 storiesOf('Search Components (Grey Vest)|/TreePauseButton', module)

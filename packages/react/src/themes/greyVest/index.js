@@ -36,7 +36,7 @@ import Box from './Box'
 import LinkButton from './LinkButton'
 import TreePauseButton from './TreePauseButton'
 import ToggleFiltersButton from './ToggleFiltersButton'
-export {default as SearchLayout} from './SearchLayout'
+export { default as SearchLayout } from './SearchLayout'
 import BaseSearchEditor from './SearchEditor'
 import DateInput from './DateInput'
 
@@ -785,16 +785,18 @@ export let FilterList = defaultProps({ Icon, ListItem, MissingTypeComponent })(
   BaseFilterList
 )
 
-export let AddableFilterList = props =>
+export let AddableFilterList = props => (
   <>
     <FilterList {...props} />
     <Adder {...props} uniqueFields />
   </>
+)
 
-export let FiltersBox = props => 
+export let FiltersBox = props => (
   <div className="gv-box filter-list">
     <AddableFilterList {...props} />
   </div>
+)
 
 export let QueryBuilder = defaultProps({ Button, MissingTypeComponent })(
   QueryBuilderComponent
