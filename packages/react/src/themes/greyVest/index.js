@@ -28,7 +28,8 @@ import IconButton from './IconButton'
 import Table from './Table'
 import Button from './Button'
 import ButtonRadio from './ButtonRadio'
-import Tabs from './TabList'
+import TabList from './TabList'
+export { Tabs, Tab, TabContent, TabOption } from './Tabs'
 import ErrorList from './ErrorList'
 import ErrorText from './ErrorText'
 import Box from './Box'
@@ -50,7 +51,7 @@ export {
   Table,
   Button,
   ButtonRadio,
-  Tabs,
+  TabList,
   ErrorList,
   Box,
   LinkButton,
