@@ -65,14 +65,14 @@ describe('highlighting', () => {
       let hit = {
         _source: {
           title: '...',
-          description: '...'
+          description: '...',
         },
-        highlight: { title: ['<a>foo</a>'], 'description': ['<a>bar</a>'] },
+        highlight: { title: ['<a>foo</a>'], description: ['<a>bar</a>'] },
       }
       let result = highlighting.highlightResults(highlightFields, hit)
       expect(hit._source).to.deep.equal({
         title: '<a>foo</a>',
-        description: '<a>bar</a>'
+        description: '<a>bar</a>',
       })
       expect(result).to.deep.equal({
         additionalFields: [],
@@ -83,20 +83,23 @@ describe('highlighting', () => {
       let highlightFields = {
         inline: ['title', 'description'],
         inlineAliases: {
-          description: 'description.exact'
-        }
+          description: 'description.exact',
+        },
       }
       let hit = {
         _source: {
           title: '...',
-          description: '...'
+          description: '...',
         },
-        highlight: { title: ['<a>foo</a>'], 'description.exact': ['<a>bar</a>'] },
+        highlight: {
+          title: ['<a>foo</a>'],
+          'description.exact': ['<a>bar</a>'],
+        },
       }
       let result = highlighting.highlightResults(highlightFields, hit)
       expect(hit._source).to.deep.equal({
         title: '<a>foo</a>',
-        description: '<a>bar</a>'
+        description: '<a>bar</a>',
       })
       expect(result).to.deep.equal({
         additionalFields: [],
@@ -107,18 +110,21 @@ describe('highlighting', () => {
       let highlightFields = {
         inline: ['description'],
         inlineAliases: {
-          description: 'description.exact'
-        }
+          description: 'description.exact',
+        },
       }
       let hit = {
         _source: {
-          description: '...'
+          description: '...',
         },
-        highlight: { description: ['<a>foo</a>'], 'description.exact': ['<a>bar</a>'] },
+        highlight: {
+          description: ['<a>foo</a>'],
+          'description.exact': ['<a>bar</a>'],
+        },
       }
       let result = highlighting.highlightResults(highlightFields, hit)
       expect(hit._source).to.deep.equal({
-        description: '<a>foo</a>'
+        description: '<a>foo</a>',
       })
       expect(result).to.deep.equal({
         additionalFields: [],

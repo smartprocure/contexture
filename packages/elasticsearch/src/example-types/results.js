@@ -29,8 +29,13 @@ module.exports = {
     if (context.include) result._source.includes = context.include
     if (context.exclude) result._source.excludes = context.exclude
 
-    let highlight = _.getOr(true, 'highlight', context) && schema.elasticsearch.highlight
-    let inlineAliases = _.getOr({}, 'elasticsearch.highlight.inlineAliases', schema)
+    let highlight =
+      _.getOr(true, 'highlight', context) && schema.elasticsearch.highlight
+    let inlineAliases = _.getOr(
+      {},
+      'elasticsearch.highlight.inlineAliases',
+      schema
+    )
 
     if (highlight) {
       // Only take the fields that matter to highlighting which are the inline, inlineAliases and additionalFields sections
