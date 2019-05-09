@@ -1,8 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Components (Grey Vest)|Box Default 1`] = `
-<div>
-<<<<<<< HEAD
+exports[`Storyshots Components (Grey Vest)|Box Box 1`] = `
+<div
+  className="gv-body"
+>
   <div>
     <link
       href="https://fonts.googleapis.com/css?family=Lato:300,400,700"
@@ -30,88 +31,13 @@ exports[`Storyshots Components (Grey Vest)|Box Default 1`] = `
         text-transform: uppercase;
         /*font-size: 22px;*/
         margin: 30px 0;
-=======
-  <div
-    style={Object {}}
-  />
-  <div>
-    <div
-      style={
-        Object {
-          "WebkitFontSmoothing": "antialiased",
-          "backgroundColor": "#fff",
-          "border": "1px solid #eee",
-          "borderRadius": "2px",
-          "boxShadow": "0px 2px 3px rgba(0, 0, 0, 0.05)",
-          "color": "#444",
-          "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
-          "fontSize": "15px",
-          "fontWeight": 300,
-          "lineHeight": 1.45,
-          "marginBottom": "20px",
-          "marginTop": "20px",
-          "padding": "20px 40px 40px",
-        }
->>>>>>> master
       }
 
-<<<<<<< HEAD
       /* Button */
       .gv-button {
         padding: 11px 22px 12px 22px;
         border-radius: 3px;
         background-color: #e3e5e6;
-=======
-exports[`Storyshots Developer Notes|Docs README.md 1`] = `
-<div>
-  <div
-    style={Object {}}
-  />
-  <div>
-    <div
-      style={
-        Object {
-          "WebkitFontSmoothing": "antialiased",
-          "backgroundColor": "#fff",
-          "border": "1px solid #eee",
-          "borderRadius": "2px",
-          "boxShadow": "0px 2px 3px rgba(0, 0, 0, 0.05)",
-          "color": "#444",
-          "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
-          "fontSize": "15px",
-          "fontWeight": 300,
-          "lineHeight": 1.45,
-          "marginBottom": "20px",
-          "marginTop": "20px",
-          "padding": "20px 40px 40px",
-        }
-      }
-    >
-      <div
-        style={
-          Object {
-            "marginBottom": 0,
-          }
-        }
-      >
-        <div
-          style={
-            Object {
-              "WebkitFontSmoothing": "antialiased",
-              "color": "#444",
-              "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
-              "fontSize": "15px",
-            }
-          }
-        >
-          test-file-stub
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
->>>>>>> master
 
         border: none;
         font-size: 14px;
@@ -629,7 +555,9 @@ exports[`Storyshots Developer Notes|Docs README.md 1`] = `
 `;
 
 exports[`Storyshots Components (Grey Vest)|Button Active 1`] = `
-<div>
+<div
+  className="gv-body"
+>
   <div>
     <link
       href="https://fonts.googleapis.com/css?family=Lato:300,400,700"
@@ -1181,15 +1109,10 @@ exports[`Storyshots Components (Grey Vest)|Button Active 1`] = `
 </div>
 `;
 
-<<<<<<< HEAD
 exports[`Storyshots Components (Grey Vest)|Button As Div 1`] = `
-<div>
-=======
-exports[`Storyshots Non Search Components|Grey Vest Box 1`] = `
 <div
   className="gv-body"
 >
->>>>>>> master
   <div>
     <link
       href="https://fonts.googleapis.com/css?family=Lato:300,400,700"
@@ -1741,15 +1664,10 @@ exports[`Storyshots Non Search Components|Grey Vest Box 1`] = `
 </div>
 `;
 
-<<<<<<< HEAD
 exports[`Storyshots Components (Grey Vest)|Button Basic Usage 1`] = `
-<div>
-=======
-exports[`Storyshots Non Search Components|Grey Vest LinkButton 1`] = `
 <div
   className="gv-body"
 >
->>>>>>> master
   <div>
     <link
       href="https://fonts.googleapis.com/css?family=Lato:300,400,700"
@@ -2302,7 +2220,9 @@ exports[`Storyshots Non Search Components|Grey Vest LinkButton 1`] = `
 `;
 
 exports[`Storyshots Components (Grey Vest)|Button Primary 1`] = `
-<div>
+<div
+  className="gv-body"
+>
   <div>
     <link
       href="https://fonts.googleapis.com/css?family=Lato:300,400,700"
@@ -2854,15 +2774,10 @@ exports[`Storyshots Components (Grey Vest)|Button Primary 1`] = `
 </div>
 `;
 
-<<<<<<< HEAD
-exports[`Storyshots Components (Grey Vest)|LinkButton Default 1`] = `
-<div>
-=======
-exports[`Storyshots Non Search Components|Grey Vest/Button Active 1`] = `
+exports[`Storyshots Components (Grey Vest)|LinkButton LinkButton 1`] = `
 <div
   className="gv-body"
 >
->>>>>>> master
   <div>
     <link
       href="https://fonts.googleapis.com/css?family=Lato:300,400,700"
@@ -3414,7 +3329,6 @@ exports[`Storyshots Non Search Components|Grey Vest/Button Active 1`] = `
 </div>
 `;
 
-<<<<<<< HEAD
 exports[`Storyshots Components (Grey Vest)|Refs Default 1`] = `
 <div
   className="gv-body"
@@ -3424,11 +3338,6 @@ exports[`Storyshots Components (Grey Vest)|Refs Default 1`] = `
       "flexDirection": "column",
     }
   }
-=======
-exports[`Storyshots Non Search Components|Grey Vest/Button As Div 1`] = `
-<div
-  className="gv-body"
->>>>>>> master
 >
   <div>
     <link
@@ -4112,61 +4021,6 @@ exports[`Storyshots Components (Unthemed)|Layout Popover 1`] = `
 
 exports[`Storyshots Developer Notes|Docs CHANGELOG.md 1`] = `
 <div>
-  <div>
-    <div
-      style={
-        Object {
-          "WebkitFontSmoothing": "antialiased",
-          "backgroundColor": "#fff",
-          "border": "1px solid #eee",
-          "borderRadius": "2px",
-          "boxShadow": "0px 2px 3px rgba(0, 0, 0, 0.05)",
-          "color": "#444",
-          "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
-          "fontSize": "15px",
-          "fontWeight": 300,
-          "lineHeight": 1.45,
-          "marginBottom": "20px",
-          "marginTop": "20px",
-          "padding": "20px 40px 40px",
-        }
-      }
-    >
-      <div
-        style={
-          Object {
-            "borderBottom": "1px solid #eee",
-            "marginBottom": 10,
-            "paddingTop": 10,
-          }
-        }
-      >
-        <h1
-          style={
-            Object {
-              "fontSize": "35px",
-              "margin": 0,
-              "padding": 0,
-            }
-          }
-        >
-          Developer Notes|Docs
-        </h1>
-        <h2
-          style={
-            Object {
-              "fontSize": "22px",
-              "fontWeight": 400,
-              "margin": "0 0 10px 0",
-              "padding": 0,
-            }
-          }
-        >
-          CHANGELOG.md
-        </h2>
-      </div>
-    </div>
-  </div>
   <div
     style={Object {}}
   />
@@ -4217,61 +4071,6 @@ exports[`Storyshots Developer Notes|Docs CHANGELOG.md 1`] = `
 
 exports[`Storyshots Developer Notes|Docs README.md 1`] = `
 <div>
-  <div>
-    <div
-      style={
-        Object {
-          "WebkitFontSmoothing": "antialiased",
-          "backgroundColor": "#fff",
-          "border": "1px solid #eee",
-          "borderRadius": "2px",
-          "boxShadow": "0px 2px 3px rgba(0, 0, 0, 0.05)",
-          "color": "#444",
-          "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
-          "fontSize": "15px",
-          "fontWeight": 300,
-          "lineHeight": 1.45,
-          "marginBottom": "20px",
-          "marginTop": "20px",
-          "padding": "20px 40px 40px",
-        }
-      }
-    >
-      <div
-        style={
-          Object {
-            "borderBottom": "1px solid #eee",
-            "marginBottom": 10,
-            "paddingTop": 10,
-          }
-        }
-      >
-        <h1
-          style={
-            Object {
-              "fontSize": "35px",
-              "margin": 0,
-              "padding": 0,
-            }
-          }
-        >
-          Developer Notes|Docs
-        </h1>
-        <h2
-          style={
-            Object {
-              "fontSize": "22px",
-              "fontWeight": 400,
-              "margin": "0 0 10px 0",
-              "padding": 0,
-            }
-          }
-        >
-          README.md
-        </h2>
-      </div>
-    </div>
-  </div>
   <div
     style={Object {}}
   />
@@ -4446,7 +4245,6 @@ exports[`Storyshots Live Demos|IMDB Blueberry Theme 1`] = `
 </div>
 `;
 
-<<<<<<< HEAD
 exports[`Storyshots Live Demos|IMDB Check List 1`] = `
 <div
   className="gv-body"
@@ -4455,28 +4253,6 @@ exports[`Storyshots Live Demos|IMDB Check List 1`] = `
     href="https://fonts.googleapis.com/css?family=Lato:400,700,900"
     rel="stylesheet"
   />
-=======
-exports[`Storyshots Non Search Components|Grey Vest/Button Basic Usage 1`] = `
-<div
-  className="gv-body"
->
-  <div>
-    <link
-      href="https://fonts.googleapis.com/css?family=Lato:300,400,700"
-      rel="stylesheet"
-    />
-    <link
-      crossOrigin="anonymous"
-      href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
-      integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-  </div>
->>>>>>> master
   <style>
     
       h1 {
@@ -5009,7 +4785,6 @@ exports[`Storyshots Non Search Components|Grey Vest/Button Basic Usage 1`] = `
 </div>
 `;
 
-<<<<<<< HEAD
 exports[`Storyshots Live Demos|IMDB Filter List 1`] = `
 <div
   style={
@@ -5035,12 +4810,6 @@ exports[`Storyshots Live Demos|IMDB Grey Vest Theme 1`] = `
     href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
     rel="stylesheet"
   />
-=======
-exports[`Storyshots Non Search Components|Grey Vest/Button Primary 1`] = `
-<div
-  className="gv-body"
->
->>>>>>> master
   <div>
     <link
       href="https://fonts.googleapis.com/css?family=Lato:300,400,700"
