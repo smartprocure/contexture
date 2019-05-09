@@ -34,7 +34,10 @@ let SearchEditor = ({ mode, setMode, children, QueryBuilder, FiltersBox }) => {
         trees
       )}
       {mode === 'basic' && (
-        <LinkButton onClick={() => setMode('builder')} style={{ marginTop: 15 }}>
+        <LinkButton
+          onClick={() => setMode('builder')}
+          style={{ marginTop: 15 }}
+        >
           Switch to Advanced Search Builder
         </LinkButton>
       )}
