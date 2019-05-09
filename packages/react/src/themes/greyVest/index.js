@@ -33,6 +33,7 @@ import ErrorList from './ErrorList'
 import ErrorText from './ErrorText'
 import Box from './Box'
 import LinkButton from './LinkButton'
+import TreePauseButton from './TreePauseButton'
 import ToggleFiltersButton from './ToggleFiltersButton'
 import DateInput from './DateInput'
 
@@ -52,8 +53,11 @@ export {
   ErrorList,
   Box,
   LinkButton,
+  TreePauseButton,
   ToggleFiltersButton,
 }
+
+export let SearchTree = () => {}
 
 export let GVStyle = () => (
   <style>
