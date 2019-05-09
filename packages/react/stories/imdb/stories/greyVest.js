@@ -309,7 +309,7 @@ export default () => (
                 <ToggleFiltersButton onClick={() => (state.mode = 'basic')} />
               )}
             </Flex>
-            <Tabs value="results">
+            <Tabs defaultValue="results">
               <TabOption value="results">
                 Movies (<ResultCount tree={tree} path={['root', 'results']} />)
               </TabOption>
