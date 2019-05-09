@@ -1,5 +1,4 @@
 import _ from 'lodash/fp'
-import F from 'futil-js'
 import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
@@ -251,7 +250,7 @@ export default () => (
     <Awaiter promise={schemas}>
       {schemas => (
         <SearchLayout mode={state.mode}>
-          <SearchEditor mode={state.mode} setMode={x => state.mode = x}>
+          <SearchEditor mode={state.mode} setMode={x => (state.mode = x)}>
             <SearchTree
               tree={tree}
               path={['root', 'criteria']}
@@ -303,7 +302,7 @@ export default () => (
             <Flex style={{ alignItems: 'center' }}>
               <h1>Search Results</h1>
               {state.mode === 'resultsOnly' && (
-                <ToggleFiltersButton onClick={() => state.mode = 'basic'} />
+                <ToggleFiltersButton onClick={() => (state.mode = 'basic')} />
               )}
             </Flex>
             <Tabs value="results">

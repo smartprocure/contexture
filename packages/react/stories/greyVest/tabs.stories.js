@@ -1,12 +1,11 @@
 import React from 'react'
-import _ from 'lodash/fp'
 import { storiesOf } from '@storybook/react'
 import { withInfo } from '@storybook/addon-info'
 import { action } from '@storybook/addon-actions'
 import { observable } from 'mobx'
 import { Observer } from 'mobx-react'
 import decorator from './decorator'
-import { Tabs, Tab, TabOption, TabContent, ButtonRadio, Button, Table, Box} from './../../src/themes/greyVest'
+import { Tabs, Tab, TabOption, TabContent, ButtonRadio, Button } from './../../src/themes/greyVest'
 
 let tabDocs = `
 # Overview
@@ -124,7 +123,7 @@ storiesOf('Non Search Components|Grey Vest/Tabs', module)
   .addWithJSX('Controlled', () => (
     <Observer>
       {() => <>
-        <Button onClick={() => state.tab = 'analytics'}>Change from {state.tab} to analytics</Button>
+        <Button onClick={() => (state.tab = 'analytics')}>Change from {state.tab} to analytics</Button>
         <Tabs 
           onChange={(x, y) => {
             state.tab = x
