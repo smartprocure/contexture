@@ -1,13 +1,15 @@
-# 1.47.2
+# 1.47.4
 * TagsQuery: Add stories
-* TagsQuery: No need to wrap TagsQuery in a "gv-box" div
 * TagsInput: Center tags
 * TagsInput: Simplify greyvest styling
 * TagsInput: Adjust margins to look nice when tags wrap around
 * StripedLoader: Style with "display: contents" so it doesn't mess up grid/flex layouts
 
-# 1.47.2
+# 1.47.3
 * Storybook: Organize categories
+
+# 1.47.2
+* Fix Checkbox dependency in CheckboxList
 
 # 1.47.1
 * DateInput: Always convert input to Date
