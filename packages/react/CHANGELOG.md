@@ -1,4 +1,6 @@
-# Next (unreleased)
+# 1.48.0
+**Requires React 16.8**
+
 ## New Components
 * GreyVest: Add SearchEditor
 * GreyVest: Add AddableFilterList
