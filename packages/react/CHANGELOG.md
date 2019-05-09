@@ -1,9 +1,22 @@
+# Next (unreleased)
+## New Components
+* GreyVest: Add SearchEditor
+* GreyVest: Add AddableFilterList
+* GreyVest: Add FiltersBox
 * GreyVest: Add ToggleFiltersButton
-* FilterList: Fix bug with node actions not working without Provider
+* GreyVest: Add TreePauseButton
+* GreyVest: Add SearchLayout
+* GreyVest: Add Tabs (complete replacement of existing control)
+
+## API Improvements
+* GreyVest: Renamed Tabs to TabList
 * GreyVest -> TabList: Pass `from` as second param to onChange
+* FilterList: Fix bug with node actions not working without Provider
 * GreyVest: Storybook refactoring (add decorator)
 * Storybook: General Cleanup (no more headers on dev, etc)
 
+## Styling/Design Improvements
+* GreyVest -> Button: Remove css outline
 
 # 1.47.2
 * Fix Checkbox dependency in CheckboxList

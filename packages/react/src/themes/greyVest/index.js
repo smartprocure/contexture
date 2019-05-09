@@ -37,6 +37,7 @@ import LinkButton from './LinkButton'
 import TreePauseButton from './TreePauseButton'
 import ToggleFiltersButton from './ToggleFiltersButton'
 export {default as SearchLayout} from './SearchLayout'
+import BaseSearchEditor from './SearchEditor'
 import DateInput from './DateInput'
 
 export {
@@ -797,4 +798,8 @@ export let FiltersBox = props =>
 
 export let QueryBuilder = defaultProps({ Button, MissingTypeComponent })(
   QueryBuilderComponent
+)
+
+export let SearchEditor = defaultProps({ QueryBuilder, FiltersBox })(
+  BaseSearchEditor
 )
