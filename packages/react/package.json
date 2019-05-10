@@ -106,6 +106,7 @@
   "dependencies": {
     "futil-js": "^1.55.0",
     "lodash": "^4.17.4",
+    "prop-types": "^15.7.2",
     "react-date-picker": "^7.2.0",
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4",

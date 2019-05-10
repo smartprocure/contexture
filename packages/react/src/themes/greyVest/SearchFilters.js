@@ -51,4 +51,8 @@ let SearchFilters = ({ mode, setMode, children, QueryBuilder, FiltersBox }) => {
     return <BuilderSearchFilters {...{ trees, setMode, QueryBuilder }} />
 }
 
+SearchFilters.propTypes = {
+  mode: PropTypes.oneOf(['basic', 'builder', 'resultsOnly']),
+}
+
 export default observer(SearchFilters)
