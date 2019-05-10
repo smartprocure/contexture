@@ -218,42 +218,21 @@ export let GVStyle = () => (
       }
 
 
+      /* Tags Input */
+      .gv-body .tags-input > * {
+        box-sizing: border-box;
+      }
       .gv-body .tags-input {
         border: 2px solid #EBEBEB;
         border-radius: 4px;
-        min-height: 40px;
-        box-sizing: border-box;
         background: #fff;
-        /* 7/8px is for 15px between tags and border */
-        padding-left: 7px;
-        padding-right: 8px;
-        padding-top: 7px;
-        padding-bottom: 8px;
       }
-      .gv-body .tags-input input {
-        /* 7/8px is for 15px between tags and border */
-        margin-left: 8px;
-        margin-right: 7px;
-        margin-top: 8px;
-        margin-bottom: 7px;
-        /* To reach perfect 40px, remove real input padding because we have it on the fake one */
-        padding: 0;
-        /* subtract padding (5+5) and borders (2+2) from 40 */
-        height: 26px;
-      }
+      .gv-body .tags-input input,
       .gv-body .tags-input-tag {
-        /* Arbitrary theme design */
-        margin-left: 8px;
-        margin-right: 7px;
-        border-radius: 2px;
-        padding: 5px 13px 7px 15px;
-        font-size: 15px;
+        height: 30px;
       }
       .gv-body .tags-input-tag-remove {
-        /* Arbitrary theme design */
-        padding-left: 10px;
-        font-size: 13px;
-        vertical-align: middle;
+        font-size: 12px;
       }
 
       /* Tags Popover */
@@ -373,7 +352,7 @@ export let GVStyle = () => (
       .gv-search-bar > .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
       }
-      .gv-search-bar .tags-input {
+      .gv-search-bar .gv-box .tags-input {
         margin: 0;
         border: none;
       }

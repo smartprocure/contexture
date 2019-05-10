@@ -1,3 +1,10 @@
+# 1.48.1
+* TagsQuery: Add stories
+* TagsInput: Center tags
+* TagsInput: Simplify greyvest styling
+* TagsInput: Adjust margins to look nice when tags wrap around
+* StripedLoader: Style with "display: contents" so it doesn't mess up grid/flex layouts
+
 # 1.48.0
 **Requires React 16.8**
 
