@@ -16,6 +16,7 @@
 * FilterList: Fix bug with node actions not working without Provider
 * GreyVest: Storybook refactoring (add decorator)
 * Storybook: General Cleanup (no more headers on dev, etc)
+* Added some basic prop-types support (will improve over time)
 
 ## Styling/Design Improvements
 * GreyVest -> Button: Remove css outline
