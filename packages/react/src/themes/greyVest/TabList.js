@@ -9,7 +9,7 @@ let TabList = ({ value, onChange = () => {}, options }) => (
         <div
           key={x.value}
           className={`gv-tab ${x.value === value ? 'active' : ''}`}
-          onClick={() => onChange(x.value)}
+          onClick={() => onChange(x.value, value)}
         >
           {x.label}
         </div>
