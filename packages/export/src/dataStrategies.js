@@ -65,6 +65,7 @@ export const results = ({
   }
 
   return {
+    include,
     formatTree,
     getTotalRecords,
     hasNext: () => page <= totalPages,

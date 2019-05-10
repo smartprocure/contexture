@@ -1,4 +1,7 @@
-﻿# 0.1.8
+﻿# 0.1.9
+* Fix missing columns issue due to not all columns having results in the first row
+
+# 0.1.8
 * Elasticsearch scrolling off by default in results strategy
 
 # 0.1.7

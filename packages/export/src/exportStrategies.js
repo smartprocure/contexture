@@ -116,8 +116,9 @@ export const CSVStream = async ({
   logger = console.info,
 }) => {
   let records = 0
-  let columnKeys = []
   let totalRecords = await strategy.getTotalRecords()
+  let includeColumns = _.getOr([], 'include', strategy)
+  let columnHeaders = []
 
   await onWrite({
     chunk: [],
@@ -129,14 +130,21 @@ export const CSVStream = async ({
       logger('CSVStream', `${records + chunk.length} of ${totalRecords}`)
 
       let formattedData = format(formatRules)(chunk)
-      // Extract column names from first object
-      if (_.isEmpty(columnKeys))
-        columnKeys = extractKeysFromFirstRow(formattedData)
+
+      // If no includeColumns ware passed get them from the first row
+      // this is not accurate and only works in the case where the first row has all the data for all columns
+      if (_.isEmpty(includeColumns)) {
+        // Extract column names from first object
+        columnHeaders = extractKeysFromFirstRow(formattedData)
+      } else {
+        // Start Case the passed includeColumns
+        columnHeaders = convertColumns(includeColumns)
+      }
       // Convert data to CSV rows
-      let rows = convertData(formattedData, columnKeys)
+      let rows = convertData(formattedData, columnHeaders)
       // Prepend columns on first pass
       if (!records) {
-        rows = [convertColumns(columnKeys), ...rows]
+        rows = [columnHeaders, ...rows]
       }
       // Convert rows to a single CSV string
       let csv = rowsToCSV(rows)
