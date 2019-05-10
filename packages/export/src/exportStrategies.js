@@ -80,9 +80,9 @@ let transformCell = _.flow(
 )
 
 // Convert array of objects to array of arrays
-export let convertData = (data, columnKeys) => {
+export let convertData = (data, columnHeaders) => {
   // Extract data from object
-  let transformRow = row => _.map(key => _.get(key, row), columnKeys)
+  let transformRow = row => _.map(key => _.get(key, row), columnHeaders)
   return _.map(transformRow, data)
 }
 
@@ -117,7 +117,7 @@ export const CSVStream = async ({
 }) => {
   let records = 0
   let totalRecords = await strategy.getTotalRecords()
-  let includeColumns = _.getOr([], 'include', strategy)
+  let includedKeys = _.getOr([], 'include', strategy)
   let columnHeaders = []
 
   await onWrite({
@@ -131,14 +131,14 @@ export const CSVStream = async ({
 
       let formattedData = format(formatRules)(chunk)
 
-      // If no includeColumns ware passed get them from the first row
+      // If no includedKeys ware passed get them from the first row
       // this is not accurate and only works in the case where the first row has all the data for all columns
-      if (_.isEmpty(includeColumns)) {
+      if (_.isEmpty(includedKeys)) {
         // Extract column names from first object
         columnHeaders = extractKeysFromFirstRow(formattedData)
       } else {
-        // Start Case the passed includeColumns
-        columnHeaders = convertColumns(includeColumns)
+        // Start Case the passed includedKeys
+        columnHeaders = convertColumns(includedKeys)
       }
       // Convert data to CSV rows
       let rows = convertData(formattedData, columnHeaders)
