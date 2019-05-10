@@ -6,7 +6,7 @@ import { ExampleTypes } from './../../src/themes/greyVest'
 import decorator from './decorator'
 let { TagsQuery } = ExampleTypes
 
-let tags = _.map(n => ({ word: `(${n}) This is a tag` }), _.range(1, 5))
+let tags = _.times(n => ({ word: `(${n}) This is a tag` }), 5)
 
 let treeWithTags = TestTree(testTree => {
   testTree.getNode(['tagsQuery']).tags = tags
