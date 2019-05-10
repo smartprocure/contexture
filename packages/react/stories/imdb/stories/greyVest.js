@@ -241,115 +241,114 @@ let mapNodeToProps = mergeOverAll([
 ])
 
 export default () => (
-    <Awaiter promise={schemas}>
-      {schemas => (
-        <SearchLayout mode={state.mode}>
-          <SearchFilters mode={state.mode} setMode={x => (state.mode = x)}>
-            <SearchTree
-              tree={tree}
-              path={['root', 'criteria']}
-              fields={schemas.movies.fields}
-              mapNodeToLabel={({ key }) =>
-                ({
-                  titleContains: 'Title Contains',
-                  titleDoesNotContain: 'Title Does Not Contain',
-                }[key])
-              }
-              mapNodeToProps={mapNodeToProps}
-            />
-          </SearchFilters>
-          <div>
-            <h1>Search Movies</h1>
-            <div className="gv-search-bar">
-              <Box>
-                <TagsQuery tree={tree} path={['root', 'bar']} />
-              </Box>
-              <div className="gv-button-group">
-                <Button
-                  className="gv-search-button"
-                  onClick={tree.triggerUpdate}
-                  primary
+  <Awaiter promise={schemas}>
+    {schemas => (
+      <SearchLayout mode={state.mode}>
+        <SearchFilters mode={state.mode} setMode={x => (state.mode = x)}>
+          <SearchTree
+            tree={tree}
+            path={['root', 'criteria']}
+            fields={schemas.movies.fields}
+            mapNodeToLabel={({ key }) =>
+              ({
+                titleContains: 'Title Contains',
+                titleDoesNotContain: 'Title Does Not Contain',
+              }[key])
+            }
+            mapNodeToProps={mapNodeToProps}
+          />
+        </SearchFilters>
+        <div>
+          <h1>Search Movies</h1>
+          <div className="gv-search-bar">
+            <Box>
+              <TagsQuery tree={tree} path={['root', 'bar']} />
+            </Box>
+            <div className="gv-button-group">
+              <Button
+                className="gv-search-button"
+                onClick={tree.triggerUpdate}
+                primary
+              >
+                Search
+              </Button>
+              <div className="gv-search-toolbar">
+                <IconButton
+                  onClick={() => {
+                    window.location.reload()
+                  }}
+                  title="New Search"
                 >
-                  Search
-                </Button>
-                <div className="gv-search-toolbar">
-                  <IconButton
-                    onClick={() => {
-                      window.location.reload()
-                    }}
-                    title="New Search"
-                  >
-                    <i className="material-icons">fiber_new</i>
-                  </IconButton>
-                  <IconButton
-                    title="Auto Update"
-                    primary={state.autoUpdate}
-                    onClick={() => {
-                      state.autoUpdate = !state.autoUpdate
-                      tree.disableAutoUpdate = !state.autoUpdate
-                    }}
-                  >
-                    <i className="material-icons">autorenew</i>
-                  </IconButton>
-                </div>
+                  <i className="material-icons">fiber_new</i>
+                </IconButton>
+                <IconButton
+                  title="Auto Update"
+                  primary={state.autoUpdate}
+                  onClick={() => {
+                    state.autoUpdate = !state.autoUpdate
+                    tree.disableAutoUpdate = !state.autoUpdate
+                  }}
+                >
+                  <i className="material-icons">autorenew</i>
+                </IconButton>
               </div>
             </div>
-            <Flex style={{ alignItems: 'center' }}>
-              <h1>Search Results</h1>
-              {state.mode === 'resultsOnly' && (
-                <ToggleFiltersButton onClick={() => (state.mode = 'basic')} />
-              )}
-            </Flex>
-            <Tabs defaultValue="results">
-              <TabLabel value="results">
-                Movies (<ResultCount tree={tree} path={['root', 'results']} />)
-              </TabLabel>
-              <TabContent value="results">
-                <PagedResultTable
-                  tree={tree}
-                  path={['root', 'results']}
-                  fields={_.omit(
-                    ['imdbId', 'runtimeMinutes'],
-                    schemas[tree.tree.schema].fields
-                  )}
-                  criteria={['root', 'criteria']}
-                  typeComponents={TypeMap}
-                />
-              </TabContent>
-              <Tab value="analytics" label="Analytics">
-                <TermsStatsTable
-                  tree={tree}
-                  path={['root', 'genreScores']}
-                  tableAttrs={{ className: 'gv-table' }}
-                  sizeOptions={[10, 25, 50]}
-                >
-                  <Column field="key" label="Genre" />
-                  <Column field="count" label="Found" />
-                  <Column
-                    field="key"
-                    label=""
-                    expand={{ display: x => `Show results for ${x} +` }}
-                    collapse={{ display: x => `Hide results for ${x} -` }}
-                  >
-                    {x => (
-                      <div style={{ marginBottom: 25 }}>
-                        <PagedResultTable
-                          tree={termDetailsTree(x)}
-                          path={['detailRoot', 'results']}
-                          fields={_.pick(
-                            ['title', 'year', 'genres'],
-                            schemas.movies.fields
-                          )}
-                        />
-                      </div>
-                    )}
-                  </Column>
-                </TermsStatsTable>
-              </Tab>
-            </Tabs>
           </div>
-        </SearchLayout>
-      )}
-    </Awaiter>
-
+          <Flex style={{ alignItems: 'center' }}>
+            <h1>Search Results</h1>
+            {state.mode === 'resultsOnly' && (
+              <ToggleFiltersButton onClick={() => (state.mode = 'basic')} />
+            )}
+          </Flex>
+          <Tabs defaultValue="results">
+            <TabLabel value="results">
+              Movies (<ResultCount tree={tree} path={['root', 'results']} />)
+            </TabLabel>
+            <TabContent value="results">
+              <PagedResultTable
+                tree={tree}
+                path={['root', 'results']}
+                fields={_.omit(
+                  ['imdbId', 'runtimeMinutes'],
+                  schemas[tree.tree.schema].fields
+                )}
+                criteria={['root', 'criteria']}
+                typeComponents={TypeMap}
+              />
+            </TabContent>
+            <Tab value="analytics" label="Analytics">
+              <TermsStatsTable
+                tree={tree}
+                path={['root', 'genreScores']}
+                tableAttrs={{ className: 'gv-table' }}
+                sizeOptions={[10, 25, 50]}
+              >
+                <Column field="key" label="Genre" />
+                <Column field="count" label="Found" />
+                <Column
+                  field="key"
+                  label=""
+                  expand={{ display: x => `Show results for ${x} +` }}
+                  collapse={{ display: x => `Hide results for ${x} -` }}
+                >
+                  {x => (
+                    <div style={{ marginBottom: 25 }}>
+                      <PagedResultTable
+                        tree={termDetailsTree(x)}
+                        path={['detailRoot', 'results']}
+                        fields={_.pick(
+                          ['title', 'year', 'genres'],
+                          schemas.movies.fields
+                        )}
+                      />
+                    </div>
+                  )}
+                </Column>
+              </TermsStatsTable>
+            </Tab>
+          </Tabs>
+        </div>
+      </SearchLayout>
+    )}
+  </Awaiter>
 )
