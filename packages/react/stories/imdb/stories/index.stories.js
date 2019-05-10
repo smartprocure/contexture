@@ -10,5 +10,6 @@ storiesOf('Live Demos|IMDB', module)
   .addWithJSX('Search Button', require('./searchButton').default)
   .addWithJSX('Blueberry Theme', require('./blueberry').default)
 
-  storiesOf('Live Demos|IMDB', module).addDecorator(GVDecorator)
+storiesOf('Live Demos|IMDB', module)
+  .addDecorator(GVDecorator)
   .addWithJSX('Grey Vest Theme', require('./greyVest').default)
