@@ -20,6 +20,10 @@ exports[`Storyshots Components (Grey Vest)|Box Box 1`] = `
       rel="stylesheet"
     />
   </div>
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    rel="stylesheet"
+  />
   <style>
     
       h1 {
@@ -584,6 +588,10 @@ exports[`Storyshots Components (Grey Vest)|Button Active 1`] = `
       rel="stylesheet"
     />
   </div>
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    rel="stylesheet"
+  />
   <style>
     
       h1 {
@@ -1149,6 +1157,10 @@ exports[`Storyshots Components (Grey Vest)|Button As Div 1`] = `
       rel="stylesheet"
     />
   </div>
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    rel="stylesheet"
+  />
   <style>
     
       h1 {
@@ -1714,6 +1726,10 @@ exports[`Storyshots Components (Grey Vest)|Button Basic Usage 1`] = `
       rel="stylesheet"
     />
   </div>
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    rel="stylesheet"
+  />
   <style>
     
       h1 {
@@ -2279,6 +2295,10 @@ exports[`Storyshots Components (Grey Vest)|Button Primary 1`] = `
       rel="stylesheet"
     />
   </div>
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    rel="stylesheet"
+  />
   <style>
     
       h1 {
@@ -2844,6 +2864,10 @@ exports[`Storyshots Components (Grey Vest)|LinkButton LinkButton 1`] = `
       rel="stylesheet"
     />
   </div>
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    rel="stylesheet"
+  />
   <style>
     
       h1 {
@@ -4011,6 +4035,10 @@ exports[`Storyshots Components (Grey Vest)|Search Layout Basic 1`] = `
       rel="stylesheet"
     />
   </div>
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    rel="stylesheet"
+  />
   <style>
     
       h1 {
@@ -4584,6 +4612,10 @@ exports[`Storyshots Components (Grey Vest)|Search Layout Builder 1`] = `
       rel="stylesheet"
     />
   </div>
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    rel="stylesheet"
+  />
   <style>
     
       h1 {
@@ -5157,6 +5189,10 @@ exports[`Storyshots Components (Grey Vest)|Search Layout Results Only 1`] = `
       rel="stylesheet"
     />
   </div>
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    rel="stylesheet"
+  />
   <style>
     
       h1 {
@@ -5725,6 +5761,10 @@ exports[`Storyshots Components (Grey Vest)|Tabs Anonymous Values 1`] = `
       rel="stylesheet"
     />
   </div>
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    rel="stylesheet"
+  />
   <style>
     
       h1 {
@@ -6305,6 +6345,10 @@ exports[`Storyshots Components (Grey Vest)|Tabs Base Usage 1`] = `
       rel="stylesheet"
     />
   </div>
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    rel="stylesheet"
+  />
   <style>
     
       h1 {
@@ -6885,6 +6929,10 @@ exports[`Storyshots Components (Grey Vest)|Tabs Controlled 1`] = `
       rel="stylesheet"
     />
   </div>
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    rel="stylesheet"
+  />
   <style>
     
       h1 {
@@ -7473,6 +7521,10 @@ exports[`Storyshots Components (Grey Vest)|Tabs Custom TabList and TabPanel 1`] 
       rel="stylesheet"
     />
   </div>
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    rel="stylesheet"
+  />
   <style>
     
       h1 {
@@ -8057,6 +8109,10 @@ exports[`Storyshots Components (Grey Vest)|Tabs Docs 1`] = `
       rel="stylesheet"
     />
   </div>
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    rel="stylesheet"
+  />
   <style>
     
       h1 {
@@ -8661,7 +8717,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Docs 1`] = `
             </code>
              components (or 
             <code>
-              TabOption
+              TabLabel
             </code>
             /
             <code>
@@ -8906,7 +8962,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Docs 1`] = `
             }
           >
             <code>
-              TabOption
+              TabLabel
             </code>
           </h2>
           <div
@@ -8992,7 +9048,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Docs 1`] = `
               }
             }
           >
-            Used in conjunction with TabOption as an alternative to a combined Tab.
+            Used in conjunction with TabLabel as an alternative to a combined Tab.
           </div>
           <table>
             <thead>
@@ -9064,6 +9120,10 @@ exports[`Storyshots Components (Grey Vest)|Tabs Tab Render Function 1`] = `
       rel="stylesheet"
     />
   </div>
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    rel="stylesheet"
+  />
   <style>
     
       h1 {
@@ -9624,7 +9684,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Tab Render Function 1`] = `
 </div>
 `;
 
-exports[`Storyshots Components (Grey Vest)|Tabs TabOption and TabContent 1`] = `
+exports[`Storyshots Components (Grey Vest)|Tabs TabLabel and TabContent 1`] = `
 <div
   className="gv-body"
 >
@@ -9644,6 +9704,10 @@ exports[`Storyshots Components (Grey Vest)|Tabs TabOption and TabContent 1`] = `
       rel="stylesheet"
     />
   </div>
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    rel="stylesheet"
+  />
   <style>
     
       h1 {
@@ -10224,6 +10288,10 @@ exports[`Storyshots Components (Grey Vest)|Tabs Uncontrolled with defaultValue 1
       rel="stylesheet"
     />
   </div>
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    rel="stylesheet"
+  />
   <style>
     
       h1 {
@@ -10804,6 +10872,10 @@ exports[`Storyshots Components (Grey Vest)|ToggleFiltersButton Basic Usage 1`] =
       rel="stylesheet"
     />
   </div>
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    rel="stylesheet"
+  />
   <style>
     
       h1 {
@@ -12249,10 +12321,6 @@ exports[`Storyshots Live Demos|IMDB Grey Vest Theme 1`] = `
 <div
   className="gv-body"
 >
-  <link
-    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
-    rel="stylesheet"
-  />
   <div>
     <link
       href="https://fonts.googleapis.com/css?family=Lato:300,400,700"
@@ -12269,6 +12337,10 @@ exports[`Storyshots Live Demos|IMDB Grey Vest Theme 1`] = `
       rel="stylesheet"
     />
   </div>
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    rel="stylesheet"
+  />
   <style>
     
       h1 {
@@ -13317,6 +13389,10 @@ exports[`Storyshots Search Components (Grey Vest)|/TreePauseButton Multiple Tree
       rel="stylesheet"
     />
   </div>
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    rel="stylesheet"
+  />
   <style>
     
       h1 {
@@ -13887,6 +13963,10 @@ exports[`Storyshots Search Components (Grey Vest)|/TreePauseButton One Tree 1`] 
       rel="stylesheet"
     />
   </div>
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+    rel="stylesheet"
+  />
   <style>
     
       h1 {
