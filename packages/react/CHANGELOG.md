@@ -2,7 +2,7 @@
 **Requires React 16.8**
 
 ## New Components
-* GreyVest: Add SearchEditor
+* GreyVest: Add SearchFilters
 * GreyVest: Add AddableFilterList
 * GreyVest: Add FiltersBox
 * GreyVest: Add ToggleFiltersButton

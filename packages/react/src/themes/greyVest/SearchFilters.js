@@ -6,7 +6,7 @@ import LinkButton from './LinkButton'
 import TreePauseButton from './TreePauseButton'
 import ToggleFiltersButton from './ToggleFiltersButton'
 
-let SearchEditor = ({ mode, setMode, children, QueryBuilder, FiltersBox }) => {
+let SearchFilters = ({ mode, setMode, children, QueryBuilder, FiltersBox }) => {
   let trees = React.Children.map(children, x => x.props)
   let SearchGroupComponent = mode === 'builder' ? QueryBuilder : FiltersBox
   return mode === 'resultsOnly' ? null : (
@@ -42,4 +42,4 @@ let SearchEditor = ({ mode, setMode, children, QueryBuilder, FiltersBox }) => {
   )
 }
 
-export default observer(SearchEditor)
+export default observer(SearchFilters)

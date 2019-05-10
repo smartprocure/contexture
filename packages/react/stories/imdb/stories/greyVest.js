@@ -15,7 +15,7 @@ import {
   PagedResultTable,
   Box,
   SearchLayout,
-  SearchEditor,
+  SearchFilters,
   SearchTree,
   ToggleFiltersButton,
 } from '../../../src/themes/greyVest'
@@ -244,7 +244,7 @@ export default () => (
     <Awaiter promise={schemas}>
       {schemas => (
         <SearchLayout mode={state.mode}>
-          <SearchEditor mode={state.mode} setMode={x => (state.mode = x)}>
+          <SearchFilters mode={state.mode} setMode={x => (state.mode = x)}>
             <SearchTree
               tree={tree}
               path={['root', 'criteria']}
@@ -257,7 +257,7 @@ export default () => (
               }
               mapNodeToProps={mapNodeToProps}
             />
-          </SearchEditor>
+          </SearchFilters>
           <div>
             <h1>Search Movies</h1>
             <div className="gv-search-bar">
