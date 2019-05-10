@@ -134,11 +134,14 @@ describe('exportStrategies', () => {
       let getNext = () => [
         {
           Title: undefined,
-          AgencyName: 'Agency A'
+          AgencyName: 'Agency A',
         },
       ]
       // Simulate the results data strategy where the `include` is exposed
-      let strategy = _.extend({include: ['Title', 'AgencyName']}, getSimpleStrategy(getNext))
+      let strategy = _.extend(
+        { include: ['Title', 'AgencyName'] },
+        getSimpleStrategy(getNext)
+      )
       let stream = {
         write: jest.fn(),
         end: jest.fn(),
@@ -175,7 +178,7 @@ describe('exportStrategies', () => {
           {
             chunk: [
               {
-                'Title': undefined,
+                Title: undefined,
                 'Agency Name': 'Agency A',
               },
             ],
@@ -187,7 +190,7 @@ describe('exportStrategies', () => {
           {
             chunk: [
               {
-                'Title': undefined,
+                Title: undefined,
                 'Agency Name': 'Agency A',
               },
             ],
