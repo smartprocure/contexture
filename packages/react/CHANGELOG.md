@@ -1,3 +1,26 @@
+# 1.48.0
+**Requires React 16.8**
+
+## New Components
+* GreyVest: Add SearchFilters
+* GreyVest: Add AddableFilterList
+* GreyVest: Add FiltersBox
+* GreyVest: Add ToggleFiltersButton
+* GreyVest: Add TreePauseButton
+* GreyVest: Add SearchLayout
+* GreyVest: Add Tabs (complete replacement of existing control)
+
+## API Improvements
+* GreyVest: Renamed Tabs to TabList
+* GreyVest -> TabList: Pass `from` as second param to onChange
+* FilterList: Fix bug with node actions not working without Provider
+* GreyVest: Storybook refactoring (add decorator)
+* Storybook: General Cleanup (no more headers on dev, etc)
+* Added some basic prop-types support (will improve over time)
+
+## Styling/Design Improvements
+* GreyVest -> Button: Remove css outline
+
 # 1.47.3
 * Storybook: Organize categories
 
