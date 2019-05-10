@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
 import { Flex } from '../../'
