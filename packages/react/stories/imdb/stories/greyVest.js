@@ -5,15 +5,13 @@ import { fromPromise } from 'mobx-utils'
 import Contexture, { updateSchemas } from '../utils/contexture'
 import { Flex, Awaiter } from '../../../src'
 import {
-  Fonts,
-  GVStyle,
   Button,
   ExampleTypes,
   IconButton,
   Tabs,
   Tab,
+  TabLabel,
   TabContent,
-  TabOption,
   PagedResultTable,
   Box,
   SearchLayout,
@@ -243,13 +241,6 @@ let mapNodeToProps = mergeOverAll([
 ])
 
 export default () => (
-  <div className="gv-body">
-    <link
-      href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
-      rel="stylesheet"
-    />
-    <Fonts />
-    <GVStyle />
     <Awaiter promise={schemas}>
       {schemas => (
         <SearchLayout mode={state.mode}>
@@ -310,9 +301,9 @@ export default () => (
               )}
             </Flex>
             <Tabs defaultValue="results">
-              <TabOption value="results">
+              <TabLabel value="results">
                 Movies (<ResultCount tree={tree} path={['root', 'results']} />)
-              </TabOption>
+              </TabLabel>
               <TabContent value="results">
                 <PagedResultTable
                   tree={tree}
@@ -360,5 +351,5 @@ export default () => (
         </SearchLayout>
       )}
     </Awaiter>
-  </div>
+
 )

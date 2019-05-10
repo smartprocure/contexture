@@ -6,15 +6,15 @@ import Box from './Box'
 
 /* Usage */
 /*
-<Tabs tabControl={ButtonRadio} value="autoLabeled">
+<Tabs tabControl={ButtonRadio} value="references">
   <Tab value="references" label="References">
     <PO Table />
   </Tab>
   <Tab label="Fancy Label">
   </Tab>
-  <TabOption value="option2">
+  <TabLabel value="option2">
     Option 2's Label
-  </TabOption>
+  </TabLabel>
   <TabContent value="option2">
     Option 2's Content
   </TabContent>
@@ -25,7 +25,7 @@ import Box from './Box'
 */
 
 export let TabContent = () => {}
-export let TabOption = () => {}
+export let TabLabel = () => {}
 export let Tab = () => {}
 export let Tabs = ({
   children,
@@ -37,7 +37,7 @@ export let Tabs = ({
 }) => {
   let childrenArray = React.Children.toArray(children)
   let options = _.flow(
-    _.filter(child => child.type === Tab || child.type === TabOption),
+    _.filter(child => child.type === Tab || child.type === TabLabel),
     F.mapIndexed(({ type, props }, i) => ({
       value: props.value || i,
       label: type === Tab ? props.label : props.children,

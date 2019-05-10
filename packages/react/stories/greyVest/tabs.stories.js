@@ -8,7 +8,7 @@ import decorator from './decorator'
 import {
   Tabs,
   Tab,
-  TabOption,
+  TabLabel,
   TabContent,
   ButtonRadio,
   Button,
@@ -17,7 +17,7 @@ import {
 let tabDocs = `
 # Overview
 
-A tab control which switches out content dynamically. \`Tabs\` is used with one or more \`Tab\` components (or \`TabOption\`/\`TabContent\` pairs) as children.
+A tab control which switches out content dynamically. \`Tabs\` is used with one or more \`Tab\` components (or \`TabLabel\`/\`TabContent\` pairs) as children.
 
 ~~~js
 <Tabs>
@@ -50,7 +50,7 @@ A tab control which switches out content dynamically. \`Tabs\` is used with one 
 | \`label\` | Fragment | Label used for the tab option |
 | \`children\` | Fragment | Tab contents shown if the tab is active |
 
-## \`TabOption\`
+## \`TabLabel\`
 Used in conjunction with TabContent as an alternative to a combined Tab.
 
 | Prop Name | Type | Description |
@@ -59,7 +59,7 @@ Used in conjunction with TabContent as an alternative to a combined Tab.
 | \`children\` | Fragment | Label used for the tab option |
 
 ## \`TabContent\`
-Used in conjunction with TabOption as an alternative to a combined Tab.
+Used in conjunction with TabLabel as an alternative to a combined Tab.
 
 | Prop Name | Type | Description |
 | --------- | ---- | ----------- |
@@ -89,9 +89,9 @@ storiesOf('Components (Grey Vest)|Tabs', module)
       <Tab label="Second Tab">Second Tab Contents</Tab>
     </Tabs>
   ))
-  .addWithJSX('TabOption and TabContent', () => (
+  .addWithJSX('TabLabel and TabContent', () => (
     <Tabs>
-      <TabOption value="results">Results</TabOption>
+      <TabLabel value="results">Results</TabLabel>
       <TabContent value="results">Results Tables</TabContent>
       <Tab value="analytics" label="Analytics">
         Charts and Stuff

@@ -1,5 +1,6 @@
 import 'babel-polyfill'
 import { storiesOf } from '@storybook/react'
+import GVDecorator from '../../greyVest/decorator'
 
 storiesOf('Live Demos|IMDB', module)
   .addWithJSX('Advanced Search', require('./advanced').default)
@@ -8,4 +9,5 @@ storiesOf('Live Demos|IMDB', module)
   .addWithJSX('Filter List', require('./filterList').default)
   .addWithJSX('Search Button', require('./searchButton').default)
   .addWithJSX('Blueberry Theme', require('./blueberry').default)
+  .addDecorator(GVDecorator)
   .addWithJSX('Grey Vest Theme', require('./greyVest').default)
