@@ -236,6 +236,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
               {F.view(filtering) && filterNode && !filterNode.paused && (
                 <Dynamic
                   component={typeComponents[filterNode.type]}
+                  tree={tree}
                   path={_.toArray(filterNode.path)}
                   {...mapNodeToProps(filterNode, fields, typeComponents)}
                 />

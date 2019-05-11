@@ -5,7 +5,7 @@ import { storiesOf } from '@storybook/react'
 import { loadHereOptions, geoCodeLocation } from '../../src/utils/geo'
 import AsyncSelect from 'react-select/lib/Async'
 
-import TestTree from './testTree'
+import TestTree from '../testTree'
 
 let formatYear = x => new Date(x).getUTCFullYear()
 import { Flex, SpacedList } from '../../src/layout'
@@ -22,7 +22,7 @@ let {
   Geo,
 } = ExampleTypes
 
-storiesOf('Example Types', module)
+storiesOf('Search Components (Unthemed)|Example Types', module)
   .addWithJSX('Full Demo', () => (
     <div
       style={{

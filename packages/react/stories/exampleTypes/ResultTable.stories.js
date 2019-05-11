@@ -1,11 +1,11 @@
 import _ from 'lodash/fp'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import TestTree from './testTree'
+import TestTree from '../testTree'
 import { ExampleTypes } from '../DemoControls'
 let { ResultTable } = ExampleTypes
 
-storiesOf('Example Types/ResultTable', module)
+storiesOf('Search Components (Unthemed)|Example Types/ResultTable', module)
   .addWithJSX('Customizations', () => (
     <div>
       <style>

@@ -2,12 +2,12 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import decorator from './decorator'
-import { LinkButton } from './../../src/themes/greyVest'
+import { ToggleFiltersButton } from './../../src/themes/greyVest'
 
 let click = action('clicked')
 
-storiesOf('Components (Grey Vest)|LinkButton', module)
+storiesOf('Components (Grey Vest)|ToggleFiltersButton', module)
   .addDecorator(decorator)
-  .addWithJSX('LinkButton', () => (
-    <LinkButton onClick={() => click()}>Click</LinkButton>
+  .addWithJSX('Basic Usage', () => (
+    <ToggleFiltersButton onClick={() => click()} />
   ))

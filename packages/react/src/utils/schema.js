@@ -26,3 +26,15 @@ export let inferSchema = _.flow(
 
 export let DefaultNodeProps = (field, fields, type) =>
   _.get([field, 'defaultNodeProps', type], fields)
+
+export let schemaFieldProps = _.curry((props, { field }, fields) =>
+  _.pick(props, fields[field])
+)
+
+export let componentForType = TypeMap => ({ type }) => ({
+  component: TypeMap[type],
+})
+
+export let fieldsFromSchema = _.curry(
+  (schemas, search) => schemas[search.tree.schema].fields
+)

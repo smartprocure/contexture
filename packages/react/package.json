@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "1.47.2",
+  "version": "1.48.2",
   "description": "React components for building contexture interfaces",
   "main": "dist/index.js",
   "scripts": {
@@ -34,7 +34,8 @@
   "peerDependencies": {
     "mobx": "^4.3.1",
     "mobx-react": "^5.2.0",
-    "mobx-utils": "^5.0.0"
+    "mobx-utils": "^5.0.0",
+    "react": "^16.8.0"
   },
   "prettier": {
     "singleQuote": true,
@@ -96,8 +97,8 @@
     "mobx-utils": "^5.0.0",
     "prettier": "^1.8.2",
     "raw-loader": "^2.0.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
     "react-select": "^2.0.0",
     "react-test-renderer": "^16.2.0",
     "storybook-addon-jsx": "^7.1.0"
@@ -105,6 +106,7 @@
   "dependencies": {
     "futil-js": "^1.55.0",
     "lodash": "^4.17.4",
+    "prop-types": "^15.7.2",
     "react-date-picker": "^7.2.0",
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4",

@@ -90,11 +90,13 @@ export let Label = inject(_.pick('tree'))(
 Label.displayName = 'Label'
 
 export let FieldLabel = InjectTreeNode(
-  observer(({ node, node: { field } = {}, fields, Icon, ListItem, label }) => (
-    <Label node={node} Icon={Icon} ListItem={ListItem}>
-      {label || _.get([field, 'label'], fields) || field}
-    </Label>
-  ))
+  observer(
+    ({ tree, node, node: { field } = {}, fields, Icon, ListItem, label }) => (
+      <Label tree={tree} node={node} Icon={Icon} ListItem={ListItem}>
+        {label || _.get([field, 'label'], fields) || field}
+      </Label>
+    )
+  )
 )
 FieldLabel.displayName = 'FieldLabel'
 
