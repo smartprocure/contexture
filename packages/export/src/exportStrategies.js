@@ -41,13 +41,12 @@ export const stream = _.curry(async ({ strategy, stream }) => {
 // Also fill in any keys which are present in the included keys but not in the passed in object
 export const formatValues = (
   rules = {},
-  includedKeys = [],
-  defaultDisplay = _.identity
+  includedKeys = []
 ) => _.map(obj => {
   // Format all values of the passed in object
   let resultObject = F.mapValuesIndexed((value, key) => rules[key]
-    ? (rules[key].display || defaultDisplay)(value)
-    : defaultDisplay(value)
+    ? rules[key].display(value)
+    : value
   , obj)
   // Fill the empty properties for the objects missing the expected keys
   _.each(key => {
@@ -62,7 +61,7 @@ export const formatValues = (
 export const formatHeaders = (
   rules,
   defaultLabel = _.startCase
-) => _.map(key => _.has(`${key}.label`, rules) ? rules[key].label : defaultLabel(key))
+) => _.map(key => _.get(`${key}.label`, rules) || defaultLabel(key))
 
 // Extract keys from first row
 export let extractHeadersFromFirstRow = _.flow(
