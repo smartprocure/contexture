@@ -3,7 +3,8 @@ import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import Contexture, { updateSchemas } from '../utils/contexture'
-import { Flex, Awaiter } from '../../../src'
+import { mergeOverAll } from '../../../src/utils/futil'
+import { Flex, Awaiter, schemaFieldProps, componentForType } from '../../../src'
 import {
   Button,
   ExampleTypes,
@@ -208,23 +209,13 @@ let overrides = {
 }
 let schemas = fromPromise(
   updateSchemas()
-    .then(_.merge(_, overrides))
+    .then(_.merge(overrides))
     .then(_.tap(() => tree.refresh(['root'])))
 )
 
-// (f, g) -> (x, y) -> {...f(x, y), ...g(x, y)}
-let mergeOverAll = fns =>
-  _.flow(
-    _.over(fns),
-    _.mergeAll
-  )
-
-let componentForType = TypeMap => ({ type }) => ({ component: TypeMap[type] })
-let schemaProps = props => ({ field }, fields) => _.pick(props, fields[field])
-
 let mapNodeToProps = mergeOverAll([
   componentForType(TypeMap),
-  schemaProps('signicantDigits'),
+  schemaFieldProps('signicantDigits'),
   ({ key }) =>
     key === 'status' && {
       component: DateRangePicker,
