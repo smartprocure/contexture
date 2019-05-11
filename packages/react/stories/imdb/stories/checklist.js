@@ -8,7 +8,7 @@ import Contexture, { updateSchemas } from '../utils/contexture'
 import { withStateLens } from '../../../src/utils/mobx-react-utils'
 import { FilterList, Flex, Awaiter, SpacedList, Grid } from '../../../src'
 import * as Theme from '../../../src/themes/greyVest'
-let { GVStyle, Adder, Button, Pager, ExampleTypes, ButtonRadio } = Theme
+let { Adder, Button, Pager, ExampleTypes, ButtonRadio } = Theme
 let { ResultCount, CheckableResultTable, TypeMap, TagsQuery } = ExampleTypes
 
 let tree = Contexture({
