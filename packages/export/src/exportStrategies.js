@@ -43,26 +43,30 @@ export const formatValues = (
   rules = {},
   includedKeys = [],
   defaultDisplay = _.identity
-) => _.map(obj => {
-  // Format all values of the passed in object
-  let resultObject = F.mapValuesIndexed((value, key) => rules[key]
-    ? (rules[key].display || defaultDisplay)(value)
-    : defaultDisplay(value)
-  , obj)
-  // Fill the empty properties for the objects missing the expected keys
-  _.each(key => {
-    if(!resultObject[key]) {
-      resultObject[key] = ''
-    }
-  }, includedKeys)
-  return resultObject
-})
+) =>
+  _.map(obj => {
+    // Format all values of the passed in object
+    let resultObject = F.mapValuesIndexed(
+      (value, key) =>
+        rules[key]
+          ? (rules[key].display || defaultDisplay)(value)
+          : defaultDisplay(value),
+      obj
+    )
+    // Fill the empty properties for the objects missing the expected keys
+    _.each(key => {
+      if (!resultObject[key]) {
+        resultObject[key] = ''
+      }
+    }, includedKeys)
+    return resultObject
+  })
 
 // Format the column headers with passed rules or _.startCase
-export const formatHeaders = (
-  rules,
-  defaultLabel = _.startCase
-) => _.map(key => _.has(`${key}.label`, rules) ? rules[key].label : defaultLabel(key))
+export const formatHeaders = (rules, defaultLabel = _.startCase) =>
+  _.map(key =>
+    _.has(`${key}.label`, rules) ? rules[key].label : defaultLabel(key)
+  )
 
 // Extract keys from first row
 export let extractHeadersFromFirstRow = _.flow(
@@ -117,7 +121,9 @@ export const CSVStream = async ({
       // this is not accurate and only works in the case where the first row has all the data for all columns
       if (_.isEmpty(columnHeaders)) {
         // Extract column names from first object and format them
-        columnHeaders = formatHeaders(formatRules)(extractHeadersFromFirstRow(formattedData))
+        columnHeaders = formatHeaders(formatRules)(
+          extractHeadersFromFirstRow(formattedData)
+        )
       }
 
       // Convert data to CSV rows

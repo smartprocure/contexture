@@ -100,8 +100,8 @@ describe('exportStrategies', () => {
           {
             chunk: [
               {
-                'firstProperty': 'FIRST',
-                'secondProperty': 'SECOND',
+                firstProperty: 'FIRST',
+                secondProperty: 'SECOND',
               },
             ],
             records: 1,
@@ -112,8 +112,8 @@ describe('exportStrategies', () => {
           {
             chunk: [
               {
-                'firstProperty': 'FIRST',
-                'secondProperty': 'SECOND',
+                firstProperty: 'FIRST',
+                secondProperty: 'SECOND',
               },
             ],
             records: 2,
@@ -134,11 +134,14 @@ describe('exportStrategies', () => {
       let getNext = () => [
         {
           Title: undefined,
-          AgencyName: 'Agency A'
+          AgencyName: 'Agency A',
         },
       ]
       // Simulate the results data strategy where the `include` is exposed
-      let strategy = _.extend({include: ['Title', 'AgencyName']}, getSimpleStrategy(getNext))
+      let strategy = _.extend(
+        { include: ['Title', 'AgencyName'] },
+        getSimpleStrategy(getNext)
+      )
       let stream = {
         write: jest.fn(),
         end: jest.fn(),
@@ -175,8 +178,8 @@ describe('exportStrategies', () => {
           {
             chunk: [
               {
-                'Title': '',
-                'AgencyName': 'Agency A',
+                Title: '',
+                AgencyName: 'Agency A',
               },
             ],
             records: 1,
@@ -187,8 +190,8 @@ describe('exportStrategies', () => {
           {
             chunk: [
               {
-                'Title': '',
-                'AgencyName': 'Agency A',
+                Title: '',
+                AgencyName: 'Agency A',
               },
             ],
             records: 2,
@@ -223,61 +226,133 @@ describe('exportStrategies', () => {
     })
     it('formatValues with no rules', () => {
       expect(formatValues({})(chunk)).toEqual([
-        {"age": 36, "name": "Bob \"Bobby\" Brown"},
-        {"age": 40, "name": "Joe Blow"}
+        { age: 36, name: 'Bob "Bobby" Brown' },
+        { age: 40, name: 'Joe Blow' },
       ])
     })
     it('formatValues with rules', () => {
-      expect(formatValues({
-        name: { display: _.toLower },
-        age: { display: _.toString }
-      })(chunk)).toEqual([
-        {age: "36", name: "bob \"bobby\" brown"},
-        {age: "40", name: "joe blow"}
+      expect(
+        formatValues({
+          name: { display: _.toLower },
+          age: { display: _.toString },
+        })(chunk)
+      ).toEqual([
+        { age: '36', name: 'bob "bobby" brown' },
+        { age: '40', name: 'joe blow' },
       ])
     })
     it('formatValues with no rules and empty props', () => {
-      let columnKeys = [ "AgencyName", "FullName", "Title", "AgencyType", "AddressState" ]
+      let columnKeys = [
+        'AgencyName',
+        'FullName',
+        'Title',
+        'AgencyType',
+        'AddressState',
+      ]
       let data = [
-        { "AgencyName": "ABC", "AgencyType": "Private Schools", "AddressState": "IL" },
-        { "AgencyName": "DEF", "FullName": "D P", "Title": "Auditor", "AgencyType": "State", "AddressState": "CA" },
-        { "AddressState": "FL" }
+        {
+          AgencyName: 'ABC',
+          AgencyType: 'Private Schools',
+          AddressState: 'IL',
+        },
+        {
+          AgencyName: 'DEF',
+          FullName: 'D P',
+          Title: 'Auditor',
+          AgencyType: 'State',
+          AddressState: 'CA',
+        },
+        { AddressState: 'FL' },
       ]
       expect(formatValues({}, columnKeys)(data)).toEqual([
-        {AgencyName: "ABC", AgencyType: "Private Schools", AddressState: "IL", Title: '', FullName: ''},
-        {AgencyName: "DEF", AgencyType: "State", AddressState: "CA", Title: 'Auditor', FullName: 'D P'},
-        {AgencyName: "", AgencyType: "", AddressState: "FL", Title: '', FullName: ''}
+        {
+          AgencyName: 'ABC',
+          AgencyType: 'Private Schools',
+          AddressState: 'IL',
+          Title: '',
+          FullName: '',
+        },
+        {
+          AgencyName: 'DEF',
+          AgencyType: 'State',
+          AddressState: 'CA',
+          Title: 'Auditor',
+          FullName: 'D P',
+        },
+        {
+          AgencyName: '',
+          AgencyType: '',
+          AddressState: 'FL',
+          Title: '',
+          FullName: '',
+        },
       ])
     })
     it('formatValues with rules and empty props', () => {
-      let columnKeys = [ "AgencyName", "FullName", "Title", "AgencyType", "AddressState" ]
+      let columnKeys = [
+        'AgencyName',
+        'FullName',
+        'Title',
+        'AgencyType',
+        'AddressState',
+      ]
       let data = [
-        { "AgencyName": "ABC", "AgencyType": "Private Schools", "AddressState": "IL" },
-        { "AgencyName": "DEF", "FullName": "D P", "Title": "Auditor", "AgencyType": "State", "AddressState": "CA" },
-        { "AddressState": "FL" }
+        {
+          AgencyName: 'ABC',
+          AgencyType: 'Private Schools',
+          AddressState: 'IL',
+        },
+        {
+          AgencyName: 'DEF',
+          FullName: 'D P',
+          Title: 'Auditor',
+          AgencyType: 'State',
+          AddressState: 'CA',
+        },
+        { AddressState: 'FL' },
       ]
       let rules = {
         AgencyType: {
-          display: _.toUpper
+          display: _.toUpper,
         },
         AddressState: {
-          display: _.toLower
-        }
+          display: _.toLower,
+        },
       }
       expect(formatValues(rules, columnKeys)(data)).toEqual([
-        {AgencyName: "ABC", AgencyType: "PRIVATE SCHOOLS", AddressState: "il", Title: '', FullName: ''},
-        {AgencyName: "DEF", AgencyType: "STATE", AddressState: "ca", Title: 'Auditor', FullName: 'D P'},
-        {AgencyName: "", AgencyType: "", AddressState: "fl", Title: '', FullName: ''}
+        {
+          AgencyName: 'ABC',
+          AgencyType: 'PRIVATE SCHOOLS',
+          AddressState: 'il',
+          Title: '',
+          FullName: '',
+        },
+        {
+          AgencyName: 'DEF',
+          AgencyType: 'STATE',
+          AddressState: 'ca',
+          Title: 'Auditor',
+          FullName: 'D P',
+        },
+        {
+          AgencyName: '',
+          AgencyType: '',
+          AddressState: 'fl',
+          Title: '',
+          FullName: '',
+        },
       ])
     })
     it('formatHeaders with no rules', () => {
       expect(formatHeaders({})(columnKeys)).toEqual(['Name', 'Age'])
     })
     it('formatHeaders with rules', () => {
-      expect(formatHeaders({
-        name: { label: 'A'},
-        age: { label: 'B'}
-      })(columnKeys)).toEqual(['A', 'B'])
+      expect(
+        formatHeaders({
+          name: { label: 'A' },
+          age: { label: 'B' },
+        })(columnKeys)
+      ).toEqual(['A', 'B'])
     })
     it('rowsToCSV', () => {
       let rows = [['Name', 'Age'], ['Bob "Bobby" Brown', 36], ['Joe Blow', 40]]
