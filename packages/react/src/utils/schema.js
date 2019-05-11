@@ -33,3 +33,7 @@ export let schemaFieldProps = _.curry(
 
 export let componentForType = TypeMap =>
   ({ type }) => ({ component: TypeMap[type] })
+
+export let fieldsFromSchema = _.curry(
+  (schemas, search) => schemas[search.tree.schema].fields
+)
