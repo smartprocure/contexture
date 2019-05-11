@@ -1,3 +1,6 @@
+# 1.48.2
+* Handle null children in SearchFilters and TreePauseButton
+
 # 1.48.1
 * TagsQuery: Add stories
 * TagsInput: Center tags

@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash/fp'
 import PropTypes from 'prop-types'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
@@ -44,7 +45,7 @@ let BuilderSearchFilters = ({ setMode, trees, QueryBuilder }) => (
 )
 
 let SearchFilters = ({ mode, setMode, children, QueryBuilder, FiltersBox }) => {
-  let trees = React.Children.map(children, x => x.props)
+  let trees = _.flow(React.Children.toArray, _.map('props'))(children)
   if (mode === 'resultsOnly') return null
   if (mode === 'basic')
     return <BasicSearchFilters {...{ trees, setMode, children, FiltersBox }} />
