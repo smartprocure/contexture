@@ -39,29 +39,25 @@ export const stream = _.curry(async ({ strategy, stream }) => {
 
 // Format object values based on passed formatter or _.identity
 // Also fill in any keys which are present in the included keys but not in the passed in object
-export const formatValues = (
-  rules = {},
-  includedKeys = []
-) => _.map(obj => {
-  // Format all values of the passed in object
-  let resultObject = F.mapValuesIndexed((value, key) => rules[key]
-    ? rules[key].display(value)
-    : value
-  , obj)
-  // Fill the empty properties for the objects missing the expected keys
-  _.each(key => {
-    if(!resultObject[key]) {
-      resultObject[key] = ''
-    }
-  }, includedKeys)
-  return resultObject
-})
+export const formatValues = (rules = {}, includedKeys = []) =>
+  _.map(obj => {
+    // Format all values of the passed in object
+    let resultObject = F.mapValuesIndexed(
+      (value, key) => (rules[key] ? rules[key].display(value) : value),
+      obj
+    )
+    // Fill the empty properties for the objects missing the expected keys
+    _.each(key => {
+      if (!resultObject[key]) {
+        resultObject[key] = ''
+      }
+    }, includedKeys)
+    return resultObject
+  })
 
 // Format the column headers with passed rules or _.startCase
-export const formatHeaders = (
-  rules,
-  defaultLabel = _.startCase
-) => _.map(key => _.get(`${key}.label`, rules) || defaultLabel(key))
+export const formatHeaders = (rules, defaultLabel = _.startCase) =>
+  _.map(key => _.get(`${key}.label`, rules) || defaultLabel(key))
 
 // Extract keys from first row
 export let extractHeadersFromFirstRow = _.flow(
@@ -116,7 +112,9 @@ export const CSVStream = async ({
       // this is not accurate and only works in the case where the first row has all the data for all columns
       if (_.isEmpty(columnHeaders)) {
         // Extract column names from first object and format them
-        columnHeaders = formatHeaders(formatRules)(extractHeadersFromFirstRow(formattedData))
+        columnHeaders = formatHeaders(formatRules)(
+          extractHeadersFromFirstRow(formattedData)
+        )
       }
 
       // Convert data to CSV rows
