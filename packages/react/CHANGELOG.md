@@ -1,6 +1,7 @@
 # 1.48.2
 * Handle null children in SearchFilters and TreePauseButton
 * Fix ResultsTable inline filtering without Provider
+* Expose missing `schemaFieldProps` and `componentForType` utils
 
 # 1.48.1
 * TagsQuery: Add stories

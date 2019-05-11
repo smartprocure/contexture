@@ -12,3 +12,10 @@ export let FlattenTreeLeaves = Tree =>
   )
 export let PlainObjectTree = F.tree(onlyWhen(_.isPlainObject))
 export let flattenPlainObject = F.whenExists(FlattenTreeLeaves(PlainObjectTree))
+
+// (f, g) -> (x, y) -> {...f(x, y), ...g(x, y)}
+export let mergeOverAll = fns =>
+  _.flow(
+    _.over(fns),
+    _.mergeAll
+  )
