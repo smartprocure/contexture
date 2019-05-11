@@ -8,8 +8,8 @@ storiesOf('Live Demos|IMDB', module)
   .addWithJSX('Filter List', require('./filterList').default)
   .addWithJSX('Search Button', require('./searchButton').default)
   .addWithJSX('Blueberry Theme', require('./blueberry').default)
-  
-  storiesOf('Live Demos|IMDB', module)
+
+storiesOf('Live Demos|IMDB', module)
   .addDecorator(GVDecorator)
   .addWithJSX('Check List', require('./checklist').default)
   .addWithJSX('Grey Vest Theme', require('./greyVest').default)

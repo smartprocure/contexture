@@ -34,6 +34,6 @@ storiesOf('Search Components (Grey Vest)|/TreePauseButton', module)
   .addWithJSX('Falsey Trees', () => (
     <TreePauseButton>
       <SearchTree tree={tree} path={['root']} />
-      {false && <SearchTree tree={tree} path={['root']} /> }
+      {false && <SearchTree tree={tree} path={['root']} />}
     </TreePauseButton>
   ))

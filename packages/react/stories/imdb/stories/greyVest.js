@@ -4,12 +4,7 @@ import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import Contexture, { updateSchemas } from '../utils/contexture'
 import { mergeOverAll } from '../../../src/utils/futil'
-import {
-  Flex,
-  Awaiter,
-  schemaFieldProps,
-  componentForType
-} from '../../../src'
+import { Flex, Awaiter, schemaFieldProps, componentForType } from '../../../src'
 import {
   Button,
   ExampleTypes,

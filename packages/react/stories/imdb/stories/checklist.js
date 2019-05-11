@@ -159,9 +159,7 @@ export default () => (
                 typeComponents={TypeMap}
                 getValue="title"
               />
-              <Flex
-                style={{ justifyContent: 'space-around', padding: '10px' }}
-              >
+              <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>
                 <Pager path={['root', 'results']} />
               </Flex>
             </div>

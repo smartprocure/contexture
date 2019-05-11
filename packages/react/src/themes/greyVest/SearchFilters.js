@@ -45,7 +45,10 @@ let BuilderSearchFilters = ({ setMode, trees, QueryBuilder }) => (
 )
 
 let SearchFilters = ({ mode, setMode, children, QueryBuilder, FiltersBox }) => {
-  let trees = _.flow(React.Children.toArray, _.map('props'))(children)
+  let trees = _.flow(
+    React.Children.toArray,
+    _.map('props')
+  )(children)
   if (mode === 'resultsOnly') return null
   if (mode === 'basic')
     return <BasicSearchFilters {...{ trees, setMode, children, FiltersBox }} />
