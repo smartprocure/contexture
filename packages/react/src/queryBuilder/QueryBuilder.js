@@ -22,8 +22,7 @@ let ContextureClientBridge = (
   Tree,
   fields,
   defaultNodeProps = DefaultNodeProps
-) => {
-  return {
+) => ({
     lens: Tree.lens,
     getNode: Tree.getNode,
     add: tree => Tree.add(tree.path, blankNode()),
@@ -38,7 +37,7 @@ let ContextureClientBridge = (
       })),
     move: (tree, node, targetTree, index) =>
       Tree.move(_.toArray(node.path), { path: _.toArray(targetTree.path), index }),
-    indent: (tree, node, skipDefaultNode)  => {
+    indent(tree, node, skipDefaultNode) {
       // Reactors:
       //   OR -> And, nothing
       //   AND -> OR, others if has value
@@ -49,8 +48,7 @@ let ContextureClientBridge = (
         Tree.add(tree ? [...tree.path, key] : [key], blankNode())
       return Tree.getNode([...tree.path, key])
     }
-  }
-}
+  })
 
 export default DDContext(
   Component(
