@@ -188,8 +188,7 @@ exports[`Storyshots Components (Grey Vest)|Box Box 1`] = `
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -735,8 +734,7 @@ exports[`Storyshots Components (Grey Vest)|Button Active 1`] = `
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -1283,8 +1281,7 @@ exports[`Storyshots Components (Grey Vest)|Button As Div 1`] = `
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -1831,8 +1828,7 @@ exports[`Storyshots Components (Grey Vest)|Button Basic Usage 1`] = `
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -2379,8 +2375,7 @@ exports[`Storyshots Components (Grey Vest)|Button Primary 1`] = `
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -2927,8 +2922,7 @@ exports[`Storyshots Components (Grey Vest)|LinkButton LinkButton 1`] = `
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -3477,8 +3471,7 @@ exports[`Storyshots Components (Grey Vest)|Refs Default 1`] = `
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -4056,8 +4049,7 @@ exports[`Storyshots Components (Grey Vest)|Search Layout Basic 1`] = `
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -4612,8 +4604,7 @@ exports[`Storyshots Components (Grey Vest)|Search Layout Builder 1`] = `
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -5168,8 +5159,7 @@ exports[`Storyshots Components (Grey Vest)|Search Layout Results Only 1`] = `
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -5719,8 +5709,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Anonymous Values 1`] = `
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -6282,8 +6271,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Base Usage 1`] = `
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -6845,8 +6833,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Controlled 1`] = `
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -7416,8 +7403,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Custom TabList and TabPanel 1`] 
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -7983,8 +7969,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Docs 1`] = `
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -8973,8 +8958,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Tab Render Function 1`] = `
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -9536,8 +9520,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs TabLabel and TabContent 1`] = `
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -10099,8 +10082,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Uncontrolled with defaultValue 1
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -10662,8 +10644,7 @@ exports[`Storyshots Components (Grey Vest)|ToggleFiltersButton Basic Usage 1`] =
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -11539,8 +11520,7 @@ exports[`Storyshots Live Demos|IMDB Check List 1`] = `
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -12101,8 +12081,7 @@ exports[`Storyshots Live Demos|IMDB Grey Vest Theme 1`] = `
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -13160,8 +13139,7 @@ exports[`Storyshots Search Components (Grey Vest)|/TreePauseButton Falsey Trees 
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -13713,8 +13691,7 @@ exports[`Storyshots Search Components (Grey Vest)|/TreePauseButton Multiple Tree
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -14266,8 +14243,7 @@ exports[`Storyshots Search Components (Grey Vest)|/TreePauseButton One Tree 1`] 
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -14819,8 +14795,7 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -15197,201 +15172,206 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
           }
         }
       >
-        <div
-          className="tags-input-tag"
+        <span
           onClick={[Function]}
           style={
             Object {
-              "alignItems": "center",
               "background": "#5cb85c",
               "borderRadius": "2px",
               "color": "white",
               "cursor": "pointer",
-              "display": "flex",
               "fontWeight": "bold",
               "margin": 3,
               "opacity": 1,
             }
           }
         >
-          <span
+          <div
             style={
               Object {
-                "padding": "0px 5px 1px 10px",
+                "alignItems": "center",
+                "display": "flex",
+                "padding": "0.25em 0.45em 0.30em 0.45em",
               }
             }
           >
-            (0) This is a tag
-          </span>
-          <span
-            onClick={[Function]}
-            style={
-              Object {
-                "padding": "0px 10px 1px 5px",
-              }
-            }
-          >
+            <span>
+              (0) This is a tag
+            </span>
             <span
-              className="tags-input-tag-remove fa fa-times"
-            />
-          </span>
-        </div>
-        <div
-          className="tags-input-tag"
+              onClick={[Function]}
+              style={
+                Object {
+                  "paddingLeft": 10,
+                }
+              }
+            >
+              <span
+                className="tags-input-tag-remove fa fa-times"
+              />
+            </span>
+          </div>
+        </span>
+        <span
           onClick={[Function]}
           style={
             Object {
-              "alignItems": "center",
               "background": "#5cb85c",
               "borderRadius": "2px",
               "color": "white",
               "cursor": "pointer",
-              "display": "flex",
               "fontWeight": "bold",
               "margin": 3,
               "opacity": 1,
             }
           }
         >
-          <span
+          <div
             style={
               Object {
-                "padding": "0px 5px 1px 10px",
+                "alignItems": "center",
+                "display": "flex",
+                "padding": "0.25em 0.45em 0.30em 0.45em",
               }
             }
           >
-            (1) This is a tag
-          </span>
-          <span
-            onClick={[Function]}
-            style={
-              Object {
-                "padding": "0px 10px 1px 5px",
-              }
-            }
-          >
+            <span>
+              (1) This is a tag
+            </span>
             <span
-              className="tags-input-tag-remove fa fa-times"
-            />
-          </span>
-        </div>
-        <div
-          className="tags-input-tag"
+              onClick={[Function]}
+              style={
+                Object {
+                  "paddingLeft": 10,
+                }
+              }
+            >
+              <span
+                className="tags-input-tag-remove fa fa-times"
+              />
+            </span>
+          </div>
+        </span>
+        <span
           onClick={[Function]}
           style={
             Object {
-              "alignItems": "center",
               "background": "#5cb85c",
               "borderRadius": "2px",
               "color": "white",
               "cursor": "pointer",
-              "display": "flex",
               "fontWeight": "bold",
               "margin": 3,
               "opacity": 1,
             }
           }
         >
-          <span
+          <div
             style={
               Object {
-                "padding": "0px 5px 1px 10px",
+                "alignItems": "center",
+                "display": "flex",
+                "padding": "0.25em 0.45em 0.30em 0.45em",
               }
             }
           >
-            (2) This is a tag
-          </span>
-          <span
-            onClick={[Function]}
-            style={
-              Object {
-                "padding": "0px 10px 1px 5px",
-              }
-            }
-          >
+            <span>
+              (2) This is a tag
+            </span>
             <span
-              className="tags-input-tag-remove fa fa-times"
-            />
-          </span>
-        </div>
-        <div
-          className="tags-input-tag"
+              onClick={[Function]}
+              style={
+                Object {
+                  "paddingLeft": 10,
+                }
+              }
+            >
+              <span
+                className="tags-input-tag-remove fa fa-times"
+              />
+            </span>
+          </div>
+        </span>
+        <span
           onClick={[Function]}
           style={
             Object {
-              "alignItems": "center",
               "background": "#5cb85c",
               "borderRadius": "2px",
               "color": "white",
               "cursor": "pointer",
-              "display": "flex",
               "fontWeight": "bold",
               "margin": 3,
               "opacity": 1,
             }
           }
         >
-          <span
+          <div
             style={
               Object {
-                "padding": "0px 5px 1px 10px",
+                "alignItems": "center",
+                "display": "flex",
+                "padding": "0.25em 0.45em 0.30em 0.45em",
               }
             }
           >
-            (3) This is a tag
-          </span>
-          <span
-            onClick={[Function]}
-            style={
-              Object {
-                "padding": "0px 10px 1px 5px",
-              }
-            }
-          >
+            <span>
+              (3) This is a tag
+            </span>
             <span
-              className="tags-input-tag-remove fa fa-times"
-            />
-          </span>
-        </div>
-        <div
-          className="tags-input-tag"
+              onClick={[Function]}
+              style={
+                Object {
+                  "paddingLeft": 10,
+                }
+              }
+            >
+              <span
+                className="tags-input-tag-remove fa fa-times"
+              />
+            </span>
+          </div>
+        </span>
+        <span
           onClick={[Function]}
           style={
             Object {
-              "alignItems": "center",
               "background": "#5cb85c",
               "borderRadius": "2px",
               "color": "white",
               "cursor": "pointer",
-              "display": "flex",
               "fontWeight": "bold",
               "margin": 3,
               "opacity": 1,
             }
           }
         >
-          <span
+          <div
             style={
               Object {
-                "padding": "0px 5px 1px 10px",
+                "alignItems": "center",
+                "display": "flex",
+                "padding": "0.25em 0.45em 0.30em 0.45em",
               }
             }
           >
-            (4) This is a tag
-          </span>
-          <span
-            onClick={[Function]}
-            style={
-              Object {
-                "padding": "0px 10px 1px 5px",
-              }
-            }
-          >
+            <span>
+              (4) This is a tag
+            </span>
             <span
-              className="tags-input-tag-remove fa fa-times"
-            />
-          </span>
-        </div>
+              onClick={[Function]}
+              style={
+                Object {
+                  "paddingLeft": 10,
+                }
+              }
+            >
+              <span
+                className="tags-input-tag-remove fa fa-times"
+              />
+            </span>
+          </div>
+        </span>
         <input
           onBlur={[Function]}
           onChange={[Function]}
@@ -15601,8 +15581,7 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
@@ -15986,201 +15965,206 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
             }
           }
         >
-          <div
-            className="tags-input-tag"
+          <span
             onClick={[Function]}
             style={
               Object {
-                "alignItems": "center",
                 "background": "#5cb85c",
                 "borderRadius": "2px",
                 "color": "white",
                 "cursor": "pointer",
-                "display": "flex",
                 "fontWeight": "bold",
                 "margin": 3,
                 "opacity": 1,
               }
             }
           >
-            <span
+            <div
               style={
                 Object {
-                  "padding": "0px 5px 1px 10px",
+                  "alignItems": "center",
+                  "display": "flex",
+                  "padding": "0.25em 0.45em 0.30em 0.45em",
                 }
               }
             >
-              (0) This is a tag
-            </span>
-            <span
-              onClick={[Function]}
-              style={
-                Object {
-                  "padding": "0px 10px 1px 5px",
-                }
-              }
-            >
+              <span>
+                (0) This is a tag
+              </span>
               <span
-                className="tags-input-tag-remove fa fa-times"
-              />
-            </span>
-          </div>
-          <div
-            className="tags-input-tag"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "paddingLeft": 10,
+                  }
+                }
+              >
+                <span
+                  className="tags-input-tag-remove fa fa-times"
+                />
+              </span>
+            </div>
+          </span>
+          <span
             onClick={[Function]}
             style={
               Object {
-                "alignItems": "center",
                 "background": "#5cb85c",
                 "borderRadius": "2px",
                 "color": "white",
                 "cursor": "pointer",
-                "display": "flex",
                 "fontWeight": "bold",
                 "margin": 3,
                 "opacity": 1,
               }
             }
           >
-            <span
+            <div
               style={
                 Object {
-                  "padding": "0px 5px 1px 10px",
+                  "alignItems": "center",
+                  "display": "flex",
+                  "padding": "0.25em 0.45em 0.30em 0.45em",
                 }
               }
             >
-              (1) This is a tag
-            </span>
-            <span
-              onClick={[Function]}
-              style={
-                Object {
-                  "padding": "0px 10px 1px 5px",
-                }
-              }
-            >
+              <span>
+                (1) This is a tag
+              </span>
               <span
-                className="tags-input-tag-remove fa fa-times"
-              />
-            </span>
-          </div>
-          <div
-            className="tags-input-tag"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "paddingLeft": 10,
+                  }
+                }
+              >
+                <span
+                  className="tags-input-tag-remove fa fa-times"
+                />
+              </span>
+            </div>
+          </span>
+          <span
             onClick={[Function]}
             style={
               Object {
-                "alignItems": "center",
                 "background": "#5cb85c",
                 "borderRadius": "2px",
                 "color": "white",
                 "cursor": "pointer",
-                "display": "flex",
                 "fontWeight": "bold",
                 "margin": 3,
                 "opacity": 1,
               }
             }
           >
-            <span
+            <div
               style={
                 Object {
-                  "padding": "0px 5px 1px 10px",
+                  "alignItems": "center",
+                  "display": "flex",
+                  "padding": "0.25em 0.45em 0.30em 0.45em",
                 }
               }
             >
-              (2) This is a tag
-            </span>
-            <span
-              onClick={[Function]}
-              style={
-                Object {
-                  "padding": "0px 10px 1px 5px",
-                }
-              }
-            >
+              <span>
+                (2) This is a tag
+              </span>
               <span
-                className="tags-input-tag-remove fa fa-times"
-              />
-            </span>
-          </div>
-          <div
-            className="tags-input-tag"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "paddingLeft": 10,
+                  }
+                }
+              >
+                <span
+                  className="tags-input-tag-remove fa fa-times"
+                />
+              </span>
+            </div>
+          </span>
+          <span
             onClick={[Function]}
             style={
               Object {
-                "alignItems": "center",
                 "background": "#5cb85c",
                 "borderRadius": "2px",
                 "color": "white",
                 "cursor": "pointer",
-                "display": "flex",
                 "fontWeight": "bold",
                 "margin": 3,
                 "opacity": 1,
               }
             }
           >
-            <span
+            <div
               style={
                 Object {
-                  "padding": "0px 5px 1px 10px",
+                  "alignItems": "center",
+                  "display": "flex",
+                  "padding": "0.25em 0.45em 0.30em 0.45em",
                 }
               }
             >
-              (3) This is a tag
-            </span>
-            <span
-              onClick={[Function]}
-              style={
-                Object {
-                  "padding": "0px 10px 1px 5px",
-                }
-              }
-            >
+              <span>
+                (3) This is a tag
+              </span>
               <span
-                className="tags-input-tag-remove fa fa-times"
-              />
-            </span>
-          </div>
-          <div
-            className="tags-input-tag"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "paddingLeft": 10,
+                  }
+                }
+              >
+                <span
+                  className="tags-input-tag-remove fa fa-times"
+                />
+              </span>
+            </div>
+          </span>
+          <span
             onClick={[Function]}
             style={
               Object {
-                "alignItems": "center",
                 "background": "#5cb85c",
                 "borderRadius": "2px",
                 "color": "white",
                 "cursor": "pointer",
-                "display": "flex",
                 "fontWeight": "bold",
                 "margin": 3,
                 "opacity": 1,
               }
             }
           >
-            <span
+            <div
               style={
                 Object {
-                  "padding": "0px 5px 1px 10px",
+                  "alignItems": "center",
+                  "display": "flex",
+                  "padding": "0.25em 0.45em 0.30em 0.45em",
                 }
               }
             >
-              (4) This is a tag
-            </span>
-            <span
-              onClick={[Function]}
-              style={
-                Object {
-                  "padding": "0px 10px 1px 5px",
-                }
-              }
-            >
+              <span>
+                (4) This is a tag
+              </span>
               <span
-                className="tags-input-tag-remove fa fa-times"
-              />
-            </span>
-          </div>
+                onClick={[Function]}
+                style={
+                  Object {
+                    "paddingLeft": 10,
+                  }
+                }
+              >
+                <span
+                  className="tags-input-tag-remove fa fa-times"
+                />
+              </span>
+            </div>
+          </span>
           <input
             onBlur={[Function]}
             onChange={[Function]}
@@ -18098,170 +18082,174 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Defaul
         }
       }
     >
-      <div
-        className="tags-input-tag"
+      <span
         onClick={[Function]}
         style={
           Object {
-            "alignItems": "center",
             "background": "#5cb85c",
             "borderRadius": "2px",
             "color": "white",
             "cursor": "pointer",
-            "display": "flex",
             "fontWeight": "bold",
             "margin": 3,
             "opacity": 1,
           }
         }
       >
-        <span
+        <div
           style={
             Object {
-              "padding": "0px 5px 1px 10px",
+              "alignItems": "center",
+              "display": "flex",
+              "padding": "0.25em 0.45em 0.30em 0.45em",
             }
           }
         >
-          (1) This is a tag
-        </span>
-        <span
-          onClick={[Function]}
-          style={
-            Object {
-              "padding": "0px 10px 1px 5px",
-            }
-          }
-        >
-          <span
-            className="tags-input-tag-remove"
-          >
-            x
+          <span>
+            (1) This is a tag
           </span>
-        </span>
-      </div>
-      <div
-        className="tags-input-tag"
+          <span
+            onClick={[Function]}
+            style={
+              Object {
+                "paddingLeft": 10,
+              }
+            }
+          >
+            <span
+              className="tags-input-tag-remove"
+            >
+              x
+            </span>
+          </span>
+        </div>
+      </span>
+      <span
         onClick={[Function]}
         style={
           Object {
-            "alignItems": "center",
             "background": "#5cb85c",
             "borderRadius": "2px",
             "color": "white",
             "cursor": "pointer",
-            "display": "flex",
             "fontWeight": "bold",
             "margin": 3,
             "opacity": 1,
           }
         }
       >
-        <span
+        <div
           style={
             Object {
-              "padding": "0px 5px 1px 10px",
+              "alignItems": "center",
+              "display": "flex",
+              "padding": "0.25em 0.45em 0.30em 0.45em",
             }
           }
         >
-          (2) This is a tag
-        </span>
-        <span
-          onClick={[Function]}
-          style={
-            Object {
-              "padding": "0px 10px 1px 5px",
-            }
-          }
-        >
-          <span
-            className="tags-input-tag-remove"
-          >
-            x
+          <span>
+            (2) This is a tag
           </span>
-        </span>
-      </div>
-      <div
-        className="tags-input-tag"
+          <span
+            onClick={[Function]}
+            style={
+              Object {
+                "paddingLeft": 10,
+              }
+            }
+          >
+            <span
+              className="tags-input-tag-remove"
+            >
+              x
+            </span>
+          </span>
+        </div>
+      </span>
+      <span
         onClick={[Function]}
         style={
           Object {
-            "alignItems": "center",
             "background": "#5cb85c",
             "borderRadius": "2px",
             "color": "white",
             "cursor": "pointer",
-            "display": "flex",
             "fontWeight": "bold",
             "margin": 3,
             "opacity": 1,
           }
         }
       >
-        <span
+        <div
           style={
             Object {
-              "padding": "0px 5px 1px 10px",
+              "alignItems": "center",
+              "display": "flex",
+              "padding": "0.25em 0.45em 0.30em 0.45em",
             }
           }
         >
-          (3) This is a tag
-        </span>
-        <span
-          onClick={[Function]}
-          style={
-            Object {
-              "padding": "0px 10px 1px 5px",
-            }
-          }
-        >
-          <span
-            className="tags-input-tag-remove"
-          >
-            x
+          <span>
+            (3) This is a tag
           </span>
-        </span>
-      </div>
-      <div
-        className="tags-input-tag"
+          <span
+            onClick={[Function]}
+            style={
+              Object {
+                "paddingLeft": 10,
+              }
+            }
+          >
+            <span
+              className="tags-input-tag-remove"
+            >
+              x
+            </span>
+          </span>
+        </div>
+      </span>
+      <span
         onClick={[Function]}
         style={
           Object {
-            "alignItems": "center",
             "background": "#5cb85c",
             "borderRadius": "2px",
             "color": "white",
             "cursor": "pointer",
-            "display": "flex",
             "fontWeight": "bold",
             "margin": 3,
             "opacity": 1,
           }
         }
       >
-        <span
+        <div
           style={
             Object {
-              "padding": "0px 5px 1px 10px",
+              "alignItems": "center",
+              "display": "flex",
+              "padding": "0.25em 0.45em 0.30em 0.45em",
             }
           }
         >
-          (4) This is a tag
-        </span>
-        <span
-          onClick={[Function]}
-          style={
-            Object {
-              "padding": "0px 10px 1px 5px",
-            }
-          }
-        >
-          <span
-            className="tags-input-tag-remove"
-          >
-            x
+          <span>
+            (4) This is a tag
           </span>
-        </span>
-      </div>
+          <span
+            onClick={[Function]}
+            style={
+              Object {
+                "paddingLeft": 10,
+              }
+            }
+          >
+            <span
+              className="tags-input-tag-remove"
+            >
+              x
+            </span>
+          </span>
+        </div>
+      </span>
       <input
         onBlur={[Function]}
         onChange={[Function]}
@@ -18317,170 +18305,174 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Respon
           }
         }
       >
-        <div
-          className="tags-input-tag"
+        <span
           onClick={[Function]}
           style={
             Object {
-              "alignItems": "center",
               "background": "#5cb85c",
               "borderRadius": "2px",
               "color": "white",
               "cursor": "pointer",
-              "display": "flex",
               "fontWeight": "bold",
               "margin": 3,
               "opacity": 1,
             }
           }
         >
-          <span
+          <div
             style={
               Object {
-                "padding": "0px 5px 1px 10px",
+                "alignItems": "center",
+                "display": "flex",
+                "padding": "0.25em 0.45em 0.30em 0.45em",
               }
             }
           >
-            (1) This is a tag
-          </span>
-          <span
-            onClick={[Function]}
-            style={
-              Object {
-                "padding": "0px 10px 1px 5px",
-              }
-            }
-          >
-            <span
-              className="tags-input-tag-remove"
-            >
-              x
+            <span>
+              (1) This is a tag
             </span>
-          </span>
-        </div>
-        <div
-          className="tags-input-tag"
+            <span
+              onClick={[Function]}
+              style={
+                Object {
+                  "paddingLeft": 10,
+                }
+              }
+            >
+              <span
+                className="tags-input-tag-remove"
+              >
+                x
+              </span>
+            </span>
+          </div>
+        </span>
+        <span
           onClick={[Function]}
           style={
             Object {
-              "alignItems": "center",
               "background": "#5cb85c",
               "borderRadius": "2px",
               "color": "white",
               "cursor": "pointer",
-              "display": "flex",
               "fontWeight": "bold",
               "margin": 3,
               "opacity": 1,
             }
           }
         >
-          <span
+          <div
             style={
               Object {
-                "padding": "0px 5px 1px 10px",
+                "alignItems": "center",
+                "display": "flex",
+                "padding": "0.25em 0.45em 0.30em 0.45em",
               }
             }
           >
-            (2) This is a tag
-          </span>
-          <span
-            onClick={[Function]}
-            style={
-              Object {
-                "padding": "0px 10px 1px 5px",
-              }
-            }
-          >
-            <span
-              className="tags-input-tag-remove"
-            >
-              x
+            <span>
+              (2) This is a tag
             </span>
-          </span>
-        </div>
-        <div
-          className="tags-input-tag"
+            <span
+              onClick={[Function]}
+              style={
+                Object {
+                  "paddingLeft": 10,
+                }
+              }
+            >
+              <span
+                className="tags-input-tag-remove"
+              >
+                x
+              </span>
+            </span>
+          </div>
+        </span>
+        <span
           onClick={[Function]}
           style={
             Object {
-              "alignItems": "center",
               "background": "#5cb85c",
               "borderRadius": "2px",
               "color": "white",
               "cursor": "pointer",
-              "display": "flex",
               "fontWeight": "bold",
               "margin": 3,
               "opacity": 1,
             }
           }
         >
-          <span
+          <div
             style={
               Object {
-                "padding": "0px 5px 1px 10px",
+                "alignItems": "center",
+                "display": "flex",
+                "padding": "0.25em 0.45em 0.30em 0.45em",
               }
             }
           >
-            (3) This is a tag
-          </span>
-          <span
-            onClick={[Function]}
-            style={
-              Object {
-                "padding": "0px 10px 1px 5px",
-              }
-            }
-          >
-            <span
-              className="tags-input-tag-remove"
-            >
-              x
+            <span>
+              (3) This is a tag
             </span>
-          </span>
-        </div>
-        <div
-          className="tags-input-tag"
+            <span
+              onClick={[Function]}
+              style={
+                Object {
+                  "paddingLeft": 10,
+                }
+              }
+            >
+              <span
+                className="tags-input-tag-remove"
+              >
+                x
+              </span>
+            </span>
+          </div>
+        </span>
+        <span
           onClick={[Function]}
           style={
             Object {
-              "alignItems": "center",
               "background": "#5cb85c",
               "borderRadius": "2px",
               "color": "white",
               "cursor": "pointer",
-              "display": "flex",
               "fontWeight": "bold",
               "margin": 3,
               "opacity": 1,
             }
           }
         >
-          <span
+          <div
             style={
               Object {
-                "padding": "0px 5px 1px 10px",
+                "alignItems": "center",
+                "display": "flex",
+                "padding": "0.25em 0.45em 0.30em 0.45em",
               }
             }
           >
-            (4) This is a tag
-          </span>
-          <span
-            onClick={[Function]}
-            style={
-              Object {
-                "padding": "0px 10px 1px 5px",
-              }
-            }
-          >
-            <span
-              className="tags-input-tag-remove"
-            >
-              x
+            <span>
+              (4) This is a tag
             </span>
-          </span>
-        </div>
+            <span
+              onClick={[Function]}
+              style={
+                Object {
+                  "paddingLeft": 10,
+                }
+              }
+            >
+              <span
+                className="tags-input-tag-remove"
+              >
+                x
+              </span>
+            </span>
+          </div>
+        </span>
         <input
           onBlur={[Function]}
           onChange={[Function]}

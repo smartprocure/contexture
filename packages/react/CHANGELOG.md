@@ -1,3 +1,9 @@
+# 1.48.4
+* TagsInput: Break Tag component into two: Tag and TagWithRemoveIcon
+
+# 1.48.3
+* Handle null better in the DateInput component
+
 # 1.48.2
 * Handle null children in SearchFilters and TreePauseButton
 * Fix ResultsTable inline filtering without Provider
