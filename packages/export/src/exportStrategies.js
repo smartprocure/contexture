@@ -37,62 +37,38 @@ export const stream = _.curry(async ({ strategy, stream }) => {
   stream.end()
 })
 
-// Strategies with a custom formatter
-
-// This format function breaks down an array of plain objects into key value pairs,
-// which will be formatted using the given format rules,
-// which then will return the array of formatted plain objects.
-// If the format rules doesn't have a proper way to handle certain key/value pair,
-// it will resort to the defaultLabel and defaultDisplay parameters, which by default
-// change the key to be in startCase form (so "ABCDary" becomes "ABC Dary"), and keeps the value as is.
-const format = (
-  rules,
-  defaultLabel = _.startCase,
-  defaultDisplay = _.identity
-) => {
-  let propertyFormatter = _.map(([k, v]) =>
-    rules[k]
-      ? [
-          rules[k].label || defaultLabel(k),
-          (rules[k].display || defaultDisplay)(v),
-        ]
-      : [defaultLabel(k), defaultDisplay(v)]
-  )
-  return _.map(
-    _.flow(
-      F.flattenObject,
-      // Extending each element with properties that might be missing
-      x => ({
-        ..._.mapValues(() => '', rules),
-        ...x,
-      }),
-      _.toPairs,
-      propertyFormatter,
-      _.fromPairs
+// Format object values based on passed formatter or _.identity
+// Also fill in any keys which are present in the included keys but not in the passed in object
+export const formatValues = (rules = {}, includedKeys = []) =>
+  _.map(obj => {
+    // Format all values of the passed in object
+    let resultObject = F.mapValuesIndexed(
+      (value, key) => (rules[key] ? rules[key].display(value) : value),
+      obj
     )
-  )
-}
+    // Fill the empty properties for the objects missing the expected keys
+    _.each(key => {
+      if (!resultObject[key]) {
+        resultObject[key] = ''
+      }
+    }, includedKeys)
+    return resultObject
+  })
+
+// Format the column headers with passed rules or _.startCase
+export const formatHeaders = (rules, defaultLabel = _.startCase) =>
+  _.map(key => _.get(`${key}.label`, rules) || defaultLabel(key))
+
+// Extract keys from first row
+export let extractHeadersFromFirstRow = _.flow(
+  _.first,
+  _.keys
+)
 
 // Escape quotes and quote cell
 let transformCell = _.flow(
   _.replace(/"/g, '""'),
   x => `"${x}"`
-)
-
-// Convert array of objects to array of arrays
-export let convertData = (data, columnKeys) => {
-  // Extract data from object
-  let transformRow = row => _.map(key => _.get(key, row), columnKeys)
-  return _.map(transformRow, data)
-}
-
-// Takes an array of column keys and returns an array of column names
-export let convertColumns = columnKeys => _.map(_.startCase, columnKeys)
-
-// Extract keys from first row
-export let extractKeysFromFirstRow = _.flow(
-  _.first,
-  _.keys
 )
 
 let transformRow = _.flow(
@@ -116,8 +92,9 @@ export const CSVStream = async ({
   logger = console.info,
 }) => {
   let records = 0
-  let columnKeys = []
   let totalRecords = await strategy.getTotalRecords()
+  let includedKeys = _.getOr([], 'include', strategy)
+  let columnHeaders = formatHeaders(formatRules)(includedKeys)
 
   await onWrite({
     chunk: [],
@@ -128,16 +105,26 @@ export const CSVStream = async ({
     async write(chunk) {
       logger('CSVStream', `${records + chunk.length} of ${totalRecords}`)
 
-      let formattedData = format(formatRules)(chunk)
-      // Extract column names from first object
-      if (_.isEmpty(columnKeys))
-        columnKeys = extractKeysFromFirstRow(formattedData)
-      // Convert data to CSV rows
-      let rows = convertData(formattedData, columnKeys)
-      // Prepend columns on first pass
-      if (!records) {
-        rows = [convertColumns(columnKeys), ...rows]
+      // Format the values in the current chunk with the passed in formatRules and fill any blank props
+      let formattedData = formatValues(formatRules, includedKeys)(chunk)
+
+      // If no includedKeys ware passed get them from the first row
+      // this is not accurate and only works in the case where the first row has all the data for all columns
+      if (_.isEmpty(columnHeaders)) {
+        // Extract column names from first object and format them
+        columnHeaders = formatHeaders(formatRules)(
+          extractHeadersFromFirstRow(formattedData)
+        )
       }
+
+      // Convert data to CSV rows
+      let rows = _.map(_.values, formattedData)
+
+      // Prepend column headers on first pass
+      if (!records) {
+        rows = [columnHeaders, ...rows]
+      }
+
       // Convert rows to a single CSV string
       let csv = rowsToCSV(rows)
 
