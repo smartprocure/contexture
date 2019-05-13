@@ -3,12 +3,11 @@ import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 import F from 'futil-js'
 import { getResults, getRecord } from '../utils/schema'
-import { length } from '../utils/futil'
 import InjectTreeNode from '../utils/injectTreeNode'
 
 let Label = observer(({ node, Checkbox, selected, getValue }) => {
   let results = _.toArray(getResults(node))
-  let allChecked = length(results) === length(F.view(selected))
+  let allChecked = _.size(results) === _.size(F.view(selected))
   let checkAll = F.sets(
     allChecked
       ? []

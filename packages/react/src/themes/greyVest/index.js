@@ -28,11 +28,16 @@ import IconButton from './IconButton'
 import Table from './Table'
 import Button from './Button'
 import ButtonRadio from './ButtonRadio'
-import Tabs from './TabList'
+import TabList from './TabList'
+export { Tabs, Tab, TabContent, TabLabel } from './Tabs'
 import ErrorList from './ErrorList'
 import ErrorText from './ErrorText'
 import Box from './Box'
 import LinkButton from './LinkButton'
+import TreePauseButton from './TreePauseButton'
+import ToggleFiltersButton from './ToggleFiltersButton'
+export { default as SearchLayout } from './SearchLayout'
+import BaseSearchFilters from './SearchFilters'
 import DateInput from './DateInput'
 
 export {
@@ -47,11 +52,15 @@ export {
   Table,
   Button,
   ButtonRadio,
-  Tabs,
+  TabList,
   ErrorList,
   Box,
   LinkButton,
+  TreePauseButton,
+  ToggleFiltersButton,
 }
+
+export let SearchTree = () => {}
 
 export let GVStyle = () => (
   <style>
@@ -74,6 +83,7 @@ export let GVStyle = () => (
         background-color: #e3e5e6;
 
         border: none;
+        outline: none;
         font-size: 14px;
         font-weight: bold;
         letter-spacing: 2px;
@@ -208,42 +218,21 @@ export let GVStyle = () => (
       }
 
 
+      /* Tags Input */
+      .gv-body .tags-input > * {
+        box-sizing: border-box;
+      }
       .gv-body .tags-input {
         border: 2px solid #EBEBEB;
         border-radius: 4px;
-        min-height: 40px;
-        box-sizing: border-box;
         background: #fff;
-        /* 7/8px is for 15px between tags and border */
-        padding-left: 7px;
-        padding-right: 8px;
-        padding-top: 7px;
-        padding-bottom: 8px;
       }
-      .gv-body .tags-input input {
-        /* 7/8px is for 15px between tags and border */
-        margin-left: 8px;
-        margin-right: 7px;
-        margin-top: 8px;
-        margin-bottom: 7px;
-        /* To reach perfect 40px, remove real input padding because we have it on the fake one */
-        padding: 0;
-        /* subtract padding (5+5) and borders (2+2) from 40 */
-        height: 26px;
-      }
+      .gv-body .tags-input input,
       .gv-body .tags-input-tag {
-        /* Arbitrary theme design */
-        margin-left: 8px;
-        margin-right: 7px;
-        border-radius: 2px;
-        padding: 5px 13px 7px 15px;
-        font-size: 15px;
+        height: 30px;
       }
       .gv-body .tags-input-tag-remove {
-        /* Arbitrary theme design */
-        padding-left: 10px;
-        font-size: 13px;
-        vertical-align: middle;
+        font-size: 12px;
       }
 
       /* Tags Popover */
@@ -363,7 +352,7 @@ export let GVStyle = () => (
       .gv-search-bar > .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
       }
-      .gv-search-bar .tags-input {
+      .gv-search-bar .gv-box .tags-input {
         margin: 0;
         border: none;
       }
@@ -494,11 +483,20 @@ export let GVStyle = () => (
         padding-top: 30px;
       }
 
-      .gv-grid {
+      .gv-search-layout-basic,
+      .gv-search-layout-builder,
+      .gv-search-layout-resultsOnly {
         display: grid;
-        grid-template-columns: 400px 1fr;
         grid-gap: 40px;
         margin: 0 40px;
+        margin-bottom: 50px;
+      }
+      .gv-search-layout-basic {
+        grid-template-columns: minmax(250px, 400px) minmax(0, 1fr);
+      }
+      .gv-search-layout-builder,
+      .gv-search-layout-resultsOnly {
+        grid-template-columns: minmax(0, 1fr);
       }
 
       .popover {
@@ -766,6 +764,23 @@ export let FilterList = defaultProps({ Icon, ListItem, MissingTypeComponent })(
   BaseFilterList
 )
 
+export let AddableFilterList = props => (
+  <>
+    <FilterList {...props} />
+    <Adder {...props} uniqueFields />
+  </>
+)
+
+export let FiltersBox = props => (
+  <div className="gv-box filter-list">
+    <AddableFilterList {...props} />
+  </div>
+)
+
 export let QueryBuilder = defaultProps({ Button, MissingTypeComponent })(
   QueryBuilderComponent
+)
+
+export let SearchFilters = defaultProps({ QueryBuilder, FiltersBox })(
+  BaseSearchFilters
 )

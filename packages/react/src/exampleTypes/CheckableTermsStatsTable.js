@@ -3,14 +3,13 @@ import F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
 import { Column } from '../layout/ExpandableTable'
-import { length } from '../utils/futil'
 import InjectTreeNode from '../utils/injectTreeNode'
 import TermsStatsTable from './TermsStatsTable'
 
 let CheckableTermsStatsTable = InjectTreeNode(
   observer(({ node, children, Checkbox, getValue, selected, ...props }) => {
     let results = _.result('context.terms.slice', node)
-    let allChecked = length(results) === length(F.view(selected))
+    let allChecked = _.size(results) === _.size(F.view(selected))
     let checkAll = F.sets(
       allChecked ? [] : _.map(_.iteratee(getValue), results),
       selected
