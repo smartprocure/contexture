@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
-import { observer } from 'mobx-react'
+import { observer, Observer } from 'mobx-react'
 import { exampleTypes } from 'contexture-client'
 import { Flex } from '../layout/Flex'
 import injectTreeNode from '../utils/injectTreeNode'
@@ -53,6 +53,29 @@ let SelectAll = observer(({ node, tree, Checkbox }) => {
     </label>
   )
 })
+
+let FacetOptionsFilter = ({ tree, node, TextInput, Button }) => {
+  let [val, setVal] = useState(node.optionsFilter)
+  let [buttonEnabled, setButtonEnabled] = useState(!!_.size(node.optionsFilter))
+  return (
+    <Observer>
+      {() => <Flex style={{ justifyContent: 'space-between' }}>
+        <TextInput
+          value={val}
+          onChange={e => {
+            setVal(e.target.value)
+            setButtonEnabled(_.size(e.target.value || val))
+          }}
+          placeholder="Find..."
+        />
+        <Button {...buttonEnabled ? {} : { disabled: true }} onClick={e => buttonEnabled && tree.mutate(node.path, { optionsFilter: val })}>
+          Submit
+        </Button>
+      </Flex>}
+    </Observer>
+  )
+}
+
 let Facet = injectTreeNode(
   observer(
     ({
@@ -60,6 +83,7 @@ let Facet = injectTreeNode(
       node,
       hide = {},
       TextInput = 'input',
+      Button = 'button',
       Checkbox = CheckboxDefault,
       RadioList = RadioListDefault,
       display = x => x,
@@ -73,12 +97,11 @@ let Facet = injectTreeNode(
           options={F.autoLabelOptions(['include', 'exclude'])}
         />
         {!hide.facetFilter && (
-          <TextInput
-            value={node.optionsFilter}
-            onChange={e =>
-              tree.mutate(node.path, { optionsFilter: e.target.value })
-            }
-            placeholder="Find..."
+          <FacetOptionsFilter
+            tree={tree}
+            node={node}
+            TextInput={TextInput}
+            Button={Button}
           />
         )}
         <SelectAll node={node} tree={tree} Checkbox={Checkbox} />

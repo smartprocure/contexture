@@ -39,7 +39,7 @@ export default ({
   Select = DefaultSelect,
 } = {}) => {
   let Components = {
-    Facet: defaultProps({ TextInput, Checkbox, RadioList })(Facet),
+    Facet: defaultProps({ TextInput, Button, Checkbox, RadioList })(Facet),
     Number: defaultProps({ NumberInput, Button })(Number),
     Date: defaultProps({ DateInput, RadioList, Select })(Date),
     DateRangePicker,

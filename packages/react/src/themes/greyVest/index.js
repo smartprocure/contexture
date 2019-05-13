@@ -394,7 +394,7 @@ export let GVStyle = () => (
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet > .gv-input[type="text"] {
         margin-bottom: 10px;
