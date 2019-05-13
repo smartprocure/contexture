@@ -7,31 +7,43 @@ import { observer, inject } from 'mobx-react'
 import { Flex } from './Flex'
 import Popover from './Popover'
 
-let Tag = observer(({ value, removeTag, tagStyle, removeIcon, onClick }) => (
-  <Flex
-    className="tags-input-tag"
+let Tag = observer(({ value, tagStyle, onClick, children, style }) => (
+  <span
     style={{
-      ...F.callOrReturn(tagStyle, value),
-      alignItems: 'center',
       cursor: 'pointer',
       margin: 3,
       borderRadius: '2px',
+      ...style,
+      ...F.callOrReturn(tagStyle, value),
     }}
     onClick={onClick}
   >
-    <span style={{ padding: '0px 5px 1px 10px' }}>{value}</span>
+    <Flex
+      style={{
+        alignItems: 'center',
+        padding: '0.25em 0.45em 0.30em 0.45em',
+      }}
+    >
+      {children || <span>{value}</span>}
+    </Flex>
+  </span>
+))
+Tag.displayName = 'Tag'
+
+let TagWithRemoveIcon = ({ removeTag, removeIcon, value, ...props }) => (
+  <Tag value={value} {...props}>
+    <span>{value}</span>
     <span
       onClick={e => {
         e.stopPropagation()
         removeTag(value)
       }}
-      style={{ padding: '0px 10px 1px 5px' }}
+      style={{ paddingLeft: 10 }}
     >
       {removeIcon || <span className="tags-input-tag-remove">x</span>}
     </span>
-  </Flex>
-))
-Tag.displayName = 'Tag'
+  </Tag>
+)
 
 // We're only using withState to preserve the state between renders, since
 // inject doesn't do that for us.
@@ -50,7 +62,7 @@ let TagsInput = withState('state', 'setState', () =>
       removeTag,
       submit = _.noop,
       tagStyle,
-      TagComponent = Tag,
+      TagComponent = TagWithRemoveIcon,
       placeholder = 'Search...',
       splitCommas,
       PopoverContents,
@@ -159,4 +171,4 @@ let MockTagsInput = inject(() => {
 })(TagsInput)
 MockTagsInput.displayName = 'MockTagsInput'
 
-export { Tag, TagsInput, MockTagsInput }
+export { Tag, TagWithRemoveIcon, TagsInput, MockTagsInput }

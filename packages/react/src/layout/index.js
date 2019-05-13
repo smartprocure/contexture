@@ -9,7 +9,7 @@ import { ModalPicker } from './Pickers'
 import NestedPicker from './NestedPicker'
 import Dynamic from './Dynamic'
 import BarChart from './BarChart'
-import { Tag, TagsInput } from './TagsInput'
+import { Tag, TagWithRemoveIcon, TagsInput } from './TagsInput'
 import LensInput from './LensInput'
 import ExpandableTable from './ExpandableTable'
 import Portal from './Portal'
@@ -27,6 +27,7 @@ export {
   Dynamic,
   BarChart,
   Tag,
+  TagWithRemoveIcon,
   TagsInput,
   LensInput,
   ExpandableTable,
