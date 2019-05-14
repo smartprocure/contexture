@@ -12480,7 +12480,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
       style={
         Object {
           "height": "100%",
-          "width": "100%",
         }
       }
     >
@@ -12537,7 +12536,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
               style={
                 Object {
                   "height": "100%",
-                  "width": "100%",
                 }
               }
             >
@@ -12621,7 +12619,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
               style={
                 Object {
                   "height": "100%",
-                  "width": "100%",
                 }
               }
             >
@@ -12730,7 +12727,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
               style={
                 Object {
                   "height": "100%",
-                  "width": "100%",
                 }
               }
             >
@@ -12834,7 +12830,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
           style={
             Object {
               "height": "100%",
-              "width": "100%",
             }
           }
         >
@@ -12862,7 +12857,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
                 Object {
                   "display": "inline-block",
                   "height": "100%",
-                  "width": "100%",
                 }
               }
             >
@@ -12874,7 +12868,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
           style={
             Object {
               "height": "100%",
-              "width": "100%",
             }
           }
         >
@@ -12900,7 +12893,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
             style={
               Object {
                 "height": "100%",
-                "width": "100%",
               }
             }
           />
@@ -15183,7 +15175,6 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
     style={
       Object {
         "height": "100%",
-        "width": "100%",
       }
     }
   >
@@ -15978,7 +15969,6 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
       style={
         Object {
           "height": "100%",
-          "width": "100%",
         }
       }
     >
@@ -16246,7 +16236,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
       style={
         Object {
           "height": "100%",
-          "width": "100%",
         }
       }
     >
@@ -16302,7 +16291,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
             style={
               Object {
                 "height": "100%",
-                "width": "100%",
               }
             }
           >
@@ -16356,7 +16344,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
             style={
               Object {
                 "height": "100%",
-                "width": "100%",
               }
             }
           >
@@ -16417,7 +16404,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
             style={
               Object {
                 "height": "100%",
-                "width": "100%",
               }
             }
           >
@@ -16643,7 +16629,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
             style={
               Object {
                 "height": "100%",
-                "width": "100%",
               }
             }
           >
@@ -16869,7 +16854,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
             style={
               Object {
                 "height": "100%",
-                "width": "100%",
               }
             }
           >
@@ -16948,7 +16932,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
             style={
               Object {
                 "height": "100%",
-                "width": "100%",
               }
             }
           >
@@ -17023,7 +17006,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
             style={
               Object {
                 "height": "100%",
-                "width": "100%",
               }
             }
           >
@@ -17225,7 +17207,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
             style={
               Object {
                 "height": "100%",
-                "width": "100%",
               }
             }
           >
@@ -17368,7 +17349,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
               Object {
                 "display": "inline-block",
                 "height": "100%",
-                "width": "100%",
               }
             }
           >
@@ -17391,7 +17371,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
               style={
                 Object {
                   "height": "100%",
-                  "width": "100%",
                 }
               }
             >
@@ -17604,7 +17583,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Geo filter & HERE
         style={
           Object {
             "height": "100%",
-            "width": "100%",
           }
         }
       >
@@ -17815,7 +17793,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/ResultTable Custo
     style={
       Object {
         "height": "100%",
-        "width": "100%",
       }
     }
   >
@@ -18038,7 +18015,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/ResultTable Displ
     style={
       Object {
         "height": "100%",
-        "width": "100%",
       }
     }
   >
@@ -18111,7 +18087,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Defaul
   style={
     Object {
       "height": "100%",
-      "width": "100%",
     }
   }
 >
@@ -18335,7 +18310,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Respon
     style={
       Object {
         "height": "100%",
-        "width": "100%",
       }
     }
   >
@@ -18554,7 +18528,6 @@ exports[`Storyshots Search Components (Unthemed)|FilterAdder Example 1`] = `
     style={
       Object {
         "height": "100%",
-        "width": "100%",
       }
     }
   >
@@ -18584,7 +18557,6 @@ exports[`Storyshots Search Components (Unthemed)|FilterAdder With NestedPickerMo
   style={
     Object {
       "height": "100%",
-      "width": "100%",
     }
   }
 >
@@ -18603,7 +18575,6 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
   style={
     Object {
       "height": "100%",
-      "width": "100%",
     }
   }
 >
@@ -18615,7 +18586,6 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
         style={
           Object {
             "height": "100%",
-            "width": "100%",
           }
         }
       >
@@ -18651,7 +18621,6 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
         style={
           Object {
             "height": "100%",
-            "width": "100%",
           }
         }
       >
@@ -18687,7 +18656,6 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
         style={
           Object {
             "height": "100%",
-            "width": "100%",
           }
         }
       >
@@ -18860,7 +18828,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                             style={
                               Object {
                                 "height": "100%",
-                                "width": "100%",
                               }
                             }
                           >
@@ -19125,7 +19092,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                         style={
                                           Object {
                                             "height": "100%",
-                                            "width": "100%",
                                           }
                                         }
                                       >
@@ -19329,7 +19295,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                         style={
                                           Object {
                                             "height": "100%",
-                                            "width": "100%",
                                           }
                                         }
                                       >
@@ -19595,7 +19560,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                     style={
                                                       Object {
                                                         "height": "100%",
-                                                        "width": "100%",
                                                       }
                                                     }
                                                   >
@@ -19869,7 +19833,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                     style={
                                                       Object {
                                                         "height": "100%",
-                                                        "width": "100%",
                                                       }
                                                     }
                                                   >
@@ -20085,7 +20048,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                             style={
                               Object {
                                 "height": "100%",
-                                "width": "100%",
                               }
                             }
                           >
@@ -20370,7 +20332,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                         style={
                                           Object {
                                             "height": "100%",
-                                            "width": "100%",
                                           }
                                         }
                                       >
@@ -20615,7 +20576,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                         style={
                                           Object {
                                             "height": "100%",
-                                            "width": "100%",
                                           }
                                         }
                                       >
@@ -20962,7 +20922,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                     style={
                                                       Object {
                                                         "height": "100%",
-                                                        "width": "100%",
                                                       }
                                                     }
                                                   >
@@ -21167,7 +21126,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                     style={
                                                       Object {
                                                         "height": "100%",
-                                                        "width": "100%",
                                                       }
                                                     }
                                                   >
@@ -21416,7 +21374,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                         style={
                                           Object {
                                             "height": "100%",
-                                            "width": "100%",
                                           }
                                         }
                                       >
@@ -21642,7 +21599,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter 1`] = `
                             style={
                               Object {
                                 "height": "100%",
-                                "width": "100%",
                               }
                             }
                           >
@@ -21862,7 +21818,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter on a mi
                             style={
                               Object {
                                 "height": "100%",
-                                "width": "100%",
                               }
                             }
                           >
@@ -22082,7 +22037,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter with fa
                             style={
                               Object {
                                 "height": "100%",
-                                "width": "100%",
                               }
                             }
                           >
@@ -22458,7 +22412,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter with fi
                             style={
                               Object {
                                 "height": "100%",
-                                "width": "100%",
                               }
                             }
                           >
