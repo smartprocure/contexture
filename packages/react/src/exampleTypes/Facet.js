@@ -56,7 +56,7 @@ let SelectAll = observer(({ node, tree, Checkbox }) => {
 
 let FacetOptionsFilter = ({ tree, node, TextInput, Button }) => {
   let [val, setVal] = useState(node.optionsFilter)
-  let [buttonEnabled, setButtonEnabled] = useState(!!_.size(node.optionsFilter))
+  let buttonEnabled = val !== node.optionsFilter
   return (
     <Observer>
       {() => <Flex style={{ justifyContent: 'space-between' }}>
@@ -64,7 +64,6 @@ let FacetOptionsFilter = ({ tree, node, TextInput, Button }) => {
           value={val}
           onChange={e => {
             setVal(e.target.value)
-            setButtonEnabled(_.size(e.target.value || val))
           }}
           placeholder="Find..."
         />
