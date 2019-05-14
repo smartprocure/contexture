@@ -68,7 +68,7 @@ let FacetOptionsFilter = ({ tree, node, TextInput, Button }) => {
           }}
           placeholder="Find..."
         />
-        <Button {...buttonEnabled ? {} : { disabled: true }} onClick={e => buttonEnabled && tree.mutate(node.path, { optionsFilter: val })}>
+        <Button disabled={!buttonEnabled} onClick={e => buttonEnabled && tree.mutate(node.path, { optionsFilter: val })}>
           Submit
         </Button>
       </Flex>}
