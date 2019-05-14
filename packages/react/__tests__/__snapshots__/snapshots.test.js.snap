@@ -12479,7 +12479,8 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
     <div
       style={
         Object {
-          "display": "contents",
+          "height": "100%",
+          "width": "100%",
         }
       }
     >
@@ -12535,7 +12536,8 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
             <div
               style={
                 Object {
-                  "display": "contents",
+                  "height": "100%",
+                  "width": "100%",
                 }
               }
             >
@@ -12618,7 +12620,8 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
             <div
               style={
                 Object {
-                  "display": "contents",
+                  "height": "100%",
+                  "width": "100%",
                 }
               }
             >
@@ -12726,7 +12729,8 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
             <div
               style={
                 Object {
-                  "display": "contents",
+                  "height": "100%",
+                  "width": "100%",
                 }
               }
             >
@@ -12829,7 +12833,8 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
         <div
           style={
             Object {
-              "display": "contents",
+              "height": "100%",
+              "width": "100%",
             }
           }
         >
@@ -12855,7 +12860,9 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
             <div
               style={
                 Object {
-                  "display": "contents",
+                  "display": "inline-block",
+                  "height": "100%",
+                  "width": "100%",
                 }
               }
             >
@@ -12866,7 +12873,8 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
         <div
           style={
             Object {
-              "display": "contents",
+              "height": "100%",
+              "width": "100%",
             }
           }
         >
@@ -12891,7 +12899,8 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
           <div
             style={
               Object {
-                "display": "contents",
+                "height": "100%",
+                "width": "100%",
               }
             }
           />
@@ -15173,7 +15182,8 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
   <div
     style={
       Object {
-        "display": "contents",
+        "height": "100%",
+        "width": "100%",
       }
     }
   >
@@ -15967,7 +15977,8 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
     <div
       style={
         Object {
-          "display": "contents",
+          "height": "100%",
+          "width": "100%",
         }
       }
     >
@@ -16234,7 +16245,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
     <div
       style={
         Object {
-          "display": "contents",
+          "height": "100%",
+          "width": "100%",
         }
       }
     >
@@ -16289,7 +16301,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           <div
             style={
               Object {
-                "display": "contents",
+                "height": "100%",
+                "width": "100%",
               }
             }
           >
@@ -16342,7 +16355,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           <div
             style={
               Object {
-                "display": "contents",
+                "height": "100%",
+                "width": "100%",
               }
             }
           >
@@ -16402,7 +16416,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           <div
             style={
               Object {
-                "display": "contents",
+                "height": "100%",
+                "width": "100%",
               }
             }
           >
@@ -16627,7 +16642,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           <div
             style={
               Object {
-                "display": "contents",
+                "height": "100%",
+                "width": "100%",
               }
             }
           >
@@ -16852,7 +16868,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           <div
             style={
               Object {
-                "display": "contents",
+                "height": "100%",
+                "width": "100%",
               }
             }
           >
@@ -16930,7 +16947,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           <div
             style={
               Object {
-                "display": "contents",
+                "height": "100%",
+                "width": "100%",
               }
             }
           >
@@ -17004,7 +17022,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           <div
             style={
               Object {
-                "display": "contents",
+                "height": "100%",
+                "width": "100%",
               }
             }
           >
@@ -17205,7 +17224,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           <div
             style={
               Object {
-                "display": "contents",
+                "height": "100%",
+                "width": "100%",
               }
             }
           >
@@ -17346,7 +17366,9 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           <div
             style={
               Object {
-                "display": "contents",
+                "display": "inline-block",
+                "height": "100%",
+                "width": "100%",
               }
             }
           >
@@ -17368,7 +17390,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
             <div
               style={
                 Object {
-                  "display": "contents",
+                  "height": "100%",
+                  "width": "100%",
                 }
               }
             >
@@ -17580,7 +17603,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Geo filter & HERE
       <div
         style={
           Object {
-            "display": "contents",
+            "height": "100%",
+            "width": "100%",
           }
         }
       >
@@ -17790,7 +17814,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/ResultTable Custo
   <div
     style={
       Object {
-        "display": "contents",
+        "height": "100%",
+        "width": "100%",
       }
     }
   >
@@ -18012,7 +18037,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/ResultTable Displ
   <div
     style={
       Object {
-        "display": "contents",
+        "height": "100%",
+        "width": "100%",
       }
     }
   >
@@ -18084,7 +18110,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Defaul
 <div
   style={
     Object {
-      "display": "contents",
+      "height": "100%",
+      "width": "100%",
     }
   }
 >
@@ -18307,7 +18334,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Respon
   <div
     style={
       Object {
-        "display": "contents",
+        "height": "100%",
+        "width": "100%",
       }
     }
   >
@@ -18525,7 +18553,8 @@ exports[`Storyshots Search Components (Unthemed)|FilterAdder Example 1`] = `
   <div
     style={
       Object {
-        "display": "contents",
+        "height": "100%",
+        "width": "100%",
       }
     }
   >
@@ -18554,7 +18583,8 @@ exports[`Storyshots Search Components (Unthemed)|FilterAdder With NestedPickerMo
 <div
   style={
     Object {
-      "display": "contents",
+      "height": "100%",
+      "width": "100%",
     }
   }
 >
@@ -18572,7 +18602,8 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
 <div
   style={
     Object {
-      "display": "contents",
+      "height": "100%",
+      "width": "100%",
     }
   }
 >
@@ -18583,7 +18614,8 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
       <div
         style={
           Object {
-            "display": "contents",
+            "height": "100%",
+            "width": "100%",
           }
         }
       >
@@ -18618,7 +18650,8 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
       <div
         style={
           Object {
-            "display": "contents",
+            "height": "100%",
+            "width": "100%",
           }
         }
       >
@@ -18653,7 +18686,8 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
       <div
         style={
           Object {
-            "display": "contents",
+            "height": "100%",
+            "width": "100%",
           }
         }
       >
@@ -18825,7 +18859,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                           <div
                             style={
                               Object {
-                                "display": "contents",
+                                "height": "100%",
+                                "width": "100%",
                               }
                             }
                           >
@@ -19089,7 +19124,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                       <div
                                         style={
                                           Object {
-                                            "display": "contents",
+                                            "height": "100%",
+                                            "width": "100%",
                                           }
                                         }
                                       >
@@ -19292,7 +19328,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                       <div
                                         style={
                                           Object {
-                                            "display": "contents",
+                                            "height": "100%",
+                                            "width": "100%",
                                           }
                                         }
                                       >
@@ -19557,7 +19594,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                   <div
                                                     style={
                                                       Object {
-                                                        "display": "contents",
+                                                        "height": "100%",
+                                                        "width": "100%",
                                                       }
                                                     }
                                                   >
@@ -19830,7 +19868,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                   <div
                                                     style={
                                                       Object {
-                                                        "display": "contents",
+                                                        "height": "100%",
+                                                        "width": "100%",
                                                       }
                                                     }
                                                   >
@@ -20045,7 +20084,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                           <div
                             style={
                               Object {
-                                "display": "contents",
+                                "height": "100%",
+                                "width": "100%",
                               }
                             }
                           >
@@ -20329,7 +20369,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                       <div
                                         style={
                                           Object {
-                                            "display": "contents",
+                                            "height": "100%",
+                                            "width": "100%",
                                           }
                                         }
                                       >
@@ -20573,7 +20614,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                       <div
                                         style={
                                           Object {
-                                            "display": "contents",
+                                            "height": "100%",
+                                            "width": "100%",
                                           }
                                         }
                                       >
@@ -20919,7 +20961,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                   <div
                                                     style={
                                                       Object {
-                                                        "display": "contents",
+                                                        "height": "100%",
+                                                        "width": "100%",
                                                       }
                                                     }
                                                   >
@@ -21123,7 +21166,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                   <div
                                                     style={
                                                       Object {
-                                                        "display": "contents",
+                                                        "height": "100%",
+                                                        "width": "100%",
                                                       }
                                                     }
                                                   >
@@ -21371,7 +21415,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                       <div
                                         style={
                                           Object {
-                                            "display": "contents",
+                                            "height": "100%",
+                                            "width": "100%",
                                           }
                                         }
                                       >
@@ -21596,7 +21641,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter 1`] = `
                           <div
                             style={
                               Object {
-                                "display": "contents",
+                                "height": "100%",
+                                "width": "100%",
                               }
                             }
                           >
@@ -21815,7 +21861,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter on a mi
                           <div
                             style={
                               Object {
-                                "display": "contents",
+                                "height": "100%",
+                                "width": "100%",
                               }
                             }
                           >
@@ -22034,7 +22081,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter with fa
                           <div
                             style={
                               Object {
-                                "display": "contents",
+                                "height": "100%",
+                                "width": "100%",
                               }
                             }
                           >
@@ -22409,7 +22457,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter with fi
                           <div
                             style={
                               Object {
-                                "display": "contents",
+                                "height": "100%",
+                                "width": "100%",
                               }
                             }
                           >

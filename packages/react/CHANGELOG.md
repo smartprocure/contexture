@@ -1,3 +1,6 @@
+# 1.48.6
+* StripedLoader: Fix loading styles
+
 # 1.48.5
 * Modal: Export themed from greyVest
 
