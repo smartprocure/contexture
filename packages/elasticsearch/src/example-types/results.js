@@ -45,10 +45,10 @@ module.exports = {
         _.flatten,
         _.concat(_.keys(inlineAliases)),
         _.uniq(),
-        // intersect with context.include so we only highlight fields we specified in the context
-        _.intersection(context.include),
+        // intersect with context.include so we only highlight fields we specified in the context if showOtherMatches is set to false
+        fields => _.getOr(false, 'showOtherMatches', context) ? fields : _.intersection(context.include, fields),
         // concat the inlineAliases KEYS so they are part of the highlight.fields object so we highlight on them in the ES response
-        _.concat(_.values(inlineAliases))
+        _.concat(_.values(inlineAliases)),
       )(schema.elasticsearch.highlight)
 
       F.extendOn(result, {
