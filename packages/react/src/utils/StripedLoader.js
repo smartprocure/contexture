@@ -4,14 +4,7 @@ import { loading } from '../styles/generic'
 
 let StripedLoader = (Component, style = {}) =>
   observer(({ isLoading, ...props }) => (
-    <div
-      style={{
-        height: '100%',
-        width: '100%',
-        ...style,
-        ...(isLoading && loading),
-      }}
-    >
+    <div style={{ height: '100%', ...style, ...(isLoading && loading) }}>
       <Component {...props} />
     </div>
   ))
