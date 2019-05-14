@@ -59,18 +59,25 @@ let FacetOptionsFilter = ({ tree, node, TextInput, Button }) => {
   let buttonEnabled = val !== node.optionsFilter
   return (
     <Observer>
-      {() => <Flex style={{ justifyContent: 'space-between' }}>
-        <TextInput
-          value={val}
-          onChange={e => {
-            setVal(e.target.value)
-          }}
-          placeholder="Find..."
-        />
-        <Button disabled={!buttonEnabled} onClick={() => buttonEnabled && tree.mutate(node.path, { optionsFilter: val })}>
-          Submit
-        </Button>
-      </Flex>}
+      {() => (
+        <Flex style={{ justifyContent: 'space-between' }}>
+          <TextInput
+            value={val}
+            onChange={e => {
+              setVal(e.target.value)
+            }}
+            placeholder="Find..."
+          />
+          <Button
+            disabled={!buttonEnabled}
+            onClick={() =>
+              buttonEnabled && tree.mutate(node.path, { optionsFilter: val })
+            }
+          >
+            Submit
+          </Button>
+        </Flex>
+      )}
     </Observer>
   )
 }
