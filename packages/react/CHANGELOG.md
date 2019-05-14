@@ -1,6 +1,12 @@
 # 1.49.0
 * Facet: apply options filter change on submit button click
 
+# 1.48.6
+* StripedLoader: Fix loading styles
+
+# 1.48.5
+* Modal: Export themed from greyVest
+
 # 1.48.4
 * TagsInput > Tag: Render remove icon conditionally
 

@@ -16,6 +16,7 @@ import {
 } from '../../'
 import ExampleTypeConstructor from '../../exampleTypes/'
 import QueryBuilderComponent from '../../queryBuilder'
+import { default as DefaultModal } from '../../layout/Modal'
 
 import Input from './Input'
 import Checkbox from './Checkbox'
@@ -702,6 +703,8 @@ export let Adder = ModalFilterAdder({
   Item: FilterListItem,
   label: AddLabel,
 })
+
+export let Modal = defaultProps({ className: 'gv-body' })(DefaultModal)
 
 export let PagerItem = observer(({ active, disabled, ...x }) => (
   <span
