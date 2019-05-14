@@ -227,12 +227,12 @@ export let GVStyle = () => (
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -714,7 +714,9 @@ export let PagerItem = observer(({ active, disabled, ...x }) => (
 PagerItem.displayName = 'PagerItem'
 
 let TagComponent = defaultProps({
-  removeIcon: <span className="tags-input-tag-remove fa fa-times" />,
+  RemoveIcon: props => (
+    <span className="tags-input-tag-remove fa fa-times" {...props} />
+  ),
 })(Tag)
 export let TagsInput = defaultProps({ TagComponent })(BaseTagsInput)
 

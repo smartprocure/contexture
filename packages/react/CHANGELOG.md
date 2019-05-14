@@ -1,3 +1,6 @@
+# 1.48.4
+* TagsInput > Tag: Render remove icon conditionally
+
 # 1.48.3
 * Handle null better in the DateInput component
 
