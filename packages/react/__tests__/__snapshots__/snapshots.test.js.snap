@@ -193,6 +193,7 @@ exports[`Storyshots Components (Grey Vest)|Box Box 1`] = `
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -739,6 +740,7 @@ exports[`Storyshots Components (Grey Vest)|Button Active 1`] = `
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -1286,6 +1288,7 @@ exports[`Storyshots Components (Grey Vest)|Button As Div 1`] = `
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -1833,6 +1836,7 @@ exports[`Storyshots Components (Grey Vest)|Button Basic Usage 1`] = `
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -2380,6 +2384,7 @@ exports[`Storyshots Components (Grey Vest)|Button Primary 1`] = `
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -2927,6 +2932,7 @@ exports[`Storyshots Components (Grey Vest)|LinkButton LinkButton 1`] = `
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -3476,6 +3482,7 @@ exports[`Storyshots Components (Grey Vest)|Refs Default 1`] = `
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -4054,6 +4061,7 @@ exports[`Storyshots Components (Grey Vest)|Search Layout Basic 1`] = `
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -4609,6 +4617,7 @@ exports[`Storyshots Components (Grey Vest)|Search Layout Builder 1`] = `
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -5164,6 +5173,7 @@ exports[`Storyshots Components (Grey Vest)|Search Layout Results Only 1`] = `
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -5714,6 +5724,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Anonymous Values 1`] = `
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -6276,6 +6287,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Base Usage 1`] = `
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -6838,6 +6850,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Controlled 1`] = `
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -7408,6 +7421,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Custom TabList and TabPanel 1`] 
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -7974,6 +7988,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Docs 1`] = `
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -8963,6 +8978,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Tab Render Function 1`] = `
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -9525,6 +9541,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs TabLabel and TabContent 1`] = `
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -10087,6 +10104,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Uncontrolled with defaultValue 1
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -10649,6 +10667,7 @@ exports[`Storyshots Components (Grey Vest)|ToggleFiltersButton Basic Usage 1`] =
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -11525,6 +11544,7 @@ exports[`Storyshots Live Demos|IMDB Check List 1`] = `
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -12086,6 +12106,7 @@ exports[`Storyshots Live Demos|IMDB Grey Vest Theme 1`] = `
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -13144,6 +13165,7 @@ exports[`Storyshots Search Components (Grey Vest)|/TreePauseButton Falsey Trees 
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -13696,6 +13718,7 @@ exports[`Storyshots Search Components (Grey Vest)|/TreePauseButton Multiple Tree
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -14248,6 +14271,7 @@ exports[`Storyshots Search Components (Grey Vest)|/TreePauseButton One Tree 1`] 
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -14800,6 +14824,7 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -15173,11 +15198,12 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
         }
       >
         <span
+          className="tags-input-tag"
           onClick={[Function]}
           style={
             Object {
               "background": "#5cb85c",
-              "borderRadius": "2px",
+              "borderRadius": "3px",
               "color": "white",
               "cursor": "pointer",
               "fontWeight": "bold",
@@ -15191,33 +15217,33 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
               Object {
                 "alignItems": "center",
                 "display": "flex",
-                "padding": "0.25em 0.45em 0.30em 0.45em",
               }
             }
           >
-            <span>
+            <span
+              style={
+                Object {
+                  "paddingBottom": "0.15em",
+                  "paddingLeft": "0.45em",
+                  "paddingRight": "0em",
+                }
+              }
+            >
               (0) This is a tag
             </span>
             <span
+              className="tags-input-tag-remove fa fa-times"
               onClick={[Function]}
-              style={
-                Object {
-                  "paddingLeft": 10,
-                }
-              }
-            >
-              <span
-                className="tags-input-tag-remove fa fa-times"
-              />
-            </span>
+            />
           </div>
         </span>
         <span
+          className="tags-input-tag"
           onClick={[Function]}
           style={
             Object {
               "background": "#5cb85c",
-              "borderRadius": "2px",
+              "borderRadius": "3px",
               "color": "white",
               "cursor": "pointer",
               "fontWeight": "bold",
@@ -15231,33 +15257,33 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
               Object {
                 "alignItems": "center",
                 "display": "flex",
-                "padding": "0.25em 0.45em 0.30em 0.45em",
               }
             }
           >
-            <span>
+            <span
+              style={
+                Object {
+                  "paddingBottom": "0.15em",
+                  "paddingLeft": "0.45em",
+                  "paddingRight": "0em",
+                }
+              }
+            >
               (1) This is a tag
             </span>
             <span
+              className="tags-input-tag-remove fa fa-times"
               onClick={[Function]}
-              style={
-                Object {
-                  "paddingLeft": 10,
-                }
-              }
-            >
-              <span
-                className="tags-input-tag-remove fa fa-times"
-              />
-            </span>
+            />
           </div>
         </span>
         <span
+          className="tags-input-tag"
           onClick={[Function]}
           style={
             Object {
               "background": "#5cb85c",
-              "borderRadius": "2px",
+              "borderRadius": "3px",
               "color": "white",
               "cursor": "pointer",
               "fontWeight": "bold",
@@ -15271,33 +15297,33 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
               Object {
                 "alignItems": "center",
                 "display": "flex",
-                "padding": "0.25em 0.45em 0.30em 0.45em",
               }
             }
           >
-            <span>
+            <span
+              style={
+                Object {
+                  "paddingBottom": "0.15em",
+                  "paddingLeft": "0.45em",
+                  "paddingRight": "0em",
+                }
+              }
+            >
               (2) This is a tag
             </span>
             <span
+              className="tags-input-tag-remove fa fa-times"
               onClick={[Function]}
-              style={
-                Object {
-                  "paddingLeft": 10,
-                }
-              }
-            >
-              <span
-                className="tags-input-tag-remove fa fa-times"
-              />
-            </span>
+            />
           </div>
         </span>
         <span
+          className="tags-input-tag"
           onClick={[Function]}
           style={
             Object {
               "background": "#5cb85c",
-              "borderRadius": "2px",
+              "borderRadius": "3px",
               "color": "white",
               "cursor": "pointer",
               "fontWeight": "bold",
@@ -15311,33 +15337,33 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
               Object {
                 "alignItems": "center",
                 "display": "flex",
-                "padding": "0.25em 0.45em 0.30em 0.45em",
               }
             }
           >
-            <span>
+            <span
+              style={
+                Object {
+                  "paddingBottom": "0.15em",
+                  "paddingLeft": "0.45em",
+                  "paddingRight": "0em",
+                }
+              }
+            >
               (3) This is a tag
             </span>
             <span
+              className="tags-input-tag-remove fa fa-times"
               onClick={[Function]}
-              style={
-                Object {
-                  "paddingLeft": 10,
-                }
-              }
-            >
-              <span
-                className="tags-input-tag-remove fa fa-times"
-              />
-            </span>
+            />
           </div>
         </span>
         <span
+          className="tags-input-tag"
           onClick={[Function]}
           style={
             Object {
               "background": "#5cb85c",
-              "borderRadius": "2px",
+              "borderRadius": "3px",
               "color": "white",
               "cursor": "pointer",
               "fontWeight": "bold",
@@ -15351,25 +15377,24 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
               Object {
                 "alignItems": "center",
                 "display": "flex",
-                "padding": "0.25em 0.45em 0.30em 0.45em",
               }
             }
           >
-            <span>
-              (4) This is a tag
-            </span>
             <span
-              onClick={[Function]}
               style={
                 Object {
-                  "paddingLeft": 10,
+                  "paddingBottom": "0.15em",
+                  "paddingLeft": "0.45em",
+                  "paddingRight": "0em",
                 }
               }
             >
-              <span
-                className="tags-input-tag-remove fa fa-times"
-              />
+              (4) This is a tag
             </span>
+            <span
+              className="tags-input-tag-remove fa fa-times"
+              onClick={[Function]}
+            />
           </div>
         </span>
         <input
@@ -15586,6 +15611,7 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -15966,11 +15992,12 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
           }
         >
           <span
+            className="tags-input-tag"
             onClick={[Function]}
             style={
               Object {
                 "background": "#5cb85c",
-                "borderRadius": "2px",
+                "borderRadius": "3px",
                 "color": "white",
                 "cursor": "pointer",
                 "fontWeight": "bold",
@@ -15984,33 +16011,33 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
                 Object {
                   "alignItems": "center",
                   "display": "flex",
-                  "padding": "0.25em 0.45em 0.30em 0.45em",
                 }
               }
             >
-              <span>
+              <span
+                style={
+                  Object {
+                    "paddingBottom": "0.15em",
+                    "paddingLeft": "0.45em",
+                    "paddingRight": "0em",
+                  }
+                }
+              >
                 (0) This is a tag
               </span>
               <span
+                className="tags-input-tag-remove fa fa-times"
                 onClick={[Function]}
-                style={
-                  Object {
-                    "paddingLeft": 10,
-                  }
-                }
-              >
-                <span
-                  className="tags-input-tag-remove fa fa-times"
-                />
-              </span>
+              />
             </div>
           </span>
           <span
+            className="tags-input-tag"
             onClick={[Function]}
             style={
               Object {
                 "background": "#5cb85c",
-                "borderRadius": "2px",
+                "borderRadius": "3px",
                 "color": "white",
                 "cursor": "pointer",
                 "fontWeight": "bold",
@@ -16024,33 +16051,33 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
                 Object {
                   "alignItems": "center",
                   "display": "flex",
-                  "padding": "0.25em 0.45em 0.30em 0.45em",
                 }
               }
             >
-              <span>
+              <span
+                style={
+                  Object {
+                    "paddingBottom": "0.15em",
+                    "paddingLeft": "0.45em",
+                    "paddingRight": "0em",
+                  }
+                }
+              >
                 (1) This is a tag
               </span>
               <span
+                className="tags-input-tag-remove fa fa-times"
                 onClick={[Function]}
-                style={
-                  Object {
-                    "paddingLeft": 10,
-                  }
-                }
-              >
-                <span
-                  className="tags-input-tag-remove fa fa-times"
-                />
-              </span>
+              />
             </div>
           </span>
           <span
+            className="tags-input-tag"
             onClick={[Function]}
             style={
               Object {
                 "background": "#5cb85c",
-                "borderRadius": "2px",
+                "borderRadius": "3px",
                 "color": "white",
                 "cursor": "pointer",
                 "fontWeight": "bold",
@@ -16064,33 +16091,33 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
                 Object {
                   "alignItems": "center",
                   "display": "flex",
-                  "padding": "0.25em 0.45em 0.30em 0.45em",
                 }
               }
             >
-              <span>
+              <span
+                style={
+                  Object {
+                    "paddingBottom": "0.15em",
+                    "paddingLeft": "0.45em",
+                    "paddingRight": "0em",
+                  }
+                }
+              >
                 (2) This is a tag
               </span>
               <span
+                className="tags-input-tag-remove fa fa-times"
                 onClick={[Function]}
-                style={
-                  Object {
-                    "paddingLeft": 10,
-                  }
-                }
-              >
-                <span
-                  className="tags-input-tag-remove fa fa-times"
-                />
-              </span>
+              />
             </div>
           </span>
           <span
+            className="tags-input-tag"
             onClick={[Function]}
             style={
               Object {
                 "background": "#5cb85c",
-                "borderRadius": "2px",
+                "borderRadius": "3px",
                 "color": "white",
                 "cursor": "pointer",
                 "fontWeight": "bold",
@@ -16104,33 +16131,33 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
                 Object {
                   "alignItems": "center",
                   "display": "flex",
-                  "padding": "0.25em 0.45em 0.30em 0.45em",
                 }
               }
             >
-              <span>
+              <span
+                style={
+                  Object {
+                    "paddingBottom": "0.15em",
+                    "paddingLeft": "0.45em",
+                    "paddingRight": "0em",
+                  }
+                }
+              >
                 (3) This is a tag
               </span>
               <span
+                className="tags-input-tag-remove fa fa-times"
                 onClick={[Function]}
-                style={
-                  Object {
-                    "paddingLeft": 10,
-                  }
-                }
-              >
-                <span
-                  className="tags-input-tag-remove fa fa-times"
-                />
-              </span>
+              />
             </div>
           </span>
           <span
+            className="tags-input-tag"
             onClick={[Function]}
             style={
               Object {
                 "background": "#5cb85c",
-                "borderRadius": "2px",
+                "borderRadius": "3px",
                 "color": "white",
                 "cursor": "pointer",
                 "fontWeight": "bold",
@@ -16144,25 +16171,24 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
                 Object {
                   "alignItems": "center",
                   "display": "flex",
-                  "padding": "0.25em 0.45em 0.30em 0.45em",
                 }
               }
             >
-              <span>
-                (4) This is a tag
-              </span>
               <span
-                onClick={[Function]}
                 style={
                   Object {
-                    "paddingLeft": 10,
+                    "paddingBottom": "0.15em",
+                    "paddingLeft": "0.45em",
+                    "paddingRight": "0em",
                   }
                 }
               >
-                <span
-                  className="tags-input-tag-remove fa fa-times"
-                />
+                (4) This is a tag
               </span>
+              <span
+                className="tags-input-tag-remove fa fa-times"
+                onClick={[Function]}
+              />
             </div>
           </span>
           <input
@@ -18083,11 +18109,12 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Defaul
       }
     >
       <span
+        className="tags-input-tag"
         onClick={[Function]}
         style={
           Object {
             "background": "#5cb85c",
-            "borderRadius": "2px",
+            "borderRadius": "3px",
             "color": "white",
             "cursor": "pointer",
             "fontWeight": "bold",
@@ -18101,35 +18128,35 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Defaul
             Object {
               "alignItems": "center",
               "display": "flex",
-              "padding": "0.25em 0.45em 0.30em 0.45em",
             }
           }
         >
-          <span>
+          <span
+            style={
+              Object {
+                "paddingBottom": "0.15em",
+                "paddingLeft": "0.45em",
+                "paddingRight": "0em",
+              }
+            }
+          >
             (1) This is a tag
           </span>
           <span
+            className="tags-input-tag-remove"
             onClick={[Function]}
-            style={
-              Object {
-                "paddingLeft": 10,
-              }
-            }
           >
-            <span
-              className="tags-input-tag-remove"
-            >
-              x
-            </span>
+            x
           </span>
         </div>
       </span>
       <span
+        className="tags-input-tag"
         onClick={[Function]}
         style={
           Object {
             "background": "#5cb85c",
-            "borderRadius": "2px",
+            "borderRadius": "3px",
             "color": "white",
             "cursor": "pointer",
             "fontWeight": "bold",
@@ -18143,35 +18170,35 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Defaul
             Object {
               "alignItems": "center",
               "display": "flex",
-              "padding": "0.25em 0.45em 0.30em 0.45em",
             }
           }
         >
-          <span>
+          <span
+            style={
+              Object {
+                "paddingBottom": "0.15em",
+                "paddingLeft": "0.45em",
+                "paddingRight": "0em",
+              }
+            }
+          >
             (2) This is a tag
           </span>
           <span
+            className="tags-input-tag-remove"
             onClick={[Function]}
-            style={
-              Object {
-                "paddingLeft": 10,
-              }
-            }
           >
-            <span
-              className="tags-input-tag-remove"
-            >
-              x
-            </span>
+            x
           </span>
         </div>
       </span>
       <span
+        className="tags-input-tag"
         onClick={[Function]}
         style={
           Object {
             "background": "#5cb85c",
-            "borderRadius": "2px",
+            "borderRadius": "3px",
             "color": "white",
             "cursor": "pointer",
             "fontWeight": "bold",
@@ -18185,35 +18212,35 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Defaul
             Object {
               "alignItems": "center",
               "display": "flex",
-              "padding": "0.25em 0.45em 0.30em 0.45em",
             }
           }
         >
-          <span>
+          <span
+            style={
+              Object {
+                "paddingBottom": "0.15em",
+                "paddingLeft": "0.45em",
+                "paddingRight": "0em",
+              }
+            }
+          >
             (3) This is a tag
           </span>
           <span
+            className="tags-input-tag-remove"
             onClick={[Function]}
-            style={
-              Object {
-                "paddingLeft": 10,
-              }
-            }
           >
-            <span
-              className="tags-input-tag-remove"
-            >
-              x
-            </span>
+            x
           </span>
         </div>
       </span>
       <span
+        className="tags-input-tag"
         onClick={[Function]}
         style={
           Object {
             "background": "#5cb85c",
-            "borderRadius": "2px",
+            "borderRadius": "3px",
             "color": "white",
             "cursor": "pointer",
             "fontWeight": "bold",
@@ -18227,26 +18254,25 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Defaul
             Object {
               "alignItems": "center",
               "display": "flex",
-              "padding": "0.25em 0.45em 0.30em 0.45em",
             }
           }
         >
-          <span>
-            (4) This is a tag
-          </span>
           <span
-            onClick={[Function]}
             style={
               Object {
-                "paddingLeft": 10,
+                "paddingBottom": "0.15em",
+                "paddingLeft": "0.45em",
+                "paddingRight": "0em",
               }
             }
           >
-            <span
-              className="tags-input-tag-remove"
-            >
-              x
-            </span>
+            (4) This is a tag
+          </span>
+          <span
+            className="tags-input-tag-remove"
+            onClick={[Function]}
+          >
+            x
           </span>
         </div>
       </span>
@@ -18306,11 +18332,12 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Respon
         }
       >
         <span
+          className="tags-input-tag"
           onClick={[Function]}
           style={
             Object {
               "background": "#5cb85c",
-              "borderRadius": "2px",
+              "borderRadius": "3px",
               "color": "white",
               "cursor": "pointer",
               "fontWeight": "bold",
@@ -18324,35 +18351,35 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Respon
               Object {
                 "alignItems": "center",
                 "display": "flex",
-                "padding": "0.25em 0.45em 0.30em 0.45em",
               }
             }
           >
-            <span>
+            <span
+              style={
+                Object {
+                  "paddingBottom": "0.15em",
+                  "paddingLeft": "0.45em",
+                  "paddingRight": "0em",
+                }
+              }
+            >
               (1) This is a tag
             </span>
             <span
+              className="tags-input-tag-remove"
               onClick={[Function]}
-              style={
-                Object {
-                  "paddingLeft": 10,
-                }
-              }
             >
-              <span
-                className="tags-input-tag-remove"
-              >
-                x
-              </span>
+              x
             </span>
           </div>
         </span>
         <span
+          className="tags-input-tag"
           onClick={[Function]}
           style={
             Object {
               "background": "#5cb85c",
-              "borderRadius": "2px",
+              "borderRadius": "3px",
               "color": "white",
               "cursor": "pointer",
               "fontWeight": "bold",
@@ -18366,35 +18393,35 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Respon
               Object {
                 "alignItems": "center",
                 "display": "flex",
-                "padding": "0.25em 0.45em 0.30em 0.45em",
               }
             }
           >
-            <span>
+            <span
+              style={
+                Object {
+                  "paddingBottom": "0.15em",
+                  "paddingLeft": "0.45em",
+                  "paddingRight": "0em",
+                }
+              }
+            >
               (2) This is a tag
             </span>
             <span
+              className="tags-input-tag-remove"
               onClick={[Function]}
-              style={
-                Object {
-                  "paddingLeft": 10,
-                }
-              }
             >
-              <span
-                className="tags-input-tag-remove"
-              >
-                x
-              </span>
+              x
             </span>
           </div>
         </span>
         <span
+          className="tags-input-tag"
           onClick={[Function]}
           style={
             Object {
               "background": "#5cb85c",
-              "borderRadius": "2px",
+              "borderRadius": "3px",
               "color": "white",
               "cursor": "pointer",
               "fontWeight": "bold",
@@ -18408,35 +18435,35 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Respon
               Object {
                 "alignItems": "center",
                 "display": "flex",
-                "padding": "0.25em 0.45em 0.30em 0.45em",
               }
             }
           >
-            <span>
+            <span
+              style={
+                Object {
+                  "paddingBottom": "0.15em",
+                  "paddingLeft": "0.45em",
+                  "paddingRight": "0em",
+                }
+              }
+            >
               (3) This is a tag
             </span>
             <span
+              className="tags-input-tag-remove"
               onClick={[Function]}
-              style={
-                Object {
-                  "paddingLeft": 10,
-                }
-              }
             >
-              <span
-                className="tags-input-tag-remove"
-              >
-                x
-              </span>
+              x
             </span>
           </div>
         </span>
         <span
+          className="tags-input-tag"
           onClick={[Function]}
           style={
             Object {
               "background": "#5cb85c",
-              "borderRadius": "2px",
+              "borderRadius": "3px",
               "color": "white",
               "cursor": "pointer",
               "fontWeight": "bold",
@@ -18450,26 +18477,25 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Respon
               Object {
                 "alignItems": "center",
                 "display": "flex",
-                "padding": "0.25em 0.45em 0.30em 0.45em",
               }
             }
           >
-            <span>
-              (4) This is a tag
-            </span>
             <span
-              onClick={[Function]}
               style={
                 Object {
-                  "paddingLeft": 10,
+                  "paddingBottom": "0.15em",
+                  "paddingLeft": "0.45em",
+                  "paddingRight": "0em",
                 }
               }
             >
-              <span
-                className="tags-input-tag-remove"
-              >
-                x
-              </span>
+              (4) This is a tag
+            </span>
+            <span
+              className="tags-input-tag-remove"
+              onClick={[Function]}
+            >
+              x
             </span>
           </div>
         </span>

@@ -9,7 +9,7 @@ import {
   TextHighlight,
   NestedPicker,
   ModalFilterAdder,
-  TagWithRemoveIcon,
+  Tag,
   TagsInput as BaseTagsInput,
   FilterList as BaseFilterList,
   Dynamic,
@@ -232,6 +232,7 @@ export let GVStyle = () => (
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -713,8 +714,10 @@ export let PagerItem = observer(({ active, disabled, ...x }) => (
 PagerItem.displayName = 'PagerItem'
 
 let TagComponent = defaultProps({
-  removeIcon: <span className="tags-input-tag-remove fa fa-times" />,
-})(TagWithRemoveIcon)
+  RemoveIcon: props => (
+    <span className="tags-input-tag-remove fa fa-times" {...props} />
+  ),
+})(Tag)
 export let TagsInput = defaultProps({ TagComponent })(BaseTagsInput)
 
 export let ExampleTypes = ExampleTypeConstructor({

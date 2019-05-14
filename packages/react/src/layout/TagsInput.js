@@ -1,49 +1,55 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
-import { withState } from 'recompose'
+import { withState, defaultProps } from 'recompose'
 import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import { Flex } from './Flex'
 import Popover from './Popover'
 
-let Tag = observer(({ value, tagStyle, onClick, children, style }) => (
+let Tag = observer(({ value, removeTag, tagStyle, RemoveIcon, onClick }) => (
   <span
+    className="tags-input-tag"
     style={{
       cursor: 'pointer',
       margin: 3,
-      borderRadius: '2px',
-      ...style,
+      borderRadius: '3px',
       ...F.callOrReturn(tagStyle, value),
     }}
     onClick={onClick}
   >
-    <Flex
-      style={{
-        alignItems: 'center',
-        padding: '0.25em 0.45em 0.30em 0.45em',
-      }}
-    >
-      {children || <span>{value}</span>}
+    <Flex style={{ alignItems: 'center' }}>
+      <span
+        style={{
+          paddingLeft: '0.45em',
+          paddingBottom: '0.15em',
+          // Prefer padding on the remove icon so it has more area to receive
+          // clicks
+          paddingRight: RemoveIcon ? '0em' : '0.45em',
+        }}
+      >
+        {value}
+      </span>
+      {RemoveIcon && (
+        <RemoveIcon
+          onClick={e => {
+            e.stopPropagation()
+            removeTag(value)
+          }}
+        />
+      )}
     </Flex>
   </span>
 ))
 Tag.displayName = 'Tag'
 
-let TagWithRemoveIcon = ({ removeTag, removeIcon, value, ...props }) => (
-  <Tag value={value} {...props}>
-    <span>{value}</span>
-    <span
-      onClick={e => {
-        e.stopPropagation()
-        removeTag(value)
-      }}
-      style={{ paddingLeft: 10 }}
-    >
-      {removeIcon || <span className="tags-input-tag-remove">x</span>}
+let DefaultTagComponent = defaultProps({
+  RemoveIcon: props => (
+    <span className="tags-input-tag-remove" {...props}>
+      x
     </span>
-  </Tag>
-)
+  ),
+})(Tag)
 
 // We're only using withState to preserve the state between renders, since
 // inject doesn't do that for us.
@@ -62,7 +68,7 @@ let TagsInput = withState('state', 'setState', () =>
       removeTag,
       submit = _.noop,
       tagStyle,
-      TagComponent = TagWithRemoveIcon,
+      TagComponent = DefaultTagComponent,
       placeholder = 'Search...',
       splitCommas,
       PopoverContents,
@@ -171,4 +177,4 @@ let MockTagsInput = inject(() => {
 })(TagsInput)
 MockTagsInput.displayName = 'MockTagsInput'
 
-export { Tag, TagWithRemoveIcon, TagsInput, MockTagsInput }
+export { Tag, TagsInput, MockTagsInput }
