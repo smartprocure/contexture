@@ -1,4 +1,7 @@
-﻿# 2.22.1
+﻿# 2.22.2
+* Set defaults for geo location and radius
+
+# 2.22.1
 * Fix bug with replace not inserting at the right index with mobx
 
 # 2.22.0
