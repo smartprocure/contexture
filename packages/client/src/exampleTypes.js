@@ -187,6 +187,8 @@ export default stampKey('type', {
     },
     defaults: {
       operator: 'within',
+      location: '',
+      radius: '',
     },
   },
   dateHistogram: {
