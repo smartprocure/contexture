@@ -72,7 +72,7 @@ storiesOf('Components (Unthemed)|Layout', module)
     <>
       <Flex column alignItems="center">
         <h1>As button</h1>
-        <FlexDemo as="button"/>
+        <FlexDemo as="button" />
       </Flex>
       <Flex column alignItems="center">
         <h1>No children</h1>
