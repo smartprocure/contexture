@@ -24,10 +24,13 @@ export let Flex = ({
     }}
     {...props}
   >
-    {Children.map(children, child =>
-      child && cloneElement(child, {
-        style: { ...styleItems, ...child.props.style },
-      })
+    {Children.map(
+      children,
+      child =>
+        child &&
+        cloneElement(child, {
+          style: { ...styleItems, ...child.props.style },
+        })
     )}
   </Component>
 )
