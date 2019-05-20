@@ -11063,103 +11063,7 @@ Array [
       }
     }
   >
-    <h1
-      style={Object {}}
-    >
-      With child styles
-    </h1>
-    <div
-      style={
-        Object {
-          "alignContent": undefined,
-          "alignItems": undefined,
-          "backgroundColor": "lightblue",
-          "display": "flex",
-          "flexDirection": false,
-          "flexWrap": "wrap",
-          "fontSize": "2em",
-          "justifyContent": "center",
-          "maxWidth": 300,
-        }
-      }
-    >
-      <div
-        style={
-          Object {
-            "backgroundColor": "lightcyan",
-            "margin": 10,
-          }
-        }
-      >
-        Item1
-      </div>
-      <div
-        style={
-          Object {
-            "backgroundColor": "lightcyan",
-            "margin": 10,
-          }
-        }
-      >
-        Item2
-      </div>
-      <div
-        style={
-          Object {
-            "backgroundColor": "lightcyan",
-            "margin": 10,
-          }
-        }
-      >
-        Item2
-      </div>
-      <div
-        style={
-          Object {
-            "backgroundColor": "lightcyan",
-            "margin": 10,
-          }
-        }
-      >
-        Item4
-      </div>
-      <div
-        style={
-          Object {
-            "backgroundColor": "lightcyan",
-            "margin": 10,
-          }
-        }
-      >
-        Item5
-      </div>
-      <div
-        style={
-          Object {
-            "backgroundColor": "lightcyan",
-            "margin": 10,
-          }
-        }
-      >
-        Item6
-      </div>
-    </div>
-  </div>,
-  <div
-    style={
-      Object {
-        "alignContent": undefined,
-        "alignItems": "center",
-        "display": "flex",
-        "flexDirection": "column",
-        "flexWrap": false,
-        "justifyContent": undefined,
-      }
-    }
-  >
-    <h1
-      style={Object {}}
-    >
+    <h1>
       As button
     </h1>
     <button
@@ -11177,58 +11081,22 @@ Array [
         }
       }
     >
-      <div
-        style={
-          Object {
-            "margin": 10,
-          }
-        }
-      >
+      <div>
         Item1
       </div>
-      <div
-        style={
-          Object {
-            "margin": 10,
-          }
-        }
-      >
+      <div>
         Item2
       </div>
-      <div
-        style={
-          Object {
-            "margin": 10,
-          }
-        }
-      >
+      <div>
         Item2
       </div>
-      <div
-        style={
-          Object {
-            "margin": 10,
-          }
-        }
-      >
+      <div>
         Item4
       </div>
-      <div
-        style={
-          Object {
-            "margin": 10,
-          }
-        }
-      >
+      <div>
         Item5
       </div>
-      <div
-        style={
-          Object {
-            "margin": 10,
-          }
-        }
-      >
+      <div>
         Item6
       </div>
     </button>
@@ -11245,9 +11113,7 @@ Array [
       }
     }
   >
-    <h1
-      style={Object {}}
-    >
+    <h1>
       No children
     </h1>
     <div
@@ -12779,13 +12645,26 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
                     onBlur={[Function]}
                     onChange={[Function]}
                     onFocus={[Function]}
-                    style={Object {}}
+                    style={
+                      Object {
+                        "background": "rgba(255, 255, 255, 0.7)",
+                        "border": "solid 1px #efefef",
+                        "borderRadius": "30px",
+                        "boxSizing": "border-box",
+                        "display": "block",
+                        "margin": "0 auto",
+                        "outline": "none",
+                        "padding": "5px",
+                        "textIndent": "5px",
+                        "transition": "background 0.3s",
+                        "width": "100%",
+                      }
+                    }
                     type="number"
                     value=""
                   />
                   <div
                     className="contexture-number-separator"
-                    style={Object {}}
                   >
                     -
                   </div>
@@ -12793,7 +12672,21 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
                     onBlur={[Function]}
                     onChange={[Function]}
                     onFocus={[Function]}
-                    style={Object {}}
+                    style={
+                      Object {
+                        "background": "rgba(255, 255, 255, 0.7)",
+                        "border": "solid 1px #efefef",
+                        "borderRadius": "30px",
+                        "boxSizing": "border-box",
+                        "display": "block",
+                        "margin": "0 auto",
+                        "outline": "none",
+                        "padding": "5px",
+                        "textIndent": "5px",
+                        "transition": "background 0.3s",
+                        "width": "100%",
+                      }
+                    }
                     type="number"
                     value={100}
                   />
@@ -12837,7 +12730,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
                 >
                   <label
                     onClick={[Function]}
-                    style={Object {}}
                   >
                     <input
                       checked={true}
@@ -12848,7 +12740,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
                   </label>
                   <label
                     onClick={[Function]}
-                    style={Object {}}
                   >
                     <input
                       checked={false}
@@ -12954,7 +12845,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
                 >
                   <label
                     onClick={[Function]}
-                    style={Object {}}
                   >
                     <input
                       checked={true}
@@ -12965,7 +12855,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
                   </label>
                   <label
                     onClick={[Function]}
-                    style={Object {}}
                   >
                     <input
                       checked={false}
@@ -13074,9 +12963,7 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
             }
           }
         >
-          <h3
-            style={Object {}}
-          >
+          <h3>
             <div
               style={
                 Object {
@@ -15474,7 +15361,6 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
             <span
               className="tags-input-tag-remove fa fa-times"
               onClick={[Function]}
-              style={Object {}}
             />
           </div>
         </span>
@@ -15519,7 +15405,6 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
             <span
               className="tags-input-tag-remove fa fa-times"
               onClick={[Function]}
-              style={Object {}}
             />
           </div>
         </span>
@@ -15564,7 +15449,6 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
             <span
               className="tags-input-tag-remove fa fa-times"
               onClick={[Function]}
-              style={Object {}}
             />
           </div>
         </span>
@@ -15609,7 +15493,6 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
             <span
               className="tags-input-tag-remove fa fa-times"
               onClick={[Function]}
-              style={Object {}}
             />
           </div>
         </span>
@@ -15654,7 +15537,6 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
             <span
               className="tags-input-tag-remove fa fa-times"
               onClick={[Function]}
-              style={Object {}}
             />
           </div>
         </span>
@@ -16296,7 +16178,6 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
               <span
                 className="tags-input-tag-remove fa fa-times"
                 onClick={[Function]}
-                style={Object {}}
               />
             </div>
           </span>
@@ -16341,7 +16222,6 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
               <span
                 className="tags-input-tag-remove fa fa-times"
                 onClick={[Function]}
-                style={Object {}}
               />
             </div>
           </span>
@@ -16386,7 +16266,6 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
               <span
                 className="tags-input-tag-remove fa fa-times"
                 onClick={[Function]}
-                style={Object {}}
               />
             </div>
           </span>
@@ -16431,7 +16310,6 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
               <span
                 className="tags-input-tag-remove fa fa-times"
                 onClick={[Function]}
-                style={Object {}}
               />
             </div>
           </span>
@@ -16476,7 +16354,6 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
               <span
                 className="tags-input-tag-remove fa fa-times"
                 onClick={[Function]}
-                style={Object {}}
               />
             </div>
           </span>
@@ -16720,7 +16597,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
               >
                 <label
                   onClick={[Function]}
-                  style={Object {}}
                 >
                   <input
                     checked={true}
@@ -16731,7 +16607,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
                 </label>
                 <label
                   onClick={[Function]}
-                  style={Object {}}
                 >
                   <input
                     checked={false}
@@ -16954,7 +16829,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
               >
                 <label
                   onClick={[Function]}
-                  style={Object {}}
                 >
                   <input
                     checked={true}
@@ -16965,7 +16839,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
                 </label>
                 <label
                   onClick={[Function]}
-                  style={Object {}}
                 >
                   <input
                     checked={false}
@@ -17190,13 +17063,26 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
                   onBlur={[Function]}
                   onChange={[Function]}
                   onFocus={[Function]}
-                  style={Object {}}
+                  style={
+                    Object {
+                      "background": "rgba(255, 255, 255, 0.7)",
+                      "border": "solid 1px #efefef",
+                      "borderRadius": "30px",
+                      "boxSizing": "border-box",
+                      "display": "block",
+                      "margin": "0 auto",
+                      "outline": "none",
+                      "padding": "5px",
+                      "textIndent": "5px",
+                      "transition": "background 0.3s",
+                      "width": "100%",
+                    }
+                  }
                   type="number"
                   value=""
                 />
                 <div
                   className="contexture-number-separator"
-                  style={Object {}}
                 >
                   -
                 </div>
@@ -17204,7 +17090,21 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
                   onBlur={[Function]}
                   onChange={[Function]}
                   onFocus={[Function]}
-                  style={Object {}}
+                  style={
+                    Object {
+                      "background": "rgba(255, 255, 255, 0.7)",
+                      "border": "solid 1px #efefef",
+                      "borderRadius": "30px",
+                      "boxSizing": "border-box",
+                      "display": "block",
+                      "margin": "0 auto",
+                      "outline": "none",
+                      "padding": "5px",
+                      "textIndent": "5px",
+                      "transition": "background 0.3s",
+                      "width": "100%",
+                    }
+                  }
                   type="number"
                   value={100}
                 />
@@ -17245,13 +17145,26 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
                   onBlur={[Function]}
                   onChange={[Function]}
                   onFocus={[Function]}
-                  style={Object {}}
+                  style={
+                    Object {
+                      "background": "rgba(255, 255, 255, 0.7)",
+                      "border": "solid 1px #efefef",
+                      "borderRadius": "30px",
+                      "boxSizing": "border-box",
+                      "display": "block",
+                      "margin": "0 auto",
+                      "outline": "none",
+                      "padding": "5px",
+                      "textIndent": "5px",
+                      "transition": "background 0.3s",
+                      "width": "100%",
+                    }
+                  }
                   type="number"
                   value=""
                 />
                 <div
                   className="contexture-number-separator"
-                  style={Object {}}
                 >
                   -
                 </div>
@@ -17259,7 +17172,21 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
                   onBlur={[Function]}
                   onChange={[Function]}
                   onFocus={[Function]}
-                  style={Object {}}
+                  style={
+                    Object {
+                      "background": "rgba(255, 255, 255, 0.7)",
+                      "border": "solid 1px #efefef",
+                      "borderRadius": "30px",
+                      "boxSizing": "border-box",
+                      "display": "block",
+                      "margin": "0 auto",
+                      "outline": "none",
+                      "padding": "5px",
+                      "textIndent": "5px",
+                      "transition": "background 0.3s",
+                      "width": "100%",
+                    }
+                  }
                   type="number"
                   value={100}
                 />
@@ -17495,9 +17422,7 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
                 }
               }
             >
-              <div
-                style={Object {}}
-              >
+              <div>
                 <div
                   style={
                     Object {
@@ -17520,9 +17445,7 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
                   1970
                 </div>
               </div>
-              <div
-                style={Object {}}
-              >
+              <div>
                 <div
                   style={
                     Object {
@@ -17545,9 +17468,7 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
                   1979
                 </div>
               </div>
-              <div
-                style={Object {}}
-              >
+              <div>
                 <div
                   style={
                     Object {
@@ -17570,9 +17491,7 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
                   1989
                 </div>
               </div>
-              <div
-                style={Object {}}
-              >
+              <div>
                 <div
                   style={
                     Object {
@@ -17595,9 +17514,7 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
                   1999
                 </div>
               </div>
-              <div
-                style={Object {}}
-              >
+              <div>
                 <div
                   style={
                     Object {
@@ -18453,7 +18370,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Defaul
           <span
             className="tags-input-tag-remove"
             onClick={[Function]}
-            style={Object {}}
           >
             x
           </span>
@@ -18500,7 +18416,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Defaul
           <span
             className="tags-input-tag-remove"
             onClick={[Function]}
-            style={Object {}}
           >
             x
           </span>
@@ -18547,7 +18462,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Defaul
           <span
             className="tags-input-tag-remove"
             onClick={[Function]}
-            style={Object {}}
           >
             x
           </span>
@@ -18594,7 +18508,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Defaul
           <span
             className="tags-input-tag-remove"
             onClick={[Function]}
-            style={Object {}}
           >
             x
           </span>
@@ -18699,7 +18612,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Respon
             <span
               className="tags-input-tag-remove"
               onClick={[Function]}
-              style={Object {}}
             >
               x
             </span>
@@ -18746,7 +18658,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Respon
             <span
               className="tags-input-tag-remove"
               onClick={[Function]}
-              style={Object {}}
             >
               x
             </span>
@@ -18793,7 +18704,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Respon
             <span
               className="tags-input-tag-remove"
               onClick={[Function]}
-              style={Object {}}
             >
               x
             </span>
@@ -18840,7 +18750,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Respon
             <span
               className="tags-input-tag-remove"
               onClick={[Function]}
-              style={Object {}}
             >
               x
             </span>
@@ -18949,9 +18858,7 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
             }
           }
         >
-          <span
-            style={Object {}}
-          >
+          <span>
             Field A
           </span>
         </div>
@@ -18989,9 +18896,7 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
             }
           }
         >
-          <span
-            style={Object {}}
-          >
+          <span>
             B Field
           </span>
         </div>
@@ -19029,9 +18934,7 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
             }
           }
         >
-          <span
-            style={Object {}}
-          >
+          <span>
             c
           </span>
         </div>
@@ -19940,7 +19843,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                       >
                                                         <label
                                                           onClick={[Function]}
-                                                          style={Object {}}
                                                         >
                                                           <input
                                                             checked={true}
@@ -19951,7 +19853,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                         </label>
                                                         <label
                                                           onClick={[Function]}
-                                                          style={Object {}}
                                                         >
                                                           <input
                                                             checked={false}
@@ -20723,13 +20624,26 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
-                                              style={Object {}}
+                                              style={
+                                                Object {
+                                                  "background": "rgba(255, 255, 255, 0.7)",
+                                                  "border": "solid 1px #efefef",
+                                                  "borderRadius": "30px",
+                                                  "boxSizing": "border-box",
+                                                  "display": "block",
+                                                  "margin": "0 auto",
+                                                  "outline": "none",
+                                                  "padding": "5px",
+                                                  "textIndent": "5px",
+                                                  "transition": "background 0.3s",
+                                                  "width": "100%",
+                                                }
+                                              }
                                               type="number"
                                               value=""
                                             />
                                             <div
                                               className="contexture-number-separator"
-                                              style={Object {}}
                                             >
                                               -
                                             </div>
@@ -20737,7 +20651,21 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
-                                              style={Object {}}
+                                              style={
+                                                Object {
+                                                  "background": "rgba(255, 255, 255, 0.7)",
+                                                  "border": "solid 1px #efefef",
+                                                  "borderRadius": "30px",
+                                                  "boxSizing": "border-box",
+                                                  "display": "block",
+                                                  "margin": "0 auto",
+                                                  "outline": "none",
+                                                  "padding": "5px",
+                                                  "textIndent": "5px",
+                                                  "transition": "background 0.3s",
+                                                  "width": "100%",
+                                                }
+                                              }
                                               type="number"
                                               value=""
                                             />
@@ -22403,7 +22331,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter with fa
                               >
                                 <label
                                   onClick={[Function]}
-                                  style={Object {}}
                                 >
                                   <input
                                     checked={true}
@@ -22414,7 +22341,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter with fa
                                 </label>
                                 <label
                                   onClick={[Function]}
-                                  style={Object {}}
                                 >
                                   <input
                                     checked={false}
