@@ -71,12 +71,8 @@ storiesOf('Components (Unthemed)|Layout', module)
   .addWithJSX('Flex', () => (
     <>
       <Flex column alignItems="center">
-        <h1>With child styles</h1>
-        <FlexDemo styleItems={{ margin: 10, backgroundColor: 'lightcyan' }} />
-      </Flex>
-      <Flex column alignItems="center">
         <h1>As button</h1>
-        <FlexDemo as="button" styleItems={{ margin: 10 }} />
+        <FlexDemo as="button"/>
       </Flex>
       <Flex column alignItems="center">
         <h1>No children</h1>
