@@ -1,3 +1,6 @@
+# 1.48.7
+* Flex: Add extra props for easier styling
+
 # 1.48.6
 * StripedLoader: Fix regression in 1.48.7
 

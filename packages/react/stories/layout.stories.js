@@ -9,6 +9,7 @@ import Popover from '../src/layout/Popover'
 import Modal from '../src/layout/Modal'
 import Awaiter from '../src/layout/Awaiter'
 import TextHighlight from '../src/layout/TextHighlight'
+import { Flex } from '../src/layout/Flex'
 import { NestedPicker, ModalPicker } from '../src'
 
 let ModalDemo = withStateLens({ isOpen: false })(
@@ -42,10 +43,47 @@ let HighlightDemo = withStateLens({ filter: '' })(
   ))
 )
 
+let FlexDemo = ({ style, ...props }) => (
+  <Flex
+    wrap
+    justifyContent="center"
+    style={{
+      backgroundColor: 'lightblue',
+      fontSize: '2em',
+      maxWidth: 300,
+      ...style,
+    }}
+    {...props}
+  >
+    <div>Item1</div>
+    <div>Item2</div>
+    <div>Item2</div>
+    <div>Item4</div>
+    <div>Item5</div>
+    <div>Item6</div>
+  </Flex>
+)
+
 storiesOf('Components (Unthemed)|Layout', module)
   .addWithJSX('Popover', () => <PopoverDemo />)
   .addWithJSX('Modal', () => <ModalDemo />)
   .addWithJSX('Highlight', () => <HighlightDemo />)
+  .addWithJSX('Flex', () => (
+    <>
+      <Flex column alignItems="center">
+        <h1>With child styles</h1>
+        <FlexDemo styleItems={{ margin: 10, backgroundColor: 'lightcyan' }} />
+      </Flex>
+      <Flex column alignItems="center">
+        <h1>As button</h1>
+        <FlexDemo as="button" styleItems={{ margin: 10 }} />
+      </Flex>
+      <Flex column alignItems="center">
+        <h1>No children</h1>
+        <Flex />
+      </Flex>
+    </>
+  ))
   .addWithJSX('Awaiter', () => {
     let resolve
     let reject
