@@ -39,25 +39,26 @@ export const stream = _.curry(async ({ strategy, stream }) => {
 
 // Format object values based on passed formatter or _.identity
 // Also fill in any keys which are present in the included keys but not in the passed in object
-export const formatValues = (rules = {}, includedKeys = []) =>
-  _.map(obj => {
-    // Format all values of the passed in object
-    let resultObject = F.mapValuesIndexed(
-      (value, key) => _.getOr(_.identity, [key, 'display'], rules)(value),
-      obj
+export const formatValues = (rules = {}, includeKeys = []) => {
+  let defaults = _.flow(
+    _.map(x => [x, '']),
+    _.fromPairs
+  )(includeKeys)
+
+  return _.map(
+    _.flow(
+      F.flattenObject,
+      F.mapValuesIndexed((value, key) =>
+        _.getOr(_.identity, [key, 'display'], rules)(value)
+      ),
+      _.defaults(defaults)
     )
-    // Fill the empty properties for the objects missing the expected keys
-    _.each(key => {
-      if (!resultObject[key]) {
-        resultObject[key] = ''
-      }
-    }, includedKeys)
-    return resultObject
-  })
+  )
+}
 
 // Format the column headers with passed rules or _.startCase
 export const formatHeaders = (rules, defaultLabel = _.startCase) =>
-  _.map(key => _.get(`${key}.label`, rules) || defaultLabel(key))
+  _.map(key => _.get([key, 'label'], rules) || defaultLabel(key))
 
 // Extract keys from first row
 export let extractHeadersFromFirstRow = _.flow(
@@ -76,6 +77,13 @@ let transformRow = _.flow(
   _.join(',')
 )
 
+// Convert array of objects to array of arrays
+export let convertData = (data, keys) => {
+  // Extract data from object
+  let transformRow = row => _.map(key => _.get(key, row), keys)
+  return _.map(transformRow, data)
+}
+
 export let rowsToCSV = _.flow(
   _.map(transformRow),
   _.join('\n'),
@@ -93,8 +101,8 @@ export const CSVStream = async ({
 }) => {
   let records = 0
   let totalRecords = await strategy.getTotalRecords()
-  let includedKeys = _.getOr([], 'include', strategy)
-  let columnHeaders = formatHeaders(formatRules)(includedKeys)
+  let includeKeys = _.getOr([], 'include', strategy)
+  let columnHeaders = formatHeaders(formatRules)(includeKeys)
 
   await onWrite({
     chunk: [],
@@ -105,20 +113,20 @@ export const CSVStream = async ({
     async write(chunk) {
       logger('CSVStream', `${records + chunk.length} of ${totalRecords}`)
 
-      // Format the values in the current chunk with the passed in formatRules and fill any blank props
-      let formattedData = formatValues(formatRules, includedKeys)(chunk)
-
-      // If no includedKeys ware passed get them from the first row
-      // this is not accurate and only works in the case where the first row has all the data for all columns
-      if (_.isEmpty(columnHeaders)) {
-        // Extract column names from first object and format them
-        columnHeaders = formatHeaders(formatRules)(
-          extractHeadersFromFirstRow(formattedData)
-        )
+      // If no includeKeys ware passed get them from the first row.
+      // This only works in the case where the first row has all the data for all columns
+      if (_.isEmpty(includeKeys)) {
+        // Extract column names from first object
+        includeKeys = extractHeadersFromFirstRow(chunk)
+        // Format column headers
+        columnHeaders = formatHeaders(formatRules)(includeKeys)
       }
 
+      // Format the values in the current chunk with the passed in formatRules and fill any blank props
+      let formattedData = formatValues(formatRules, includeKeys)(chunk)
+
       // Convert data to CSV rows
-      let rows = _.map(_.values, formattedData)
+      let rows = convertData(formattedData, includeKeys)
 
       // Prepend column headers on first pass
       if (!records) {

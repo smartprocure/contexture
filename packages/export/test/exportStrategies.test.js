@@ -211,6 +211,7 @@ describe('exportStrategies', () => {
   })
   describe('utils', () => {
     let {
+      convertData,
       formatHeaders,
       formatValues,
       rowsToCSV,
@@ -218,11 +219,21 @@ describe('exportStrategies', () => {
     } = exportStrategies
     let columnKeys = ['name', 'age']
     let chunk = [
-      { name: 'Bob "Bobby" Brown', age: 36, weight: 160},
+      { name: 'Bob "Bobby" Brown', age: 36, weight: 160 },
       { name: 'Joe Blow', age: 40 },
     ]
+    it('convertData', () => {
+      expect(convertData(chunk, columnKeys)).toEqual([
+        ['Bob "Bobby" Brown', 36],
+        ['Joe Blow', 40],
+      ])
+    })
     it('extractHeadersFromFirstRow', () => {
-      expect(extractHeadersFromFirstRow(chunk)).toEqual(['name', 'age', 'weight'])
+      expect(extractHeadersFromFirstRow(chunk)).toEqual([
+        'name',
+        'age',
+        'weight',
+      ])
     })
     it('formatValues with no rules', () => {
       expect(formatValues({})(chunk)).toEqual([
@@ -235,11 +246,27 @@ describe('exportStrategies', () => {
         formatValues({
           name: { display: _.toLower },
           age: { display: _.toString },
-          weight: { label: 'Weight (lbs)' } // Missing display fn
+          weight: { label: 'Weight (lbs)' }, // Missing display fn
         })(chunk)
       ).toEqual([
         { age: '36', name: 'bob "bobby" brown', weight: 160 },
         { age: '40', name: 'joe blow' },
+      ])
+    })
+    it('formatValues with rules (nested keys)', () => {
+      let chunk = [
+        { Person: { name: 'Bob "Bobby" Brown', age: 36, weight: 160 } },
+        { Person: { name: 'Joe Blow', age: 40 } },
+      ]
+      expect(
+        formatValues({
+          'Person.name': { display: _.toLower },
+          'Person.age': { display: _.toString },
+          'Person.weight': { label: 'Weight (lbs)' }, // Missing display fn
+        })(chunk)
+      ).toEqual([
+        { 'Person.age': '36', 'Person.name': 'bob "bobby" brown', 'Person.weight': 160 },
+        { 'Person.age': '40', 'Person.name': 'joe blow' },
       ])
     })
     it('formatValues with no rules and empty props', () => {
