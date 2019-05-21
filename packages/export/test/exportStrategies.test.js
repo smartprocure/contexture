@@ -265,7 +265,11 @@ describe('exportStrategies', () => {
           'Person.weight': { label: 'Weight (lbs)' }, // Missing display fn
         })(chunk)
       ).toEqual([
-        { 'Person.age': '36', 'Person.name': 'bob "bobby" brown', 'Person.weight': 160 },
+        {
+          'Person.age': '36',
+          'Person.name': 'bob "bobby" brown',
+          'Person.weight': 160,
+        },
         { 'Person.age': '40', 'Person.name': 'joe blow' },
       ])
     })
