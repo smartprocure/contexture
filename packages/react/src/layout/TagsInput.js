@@ -7,6 +7,11 @@ import { observer, inject } from 'mobx-react'
 import { Flex } from './Flex'
 import Popover from './Popover'
 
+let isValidTag = (tag, tags) => {
+  let cleanTag = _.toLower(_.trim(tag))
+  return !_.isEmpty(cleanTag) && !_.some(t => _.toLower(t) === cleanTag, tags)
+}
+
 let Tag = observer(({ value, removeTag, tagStyle, RemoveIcon, onClick }) => (
   <span
     className="tags-input-tag"
@@ -114,24 +119,16 @@ let TagsInput = withState('state', 'setState', () =>
                 state.currentInput = e.target.value
               }}
               onBlur={() => {
-                if (
-                  state.currentInput &&
-                  !_.includes(state.currentInput, tags)
-                ) {
+                if (isValidTag(state.currentInput, tags)) {
                   addTag(state.currentInput)
                   state.currentInput = ''
                 }
               }}
               onKeyDown={e => {
-                if (e.key === 'Enter' && !state.currentInput) submit()
-                if (
-                  (e.key === 'Enter' ||
-                    e.key === 'Tab' ||
-                    (splitCommas && e.key === ',')) &&
-                  state.currentInput &&
-                  !_.includes(state.currentInput, tags)
-                ) {
-                  addTag(state.currentInput)
+                let currentInput = _.trim(state.currentInput)
+                if (e.key === 'Enter' && !currentInput) submit()
+                if ((e.key === 'Enter' || e.key === 'Tab' || (splitCommas && e.key === ',')) && isValidTag(currentInput, tags)) {
+                  addTag(currentInput)
                   state.currentInput = ''
                   e.preventDefault()
                 }

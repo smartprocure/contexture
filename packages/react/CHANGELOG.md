@@ -1,5 +1,8 @@
-# 1.48.6
-* StripedLoader: Fix regression in 1.48.7
+# 1.48.8
+* TagsInput: Better validation on the input
+
+# 1.48.7
+* StripedLoader: Fix regression in 1.48.6
 
 # 1.48.6
 * StripedLoader: Fix loading styles
