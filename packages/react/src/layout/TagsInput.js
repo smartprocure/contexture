@@ -127,7 +127,12 @@ let TagsInput = withState('state', 'setState', () =>
               onKeyDown={e => {
                 let currentInput = _.trim(state.currentInput)
                 if (e.key === 'Enter' && !currentInput) submit()
-                if ((e.key === 'Enter' || e.key === 'Tab' || (splitCommas && e.key === ',')) && isValidTag(currentInput, tags)) {
+                if (
+                  (e.key === 'Enter' ||
+                    e.key === 'Tab' ||
+                    (splitCommas && e.key === ',')) &&
+                  isValidTag(currentInput, tags)
+                ) {
                   addTag(currentInput)
                   state.currentInput = ''
                   e.preventDefault()
