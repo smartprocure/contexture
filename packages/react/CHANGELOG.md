@@ -1,4 +1,7 @@
-# 1.48.6
+# 1.48.8
+* TagsInput: Accept style prop
+
+# 1.48.7
 * StripedLoader: Fix regression in 1.48.7
 
 # 1.48.6
