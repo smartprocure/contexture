@@ -218,15 +218,15 @@ describe('exportStrategies', () => {
     } = exportStrategies
     let columnKeys = ['name', 'age']
     let chunk = [
-      { name: 'Bob "Bobby" Brown', age: 36 },
+      { name: 'Bob "Bobby" Brown', age: 36, weight: 160},
       { name: 'Joe Blow', age: 40 },
     ]
     it('extractHeadersFromFirstRow', () => {
-      expect(extractHeadersFromFirstRow(chunk)).toEqual(['name', 'age'])
+      expect(extractHeadersFromFirstRow(chunk)).toEqual(['name', 'age', 'weight'])
     })
     it('formatValues with no rules', () => {
       expect(formatValues({})(chunk)).toEqual([
-        { age: 36, name: 'Bob "Bobby" Brown' },
+        { age: 36, name: 'Bob "Bobby" Brown', weight: 160 },
         { age: 40, name: 'Joe Blow' },
       ])
     })
@@ -235,9 +235,10 @@ describe('exportStrategies', () => {
         formatValues({
           name: { display: _.toLower },
           age: { display: _.toString },
+          weight: { label: 'Weight (lbs)' } // Missing display fn
         })(chunk)
       ).toEqual([
-        { age: '36', name: 'bob "bobby" brown' },
+        { age: '36', name: 'bob "bobby" brown', weight: 160 },
         { age: '40', name: 'joe blow' },
       ])
     })

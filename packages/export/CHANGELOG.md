@@ -1,4 +1,7 @@
-﻿# 0.1.9
+﻿# 0.1.10
+* Only call display if fn exists.
+
+# 0.1.9
 * Fix missing columns issue due to not all columns having results in the first row
 
 # 0.1.8

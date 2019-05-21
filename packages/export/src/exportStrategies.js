@@ -43,7 +43,7 @@ export const formatValues = (rules = {}, includedKeys = []) =>
   _.map(obj => {
     // Format all values of the passed in object
     let resultObject = F.mapValuesIndexed(
-      (value, key) => (rules[key] ? rules[key].display(value) : value),
+      (value, key) => _.getOr(_.identity, [key, 'display'], rules)(value),
       obj
     )
     // Fill the empty properties for the objects missing the expected keys
