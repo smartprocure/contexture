@@ -8,8 +8,8 @@ import { Flex } from './Flex'
 import Popover from './Popover'
 
 let isValidTag = (tag, tags) => {
-  let cleanTag = _.toLower(_.trim(tag))
-  return !_.isEmpty(cleanTag) && !_.some(t => _.toLower(t) === cleanTag, tags)
+  let cleanTag = _.trim(tag)
+  return !_.isEmpty(cleanTag) && !_.includes(cleanTag, tags)
 }
 
 let Tag = observer(({ value, removeTag, tagStyle, RemoveIcon, onClick }) => (
