@@ -1,4 +1,8 @@
-# 1.48.6
+# 1.48.8
+* TermsStatsTable: Add margin to size dropdown to align with table
+* TermsStatsTable: Default to 20 items
+
+# 1.48.7
 * StripedLoader: Fix regression in 1.48.7
 
 # 1.48.6
