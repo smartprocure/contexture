@@ -78,7 +78,7 @@ let transformRow = _.flow(
 )
 
 // Convert array of objects to array of arrays
-export let convertData = (data, keys) => {
+export let extractValues = (data, keys) => {
   // Extract data from object
   let transformRow = row => _.map(key => _.get(key, row), keys)
   return _.map(transformRow, data)
@@ -126,7 +126,7 @@ export const CSVStream = async ({
       let formattedData = formatValues(formatRules, includeKeys)(chunk)
 
       // Convert data to CSV rows
-      let rows = convertData(formattedData, includeKeys)
+      let rows = extractValues(formattedData, includeKeys)
 
       // Prepend column headers on first pass
       if (!records) {

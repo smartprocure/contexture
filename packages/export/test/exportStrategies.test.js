@@ -211,7 +211,7 @@ describe('exportStrategies', () => {
   })
   describe('utils', () => {
     let {
-      convertData,
+      extractValues,
       formatHeaders,
       formatValues,
       rowsToCSV,
@@ -222,8 +222,8 @@ describe('exportStrategies', () => {
       { name: 'Bob "Bobby" Brown', age: 36, weight: 160 },
       { name: 'Joe Blow', age: 40 },
     ]
-    it('convertData', () => {
-      expect(convertData(chunk, columnKeys)).toEqual([
+    it('extractValues', () => {
+      expect(extractValues(chunk, columnKeys)).toEqual([
         ['Bob "Bobby" Brown', 36],
         ['Joe Blow', 40],
       ])
