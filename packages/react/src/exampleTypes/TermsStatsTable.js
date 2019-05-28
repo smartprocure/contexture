@@ -52,7 +52,7 @@ let TermsStatsTable = injectTreeNode(
       ...props
     }) => (
       <div>
-        <Flex style={toolBarStyle}>
+        <Flex style={{ ...toolBarStyle, margin: 40, marginBottom: 0 }}>
           <Filter
             Input={Input}
             {...F.domLens.value(tree.lens(node.path, 'filter'))}
