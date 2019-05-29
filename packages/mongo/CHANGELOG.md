@@ -1,4 +1,7 @@
 ﻿# 0.8.1
+* Results example type: sort after lookups
+
+# 0.8.1
 * Remove uneccessary contexture peer dependency (which causes an issue since minor revisions are breaking in semver at 0.x)
 
 # 0.8.0
