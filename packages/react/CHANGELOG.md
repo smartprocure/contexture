@@ -1,5 +1,11 @@
-# 1.48.9
+# 1.48.11
 * TagsInput: Accept style prop
+
+# 1.48.10
+* New grey vest search component: ToggleFiltersHeader
+
+# 1.48.9
+* TermsStatsTable: Add margin to size dropdown to align with table
 
 # 1.48.8
 * TagsInput: Better validation on the input
