@@ -69,6 +69,7 @@ let FacetOptionsFilter = ({ tree, node, TextInput, Button }) => {
               setVal(e.target.value)
             }}
             onKeyPress={e => e.key === 'Enter' && sumitHandler()}
+            onBlur = {sumitHandler}
             placeholder="Find..."
           />
           <Button
