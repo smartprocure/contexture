@@ -57,26 +57,27 @@ let SelectAll = observer(({ node, tree, Checkbox }) => {
 let FacetOptionsFilter = ({ tree, node, TextInput, Button }) => {
   let [val, setVal] = useState(node.optionsFilter)
   let buttonEnabled = val !== node.optionsFilter
+  let sumitHandler = () =>
+    buttonEnabled && tree.mutate(node.path, { optionsFilter: val })
   return (
     <Observer>
       {() => (
-        <Flex style={{ justifyContent: 'space-between' }}>
+        <div className="gv-button-group">
           <TextInput
             value={val}
             onChange={e => {
               setVal(e.target.value)
             }}
+            onKeyPress={e => e.key === 'Enter' && sumitHandler()}
             placeholder="Find..."
           />
           <Button
-            disabled={!buttonEnabled}
-            onClick={() =>
-              buttonEnabled && tree.mutate(node.path, { optionsFilter: val })
-            }
+            style={{ display: buttonEnabled ? 'block' : 'none' }}
+            onClick={sumitHandler}
           >
             Submit
           </Button>
-        </Flex>
+        </div>
       )}
     </Observer>
   )
