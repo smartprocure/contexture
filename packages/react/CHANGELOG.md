@@ -1,8 +1,14 @@
-# 1.49.0
+# 1.48.10
 * Facet: apply options filter change on submit button click
 
-# 1.48.6
-* StripedLoader: Fix regression in 1.48.7
+# 1.48.9
+* TermsStatsTable: Add margin to size dropdown to align with table
+
+# 1.48.8
+* TagsInput: Better validation on the input
+
+# 1.48.7
+* StripedLoader: Fix regression in 1.48.6
 
 # 1.48.6
 * StripedLoader: Fix loading styles
