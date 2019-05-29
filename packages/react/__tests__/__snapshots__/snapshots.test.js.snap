@@ -12656,17 +12656,13 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
                   </label>
                 </div>
                 <div
-                  style={
-                    Object {
-                      "display": "flex",
-                      "justifyContent": "space-between",
-                    }
-                  }
+                  className="gv-button-group"
                 >
                   <input
                     onBlur={[Function]}
                     onChange={[Function]}
                     onFocus={[Function]}
+                    onKeyPress={[Function]}
                     placeholder="Find..."
                     style={
                       Object {
@@ -12686,8 +12682,12 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
                     value=""
                   />
                   <button
-                    disabled={true}
                     onClick={[Function]}
+                    style={
+                      Object {
+                        "display": "none",
+                      }
+                    }
                   >
                     Submit
                   </button>
@@ -12779,17 +12779,13 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
                   </label>
                 </div>
                 <div
-                  style={
-                    Object {
-                      "display": "flex",
-                      "justifyContent": "space-between",
-                    }
-                  }
+                  className="gv-button-group"
                 >
                   <input
                     onBlur={[Function]}
                     onChange={[Function]}
                     onFocus={[Function]}
+                    onKeyPress={[Function]}
                     placeholder="Find..."
                     style={
                       Object {
@@ -12809,8 +12805,12 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
                     value=""
                   />
                   <button
-                    disabled={true}
                     onClick={[Function]}
+                    style={
+                      Object {
+                        "display": "none",
+                      }
+                    }
                   >
                     Submit
                   </button>
@@ -16471,17 +16471,13 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
                 </label>
               </div>
               <div
-                style={
-                  Object {
-                    "display": "flex",
-                    "justifyContent": "space-between",
-                  }
-                }
+                className="gv-button-group"
               >
                 <input
                   onBlur={[Function]}
                   onChange={[Function]}
                   onFocus={[Function]}
+                  onKeyPress={[Function]}
                   placeholder="Find..."
                   style={
                     Object {
@@ -16501,8 +16497,12 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
                   value=""
                 />
                 <button
-                  disabled={true}
                   onClick={[Function]}
+                  style={
+                    Object {
+                      "display": "none",
+                    }
+                  }
                 >
                   Submit
                 </button>
@@ -16711,17 +16711,13 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
                 </label>
               </div>
               <div
-                style={
-                  Object {
-                    "display": "flex",
-                    "justifyContent": "space-between",
-                  }
-                }
+                className="gv-button-group"
               >
                 <input
                   onBlur={[Function]}
                   onChange={[Function]}
                   onFocus={[Function]}
+                  onKeyPress={[Function]}
                   placeholder="Find..."
                   style={
                     Object {
@@ -16741,8 +16737,12 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
                   value=""
                 />
                 <button
-                  disabled={true}
                   onClick={[Function]}
+                  style={
+                    Object {
+                      "display": "none",
+                    }
+                  }
                 >
                   Submit
                 </button>
@@ -19657,17 +19657,13 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                         </label>
                                                       </div>
                                                       <div
-                                                        style={
-                                                          Object {
-                                                            "display": "flex",
-                                                            "justifyContent": "space-between",
-                                                          }
-                                                        }
+                                                        className="gv-button-group"
                                                       >
                                                         <input
                                                           onBlur={[Function]}
                                                           onChange={[Function]}
                                                           onFocus={[Function]}
+                                                          onKeyPress={[Function]}
                                                           placeholder="Find..."
                                                           style={
                                                             Object {
@@ -19687,8 +19683,12 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                           value=""
                                                         />
                                                         <button
-                                                          disabled={true}
                                                           onClick={[Function]}
+                                                          style={
+                                                            Object {
+                                                              "display": "none",
+                                                            }
+                                                          }
                                                         >
                                                           Submit
                                                         </button>
@@ -22149,17 +22149,13 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter with fa
                                 </label>
                               </div>
                               <div
-                                style={
-                                  Object {
-                                    "display": "flex",
-                                    "justifyContent": "space-between",
-                                  }
-                                }
+                                className="gv-button-group"
                               >
                                 <input
                                   onBlur={[Function]}
                                   onChange={[Function]}
                                   onFocus={[Function]}
+                                  onKeyPress={[Function]}
                                   placeholder="Find..."
                                   style={
                                     Object {
@@ -22179,8 +22175,12 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter with fa
                                   value=""
                                 />
                                 <button
-                                  disabled={true}
                                   onClick={[Function]}
+                                  style={
+                                    Object {
+                                      "display": "none",
+                                    }
+                                  }
                                 >
                                   Submit
                                 </button>
