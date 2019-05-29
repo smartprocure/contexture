@@ -1,5 +1,8 @@
-﻿# 0.8.1
+# 0.8.3
 * Results example type: sort after lookups
+
+# 0.8.2
+* Fix typo on `tagsText` example type
 
 # 0.8.1
 * Remove uneccessary contexture peer dependency (which causes an issue since minor revisions are breaking in semver at 0.x)
