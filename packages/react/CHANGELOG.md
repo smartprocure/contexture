@@ -1,3 +1,6 @@
+# 1.48.10
+* New grey vest search component: ToggleFiltersHeader
+
 # 1.48.9
 * TermsStatsTable: Add margin to size dropdown to align with table
 
