@@ -37,6 +37,7 @@ import Box from './Box'
 import LinkButton from './LinkButton'
 import TreePauseButton from './TreePauseButton'
 import ToggleFiltersButton from './ToggleFiltersButton'
+import ToggleFiltersHeader from './ToggleFiltersHeader'
 export { default as SearchLayout } from './SearchLayout'
 import BaseSearchFilters from './SearchFilters'
 import DateInput from './DateInput'
@@ -59,6 +60,7 @@ export {
   LinkButton,
   TreePauseButton,
   ToggleFiltersButton,
+  ToggleFiltersHeader,
 }
 
 export let SearchTree = () => {}

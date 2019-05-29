@@ -1,5 +1,12 @@
-# 1.48.10
+
+# 1.48.12
 * Facet: apply options filter change on submit button click
+
+# 1.48.11
+* TagsInput: Accept style prop
+
+# 1.48.10
+* New grey vest search component: ToggleFiltersHeader
 
 # 1.48.9
 * TermsStatsTable: Add margin to size dropdown to align with table
