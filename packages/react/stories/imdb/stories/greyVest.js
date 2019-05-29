@@ -250,7 +250,10 @@ export default () => (
           />
         </SearchFilters>
         <div>
-          <ToggleFiltersHeader mode={state.mode} setMode={x => (state.mode = x)}>
+          <ToggleFiltersHeader
+            mode={state.mode}
+            setMode={x => (state.mode = x)}
+          >
             Search Movies
           </ToggleFiltersHeader>
           <div className="gv-search-bar">
