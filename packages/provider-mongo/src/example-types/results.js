@@ -23,9 +23,6 @@ module.exports = {
       search(
         _.reject(_.isEmpty, [
           {
-            $sort: sort,
-          },
-          {
             $skip: startRecord,
           },
           pageSize > 0 && {
@@ -54,6 +51,9 @@ module.exports = {
               },
             }
           }, populate),
+          {
+            $sort: sort,
+          },
         ])
       ),
       search([
