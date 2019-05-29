@@ -1,3 +1,6 @@
+# 1.48.11
+* TagsInput: Accept style prop
+
 # 1.48.10
 * New grey vest search component: ToggleFiltersHeader
 
