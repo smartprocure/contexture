@@ -57,7 +57,7 @@ let SelectAll = observer(({ node, tree, Checkbox }) => {
 let FacetOptionsFilter = ({ tree, node, TextInput, Button }) => {
   let [val, setVal] = useState(node.optionsFilter)
   let buttonEnabled = val !== node.optionsFilter
-  let sumitHandler = () =>
+  let submit = () =>
     buttonEnabled && tree.mutate(node.path, { optionsFilter: val })
   return (
     <Observer>
@@ -68,13 +68,13 @@ let FacetOptionsFilter = ({ tree, node, TextInput, Button }) => {
             onChange={e => {
               setVal(e.target.value)
             }}
-            onKeyPress={e => e.key === 'Enter' && sumitHandler()}
-            onBlur = {sumitHandler}
+            onKeyPress={e => e.key === 'Enter' && submit()}
+            onBlur = {submit}
             placeholder="Find..."
           />
           <Button
             style={{ display: buttonEnabled ? 'block' : 'none' }}
-            onClick={sumitHandler}
+            onClick={submit}
           >
             Submit
           </Button>
