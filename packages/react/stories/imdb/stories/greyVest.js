@@ -4,7 +4,7 @@ import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import Contexture, { updateSchemas } from '../utils/contexture'
 import { mergeOverAll } from '../../../src/utils/futil'
-import { Flex, Awaiter, schemaFieldProps, componentForType } from '../../../src'
+import { Awaiter, schemaFieldProps, componentForType } from '../../../src'
 import {
   Button,
   ExampleTypes,
@@ -18,7 +18,7 @@ import {
   SearchLayout,
   SearchFilters,
   SearchTree,
-  ToggleFiltersButton,
+  ToggleFiltersHeader,
 } from '../../../src/themes/greyVest'
 import { Column } from './../../../src/layout/ExpandableTable'
 let {
@@ -250,7 +250,9 @@ export default () => (
           />
         </SearchFilters>
         <div>
-          <h1>Search Movies</h1>
+          <ToggleFiltersHeader mode={state.mode} setMode={x => (state.mode = x)}>
+            Search Movies
+          </ToggleFiltersHeader>
           <div className="gv-search-bar">
             <Box>
               <TagsQuery tree={tree} path={['root', 'bar']} />
@@ -285,12 +287,7 @@ export default () => (
               </div>
             </div>
           </div>
-          <Flex style={{ alignItems: 'center' }}>
-            <h1>Search Results</h1>
-            {state.mode === 'resultsOnly' && (
-              <ToggleFiltersButton onClick={() => (state.mode = 'basic')} />
-            )}
-          </Flex>
+          <h1>Search Results</h1>
           <Tabs defaultValue="results">
             <TabLabel value="results">
               Movies (<ResultCount tree={tree} path={['root', 'results']} />)
