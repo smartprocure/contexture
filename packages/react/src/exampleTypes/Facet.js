@@ -54,7 +54,7 @@ let SelectAll = observer(({ node, tree, Checkbox }) => {
   )
 })
 
-let FacetOptionsFilter = ({ tree, node, TextInput, Button }) => {
+let FacetOptionsFilter = ({ tree, node, TextInput, Button, ButtonGroup }) => {
   let [val, setVal] = useState(node.optionsFilter)
   let buttonEnabled = val !== node.optionsFilter
   let submit = () =>
@@ -62,7 +62,7 @@ let FacetOptionsFilter = ({ tree, node, TextInput, Button }) => {
   return (
     <Observer>
       {() => (
-        <div className="gv-button-group">
+        <ButtonGroup>
           <TextInput
             value={val}
             onChange={e => {
@@ -78,7 +78,7 @@ let FacetOptionsFilter = ({ tree, node, TextInput, Button }) => {
           >
             Submit
           </Button>
-        </div>
+        </ButtonGroup>
       )}
     </Observer>
   )
@@ -97,6 +97,7 @@ let Facet = injectTreeNode(
       display = x => x,
       displayBlank = () => <i>Not Specified</i>,
       formatCount = x => x,
+      ButtonGroup,
     }) => (
       <div className="contexture-facet">
         <RadioList
@@ -110,6 +111,7 @@ let Facet = injectTreeNode(
             node={node}
             TextInput={TextInput}
             Button={Button}
+            ButtonGroup={ButtonGroup}
           />
         )}
         <SelectAll node={node} tree={tree} Checkbox={Checkbox} />

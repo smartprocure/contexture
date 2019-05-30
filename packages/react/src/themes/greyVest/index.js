@@ -738,6 +738,7 @@ export let ExampleTypes = ExampleTypeConstructor({
   TagsInput,
   Icon,
   DateInput,
+  ButtonGroup: defaultProps({ className: 'gv-button-group'}) (Flex)
 })
 export let Pager = props => (
   <ExampleTypes.ResultPager
