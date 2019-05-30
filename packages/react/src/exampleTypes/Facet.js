@@ -97,7 +97,7 @@ let Facet = injectTreeNode(
       display = x => x,
       displayBlank = () => <i>Not Specified</i>,
       formatCount = x => x,
-      ButtonGroup,
+      ButtonGroup = 'div',
     }) => (
       <div className="contexture-facet">
         <RadioList

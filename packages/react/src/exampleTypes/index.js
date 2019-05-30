@@ -37,7 +37,7 @@ export default ({
   ListGroupItem = 'div',
   Icon,
   Select = DefaultSelect,
-  ButtonGroup = 'div',
+  ButtonGroup,
 } = {}) => {
   let Components = {
     Facet: defaultProps({
