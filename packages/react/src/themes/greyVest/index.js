@@ -707,7 +707,7 @@ export let Adder = ModalFilterAdder({
 })
 
 export let Modal = defaultProps({ className: 'gv-body' })(DefaultModal)
-export let ButtonGroup = defaultProps({ className: 'gv-button-group'}) (Flex)
+export let ButtonGroup = defaultProps({ className: 'gv-button-group' })(Flex)
 export let PagerItem = observer(({ active, disabled, ...x }) => (
   <span
     className={`gv-pager-item ${disabled ? 'disabled' : ''} ${
