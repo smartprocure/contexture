@@ -12655,9 +12655,7 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
                     Exclude
                   </label>
                 </div>
-                <div
-                  className="gv-button-group"
-                >
+                <div>
                   <input
                     onBlur={[Function]}
                     onChange={[Function]}
@@ -12778,9 +12776,7 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
                     Exclude
                   </label>
                 </div>
-                <div
-                  className="gv-button-group"
-                >
+                <div>
                   <input
                     onBlur={[Function]}
                     onChange={[Function]}
@@ -16470,9 +16466,7 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
                   Exclude
                 </label>
               </div>
-              <div
-                className="gv-button-group"
-              >
+              <div>
                 <input
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -16710,9 +16704,7 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
                   Exclude
                 </label>
               </div>
-              <div
-                className="gv-button-group"
-              >
+              <div>
                 <input
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -19656,9 +19648,7 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                           Exclude
                                                         </label>
                                                       </div>
-                                                      <div
-                                                        className="gv-button-group"
-                                                      >
+                                                      <div>
                                                         <input
                                                           onBlur={[Function]}
                                                           onChange={[Function]}
@@ -22148,9 +22138,7 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter with fa
                                   Exclude
                                 </label>
                               </div>
-                              <div
-                                className="gv-button-group"
-                              >
+                              <div>
                                 <input
                                   onBlur={[Function]}
                                   onChange={[Function]}
