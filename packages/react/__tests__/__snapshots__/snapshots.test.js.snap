@@ -107,7 +107,7 @@ exports[`Storyshots Components (Grey Vest)|Box Box 1`] = `
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -307,15 +307,11 @@ exports[`Storyshots Components (Grey Vest)|Box Box 1`] = `
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -654,7 +650,7 @@ exports[`Storyshots Components (Grey Vest)|Button Active 1`] = `
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -854,15 +850,11 @@ exports[`Storyshots Components (Grey Vest)|Button Active 1`] = `
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -1202,7 +1194,7 @@ exports[`Storyshots Components (Grey Vest)|Button As Div 1`] = `
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -1402,15 +1394,11 @@ exports[`Storyshots Components (Grey Vest)|Button As Div 1`] = `
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -1750,7 +1738,7 @@ exports[`Storyshots Components (Grey Vest)|Button Basic Usage 1`] = `
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -1950,15 +1938,11 @@ exports[`Storyshots Components (Grey Vest)|Button Basic Usage 1`] = `
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -2298,7 +2282,7 @@ exports[`Storyshots Components (Grey Vest)|Button Primary 1`] = `
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -2498,15 +2482,11 @@ exports[`Storyshots Components (Grey Vest)|Button Primary 1`] = `
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -2846,7 +2826,7 @@ exports[`Storyshots Components (Grey Vest)|LinkButton LinkButton 1`] = `
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -3046,15 +3026,11 @@ exports[`Storyshots Components (Grey Vest)|LinkButton LinkButton 1`] = `
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -3396,7 +3372,7 @@ exports[`Storyshots Components (Grey Vest)|Refs Default 1`] = `
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -3596,15 +3572,11 @@ exports[`Storyshots Components (Grey Vest)|Refs Default 1`] = `
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -3975,7 +3947,7 @@ exports[`Storyshots Components (Grey Vest)|Search Layout Basic 1`] = `
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -4175,15 +4147,11 @@ exports[`Storyshots Components (Grey Vest)|Search Layout Basic 1`] = `
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -4531,7 +4499,7 @@ exports[`Storyshots Components (Grey Vest)|Search Layout Builder 1`] = `
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -4731,15 +4699,11 @@ exports[`Storyshots Components (Grey Vest)|Search Layout Builder 1`] = `
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -5087,7 +5051,7 @@ exports[`Storyshots Components (Grey Vest)|Search Layout Results Only 1`] = `
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -5287,15 +5251,11 @@ exports[`Storyshots Components (Grey Vest)|Search Layout Results Only 1`] = `
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -5638,7 +5598,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Anonymous Values 1`] = `
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -5838,15 +5798,11 @@ exports[`Storyshots Components (Grey Vest)|Tabs Anonymous Values 1`] = `
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -6201,7 +6157,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Base Usage 1`] = `
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -6401,15 +6357,11 @@ exports[`Storyshots Components (Grey Vest)|Tabs Base Usage 1`] = `
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -6764,7 +6716,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Controlled 1`] = `
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -6964,15 +6916,11 @@ exports[`Storyshots Components (Grey Vest)|Tabs Controlled 1`] = `
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -7335,7 +7283,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Custom TabList and TabPanel 1`] 
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -7535,15 +7483,11 @@ exports[`Storyshots Components (Grey Vest)|Tabs Custom TabList and TabPanel 1`] 
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -7902,7 +7846,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Docs 1`] = `
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -8102,15 +8046,11 @@ exports[`Storyshots Components (Grey Vest)|Tabs Docs 1`] = `
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -8892,7 +8832,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Tab Render Function 1`] = `
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -9092,15 +9032,11 @@ exports[`Storyshots Components (Grey Vest)|Tabs Tab Render Function 1`] = `
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -9455,7 +9391,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs TabLabel and TabContent 1`] = `
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -9655,15 +9591,11 @@ exports[`Storyshots Components (Grey Vest)|Tabs TabLabel and TabContent 1`] = `
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -10018,7 +9950,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Uncontrolled with defaultValue 1
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -10218,15 +10150,11 @@ exports[`Storyshots Components (Grey Vest)|Tabs Uncontrolled with defaultValue 1
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -10581,7 +10509,7 @@ exports[`Storyshots Components (Grey Vest)|ToggleFiltersButton Basic Usage 1`] =
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -10781,15 +10709,11 @@ exports[`Storyshots Components (Grey Vest)|ToggleFiltersButton Basic Usage 1`] =
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -11458,7 +11382,7 @@ exports[`Storyshots Live Demos|IMDB Check List 1`] = `
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -11658,15 +11582,11 @@ exports[`Storyshots Live Demos|IMDB Check List 1`] = `
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -12020,7 +11940,7 @@ exports[`Storyshots Live Demos|IMDB Grey Vest Theme 1`] = `
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -12220,15 +12140,11 @@ exports[`Storyshots Live Demos|IMDB Grey Vest Theme 1`] = `
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -12477,11 +12393,8 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
     }
   >
     <div
-      style={
-        Object {
-          "height": "100%",
-        }
-      }
+      className="loader"
+      style={Object {}}
     >
       <input
         onBlur={[Function]}
@@ -12533,11 +12446,8 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
               MetaScore
             </b>
             <div
-              style={
-                Object {
-                  "height": "100%",
-                }
-              }
+              className="loader"
+              style={Object {}}
             >
               <div
                 className="contexture-number"
@@ -12616,11 +12526,8 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
               Genre
             </b>
             <div
-              style={
-                Object {
-                  "height": "100%",
-                }
-              }
+              className="loader"
+              style={Object {}}
             >
               <div
                 className="contexture-facet"
@@ -12737,11 +12644,8 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
               Actors
             </b>
             <div
-              style={
-                Object {
-                  "height": "100%",
-                }
-              }
+              className="loader"
+              style={Object {}}
             >
               <div
                 className="contexture-facet"
@@ -12853,11 +12757,8 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
       </div>
       <div>
         <div
-          style={
-            Object {
-              "height": "100%",
-            }
-          }
+          className="loader"
+          style={Object {}}
         >
           <div
             style={
@@ -12879,10 +12780,10 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
         >
           <h3>
             <div
+              className="loader"
               style={
                 Object {
                   "display": "inline-block",
-                  "height": "100%",
                 }
               }
             >
@@ -12891,11 +12792,8 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
           </h3>
         </div>
         <div
-          style={
-            Object {
-              "height": "100%",
-            }
-          }
+          className="loader"
+          style={Object {}}
         >
           <div
             style={
@@ -12916,11 +12814,8 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
           }
         >
           <div
-            style={
-              Object {
-                "height": "100%",
-              }
-            }
+            className="loader"
+            style={Object {}}
           />
         </div>
       </div>
@@ -13106,7 +13001,7 @@ exports[`Storyshots Search Components (Grey Vest)|/TreePauseButton Falsey Trees 
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -13306,15 +13201,11 @@ exports[`Storyshots Search Components (Grey Vest)|/TreePauseButton Falsey Trees 
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -13659,7 +13550,7 @@ exports[`Storyshots Search Components (Grey Vest)|/TreePauseButton Multiple Tree
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -13859,15 +13750,11 @@ exports[`Storyshots Search Components (Grey Vest)|/TreePauseButton Multiple Tree
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -14212,7 +14099,7 @@ exports[`Storyshots Search Components (Grey Vest)|/TreePauseButton One Tree 1`] 
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -14412,15 +14299,11 @@ exports[`Storyshots Search Components (Grey Vest)|/TreePauseButton One Tree 1`] 
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -14765,7 +14648,7 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -14965,15 +14848,11 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -15198,19 +15077,12 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
     
   </style>
   <div
-    style={
-      Object {
-        "height": "100%",
-      }
-    }
+    className="loader"
+    style={Object {}}
   >
     <div
       className="tags-input"
-      style={
-        Object {
-          "height": "100%",
-        }
-      }
+      style={Object {}}
     >
       <div
         style={
@@ -15552,7 +15424,7 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
         background: rgba(237, 237, 237, 0.5)
       }
 
-      .gv-box {
+      .gv-box, .gv-search-bar .tags-input {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -15752,15 +15624,11 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
-        padding: 0;
+      .gv-search-bar .tags-input {
+        padding: 0px;
       }
       .gv-search-bar &gt; .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
-      }
-      .gv-search-bar .gv-box .tags-input {
-        margin: 0;
-        border: none;
       }
       .gv-search-button {
         font-size: 18px;
@@ -15992,19 +15860,12 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
     }
   >
     <div
-      style={
-        Object {
-          "height": "100%",
-        }
-      }
+      className="loader"
+      style={Object {}}
     >
       <div
         className="tags-input"
-        style={
-          Object {
-            "height": "100%",
-          }
-        }
+        style={Object {}}
       >
         <div
           style={
@@ -16259,11 +16120,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
     }
   >
     <div
-      style={
-        Object {
-          "height": "100%",
-        }
-      }
+      className="loader"
+      style={Object {}}
     >
       <input
         onBlur={[Function]}
@@ -16314,19 +16172,12 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           }
         >
           <div
-            style={
-              Object {
-                "height": "100%",
-              }
-            }
+            className="loader"
+            style={Object {}}
           >
             <div
               className="tags-input"
-              style={
-                Object {
-                  "height": "100%",
-                }
-              }
+              style={Object {}}
             >
               <div
                 style={
@@ -16367,11 +16218,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           }
         >
           <div
-            style={
-              Object {
-                "height": "100%",
-              }
-            }
+            className="loader"
+            style={Object {}}
           >
             <input
               node={
@@ -16427,11 +16275,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           }
         >
           <div
-            style={
-              Object {
-                "height": "100%",
-              }
-            }
+            className="loader"
+            style={Object {}}
           >
             <div
               className="contexture-facet"
@@ -16665,11 +16510,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           }
         >
           <div
-            style={
-              Object {
-                "height": "100%",
-              }
-            }
+            className="loader"
+            style={Object {}}
           >
             <div
               className="contexture-facet"
@@ -16903,11 +16745,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           }
         >
           <div
-            style={
-              Object {
-                "height": "100%",
-              }
-            }
+            className="loader"
+            style={Object {}}
           >
             <div
               className="contexture-number"
@@ -16981,11 +16820,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           }
         >
           <div
-            style={
-              Object {
-                "height": "100%",
-              }
-            }
+            className="loader"
+            style={Object {}}
           >
             <div
               className="contexture-number"
@@ -17055,11 +16891,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           style={Object {}}
         >
           <div
-            style={
-              Object {
-                "height": "100%",
-              }
-            }
+            className="loader"
+            style={Object {}}
           >
             <div
               style={
@@ -17256,11 +17089,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           }
         >
           <div
-            style={
-              Object {
-                "height": "100%",
-              }
-            }
+            className="loader"
+            style={Object {}}
           >
             <div
               style={
@@ -17397,10 +17227,10 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           }
         >
           <div
+            className="loader"
             style={
               Object {
                 "display": "inline-block",
-                "height": "100%",
               }
             }
           >
@@ -17420,11 +17250,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
             }
           >
             <div
-              style={
-                Object {
-                  "height": "100%",
-                }
-              }
+              className="loader"
+              style={Object {}}
             >
               <table>
                 <thead>
@@ -17632,11 +17459,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Geo filter & HERE
       }
     >
       <div
-        style={
-          Object {
-            "height": "100%",
-          }
-        }
+        className="loader"
+        style={Object {}}
       >
         <div
           style={
@@ -17842,11 +17666,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/ResultTable Custo
         
   </style>
   <div
-    style={
-      Object {
-        "height": "100%",
-      }
-    }
+    className="loader"
+    style={Object {}}
   >
     <table
       className="example-table"
@@ -18064,11 +17885,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/ResultTable Displ
         
   </style>
   <div
-    style={
-      Object {
-        "height": "100%",
-      }
-    }
+    className="loader"
+    style={Object {}}
   >
     <table
       className="example-table"
@@ -18136,19 +17954,12 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/ResultTable Displ
 
 exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Default 1`] = `
 <div
-  style={
-    Object {
-      "height": "100%",
-    }
-  }
+  className="loader"
+  style={Object {}}
 >
   <div
     className="tags-input"
-    style={
-      Object {
-        "height": "100%",
-      }
-    }
+    style={Object {}}
   >
     <div
       style={
@@ -18359,19 +18170,12 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Respon
   }
 >
   <div
-    style={
-      Object {
-        "height": "100%",
-      }
-    }
+    className="loader"
+    style={Object {}}
   >
     <div
       className="tags-input"
-      style={
-        Object {
-          "height": "100%",
-        }
-      }
+      style={Object {}}
     >
       <div
         style={
@@ -18577,11 +18381,8 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Respon
 exports[`Storyshots Search Components (Unthemed)|FilterAdder Example 1`] = `
 <div>
   <div
-    style={
-      Object {
-        "height": "100%",
-      }
-    }
+    className="loader"
+    style={Object {}}
   >
     <select
       onChange={[Function]}
@@ -18606,11 +18407,8 @@ exports[`Storyshots Search Components (Unthemed)|FilterAdder Example 1`] = `
 
 exports[`Storyshots Search Components (Unthemed)|FilterAdder With NestedPickerModal 1`] = `
 <div
-  style={
-    Object {
-      "height": "100%",
-    }
-  }
+  className="loader"
+  style={Object {}}
 >
   <div>
     <button
@@ -18624,22 +18422,16 @@ exports[`Storyshots Search Components (Unthemed)|FilterAdder With NestedPickerMo
 
 exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
 <div
-  style={
-    Object {
-      "height": "100%",
-    }
-  }
+  className="loader"
+  style={Object {}}
 >
   <div>
     <div
       className="filter-list-item"
     >
       <div
-        style={
-          Object {
-            "height": "100%",
-          }
-        }
+        className="loader"
+        style={Object {}}
       >
         <div
           className="filter-field-label"
@@ -18670,11 +18462,8 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
       className="filter-list-item"
     >
       <div
-        style={
-          Object {
-            "height": "100%",
-          }
-        }
+        className="loader"
+        style={Object {}}
       >
         <div
           className="filter-field-label"
@@ -18705,11 +18494,8 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
       className="filter-list-item"
     >
       <div
-        style={
-          Object {
-            "height": "100%",
-          }
-        }
+        className="loader"
+        style={Object {}}
       >
         <div
           className="filter-field-label"
@@ -18877,11 +18663,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                           }
                         >
                           <div
-                            style={
-                              Object {
-                                "height": "100%",
-                              }
-                            }
+                            className="loader"
+                            style={Object {}}
                           >
                             <input
                               onBlur={[Function]}
@@ -19141,11 +18924,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                       }
                                     >
                                       <div
-                                        style={
-                                          Object {
-                                            "height": "100%",
-                                          }
-                                        }
+                                        className="loader"
+                                        style={Object {}}
                                       >
                                         <input
                                           onBlur={[Function]}
@@ -19344,11 +19124,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                       }
                                     >
                                       <div
-                                        style={
-                                          Object {
-                                            "height": "100%",
-                                          }
-                                        }
+                                        className="loader"
+                                        style={Object {}}
                                       >
                                         <input
                                           onBlur={[Function]}
@@ -19609,11 +19386,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                   }
                                                 >
                                                   <div
-                                                    style={
-                                                      Object {
-                                                        "height": "100%",
-                                                      }
-                                                    }
+                                                    className="loader"
+                                                    style={Object {}}
                                                   >
                                                     <div
                                                       className="contexture-facet"
@@ -19895,11 +19669,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                   }
                                                 >
                                                   <div
-                                                    style={
-                                                      Object {
-                                                        "height": "100%",
-                                                      }
-                                                    }
+                                                    className="loader"
+                                                    style={Object {}}
                                                   >
                                                     <input
                                                       onBlur={[Function]}
@@ -20110,11 +19881,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                           }
                         >
                           <div
-                            style={
-                              Object {
-                                "height": "100%",
-                              }
-                            }
+                            className="loader"
+                            style={Object {}}
                           >
                             <input
                               onBlur={[Function]}
@@ -20394,11 +20162,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                       }
                                     >
                                       <div
-                                        style={
-                                          Object {
-                                            "height": "100%",
-                                          }
-                                        }
+                                        className="loader"
+                                        style={Object {}}
                                       >
                                         <div
                                           className="contexture-number"
@@ -20638,11 +20403,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                       }
                                     >
                                       <div
-                                        style={
-                                          Object {
-                                            "height": "100%",
-                                          }
-                                        }
+                                        className="loader"
+                                        style={Object {}}
                                       >
                                         <input
                                           onBlur={[Function]}
@@ -20984,11 +20746,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                   }
                                                 >
                                                   <div
-                                                    style={
-                                                      Object {
-                                                        "height": "100%",
-                                                      }
-                                                    }
+                                                    className="loader"
+                                                    style={Object {}}
                                                   >
                                                     <input
                                                       onBlur={[Function]}
@@ -21188,11 +20947,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                   }
                                                 >
                                                   <div
-                                                    style={
-                                                      Object {
-                                                        "height": "100%",
-                                                      }
-                                                    }
+                                                    className="loader"
+                                                    style={Object {}}
                                                   >
                                                     <input
                                                       node={
@@ -21436,11 +21192,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                       }
                                     >
                                       <div
-                                        style={
-                                          Object {
-                                            "height": "100%",
-                                          }
-                                        }
+                                        className="loader"
+                                        style={Object {}}
                                       >
                                         <input
                                           onBlur={[Function]}
@@ -21661,11 +21414,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter 1`] = `
                           }
                         >
                           <div
-                            style={
-                              Object {
-                                "height": "100%",
-                              }
-                            }
+                            className="loader"
+                            style={Object {}}
                           >
                             <input
                               onBlur={[Function]}
@@ -21880,11 +21630,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter on a mi
                           }
                         >
                           <div
-                            style={
-                              Object {
-                                "height": "100%",
-                              }
-                            }
+                            className="loader"
+                            style={Object {}}
                           >
                             <input
                               onBlur={[Function]}
@@ -22099,11 +21846,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter with fa
                           }
                         >
                           <div
-                            style={
-                              Object {
-                                "height": "100%",
-                              }
-                            }
+                            className="loader"
+                            style={Object {}}
                           >
                             <div
                               className="contexture-facet"
@@ -22487,11 +22231,8 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter with fi
                           }
                         >
                           <div
-                            style={
-                              Object {
-                                "height": "100%",
-                              }
-                            }
+                            className="loader"
+                            style={Object {}}
                           >
                             <input
                               onBlur={[Function]}
