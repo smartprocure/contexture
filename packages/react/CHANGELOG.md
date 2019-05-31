@@ -1,3 +1,7 @@
+# 1.48.13
+* TagsInput: Remove 100% height
+* StripedLoader: Remove 100% height
+* Storybook: Center TagsInput in the search bar in GreyVest
 
 # 1.48.12
 * Facet: apply options filter change on submit button click
