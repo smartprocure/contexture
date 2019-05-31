@@ -386,7 +386,7 @@ export let GVStyle = () => (
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet > .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -707,7 +707,7 @@ export let Adder = ModalFilterAdder({
 })
 
 export let Modal = defaultProps({ className: 'gv-body' })(DefaultModal)
-
+export let ButtonGroup = defaultProps({ className: 'gv-button-group' })(Flex)
 export let PagerItem = observer(({ active, disabled, ...x }) => (
   <span
     className={`gv-pager-item ${disabled ? 'disabled' : ''} ${
@@ -738,6 +738,7 @@ export let ExampleTypes = ExampleTypeConstructor({
   TagsInput,
   Icon,
   DateInput,
+  ButtonGroup,
 })
 export let Pager = props => (
   <ExampleTypes.ResultPager

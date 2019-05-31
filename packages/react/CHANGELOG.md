@@ -1,3 +1,7 @@
+
+# 1.48.12
+* Facet: apply options filter change on submit button click
+
 # 1.48.11
 * TagsInput: Accept style prop
 
