@@ -257,7 +257,13 @@ export default () => (
             Search Movies
           </ToggleFiltersHeader>
           <div className="gv-search-bar">
-            <Box>
+            <Box style={{
+              // vertically center the TagsQuery
+              display: 'flex',
+              justifyContent: 'center',
+              alignContent: 'stretch',
+              flexDirection: 'column'
+            }}>
               <TagsQuery tree={tree} path={['root', 'bar']} />
             </Box>
             <div className="gv-button-group">

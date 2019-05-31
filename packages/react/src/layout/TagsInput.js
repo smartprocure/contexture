@@ -85,7 +85,7 @@ let TagsInput = withState('state', 'setState', () =>
           _.map(addTag)
         )
       return (
-        <div className="tags-input" style={{ height: '100%', ...style }}>
+        <div className="tags-input" style={{ ...style }}>
           <Flex
             style={{
               cursor: 'text',
