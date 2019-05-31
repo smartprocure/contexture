@@ -344,7 +344,7 @@ exports[`Storyshots Components (Grey Vest)|Box Box 1`] = `
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -891,7 +891,7 @@ exports[`Storyshots Components (Grey Vest)|Button Active 1`] = `
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -1439,7 +1439,7 @@ exports[`Storyshots Components (Grey Vest)|Button As Div 1`] = `
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -1987,7 +1987,7 @@ exports[`Storyshots Components (Grey Vest)|Button Basic Usage 1`] = `
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -2535,7 +2535,7 @@ exports[`Storyshots Components (Grey Vest)|Button Primary 1`] = `
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -3083,7 +3083,7 @@ exports[`Storyshots Components (Grey Vest)|LinkButton LinkButton 1`] = `
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -3633,7 +3633,7 @@ exports[`Storyshots Components (Grey Vest)|Refs Default 1`] = `
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -4212,7 +4212,7 @@ exports[`Storyshots Components (Grey Vest)|Search Layout Basic 1`] = `
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -4768,7 +4768,7 @@ exports[`Storyshots Components (Grey Vest)|Search Layout Builder 1`] = `
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -5324,7 +5324,7 @@ exports[`Storyshots Components (Grey Vest)|Search Layout Results Only 1`] = `
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -5875,7 +5875,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Anonymous Values 1`] = `
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -6438,7 +6438,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Base Usage 1`] = `
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -7001,7 +7001,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Controlled 1`] = `
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -7572,7 +7572,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Custom TabList and TabPanel 1`] 
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -8143,7 +8143,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Docs 1`] = `
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -9133,7 +9133,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Tab Render Function 1`] = `
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -9696,7 +9696,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs TabLabel and TabContent 1`] = `
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -10259,7 +10259,7 @@ exports[`Storyshots Components (Grey Vest)|Tabs Uncontrolled with defaultValue 1
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -10822,7 +10822,7 @@ exports[`Storyshots Components (Grey Vest)|ToggleFiltersButton Basic Usage 1`] =
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -11782,7 +11782,7 @@ exports[`Storyshots Live Demos|IMDB Check List 1`] = `
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -12344,7 +12344,7 @@ exports[`Storyshots Live Demos|IMDB Grey Vest Theme 1`] = `
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -12749,28 +12749,41 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
                     Exclude
                   </label>
                 </div>
-                <input
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onFocus={[Function]}
-                  placeholder="Find..."
-                  style={
-                    Object {
-                      "background": "rgba(255, 255, 255, 0.7)",
-                      "border": "solid 1px #efefef",
-                      "borderRadius": "30px",
-                      "boxSizing": "border-box",
-                      "display": "block",
-                      "margin": "0 auto",
-                      "outline": "none",
-                      "padding": "5px",
-                      "textIndent": "5px",
-                      "transition": "background 0.3s",
-                      "width": "100%",
+                <div>
+                  <input
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onFocus={[Function]}
+                    onKeyPress={[Function]}
+                    placeholder="Find..."
+                    style={
+                      Object {
+                        "background": "rgba(255, 255, 255, 0.7)",
+                        "border": "solid 1px #efefef",
+                        "borderRadius": "30px",
+                        "boxSizing": "border-box",
+                        "display": "block",
+                        "margin": "0 auto",
+                        "outline": "none",
+                        "padding": "5px",
+                        "textIndent": "5px",
+                        "transition": "background 0.3s",
+                        "width": "100%",
+                      }
                     }
-                  }
-                  value=""
-                />
+                    value=""
+                  />
+                  <button
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "display": "none",
+                      }
+                    }
+                  >
+                    Submit
+                  </button>
+                </div>
                 <label
                   style={
                     Object {
@@ -12864,28 +12877,41 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
                     Exclude
                   </label>
                 </div>
-                <input
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onFocus={[Function]}
-                  placeholder="Find..."
-                  style={
-                    Object {
-                      "background": "rgba(255, 255, 255, 0.7)",
-                      "border": "solid 1px #efefef",
-                      "borderRadius": "30px",
-                      "boxSizing": "border-box",
-                      "display": "block",
-                      "margin": "0 auto",
-                      "outline": "none",
-                      "padding": "5px",
-                      "textIndent": "5px",
-                      "transition": "background 0.3s",
-                      "width": "100%",
+                <div>
+                  <input
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onFocus={[Function]}
+                    onKeyPress={[Function]}
+                    placeholder="Find..."
+                    style={
+                      Object {
+                        "background": "rgba(255, 255, 255, 0.7)",
+                        "border": "solid 1px #efefef",
+                        "borderRadius": "30px",
+                        "boxSizing": "border-box",
+                        "display": "block",
+                        "margin": "0 auto",
+                        "outline": "none",
+                        "padding": "5px",
+                        "textIndent": "5px",
+                        "transition": "background 0.3s",
+                        "width": "100%",
+                      }
                     }
-                  }
-                  value=""
-                />
+                    value=""
+                  />
+                  <button
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "display": "none",
+                      }
+                    }
+                  >
+                    Submit
+                  </button>
+                </div>
                 <label
                   style={
                     Object {
@@ -13436,7 +13462,7 @@ exports[`Storyshots Search Components (Grey Vest)|/TreePauseButton Falsey Trees 
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -13989,7 +14015,7 @@ exports[`Storyshots Search Components (Grey Vest)|/TreePauseButton Multiple Tree
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -14542,7 +14568,7 @@ exports[`Storyshots Search Components (Grey Vest)|/TreePauseButton One Tree 1`] 
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -15095,7 +15121,7 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -15905,7 +15931,7 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet &gt; .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -16616,28 +16642,41 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
                   Exclude
                 </label>
               </div>
-              <input
-                onBlur={[Function]}
-                onChange={[Function]}
-                onFocus={[Function]}
-                placeholder="Find..."
-                style={
-                  Object {
-                    "background": "rgba(255, 255, 255, 0.7)",
-                    "border": "solid 1px #efefef",
-                    "borderRadius": "30px",
-                    "boxSizing": "border-box",
-                    "display": "block",
-                    "margin": "0 auto",
-                    "outline": "none",
-                    "padding": "5px",
-                    "textIndent": "5px",
-                    "transition": "background 0.3s",
-                    "width": "100%",
+              <div>
+                <input
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onFocus={[Function]}
+                  onKeyPress={[Function]}
+                  placeholder="Find..."
+                  style={
+                    Object {
+                      "background": "rgba(255, 255, 255, 0.7)",
+                      "border": "solid 1px #efefef",
+                      "borderRadius": "30px",
+                      "boxSizing": "border-box",
+                      "display": "block",
+                      "margin": "0 auto",
+                      "outline": "none",
+                      "padding": "5px",
+                      "textIndent": "5px",
+                      "transition": "background 0.3s",
+                      "width": "100%",
+                    }
                   }
-                }
-                value=""
-              />
+                  value=""
+                />
+                <button
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "display": "none",
+                    }
+                  }
+                >
+                  Submit
+                </button>
+              </div>
               <label
                 style={
                   Object {
@@ -16848,28 +16887,41 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
                   Exclude
                 </label>
               </div>
-              <input
-                onBlur={[Function]}
-                onChange={[Function]}
-                onFocus={[Function]}
-                placeholder="Find..."
-                style={
-                  Object {
-                    "background": "rgba(255, 255, 255, 0.7)",
-                    "border": "solid 1px #efefef",
-                    "borderRadius": "30px",
-                    "boxSizing": "border-box",
-                    "display": "block",
-                    "margin": "0 auto",
-                    "outline": "none",
-                    "padding": "5px",
-                    "textIndent": "5px",
-                    "transition": "background 0.3s",
-                    "width": "100%",
+              <div>
+                <input
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onFocus={[Function]}
+                  onKeyPress={[Function]}
+                  placeholder="Find..."
+                  style={
+                    Object {
+                      "background": "rgba(255, 255, 255, 0.7)",
+                      "border": "solid 1px #efefef",
+                      "borderRadius": "30px",
+                      "boxSizing": "border-box",
+                      "display": "block",
+                      "margin": "0 auto",
+                      "outline": "none",
+                      "padding": "5px",
+                      "textIndent": "5px",
+                      "transition": "background 0.3s",
+                      "width": "100%",
+                    }
                   }
-                }
-                value=""
-              />
+                  value=""
+                />
+                <button
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "display": "none",
+                    }
+                  }
+                >
+                  Submit
+                </button>
+              </div>
               <label
                 style={
                   Object {
@@ -19862,28 +19914,41 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                           Exclude
                                                         </label>
                                                       </div>
-                                                      <input
-                                                        onBlur={[Function]}
-                                                        onChange={[Function]}
-                                                        onFocus={[Function]}
-                                                        placeholder="Find..."
-                                                        style={
-                                                          Object {
-                                                            "background": "rgba(255, 255, 255, 0.7)",
-                                                            "border": "solid 1px #efefef",
-                                                            "borderRadius": "30px",
-                                                            "boxSizing": "border-box",
-                                                            "display": "block",
-                                                            "margin": "0 auto",
-                                                            "outline": "none",
-                                                            "padding": "5px",
-                                                            "textIndent": "5px",
-                                                            "transition": "background 0.3s",
-                                                            "width": "100%",
+                                                      <div>
+                                                        <input
+                                                          onBlur={[Function]}
+                                                          onChange={[Function]}
+                                                          onFocus={[Function]}
+                                                          onKeyPress={[Function]}
+                                                          placeholder="Find..."
+                                                          style={
+                                                            Object {
+                                                              "background": "rgba(255, 255, 255, 0.7)",
+                                                              "border": "solid 1px #efefef",
+                                                              "borderRadius": "30px",
+                                                              "boxSizing": "border-box",
+                                                              "display": "block",
+                                                              "margin": "0 auto",
+                                                              "outline": "none",
+                                                              "padding": "5px",
+                                                              "textIndent": "5px",
+                                                              "transition": "background 0.3s",
+                                                              "width": "100%",
+                                                            }
                                                           }
-                                                        }
-                                                        value=""
-                                                      />
+                                                          value=""
+                                                        />
+                                                        <button
+                                                          onClick={[Function]}
+                                                          style={
+                                                            Object {
+                                                              "display": "none",
+                                                            }
+                                                          }
+                                                        >
+                                                          Submit
+                                                        </button>
+                                                      </div>
                                                       <label
                                                         style={
                                                           Object {
@@ -22350,28 +22415,41 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter with fa
                                   Exclude
                                 </label>
                               </div>
-                              <input
-                                onBlur={[Function]}
-                                onChange={[Function]}
-                                onFocus={[Function]}
-                                placeholder="Find..."
-                                style={
-                                  Object {
-                                    "background": "rgba(255, 255, 255, 0.7)",
-                                    "border": "solid 1px #efefef",
-                                    "borderRadius": "30px",
-                                    "boxSizing": "border-box",
-                                    "display": "block",
-                                    "margin": "0 auto",
-                                    "outline": "none",
-                                    "padding": "5px",
-                                    "textIndent": "5px",
-                                    "transition": "background 0.3s",
-                                    "width": "100%",
+                              <div>
+                                <input
+                                  onBlur={[Function]}
+                                  onChange={[Function]}
+                                  onFocus={[Function]}
+                                  onKeyPress={[Function]}
+                                  placeholder="Find..."
+                                  style={
+                                    Object {
+                                      "background": "rgba(255, 255, 255, 0.7)",
+                                      "border": "solid 1px #efefef",
+                                      "borderRadius": "30px",
+                                      "boxSizing": "border-box",
+                                      "display": "block",
+                                      "margin": "0 auto",
+                                      "outline": "none",
+                                      "padding": "5px",
+                                      "textIndent": "5px",
+                                      "transition": "background 0.3s",
+                                      "width": "100%",
+                                    }
                                   }
-                                }
-                                value=""
-                              />
+                                  value=""
+                                />
+                                <button
+                                  onClick={[Function]}
+                                  style={
+                                    Object {
+                                      "display": "none",
+                                    }
+                                  }
+                                >
+                                  Submit
+                                </button>
+                              </div>
                               <label
                                 style={
                                   Object {

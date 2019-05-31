@@ -77,6 +77,7 @@ let TagsInput = withState('state', 'setState', () =>
       placeholder = 'Search...',
       splitCommas,
       PopoverContents,
+      style,
     }) => {
       if (splitCommas)
         addTag = _.flow(
@@ -84,7 +85,7 @@ let TagsInput = withState('state', 'setState', () =>
           _.map(addTag)
         )
       return (
-        <div className="tags-input" style={{ height: '100%' }}>
+        <div className="tags-input" style={{ height: '100%', ...style }}>
           <Flex
             style={{
               cursor: 'text',

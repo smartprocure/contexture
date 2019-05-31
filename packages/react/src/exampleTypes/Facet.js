@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
-import { observer } from 'mobx-react'
+import { observer, Observer } from 'mobx-react'
 import { exampleTypes } from 'contexture-client'
 import { Flex } from '../layout/Flex'
 import injectTreeNode from '../utils/injectTreeNode'
@@ -53,6 +53,37 @@ let SelectAll = observer(({ node, tree, Checkbox }) => {
     </label>
   )
 })
+
+let FacetOptionsFilter = ({ tree, node, TextInput, Button, ButtonGroup }) => {
+  let [val, setVal] = useState(node.optionsFilter)
+  let buttonEnabled = val !== node.optionsFilter
+  let submit = () =>
+    buttonEnabled && tree.mutate(node.path, { optionsFilter: val })
+  return (
+    <Observer>
+      {() => (
+        <ButtonGroup>
+          <TextInput
+            value={val}
+            onChange={e => {
+              setVal(e.target.value)
+            }}
+            onKeyPress={e => e.key === 'Enter' && submit()}
+            onBlur={submit}
+            placeholder="Find..."
+          />
+          <Button
+            style={{ display: buttonEnabled ? 'block' : 'none' }}
+            onClick={submit}
+          >
+            Submit
+          </Button>
+        </ButtonGroup>
+      )}
+    </Observer>
+  )
+}
+
 let Facet = injectTreeNode(
   observer(
     ({
@@ -60,11 +91,13 @@ let Facet = injectTreeNode(
       node,
       hide = {},
       TextInput = 'input',
+      Button = 'button',
       Checkbox = CheckboxDefault,
       RadioList = RadioListDefault,
       display = x => x,
       displayBlank = () => <i>Not Specified</i>,
       formatCount = x => x,
+      ButtonGroup = 'div',
     }) => (
       <div className="contexture-facet">
         <RadioList
@@ -73,12 +106,12 @@ let Facet = injectTreeNode(
           options={F.autoLabelOptions(['include', 'exclude'])}
         />
         {!hide.facetFilter && (
-          <TextInput
-            value={node.optionsFilter}
-            onChange={e =>
-              tree.mutate(node.path, { optionsFilter: e.target.value })
-            }
-            placeholder="Find..."
+          <FacetOptionsFilter
+            tree={tree}
+            node={node}
+            TextInput={TextInput}
+            Button={Button}
+            ButtonGroup={ButtonGroup}
           />
         )}
         <SelectAll node={node} tree={tree} Checkbox={Checkbox} />
