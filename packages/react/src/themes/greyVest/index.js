@@ -350,7 +350,11 @@ export let GVStyle = () => (
         /*background: #f6f6f6;*/
       }
       .gv-search-bar .gv-box {
-        padding: 0;
+        padding: 8px 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: stretch;
       }
       .gv-search-bar > .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
