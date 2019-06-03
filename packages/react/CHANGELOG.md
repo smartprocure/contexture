@@ -1,4 +1,7 @@
 # 1.48.13
+* Removed Jest Snapshot tests.
+
+# 1.48.13
 * Flex: Add extra props for easier styling
 
 # 1.48.12
