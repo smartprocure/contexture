@@ -12561,7 +12561,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
     }
   >
     <div
-      className="loader"
       style={Object {}}
     >
       <input
@@ -12614,7 +12613,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
               MetaScore
             </b>
             <div
-              className="loader"
               style={Object {}}
             >
               <div
@@ -12694,7 +12692,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
               Genre
             </b>
             <div
-              className="loader"
               style={Object {}}
             >
               <div
@@ -12812,7 +12809,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
               Actors
             </b>
             <div
-              className="loader"
               style={Object {}}
             >
               <div
@@ -12925,7 +12921,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
       </div>
       <div>
         <div
-          className="loader"
           style={Object {}}
         >
           <div
@@ -12948,7 +12943,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
         >
           <h3>
             <div
-              className="loader"
               style={
                 Object {
                   "display": "inline-block",
@@ -12960,7 +12954,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
           </h3>
         </div>
         <div
-          className="loader"
           style={Object {}}
         >
           <div
@@ -12982,7 +12975,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
           }
         >
           <div
-            className="loader"
             style={Object {}}
           />
         </div>
@@ -15277,7 +15269,6 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
     
   </style>
   <div
-    className="loader"
     style={Object {}}
   >
     <div
@@ -16068,7 +16059,6 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
     }
   >
     <div
-      className="loader"
       style={Object {}}
     >
       <div
@@ -16328,7 +16318,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
     }
   >
     <div
-      className="loader"
       style={Object {}}
     >
       <input
@@ -16380,7 +16369,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           }
         >
           <div
-            className="loader"
             style={Object {}}
           >
             <div
@@ -16426,7 +16414,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           }
         >
           <div
-            className="loader"
             style={Object {}}
           >
             <input
@@ -16483,7 +16470,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           }
         >
           <div
-            className="loader"
             style={Object {}}
           >
             <div
@@ -16718,7 +16704,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           }
         >
           <div
-            className="loader"
             style={Object {}}
           >
             <div
@@ -16953,7 +16938,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           }
         >
           <div
-            className="loader"
             style={Object {}}
           >
             <div
@@ -17028,7 +17012,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           }
         >
           <div
-            className="loader"
             style={Object {}}
           >
             <div
@@ -17099,7 +17082,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           style={Object {}}
         >
           <div
-            className="loader"
             style={Object {}}
           >
             <div
@@ -17297,7 +17279,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           }
         >
           <div
-            className="loader"
             style={Object {}}
           >
             <div
@@ -17435,7 +17416,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           }
         >
           <div
-            className="loader"
             style={
               Object {
                 "display": "inline-block",
@@ -17458,7 +17438,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
             }
           >
             <div
-              className="loader"
               style={Object {}}
             >
               <table>
@@ -17667,7 +17646,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Geo filter & HERE
       }
     >
       <div
-        className="loader"
         style={Object {}}
       >
         <div
@@ -17874,7 +17852,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/ResultTable Custo
         
   </style>
   <div
-    className="loader"
     style={Object {}}
   >
     <table
@@ -18093,7 +18070,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/ResultTable Displ
         
   </style>
   <div
-    className="loader"
     style={Object {}}
   >
     <table
@@ -18162,7 +18138,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/ResultTable Displ
 
 exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Default 1`] = `
 <div
-  className="loader"
   style={Object {}}
 >
   <div
@@ -18378,7 +18353,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Respon
   }
 >
   <div
-    className="loader"
     style={Object {}}
   >
     <div
@@ -18589,7 +18563,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Respon
 exports[`Storyshots Search Components (Unthemed)|FilterAdder Example 1`] = `
 <div>
   <div
-    className="loader"
     style={Object {}}
   >
     <select
@@ -18615,7 +18588,6 @@ exports[`Storyshots Search Components (Unthemed)|FilterAdder Example 1`] = `
 
 exports[`Storyshots Search Components (Unthemed)|FilterAdder With NestedPickerModal 1`] = `
 <div
-  className="loader"
   style={Object {}}
 >
   <div>
@@ -18630,7 +18602,6 @@ exports[`Storyshots Search Components (Unthemed)|FilterAdder With NestedPickerMo
 
 exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
 <div
-  className="loader"
   style={Object {}}
 >
   <div>
@@ -18638,7 +18609,6 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
       className="filter-list-item"
     >
       <div
-        className="loader"
         style={Object {}}
       >
         <div
@@ -18670,7 +18640,6 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
       className="filter-list-item"
     >
       <div
-        className="loader"
         style={Object {}}
       >
         <div
@@ -18702,7 +18671,6 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
       className="filter-list-item"
     >
       <div
-        className="loader"
         style={Object {}}
       >
         <div
@@ -18871,7 +18839,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                           }
                         >
                           <div
-                            className="loader"
                             style={Object {}}
                           >
                             <input
@@ -19132,7 +19099,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                       }
                                     >
                                       <div
-                                        className="loader"
                                         style={Object {}}
                                       >
                                         <input
@@ -19332,7 +19298,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                       }
                                     >
                                       <div
-                                        className="loader"
                                         style={Object {}}
                                       >
                                         <input
@@ -19594,7 +19559,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                   }
                                                 >
                                                   <div
-                                                    className="loader"
                                                     style={Object {}}
                                                   >
                                                     <div
@@ -19877,7 +19841,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                   }
                                                 >
                                                   <div
-                                                    className="loader"
                                                     style={Object {}}
                                                   >
                                                     <input
@@ -20089,7 +20052,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                           }
                         >
                           <div
-                            className="loader"
                             style={Object {}}
                           >
                             <input
@@ -20370,7 +20332,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                       }
                                     >
                                       <div
-                                        className="loader"
                                         style={Object {}}
                                       >
                                         <div
@@ -20611,7 +20572,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                       }
                                     >
                                       <div
-                                        className="loader"
                                         style={Object {}}
                                       >
                                         <input
@@ -20954,7 +20914,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                   }
                                                 >
                                                   <div
-                                                    className="loader"
                                                     style={Object {}}
                                                   >
                                                     <input
@@ -21155,7 +21114,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                   }
                                                 >
                                                   <div
-                                                    className="loader"
                                                     style={Object {}}
                                                   >
                                                     <input
@@ -21400,7 +21358,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                       }
                                     >
                                       <div
-                                        className="loader"
                                         style={Object {}}
                                       >
                                         <input
@@ -21622,7 +21579,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter 1`] = `
                           }
                         >
                           <div
-                            className="loader"
                             style={Object {}}
                           >
                             <input
@@ -21838,7 +21794,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter on a mi
                           }
                         >
                           <div
-                            className="loader"
                             style={Object {}}
                           >
                             <input
@@ -22054,7 +22009,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter with fa
                           }
                         >
                           <div
-                            className="loader"
                             style={Object {}}
                           >
                             <div
@@ -22439,7 +22393,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter with fi
                           }
                         >
                           <div
-                            className="loader"
                             style={Object {}}
                           >
                             <input
