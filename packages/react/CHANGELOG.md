@@ -1,3 +1,5 @@
+# 1.48.13
+* Flex: Add extra props for easier styling
 
 # 1.48.12
 * Facet: apply options filter change on submit button click

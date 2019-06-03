@@ -7771,8 +7771,12 @@ exports[`Storyshots Components (Grey Vest)|Tabs Custom TabList and TabPanel 1`] 
     className="gv-button-radio"
     style={
       Object {
+        "alignContent": undefined,
         "alignItems": "baseline",
         "display": "flex",
+        "flexDirection": false,
+        "flexWrap": false,
+        "justifyContent": undefined,
       }
     }
   >
@@ -11045,6 +11049,89 @@ exports[`Storyshots Components (Unthemed)|Layout Awaiter 1`] = `
 </div>
 `;
 
+exports[`Storyshots Components (Unthemed)|Layout Flex 1`] = `
+Array [
+  <div
+    style={
+      Object {
+        "alignContent": undefined,
+        "alignItems": "center",
+        "display": "flex",
+        "flexDirection": "column",
+        "flexWrap": false,
+        "justifyContent": undefined,
+      }
+    }
+  >
+    <h1>
+      As button
+    </h1>
+    <button
+      style={
+        Object {
+          "alignContent": undefined,
+          "alignItems": undefined,
+          "backgroundColor": "lightblue",
+          "display": "flex",
+          "flexDirection": false,
+          "flexWrap": "wrap",
+          "fontSize": "2em",
+          "justifyContent": "center",
+          "maxWidth": 300,
+        }
+      }
+    >
+      <div>
+        Item1
+      </div>
+      <div>
+        Item2
+      </div>
+      <div>
+        Item2
+      </div>
+      <div>
+        Item4
+      </div>
+      <div>
+        Item5
+      </div>
+      <div>
+        Item6
+      </div>
+    </button>
+  </div>,
+  <div
+    style={
+      Object {
+        "alignContent": undefined,
+        "alignItems": "center",
+        "display": "flex",
+        "flexDirection": "column",
+        "flexWrap": false,
+        "justifyContent": undefined,
+      }
+    }
+  >
+    <h1>
+      No children
+    </h1>
+    <div
+      style={
+        Object {
+          "alignContent": undefined,
+          "alignItems": undefined,
+          "display": "flex",
+          "flexDirection": false,
+          "flexWrap": false,
+          "justifyContent": undefined,
+        }
+      }
+    />
+  </div>,
+]
+`;
+
 exports[`Storyshots Components (Unthemed)|Layout Highlight 1`] = `
 <div>
   <div>
@@ -12545,8 +12632,12 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
                 <div
                   style={
                     Object {
+                      "alignContent": undefined,
                       "alignItems": "center",
                       "display": "flex",
+                      "flexDirection": false,
+                      "flexWrap": false,
+                      "justifyContent": undefined,
                     }
                   }
                 >
@@ -12628,8 +12719,11 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
                 <div
                   style={
                     Object {
+                      "alignContent": undefined,
                       "alignItems": "baseline",
                       "display": "flex",
+                      "flexDirection": false,
+                      "flexWrap": false,
                       "justifyContent": "space-between",
                     }
                   }
@@ -12720,7 +12814,11 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
                   className="contexture-facet-cardinality"
                   style={
                     Object {
+                      "alignContent": undefined,
+                      "alignItems": undefined,
                       "display": "flex",
+                      "flexDirection": false,
+                      "flexWrap": false,
                       "justifyContent": "space-between",
                     }
                   }
@@ -12749,8 +12847,11 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
                 <div
                   style={
                     Object {
+                      "alignContent": undefined,
                       "alignItems": "baseline",
                       "display": "flex",
+                      "flexDirection": false,
+                      "flexWrap": false,
                       "justifyContent": "space-between",
                     }
                   }
@@ -12841,7 +12942,11 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
                   className="contexture-facet-cardinality"
                   style={
                     Object {
+                      "alignContent": undefined,
+                      "alignItems": undefined,
                       "display": "flex",
+                      "flexDirection": false,
+                      "flexWrap": false,
                       "justifyContent": "space-between",
                     }
                   }
@@ -12862,8 +12967,11 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
           <div
             style={
               Object {
+                "alignContent": undefined,
                 "alignItems": "flex-end",
                 "display": "flex",
+                "flexDirection": false,
+                "flexWrap": false,
                 "justifyContent": "center",
               }
             }
@@ -12872,7 +12980,11 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
         <div
           style={
             Object {
+              "alignContent": undefined,
+              "alignItems": undefined,
               "display": "flex",
+              "flexDirection": false,
+              "flexWrap": false,
               "justifyContent": "space-around",
             }
           }
@@ -12900,7 +13012,10 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
           <div
             style={
               Object {
+                "alignContent": undefined,
+                "alignItems": undefined,
                 "display": "flex",
+                "flexDirection": false,
                 "flexWrap": "wrap",
                 "justifyContent": "center",
               }
@@ -12910,7 +13025,11 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
         <div
           style={
             Object {
+              "alignContent": undefined,
+              "alignItems": undefined,
               "display": "flex",
+              "flexDirection": false,
+              "flexWrap": false,
               "justifyContent": "space-around",
             }
           }
@@ -15215,11 +15334,14 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
       <div
         style={
           Object {
+            "alignContent": undefined,
             "alignItems": "center",
             "cursor": "text",
             "display": "flex",
+            "flexDirection": false,
             "flexWrap": "wrap",
             "height": "100%",
+            "justifyContent": undefined,
             "padding": 3,
           }
         }
@@ -15242,8 +15364,12 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
           <div
             style={
               Object {
+                "alignContent": undefined,
                 "alignItems": "center",
                 "display": "flex",
+                "flexDirection": false,
+                "flexWrap": false,
+                "justifyContent": undefined,
               }
             }
           >
@@ -15282,8 +15408,12 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
           <div
             style={
               Object {
+                "alignContent": undefined,
                 "alignItems": "center",
                 "display": "flex",
+                "flexDirection": false,
+                "flexWrap": false,
+                "justifyContent": undefined,
               }
             }
           >
@@ -15322,8 +15452,12 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
           <div
             style={
               Object {
+                "alignContent": undefined,
                 "alignItems": "center",
                 "display": "flex",
+                "flexDirection": false,
+                "flexWrap": false,
+                "justifyContent": undefined,
               }
             }
           >
@@ -15362,8 +15496,12 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
           <div
             style={
               Object {
+                "alignContent": undefined,
                 "alignItems": "center",
                 "display": "flex",
+                "flexDirection": false,
+                "flexWrap": false,
+                "justifyContent": undefined,
               }
             }
           >
@@ -15402,8 +15540,12 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
           <div
             style={
               Object {
+                "alignContent": undefined,
                 "alignItems": "center",
                 "display": "flex",
+                "flexDirection": false,
+                "flexWrap": false,
+                "justifyContent": undefined,
               }
             }
           >
@@ -16009,11 +16151,14 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
         <div
           style={
             Object {
+              "alignContent": undefined,
               "alignItems": "center",
               "cursor": "text",
               "display": "flex",
+              "flexDirection": false,
               "flexWrap": "wrap",
               "height": "100%",
+              "justifyContent": undefined,
               "padding": 3,
             }
           }
@@ -16036,8 +16181,12 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
             <div
               style={
                 Object {
+                  "alignContent": undefined,
                   "alignItems": "center",
                   "display": "flex",
+                  "flexDirection": false,
+                  "flexWrap": false,
+                  "justifyContent": undefined,
                 }
               }
             >
@@ -16076,8 +16225,12 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
             <div
               style={
                 Object {
+                  "alignContent": undefined,
                   "alignItems": "center",
                   "display": "flex",
+                  "flexDirection": false,
+                  "flexWrap": false,
+                  "justifyContent": undefined,
                 }
               }
             >
@@ -16116,8 +16269,12 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
             <div
               style={
                 Object {
+                  "alignContent": undefined,
                   "alignItems": "center",
                   "display": "flex",
+                  "flexDirection": false,
+                  "flexWrap": false,
+                  "justifyContent": undefined,
                 }
               }
             >
@@ -16156,8 +16313,12 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
             <div
               style={
                 Object {
+                  "alignContent": undefined,
                   "alignItems": "center",
                   "display": "flex",
+                  "flexDirection": false,
+                  "flexWrap": false,
+                  "justifyContent": undefined,
                 }
               }
             >
@@ -16196,8 +16357,12 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
             <div
               style={
                 Object {
+                  "alignContent": undefined,
                   "alignItems": "center",
                   "display": "flex",
+                  "flexDirection": false,
+                  "flexWrap": false,
+                  "justifyContent": undefined,
                 }
               }
             >
@@ -16295,7 +16460,12 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
     <div
       style={
         Object {
+          "alignContent": undefined,
+          "alignItems": undefined,
           "display": "flex",
+          "flexDirection": false,
+          "flexWrap": false,
+          "justifyContent": undefined,
         }
       }
     >
@@ -16331,11 +16501,14 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
               <div
                 style={
                   Object {
+                    "alignContent": undefined,
                     "alignItems": "center",
                     "cursor": "text",
                     "display": "flex",
+                    "flexDirection": false,
                     "flexWrap": "wrap",
                     "height": "100%",
+                    "justifyContent": undefined,
                     "padding": 3,
                   }
                 }
@@ -16439,8 +16612,11 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
               <div
                 style={
                   Object {
+                    "alignContent": undefined,
                     "alignItems": "baseline",
                     "display": "flex",
+                    "flexDirection": false,
+                    "flexWrap": false,
                     "justifyContent": "space-between",
                   }
                 }
@@ -16649,7 +16825,11 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
                 className="contexture-facet-cardinality"
                 style={
                   Object {
+                    "alignContent": undefined,
+                    "alignItems": undefined,
                     "display": "flex",
+                    "flexDirection": false,
+                    "flexWrap": false,
                     "justifyContent": "space-between",
                   }
                 }
@@ -16677,8 +16857,11 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
               <div
                 style={
                   Object {
+                    "alignContent": undefined,
                     "alignItems": "baseline",
                     "display": "flex",
+                    "flexDirection": false,
+                    "flexWrap": false,
                     "justifyContent": "space-between",
                   }
                 }
@@ -16887,7 +17070,11 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
                 className="contexture-facet-cardinality"
                 style={
                   Object {
+                    "alignContent": undefined,
+                    "alignItems": undefined,
                     "display": "flex",
+                    "flexDirection": false,
+                    "flexWrap": false,
                     "justifyContent": "space-between",
                   }
                 }
@@ -16915,8 +17102,12 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
               <div
                 style={
                   Object {
+                    "alignContent": undefined,
                     "alignItems": "center",
                     "display": "flex",
+                    "flexDirection": false,
+                    "flexWrap": false,
+                    "justifyContent": undefined,
                   }
                 }
               >
@@ -16993,8 +17184,12 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
               <div
                 style={
                   Object {
+                    "alignContent": undefined,
                     "alignItems": "center",
                     "display": "flex",
+                    "flexDirection": false,
+                    "flexWrap": false,
+                    "justifyContent": undefined,
                   }
                 }
               >
@@ -17064,8 +17259,13 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
             <div
               style={
                 Object {
+                  "alignContent": undefined,
+                  "alignItems": undefined,
                   "display": "flex",
+                  "flexDirection": false,
                   "flexFlow": "column",
+                  "flexWrap": false,
+                  "justifyContent": undefined,
                 }
               }
             >
@@ -17265,8 +17465,11 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
             <div
               style={
                 Object {
+                  "alignContent": undefined,
                   "alignItems": "flex-end",
                   "display": "flex",
+                  "flexDirection": false,
+                  "flexWrap": false,
                   "justifyContent": "center",
                 }
               }
@@ -17413,8 +17616,11 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
           <div
             style={
               Object {
+                "alignContent": undefined,
                 "alignItems": "baseline",
                 "display": "flex",
+                "flexDirection": false,
+                "flexWrap": false,
                 "justifyContent": "center",
               }
             }
@@ -17619,8 +17825,13 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Geo filter & HERE
   <div
     style={
       Object {
+        "alignContent": undefined,
+        "alignItems": undefined,
         "display": "flex",
+        "flexDirection": false,
         "flexFlow": "column wrap",
+        "flexWrap": false,
+        "justifyContent": undefined,
       }
     }
   >
@@ -17641,8 +17852,13 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Geo filter & HERE
         <div
           style={
             Object {
+              "alignContent": undefined,
+              "alignItems": undefined,
               "display": "flex",
+              "flexDirection": false,
               "flexFlow": "column",
+              "flexWrap": false,
+              "justifyContent": undefined,
             }
           }
         >
@@ -18153,11 +18369,14 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Defaul
     <div
       style={
         Object {
+          "alignContent": undefined,
           "alignItems": "center",
           "cursor": "text",
           "display": "flex",
+          "flexDirection": false,
           "flexWrap": "wrap",
           "height": "100%",
+          "justifyContent": undefined,
           "padding": 3,
         }
       }
@@ -18180,8 +18399,12 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Defaul
         <div
           style={
             Object {
+              "alignContent": undefined,
               "alignItems": "center",
               "display": "flex",
+              "flexDirection": false,
+              "flexWrap": false,
+              "justifyContent": undefined,
             }
           }
         >
@@ -18222,8 +18445,12 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Defaul
         <div
           style={
             Object {
+              "alignContent": undefined,
               "alignItems": "center",
               "display": "flex",
+              "flexDirection": false,
+              "flexWrap": false,
+              "justifyContent": undefined,
             }
           }
         >
@@ -18264,8 +18491,12 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Defaul
         <div
           style={
             Object {
+              "alignContent": undefined,
               "alignItems": "center",
               "display": "flex",
+              "flexDirection": false,
+              "flexWrap": false,
+              "justifyContent": undefined,
             }
           }
         >
@@ -18306,8 +18537,12 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Defaul
         <div
           style={
             Object {
+              "alignContent": undefined,
               "alignItems": "center",
               "display": "flex",
+              "flexDirection": false,
+              "flexWrap": false,
+              "justifyContent": undefined,
             }
           }
         >
@@ -18376,11 +18611,14 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Respon
       <div
         style={
           Object {
+            "alignContent": undefined,
             "alignItems": "center",
             "cursor": "text",
             "display": "flex",
+            "flexDirection": false,
             "flexWrap": "wrap",
             "height": "100%",
+            "justifyContent": undefined,
             "padding": 3,
           }
         }
@@ -18403,8 +18641,12 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Respon
           <div
             style={
               Object {
+                "alignContent": undefined,
                 "alignItems": "center",
                 "display": "flex",
+                "flexDirection": false,
+                "flexWrap": false,
+                "justifyContent": undefined,
               }
             }
           >
@@ -18445,8 +18687,12 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Respon
           <div
             style={
               Object {
+                "alignContent": undefined,
                 "alignItems": "center",
                 "display": "flex",
+                "flexDirection": false,
+                "flexWrap": false,
+                "justifyContent": undefined,
               }
             }
           >
@@ -18487,8 +18733,12 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Respon
           <div
             style={
               Object {
+                "alignContent": undefined,
                 "alignItems": "center",
                 "display": "flex",
+                "flexDirection": false,
+                "flexWrap": false,
+                "justifyContent": undefined,
               }
             }
           >
@@ -18529,8 +18779,12 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Respon
           <div
             style={
               Object {
+                "alignContent": undefined,
                 "alignItems": "center",
                 "display": "flex",
+                "flexDirection": false,
+                "flexWrap": false,
+                "justifyContent": undefined,
               }
             }
           >
@@ -18646,9 +18900,12 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
           onClick={[Function]}
           style={
             Object {
+              "alignContent": undefined,
               "alignItems": "center",
               "cursor": "pointer",
               "display": "flex",
+              "flexDirection": false,
+              "flexWrap": false,
               "justifyContent": "space-between",
             }
           }
@@ -18681,9 +18938,12 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
           onClick={[Function]}
           style={
             Object {
+              "alignContent": undefined,
               "alignItems": "center",
               "cursor": "pointer",
               "display": "flex",
+              "flexDirection": false,
+              "flexWrap": false,
               "justifyContent": "space-between",
             }
           }
@@ -18716,9 +18976,12 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
           onClick={[Function]}
           style={
             Object {
+              "alignContent": undefined,
               "alignItems": "center",
               "cursor": "pointer",
               "display": "flex",
+              "flexDirection": false,
+              "flexWrap": false,
               "justifyContent": "space-between",
             }
           }
@@ -19621,8 +19884,11 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                       <div
                                                         style={
                                                           Object {
+                                                            "alignContent": undefined,
                                                             "alignItems": "baseline",
                                                             "display": "flex",
+                                                            "flexDirection": false,
+                                                            "flexWrap": false,
                                                             "justifyContent": "space-between",
                                                           }
                                                         }
@@ -19713,7 +19979,11 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                         className="contexture-facet-cardinality"
                                                         style={
                                                           Object {
+                                                            "alignContent": undefined,
+                                                            "alignItems": undefined,
                                                             "display": "flex",
+                                                            "flexDirection": false,
+                                                            "flexWrap": false,
                                                             "justifyContent": "space-between",
                                                           }
                                                         }
@@ -20406,8 +20676,12 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                           <div
                                             style={
                                               Object {
+                                                "alignContent": undefined,
                                                 "alignItems": "center",
                                                 "display": "flex",
+                                                "flexDirection": false,
+                                                "flexWrap": false,
+                                                "justifyContent": undefined,
                                               }
                                             }
                                           >
@@ -22111,8 +22385,11 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter with fa
                               <div
                                 style={
                                   Object {
+                                    "alignContent": undefined,
                                     "alignItems": "baseline",
                                     "display": "flex",
+                                    "flexDirection": false,
+                                    "flexWrap": false,
                                     "justifyContent": "space-between",
                                   }
                                 }
@@ -22261,7 +22538,11 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter with fa
                                 className="contexture-facet-cardinality"
                                 style={
                                   Object {
+                                    "alignContent": undefined,
+                                    "alignItems": undefined,
                                     "display": "flex",
+                                    "flexDirection": false,
+                                    "flexWrap": false,
                                     "justifyContent": "space-between",
                                   }
                                 }
