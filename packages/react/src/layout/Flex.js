@@ -1,6 +1,25 @@
 import React from 'react'
 
-// TODO: align items/content/justify/etc support
-export let Flex = ({ style, ...props }) => (
-  <div style={{ display: 'flex', ...style }} {...props} />
+export let Flex = ({
+  as: Component = 'div',
+  style,
+  alignItems,
+  alignContent,
+  justifyContent,
+  wrap = false,
+  column = false,
+  ...props
+}) => (
+  <Component
+    style={{
+      display: 'flex',
+      flexWrap: wrap && 'wrap',
+      flexDirection: column && 'column',
+      alignItems,
+      justifyContent,
+      alignContent,
+      ...style,
+    }}
+    {...props}
+  />
 )
