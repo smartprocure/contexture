@@ -1,3 +1,6 @@
+# 1.49.0
+* New grey vest component: ErrorBlock
+
 # 1.48.14
 * Removed Jest Snapshot tests.
 
