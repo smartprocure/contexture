@@ -519,6 +519,13 @@ export let GVStyle = () => (
       .gv-text-error {
         color: #D75050;
       }
+      .gv-block-error {
+        margin: 15px 0;
+        color: #D75050;
+        background-color: #D7505011;
+        padding: 12px;
+        border-radius: 5px;
+      }
 
       .gv-body .labeled-checkbox {
         display: flex;
