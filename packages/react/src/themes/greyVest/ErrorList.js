@@ -5,9 +5,12 @@ import ErrorText from './ErrorText'
 
 let ErrorList = ({ block = false, children }) =>
   _.map(
-      e => block
-        ? <ErrorBlock key={e}>{e}</ErrorBlock>
-        : <ErrorText key={e}>{e}</ErrorText>,
-      _.castArray(children)
-    )
+    e =>
+      block ? (
+        <ErrorBlock key={e}>{e}</ErrorBlock>
+      ) : (
+        <ErrorText key={e}>{e}</ErrorText>
+      ),
+    _.castArray(children)
+  )
 export default ErrorList
