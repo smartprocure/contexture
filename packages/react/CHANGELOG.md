@@ -1,3 +1,8 @@
+# 1.49.1
+* TagsInput: Remove 100% height
+* StripedLoader: Remove 100% height
+* Storybook: Center TagsInput in the search bar in GreyVest
+
 # 1.49.0
 * New grey vest component: ErrorBlock
 
