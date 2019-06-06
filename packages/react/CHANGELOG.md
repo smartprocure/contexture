@@ -1,7 +1,16 @@
-# 1.48.13
+# 1.49.1
 * TagsInput: Remove 100% height
 * StripedLoader: Remove 100% height
 * Storybook: Center TagsInput in the search bar in GreyVest
+
+# 1.49.0
+* New grey vest component: ErrorBlock
+
+# 1.48.14
+* Removed Jest Snapshot tests.
+
+# 1.48.13
+* Flex: Add extra props for easier styling
 
 # 1.48.12
 * Facet: apply options filter change on submit button click

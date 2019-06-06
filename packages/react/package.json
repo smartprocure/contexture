@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "1.48.13",
+  "version": "1.49.1",
   "description": "React components for building contexture interfaces",
   "main": "dist/index.js",
   "scripts": {
@@ -14,11 +14,10 @@
     "lint": "eslint src stories .storybook .circleci __tests__",
     "lint-fix": "npm run lint -- --fix",
     "lint-ci": "npm run lint -- -o lint-results.json -f json",
-    "test": "jest --coverage",
-    "test-u": "jest --coverage --u",
+    "test": "jest --coverage --passWithNoTests",
     "test-ci": "npm t -- --json --outputFile=test-results.json",
     "duti": "duti",
-    "fmt": "prettier --write '{src,stories,__tests__/Snapshot.js,.storybook}/**/*'",
+    "fmt": "prettier --write '{src,stories,.storybook}/**/*'",
     "duti:fix": "npm run lint-fix && npm run fmt"
   },
   "repository": {
@@ -75,7 +74,6 @@
     "@babel/preset-react": "^7.0.0",
     "@storybook/addon-actions": "^5.0.10",
     "@storybook/addon-info": "^3.4.12",
-    "@storybook/addon-storyshots": "^5.0.10",
     "@storybook/addon-storysource": "^5.0.10",
     "@storybook/react": "^5.0.10",
     "@storybook/storybook-deployer": "^2.0.0",
