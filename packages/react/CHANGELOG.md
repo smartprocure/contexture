@@ -1,3 +1,6 @@
+# 1.49.2
+* Shrink font sizes to match design
+
 # 1.49.1
 * TagsInput: Remove 100% height
 * StripedLoader: Remove 100% height
