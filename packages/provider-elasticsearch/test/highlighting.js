@@ -58,5 +58,78 @@ describe('highlighting', () => {
         mainHighlighted: true,
       })
     })
+    it('should work with inline', () => {
+      let highlightFields = {
+        inline: ['title', 'description'],
+      }
+      let hit = {
+        _source: {
+          title: '...',
+          description: '...',
+        },
+        highlight: { title: ['<a>foo</a>'], description: ['<a>bar</a>'] },
+      }
+      let result = highlighting.highlightResults(highlightFields, hit)
+      expect(hit._source).to.deep.equal({
+        title: '<a>foo</a>',
+        description: '<a>bar</a>',
+      })
+      expect(result).to.deep.equal({
+        additionalFields: [],
+        mainHighlighted: true,
+      })
+    })
+    it('should work with inlineAliases', () => {
+      let highlightFields = {
+        inline: ['title', 'description'],
+        inlineAliases: {
+          description: 'description.exact',
+        },
+      }
+      let hit = {
+        _source: {
+          title: '...',
+          description: '...',
+        },
+        highlight: {
+          title: ['<a>foo</a>'],
+          'description.exact': ['<a>bar</a>'],
+        },
+      }
+      let result = highlighting.highlightResults(highlightFields, hit)
+      expect(hit._source).to.deep.equal({
+        title: '<a>foo</a>',
+        description: '<a>bar</a>',
+      })
+      expect(result).to.deep.equal({
+        additionalFields: [],
+        mainHighlighted: true,
+      })
+    })
+    it('inline should precede inlineAliases', () => {
+      let highlightFields = {
+        inline: ['description'],
+        inlineAliases: {
+          description: 'description.exact',
+        },
+      }
+      let hit = {
+        _source: {
+          description: '...',
+        },
+        highlight: {
+          description: ['<a>foo</a>'],
+          'description.exact': ['<a>bar</a>'],
+        },
+      }
+      let result = highlighting.highlightResults(highlightFields, hit)
+      expect(hit._source).to.deep.equal({
+        description: '<a>foo</a>',
+      })
+      expect(result).to.deep.equal({
+        additionalFields: [],
+        mainHighlighted: true,
+      })
+    })
   })
 })

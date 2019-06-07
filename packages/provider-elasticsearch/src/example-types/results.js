@@ -28,22 +28,39 @@ module.exports = {
     if (context.include || context.exclude) result._source = {}
     if (context.include) result._source.includes = context.include
     if (context.exclude) result._source.excludes = context.exclude
+
     let highlight =
       _.getOr(true, 'highlight', context) && schema.elasticsearch.highlight
+    let inlineAliases = _.getOr(
+      {},
+      'elasticsearch.highlight.inlineAliases',
+      schema
+    )
+
     if (highlight) {
-      let schemaHiglightFields = _.flatten(
-        _.values(schema.elasticsearch.highlight)
-      )
-      let highlightFields = _.get('showOtherMatches', context)
-        ? schemaHiglightFields
-        : _.intersection(context.include, schemaHiglightFields)
+      // Only take the fields that matter to highlighting which are the inline, inlineAliases and additionalFields sections
+      let schemaHighlightFields = _.flow(
+        _.pick(['inline', 'additionalFields']),
+        _.values,
+        _.flatten,
+        _.concat(_.keys(inlineAliases)),
+        _.uniq(),
+        // intersect with context.include so we only highlight fields we specified in the context if showOtherMatches is set to false
+        fields =>
+          _.getOr(false, 'showOtherMatches', context)
+            ? fields
+            : _.intersection(context.include, fields),
+        // concat the inlineAliases KEYS so they are part of the highlight.fields object so we highlight on them in the ES response
+        _.concat(_.values(inlineAliases))
+      )(schema.elasticsearch.highlight)
+
       F.extendOn(result, {
         highlight: {
           pre_tags: ['<b>'],
           post_tags: ['</b>'],
           require_field_match: false,
           number_of_fragments: 0,
-          fields: _.fromPairs(_.map(val => [val, {}], highlightFields)),
+          fields: _.fromPairs(_.map(val => [val, {}], schemaHighlightFields)),
         },
       })
     }

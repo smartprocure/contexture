@@ -124,9 +124,7 @@ describe('results', () => {
           _score: 'desc',
         },
         highlight: {
-          fields: {
-            field: {},
-          },
+          fields: {},
           number_of_fragments: 0,
           post_tags: ['</b>'],
           pre_tags: ['<b>'],
