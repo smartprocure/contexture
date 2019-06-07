@@ -65,12 +65,31 @@ function highlightResults(highlightFields, hit, pathToNested, include) {
   let mainHighlighted = false
   // Copy over all inline highlighted fields
   if (hit.highlight) {
-    _.each(highlightFields.inline, val => {
+    let { inline, inlineAliases } = highlightFields
+    // do the field replacement for the inline fields
+    _.each(inline, val => {
       if (hit.highlight[val]) {
         _.set(hit._source, val, hit.highlight[val][0])
         mainHighlighted = true
       }
     })
+    // do the field replacement for the inlineAliases fields
+    if (inlineAliases) {
+      for (let field in inlineAliases) {
+        let mapToField = inlineAliases[field]
+        // if we have a highlight result matching the inlineAliases TO field
+        if (hit.highlight[mapToField]) {
+          // if the field is only in inlineAliases OR it is in both but not inlined/highlighted already by the inline section
+          if (
+            !_.includes(inline, field) ||
+            (_.includes(inline, field) && !hit.highlight[field])
+          ) {
+            _.set(hit._source, field, hit.highlight[mapToField][0])
+            mainHighlighted = true
+          }
+        }
+      }
+    }
   }
 
   return {
