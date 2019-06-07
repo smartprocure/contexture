@@ -70,7 +70,7 @@ export let GVStyle = () => (
     {`
       h1 {
         font-family: Lato;
-        font-size: 20px;
+        font-size: 18px;
         font-weight: bold;
         line-height: 1.3;
         letter-spacing: 3px;
@@ -160,7 +160,7 @@ export let GVStyle = () => (
         margin: 0;
         background: #f6f6f6;
         font-family: Lato;
-        font-size: 16px;
+        font-size: 14px;
         color: #454545;
       }
 
@@ -416,7 +416,7 @@ export let GVStyle = () => (
         display: inline-block;
         padding: 15px 20px;
         background-color: #e0e0e3;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: bold;
         cursor: pointer;
         vertical-align: bottom;
@@ -436,7 +436,7 @@ export let GVStyle = () => (
       }
       .gv-tab.active, .gv-tab.active:hover {
         background-color: #fff;
-        font-size: 18px;
+        font-size: 16px;
         padding: 15px 30px;
         border-radius: 4px 4px 0 0 !important;
         /* white box shadow trick from http://dev.housetrip.com/2012/06/15/good-looking-css-tabs/ */
@@ -462,7 +462,7 @@ export let GVStyle = () => (
         padding-right: 30px;
       }
       .filter-field-label {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: bold;
       }
       .filter-field-label-icon {
