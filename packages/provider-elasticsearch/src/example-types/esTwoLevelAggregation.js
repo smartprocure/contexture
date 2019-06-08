@@ -1,5 +1,6 @@
 let _ = require('lodash/fp')
 let F = require('futil-js')
+let { metrics, hasValidMetrics } = require('../aggUtils')
 
 // let example = {
 //   key_type: 'range',
@@ -18,6 +19,11 @@ module.exports = {
     context.value_field &&
     context.value_type,
   result(context, search) {
+    let validMetrics = hasValidMetrics(context)
+    if (_.has('include', context) && !validMetrics)
+      throw new Error(
+        `Unsupported include options ${_.difference(metrics, context.include)}`
+      )
     let query = {
       aggs: {
         twoLevelAgg: {
@@ -31,17 +37,33 @@ module.exports = {
             )
           ),
           aggs: {
-            twoLevelAgg: {
-              [context.value_type]: _.omitBy(
-                _.isNil,
-                _.extend(
-                  {
-                    field: context.value_field,
-                  },
-                  context.value_data
+            ...(validMetrics
+              ? _.reduce(
+                  (obj, metric) =>
+                    _.extend(
+                      {
+                        [`twoLevelAgg_${metric}`]: {
+                          [metric]: { field: context.value_field },
+                        },
+                      },
+                      obj
+                    ),
+                  {},
+                  context.include
                 )
-              ),
-            },
+              : {
+                  twoLevelAgg: {
+                    [context.value_type]: _.omitBy(
+                      _.isNil,
+                      _.extend(
+                        {
+                          field: context.value_field,
+                        },
+                        context.value_data
+                      )
+                    ),
+                  },
+                }),
           },
         },
       },
@@ -72,7 +94,15 @@ module.exports = {
                 key: bucket.key || key,
                 doc_count: bucket.doc_count,
               },
-              bucket.twoLevelAgg
+              bucket.twoLevelAgg ||
+                F.reduceIndexed(
+                  (obj, data, key) =>
+                    _.startsWith('twoLevelAgg_', key)
+                      ? _.extend({ [_.last(key.split('_'))]: data.value }, obj)
+                      : obj,
+                  {},
+                  bucket
+                )
             ),
           (results.aggregations.twoLevelFilter || results.aggregations)
             .twoLevelAgg.buckets

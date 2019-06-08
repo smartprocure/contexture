@@ -1,3 +1,6 @@
+# 0.18.0
+* Add support for includes on term_stats
+
 # 0.17.0
 * Add support for "inlineAliases" when dealing with ES highlight response
 
