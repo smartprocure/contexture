@@ -2,11 +2,22 @@ var _ = require('lodash/fp')
 var esTwoLevel = require('./esTwoLevelAggregation').result
 let { buildRegexQueryForWords } = require('../regex')
 let { getField } = require('../fields')
+let { metrics, hasValidMetrics } = require('../aggUtils')
 
 module.exports = {
   validContext: context => context.key_field && context.value_field,
   async result(context, search, schema) {
     let field = getField(schema, context.key_field, context.fieldMode)
+    let orderPaths = _.reduce(
+      (obj, metric) =>
+        _.extend({
+          [metric]: {
+            [`twoLevelAgg_${metric}.value`]: context.sortDir || 'desc',
+          },
+        }, obj),
+      {},
+      metrics
+    )
     let x = await esTwoLevel(
       _.merge(
         {
@@ -19,7 +30,7 @@ module.exports = {
           key_data: {
             field,
             size: context.size || 10,
-            order: {
+            order: hasValidMetrics(context) ? orderPaths[context.order] : ({
               // Disable nested path checking for now as we don't need it anymore:
               //  key +
               //      may need >inner>inner. when adding additional inner for nested filters per old code
@@ -28,7 +39,7 @@ module.exports = {
               //  order
               [`twoLevelAgg.${context.order || 'sum'}`]:
                 context.sortDir || 'desc',
-            },
+            }),
           },
           value_type: 'stats',
         },
