@@ -1,3 +1,6 @@
+# 1.49.3
+* Fix error when adding a new field in QueryBuilder
+
 # 1.49.2
 * Shrink font sizes to match design
 

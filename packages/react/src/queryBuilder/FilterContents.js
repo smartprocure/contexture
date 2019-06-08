@@ -32,7 +32,7 @@ let FilterContents = inject(_.defaults)(
       // `get` allows us to create a dependency on field before we know it exists (because the client will only add it if it's a type that uses it as it wouldn't make sense for something like `results`)
       let nodeField = get(node, 'field')
       let typeOptions = _.get([nodeField, 'typeOptions'], fields) || []
-      if (!_.includes(node.type, typeOptions))
+      if (node.type && !_.includes(node.type, typeOptions))
         typeOptions = [...typeOptions, node.type]
       let nodeLabel = _.get([nodeField, 'label'], fields) || nodeField
       return (
