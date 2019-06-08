@@ -1,9 +1,9 @@
 let _ = require('lodash/fp')
 let isSubset = (a, b) =>
-!_.flow(
-  _.difference(a),
-  _.size
-)(b)
+  !_.flow(
+    _.difference(a),
+    _.size
+  )(b)
 let metrics = [
   'avg',
   'max',
@@ -30,5 +30,6 @@ module.exports = {
     },
   }),
   metrics,
-  hasValidMetrics:  context => !_.isEmpty(context.include) && isSubset(context.include, metrics)
+  hasValidMetrics: context =>
+    !_.isEmpty(context.include) && isSubset(context.include, metrics),
 }
