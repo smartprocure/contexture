@@ -39,6 +39,38 @@ describe('term_stats', () => {
       ],
       ...x
     )
+  let includeTest = (...x) =>
+  sequentialResultTest(
+    [
+      {
+        aggregations: {
+          twoLevelFilter: {
+            twoLevelAgg: {
+              buckets: [
+                {
+                  key: 'City of Deerfield',
+                  doc_count: 50,
+                  twoLevelAgg: {
+                    count: 6,
+                    sum: 471,
+                  },
+                },
+                {
+                  key: 'City of Boca',
+                  doc_count: 50,
+                  twoLevelAgg: {
+                    count: 6,
+                    sum: 471,
+                  },
+                },
+              ],
+            },
+          },
+        },
+      },
+    ],
+    ...x
+  )
   it('should work', () =>
     test(
       {
@@ -235,4 +267,59 @@ describe('term_stats', () => {
         },
       ]
     ))
+  it('should support include', () =>
+  includeTest(
+    {
+      key: 'test',
+      type: 'terms_stats',
+      key_field: 'Organization.Name.untouched',
+      value_field: 'LineItem.TotalPrice',
+      include: ['value_count', 'sum'],
+      order: 'sum',
+      sortDir: 'desc',
+    },
+    {
+      terms: [
+        {
+          key: 'City of Deerfield',
+          doc_count: 50,
+          count: 6,
+          sum: 471,
+        },
+        {
+          key: 'City of Boca',
+          doc_count: 50,
+          count: 6,
+          sum: 471,
+        },
+      ],
+    },
+    [
+      {
+        aggs: {
+          twoLevelAgg: {
+            terms: {
+              field: 'Organization.Name.untouched',
+              size: 10,
+              order: {
+                'twoLevelAgg_sum.value': 'desc',
+              },
+            },
+            aggs: {
+              twoLevelAgg_sum: {
+                sum: {
+                  field: 'LineItem.TotalPrice',
+                },
+              },
+              twoLevelAgg_value_count: {
+                value_count: {
+                  field: 'LineItem.TotalPrice',
+                },
+              },
+            },
+          },
+        },
+      },
+    ]
+  ))
 })
