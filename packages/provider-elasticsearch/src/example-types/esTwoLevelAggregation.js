@@ -39,10 +39,10 @@ module.exports = {
           aggs: {
             ...(validMetrics
               ? F.arrayToObject(
-                metric => `twoLevelAgg_${metric}`,
-                metric => ({ [metric]: { field: context .value_field } }),
-                context.include
-              )
+                  metric => `twoLevelAgg_${metric}`,
+                  metric => ({ [metric]: { field: context.value_field } }),
+                  context.include
+                )
               : {
                   twoLevelAgg: {
                     [context.value_type]: _.omitBy(
@@ -87,14 +87,10 @@ module.exports = {
                 doc_count: bucket.doc_count,
               },
               bucket.twoLevelAgg ||
-                F.reduceIndexed(
-                  (obj, data, key) =>
-                    _.startsWith('twoLevelAgg_', key)
-                      ? _.extend({ [_.last(key.split('_'))]: data.value }, obj)
-                      : obj,
-                  {},
-                  bucket
-                )
+                _.flow(
+                  _.mapKeys(_.replace('twoLevelAgg_', '')),
+                  _.mapValues('value')
+                )(bucket)
             ),
           (results.aggregations.twoLevelFilter || results.aggregations)
             .twoLevelAgg.buckets
