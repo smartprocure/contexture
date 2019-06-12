@@ -1,4 +1,5 @@
 var _ = require('lodash/fp')
+let F = require('futil-js')
 var esTwoLevel = require('./esTwoLevelAggregation').result
 let { buildRegexQueryForWords } = require('../regex')
 let { getField } = require('../fields')
@@ -8,17 +9,11 @@ module.exports = {
   validContext: context => context.key_field && context.value_field,
   async result(context, search, schema) {
     let field = getField(schema, context.key_field, context.fieldMode)
-    let orderPaths = _.reduce(
-      (obj, metric) =>
-        _.extend(
-          {
-            [metric]: {
-              [`twoLevelAgg_${metric}.value`]: context.sortDir || 'desc',
-            },
-          },
-          obj
-        ),
-      {},
+    let orderPaths = F.arrayToObject(
+      _.identity,
+      metric => ({
+          [`twoLevelAgg_${metric}.value`]: context.sortDir || 'desc',
+      }),
       metrics
     )
     let x = await esTwoLevel(
