@@ -115,6 +115,7 @@ let TagsInput = withState('state', 'setState', () =>
                 outline: 'none',
                 flex: 1,
                 margin: 3,
+                minWidth: 120,
               }}
               onChange={e => {
                 state.currentInput = e.target.value
