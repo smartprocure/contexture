@@ -8,7 +8,6 @@ let metrics = [
   'value_count',
   'weighted_avg',
   'cardinality',
-  'percentiles',
   'median_absolute_deviation',
 ]
 
