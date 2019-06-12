@@ -38,19 +38,11 @@ module.exports = {
           ),
           aggs: {
             ...(validMetrics
-              ? _.reduce(
-                  (obj, metric) =>
-                    _.extend(
-                      {
-                        [`twoLevelAgg_${metric}`]: {
-                          [metric]: { field: context.value_field },
-                        },
-                      },
-                      obj
-                    ),
-                  {},
-                  context.include
-                )
+              ? F.arrayToObject(
+                metric => `twoLevelAgg_${metric}`,
+                metric => ({ [metric]: { field: context .value_field } }),
+                context.include
+              )
               : {
                   twoLevelAgg: {
                     [context.value_type]: _.omitBy(
