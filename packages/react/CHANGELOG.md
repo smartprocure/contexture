@@ -1,3 +1,6 @@
+# 1.49.4
+* Add minWidth to TagsInput
+
 # 1.49.3
 * Fix error when adding a new field in QueryBuilder
 
