@@ -12,7 +12,7 @@ module.exports = {
     let orderPaths = F.arrayToObject(
       _.identity,
       metric => ({
-          [`twoLevelAgg_${metric}.value`]: context.sortDir || 'desc',
+        [`twoLevelAgg_${metric}.value`]: context.sortDir || 'desc',
       }),
       metrics
     )
