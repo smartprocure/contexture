@@ -1,7 +1,6 @@
 let _ = require('lodash/fp')
 let isSubset = (a, b) => !_.difference(a, b).length
 let metrics = [
-  'stats',
   'avg',
   'max',
   'min',
