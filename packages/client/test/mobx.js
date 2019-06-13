@@ -264,7 +264,10 @@ describe('usage with mobx should generally work', () => {
     })
     expect(service).to.have.callCount(1)
     expect(
-      Tree.getNode(['root', 'results']).context.results.slice()
+      _.flow(
+        _.get(['context', 'results']),
+        _.toArray
+      )(Tree.getNode(['root', 'results']))
     ).to.deep.equal([
       {
         title: 'Some result',
@@ -283,7 +286,10 @@ describe('usage with mobx should generally work', () => {
     })
     expect(service).to.have.callCount(2)
     expect(
-      Tree.getNode(['root', 'results']).context.results.slice()
+      _.flow(
+        _.get(['context', 'results']),
+        _.toArray
+      )(Tree.getNode(['root', 'results']))
     ).to.deep.equal([
       {
         title: 'New values',
