@@ -15,7 +15,7 @@ let { background } = styles
 let GroupItem = FilterDragSource(args => {
   let {
     child,
-    tree,
+    tree: node,
     index,
     state,
     root,
@@ -28,17 +28,17 @@ let GroupItem = FilterDragSource(args => {
     <div
       style={{
         ...styles.dFlex,
-        ...(index === tree.children.length - 1 &&
+        ...(index === node.children.length - 1 &&
           !root.adding && { background }),
       }}
     >
-      {!(isRoot && tree.children.length === 1) && (
+      {!(isRoot && node.children.length === 1) && (
         <Operator
-          {...{ tree, child, root, parentTree, index, parent: state }}
+          {...{ node, child, root, parentTree, index, parent: state }}
         />
       )}
       {child.children ? (
-        <Group tree={child} root={root} parentTree={tree} />
+        <Group tree={child} root={root} parentTree={node} />
       ) : (
         <Rule {...{ ...args, node: child }} />
       )}

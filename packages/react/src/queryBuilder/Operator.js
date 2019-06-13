@@ -6,13 +6,13 @@ import Popover from '../layout/Popover'
 import OperatorMenu from './OperatorMenu'
 import { OperatorMoveTarget } from './DragDrop/MoveTargets'
 
-let BlankOperator = ({ state, tree, child }) => (
+let BlankOperator = ({ state, node, child }) => (
   <div>
     <div
       onClick={F.flip(state.lens.isOpen)}
       style={{
         ...styles.blankOperator,
-        borderBottomColor: styles.joinColor(tree.join),
+        borderBottomColor: styles.joinColor(node.join),
       }}
     />
     {child.children && child.join !== 'not' && (
@@ -20,7 +20,7 @@ let BlankOperator = ({ state, tree, child }) => (
         style={{
           ...styles.operatorLine,
           ...styles.blankOperatorLineExtended,
-          ...styles.bgJoin(tree),
+          ...styles.bgJoin(node),
         }}
       />
     )}
@@ -28,25 +28,25 @@ let BlankOperator = ({ state, tree, child }) => (
 )
 BlankOperator.displayName = 'BlankOperator'
 
-let OperatorLine = Component(({ tree, child, style }) => (
+let OperatorLine = Component(({ node, child, style }) => (
   <div
     style={{
       ...styles.operatorLine,
       ...(child.children &&
         child.join !== 'not' &&
         styles.operatorLineExtended),
-      ...styles.bgJoin(tree),
+      ...styles.bgJoin(node),
       ...style,
     }}
   />
 ))
 OperatorLine.displayName = 'OperatorLine'
 
-let JoinOperator = ({ state, tree, child, parent }) => (
+let JoinOperator = ({ state, node, child, parent }) => (
   <div>
     <div
       onClick={F.flip(state.lens.isOpen)}
-      style={{ ...styles.operator, ...styles.bgJoin(parent.joinHover || tree) }}
+      style={{ ...styles.operator, ...styles.bgJoin(parent.joinHover || node) }}
     >
       <span
         style={{
@@ -56,10 +56,10 @@ let JoinOperator = ({ state, tree, child, parent }) => (
           }),
         }}
       >
-        {parent.joinHover || tree.join}
+        {parent.joinHover || node.join}
       </span>
     </div>
-    <OperatorLine {...{ tree, child }} />
+    <OperatorLine {...{ node, child }} />
   </div>
 )
 JoinOperator.displayName = 'JoinOperator'
@@ -70,23 +70,23 @@ let Operator = Component(
       isOpen: false,
     }),
   }),
-  ({ state, tree, child, parent, root, parentTree, index }) => (
+  ({ state, node, child, parent, root, parentTree, index }) => (
     <div>
-      {!(index !== 0 || tree.join === 'not') ? (
-        <BlankOperator {...{ state, tree, child }} />
+      {!(index !== 0 || node.join === 'not') ? (
+        <BlankOperator {...{ state, node, child }} />
       ) : (
-        <JoinOperator {...{ state, tree, child, parent }} />
+        <JoinOperator {...{ state, node, child, parent }} />
       )}
-      <OperatorMoveTarget {...{ tree, root, index }} />
+      <OperatorMoveTarget {...{ node, root, index }} />
       <Popover
         isOpen={state.lens.isOpen}
         style={{
           ...styles.operatorPopover,
-          ...styles.bdJoin(tree),
+          ...styles.bdJoin(node),
           ...(parent.wrapHover && { marginLeft: 0 }),
         }}
       >
-        <OperatorMenu {...{ tree, parent, root, parentTree }} />
+        <OperatorMenu {...{ node, parent, root, parentTree }} />
       </Popover>
     </div>
   ),
