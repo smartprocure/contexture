@@ -91,7 +91,7 @@ export default DDContext(
       >
         <div style={{ background }}>
           {state.getNode(path) && (
-            <Group tree={state.getNode(path)} root={state} isRoot={true} />
+            <Group node={state.getNode(path)} root={state} isRoot={true} />
           )}
           <Button
             onClick={() => {

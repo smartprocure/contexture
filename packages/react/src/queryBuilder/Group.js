@@ -15,7 +15,7 @@ let { background } = styles
 let GroupItem = FilterDragSource(args => {
   let {
     child,
-    tree: node,
+    node,
     index,
     state,
     root,
@@ -38,9 +38,9 @@ let GroupItem = FilterDragSource(args => {
         />
       )}
       {child.children ? (
-        <Group tree={child} root={root} parentTree={node} />
+        <Group node={child} root={root} parentTree={node} />
       ) : (
-        <Rule {...{ ...args, node: child }} />
+        <Rule {...{ ...args, parent: node, node: child }} />
       )}
     </div>
   )
@@ -55,14 +55,14 @@ let Group = Component(
     }),
   }),
   args => {
-    let { tree, root, state, isRoot } = args
+    let { node, root, state, isRoot } = args
     return (
-      <Indentable tree={tree} indent={state.lens.wrapHover}>
+      <Indentable tree={node} indent={state.lens.wrapHover}>
         <div
           style={{
             ...styles.conditions,
             ...(!isRoot && styles.w100),
-            ...styles.bdJoin(tree),
+            ...styles.bdJoin(node),
             ...(state.removeHover && {
               ...styles.bgStriped,
               borderColor: background,
@@ -86,15 +86,15 @@ let Group = Component(
                   )}
                 </div>
               ),
-              _.toArray(tree.children)
+              _.toArray(node.children)
             )}
             {/*<FilterMoveTarget index={tree.children.length} tree={tree} /> */}
             {root.adding && (
               <AddPreview
                 onClick={() => {
-                  root.add(tree)
+                  root.add(node)
                 }}
-                join={tree.join}
+                join={node.join}
                 style={{
                   marginLeft: 0,
                   borderTopLeftRadius: 5,

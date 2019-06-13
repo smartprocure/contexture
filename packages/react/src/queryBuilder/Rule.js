@@ -7,7 +7,7 @@ import FilterContents from './FilterContents'
 import FilterDragSource from './DragDrop/FilterDragSource'
 import { oppositeJoin } from '../utils/search'
 
-let Rule = ({ state, node, tree: parent, root, connectDragSource, isDragging }) =>
+let Rule = ({ state, node, parent, root, connectDragSource, isDragging }) =>
   connectDragSource(
     <div style={styles.w100}>
       <Indentable tree={parent} indent={state.lens.indentHover}>
