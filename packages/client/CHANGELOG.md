@@ -1,4 +1,7 @@
-﻿# 2.22.2
+﻿# 2.22.3
+* Add `_.toArray` to actions to handle ObservableArray paths
+
+# 2.22.2
 * Set defaults for geo location and radius
 
 # 2.22.1
