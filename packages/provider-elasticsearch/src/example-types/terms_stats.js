@@ -1,5 +1,4 @@
 var _ = require('lodash/fp')
-let F = require('futil-js')
 var esTwoLevel = require('./esTwoLevelAggregation').result
 let { buildRegexQueryForWords } = require('../regex')
 let { getField } = require('../fields')
