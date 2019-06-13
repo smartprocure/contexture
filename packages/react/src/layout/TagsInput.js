@@ -1,37 +1,60 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
-import { withState } from 'recompose'
+import { withState, defaultProps } from 'recompose'
 import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import { Flex } from './Flex'
 import Popover from './Popover'
 
-let Tag = observer(({ value, removeTag, tagStyle, removeIcon, onClick }) => (
-  <Flex
+let isValidTag = (tag, tags) => {
+  let cleanTag = _.trim(tag)
+  return !_.isEmpty(cleanTag) && !_.includes(cleanTag, tags)
+}
+
+let Tag = observer(({ value, removeTag, tagStyle, RemoveIcon, onClick }) => (
+  <span
     className="tags-input-tag"
     style={{
-      ...F.callOrReturn(tagStyle, value),
-      alignItems: 'center',
       cursor: 'pointer',
       margin: 3,
-      borderRadius: '2px',
+      borderRadius: '3px',
+      ...F.callOrReturn(tagStyle, value),
     }}
     onClick={onClick}
   >
-    <span style={{ padding: '0px 5px 1px 10px' }}>{value}</span>
-    <span
-      onClick={e => {
-        e.stopPropagation()
-        removeTag(value)
-      }}
-      style={{ padding: '0px 10px 1px 5px' }}
-    >
-      {removeIcon || <span className="tags-input-tag-remove">x</span>}
-    </span>
-  </Flex>
+    <Flex style={{ alignItems: 'center' }}>
+      <span
+        style={{
+          paddingLeft: '0.45em',
+          paddingBottom: '0.15em',
+          // Prefer padding on the remove icon so it has more area to receive
+          // clicks
+          paddingRight: RemoveIcon ? '0em' : '0.45em',
+        }}
+      >
+        {value}
+      </span>
+      {RemoveIcon && (
+        <RemoveIcon
+          onClick={e => {
+            e.stopPropagation()
+            removeTag(value)
+          }}
+        />
+      )}
+    </Flex>
+  </span>
 ))
 Tag.displayName = 'Tag'
+
+let DefaultTagComponent = defaultProps({
+  RemoveIcon: props => (
+    <span className="tags-input-tag-remove" {...props}>
+      x
+    </span>
+  ),
+})(Tag)
 
 // We're only using withState to preserve the state between renders, since
 // inject doesn't do that for us.
@@ -50,10 +73,11 @@ let TagsInput = withState('state', 'setState', () =>
       removeTag,
       submit = _.noop,
       tagStyle,
-      TagComponent = Tag,
+      TagComponent = DefaultTagComponent,
       placeholder = 'Search...',
       splitCommas,
       PopoverContents,
+      style,
     }) => {
       if (splitCommas)
         addTag = _.flow(
@@ -61,7 +85,7 @@ let TagsInput = withState('state', 'setState', () =>
           _.map(addTag)
         )
       return (
-        <div className="tags-input" style={{ height: '100%' }}>
+        <div className="tags-input" style={{ ...style }}>
           <Flex
             style={{
               cursor: 'text',
@@ -91,29 +115,27 @@ let TagsInput = withState('state', 'setState', () =>
                 outline: 'none',
                 flex: 1,
                 margin: 3,
+                minWidth: 120,
               }}
               onChange={e => {
                 state.currentInput = e.target.value
               }}
               onBlur={() => {
-                if (
-                  state.currentInput &&
-                  !_.includes(state.currentInput, tags)
-                ) {
+                if (isValidTag(state.currentInput, tags)) {
                   addTag(state.currentInput)
                   state.currentInput = ''
                 }
               }}
               onKeyDown={e => {
-                if (e.key === 'Enter' && !state.currentInput) submit()
+                let currentInput = _.trim(state.currentInput)
+                if (e.key === 'Enter' && !currentInput) submit()
                 if (
                   (e.key === 'Enter' ||
                     e.key === 'Tab' ||
                     (splitCommas && e.key === ',')) &&
-                  state.currentInput &&
-                  !_.includes(state.currentInput, tags)
+                  isValidTag(currentInput, tags)
                 ) {
-                  addTag(state.currentInput)
+                  addTag(currentInput)
                   state.currentInput = ''
                   e.preventDefault()
                 }

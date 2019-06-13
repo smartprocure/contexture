@@ -16,6 +16,7 @@ import {
 } from '../../'
 import ExampleTypeConstructor from '../../exampleTypes/'
 import QueryBuilderComponent from '../../queryBuilder'
+import { default as DefaultModal } from '../../layout/Modal'
 
 import Input from './Input'
 import Checkbox from './Checkbox'
@@ -36,6 +37,7 @@ import Box from './Box'
 import LinkButton from './LinkButton'
 import TreePauseButton from './TreePauseButton'
 import ToggleFiltersButton from './ToggleFiltersButton'
+import ToggleFiltersHeader from './ToggleFiltersHeader'
 export { default as SearchLayout } from './SearchLayout'
 import BaseSearchFilters from './SearchFilters'
 import DateInput from './DateInput'
@@ -58,6 +60,7 @@ export {
   LinkButton,
   TreePauseButton,
   ToggleFiltersButton,
+  ToggleFiltersHeader,
 }
 
 export let SearchTree = () => {}
@@ -67,7 +70,7 @@ export let GVStyle = () => (
     {`
       h1 {
         font-family: Lato;
-        font-size: 20px;
+        font-size: 18px;
         font-weight: bold;
         line-height: 1.3;
         letter-spacing: 3px;
@@ -157,7 +160,7 @@ export let GVStyle = () => (
         margin: 0;
         background: #f6f6f6;
         font-family: Lato;
-        font-size: 16px;
+        font-size: 14px;
         color: #454545;
       }
 
@@ -227,12 +230,12 @@ export let GVStyle = () => (
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input,
-      .gv-body .tags-input-tag {
+      .gv-body .tags-input input {
         height: 30px;
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
+        padding: 8px;
       }
 
       /* Tags Popover */
@@ -347,7 +350,11 @@ export let GVStyle = () => (
         /*background: #f6f6f6;*/
       }
       .gv-search-bar .gv-box {
-        padding: 0;
+        padding: 8px 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: stretch;
       }
       .gv-search-bar > .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
@@ -383,7 +390,7 @@ export let GVStyle = () => (
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {
-        margin: 0 10px;
+        margin: 0 10px 0 0;
       }
       .contexture-facet > .gv-input[type="text"] {
         margin-bottom: 10px;
@@ -409,7 +416,7 @@ export let GVStyle = () => (
         display: inline-block;
         padding: 15px 20px;
         background-color: #e0e0e3;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: bold;
         cursor: pointer;
         vertical-align: bottom;
@@ -429,7 +436,7 @@ export let GVStyle = () => (
       }
       .gv-tab.active, .gv-tab.active:hover {
         background-color: #fff;
-        font-size: 18px;
+        font-size: 16px;
         padding: 15px 30px;
         border-radius: 4px 4px 0 0 !important;
         /* white box shadow trick from http://dev.housetrip.com/2012/06/15/good-looking-css-tabs/ */
@@ -455,7 +462,7 @@ export let GVStyle = () => (
         padding-right: 30px;
       }
       .filter-field-label {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: bold;
       }
       .filter-field-label-icon {
@@ -515,6 +522,13 @@ export let GVStyle = () => (
 
       .gv-text-error {
         color: #D75050;
+      }
+      .gv-block-error {
+        margin: 15px 0;
+        color: #D75050;
+        background-color: #D7505011;
+        padding: 12px;
+        border-radius: 5px;
       }
 
       .gv-body .labeled-checkbox {
@@ -703,6 +717,8 @@ export let Adder = ModalFilterAdder({
   label: AddLabel,
 })
 
+export let Modal = defaultProps({ className: 'gv-body' })(DefaultModal)
+export let ButtonGroup = defaultProps({ className: 'gv-button-group' })(Flex)
 export let PagerItem = observer(({ active, disabled, ...x }) => (
   <span
     className={`gv-pager-item ${disabled ? 'disabled' : ''} ${
@@ -714,7 +730,9 @@ export let PagerItem = observer(({ active, disabled, ...x }) => (
 PagerItem.displayName = 'PagerItem'
 
 let TagComponent = defaultProps({
-  removeIcon: <span className="tags-input-tag-remove fa fa-times" />,
+  RemoveIcon: props => (
+    <span className="tags-input-tag-remove fa fa-times" {...props} />
+  ),
 })(Tag)
 export let TagsInput = defaultProps({ TagComponent })(BaseTagsInput)
 
@@ -731,6 +749,7 @@ export let ExampleTypes = ExampleTypeConstructor({
   TagsInput,
   Icon,
   DateInput,
+  ButtonGroup,
 })
 export let Pager = props => (
   <ExampleTypes.ResultPager

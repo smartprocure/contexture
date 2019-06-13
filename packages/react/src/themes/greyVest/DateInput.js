@@ -9,7 +9,7 @@ let DateInput = observer(
       calendarType={'US'}
       calendarIcon={calendarIcon}
       clearIcon={clearIcon}
-      value={_.isDate(value) ? value : new Date(value)}
+      value={_.isDate(value) || _.isEmpty(value) ? value : new Date(value)}
       {...props}
     />
   )

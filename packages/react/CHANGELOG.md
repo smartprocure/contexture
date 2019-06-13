@@ -1,3 +1,56 @@
+# 1.49.4
+* Add minWidth to TagsInput
+
+# 1.49.3
+* Fix error when adding a new field in QueryBuilder
+
+# 1.49.2
+* Shrink font sizes to match design
+
+# 1.49.1
+* TagsInput: Remove 100% height
+* StripedLoader: Remove 100% height
+* Storybook: Center TagsInput in the search bar in GreyVest
+
+# 1.49.0
+* New grey vest component: ErrorBlock
+
+# 1.48.14
+* Removed Jest Snapshot tests.
+
+# 1.48.13
+* Flex: Add extra props for easier styling
+
+# 1.48.12
+* Facet: apply options filter change on submit button click
+
+# 1.48.11
+* TagsInput: Accept style prop
+
+# 1.48.10
+* New grey vest search component: ToggleFiltersHeader
+
+# 1.48.9
+* TermsStatsTable: Add margin to size dropdown to align with table
+
+# 1.48.8
+* TagsInput: Better validation on the input
+
+# 1.48.7
+* StripedLoader: Fix regression in 1.48.6
+
+# 1.48.6
+* StripedLoader: Fix loading styles
+
+# 1.48.5
+* Modal: Export themed from greyVest
+
+# 1.48.4
+* TagsInput > Tag: Render remove icon conditionally
+
+# 1.48.3
+* Handle null better in the DateInput component
+
 # 1.48.2
 * Handle null children in SearchFilters and TreePauseButton
 * Fix ResultsTable inline filtering without Provider
