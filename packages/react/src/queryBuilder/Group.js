@@ -57,7 +57,7 @@ let Group = Component(
   args => {
     let { node, root, state, isRoot } = args
     return (
-      <Indentable tree={node} indent={state.lens.wrapHover}>
+      <Indentable node={node} indent={state.lens.wrapHover}>
         <div
           style={{
             ...styles.conditions,

@@ -5,19 +5,19 @@ import styles from '../../styles'
 import { oppositeJoin } from '../../utils/search'
 import AddPreview from './AddPreview'
 
-let Indentable = ({ children, indent, tree }) => (
+let Indentable = ({ children, indent, node }) => (
   <div style={{ ...styles.dFlex, ...styles.w100 }}>
     {F.view(indent) && (
       <div
         style={{
           ...styles.indent,
-          ...styles.bgPreview(oppositeJoin(tree.join)),
+          ...styles.bgPreview(oppositeJoin(node.join)),
         }}
       />
     )}
     <div style={styles.w100}>
       {children}
-      {F.view(indent) && <AddPreview join={oppositeJoin(tree.join)} />}
+      {F.view(indent) && <AddPreview join={oppositeJoin(node.join)} />}
     </div>
   </div>
 )
