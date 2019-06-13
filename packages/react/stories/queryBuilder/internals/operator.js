@@ -5,7 +5,7 @@ import Operator from '../../../src/queryBuilder/Operator'
 let operatorStory = (join, index, root) => () => (
   <Operator
     {...{
-      tree: { join },
+      node: { join },
       child: {
         join: 'and',
       },

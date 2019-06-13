@@ -20,7 +20,7 @@ let GroupItem = FilterDragSource(args => {
     state,
     root,
     isRoot,
-    parentTree,
+    parentNode,
     connectDragSource,
     //connectDragPreview, isDragging
   } = args
@@ -34,11 +34,11 @@ let GroupItem = FilterDragSource(args => {
     >
       {!(isRoot && node.children.length === 1) && (
         <Operator
-          {...{ node, child, root, parentTree, index, parent: state }}
+          {...{ node, child, root, parentNode, index, parent: state }}
         />
       )}
       {child.children ? (
-        <Group node={child} root={root} parentTree={node} />
+        <Group node={child} root={root} parentNode={node} />
       ) : (
         <Rule {...{ ...args, parent: node, node: child }} />
       )}

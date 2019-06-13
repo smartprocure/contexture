@@ -70,7 +70,7 @@ let Operator = Component(
       isOpen: false,
     }),
   }),
-  ({ state, node, child, parent, root, parentTree, index }) => (
+  ({ state, node, child, parent, root, parentNode, index }) => (
     <div>
       {!(index !== 0 || node.join === 'not') ? (
         <BlankOperator {...{ state, node, child }} />
@@ -86,7 +86,7 @@ let Operator = Component(
           ...(parent.wrapHover && { marginLeft: 0 }),
         }}
       >
-        <OperatorMenu {...{ node, parent, root, parentTree }} />
+        <OperatorMenu {...{ node, parent, root, parentNode }} />
       </Popover>
     </div>
   ),
