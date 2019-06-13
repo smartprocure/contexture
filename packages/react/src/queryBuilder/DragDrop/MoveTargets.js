@@ -6,17 +6,17 @@ import styles from '../../styles'
 let FilterMoveSpec = {
   drop(props, monitor) {
     let { tree, node } = monitor.getItem()
-    props.root.move(tree, node, props.tree, props.index)
+    props.root.move(tree, node, props.node, props.index)
   },
 }
 let FilterMoveDropTarget = style =>
   FilterDropTarget(FilterMoveSpec)(
-    ({ tree, connectDropTarget, isOver, canDrop }) =>
+    ({ node, connectDropTarget, isOver, canDrop }) =>
       connectDropTarget(
         canDrop ? (
           <div
             style={{
-              ...styles.bgPreview(tree),
+              ...styles.bgPreview(node),
               ...style({ isOver }),
             }}
           />
