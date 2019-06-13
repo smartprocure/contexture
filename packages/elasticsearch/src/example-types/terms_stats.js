@@ -3,40 +3,30 @@ let F = require('futil-js')
 var esTwoLevel = require('./esTwoLevelAggregation').result
 let { buildRegexQueryForWords } = require('../regex')
 let { getField } = require('../fields')
-let { metrics, hasValidMetrics } = require('../aggUtils')
 
+let orderField = ({ include, order = 'sum' }) =>
+  include ? `twoLevelAgg_${order}.value` : `twoLevelAgg.${order}`
 module.exports = {
-  validContext: context => context.key_field && context.value_field,
-  async result(context, search, schema) {
-    let field = getField(schema, context.key_field, context.fieldMode)
-    let orderPaths = F.arrayToObject(
-      _.identity,
-      metric => ({
-        [metric === 'stats'
-          ? `twoLevelAgg.${context.order || 'sum'}`
-          : `twoLevelAgg_${metric}.value`]: context.sortDir || 'desc',
-      }),
-      metrics
-    )
+  validContext: node => node.key_field && node.value_field,
+  async result(node, search, schema) {
+    let field = getField(schema, node.key_field, node.fieldMode)
     let x = await esTwoLevel(
       _.merge(
         {
           filter_agg:
-            context.filter &&
-            buildRegexQueryForWords(field, context.caseSensitive)(
-              context.filter
+            node.filter &&
+            buildRegexQueryForWords(field, node.caseSensitive)(
+              node.filter
             ),
           key_type: 'terms',
           key_data: {
             field,
-            size: context.size || 10,
-            order: hasValidMetrics(context) && _.size(context.include)
-              ? orderPaths[_.contains('stats', context.include) ? 'stats' : context.order]
-              : orderPaths['stats'],
+            size: node.size || 10,
+            order: {[orderField(node)]: node.sortDir || 'desc'},
           },
           value_type: 'stats',
         },
-        context
+        node
       ),
       search
     )
