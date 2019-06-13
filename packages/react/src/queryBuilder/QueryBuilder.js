@@ -1,6 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import { observable , toJS} from 'mobx'
+import { observable, toJS } from 'mobx'
 import { Provider } from 'mobx-react'
 import DDContext from './DragDrop/DDContext'
 import { Component } from '../utils/mobx-react-utils'
@@ -22,32 +22,41 @@ let ContextureClientBridge = (
   fields,
   defaultNodeProps = DefaultNodeProps
 ) => ({
-    lens: Tree.lens,
-    getNode: Tree.getNode,
-    add: tree => Tree.add(tree.path, blankNode()),
-    remove: (tree, node) => Tree.remove(node.path),
-    join: (tree, join) => Tree.mutate(tree.path, { join }),
-    mutate: Tree.mutate,
-    typeChange: (node, type) =>
-      Tree.replace(_.toArray(node.path), toJS({
+  lens: Tree.lens,
+  getNode: Tree.getNode,
+  add: tree => Tree.add(tree.path, blankNode()),
+  remove: (tree, node) => Tree.remove(node.path),
+  join: (tree, join) => Tree.mutate(tree.path, { join }),
+  mutate: Tree.mutate,
+  typeChange: (node, type) =>
+    Tree.replace(
+      _.toArray(node.path),
+      toJS({
         type,
         ..._.pick(['key', 'field'], node),
         ...defaultNodeProps(node.field, fields, type, Tree),
-      })),
-    move: (tree, node, targetTree, index) =>
-      Tree.move(_.toArray(node.path), { path: _.toArray(targetTree.path), index }),
-    indent(tree, node, skipDefaultNode) {
-      // Reactors:
-      //   OR -> And, nothing
-      //   AND -> OR, others if has value
-      //   to/from NOT, others if has value
-      let key = randomString()
-      Tree.wrapInGroup(_.toArray(node.path), { key, join: oppositeJoin((tree || node).join) })
-      if (!skipDefaultNode)
-        Tree.add(tree ? [...tree.path, key] : [key], blankNode())
-      return Tree.getNode([...tree.path, key])
-    }
-  })
+      })
+    ),
+  move: (tree, node, targetTree, index) =>
+    Tree.move(_.toArray(node.path), {
+      path: _.toArray(targetTree.path),
+      index,
+    }),
+  indent(tree, node, skipDefaultNode) {
+    // Reactors:
+    //   OR -> And, nothing
+    //   AND -> OR, others if has value
+    //   to/from NOT, others if has value
+    let key = randomString()
+    Tree.wrapInGroup(_.toArray(node.path), {
+      key,
+      join: oppositeJoin((tree || node).join),
+    })
+    if (!skipDefaultNode)
+      Tree.add(tree ? [...tree.path, key] : [key], blankNode())
+    return Tree.getNode([...tree.path, key])
+  },
+})
 
 export default DDContext(
   Component(
@@ -64,8 +73,8 @@ export default DDContext(
       types,
       state: observable({
         adding: false,
-        ...ContextureClientBridge(tree, fields, defaultNodeProps)
-      })
+        ...ContextureClientBridge(tree, fields, defaultNodeProps),
+      }),
     }),
     ({
       state,
