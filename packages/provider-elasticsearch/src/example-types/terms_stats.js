@@ -15,14 +15,12 @@ module.exports = {
         {
           filter_agg:
             node.filter &&
-            buildRegexQueryForWords(field, node.caseSensitive)(
-              node.filter
-            ),
+            buildRegexQueryForWords(field, node.caseSensitive)(node.filter),
           key_type: 'terms',
           key_data: {
             field,
             size: node.size || 10,
-            order: {[orderField(node)]: node.sortDir || 'desc'},
+            order: { [orderField(node)]: node.sortDir || 'desc' },
           },
           value_type: 'stats',
         },
