@@ -10,6 +10,11 @@ let pushOrSpliceOn = (array, item, index) => {
   return array
 }
 
+let arrayDropLast = _.flow(
+  _.toArray,
+  _.dropRight(1)
+)
+
 export default config => {
   let {
     getNode,
@@ -42,7 +47,7 @@ export default config => {
 
   let remove = async path => {
     let previous = getNode(path)
-    let parentPath = _.dropRight(1, path)
+    let parentPath = arrayDropLast(path)
     let parent = getNode(parentPath)
     pullOn(previous, parent.children)
 
@@ -79,7 +84,7 @@ export default config => {
     )
 
   let replace = (path, node) => {
-    let parentPath = _.dropRight(1, path)
+    let parentPath = arrayDropLast(path)
     let index = _.findIndex(
       x => x === getNode(path),
       getNode(parentPath).children
@@ -91,7 +96,7 @@ export default config => {
   let { wrapInGroup } = wrap(config, { mutate, replace, add })
 
   let move = (path, { path: targetPath, index: targetIndex } = {}) => {
-    let parentPath = _.dropRight(1, path)
+    let parentPath = arrayDropLast(path)
     targetPath = targetPath || parentPath
 
     let node = getNode(path)
@@ -110,7 +115,7 @@ export default config => {
   let mutateNested = (path, payload) =>
     _.flow(
       getNode,
-      Tree.toArrayBy(node => mutate(node.path.slice(), payload)),
+      Tree.toArrayBy(node => mutate(_.toArray(node.path), payload)),
       x => Promise.all(x)
     )(path)
 
