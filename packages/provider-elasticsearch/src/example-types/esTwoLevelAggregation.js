@@ -20,7 +20,7 @@ module.exports = {
     context.value_type,
   result(context, search) {
     let validMetrics = hasValidMetrics(context)
-    if (_.has('include', context) && !validMetrics)
+    if (!validMetrics)
       throw new Error(
         `Unsupported include options ${_.difference(metrics, context.include)}`
       )
@@ -37,25 +37,18 @@ module.exports = {
             )
           ),
           aggs: {
-            ...(validMetrics
-              ? F.arrayToObject(
-                  metric => `twoLevelAgg_${metric}`,
-                  metric => ({ [metric]: { field: context.value_field } }),
-                  context.include
-                )
-              : {
-                  twoLevelAgg: {
-                    [context.value_type]: _.omitBy(
-                      _.isNil,
-                      _.extend(
-                        {
-                          field: context.value_field,
-                        },
-                        context.value_data
-                      )
-                    ),
-                  },
+            ...(validMetrics &&
+              F.arrayToObject(
+                metric =>
+                  metric === 'stats' ? 'twoLevelAgg' : `twoLevelAgg_${metric}`,
+                metric => ({
+                  [metric]: _.extend(
+                    { field: context.value_field },
+                    context.value_data
+                  ),
                 }),
+                _.size(context.include) ? context.include : [context.value_type]
+              )),
           },
         },
       },
