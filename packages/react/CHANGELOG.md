@@ -1,3 +1,6 @@
+# 1.49.6
+* Rename all instances of `tree` to `node` in QueryBuilder props
+
 # 1.49.5
 * Simplify QueryBuilder and contexture-mobx with the latest contexture-client
 
