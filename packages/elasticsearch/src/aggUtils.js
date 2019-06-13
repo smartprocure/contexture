@@ -1,6 +1,7 @@
 let _ = require('lodash/fp')
 let isSubset = (a, b) => !_.difference(a, b).length
 let metrics = [
+  'stats',
   'avg',
   'max',
   'min',
@@ -10,7 +11,6 @@ let metrics = [
   'cardinality',
   'median_absolute_deviation',
 ]
-
 module.exports = {
   buildAgg: agg => ({
     [agg.key || agg.type]: {
@@ -25,6 +25,5 @@ module.exports = {
     },
   }),
   metrics,
-  hasValidMetrics: context =>
-    !_.isEmpty(context.include) && isSubset(context.include, metrics),
+  hasValidMetrics: context => !_.difference(context.include, metrics).length,
 }

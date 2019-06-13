@@ -12,7 +12,9 @@ module.exports = {
     let orderPaths = F.arrayToObject(
       _.identity,
       metric => ({
-        [`twoLevelAgg_${metric}.value`]: context.sortDir || 'desc',
+        [metric === 'stats'
+          ? `twoLevelAgg.${context.order || 'sum'}`
+          : `twoLevelAgg_${metric}.value`]: context.sortDir || 'desc',
       }),
       metrics
     )
@@ -28,18 +30,9 @@ module.exports = {
           key_data: {
             field,
             size: context.size || 10,
-            order: hasValidMetrics(context)
-              ? orderPaths[context.order]
-              : {
-                  // Disable nested path checking for now as we don't need it anymore:
-                  //  key +
-                  //      may need >inner>inner. when adding additional inner for nested filters per old code
-                  //      xor paths - if both are nested or both not, the inner one wot be in inner
-                  //      ((!getNestedPath(context.value_field) != !getNestedPath(context.key_field)) ? '>inner.' : '.') +
-                  //  order
-                  [`twoLevelAgg.${context.order || 'sum'}`]:
-                    context.sortDir || 'desc',
-                },
+            order: hasValidMetrics(context) && _.size(context.include)
+              ? orderPaths[_.contains('stats', context.include) ? 'stats' : context.order]
+              : orderPaths['stats'],
           },
           value_type: 'stats',
         },
