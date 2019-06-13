@@ -30,9 +30,14 @@ module.exports = {
           key_data: {
             field,
             size: context.size || 10,
-            order: hasValidMetrics(context) && _.size(context.include)
-              ? orderPaths[_.contains('stats', context.include) ? 'stats' : context.order]
-              : orderPaths['stats'],
+            order:
+              hasValidMetrics(context) && _.size(context.include)
+                ? orderPaths[
+                    _.contains('stats', context.include)
+                      ? 'stats'
+                      : context.order
+                  ]
+                : orderPaths['stats'],
           },
           value_type: 'stats',
         },
