@@ -1,5 +1,4 @@
 import React from 'react'
-import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import { observable , toJS} from 'mobx'
 import { Provider } from 'mobx-react'
@@ -43,7 +42,7 @@ let ContextureClientBridge = (
       //   AND -> OR, others if has value
       //   to/from NOT, others if has value
       let key = randomString()
-      Tree.wrapInGroup(_.toArray(node.path), { key, join: oppositeJoin([tree || node].join) })
+      Tree.wrapInGroup(_.toArray(node.path), { key, join: oppositeJoin((tree || node).join) })
       if (!skipDefaultNode)
         Tree.add(tree ? [...tree.path, key] : [key], blankNode())
       return Tree.getNode([...tree.path, key])
