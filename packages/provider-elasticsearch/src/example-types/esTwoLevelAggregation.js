@@ -88,8 +88,12 @@ module.exports = {
               },
               bucket.twoLevelAgg ||
                 _.flow(
-                  _.mapKeys(_.replace('twoLevelAgg_', '')),
-                  _.mapValues('value')
+                  _.mapKeys(key =>
+                    _.startsWith('twoLevelAgg_', key)
+                      ? _.last(key.split('_'))
+                      : key
+                  ),
+                  _.mapValues(value => _.getOr(value, 'value', value))
                 )(bucket)
             ),
           (results.aggregations.twoLevelFilter || results.aggregations)
