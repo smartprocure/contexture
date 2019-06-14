@@ -61,7 +61,7 @@ describe('twoLevelMatch', function() {
         aggs: {
           twoLevelAgg: {
             aggs: {
-              twoLevelAgg: {
+              stats: {
                 stats: {
                   field: 'LineItem.TotalPrice',
                 },

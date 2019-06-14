@@ -37,8 +37,7 @@ module.exports = {
             )
           ),
           aggs: F.arrayToObject(
-            metric =>
-              metric === 'stats' ? 'twoLevelAgg' : `twoLevelAgg_${metric}`,
+            _.identity,
             metric => ({
               [metric]: _.extend(
                 { field: context.value_field },
@@ -77,11 +76,7 @@ module.exports = {
               },
               bucket.twoLevelAgg ||
                 _.flow(
-                  _.mapKeys(key =>
-                    _.startsWith('twoLevelAgg_', key)
-                      ? _.last(key.split('_'))
-                      : key
-                  ),
+                  _.mapKeys(_.replace('value_', '')),
                   _.mapValues(F.getOrReturn('value'))
                 )(bucket)
             ),

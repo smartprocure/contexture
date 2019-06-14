@@ -109,11 +109,11 @@ describe('term_stats', () => {
                 field: 'Organization.Name.untouched',
                 size: 10,
                 order: {
-                  'twoLevelAgg.sum': 'desc',
+                  'stats.sum': 'desc',
                 },
               },
               aggs: {
-                twoLevelAgg: {
+                stats: {
                   stats: {
                     field: 'LineItem.TotalPrice',
                   },
@@ -176,11 +176,11 @@ describe('term_stats', () => {
                     field: 'Organization.Name.untouched',
                     size: 10,
                     order: {
-                      'twoLevelAgg.sum': 'desc',
+                      'stats.sum': 'desc',
                     },
                   },
                   aggs: {
-                    twoLevelAgg: {
+                    stats: {
                       stats: {
                         field: 'LineItem.TotalPrice',
                       },
@@ -250,11 +250,11 @@ describe('term_stats', () => {
                     field: 'Organization.Name.untouched',
                     size: 10,
                     order: {
-                      'twoLevelAgg.sum': 'desc',
+                      'stats.sum': 'desc',
                     },
                   },
                   aggs: {
-                    twoLevelAgg: {
+                    stats: {
                       stats: {
                         field: 'LineItem.TotalPrice',
                       },
@@ -302,16 +302,16 @@ describe('term_stats', () => {
                 field: 'Organization.Name.untouched',
                 size: 10,
                 order: {
-                  'twoLevelAgg_sum.value': 'desc',
+                  'sum.value': 'desc',
                 },
               },
               aggs: {
-                twoLevelAgg_sum: {
+                sum: {
                   sum: {
                     field: 'LineItem.TotalPrice',
                   },
                 },
-                twoLevelAgg_value_count: {
+                value_count: {
                   value_count: {
                     field: 'LineItem.TotalPrice',
                   },
