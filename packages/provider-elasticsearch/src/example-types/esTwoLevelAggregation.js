@@ -38,12 +38,13 @@ module.exports = {
           ),
           aggs: F.arrayToObject(
             _.identity,
-            metric => ({
-              [metric]: _.extend(
-                { field: context.value_field },
-                context.value_data
-              ),
-            }),
+            metric =>
+              _.omitBy(_.isNil, {
+                [metric]: _.extend(
+                  { field: context.value_field },
+                  context.value_data
+                ),
+              }),
             _.size(context.include) ? context.include : [context.value_type]
           ),
         },
