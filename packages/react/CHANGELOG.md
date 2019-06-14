@@ -1,3 +1,6 @@
+# 1.49.5
+* Simplify QueryBuilder and contexture-mobx with the latest contexture-client
+
 # 1.49.4
 * Add minWidth to TagsInput
 
