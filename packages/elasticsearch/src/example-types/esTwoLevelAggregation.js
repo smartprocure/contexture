@@ -65,7 +65,6 @@ module.exports = {
           ),
         },
       }
-
     return search(query).then(results => {
       let rtn = {
         results: F.mapIndexed(
@@ -83,7 +82,7 @@ module.exports = {
                       ? _.last(key.split('_'))
                       : key
                   ),
-                  _.mapValues(value => _.getOr(value, 'value', value))
+                  _.mapValues(F.getOrReturn('value'))
                 )(bucket)
             ),
           (results.aggregations.twoLevelFilter || results.aggregations)
