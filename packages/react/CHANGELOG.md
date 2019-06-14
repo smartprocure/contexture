@@ -1,3 +1,6 @@
+# 1.49.5
+* Fix Select placeholder rendering
+
 # 1.49.4
 * Add minWidth to TagsInput
 
