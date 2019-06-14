@@ -46,7 +46,10 @@ let JoinOperator = ({ state, parentState, node, child }) => (
   <div>
     <div
       onClick={F.flip(state.lens.isOpen)}
-      style={{ ...styles.operator, ...styles.bgJoin(parentState.joinHover || node) }}
+      style={{
+        ...styles.operator,
+        ...styles.bgJoin(parentState.joinHover || node),
+      }}
     >
       <span
         style={{
