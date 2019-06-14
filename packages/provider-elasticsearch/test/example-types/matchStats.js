@@ -89,7 +89,7 @@ describe('matchStats', () => {
                 },
               },
               aggs: {
-                twoLevelAgg: {
+                stats: {
                   stats: {
                     field: 'LineItem.TotalPrice',
                   },

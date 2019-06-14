@@ -95,7 +95,7 @@ describe('dateHistogram', () => {
                 min_doc_count: 0,
               },
               aggs: {
-                twoLevelAgg: {
+                stats: {
                   stats: {
                     field: 'LineItem.TotalPrice',
                   },

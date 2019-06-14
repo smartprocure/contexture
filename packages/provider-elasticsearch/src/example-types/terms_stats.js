@@ -4,7 +4,7 @@ let { buildRegexQueryForWords } = require('../regex')
 let { getField } = require('../fields')
 
 let orderField = ({ include, order = 'sum' }) =>
-  include ? `twoLevelAgg_${order}.value` : `twoLevelAgg.${order}`
+  include ? `${order}.value` : `stats.${order}`
 module.exports = {
   validContext: node => node.key_field && node.value_field,
   async result(node, search, schema) {

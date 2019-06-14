@@ -73,7 +73,7 @@ describe('matchCardinality', () => {
                 },
               },
               aggs: {
-                twoLevelAgg_cardinality: {
+                cardinality: {
                   cardinality: {
                     field: 'LineItem.TotalPrice',
                   },
