@@ -74,7 +74,8 @@ module.exports = {
                 key: bucket.key || key,
                 doc_count: bucket.doc_count,
               },
-              bucket.twoLevelAgg || bucket.stats ||
+              bucket.twoLevelAgg ||
+                bucket.stats ||
                 _.flow(
                   _.mapKeys(_.replace('value_', '')),
                   _.mapValues(F.getOrReturn('value'))
