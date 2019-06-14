@@ -42,21 +42,21 @@ let OperatorLine = Component(({ node, child, style }) => (
 ))
 OperatorLine.displayName = 'OperatorLine'
 
-let JoinOperator = ({ state, node, child, parent }) => (
+let JoinOperator = ({ state, parentState, node, child }) => (
   <div>
     <div
       onClick={F.flip(state.lens.isOpen)}
-      style={{ ...styles.operator, ...styles.bgJoin(parent.joinHover || node) }}
+      style={{ ...styles.operator, ...styles.bgJoin(parentState.joinHover || node) }}
     >
       <span
         style={{
-          ...(parent.joinHover && {
+          ...(parentState.joinHover && {
             fontStyle: 'italic',
             opacity: 0.5,
           }),
         }}
       >
-        {parent.joinHover || node.join}
+        {parentState.joinHover || node.join}
       </span>
     </div>
     <OperatorLine {...{ node, child }} />
@@ -70,12 +70,12 @@ let Operator = Component(
       isOpen: false,
     }),
   }),
-  ({ state, node, child, parent, root, parentNode, index }) => (
+  ({ state, parentState, node, child, parent, root, index }) => (
     <div>
       {!(index !== 0 || node.join === 'not') ? (
         <BlankOperator {...{ state, node, child }} />
       ) : (
-        <JoinOperator {...{ state, node, child, parent }} />
+        <JoinOperator {...{ state, node, child, parentState }} />
       )}
       <OperatorMoveTarget {...{ node, root, index }} />
       <Popover
@@ -83,10 +83,10 @@ let Operator = Component(
         style={{
           ...styles.operatorPopover,
           ...styles.bdJoin(node),
-          ...(parent.wrapHover && { marginLeft: 0 }),
+          ...(parentState.wrapHover && { marginLeft: 0 }),
         }}
       >
-        <OperatorMenu {...{ node, parent, root, parentNode }} />
+        <OperatorMenu {...{ node, parentState, root, parent }} />
       </Popover>
     </div>
   ),
