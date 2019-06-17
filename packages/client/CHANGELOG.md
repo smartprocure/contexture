@@ -1,5 +1,26 @@
-﻿# 2.20.1
+# 2.22.4
 * Add `onError` event to be triggered on service exception
+
+# 2.22.3
+* Add `_.toArray` to actions to handle ObservableArray paths
+
+# 2.22.2
+* Set defaults for geo location and radius
+
+# 2.22.1
+* Fix bug with replace not inserting at the right index with mobx
+
+# 2.22.0
+* Add nested pause actions (pauseNested, unpauseNested, isPausedNested)
+* Add move action
+* Add wrapInGroup action
+* Add replace action
+* Support nested add, nested remove, add at index
+* Add `initObject` config support
+* Entire test suite is now run against both the native JS and mobx client
+
+# 2.21.0
+* Serialize a node's `paused` field
 
 # 2.20.0
 * Add `clear` action to reset a node's value to its defaults
