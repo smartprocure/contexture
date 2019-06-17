@@ -21,7 +21,7 @@ export default DDContext(
       types,
       state: observable({
         adding: false,
-        ...tree
+        ...tree,
       }),
     }),
     ({
