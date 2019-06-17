@@ -7,14 +7,14 @@ import FilterContents from './FilterContents'
 import FilterDragSource from './DragDrop/FilterDragSource'
 import { oppositeJoin } from '../utils/search'
 
-let Rule = ({ state, node, tree, root, connectDragSource, isDragging }) =>
+let Rule = ({ state, node, parent, root, connectDragSource, isDragging }) =>
   connectDragSource(
     <div style={styles.w100}>
-      <Indentable tree={tree} indent={state.lens.indentHover}>
+      <Indentable node={parent} indent={state.lens.indentHover}>
         <div
           style={{
             ...styles.condition,
-            ...styles.bdJoin(tree),
+            ...styles.bdJoin(parent),
             ...(state.removeHover && {
               borderStyle: 'dashed',
               opacity: 0.25,
@@ -35,11 +35,11 @@ let Rule = ({ state, node, tree, root, connectDragSource, isDragging }) =>
             <button
               {...F.domLens.hover(state.lens.indentHover)}
               style={{
-                color: styles.joinColor(oppositeJoin(tree.join)),
+                color: styles.joinColor(oppositeJoin(parent.join)),
                 ...styles.btn,
                 ...styles.roundedRight0,
               }}
-              onClick={() => root.indent(tree, node)}
+              onClick={() => root.indent(parent, node)}
             >
               >
             </button>
@@ -50,7 +50,7 @@ let Rule = ({ state, node, tree, root, connectDragSource, isDragging }) =>
                 ...styles.roundedLeft0,
                 marginLeft: '-1px',
               }}
-              onClick={() => root.remove(tree, node)}
+              onClick={() => root.remove(parent, node)}
             >
               X
             </button>

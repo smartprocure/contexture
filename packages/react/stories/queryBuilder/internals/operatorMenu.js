@@ -7,5 +7,5 @@ export default (parent, root) =>
     'Search Components (Unthemed)|QueryBuilder/Internals/OperatorMenu',
     module
   ).addWithJSX('OperatorMenu', () => (
-    <OperatorMenu {...{ tree: { join: 'and' }, parent, root }} />
+    <OperatorMenu {...{ node: { join: 'and' }, parent, root }} />
   ))

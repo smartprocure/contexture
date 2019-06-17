@@ -15,12 +15,12 @@ let { background } = styles
 let GroupItem = FilterDragSource(args => {
   let {
     child,
-    tree,
+    node,
     index,
     state,
     root,
     isRoot,
-    parentTree,
+    parent,
     connectDragSource,
     //connectDragPreview, isDragging
   } = args
@@ -28,19 +28,19 @@ let GroupItem = FilterDragSource(args => {
     <div
       style={{
         ...styles.dFlex,
-        ...(index === tree.children.length - 1 &&
+        ...(index === node.children.length - 1 &&
           !root.adding && { background }),
       }}
     >
-      {!(isRoot && tree.children.length === 1) && (
+      {!(isRoot && node.children.length === 1) && (
         <Operator
-          {...{ tree, child, root, parentTree, index, parent: state }}
+          {...{ node, child, root, parent, index, parentState: state }}
         />
       )}
       {child.children ? (
-        <Group tree={child} root={root} parentTree={tree} />
+        <Group node={child} root={root} parent={node} />
       ) : (
-        <Rule {...{ ...args, node: child }} />
+        <Rule {...{ ...args, parent: node, node: child }} />
       )}
     </div>
   )
@@ -55,14 +55,14 @@ let Group = Component(
     }),
   }),
   args => {
-    let { tree, root, state, isRoot } = args
+    let { node, root, state, isRoot } = args
     return (
-      <Indentable tree={tree} indent={state.lens.wrapHover}>
+      <Indentable node={node} indent={state.lens.wrapHover}>
         <div
           style={{
             ...styles.conditions,
             ...(!isRoot && styles.w100),
-            ...styles.bdJoin(tree),
+            ...styles.bdJoin(node),
             ...(state.removeHover && {
               ...styles.bgStriped,
               borderColor: background,
@@ -86,15 +86,15 @@ let Group = Component(
                   )}
                 </div>
               ),
-              _.toArray(tree.children)
+              _.toArray(node.children)
             )}
             {/*<FilterMoveTarget index={tree.children.length} tree={tree} /> */}
             {root.adding && (
               <AddPreview
                 onClick={() => {
-                  root.add(tree)
+                  root.add(node)
                 }}
-                join={tree.join}
+                join={node.join}
                 style={{
                   marginLeft: 0,
                   borderTopLeftRadius: 5,

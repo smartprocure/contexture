@@ -8,17 +8,17 @@ export default () =>
     module
   )
     .addWithJSX('and', () => (
-      <Indentable indent={() => true} tree={{ join: 'and' }}>
+      <Indentable indent={() => true} node={{ join: 'and' }}>
         <div style={{ height: '100px' }}>Contents</div>
       </Indentable>
     ))
     .addWithJSX('or', () => (
-      <Indentable indent={() => true} tree={{ join: 'or' }}>
+      <Indentable indent={() => true} node={{ join: 'or' }}>
         <div style={{ height: '100px' }}>Contents</div>
       </Indentable>
     ))
     .addWithJSX('not', () => (
-      <Indentable indent={() => true} tree={{ join: 'not' }}>
+      <Indentable indent={() => true} node={{ join: 'not' }}>
         <div style={{ height: '100px' }}>Contents</div>
       </Indentable>
     ))

@@ -7,7 +7,7 @@ export default (parent, root, DnDDecorator) =>
     .addDecorator(DnDDecorator)
     .addWithJSX('One Filter', () => (
       <Group
-        tree={{
+        node={{
           key: 'root',
           join: 'and',
           children: [{ key: 'filter 1', type: 'query' }],
@@ -18,7 +18,7 @@ export default (parent, root, DnDDecorator) =>
     ))
     .addWithJSX('Multiple Filters', () => (
       <Group
-        tree={{
+        node={{
           key: 'root',
           join: 'and',
           children: [

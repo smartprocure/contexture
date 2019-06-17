@@ -1,3 +1,6 @@
+# 1.49.7
+* Rename all instances of `tree` to `node` in QueryBuilder props
+
 # 1.49.6
 * Fix Select placeholder rendering
 

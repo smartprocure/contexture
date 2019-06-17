@@ -9,9 +9,9 @@ let FilterIndentSpec = {
     let source = monitor.getItem()
     let isSelf = props.child === source.node
     if (isSelf) {
-      props.root.remove(props.tree, props.child)
+      props.root.remove(props.node, props.child)
     } else {
-      let newGroup = props.root.indent(props.tree, props.child, true)
+      let newGroup = props.root.indent(props.node, props.child, true)
       props.root.move(source.tree, source.node, newGroup, 1)
     }
   },
@@ -19,7 +19,7 @@ let FilterIndentSpec = {
 export let FilterIndentTarget = FilterDropTarget(FilterIndentSpec)(
   ({
     child,
-    tree,
+    node,
     // root,
     connectDropTarget,
     // isOver,
@@ -37,7 +37,7 @@ export let FilterIndentTarget = FilterDropTarget(FilterIndentSpec)(
               position: 'fixed',
               ...(dragItem.node === child
                 ? styles.bgStriped
-                : styles.bgPreview(oppositeJoin(tree.join))),
+                : styles.bgPreview(oppositeJoin(node.join))),
               zIndex: 100,
             }}
           />
