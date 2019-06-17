@@ -406,7 +406,7 @@ describe('lib', () => {
 
     let spy = sinon.spy()
     // Just call the spy for `onError`
-    let onError = e => spy()
+    let onError = () => spy()
     let Tree = ContextureClient(
       {
         service,
