@@ -49,10 +49,7 @@ let FilterContents = inject(_.defaults)(
             <div style={{ margin: '0 5px' }}>
               <select
                 onChange={({ target: { value: type } }) => {
-                  tree.replace(
-                    node.path,
-                    newNodeFromType(type, fields, node)
-                  )
+                  tree.replace(node.path, newNodeFromType(type, fields, node))
                 }}
                 value={F.when(_.isNil, undefined)(node.type)} // fix null value issue...
               >

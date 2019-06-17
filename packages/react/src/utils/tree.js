@@ -17,13 +17,11 @@ export let blankNode = () => ({ key: randomString() })
 // would also work as a "node transformer", etc -> node -> newNode,
 // for use in a hypothetical `transformReplace` contexture action:
 // (transform, node) -> replace(node.path, transform(node))
-export let newNodeFromType = _.curry(
-  (type, fields, node) => ({
-    type,
-    ..._.pick(['key', 'field'], node),
-    ...defaultNodeProps(node.field, fields, type),
-  })
-)
+export let newNodeFromType = _.curry((type, fields, node) => ({
+  type,
+  ..._.pick(['key', 'field'], node),
+  ...defaultNodeProps(node.field, fields, type),
+}))
 
 export let indent = (Tree, parent, node, skipDefaultNode) => {
   // Reactors:
