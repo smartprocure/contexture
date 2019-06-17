@@ -1,1 +1,3 @@
-export let oppositeJoin = join => (join === 'and' ? 'or' : 'and')
+import F from 'futil-js'
+
+export let oppositeJoin = node => F.getOrReturn('join', node) === 'and' ? 'or' : 'and'
