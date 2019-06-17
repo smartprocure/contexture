@@ -51,6 +51,7 @@ export let ContextTree = _.curry(
       debounce = 500,
       onResult = _.noop,
       onChange = _.noop,
+      onError = F.throws,
       debug,
       extend = F.extendOn,
       snapshot = _.cloneDeep,
@@ -120,7 +121,11 @@ export let ContextTree = _.curry(
       markLastUpdate(now)(tree)
       let dto = serialize(snapshot(tree), { search: true })
       prepForUpdate(tree)
-      await processResponse(await service(dto, now))
+      try {
+        await processResponse(await service(dto, now))
+      } catch (e) {
+        onError(e)
+      }
     })
 
     let processResponse = async data => {

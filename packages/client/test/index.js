@@ -254,17 +254,6 @@ describe('lib', () => {
     }
     throw Error('Should have thrown')
   })
-  // it('should ignore searches where everything is filterOnly', () => {
-  //   let Tree = ContextureClient({}, {
-  //     key: 'root',
-  //     children: [{
-  //       key:'filter'
-  //     }, {
-  //       key: 'results'
-  //     }]
-  //   }),
-
-  // })
   it('should work', async () => {
     let service = sinon.spy(mockService())
     let Tree = ContextureClient(
@@ -396,6 +385,41 @@ describe('lib', () => {
       values: ['b'],
     })
     await Promise.all([step1, step2])
+    expect(spy).to.have.callCount(1)
+  })
+  it('should call onError when the service returns error', async () => {
+    let tree = {
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'filter',
+          type: 'facet',
+        },
+        {
+          key: 'results',
+          type: 'results',
+        },
+      ],
+    }
+    let service = sinon.spy(async (dto, lastUpdateTime) => { throw('service error') })
+
+    let spy = sinon.spy()
+    // Just call the spy for `onError`
+    let onError = e => spy()
+    let Tree = ContextureClient(
+      {
+        service,
+        debounce: 1,
+        onError,
+      },
+      tree
+    )
+    let step1 = Tree.mutate(['root', 'filter'], {
+      values: ['a'],
+    })
+    await Promise.delay(100)
+    await Promise.resolve(step1)
     expect(spy).to.have.callCount(1)
   })
   it('should support custom type reactors', async () => {
