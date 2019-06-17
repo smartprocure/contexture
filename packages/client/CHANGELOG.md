@@ -1,4 +1,4 @@
-# 2.22.4
+# 2.23.0
 * Add `onError` event to be triggered on service exception
 
 # 2.22.3

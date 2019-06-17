@@ -409,7 +409,7 @@ let AllTests = ContextureClient => {
         },
       ],
     }
-    let service = sinon.spy(async (dto, lastUpdateTime) => { throw('service error') })
+    let service = sinon.spy(async () => { throw('service error') })
 
     let spy = sinon.spy()
     // Just call the spy for `onError`
