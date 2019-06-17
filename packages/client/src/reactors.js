@@ -4,9 +4,11 @@ import { hasContext, hasValue } from './node'
 
 let reactors = {
   others: (parent, node) =>
-    parent.join === 'or' ? [] : _.difference(parent.children.slice(), [node]),
+    parent.join === 'or'
+      ? []
+      : _.difference(_.toArray(parent.children), [node]),
   self: (parent, node) => [node],
-  all: parent => parent.children.slice(),
+  all: parent => _.toArray(parent.children),
   none: () => [],
   standardChange(parent, node, { previous }, reactors) {
     let needUpdate = hasContext(node)
@@ -26,7 +28,10 @@ let reactors = {
 export let StandardReactors = {
   refresh: reactors.all,
   join(parent, node, { previous }, reactor) {
-    let childrenWithValues = _.filter(hasValue, node.children.slice())
+    let childrenWithValues = _.flow(
+      _.toArray,
+      _.filter(hasValue)
+    )(node.children)
     let joinInverted = node.join === 'not' || previous.join === 'not'
     if (childrenWithValues.length > 1 || joinInverted) return reactor('all')
   },

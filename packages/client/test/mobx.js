@@ -5,26 +5,18 @@ import chai from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import ContextureClient from '../src'
-import { observable, reaction, toJS, set, action } from 'mobx'
+import { observable, reaction, toJS, set } from 'mobx'
 const expect = chai.expect
 chai.use(sinonChai)
 
-let ContextureMobx = x =>
-  _.flow(
-    observable,
-    ContextureClient({
-      snapshot: toJS,
-      extend: set,
-      ...x,
-    }),
-    // contexture-client here takes a whole observable tree and doesn't make initial values observable itself so we need to wrap new nodes in observable
-    F.updateOn('add', add =>
-      action((path, node) => add(path, observable(node)))
-    ),
-    F.updateOn('remove', action),
-    F.updateOn('mutate', action),
-    F.updateOn('refresh', action)
-  )
+let mobxAdapter = { snapshot: toJS, extend: set, initObject: observable }
+let ContextureMobx = x => ContextureClient({ ...mobxAdapter, ...x })
+//,
+// F.updateOn('add', action),
+// F.updateOn('remove', action),
+// F.updateOn('mutate', action),
+// F.updateOn('refresh', action)
+// )
 
 let treeUtils = Tree
 
@@ -272,7 +264,10 @@ describe('usage with mobx should generally work', () => {
     })
     expect(service).to.have.callCount(1)
     expect(
-      Tree.getNode(['root', 'results']).context.results.slice()
+      _.flow(
+        _.get(['context', 'results']),
+        _.toArray
+      )(Tree.getNode(['root', 'results']))
     ).to.deep.equal([
       {
         title: 'Some result',
@@ -291,7 +286,10 @@ describe('usage with mobx should generally work', () => {
     })
     expect(service).to.have.callCount(2)
     expect(
-      Tree.getNode(['root', 'results']).context.results.slice()
+      _.flow(
+        _.get(['context', 'results']),
+        _.toArray
+      )(Tree.getNode(['root', 'results']))
     ).to.deep.equal([
       {
         title: 'New values',
@@ -367,5 +365,50 @@ describe('usage with mobx should generally work', () => {
     })
     await tree.refresh(['root'])
     await tree.mutate(['root', 'subgroup'], { join: 'and' })
+  })
+  it('should match flat and nested trees after add', async () => {
+    service.reset()
+    let Tree = ContextureMobx({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'filter 1',
+          type: 'facet',
+          field: 'facetfield',
+          value: 'some value',
+        },
+      ],
+    })
+    await tree.add(['root'], {
+      key: 'filter 2',
+      type: 'facet',
+      field: 'facetfield',
+      value: 'some value',
+    })
+    expect(tree.getNode(['root', 'filter 2'])).to.equal(tree.tree.children[1])
+  })
+  it('Test that pushing into an observable array converts array items to observables different from what was pushed', () => {
+    let tree = observable({
+      key: 'a',
+      children: [
+        {
+          key: 'b',
+        },
+      ],
+    })
+    let plainNode = {
+      key: 'c',
+    }
+    tree.children.push(plainNode)
+    expect(tree.children[1]).not.to.equal(plainNode)
+
+    let observableNode = {
+      key: 'd',
+    }
+    observableNode = observable(observableNode)
+    tree.children.push(observableNode)
+    expect(tree.children[2]).to.equal(observableNode)
   })
 })
