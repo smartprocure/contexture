@@ -1,5 +1,8 @@
-# 1.49.6
+# 1.49.7
 * Rename all instances of `tree` to `node` in QueryBuilder props
+
+# 1.49.6
+* Fix Select placeholder rendering
 
 # 1.49.5
 * Simplify QueryBuilder and contexture-mobx with the latest contexture-client
