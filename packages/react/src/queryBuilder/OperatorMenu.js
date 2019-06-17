@@ -6,7 +6,9 @@ import styles from '../styles'
 import { oppositeJoin } from '../utils/search'
 let { btn, joinColor, bgJoin } = styles
 
-let OperatorMenu = ({ node, parentState, root, parent }) => (
+import { indent } from '../utils/tree'
+
+let OperatorMenu = ({ node, parentState, tree, parent }) => (
   <div>
     {_.map(
       join =>
@@ -15,7 +17,7 @@ let OperatorMenu = ({ node, parentState, root, parent }) => (
             key={join}
             {...F.domLens.hover(x => (parentState.joinHover = x && join))}
             style={{ ...btn, ...bgJoin(join) }}
-            onClick={() => root.join(node, join)}
+            onClick={() => tree.mutate(node.path, { join })}
           >
             To {join.toUpperCase()}
           </div>
@@ -31,7 +33,7 @@ let OperatorMenu = ({ node, parentState, root, parent }) => (
         }}
         {...F.domLens.hover(parentState.lens.wrapHover)}
         onClick={() => {
-          root.indent(parent, node)
+          indent(tree, parent, node)
           F.off(parentState.lens.wrapHover)()
         }}
       >
@@ -42,7 +44,7 @@ let OperatorMenu = ({ node, parentState, root, parent }) => (
       <div
         {...F.domLens.hover(parentState.lens.removeHover)}
         style={{ ...btn, marginTop: 5 }}
-        onClick={() => root.remove(parent, node)}
+        onClick={() => tree.remove(node.path)}
       >
         Remove
       </div>

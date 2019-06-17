@@ -6,6 +6,7 @@ import { ModalPicker, Modal, NestedPicker, Dynamic, Grid } from '../layout/'
 import { fieldsToOptions } from '../FilterAdder'
 import { defaultProps } from 'recompose'
 import { get } from '../utils/mobx-utils'
+import { newNodeFromType } from '../utils/tree'
 
 let FieldPicker = defaultProps({
   Modal,
@@ -22,7 +23,7 @@ let FilterContents = inject(_.defaults)(
   observer(
     ({
       node,
-      root,
+      tree,
       fields,
       types = {},
       ContextureButton = 'button',
@@ -42,13 +43,16 @@ let FilterContents = inject(_.defaults)(
             label={nodeField ? nodeLabel : 'Pick a Field'}
             options={fieldsToOptions(fields)}
             // TODO: consider type options in case this isn't safe, e.g. a field/type change action
-            onChange={field => root.mutate(node.path, { field })}
+            onChange={field => tree.mutate(node.path, { field })}
           />
           {nodeField && (
             <div style={{ margin: '0 5px' }}>
               <select
-                onChange={({ target: { value } }) => {
-                  root.typeChange(node, value)
+                onChange={({ target: { value: type } }) => {
+                  tree.replace(
+                    node.path,
+                    newNodeFromType(type, fields, node)
+                  )
                 }}
                 value={F.when(_.isNil, undefined)(node.type)} // fix null value issue...
               >
@@ -81,7 +85,7 @@ let FilterContents = inject(_.defaults)(
             >
               <Dynamic
                 component={types[node.type] || MissingTypeComponent}
-                tree={root}
+                tree={tree}
                 node={node}
                 {...mapNodeToProps(node, fields, types)}
               />
