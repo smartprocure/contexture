@@ -410,7 +410,7 @@ let AllTests = ContextureClient => {
       ],
     }
     let service = sinon.spy(async () => {
-      throw 'service error'
+      throw 'service error!'
     })
 
     let spy = sinon.spy()
@@ -430,6 +430,40 @@ let AllTests = ContextureClient => {
     await Promise.delay(100)
     await Promise.resolve(step1)
     expect(spy).to.have.callCount(1)
+  })
+  it('should throw when the service crashes', async () => {
+    let tree = {
+      key: 'root',
+      join: 'and',
+      children: [{
+        key: 'filter',
+        type: 'facet',
+      },
+      {
+        key: 'results',
+        type: 'results',
+      }],
+    }
+    let service = sinon.spy(async () => {
+      throw 'service error!'
+    })
+
+    let spy = sinon.spy()
+    let Tree = ContextureClient(
+      {
+        service,
+        debounce: 1
+      },
+      tree
+    )
+    try {
+      await Tree.mutate(['root', 'filter'], {
+        values: ['a'],
+      })
+    } catch (e) {
+      expect(e).to.equal('service error!')
+      return
+    }
   })
   it('should support custom type reactors', async () => {
     let service = sinon.spy(mockService())
