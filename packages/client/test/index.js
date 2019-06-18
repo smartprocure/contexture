@@ -448,7 +448,6 @@ let AllTests = ContextureClient => {
       throw 'service error!'
     })
 
-    let spy = sinon.spy()
     let Tree = ContextureClient(
       {
         service,
