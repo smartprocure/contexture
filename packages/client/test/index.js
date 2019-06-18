@@ -435,14 +435,16 @@ let AllTests = ContextureClient => {
     let tree = {
       key: 'root',
       join: 'and',
-      children: [{
-        key: 'filter',
-        type: 'facet',
-      },
-      {
-        key: 'results',
-        type: 'results',
-      }],
+      children: [
+        {
+          key: 'filter',
+          type: 'facet',
+        },
+        {
+          key: 'results',
+          type: 'results',
+        },
+      ],
     }
     let service = sinon.spy(async () => {
       throw 'service error!'
@@ -451,7 +453,7 @@ let AllTests = ContextureClient => {
     let Tree = ContextureClient(
       {
         service,
-        debounce: 1
+        debounce: 1,
       },
       tree
     )
