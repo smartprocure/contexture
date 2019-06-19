@@ -1,4 +1,7 @@
-﻿# 2.22.3
+# 2.23.0
+* Add `onError` event to be triggered on service exception
+
+# 2.22.3
 * Add `_.toArray` to actions to handle ObservableArray paths
 
 # 2.22.2

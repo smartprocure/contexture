@@ -261,17 +261,6 @@ let AllTests = ContextureClient => {
     }
     throw Error('Should have thrown')
   })
-  // it('should ignore searches where everything is filterOnly', () => {
-  //   let Tree = ContextureClient({}, {
-  //     key: 'root',
-  //     children: [{
-  //       key:'filter'
-  //     }, {
-  //       key: 'results'
-  //     }]
-  //   }),
-
-  // })
   it('should work', async () => {
     let service = sinon.spy(mockService())
     let Tree = ContextureClient(
@@ -404,6 +393,78 @@ let AllTests = ContextureClient => {
     })
     await Promise.all([step1, step2])
     expect(spy).to.have.callCount(1)
+  })
+  it('should call onError when the service returns error', async () => {
+    let tree = {
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'filter',
+          type: 'facet',
+        },
+        {
+          key: 'results',
+          type: 'results',
+        },
+      ],
+    }
+    let service = sinon.spy(async () => {
+      throw 'service error!'
+    })
+
+    let spy = sinon.spy()
+    // Just call the spy for `onError`
+    let onError = () => spy()
+    let Tree = ContextureClient(
+      {
+        service,
+        debounce: 1,
+        onError,
+      },
+      tree
+    )
+    let step1 = Tree.mutate(['root', 'filter'], {
+      values: ['a'],
+    })
+    await Promise.delay(100)
+    await Promise.resolve(step1)
+    expect(spy).to.have.callCount(1)
+  })
+  it('should throw when the service crashes', async () => {
+    let tree = {
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'filter',
+          type: 'facet',
+        },
+        {
+          key: 'results',
+          type: 'results',
+        },
+      ],
+    }
+    let service = sinon.spy(async () => {
+      throw 'service error!'
+    })
+
+    let Tree = ContextureClient(
+      {
+        service,
+        debounce: 1,
+      },
+      tree
+    )
+    try {
+      await Tree.mutate(['root', 'filter'], {
+        values: ['a'],
+      })
+    } catch (e) {
+      expect(e).to.equal('service error!')
+      return
+    }
   })
   it('should support custom type reactors', async () => {
     let service = sinon.spy(mockService())
