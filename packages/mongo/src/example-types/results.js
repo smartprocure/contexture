@@ -26,7 +26,7 @@ let lookupFromPopulate = getSchema =>
     }
   })
 
-let getStartRecord = (page, pageSize) => {
+let getStartRecord = ({ page, pageSize }) => {
   page = page < 1 ? 0 : page - 1
   return page * pageSize
 }
