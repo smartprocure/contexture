@@ -86,10 +86,7 @@ export default config => {
   let replace = (path, transform) => {
     let parentPath = arrayDropLast(path)
     let node = getNode(path)
-    let index = _.findIndex(
-      x => x === node,
-      getNode(parentPath).children
-    )
+    let index = _.findIndex(x => x === node, getNode(parentPath).children)
     let newNode = F.callOrReturn(transform, node)
     remove(path)
     return add(parentPath, newNode, { index })
