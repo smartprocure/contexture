@@ -1298,14 +1298,26 @@ let AllTests = ContextureClient => {
         },
       ],
     })
-    await tree.replace(['root', 'criteria'], {
-      key: 'criteria1',
-      type: 'facet',
-    })
+    expect(tree.tree.children[1].key).to.deep.equal('criteria')
+    // Replace with a transform
+    await tree.replace(
+      ['root', 'criteria'], 
+      node => ({...node, key: 'criteria1', values: [1, 2, 3]})
+    )
     expect(tree.getNode(['root', 'criteria'])).to.not.exist
-    expect(tree.getNode(['root', 'criteria1']).values).to.deep.equal([])
+    expect(tree.getNode(['root', 'criteria1']).values).to.deep.equal([1, 2, 3])
+    expect(tree.getNode(['root', 'criteria1']).children).to.have.lengthOf(2)
     // Confirm it's at the right index
     expect(tree.tree.children[1].key).to.deep.equal('criteria1')
+    // Replace with a new object
+    await tree.replace(['root', 'criteria1'], () => ({
+      key: 'criteria2',
+      type: 'facet',
+    }))
+    expect(tree.getNode(['root', 'criteria'])).to.not.exist
+    expect(tree.getNode(['root', 'criteria2']).values).to.deep.equal([])
+    expect(tree.getNode(['root', 'criteria2']).children).to.not.exist
+    expect(tree.tree.children[1].key).to.deep.equal('criteria2')
   })
   it('should wrapInGroup replace', async () => {
     let service = sinon.spy(mockService())
