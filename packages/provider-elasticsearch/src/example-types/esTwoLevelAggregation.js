@@ -76,7 +76,12 @@ module.exports = {
                 doc_count: bucket.doc_count,
               },
               bucket.twoLevelAgg ||
-                bucket.stats ||
+                _.find(
+                  value =>
+                    !F.cascade(['value', 'values', 'value_count'], value) &&
+                    _.isObject(value),
+                  bucket
+                ) ||
                 _.flow(
                   _.mapKeys(_.replace('value_', '')),
                   _.mapValues(F.getOrReturn('value'))
