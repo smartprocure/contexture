@@ -1,5 +1,20 @@
 import _ from 'lodash/fp'
-import { runTypeFunction, getTypeProp } from './types'
+import F from 'futil-js'
+import { runTypeFunction, runTypeFunctionOrDefault, getTypeProp } from './types'
+
+// WIP until this goes into futil
+let uniqueString = _.curry((cache, x) => {
+  let result = x
+  while (cache[result]) result = x + cache[x]++
+  cache[result] = (cache[result] || 0) + 1
+  return result
+})
+let uniqueStringFrom = _.curry((others, x) => 
+  _.flow(
+    _.map(uniqueString({})),
+    _.last
+  )([...others, x])
+)
 
 export let defaults = {
   path: null,
@@ -22,16 +37,27 @@ export let internalStateKeys = {
   afterSearch: null,
 }
 
-export let initNode = (node, path, extend, types) => {
+export let autoKey = x =>
+  F.compactJoin('-', [x.field, x.type])
+
+export let initNode = (node, parent, extend, types) => {
   runTypeFunction(types, 'init', node, extend)
-  extend(node, {
-    ..._.omit(_.keys(node), defaults),
-    ..._.omit(_.keys(node), getTypeProp(types, 'defaults', node)),
-    path,
-  })
+  // initialize the F.uniqueString cache from sibling keys
+  let key = node.key || uniqueStringFrom(
+    _.flow(
+      _.get('children'),
+      _.toArray, // mobx
+      _.map('key')
+    )(parent),
+    runTypeFunctionOrDefault(autoKey, types, 'autoKey', node, extend)
+  )
+  extend(node, _.defaults(
+    { ...defaults, ...getTypeProp(types, 'defaults', node) },
+    { ...node, key, path: [...(_.get('path', parent) || []), key] }
+  ))
 }
 
-export let hasContext = node => node.context
+export let hasContext = node => node && node.context
 let throwsError = x => {
   throw Error(x)
 } // Throw expressions are stage 3 :(

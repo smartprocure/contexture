@@ -30,9 +30,8 @@ export default config => {
   let add = async (parentPath, node, { index } = {}) => {
     node = initObject(node)
     Tree.walk((node, index, [parent = {}]) => {
-      let path = [...(parent.path || parentPath), node.key]
-      initNode(node, path, extend, types)
-      flat[encode(path)] = node
+      initNode(node, getNode(parent.path || parentPath), extend, types)
+      flat[encode(node.path)] = node
     })(node)
 
     let target = getNode(parentPath)
