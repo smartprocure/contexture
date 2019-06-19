@@ -45,13 +45,16 @@ describe('results', () => {
   })
   describe('getStartRecord', () => {
     it('should return 0 if page is 1', () => {
-      expect(getStartRecord(1, 10)).to.equal(0)
+      let context = { page: 1, pageSize: 10 }
+      expect(getStartRecord(context)).to.equal(0)
     })
     it('should return 0 if page is < 1', () => {
-      expect(getStartRecord(0, 10)).to.equal(0)
+      let context = { page: 0, pageSize: 10 }
+      expect(getStartRecord(context)).to.equal(0)
     })
     it('should return 10 if page is 2', () => {
-      expect(getStartRecord(2, 10)).to.equal(10)
+      let context = { page: 2, pageSize: 10 }
+      expect(getStartRecord(context)).to.equal(10)
     })
   })
   describe('getResultsQuery', () => {
