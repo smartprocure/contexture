@@ -27,7 +27,7 @@ let lookupFromPopulate = getSchema =>
   })
 
 let getStartRecord = (page, pageSize) => {
-  page -= 1
+  page = page < 1 ? 0 : page - 1
   return page * pageSize
 }
 
@@ -50,13 +50,15 @@ let getResultsQuery = (context, getSchema, startRecord) => {
   // Otherwise, place those first to take advantage of any indexes on that field.
   let sortOnJoinField = /\./.test(sortField)
   // $project
-  let $project = _.zipObject(include, _.times(_.constant(1), include.length))
+  let $project = [
+    { $project: _.zipObject(include, _.times(_.constant(1), include.length)) },
+  ]
 
   return _.reject(_.isEmpty, [
     ...(!sortOnJoinField ? sortSkipLimit : []),
     ...lookupFromPopulate(getSchema)(populate),
     ...(sortOnJoinField ? sortSkipLimit : []),
-    $project,
+    ...(!_.isEmpty(include) ? $project : []),
   ])
 }
 
@@ -68,27 +70,34 @@ let defaults = _.defaults({
   include: [],
 })
 
+let result = async (context, search, schema, { getSchema }) => {
+  context = defaults(context)
+  let startRecord = getStartRecord(context)
+  let resultsQuery = getResultsQuery(context, getSchema, startRecord)
+  let countQuery = [{ $group: { _id: null, count: { $sum: 1 } } }]
+
+  let [results, count] = await Promise.all([
+    search(resultsQuery),
+    search(countQuery),
+  ])
+
+  return {
+    // TODO - handle aggregate wrapped stuff, e.g. result.result or result.result[0] etc
+    response: {
+      totalRecords: _.get('0.count', count),
+      startRecord: startRecord + 1,
+      endRecord: startRecord + results.length,
+      results,
+    },
+  }
+}
+
 // NOTE: pageSize of 0 will return all records
 module.exports = {
-  async result(context, search, schema, { getSchema }) {
-    context = defaults(context)
-    let startRecord = getStartRecord(context)
-    let resultsQuery = getResultsQuery(context, getSchema, startRecord)
-    let countQuery = [{ $group: { _id: null, count: { $sum: 1 } } }]
-
-    let [results, count] = await Promise.all([
-      search(resultsQuery),
-      search(countQuery),
-    ])
-
-    return {
-      // TODO - handle aggregate wrapped stuff, e.g. result.result or result.result[0] etc
-      response: {
-        totalRecords: _.get('0.count', count),
-        startRecord: startRecord + 1,
-        endRecord: startRecord + results.length,
-        results,
-      },
-    }
-  },
+  lookupFromPopulate,
+  getStartRecord,
+  getResultsQuery,
+  defaults,
+  // API
+  result,
 }
