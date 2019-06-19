@@ -48,7 +48,10 @@ let getResultsQuery = (context, getSchema, startRecord) => {
   ]
   // If sort field contains a '.' move $sort, $skip, and $limit to after $lookup.
   // Otherwise, place those first to take advantage of any indexes on that field.
-  let sortOnJoinField = /\./.test(sortField)
+  let sortOnJoinField = _.includes(
+    _.replace(/^([^.]+)\..+$/, '$1', sortField),
+    _.keys(populate)
+  )
   // $project
   let $project = [
     { $project: _.zipObject(include, _.times(_.constant(1), include.length)) },
