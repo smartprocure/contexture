@@ -1492,6 +1492,48 @@ let AllTests = ContextureClient => {
     expect(tree.getNode(['root', 'criteria', 'filter1']).paused).to.be.false
     expect(tree.getNode(['root', 'criteria', 'filter2']).paused).to.be.false
   })
+  it('should autogenerate keys on node add', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        { key: 'results', type: 'results', page: 1 },
+        {
+          key: 'criteria',
+          children: [
+            { key: 'field-facet', type: 'facet', field: 'field', values: [1, 2] },
+            { key: 'field-facet1', type: 'facet', field: 'field' },
+          ],
+        },
+      ],
+    })
+    expect(tree.getNode(['root', 'criteria', 'field-facet2'])).to.not.exist
+    await tree.add(['root', 'criteria'], {type: 'facet', field: 'field'})
+    expect(tree.getNode(['root', 'criteria', 'field-facet2'])).to.exist
+  })
+  it('should autogenerate keys on tree initialization', () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        { key: 'results', type: 'results', page: 1 },
+        {
+          key: 'criteria',
+          children: [
+            { type: 'facet', field: 'field', values: [1, 2] },
+            { type: 'facet', field: 'field' },
+          ],
+        },
+      ],
+    })
+    expect(tree.getNode(['root', 'criteria', 'field-facet'])).to.exist
+    expect(tree.getNode(['root', 'criteria', 'field-facet1'])).to.exist
+  })
+
 }
 
 describe('lib', () => AllTests(ContextureClient))

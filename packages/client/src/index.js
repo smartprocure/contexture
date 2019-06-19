@@ -62,14 +62,15 @@ export let ContextTree = _.curry(
   ) => {
     tree = initObject(tree)
     let log = x => debug && console.info(x)
+    let customReactors = {}
+    
+    // initNode now autogenerates and dedupes node keys, so it must be run before flattening the tree
+    Tree.walk((node, index, [parent = {}]) => {
+      initNode(node, parent, extend, types)
+    })(tree)
+
     let flat = flatten(tree)
     let getNode = path => flat[encode(path)]
-    let customReactors = {}
-
-    F.eachIndexed(
-      (node, path) => initNode(node, decode(path), extend, types),
-      flat
-    )
 
     // Overwrite extend to report changes
     extend = _.over([extend, (a, b) => TreeInstance.onChange(a, b)])
@@ -166,6 +167,7 @@ export let ContextTree = _.curry(
       dispatch,
       getNode,
       tree,
+      flat,
       addActions: create =>
         F.extendOn(
           TreeInstance,
