@@ -1300,10 +1300,11 @@ let AllTests = ContextureClient => {
     })
     expect(tree.tree.children[1].key).to.deep.equal('criteria')
     // Replace with a transform
-    await tree.replace(
-      ['root', 'criteria'], 
-      node => ({...node, key: 'criteria1', values: [1, 2, 3]})
-    )
+    await tree.replace(['root', 'criteria'], node => ({
+      ...node,
+      key: 'criteria1',
+      values: [1, 2, 3],
+    }))
     expect(tree.getNode(['root', 'criteria'])).to.not.exist
     expect(tree.getNode(['root', 'criteria1']).values).to.deep.equal([1, 2, 3])
     expect(tree.getNode(['root', 'criteria1']).children).to.have.lengthOf(2)
