@@ -1,3 +1,6 @@
+# 0.17.1
+* Throw error message and object on client search run exception
+
 # 0.17.0
 * Add support for "inlineAliases" when dealing with ES highlight response
 

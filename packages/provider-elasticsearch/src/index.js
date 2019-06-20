@@ -90,6 +90,11 @@ let ElasticsearchProvider = (
       if (results.timed_out) context.timedout = true
       // Log response
       _.last(context._meta.requests).response = results
+    }).catch(({message, body}) => {
+      throw {
+        message,
+        ..._.get('error.caused_by', body)
+      }
     })
   },
   // Utility function to get a mapping used for building a schema directly from ES
