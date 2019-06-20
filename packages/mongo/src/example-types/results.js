@@ -85,7 +85,6 @@ let result = async (context, search, schema, { getSchema }) => {
   ])
 
   return {
-    // TODO - handle aggregate wrapped stuff, e.g. result.result or result.result[0] etc
     response: {
       totalRecords: _.get('0.count', count),
       startRecord: startRecord + 1,
