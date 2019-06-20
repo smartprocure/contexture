@@ -27,7 +27,7 @@ export default extend => ({
     }
   }),
   resetUpdate: Tree.walk(child => {
-    if(child.markForUpdate || child.updating) {
+    if (child.markForUpdate || child.updating) {
       extend(child, {
         updating: false,
         markedForUpdate: false,
