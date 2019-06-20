@@ -1,3 +1,6 @@
+# 2.23.1
+* Add `resetUpdate` to normalize the tree post service exception
+
 # 2.23.0
 * Add `onError` event to be triggered on service exception
 
