@@ -75,7 +75,12 @@ export let ContextTree = _.curry(
     extend = _.over([extend, (a, b) => TreeInstance.onChange(a, b)])
 
     // Getting the Traversals
-    let { markForUpdate, markLastUpdate, prepForUpdate, resetUpdate } = traversals(extend)
+    let {
+      markForUpdate,
+      markLastUpdate,
+      prepForUpdate,
+      resetUpdate,
+    } = traversals(extend)
 
     let processEvent = event => path =>
       _.flow(
@@ -126,8 +131,8 @@ export let ContextTree = _.curry(
       try {
         await processResponse(await service(dto, now))
       } catch (error) {
-        onError(error)  // Raise the onError event
-        resetUpdate(tree)  // Reset the tree so there are no `updating` flags on etc
+        onError(error) // Raise the onError event
+        resetUpdate(tree) // Reset the tree so there are no `updating` flags on etc
       }
     })
 
