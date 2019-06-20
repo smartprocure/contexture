@@ -88,17 +88,34 @@ describe('results', () => {
         { $project: { name: 1, user: 1, type: 1, updatedAt: 1 } },
       ])
     })
-    it('should sort descending', () => {
+    it('should put $sort, $skip, $limit first in pipeline where sort field is not part of a join', () => {
       let context = defaults({
         key: 'results',
         type: 'results',
-        sortField: 'createdAt',
-        sortDir: 'desc',
+        sortField: 'metrics.sessionsCount',
+        include: ['name', 'user', 'type', 'updatedAt'],
+        sortDir: 'asc',
+        populate: {
+          user: {
+            schema: 'user',
+            localField: 'user',
+            foreignField: '_id',
+          },
+        },
       })
       expect(getResultsQuery(context, getSchema, 0)).to.deep.equal([
-        { $sort: { createdAt: -1 } },
+        { $sort: { 'metrics.sessionsCount': 1 } },
         { $skip: 0 },
         { $limit: 10 },
+        {
+          $lookup: {
+            as: 'user',
+            from: 'user',
+            localField: 'user',
+            foreignField: '_id',
+          },
+        },
+        { $project: { name: 1, user: 1, type: 1, updatedAt: 1 } },
       ])
     })
     it('should put $sort, $skip, $limit first after $lookup', () => {
@@ -129,6 +146,19 @@ describe('results', () => {
         { $skip: 0 },
         { $limit: 10 },
         { $project: { 'user.firstName': 1, user: 1, type: 1, updatedAt: 1 } },
+      ])
+    })
+    it('should sort descending and skip $lookup and $project', () => {
+      let context = defaults({
+        key: 'results',
+        type: 'results',
+        sortField: 'createdAt',
+        sortDir: 'desc',
+      })
+      expect(getResultsQuery(context, getSchema, 0)).to.deep.equal([
+        { $sort: { createdAt: -1 } },
+        { $skip: 0 },
+        { $limit: 10 },
       ])
     })
   })
