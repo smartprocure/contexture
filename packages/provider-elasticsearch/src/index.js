@@ -86,16 +86,18 @@ let ElasticsearchProvider = (
           scrollId,
         })
       : client.search(request)
-    return Promise.resolve(result).tap(results => {
-      if (results.timed_out) context.timedout = true
-      // Log response
-      _.last(context._meta.requests).response = results
-    }).catch(({message, body}) => {
-      throw {
-        message,
-        ..._.get('error.caused_by', body)
-      }
-    })
+    return Promise.resolve(result)
+      .tap(results => {
+        if (results.timed_out) context.timedout = true
+        // Log response
+        _.last(context._meta.requests).response = results
+      })
+      .catch(({ message, body }) => {
+        throw {
+          message,
+          ..._.get('error.caused_by', body),
+        }
+      })
   },
   // Utility function to get a mapping used for building a schema directly from ES
   async getMappingProperties(schema) {
