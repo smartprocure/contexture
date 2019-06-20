@@ -10,13 +10,13 @@ describe('matchCardinality', () => {
               buckets: {
                 pass: {
                   doc_count: 50,
-                  twoLevelAgg: {
+                  cardinality: {
                     value: 471,
                   },
                 },
                 fail: {
                   doc_count: 50,
-                  twoLevelAgg: {
+                  cardinality: {
                     value: 471,
                   },
                 },
@@ -41,12 +41,12 @@ describe('matchCardinality', () => {
           {
             key: 'pass',
             doc_count: 50,
-            value: 471,
+            cardinality: 471,
           },
           {
             key: 'fail',
             doc_count: 50,
-            value: 471,
+            cardinality: 471,
           },
         ],
       },

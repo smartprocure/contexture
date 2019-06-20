@@ -43,7 +43,7 @@ module.exports = {
             metric => ({
               [metric]: {
                 field: context.value_field,
-                ...F.omitNil(context.value_data)
+                ...F.omitNil(context.value_data),
               },
             }),
             _.size(context.include) ? context.include : [context.value_type]
@@ -76,12 +76,11 @@ module.exports = {
                 key: bucket.key || key,
                 doc_count: bucket.doc_count,
               },
-              bucket.twoLevelAgg ||
-                _.find(
-                  value =>
-                    !F.cascade(['value', 'values'], value) && _.isObject(value),
-                  bucket
-                ) ||
+              _.find(
+                value =>
+                  !F.cascade(['value', 'values'], value) && _.isObject(value),
+                bucket
+              ) ||
                 _.flow(
                   _.mapKeys(_.replace('value_', '')),
                   _.mapValues(F.getOrReturn('value'))
