@@ -127,7 +127,7 @@ export let ContextTree = _.curry(
         await processResponse(await service(dto, now))
       } catch (error) {
         onError(error)  // Raise the onError event
-        resetUpdate(tree)  // Reset the tree so there are no `updating` flags on etc
+        await processResponse(tree)
       }
     })
 
