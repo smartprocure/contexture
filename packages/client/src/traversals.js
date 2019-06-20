@@ -26,4 +26,17 @@ export default extend => ({
       })
     }
   }),
+  resetUpdate: Tree.walk(child => {
+    if(child.markForUpdate || child.updating) {
+      extend(child, {
+        updating: false,
+        markedForUpdate: false,
+      })
+      try {
+        child.updatingDeferred.resolve()
+      } catch (e) {
+        console.error(`resetUpdate failed for: ${child.key}`)
+      }
+    }
+  }),
 })
