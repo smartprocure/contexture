@@ -57,12 +57,12 @@ let getResultsQuery = (context, getSchema, startRecord) => {
     { $project: _.zipObject(include, _.times(_.constant(1), include.length)) },
   ]
 
-  return _.reject(_.isEmpty, [
+  return [
     ...(!sortOnJoinField ? sortSkipLimit : []),
     ...lookupFromPopulate(getSchema)(populate),
     ...(sortOnJoinField ? sortSkipLimit : []),
     ...(!_.isEmpty(include) ? $project : []),
-  ])
+  ]
 }
 
 let defaults = _.defaults({
