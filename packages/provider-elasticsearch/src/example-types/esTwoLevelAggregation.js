@@ -43,7 +43,7 @@ module.exports = {
             metric => ({
               [metric]: {
                 field: context.value_field,
-                ...F.omitNil(context.value_data)
+                ...F.omitNil(context.value_data),
               },
             }),
             _.size(context.include) ? context.include : [context.value_type]
