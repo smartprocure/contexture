@@ -19,6 +19,9 @@ module.exports = {
     context.value_field &&
     context.value_type,
   result(context, search) {
+    // debugger
+    // count as alias for `value_count'
+    context.include = F.replaceElement('count', 'value_count', context.include)
     let validMetrics = hasValidMetrics(context)
     if (!validMetrics)
       throw new Error(
@@ -27,8 +30,7 @@ module.exports = {
     let query = {
       aggs: {
         twoLevelAgg: {
-          [context.key_type]: _.omitBy(
-            _.isNil,
+          [context.key_type]: F.omitNil(
             _.extend(
               {
                 field: context.key_field,
@@ -38,13 +40,12 @@ module.exports = {
           ),
           aggs: F.arrayToObject(
             _.identity,
-            metric =>
-              _.omitBy(_.isNil, {
-                [metric]: _.extend(
-                  { field: context.value_field },
-                  context.value_data
-                ),
-              }),
+            metric => ({
+              [metric]: {
+                field: context.value_field,
+                ...F.omitNil(context.value_data)
+              },
+            }),
             _.size(context.include) ? context.include : [context.value_type]
           ),
         },
@@ -78,8 +79,7 @@ module.exports = {
               bucket.twoLevelAgg ||
                 _.find(
                   value =>
-                    !F.cascade(['value', 'values', 'value_count'], value) &&
-                    _.isObject(value),
+                    !F.cascade(['value', 'values'], value) && _.isObject(value),
                   bucket
                 ) ||
                 _.flow(
