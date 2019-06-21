@@ -1503,14 +1503,19 @@ let AllTests = ContextureClient => {
         {
           key: 'criteria',
           children: [
-            { key: 'field-facet', type: 'facet', field: 'field', values: [1, 2] },
+            {
+              key: 'field-facet',
+              type: 'facet',
+              field: 'field',
+              values: [1, 2],
+            },
             { key: 'field-facet1', type: 'facet', field: 'field' },
           ],
         },
       ],
     })
     expect(tree.getNode(['root', 'criteria', 'field-facet2'])).to.not.exist
-    await tree.add(['root', 'criteria'], {type: 'facet', field: 'field'})
+    await tree.add(['root', 'criteria'], { type: 'facet', field: 'field' })
     expect(tree.getNode(['root', 'criteria', 'field-facet2'])).to.exist
   })
   it('should autogenerate keys on tree initialization', () => {
@@ -1533,7 +1538,6 @@ let AllTests = ContextureClient => {
     expect(tree.getNode(['root', 'criteria', 'field-facet'])).to.exist
     expect(tree.getNode(['root', 'criteria', 'field-facet1'])).to.exist
   })
-
 }
 
 describe('lib', () => AllTests(ContextureClient))
