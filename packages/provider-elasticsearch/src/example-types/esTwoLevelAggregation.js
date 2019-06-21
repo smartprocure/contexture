@@ -19,8 +19,7 @@ module.exports = {
     context.value_field &&
     context.value_type,
   result(context, search) {
-    // debugger
-    // count as alias for `value_count'
+    // 'count' as alias for `value_count'
     context.include = F.replaceElement('count', 'value_count', context.include)
     let validMetrics = hasValidMetrics(context)
     if (!validMetrics)
