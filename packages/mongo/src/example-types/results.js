@@ -46,8 +46,8 @@ let getResultsQuery = (context, getSchema, startRecord) => {
       $limit: pageSize,
     },
   ]
-  // If sort field contains a '.' move $sort, $skip, and $limit to after $lookup.
-  // Otherwise, place those first to take advantage of any indexes on that field.
+  // If sort field is a join field move $sort, $skip, and $limit to after $lookup.
+  // Otherwise, place those stages first to take advantage of any indexes on that field.
   let sortOnJoinField = _.includes(
     _.replace(/^([^.]+)\..+$/, '$1', sortField),
     _.keys(populate)
