@@ -218,7 +218,6 @@ export let ContextTree = _.curry(
       dispatch,
       getNode,
       tree,
-      flat,
       addActions: create =>
         F.extendOn(
           TreeInstance,
