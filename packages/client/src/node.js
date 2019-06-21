@@ -2,20 +2,6 @@ import _ from 'lodash/fp'
 import F from 'futil-js'
 import { runTypeFunction, runTypeFunctionOrDefault, getTypeProp } from './types'
 
-// WIP until this goes into futil
-let uniqueString = _.curry((cache, x) => {
-  let result = x
-  while (cache[result]) result = x + cache[x]++
-  cache[result] = (cache[result] || 0) + 1
-  return result
-})
-let uniqueStringFrom = _.curry((others, x) => 
-  _.flow(
-    _.map(uniqueString({})),
-    _.last
-  )([...others, x])
-)
-
 export let defaults = {
   path: null,
   updating: null,
@@ -37,24 +23,27 @@ export let internalStateKeys = {
   afterSearch: null,
 }
 
-export let autoKey = x =>
-  F.compactJoin('-', [x.field, x.type])
+export let autoKey = x => F.compactJoin('-', [x.field, x.type])
 
-export let initNode = (node, parent, extend, types) => {
+export let initNode = (
+  node,
+  parentPath,
+  extend,
+  types,
+  dedupe = _.identity
+) => {
   runTypeFunction(types, 'init', node, extend)
-  // initialize the F.uniqueString cache from sibling keys
-  let key = node.key || uniqueStringFrom(
-    _.flow(
-      _.get('children'),
-      _.toArray, // mobx
-      _.map('key')
-    )(parent),
-    runTypeFunctionOrDefault(autoKey, types, 'autoKey', node, extend)
+  if (node.key) dedupe(node.key) // add node.key to the dedupe cache
+  let key =
+    node.key ||
+    dedupe(runTypeFunctionOrDefault(autoKey, types, 'autoKey', node, extend))
+  extend(
+    node,
+    _.defaults(
+      { ...defaults, ...getTypeProp(types, 'defaults', node) },
+      { ...node, key, path: [...parentPath, key] }
+    )
   )
-  extend(node, _.defaults(
-    { ...defaults, ...getTypeProp(types, 'defaults', node) },
-    { ...node, key, path: [...(_.get('path', parent) || []), key] }
-  ))
 }
 
 export let hasContext = node => node && node.context
