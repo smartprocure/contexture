@@ -190,4 +190,16 @@ describe('geo', () => {
       Longitude: -80.1131784,
     })
   })
+  it('Should faild is no geoCodeLocation service is passed', () => {
+    let _geo = geoType()
+    let context = {
+      type: 'geo',
+      field: 'test',
+      location: 'SmartProcure',
+      radius: 10,
+      operator: 'within',
+      _meta: {},
+    }
+    return expect(Promise.resolve(_geo.filter(context))).to.throw
+  })
 })
