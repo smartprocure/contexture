@@ -7,10 +7,11 @@ import { withStateLens } from './utils/mobx-react-utils'
 import InjectTreeNode from './utils/injectTreeNode'
 import DefaultIcon from './DefaultIcon'
 import { bdJoin } from './styles/generic'
+import { newNodeFromType } from './utils/search'
 
 export let Label = inject(_.pick('tree'))(
   withStateLens({ popover: false })(
-    observer(({ tree, node, Icon, ListItem: Item, popover, ...x }) => (
+    observer(({ tree, node, fields, Icon, ListItem: Item, popover, ...x }) => (
       <Flex
         className={`filter-field-label ${
           _.get('hasValue', node) ? 'filter-field-has-value' : ''
@@ -39,11 +40,31 @@ export let Label = inject(_.pick('tree'))(
                 style={{
                   userSelect: 'none',
                   marginTop: '0.5rem',
-                  width: '5.5rem',
                   transform: 'translateX(-2.25rem)',
                   lineHeight: '1.4rem',
                 }}
               >
+                <Item 
+                  style={{
+                    fontWeight: 'bold', 
+                    color: 'initial', 
+                    cursor: 'initial'
+                  }}
+                >
+                  {F.autoLabel(node.type)}
+                </Item>
+                {_.map(
+                  x => (
+                    <Item 
+                      key={x.value} 
+                      onClick={() => tree.replace(node.path, newNodeFromType(x.value, fields, node))}
+                    >
+                      —Change to {x.label}
+                    </Item>
+                  ),
+                  F.autoLabelOptions(_.without([node.type], _.get([node.field, 'typeOptions'], fields)) || [])
+                )}
+                <div style={{borderBottom: '1px solid #eee', margin: '4px -5px' }} />
                 {/* If only contexture-client diffed the tree before sending a request... */}
                 {(node.hasValue || false) && (
                   <Item onClick={() => tree.clear(node.path)}>
@@ -92,7 +113,7 @@ Label.displayName = 'Label'
 export let FieldLabel = InjectTreeNode(
   observer(
     ({ tree, node, node: { field } = {}, fields, Icon, ListItem, label }) => (
-      <Label tree={tree} node={node} Icon={Icon} ListItem={ListItem}>
+      <Label tree={tree} node={node} Icon={Icon} ListItem={ListItem} fields={fields}>
         {label || _.get([field, 'label'], fields) || field}
       </Label>
     )
@@ -136,6 +157,7 @@ export let FilterList = InjectTreeNode(
                 Icon={Icon}
                 className={'filter-list-group'}
                 style={bdJoin(child)}
+                ListItem={ListItem}
               />
             ) : (
               <div key={child.path} className="filter-list-item">

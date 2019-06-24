@@ -1,3 +1,6 @@
+# 1.50.0
+* Add type options to title popover in FilterList
+
 # 1.49.8
 * QueryBuilder: Remove ContextureClientBridge
 
