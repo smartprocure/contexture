@@ -6,7 +6,7 @@ import { ModalPicker, Modal, NestedPicker, Dynamic, Grid } from '../layout/'
 import { fieldsToOptions } from '../FilterAdder'
 import { defaultProps } from 'recompose'
 import { get } from '../utils/mobx-utils'
-import { newNodeFromType } from '../utils/tree'
+import { newNodeFromType } from '../utils/search'
 
 let FieldPicker = defaultProps({
   Modal,

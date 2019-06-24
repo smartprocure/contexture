@@ -11,7 +11,7 @@ import FilterDragSource from './DragDrop/FilterDragSource'
 import { FilterIndentTarget } from './DragDrop/IndentTarget'
 import { FilterMoveTarget } from './DragDrop/MoveTargets'
 let { background } = styles
-import { blankNode } from '../utils/tree'
+import { blankNode } from '../utils/search'
 
 let GroupItem = FilterDragSource(args => {
   let {
@@ -33,6 +33,7 @@ let GroupItem = FilterDragSource(args => {
           !tree.adding && { background }),
       }}
     >
+      { `${node.type} ${child && child.type}` }
       {!(isRoot && node.children.length === 1) && (
         <Operator
           {...{ node, child, tree, parent, index, parentState: state }}
