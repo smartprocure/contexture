@@ -3,9 +3,6 @@ import F from 'futil-js'
 import { encode, Tree } from '../util/tree'
 import { getTypeProp } from '../types'
 import wrap from './wrap'
-// FUTIL // FUTIL // FUTIL // FUTIL // FUTIL //
-import { uniqueStringHash } from '../index'
-// FUTIL // FUTIL // FUTIL // FUTIL // FUTIL //
 
 let pushOrSpliceOn = (array, item, index) => {
   if (index === undefined) array.push(item)
@@ -32,29 +29,24 @@ export default config => {
 
   let add = async (parentPath, node, { index } = {}) => {
     let target = getNode(parentPath)
-    // initialize uniqueString hash
-    let dedupeChildren = uniqueStringHash()
-    // populate the dedupe cache for our new node's siblings
-    _.flow(
-      _.get('children'),
-      _.toArray, // mobx
-      F.flowMap(_.get('key'), dedupeChildren(parentPath))
-    )(target)
-
+    // initialize uniqueString cache for the parent of the node to be added here,
+    // since it's not visited during the tree walk
+    let parentDedupeChildren = F.uniqueString(_.map('key', target.children))
     node = initObject(node)
     Tree.walk(
       (node, index, [parent = {}]) => {
+        node.dedupeChildren = F.uniqueString([])
         initNode(
           node,
           parent.path || parentPath,
           extend,
           types,
-          dedupeChildren(parent.path || parentPath)
+          parent.dedupeChildren || parentDedupeChildren
         )
         flat[encode(node.path)] = node
       },
       node => {
-        dedupeChildren.clear(node.path)
+        delete node.dedupeChildren
       }
     )(node)
 
