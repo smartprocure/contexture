@@ -1,4 +1,7 @@
-﻿# 0.1.10
+# 0.2.0
+* Add support for `results` nodes which don't wrap their context objects in `response` (like contexture-memory)
+
+# 0.1.10
 * Only call display if fn exists.
 
 # 0.1.9
