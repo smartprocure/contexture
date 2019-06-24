@@ -44,27 +44,39 @@ export let Label = inject(_.pick('tree'))(
                   lineHeight: '1.4rem',
                 }}
               >
-                <Item 
+                <Item
                   style={{
-                    fontWeight: 'bold', 
-                    color: 'initial', 
-                    cursor: 'initial'
+                    fontWeight: 'bold',
+                    color: 'initial',
+                    cursor: 'initial',
                   }}
                 >
                   {F.autoLabel(node.type)}
                 </Item>
                 {_.map(
                   x => (
-                    <Item 
-                      key={x.value} 
-                      onClick={() => tree.replace(node.path, newNodeFromType(x.value, fields, node))}
+                    <Item
+                      key={x.value}
+                      onClick={() =>
+                        tree.replace(
+                          node.path,
+                          newNodeFromType(x.value, fields, node)
+                        )
+                      }
                     >
                       —Change to {x.label}
                     </Item>
                   ),
-                  F.autoLabelOptions(_.without([node.type], _.get([node.field, 'typeOptions'], fields)) || [])
+                  F.autoLabelOptions(
+                    _.without(
+                      [node.type],
+                      _.get([node.field, 'typeOptions'], fields)
+                    ) || []
+                  )
                 )}
-                <div style={{borderBottom: '1px solid #eee', margin: '4px -5px' }} />
+                <div
+                  style={{ borderBottom: '1px solid #eee', margin: '4px -5px' }}
+                />
                 {/* If only contexture-client diffed the tree before sending a request... */}
                 {(node.hasValue || false) && (
                   <Item onClick={() => tree.clear(node.path)}>
@@ -113,7 +125,13 @@ Label.displayName = 'Label'
 export let FieldLabel = InjectTreeNode(
   observer(
     ({ tree, node, node: { field } = {}, fields, Icon, ListItem, label }) => (
-      <Label tree={tree} node={node} Icon={Icon} ListItem={ListItem} fields={fields}>
+      <Label
+        tree={tree}
+        node={node}
+        Icon={Icon}
+        ListItem={ListItem}
+        fields={fields}
+      >
         {label || _.get([field, 'label'], fields) || field}
       </Label>
     )
