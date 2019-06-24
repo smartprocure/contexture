@@ -54,12 +54,18 @@ export const results = ({
     )
     scrollId = result.context.scrollId
     page++
-    return _.map('_source', F.cascade(['response.results', 'results'], result.context))
+    return _.map(
+      '_source',
+      F.cascade(['response.results', 'results'], result.context)
+    )
   }
 
   const getTotalRecords = async () => {
     let data = await service(formatTree({ pageSize: 1, page: 1 }))
-    let totalRecords = F.cascade(['response.totalRecords', 'totalRecords'], getTreeResults(data).context)
+    let totalRecords = F.cascade(
+      ['response.totalRecords', 'totalRecords'],
+      getTreeResults(data).context
+    )
     let expectedRecords = totalPages * pageSize
     return totalRecords < expectedRecords ? totalRecords : expectedRecords
   }
