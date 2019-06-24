@@ -5,8 +5,7 @@ import styles from '../styles'
 import Indentable from './preview/Indentable'
 import FilterContents from './FilterContents'
 import FilterDragSource from './DragDrop/FilterDragSource'
-import { oppositeJoin } from '../utils/search'
-import { indent } from '../utils/tree'
+import { oppositeJoin, indent } from '../utils/search'
 
 let Rule = ({ state, node, parent, tree, connectDragSource, isDragging }) =>
   connectDragSource(

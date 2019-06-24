@@ -3,10 +3,8 @@ import _ from 'lodash/fp'
 import F from 'futil-js'
 import { Component } from '../utils/mobx-react-utils'
 import styles from '../styles'
-import { oppositeJoin } from '../utils/search'
+import { oppositeJoin, indent } from '../utils/search'
 let { btn, joinColor, bgJoin } = styles
-
-import { indent } from '../utils/tree'
 
 let OperatorMenu = ({ node, parentState, tree, parent }) => (
   <div>
