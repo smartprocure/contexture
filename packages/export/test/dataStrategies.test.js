@@ -64,10 +64,10 @@ describe('dataStrategies', () => {
       })
     }
     describe(' with contexts wrapped in `response`', () => {
-       resultsTests(prepareSimpleStrategy(getSimpleService(!wrap)))
+      resultsTests(prepareSimpleStrategy(getSimpleService(!wrap)))
     })
     describe(' with contexts not wrapped in `response`', () => {
-       resultsTests(prepareSimpleStrategy(getSimpleService(wrap)))
+      resultsTests(prepareSimpleStrategy(getSimpleService(wrap)))
     })
   })
 
