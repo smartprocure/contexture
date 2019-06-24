@@ -19,19 +19,17 @@ describe('dataStrategies', () => {
   describe('results', () => {
     let simpleRecords = ['record1', 'record2', 'record3']
 
-    let getSimpleService = () =>
+    let getSimpleService = wrap =>
       jest.fn(tree => {
-        _.last(tree.children).context = {
-          response: {
-            totalRecords: 1337,
-            results: simpleRecords.map(_source => ({ _source })),
-          },
+        let response = {
+          totalRecords: 1337,
+          results: simpleRecords.map(_source => ({ _source })),
         }
+        _.last(tree.children).context = wrap ? { response } : response
         return tree
       })
 
-    let prepareSimpleStrategy = (strategyParams = {}) => {
-      let service = getSimpleService()
+    let prepareSimpleStrategy = service => (strategyParams = {}) => {
       let tree = _.cloneDeep(defaultTree)
       let include = ['a', 'b', 'c']
       let strategy = dataStrategies.results({
@@ -47,22 +45,29 @@ describe('dataStrategies', () => {
       })
       return strategy
     }
-
-    it('retrieves the total records', async () => {
-      let strategy = prepareSimpleStrategy({ totalPages: 1 })
-      expect(await strategy.getTotalRecords()).toBe(3)
-      strategy = prepareSimpleStrategy({ totalPages: Infinity })
-      expect(await strategy.getTotalRecords()).toBe(1337)
+    let resultsTests = prepareSimpleStrategy => {
+      it('retrieves the total records', async () => {
+        let strategy = prepareSimpleStrategy({ totalPages: 1 })
+        expect(await strategy.getTotalRecords()).toBe(3)
+        strategy = prepareSimpleStrategy({ totalPages: Infinity })
+        expect(await strategy.getTotalRecords()).toBe(1337)
+      })
+      it('shows wether or not there are more obtainable records', async () => {
+        let strategy = prepareSimpleStrategy({ page: 1 })
+        expect(await strategy.hasNext()).toBe(true)
+        strategy = prepareSimpleStrategy({ page: 2 })
+        expect(await strategy.hasNext()).toBe(false)
+      })
+      it('retrieves records consistently with getNext', async () => {
+        let strategy = prepareSimpleStrategy({ page: 1 })
+        expect(await strategy.getNext()).toEqual(simpleRecords)
+      })
+    }
+    describe(' with contexts wrapped in `response`', () => {
+       resultsTests(prepareSimpleStrategy(getSimpleService(!wrap))
     })
-    it('shows wether or not there are more obtainable records', async () => {
-      let strategy = prepareSimpleStrategy({ page: 1 })
-      expect(await strategy.hasNext()).toBe(true)
-      strategy = prepareSimpleStrategy({ page: 2 })
-      expect(await strategy.hasNext()).toBe(false)
-    })
-    it('retrieves records consistently with getNext', async () => {
-      let strategy = prepareSimpleStrategy({ page: 1 })
-      expect(await strategy.getNext()).toEqual(simpleRecords)
+    describe(' with contexts not wrapped in `response`', () => {
+       resultsTests(prepareSimpleStrategy(getSimpleService(wrap))
     })
   })
 
