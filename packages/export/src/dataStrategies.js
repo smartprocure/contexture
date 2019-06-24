@@ -1,3 +1,4 @@
+import F from 'futil'
 import _ from 'lodash/fp'
 import { setFilterOnly } from './utils'
 
