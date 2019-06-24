@@ -78,8 +78,7 @@ export let ContextTree = _.curry(
     let {
       markForUpdate,
       markLastUpdate,
-      prepForUpdate,
-      resetUpdate,
+      prepForUpdate
     } = traversals(extend)
 
     let processEvent = event => path =>
