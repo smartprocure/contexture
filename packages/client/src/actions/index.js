@@ -3,6 +3,7 @@ import F from 'futil-js'
 import { encode, Tree } from '../util/tree'
 import { getTypeProp } from '../types'
 import wrap from './wrap'
+import { initWalk } from '../node'
 
 let pushOrSpliceOn = (array, item, index) => {
   if (index === undefined) array.push(item)
@@ -33,22 +34,18 @@ export default config => {
     // since it's not visited during the tree walk
     let parentDedupeChildren = F.uniqueString(_.map('key', target.children))
     node = initObject(node)
-    Tree.walk(
-      (node, index, [parent = {}]) => {
-        node.dedupeChildren = F.uniqueString([])
-        initNode(
-          node,
-          parent.path || parentPath,
-          extend,
-          types,
-          parent.dedupeChildren || parentDedupeChildren
-        )
-        flat[encode(node.path)] = node
-      },
+
+    initWalk(
+      node,
+      extend,
+      types,
+      initNode,
+      parentPath,
+      parentDedupeChildren,
       node => {
-        delete node.dedupeChildren
+        flat[encode(node.path)] = node
       }
-    )(node)
+    )
 
     // consider moving this in the tree walk? it could work for al children too but would be exgra work for chilren
     pushOrSpliceOn(target.children, node, index)
