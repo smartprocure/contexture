@@ -1,5 +1,6 @@
 import _ from 'lodash/fp'
 import F from 'futil-js'
+import { Tree } from './util/tree'
 import { runTypeFunction, runTypeFunctionOrDefault, getTypeProp } from './types'
 
 export let defaults = {
@@ -33,18 +34,47 @@ export let initNode = (
   dedupe = _.identity
 ) => {
   runTypeFunction(types, 'init', node, extend)
-  if (node.key) dedupe(node.key) // add node.key to the dedupe cache
-  let key =
+  let key = dedupe(
     node.key ||
-    dedupe(runTypeFunctionOrDefault(autoKey, types, 'autoKey', node, extend))
-  extend(
-    node,
-    _.defaults(
-      { ...defaults, ...getTypeProp(types, 'defaults', node) },
-      { ...node, key, path: [...parentPath, key] }
-    )
+      runTypeFunctionOrDefault(autoKey, types, 'autoKey', node, extend)
   )
+  extend(node, {
+    ..._.omit(_.keys(node), defaults),
+    ..._.omit(_.keys(node), getTypeProp(types, 'defaults', node)),
+    key,
+    path: [...parentPath, key],
+  })
 }
+
+export let initWalk = (
+  tree,
+  extend,
+  types,
+  initNode = initNode,
+  defaultParentPath = [],
+  defaultDedupe = _.identity,
+  postInit = _.noop
+) =>
+  Tree.walk(
+    (node, index, [parent = {}]) => {
+      // allows us to maintain individual deduplication caches for each node's children.
+      // this ensures that node keys will always be unique from their siblings, but won't
+      // be unnecessarily modified if they are duplicates of keys in other branches.
+      node.dedupeChildren = F.uniqueString([])
+      let parentPath = parent.path || defaultParentPath
+      initNode(
+        node,
+        parentPath,
+        extend,
+        types,
+        parent ? parent.dedupeChildren : defaultDedupe
+      )
+      postInit(node)
+    },
+    node => {
+      delete node.dedupeChildren
+    }
+  )(tree)
 
 export let hasContext = node => node && node.context
 let throwsError = x => {
