@@ -7,7 +7,7 @@ import actions from './actions'
 import serialize from './serialize'
 import traversals from './traversals'
 import { runTypeFunction } from './types'
-import { initNode, hasContext, hasValue, initWalk } from './node'
+import { initNode, hasContext, hasValue, dedupeWalk } from './node'
 import exampleTypes from './exampleTypes'
 import lens from './lens'
 import mockService from './mockService'
@@ -65,7 +65,7 @@ export let ContextTree = _.curry(
     let customReactors = {}
 
     // initNode now generates node keys, so it must be run before flattening the tree
-    initWalk(tree, extend, types, initNode)
+    dedupeWalk(initNode(extend, types), tree)
     let flat = flatten(tree)
     let getNode = path => flat[encode(path)]
 
