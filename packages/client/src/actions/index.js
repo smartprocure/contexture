@@ -1,5 +1,5 @@
 import _ from 'lodash/fp'
-import { pullOn } from 'futil-js'
+import F from 'futil-js'
 import { encode, Tree } from '../util/tree'
 import { getTypeProp } from '../types'
 import wrap from './wrap'
@@ -49,7 +49,7 @@ export default config => {
     let previous = getNode(path)
     let parentPath = arrayDropLast(path)
     let parent = getNode(parentPath)
-    pullOn(previous, parent.children)
+    F.pullOn(previous, parent.children)
 
     Tree.walk((node, index, [parent = {}]) => {
       let path = [...(parent.path || parentPath), node.key]
@@ -83,14 +83,13 @@ export default config => {
       _.omit(['field'], getTypeProp(types, 'defaults', getNode(path)))
     )
 
-  let replace = (path, node) => {
+  let replace = (path, transform) => {
     let parentPath = arrayDropLast(path)
-    let index = _.findIndex(
-      x => x === getNode(path),
-      getNode(parentPath).children
-    )
+    let node = getNode(path)
+    let index = _.findIndex(x => x === node, getNode(parentPath).children)
+    let newNode = F.callOrReturn(transform, node)
     remove(path)
-    return add(parentPath, node, { index })
+    return add(parentPath, newNode, { index })
   }
 
   let { wrapInGroup } = wrap(config, { mutate, replace, add })
@@ -102,7 +101,7 @@ export default config => {
     let node = getNode(path)
     if (_.isEqual(parentPath, targetPath)) {
       // Same group, no dispatch or updating of paths needed - just rearrange children
-      pullOn(node, getNode(parentPath).children)
+      F.pullOn(node, getNode(parentPath).children)
       pushOrSpliceOn(getNode(targetPath).children, node, targetIndex)
     } else {
       return Promise.all([
