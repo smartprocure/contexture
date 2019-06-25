@@ -1,3 +1,6 @@
+# 2.24.1
+* Await `processResponse` to normalize the tree post service exception
+
 # 2.24.0
 * Update `replace` action to support taking a transform function as an argument
 
