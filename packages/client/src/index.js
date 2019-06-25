@@ -130,8 +130,8 @@ export let ContextTree = _.curry(
       try {
         await processResponse(await service(dto, now))
       } catch (error) {
-        onError(error)  // Raise the onError event
         await processResponse(tree)
+        onError(error)  // Raise the onError event
       }
     })
 
