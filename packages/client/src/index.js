@@ -125,8 +125,9 @@ export let ContextTree = _.curry(
       prepForUpdate(tree)
       try {
         await processResponse(await service(dto, now))
-      } catch (e) {
-        onError(e)
+      } catch (error) {
+        await processResponse(tree)
+        onError(error) // Raise the onError event
       }
     })
 
@@ -135,7 +136,6 @@ export let ContextTree = _.curry(
       data = _.isEmpty(data.data) ? data : data.data
       let { error } = data
       if (error) extend(tree, { error })
-
       await Promise.all(
         F.mapIndexed(async (node, path) => {
           let target = flat[path]
