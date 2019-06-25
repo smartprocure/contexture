@@ -3,7 +3,7 @@ import F from 'futil-js'
 import { encode, Tree } from '../util/tree'
 import { getTypeProp } from '../types'
 import wrap from './wrap'
-import { initWalk } from '../node'
+import { dedupeWalk } from '../node'
 
 let pushOrSpliceOn = (array, item, index) => {
   if (index === undefined) array.push(item)
@@ -32,19 +32,16 @@ export default config => {
     let target = getNode(parentPath)
     // initialize uniqueString cache for the parent of the node to be added here,
     // since it's not visited during the tree walk
-    let parentDedupeChildren = F.uniqueString(_.map('key', target.children))
+    let parentDedupe = F.uniqueString(_.map('key', target.children))
     node = initObject(node)
 
-    initWalk(
-      node,
-      extend,
-      types,
-      initNode,
-      parentPath,
-      parentDedupeChildren,
-      node => {
+    dedupeWalk(
+      (dedupe, parentPath, node) => {
+        initNode(extend, types, dedupe, parentPath, node)
         flat[encode(node.path)] = node
-      }
+      },
+      node,
+      { target, dedupe: parentDedupe }
     )
 
     // consider moving this in the tree walk? it could work for al children too but would be exgra work for chilren
