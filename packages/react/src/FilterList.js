@@ -2,7 +2,14 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer, inject } from 'mobx-react'
-import { Flex, Dynamic, Popover, ExternalModalPicker, Modal, NestedPicker } from './layout'
+import {
+  Flex,
+  Dynamic,
+  Popover,
+  ExternalModalPicker,
+  Modal,
+  NestedPicker,
+} from './layout'
 import { fieldsToOptions } from './FilterAdder'
 import { withStateLens } from './utils/mobx-react-utils'
 import InjectTreeNode from './utils/injectTreeNode'
@@ -48,76 +55,78 @@ export let FilterActions = ({ node, tree, fields, Item, isModalOpen }) => (
 
 export let Label = inject(_.pick('tree'))(
   withStateLens({ popover: false, modal: false })(
-    observer(({ tree, node, fields, Icon, ListItem: Item, popover, modal, ...x }) => (
-      <Flex
-        className={`filter-field-label ${
-          _.get('hasValue', node) ? 'filter-field-has-value' : ''
-        }`.trim()}
-        style={{
-          cursor: 'pointer',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-        onClick={() =>
-          tree && node && tree.mutate(node.path, { paused: !node.paused })
-        }
-      >
-        <FieldPicker 
-          isOpen={modal}
-          options={fieldsToOptions(fields)}
-          // TODO: consider type options in case this isn't safe, e.g. a field/type change action
-          onChange={field => tree.mutate(node.path, { field })}
-        />
-        <span {...x} />
-        {tree && node && (
-          <React.Fragment>
-            <span
-              onClick={e => {
-                e.stopPropagation()
-                F.flip(popover)()
-              }}
-            >
-              <Icon icon="TableColumnMenu" />
-              <Popover isOpen={popover} className="filter-actions-popover">
-                <FilterActions
-                  node={node}
-                  tree={tree}
-                  fields={fields}
-                  Item={Item}
-                  isModalOpen={modal}
+    observer(
+      ({ tree, node, fields, Icon, ListItem: Item, popover, modal, ...x }) => (
+        <Flex
+          className={`filter-field-label ${
+            _.get('hasValue', node) ? 'filter-field-has-value' : ''
+          }`.trim()}
+          style={{
+            cursor: 'pointer',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+          onClick={() =>
+            tree && node && tree.mutate(node.path, { paused: !node.paused })
+          }
+        >
+          <FieldPicker
+            isOpen={modal}
+            options={fieldsToOptions(fields)}
+            // TODO: consider type options in case this isn't safe, e.g. a field/type change action
+            onChange={field => tree.mutate(node.path, { field })}
+          />
+          <span {...x} />
+          {tree && node && (
+            <React.Fragment>
+              <span
+                onClick={e => {
+                  e.stopPropagation()
+                  F.flip(popover)()
+                }}
+              >
+                <Icon icon="TableColumnMenu" />
+                <Popover isOpen={popover} className="filter-actions-popover">
+                  <FilterActions
+                    node={node}
+                    tree={tree}
+                    fields={fields}
+                    Item={Item}
+                    isModalOpen={modal}
+                  />
+                </Popover>
+              </span>
+              {
+                // Whitespace separator
+                <div style={{ flexGrow: 1 }} />
+              }
+              {!node.updating &&
+                tree.disableAutoUpdate &&
+                // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
+                _.some(
+                  treeNode => treeNode !== node && treeNode.markedForUpdate,
+                  F.treeToArray(_.get('children'))(tree.tree)
+                ) && (
+                  <div
+                    className="filter-field-icon-refresh"
+                    onClick={e => {
+                      e.stopPropagation()
+                      tree.triggerUpdate()
+                    }}
+                  >
+                    <Icon icon="Refresh" />
+                  </div>
+                )}
+              <div className="filter-field-label-icon">
+                <Icon
+                  icon={node.paused ? 'FilterListExpand' : 'FilterListCollapse'}
                 />
-              </Popover>
-            </span>
-            {
-              // Whitespace separator
-              <div style={{ flexGrow: 1 }} />
-            }
-            {!node.updating &&
-              tree.disableAutoUpdate &&
-              // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
-              _.some(
-                treeNode => treeNode !== node && treeNode.markedForUpdate,
-                F.treeToArray(_.get('children'))(tree.tree)
-              ) && (
-                <div
-                  className="filter-field-icon-refresh"
-                  onClick={e => {
-                    e.stopPropagation()
-                    tree.triggerUpdate()
-                  }}
-                >
-                  <Icon icon="Refresh" />
-                </div>
-              )}
-            <div className="filter-field-label-icon">
-              <Icon
-                icon={node.paused ? 'FilterListExpand' : 'FilterListCollapse'}
-              />
-            </div>
-          </React.Fragment>
-        )}
-      </Flex>
-    ))
+              </div>
+            </React.Fragment>
+          )}
+        </Flex>
+      )
+    )
   )
 )
 Label.displayName = 'Label'

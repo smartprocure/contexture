@@ -3,7 +3,13 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { withStateLens } from '../utils/mobx-react-utils'
 
-export let ExternalModalPicker = ({Modal, Picker, options, onChange, isOpen}) =>  (
+export let ExternalModalPicker = ({
+  Modal,
+  Picker,
+  options,
+  onChange,
+  isOpen,
+}) => (
   <Modal isOpen={isOpen}>
     <Picker
       options={options}
@@ -12,8 +18,8 @@ export let ExternalModalPicker = ({Modal, Picker, options, onChange, isOpen}) =>
         F.off(isOpen)()
       }}
     />
-    </Modal>
-  )
+  </Modal>
+)
 
 export let ModalPicker = withStateLens({ isOpen: false })(
   observer(
@@ -27,7 +33,7 @@ export let ModalPicker = withStateLens({ isOpen: false })(
       Modal,
     }) => (
       <div>
-        <ExternalModalPicker 
+        <ExternalModalPicker
           Modal={Modal}
           isOpen={isOpen}
           Picker={Picker}
