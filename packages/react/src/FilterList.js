@@ -7,7 +7,7 @@ import { withStateLens } from './utils/mobx-react-utils'
 import InjectTreeNode from './utils/injectTreeNode'
 import DefaultIcon from './DefaultIcon'
 import { bdJoin } from './styles/generic'
-import { newNodeFromType } from './utils/search'
+import FilterOptions from './FilterOptions'
 
 export let Label = inject(_.pick('tree'))(
   withStateLens({ popover: false })(
@@ -37,55 +37,9 @@ export let Label = inject(_.pick('tree'))(
               <Icon icon="TableColumnMenu" />
               <Popover
                 isOpen={popover}
-                style={{
-                  userSelect: 'none',
-                  marginTop: '0.5rem',
-                  transform: 'translateX(-2.25rem)',
-                  lineHeight: '1.4rem',
-                }}
+                className="filter-options-popover"
               >
-                <Item
-                  style={{
-                    fontWeight: 'bold',
-                    color: 'initial',
-                    cursor: 'initial',
-                  }}
-                >
-                  {F.autoLabel(node.type)}
-                </Item>
-                {_.map(
-                  x => (
-                    <Item
-                      key={x.value}
-                      onClick={() =>
-                        tree.replace(
-                          node.path,
-                          newNodeFromType(x.value, fields, node)
-                        )
-                      }
-                    >
-                      —Change to {x.label}
-                    </Item>
-                  ),
-                  F.autoLabelOptions(
-                    _.without(
-                      [node.type],
-                      _.get([node.field, 'typeOptions'], fields)
-                    ) || []
-                  )
-                )}
-                <div
-                  style={{ borderBottom: '1px solid #eee', margin: '4px -5px' }}
-                />
-                {/* If only contexture-client diffed the tree before sending a request... */}
-                {(node.hasValue || false) && (
-                  <Item onClick={() => tree.clear(node.path)}>
-                    Clear Filter
-                  </Item>
-                )}
-                <Item onClick={() => tree.remove(node.path)}>
-                  Delete Filter
-                </Item>
+                <FilterOptions node={node} tree={tree} fields={fields} Item={Item} />
               </Popover>
             </span>
             {
