@@ -2,14 +2,21 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer, inject } from 'mobx-react'
-import { Flex, Dynamic, Popover } from './layout'
+import { Flex, Dynamic, Popover, ExternalModalPicker, Modal, NestedPicker } from './layout'
+import { fieldsToOptions } from './FilterAdder'
 import { withStateLens } from './utils/mobx-react-utils'
 import InjectTreeNode from './utils/injectTreeNode'
 import DefaultIcon from './DefaultIcon'
 import { bdJoin } from './styles/generic'
 import { newNodeFromType } from './utils/search'
+import { defaultProps } from 'recompose'
 
-export let FilterActions = ({ node, tree, fields, Item }) => (
+let FieldPicker = defaultProps({
+  Modal,
+  Picker: NestedPicker,
+})(ExternalModalPicker)
+
+export let FilterActions = ({ node, tree, fields, Item, isModalOpen }) => (
   <>
     <Item className="filter-options-selected-type">
       {F.autoLabel(node.type)}
@@ -30,6 +37,7 @@ export let FilterActions = ({ node, tree, fields, Item }) => (
       )
     )}
     <div className="filter-options-separator" />
+    <Item onClick={F.on(isModalOpen)}>Pick Field</Item>
     {/* If only contexture-client diffed the tree before sending a request... */}
     {(node.hasValue || false) && (
       <Item onClick={() => tree.clear(node.path)}>Clear Filter</Item>
@@ -39,8 +47,8 @@ export let FilterActions = ({ node, tree, fields, Item }) => (
 )
 
 export let Label = inject(_.pick('tree'))(
-  withStateLens({ popover: false })(
-    observer(({ tree, node, fields, Icon, ListItem: Item, popover, ...x }) => (
+  withStateLens({ popover: false, modal: false })(
+    observer(({ tree, node, fields, Icon, ListItem: Item, popover, modal, ...x }) => (
       <Flex
         className={`filter-field-label ${
           _.get('hasValue', node) ? 'filter-field-has-value' : ''
@@ -54,6 +62,12 @@ export let Label = inject(_.pick('tree'))(
           tree && node && tree.mutate(node.path, { paused: !node.paused })
         }
       >
+        <FieldPicker 
+          isOpen={modal}
+          options={fieldsToOptions(fields)}
+          // TODO: consider type options in case this isn't safe, e.g. a field/type change action
+          onChange={field => tree.mutate(node.path, { field })}
+        />
         <span {...x} />
         {tree && node && (
           <React.Fragment>
@@ -70,6 +84,7 @@ export let Label = inject(_.pick('tree'))(
                   tree={tree}
                   fields={fields}
                   Item={Item}
+                  isModalOpen={modal}
                 />
               </Popover>
             </span>

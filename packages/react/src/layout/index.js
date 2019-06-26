@@ -5,7 +5,7 @@ import Modal from './Modal'
 import Popover from './Popover'
 import SpacedList from './SpacedList'
 import TextHighlight from './TextHighlight'
-import { ModalPicker } from './Pickers'
+import { ModalPicker, ExternalModalPicker } from './Pickers'
 import NestedPicker from './NestedPicker'
 import Dynamic from './Dynamic'
 import BarChart from './BarChart'
@@ -24,6 +24,7 @@ export {
   TextHighlight,
   NestedPicker,
   ModalPicker,
+  ExternalModalPicker,
   Dynamic,
   BarChart,
   Tag,
