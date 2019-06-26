@@ -10,7 +10,7 @@ import { oppositeJoin, indent } from '../utils/search'
 let Rule = ({ state, node, parent, tree, connectDragSource, isDragging }) =>
   connectDragSource(
     <div style={styles.w100}>
-      <Indentable node={parent} indent={state.lens.indentHover}>
+      <Indentable parent={parent} indent={state.lens.indentHover}>
         <div
           style={{
             ...styles.condition,
