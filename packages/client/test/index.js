@@ -1492,6 +1492,96 @@ let AllTests = ContextureClient => {
     expect(tree.getNode(['root', 'criteria', 'filter1']).paused).to.be.false
     expect(tree.getNode(['root', 'criteria', 'filter2']).paused).to.be.false
   })
+  it('should autogenerate keys on node add', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        { key: 'results', type: 'results', page: 1 },
+        {
+          key: 'criteria',
+          children: [
+            {
+              key: 'field-facet',
+              type: 'facet',
+              field: 'field',
+              values: [1, 2],
+            },
+            { key: 'field-facet1', type: 'facet', field: 'field' },
+          ],
+        },
+      ],
+    })
+    expect(tree.getNode(['root', 'criteria', 'field-facet2'])).to.not.exist
+    // should dedupe added nodes against existing siblings
+    await tree.add(['root', 'criteria'], { type: 'facet', field: 'field' })
+    expect(tree.getNode(['root', 'criteria', 'field-facet2'])).to.exist
+    // should autokey nested nodes
+    await tree.add(['root'], {
+      type: 'group',
+      children: [
+        {
+          type: 'date',
+          field: 'birthday',
+        },
+      ],
+    })
+    expect(tree.getNode(['root', 'group', 'birthday-date'])).to.exist
+    // should still deupe nodes with user-created keys
+    await tree.add(['root', 'group'], { key: 'birthday-date' })
+    expect(tree.getNode(['root', 'group', 'birthday-date1'])).to.exist
+  })
+  it('should autogenerate keys on tree initialization', () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        { type: 'results', page: 1 },
+        {
+          key: 'criteria',
+          children: [
+            { type: 'facet', field: 'field', values: [1, 2] },
+            { type: 'facet', field: 'field', values: [3, 4] },
+            {
+              type: 'group',
+              // should autokey nested nodes
+              children: [
+                {
+                  type: 'query',
+                  field: 'pizza',
+                },
+                {
+                  // should not dedupe non-siblings
+                  type: 'group',
+                  children: [
+                    // should autokey blank nodes
+                    {},
+                    {},
+                    // should still deupe nodes with user-created keys
+                    { key: 'node1' },
+                    { key: 'node' },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    })
+    expect(tree.getNode(['root', 'criteria', 'field-facet'])).to.exist
+    expect(tree.getNode(['root', 'criteria', 'field-facet1'])).to.exist
+    expect(tree.getNode(['root', 'criteria', 'group', 'pizza-query'])).to.exist
+    expect(
+      _.map(
+        'key',
+        tree.getNode(['root', 'criteria', 'group', 'group']).children
+      )
+    ).to.deep.equal(['node', 'node1', 'node11', 'node2'])
+  })
 }
 
 describe('lib', () => AllTests(ContextureClient))

@@ -7,7 +7,7 @@ import actions from './actions'
 import serialize from './serialize'
 import traversals from './traversals'
 import { runTypeFunction } from './types'
-import { initNode, hasContext, hasValue } from './node'
+import { initNode, hasContext, hasValue, dedupeWalk } from './node'
 import exampleTypes from './exampleTypes'
 import lens from './lens'
 import mockService from './mockService'
@@ -62,14 +62,12 @@ export let ContextTree = _.curry(
   ) => {
     tree = initObject(tree)
     let log = x => debug && console.info(x)
-    let flat = flatten(tree)
-    let getNode = path => flat[encode(path)]
     let customReactors = {}
 
-    F.eachIndexed(
-      (node, path) => initNode(node, decode(path), extend, types),
-      flat
-    )
+    // initNode now generates node keys, so it must be run before flattening the tree
+    dedupeWalk(initNode(extend, types), tree)
+    let flat = flatten(tree)
+    let getNode = path => flat[encode(path)]
 
     // Overwrite extend to report changes
     extend = _.over([extend, (a, b) => TreeInstance.onChange(a, b)])

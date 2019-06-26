@@ -14,6 +14,9 @@ export let getTypePropOrError = _.curry(
     F.throws(Error(`No '${prop}' found for ${node.type}`))
 )
 
-export let runTypeFunction = _.curry((types, prop, node, extend) =>
-  (getTypeProp(types, prop, node) || _.stubTrue)(node, extend)
+export let runTypeFunctionOrDefault = _.curry(
+  (defaultFn, types, prop, node, extend) =>
+    (getTypeProp(types, prop, node) || defaultFn)(node, extend)
 )
+
+export let runTypeFunction = runTypeFunctionOrDefault(_.stubTrue)
