@@ -2,26 +2,25 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer, inject } from 'mobx-react'
-import {
-  Flex,
-  Dynamic,
-  Popover,
-  ExternalModalPicker,
-  Modal,
-  NestedPicker,
-} from './layout'
+import { Flex, Dynamic, Popover, Modal, NestedPicker } from './layout'
 import { fieldsToOptions } from './FilterAdder'
 import { withStateLens } from './utils/mobx-react-utils'
 import InjectTreeNode from './utils/injectTreeNode'
 import DefaultIcon from './DefaultIcon'
 import { bdJoin } from './styles/generic'
 import { newNodeFromType } from './utils/search'
-import { defaultProps } from 'recompose'
 
-let FieldPicker = defaultProps({
-  Modal,
-  Picker: NestedPicker,
-})(ExternalModalPicker)
+let FieldPicker = ({ options, isOpen, onChange }) => (
+  <Modal isOpen={isOpen}>
+    <NestedPicker
+      options={options}
+      onChange={x => {
+        onChange(x)
+        F.off(isOpen)()
+      }}
+    />
+  </Modal>
+)
 
 export let FilterActions = ({ node, tree, fields, Item, isModalOpen }) => (
   <>
