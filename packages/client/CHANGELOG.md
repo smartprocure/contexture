@@ -1,3 +1,7 @@
+# 2.25.0
+* Add automatic generation and deduplication of default node keys during tree init and `add` action
+* Add support for `autoKey` type property to specify type-specific autokey functions
+
 # 2.24.1
 * Await `processResponse` to normalize the tree post service exception
 
