@@ -490,19 +490,19 @@ export let GVStyle = () => (
         padding-top: 30px;
       }
 
-      .filter-options-popover {
+      .filter-actions-popover {
         userSelect: none;
         marginTop: 0.5rem;
         min-width: 5rem;
         transform: translateX(-2.25rem);
         lineHeight: 1.4rem;
       }
-      .filter-options-selected-type {
+      .filter-actions-selected-type {
         font-weight: bold;
         color: initial !important;
         cursor: default !important;
       }
-      .filter-options-separator {
+      .filter-actions-separator {
         border-bottom: 1px solid #eee;
         margin: 4px -5px;
       }

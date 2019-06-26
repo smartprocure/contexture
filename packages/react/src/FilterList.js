@@ -18,7 +18,7 @@ let FieldPicker = defaultProps({
 
 export let FilterActions = ({ node, tree, fields, Item, isModalOpen }) => (
   <>
-    <Item className="filter-options-selected-type">
+    <Item className="filter-actions-selected-type">
       {F.autoLabel(node.type)}
     </Item>
     {_.map(
@@ -36,7 +36,7 @@ export let FilterActions = ({ node, tree, fields, Item, isModalOpen }) => (
         _.without([node.type], _.get([node.field, 'typeOptions'], fields)) || []
       )
     )}
-    <div className="filter-options-separator" />
+    <div className="filter-actions-separator" />
     <Item onClick={F.on(isModalOpen)}>Pick Field</Item>
     {/* If only contexture-client diffed the tree before sending a request... */}
     {(node.hasValue || false) && (
@@ -78,7 +78,7 @@ export let Label = inject(_.pick('tree'))(
               }}
             >
               <Icon icon="TableColumnMenu" />
-              <Popover isOpen={popover} className="filter-options-popover">
+              <Popover isOpen={popover} className="filter-actions-popover">
                 <FilterActions
                   node={node}
                   tree={tree}
