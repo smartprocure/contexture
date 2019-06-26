@@ -1,6 +1,9 @@
 # 1.50.0
 * Add type options to title popover in FilterList
 
+# 1.49.9
+* QueryBuilder: Fix Indentable AddPreview preview showing wrong join type
+
 # 1.49.8
 * QueryBuilder: Remove ContextureClientBridge
 

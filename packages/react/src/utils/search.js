@@ -1,7 +1,9 @@
+import F from 'futil-js'
 import _ from 'lodash/fp'
 import { DefaultNodeProps as defaultNodeProps } from './schema'
 
-export let oppositeJoin = join => (join === 'and' ? 'or' : 'and')
+export let oppositeJoin = node =>
+  F.getOrReturn('join', node) === 'and' ? 'or' : 'and'
 
 export let randomString = () =>
   Math.random()
