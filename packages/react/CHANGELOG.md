@@ -1,3 +1,6 @@
+# 1.49.10
+* Remove accidentally added line :(
+
 # 1.49.9
 * QueryBuilder: Fix Indentable AddPreview preview showing wrong join type
 
