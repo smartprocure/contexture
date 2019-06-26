@@ -33,7 +33,6 @@ let GroupItem = FilterDragSource(args => {
           !tree.adding && { background }),
       }}
     >
-      {`${node.type} ${child && child.type}`}
       {!(isRoot && node.children.length === 1) && (
         <Operator
           {...{ node, child, tree, parent, index, parentState: state }}
