@@ -5,8 +5,11 @@ import styles from '../../styles'
 // Move
 let FilterMoveSpec = {
   drop(props, monitor) {
-    let { tree, node } = monitor.getItem()
-    props.root.move(tree, node, props.node, props.index)
+    let { node } = monitor.getItem()
+    props.tree.move(node.path, {
+      path: props.node.path,
+      index: props.index,
+    })
   },
 }
 let FilterMoveDropTarget = style =>

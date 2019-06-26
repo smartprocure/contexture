@@ -5,9 +5,9 @@ import styles from '../styles'
 import Indentable from './preview/Indentable'
 import FilterContents from './FilterContents'
 import FilterDragSource from './DragDrop/FilterDragSource'
-import { oppositeJoin } from '../utils/search'
+import { oppositeJoin, indent } from '../utils/search'
 
-let Rule = ({ state, node, parent, root, connectDragSource, isDragging }) =>
+let Rule = ({ state, node, parent, tree, connectDragSource, isDragging }) =>
   connectDragSource(
     <div style={styles.w100}>
       <Indentable node={parent} indent={state.lens.indentHover}>
@@ -25,7 +25,7 @@ let Rule = ({ state, node, parent, root, connectDragSource, isDragging }) =>
           }}
           {...F.domLens.hover(state.lens.ruleHover)}
         >
-          <FilterContents {...{ node, root }} />
+          <FilterContents {...{ node, tree }} />
           <div
             style={{
               ...(state.ruleHover || { visibility: 'hidden' }),
@@ -39,7 +39,7 @@ let Rule = ({ state, node, parent, root, connectDragSource, isDragging }) =>
                 ...styles.btn,
                 ...styles.roundedRight0,
               }}
-              onClick={() => root.indent(parent, node)}
+              onClick={() => indent(tree, parent, node)}
             >
               >
             </button>
@@ -50,7 +50,7 @@ let Rule = ({ state, node, parent, root, connectDragSource, isDragging }) =>
                 ...styles.roundedLeft0,
                 marginLeft: '-1px',
               }}
-              onClick={() => root.remove(parent, node)}
+              onClick={() => tree.remove(node.path)}
             >
               X
             </button>

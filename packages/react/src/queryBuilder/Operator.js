@@ -73,14 +73,14 @@ let Operator = Component(
       isOpen: false,
     }),
   }),
-  ({ state, parentState, node, child, parent, root, index }) => (
+  ({ state, parentState, node, child, parent, tree, index }) => (
     <div>
       {!(index !== 0 || node.join === 'not') ? (
         <BlankOperator {...{ state, node, child }} />
       ) : (
         <JoinOperator {...{ state, node, child, parentState }} />
       )}
-      <OperatorMoveTarget {...{ node, root, index }} />
+      <OperatorMoveTarget {...{ node, tree, index }} />
       <Popover
         isOpen={state.lens.isOpen}
         style={{
@@ -89,7 +89,7 @@ let Operator = Component(
           ...(parentState.wrapHover && { marginLeft: 0 }),
         }}
       >
-        <OperatorMenu {...{ node, parentState, root, parent }} />
+        <OperatorMenu {...{ node, parentState, tree, parent }} />
       </Popover>
     </div>
   ),

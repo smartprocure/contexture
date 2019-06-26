@@ -11,6 +11,7 @@ import FilterDragSource from './DragDrop/FilterDragSource'
 import { FilterIndentTarget } from './DragDrop/IndentTarget'
 import { FilterMoveTarget } from './DragDrop/MoveTargets'
 let { background } = styles
+import { blankNode } from '../utils/search'
 
 let GroupItem = FilterDragSource(args => {
   let {
@@ -18,7 +19,7 @@ let GroupItem = FilterDragSource(args => {
     node,
     index,
     state,
-    root,
+    tree,
     isRoot,
     parent,
     connectDragSource,
@@ -29,16 +30,17 @@ let GroupItem = FilterDragSource(args => {
       style={{
         ...styles.dFlex,
         ...(index === node.children.length - 1 &&
-          !root.adding && { background }),
+          !tree.adding && { background }),
       }}
     >
+      {`${node.type} ${child && child.type}`}
       {!(isRoot && node.children.length === 1) && (
         <Operator
-          {...{ node, child, root, parent, index, parentState: state }}
+          {...{ node, child, tree, parent, index, parentState: state }}
         />
       )}
       {child.children ? (
-        <Group node={child} root={root} parent={node} />
+        <Group node={child} tree={tree} parent={node} />
       ) : (
         <Rule {...{ ...args, parent: node, node: child }} />
       )}
@@ -55,7 +57,7 @@ let Group = Component(
     }),
   }),
   args => {
-    let { node, root, state, isRoot } = args
+    let { node, tree, state, isRoot } = args
     return (
       <Indentable node={node} indent={state.lens.wrapHover}>
         <div
@@ -89,10 +91,10 @@ let Group = Component(
               _.toArray(node.children)
             )}
             {/*<FilterMoveTarget index={tree.children.length} tree={tree} /> */}
-            {root.adding && (
+            {tree.adding && (
               <AddPreview
                 onClick={() => {
-                  root.add(node)
+                  tree.add(node.path, blankNode())
                 }}
                 join={node.join}
                 style={{

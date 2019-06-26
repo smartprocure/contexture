@@ -1,7 +1,7 @@
 import React from 'react'
 import FilterDropTarget from './FilterDropTarget'
 import styles from '../../styles'
-import { oppositeJoin } from '../../utils/search'
+import { oppositeJoin, indent } from '../../utils/search'
 
 // Indent
 let FilterIndentSpec = {
@@ -9,10 +9,13 @@ let FilterIndentSpec = {
     let source = monitor.getItem()
     let isSelf = props.child === source.node
     if (isSelf) {
-      props.root.remove(props.node, props.child)
+      props.tree.remove(props.child)
     } else {
-      let newGroup = props.root.indent(props.node, props.child, true)
-      props.root.move(source.tree, source.node, newGroup, 1)
+      let newGroup = indent(props.tree, props.node, props.child, true)
+      props.tree.move(source.node.path, {
+        path: newGroup.path,
+        index: 1,
+      })
     }
   },
 }
@@ -20,7 +23,6 @@ export let FilterIndentTarget = FilterDropTarget(FilterIndentSpec)(
   ({
     child,
     node,
-    // root,
     connectDropTarget,
     // isOver,
     canDrop,
