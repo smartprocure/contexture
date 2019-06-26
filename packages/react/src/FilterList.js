@@ -2,7 +2,13 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer, inject } from 'mobx-react'
-import { Flex, Dynamic, Popover, Modal as BaseModal, NestedPicker } from './layout'
+import {
+  Flex,
+  Dynamic,
+  Popover,
+  Modal as BaseModal,
+  NestedPicker,
+} from './layout'
 import { fieldsToOptions } from './FilterAdder'
 import { withStateLens } from './utils/mobx-react-utils'
 import InjectTreeNode from './utils/injectTreeNode'
@@ -38,7 +44,10 @@ export let FilterActions = withStateLens({ modal: false })(
             </Item>
           ),
           F.autoLabelOptions(
-            _.without([node.type], _.get([node.field, 'typeOptions'], fields)) || []
+            _.without(
+              [node.type],
+              _.get([node.field, 'typeOptions'], fields)
+            ) || []
           )
         )}
         <div className="filter-actions-separator" />
@@ -56,7 +65,18 @@ export let FilterActions = withStateLens({ modal: false })(
 export let Label = inject(_.pick('tree'))(
   withStateLens({ popover: false, modal: false })(
     observer(
-      ({ tree, node, fields, Icon, ListItem: Item, Modal, Picker, popover, modal, ...x }) => (
+      ({
+        tree,
+        node,
+        fields,
+        Icon,
+        ListItem: Item,
+        Modal,
+        Picker,
+        popover,
+        modal,
+        ...x
+      }) => (
         <Flex
           className={`filter-field-label ${
             _.get('hasValue', node) ? 'filter-field-has-value' : ''
@@ -129,7 +149,17 @@ Label.displayName = 'Label'
 
 export let FieldLabel = InjectTreeNode(
   observer(
-    ({ tree, node, node: { field } = {}, fields, Icon, ListItem, Modal, Picker, label }) => (
+    ({
+      tree,
+      node,
+      node: { field } = {},
+      fields,
+      Icon,
+      ListItem,
+      Modal,
+      Picker,
+      label,
+    }) => (
       <Label
         tree={tree}
         node={node}
