@@ -81,7 +81,7 @@ module.exports = {
                 bucket
               ) ||
                 _.flow(
-                  _.mapKeys(_.replace('value_count', 'count')),
+                  F.renameProperty('value_count', 'count'),
                   _.mapValues(F.getOrReturn('value'))
                 )(bucket)
             ),
