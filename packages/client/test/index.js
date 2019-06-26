@@ -427,9 +427,52 @@ let AllTests = ContextureClient => {
     let step1 = Tree.mutate(['root', 'filter'], {
       values: ['a'],
     })
-    await Promise.delay(100)
+    await Promise.delay(20)
     await Promise.resolve(step1)
     expect(spy).to.have.callCount(1)
+  })
+  it('onError tree should be back to normal - no updating flags etc', async () => {
+    let service = sinon.spy(async () => {
+      throw 'service error!'
+    })
+    let spy = sinon.spy()
+    let onError = () => spy()
+    let tree = ContextureClient(
+      {
+        debounce: 0,
+        service,
+        types: {
+          facet: {
+            reactors: {
+              values: 'others',
+            },
+          },
+        },
+        onError,
+      },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'a',
+            type: 'facet',
+          },
+          {
+            key: 'b',
+            type: 'results',
+          },
+        ],
+      }
+    )
+    let step1 = tree.mutate(['root', 'a'], { values: [1] })
+    await Promise.delay(5)
+    await Promise.resolve(step1)
+    expect(spy).to.have.callCount(1)
+    let node = tree.getNode(['root', 'b'])
+    expect(node.updating).to.be.false
+    await node.updatingPromise
+    expect(node.updating).to.be.false
   })
   it('should throw when the service crashes', async () => {
     let tree = {
