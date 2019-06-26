@@ -35,11 +35,13 @@ export let Label = inject(_.pick('tree'))(
               }}
             >
               <Icon icon="TableColumnMenu" />
-              <Popover
-                isOpen={popover}
-                className="filter-options-popover"
-              >
-                <FilterOptions node={node} tree={tree} fields={fields} Item={Item} />
+              <Popover isOpen={popover} className="filter-options-popover">
+                <FilterOptions
+                  node={node}
+                  tree={tree}
+                  fields={fields}
+                  Item={Item}
+                />
               </Popover>
             </span>
             {
