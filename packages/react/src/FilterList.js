@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer, inject } from 'mobx-react'
-import { Flex, Dynamic, Popover, Modal, NestedPicker } from './layout'
+import { Flex, Dynamic, Popover, Modal as BaseModal, NestedPicker } from './layout'
 import { fieldsToOptions } from './FilterAdder'
 import { withStateLens } from './utils/mobx-react-utils'
 import InjectTreeNode from './utils/injectTreeNode'
@@ -10,52 +10,53 @@ import DefaultIcon from './DefaultIcon'
 import { bdJoin } from './styles/generic'
 import { newNodeFromType } from './utils/search'
 
-let FieldPicker = ({ options, isOpen, onChange }) => (
-  <Modal isOpen={isOpen}>
-    <NestedPicker
-      options={options}
-      onChange={x => {
-        onChange(x)
-        F.off(isOpen)()
-      }}
-    />
-  </Modal>
-)
-
-export let FilterActions = ({ node, tree, fields, Item, isModalOpen }) => (
-  <>
-    <Item className="filter-actions-selected-type">
-      {F.autoLabel(node.type)}
-    </Item>
-    {_.map(
-      x => (
-        <Item
-          key={x.value}
-          onClick={() =>
-            tree.replace(node.path, newNodeFromType(x.value, fields, node))
-          }
-        >
-          —Change to {x.label}
+export let FilterActions = withStateLens({ modal: false })(
+  ({ node, tree, fields, Item, Popover, popover, Modal, Picker, modal }) => (
+    <>
+      <Modal isOpen={modal}>
+        <Picker
+          options={fieldsToOptions(fields)}
+          onChange={field => {
+            tree.mutate(node.path, { field })
+            F.off(modal)()
+          }}
+        />
+      </Modal>
+      <Popover isOpen={popover} className="filter-actions-popover">
+        <Item className="filter-actions-selected-type">
+          {F.autoLabel(node.type)}
         </Item>
-      ),
-      F.autoLabelOptions(
-        _.without([node.type], _.get([node.field, 'typeOptions'], fields)) || []
-      )
-    )}
-    <div className="filter-actions-separator" />
-    <Item onClick={F.on(isModalOpen)}>Pick Field</Item>
-    {/* If only contexture-client diffed the tree before sending a request... */}
-    {(node.hasValue || false) && (
-      <Item onClick={() => tree.clear(node.path)}>Clear Filter</Item>
-    )}
-    <Item onClick={() => tree.remove(node.path)}>Delete Filter</Item>
-  </>
+        {_.map(
+          x => (
+            <Item
+              key={x.value}
+              onClick={() =>
+                tree.replace(node.path, newNodeFromType(x.value, fields, node))
+              }
+            >
+              —Change to {x.label}
+            </Item>
+          ),
+          F.autoLabelOptions(
+            _.without([node.type], _.get([node.field, 'typeOptions'], fields)) || []
+          )
+        )}
+        <div className="filter-actions-separator" />
+        <Item onClick={F.on(modal)}>Pick Field</Item>
+        {/* If only contexture-client diffed the tree before sending a request... */}
+        {(node.hasValue || false) && (
+          <Item onClick={() => tree.clear(node.path)}>Clear Filter</Item>
+        )}
+        <Item onClick={() => tree.remove(node.path)}>Delete Filter</Item>
+      </Popover>
+    </>
+  )
 )
 
 export let Label = inject(_.pick('tree'))(
   withStateLens({ popover: false, modal: false })(
     observer(
-      ({ tree, node, fields, Icon, ListItem: Item, popover, modal, ...x }) => (
+      ({ tree, node, fields, Icon, ListItem: Item, Modal, Picker, popover, modal, ...x }) => (
         <Flex
           className={`filter-field-label ${
             _.get('hasValue', node) ? 'filter-field-has-value' : ''
@@ -69,12 +70,6 @@ export let Label = inject(_.pick('tree'))(
             tree && node && tree.mutate(node.path, { paused: !node.paused })
           }
         >
-          <FieldPicker
-            isOpen={modal}
-            options={fieldsToOptions(fields)}
-            // TODO: consider type options in case this isn't safe, e.g. a field/type change action
-            onChange={field => tree.mutate(node.path, { field })}
-          />
           <span {...x} />
           {tree && node && (
             <React.Fragment>
@@ -85,15 +80,17 @@ export let Label = inject(_.pick('tree'))(
                 }}
               >
                 <Icon icon="TableColumnMenu" />
-                <Popover isOpen={popover} className="filter-actions-popover">
-                  <FilterActions
-                    node={node}
-                    tree={tree}
-                    fields={fields}
-                    Item={Item}
-                    isModalOpen={modal}
-                  />
-                </Popover>
+                <FilterActions
+                  node={node}
+                  tree={tree}
+                  fields={fields}
+                  Item={Item}
+                  Popover={Popover}
+                  popover={popover}
+                  Modal={Modal}
+                  Picker={Picker}
+                  modal={modal}
+                />
               </span>
               {
                 // Whitespace separator
@@ -132,12 +129,14 @@ Label.displayName = 'Label'
 
 export let FieldLabel = InjectTreeNode(
   observer(
-    ({ tree, node, node: { field } = {}, fields, Icon, ListItem, label }) => (
+    ({ tree, node, node: { field } = {}, fields, Icon, ListItem, Modal, Picker, label }) => (
       <Label
         tree={tree}
         node={node}
         Icon={Icon}
         ListItem={ListItem}
+        Modal={Modal}
+        Picker={Picker}
         fields={fields}
       >
         {label || _.get([field, 'label'], fields) || field}
@@ -164,6 +163,8 @@ export let FilterList = InjectTreeNode(
       mapNodeToLabel = _.noop,
       Icon = DefaultIcon,
       ListItem = 'div',
+      Modal = BaseModal,
+      Picker = NestedPicker,
       className,
       style,
       MissingTypeComponent = DefaultMissingTypeComponent,
@@ -184,6 +185,8 @@ export let FilterList = InjectTreeNode(
                 className={'filter-list-group'}
                 style={bdJoin(child)}
                 ListItem={ListItem}
+                Modal={Modal}
+                Picker={Picker}
               />
             ) : (
               <div key={child.path} className="filter-list-item">
@@ -193,6 +196,8 @@ export let FilterList = InjectTreeNode(
                   fields={fields}
                   Icon={Icon}
                   ListItem={ListItem}
+                  Modal={Modal}
+                  Picker={Picker}
                   label={mapNodeToLabel(child, fields, types)}
                 />
                 {!child.paused && (
