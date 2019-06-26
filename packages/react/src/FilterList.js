@@ -17,48 +17,53 @@ import { bdJoin } from './styles/generic'
 import { newNodeFromType } from './utils/search'
 
 export let FilterActions = withStateLens({ modal: false })(
-  ({ node, tree, fields, Item, Popover, popover, Modal, Picker, modal }) => (
-    <>
-      <Modal isOpen={modal}>
-        <Picker
-          options={fieldsToOptions(fields)}
-          onChange={field => {
-            tree.mutate(node.path, { field })
-            F.off(modal)()
-          }}
-        />
-      </Modal>
-      <Popover isOpen={popover} className="filter-actions-popover">
-        <Item className="filter-actions-selected-type">
-          {F.autoLabel(node.type)}
-        </Item>
-        {_.map(
-          x => (
-            <Item
-              key={x.value}
-              onClick={() =>
-                tree.replace(node.path, newNodeFromType(x.value, fields, node))
-              }
-            >
-              —Change to {x.label}
-            </Item>
-          ),
-          F.autoLabelOptions(
-            _.without(
-              [node.type],
-              _.get([node.field, 'typeOptions'], fields)
-            ) || []
-          )
-        )}
-        <div className="filter-actions-separator" />
-        <Item onClick={F.on(modal)}>Pick Field</Item>
-        {/* If only contexture-client diffed the tree before sending a request... */}
-        {(node.hasValue || false) && (
-          <Item onClick={() => tree.clear(node.path)}>Clear Filter</Item>
-        )}
-        <Item onClick={() => tree.remove(node.path)}>Delete Filter</Item>
-      </Popover>
-    </>
+  observer(
+    ({ node, tree, fields, Item, Popover, popover, Modal, Picker, modal }) => (
+      <>
+        <Modal isOpen={modal}>
+          <Picker
+            options={fieldsToOptions(fields)}
+            onChange={field => {
+              tree.mutate(node.path, { field })
+              F.off(modal)()
+            }}
+          />
+        </Modal>
+        <Popover isOpen={popover} className="filter-actions-popover">
+          <Item className="filter-actions-selected-type">
+            {F.autoLabel(node.type)}
+          </Item>
+          {_.map(
+            x => (
+              <Item
+                key={x.value}
+                onClick={() =>
+                  tree.replace(
+                    node.path,
+                    newNodeFromType(x.value, fields, node)
+                  )
+                }
+              >
+                —Change to {x.label}
+              </Item>
+            ),
+            F.autoLabelOptions(
+              _.without(
+                [node.type],
+                _.get([node.field, 'typeOptions'], fields)
+              ) || []
+            )
+          )}
+          <div className="filter-actions-separator" />
+          <Item onClick={F.on(modal)}>Pick Field</Item>
+          {/* If only contexture-client diffed the tree before sending a request... */}
+          {(node.hasValue || false) && (
+            <Item onClick={() => tree.clear(node.path)}>Clear Filter</Item>
+          )}
+          <Item onClick={() => tree.remove(node.path)}>Delete Filter</Item>
+        </Popover>
+      </>
+    )
   )
 )
 
