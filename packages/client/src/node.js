@@ -24,7 +24,7 @@ export let internalStateKeys = {
   afterSearch: null,
 }
 
-export let autoKey = x => F.compactJoin('-', [x.field, x.type])
+export let autoKey = x => F.compactJoin('-', [x.field, x.type]) || 'node'
 
 export let initNode = _.curry((extend, types, dedupe, parentPath, node) => {
   runTypeFunction(types, 'init', node, extend)
