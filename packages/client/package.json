@@ -1,6 +1,6 @@
 {
   "name": "contexture-client",
-  "version": "2.24.0",
+  "version": "2.25.0",
   "description": "The Contexture (aka ContextTree) Client",
   "main": "lib/contexture-client.js",
   "scripts": {
@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/smartprocure/contexture-client#readme",
   "dependencies": {
-    "futil-js": "^1.49.0",
+    "futil-js": "^1.58.0",
     "lodash": "^4.17.4"
   },
   "devDependencies": {
