@@ -53,9 +53,7 @@ let getResultsQuery = (context, getSchema, startRecord) => {
     _.keys(populate)
   )
   // $project
-  let $project = [
-    { $project: _.countBy(_.identity, include) }
-  ]
+  let $project = [{ $project: _.countBy(_.identity, include) }]
 
   return [
     ...(!sortOnJoinField ? sortSkipLimit : []),
