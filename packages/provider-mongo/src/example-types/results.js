@@ -48,8 +48,8 @@ let getResultsQuery = (context, getSchema, startRecord) => {
   ]
   // If sort field is a join field move $sort, $skip, and $limit to after $lookup.
   // Otherwise, place those stages first to take advantage of any indexes on that field.
-  let sortOnJoinField = _.includes(
-    _.replace(/^([^.]+)\..+$/, '$1', sortField),
+  let sortOnJoinField = _.some(
+    x => _.startsWith(`${x}.`, sortField) || sortField === x,
     _.keys(populate)
   )
   // $project
