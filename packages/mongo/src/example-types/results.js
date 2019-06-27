@@ -54,7 +54,7 @@ let getResultsQuery = (context, getSchema, startRecord) => {
   )
   // $project
   let $project = [
-    { $project: _.zipObject(include, _.times(_.constant(1), include.length)) },
+    { $project: _.countBy(_.identity, include) }
   ]
 
   return [
