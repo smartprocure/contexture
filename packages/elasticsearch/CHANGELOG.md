@@ -1,3 +1,6 @@
+# 0.18.0
+* Add support for includes on term_stats
+
 # 0.17.1
 * Throw error message and object on client search run exception
 
