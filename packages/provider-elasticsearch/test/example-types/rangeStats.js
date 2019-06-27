@@ -150,7 +150,7 @@ describe('rangeStats', () => {
                   ],
                 },
                 aggs: {
-                  twoLevelAgg: {
+                  stats: {
                     stats: {
                       field: 'LineItem.TotalPrice',
                     },

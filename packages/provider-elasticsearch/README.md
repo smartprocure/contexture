@@ -305,7 +305,8 @@ Output
 A nested stats aggregation inside a dateHistogram aggregation, with support for tweaking min/max bounds.
 
 #### `esTwoLevelAggregation`
-An attempt at a generic version of many of these types, which nests two aggregations - generally a metric inside a bucket.
+An attempt at a generic version of many of these types, which nests two aggregations - generally a metric inside a bucket. 
+Supports include to specify specific aggregation types if include is empty it returns all aggregations under stats aggregation.
 
 #### `groupedMetric`
 A more general version of esTwoLevelAggregation, used in analysis builders/pivot tables. It takes config for an array of buckets and a metric agg. The buckets are nested with the metric on the inside.
