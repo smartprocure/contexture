@@ -1,4 +1,7 @@
-﻿# 0.8.2
+# 0.8.3
+* Results example type: sort after lookups and `include` is respected now via `$project`.
+
+# 0.8.2
 * Fix typo on `tagsText` example type
 
 # 0.8.1
