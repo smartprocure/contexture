@@ -14,7 +14,7 @@ import { withStateLens } from './utils/mobx-react-utils'
 import InjectTreeNode from './utils/injectTreeNode'
 import DefaultIcon from './DefaultIcon'
 import { bdJoin } from './styles/generic'
-import { newNodeFromType } from './utils/search'
+import { newNodeFromType, changeNodeField } from './utils/search'
 
 export let FilterActions = withStateLens({ modal: false })(
   observer(
@@ -24,7 +24,7 @@ export let FilterActions = withStateLens({ modal: false })(
           <Picker
             options={fieldsToOptions(fields)}
             onChange={field => {
-              tree.mutate(node.path, { field })
+              changeNodeField(tree, node, field)
               F.off(modal)()
             }}
           />
