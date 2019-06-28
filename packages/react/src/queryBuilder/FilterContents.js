@@ -6,7 +6,7 @@ import { ModalPicker, Modal, NestedPicker, Dynamic, Grid } from '../layout/'
 import { fieldsToOptions } from '../FilterAdder'
 import { defaultProps } from 'recompose'
 import { get } from '../utils/mobx-utils'
-import { newNodeFromType } from '../utils/search'
+import { newNodeFromType, changeNodeField } from '../utils/search'
 
 let FieldPicker = defaultProps({
   Modal,
@@ -43,7 +43,7 @@ let FilterContents = inject(_.defaults)(
             label={nodeField ? nodeLabel : 'Pick a Field'}
             options={fieldsToOptions(fields)}
             // TODO: consider type options in case this isn't safe, e.g. a field/type change action
-            onChange={field => tree.mutate(node.path, { field })}
+            onChange={field => changeNodeField(tree, node, field)}
           />
           {nodeField && (
             <div style={{ margin: '0 5px' }}>

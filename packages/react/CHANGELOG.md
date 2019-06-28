@@ -1,3 +1,6 @@
+# 1.51.0
+* Add field options to title popover in FilterList
+
 # 1.50.0
 * Add type options to title popover in FilterList
 
