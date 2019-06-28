@@ -27,7 +27,6 @@ export let changeNodeField = (Tree, node, field) => {
   Tree.mutate(node.path, { field })
 }
 
-
 export let indent = (Tree, parent, node, skipDefaultNode) => {
   // Reactors:
   //   OR -> And, nothing
