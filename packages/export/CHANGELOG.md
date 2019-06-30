@@ -1,3 +1,6 @@
+# 0.2.1
+* Enable support for include in terms stats data strategy.
+
 # 0.2.0
 * Add support for `results` nodes which don't wrap their context objects in `response` (like contexture-memory)
 

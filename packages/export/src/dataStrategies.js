@@ -91,6 +91,7 @@ export const terms_stats = ({
   value_field,
   size = 100,
   sortDir,
+  include,
 }) => {
   let formatTree = analysisNode => ({
     ..._.pick(['schema', 'join'], tree),
@@ -124,6 +125,7 @@ export const terms_stats = ({
           value_field,
           size: size || (await getTotalRecords()),
           sortDir,
+          include,
         })
       )
     )
