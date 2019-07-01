@@ -1,7 +1,7 @@
 import React from 'react'
 import { Flex } from './Flex'
 
-let CheckboxDefault = ({checked, ...props}) => (
+let CheckboxDefault = ({ checked, ...props }) => (
   <input type="checkbox" disabled checked={checked} {...props} />
 )
 
