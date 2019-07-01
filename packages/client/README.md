@@ -150,7 +150,7 @@ Note that it's also possible to add custom actions to a client instance through 
 | ---- | --------- | ----------- |
 | add | `async (path, newNode, {index}) -> await searchCompleted` | Adds a node to the tree as a child of the specified path. You can optionally pass an options object as the third param to specify the index where to add the node. The node can be a group with children. |
 | remove | `async path -> await searchCompleted` | Removes a node at the specified path. Will also remove children of the target node. |
-| mutate | `async (path, deltas) -> await searchCompleted` | Mutates the node at the given path with the new values. |
+| mutate | `async (path, deltas) -> await searchCompleted` | Mutates the node at the given path with the new values. Note that this does not automatically change the `paused` flag. This is by design since you should be able to mutate paused nodes. |
 | triggerUpdate | `async () -> await searchCompleted` | Will trigger an update with a `none` reactor, updating only nodes that are already marked for update. This is useful when `disableAutoUpdate` is set to true. |
 | clear | `async path -> await searchCompleted` | Resets the node's values to those given on the node type's `defaults` (except `field`) |
 | replace | `async (path, newNodeOrTransform) -> await searchCompleted` | Replaces the node at the given path with a new node. Accepts either a node object or a `node -> newNode` transform function as its second argument. If a function is given, it is called on the node at `path`, and the result is then used in `replace`. |
