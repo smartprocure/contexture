@@ -1,3 +1,6 @@
+# 0.8.4
+* Results example type: Removed default `$sort`. Fixed `$limit` when pageSize is 0.
+
 # 0.8.3
 * Results example type: sort after lookups and `include` is respected now via `$project`.
 
