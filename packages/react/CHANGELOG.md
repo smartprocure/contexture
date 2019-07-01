@@ -1,3 +1,6 @@
+# 1.52.0
+* Add CheckButton component
+
 # 1.51.0
 * Add field options to title popover in FilterList
 
