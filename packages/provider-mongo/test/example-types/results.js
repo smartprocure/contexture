@@ -161,5 +161,27 @@ describe('results', () => {
         { $limit: 10 },
       ])
     })
+    it('should not have $limit stage if pageSize is 0', () => {
+      let context = defaults({
+        key: 'results',
+        type: 'results',
+        sortField: 'createdAt',
+        pageSize: 0,
+      })
+      expect(getResultsQuery(context, getSchema, 0)).to.deep.equal([
+        { $sort: { createdAt: -1 } },
+        { $skip: 0 },
+      ])
+    })
+    it('should not have $sort stage if sortField is missing', () => {
+      let context = defaults({
+        key: 'results',
+        type: 'results',
+      })
+      expect(getResultsQuery(context, getSchema, 0)).to.deep.equal([
+        { $skip: 0 },
+        { $limit: 10 },
+      ])
+    })
   })
 })

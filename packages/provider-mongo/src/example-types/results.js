@@ -34,18 +34,18 @@ let getStartRecord = ({ page, pageSize }) => {
 let getResultsQuery = (context, getSchema, startRecord) => {
   let { pageSize, sortField, sortDir, populate, include } = context
 
-  let $sort = {
-    [sortField]: sortDir === 'asc' ? 1 : -1,
-  }
-
   // $sort, $skip, $limit
-  let sortSkipLimit = [
-    { $sort },
-    { $skip: startRecord },
-    pageSize > 0 && {
-      $limit: pageSize,
+  let $sort = {
+    $sort: {
+      [sortField]: sortDir === 'asc' ? 1 : -1,
     },
-  ]
+  }
+  let $limit = { $limit: pageSize }
+  let sortSkipLimit = _.compact([
+    sortField && $sort,
+    { $skip: startRecord },
+    pageSize > 0 && $limit,
+  ])
   // If sort field is a join field move $sort, $skip, and $limit to after $lookup.
   // Otherwise, place those stages first to take advantage of any indexes on that field.
   let sortOnJoinField = _.some(
@@ -66,7 +66,6 @@ let getResultsQuery = (context, getSchema, startRecord) => {
 let defaults = _.defaults({
   page: 1,
   pageSize: 10,
-  sortField: '_score',
   sortDir: 'desc',
   include: [],
 })
