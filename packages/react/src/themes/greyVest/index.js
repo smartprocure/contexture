@@ -771,7 +771,9 @@ export let Adder = ModalFilterAdder({
 })
 
 let CheckButtonButton = props => <Button className="checkbutton" {...props} />
-export let CheckButton = defaultProps({ Checkbox, Button: CheckButtonButton })(DefaultCheckButton)
+export let CheckButton = defaultProps({ Checkbox, Button: CheckButtonButton })(
+  DefaultCheckButton
+)
 
 export let Modal = defaultProps({ className: 'gv-body' })(DefaultModal)
 export let ButtonGroup = defaultProps({ className: 'gv-button-group' })(Flex)
