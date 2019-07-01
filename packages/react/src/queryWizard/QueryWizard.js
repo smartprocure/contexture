@@ -3,29 +3,34 @@ import F from 'futil-js'
 import React from 'react'
 import DefaultCheckButton from '../layout/CheckButton'
 import DefaultModal from '../layout/Modal'
-import StepGroup from './StepGroup'
+import WizardStep from './WizardStep'
 
-
-export default ({ 
+export default ({
   tree,
   CheckButton = DefaultCheckButton,
   Button = 'button',
   Modal = DefaultModal,
   fields,
-  mapNodeToProps
+  mapNodeToProps,
+  mapNodeToLabel,
 }) => (
   <div>
-    {F.mapIndexed((node, i) => 
-      <StepGroup
-        node={node}
-        tree={tree}
-        CheckButton={CheckButton}
-        Button={Button}
-        Modal={Modal}
-        stepNumber={i}
-        mapNodeToProps={mapNodeToProps}
-        fields={fields}
-      />,
+    {F.mapIndexed(
+      (node, i) => (
+        <WizardStep
+          {...{
+            node,
+            tree,
+            fields,
+            mapNodeToProps,
+            mapNodeToLabel,
+            CheckButton,
+            Button,
+            Modal,
+          }}
+          stepNumber={i}
+        />
+      ),
       tree.tree.children
     )}
   </div>

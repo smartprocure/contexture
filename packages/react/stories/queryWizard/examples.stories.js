@@ -13,8 +13,6 @@ let Client = ContextureMobx({
   service: mockService(),
 })
 
-// let Node = (type, key) => ({ key, type })
-
 storiesOf('Search Components (Unthemed)|QueryWizard', module)
   .addWithJSX('One Filter', () => (
     <QueryWizard
@@ -22,8 +20,8 @@ storiesOf('Search Components (Unthemed)|QueryWizard', module)
         key: 'root',
         join: 'and',
         children: [
-          { 
-            key: 'step 1', 
+          {
+            key: 'step 1',
             friendlyName: 'Friendly Group',
             type: 'group',
             join: 'and',
@@ -33,14 +31,119 @@ storiesOf('Search Components (Unthemed)|QueryWizard', module)
                 key: 'friendly node',
                 friendlyName: 'Friendly Node',
                 typeDescription: 'Enter some tags',
-                fieldDescription: 'Search for stuff'
-              }
-            ]
-          }
+                fieldDescription: 'Search for stuff',
+              },
+            ],
+          },
         ],
       })}
       path={['root']}
       mapNodeToProps={componentForType(TypeMap)}
-      // fields={fieldsFromSchema(schemas, search)} // schemas[search.tree.schema].fields
+    />
+  ))
+  .addWithJSX('Two Filters', () => (
+    <QueryWizard
+      tree={Client({
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'step 1',
+            friendlyName: 'Friendly Group',
+            type: 'group',
+            join: 'and',
+            children: [
+              {
+                type: 'tagsQuery',
+                key: 'friendly node',
+                friendlyName: 'Friendly Node',
+                typeDescription: 'Enter some tags',
+                fieldDescription: 'Search for stuff',
+              },
+              {
+                type: 'facet',
+                key: 'friendly facet',
+                friendlyName: 'Facet',
+                typeDescription: 'Select some checkboxes or whatever',
+                fieldDescription: 'Search for stuff',
+              },
+            ],
+          },
+        ],
+      })}
+      path={['root']}
+      mapNodeToProps={componentForType(TypeMap)}
+    />
+  ))
+  .addWithJSX('Two Steps with nested filters', () => (
+    <QueryWizard
+      tree={Client({
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'step 1',
+            friendlyName: 'Friendly Group',
+            type: 'group',
+            join: 'and',
+            children: [
+              {
+                type: 'tagsQuery',
+                key: 'friendly node',
+                friendlyName: 'Friendly Node',
+                typeDescription: 'Enter some tags',
+                fieldDescription: 'Search for stuff',
+              },
+              {
+                type: 'group',
+                join: 'and',
+                children: [
+                  {
+                    type: 'query',
+                    key: 'bar',
+                    friendlyName: 'Bar',
+                  },
+                  {
+                    type: 'tagsQuery',
+                    key: 'foo',
+                    friendlyName: 'Foo',
+                  },
+                ],
+              },
+              {
+                type: 'facet',
+                key: 'friendly facet',
+                friendlyName: 'Facet',
+                typeDescription: 'Select some checkboxes or whatever',
+                fieldDescription: 'Search for stuff',
+              },
+            ],
+          },
+          {
+            key: 'step 2',
+            friendlyName: 'Step 2',
+            type: 'group',
+            join: 'and',
+            children: [
+              {
+                type: 'tagsQuery',
+                key: 'friendly node',
+                friendlyName: 'Friendly Node',
+                typeDescription: 'Enter some tags',
+                fieldDescription: 'Search for stuff',
+              },
+              {
+                type: 'facet',
+                key: 'friendly facet',
+                friendlyName: 'Facet',
+                typeDescription: 'Select some checkboxes or whatever',
+                fieldDescription: 'Search for stuff',
+              },
+            ],
+          },
+        ],
+      })}
+      path={['root']}
+      mapNodeToProps={componentForType(TypeMap)}
     />
   ))
