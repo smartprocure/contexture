@@ -31,6 +31,17 @@ let getStartRecord = ({ page, pageSize }) => {
   return page * pageSize
 }
 
+let parentPath = path => path.replace(/(\.[^.]+)$/, '')
+
+let isParentPathProjected = include => path =>
+  _.some(_.eq(parentPath(path)), _.pull(path, include))
+
+let projectFromInclude = include =>
+  _.flow(
+    _.remove(isParentPathProjected(include)),
+    _.countBy(_.identity)
+  )(include)
+
 let getResultsQuery = (context, getSchema, startRecord) => {
   let { pageSize, sortField, sortDir, populate, include } = context
 
@@ -53,7 +64,7 @@ let getResultsQuery = (context, getSchema, startRecord) => {
     _.keys(populate)
   )
   // $project
-  let $project = [{ $project: _.countBy(_.identity, include) }]
+  let $project = [{ $project: projectFromInclude(include) }]
 
   return [
     ...(!sortOnJoinField ? sortSkipLimit : []),
@@ -97,6 +108,7 @@ module.exports = {
   getStartRecord,
   getResultsQuery,
   defaults,
+  projectFromInclude,
   // API
   result,
 }
