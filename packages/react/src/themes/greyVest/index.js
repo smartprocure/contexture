@@ -16,6 +16,7 @@ import {
 } from '../../'
 import ExampleTypeConstructor from '../../exampleTypes/'
 import QueryBuilderComponent from '../../queryBuilder'
+import QueryWizardComponent from '../../queryWizard'
 import { default as DefaultModal } from '../../layout/Modal'
 import { default as DefaultCheckButton } from '../../layout/CheckButton'
 
@@ -217,7 +218,7 @@ export let GVStyle = () => (
         height: 30px;
         width: 30px;
         font-size: 20px;
-        margin-right: 7px;
+        margin-right: 8px;
       }
       .gv-button.checkbutton .gv-checkbox i {
         font-size: 20px;
@@ -643,6 +644,33 @@ export let GVStyle = () => (
         border: 30px solid white;
         overflow-x: auto;
       }
+
+      /* Query Wizard */
+      .gv-query-wizard .wizard-step {
+        padding: 40px;
+        border-bottom: 1px solid #eef0f1;
+      }
+      .gv-query-wizard .gv-button {
+        margin-right: 10px;
+      }
+      .gv-query-wizard .main-wizard-group {
+        margin: 30px -5px;
+      }
+      .gv-query-wizard .wizard-group.nested {
+        box-shadow: 0 0 3px 1px #c4c5ca;
+        border-radius: 3px;
+        padding: 5px;
+        margin: 0 7px;
+      }
+      .gv-query-wizard .wizard-step h1 {
+        margin: 0;
+      }
+      .gv-query-wizard span.step-number {
+        color: #0076de;
+      }
+      .gv-query-wizard .checkbutton {
+        margin: 5px;
+      }
     `}
   </style>
 )
@@ -860,4 +888,8 @@ export let QueryBuilder = defaultProps({ Button, MissingTypeComponent })(
 
 export let SearchFilters = defaultProps({ QueryBuilder, FiltersBox })(
   BaseSearchFilters
+)
+
+export let QueryWizard = defaultProps({CheckButton, Modal, Button, Icon, className: 'gv-query-wizard'})(
+  QueryWizardComponent
 )

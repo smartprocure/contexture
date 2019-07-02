@@ -23,8 +23,8 @@ export default ({
   totalSteps,
   currentStep,
 }) => (
-  <>
-    <Flex alignItems="center">
+  <div className={`wizard-step ${className ? className : ''}`} style={style}>
+    <Flex alignItems="center" justifyContent="space-between">
       <h1>
         <span className="step-number">Step {step + 1}</span> - Search for{' '}
         {node.friendlyName || node.key}
@@ -38,30 +38,28 @@ export default ({
     </Flex>
     {expanded && (
       <>
-        <Flex style={style} className={className}>
-          <WizardGroup
-            {...{
-              tree,
-              node,
-              fields,
-              mapNodeToProps,
-              mapNodeToLabel,
-              Button,
-              CheckButton,
-              Modal,
-            }}
-            className="wizard-group"
-          />
-        </Flex>
+        <WizardGroup
+          {...{
+            tree,
+            node,
+            fields,
+            mapNodeToProps,
+            mapNodeToLabel,
+            Button,
+            CheckButton,
+            Modal,
+          }}
+          className="main-wizard-group"
+        />
         {step > 0 && (
           <Button onClick={F.sets(step - 1, currentStep)}>{'<'} Back</Button>
         )}
         {step < totalSteps - 1 ? (
-          <Button onClick={F.sets(step + 1, currentStep)}>Continue</Button>
+          <Button primary onClick={F.sets(step + 1, currentStep)}>Continue</Button>
         ) : (
-          <Button>View Results</Button>
+          <Button primary>View Results</Button>
         )}
       </>
     )}
-  </>
+  </div>
 )

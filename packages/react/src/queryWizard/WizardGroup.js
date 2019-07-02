@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 import React from 'react'
 
 import { observer } from 'mobx-react'
-import { Dynamic } from '../layout'
+import { Dynamic, Flex } from '../layout'
 import InjectTreeNode from '../utils/injectTreeNode'
 
 export let DefaultMissingTypeComponent = InjectTreeNode(({ node = {} }) => (
@@ -30,7 +30,7 @@ let WizardItem = ({
   let modal = F.stateLens(React.useState(false))
   let title = label || node.friendlyName || node.key
   return (
-    <div>
+    <>
       <CheckButton checked={node.hasValue} onClick={F.on(modal)}>
         {title}
       </CheckButton>
@@ -48,20 +48,17 @@ let WizardItem = ({
           Done
         </Button>
       </Modal>
-    </div>
+    </>
   )
 }
 
-let DefaultBox = ({ children, isNested }) => (
-  <div
-    style={
-      isNested
-        ? { borderLeft: '3px solid green', padding: '0 10px', margin: '10px 0' }
-        : {}
-    }
+let Box = ({ children, nested, className }) => (
+  <Flex
+    className={`${className} ${nested ? 'nested' : ''}`}
+    alignItems="center"
   >
     {children}
-  </div>
+  </Flex>
 )
 
 let WizardGroup = ({
@@ -74,7 +71,7 @@ let WizardGroup = ({
   Button,
   CheckButton,
   Modal,
-  Box = DefaultBox,
+//  Box = DefaultBox,
   nested = false,
 }) => (
   <Box {...{ nested, className }}>
@@ -90,28 +87,26 @@ let WizardGroup = ({
               fields,
               mapNodeToProps,
               mapNodeToLabel,
-              className: 'wizard-group',
               Button,
               CheckButton,
               Modal,
             }}
+            className="wizard-group"
           />
         ) : (
-          <div key={child.path}>
-            <WizardItem
-              key={child.path}
-              {...{
-                tree,
-                node: child,
-                fields,
-                mapNodeToProps,
-                Button,
-                CheckButton,
-                Modal,
-              }}
-              label={mapNodeToLabel(child, fields)}
-            />
-          </div>
+          <WizardItem
+            key={child.path}
+            {...{
+              tree,
+              node: child,
+              fields,
+              mapNodeToProps,
+              Button,
+              CheckButton,
+              Modal,
+            }}
+            label={mapNodeToLabel(child, fields)}
+          />
         ),
       _.getOr([], 'children', node)
     )}

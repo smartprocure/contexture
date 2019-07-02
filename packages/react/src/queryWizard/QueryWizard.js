@@ -20,8 +20,9 @@ export default withStateLens({ current: 0 })(
       mapNodeToProps,
       mapNodeToLabel,
       current,
+      className,
     }) => (
-      <div>
+      <div className={className}>
         {F.mapIndexed(
           (node, i) => (
             <WizardStep
