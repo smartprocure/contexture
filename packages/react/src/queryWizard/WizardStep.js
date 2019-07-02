@@ -26,12 +26,14 @@ export default ({
   <div className={`wizard-step ${className ? className : ''}`} style={style}>
     <Flex alignItems="center" justifyContent="space-between">
       <h1>
-        <span className="step-number">Step {step + 1}</span> - Search for{' '}
-        {node.friendlyName || node.key}
+        <span className="step-number">Step {step + 1}</span> - {
+          step === 0 ? `Search for ${node.friendlyName || node.key} by...` : `And...`
+        }
       </h1>
       <div
         className="filter-field-label-icon"
         onClick={F.sets(step, currentStep)}
+        style={{ cursor: 'pointer' }}
       >
         <Icon icon={expanded ? 'FilterListCollapse' : 'FilterListExpand'} />
       </div>
@@ -52,7 +54,10 @@ export default ({
           className="main-wizard-group"
         />
         {step > 0 && (
-          <Button onClick={F.sets(step - 1, currentStep)}>{'<'} Back</Button>
+          <Button onClick={F.sets(step - 1, currentStep)} className="back-button">
+            <Icon icon='PreviousPage' />
+            Back
+          </Button>
         )}
         {step < totalSteps - 1 ? (
           <Button primary onClick={F.sets(step + 1, currentStep)}>Continue</Button>

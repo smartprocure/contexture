@@ -1,10 +1,10 @@
 import F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
-
 import { observer } from 'mobx-react'
 import { Dynamic, Flex } from '../layout'
 import InjectTreeNode from '../utils/injectTreeNode'
+import styles from '../styles'
 
 export let DefaultMissingTypeComponent = InjectTreeNode(({ node = {} }) => (
   <div>
@@ -52,10 +52,12 @@ let WizardItem = ({
   )
 }
 
-let Box = ({ children, nested, className }) => (
+let Box = ({ nodeJoinColor, children, nested, className }) => (
   <Flex
+    wrap
     className={`${className} ${nested ? 'nested' : ''}`}
     alignItems="center"
+    style={{ borderColor: nodeJoinColor }}
   >
     {children}
   </Flex>
@@ -74,7 +76,7 @@ let WizardGroup = ({
 //  Box = DefaultBox,
   nested = false,
 }) => (
-  <Box {...{ nested, className }}>
+  <Box {...{ nested, className }} nodeJoinColor={styles.joinColor(node)}>
     {_.map(
       child =>
         child.children ? (

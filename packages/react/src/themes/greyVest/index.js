@@ -652,15 +652,17 @@ export let GVStyle = () => (
       }
       .gv-query-wizard .gv-button {
         margin-right: 10px;
+        margin-top: 5px;
+        margin-bottom: 5px;
       }
       .gv-query-wizard .main-wizard-group {
         margin: 30px -5px;
       }
       .gv-query-wizard .wizard-group.nested {
-        box-shadow: 0 0 3px 1px #c4c5ca;
-        border-radius: 3px;
-        padding: 5px;
-        margin: 0 7px;
+        border: 2px solid;
+        border-radius: 6px;
+        padding: 4px;
+        margin: 2px 5px;
       }
       .gv-query-wizard .wizard-step h1 {
         margin: 0;
@@ -670,6 +672,13 @@ export let GVStyle = () => (
       }
       .gv-query-wizard .checkbutton {
         margin: 5px;
+        white-space: nowrap;
+      }
+      .gv-query-wizard .back-button i {
+        vertical-align: middle;
+        line-height: 14px;
+        margin: 0 10px 0 -5px;
+        opacity: 0.4;
       }
     `}
   </style>
