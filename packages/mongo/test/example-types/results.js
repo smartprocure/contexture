@@ -188,7 +188,10 @@ describe('results', () => {
   describe('projectFromInclude', () => {
     it('should remove redundant child paths', () => {
       let include = ['foo', 'foo.bar', 'foo.bar.baz', 'bar.baz.qux', 'bar.baz']
-      expect(projectFromInclude(include)).to.deep.equal({ 'bar.baz': 1, foo: 1 })
+      expect(projectFromInclude(include)).to.deep.equal({
+        'bar.baz': 1,
+        foo: 1,
+      })
     })
   })
 })
