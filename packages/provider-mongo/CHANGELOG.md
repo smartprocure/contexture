@@ -1,3 +1,6 @@
+# 0.8.5
+* Results example type: Don't `$project` redundant child paths when parent path is already projected.
+
 # 0.8.4
 * Results example type: Removed default `$sort`. Fixed `$limit` when pageSize is 0.
 

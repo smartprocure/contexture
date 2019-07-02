@@ -4,6 +4,7 @@ let {
   lookupFromPopulate,
   getResultsQuery,
   getStartRecord,
+  projectFromInclude,
 } = require('../../src/example-types/results')
 
 let getSchema = collection => ({ mongo: { collection } })
@@ -145,7 +146,7 @@ describe('results', () => {
         { $sort: { 'user.firstName': 1 } },
         { $skip: 0 },
         { $limit: 10 },
-        { $project: { 'user.firstName': 1, user: 1, type: 1, updatedAt: 1 } },
+        { $project: { user: 1, type: 1, updatedAt: 1 } },
       ])
     })
     it('should sort descending and skip $lookup and $project', () => {
@@ -182,6 +183,12 @@ describe('results', () => {
         { $skip: 0 },
         { $limit: 10 },
       ])
+    })
+  })
+  describe('projectFromInclude', () => {
+    it('should remove redundant child paths', () => {
+      let include = ['foo', 'foo.bar', 'foo.bar.baz', 'bar.baz.qux', 'bar.baz']
+      expect(projectFromInclude(include)).to.deep.equal({ 'bar.baz': 1, foo: 1 })
     })
   })
 })
