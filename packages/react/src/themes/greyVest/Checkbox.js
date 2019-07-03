@@ -3,17 +3,8 @@ import React from 'react'
 // Low effort custom checkbox
 let Checkbox = ({ checked, onChange, style = {} }) => (
   <label
-    className="gv-input gv-checkbox"
-    style={{
-      height: '20px',
-      width: '20px',
-      borderRadius: '3px',
-      display: 'flex',
-      justifyContent: 'center',
-      cursor: 'pointer',
-      ...(checked ? { backgroundColor: '#ebebeb' } : {}),
-      ...style,
-    }}
+    className={`gv-input gv-checkbox ${checked ? 'checked' : ''}`}
+    style={style}
   >
     <input
       type="checkbox"
@@ -21,15 +12,7 @@ let Checkbox = ({ checked, onChange, style = {} }) => (
       {...{ checked, onChange }}
     />
     {checked ? (
-      <i
-        className="material-icons"
-        style={{
-          fontSize: 14,
-          fontWeight: 'bold',
-        }}
-      >
-        check
-      </i>
+      <i className="material-icons">check</i>
     ) : (
       String.fromCharCode(160)
     )}

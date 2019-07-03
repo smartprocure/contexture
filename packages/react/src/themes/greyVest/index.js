@@ -17,6 +17,7 @@ import {
 import ExampleTypeConstructor from '../../exampleTypes/'
 import QueryBuilderComponent from '../../queryBuilder'
 import { default as DefaultModal } from '../../layout/Modal'
+import { default as DefaultCheckButton } from '../../layout/CheckButton'
 
 import Input from './Input'
 import Checkbox from './Checkbox'
@@ -189,6 +190,41 @@ export let GVStyle = () => (
         cursor: pointer;
       }
 
+      /* Checkbox */
+      .gv-checkbox {
+        height: 20px;
+        width: 20px;
+        border-radius: 3px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+      }
+      .gv-checkbox.checked {
+        background-color: transparent;
+        border-color: transparent;
+      }
+      .gv-checkbox i {
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      /* Checkbutton */
+      .gv-button.checkbutton {
+        padding: 5px 23px 5px 10px;
+      }
+      .gv-button.checkbutton .gv-checkbox {
+        height: 30px;
+        width: 30px;
+        font-size: 20px;
+        margin-right: 7px;
+      }
+      .gv-button.checkbutton .gv-checkbox i {
+        font-size: 20px;
+      }
+      .gv-button.checkbutton .gv-checkbox.checked {
+        color: #0076de;
+      }
 
       /* Radio Buttons */
       .gv-radio {
@@ -733,6 +769,11 @@ export let Adder = ModalFilterAdder({
   Item: FilterListItem,
   label: AddLabel,
 })
+
+let CheckButtonButton = props => <Button className="checkbutton" {...props} />
+export let CheckButton = defaultProps({ Checkbox, Button: CheckButtonButton })(
+  DefaultCheckButton
+)
 
 export let Modal = defaultProps({ className: 'gv-body' })(DefaultModal)
 export let ButtonGroup = defaultProps({ className: 'gv-button-group' })(Flex)

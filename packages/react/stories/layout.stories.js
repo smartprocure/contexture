@@ -9,6 +9,7 @@ import Popover from '../src/layout/Popover'
 import Modal from '../src/layout/Modal'
 import Awaiter from '../src/layout/Awaiter'
 import TextHighlight from '../src/layout/TextHighlight'
+import CheckButton from '../src/layout/CheckButton'
 import { Flex } from '../src/layout/Flex'
 import { NestedPicker, ModalPicker } from '../src'
 
@@ -111,4 +112,10 @@ storiesOf('Components (Unthemed)|Layout', module)
       Picker={NestedPicker}
       Modal={Modal}
     />
+  ))
+  .addWithJSX('CheckButton', () => (
+    <>
+      <CheckButton checked>This one is on</CheckButton>
+      <CheckButton>This one is off</CheckButton>
+    </>
   ))
