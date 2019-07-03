@@ -1,15 +1,7 @@
 let _ = require('lodash/fp')
 let Promise = require('bluebird')
 let { ObjectID } = require('mongodb')
-
-let buildRegex = _.flow(
-  _.replace(/\s\s+/g, ' '),
-  _.trim,
-  _.split(' '),
-  _.map(x => `(?=.*${x}.*)`),
-  _.join(''),
-  x => `.*${x}.*`
-)
+let F = require('futil-js')
 
 module.exports = {
   hasValue: _.get('values.length'),
@@ -39,7 +31,7 @@ module.exports = {
           context.optionsFilter && {
             $match: {
               _id: {
-                $regex: buildRegex(context.optionsFilter),
+                $regex: F.wordsToRegexp(context.optionsFilter),
                 $options: 'i',
               },
             },
