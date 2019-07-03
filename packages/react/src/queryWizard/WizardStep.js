@@ -26,9 +26,10 @@ export default ({
   <div className={`wizard-step ${className ? className : ''}`} style={style}>
     <Flex alignItems="center" justifyContent="space-between">
       <h1>
-        <span className="step-number">Step {step + 1}</span> - {
-          step === 0 ? `Search for ${node.friendlyName || node.key} by...` : `And...`
-        }
+        <span className="step-number">Step {step + 1}</span> -{' '}
+        {step === 0
+          ? `Search for ${node.friendlyName || node.key} by...`
+          : `And...`}
       </h1>
       <div
         className="filter-field-label-icon"
@@ -54,13 +55,18 @@ export default ({
           className="main-wizard-group"
         />
         {step > 0 && (
-          <Button onClick={F.sets(step - 1, currentStep)} className="back-button">
-            <Icon icon='PreviousPage' />
+          <Button
+            onClick={F.sets(step - 1, currentStep)}
+            className="back-button"
+          >
+            <Icon icon="PreviousPage" />
             Back
           </Button>
         )}
         {step < totalSteps - 1 ? (
-          <Button primary onClick={F.sets(step + 1, currentStep)}>Continue</Button>
+          <Button primary onClick={F.sets(step + 1, currentStep)}>
+            Continue
+          </Button>
         ) : (
           <Button primary>View Results</Button>
         )}

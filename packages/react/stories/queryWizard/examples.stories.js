@@ -15,9 +15,11 @@ let Client = ContextureMobx({
   service: mockService(),
 })
 
-let Box = ({children}) => <div style={{backgroundColor: 'white'}}>{children}</div>
+let Box = ({ children }) => (
+  <div style={{ backgroundColor: 'white' }}>{children}</div>
+)
 
-let story = (QueryWizard) => () => (
+let story = QueryWizard => () => (
   <Box>
     <QueryWizard
       tree={Client({
@@ -57,9 +59,9 @@ let story = (QueryWizard) => () => (
                       },
                       {
                         key: 'bar',
-                        type: 'tagsQuery'
-                      }
-                    ]
+                        type: 'tagsQuery',
+                      },
+                    ],
                   },
                 ],
               },
@@ -102,8 +104,10 @@ let story = (QueryWizard) => () => (
   </Box>
 )
 
-storiesOf('Search Components (Unthemed)|QueryWizard', module)
-  .addWithJSX('Two steps with nested filters', story(DefaultQueryWizard))
+storiesOf('Search Components (Unthemed)|QueryWizard', module).addWithJSX(
+  'Two steps with nested filters',
+  story(DefaultQueryWizard)
+)
 
 storiesOf('Search Components (Grey Vest)|QueryWizard', module)
   .addDecorator(GVDecorator)

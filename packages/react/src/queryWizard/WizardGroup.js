@@ -73,7 +73,7 @@ let WizardGroup = ({
   Button,
   CheckButton,
   Modal,
-//  Box = DefaultBox,
+  //  Box = DefaultBox,
   nested = false,
 }) => (
   <Box {...{ nested, className }} nodeJoinColor={styles.joinColor(node)}>

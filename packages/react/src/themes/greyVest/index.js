@@ -899,6 +899,10 @@ export let SearchFilters = defaultProps({ QueryBuilder, FiltersBox })(
   BaseSearchFilters
 )
 
-export let QueryWizard = defaultProps({CheckButton, Modal, Button, Icon, className: 'gv-query-wizard'})(
-  QueryWizardComponent
-)
+export let QueryWizard = defaultProps({
+  CheckButton,
+  Modal,
+  Button,
+  Icon,
+  className: 'gv-query-wizard',
+})(QueryWizardComponent)
