@@ -64,7 +64,7 @@ describe('facet', () => {
       expect(filterAgg).to.deep.equal({
         $match: {
           _id: {
-            $regex: '.*(?=.*cable.*).*',
+            $regex: '(?=.*cable)',
             $options: 'i',
           },
         },
@@ -85,7 +85,7 @@ describe('facet', () => {
       expect(filterAgg).to.deep.equal({
         $match: {
           _id: {
-            $regex: '.*(?=.*dis.*)(?=.*comp.*).*',
+            $regex: '(?=.*dis)(?=.*comp)',
             $options: 'i',
           },
         },
