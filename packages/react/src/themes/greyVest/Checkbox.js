@@ -9,8 +9,7 @@ let Checkbox = ({ checked, onChange, style = {} }) => (
     <input
       type="checkbox"
       style={{ display: 'none' }}
-      checked={!!checked} // prevent react "uncontrolled component" warning when `checked` prop is undefined
-      onChange={onChange}
+      {...{ checked, onChange }}
     />
     {checked ? (
       <i className="material-icons">check</i>
