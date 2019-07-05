@@ -9,12 +9,13 @@ let Checkbox = ({ checked, onChange, style = {} }) => (
     <input
       type="checkbox"
       style={{ display: 'none' }}
-      {...{ checked, onChange }}
+      checked={!!checked} // prevent react "uncontrolled component" warning when `checked` prop is undefined
+      onChange={onChange}
     />
     {checked ? (
       <i className="material-icons">check</i>
     ) : (
-      String.fromCharCode(160)
+      String.fromCharCode(160) // non-breaking space
     )}
   </label>
 )

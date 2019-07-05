@@ -2,7 +2,12 @@ import React from 'react'
 import { Flex } from './Flex'
 
 let CheckboxDefault = ({ checked, ...props }) => (
-  <input type="checkbox" disabled checked={checked} {...props} />
+  <input
+    type="checkbox"
+    disabled
+    checked={!!checked} // prevent react "uncontrolled component" warning when `checked` prop is undefined
+    {...props}
+  />
 )
 
 let CheckButton = ({
@@ -15,7 +20,7 @@ let CheckButton = ({
 }) => (
   <Button onClick={onClick} {...props}>
     <Flex alignItems="center" justifyContent="center">
-      <Checkbox checked={checked} />
+      <Checkbox checked={!!checked} />
       {children}
     </Flex>
   </Button>
