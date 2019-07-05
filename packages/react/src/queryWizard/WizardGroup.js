@@ -13,10 +13,11 @@ export let DefaultMissingTypeComponent = InjectTreeNode(({ node = {} }) => (
 ))
 
 let FieldDescription = observer(({ node }) => (
-  <div>
+  <div className="wizard-description">
     {node.fieldDescription} {node.typeDescription}
   </div>
 ))
+
 let WizardItem = ({
   node,
   tree,
@@ -35,18 +36,22 @@ let WizardItem = ({
         {title}
       </CheckButton>
       <Modal isOpen={modal}>
-        <h1>{title}</h1>
-        <FieldDescription node={node} />
-        <Dynamic
-          tree={tree}
-          node={node}
-          path={_.toArray(node.path)}
-          {...mapNodeToProps(node, fields)}
-        />
-        <Button onClick={() => tree.clear(node.path)}>Clear</Button>
-        <Button primary onClick={F.off(modal)}>
-          Done
-        </Button>
+        <div className="wizard-modal">
+          <h1>{title}</h1>
+          <FieldDescription node={node} />
+          <div className="wizard-filter">
+            <Dynamic
+              tree={tree}
+              node={node}
+              path={_.toArray(node.path)}
+              {...mapNodeToProps(node, fields)}
+            />
+          </div>
+          <Button onClick={() => tree.clear(node.path)}>Clear</Button>
+          <Button primary onClick={F.off(modal)}>
+            Done
+          </Button>
+        </div>
       </Modal>
     </>
   )

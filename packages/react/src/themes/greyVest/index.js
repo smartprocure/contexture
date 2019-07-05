@@ -680,6 +680,26 @@ export let GVStyle = () => (
         margin: 0 10px 0 -5px;
         opacity: 0.4;
       }
+      .wizard-modal {
+        min-width: 300px;
+      }
+      .wizard-modal * {
+        max-width: 480px;
+      }
+      .wizard-modal h1 {
+        margin: 0;
+      }
+      .wizard-modal .wizard-description {
+        margin: 20px 0;
+        color: #4a4a4a;
+        line-height: 1.5;
+      }
+      .wizard-modal .wizard-filter {
+        margin: 30px 0;
+      }
+      .wizard-modal .gv-button {
+        margin-right: 10px;
+      }
     `}
   </style>
 )
