@@ -3,10 +3,7 @@ import React from 'react'
 import { Flex } from './Flex'
 
 let CheckboxDefault = ({ checked }) => (
-  <input
-    type="checkbox"
-    checked={checked}
-  />
+  <input type="checkbox" checked={checked} />
 )
 
 let CheckButton = ({
