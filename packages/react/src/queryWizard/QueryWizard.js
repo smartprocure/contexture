@@ -43,6 +43,7 @@ export default withStateLens({ current: 0 })(
               currentStep={current}
               expanded={F.view(current) === i}
               totalSteps={_.size(tree.getNode(path).children)}
+              isRequired={i === 0}
             />
           ),
           tree.getNode(path).children || []
