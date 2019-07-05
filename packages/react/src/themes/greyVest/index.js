@@ -101,6 +101,10 @@ export let GVStyle = () => (
         background-color: #0076de;
         color: #fff;
       }
+      .gv-button:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+      }
       .gv-button.success {
         background-color: #5bb85b !important;
       }
