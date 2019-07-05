@@ -12,6 +12,7 @@ export default withStateLens({ current: 0 })(
   observer(
     ({
       tree,
+      path,
       CheckButton = DefaultCheckButton,
       Button = 'button',
       Modal = DefaultModal,
@@ -37,13 +38,14 @@ export default withStateLens({ current: 0 })(
                 Icon,
                 Modal,
               }}
+              key={node.key}
               step={i}
               currentStep={current}
               expanded={F.view(current) === i}
-              totalSteps={_.size(tree.tree.children)}
+              totalSteps={_.size(tree.getNode(path).children)}
             />
           ),
-          tree.tree.children
+          tree.getNode(path).children || []
         )}
       </div>
     )
