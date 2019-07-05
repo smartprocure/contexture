@@ -29,7 +29,7 @@ let WizardItem = ({
   Modal,
 }) => {
   let modal = F.stateLens(React.useState(false))
-  let title = label || node.friendlyName || node.key
+  let title = label || _.get([node.field, 'label'], fields) || node.field || node.key
   return (
     <>
       <CheckButton checked={node.hasValue} onClick={F.on(modal)}>
