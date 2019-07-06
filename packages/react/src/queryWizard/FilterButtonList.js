@@ -29,7 +29,8 @@ let FilterButtonItem = ({
   Modal,
 }) => {
   let modal = F.stateLens(React.useState(false))
-  let title = label || _.get([node.field, 'label'], fields) || node.field || node.key
+  let title =
+    label || _.get([node.field, 'label'], fields) || node.field || node.key
   return (
     <>
       <CheckButton checked={node.hasValue} onClick={F.on(modal)}>
@@ -68,63 +69,65 @@ let Box = ({ nodeJoinColor, children, nested, className }) => (
   </Flex>
 )
 
-let FilterButtonList = observer(({
-  node,
-  tree,
-  fields,
-  mapNodeToProps,
-  mapNodeToLabel,
-  className,
-  Button,
-  CheckButton,
-  Icon,
-  Modal,
-  Popover,
-  //  Box = DefaultBox,
-  nested = false,
-}) => (
-  <Box {...{ nested, className }} nodeJoinColor={styles.joinColor(node)}>
-    {_.map(
-      child =>
-        child.children ? (
-          <FilterButtonList
-            key={child.path}
-            nested
-            {...{
-              tree,
-              node: child,
-              fields,
-              mapNodeToProps,
-              mapNodeToLabel,
-              Button,
-              CheckButton,
-              Icon,
-              Modal,
-              Popover
-            }}
-            className="filter-button-list"
-          />
-      ) : (
-          <FilterButtonItem
-            key={child.path}
-            {...{
-              tree,
-              node: child,
-              fields,
-              mapNodeToProps,
-              Button,
-              CheckButton,
-              Icon,
-              Modal,
-              Popover,
-            }}
-            label={mapNodeToLabel(child, fields)}
-          />
-        ),
-      _.getOr([], 'children', node)
-    )}
-  </Box>
-))
+let FilterButtonList = observer(
+  ({
+    node,
+    tree,
+    fields,
+    mapNodeToProps,
+    mapNodeToLabel,
+    className,
+    Button,
+    CheckButton,
+    Icon,
+    Modal,
+    Popover,
+    //  Box = DefaultBox,
+    nested = false,
+  }) => (
+    <Box {...{ nested, className }} nodeJoinColor={styles.joinColor(node)}>
+      {_.map(
+        child =>
+          child.children ? (
+            <FilterButtonList
+              key={child.path}
+              nested
+              {...{
+                tree,
+                node: child,
+                fields,
+                mapNodeToProps,
+                mapNodeToLabel,
+                Button,
+                CheckButton,
+                Icon,
+                Modal,
+                Popover,
+              }}
+              className="filter-button-list"
+            />
+          ) : (
+            <FilterButtonItem
+              key={child.path}
+              {...{
+                tree,
+                node: child,
+                fields,
+                mapNodeToProps,
+                Button,
+                CheckButton,
+                Icon,
+                Modal,
+                Popover,
+              }}
+              label={mapNodeToLabel(child, fields)}
+            />
+          ),
+        _.getOr([], 'children', node)
+      )}
+    </Box>
+  )
+)
 
 FilterButtonList.displayName = 'FilterButtonList'
 export default FilterButtonList

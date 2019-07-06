@@ -21,33 +21,34 @@ let QueryWizard = ({
 }) => {
   let currentStep = F.stateLens(React.useState(0))
   return (
-  <div className={className} style={style}>
-    {F.mapIndexed(
-      (node, i) => (
-        <WizardStep
-          {...{
-            node,
-            tree,
-            fields,
-            mapNodeToProps,
-            mapNodeToLabel,
-            CheckButton,
-            Button,
-            Icon,
-            Modal,
-            currentStep
-          }}
-          key={node.key}
-          step={i}
-          expanded={F.view(currentStep) === i}
-          totalSteps={_.size(tree.getNode(path).children)}
-          isRequired={i === 0}
-        />
-      ),
-      tree.getNode(path).children || []
-    )}
-  </div>
-)}
+    <div className={className} style={style}>
+      {F.mapIndexed(
+        (node, i) => (
+          <WizardStep
+            {...{
+              node,
+              tree,
+              fields,
+              mapNodeToProps,
+              mapNodeToLabel,
+              CheckButton,
+              Button,
+              Icon,
+              Modal,
+              currentStep,
+            }}
+            key={node.key}
+            step={i}
+            expanded={F.view(currentStep) === i}
+            totalSteps={_.size(tree.getNode(path).children)}
+            isRequired={i === 0}
+          />
+        ),
+        tree.getNode(path).children || []
+      )}
+    </div>
+  )
+}
 
 QueryWizard.displayName = 'QueryWizard'
 export default QueryWizard
