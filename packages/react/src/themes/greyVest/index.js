@@ -659,10 +659,10 @@ export let GVStyle = () => (
         margin-top: 5px;
         margin-bottom: 5px;
       }
-      .gv-query-wizard .main-wizard-group {
+      .gv-query-wizard .main-filter-button-list {
         margin: 30px -5px;
       }
-      .gv-query-wizard .wizard-group.nested {
+      .gv-query-wizard .filter-button-list.nested {
         border: 2px solid;
         border-radius: 6px;
         padding: 4px;
@@ -684,24 +684,24 @@ export let GVStyle = () => (
         margin: 0 10px 0 -5px;
         opacity: 0.4;
       }
-      .wizard-modal {
+      .filter-button-modal {
         min-width: 300px;
       }
-      .wizard-modal * {
+      .filter-button-modal * {
         max-width: 480px;
       }
-      .wizard-modal h1 {
+      .filter-button-modal h1 {
         margin: 0;
       }
-      .wizard-modal .wizard-description {
+      .filter-button-modal .filter-description {
         margin: 20px 0;
         color: #4a4a4a;
         line-height: 1.5;
       }
-      .wizard-modal .wizard-filter {
+      .filter-button-modal .filter-component {
         margin: 30px 0;
       }
-      .wizard-modal .gv-button {
+      .filter-button-modal .gv-button {
         margin-right: 10px;
       }
     `}

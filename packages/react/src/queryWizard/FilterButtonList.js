@@ -13,12 +13,12 @@ export let DefaultMissingTypeComponent = InjectTreeNode(({ node = {} }) => (
 ))
 
 let FieldDescription = observer(({ node }) => (
-  <div className="wizard-description">
+  <div className="filter-description">
     {node.fieldDescription} {node.typeDescription}
   </div>
 ))
 
-let WizardItem = ({
+let FilterButtonItem = ({
   node,
   tree,
   fields,
@@ -36,10 +36,10 @@ let WizardItem = ({
         {title}
       </CheckButton>
       <Modal isOpen={modal}>
-        <div className="wizard-modal">
+        <div className="filter-button-modal">
           <h1>{title}</h1>
           <FieldDescription node={node} />
-          <div className="wizard-filter">
+          <div className="filter-component">
             <Dynamic
               tree={tree}
               node={node}
@@ -68,7 +68,7 @@ let Box = ({ nodeJoinColor, children, nested, className }) => (
   </Flex>
 )
 
-let WizardGroup = ({
+let FilterButtonList = observer(({
   node,
   tree,
   fields,
@@ -77,7 +77,9 @@ let WizardGroup = ({
   className,
   Button,
   CheckButton,
+  Icon,
   Modal,
+  Popover,
   //  Box = DefaultBox,
   nested = false,
 }) => (
@@ -85,7 +87,7 @@ let WizardGroup = ({
     {_.map(
       child =>
         child.children ? (
-          <WizardGroup
+          <FilterButtonList
             key={child.path}
             nested
             {...{
@@ -96,12 +98,14 @@ let WizardGroup = ({
               mapNodeToLabel,
               Button,
               CheckButton,
+              Icon,
               Modal,
+              Popover
             }}
-            className="wizard-group"
+            className="filter-button-list"
           />
-        ) : (
-          <WizardItem
+      ) : (
+          <FilterButtonItem
             key={child.path}
             {...{
               tree,
@@ -110,7 +114,9 @@ let WizardGroup = ({
               mapNodeToProps,
               Button,
               CheckButton,
+              Icon,
               Modal,
+              Popover,
             }}
             label={mapNodeToLabel(child, fields)}
           />
@@ -118,7 +124,7 @@ let WizardGroup = ({
       _.getOr([], 'children', node)
     )}
   </Box>
-)
+))
 
-WizardGroup.displayName = 'WizardGroup'
-export default WizardGroup
+FilterButtonList.displayName = 'FilterButtonList'
+export default FilterButtonList

@@ -5,7 +5,7 @@ import { observer } from 'mobx-react'
 import DefaultCheckButton from '../layout/CheckButton'
 import DefaultModal from '../layout/Modal'
 import { Flex } from '../layout/Flex'
-import WizardGroup from './WizardGroup'
+import FilterButtonList from './FilterButtonList'
 
 // Observes node, so we can activate the Continue button if it (or any child) has a value.
 // We don't observe on WizardStep because then it would rerender its children when `node`
@@ -34,7 +34,7 @@ let Buttons = observer(
   )
 )
 
-export default ({
+let WizardStep = ({
   node,
   tree,
   CheckButton = DefaultCheckButton,
@@ -69,7 +69,7 @@ export default ({
     </Flex>
     {expanded && (
       <>
-        <WizardGroup
+        <FilterButtonList
           {...{
             tree,
             node,
@@ -80,7 +80,7 @@ export default ({
             CheckButton,
             Modal,
           }}
-          className="main-wizard-group"
+          className="main-filter-button-list"
         />
         <Buttons
           {...{ node, step, totalSteps, currentStep, isRequired, Button, Icon }}
@@ -89,3 +89,6 @@ export default ({
     )}
   </div>
 )
+
+WizardStep.displayName = 'WizardStep'
+export default WizardStep
