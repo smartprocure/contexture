@@ -2,10 +2,12 @@ import F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { Dynamic, Flex, 
-  CheckButton as DefaultCheckButton, 
-  Modal as DefaultModal, 
-  Popover as DefaultPopover
+import {
+  Dynamic,
+  Flex,
+  CheckButton as DefaultCheckButton,
+  Modal as DefaultModal,
+  Popover as DefaultPopover,
 } from './layout'
 import DefaultIcon from './DefaultIcon'
 import InjectTreeNode from './utils/injectTreeNode'
@@ -81,8 +83,8 @@ let FilterButtonList = observer(
     fields,
     mapNodeToProps = _.noop,
     mapNodeToLabel = _.noop,
-    className = "filter-button-list",
-    Button = "button",
+    className = 'filter-button-list',
+    Button = 'button',
     CheckButton = DefaultCheckButton,
     Icon = DefaultIcon,
     Modal = DefaultModal,

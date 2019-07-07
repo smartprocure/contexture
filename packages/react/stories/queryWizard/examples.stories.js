@@ -131,14 +131,10 @@ let story2 = Wizard => () => (
 )
 
 storiesOf('Search Components (Unthemed)|QueryWizard', module)
-  .addWithJSX(
-    'Two steps with nested filters',
-    story(DefaultQueryWizard)
-  )
+  .addWithJSX('Two steps with nested filters', story(DefaultQueryWizard))
   .addWithJSX('StepsWizard', story2(WizardAccordion))
 
 storiesOf('Search Components (Grey Vest)|QueryWizard', module)
   .addDecorator(GVDecorator)
   .addWithJSX('Two steps with nested filters', story(GVQueryWizard))
   .addWithJSX('StepsWizard', story2(WizardAccordion))
-  
