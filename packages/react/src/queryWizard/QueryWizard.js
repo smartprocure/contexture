@@ -44,8 +44,8 @@ let QueryWizard = ({
               i === 0
                 ? `Search for ${node.key} by...`
                 : i < _.size(nodeChildren) - 1
-                  ? `And...`
-                  : `Narrow Your Results`
+                ? `And...`
+                : `Narrow Your Results`
             }
           />
         ),
