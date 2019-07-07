@@ -13,6 +13,7 @@ import { Tag, TagsInput } from './TagsInput'
 import LensInput from './LensInput'
 import ExpandableTable from './ExpandableTable'
 import Portal from './Portal'
+import CheckButton from './CheckButton'
 
 export {
   Awaiter,
@@ -31,4 +32,5 @@ export {
   LensInput,
   ExpandableTable,
   Portal,
+  CheckButton,
 }
