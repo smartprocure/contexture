@@ -2,9 +2,14 @@ import F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { Dynamic, Flex } from '../layout'
-import InjectTreeNode from '../utils/injectTreeNode'
-import styles from '../styles'
+import { Dynamic, Flex, 
+  CheckButton as DefaultCheckButton, 
+  Modal as DefaultModal, 
+  Popover as DefaultPopover
+} from './layout'
+import DefaultIcon from './DefaultIcon'
+import InjectTreeNode from './utils/injectTreeNode'
+import styles from './styles'
 
 export let DefaultMissingTypeComponent = InjectTreeNode(({ node = {} }) => (
   <div>
@@ -74,15 +79,14 @@ let FilterButtonList = observer(
     node,
     tree,
     fields,
-    mapNodeToProps,
-    mapNodeToLabel,
-    className,
-    Button,
-    CheckButton,
-    Icon,
-    Modal,
-    Popover,
-    //  Box = DefaultBox,
+    mapNodeToProps = _.noop,
+    mapNodeToLabel = _.noop,
+    className = "filter-button-list",
+    Button = "button",
+    CheckButton = DefaultCheckButton,
+    Icon = DefaultIcon,
+    Modal = DefaultModal,
+    Popover = DefaultPopover,
     nested = false,
   }) => (
     <Box {...{ nested, className }} nodeJoinColor={styles.joinColor(node)}>
