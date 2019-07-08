@@ -847,7 +847,9 @@ export let Adder = ModalFilterAdder({
   label: AddLabel,
 })
 
-let CheckButtonButton = props => <Button className="gv-checkbutton" {...props} />
+let CheckButtonButton = props => (
+  <Button className="gv-checkbutton" {...props} />
+)
 export let CheckButton = defaultProps({ Checkbox, Button: CheckButtonButton })(
   DefaultCheckButton
 )

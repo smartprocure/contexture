@@ -58,9 +58,7 @@ let WizardStep = ({
       </Flex>
       {isOpen && (
         <>
-          <div className="step-contents">
-            {children}
-          </div>
+          <div className="step-contents">{children}</div>
           <Buttons {...{ step, totalSteps, currentStep, Button, Icon }} />
         </>
       )}

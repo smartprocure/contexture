@@ -1,10 +1,10 @@
 import React from 'react'
 import { exampleTypes, mockService } from 'contexture-client'
 import { storiesOf } from '@storybook/react'
-import { 
+import {
   QueryWizard as GVQueryWizard,
   FilterButtonList as GVFilterButtonList,
-  AccordionWizard as GVAccordionWizard
+  AccordionWizard as GVAccordionWizard,
 } from '../../src/themes/greyVest'
 import DefaultQueryWizard from '../../src/queryWizard/QueryWizard'
 import DefaultAccordionWizard from '../../src/queryWizard/AccordionWizard'
@@ -136,7 +136,10 @@ let story2 = (AccordionWizard, FilterButtonList) => () => (
 
 storiesOf('Search Components (Unthemed)|QueryWizard', module)
   .addWithJSX('Two steps with nested filters', story(DefaultQueryWizard))
-  .addWithJSX('StepsWizard', story2(DefaultAccordionWizard, DefaultFilterButtonList))
+  .addWithJSX(
+    'StepsWizard',
+    story2(DefaultAccordionWizard, DefaultFilterButtonList)
+  )
 
 storiesOf('Search Components (Grey Vest)|QueryWizard', module)
   .addDecorator(GVDecorator)
