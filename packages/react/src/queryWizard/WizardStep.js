@@ -43,17 +43,24 @@ let WizardStep = ({
       <Flex alignItems="center" justifyContent="space-between">
         <Flex alignItems="center">
           <h1>
-            <span className="step-number">Step {step + 1}</span> - {stepTitle}
+            <span className="step-number">Step {step + 1}</span>
+            {stepTitle && ` - ${stepTitle}`}
           </h1>
           {!isRequired && <em style={{ marginLeft: 6 }}>(Optional)</em>}
         </Flex>
-        <div className="filter-field-label-icon" style={{ cursor: 'default' }}>
+        <div
+          className="filter-field-label-icon"
+          style={{ cursor: 'pointer' }}
+          onClick={F.sets(isOpen ? -1 : step, currentStep)}
+        >
           <Icon icon={isOpen ? 'FilterListCollapse' : 'FilterListExpand'} />
         </div>
       </Flex>
       {isOpen && (
         <>
-          {children}
+          <div className="step-contents">
+            {children}
+          </div>
           <Buttons {...{ step, totalSteps, currentStep, Button, Icon }} />
         </>
       )}

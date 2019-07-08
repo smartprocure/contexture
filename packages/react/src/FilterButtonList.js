@@ -109,8 +109,8 @@ let FilterButtonList = observer(
                 Icon,
                 Modal,
                 Popover,
+                className,
               }}
-              className="filter-button-list"
             />
           ) : (
             <FilterButtonItem

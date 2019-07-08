@@ -1,10 +1,14 @@
 import React from 'react'
 import { exampleTypes, mockService } from 'contexture-client'
 import { storiesOf } from '@storybook/react'
-import { QueryWizard as GVQueryWizard } from '../../src/themes/greyVest'
+import { 
+  QueryWizard as GVQueryWizard,
+  FilterButtonList as GVFilterButtonList,
+  AccordionWizard as GVAccordionWizard
+} from '../../src/themes/greyVest'
 import DefaultQueryWizard from '../../src/queryWizard/QueryWizard'
-import WizardAccordion from '../../src/queryWizard/WizardAccordion'
-import FilterButtonList from '../../src/FilterButtonList'
+import DefaultAccordionWizard from '../../src/queryWizard/AccordionWizard'
+import DefaultFilterButtonList from '../../src/FilterButtonList'
 import ContextureMobx from '../../src/utils/contexture-mobx'
 import { componentForType } from '../../src/utils/schema'
 import GVDecorator from '../greyVest/decorator'
@@ -109,9 +113,9 @@ let story = QueryWizard => () => (
   </Box>
 )
 
-let story2 = Wizard => () => (
+let story2 = (AccordionWizard, FilterButtonList) => () => (
   <Box>
-    <Wizard>
+    <AccordionWizard>
       <FilterButtonList
         tree={tree}
         node={tree.getNode(['root', 'step 1'])}
@@ -126,15 +130,15 @@ let story2 = Wizard => () => (
         isRequired={false}
         stepTitle="Quick brown fox"
       />
-    </Wizard>
+    </AccordionWizard>
   </Box>
 )
 
 storiesOf('Search Components (Unthemed)|QueryWizard', module)
   .addWithJSX('Two steps with nested filters', story(DefaultQueryWizard))
-  .addWithJSX('StepsWizard', story2(WizardAccordion))
+  .addWithJSX('StepsWizard', story2(DefaultAccordionWizard, DefaultFilterButtonList))
 
 storiesOf('Search Components (Grey Vest)|QueryWizard', module)
   .addDecorator(GVDecorator)
   .addWithJSX('Two steps with nested filters', story(GVQueryWizard))
-  .addWithJSX('StepsWizard', story2(WizardAccordion))
+  .addWithJSX('StepsWizard', story2(GVAccordionWizard, GVFilterButtonList))

@@ -6,10 +6,12 @@ import WizardStep from './WizardStep'
 
 let splitKeys = _.curry((keys, obj) => [_.pick(keys, obj), _.omit(keys, obj)])
 
-let WizardAccordion = ({ Button = 'button', Icon = DefaultIcon, children }) => {
+let AccordionWizard = ({ Button = 'button', Icon = DefaultIcon, children, ...props }) => {
   let currentStep = F.stateLens(React.useState(0))
   let splitProps = splitKeys(['stepTitle', 'isRequired'])
-  return React.Children.map(children, (child, i) => {
+  return (
+  <div {...props}>
+  {React.Children.map(children, (child, i) => {
     let [propsForStep, propsForChild] = splitProps(child.props)
     return (
       <WizardStep
@@ -23,8 +25,10 @@ let WizardAccordion = ({ Button = 'button', Icon = DefaultIcon, children }) => {
         {React.cloneElement(child, propsForChild, child.children)}
       </WizardStep>
     )
-  })
+  })}
+  </div>
+  )
 }
 
-WizardAccordion.displayName = 'WizardAccordion'
-export default WizardAccordion
+AccordionWizard.displayName = 'AccordionWizard'
+export default AccordionWizard

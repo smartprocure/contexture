@@ -12,11 +12,13 @@ import {
   Tag,
   TagsInput as BaseTagsInput,
   FilterList as BaseFilterList,
+  FilterButtonList as BaseFilterButtonList,
   Dynamic,
 } from '../../'
 import ExampleTypeConstructor from '../../exampleTypes/'
 import QueryBuilderComponent from '../../queryBuilder'
 import QueryWizardComponent from '../../queryWizard'
+import AccordionWizardComponent from '../../queryWizard/AccordionWizard'
 import { default as DefaultModal } from '../../layout/Modal'
 import { default as DefaultCheckButton } from '../../layout/CheckButton'
 
@@ -215,19 +217,19 @@ export let GVStyle = () => (
       }
 
       /* Checkbutton */
-      .gv-button.checkbutton {
+      .gv-button.gv-checkbutton {
         padding: 5px 23px 5px 10px;
       }
-      .gv-button.checkbutton .gv-checkbox {
+      .gv-button.gv-checkbutton .gv-checkbox {
         height: 30px;
         width: 30px;
         font-size: 20px;
         margin-right: 8px;
       }
-      .gv-button.checkbutton .gv-checkbox i {
+      .gv-button.gv-checkbutton .gv-checkbox i {
         font-size: 20px;
       }
-      .gv-button.checkbutton .gv-checkbox.checked {
+      .gv-button.gv-checkbutton .gv-checkbox.checked {
         color: #0076de;
       }
 
@@ -649,6 +651,24 @@ export let GVStyle = () => (
         overflow-x: auto;
       }
 
+      /* FilterButtonList */
+      .gv-filter-button-list.nested {
+        border: 2px solid;
+        border-radius: 6px;
+        padding: 3px 5px;
+        margin: 2px 5px;
+      }
+      .gv-filter-button-list .checkbutton {
+        margin: 5px;
+        white-space: nowrap;
+      }
+      .gv-filter-button-list > *:first-child {
+        margin-left: 0;
+      }
+      .gv-filter-button-list > *:last-child {
+        margin-right: 0;
+      }
+
       /* Query Wizard */
       .gv-query-wizard .wizard-step {
         padding: 40px;
@@ -659,30 +679,26 @@ export let GVStyle = () => (
         margin-top: 5px;
         margin-bottom: 5px;
       }
-      .gv-query-wizard .main-filter-button-list {
-        margin: 30px -5px;
+      .gv-query-wizard .step-contents {
+        margin: 30px 0;
       }
-      .gv-query-wizard .filter-button-list.nested {
-        border: 2px solid;
-        border-radius: 6px;
-        padding: 4px;
-        margin: 2px 5px;
-      }
+    
       .gv-query-wizard .wizard-step h1 {
         margin: 0;
       }
       .gv-query-wizard span.step-number {
         color: #0076de;
       }
-      .gv-query-wizard .checkbutton {
-        margin: 5px;
-        white-space: nowrap;
-      }
       .gv-query-wizard .back-button i {
         vertical-align: middle;
         line-height: 14px;
         margin: 0 10px 0 -5px;
         opacity: 0.4;
+      }
+      .gv-query-wizard .gv-button:first-child {
+        margin-left: 0;
+        margin-top: 5px;
+        margin-bottom: 5px;
       }
       .filter-button-modal {
         min-width: 300px;
@@ -831,7 +847,7 @@ export let Adder = ModalFilterAdder({
   label: AddLabel,
 })
 
-let CheckButtonButton = props => <Button className="checkbutton" {...props} />
+let CheckButtonButton = props => <Button className="gv-checkbutton" {...props} />
 export let CheckButton = defaultProps({ Checkbox, Button: CheckButtonButton })(
   DefaultCheckButton
 )
@@ -923,7 +939,23 @@ export let SearchFilters = defaultProps({ QueryBuilder, FiltersBox })(
   BaseSearchFilters
 )
 
+export let FilterButtonList = defaultProps({
+  Button,
+  CheckButton,
+  Icon,
+  Modal,
+  className: 'gv-filter-button-list',
+})(BaseFilterButtonList)
+
+export let AccordionWizard = defaultProps({
+  Button,
+  Icon,
+  className: 'gv-query-wizard',
+})(AccordionWizardComponent)
+
 export let QueryWizard = defaultProps({
+  AccordionWizard,
+  FilterButtonList,
   CheckButton,
   Modal,
   Button,

@@ -2,8 +2,8 @@ import _ from 'lodash/fp'
 import React from 'react'
 import { Flex } from './Flex'
 
-let CheckboxDefault = ({ checked }) => (
-  <input type="checkbox" checked={checked} />
+let CheckboxDefault = props => (
+  <input type="checkbox" {...props} />
 )
 
 let CheckButton = ({

@@ -2,14 +2,16 @@ import _ from 'lodash/fp'
 import F from 'futil-js'
 import React from 'react'
 import DefaultIcon from '../DefaultIcon'
-import FilterButtonList from '../FilterButtonList'
+import DefaultFilterButtonList from '../FilterButtonList'
 import {
   CheckButton as DefaultCheckButton,
   Modal as DefaultModal,
 } from '../layout'
-import WizardAccordion from './WizardAccordion'
+import DefaultAccordionWizard from './AccordionWizard'
 
 let QueryWizard = ({
+  AccordionWizard = DefaultAccordionWizard,
+  FilterButtonList = DefaultFilterButtonList,
   CheckButton = DefaultCheckButton,
   Button = 'button',
   Modal = DefaultModal,
@@ -22,7 +24,7 @@ let QueryWizard = ({
   className,
   style,
 }) => (
-  <WizardAccordion {...{ className, style }}>
+  <AccordionWizard {...{ Button, Icon, className, style }}>
     {(nodeChildren =>
       F.mapIndexed(
         (node, i) => (
@@ -51,7 +53,7 @@ let QueryWizard = ({
         ),
         nodeChildren
       ))(tree.getNode(path).children || [])}
-  </WizardAccordion>
+  </AccordionWizard>
 )
 
 QueryWizard.displayName = 'QueryWizard'
