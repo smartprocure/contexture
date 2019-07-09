@@ -248,7 +248,7 @@ export let FilterList = InjectTreeNode(
                 )}
               </div>
             ),
-          _.getOr([], 'children', node)
+          _.get('children', node)
         )}
       </div>
     )

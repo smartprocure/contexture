@@ -1,5 +1,5 @@
+import _ from 'lodash/fp'
 import React from 'react'
-import { exampleTypes, mockService } from 'contexture-client'
 import { storiesOf } from '@storybook/react'
 import {
   QueryWizard as GVQueryWizard,
@@ -9,139 +9,58 @@ import {
 import DefaultQueryWizard from '../../src/queryWizard/QueryWizard'
 import DefaultAccordionWizard from '../../src/queryWizard/AccordionWizard'
 import DefaultFilterButtonList from '../../src/FilterButtonList'
-import ContextureMobx from '../../src/utils/contexture-mobx'
 import { componentForType } from '../../src/utils/schema'
 import GVDecorator from '../greyVest/decorator'
 import { ExampleTypes } from '../DemoControls'
+import { mapNodeToDescription } from './utils'
+import { tree, fields, types, nodeOverrides } from './config'
 let { TypeMap } = ExampleTypes
 
-let Client = ContextureMobx({
-  debug: true,
-  types: exampleTypes,
-  service: mockService(),
-})
-
-let Box = ({ children }) => (
-  <div style={{ backgroundColor: 'white' }}>{children}</div>
-)
-
-let tree = Client({
-  key: 'root',
-  join: 'and',
-  children: [
-    {
-      key: 'step 1',
-      label: 'Friendly Group',
-      type: 'group',
-      join: 'and',
-      children: [
-        {
-          type: 'tagsQuery',
-          key: 'friendly node',
-          label: 'Friendly Node',
-          typeDescription: 'Enter some tags',
-          fieldDescription: 'Search for stuff',
-        },
-        {
-          key: 'foop',
-          type: 'group',
-          join: 'and',
-          children: [
-            {
-              type: 'query',
-              key: 'bar',
-              label: 'This is a really long name',
-            },
-            {
-              type: 'group',
-              key: 'foo',
-              join: 'or',
-              children: [
-                {
-                  key: 'foo',
-                  type: 'query',
-                },
-                {
-                  key: 'bar',
-                  type: 'tagsQuery',
-                },
-              ],
-            },
-          ],
-        },
-        {
-          type: 'facet',
-          key: 'friendly facet',
-          friendlyName: 'This is another really long name',
-          typeDescription: 'Select some checkboxes or whatever',
-          fieldDescription: 'Search for stuff',
-        },
-      ],
-    },
-    {
-      key: 'step 2',
-      friendlyName: 'Step 2',
-      type: 'group',
-      join: 'and',
-      children: [
-        {
-          type: 'tagsQuery',
-          key: 'friendly node',
-          friendlyName: 'Friendly Node',
-          typeDescription: 'Enter some tags',
-          fieldDescription: 'Search for stuff',
-        },
-        {
-          type: 'facet',
-          key: 'friendly facet',
-          friendlyName: 'Facet',
-          typeDescription: 'Select some checkboxes or whatever',
-          fieldDescription: 'Search for stuff',
-        },
-      ],
-    },
-  ],
-})
-
 let story = QueryWizard => () => (
-  <Box>
-    <QueryWizard
-      tree={tree}
-      path={['root']}
-      mapNodeToProps={componentForType(TypeMap)}
-    />
-  </Box>
+  <QueryWizard
+    tree={tree}
+    path={['root']}
+    fields={fields}
+    mapNodeToProps={componentForType(TypeMap)}
+    mapNodeToLabel={(node, fields) => _.get([node.field, 'label'], fields)}
+    mapNodeToDescription={mapNodeToDescription(types)}
+    title="Movies"
+  />
 )
 
 let story2 = (AccordionWizard, FilterButtonList) => () => (
-  <Box>
-    <AccordionWizard>
-      <FilterButtonList
-        tree={tree}
-        node={tree.getNode(['root', 'step 1'])}
-        mapNodeToProps={componentForType(TypeMap)}
-        isRequired={true}
-        stepTitle="Test title"
-      />
-      <FilterButtonList
-        tree={tree}
-        node={tree.getNode(['root', 'step 2'])}
-        mapNodeToProps={componentForType(TypeMap)}
-        isRequired={false}
-        stepTitle="Quick brown fox"
-      />
-    </AccordionWizard>
-  </Box>
+  <AccordionWizard>
+    <FilterButtonList
+      tree={tree}
+      fields={fields}
+      path={['root', 'step 1']}
+      mapNodeToProps={componentForType(TypeMap)}
+      isRequired={true}
+      stepTitle="Test title"
+    />
+    <FilterButtonList
+      tree={tree}
+      path={['root', 'step 2']}
+      fields={fields}
+      mapNodeToProps={(node, fields) => _.merge(
+        componentForType(TypeMap)(node, fields),
+        nodeOverrides[node['key']]
+      )}
+      mapNodeToDescription={mapNodeToDescription(types)}
+      isRequired={false}
+      stepTitle="Quick brown fox"
+    />
+  </AccordionWizard>
 )
 
-storiesOf('Search Components (Unthemed)|QueryWizard', module)
-  .addWithJSX('Two steps with nested filters', story(DefaultQueryWizard))
+storiesOf('Search Components (Unthemed)|Wizard', module)
+  .addWithJSX('QueryWizard', story(DefaultQueryWizard))
   .addWithJSX(
-    'StepsWizard',
+    'Accordion with FilterButtonList',
     story2(DefaultAccordionWizard, DefaultFilterButtonList)
   )
 
-storiesOf('Search Components (Grey Vest)|QueryWizard', module)
+storiesOf('Search Components (Grey Vest)|Wizard', module)
   .addDecorator(GVDecorator)
-  .addWithJSX('Two steps with nested filters', story(GVQueryWizard))
-  .addWithJSX('StepsWizard', story2(GVAccordionWizard, GVFilterButtonList))
+  .addWithJSX('QueryWizard', story(GVQueryWizard))
+  .addWithJSX('Accordion with FilterButtonList', story2(GVAccordionWizard, GVFilterButtonList))
