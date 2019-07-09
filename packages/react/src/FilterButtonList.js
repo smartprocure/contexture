@@ -32,8 +32,15 @@ let FilterButtonItem = ({
 }) => {
   let mappedProps = mapNodeToProps(node, fields)
   let modal = F.stateLens(React.useState(false))
-  let title = _.get('label', mappedProps) || mapNodeToLabel(node, fields) || node.field || node.key
-  let description = node.description || _.get('description', mappedProps) || mapNodeToDescription(node, fields)
+  let title =
+    _.get('label', mappedProps) ||
+    mapNodeToLabel(node, fields) ||
+    node.field ||
+    node.key
+  let description =
+    node.description ||
+    _.get('description', mappedProps) ||
+    mapNodeToDescription(node, fields)
   return (
     <>
       <CheckButton checked={node.hasValue} onClick={F.on(modal)}>
@@ -42,7 +49,9 @@ let FilterButtonItem = ({
       <Modal isOpen={modal}>
         <div className="filter-button-modal">
           <h1>{title}</h1>
-          {description && <div className="filter-description">{description}</div>}
+          {description && (
+            <div className="filter-description">{description}</div>
+          )}
           <div className="filter-component">
             <Dynamic
               tree={tree}
@@ -89,7 +98,10 @@ let FilterButtonList = InjectTreeNode(
       Popover = DefaultPopover,
       nested = false,
     }) => (
-      <GroupBox {...{ nested, className }} nodeJoinColor={node && styles.joinColor(node)}>
+      <GroupBox
+        {...{ nested, className }}
+        nodeJoinColor={node && styles.joinColor(node)}
+      >
         {_.map(
           child =>
             child.children ? (

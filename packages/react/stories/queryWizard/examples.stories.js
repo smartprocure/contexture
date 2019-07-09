@@ -42,10 +42,12 @@ let story2 = (AccordionWizard, FilterButtonList) => () => (
       tree={tree}
       path={['root', 'step 2']}
       fields={fields}
-      mapNodeToProps={(node, fields) => _.merge(
-        componentForType(TypeMap)(node, fields),
-        nodeOverrides[node['key']]
-      )}
+      mapNodeToProps={(node, fields) =>
+        _.merge(
+          componentForType(TypeMap)(node, fields),
+          nodeOverrides[node['key']]
+        )
+      }
       mapNodeToDescription={mapNodeToDescription(types)}
       isRequired={false}
       stepTitle="Quick brown fox"
@@ -63,4 +65,7 @@ storiesOf('Search Components (Unthemed)|Wizard', module)
 storiesOf('Search Components (Grey Vest)|Wizard', module)
   .addDecorator(GVDecorator)
   .addWithJSX('QueryWizard', story(GVQueryWizard))
-  .addWithJSX('Accordion with FilterButtonList', story2(GVAccordionWizard, GVFilterButtonList))
+  .addWithJSX(
+    'Accordion with FilterButtonList',
+    story2(GVAccordionWizard, GVFilterButtonList)
+  )
