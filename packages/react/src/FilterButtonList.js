@@ -10,14 +10,9 @@ import {
   Popover as DefaultPopover,
 } from './layout'
 import DefaultIcon from './DefaultIcon'
+import DefaultMissingTypeComponent from './DefaultMissingTypeComponent'
 import InjectTreeNode from './utils/injectTreeNode'
 import styles from './styles'
-
-export let DefaultMissingTypeComponent = InjectTreeNode(({ node = {} }) => (
-  <div>
-    Type <b>{node.type}</b> is not supported (for key <i>{node.key}</i>)
-  </div>
-))
 
 let FilterButtonItem = ({
   node,
@@ -28,17 +23,18 @@ let FilterButtonItem = ({
   mapNodeToLabel,
   Button,
   CheckButton,
+  MissingTypeComponent,
   Modal,
 }) => {
   let mappedProps = mapNodeToProps(node, fields)
   let modal = F.stateLens(React.useState(false))
-  let title =
+  let title = // we really need a title, so here's every possible fallback
     _.get('label', mappedProps) ||
     mapNodeToLabel(node, fields) ||
+    _.get([node.field, 'label'], fields) ||
     node.field ||
     node.key
   let description =
-    node.description ||
     _.get('description', mappedProps) ||
     mapNodeToDescription(node, fields)
   return (
@@ -54,6 +50,7 @@ let FilterButtonItem = ({
           )}
           <div className="filter-component">
             <Dynamic
+              Component={MissingTypeComponent}
               tree={tree}
               node={node}
               path={_.toArray(node.path)}
@@ -94,6 +91,7 @@ let FilterButtonList = InjectTreeNode(
       Button = 'button',
       CheckButton = DefaultCheckButton,
       Icon = DefaultIcon,
+      MissingTypeComponent = DefaultMissingTypeComponent,
       Modal = DefaultModal,
       Popover = DefaultPopover,
       nested = false,
@@ -118,6 +116,7 @@ let FilterButtonList = InjectTreeNode(
                   Button,
                   CheckButton,
                   Icon,
+                  MissingTypeComponent,
                   Modal,
                   Popover,
                   className,
@@ -136,6 +135,7 @@ let FilterButtonList = InjectTreeNode(
                   Button,
                   CheckButton,
                   Icon,
+                  MissingTypeComponent,
                   Modal,
                   Popover,
                 }}

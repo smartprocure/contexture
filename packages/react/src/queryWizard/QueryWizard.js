@@ -3,6 +3,7 @@ import F from 'futil-js'
 import React from 'react'
 import DefaultIcon from '../DefaultIcon'
 import DefaultFilterButtonList from '../FilterButtonList'
+import DefaultMissingTypeComponent from '../DefaultMissingTypeComponent'
 import {
   CheckButton as DefaultCheckButton,
   Modal as DefaultModal,
@@ -17,6 +18,7 @@ let QueryWizard = InjectTreeNode(
     CheckButton = DefaultCheckButton,
     Button = 'button',
     Modal = DefaultModal,
+    MissingTypeComponent = DefaultMissingTypeComponent,
     Icon = DefaultIcon,
     tree,
     node,
@@ -36,6 +38,7 @@ let QueryWizard = InjectTreeNode(
               CheckButton,
               Button,
               Icon,
+              MissingTypeComponent,
               Modal,
               node: child,
               tree,
