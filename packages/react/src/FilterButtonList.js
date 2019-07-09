@@ -35,8 +35,7 @@ let FilterButtonItem = ({
     node.field ||
     node.key
   let description =
-    _.get('description', mappedProps) ||
-    mapNodeToDescription(node, fields)
+    _.get('description', mappedProps) || mapNodeToDescription(node, fields)
   return (
     <>
       <CheckButton checked={node.hasValue} onClick={F.on(modal)}>
