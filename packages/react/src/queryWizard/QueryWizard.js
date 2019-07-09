@@ -9,11 +9,11 @@ import {
   Modal as DefaultModal,
 } from '../layout'
 import InjectTreeNode from '../utils/injectTreeNode'
-import DefaultAccordionWizard from './AccordionWizard'
+import DefaultStepsAccordion from './StepsAccordion'
 
 let QueryWizard = InjectTreeNode(
   ({
-    AccordionWizard = DefaultAccordionWizard,
+    StepsAccordion = DefaultStepsAccordion,
     FilterButtonList = DefaultFilterButtonList,
     CheckButton = DefaultCheckButton,
     Button = 'button',
@@ -30,7 +30,7 @@ let QueryWizard = InjectTreeNode(
     className,
     style,
   }) => (
-    <AccordionWizard {...{ Button, Icon, className, style }}>
+    <StepsAccordion {...{ Button, Icon, className, style }}>
       {F.mapIndexed(
         (child, i) => (
           <FilterButtonList
@@ -62,7 +62,7 @@ let QueryWizard = InjectTreeNode(
         ),
         _.get('children', node)
       )}
-    </AccordionWizard>
+    </StepsAccordion>
   )
 )
 

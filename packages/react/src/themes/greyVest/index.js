@@ -18,7 +18,7 @@ import {
 import ExampleTypeConstructor from '../../exampleTypes/'
 import QueryBuilderComponent from '../../queryBuilder'
 import QueryWizardComponent from '../../queryWizard'
-import AccordionWizardComponent from '../../queryWizard/AccordionWizard'
+import StepsAccordionComponent from '../../queryWizard/StepsAccordion'
 import { default as DefaultModal } from '../../layout/Modal'
 import { default as DefaultCheckButton } from '../../layout/CheckButton'
 
@@ -949,14 +949,14 @@ export let FilterButtonList = defaultProps({
   className: 'gv-filter-button-list',
 })(BaseFilterButtonList)
 
-export let AccordionWizard = defaultProps({
+export let StepsAccordion = defaultProps({
   Button,
   Icon,
   className: 'gv-query-wizard',
-})(AccordionWizardComponent)
+})(StepsAccordionComponent)
 
 export let QueryWizard = defaultProps({
-  AccordionWizard,
+  StepsAccordion,
   FilterButtonList,
   CheckButton,
   Modal,

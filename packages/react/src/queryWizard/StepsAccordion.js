@@ -6,7 +6,7 @@ import WizardStep from './WizardStep'
 
 let splitKeys = _.curry((keys, obj) => [_.pick(keys, obj), _.omit(keys, obj)])
 
-let AccordionWizard = ({
+let StepsAccordion = ({
   Button = 'button',
   Icon = DefaultIcon,
   children,
@@ -35,5 +35,5 @@ let AccordionWizard = ({
   )
 }
 
-AccordionWizard.displayName = 'AccordionWizard'
-export default AccordionWizard
+StepsAccordion.displayName = 'StepsAccordion'
+export default StepsAccordion

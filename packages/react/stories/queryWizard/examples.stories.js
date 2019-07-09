@@ -4,10 +4,10 @@ import { storiesOf } from '@storybook/react'
 import {
   QueryWizard as GVQueryWizard,
   FilterButtonList as GVFilterButtonList,
-  AccordionWizard as GVAccordionWizard,
+  StepsAccordion as GVStepsAccordion,
 } from '../../src/themes/greyVest'
 import DefaultQueryWizard from '../../src/queryWizard/QueryWizard'
-import DefaultAccordionWizard from '../../src/queryWizard/AccordionWizard'
+import DefaultStepsAccordion from '../../src/queryWizard/StepsAccordion'
 import DefaultFilterButtonList from '../../src/FilterButtonList'
 import { componentForType } from '../../src/utils/schema'
 import GVDecorator from '../greyVest/decorator'
@@ -28,8 +28,8 @@ let story = QueryWizard => () => (
   />
 )
 
-let story2 = (AccordionWizard, FilterButtonList) => () => (
-  <AccordionWizard>
+let story2 = (StepsAccordion, FilterButtonList) => () => (
+  <StepsAccordion>
     <FilterButtonList
       tree={tree}
       fields={fields}
@@ -52,14 +52,14 @@ let story2 = (AccordionWizard, FilterButtonList) => () => (
       isRequired={false}
       stepTitle="Quick brown fox"
     />
-  </AccordionWizard>
+  </StepsAccordion>
 )
 
 storiesOf('Search Components (Unthemed)|Wizard', module)
   .addWithJSX('QueryWizard', story(DefaultQueryWizard))
   .addWithJSX(
     'Accordion with FilterButtonList',
-    story2(DefaultAccordionWizard, DefaultFilterButtonList)
+    story2(DefaultStepsAccordion, DefaultFilterButtonList)
   )
 
 storiesOf('Search Components (Grey Vest)|Wizard', module)
@@ -67,5 +67,5 @@ storiesOf('Search Components (Grey Vest)|Wizard', module)
   .addWithJSX('QueryWizard', story(GVQueryWizard))
   .addWithJSX(
     'Accordion with FilterButtonList',
-    story2(GVAccordionWizard, GVFilterButtonList)
+    story2(GVStepsAccordion, GVFilterButtonList)
   )
