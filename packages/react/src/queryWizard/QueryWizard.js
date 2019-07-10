@@ -24,13 +24,14 @@ let QueryWizard = InjectTreeNode(
     node,
     fields = {},
     title,
+    onSubmit = _.noop,
     mapNodeToProps = _.noop,
     mapNodeToLabel = _.noop,
     mapNodeToDescription = _.noop,
     className,
     style,
   }) => (
-    <StepsAccordion {...{ Button, Icon, className, style }}>
+    <StepsAccordion {...{ Button, Icon, className, style, onSubmit }}>
       {F.mapIndexed(
         (child, i) => (
           <FilterButtonList

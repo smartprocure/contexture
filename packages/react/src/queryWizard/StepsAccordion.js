@@ -9,6 +9,7 @@ let splitKeys = _.curry((keys, obj) => [_.pick(keys, obj), _.omit(keys, obj)])
 let StepsAccordion = ({
   Button = 'button',
   Icon = DefaultIcon,
+  onSubmit = _.noop,
   children,
   ...props
 }) => {
@@ -20,10 +21,9 @@ let StepsAccordion = ({
         let [propsForStep, propsForChild] = splitProps(child.props)
         return (
           <WizardStep
-            {...{ Button, Icon }}
+            {...{ Button, Icon, currentStep, onSubmit }}
             key={i}
             step={i}
-            currentStep={currentStep}
             totalSteps={_.size(children)}
             {...propsForStep}
           >

@@ -7,7 +7,7 @@ import DefaultIcon from '../DefaultIcon'
 // Observes node, so we can activate the Continue button if it (or any child) has a value.
 // We don't observe on WizardStep because then it would rerender its children when `node`
 // changes, which unfocuses query inputs as soon as the first character is entered.
-let Buttons = observer(({ step, totalSteps, currentStep, Button, Icon }) => (
+let Buttons = observer(({ step, totalSteps, currentStep, Button, Icon, onSubmit }) => (
   <>
     {step > 0 && (
       <Button onClick={F.sets(step - 1, currentStep)} className="back-button">
@@ -20,7 +20,7 @@ let Buttons = observer(({ step, totalSteps, currentStep, Button, Icon }) => (
         Continue
       </Button>
     ) : (
-      <Button primary>View Results</Button>
+      <Button primary onClick={onSubmit}>View Results</Button>
     )}
   </>
 ))
@@ -35,6 +35,7 @@ let WizardStep = ({
   currentStep,
   stepTitle = '',
   isRequired = false,
+  onSubmit,
   children,
 }) => {
   let isOpen = F.view(currentStep) === step
@@ -59,7 +60,7 @@ let WizardStep = ({
       {isOpen && (
         <>
           <div className="step-contents">{children}</div>
-          <Buttons {...{ step, totalSteps, currentStep, Button, Icon }} />
+          <Buttons {...{ step, totalSteps, currentStep, onSubmit, Button, Icon }} />
         </>
       )}
     </div>
