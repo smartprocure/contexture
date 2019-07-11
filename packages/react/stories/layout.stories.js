@@ -5,11 +5,9 @@ import { action } from '@storybook/addon-actions'
 import { observer } from 'mobx-react'
 import { fromPromise } from 'mobx-utils'
 import { withStateLens } from '../src/utils/mobx-react-utils'
-import Popover from '../src/layout/Popover'
-import Modal from '../src/layout/Modal'
-import Awaiter from '../src/layout/Awaiter'
-import TextHighlight from '../src/layout/TextHighlight'
-import CheckButton from '../src/layout/CheckButton'
+import {
+  Popover, Modal, Awaiter, TextHighlight, CheckButton, StepsAccordion 
+} from '../src/layout'
 import { Flex } from '../src/layout/Flex'
 import { NestedPicker, ModalPicker } from '../src'
 
@@ -118,4 +116,19 @@ storiesOf('Components (Unthemed)|Layout', module)
       <CheckButton checked>This one is on</CheckButton>
       <CheckButton>This one is off</CheckButton>
     </>
+  ))
+  .addWithJSX('StepsAccordion', () => (
+    <StepsAccordion>
+      <div isRequired={true}>
+        <div>A</div><div>B</div><div>C</div>
+      </div>
+      <button
+        isRequired={true}
+        stepTitle="Click the button" 
+        onClick={() => alert('you clicked the button')}
+      >
+        Button
+      </button>
+      <input type="text" stepTitle="Type something" />
+    </StepsAccordion>
   ))

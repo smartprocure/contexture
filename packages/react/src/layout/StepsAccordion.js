@@ -100,7 +100,7 @@ let StepsAccordion = ({
             totalSteps={_.size(children)}
             {...propsForStep}
           >
-            {React.cloneElement(child, propsForChild, child.children)}
+            <child.type {...propsForChild} />
           </Step>
         )
       })}
