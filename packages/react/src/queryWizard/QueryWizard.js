@@ -26,8 +26,6 @@ let QueryWizard = InjectTreeNode(
     title,
     onSubmit = _.noop,
     mapNodeToProps = _.noop,
-    mapNodeToLabel = _.noop,
-    mapNodeToDescription = _.noop,
     className,
     style,
   }) => (
@@ -45,16 +43,12 @@ let QueryWizard = InjectTreeNode(
               tree,
               fields,
               mapNodeToProps,
-              mapNodeToLabel,
-              mapNodeToDescription,
             }}
             key={node.key}
             isRequired={i === 0}
             stepTitle={
               i === 0
-                ? `Search for ${title ||
-                    mapNodeToLabel(child, fields) ||
-                    child.key} by...`
+                ? `Search for ${title || 'Results'} by...`
                 : i < _.size(node.children) - 1
                 ? `And...`
                 : `Narrow Your Results`

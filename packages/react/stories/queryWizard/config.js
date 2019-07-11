@@ -4,10 +4,10 @@ import ContextureMobx from '../../src/utils/contexture-mobx'
 
 let typeDescriptions = {
   tagsQuery: {
-    description: 'enter some tags',
+    description: 'Enter some tags.',
   },
   query: {
-    description: 'Enter A Search Term In The Field',
+    description: 'Enter a search term in the field.',
   },
   facet: {
     description:
@@ -18,8 +18,8 @@ let typeDescriptions = {
 export let types = _.merge(exampleTypes, typeDescriptions)
 
 export let fields = {
-  foo: { label: 'Foo', description: 'enter a foo' },
-  bar: { label: 'Bar', description: "Type in the bar's name" },
+  foo: { label: 'Foo', description: 'Enter a foo.' },
+  bar: { label: 'Bar', description: "Type in the bar's name." },
 }
 
 let Client = ContextureMobx({
@@ -106,6 +106,6 @@ export let nodeOverrides = {
   },
   'friendly facet': {
     label: 'This is another really long name',
-    description: 'FRIENDLY FACET OVERRIDE DESCRIPTION',
+    description: 'FRIENDLY FACET OVERRIDE DESCRIPTION!',
   },
 }

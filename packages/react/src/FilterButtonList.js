@@ -19,8 +19,6 @@ let FilterButtonItem = ({
   tree,
   fields,
   mapNodeToProps,
-  mapNodeToDescription,
-  mapNodeToLabel,
   Button,
   CheckButton,
   MissingTypeComponent,
@@ -30,12 +28,10 @@ let FilterButtonItem = ({
   let modal = F.stateLens(React.useState(false))
   let title = // we really need a title, so here's every possible fallback
     _.get('label', mappedProps) ||
-    mapNodeToLabel(node, fields) ||
     _.get([node.field, 'label'], fields) ||
     node.field ||
     node.key
-  let description =
-    _.get('description', mappedProps) || mapNodeToDescription(node, fields)
+  let description = _.get('description', mappedProps)
   return (
     <>
       <CheckButton checked={node.hasValue} onClick={F.on(modal)}>
@@ -84,8 +80,6 @@ let FilterButtonList = InjectTreeNode(
       tree,
       fields = {},
       mapNodeToProps = _.noop,
-      mapNodeToLabel = _.noop,
-      mapNodeToDescription = _.noop,
       className = 'filter-button-list',
       Button = 'button',
       CheckButton = DefaultCheckButton,
@@ -110,8 +104,6 @@ let FilterButtonList = InjectTreeNode(
                   node: child,
                   fields,
                   mapNodeToProps,
-                  mapNodeToLabel,
-                  mapNodeToDescription,
                   Button,
                   CheckButton,
                   Icon,
@@ -128,8 +120,6 @@ let FilterButtonList = InjectTreeNode(
                   tree,
                   node: child,
                   fields,
-                  mapNodeToLabel,
-                  mapNodeToDescription,
                   mapNodeToProps,
                   Button,
                   CheckButton,

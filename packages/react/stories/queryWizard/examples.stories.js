@@ -9,12 +9,19 @@ import {
 import DefaultQueryWizard from '../../src/queryWizard/QueryWizard'
 import DefaultStepsAccordion from '../../src/queryWizard/StepsAccordion'
 import DefaultFilterButtonList from '../../src/FilterButtonList'
+import { mergeOverAll } from '../../src/utils/futil'
 import { componentForType } from '../../src/utils/schema'
 import GVDecorator from '../greyVest/decorator'
 import { ExampleTypes } from '../DemoControls'
-import { mapNodeToDescription } from './utils'
 import { tree, fields, types, nodeOverrides } from './config'
 let { TypeMap } = ExampleTypes
+
+let mapNodeToDescription = types => (node, fields) => ({
+  description: _.join(' ', [
+    _.get([node.field, 'description'], fields) || node.description,
+    _.get([node.type, 'description'], types),
+  ])
+})
 
 let story = QueryWizard => () => (
   <QueryWizard
@@ -24,6 +31,11 @@ let story = QueryWizard => () => (
     mapNodeToProps={componentForType(TypeMap)}
     mapNodeToLabel={(node, fields) => _.get([node.field, 'label'], fields)}
     mapNodeToDescription={mapNodeToDescription(types)}
+    mapNodeToProps={mergeOverAll([
+      componentForType(TypeMap),
+      mapNodeToDescription(types),
+      node => nodeOverrides[node.key],
+    ])}
     title="Movies"
   />
 )
@@ -42,13 +54,11 @@ let story2 = (StepsAccordion, FilterButtonList) => () => (
       tree={tree}
       path={['root', 'step 2']}
       fields={fields}
-      mapNodeToProps={(node, fields) =>
-        _.merge(
-          componentForType(TypeMap)(node, fields),
-          nodeOverrides[node['key']]
-        )
-      }
-      mapNodeToDescription={mapNodeToDescription(types)}
+      mapNodeToProps={mergeOverAll([
+        componentForType(TypeMap),
+        mapNodeToDescription(types),
+        node => nodeOverrides[node.key],
+      ])}
       isRequired={false}
       stepTitle="Quick brown fox"
     />
