@@ -20,4 +20,7 @@ export let mergeOverAll = fns =>
     _.mergeAll
   )
 
-export let splitKeys = _.curry((keys, obj) => [_.pick(keys, obj), _.omit(keys, obj)])
+export let splitKeys = _.curry((keys, obj) => [
+  _.pick(keys, obj),
+  _.omit(keys, obj),
+])

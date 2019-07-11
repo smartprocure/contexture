@@ -20,7 +20,7 @@ let mapNodeToDescription = types => (node, fields) => ({
   description: _.join(' ', [
     _.get([node.field, 'description'], fields) || node.description,
     _.get([node.type, 'description'], types),
-  ])
+  ]),
 })
 
 let story = QueryWizard => () => (

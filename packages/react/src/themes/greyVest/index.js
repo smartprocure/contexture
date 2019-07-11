@@ -18,10 +18,10 @@ import {
 import ExampleTypeConstructor from '../../exampleTypes/'
 import QueryBuilderComponent from '../../queryBuilder'
 import QueryWizardComponent from '../../queryWizard'
-import { 
+import {
   Modal as DefaultModal,
   CheckButton as DefaultCheckButton,
-  StepsAccordion as DefaultStepsAccordion
+  StepsAccordion as DefaultStepsAccordion,
 } from '../../layout'
 
 import Input from './Input'

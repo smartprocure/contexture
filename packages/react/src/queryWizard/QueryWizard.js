@@ -7,7 +7,7 @@ import DefaultMissingTypeComponent from '../DefaultMissingTypeComponent'
 import {
   CheckButton as DefaultCheckButton,
   Modal as DefaultModal,
-  StepsAccordion as DefaultStepsAccordion
+  StepsAccordion as DefaultStepsAccordion,
 } from '../layout'
 import InjectTreeNode from '../utils/injectTreeNode'
 
