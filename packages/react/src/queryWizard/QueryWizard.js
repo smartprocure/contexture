@@ -7,9 +7,9 @@ import DefaultMissingTypeComponent from '../DefaultMissingTypeComponent'
 import {
   CheckButton as DefaultCheckButton,
   Modal as DefaultModal,
+  StepsAccordion as DefaultStepsAccordion
 } from '../layout'
 import InjectTreeNode from '../utils/injectTreeNode'
-import DefaultStepsAccordion from './StepsAccordion'
 
 let QueryWizard = InjectTreeNode(
   ({

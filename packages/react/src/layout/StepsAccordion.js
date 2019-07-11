@@ -1,11 +1,13 @@
+import _ from 'lodash/fp'
 import F from 'futil-js'
-import React from 'react'
 import { observer } from 'mobx-react'
-import { Flex } from '../layout'
+import React from 'react'
 import DefaultIcon from '../DefaultIcon'
+import { Flex } from './Flex'
+import { splitKeys } from '../utils/futil'
 
 // Observes node, so we can activate the Continue button if it (or any child) has a value.
-// We don't observe on WizardStep because then it would rerender its children when `node`
+// We don't observe on Step because then it would rerender its children when `node`
 // changes, which unfocuses query inputs as soon as the first character is entered.
 let Buttons = observer(
   ({ step, totalSteps, currentStep, Button, Icon, onSubmit }) => (
@@ -33,9 +35,9 @@ let Buttons = observer(
   )
 )
 
-let WizardStep = ({
-  Button = 'button',
-  Icon = DefaultIcon,
+let Step = ({
+  Button,
+  Icon,
   style,
   className,
   step,
@@ -77,5 +79,34 @@ let WizardStep = ({
   )
 }
 
-WizardStep.displayName = 'WizardStep'
-export default WizardStep
+let StepsAccordion = ({
+  Button = 'button',
+  Icon = DefaultIcon,
+  onSubmit = _.noop,
+  children,
+  ...props
+}) => {
+  let currentStep = F.stateLens(React.useState(0))
+  let splitProps = splitKeys(['stepTitle', 'isRequired'])
+  return (
+    <div {...props}>
+      {React.Children.map(children, (child, i) => {
+        let [propsForStep, propsForChild] = splitProps(child.props)
+        return (
+          <Step
+            {...{ Button, Icon, currentStep, onSubmit }}
+            key={i}
+            step={i}
+            totalSteps={_.size(children)}
+            {...propsForStep}
+          >
+            {React.cloneElement(child, propsForChild, child.children)}
+          </Step>
+        )
+      })}
+    </div>
+  )
+}
+
+StepsAccordion.displayName = 'StepsAccordion'
+export default StepsAccordion

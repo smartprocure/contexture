@@ -7,7 +7,7 @@ import {
   StepsAccordion as GVStepsAccordion,
 } from '../../src/themes/greyVest'
 import DefaultQueryWizard from '../../src/queryWizard/QueryWizard'
-import DefaultStepsAccordion from '../../src/queryWizard/StepsAccordion'
+import DefaultStepsAccordion from '../../src/layout/StepsAccordion'
 import DefaultFilterButtonList from '../../src/FilterButtonList'
 import { mergeOverAll } from '../../src/utils/futil'
 import { componentForType } from '../../src/utils/schema'

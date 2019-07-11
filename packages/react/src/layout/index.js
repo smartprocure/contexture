@@ -14,6 +14,7 @@ import LensInput from './LensInput'
 import ExpandableTable from './ExpandableTable'
 import Portal from './Portal'
 import CheckButton from './CheckButton'
+import StepsAccordion from './StepsAccordion'
 
 export {
   Awaiter,
@@ -33,4 +34,5 @@ export {
   ExpandableTable,
   Portal,
   CheckButton,
+  StepsAccordion,
 }

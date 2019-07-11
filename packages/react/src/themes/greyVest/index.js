@@ -18,9 +18,11 @@ import {
 import ExampleTypeConstructor from '../../exampleTypes/'
 import QueryBuilderComponent from '../../queryBuilder'
 import QueryWizardComponent from '../../queryWizard'
-import StepsAccordionComponent from '../../queryWizard/StepsAccordion'
-import { default as DefaultModal } from '../../layout/Modal'
-import { default as DefaultCheckButton } from '../../layout/CheckButton'
+import { 
+  Modal as DefaultModal,
+  CheckButton as DefaultCheckButton,
+  StepsAccordion as DefaultStepsAccordion
+} from '../../layout'
 
 import Input from './Input'
 import Checkbox from './Checkbox'
@@ -953,7 +955,7 @@ export let StepsAccordion = defaultProps({
   Button,
   Icon,
   className: 'gv-query-wizard',
-})(StepsAccordionComponent)
+})(DefaultStepsAccordion)
 
 export let QueryWizard = defaultProps({
   StepsAccordion,
