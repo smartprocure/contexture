@@ -9,6 +9,11 @@ storiesOf('Components (Grey Vest)|Button', module)
   .addWithJSX('Basic Usage', () => (
     <Button onClick={() => action('clicked')()}>Click</Button>
   ))
+  .addWithJSX('Disabled', () => (
+    <Button disabled onClick={() => action('clicked')()}>
+      Don't click
+    </Button>
+  ))
   .addWithJSX('Active', () => (
     <Button isActive onClick={() => action('clicked')()}>
       Click
@@ -17,6 +22,11 @@ storiesOf('Components (Grey Vest)|Button', module)
   .addWithJSX('Primary', () => (
     <Button primary onClick={() => action('clicked')()}>
       Click
+    </Button>
+  ))
+  .addWithJSX('Primary Disabled', () => (
+    <Button primary disabled onClick={() => action('clicked')()}>
+      Can't touch this
     </Button>
   ))
   .addWithJSX('As Div', () => (

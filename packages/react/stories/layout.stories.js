@@ -5,11 +5,15 @@ import { action } from '@storybook/addon-actions'
 import { observer } from 'mobx-react'
 import { fromPromise } from 'mobx-utils'
 import { withStateLens } from '../src/utils/mobx-react-utils'
-import Popover from '../src/layout/Popover'
-import Modal from '../src/layout/Modal'
-import Awaiter from '../src/layout/Awaiter'
-import TextHighlight from '../src/layout/TextHighlight'
-import CheckButton from '../src/layout/CheckButton'
+import {
+  Popover,
+  Modal,
+  Awaiter,
+  TextHighlight,
+  CheckButton,
+  StepsAccordion,
+  AccordionStep,
+} from '../src/layout'
 import { Flex } from '../src/layout/Flex'
 import { NestedPicker, ModalPicker } from '../src'
 
@@ -65,6 +69,13 @@ let FlexDemo = ({ style, ...props }) => (
   </Flex>
 )
 
+let makeStepTitle = title => n => (
+  <h3>
+    <span className="step-number">{n + 1}) </span>
+    {title}
+  </h3>
+)
+
 storiesOf('Components (Unthemed)|Layout', module)
   .addWithJSX('Popover', () => <PopoverDemo />)
   .addWithJSX('Modal', () => <ModalDemo />)
@@ -118,4 +129,24 @@ storiesOf('Components (Unthemed)|Layout', module)
       <CheckButton checked>This one is on</CheckButton>
       <CheckButton>This one is off</CheckButton>
     </>
+  ))
+  .addWithJSX('StepsAccordion', () => (
+    <StepsAccordion>
+      <AccordionStep isRequired={true} title={makeStepTitle()}>
+        <div>
+          <div>A</div>
+          <div>B</div>
+          <div>C</div>
+        </div>
+      </AccordionStep>
+      <AccordionStep
+        isRequired={true}
+        title={makeStepTitle('Click the button')}
+      >
+        <button onClick={() => alert('you clicked the button')}>Button</button>
+      </AccordionStep>
+      <AccordionStep title={makeStepTitle('Type something')}>
+        <input type="text" />
+      </AccordionStep>
+    </StepsAccordion>
   ))

@@ -13,6 +13,7 @@ import { fieldsToOptions } from './FilterAdder'
 import { withStateLens } from './utils/mobx-react-utils'
 import InjectTreeNode from './utils/injectTreeNode'
 import DefaultIcon from './DefaultIcon'
+import DefaultMissingTypeComponent from './DefaultMissingTypeComponent'
 import { bdJoin } from './styles/generic'
 import { newNodeFromType, changeNodeField } from './utils/search'
 
@@ -181,12 +182,6 @@ export let FieldLabel = InjectTreeNode(
 )
 FieldLabel.displayName = 'FieldLabel'
 
-export let DefaultMissingTypeComponent = InjectTreeNode(({ node = {} }) => (
-  <div>
-    Type <b>{node.type}</b> is not supported (for key <i>{node.key}</i>)
-  </div>
-))
-
 export let FilterList = InjectTreeNode(
   observer(
     ({
@@ -248,7 +243,7 @@ export let FilterList = InjectTreeNode(
                 )}
               </div>
             ),
-          _.getOr([], 'children', node)
+          _.get('children', node)
         )}
       </div>
     )

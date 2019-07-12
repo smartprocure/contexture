@@ -1,3 +1,7 @@
+# 1.53.0
+* Add QueryWizard
+* Add FilterButtonList
+
 # 1.52.0
 * Add CheckButton component
 

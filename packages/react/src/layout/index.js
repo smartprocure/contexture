@@ -13,6 +13,8 @@ import { Tag, TagsInput } from './TagsInput'
 import LensInput from './LensInput'
 import ExpandableTable from './ExpandableTable'
 import Portal from './Portal'
+import CheckButton from './CheckButton'
+import StepsAccordion, { AccordionStep } from './StepsAccordion'
 
 export {
   Awaiter,
@@ -31,4 +33,7 @@ export {
   LensInput,
   ExpandableTable,
   Portal,
+  CheckButton,
+  StepsAccordion,
+  AccordionStep,
 }
