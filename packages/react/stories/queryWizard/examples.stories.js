@@ -10,7 +10,7 @@ import DefaultQueryWizard from '../../src/queryWizard/QueryWizard'
 import DefaultStepsAccordion from '../../src/layout/StepsAccordion'
 import DefaultFilterButtonList from '../../src/FilterButtonList'
 import { mergeOverAll } from '../../src/utils/futil'
-import { componentForType } from '../../src/utils/schema'
+import { componentForType, schemaFieldProps } from '../../src/utils/schema'
 import GVDecorator from '../greyVest/decorator'
 import { ExampleTypes } from '../DemoControls'
 import { tree, fields, types, nodeOverrides } from './config'
@@ -28,11 +28,9 @@ let story = QueryWizard => () => (
     tree={tree}
     path={['root']}
     fields={fields}
-    mapNodeToProps={componentForType(TypeMap)}
-    mapNodeToLabel={(node, fields) => _.get([node.field, 'label'], fields)}
-    mapNodeToDescription={mapNodeToDescription(types)}
     mapNodeToProps={mergeOverAll([
       componentForType(TypeMap),
+      schemaFieldProps(['label']),
       mapNodeToDescription(types),
       node => nodeOverrides[node.key],
     ])}
@@ -46,7 +44,12 @@ let story2 = (StepsAccordion, FilterButtonList) => () => (
       tree={tree}
       fields={fields}
       path={['root', 'step 1']}
-      mapNodeToProps={componentForType(TypeMap)}
+      mapNodeToProps={mergeOverAll([
+        componentForType(TypeMap),
+        schemaFieldProps(['label']),
+        mapNodeToDescription(types),
+        node => nodeOverrides[node.key],
+      ])}
       isRequired={true}
       stepTitle="Test title"
     />

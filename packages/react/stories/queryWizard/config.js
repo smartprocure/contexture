@@ -42,8 +42,6 @@ export let tree = Client({
           type: 'tagsQuery',
           key: 'friendly node',
           label: 'Friendly Node',
-          typeDescription: 'Enter some tags',
-          fieldDescription: 'Search for stuff',
         },
         {
           key: 'foop',
