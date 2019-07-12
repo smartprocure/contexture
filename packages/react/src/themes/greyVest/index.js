@@ -12,12 +12,18 @@ import {
   Tag,
   TagsInput as BaseTagsInput,
   FilterList as BaseFilterList,
+  FilterButtonList as BaseFilterButtonList,
   Dynamic,
 } from '../../'
 import ExampleTypeConstructor from '../../exampleTypes/'
 import QueryBuilderComponent from '../../queryBuilder'
-import { default as DefaultModal } from '../../layout/Modal'
-import { default as DefaultCheckButton } from '../../layout/CheckButton'
+import QueryWizardComponent from '../../queryWizard'
+import {
+  Modal as DefaultModal,
+  CheckButton as DefaultCheckButton,
+  StepsAccordion as DefaultStepsAccordion,
+  AccordionStep,
+} from '../../layout'
 
 import Input from './Input'
 import Checkbox from './Checkbox'
@@ -62,6 +68,7 @@ export {
   TreePauseButton,
   ToggleFiltersButton,
   ToggleFiltersHeader,
+  AccordionStep,
 }
 
 export let SearchTree = () => {}
@@ -99,6 +106,10 @@ export let GVStyle = () => (
       .gv-button.active, .gv-button.primary {
         background-color: #0076de;
         color: #fff;
+      }
+      .gv-button:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
       }
       .gv-button.success {
         background-color: #5bb85b !important;
@@ -210,19 +221,19 @@ export let GVStyle = () => (
       }
 
       /* Checkbutton */
-      .gv-button.checkbutton {
+      .gv-button.gv-checkbutton {
         padding: 5px 23px 5px 10px;
       }
-      .gv-button.checkbutton .gv-checkbox {
+      .gv-button.gv-checkbutton .gv-checkbox {
         height: 30px;
         width: 30px;
         font-size: 20px;
-        margin-right: 7px;
+        margin-right: 8px;
       }
-      .gv-button.checkbutton .gv-checkbox i {
+      .gv-button.gv-checkbutton .gv-checkbox i {
         font-size: 20px;
       }
-      .gv-button.checkbutton .gv-checkbox.checked {
+      .gv-button.gv-checkbutton .gv-checkbox.checked {
         color: #0076de;
       }
 
@@ -661,6 +672,76 @@ export let GVStyle = () => (
         border: 30px solid white;
         overflow-x: auto;
       }
+
+      /* FilterButtonList */
+      .gv-filter-button-list.nested {
+        border: 2px solid;
+        border-radius: 6px;
+        padding: 3px 5px;
+        margin: 2px 5px;
+      }
+      .gv-filter-button-list .checkbutton {
+        margin: 5px;
+        white-space: nowrap;
+      }
+      .gv-filter-button-list > *:first-child {
+        margin-left: 0;
+      }
+      .gv-filter-button-list > *:last-child {
+        margin-right: 0;
+      }
+
+      /* Query Wizard */
+      .gv-steps-accordion .accordion-step {
+        padding: 40px;
+        border-bottom: 1px solid #eef0f1;
+      }
+      .gv-steps-accordion .gv-button {
+        margin-right: 10px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+      .gv-steps-accordion .step-contents {
+        margin: 30px 0;
+      }
+    
+      .gv-steps-accordion .accordion-step-title > * {
+        margin: 0;
+      }
+      .gv-steps-accordion .accordion-step-title span.step-number {
+        color: #0076de;
+      }
+      .gv-steps-accordion .back-button i {
+        vertical-align: middle;
+        line-height: 14px;
+        margin: 0 10px 0 -5px;
+        opacity: 0.4;
+      }
+      .gv-steps-accordion .gv-button:first-child {
+        margin-left: 0;
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+      .filter-button-modal {
+        min-width: 300px;
+      }
+      .filter-button-modal * {
+        max-width: 480px;
+      }
+      .filter-button-modal h1 {
+        margin: 0;
+      }
+      .filter-button-modal .filter-description {
+        margin: 20px 0;
+        color: #4a4a4a;
+        line-height: 1.5;
+      }
+      .filter-button-modal .filter-component {
+        margin: 30px 0;
+      }
+      .filter-button-modal .gv-button {
+        margin-right: 10px;
+      }
     `}
   </style>
 )
@@ -788,7 +869,9 @@ export let Adder = ModalFilterAdder({
   label: AddLabel,
 })
 
-let CheckButtonButton = props => <Button className="checkbutton" {...props} />
+let CheckButtonButton = props => (
+  <Button className="gv-checkbutton" {...props} />
+)
 export let CheckButton = defaultProps({ Checkbox, Button: CheckButtonButton })(
   DefaultCheckButton
 )
@@ -879,3 +962,26 @@ export let QueryBuilder = defaultProps({ Button, MissingTypeComponent })(
 export let SearchFilters = defaultProps({ QueryBuilder, FiltersBox })(
   BaseSearchFilters
 )
+
+export let FilterButtonList = defaultProps({
+  Button,
+  CheckButton,
+  Icon,
+  Modal,
+  className: 'gv-filter-button-list',
+})(BaseFilterButtonList)
+
+export let StepsAccordion = defaultProps({
+  Button,
+  Icon,
+  className: 'gv-steps-accordion',
+})(DefaultStepsAccordion)
+
+export let QueryWizard = defaultProps({
+  StepsAccordion,
+  FilterButtonList,
+  CheckButton,
+  Modal,
+  Button,
+  Icon,
+})(QueryWizardComponent)

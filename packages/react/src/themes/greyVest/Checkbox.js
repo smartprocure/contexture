@@ -14,7 +14,7 @@ let Checkbox = ({ checked, onChange, style = {} }) => (
     {checked ? (
       <i className="material-icons">check</i>
     ) : (
-      String.fromCharCode(160)
+      String.fromCharCode(160) // non-breaking space
     )}
   </label>
 )
