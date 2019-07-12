@@ -1,3 +1,6 @@
+# 1.54.0
+* Add one line support for the TagsInput component
+
 # 1.53.0
 * Add QueryWizard
 * Add FilterButtonList
