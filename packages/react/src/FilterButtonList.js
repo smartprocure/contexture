@@ -94,9 +94,10 @@ let FilterButtonList = InjectTreeNode(
         nodeJoinColor={node && styles.joinColor(node)}
       >
         {_.map(
-          child =>
-            child.children ? (
-              <FilterButtonList
+          child => {
+            let Component = child.children ? FilterButtonList : FilterButtonItem
+            return (
+              <Component
                 key={child.path}
                 nested
                 {...{
@@ -113,23 +114,8 @@ let FilterButtonList = InjectTreeNode(
                   className,
                 }}
               />
-            ) : (
-              <FilterButtonItem
-                key={child.path}
-                {...{
-                  tree,
-                  node: child,
-                  fields,
-                  mapNodeToProps,
-                  Button,
-                  CheckButton,
-                  Icon,
-                  MissingTypeComponent,
-                  Modal,
-                  Popover,
-                }}
-              />
-            ),
+            )
+          },
           _.get('children', node)
         )}
       </GroupBox>
