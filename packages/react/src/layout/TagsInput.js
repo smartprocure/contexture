@@ -109,10 +109,10 @@ let TagsInput = withState('state', 'setState', () =>
             }}
           >
             <Flex
+              wrap
+              alignItems="center"
               style={{
                 cursor: 'text',
-                alignItems: 'center',
-                flexWrap: 'wrap',
                 height: '100%',
                 padding: 2,
               }}
