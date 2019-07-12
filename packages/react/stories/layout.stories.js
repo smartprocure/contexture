@@ -12,6 +12,7 @@ import {
   TextHighlight,
   CheckButton,
   StepsAccordion,
+  AccordionStep,
 } from '../src/layout'
 import { Flex } from '../src/layout/Flex'
 import { NestedPicker, ModalPicker } from '../src'
@@ -66,6 +67,13 @@ let FlexDemo = ({ style, ...props }) => (
     <div>Item5</div>
     <div>Item6</div>
   </Flex>
+)
+
+let makeStepTitle = title => n => (
+  <h3>
+    <span className="step-number">{n + 1}) </span>
+    {title}
+  </h3>
 )
 
 storiesOf('Components (Unthemed)|Layout', module)
@@ -124,18 +132,26 @@ storiesOf('Components (Unthemed)|Layout', module)
   ))
   .addWithJSX('StepsAccordion', () => (
     <StepsAccordion>
-      <div isRequired={true}>
-        <div>A</div>
-        <div>B</div>
-        <div>C</div>
-      </div>
-      <button
-        isRequired={true}
-        stepTitle="Click the button"
-        onClick={() => alert('you clicked the button')}
+      <AccordionStep
+        isRequired={true} 
+        title={makeStepTitle()}
       >
-        Button
-      </button>
-      <input type="text" stepTitle="Type something" />
+        <div>
+          <div>A</div>
+          <div>B</div>
+          <div>C</div>
+        </div>
+      </AccordionStep>
+      <AccordionStep
+        isRequired={true}
+        title={makeStepTitle('Click the button')}
+      >
+        <button onClick={() => alert('you clicked the button')}>
+          Button
+        </button>
+      </AccordionStep>
+      <AccordionStep title={makeStepTitle('Type something')}>    
+        <input type="text" />
+      </AccordionStep>
     </StepsAccordion>
   ))

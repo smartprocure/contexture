@@ -4,7 +4,6 @@ import { observer } from 'mobx-react'
 import React from 'react'
 import DefaultIcon from '../DefaultIcon'
 import { Flex } from './Flex'
-import { splitKeys } from '../utils/futil'
 
 // Observes node, so we can activate the Continue button if it (or any child) has a value.
 // We don't observe on Step because then it would rerender its children when `node`
@@ -35,7 +34,7 @@ let Buttons = observer(
   )
 )
 
-let Step = ({
+export let AccordionStep = ({
   Button,
   Icon,
   style,
@@ -43,20 +42,17 @@ let Step = ({
   step,
   totalSteps,
   currentStep,
-  stepTitle = '',
+  title,
   isRequired = false,
   onSubmit,
   children,
 }) => {
   let isOpen = F.view(currentStep) === step
   return (
-    <div className={`wizard-step ${className ? className : ''}`} style={style}>
+    <div className={`accordion-step ${className ? className : ''}`} style={style}>
       <Flex alignItems="center" justifyContent="space-between">
         <Flex alignItems="center">
-          <h1>
-            <span className="step-number">Step {step + 1}</span>
-            {stepTitle && ` - ${stepTitle}`}
-          </h1>
+          <div className="accordion-step-title">{F.callOrReturn(title, step)}</div>
           {!isRequired && <em style={{ marginLeft: 6 }}>(Optional)</em>}
         </Flex>
         <div
@@ -87,23 +83,17 @@ let StepsAccordion = ({
   ...props
 }) => {
   let currentStep = F.stateLens(React.useState(0))
-  let splitProps = splitKeys(['stepTitle', 'isRequired'])
   return (
     <div {...props}>
-      {React.Children.map(children, (child, i) => {
-        let [propsForStep, propsForChild] = splitProps(child.props)
-        return (
-          <Step
-            {...{ Button, Icon, currentStep, onSubmit }}
-            key={i}
-            step={i}
-            totalSteps={_.size(children)}
-            {...propsForStep}
-          >
-            <child.type {...propsForChild} />
-          </Step>
-        )
-      })}
+      {React.Children.map(children, (child, i) => (
+        <child.type
+          {...{ Button, Icon, currentStep, onSubmit }}
+          key={i}
+          step={i}
+          totalSteps={_.size(children)}
+          {...child.props}
+        />
+      ))}
     </div>
   )
 }

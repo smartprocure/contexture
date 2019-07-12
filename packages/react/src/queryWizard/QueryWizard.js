@@ -8,8 +8,21 @@ import {
   CheckButton as DefaultCheckButton,
   Modal as DefaultModal,
   StepsAccordion as DefaultStepsAccordion,
+  AccordionStep
 } from '../layout'
 import InjectTreeNode from '../utils/injectTreeNode'
+
+let generateStepTitle = (node, title) => i => (
+  <h1>
+    <span className="step-number">Step {i + 1} - </span>
+    {i === 0
+      ? `Search for ${title || 'Results'} by...`
+      : i < _.size(node.children) - 1
+      ? `And...`
+      : `Narrow Your Results`
+    }
+  </h1>
+)
 
 let QueryWizard = InjectTreeNode(
   ({
@@ -26,34 +39,31 @@ let QueryWizard = InjectTreeNode(
     title,
     onSubmit = _.noop,
     mapNodeToProps = _.noop,
-    className,
     style,
   }) => (
-    <StepsAccordion {...{ Button, Icon, className, style, onSubmit }}>
+    <StepsAccordion {...{ Button, Icon, style, onSubmit }}>
       {F.mapIndexed(
         (child, i) => (
-          <FilterButtonList
-            {...{
-              CheckButton,
-              Button,
-              Icon,
-              MissingTypeComponent,
-              Modal,
-              node: child,
-              tree,
-              fields,
-              mapNodeToProps,
-            }}
-            key={node.key}
+          <AccordionStep
             isRequired={i === 0}
-            stepTitle={
-              i === 0
-                ? `Search for ${title || 'Results'} by...`
-                : i < _.size(node.children) - 1
-                ? `And...`
-                : `Narrow Your Results`
-            }
-          />
+            title={generateStepTitle(node, title)}
+          >
+            <FilterButtonList
+              {...{
+                CheckButton,
+                Button,
+                Icon,
+                MissingTypeComponent,
+                Modal,
+                node: child,
+                tree,
+                fields,
+                mapNodeToProps,
+              }}
+              key={node.key}
+              
+            />
+          </AccordionStep>
         ),
         _.get('children', node)
       )}

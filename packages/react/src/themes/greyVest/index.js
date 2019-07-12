@@ -22,6 +22,7 @@ import {
   Modal as DefaultModal,
   CheckButton as DefaultCheckButton,
   StepsAccordion as DefaultStepsAccordion,
+  AccordionStep,
 } from '../../layout'
 
 import Input from './Input'
@@ -67,6 +68,7 @@ export {
   TreePauseButton,
   ToggleFiltersButton,
   ToggleFiltersHeader,
+  AccordionStep,
 }
 
 export let SearchTree = () => {}
@@ -672,32 +674,32 @@ export let GVStyle = () => (
       }
 
       /* Query Wizard */
-      .gv-query-wizard .wizard-step {
+      .gv-steps-accordion .accordion-step {
         padding: 40px;
         border-bottom: 1px solid #eef0f1;
       }
-      .gv-query-wizard .gv-button {
+      .gv-steps-accordion .gv-button {
         margin-right: 10px;
         margin-top: 5px;
         margin-bottom: 5px;
       }
-      .gv-query-wizard .step-contents {
+      .gv-steps-accordion .step-contents {
         margin: 30px 0;
       }
     
-      .gv-query-wizard .wizard-step h1 {
+      .gv-steps-accordion .accordion-step-title > * {
         margin: 0;
       }
-      .gv-query-wizard span.step-number {
+      .gv-steps-accordion .accordion-step-title span.step-number {
         color: #0076de;
       }
-      .gv-query-wizard .back-button i {
+      .gv-steps-accordion .back-button i {
         vertical-align: middle;
         line-height: 14px;
         margin: 0 10px 0 -5px;
         opacity: 0.4;
       }
-      .gv-query-wizard .gv-button:first-child {
+      .gv-steps-accordion .gv-button:first-child {
         margin-left: 0;
         margin-top: 5px;
         margin-bottom: 5px;
@@ -954,7 +956,7 @@ export let FilterButtonList = defaultProps({
 export let StepsAccordion = defaultProps({
   Button,
   Icon,
-  className: 'gv-query-wizard',
+  className: 'gv-steps-accordion',
 })(DefaultStepsAccordion)
 
 export let QueryWizard = defaultProps({
@@ -964,5 +966,4 @@ export let QueryWizard = defaultProps({
   Modal,
   Button,
   Icon,
-  className: 'gv-query-wizard',
 })(QueryWizardComponent)
