@@ -6,7 +6,7 @@ import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import { Flex } from './Flex'
 import Popover from './Popover'
-import OutsideClickHandler from 'react-outside-click-handler';
+import OutsideClickHandler from 'react-outside-click-handler'
 
 let isValidTag = (tag, tags) => {
   let cleanTag = _.trim(tag)
@@ -89,95 +89,100 @@ let TagsInput = withState('state', 'setState', () =>
           _.map(addTag)
         )
       return (
-        <OutsideClickHandler onOutsideClick={() => {
-          state.isOneLine = true
-          containerRef.scrollTop = 0
-        }}>
-        <div className={`tags-input ${state.isOneLine ? 'tags-input-one-line' : ''}`}
-          ref={e => (containerRef = e ? e : containerRef)}
-          style={{ ...style }}
-          onClick={() => {
-            if(state.isOneLine) {
-              state.isOneLine = false
-              inputRef.focus()
-            }
+        <OutsideClickHandler
+          onOutsideClick={() => {
+            state.isOneLine = true
+            containerRef.scrollTop = 0
           }}
         >
-          <Flex
-            style={{
-              cursor: 'text',
-              alignItems: 'center',
-              flexWrap: 'wrap',
-              height: '100%',
-              padding: 2,
+          <div
+            className={`tags-input ${
+              state.isOneLine ? 'tags-input-one-line' : ''
+            }`}
+            ref={e => (containerRef = e ? e : containerRef)}
+            style={{ ...style }}
+            onClick={() => {
+              if (state.isOneLine) {
+                state.isOneLine = false
+                inputRef.focus()
+              }
             }}
           >
-            {_.map(
-              t => (
-                <TagComponent
-                  key={t}
-                  value={t}
-                  {...{ removeTag, tagStyle }}
-                  onClick={() => {
-                    state.popoverOpen = true
-                    state.selectedTag = t
-                  }}
-                />
-              ),
-              tags
-            )}
-            <input
+            <Flex
               style={{
-                border: 'none',
-                outline: 'none',
-                flex: 1,
-                margin: 3,
-                minWidth: 120,
+                cursor: 'text',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                height: '100%',
+                padding: 2,
               }}
-              ref={e => (inputRef = e)}
-              onChange={e => {
-                state.currentInput = e.target.value
-              }}
-              onBlur={() => {
-                if (isValidTag(state.currentInput, tags)) {
-                  addTag(state.currentInput)
-                  state.currentInput = ''
-                }
-              }}
-              onKeyDown={e => {
-                let currentInput = _.trim(state.currentInput)
-                if (e.key === 'Enter' && !currentInput) submit()
-                if (
-                  (e.key === 'Enter' ||
-                    e.key === 'Tab' ||
-                    (splitCommas && e.key === ',')) &&
-                  isValidTag(currentInput, tags)
-                ) {
-                  addTag(currentInput)
-                  state.currentInput = ''
-                  e.preventDefault()
-                }
-                if (
-                  e.key === 'Backspace' &&
-                  !state.currentInput &&
-                  tags.length
-                ) {
-                  let last = _.last(tags)
-                  removeTag(last)
-                  state.currentInput = last
-                  e.preventDefault()
-                }
-              }}
-              value={state.currentInput}
-              placeholder={placeholder}
-            />
-          </Flex>
-          {PopoverContents && (
-            <Popover isOpen={F.lensProp('popoverOpen', state)}>
-              <PopoverContents tag={state.selectedTag} />
-            </Popover>
-          )}
-        </div>
+            >
+              {_.map(
+                t => (
+                  <TagComponent
+                    key={t}
+                    value={t}
+                    {...{ removeTag, tagStyle }}
+                    onClick={() => {
+                      state.popoverOpen = true
+                      state.selectedTag = t
+                    }}
+                  />
+                ),
+                tags
+              )}
+              <input
+                style={{
+                  border: 'none',
+                  outline: 'none',
+                  flex: 1,
+                  margin: 3,
+                  minWidth: 120,
+                }}
+                ref={e => (inputRef = e)}
+                onChange={e => {
+                  state.currentInput = e.target.value
+                }}
+                onBlur={() => {
+                  if (isValidTag(state.currentInput, tags)) {
+                    addTag(state.currentInput)
+                    state.currentInput = ''
+                  }
+                }}
+                onKeyDown={e => {
+                  let currentInput = _.trim(state.currentInput)
+                  if (e.key === 'Enter' && !currentInput) submit()
+                  if (
+                    (e.key === 'Enter' ||
+                      e.key === 'Tab' ||
+                      (splitCommas && e.key === ',')) &&
+                    isValidTag(currentInput, tags)
+                  ) {
+                    addTag(currentInput)
+                    state.currentInput = ''
+                    e.preventDefault()
+                  }
+                  if (
+                    e.key === 'Backspace' &&
+                    !state.currentInput &&
+                    tags.length
+                  ) {
+                    let last = _.last(tags)
+                    removeTag(last)
+                    state.currentInput = last
+                    e.preventDefault()
+                  }
+                }}
+                value={state.currentInput}
+                placeholder={placeholder}
+              />
+            </Flex>
+            {PopoverContents && (
+              <Popover isOpen={F.lensProp('popoverOpen', state)}>
+                <PopoverContents tag={state.selectedTag} />
+              </Popover>
+            )}
+          </div>
         </OutsideClickHandler>
       )
     }
