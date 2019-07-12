@@ -8,7 +8,7 @@ import {
   CheckButton as DefaultCheckButton,
   Modal as DefaultModal,
   StepsAccordion as DefaultStepsAccordion,
-  AccordionStep
+  AccordionStep,
 } from '../layout'
 import InjectTreeNode from '../utils/injectTreeNode'
 
@@ -19,8 +19,7 @@ let generateStepTitle = (node, title) => i => (
       ? `Search for ${title || 'Results'} by...`
       : i < _.size(node.children) - 1
       ? `And...`
-      : `Narrow Your Results`
-    }
+      : `Narrow Your Results`}
   </h1>
 )
 
@@ -61,7 +60,6 @@ let QueryWizard = InjectTreeNode(
                 mapNodeToProps,
               }}
               key={node.key}
-              
             />
           </AccordionStep>
         ),

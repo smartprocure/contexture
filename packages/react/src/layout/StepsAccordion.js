@@ -49,10 +49,15 @@ export let AccordionStep = ({
 }) => {
   let isOpen = F.view(currentStep) === step
   return (
-    <div className={`accordion-step ${className ? className : ''}`} style={style}>
+    <div
+      className={`accordion-step ${className ? className : ''}`}
+      style={style}
+    >
       <Flex alignItems="center" justifyContent="space-between">
         <Flex alignItems="center">
-          <div className="accordion-step-title">{F.callOrReturn(title, step)}</div>
+          <div className="accordion-step-title">
+            {F.callOrReturn(title, step)}
+          </div>
           {!isRequired && <em style={{ marginLeft: 6 }}>(Optional)</em>}
         </Flex>
         <div

@@ -10,8 +10,8 @@ import {
 import DefaultQueryWizard from '../../src/queryWizard/QueryWizard'
 import {
   StepsAccordion as DefaultStepsAccordion,
-  AccordionStep as DefaultAccordionStep
- } from '../../src/layout'
+  AccordionStep as DefaultAccordionStep,
+} from '../../src/layout'
 import DefaultFilterButtonList from '../../src/FilterButtonList'
 import { mergeOverAll } from '../../src/utils/futil'
 import { componentForType, schemaFieldProps } from '../../src/utils/schema'
@@ -42,12 +42,13 @@ let wizardStory = QueryWizard => () => (
   />
 )
 
-let accordionStory = (StepsAccordion, AccordionStep, FilterButtonList) => () => (
+let accordionStory = (
+  StepsAccordion,
+  AccordionStep,
+  FilterButtonList
+) => () => (
   <StepsAccordion>
-    <AccordionStep
-      isRequired={true}
-      title={<h1>Test title</h1>}
-    >
+    <AccordionStep isRequired={true} title={<h1>Test title</h1>}>
       <FilterButtonList
         tree={tree}
         fields={fields}
@@ -60,10 +61,7 @@ let accordionStory = (StepsAccordion, AccordionStep, FilterButtonList) => () => 
         ])}
       />
     </AccordionStep>
-    <AccordionStep
-      isRequired={false}
-      title={<h1>Quick brown fox</h1>}
-    >
+    <AccordionStep isRequired={false} title={<h1>Quick brown fox</h1>}>
       <FilterButtonList
         tree={tree}
         path={['root', 'step 2']}
@@ -82,7 +80,11 @@ storiesOf('Search Components (Unthemed)|Wizard', module)
   .addWithJSX('QueryWizard', wizardStory(DefaultQueryWizard))
   .addWithJSX(
     'Accordion with FilterButtonList',
-    accordionStory(DefaultStepsAccordion, DefaultAccordionStep, DefaultFilterButtonList)
+    accordionStory(
+      DefaultStepsAccordion,
+      DefaultAccordionStep,
+      DefaultFilterButtonList
+    )
   )
 
 storiesOf('Search Components (Grey Vest)|Wizard', module)

@@ -132,10 +132,7 @@ storiesOf('Components (Unthemed)|Layout', module)
   ))
   .addWithJSX('StepsAccordion', () => (
     <StepsAccordion>
-      <AccordionStep
-        isRequired={true} 
-        title={makeStepTitle()}
-      >
+      <AccordionStep isRequired={true} title={makeStepTitle()}>
         <div>
           <div>A</div>
           <div>B</div>
@@ -146,11 +143,9 @@ storiesOf('Components (Unthemed)|Layout', module)
         isRequired={true}
         title={makeStepTitle('Click the button')}
       >
-        <button onClick={() => alert('you clicked the button')}>
-          Button
-        </button>
+        <button onClick={() => alert('you clicked the button')}>Button</button>
       </AccordionStep>
-      <AccordionStep title={makeStepTitle('Type something')}>    
+      <AccordionStep title={makeStepTitle('Type something')}>
         <input type="text" />
       </AccordionStep>
     </StepsAccordion>
