@@ -258,6 +258,10 @@ export let GVStyle = () => (
 
 
       /* Tags Input */
+      .tags-input-one-line {
+        max-height: 40px;
+        overflow-y: auto;
+      }
       .gv-body .tags-input > * {
         box-sizing: border-box;
       }

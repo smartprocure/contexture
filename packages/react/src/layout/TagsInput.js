@@ -6,6 +6,7 @@ import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import { Flex } from './Flex'
 import Popover from './Popover'
+import OutsideClickHandler from 'react-outside-click-handler';
 
 let isValidTag = (tag, tags) => {
   let cleanTag = _.trim(tag)
@@ -63,6 +64,7 @@ let TagsInput = withState('state', 'setState', () =>
     currentInput: '',
     selectedTag: null,
     popoverOpen: false,
+    isOneLine: true,
   })
 )(
   observer(
@@ -79,20 +81,35 @@ let TagsInput = withState('state', 'setState', () =>
       PopoverContents,
       style,
     }) => {
+      let containerRef
+      let inputRef
       if (splitCommas)
         addTag = _.flow(
           _.split(','),
           _.map(addTag)
         )
       return (
-        <div className="tags-input" style={{ ...style }}>
+        <OutsideClickHandler onOutsideClick={() => {
+          state.isOneLine = true
+          containerRef.scrollTop = 0
+        }}>
+        <div className={`tags-input ${state.isOneLine ? 'tags-input-one-line' : ''}`}
+          ref={e => (containerRef = e ? e : containerRef)}
+          style={{ ...style }}
+          onClick={() => {
+            if(state.isOneLine) {
+              state.isOneLine = false
+              inputRef.focus()
+            }
+          }}
+        >
           <Flex
             style={{
               cursor: 'text',
               alignItems: 'center',
               flexWrap: 'wrap',
               height: '100%',
-              padding: 3,
+              padding: 2,
             }}
           >
             {_.map(
@@ -117,6 +134,7 @@ let TagsInput = withState('state', 'setState', () =>
                 margin: 3,
                 minWidth: 120,
               }}
+              ref={e => (inputRef = e)}
               onChange={e => {
                 state.currentInput = e.target.value
               }}
@@ -160,6 +178,7 @@ let TagsInput = withState('state', 'setState', () =>
             </Popover>
           )}
         </div>
+        </OutsideClickHandler>
       )
     }
   )
