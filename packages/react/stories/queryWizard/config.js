@@ -34,14 +34,12 @@ export let tree = Client({
   children: [
     {
       key: 'step 1',
-      label: 'Friendly Group',
       type: 'group',
       join: 'and',
       children: [
         {
           type: 'tagsQuery',
           key: 'friendly node',
-          label: 'Friendly Node',
         },
         {
           key: 'foop',
@@ -79,7 +77,6 @@ export let tree = Client({
     },
     {
       key: 'step 2',
-      friendlyName: 'Step 2',
       type: 'group',
       join: 'and',
       children: [
