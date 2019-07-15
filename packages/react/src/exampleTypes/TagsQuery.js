@@ -124,7 +124,7 @@ let TagsQuery = ({
       submit={tree.triggerUpdate}
       placeholder={placeholder}
       PopoverContents={TagQueryPopever}
-      {...props }
+      {...props}
     />
   )
 }

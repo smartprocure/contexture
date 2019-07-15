@@ -258,7 +258,7 @@ export default () => (
           </ToggleFiltersHeader>
           <div className="gv-search-bar">
             <Box>
-              <TagsQuery tree={tree} path={['root', 'bar']} autoFocus/>
+              <TagsQuery tree={tree} path={['root', 'bar']} autoFocus />
             </Box>
             <div className="gv-button-group">
               <Button
