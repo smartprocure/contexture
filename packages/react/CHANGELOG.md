@@ -1,3 +1,6 @@
+# 1.54.1
+* Allow to pass-through props from TagsQuery to the actual input in TagsInput
+
 # 1.54.0
 * Add one line support for the TagsInput component
 
