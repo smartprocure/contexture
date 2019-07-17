@@ -2,17 +2,11 @@ import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
 import { inject, observer } from 'mobx-react'
-import { ModalPicker, Modal, NestedPicker, Dynamic, Grid } from '../layout/'
+import { ModalPicker, Modal as DefaultModal, NestedPicker, Dynamic, Grid } from '../layout/'
 import { fieldsToOptions } from '../FilterAdder'
 import DefaultMissingTypeComponent from '../DefaultMissingTypeComponent'
-import { defaultProps } from 'recompose'
 import { get } from '../utils/mobx-utils'
 import { newNodeFromType, changeNodeField } from '../utils/search'
-
-let FieldPicker = defaultProps({
-  Modal,
-  Picker: NestedPicker,
-})(ModalPicker)
 
 let FilterContents = inject(_.defaults)(
   observer(
@@ -21,7 +15,9 @@ let FilterContents = inject(_.defaults)(
       tree,
       fields,
       types = {},
-      ContextureButton = 'button',
+      Button = 'button',
+      Modal = DefaultModal,
+      Picker = NestedPicker,
       mapNodeToProps = _.noop,
       MissingTypeComponent = DefaultMissingTypeComponent,
     }) => {
@@ -33,8 +29,8 @@ let FilterContents = inject(_.defaults)(
       let nodeLabel = _.get([nodeField, 'label'], fields) || nodeField
       return (
         <Grid columns="auto auto 1fr" style={{ width: '100%' }}>
-          <FieldPicker
-            Button={ContextureButton}
+          <ModalPicker
+            {...{ Modal, Picker, Button }}
             label={nodeField ? nodeLabel : 'Pick a Field'}
             options={fieldsToOptions(fields)}
             // TODO: consider type options in case this isn't safe, e.g. a field/type change action

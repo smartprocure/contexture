@@ -3,6 +3,7 @@ import { observable } from 'mobx'
 import { Provider } from 'mobx-react'
 import DDContext from './DragDrop/DDContext'
 import { Component } from '../utils/mobx-react-utils'
+import { Modal as DefaultModal, NestedPicker } from '../layout/'
 import Group from './Group'
 import styles from '../styles'
 
@@ -30,6 +31,8 @@ export default DDContext(
       fields,
       types = {},
       Button = 'button',
+      Modal = DefaultModal,
+      Picker = NestedPicker,
       mapNodeToProps,
       MissingTypeComponent,
     }) => (
@@ -39,7 +42,7 @@ export default DDContext(
       >
         <div style={{ background }}>
           {state.getNode(path) && (
-            <Group node={state.getNode(path)} tree={state} isRoot={true} />
+            <Group node={state.getNode(path)} tree={state} isRoot={true}  {...{ Button, Modal, Picker }} />
           )}
           <Button
             onClick={() => {
