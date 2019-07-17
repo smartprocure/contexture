@@ -1,3 +1,6 @@
+# 1.54.1
+* GreyVest: Standardize FieldPicker modal across FilterList & QueryBuilder
+
 # 1.54.0
 * Add one line support for the TagsInput component
 
