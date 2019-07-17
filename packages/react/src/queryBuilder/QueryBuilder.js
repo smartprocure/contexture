@@ -42,7 +42,12 @@ export default DDContext(
       >
         <div style={{ background }}>
           {state.getNode(path) && (
-            <Group node={state.getNode(path)} tree={state} isRoot={true}  {...{ Button, Modal, Picker }} />
+            <Group
+              node={state.getNode(path)}
+              tree={state}
+              isRoot={true}
+              {...{ Button, Modal, Picker }}
+            />
           )}
           <Button
             onClick={() => {

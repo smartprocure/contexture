@@ -2,7 +2,13 @@ import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
 import { inject, observer } from 'mobx-react'
-import { ModalPicker, Modal as DefaultModal, NestedPicker, Dynamic, Grid } from '../layout/'
+import {
+  ModalPicker,
+  Modal as DefaultModal,
+  NestedPicker,
+  Dynamic,
+  Grid,
+} from '../layout/'
 import { fieldsToOptions } from '../FilterAdder'
 import DefaultMissingTypeComponent from '../DefaultMissingTypeComponent'
 import { get } from '../utils/mobx-utils'

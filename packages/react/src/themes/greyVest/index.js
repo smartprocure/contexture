@@ -898,7 +898,7 @@ export let TagsInput = defaultProps({ TagComponent })(BaseTagsInput)
 let FieldPicker = defaultProps({
   Input,
   Highlight,
-  Item: FilterListItem
+  Item: FilterListItem,
 })(NestedPicker)
 
 export let ExampleTypes = ExampleTypeConstructor({
@@ -947,7 +947,7 @@ export let FilterList = defaultProps({
   Icon,
   ListItem,
   MissingTypeComponent,
-  Picker: FieldPicker
+  Picker: FieldPicker,
 })(BaseFilterList)
 
 export let AddableFilterList = props => (
@@ -963,9 +963,11 @@ export let FiltersBox = props => (
   </div>
 )
 
-export let QueryBuilder = defaultProps({ Button, MissingTypeComponent, Picker: FieldPicker })(
-  QueryBuilderComponent
-)
+export let QueryBuilder = defaultProps({
+  Button,
+  MissingTypeComponent,
+  Picker: FieldPicker,
+})(QueryBuilderComponent)
 
 export let SearchFilters = defaultProps({ QueryBuilder, FiltersBox })(
   BaseSearchFilters
