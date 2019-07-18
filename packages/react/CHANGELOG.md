@@ -1,3 +1,6 @@
+# 1.54.1
+* New helper function `newNodeFromField`
+
 # 1.54.0
 * Add one line support for the TagsInput component
 

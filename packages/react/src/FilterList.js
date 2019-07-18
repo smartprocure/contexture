@@ -15,7 +15,7 @@ import InjectTreeNode from './utils/injectTreeNode'
 import DefaultIcon from './DefaultIcon'
 import DefaultMissingTypeComponent from './DefaultMissingTypeComponent'
 import { bdJoin } from './styles/generic'
-import { newNodeFromType, changeNodeField } from './utils/search'
+import { newNodeFromType, newNodeFromField } from './utils/search'
 
 export let FilterActions = withStateLens({ modal: false })(
   observer(
@@ -25,7 +25,10 @@ export let FilterActions = withStateLens({ modal: false })(
           <Picker
             options={fieldsToOptions(fields)}
             onChange={field => {
-              changeNodeField(tree, node, field)
+              tree.replace(
+                node.path,
+                newNodeFromField({ field, fields, key: node.key })
+              )
               F.off(modal)()
             }}
           />
