@@ -1,3 +1,6 @@
+# 1.54.1
+* Update max-height / max-width for modal component
+
 # 1.54.0
 * Add one line support for the TagsInput component
 
