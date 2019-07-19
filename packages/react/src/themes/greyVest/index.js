@@ -595,6 +595,9 @@ export let GVStyle = () => (
         padding: 5px;
       }
 
+      .panel-tree-picker {
+        max-height: 640px;
+      }
       .panel-tree-picker > div {
         border-right: solid 1px #eef0f1;
       }
@@ -668,9 +671,9 @@ export let GVStyle = () => (
       /* Modals */
       .default-modal-wrap {
         width: auto;
-        max-width: 640px;
+        max-width: 800px;
         border: 30px solid white;
-        overflow-x: auto;
+        overflow: auto;
       }
 
       /* FilterButtonList */
