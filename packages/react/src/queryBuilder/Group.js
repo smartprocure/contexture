@@ -25,6 +25,7 @@ let GroupItem = FilterDragSource(args => {
     connectDragSource,
     //connectDragPreview, isDragging
   } = args
+  let Component = child.children ? Group : Rule
   return connectDragSource(
     <div
       style={{
@@ -38,11 +39,7 @@ let GroupItem = FilterDragSource(args => {
           {...{ node, child, tree, parent, index, parentState: state }}
         />
       )}
-      {child.children ? (
-        <Group node={child} tree={tree} parent={node} />
-      ) : (
-        <Rule {...{ ...args, parent: node, node: child }} />
-      )}
+      <Component {...args} node={child} parent={node} />
     </div>
   )
 })

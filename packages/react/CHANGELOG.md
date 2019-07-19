@@ -1,5 +1,11 @@
-# 1.54.1
+# 1.54.3
 * Allow to pass-through props from TagsQuery to the actual input in TagsInput
+
+# 1.54.2
+* GreyVest: Standardize FieldPicker modal across FilterList & QueryBuilder
+
+# 1.54.1
+* Update max-height / max-width for modal component
 
 # 1.54.0
 * Add one line support for the TagsInput component
