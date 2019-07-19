@@ -25,10 +25,7 @@ export let FilterActions = withStateLens({ modal: false })(
           <Picker
             options={fieldsToOptions(fields)}
             onChange={field => {
-              tree.replace(
-                node.path,
-                transformNodeFromField({ field, fields })
-              )
+              tree.replace(node.path, transformNodeFromField({ field, fields }))
               F.off(modal)()
             }}
           />

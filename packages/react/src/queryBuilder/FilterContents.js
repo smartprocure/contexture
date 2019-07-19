@@ -40,10 +40,7 @@ let FilterContents = inject(_.defaults)(
             label={nodeField ? nodeLabel : 'Pick a Field'}
             options={fieldsToOptions(fields)}
             onChange={field =>
-              tree.replace(
-                node.path,
-                transformNodeFromField({ field, fields })
-              )
+              tree.replace(node.path, transformNodeFromField({ field, fields }))
             }
           />
           {nodeField && (
