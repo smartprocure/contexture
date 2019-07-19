@@ -595,6 +595,9 @@ export let GVStyle = () => (
         padding: 5px;
       }
 
+      .panel-tree-picker {
+        max-height: 640px;
+      }
       .panel-tree-picker > div {
         border-right: solid 1px #eef0f1;
       }
@@ -668,9 +671,9 @@ export let GVStyle = () => (
       /* Modals */
       .default-modal-wrap {
         width: auto;
-        max-width: 640px;
+        max-width: 800px;
         border: 30px solid white;
-        overflow-x: auto;
+        overflow: auto;
       }
 
       /* FilterButtonList */
@@ -895,15 +898,19 @@ let TagComponent = defaultProps({
 })(Tag)
 export let TagsInput = defaultProps({ TagComponent })(BaseTagsInput)
 
+let FieldPicker = defaultProps({
+  Input,
+  Highlight,
+  Item: FilterListItem,
+})(NestedPicker)
+
 export let ExampleTypes = ExampleTypeConstructor({
   Button,
   Input,
   Checkbox,
   RadioList,
   Table,
-  FieldPicker: defaultProps({ Input, Highlight, Item: FilterListItem })(
-    NestedPicker
-  ),
+  FieldPicker,
   ListGroupItem,
   TagsInput,
   Icon,
@@ -938,9 +945,13 @@ export let MissingTypeComponent = InjectTreeNode(({ node = {} }) => (
     </ErrorText>
   </Flex>
 ))
-export let FilterList = defaultProps({ Icon, ListItem, MissingTypeComponent })(
-  BaseFilterList
-)
+
+export let FilterList = defaultProps({
+  Icon,
+  ListItem,
+  MissingTypeComponent,
+  Picker: FieldPicker,
+})(BaseFilterList)
 
 export let AddableFilterList = props => (
   <>
@@ -955,9 +966,11 @@ export let FiltersBox = props => (
   </div>
 )
 
-export let QueryBuilder = defaultProps({ Button, MissingTypeComponent })(
-  QueryBuilderComponent
-)
+export let QueryBuilder = defaultProps({
+  Button,
+  MissingTypeComponent,
+  Picker: FieldPicker,
+})(QueryBuilderComponent)
 
 export let SearchFilters = defaultProps({ QueryBuilder, FiltersBox })(
   BaseSearchFilters

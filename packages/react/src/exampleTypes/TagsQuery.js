@@ -21,6 +21,7 @@ let TagsQuery = ({
   Select = DefaultSelect,
   Button = 'button',
   placeholder,
+  ...props
 }) => {
   let getTag = tag => _.find({ [tagValueField]: tag }, node.tags)
   let TagQueryPopever = observer(({ tag }) => {
@@ -123,6 +124,7 @@ let TagsQuery = ({
       submit={tree.triggerUpdate}
       placeholder={placeholder}
       PopoverContents={TagQueryPopever}
+      {...props}
     />
   )
 }
