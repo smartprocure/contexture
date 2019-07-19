@@ -898,15 +898,19 @@ let TagComponent = defaultProps({
 })(Tag)
 export let TagsInput = defaultProps({ TagComponent })(BaseTagsInput)
 
+let FieldPicker = defaultProps({
+  Input,
+  Highlight,
+  Item: FilterListItem,
+})(NestedPicker)
+
 export let ExampleTypes = ExampleTypeConstructor({
   Button,
   Input,
   Checkbox,
   RadioList,
   Table,
-  FieldPicker: defaultProps({ Input, Highlight, Item: FilterListItem })(
-    NestedPicker
-  ),
+  FieldPicker,
   ListGroupItem,
   TagsInput,
   Icon,
@@ -941,9 +945,13 @@ export let MissingTypeComponent = InjectTreeNode(({ node = {} }) => (
     </ErrorText>
   </Flex>
 ))
-export let FilterList = defaultProps({ Icon, ListItem, MissingTypeComponent })(
-  BaseFilterList
-)
+
+export let FilterList = defaultProps({
+  Icon,
+  ListItem,
+  MissingTypeComponent,
+  Picker: FieldPicker,
+})(BaseFilterList)
 
 export let AddableFilterList = props => (
   <>
@@ -958,9 +966,11 @@ export let FiltersBox = props => (
   </div>
 )
 
-export let QueryBuilder = defaultProps({ Button, MissingTypeComponent })(
-  QueryBuilderComponent
-)
+export let QueryBuilder = defaultProps({
+  Button,
+  MissingTypeComponent,
+  Picker: FieldPicker,
+})(QueryBuilderComponent)
 
 export let SearchFilters = defaultProps({ QueryBuilder, FiltersBox })(
   BaseSearchFilters
