@@ -16,9 +16,7 @@ let FilterAdder = ({ tree, node, path, fields, Picker, uniqueFields }) => {
   return (
     <Picker
       options={options}
-      onChange={field => {
-        tree.add(path, newNodeFromField({ field, fields }))
-      }}
+      onChange={field => tree.add(path, newNodeFromField({ field, fields }))}
     />
   )
 }

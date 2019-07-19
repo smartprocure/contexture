@@ -7,7 +7,7 @@ import { fieldsToOptions } from '../FilterAdder'
 import DefaultMissingTypeComponent from '../DefaultMissingTypeComponent'
 import { defaultProps } from 'recompose'
 import { get } from '../utils/mobx-utils'
-import { newNodeFromType, newNodeFromField } from '../utils/search'
+import { newNodeFromType, transformNodeFromField } from '../utils/search'
 
 let FieldPicker = defaultProps({
   Modal,
@@ -42,7 +42,7 @@ let FilterContents = inject(_.defaults)(
             onChange={field =>
               tree.replace(
                 node.path,
-                newNodeFromField({ key: node.key, field, fields })
+                transformNodeFromField({ field, fields })
               )
             }
           />

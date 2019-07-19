@@ -18,16 +18,20 @@ export let newNodeFromType = _.curry((type, fields, node) => ({
   ...defaultNodeProps(node.field, fields, type),
 }))
 
-export let newNodeFromField = ({ key, field, fields, ...rest }) => {
+export let newNodeFromField = ({ field, fields, ...optionalNodeProps }) => {
   let type = _.get([field, 'typeDefault'], fields)
   return {
     type,
     field,
-    key: key || _.uniqueId('add'),
     ...defaultNodeProps(field, fields, type),
-    ...rest,
+    ...optionalNodeProps,
   }
 }
+
+export let transformNodeFromField = args => node => ({
+  ..._.pick('key', node),
+  ...newNodeFromField(args),
+})
 
 export let indent = (Tree, parent, node, skipDefaultNode) => {
   // Reactors:
