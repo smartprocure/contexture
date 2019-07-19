@@ -13,6 +13,7 @@ import {
   getResults,
   inferSchema,
 } from '../utils/schema'
+import { newNodeFromField } from '../utils/search'
 
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
@@ -332,11 +333,7 @@ let ResultTable = InjectTreeNode(
       includes,
       addOptions: fieldsToOptions(hiddenFields),
       addFilter: field =>
-        tree.add(criteria, {
-          key: _.uniqueId('add'),
-          field,
-          type: _.find({ field }, schema).typeDefault,
-        }),
+        tree.add(criteria, newNodeFromField({ field, fields })),
       tree,
       node,
       mutate,

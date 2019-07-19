@@ -1,3 +1,6 @@
+# 1.54.4
+* New helper function `newNodeFromField`
+
 # 1.54.3
 * Allow to pass-through props from TagsQuery to the actual input in TagsInput
 

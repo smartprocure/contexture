@@ -12,7 +12,7 @@ import {
 import { fieldsToOptions } from '../FilterAdder'
 import DefaultMissingTypeComponent from '../DefaultMissingTypeComponent'
 import { get } from '../utils/mobx-utils'
-import { newNodeFromType, changeNodeField } from '../utils/search'
+import { newNodeFromType, transformNodeFromField } from '../utils/search'
 
 let FilterContents = inject(_.defaults)(
   observer(
@@ -27,7 +27,9 @@ let FilterContents = inject(_.defaults)(
       mapNodeToProps = _.noop,
       MissingTypeComponent = DefaultMissingTypeComponent,
     }) => {
-      // `get` allows us to create a dependency on field before we know it exists (because the client will only add it if it's a type that uses it as it wouldn't make sense for something like `results`)
+      // `get` allows us to create a dependency on field before we know it
+      // exists (because the client will only add it if it's a type that uses it
+      // as it wouldn't make sense for something like `results`)
       let nodeField = get(node, 'field')
       let typeOptions = _.get([nodeField, 'typeOptions'], fields) || []
       if (node.type && !_.includes(node.type, typeOptions))
@@ -39,8 +41,9 @@ let FilterContents = inject(_.defaults)(
             {...{ Modal, Picker, Button }}
             label={nodeField ? nodeLabel : 'Pick a Field'}
             options={fieldsToOptions(fields)}
-            // TODO: consider type options in case this isn't safe, e.g. a field/type change action
-            onChange={field => changeNodeField(tree, node, field)}
+            onChange={field =>
+              tree.replace(node.path, transformNodeFromField({ field, fields }))
+            }
           />
           {nodeField && (
             <div style={{ margin: '0 5px' }}>
