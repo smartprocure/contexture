@@ -80,6 +80,7 @@ let TagsInput = withState('state', 'setState', () =>
       splitCommas,
       PopoverContents,
       style,
+      ...props
     }) => {
       let containerRef
       let inputRef
@@ -175,6 +176,7 @@ let TagsInput = withState('state', 'setState', () =>
                 }}
                 value={state.currentInput}
                 placeholder={placeholder}
+                {...props}
               />
             </Flex>
             {PopoverContents && (

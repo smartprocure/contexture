@@ -1,3 +1,6 @@
+# 1.54.3
+* Allow to pass-through props from TagsQuery to the actual input in TagsInput
+
 # 1.54.2
 * GreyVest: Standardize FieldPicker modal across FilterList & QueryBuilder
 
