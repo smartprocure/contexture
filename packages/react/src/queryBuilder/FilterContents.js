@@ -12,7 +12,7 @@ import {
 import { fieldsToOptions } from '../FilterAdder'
 import DefaultMissingTypeComponent from '../DefaultMissingTypeComponent'
 import { get } from '../utils/mobx-utils'
-import { newNodeFromType, transformNodeFromField } from '../utils/search'
+import { newNodeFromType, transformNodeFromField, getTypeLabelOptions } from '../utils/search'
 
 let FilterContents = inject(_.defaults)(
   observer(
@@ -65,7 +65,7 @@ let FilterContents = inject(_.defaults)(
                       label: 'Select Type',
                       disabled: node.type,
                     },
-                    ...F.autoLabelOptions(typeOptions),
+                    ...getTypeLabelOptions(tree, typeOptions)
                   ]
                 )}
               </select>

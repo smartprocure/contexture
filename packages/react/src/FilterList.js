@@ -15,7 +15,7 @@ import InjectTreeNode from './utils/injectTreeNode'
 import DefaultIcon from './DefaultIcon'
 import DefaultMissingTypeComponent from './DefaultMissingTypeComponent'
 import { bdJoin } from './styles/generic'
-import { newNodeFromType, transformNodeFromField, getTypeLabel } from './utils/search'
+import { newNodeFromType, transformNodeFromField, getTypeLabel, getTypeLabelOptions } from './utils/search'
 
 export let FilterActions = withStateLens({ modal: false })(
   observer(
@@ -51,7 +51,7 @@ export let FilterActions = withStateLens({ modal: false })(
             _.flow(
               _.getOr([], [node.field, 'typeOptions']),
               _.without([node.type]),
-              _.map(type => ({ label: getTypeLabel(tree, type), value: type }))
+              getTypeLabelOptions(tree)
             )(fields)
           )}
           <div className="filter-actions-separator" />
