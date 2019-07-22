@@ -15,62 +15,71 @@ import InjectTreeNode from './utils/injectTreeNode'
 import DefaultIcon from './DefaultIcon'
 import DefaultMissingTypeComponent from './DefaultMissingTypeComponent'
 import { bdJoin } from './styles/generic'
-import { newNodeFromType, transformNodeFromField, getTypeLabel, getTypeLabelOptions } from './utils/search'
+import {
+  newNodeFromType,
+  transformNodeFromField,
+  getTypeLabel,
+  getTypeLabelOptions,
+} from './utils/search'
 
 export let FilterActions = withStateLens({ modal: false })(
   observer(
     ({ node, tree, fields, Item, Popover, popover, Modal, Picker, modal }) => {
       let typeOptions = _.flow(
         _.getOr([], [node.field, 'typeOptions']),
-        _.without([node.type]),
+        _.without([node.type])
       )(fields)
 
       return (
-      <>
-        <Modal isOpen={modal}>
-          <Picker
-            options={fieldsToOptions(fields)}
-            onChange={field => {
-              tree.replace(node.path, transformNodeFromField({ field, fields }))
-              F.off(modal)()
-            }}
-          />
-        </Modal>
-        <Popover isOpen={popover} className="filter-actions-popover">
-          {!_.isEmpty(typeOptions) &&
-            <>
-              <Item className="filter-actions-selected-type">
-                Filter type: <strong>{getTypeLabel(tree, node.type)}</strong>
-              </Item>
-              {_.map(
-                x => (
-                  <Item
-                    key={x.value}
-                    onClick={() =>
-                      tree.replace(
-                        node.path,
-                        newNodeFromType(x.value, fields, node)
-                      )
-                    }
-                  >
-                    —Change to {x.label}
-                  </Item>
-                ),
-                getTypeLabelOptions(tree, typeOptions)
-              )}
-              <div className="filter-actions-separator" />
-            </>
-          }
-          <Item onClick={F.on(modal)}>Pick Field</Item>
-          {/* If only contexture-client diffed the tree before sending a request... */}
-          {(node.hasValue || false) && (
-            <Item onClick={() => tree.clear(node.path)}>Clear Filter</Item>
-          )}
-          <Item onClick={() => tree.remove(node.path)}>Delete Filter</Item>
-        </Popover>
-      </>
-    )
-  })
+        <>
+          <Modal isOpen={modal}>
+            <Picker
+              options={fieldsToOptions(fields)}
+              onChange={field => {
+                tree.replace(
+                  node.path,
+                  transformNodeFromField({ field, fields })
+                )
+                F.off(modal)()
+              }}
+            />
+          </Modal>
+          <Popover isOpen={popover} className="filter-actions-popover">
+            {!_.isEmpty(typeOptions) && (
+              <>
+                <Item className="filter-actions-selected-type">
+                  Filter type: <strong>{getTypeLabel(tree, node.type)}</strong>
+                </Item>
+                {_.map(
+                  x => (
+                    <Item
+                      key={x.value}
+                      onClick={() =>
+                        tree.replace(
+                          node.path,
+                          newNodeFromType(x.value, fields, node)
+                        )
+                      }
+                    >
+                      —Change to {x.label}
+                    </Item>
+                  ),
+                  getTypeLabelOptions(tree, typeOptions)
+                )}
+                <div className="filter-actions-separator" />
+              </>
+            )}
+            <Item onClick={F.on(modal)}>Pick Field</Item>
+            {/* If only contexture-client diffed the tree before sending a request... */}
+            {(node.hasValue || false) && (
+              <Item onClick={() => tree.clear(node.path)}>Clear Filter</Item>
+            )}
+            <Item onClick={() => tree.remove(node.path)}>Delete Filter</Item>
+          </Popover>
+        </>
+      )
+    }
+  )
 )
 
 export let Label = inject(_.pick('tree'))(
