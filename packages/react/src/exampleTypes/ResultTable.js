@@ -265,12 +265,25 @@ Header.displayName = 'Header'
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
 let TableBody = observer(
-  ({ node, visibleFields, Modal, Table, Row, schema }) => (
+  ({
+    node,
+    visibleFields,
+    fields,
+    hiddenFields,
+    Modal,
+    Table,
+    Row,
+    schema,
+  }) => (
     <tbody>
       {!!getResults(node).length &&
         _.map(
           x => (
-            <Row key={x._id}>
+            <Row
+              key={x._id}
+              record={getRecord(x)}
+              {...{ fields, visibleFields, hiddenFields }}
+            >
               {_.map(
                 ({ field, display = x => x, Cell = 'td' }) => (
                   <Cell key={field}>
@@ -299,71 +312,98 @@ let TableBody = observer(
 )
 TableBody.displayName = 'TableBody'
 
+let Tr = props => (
+  <tr
+    {..._.omit(['record', 'fields', 'visibleFields', 'hiddenFields'], props)}
+  />
+)
+
 let ResultTable = InjectTreeNode(
-  observer(({ // Props
-    fields, infer, path, criteria, node, tree, Table = 'table', HeaderCell, Modal, ListGroupItem, FieldPicker, typeComponents, mapNodeToProps = () => ({}), Icon = DefaultIcon, Row = 'tr' }) => {
-    // From Provider // Theme/Components
-    let mutate = tree.mutate(path)
-    // NOTE infer + add columns does not work together (except for anything explicitly passed in)
-    //   When removing a field, it's not longer on the record, so infer can't pick it up since it runs per render
-    let schema = _.flow(
-      _.merge(infer && inferSchema(node)),
-      applyDefaults,
-      _.values,
-      _.orderBy('order', 'desc')
-    )(fields)
-    let includes = getIncludes(schema, node)
-    let isIncluded = x => _.includes(x.field, includes)
-    let visibleFields = _.flow(
-      _.map(field => _.find({ field }, schema)),
-      _.compact
-    )(includes)
-    let hiddenFields = _.reject(isIncluded, schema)
-
-    let headerProps = {
-      Modal,
-      FieldPicker,
-      ListGroupItem,
-      typeComponents,
-      HeaderCell,
-      Icon,
-      mapNodeToProps,
+  observer(
+    ({
       fields,
-      visibleFields,
-      includes,
-      addOptions: fieldsToOptions(hiddenFields),
-      addFilter: field =>
-        tree.add(criteria, newNodeFromField({ field, fields })),
-      tree,
-      node,
-      mutate,
+      infer,
+      path,
       criteria,
-    }
+      node,
+      tree,
+      Table = 'table',
+      HeaderCell,
+      Modal,
+      ListGroupItem,
+      FieldPicker,
+      typeComponents,
+      mapNodeToProps = () => ({}),
+      Icon = DefaultIcon,
+      Row = Tr,
+    }) => {
+      // From Provider // Theme/Components
+      let mutate = tree.mutate(path)
+      // NOTE infer + add columns does not work together (except for anything explicitly passed in)
+      //   When removing a field, it's not longer on the record, so infer can't pick it up since it runs per render
+      let schema = _.flow(
+        _.merge(infer && inferSchema(node)),
+        applyDefaults,
+        _.values,
+        _.orderBy('order', 'desc')
+      )(fields)
+      let includes = getIncludes(schema, node)
+      let isIncluded = x => _.includes(x.field, includes)
+      let visibleFields = _.flow(
+        _.map(field => _.find({ field }, schema)),
+        _.compact
+      )(includes)
+      let hiddenFields = _.reject(isIncluded, schema)
 
-    return (
-      <Table>
-        <thead>
-          <tr>
-            {F.mapIndexed(
-              x => (
-                <Header key={x.field} field={x} {...headerProps} />
-              ),
-              visibleFields
-            )}
-            <HighlightedColumnHeader node={node} />
-          </tr>
-        </thead>
-        <TableBody
-          Row={Row}
-          node={node}
-          visibleFields={visibleFields}
-          Modal={Modal}
-          Table={Table}
-          schema={schema}
-        />
-      </Table>
-    )
-  })
+      let headerProps = {
+        Modal,
+        FieldPicker,
+        ListGroupItem,
+        typeComponents,
+        HeaderCell,
+        Icon,
+        mapNodeToProps,
+        fields,
+        visibleFields,
+        includes,
+        addOptions: fieldsToOptions(hiddenFields),
+        addFilter: field =>
+          tree.add(criteria, newNodeFromField({ field, fields })),
+        tree,
+        node,
+        mutate,
+        criteria,
+      }
+
+      return (
+        <Table>
+          <thead>
+            <tr>
+              {F.mapIndexed(
+                x => (
+                  <Header key={x.field} field={x} {...headerProps} />
+                ),
+                visibleFields
+              )}
+              <HighlightedColumnHeader node={node} />
+            </tr>
+          </thead>
+          <TableBody
+            {...{
+              Row,
+              node,
+              fields,
+              visibleFields,
+              hiddenFields,
+              Modal,
+              Table,
+              schema,
+            }}
+          />
+        </Table>
+      )
+    }
+  )
 )
 ResultTable.displayName = 'ResultTable'
 

@@ -47,3 +47,10 @@ export let indent = (Tree, parent, node, skipDefaultNode) => {
     Tree.add(parent ? [...parent.path, key] : [key], blankNode())
   return Tree.getNode([...parent.path, key])
 }
+
+export let getTypeLabel = (tree, type) =>
+  _.getOr(F.autoLabel(type), ['types', type, 'label'], tree)
+
+export let getTypeLabelOptions = _.curry((tree, types) =>
+  _.map(type => ({ label: getTypeLabel(tree, type), value: type }), types)
+)

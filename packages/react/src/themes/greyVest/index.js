@@ -211,10 +211,6 @@ export let GVStyle = () => (
         align-items: center;
         cursor: pointer;
       }
-      .gv-checkbox.checked {
-        background-color: transparent;
-        border-color: transparent;
-      }
       .gv-checkbox i {
         font-size: 14px;
         font-weight: bold;
@@ -235,6 +231,8 @@ export let GVStyle = () => (
       }
       .gv-button.gv-checkbutton .gv-checkbox.checked {
         color: #0076de;
+        background-color: transparent;
+        border-color: transparent;
       }
 
       /* Radio Buttons */
@@ -563,7 +561,7 @@ export let GVStyle = () => (
         lineHeight: 1.4rem;
       }
       .filter-actions-selected-type {
-        font-weight: bold;
+        opacity: 0.7;
         color: initial !important;
         cursor: default !important;
       }
