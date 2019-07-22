@@ -265,12 +265,12 @@ Header.displayName = 'Header'
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
 let TableBody = observer(
-  ({ node, visibleFields, Modal, Table, Row, schema }) => (
+  ({ node, visibleFields, fields, hiddenFields, Modal, Table, Row, schema }) => (
     <tbody>
       {!!getResults(node).length &&
         _.map(
           x => (
-            <Row key={x._id}>
+            <Row key={x._id} record={getRecord(x)} {...{fields, visibleFields, hiddenFields}}>
               {_.map(
                 ({ field, display = x => x, Cell = 'td' }) => (
                   <Cell key={field}>
@@ -299,9 +299,11 @@ let TableBody = observer(
 )
 TableBody.displayName = 'TableBody'
 
+let Tr = props => <tr {..._.omit(['record', 'fields', 'visibleFields', 'hiddenFields'], props)} />
+
 let ResultTable = InjectTreeNode(
-  observer(({ // Props
-    fields, infer, path, criteria, node, tree, Table = 'table', HeaderCell, Modal, ListGroupItem, FieldPicker, typeComponents, mapNodeToProps = () => ({}), Icon = DefaultIcon, Row = 'tr' }) => {
+  observer(({
+    fields, infer, path, criteria, node, tree, Table = 'table', HeaderCell, Modal, ListGroupItem, FieldPicker, typeComponents, mapNodeToProps = () => ({}), Icon = DefaultIcon, Row = Tr }) => {
     // From Provider // Theme/Components
     let mutate = tree.mutate(path)
     // NOTE infer + add columns does not work together (except for anything explicitly passed in)
@@ -354,12 +356,7 @@ let ResultTable = InjectTreeNode(
           </tr>
         </thead>
         <TableBody
-          Row={Row}
-          node={node}
-          visibleFields={visibleFields}
-          Modal={Modal}
-          Table={Table}
-          schema={schema}
+          {...{Row, node, fields, visibleFields, hiddenFields, Modal, Table, schema}}
         />
       </Table>
     )
