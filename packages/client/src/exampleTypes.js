@@ -24,6 +24,7 @@ let twoLevelMatch = {
 
 export default stampKey('type', {
   facet: {
+    label: 'List',
     validate: validateValues,
     reactors: {
       values: 'others',
@@ -60,6 +61,7 @@ export default stampKey('type', {
     },
   },
   tagsText: {
+    label: 'Text',
     validate: validateValues,
     reactors: {
       values: 'others',
@@ -84,6 +86,7 @@ export default stampKey('type', {
     },
   },
   tagsQuery: {
+    label: 'Matches',
     validate: x => x.tags.length,
     reactors: {
       join: 'others',
