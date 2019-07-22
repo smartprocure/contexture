@@ -159,24 +159,25 @@ export let ContextTree = _.curry(
       )
     }
 
+    let actionProps = {
+      getNode,
+      flat,
+      dispatch,
+      snapshot,
+      extend,
+      types,
+      initNode,
+      initObject,
+    }
+
     let TreeInstance = {
       serialize: () => serialize(snapshot(tree), {}),
-      dispatch,
-      getNode,
       tree,
+      ...actionProps,
       addActions: create =>
         F.extendOn(
           TreeInstance,
-          create({
-            getNode,
-            flat,
-            dispatch,
-            snapshot,
-            extend,
-            types,
-            initNode,
-            initObject,
-          })
+          create(actionProps)
         ),
       addReactors: create => F.extendOn(customReactors, create()),
       onResult,
