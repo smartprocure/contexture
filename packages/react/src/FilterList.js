@@ -15,7 +15,7 @@ import InjectTreeNode from './utils/injectTreeNode'
 import DefaultIcon from './DefaultIcon'
 import DefaultMissingTypeComponent from './DefaultMissingTypeComponent'
 import { bdJoin } from './styles/generic'
-import { newNodeFromType, transformNodeFromField } from './utils/search'
+import { newNodeFromType, transformNodeFromField, getTypeLabel } from './utils/search'
 
 export let FilterActions = withStateLens({ modal: false })(
   observer(
@@ -32,7 +32,7 @@ export let FilterActions = withStateLens({ modal: false })(
         </Modal>
         <Popover isOpen={popover} className="filter-actions-popover">
           <Item className="filter-actions-selected-type">
-            {F.autoLabel(node.type)}
+            Filter type: <strong>{getTypeLabel(tree, node.type)}</strong>
           </Item>
           {_.map(
             x => (
@@ -48,12 +48,11 @@ export let FilterActions = withStateLens({ modal: false })(
                 —Change to {x.label}
               </Item>
             ),
-            F.autoLabelOptions(
-              _.without(
-                [node.type],
-                _.get([node.field, 'typeOptions'], fields)
-              ) || []
-            )
+            _.flow(
+              _.getOr([], [node.field, 'typeOptions']),
+              _.without([node.type]),
+              _.map(type => ({ label: getTypeLabel(tree, type), value: type }))
+            )(fields)
           )}
           <div className="filter-actions-separator" />
           <Item onClick={F.on(modal)}>Pick Field</Item>

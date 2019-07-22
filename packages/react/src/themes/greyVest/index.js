@@ -563,7 +563,7 @@ export let GVStyle = () => (
         lineHeight: 1.4rem;
       }
       .filter-actions-selected-type {
-        font-weight: bold;
+        opacity: 0.7;
         color: initial !important;
         cursor: default !important;
       }
