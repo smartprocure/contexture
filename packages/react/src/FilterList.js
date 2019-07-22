@@ -19,7 +19,13 @@ import { newNodeFromType, transformNodeFromField, getTypeLabel, getTypeLabelOpti
 
 export let FilterActions = withStateLens({ modal: false })(
   observer(
-    ({ node, tree, fields, Item, Popover, popover, Modal, Picker, modal }) => (
+    ({ node, tree, fields, Item, Popover, popover, Modal, Picker, modal }) => {
+      let typeOptions = _.flow(
+        _.getOr([], [node.field, 'typeOptions']),
+        _.without([node.type]),
+      )(fields)
+
+      return (
       <>
         <Modal isOpen={modal}>
           <Picker
@@ -31,30 +37,30 @@ export let FilterActions = withStateLens({ modal: false })(
           />
         </Modal>
         <Popover isOpen={popover} className="filter-actions-popover">
-          <Item className="filter-actions-selected-type">
-            Filter type: <strong>{getTypeLabel(tree, node.type)}</strong>
-          </Item>
-          {_.map(
-            x => (
-              <Item
-                key={x.value}
-                onClick={() =>
-                  tree.replace(
-                    node.path,
-                    newNodeFromType(x.value, fields, node)
-                  )
-                }
-              >
-                —Change to {x.label}
+          {!_.isEmpty(typeOptions) &&
+            <>
+              <Item className="filter-actions-selected-type">
+                Filter type: <strong>{getTypeLabel(tree, node.type)}</strong>
               </Item>
-            ),
-            _.flow(
-              _.getOr([], [node.field, 'typeOptions']),
-              _.without([node.type]),
-              getTypeLabelOptions(tree)
-            )(fields)
-          )}
-          <div className="filter-actions-separator" />
+              {_.map(
+                x => (
+                  <Item
+                    key={x.value}
+                    onClick={() =>
+                      tree.replace(
+                        node.path,
+                        newNodeFromType(x.value, fields, node)
+                      )
+                    }
+                  >
+                    —Change to {x.label}
+                  </Item>
+                ),
+                getTypeLabelOptions(tree, typeOptions)
+              )}
+              <div className="filter-actions-separator" />
+            </>
+          }
           <Item onClick={F.on(modal)}>Pick Field</Item>
           {/* If only contexture-client diffed the tree before sending a request... */}
           {(node.hasValue || false) && (
@@ -64,7 +70,7 @@ export let FilterActions = withStateLens({ modal: false })(
         </Popover>
       </>
     )
-  )
+  })
 )
 
 export let Label = inject(_.pick('tree'))(
