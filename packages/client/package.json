@@ -1,10 +1,11 @@
 {
   "name": "contexture-client",
-  "version": "2.25.0",
+  "version": "2.26.0",
   "description": "The Contexture (aka ContextTree) Client",
   "main": "lib/contexture-client.js",
   "scripts": {
     "build": "webpack",
+    "watch": "npm run build -- --watch",
     "lint": "eslint src test",
     "lint-ci": "npm run lint -- -o lint-results.json -f json",
     "lint-fix": "npm run lint -- --fix",

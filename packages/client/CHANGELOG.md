@@ -1,3 +1,6 @@
+# 2.26.0
+* Expose additional properties on tree instance: `flat`, `snapshot`, `extend`, `types`, `initNode`, `initObject`
+
 # 2.25.0
 * Add automatic generation and deduplication of default node keys during tree init and `add` action
 * Add support for `autoKey` type property to specify type-specific autokey functions
