@@ -1,7 +1,6 @@
 import F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
-import { observer } from 'mobx-react'
 import {
   Dynamic,
   Flex,
@@ -11,10 +10,10 @@ import {
 } from './layout'
 import DefaultIcon from './DefaultIcon'
 import DefaultMissingTypeComponent from './DefaultMissingTypeComponent'
-import InjectTreeNode from './utils/injectTreeNode'
+import { withNode, withLoader } from './utils/injectTreeNode'
 import styles from './styles'
 
-let FilterButtonItem = ({
+let FilterButtonItem = withLoader(({
   node,
   tree,
   fields,
@@ -60,7 +59,7 @@ let FilterButtonItem = ({
       </Modal>
     </>
   )
-}
+})
 
 let GroupBox = ({ nodeJoinColor, children, nested, className }) => (
   <Flex
@@ -73,50 +72,48 @@ let GroupBox = ({ nodeJoinColor, children, nested, className }) => (
   </Flex>
 )
 
-let FilterButtonList = InjectTreeNode(
-  observer(
-    ({
-      node,
-      tree,
-      fields = {},
-      mapNodeToProps = _.noop,
-      className = 'filter-button-list',
-      Button = 'button',
-      CheckButton = DefaultCheckButton,
-      Icon = DefaultIcon,
-      MissingTypeComponent = DefaultMissingTypeComponent,
-      Modal = DefaultModal,
-      Popover = DefaultPopover,
-      nested = false,
-    }) => (
-      <GroupBox
-        {...{ nested, className }}
-        nodeJoinColor={node && styles.joinColor(node)}
-      >
-        {_.map(child => {
-          let Component = child.children ? FilterButtonList : FilterButtonItem
-          return (
-            <Component
-              key={child.path}
-              nested
-              {...{
-                tree,
-                node: child,
-                fields,
-                mapNodeToProps,
-                Button,
-                CheckButton,
-                Icon,
-                MissingTypeComponent,
-                Modal,
-                Popover,
-                className,
-              }}
-            />
-          )
-        }, _.get('children', node))}
-      </GroupBox>
-    )
+let FilterButtonList = withNode(
+  ({
+    node,
+    tree,
+    fields = {},
+    mapNodeToProps = _.noop,
+    className = 'filter-button-list',
+    Button = 'button',
+    CheckButton = DefaultCheckButton,
+    Icon = DefaultIcon,
+    MissingTypeComponent = DefaultMissingTypeComponent,
+    Modal = DefaultModal,
+    Popover = DefaultPopover,
+    nested = false,
+  }) => (
+    <GroupBox
+      {...{ nested, className }}
+      nodeJoinColor={node && styles.joinColor(node)}
+    >
+      {_.map(child => {
+        let Component = child.children ? FilterButtonList : FilterButtonItem
+        return (
+          <Component
+            key={child.path}
+            nested
+            {...{
+              tree,
+              node: child,
+              fields,
+              mapNodeToProps,
+              Button,
+              CheckButton,
+              Icon,
+              MissingTypeComponent,
+              Modal,
+              Popover,
+              className,
+            }}
+          />
+        )
+      }, _.get('children', node))}
+    </GroupBox>
   ),
   { allowEmptyNode: true }
 )

@@ -10,7 +10,7 @@ import {
   StepsAccordion as DefaultStepsAccordion,
   AccordionStep,
 } from '../layout'
-import InjectTreeNode from '../utils/injectTreeNode'
+import { withNode } from '../utils/injectTreeNode'
 
 let generateStepTitle = (node, title) => i => (
   <h1>
@@ -23,7 +23,7 @@ let generateStepTitle = (node, title) => i => (
   </h1>
 )
 
-let QueryWizard = InjectTreeNode(
+let QueryWizard = withNode(
   ({
     StepsAccordion = DefaultStepsAccordion,
     FilterButtonList = DefaultFilterButtonList,
