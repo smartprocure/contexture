@@ -1,6 +1,7 @@
 # 2.0.0
 * Bump mobx-react to latest version
 * Remove usages of mobx-react Provider
+* Refactor `injectTreeNode` into `withNode` and `withLoader`
 
 # 1.54.6
 * Tweaks and fixes to QueryWizard & StepsAccordion
