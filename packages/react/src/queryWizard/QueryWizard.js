@@ -44,6 +44,7 @@ let QueryWizard = InjectTreeNode(
       {F.mapIndexed(
         (child, i) => (
           <AccordionStep
+            key={i}
             isRequired={i === 0}
             title={generateStepTitle(node, title)}
           >

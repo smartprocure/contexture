@@ -1,3 +1,6 @@
+# 1.54.6
+* Tweaks and fixes to QueryWizard & StepsAccordion
+
 # 1.54.5
 * Add support for type labels to type selection options in FilterList/QueryBuilder
 * ResultTable: Pass additional props to Row

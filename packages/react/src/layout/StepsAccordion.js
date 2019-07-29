@@ -53,18 +53,19 @@ export let AccordionStep = ({
       className={`accordion-step ${className ? className : ''}`}
       style={style}
     >
-      <Flex alignItems="center" justifyContent="space-between">
+      <Flex
+        alignItems="center"
+        justifyContent="space-between"
+        onClick={F.sets(isOpen ? -1 : step, currentStep)}
+        style={{ cursor: 'pointer' }}
+      >
         <Flex alignItems="center">
           <div className="accordion-step-title">
             {F.callOrReturn(title, step)}
           </div>
           {!isRequired && <em style={{ marginLeft: 6 }}>(Optional)</em>}
         </Flex>
-        <div
-          className="filter-field-label-icon"
-          style={{ cursor: 'pointer' }}
-          onClick={F.sets(isOpen ? -1 : step, currentStep)}
-        >
+        <div className="filter-field-label-icon">
           <Icon icon={isOpen ? 'FilterListCollapse' : 'FilterListExpand'} />
         </div>
       </Flex>
