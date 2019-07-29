@@ -2,7 +2,6 @@ import _ from 'lodash/fp'
 import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
-import { Provider } from 'mobx-react'
 import Contexture, { updateSchemas } from '../utils/contexture'
 import { Flex, Awaiter, SpacedList, FilterList } from '../../../src'
 import { Button, Adder, Pager, ExampleTypes } from '../../DemoControls'
@@ -107,62 +106,64 @@ let whiteBox = {
 export default () => (
   <Awaiter promise={schemas}>
     {schemas => (
-      <Provider tree={tree}>
-        <div style={{ background: '#f4f4f4' }}>
-          <SpacedList>
-            <Flex style={{ alignItems: 'center', ...blueBar }}>
-              <div style={{ flex: 4 }}>
-                <Query path={['searchRoot', 'searchQuery']} />
-              </div>
-              <div style={{ flex: 1, marginLeft: '5px', display: 'flex' }}>
-                <input
-                  type="checkbox"
-                  checked={state.autoUpdate}
-                  onChange={e => {
-                    let val = !!e.target.checked
-                    tree.disableAutoUpdate = !val
-                    state.autoUpdate = val
-                  }}
-                />
-                {!state.autoUpdate && (
-                  <Button onClick={tree.triggerUpdate}>Search</Button>
-                )}
-              </div>
-            </Flex>
-            <Flex>
-              <div style={{ flex: 1, ...whiteBox }}>
-                <FilterList
-                  path={['searchRoot', 'criteria']}
+      <div style={{ background: '#f4f4f4' }}>
+        <SpacedList>
+          <Flex style={{ alignItems: 'center', ...blueBar }}>
+            <div style={{ flex: 4 }}>
+              <Query tree={tree} path={['searchRoot', 'searchQuery']} />
+            </div>
+            <div style={{ flex: 1, marginLeft: '5px', display: 'flex' }}>
+              <input
+                type="checkbox"
+                checked={state.autoUpdate}
+                onChange={e => {
+                  let val = !!e.target.checked
+                  tree.disableAutoUpdate = !val
+                  state.autoUpdate = val
+                }}
+              />
+              {!state.autoUpdate && (
+                <Button onClick={tree.triggerUpdate}>Search</Button>
+              )}
+            </div>
+          </Flex>
+          <Flex>
+            <div style={{ flex: 1, ...whiteBox }}>
+              <FilterList
+                tree={tree}
+                path={['searchRoot', 'criteria']}
+                fields={schemas.movies.fields}
+                typeComponents={TypeMap}
+              />
+              <Adder
+                tree={tree}
+                path={['searchRoot', 'criteria']}
+                fields={schemas.movies.fields}
+                uniqueFields
+              />
+            </div>
+            <div style={{ flex: 4, maxWidth: '80%', ...whiteBox }}>
+              <ResultCount tree={tree} path={['searchRoot', 'results']} />
+              <DateHistogram
+                tree={tree}
+                path={['searchRoot', 'releases']}
+                format={formatYear}
+              />
+              <TermsStats tree={tree} path={['searchRoot', 'genreScores']} />
+              <div style={{ overflowX: 'auto' }}>
+                <ResultTable
+                  tree={tree}
+                  path={['searchRoot', 'results']}
                   fields={schemas.movies.fields}
-                  typeComponents={TypeMap}
-                />
-                <Adder
-                  path={['searchRoot', 'criteria']}
-                  fields={schemas.movies.fields}
-                  uniqueFields
                 />
               </div>
-              <div style={{ flex: 4, maxWidth: '80%', ...whiteBox }}>
-                <ResultCount path={['searchRoot', 'results']} />
-                <DateHistogram
-                  path={['searchRoot', 'releases']}
-                  format={formatYear}
-                />
-                <TermsStats path={['searchRoot', 'genreScores']} />
-                <div style={{ overflowX: 'auto' }}>
-                  <ResultTable
-                    path={['searchRoot', 'results']}
-                    fields={schemas.movies.fields}
-                  />
-                </div>
-                <Flex style={{ justifyContent: 'space-around' }}>
-                  <Pager path={['searchRoot', 'results']} />
-                </Flex>
-              </div>
-            </Flex>
-          </SpacedList>
-        </div>
-      </Provider>
+              <Flex style={{ justifyContent: 'space-around' }}>
+                <Pager tree={tree} path={['searchRoot', 'results']} />
+              </Flex>
+            </div>
+          </Flex>
+        </SpacedList>
+      </div>
     )}
   </Awaiter>
 )

@@ -1,6 +1,5 @@
 import React from 'react'
 import { observable } from 'mobx'
-import { Provider } from 'mobx-react'
 import DDContext from './DragDrop/DDContext'
 import { Component } from '../utils/mobx-react-utils'
 import { Modal as DefaultModal, NestedPicker } from '../layout/'
@@ -36,28 +35,31 @@ export default DDContext(
       mapNodeToProps,
       MissingTypeComponent,
     }) => (
-      <Provider
-        ContextureButton={Button}
-        {...{ fields, types, mapNodeToProps, MissingTypeComponent }}
-      >
-        <div style={{ background }}>
-          {state.getNode(path) && (
-            <Group
-              node={state.getNode(path)}
-              tree={state}
-              isRoot={true}
-              {...{ Button, Modal, Picker }}
-            />
-          )}
-          <Button
-            onClick={() => {
-              state.adding = !state.adding
+      <div style={{ background }}>
+        {state.getNode(path) && (
+          <Group
+            node={state.getNode(path)}
+            tree={state}
+            isRoot={true}
+            {...{
+              Button,
+              Modal,
+              Picker,
+              fields,
+              types,
+              mapNodeToProps,
+              MissingTypeComponent,
             }}
-          >
-            {state.adding ? 'Cancel' : 'Add Filter'}
-          </Button>
-        </div>
-      </Provider>
+          />
+        )}
+        <Button
+          onClick={() => {
+            state.adding = !state.adding
+          }}
+        >
+          {state.adding ? 'Cancel' : 'Add Filter'}
+        </Button>
+      </div>
     ),
     'QueryBuilder'
   ),

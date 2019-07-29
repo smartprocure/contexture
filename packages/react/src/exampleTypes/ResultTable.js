@@ -337,7 +337,7 @@ let ResultTable = InjectTreeNode(
       Icon = DefaultIcon,
       Row = Tr,
     }) => {
-      // From Provider // Theme/Components
+      // From Theme/Components
       let mutate = tree.mutate(path)
       // NOTE infer + add columns does not work together (except for anything explicitly passed in)
       //   When removing a field, it's not longer on the record, so infer can't pick it up since it runs per render

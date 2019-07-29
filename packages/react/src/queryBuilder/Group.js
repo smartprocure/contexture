@@ -13,7 +13,7 @@ import { FilterMoveTarget } from './DragDrop/MoveTargets'
 let { background } = styles
 import { blankNode } from '../utils/search'
 
-let GroupItem = FilterDragSource(args => {
+let GroupItem = FilterDragSource(props => {
   let {
     child,
     node,
@@ -23,8 +23,7 @@ let GroupItem = FilterDragSource(args => {
     isRoot,
     parent,
     connectDragSource,
-    //connectDragPreview, isDragging
-  } = args
+  } = props
   let Component = child.children ? Group : Rule
   return connectDragSource(
     <div
@@ -39,7 +38,7 @@ let GroupItem = FilterDragSource(args => {
           {...{ node, child, tree, parent, index, parentState: state }}
         />
       )}
-      <Component {...args} node={child} parent={node} />
+      <Component {...props} node={child} parent={node} />
     </div>
   )
 })
@@ -52,8 +51,8 @@ let Group = Component(
       removeHover: false,
     }),
   }),
-  args => {
-    let { parent, node, tree, state, isRoot } = args
+  props => {
+    let { parent, node, tree, state, isRoot } = props
     return (
       <Indentable parent={parent} indent={state.lens.wrapHover}>
         <div
@@ -76,11 +75,11 @@ let Group = Component(
             {F.mapIndexed(
               (child, index) => (
                 <div key={child.key + index}>
-                  <FilterIndentTarget {...{ ...args, child, index }} />
+                  <FilterIndentTarget {...{ ...props, child, index }} />
                   {/*<FilterMoveTarget index={index} tree={tree} />*/}
-                  <GroupItem {...{ ...args, child, index }} />
+                  <GroupItem {...{ ...props, child, index }} />
                   {/*index !== (tree.children.length-1) &&*/ !child.children && (
-                    <FilterMoveTarget {...{ ...args, child, index }} />
+                    <FilterMoveTarget {...{ ...props, child, index }} />
                   )}
                 </div>
               ),

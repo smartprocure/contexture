@@ -1,3 +1,7 @@
+# 1.54.6
+* Bump mobx-react to latest version
+* Remove usages of mobx-react Provider
+
 # 1.54.5
 * Add support for type labels to type selection options in FilterList/QueryBuilder
 * ResultTable: Pass additional props to Row

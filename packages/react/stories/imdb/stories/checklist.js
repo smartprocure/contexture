@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
-import { Provider, observer } from 'mobx-react'
+import { observer } from 'mobx-react'
 import Contexture, { updateSchemas } from '../utils/contexture'
 import { withStateLens } from '../../../src/utils/mobx-react-utils'
 import { FilterList, Flex, Awaiter, SpacedList, Grid } from '../../../src'
@@ -99,73 +99,74 @@ let CheckboxResultTable = withStateLens({ selected: [] })(
 export default () => (
   <Awaiter promise={schemas}>
     {schemas => (
-      <Provider tree={tree}>
-        <Grid gap="22px" columns="1fr 4fr" style={{ margin: '0 22px' }}>
-          <div>
-            <h1>Filters</h1>
-            <SpacedList>
-              <FilterList
-                path={['root', 'criteria']}
-                fields={schemas.movies.fields}
-                typeComponents={TypeMap}
-                mapNodeToProps={field =>
-                  field.key === 'searchNumber' ? { showBestRange: true } : {}
-                }
+      <Grid gap="22px" columns="1fr 4fr" style={{ margin: '0 22px' }}>
+        <div>
+          <h1>Filters</h1>
+          <SpacedList>
+            <FilterList
+              tree={tree}
+              path={['root', 'criteria']}
+              fields={schemas.movies.fields}
+              typeComponents={TypeMap}
+              mapNodeToProps={field =>
+                field.key === 'searchNumber' ? { showBestRange: true } : {}
+              }
+            />
+            <Adder
+              tree={tree}
+              path={['root', 'criteria']}
+              fields={schemas.movies.fields}
+              uniqueFields
+            />
+          </SpacedList>
+        </div>
+        <div>
+          <Grid columns="1fr 25px 150px" style={{ alignItems: 'center' }}>
+            <TagsQuery tree={tree} path={['root', 'bar']} />
+            {!state.autoUpdate && (
+              <Button onClick={tree.triggerUpdate} primary>
+                Search
+              </Button>
+            )}
+          </Grid>
+          <Flex
+            style={{
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <h1>
+              Results (<ResultCount tree={tree} path={['root', 'results']} />)
+            </h1>
+            <Flex>
+              <ButtonRadio
+                options={[
+                  { label: 'AutoSearch On', value: true },
+                  { label: 'AutoSearch Off', value: false },
+                ]}
+                value={state.autoUpdate}
+                onChange={val => {
+                  tree.disableAutoUpdate = !val
+                  state.autoUpdate = !!val
+                }}
               />
-              <Adder
-                path={['root', 'criteria']}
-                fields={schemas.movies.fields}
-                uniqueFields
-              />
-            </SpacedList>
-          </div>
-          <div>
-            <Grid columns="1fr 25px 150px" style={{ alignItems: 'center' }}>
-              <TagsQuery path={['root', 'bar']} />
-              {!state.autoUpdate && (
-                <Button onClick={tree.triggerUpdate} primary>
-                  Search
-                </Button>
-              )}
-            </Grid>
-            <Flex
-              style={{
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <h1>
-                Results (<ResultCount path={['root', 'results']} />)
-              </h1>
-              <Flex>
-                <ButtonRadio
-                  options={[
-                    { label: 'AutoSearch On', value: true },
-                    { label: 'AutoSearch Off', value: false },
-                  ]}
-                  value={state.autoUpdate}
-                  onChange={val => {
-                    tree.disableAutoUpdate = !val
-                    state.autoUpdate = !!val
-                  }}
-                />
-              </Flex>
             </Flex>
-            <div className="gv-box">
-              <CheckboxResultTable
-                fields={schemas[tree.tree.schema].fields}
-                path={['root', 'results']}
-                criteria={['root', 'criteria']}
-                typeComponents={TypeMap}
-                getValue="title"
-              />
-              <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>
-                <Pager path={['root', 'results']} />
-              </Flex>
-            </div>
+          </Flex>
+          <div className="gv-box">
+            <CheckboxResultTable
+              tree={tree}
+              fields={schemas[tree.tree.schema].fields}
+              path={['root', 'results']}
+              criteria={['root', 'criteria']}
+              typeComponents={TypeMap}
+              getValue="title"
+            />
+            <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>
+              <Pager tree={tree} path={['root', 'results']} />
+            </Flex>
           </div>
-        </Grid>
-      </Provider>
+        </div>
+      </Grid>
     )}
   </Awaiter>
 )
