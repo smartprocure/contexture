@@ -8,30 +8,32 @@ let { Facet, Number, Query, ResultCount, DateHistogram } = ExampleTypes
 
 let formatYear = x => new Date(x).getUTCFullYear()
 
-export default () => (
-  <ContextureProvider schema="movies" types={types} service={service}>
+export default () => {
+  let tree = ContextureProvider({ schema: 'movies', types, service })
+  return (
     <DarkBox>
       <SpacedList>
-        <Query field="title" />
+        <Query tree={tree} field="title" />
         <Grid gap="5px" columns="1fr 4fr">
           <div>
             <SpacedList>
               <div>
                 <b>MetaScore</b>
-                <Number field="metaScore" min={0} max={100} />
+                <Number tree={tree} field="metaScore" min={0} max={100} />
               </div>
               <div>
                 <b>Genre</b>
-                <Facet field="genres" />
+                <Facet tree={tree} field="genres" />
               </div>
               <div>
                 <b>Actors</b>
-                <Facet field="actors" />
+                <Facet tree={tree} field="actors" />
               </div>
             </SpacedList>
           </div>
           <div>
             <DateHistogram
+              tree={tree}
               key_field="released"
               value_field="imdbVotes"
               interval="3650d"
@@ -39,16 +41,16 @@ export default () => (
             />
             <Flex style={{ justifyContent: 'space-around' }}>
               <h3>
-                <ResultCount pageSize={6} />
+                <ResultCount tree={tree} pageSize={6} />
               </h3>
             </Flex>
-            <IMDBCards path={['root', 'results']} />
+            <IMDBCards tree={tree} path={['root', 'results']} />
             <Flex style={{ justifyContent: 'space-around' }}>
-              <Pager path={['root', 'results']} />
+              <Pager tree={tree} path={['root', 'results']} />
             </Flex>
           </div>
         </Grid>
       </SpacedList>
     </DarkBox>
-  </ContextureProvider>
-)
+  )
+}

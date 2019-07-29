@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
-import { Provider, observer } from 'mobx-react'
+import { observer } from 'mobx-react'
 
 import { Awaiter, Flex, QueryBuilder } from '../../src/'
 import { Input, ExampleTypes } from '../DemoControls'
@@ -100,19 +100,20 @@ let Story = observer(() => {
                     <Debug style={{ width: '50%' }} value={tree} />
                   </Flex>
                 )}
-                <Provider tree={tree} types={TypeMap}>
-                  <div>
-                    <QueryBuilder
-                      fields={schemas[tree.tree.schema].fields}
-                      path={['root', 'criteria']}
-                    />
-                    <ResultCount path={['root', 'results']} />
-                    <ResultTable
-                      path={['root', 'results']}
-                      fields={schemas[tree.tree.schema].fields}
-                    />
-                  </div>
-                </Provider>
+                <div>
+                  <QueryBuilder
+                    tree={tree}
+                    types={TypeMap}
+                    fields={schemas[tree.tree.schema].fields}
+                    path={['root', 'criteria']}
+                  />
+                  <ResultCount tree={tree} path={['root', 'results']} />
+                  <ResultTable
+                    tree={tree}
+                    path={['root', 'results']}
+                    fields={schemas[tree.tree.schema].fields}
+                  />
+                </div>
               </div>
             )
           }

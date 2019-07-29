@@ -1,6 +1,5 @@
 import * as F from 'futil-js'
 import React from 'react'
-import { Provider } from 'mobx-react'
 import { storiesOf } from '@storybook/react'
 import { loadHereOptions, geoCodeLocation } from '../../src/utils/geo'
 import AsyncSelect from 'react-select/lib/Async'
@@ -23,28 +22,34 @@ let {
 } = ExampleTypes
 
 storiesOf('Search Components (Unthemed)|Example Types', module)
-  .addWithJSX('Full Demo', () => (
-    <div
-      style={{
-        backgroundColor: '#333',
-        color: '#AAA',
-        padding: '20px',
-        borderRadius: '10px',
-      }}
-    >
-      <Provider tree={TestTree()}>
+  .addWithJSX('Full Demo', () => {
+    let tree = TestTree()
+    return (
+      <div
+        style={{
+          backgroundColor: '#333',
+          color: '#AAA',
+          padding: '20px',
+          borderRadius: '10px',
+        }}
+      >
         <SpacedList>
-          <Query path={['query']} />
+          <Query tree={tree} path={['query']} />
           <Flex>
             <div style={{ flex: 1 }}>
               <SpacedList>
-                <TagsQuery path={['tagsQuery']} />
-                <Text path={['titleText']} />
-                <Facet path={['facet']} formatCount={x => `(${x})`} />
-                <Facet path={['facet']} display={F.autoLabel} />
-                <Number path={['number']} />
-                <Number path={['number']} />
+                <TagsQuery tree={tree} path={['tagsQuery']} />
+                <Text tree={tree} path={['titleText']} />
+                <Facet
+                  tree={tree}
+                  path={['facet']}
+                  formatCount={x => `(${x})`}
+                />
+                <Facet tree={tree} path={['facet']} display={F.autoLabel} />
+                <Number tree={tree} path={['number']} />
+                <Number tree={tree} path={['number']} />
                 <Geo
+                  tree={tree}
                   loadOptions={loadHereOptions}
                   path={['geo']}
                   AutoComplete={AsyncSelect}
@@ -54,23 +59,27 @@ storiesOf('Search Components (Unthemed)|Example Types', module)
             </div>
             <div style={{ flex: 4 }}>
               <SpacedList>
-                <DateHistogram path={['dateHistogram']} format={formatYear} />
-                <ResultCount path={['results']} />
+                <DateHistogram
+                  tree={tree}
+                  path={['dateHistogram']}
+                  format={formatYear}
+                />
+                <ResultCount tree={tree} path={['results']} />
                 <Flex
                   style={{
                     alignItems: 'baseline',
                     justifyContent: 'center',
                   }}
                 >
-                  <ResultTable path={['results']} infer />
+                  <ResultTable tree={tree} path={['results']} infer />
                 </Flex>
               </SpacedList>
             </div>
           </Flex>
         </SpacedList>
-      </Provider>
-    </div>
-  ))
+      </div>
+    )
+  })
   .addWithJSX('Geo filter & HERE maps', () => (
     <div
       style={{
@@ -80,17 +89,16 @@ storiesOf('Search Components (Unthemed)|Example Types', module)
         borderRadius: '10px',
       }}
     >
-      <Provider tree={TestTree()}>
-        <Flex style={{ flexFlow: 'column wrap' }}>
-          <div style={{ flex: 1 }}>
-            <Geo
-              placeholder="Enter address, city, state, zip or business name ..."
-              loadOptions={loadHereOptions}
-              path={['geo']}
-              AutoComplete={AsyncSelect}
-            />
-          </div>
-        </Flex>
-      </Provider>
+      <Flex style={{ flexFlow: 'column wrap' }}>
+        <div style={{ flex: 1 }}>
+          <Geo
+            tree={TestTree()}
+            placeholder="Enter address, city, state, zip or business name ..."
+            loadOptions={loadHereOptions}
+            path={['geo']}
+            AutoComplete={AsyncSelect}
+          />
+        </div>
+      </Flex>
     </div>
   ))

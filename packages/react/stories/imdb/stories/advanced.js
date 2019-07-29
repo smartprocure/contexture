@@ -1,6 +1,5 @@
 import _ from 'lodash/fp'
 import React from 'react'
-import { Provider } from 'mobx-react'
 import { fromPromise } from 'mobx-utils'
 import { QueryBuilder, Awaiter } from '../../../src'
 import Contexture, { updateSchemas } from '../utils/contexture'
@@ -54,23 +53,23 @@ let schemas = fromPromise(
 export default () => (
   <Awaiter promise={schemas}>
     {schemas => (
-      <Provider tree={tree}>
-        <div>
-          <QueryBuilder
-            types={TypeMap}
-            fields={schemas.movies.fields}
-            path={['root', 'searchRoot']}
-          />
-          <h1>
-            <ResultCount path={['root', 'results']} />
-          </h1>
-          <ResultTable
-            path={['root', 'results']}
-            fields={schemas.movies.fields}
-          />
-          <pre>{JSON.stringify(tree, null, 2)}</pre>
-        </div>
-      </Provider>
+      <div>
+        <QueryBuilder
+          tree={tree}
+          types={TypeMap}
+          fields={schemas.movies.fields}
+          path={['root', 'searchRoot']}
+        />
+        <h1>
+          <ResultCount tree={tree} path={['root', 'results']} />
+        </h1>
+        <ResultTable
+          tree={tree}
+          path={['root', 'results']}
+          fields={schemas.movies.fields}
+        />
+        <pre>{JSON.stringify(tree, null, 2)}</pre>
+      </div>
     )}
   </Awaiter>
 )

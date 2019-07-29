@@ -12,11 +12,9 @@ let Rule = ({
   node,
   parent,
   tree,
-  Button,
-  Modal,
-  Picker,
   connectDragSource,
   isDragging,
+  ...props
 }) =>
   connectDragSource(
     <div style={styles.w100}>
@@ -35,7 +33,7 @@ let Rule = ({
           }}
           {...F.domLens.hover(state.lens.ruleHover)}
         >
-          <FilterContents {...{ node, tree, Button, Modal, Picker }} />
+          <FilterContents {...{ node, tree, ...props }} />
           <div
             style={{
               ...(state.ruleHover || { visibility: 'hidden' }),

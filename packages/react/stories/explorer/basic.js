@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
-import { Provider, observer } from 'mobx-react'
+import { observer } from 'mobx-react'
 
 import { QueryBuilder, FilterList, Awaiter, Flex } from '../../src/'
 import { Input, ClampedHTML, Adder, Pager, ExampleTypes } from '../DemoControls'
@@ -139,44 +139,45 @@ let Story = observer(() => {
                         state.overrides = JSON.parse(e.target.value)
                       }}
                     />
-                    <Provider tree={tree} types={TypeMap}>
-                      <QueryBuilder
-                        fields={schemas[tree.tree.schema].fields}
-                        path={['root', 'criteria']}
-                      />
-                    </Provider>
+                    <QueryBuilder
+                      tree={tree}
+                      types={TypeMap}
+                      fields={schemas[tree.tree.schema].fields}
+                      path={['root', 'criteria']}
+                    />
                   </div>
                 )}
-                <Provider tree={tree} types={TypeMap}>
-                  <div>
-                    <Flex>
-                      <div style={{ flex: 1, ...whiteBox }}>
-                        <FilterList
-                          path={['root', 'criteria']}
+                <div>
+                  <Flex>
+                    <div style={{ flex: 1, ...whiteBox }}>
+                      <FilterList
+                        tree={tree}
+                        path={['root', 'criteria']}
+                        fields={schemas[tree.tree.schema].fields}
+                        typeComponents={TypeMap}
+                      />
+                      <Adder
+                        tree={tree}
+                        path={['root', 'criteria']}
+                        fields={schemas[tree.tree.schema].fields}
+                        uniqueFields
+                      />
+                    </div>
+                    <div style={{ flex: 4, maxWidth: '80%', ...whiteBox }}>
+                      <ResultCount tree={tree} path={['root', 'results']} />
+                      <div style={{ overflowX: 'auto' }}>
+                        <ResultTable
+                          tree={tree}
+                          path={['root', 'results']}
                           fields={schemas[tree.tree.schema].fields}
-                          typeComponents={TypeMap}
-                        />
-                        <Adder
-                          path={['root', 'criteria']}
-                          fields={schemas[tree.tree.schema].fields}
-                          uniqueFields
                         />
                       </div>
-                      <div style={{ flex: 4, maxWidth: '80%', ...whiteBox }}>
-                        <ResultCount path={['root', 'results']} />
-                        <div style={{ overflowX: 'auto' }}>
-                          <ResultTable
-                            path={['root', 'results']}
-                            fields={schemas[tree.tree.schema].fields}
-                          />
-                        </div>
-                        <Flex style={{ justifyContent: 'space-around' }}>
-                          <Pager path={['root', 'results']} />
-                        </Flex>
-                      </div>
-                    </Flex>
-                  </div>
-                </Provider>
+                      <Flex style={{ justifyContent: 'space-around' }}>
+                        <Pager tree={tree} path={['root', 'results']} />
+                      </Flex>
+                    </div>
+                  </Flex>
+                </div>
               </div>
             )
           }
