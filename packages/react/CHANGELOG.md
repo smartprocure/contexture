@@ -1,4 +1,4 @@
-# 1.54.6
+# 2.0.0
 * Bump mobx-react to latest version
 * Remove usages of mobx-react Provider
 
