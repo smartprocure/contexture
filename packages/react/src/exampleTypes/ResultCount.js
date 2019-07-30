@@ -6,7 +6,7 @@ let ResultCount = contexturify(
       ? display(node.context.response.totalRecords)
       : 'No Results',
   {},
-  { style: { display: 'inline-block' }} // style for the loader div
+  { style: { display: 'inline-block' } } // style for the loader div
 )
 
 export default ResultCount
