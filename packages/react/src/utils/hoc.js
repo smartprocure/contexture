@@ -9,9 +9,9 @@ export let withNode = (Component, { allowEmptyNode = false } = {}) => ({
   path,
   ...props
 }) => {
-  node = node || tree.getNode(path)
+  node = node || (tree && path && tree.getNode(path))
 
-  if (!node && path && !allowEmptyNode)
+  if (!node && !allowEmptyNode)
     throw Error(`Node not provided, and couldn't find node at ${path}`)
 
   return <Component {...{ tree, node, path, ...props }} />
@@ -24,11 +24,13 @@ export let withLoader = Component =>
     </Loader>
   ))
 
-export let contexturify = _.flow(
-  withNode,
+export let contexturify = (render, config) => _.flow(
+  observer,
+  x => withNode(x, config),
   withLoader,
-)
+)(render)
 
+// this is used for the text components
 export let withTreeLens = Component =>
   ({ tree, node, prop = 'value', ...props }) => (
     <Component {...{ tree, node, lens: tree.lens(node.path, prop), ...props }} />

@@ -1,11 +1,10 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import { observer } from 'mobx-react'
 import DefaultSelect from '../layout/Select'
 import { contexturify } from '../utils/hoc'
 
 let DateComponent = contexturify(
-  observer(({ tree, node, ranges, Select = DefaultSelect }) => (
+  ({ tree, node, ranges, Select = DefaultSelect }) => (
     <Select
       value={(_.find({ from: node.from, to: node.to }, ranges) || {}).label}
       onChange={event => {
@@ -17,7 +16,7 @@ let DateComponent = contexturify(
       }}
       options={_.map(x => ({ value: x.label, label: x.label }), ranges)}
     />
-  ))
+  )
 )
 DateComponent.displayName = 'DateRangePicker'
 
