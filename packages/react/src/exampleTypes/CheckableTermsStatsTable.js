@@ -1,13 +1,12 @@
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import React from 'react'
-import { observer } from 'mobx-react'
 import { Column } from '../layout/ExpandableTable'
-import InjectTreeNode from '../utils/injectTreeNode'
+import { contexturify } from '../utils/hoc'
 import TermsStatsTable from './TermsStatsTable'
 
-let CheckableTermsStatsTable = InjectTreeNode(
-  observer(({ node, children, Checkbox, getValue, selected, ...props }) => {
+let CheckableTermsStatsTable = contexturify(
+  ({ node, children, Checkbox, getValue, selected, ...props }) => {
     let results = _.result('context.terms.slice', node)
     let allChecked = _.size(results) === _.size(F.view(selected))
     let checkAll = F.sets(
@@ -36,8 +35,6 @@ let CheckableTermsStatsTable = InjectTreeNode(
       />
     )
   })
-)
-
 CheckableTermsStatsTable.displayName = 'CheckableTermsStatsTable'
 
 export default CheckableTermsStatsTable

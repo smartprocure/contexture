@@ -1,10 +1,8 @@
 import React from 'react'
-import { observer } from 'mobx-react'
-import injectTreeNode from '../utils/injectTreeNode'
-import { exampleTypes } from 'contexture-client'
+import { contexturify } from '../utils/hoc'
 
-let Query = injectTreeNode(
-  observer(({ tree, node, TextInput = 'input' }) => (
+let Query = contexturify(
+  ({ tree, node, TextInput = 'input' }) => (
     <TextInput
       value={node.query || ''}
       onChange={e =>
@@ -14,8 +12,7 @@ let Query = injectTreeNode(
       }
       placeholder="Search"
     />
-  )),
-  exampleTypes.query
+  )
 )
 Query.displayName = 'Query'
 

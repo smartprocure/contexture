@@ -1,5 +1,5 @@
 import { inject } from 'mobx-react'
-import injectTreeNode from '../utils/injectTreeNode'
+import { withNode, withLoader } from '../utils/hoc'
 import LensInput from '../layout/LensInput'
 
 let Text = injectTreeNode(

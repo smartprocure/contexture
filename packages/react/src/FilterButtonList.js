@@ -10,7 +10,7 @@ import {
 } from './layout'
 import DefaultIcon from './DefaultIcon'
 import DefaultMissingTypeComponent from './DefaultMissingTypeComponent'
-import { withNode, withLoader } from './utils/injectTreeNode'
+import { withNode, withLoader } from './utils/hoc'
 import styles from './styles'
 
 let FilterButtonItem = withLoader(

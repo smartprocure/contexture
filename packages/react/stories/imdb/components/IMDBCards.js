@@ -2,7 +2,7 @@ import _ from 'lodash/fp'
 import React from 'react'
 import { observer } from 'mobx-react'
 import { Flex } from '../../../src/layout/Flex'
-import InjectTreeNode from '../../../src/utils/injectTreeNode'
+import { withNode, withLoader } from '../../../src/utils/hoc'
 
 let IMDBCards = InjectTreeNode(
   observer(({ node }) => (

@@ -2,8 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
-import injectTreeNode from '../utils/injectTreeNode'
-import { exampleTypes } from 'contexture-client'
+import { contexturify } from '../utils/hoc'
 import { bgJoin } from '../styles/generic'
 import { TagsInput as DefaultTagsInput } from '../layout/TagsInput'
 import DefaultRadioList from '../layout/RadioList'
@@ -129,4 +128,4 @@ let TagsQuery = ({
   )
 }
 
-export default injectTreeNode(observer(TagsQuery), exampleTypes.tagsQuery)
+export default contexturify(TagsQuery)

@@ -24,7 +24,12 @@ export let withLoader = Component =>
     </Loader>
   ))
 
-export default _.flow(
+export let contexturify = _.flow(
   withNode,
-  withLoader
+  withLoader,
 )
+
+export let withTreeLens = Component =>
+  ({ tree, node, prop = 'value', ...props }) => (
+    <Component {...{ tree, node, lens: tree.lens(node.path, prop), ...props }} />
+  )

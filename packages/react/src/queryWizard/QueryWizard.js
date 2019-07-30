@@ -10,7 +10,7 @@ import {
   StepsAccordion as DefaultStepsAccordion,
   AccordionStep,
 } from '../layout'
-import { withNode } from '../utils/injectTreeNode'
+import { withNode } from '../utils/hoc'
 
 let generateStepTitle = (node, title) => i => (
   <h1>
