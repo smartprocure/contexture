@@ -24,14 +24,19 @@ export let withLoader = Component =>
     </Loader>
   ))
 
-export let contexturify = (render, config) => _.flow(
-  observer,
-  x => withNode(x, config),
-  withLoader,
-)(render)
+export let contexturify = (render, config) =>
+  _.flow(
+    observer,
+    x => withNode(x, config),
+    withLoader
+  )(render)
 
 // this is used for the text components
-export let withTreeLens = Component =>
-  ({ tree, node, prop = 'value', ...props }) => (
-    <Component {...{ tree, node, lens: tree.lens(node.path, prop), ...props }} />
-  )
+export let withTreeLens = Component => ({
+  tree,
+  node,
+  prop = 'value',
+  ...props
+}) => (
+  <Component {...{ tree, node, lens: tree.lens(node.path, prop), ...props }} />
+)

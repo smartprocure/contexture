@@ -15,4 +15,4 @@ let Exists = ({ tree, node, RadioList = RadioListDefault }) => (
   </div>
 )
 
-export default contexturify((Exists), 'exists')
+export default contexturify(Exists, 'exists')

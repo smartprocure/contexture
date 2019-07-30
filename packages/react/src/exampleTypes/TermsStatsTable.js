@@ -73,10 +73,7 @@ let TermsStatsTable = contexturify(
                             let field = criteriaField || node.key_field
                             let filter =
                               criteria &&
-                              _.find(
-                                { field },
-                                tree.getNode(criteria).children
-                              )
+                              _.find({ field }, tree.getNode(criteria).children)
 
                             if (!filter) {
                               await tree.add(criteria, {

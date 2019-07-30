@@ -34,7 +34,8 @@ let CheckableTermsStatsTable = contexturify(
         }}
       />
     )
-  })
+  }
+)
 CheckableTermsStatsTable.displayName = 'CheckableTermsStatsTable'
 
 export default CheckableTermsStatsTable

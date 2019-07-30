@@ -21,11 +21,13 @@ let operatorOptions = F.autoLabelOptions([
   // { value: 'doesNotContain', label: 'Does Not Contain'}
 ])
 
-let Text = _.flow(contexturify, withTreeLens)(
+let Text = _.flow(
+  withTreeLens,
+  contexturify
+)(
   ({
     tree,
     node,
-    lens,
     TagsInput = DefaultTagsInput,
     Select = DefaultSelect,
     placeholder,
@@ -40,9 +42,7 @@ let Text = _.flow(contexturify, withTreeLens)(
       <div className="contexture-text">
         <Select
           value={node.operator}
-          onChange={e =>
-            tree.mutate(node.path, { operator: e.target.value })
-          }
+          onChange={e => tree.mutate(node.path, { operator: e.target.value })}
           options={operatorOptions}
         />
         <TagsInput
@@ -60,7 +60,6 @@ let Text = _.flow(contexturify, withTreeLens)(
           submit={tree.triggerUpdate}
           placeholder={placeholder}
           PopoverContents={TagPopover}
-          lens={lens}
         />
       </div>
     )

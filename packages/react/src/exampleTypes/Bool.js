@@ -1,7 +1,6 @@
 import React from 'react'
 import F from 'futil-js'
-import _ from 'lodash/fp'
-import { withNode, withLoader } from '../utils/hoc'
+import { contexturify } from '../utils/hoc'
 import RadioListDefault from '../layout/RadioList'
 
 let Bool = ({ tree, node, RadioList = RadioListDefault }) => (
@@ -16,4 +15,4 @@ let Bool = ({ tree, node, RadioList = RadioListDefault }) => (
   </div>
 )
 
-export default _.flow(withNode, withLoader)(Bool)
+export default contexturify(Bool)

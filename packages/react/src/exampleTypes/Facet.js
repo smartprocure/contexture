@@ -157,7 +157,7 @@ let Facet = contexturify(
         )}
       </Flex>
     </div>
-  ),
+  )
 )
 Facet.displayName = 'Facet'
 
