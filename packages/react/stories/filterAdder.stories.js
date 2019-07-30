@@ -31,7 +31,7 @@ let Adder = defaultProps({
 
 let mockTree = {
   add: action('add'),
-  // if falsey, injectTreeNode assumes an error
+  // if falsey, withNode assumes an error
   getNode: () => true,
 }
 
