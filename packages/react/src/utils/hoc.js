@@ -17,19 +17,19 @@ export let withNode = (Component, { allowEmptyNode = false } = {}) => ({
   return <Component {...{ tree, node, path, ...props }} />
 }
 
-export let withLoader = Component =>
+export let withLoader = (Component, loaderProps) =>
   observer(({ Loader = StripedLoader, node, ...props }) => (
-    <Loader loading={node && node.updating}>
+    <Loader loading={node && node.updating} {...loaderProps}>
       <Component node={node} {...props} />
     </Loader>
   ))
 
-export let contexturify = (render, config) =>
+export let contexturify = (Component, config, loaderProps) =>
   _.flow(
     observer,
-    x => withNode(x, config),
-    withLoader
-  )(render)
+    c => withNode(c, config),
+    c => withLoader(c, loaderProps)
+  )(Component)
 
 // this is used for the text components
 export let withTreeLens = Component => ({
