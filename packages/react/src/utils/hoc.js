@@ -19,7 +19,7 @@ export let withNode = (Component, { allowEmptyNode = false } = {}) => ({
 
 export let withLoader = Component =>
   observer(({ Loader = StripedLoader, node, ...props }) => (
-    <Loader loading={node.updating}>
+    <Loader loading={node && node.updating}>
       <Component node={node} {...props} />
     </Loader>
   ))
