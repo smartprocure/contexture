@@ -1,3 +1,6 @@
+# 1.54.7
+* TermsStatsTable: sort descending by default
+
 # 1.54.6
 * Tweaks and fixes to QueryWizard & StepsAccordion
 
