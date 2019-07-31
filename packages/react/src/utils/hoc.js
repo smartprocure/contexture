@@ -7,8 +7,7 @@ export let withNode = Component => props => {
   let { tree, node, path } = props
   node = node || (tree && path && tree.getNode(path))
 
-  if (!node)
-    throw Error(`Node not provided, and couldn't find node at ${path}`)
+  if (!node) throw Error(`Node not provided, and couldn't find node at ${path}`)
 
   return <Component {...props} node={node} />
 }
