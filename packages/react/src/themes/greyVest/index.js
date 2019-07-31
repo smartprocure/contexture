@@ -923,14 +923,14 @@ export let Pager = props => (
   />
 )
 
-export let PagedResultTable = contexturify(({ tree, node, ...props }) => (
+export let PagedResultTable = ({ tree, node, ...props }) => (
   <>
     <ExampleTypes.ResultTable tree={tree} node={node} {...props} />
     <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>
       <Pager tree={tree} node={node} />
     </Flex>
   </>
-))
+)
 PagedResultTable.displayName = 'PagedResultTable'
 
 export let MissingTypeComponent = withNode(({ node = {} }) => (
