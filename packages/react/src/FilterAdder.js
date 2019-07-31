@@ -1,7 +1,6 @@
 import _ from 'lodash/fp'
 import React from 'react'
-import { observer } from 'mobx-react'
-import InjectTreeNode from './utils/injectTreeNode'
+import { contexturify } from './utils/hoc'
 import { newNodeFromField } from './utils/search'
 
 export let fieldsToOptions = _.map(x => ({ value: x.field, ...x }))
@@ -21,4 +20,4 @@ let FilterAdder = ({ tree, node, path, fields, Picker, uniqueFields }) => {
   )
 }
 
-export default InjectTreeNode(observer(FilterAdder), { allowEmptyNode: true })
+export default contexturify(FilterAdder)

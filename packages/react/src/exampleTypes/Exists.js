@@ -1,8 +1,6 @@
 import React from 'react'
 import F from 'futil-js'
-import { observer } from 'mobx-react'
-import { exampleTypes } from 'contexture-client'
-import injectTreeNode from '../utils/injectTreeNode'
+import { contexturify } from '../utils/hoc'
 import RadioListDefault from '../layout/RadioList'
 
 let Exists = ({ tree, node, RadioList = RadioListDefault }) => (
@@ -17,4 +15,4 @@ let Exists = ({ tree, node, RadioList = RadioListDefault }) => (
   </div>
 )
 
-export default injectTreeNode(observer(Exists), exampleTypes.exists)
+export default contexturify(Exists, 'exists')

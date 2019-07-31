@@ -2,8 +2,7 @@ import _ from 'lodash/fp'
 import F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { exampleTypes } from 'contexture-client'
-import injectTreeNode from '../utils/injectTreeNode'
+import { contexturify } from '../utils/hoc'
 import ExpandableTable, { Column } from '../layout/ExpandableTable'
 import { Flex } from '../layout/Flex'
 import Select from '../layout/Select'
@@ -34,101 +33,95 @@ let SelectSize = observer(
     </Flex>
   )
 )
-let TermsStatsTable = injectTreeNode(
-  observer(
-    ({
-      node,
-      criteria,
-      criteriaField,
-      criteriaFieldLabel = '',
-      criteriaGetValue = _.identity,
-      tree,
-      children,
-      Button,
-      MoreControls = 'div',
-      Input = 'input',
-      Filter = SimpleFilter,
-      sizeOptions,
-      ...props
-    }) => (
-      <div>
-        <Flex style={{ ...toolBarStyle, margin: 40, marginBottom: 0 }}>
-          <Filter
-            Input={Input}
-            {...F.domLens.value(tree.lens(node.path, 'filter'))}
-          />
-          <SelectSize node={node} tree={tree} options={sizeOptions} />
-        </Flex>
-        <ExpandableTable
-          {...{
-            ...props,
-            children: criteria
-              ? [
-                  ..._.compact(children),
-                  <Column
-                    label={criteriaFieldLabel}
-                    expand={{
-                      display: (value, record) => (
-                        <div>
-                          <Button
-                            onClick={async () => {
-                              let field = criteriaField || node.key_field
-                              let filter =
-                                criteria &&
-                                _.find(
-                                  { field },
-                                  tree.getNode(criteria).children
-                                )
-
-                              if (!filter) {
-                                await tree.add(criteria, {
-                                  key: _.uniqueId('add'),
-                                  field,
-                                  type: 'facet',
-                                })
-                                filter = _.find(
-                                  { field },
-                                  tree.getNode(criteria).children
-                                )
-                              }
-                              await tree.mutate(filter.path, {
-                                mode: 'include',
-                                values: _.uniq([
-                                  ..._.getOr([], 'values', filter),
-                                  criteriaGetValue(record.key),
-                                ]),
-                              })
-                            }}
-                          >
-                            Add as Filter
-                          </Button>
-                          <MoreControls />
-                        </div>
-                      ),
-                    }}
-                  />,
-                ]
-              : _.compact(children),
-          }}
-          data={node.context.terms}
-          sortField={node.order}
-          sortDir={node.sortDir}
-          columnSort={column => {
-            if (column.field !== 'key' && column.enableSort) {
-              tree.mutate(node.path, {
-                order: column.field,
-                sortDir:
-                  node.order === column.field && node.sortDir === 'asc'
-                    ? 'desc'
-                    : 'asc',
-              })
-            }
-          }}
+let TermsStatsTable = contexturify(
+  ({
+    node,
+    criteria,
+    criteriaField,
+    criteriaFieldLabel = '',
+    criteriaGetValue = _.identity,
+    tree,
+    children,
+    Button,
+    MoreControls = 'div',
+    Input = 'input',
+    Filter = SimpleFilter,
+    sizeOptions,
+    ...props
+  }) => (
+    <div>
+      <Flex style={{ ...toolBarStyle, margin: 40, marginBottom: 0 }}>
+        <Filter
+          Input={Input}
+          {...F.domLens.value(tree.lens(node.path, 'filter'))}
         />
-      </div>
-    )
-  ),
-  exampleTypes.TermsStats
+        <SelectSize node={node} tree={tree} options={sizeOptions} />
+      </Flex>
+      <ExpandableTable
+        {...{
+          ...props,
+          children: criteria
+            ? [
+                ..._.compact(children),
+                <Column
+                  label={criteriaFieldLabel}
+                  expand={{
+                    display: (value, record) => (
+                      <div>
+                        <Button
+                          onClick={async () => {
+                            let field = criteriaField || node.key_field
+                            let filter =
+                              criteria &&
+                              _.find({ field }, tree.getNode(criteria).children)
+
+                            if (!filter) {
+                              await tree.add(criteria, {
+                                key: _.uniqueId('add'),
+                                field,
+                                type: 'facet',
+                              })
+                              filter = _.find(
+                                { field },
+                                tree.getNode(criteria).children
+                              )
+                            }
+                            await tree.mutate(filter.path, {
+                              mode: 'include',
+                              values: _.uniq([
+                                ..._.getOr([], 'values', filter),
+                                criteriaGetValue(record.key),
+                              ]),
+                            })
+                          }}
+                        >
+                          Add as Filter
+                        </Button>
+                        <MoreControls />
+                      </div>
+                    ),
+                  }}
+                />,
+              ]
+            : _.compact(children),
+        }}
+        data={node.context.terms}
+        sortField={node.order}
+        sortDir={node.sortDir}
+        columnSort={column => {
+          if (column.field !== 'key' && column.enableSort) {
+            tree.mutate(node.path, {
+              order: column.field,
+              sortDir:
+                node.order === column.field && node.sortDir === 'asc'
+                  ? 'desc'
+                  : 'asc',
+            })
+          }
+        }}
+      />
+    </div>
+  )
 )
 TermsStatsTable.displayName = 'TermsStatsTable'
 

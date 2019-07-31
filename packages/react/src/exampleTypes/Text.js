@@ -1,12 +1,11 @@
-import { inject } from 'mobx-react'
-import injectTreeNode from '../utils/injectTreeNode'
+import _ from 'lodash/fp'
+import { contexturify, withTreeLens } from '../utils/hoc'
 import LensInput from '../layout/LensInput'
 
-let Text = injectTreeNode(
-  inject((context, { tree, node, prop = 'value' }) => ({
-    lens: tree.lens(node.path, prop),
-  }))(LensInput)
-)
+let Text = _.flow(
+  withTreeLens,
+  contexturify
+)(LensInput)
 Text.displayName = 'Text'
 
 export default Text

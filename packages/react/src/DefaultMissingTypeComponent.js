@@ -1,7 +1,7 @@
 import React from 'react'
-import InjectTreeNode from './utils/injectTreeNode'
+import { withNode } from './utils/hoc'
 
-let DefaultMissingTypeComponent = InjectTreeNode(({ node = {} }) => (
+let DefaultMissingTypeComponent = withNode(({ node = {} }) => (
   <div>
     Type <b>{node.type}</b> is not supported (for key <i>{node.key}</i>)
   </div>

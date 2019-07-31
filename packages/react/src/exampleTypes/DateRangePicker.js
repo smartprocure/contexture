@@ -1,12 +1,10 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import { observer } from 'mobx-react'
-import { exampleTypes } from 'contexture-client'
-import injectTreeNode from '../utils/injectTreeNode'
 import DefaultSelect from '../layout/Select'
+import { contexturify } from '../utils/hoc'
 
-let DateComponent = injectTreeNode(
-  observer(({ tree, node, ranges, Select = DefaultSelect }) => (
+let DateComponent = contexturify(
+  ({ tree, node, ranges, Select = DefaultSelect }) => (
     <Select
       value={(_.find({ from: node.from, to: node.to }, ranges) || {}).label}
       onChange={event => {
@@ -18,8 +16,7 @@ let DateComponent = injectTreeNode(
       }}
       options={_.map(x => ({ value: x.label, label: x.label }), ranges)}
     />
-  )),
-  exampleTypes.date
+  )
 )
 DateComponent.displayName = 'DateRangePicker'
 

@@ -11,7 +11,7 @@ import {
 } from './layout'
 import { fieldsToOptions } from './FilterAdder'
 import { withStateLens } from './utils/mobx-react-utils'
-import InjectTreeNode from './utils/injectTreeNode'
+import { contexturify } from './utils/hoc'
 import DefaultIcon from './DefaultIcon'
 import DefaultMissingTypeComponent from './DefaultMissingTypeComponent'
 import { bdJoin } from './styles/generic'
@@ -167,101 +167,96 @@ export let Label = inject(_.pick('tree'))(
 )
 Label.displayName = 'Label'
 
-export let FieldLabel = InjectTreeNode(
-  observer(
-    ({
-      tree,
-      node,
-      node: { field } = {},
-      fields,
-      Icon,
-      ListItem,
-      Modal,
-      Picker,
-      label,
-    }) => (
-      <Label
-        tree={tree}
-        node={node}
-        Icon={Icon}
-        ListItem={ListItem}
-        Modal={Modal}
-        Picker={Picker}
-        fields={fields}
-      >
-        {label || _.get([field, 'label'], fields) || field}
-      </Label>
-    )
+export let FieldLabel = contexturify(
+  ({
+    tree,
+    node,
+    node: { field } = {},
+    fields,
+    Icon,
+    ListItem,
+    Modal,
+    Picker,
+    label,
+  }) => (
+    <Label
+      tree={tree}
+      node={node}
+      Icon={Icon}
+      ListItem={ListItem}
+      Modal={Modal}
+      Picker={Picker}
+      fields={fields}
+    >
+      {label || _.get([field, 'label'], fields) || field}
+    </Label>
   )
 )
 FieldLabel.displayName = 'FieldLabel'
 
-export let FilterList = InjectTreeNode(
-  observer(
-    ({
-      tree,
-      node,
-      typeComponents: types = {},
-      fields,
-      mapNodeToProps = _.noop,
-      mapNodeToLabel = _.noop,
-      Icon = DefaultIcon,
-      ListItem = 'div',
-      Modal = BaseModal,
-      Picker = NestedPicker,
-      className,
-      style,
-      MissingTypeComponent = DefaultMissingTypeComponent,
-    }) => (
-      <div style={style} className={className}>
-        {_.map(
-          child =>
-            child.children ? (
-              <FilterList
-                key={child.path}
+export let FilterList = contexturify(
+  ({
+    tree,
+    node,
+    typeComponents: types = {},
+    fields,
+    mapNodeToProps = _.noop,
+    mapNodeToLabel = _.noop,
+    Icon = DefaultIcon,
+    ListItem = 'div',
+    Modal = BaseModal,
+    Picker = NestedPicker,
+    className,
+    style,
+    MissingTypeComponent = DefaultMissingTypeComponent,
+  }) => (
+    <div style={style} className={className}>
+      {_.map(
+        child =>
+          child.children ? (
+            <FilterList
+              key={child.path}
+              tree={tree}
+              node={child}
+              typeComponents={types}
+              fields={fields}
+              mapNodeToProps={mapNodeToProps}
+              mapNodeToLabel={mapNodeToLabel}
+              Icon={Icon}
+              className={'filter-list-group'}
+              style={bdJoin(child)}
+              ListItem={ListItem}
+              Modal={Modal}
+              Picker={Picker}
+            />
+          ) : (
+            <div key={child.path} className="filter-list-item">
+              <FieldLabel
                 tree={tree}
                 node={child}
-                typeComponents={types}
                 fields={fields}
-                mapNodeToProps={mapNodeToProps}
-                mapNodeToLabel={mapNodeToLabel}
                 Icon={Icon}
-                className={'filter-list-group'}
-                style={bdJoin(child)}
                 ListItem={ListItem}
                 Modal={Modal}
                 Picker={Picker}
+                label={mapNodeToLabel(child, fields, types)}
               />
-            ) : (
-              <div key={child.path} className="filter-list-item">
-                <FieldLabel
-                  tree={tree}
-                  node={child}
-                  fields={fields}
-                  Icon={Icon}
-                  ListItem={ListItem}
-                  Modal={Modal}
-                  Picker={Picker}
-                  label={mapNodeToLabel(child, fields, types)}
-                />
-                {!child.paused && (
-                  <div className="filter-list-item-contents">
-                    <Dynamic
-                      component={types[child.type] || MissingTypeComponent}
-                      tree={tree}
-                      node={child}
-                      path={_.toArray(child.path)}
-                      {...mapNodeToProps(child, fields, types)}
-                    />
-                  </div>
-                )}
-              </div>
-            ),
-          _.get('children', node)
-        )}
-      </div>
-    )
-  ),
-  { allowEmptyNode: true }
+              {!child.paused && (
+                <div className="filter-list-item-contents">
+                  <Dynamic
+                    component={types[child.type] || MissingTypeComponent}
+                    tree={tree}
+                    node={child}
+                    path={_.toArray(child.path)}
+                    {...mapNodeToProps(child, fields, types)}
+                  />
+                </div>
+              )}
+            </div>
+          ),
+        _.get('children', node)
+      )}
+    </div>
+  )
 )
 FilterList.displayName = 'FilterList'
