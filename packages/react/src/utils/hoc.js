@@ -27,7 +27,11 @@ export let withInlineLoader = Component =>
     </Loader>
   ))
 
-export let contexturify = _.flow(observer, withNode, withLoader)
+export let contexturify = _.flow(
+  observer,
+  withNode,
+  withLoader
+)
 
 // this is used for the text components
 export let withTreeLens = Component => ({ prop = 'value', ...props }) => (
