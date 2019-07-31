@@ -116,8 +116,7 @@ let FilterButtonList = withNode(
         )
       }, _.get('children', node))}
     </GroupBox>
-  ),
-  { allowEmptyNode: true }
+  )
 )
 
 FilterButtonList.displayName = 'FilterButtonList'

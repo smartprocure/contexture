@@ -12,19 +12,22 @@ export let withNode = Component => props => {
   return <Component {...props} node={node} />
 }
 
-export let withLoader = (Component, loaderProps) =>
+export let withLoader = Component =>
   observer(({ Loader = StripedLoader, node, ...props }) => (
-    <Loader loading={node && node.updating} {...loaderProps}>
+    <Loader loading={node && node.updating}>
       <Component node={node} {...props} />
     </Loader>
   ))
 
-export let contexturify = (Component, loaderProps) =>
-  _.flow(
-    observer,
-    withNode,
-    c => withLoader(c, loaderProps)
-  )(Component)
+// I am a band-aid, please rip me off as quickly as possible
+export let withInlineLoader = Component =>
+  observer(({ Loader = StripedLoader, node, ...props }) => (
+    <Loader loading={node && node.updating} style={{ display: 'inline-block' }}>
+      <Component node={node} {...props} />
+    </Loader>
+  ))
+
+export let contexturify = _.flow(observer, withNode, withLoader)
 
 // this is used for the text components
 export let withTreeLens = Component => ({ prop = 'value', ...props }) => (

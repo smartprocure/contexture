@@ -1,12 +1,12 @@
-import { contexturify } from '../utils/hoc'
+import _ from 'lodash/fp'
+import { observer } from 'mobx-react'
+import { withNode, withInlineLoader } from '../utils/hoc'
 
-let ResultCount = contexturify(
+let ResultCount = _.flow(observer, withNode, withInlineLoader)(
   ({ node, display = x => x }) =>
     node.context.response.results.length
       ? display(node.context.response.totalRecords)
-      : 'No Results',
-  {},
-  { style: { display: 'inline-block' } } // style for the loader div
+      : 'No Results'
 )
 
 export default ResultCount

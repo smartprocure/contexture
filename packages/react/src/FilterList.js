@@ -257,7 +257,6 @@ export let FilterList = contexturify(
         _.get('children', node)
       )}
     </div>
-  ),
-  { allowEmptyNode: true }
+  )
 )
 FilterList.displayName = 'FilterList'

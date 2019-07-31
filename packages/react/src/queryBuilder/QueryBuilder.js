@@ -63,5 +63,5 @@ export default DDContext(
     ),
     'QueryBuilder'
   ),
-  { allowEmptyNode: true }
+  { allowEmptyNode: true } // false alarm, this one's for DDContext
 )

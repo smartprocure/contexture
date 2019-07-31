@@ -20,4 +20,4 @@ let FilterAdder = ({ tree, node, path, fields, Picker, uniqueFields }) => {
   )
 }
 
-export default contexturify(FilterAdder, { allowEmptyNode: true })
+export default contexturify(FilterAdder)
