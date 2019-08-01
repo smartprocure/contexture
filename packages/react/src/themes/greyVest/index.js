@@ -3,7 +3,7 @@ import F from 'futil-js'
 import { observer } from 'mobx-react'
 import { defaultProps } from 'recompose'
 import { withStateLens } from '../../utils/mobx-react-utils'
-import { withNode, contexturify } from '../../utils/hoc'
+import { withNode } from '../../utils/hoc'
 import {
   Flex,
   TextHighlight,
@@ -923,14 +923,14 @@ export let Pager = props => (
   />
 )
 
-export let PagedResultTable = contexturify(({ tree, node, ...props }) => (
+export let PagedResultTable = ({ tree, node, ...props }) => (
   <>
     <ExampleTypes.ResultTable tree={tree} node={node} {...props} />
     <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>
       <Pager tree={tree} node={node} />
     </Flex>
   </>
-))
+)
 PagedResultTable.displayName = 'PagedResultTable'
 
 export let MissingTypeComponent = withNode(({ node = {} }) => (
