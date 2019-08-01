@@ -3,7 +3,7 @@ import F from 'futil-js'
 import { observer } from 'mobx-react'
 import { defaultProps } from 'recompose'
 import { withStateLens } from '../../utils/mobx-react-utils'
-import { withNode, contexturify } from '../../utils/hoc'
+import { withNode } from '../../utils/hoc'
 import {
   Flex,
   TextHighlight,
