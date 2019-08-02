@@ -1,3 +1,6 @@
+# 1.54.8
+* TagsInput: Better validation and input logic for new tags
+
 # 1.54.7
 * TermsStatsTable: sort descending by default
 
