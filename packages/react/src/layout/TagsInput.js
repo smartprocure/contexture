@@ -10,11 +10,14 @@ import OutsideClickHandler from 'react-outside-click-handler'
 
 let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
-let getUniqueTagsFromInput = (tag, tags, splitCommas=true) => {
+let getUniqueTagsFromInput = (tag, tags, splitCommas = true) => {
   let trimmedTag = _.trim(tag)
-  if(splitCommas && _.includes(',', trimmedTag)) {
+  if (splitCommas && _.includes(',', trimmedTag)) {
     // Extract only the unique and not present in the current tags collection tags from the string
-    let newUniqTags = _.difference(_.uniq(_.compact(_.split(',', trimmedTag))), tags)
+    let newUniqTags = _.difference(
+      _.uniq(_.compact(_.split(',', trimmedTag))),
+      tags
+    )
     return _.isEmpty(newUniqTags) ? null : newUniqTags.join(',')
   }
   return trimmedTag
@@ -152,16 +155,27 @@ let TagsInput = withState('state', 'setState', () =>
                   state.currentInput = e.target.value
                 }}
                 onBlur={() => {
-                  let input = getUniqueTagsFromInput(state.currentInput, tags, splitCommas)
+                  let input = getUniqueTagsFromInput(
+                    state.currentInput,
+                    tags,
+                    splitCommas
+                  )
                   if (isValidInput(input, tags)) {
                     addTag(input)
                     state.currentInput = ''
                   }
                 }}
                 onKeyDown={e => {
-                  let input = getUniqueTagsFromInput(state.currentInput, tags, splitCommas)
+                  let input = getUniqueTagsFromInput(
+                    state.currentInput,
+                    tags,
+                    splitCommas
+                  )
                   if (e.key === 'Enter' && !input) submit()
-                  if ((_.includes(e.key, ['Enter','Tab']) || (splitCommas && e.key === ',')) && isValidInput(input, tags)
+                  if (
+                    (_.includes(e.key, ['Enter', 'Tab']) ||
+                      (splitCommas && e.key === ',')) &&
+                    isValidInput(input, tags)
                   ) {
                     addTag(input)
                     state.currentInput = ''
