@@ -451,7 +451,7 @@ export let GVStyle = () => (
       }
       .contexture-facet > label {
         margin: 5px 0;
-        width: 340px;
+        max-width: 340px;
       }
       .contexture-facet .gv-checkbox {
         margin: 0 10px 0 0;
