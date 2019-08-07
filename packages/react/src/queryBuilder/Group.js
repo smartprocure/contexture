@@ -97,9 +97,10 @@ let Group = observer(
             )}
           </div>
         </div>
-      </Indentable>
+      </Indentable> 
     )
   }
 )
+Group.displayName = 'Group'
 
 export default Group

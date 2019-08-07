@@ -6,7 +6,7 @@ import styles from '../styles'
 import { oppositeJoin, indent } from '../utils/search'
 let { btn, joinColor, bgJoin } = styles
 
-let OperatorMenu = observer(({ node, hover, tree, parent }) => (
+let OperatorMenu = ({ node, hover, tree, parent }) => (
   <div>
     {_.map(
       join =>
@@ -48,7 +48,6 @@ let OperatorMenu = observer(({ node, hover, tree, parent }) => (
       </div>
     </div>
   </div>
-))
-OperatorMenu.displayName = 'OperatorMenu'
+)
 
-export default OperatorMenu
+export default observer(OperatorMenu)

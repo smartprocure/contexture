@@ -9,18 +9,7 @@ import FilterDragSource from './DragDrop/FilterDragSource'
 import { oppositeJoin, indent } from '../utils/search'
 import { useLensObject } from '../utils/futil'
 
-let Rule = _.flow(
-  observer,
-  FilterDragSource
-)(
-  ({
-  node,
-  parent,
-  tree,
-  connectDragSource,
-  isDragging,
-  ...props
-}) => {
+let Rule = ({ node, parent, tree, connectDragSource, isDragging, ...props }) => {
   let hover = useLensObject({
     indent: false,
     remove: false,
@@ -77,7 +66,6 @@ let Rule = _.flow(
       </Indentable>
     </div>
   )
-})
-Rule.displayName = 'Rule'
+}
 
-export default Rule
+export default _.flow(observer, FilterDragSource)(Rule)

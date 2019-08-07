@@ -5,7 +5,7 @@ import styles from '../../styles'
 import { oppositeJoin } from '../../utils/search'
 import AddPreview from './AddPreview'
 
-let Indentable = observer(({ children, indent, parent }) => (
+let Indentable = ({ children, indent, parent }) => (
   <div style={{ ...styles.dFlex, ...styles.w100 }}>
     {F.view(indent) && (
       <div
@@ -20,7 +20,6 @@ let Indentable = observer(({ children, indent, parent }) => (
       {F.view(indent) && <AddPreview join={oppositeJoin(parent)} />}
     </div>
   </div>
-))
-Indentable.displayName = 'Indentable'
+)
 
-export default Indentable
+export default observer(Indentable)

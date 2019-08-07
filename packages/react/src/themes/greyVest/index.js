@@ -748,14 +748,14 @@ export let GVStyle = () => (
 )
 
 // Lifted from demo theme to prevent codependency
-export let Highlight = ({ style = {}, ...x }) => (
+export let Highlight = ({ style = {}, ...props }) => (
   <TextHighlight
     Wrap={x => <b style={{ backgroundColor: 'yellow', ...style }} {...x} />}
-    {...x}
+    {...props}
   />
 )
 
-export let ListItem = observer(({ style = {}, ...x }) => {
+export let ListItem = observer(({ style = {}, ...props }) => {
   let hovering = useLens(false)
   return (
     <div
@@ -769,7 +769,7 @@ export let ListItem = observer(({ style = {}, ...x }) => {
         ...style,
       }}
       {...F.domLens.hover(hovering)}
-      {...x}
+      {...props}
     />
   )
 })
@@ -786,7 +786,6 @@ export let ListGroupItem = props => (
     {...props}
   />
 )
-ListGroupItem.displayName = 'ListGroupItem'
 
 let SmallIcon = ({ icon }) => (
   <i className="material-icons" style={{ fontSize: 20 }}>

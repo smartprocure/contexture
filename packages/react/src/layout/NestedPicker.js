@@ -105,6 +105,7 @@ let PanelTreePicker = inject((store, { onChange, options }) => {
 PanelTreePicker.displayName = 'PanelTreePicker'
 
 let matchLabel = str => _.filter(x => F.matchAllWords(str)(x.label))
+
 let NestedPicker = ({
   options,
   onChange,
@@ -130,6 +131,5 @@ let NestedPicker = ({
     </div>
   )
 }
-NestedPicker.displayName = 'NestedPicker'
 
-export default NestedPicker
+export default observer(NestedPicker)

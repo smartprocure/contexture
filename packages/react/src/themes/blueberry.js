@@ -13,7 +13,7 @@ import {
 } from '../'
 import ExampleTypeConstructor from '../exampleTypes/'
 
-export let Input = ({ style = {}, ...x }) => (
+export let Input = ({ style = {}, ...props }) => (
   <input
     style={{
       padding: '5px',
@@ -21,10 +21,9 @@ export let Input = ({ style = {}, ...x }) => (
       margin: '5px auto',
       ...style,
     }}
-    {...x}
+    {...props}
   />
 )
-Input.displayName = 'Input'
 
 // Low effort custom checkbox
 export let Checkbox = ({ checked, onChange, style = {} }) => (
@@ -166,14 +165,15 @@ export let Style = () => (
     `}
   </style>
 )
-export let Table = x => <table className="bb-table" {...x} />
+
+export let Table = props => <table className="bb-table" {...props} />
 
 export let Button = ({
   isActive,
   primary,
   style = {},
   as: As = 'button',
-  ...x
+  ...props
 }) => (
   <As
     className="bb-input"
@@ -187,7 +187,7 @@ export let Button = ({
       ...(primary && { background: '#0076DE', color: '#FFF' }),
       ...style,
     }}
-    {...x}
+    {...props}
   />
 )
 export let ButtonRadio = ({
@@ -214,10 +214,10 @@ export let ButtonRadio = ({
 )
 
 // Lifted from demo theme to prevent codependency
-export let Highlight = ({ style = {}, ...x }) => (
+export let Highlight = ({ style = {}, ...props }) => (
   <TextHighlight
     Wrap={x => <b style={{ backgroundColor: 'yellow', ...style }} {...x} />}
-    {...x}
+    {...props}
   />
 )
 
@@ -241,6 +241,7 @@ export let ListGroupItem = observer(props => {
     />
   )
 })
+ListGroupItem.displayName = 'ListGroupItem'
 
 export let Adder = ModalFilterAdder({
   Button,
@@ -249,31 +250,34 @@ export let Adder = ModalFilterAdder({
   Item: ListGroupItem,
 })
 
-export let PagerItem = observer(({ active, disabled, style = {}, ...props }) => {
-  let hovering = useLens(false)
-  return (
-    <span
-      style={{
-        padding: '5px',
-        background: F.view(hovering) || disabled ? '#f5f5f5' : 'white',
-        border: '2px solid #EDEDED',
-        borderRadius: '4px',
-        ...(active && {
-          fontWeight: 'bold',
-          borderColor: '#0076DE',
-          color: '#0076DE',
-        }),
-        ...(disabled && {
-          pointerEvents: 'none',
-        }),
-        cursor: disabled ? 'not-allowed' : 'pointer',
-        ...style,
-      }}
-      {...F.domLens.hover(hovering)}
-      {...props}
-    />
-  )
-})
+export let PagerItem = observer(
+  ({ active, disabled, style = {}, ...props }) => {
+    let hovering = useLens(false)
+    return (
+      <span
+        style={{
+          padding: '5px',
+          background: F.view(hovering) || disabled ? '#f5f5f5' : 'white',
+          border: '2px solid #EDEDED',
+          borderRadius: '4px',
+          ...(active && {
+            fontWeight: 'bold',
+            borderColor: '#0076DE',
+            color: '#0076DE',
+          }),
+          ...(disabled && {
+            pointerEvents: 'none',
+          }),
+          cursor: disabled ? 'not-allowed' : 'pointer',
+          ...style,
+        }}
+        {...F.domLens.hover(hovering)}
+        {...props}
+      />
+    )
+  }
+)
+PagerItem.displayName = 'PagerItem'
 
 let TagComponent = observer(({ value, removeTag, tagStyle, onClick }) => (
   <div
@@ -304,3 +308,4 @@ export let ExampleTypes = ExampleTypeConstructor({
 })
 
 export let Pager = defaultProps({ Item: PagerItem })(ExampleTypes.ResultPager)
+Pager.displayName = 'Pager'
