@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { observer } from 'mobx-react'
 import { fromPromise } from 'mobx-utils'
+import { useLens } from '../src/utils/futil'
 import {
   Popover,
   Modal,
@@ -17,7 +18,7 @@ import { Flex } from '../src/layout/Flex'
 import { NestedPicker, ModalPicker } from '../src'
 
 let ModalDemo = observer(() => {
-  let isOpen = F.stateLens(React.useState(false))
+  let isOpen = useLens(false)
   return (
     <div>
       <Modal isOpen={isOpen}>Some Modal Content</Modal>
@@ -27,7 +28,7 @@ let ModalDemo = observer(() => {
 })
 
 let PopoverDemo = observer(() => {
-  let isOpen = F.stateLens(React.useState(false))
+  let isOpen = useLens(false)
   return (
     <div>
       <Popover isOpen={isOpen}>Some Popover Content</Popover>
@@ -39,7 +40,7 @@ let PopoverDemo = observer(() => {
 let lipsum =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
 let HighlightDemo = observer(() => {
-    let filter = F.stateLens(React.useState(''))
+    let filter = useLens('')
     return (
     <div>
       <div>

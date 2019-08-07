@@ -3,6 +3,7 @@ import F from 'futil-js'
 import _ from 'lodash/fp'
 import { inject, observer } from 'mobx-react'
 import { observable } from 'mobx'
+import { useLens } from '../utils/futil'
 import TextHighlight from './TextHighlight'
 
 // Unflatten by with support for arrays (allow dots in paths) and not needing a _.keyBy first
@@ -111,7 +112,7 @@ let NestedPicker = ({
   Highlight = TextHighlight,
   Item = DefaultItem,
 }) => {
-  let filter = F.stateLens(React.useState(''))
+  let filter = useLens('')
   return (
     <div>
       <Input {...F.domLens.value(filter)} placeholder="Enter filter keyword..." />

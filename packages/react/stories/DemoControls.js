@@ -1,6 +1,7 @@
 import F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
+import { useLens } from '../src/utils/futil'
 import { defaultProps } from 'recompose'
 import ExampleTypeConstructor from '../src/exampleTypes/'
 import { TextHighlight, NestedPicker, ModalFilterAdder } from '../src'
@@ -18,7 +19,7 @@ export let Button = x => (
 )
 
 export let Input = observer(props => {
-  let focusing = F.stateLens(React.useState(false))
+  let focusing = useLens(false)
   return (
     <input
       style={{
@@ -48,7 +49,7 @@ export let Highlight = x => (
 )
 
 export let ListGroupItem = observer(props => {
-  let hovering = F.stateLens(React.useState(false))
+  let hovering = useLens(false)
   return (
     <div
       style={{
@@ -64,7 +65,7 @@ export let ListGroupItem = observer(props => {
 })
 
 export let PagerItem = observer(({ active, ...props }) => {
-  let hovering = F.stateLens(React.useState(false))
+  let hovering = useLens(false)
   return (
     <span
       style={{

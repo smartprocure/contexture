@@ -5,6 +5,7 @@ import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { observer } from 'mobx-react'
 import Contexture, { updateSchemas } from '../utils/contexture'
+import { useLens } from '../../../src/utils/futil'
 import { FilterList, Flex, Awaiter, SpacedList, Grid } from '../../../src'
 import * as Theme from '../../../src/themes/greyVest'
 let { Adder, Button, Pager, ExampleTypes, ButtonRadio } = Theme
@@ -87,7 +88,7 @@ let schemas = fromPromise(
 )
 
 let CheckboxResultTable = observer(props => {
-  let selected = F.stateLens(React.useState([]))
+  let selected = useLens([])
   return (
     <div>
       {JSON.stringify(F.view(selected))}

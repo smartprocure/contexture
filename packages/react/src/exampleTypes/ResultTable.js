@@ -4,6 +4,7 @@ import * as F from 'futil-js'
 import { observer } from 'mobx-react'
 import { contexturify } from '../utils/hoc'
 import { Popover, Dynamic } from '../layout'
+import { useLens } from '../utils/futil'
 import { fieldsToOptions } from '../FilterAdder'
 import DefaultIcon from '../DefaultIcon'
 import {
@@ -72,7 +73,7 @@ let HighlightedColumn = observer(
     Modal = null,
     schema,
   }) => {
-    let viewModal = F.stateLens(React.useState(false))
+    let viewModal = useLens(false)
     return _.isEmpty(additionalFields) ? (
       <Cell key="additionalFields" />
     ) : (
@@ -121,9 +122,9 @@ let Header = observer(({ // Local State
   Modal, FieldPicker, ListGroupItem: Item, typeComponents = {}, HeaderCell = HeaderCellDefault, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria, mapNodeToProps, fields, visibleFields, Icon
 }) => {
   // Components (providerable?) // Contextual
-  let popover = F.stateLens(React.useState(false))
-  let adding = F.stateLens(React.useState(false))
-  let filtering = F.stateLens(React.useState(false))
+  let popover = useLens(false)
+  let adding = useLens(false)
+  let filtering = useLens(false)
   let {
     disableFilter,
     disableSort,

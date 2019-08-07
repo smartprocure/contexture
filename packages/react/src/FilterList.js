@@ -10,6 +10,7 @@ import {
   NestedPicker,
 } from './layout'
 import { fieldsToOptions } from './FilterAdder'
+import { useLens } from './utils/futil'
 import { contexturify } from './utils/hoc'
 import DefaultIcon from './DefaultIcon'
 import DefaultMissingTypeComponent from './DefaultMissingTypeComponent'
@@ -23,7 +24,7 @@ import {
 
 export let FilterActions = observer(
   ({ node, tree, fields, Item, Popover, popover, Modal, Picker }) => {
-    let modal = F.stateLens(React.useState(false))
+    let modal = useLens(false)
     let typeOptions = _.flow(
       _.getOr([], [node.field, 'typeOptions']),
       _.without([node.type])
@@ -91,8 +92,8 @@ export let Label = contexturify(
     Picker,
     ...x
   }) => {
-    let popover = F.stateLens(React.useState(false))
-    let modal = F.stateLens(React.useState(false))
+    let popover = useLens(false)
+    let modal = useLens(false)
     return (
       <Flex
         className={`filter-field-label ${

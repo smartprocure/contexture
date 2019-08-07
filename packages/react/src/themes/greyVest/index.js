@@ -2,6 +2,7 @@ import React from 'react'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
 import { defaultProps } from 'recompose'
+import { useLens } from '../../utils/futil'
 import { withNode, contexturify } from '../../utils/hoc'
 import {
   Flex,
@@ -755,7 +756,7 @@ export let Highlight = ({ style = {}, ...x }) => (
 )
 
 export let ListItem = observer(({ style = {}, ...x }) => {
-  let hovering = F.stateLens(React.useState(false))
+  let hovering = useLens(false)
   return (
     <div
       style={{

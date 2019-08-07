@@ -2,6 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
+import { useLens } from '../utils/futil'
 import { defaultProps } from 'recompose'
 import {
   Flex,
@@ -221,7 +222,7 @@ export let Highlight = ({ style = {}, ...x }) => (
 )
 
 export let ListGroupItem = observer(props => {
-  let hovering = F.stateLens(React.useState(false))
+  let hovering = useLens(false)
   return (
     <div
       style={{
@@ -249,7 +250,7 @@ export let Adder = ModalFilterAdder({
 })
 
 export let PagerItem = observer(({ active, disabled, style = {}, ...props }) => {
-  let hovering = F.stateLens(React.useState(false))
+  let hovering = useLens(false)
   return (
     <span
       style={{

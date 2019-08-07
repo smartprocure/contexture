@@ -1,6 +1,7 @@
 import F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
+import { useLens } from '../utils/futil'
 
 export let ModalPicker = observer(({
   options,
@@ -10,7 +11,7 @@ export let ModalPicker = observer(({
   Picker,
   Modal,
 }) => {
-  let isOpen = F.stateLens(React.useState(false))
+  let isOpen = useLens(false)
   return (
     <div>
       <Modal isOpen={isOpen}>
