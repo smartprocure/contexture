@@ -3,7 +3,6 @@ import F from 'futil-js'
 import _ from 'lodash/fp'
 import { inject, observer } from 'mobx-react'
 import { observable } from 'mobx'
-import { withStateLens } from '../utils/mobx-react-utils'
 import TextHighlight from './TextHighlight'
 
 // Unflatten by with support for arrays (allow dots in paths) and not needing a _.keyBy first
@@ -108,28 +107,28 @@ let matchLabel = str => _.filter(x => F.matchAllWords(str)(x.label))
 let NestedPicker = ({
   options,
   onChange,
-  filter,
   Input = 'input',
   Highlight = TextHighlight,
   Item = DefaultItem,
-}) => (
-  <div>
-    <Input {...F.domLens.value(filter)} placeholder="Enter filter keyword..." />
-    {F.view(filter) ? (
-      <FilteredSection
-        options={matchLabel(F.view(filter))(options)}
-        onClick={onChange}
-        highlight={F.view(filter)}
-        Highlight={Highlight}
-        Item={Item}
-      />
-    ) : (
-      <PanelTreePicker options={options} onChange={onChange} Item={Item} />
-    )}
-  </div>
-)
-let wrapPicker = _.flow(
-  observer,
-  withStateLens({ filter: '' })
-)
-export default wrapPicker(NestedPicker)
+}) => {
+  let filter = F.stateLens(React.useState(''))
+  return (
+    <div>
+      <Input {...F.domLens.value(filter)} placeholder="Enter filter keyword..." />
+      {F.view(filter) ? (
+        <FilteredSection
+          options={matchLabel(F.view(filter))(options)}
+          onClick={onChange}
+          highlight={F.view(filter)}
+          Highlight={Highlight}
+          Item={Item}
+        />
+      ) : (
+        <PanelTreePicker options={options} onChange={onChange} Item={Item} />
+      )}
+    </div>
+  )
+}
+NestedPicker.displayName = 'NestedPicker'
+
+export default NestedPicker

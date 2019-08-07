@@ -5,7 +5,6 @@ import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { observer } from 'mobx-react'
 import Contexture, { updateSchemas } from '../utils/contexture'
-import { withStateLens } from '../../../src/utils/mobx-react-utils'
 import { FilterList, Flex, Awaiter, SpacedList, Grid } from '../../../src'
 import * as Theme from '../../../src/themes/greyVest'
 let { Adder, Button, Pager, ExampleTypes, ButtonRadio } = Theme
@@ -87,14 +86,15 @@ let schemas = fromPromise(
     .then(_.tap(() => tree.refresh(['root'])))
 )
 
-let CheckboxResultTable = withStateLens({ selected: [] })(
-  observer(({ selected, ...props }) => (
+let CheckboxResultTable = observer(props => {
+  let selected = F.stateLens(React.useState([]))
+  return (
     <div>
       {JSON.stringify(F.view(selected))}
       <CheckableResultTable {...{ selected, ...props }} />
     </div>
-  ))
-)
+  )
+})
 
 export default () => (
   <Awaiter promise={schemas}>

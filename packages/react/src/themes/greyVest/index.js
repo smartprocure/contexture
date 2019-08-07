@@ -2,7 +2,6 @@ import React from 'react'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
 import { defaultProps } from 'recompose'
-import { withStateLens } from '../../utils/mobx-react-utils'
 import { withNode, contexturify } from '../../utils/hoc'
 import {
   Flex,
@@ -755,8 +754,9 @@ export let Highlight = ({ style = {}, ...x }) => (
   />
 )
 
-export let ListItem = withStateLens({ hovering: false })(
-  observer(({ hovering, style = {}, ...x }) => (
+export let ListItem = observer(({ style = {}, ...x }) => {
+  let hovering = F.stateLens(React.useState(false))
+  return (
     <div
       style={{
         cursor: 'pointer',
@@ -770,8 +770,8 @@ export let ListItem = withStateLens({ hovering: false })(
       {...F.domLens.hover(hovering)}
       {...x}
     />
-  ))
-)
+  )
+})
 ListItem.displayName = 'ListItem'
 
 export let ListGroupItem = props => (

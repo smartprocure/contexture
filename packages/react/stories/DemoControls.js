@@ -1,7 +1,6 @@
 import F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { withStateLens } from '../src/utils/mobx-react-utils'
 import { defaultProps } from 'recompose'
 import ExampleTypeConstructor from '../src/exampleTypes/'
 import { TextHighlight, NestedPicker, ModalFilterAdder } from '../src'
@@ -18,8 +17,9 @@ export let Button = x => (
   />
 )
 
-export let Input = withStateLens({ focusing: false })(
-  observer(({ focusing, ...x }) => (
+export let Input = observer(props => {
+  let focusing = F.stateLens(React.useState(false))
+  return (
     <input
       style={{
         width: '100%',
@@ -35,10 +35,10 @@ export let Input = withStateLens({ focusing: false })(
         background: `rgba(255, 255, 255, ${F.view(focusing) ? 1 : 0.7})`,
       }}
       {...F.domLens.focus(focusing)}
-      {...x}
+      {...props}
     />
-  ))
-)
+  )
+})
 
 export let Highlight = x => (
   <TextHighlight
@@ -47,8 +47,9 @@ export let Highlight = x => (
   />
 )
 
-export let ListGroupItem = withStateLens({ hovering: false })(
-  observer(({ hovering, ...x }) => (
+export let ListGroupItem = observer(props => {
+  let hovering = F.stateLens(React.useState(false))
+  return (
     <div
       style={{
         cursor: 'pointer',
@@ -57,13 +58,14 @@ export let ListGroupItem = withStateLens({ hovering: false })(
         ...(F.view(hovering) && { backgroundColor: '#f5f5f5' }),
       }}
       {...F.domLens.hover(hovering)}
-      {...x}
+      {...props}
     />
-  ))
-)
+  )
+})
 
-export let PagerItem = withStateLens({ hovering: false })(
-  observer(({ active, hovering, ...x }) => (
+export let PagerItem = observer(({ active, ...props }) => {
+  let hovering = F.stateLens(React.useState(false))
+  return (
     <span
       style={{
         padding: '5px',
@@ -74,10 +76,10 @@ export let PagerItem = withStateLens({ hovering: false })(
         cursor: 'pointer',
       }}
       {...F.domLens.hover(hovering)}
-      {...x}
+      {...props}
     />
-  ))
-)
+  )
+})
 
 export let DarkBox = props => (
   <div

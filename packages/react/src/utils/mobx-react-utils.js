@@ -19,7 +19,5 @@ export let lenservable = x => {
   return s
 }
 
-export let withStateLens = state => inject(() => F.lensOf(observable(state)))
-
 export let injectDefaults = f =>
   inject((stores, props) => f(_.defaults(stores, props)))

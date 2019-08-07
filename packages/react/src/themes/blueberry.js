@@ -2,7 +2,6 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
-import { withStateLens } from '../utils/mobx-react-utils'
 import { defaultProps } from 'recompose'
 import {
   Flex,
@@ -220,8 +219,10 @@ export let Highlight = ({ style = {}, ...x }) => (
     {...x}
   />
 )
-export let ListGroupItem = withStateLens({ hovering: false })(
-  observer(({ hovering, ...x }) => (
+
+export let ListGroupItem = observer(props => {
+  let hovering = F.stateLens(React.useState(false))
+  return (
     <div
       style={{
         cursor: 'pointer',
@@ -235,10 +236,10 @@ export let ListGroupItem = withStateLens({ hovering: false })(
         ...(F.view(hovering) && { backgroundColor: '#f5f5f5' }),
       }}
       {...F.domLens.hover(hovering)}
-      {...x}
+      {...props}
     />
-  ))
-)
+  )
+})
 
 export let Adder = ModalFilterAdder({
   Button,
@@ -247,8 +248,9 @@ export let Adder = ModalFilterAdder({
   Item: ListGroupItem,
 })
 
-export let PagerItem = withStateLens({ hovering: false })(
-  observer(({ active, hovering, disabled, style = {}, ...x }) => (
+export let PagerItem = observer(({ active, disabled, style = {}, ...props }) => {
+  let hovering = F.stateLens(React.useState(false))
+  return (
     <span
       style={{
         padding: '5px',
@@ -267,10 +269,10 @@ export let PagerItem = withStateLens({ hovering: false })(
         ...style,
       }}
       {...F.domLens.hover(hovering)}
-      {...x}
+      {...props}
     />
-  ))
-)
+  )
+})
 
 let TagComponent = observer(({ value, removeTag, tagStyle, onClick }) => (
   <div
