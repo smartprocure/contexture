@@ -10,23 +10,6 @@ import OutsideClickHandler from 'react-outside-click-handler'
 
 let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
-// extracts only the unique (and not already used tags) from the user tags input
-// e.g. if "x,y,z" are already entered then only "d" would be added if the user tris to enter "x,y,d"
-// returns a string with either single tag or multiple unique tags separated by comma
-let getUniqueTagsStringFromInput = (tag, tags, useCommaSeparator = true) => {
-  let trimmedTag = _.trim(tag)
-  if (useCommaSeparator && _.includes(',', trimmedTag)) {
-    // Extract only the unique (and not present in the current tags collection) tags from the string
-    let newUniqTags = _.difference(
-      _.uniq(_.compact(_.split(',', trimmedTag))),
-      tags
-    )
-    // if not empty return the joined string which would be split to separate tags in `addTag` if splitCommas is set
-    return _.isEmpty(newUniqTags) ? null : newUniqTags.join(',')
-  }
-  return trimmedTag
-}
-
 let Tag = observer(({ value, removeTag, tagStyle, RemoveIcon, onClick }) => (
   <span
     className="tags-input-tag"
@@ -101,6 +84,10 @@ let TagsInput = withState('state', 'setState', () =>
       if (splitCommas)
         addTag = _.flow(
           _.split(','),
+          _.invokeMap('trim'),
+          _.compact,
+          _.uniq,
+          _.difference(_, tags),
           _.map(addTag)
         )
       return (
@@ -159,29 +146,19 @@ let TagsInput = withState('state', 'setState', () =>
                   state.currentInput = e.target.value
                 }}
                 onBlur={() => {
-                  let input = getUniqueTagsStringFromInput(
-                    state.currentInput,
-                    tags,
-                    splitCommas
-                  )
-                  if (isValidInput(input, tags)) {
-                    addTag(input)
+                  if (isValidInput(state.currentInput, tags)) {
+                    addTag(state.currentInput)
                     state.currentInput = ''
                   }
                 }}
                 onKeyDown={e => {
-                  let input = getUniqueTagsStringFromInput(
-                    state.currentInput,
-                    tags,
-                    splitCommas
-                  )
-                  if (e.key === 'Enter' && !input) submit()
+                  if (e.key === 'Enter' && !state.currentInput) submit()
                   if (
                     (_.includes(e.key, ['Enter', 'Tab']) ||
                       (splitCommas && e.key === ',')) &&
-                    isValidInput(input, tags)
+                    isValidInput(state.currentInput, tags)
                   ) {
-                    addTag(input)
+                    addTag(state.currentInput)
                     state.currentInput = ''
                     e.preventDefault()
                   }
