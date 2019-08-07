@@ -1,47 +1,57 @@
 import React from 'react'
+import { observer } from 'mobx-react'
+import _ from 'lodash/fp'
 import F from 'futil-js'
-import { Component, lenservable } from '../utils/mobx-react-utils'
 import styles from '../styles'
 import Indentable from './preview/Indentable'
 import FilterContents from './FilterContents'
 import FilterDragSource from './DragDrop/FilterDragSource'
 import { oppositeJoin, indent } from '../utils/search'
+import { useLensObject } from '../utils/futil'
 
-let Rule = ({
-  state,
+let Rule = _.flow(
+  observer,
+  FilterDragSource
+)(
+  ({
   node,
   parent,
   tree,
   connectDragSource,
   isDragging,
   ...props
-}) =>
-  connectDragSource(
+}) => {
+  let hover = useLensObject({
+    indent: false,
+    remove: false,
+    rule: false,
+  })
+  return connectDragSource(
     <div style={styles.w100}>
-      <Indentable parent={parent} indent={state.lens.indentHover}>
+      <Indentable parent={parent} indent={hover.indent}>
         <div
           style={{
             ...styles.condition,
             ...styles.bdJoin(parent),
-            ...(state.removeHover && {
+            ...(F.view(hover.remove) && {
               borderStyle: 'dashed',
               opacity: 0.25,
               ...styles.bgStriped,
             }),
             ...(isDragging && { opacity: 0.25 }),
-            ...(state.ruleHover && { background: styles.background }),
+            ...(F.view(hover.rule) && { background: styles.background }),
           }}
-          {...F.domLens.hover(state.lens.ruleHover)}
+          {...F.domLens.hover(hover.rule)}
         >
           <FilterContents {...{ node, tree, ...props }} />
           <div
             style={{
-              ...(state.ruleHover || { visibility: 'hidden' }),
+              ...(F.view(hover.rule) || { visibility: 'hidden' }),
               minWidth: 82,
             }}
           >
             <button
-              {...F.domLens.hover(state.lens.indentHover)}
+              {...F.domLens.hover(hover.indent)}
               style={{
                 color: styles.joinColor(oppositeJoin(parent.join)),
                 ...styles.btn,
@@ -52,7 +62,7 @@ let Rule = ({
               >
             </button>
             <button
-              {...F.domLens.hover(state.lens.removeHover)}
+              {...F.domLens.hover(hover.remove)}
               style={{
                 ...styles.btn,
                 ...styles.roundedLeft0,
@@ -67,17 +77,7 @@ let Rule = ({
       </Indentable>
     </div>
   )
+})
+Rule.displayName = 'Rule'
 
-export default FilterDragSource(
-  Component(
-    () => ({
-      state: lenservable({
-        indentHover: false,
-        removeHover: false,
-        ruleHover: false,
-      }),
-    }),
-    Rule,
-    'Rule'
-  )
-)
+export default Rule

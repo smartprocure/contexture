@@ -1,5 +1,6 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
+import { useState } from 'react'
 
 // Logic
 export let onlyWhen = f => F.unless(f, () => {})
@@ -24,3 +25,7 @@ export let splitKeys = _.curry((keys, obj) => [
   _.pick(keys, obj),
   _.omit(keys, obj),
 ])
+
+export let useLens = x => F.stateLens(useState(x))
+
+export let useLensObject = _.mapValues(useLens)

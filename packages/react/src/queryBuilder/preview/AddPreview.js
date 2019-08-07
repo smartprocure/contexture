@@ -1,8 +1,8 @@
 import React from 'react'
-import { Component } from '../../utils/mobx-react-utils'
+import { observer } from 'mobx-react'
 import styles from '../../styles'
 
-let AddPreview = ({ join, style, onClick }) => (
+let AddPreview = observer(({ join, style, onClick }) => (
   <div style={{ background: styles.background }} onClick={() => onClick(join)}>
     <div
       style={{
@@ -17,6 +17,7 @@ let AddPreview = ({ join, style, onClick }) => (
       </b>
     </div>
   </div>
-)
+))
+AddPreview.displayName = 'AddPreview'
 
-export default Component(AddPreview)
+export default AddPreview

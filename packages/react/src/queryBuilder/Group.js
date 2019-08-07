@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
-import { Component, lenservable } from '../utils/mobx-react-utils'
+import { observer } from 'mobx-react'
 import styles from '../styles'
 import Indentable from './preview/Indentable'
 import AddPreview from './preview/AddPreview'
@@ -12,17 +12,18 @@ import { FilterIndentTarget } from './DragDrop/IndentTarget'
 import { FilterMoveTarget } from './DragDrop/MoveTargets'
 let { background } = styles
 import { blankNode } from '../utils/search'
+import { useLensObject } from '../utils/futil'
 
 let GroupItem = FilterDragSource(props => {
   let {
     child,
     node,
     index,
-    state,
     tree,
     isRoot,
     parent,
     connectDragSource,
+    hover,
   } = props
   let Component = child.children ? Group : Rule
   return connectDragSource(
@@ -35,7 +36,7 @@ let GroupItem = FilterDragSource(props => {
     >
       {!(isRoot && node.children.length === 1) && (
         <Operator
-          {...{ node, child, tree, parent, index, parentState: state }}
+          {...{ node, child, tree, parent, index, hover }}
         />
       )}
       <Component {...props} node={child} parent={node} />
@@ -43,24 +44,18 @@ let GroupItem = FilterDragSource(props => {
   )
 })
 
-let Group = Component(
-  () => ({
-    state: lenservable({
-      wrapHover: false,
-      joinHover: '',
-      removeHover: false,
-    }),
-  }),
+let Group = observer(
   props => {
-    let { parent, node, tree, state, isRoot } = props
+    let { parent, node, tree, isRoot } = props
+    let hover = useLensObject({wrap: false, join: '', remove: false})
     return (
-      <Indentable parent={parent} indent={state.lens.wrapHover}>
+      <Indentable parent={parent} indent={hover.wrap}>
         <div
           style={{
             ...styles.conditions,
             ...(!isRoot && styles.w100),
             ...styles.bdJoin(node),
-            ...(state.removeHover && {
+            ...(F.view(hover.remove) && {
               ...styles.bgStriped,
               borderColor: background,
             }),
@@ -69,7 +64,7 @@ let Group = Component(
           <div
             style={{
               ...styles.conditionsInner,
-              ...(state.removeHover && { opacity: 0.25 }),
+              ...(F.view(hover.remove) && { opacity: 0.25 }),
             }}
           >
             {F.mapIndexed(
@@ -77,7 +72,7 @@ let Group = Component(
                 <div key={child.key + index}>
                   <FilterIndentTarget {...{ ...props, child, index }} />
                   {/*<FilterMoveTarget index={index} tree={tree} />*/}
-                  <GroupItem {...{ ...props, child, index }} />
+                  <GroupItem {...{ ...props, child, index, hover }} />
                   {/*index !== (tree.children.length-1) &&*/ !child.children && (
                     <FilterMoveTarget {...{ ...props, child, index }} />
                   )}
@@ -103,8 +98,7 @@ let Group = Component(
         </div>
       </Indentable>
     )
-  },
-  'Group'
+  }
 )
 
 export default Group
