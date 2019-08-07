@@ -20,6 +20,7 @@ let GroupItem = FilterDragSource(props => {
     node,
     index,
     tree,
+    adding,
     isRoot,
     parent,
     connectDragSource,
@@ -31,7 +32,7 @@ let GroupItem = FilterDragSource(props => {
       style={{
         ...styles.dFlex,
         ...(index === node.children.length - 1 &&
-          !tree.adding && { background }),
+          !F.view(adding) && { background }),
       }}
     >
       {!(isRoot && node.children.length === 1) && (
@@ -46,7 +47,7 @@ let GroupItem = FilterDragSource(props => {
 
 let Group = observer(
   props => {
-    let { parent, node, tree, isRoot } = props
+    let { parent, node, tree, adding, isRoot } = props
     let hover = useLensObject({wrap: false, join: '', remove: false})
     return (
       <Indentable parent={parent} indent={hover.wrap}>
@@ -72,7 +73,7 @@ let Group = observer(
                 <div key={child.key + index}>
                   <FilterIndentTarget {...{ ...props, child, index }} />
                   {/*<FilterMoveTarget index={index} tree={tree} />*/}
-                  <GroupItem {...{ ...props, child, index, hover }} />
+                  <GroupItem {...{ ...props, child, index, adding, hover }} />
                   {/*index !== (tree.children.length-1) &&*/ !child.children && (
                     <FilterMoveTarget {...{ ...props, child, index }} />
                   )}
@@ -81,7 +82,7 @@ let Group = observer(
               _.toArray(node.children)
             )}
             {/*<FilterMoveTarget index={tree.children.length} tree={tree} /> */}
-            {tree.adding && (
+            {F.view(adding) && (
               <AddPreview
                 onClick={() => {
                   tree.add(node.path, blankNode())
