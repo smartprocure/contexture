@@ -14,18 +14,5 @@ export let FlattenTreeLeaves = Tree =>
 export let PlainObjectTree = F.tree(onlyWhen(_.isPlainObject))
 export let flattenPlainObject = F.whenExists(FlattenTreeLeaves(PlainObjectTree))
 
-// (f, g) -> (x, y) -> {...f(x, y), ...g(x, y)}
-export let mergeOverAll = fns =>
-  _.flow(
-    _.over(fns),
-    _.mergeAll
-  )
-
-export let splitKeys = _.curry((keys, obj) => [
-  _.pick(keys, obj),
-  _.omit(keys, obj),
-])
-
 export let useLens = x => F.stateLens(useState(x))
-
 export let useLensObject = _.mapValues(useLens)

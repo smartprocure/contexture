@@ -13,7 +13,7 @@ import {
   AccordionStep as DefaultAccordionStep,
 } from '../../src/layout'
 import DefaultFilterButtonList from '../../src/FilterButtonList'
-import { mergeOverAll } from '../../src/utils/futil'
+import { mergeOverAll } from 'futil-js'
 import { componentForType, schemaFieldProps } from '../../src/utils/schema'
 import GVDecorator from '../greyVest/decorator'
 import { ExampleTypes } from '../DemoControls'
