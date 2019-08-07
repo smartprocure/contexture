@@ -451,7 +451,6 @@ export let GVStyle = () => (
       }
       .contexture-facet > label {
         margin: 5px 0;
-        max-width: 340px;
       }
       .contexture-facet .gv-checkbox {
         margin: 0 10px 0 0;
@@ -463,7 +462,6 @@ export let GVStyle = () => (
         margin: 10px 0;
       }
       .contexture-facet > label > div {
-        white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }

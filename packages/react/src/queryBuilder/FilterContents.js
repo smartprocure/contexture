@@ -40,7 +40,7 @@ let FilterContents = inject(_.defaults)(
         typeOptions = [...typeOptions, node.type]
       let nodeLabel = _.get([nodeField, 'label'], fields) || nodeField
       return (
-        <Grid columns="auto auto 1fr" style={{ width: '100%' }}>
+        <Grid columns="auto auto minmax(0, 1fr)" style={{ width: '100%' }}>
           <ModalPicker
             {...{ Modal, Picker, Button }}
             label={nodeField ? nodeLabel : 'Pick a Field'}
