@@ -10,14 +10,18 @@ import OutsideClickHandler from 'react-outside-click-handler'
 
 let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
-let getUniqueTagsFromInput = (tag, tags, splitCommas = true) => {
+// extracts only the unique (and not already used tags) from the user tags input
+// e.g. if "x,y,z" are already entered then only "d" would be added if the user tris to enter "x,y,d"
+// returns a string with either single tag or multiple unique tags separated by comma
+let getUniqueTagsStringFromInput = (tag, tags, useCommaSeparator = true) => {
   let trimmedTag = _.trim(tag)
-  if (splitCommas && _.includes(',', trimmedTag)) {
-    // Extract only the unique and not present in the current tags collection tags from the string
+  if (useCommaSeparator && _.includes(',', trimmedTag)) {
+    // Extract only the unique (and not present in the current tags collection) tags from the string
     let newUniqTags = _.difference(
       _.uniq(_.compact(_.split(',', trimmedTag))),
       tags
     )
+    // if not empty return the joined string which would be split to separate tags in `addTag` if splitCommas is set
     return _.isEmpty(newUniqTags) ? null : newUniqTags.join(',')
   }
   return trimmedTag
@@ -155,7 +159,7 @@ let TagsInput = withState('state', 'setState', () =>
                   state.currentInput = e.target.value
                 }}
                 onBlur={() => {
-                  let input = getUniqueTagsFromInput(
+                  let input = getUniqueTagsStringFromInput(
                     state.currentInput,
                     tags,
                     splitCommas
@@ -166,7 +170,7 @@ let TagsInput = withState('state', 'setState', () =>
                   }
                 }}
                 onKeyDown={e => {
-                  let input = getUniqueTagsFromInput(
+                  let input = getUniqueTagsStringFromInput(
                     state.currentInput,
                     tags,
                     splitCommas
