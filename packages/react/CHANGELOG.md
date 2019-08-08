@@ -3,6 +3,8 @@
 * Remove usages of mobx-react Provider
 * Refactor `injectTreeNode` into `withNode` and `withLoader`
 * Remove QuickStart story
+* Remove `utils/mobx-react-utils`, `utils/dsl`, and `utils/tree`
+* Add `utils/react`, with new `useLens` and `useLensObject` functions
 
 # 1.54.7
 * TermsStatsTable: sort descending by default
