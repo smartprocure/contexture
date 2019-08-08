@@ -80,7 +80,10 @@ let TermsStatsTable = injectTreeNode(
                                   tree.getNode(criteria).children
                                 )
 
-                              if (!filter) {
+                              if (
+                                !filter ||
+                                _.get('mode', filter) === 'exclude'
+                              ) {
                                 await tree.add(criteria, {
                                   key: _.uniqueId('add'),
                                   field,
