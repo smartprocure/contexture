@@ -923,11 +923,11 @@ export let Pager = props => (
   />
 )
 
-export let PagedResultTable = ({ tree, node, ...props }) => (
+export let PagedResultTable = ({ tree, node, path, ...props }) => (
   <>
-    <ExampleTypes.ResultTable tree={tree} node={node} {...props} />
+    <ExampleTypes.ResultTable {...{ tree, node, path, ...props }} />
     <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>
-      <Pager tree={tree} node={node} />
+      <Pager {...{ tree, node, path }} />
     </Flex>
   </>
 )
