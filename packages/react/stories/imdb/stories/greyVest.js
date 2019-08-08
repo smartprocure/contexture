@@ -3,7 +3,7 @@ import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import Contexture, { updateSchemas } from '../utils/contexture'
-import { mergeOverAll } from '../../../src/utils/futil'
+import { mergeOverAll } from 'futil-js'
 import { Awaiter, schemaFieldProps, componentForType } from '../../../src'
 import {
   Button,
@@ -304,7 +304,7 @@ export default () => (
                   schemas[tree.tree.schema].fields
                 )}
                 criteria={['root', 'criteria']}
-                typeComponents={TypeMap}
+                mapNodeToProps={componentForType(TypeMap)}
               />
             </TabContent>
             <Tab value="analytics" label="Analytics">

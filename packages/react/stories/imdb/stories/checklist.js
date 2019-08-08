@@ -5,8 +5,15 @@ import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { observer } from 'mobx-react'
 import Contexture, { updateSchemas } from '../utils/contexture'
-import { withStateLens } from '../../../src/utils/mobx-react-utils'
-import { FilterList, Flex, Awaiter, SpacedList, Grid } from '../../../src'
+import { useLens } from '../../../src/utils/react'
+import {
+  FilterList,
+  Flex,
+  Awaiter,
+  SpacedList,
+  Grid,
+  componentForType,
+} from '../../../src'
 import * as Theme from '../../../src/themes/greyVest'
 let { Adder, Button, Pager, ExampleTypes, ButtonRadio } = Theme
 let { ResultCount, CheckableResultTable, TypeMap, TagsQuery } = ExampleTypes
@@ -87,14 +94,15 @@ let schemas = fromPromise(
     .then(_.tap(() => tree.refresh(['root'])))
 )
 
-let CheckboxResultTable = withStateLens({ selected: [] })(
-  observer(({ selected, ...props }) => (
+let CheckboxResultTable = observer(props => {
+  let selected = useLens([])
+  return (
     <div>
       {JSON.stringify(F.view(selected))}
       <CheckableResultTable {...{ selected, ...props }} />
     </div>
-  ))
-)
+  )
+})
 
 export default () => (
   <Awaiter promise={schemas}>
@@ -107,10 +115,11 @@ export default () => (
               tree={tree}
               path={['root', 'criteria']}
               fields={schemas.movies.fields}
-              typeComponents={TypeMap}
-              mapNodeToProps={field =>
-                field.key === 'searchNumber' ? { showBestRange: true } : {}
-              }
+              mapNodeToProps={F.mergeOverAll([
+                componentForType(TypeMap),
+                field =>
+                  field.key === 'searchNumber' ? { showBestRange: true } : {},
+              ])}
             />
             <Adder
               tree={tree}
@@ -158,7 +167,7 @@ export default () => (
               fields={schemas[tree.tree.schema].fields}
               path={['root', 'results']}
               criteria={['root', 'criteria']}
-              typeComponents={TypeMap}
+              mapNodeToProps={componentForType(TypeMap)}
               getValue="title"
             />
             <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>

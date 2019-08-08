@@ -1,19 +1,19 @@
 import React from 'react'
+import { observer } from 'mobx-react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
-import { Component } from '../utils/mobx-react-utils'
 import styles from '../styles'
 import { oppositeJoin, indent } from '../utils/search'
 let { btn, joinColor, bgJoin } = styles
 
-let OperatorMenu = ({ node, parentState, tree, parent }) => (
+let OperatorMenu = ({ node, hover, tree, parent }) => (
   <div>
     {_.map(
       join =>
         node.join !== join && (
           <div
             key={join}
-            {...F.domLens.hover(x => (parentState.joinHover = x && join))}
+            {...F.domLens.hover(x => F.set(x && join, hover.join))}
             style={{ ...btn, ...bgJoin(join) }}
             onClick={() => tree.mutate(node.path, { join })}
           >
@@ -29,10 +29,10 @@ let OperatorMenu = ({ node, parentState, tree, parent }) => (
           color: joinColor(oppositeJoin(parent)),
           marginTop: 5,
         }}
-        {...F.domLens.hover(parentState.lens.wrapHover)}
+        {...F.domLens.hover(hover.wrap)}
         onClick={() => {
           indent(tree, parent, node)
-          F.off(parentState.lens.wrapHover)()
+          F.off(hover.wrap)()
         }}
       >
         Wrap in {oppositeJoin(parent).toUpperCase()}
@@ -40,7 +40,7 @@ let OperatorMenu = ({ node, parentState, tree, parent }) => (
     </div>
     <div>
       <div
-        {...F.domLens.hover(parentState.lens.removeHover)}
+        {...F.domLens.hover(hover.remove)}
         style={{ ...btn, marginTop: 5 }}
         onClick={() => tree.remove(node.path)}
       >
@@ -49,6 +49,5 @@ let OperatorMenu = ({ node, parentState, tree, parent }) => (
     </div>
   </div>
 )
-OperatorMenu.displayName = 'OperatorMenu'
 
-export default Component(OperatorMenu)
+export default observer(OperatorMenu)

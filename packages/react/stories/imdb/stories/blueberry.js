@@ -10,6 +10,7 @@ import {
   Awaiter,
   SpacedList,
   Grid,
+  componentForType,
 } from '../../../src'
 import {
   Fonts,
@@ -159,7 +160,7 @@ export default () => (
                 tree={tree}
                 path={['root', 'criteria']}
                 fields={schemas.movies.fields}
-                typeComponents={TypeMap}
+                mapNodeToProps={componentForType(TypeMap)}
               />
               <Adder
                 tree={tree}
@@ -214,7 +215,7 @@ export default () => (
                 path={['root', 'results']}
                 fields={schemas[tree.tree.schema].fields}
                 criteria={['root', 'criteria']}
-                typeComponents={TypeMap}
+                mapNodeToProps={componentForType(TypeMap)}
               />
               <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>
                 <Pager tree={tree} path={['root', 'results']} />

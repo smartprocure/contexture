@@ -2,7 +2,7 @@ import React from 'react'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
 import { defaultProps } from 'recompose'
-import { withStateLens } from '../../utils/mobx-react-utils'
+import { useLens } from '../../utils/react'
 import { withNode } from '../../utils/hoc'
 import {
   Flex,
@@ -748,15 +748,16 @@ export let GVStyle = () => (
 )
 
 // Lifted from demo theme to prevent codependency
-export let Highlight = ({ style = {}, ...x }) => (
+export let Highlight = ({ style = {}, ...props }) => (
   <TextHighlight
     Wrap={x => <b style={{ backgroundColor: 'yellow', ...style }} {...x} />}
-    {...x}
+    {...props}
   />
 )
 
-export let ListItem = withStateLens({ hovering: false })(
-  observer(({ hovering, style = {}, ...x }) => (
+export let ListItem = observer(({ style = {}, ...props }) => {
+  let hovering = useLens(false)
+  return (
     <div
       style={{
         cursor: 'pointer',
@@ -768,10 +769,10 @@ export let ListItem = withStateLens({ hovering: false })(
         ...style,
       }}
       {...F.domLens.hover(hovering)}
-      {...x}
+      {...props}
     />
-  ))
-)
+  )
+})
 ListItem.displayName = 'ListItem'
 
 export let ListGroupItem = props => (
@@ -785,7 +786,6 @@ export let ListGroupItem = props => (
     {...props}
   />
 )
-ListGroupItem.displayName = 'ListGroupItem'
 
 let SmallIcon = ({ icon }) => (
   <i className="material-icons" style={{ fontSize: 20 }}>
@@ -923,11 +923,11 @@ export let Pager = props => (
   />
 )
 
-export let PagedResultTable = ({ tree, node, ...props }) => (
+export let PagedResultTable = ({ tree, node, path, ...props }) => (
   <>
-    <ExampleTypes.ResultTable tree={tree} node={node} {...props} />
+    <ExampleTypes.ResultTable {...{ tree, node, path, ...props }} />
     <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>
-      <Pager tree={tree} node={node} />
+      <Pager {...{ tree, node, path }} />
     </Flex>
   </>
 )

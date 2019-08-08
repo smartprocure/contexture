@@ -1,6 +1,6 @@
 import React from 'react'
 import * as F from 'futil-js'
-import { Component } from '../../utils/mobx-react-utils'
+import { observer } from 'mobx-react'
 import styles from '../../styles'
 import { oppositeJoin } from '../../utils/search'
 import AddPreview from './AddPreview'
@@ -22,4 +22,4 @@ let Indentable = ({ children, indent, parent }) => (
   </div>
 )
 
-export default Component(Indentable)
+export default observer(Indentable)
