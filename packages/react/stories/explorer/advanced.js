@@ -5,7 +5,7 @@ import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { observer } from 'mobx-react'
 
-import { Awaiter, Flex, QueryBuilder } from '../../src/'
+import { Awaiter, Flex, QueryBuilder, componentForType } from '../../src/'
 import { Input, ExampleTypes } from '../DemoControls'
 let { ResultCount, ResultTable, TypeMap } = ExampleTypes
 
@@ -103,7 +103,7 @@ let Story = observer(() => {
                 <div>
                   <QueryBuilder
                     tree={tree}
-                    types={TypeMap}
+                    mapNodeToProps={componentForType(TypeMap)}
                     fields={schemas[tree.tree.schema].fields}
                     path={['root', 'criteria']}
                   />

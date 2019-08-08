@@ -1,6 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { FilterList } from '../src/FilterList'
+import { componentForType } from '../src'
 
 storiesOf('Search Components (Unthemed)|FilterList', module).addWithJSX(
   'Example',
@@ -30,10 +31,10 @@ storiesOf('Search Components (Unthemed)|FilterList', module).addWithJSX(
         b: { label: 'B Field' },
         c: { label: 'c' },
       }}
-      typeComponents={{
+      mapNodeToProps={componentForType({
         typeA: () => <div>A TYPE</div>,
         typeB: () => <div>B TYPE</div>,
-      }}
+      })}
     />
   )
 )

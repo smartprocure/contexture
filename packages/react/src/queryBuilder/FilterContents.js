@@ -22,7 +22,6 @@ let FilterContents = ({
   node,
   tree,
   fields,
-  types = {},
   Button = 'button',
   Modal = DefaultModal,
   Picker = NestedPicker,
@@ -83,10 +82,10 @@ let FilterContents = ({
           }}
         >
           <Dynamic
-            component={types[node.type] || MissingTypeComponent}
+            component={MissingTypeComponent}
             tree={tree}
             node={node}
-            {...mapNodeToProps(node, fields, types)}
+            {...mapNodeToProps(node, fields)}
           />
         </div>
       )}

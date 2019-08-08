@@ -304,7 +304,7 @@ export default () => (
                   schemas[tree.tree.schema].fields
                 )}
                 criteria={['root', 'criteria']}
-                typeComponents={TypeMap}
+                mapNodeToProps={componentForType(TypeMap)}
               />
             </TabContent>
             <Tab value="analytics" label="Analytics">

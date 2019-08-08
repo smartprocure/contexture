@@ -5,7 +5,7 @@ import { observable, autorun } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { observer, inject } from 'mobx-react'
 import Contexture, { updateSchemas } from '../utils/contexture'
-import { FilterList, Flex, Awaiter, SpacedList } from '../../../src'
+import { FilterList, Flex, Awaiter, SpacedList, componentForType } from '../../../src'
 import { DarkBox, Adder, Pager, ExampleTypes } from '../../DemoControls'
 let {
   Query,
@@ -131,7 +131,7 @@ const Story = inject(() => {
                   tree={tree}
                   path={['searchRoot', 'criteria']}
                   fields={schemas.movies.fields}
-                  typeComponents={TypeMap}
+                  mapNodeToProps={componentForType(TypeMap)}
                 />
                 <Adder
                   tree={tree}

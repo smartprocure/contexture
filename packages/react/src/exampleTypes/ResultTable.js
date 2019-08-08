@@ -14,6 +14,7 @@ import {
   inferSchema,
 } from '../utils/schema'
 import { newNodeFromField } from '../utils/search'
+import DefaultMissingTypeComponent from '../DefaultMissingTypeComponent'
 
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
@@ -119,7 +120,7 @@ let HeaderCellDefault = observer(({ activeFilter, style, children }) => (
 HeaderCellDefault.displayName = 'HeaderCellDefault'
 
 let Header = observer(({ // Local State
-  Modal, FieldPicker, ListGroupItem: Item, typeComponents = {}, HeaderCell = HeaderCellDefault, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria, mapNodeToProps, fields, visibleFields, Icon }) => {
+  Modal, FieldPicker, ListGroupItem: Item, HeaderCell = HeaderCellDefault, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria, mapNodeToProps, fields, visibleFields, Icon }) => {
   // Components (providerable?) // Contextual
   let popover = useLens(false)
   let adding = useLens(false)
@@ -235,10 +236,10 @@ let Header = observer(({ // Local State
             </Item>
             {F.view(filtering) && filterNode && !filterNode.paused && (
               <Dynamic
-                component={typeComponents[filterNode.type]}
+                component={DefaultMissingTypeComponent}
                 tree={tree}
                 path={_.toArray(filterNode.path)}
-                {...mapNodeToProps(filterNode, fields, typeComponents)}
+                {...mapNodeToProps(filterNode, fields)}
               />
             )}
           </div>
@@ -329,7 +330,6 @@ let ResultTable = contexturify(
     Modal,
     ListGroupItem,
     FieldPicker,
-    typeComponents,
     mapNodeToProps = () => ({}),
     Icon = DefaultIcon,
     Row = Tr,
@@ -356,7 +356,6 @@ let ResultTable = contexturify(
       Modal,
       FieldPicker,
       ListGroupItem,
-      typeComponents,
       HeaderCell,
       Icon,
       mapNodeToProps,
