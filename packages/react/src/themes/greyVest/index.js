@@ -461,6 +461,10 @@ export let GVStyle = () => (
       .contexture-facet-cardinality {
         margin: 10px 0;
       }
+      .contexture-facet > label > div {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
 
       .contexture-number-separator {
         margin: 0 10px;

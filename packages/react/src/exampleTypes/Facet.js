@@ -126,6 +126,7 @@ let Facet = injectTreeNode(
                 display: 'flex',
                 cursor: 'pointer',
               }}
+              title={`${display(name)} : ${formatCount(count)}`}
             >
               <Checkbox {...F.domLens.checkboxValues(name, lens)} />
               <div style={{ flex: 2, padding: '0 5px' }}>
