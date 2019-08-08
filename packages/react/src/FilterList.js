@@ -78,7 +78,7 @@ export let FilterActions = observer(
   }
 )
 
-export let Label = contexturify(
+export let Label = observer(
   ({ tree, node, fields, Icon, ListItem: Item, Modal, Picker, ...x }) => {
     let popover = useLens(false)
     let modal = useLens(false)
