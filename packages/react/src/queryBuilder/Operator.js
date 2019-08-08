@@ -68,10 +68,9 @@ let JoinOperator = ({ isOpen, hover, node, child }) => (
 )
 JoinOperator.displayName = 'JoinOperator'
 
-let Operator = observer(
-  ({ hover, node, child, parent, tree, index }) => {
-    let isOpen = useLens(false)
-    return (
+let Operator = observer(({ hover, node, child, parent, tree, index }) => {
+  let isOpen = useLens(false)
+  return (
     <div>
       {!(index !== 0 || node.join === 'not') ? (
         <BlankOperator {...{ isOpen, node, child }} />

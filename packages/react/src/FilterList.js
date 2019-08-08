@@ -36,10 +36,7 @@ export let FilterActions = observer(
           <Picker
             options={fieldsToOptions(fields)}
             onChange={field => {
-              tree.replace(
-                node.path,
-                transformNodeFromField({ field, fields })
-              )
+              tree.replace(node.path, transformNodeFromField({ field, fields }))
               F.off(modal)()
             }}
           />
@@ -82,16 +79,7 @@ export let FilterActions = observer(
 )
 
 export let Label = contexturify(
-  ({
-    tree,
-    node,
-    fields,
-    Icon,
-    ListItem: Item,
-    Modal,
-    Picker,
-    ...x
-  }) => {
+  ({ tree, node, fields, Icon, ListItem: Item, Modal, Picker, ...x }) => {
     let popover = useLens(false)
     let modal = useLens(false)
     return (

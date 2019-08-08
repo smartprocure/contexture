@@ -116,7 +116,10 @@ let NestedPicker = ({
   let filter = useLens('')
   return (
     <div>
-      <Input {...F.domLens.value(filter)} placeholder="Enter filter keyword..." />
+      <Input
+        {...F.domLens.value(filter)}
+        placeholder="Enter filter keyword..."
+      />
       {F.view(filter) ? (
         <FilteredSection
           options={matchLabel(F.view(filter))(options)}

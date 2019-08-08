@@ -42,9 +42,7 @@ export default DDContext(
               }}
             />
           )}
-          <Button
-            onClick={F.flip(adding)}
-          >
+          <Button onClick={F.flip(adding)}>
             {F.view(adding) ? 'Cancel' : 'Add Filter'}
           </Button>
         </div>

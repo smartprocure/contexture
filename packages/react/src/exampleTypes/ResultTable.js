@@ -119,8 +119,7 @@ let HeaderCellDefault = observer(({ activeFilter, style, children }) => (
 HeaderCellDefault.displayName = 'HeaderCellDefault'
 
 let Header = observer(({ // Local State
-  Modal, FieldPicker, ListGroupItem: Item, typeComponents = {}, HeaderCell = HeaderCellDefault, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria, mapNodeToProps, fields, visibleFields, Icon
-}) => {
+  Modal, FieldPicker, ListGroupItem: Item, typeComponents = {}, HeaderCell = HeaderCellDefault, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria, mapNodeToProps, fields, visibleFields, Icon }) => {
   // Components (providerable?) // Contextual
   let popover = useLens(false)
   let adding = useLens(false)
@@ -210,9 +209,7 @@ let Header = observer(({ // Local State
           <Icon icon="MoveRight" />
           Move Right
         </Item>
-        <Item
-          onClick={() => mutate({ include: _.without([field], includes) })}
-        >
+        <Item onClick={() => mutate({ include: _.without([field], includes) })}>
           <Icon icon="RemoveColumn" />
           Remove Column
         </Item>
