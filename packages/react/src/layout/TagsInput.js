@@ -93,7 +93,7 @@ let TagsInput = withState('state', 'setState', () =>
         : _.flow(
             _.trim,
             addTag
-        )
+          )
       return (
         <OutsideClickHandler
           onOutsideClick={() => {
