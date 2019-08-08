@@ -26,7 +26,7 @@ let NumberComponent = contexturify(
             })
           }
         />
-       <div className="contexture-number-separator">-</div>
+        <div className="contexture-number-separator">-</div>
         <NumberInput
           value={formatter(node.max) || ''}
           onChange={e =>
@@ -61,7 +61,7 @@ let NumberComponent = contexturify(
             Find best range
           </Button>
         </div>
-        )}
+      )}
     </div>
   )
 )
