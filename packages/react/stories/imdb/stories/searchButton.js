@@ -3,7 +3,13 @@ import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import Contexture, { updateSchemas } from '../utils/contexture'
-import { Flex, Awaiter, SpacedList, FilterList } from '../../../src'
+import {
+  Flex,
+  Awaiter,
+  SpacedList,
+  FilterList,
+  componentForType,
+} from '../../../src'
 import { Button, Adder, Pager, ExampleTypes } from '../../DemoControls'
 let {
   Query,
@@ -133,7 +139,7 @@ export default () => (
                 tree={tree}
                 path={['searchRoot', 'criteria']}
                 fields={schemas.movies.fields}
-                typeComponents={TypeMap}
+                mapNodeToProps={componentForType(TypeMap)}
               />
               <Adder
                 tree={tree}

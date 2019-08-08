@@ -4,6 +4,7 @@ import { exampleTypes, mockService } from 'contexture-client'
 import ContextureMobx from '../../src/utils/contexture-mobx'
 import QueryBuilder from '../../src/queryBuilder/'
 import { ExampleTypes } from '../DemoControls'
+import { componentForType } from '../../src'
 let { TypeMap } = ExampleTypes
 
 let Client = ContextureMobx({
@@ -23,7 +24,7 @@ storiesOf('Search Components (Unthemed)|QueryBuilder', module)
         children: [{ key: 'filter 1', type: 'query' }],
       })}
       path={['root']}
-      types={TypeMap}
+      mapNodeToProps={componentForType(TypeMap)}
     />
   ))
   .addWithJSX('One Filter with fields', () => (
@@ -46,7 +47,7 @@ storiesOf('Search Components (Unthemed)|QueryBuilder', module)
           typeOptions: ['facet', 'query'],
         },
       }}
-      types={TypeMap}
+      mapNodeToProps={componentForType(TypeMap)}
     />
   ))
   .addWithJSX('One Filter with facet options', () => (
@@ -75,7 +76,7 @@ storiesOf('Search Components (Unthemed)|QueryBuilder', module)
         ],
       })}
       fields={['field1', 'field2', { label: 'Field 3', value: 'field3' }]}
-      types={TypeMap}
+      mapNodeToProps={componentForType(TypeMap)}
     />
   ))
   .addWithJSX('One Filter on a misplaced root', () => (
@@ -92,7 +93,7 @@ storiesOf('Search Components (Unthemed)|QueryBuilder', module)
         ],
       })}
       path={['root', 'search']}
-      types={TypeMap}
+      mapNodeToProps={componentForType(TypeMap)}
     />
   ))
   .addWithJSX('Multiple Filters', () => (
@@ -142,6 +143,6 @@ storiesOf('Search Components (Unthemed)|QueryBuilder', module)
           },
         ],
       })}
-      types={TypeMap}
+      mapNodeToProps={componentForType(TypeMap)}
     />
   ))

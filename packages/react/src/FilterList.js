@@ -79,7 +79,7 @@ export let FilterActions = observer(
 )
 
 export let Label = observer(
-  ({ tree, node, fields, Icon, ListItem: Item, Modal, Picker, ...x }) => {
+  ({ tree, node, fields, Icon, ListItem: Item, Modal, Picker, ...props }) => {
     let popover = useLens(false)
     let modal = useLens(false)
     return (
@@ -96,7 +96,7 @@ export let Label = observer(
           tree && node && tree.mutate(node.path, { paused: !node.paused })
         }
       >
-        <span {...x} />
+        <span {...props} />
         {tree && node && (
           <React.Fragment>
             <span
@@ -183,7 +183,6 @@ export let FilterList = contexturify(
   ({
     tree,
     node,
-    typeComponents: types = {},
     fields,
     mapNodeToProps = _.noop,
     mapNodeToLabel = _.noop,
@@ -203,7 +202,6 @@ export let FilterList = contexturify(
               key={child.path}
               tree={tree}
               node={child}
-              typeComponents={types}
               fields={fields}
               mapNodeToProps={mapNodeToProps}
               mapNodeToLabel={mapNodeToLabel}
@@ -224,16 +222,16 @@ export let FilterList = contexturify(
                 ListItem={ListItem}
                 Modal={Modal}
                 Picker={Picker}
-                label={mapNodeToLabel(child, fields, types)}
+                label={mapNodeToLabel(child, fields)}
               />
               {!child.paused && (
                 <div className="filter-list-item-contents">
                   <Dynamic
-                    component={types[child.type] || MissingTypeComponent}
+                    component={MissingTypeComponent}
                     tree={tree}
                     node={child}
                     path={_.toArray(child.path)}
-                    {...mapNodeToProps(child, fields, types)}
+                    {...mapNodeToProps(child, fields)}
                   />
                 </div>
               )}

@@ -5,6 +5,7 @@
 * Remove QuickStart story
 * Remove `utils/mobx-react-utils`, `utils/dsl`, and `utils/tree`
 * Add `utils/react`, with new `useLens` and `useLensObject` functions
+* Remove `types` and `typeComponents` props from QueryBuilder and FilterList
 
 # 1.54.7
 * TermsStatsTable: sort descending by default

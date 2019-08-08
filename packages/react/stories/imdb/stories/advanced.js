@@ -1,7 +1,7 @@
 import _ from 'lodash/fp'
 import React from 'react'
 import { fromPromise } from 'mobx-utils'
-import { QueryBuilder, Awaiter } from '../../../src'
+import { QueryBuilder, Awaiter, componentForType } from '../../../src'
 import Contexture, { updateSchemas } from '../utils/contexture'
 import { ExampleTypes } from '../../DemoControls'
 let { ResultCount, ResultTable, TypeMap } = ExampleTypes
@@ -56,7 +56,7 @@ export default () => (
       <div>
         <QueryBuilder
           tree={tree}
-          types={TypeMap}
+          mapNodeToProps={componentForType(TypeMap)}
           fields={schemas.movies.fields}
           path={['root', 'searchRoot']}
         />
