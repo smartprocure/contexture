@@ -8,10 +8,7 @@ import { Flex } from './Flex'
 import Popover from './Popover'
 import OutsideClickHandler from 'react-outside-click-handler'
 
-let isValidTag = (tag, tags) => {
-  let cleanTag = _.trim(tag)
-  return !_.isEmpty(cleanTag) && !_.includes(cleanTag, tags)
-}
+let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
 let Tag = observer(({ value, removeTag, tagStyle, RemoveIcon, onClick }) => (
   <span
@@ -84,11 +81,19 @@ let TagsInput = withState('state', 'setState', () =>
     }) => {
       let containerRef
       let inputRef
-      if (splitCommas)
-        addTag = _.flow(
-          _.split(','),
-          _.map(addTag)
-        )
+      addTag = splitCommas
+        ? _.flow(
+            _.split(','),
+            _.invokeMap('trim'),
+            _.compact,
+            _.uniq,
+            _.difference(_, tags),
+            _.map(addTag)
+          )
+        : _.flow(
+            _.trim,
+            addTag
+          )
       return (
         <OutsideClickHandler
           onOutsideClick={() => {
@@ -145,21 +150,19 @@ let TagsInput = withState('state', 'setState', () =>
                   state.currentInput = e.target.value
                 }}
                 onBlur={() => {
-                  if (isValidTag(state.currentInput, tags)) {
+                  if (isValidInput(state.currentInput, tags)) {
                     addTag(state.currentInput)
                     state.currentInput = ''
                   }
                 }}
                 onKeyDown={e => {
-                  let currentInput = _.trim(state.currentInput)
-                  if (e.key === 'Enter' && !currentInput) submit()
+                  if (e.key === 'Enter' && !state.currentInput) submit()
                   if (
-                    (e.key === 'Enter' ||
-                      e.key === 'Tab' ||
+                    (_.includes(e.key, ['Enter', 'Tab']) ||
                       (splitCommas && e.key === ',')) &&
-                    isValidTag(currentInput, tags)
+                    isValidInput(state.currentInput, tags)
                   ) {
-                    addTag(currentInput)
+                    addTag(state.currentInput)
                     state.currentInput = ''
                     e.preventDefault()
                   }
