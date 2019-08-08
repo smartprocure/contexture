@@ -1,3 +1,6 @@
+# 1.55.0
+* Fix inputs issue with FireFox
+
 # 1.54.9
 * TermStatsTable: Add as filter would now add filter if the existing one is not in mode 'include'
 * Number: Better handling zero edge case when significantDigits is true
