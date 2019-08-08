@@ -189,6 +189,7 @@ export let GVStyle = () => (
 
         display: block;
         width: 100%;
+        min-width: 0;
 
         box-sizing: border-box;
         height: 40px;
