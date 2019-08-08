@@ -5,7 +5,13 @@ import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { observer } from 'mobx-react'
 
-import { QueryBuilder, FilterList, Awaiter, Flex, componentForType } from '../../src/'
+import {
+  QueryBuilder,
+  FilterList,
+  Awaiter,
+  Flex,
+  componentForType,
+} from '../../src/'
 import { Input, ClampedHTML, Adder, Pager, ExampleTypes } from '../DemoControls'
 let { ResultCount, ResultTable, TypeMap } = ExampleTypes
 

@@ -6,7 +6,14 @@ import { fromPromise } from 'mobx-utils'
 import { observer } from 'mobx-react'
 import Contexture, { updateSchemas } from '../utils/contexture'
 import { useLens } from '../../../src/utils/react'
-import { FilterList, Flex, Awaiter, SpacedList, Grid, componentForType } from '../../../src'
+import {
+  FilterList,
+  Flex,
+  Awaiter,
+  SpacedList,
+  Grid,
+  componentForType,
+} from '../../../src'
 import * as Theme from '../../../src/themes/greyVest'
 let { Adder, Button, Pager, ExampleTypes, ButtonRadio } = Theme
 let { ResultCount, CheckableResultTable, TypeMap, TagsQuery } = ExampleTypes
@@ -110,7 +117,8 @@ export default () => (
               fields={schemas.movies.fields}
               mapNodeToProps={F.mergeOverAll([
                 componentForType(TypeMap),
-                field => field.key === 'searchNumber' ? { showBestRange: true } : {}
+                field =>
+                  field.key === 'searchNumber' ? { showBestRange: true } : {},
               ])}
             />
             <Adder
