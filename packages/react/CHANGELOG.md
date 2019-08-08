@@ -7,6 +7,14 @@
 * Add `utils/react`, with new `useLens` and `useLensObject` functions
 * Remove `types` and `typeComponents` props from QueryBuilder and FilterList
 
+# 1.54.9
+* TermStatsTable: Add as filter would now add filter if the existing one is not in mode 'include'
+* Number: Better handling zero edge case when significantDigits is true
+* Facet: Better handling of the labels when there is no white space
+
+# 1.54.8
+* TagsInput: Better validation and input logic for new tags
+
 # 1.54.7
 * TermsStatsTable: sort descending by default
 
