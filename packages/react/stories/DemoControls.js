@@ -1,7 +1,7 @@
 import F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { useLens } from '../src/utils/futil'
+import { useLens } from '../src/utils/react'
 import { defaultProps } from 'recompose'
 import ExampleTypeConstructor from '../src/exampleTypes/'
 import { TextHighlight, NestedPicker, ModalFilterAdder } from '../src'

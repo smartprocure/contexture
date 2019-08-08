@@ -1,7 +1,7 @@
 import F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { useLens } from '../utils/futil'
+import { useLens } from '../utils/react'
 
 export let ModalPicker = observer(({
   options,

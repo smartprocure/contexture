@@ -10,7 +10,7 @@ import {
   NestedPicker,
 } from './layout'
 import { fieldsToOptions } from './FilterAdder'
-import { useLens } from './utils/futil'
+import { useLens } from './utils/react'
 import { contexturify } from './utils/hoc'
 import DefaultIcon from './DefaultIcon'
 import DefaultMissingTypeComponent from './DefaultMissingTypeComponent'

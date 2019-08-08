@@ -5,7 +5,7 @@ import { Modal as DefaultModal, NestedPicker } from '../layout/'
 import Group from './Group'
 import styles from '../styles'
 import { contexturify } from '../utils/hoc'
-import { useLens } from '../utils/futil'
+import { useLens } from '../utils/react'
 
 let { background } = styles
 

@@ -4,7 +4,7 @@ import * as F from 'futil-js'
 import { observer } from 'mobx-react'
 import { contexturify } from '../utils/hoc'
 import { Popover, Dynamic } from '../layout'
-import { useLens } from '../utils/futil'
+import { useLens } from '../utils/react'
 import { fieldsToOptions } from '../FilterAdder'
 import DefaultIcon from '../DefaultIcon'
 import {

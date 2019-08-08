@@ -12,7 +12,7 @@ import { FilterIndentTarget } from './DragDrop/IndentTarget'
 import { FilterMoveTarget } from './DragDrop/MoveTargets'
 let { background } = styles
 import { blankNode } from '../utils/search'
-import { useLensObject } from '../utils/futil'
+import { useLensObject } from '../utils/react'
 
 let GroupItem = FilterDragSource(props => {
   let {

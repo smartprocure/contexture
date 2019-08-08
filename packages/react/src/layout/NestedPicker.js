@@ -3,7 +3,7 @@ import F from 'futil-js'
 import _ from 'lodash/fp'
 import { inject, observer } from 'mobx-react'
 import { observable } from 'mobx'
-import { useLens } from '../utils/futil'
+import { useLens } from '../utils/react'
 import TextHighlight from './TextHighlight'
 
 // Unflatten by with support for arrays (allow dots in paths) and not needing a _.keyBy first

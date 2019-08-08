@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { observer } from 'mobx-react'
 import { fromPromise } from 'mobx-utils'
-import { useLens } from '../src/utils/futil'
+import { useLens } from '../src/utils/react'
 import {
   Popover,
   Modal,

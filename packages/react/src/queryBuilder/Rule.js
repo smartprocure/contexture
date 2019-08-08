@@ -7,7 +7,7 @@ import Indentable from './preview/Indentable'
 import FilterContents from './FilterContents'
 import FilterDragSource from './DragDrop/FilterDragSource'
 import { oppositeJoin, indent } from '../utils/search'
-import { useLensObject } from '../utils/futil'
+import { useLensObject } from '../utils/react'
 
 let Rule = ({ node, parent, tree, connectDragSource, isDragging, ...props }) => {
   let hover = useLensObject({

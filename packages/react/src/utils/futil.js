@@ -1,6 +1,5 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
-import { useState } from 'react'
 
 // Logic
 export let onlyWhen = f => F.unless(f, () => {})
@@ -13,6 +12,3 @@ export let FlattenTreeLeaves = Tree =>
   )
 export let PlainObjectTree = F.tree(onlyWhen(_.isPlainObject))
 export let flattenPlainObject = F.whenExists(FlattenTreeLeaves(PlainObjectTree))
-
-export let useLens = x => F.stateLens(useState(x))
-export let useLensObject = _.mapValues(useLens)

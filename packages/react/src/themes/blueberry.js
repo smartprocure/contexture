@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
-import { useLens } from '../utils/futil'
+import { useLens } from '../utils/react'
 import { defaultProps } from 'recompose'
 import {
   Flex,

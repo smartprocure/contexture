@@ -1,7 +1,7 @@
 import React from 'react'
 import * as F from 'futil-js'
 import { observer } from 'mobx-react'
-import { useLens } from '../utils/futil'
+import { useLens } from '../utils/react'
 import styles from '../styles'
 import Popover from '../layout/Popover'
 import OperatorMenu from './OperatorMenu'
