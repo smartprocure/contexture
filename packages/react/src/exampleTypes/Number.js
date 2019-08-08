@@ -24,8 +24,8 @@ let NumberComponent = injectTreeNode(
             onChange={e =>
               tree.mutate(node.path, {
                 min: _.isNumber(significantDigits)
-                  ? round(e.target.value, significantDigits)
-                  : e.target.value,
+                  ? _.toString(round(e.target.value, significantDigits))
+                  : e.target.value
               })
             }
           />
@@ -35,8 +35,8 @@ let NumberComponent = injectTreeNode(
             onChange={e =>
               tree.mutate(node.path, {
                 max: _.isNumber(significantDigits)
-                  ? round(e.target.value, significantDigits)
-                  : e.target.value,
+                  ? _.toString(round(e.target.value, significantDigits))
+                  : e.target.value
               })
             }
           />
