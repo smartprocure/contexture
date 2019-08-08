@@ -81,14 +81,18 @@ let TagsInput = withState('state', 'setState', () =>
     }) => {
       let containerRef
       let inputRef
-      if (splitCommas)
-        addTag = _.flow(
-          _.split(','),
-          _.invokeMap('trim'),
-          _.compact,
-          _.uniq,
-          _.difference(_, tags),
-          _.map(addTag)
+      addTag = splitCommas
+        ? _.flow(
+            _.split(','),
+            _.invokeMap('trim'),
+            _.compact,
+            _.uniq,
+            _.difference(_, tags),
+            _.map(addTag)
+          )
+        : _.flow(
+            _.trim,
+            addTag
         )
       return (
         <OutsideClickHandler
