@@ -14,5 +14,5 @@ export let PlainObjectTree = F.tree(onlyWhen(_.isPlainObject))
 export let flattenPlainObject = F.whenExists(FlattenTreeLeaves(PlainObjectTree))
 
 export let mergeOrReturn = _.curry(
-  (a, b) => (a && b && _.merge(a, b)) || a || b || {}
+  (a, b) => a && b && _.merge(a, b) || a || b || {}
 )
