@@ -1,7 +1,7 @@
 import React from 'react'
 import F from 'futil-js'
 import { storiesOf } from '@storybook/react'
-import { ThemeContext, ThemeConsumer, withTheme } from '../src/utils/theme'
+import { ThemeProvider, ThemeConsumer, withTheme } from '../src/utils/theme'
 
 let withStyle = (style, Component) => props => (
   <Component style={style} {...props} />
@@ -60,28 +60,24 @@ storiesOf('Theme API|withTheme', module)
       )
     )
     return (
-      <ThemeContext.Provider>
+      <ThemeProvider>
         <ThemedButton>My default is a plain button!</ThemedButton>
         <DefaultVanillaButton>My default is Vanilla!</DefaultVanillaButton>
-      </ThemeContext.Provider>
+      </ThemeProvider>
     )
   })
   .addWithJSX('Theme precedence', () => (
-    <ThemeContext.Provider
-      value={{
-        Button: VanillaButton,
-        'ButtonGroup.Button': StrawberryButton,
-      }}
-    >
-      <ThemedButtonGroup
-        buttons={['Nested themes override top-level themes']}
-      />
-      <ThemedButtonGroup
-        theme={{ Button: PearButton }}
-        buttons={['Theme props override theme context']}
-      />
-    </ThemeContext.Provider>
-  ))
+      <ThemeProvider
+        value={{
+          Button: VanillaButton,
+          'ButtonGroup.Button': StrawberryButton
+        }}
+      >
+        <ThemedButtonGroup buttons={['Nested themes override top-level themes']} />
+        <ThemedButtonGroup theme={{ Button: PearButton }} buttons={['Theme props override theme context']} />
+      </ThemeProvider>
+    )
+  )
   .addWithJSX('Explicit naming', () => {
     let UnnamedComponent = withTheme()(({ theme: { Button = 'button' } }) => (
       <>
@@ -102,7 +98,7 @@ storiesOf('Theme API|withTheme', module)
     )
     let ButtonGroupGeorge = withTheme('George')(ButtonGroup)
     return (
-      <ThemeContext.Provider
+      <ThemeProvider
         value={{
           Button: VanillaButton,
           'Jerry.Button': StrawberryButton,
@@ -118,41 +114,29 @@ storiesOf('Theme API|withTheme', module)
           as "George":
         </div>
         <ButtonGroupGeorge buttons={['George buttons are Pear!']} />
-      </ThemeContext.Provider>
+      </ThemeProvider>
     )
   })
 
 storiesOf('Theme API|ThemeConsumer', module)
   .addWithJSX('Without path', () => (
-    <ThemeContext.Provider
-      value={{
-        Button: VanillaButton,
-        ButtonGroup,
-        'ButtonGroup.Button': PearButton,
-      }}
-    >
-      <ThemeConsumer>
-        {theme => <theme.Button>Top-level buttons are Vanilla</theme.Button>}
+    <ThemeProvider value={{ Button: VanillaButton, ButtonGroup, 'ButtonGroup.Button': PearButton }}>
+      <ThemeConsumer name="Button">
+        {({ Button = 'button' }) => <Button>Top-level buttons are Vanilla</Button>}
       </ThemeConsumer>
-    </ThemeContext.Provider>
+    </ThemeProvider>
   ))
   .addWithJSX('With path', () => (
-    <ThemeContext.Provider
-      value={{
-        Button: VanillaButton,
-        ButtonGroup,
-        'ButtonGroup.Button': GrapeButton,
-      }}
-    >
+    <ThemeProvider value={{ Button: VanillaButton, ButtonGroup, 'ButtonGroup.Button': GrapeButton }}>
       {/* 
         If ThemeConsumer is given a `path` prop containing an array, it will merge
         all of the theme components along that path into the `theme` object that is
         passed to its child function.
       */}
-      <ThemeConsumer path={['ButtonGroup']}>
-        {theme => <theme.Button>ButtonGroup buttons are Grape!</theme.Button>}
+      <ThemeConsumer name="ButtonGroup">
+        {({ Button = 'button' }) => <Button>ButtonGroup buttons are Grape!</Button>}
       </ThemeConsumer>
-    </ThemeContext.Provider>
+    </ThemeProvider>
   ))
 
 let IconButton = ({
@@ -168,7 +152,7 @@ let ThemedIconButton = withTheme('IconButton')(IconButton)
 
 storiesOf('Theme API|Multi-level nesting', module)
   .addWithJSX('With theme context', () => (
-    <ThemeContext.Provider
+    <ThemeProvider
       value={{
         Icon: () => <span>🍨</span>,
         Button: VanillaButton,
@@ -179,10 +163,10 @@ storiesOf('Theme API|Multi-level nesting', module)
     >
       <ThemedIconButton>Top-level Icon & Button theme</ThemedIconButton>
       <ThemedButtonGroup buttons={['ButtonGroup Icon & Button theme']} />
-    </ThemeContext.Provider>
+    </ThemeProvider>
   ))
   .addWithJSX('With theme props', () => (
-    <ThemeContext.Provider
+    <ThemeProvider
       value={{
         Icon: () => <span>🍨</span>,
         Button: VanillaButton,
@@ -197,5 +181,5 @@ storiesOf('Theme API|Multi-level nesting', module)
         }}
         buttons={['ButtonGroup Icon & Button theme']}
       />
-    </ThemeContext.Provider>
+    </ThemeProvider>
   ))

@@ -2,12 +2,10 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 
-export let ThemeContext = React.createContext()
+let ThemeContext = React.createContext()
+export let ThemeProvider = ThemeContext.Provider
 
-let hasNested = _.curry(
-  (key, theme) =>
-    key && theme && F.findIndexed((v, k) => _.startsWith(`${key}.`, k), theme)
-)
+let hasNested = key => F.findIndexed((v, k) => _.startsWith(`${key}.`, k))
 
 export let mergeNestedTheme = (theme, key) =>
   F.when(
@@ -19,24 +17,17 @@ export let mergeNestedTheme = (theme, key) =>
     )
   )(theme)
 
-export let mergeNestedThemePath = (theme, path) =>
-  _.reduce((acc, key) => mergeNestedTheme(acc, key), theme, path || [])
-
-export let ThemeConsumer = ({ children, path }) => (
-  <ThemeContext.Consumer>
-    {theme => children(mergeNestedThemePath(theme, path))}
-  </ThemeContext.Consumer>
-)
-
-export let withTheme = name => Component => ({
-  theme: propTheme,
-  ...props
-}) => {
+export let ThemeConsumer = ({ name, children, theme: propTheme }) => {
   let contextTheme = mergeNestedTheme(React.useContext(ThemeContext), name)
   let newTheme = _.merge(contextTheme, propTheme)
   return (
     <ThemeContext.Provider value={newTheme}>
-      <Component {...props} theme={newTheme} />
+      {children(newTheme)}
     </ThemeContext.Provider>
   )
 }
+
+export let withTheme = name => Component => ({ theme, ...props }) => 
+  <ThemeConsumer {...{ theme, name }}>
+    {newTheme => <Component {...props} theme={newTheme} />}
+  </ThemeConsumer>
