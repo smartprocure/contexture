@@ -28,7 +28,8 @@ export let ThemeConsumer = ({ name, children, theme: propTheme }) => {
   )
 }
 
-export let withTheme = name => Component => ({ theme, ...props }) => 
+export let withTheme = name => Component => ({ theme, ...props }) => (
   <ThemeConsumer {...{ theme, name }}>
     {newTheme => <Component {...props} theme={newTheme} />}
   </ThemeConsumer>
+)

@@ -67,17 +67,21 @@ storiesOf('Theme API|withTheme', module)
     )
   })
   .addWithJSX('Theme precedence', () => (
-      <ThemeProvider
-        value={{
-          Button: VanillaButton,
-          'ButtonGroup.Button': StrawberryButton
-        }}
-      >
-        <ThemedButtonGroup buttons={['Nested themes override top-level themes']} />
-        <ThemedButtonGroup theme={{ Button: PearButton }} buttons={['Theme props override theme context']} />
-      </ThemeProvider>
-    )
-  )
+    <ThemeProvider
+      value={{
+        Button: VanillaButton,
+        'ButtonGroup.Button': StrawberryButton,
+      }}
+    >
+      <ThemedButtonGroup
+        buttons={['Nested themes override top-level themes']}
+      />
+      <ThemedButtonGroup
+        theme={{ Button: PearButton }}
+        buttons={['Theme props override theme context']}
+      />
+    </ThemeProvider>
+  ))
   .addWithJSX('Explicit naming', () => {
     let UnnamedComponent = withTheme()(({ theme: { Button = 'button' } }) => (
       <>
@@ -120,21 +124,37 @@ storiesOf('Theme API|withTheme', module)
 
 storiesOf('Theme API|ThemeConsumer', module)
   .addWithJSX('Without path', () => (
-    <ThemeProvider value={{ Button: VanillaButton, ButtonGroup, 'ButtonGroup.Button': PearButton }}>
+    <ThemeProvider
+      value={{
+        Button: VanillaButton,
+        ButtonGroup,
+        'ButtonGroup.Button': PearButton,
+      }}
+    >
       <ThemeConsumer name="Button">
-        {({ Button = 'button' }) => <Button>Top-level buttons are Vanilla</Button>}
+        {({ Button = 'button' }) => (
+          <Button>Top-level buttons are Vanilla</Button>
+        )}
       </ThemeConsumer>
     </ThemeProvider>
   ))
   .addWithJSX('With path', () => (
-    <ThemeProvider value={{ Button: VanillaButton, ButtonGroup, 'ButtonGroup.Button': GrapeButton }}>
+    <ThemeProvider
+      value={{
+        Button: VanillaButton,
+        ButtonGroup,
+        'ButtonGroup.Button': GrapeButton,
+      }}
+    >
       {/* 
         If ThemeConsumer is given a `path` prop containing an array, it will merge
         all of the theme components along that path into the `theme` object that is
         passed to its child function.
       */}
       <ThemeConsumer name="ButtonGroup">
-        {({ Button = 'button' }) => <Button>ButtonGroup buttons are Grape!</Button>}
+        {({ Button = 'button' }) => (
+          <Button>ButtonGroup buttons are Grape!</Button>
+        )}
       </ThemeConsumer>
     </ThemeProvider>
   ))
