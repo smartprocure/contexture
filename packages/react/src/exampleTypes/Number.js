@@ -21,7 +21,7 @@ let NumberComponent = contexturify(
           onChange={e =>
             tree.mutate(node.path, {
               min: _.isNumber(significantDigits)
-                ? round(e.target.value, significantDigits)
+                ? _.toString(round(e.target.value, significantDigits))
                 : e.target.value,
             })
           }
@@ -32,7 +32,7 @@ let NumberComponent = contexturify(
           onChange={e =>
             tree.mutate(node.path, {
               max: _.isNumber(significantDigits)
-                ? round(e.target.value, significantDigits)
+                ? _.toString(round(e.target.value, significantDigits))
                 : e.target.value,
             })
           }
