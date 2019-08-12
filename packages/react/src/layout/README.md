@@ -111,7 +111,6 @@
 `isOpen`,
 `style`
 
-
 ## ModalPicker
 
 ### Props
@@ -127,7 +126,6 @@
 | `Button`  | `'button'`          |
 | `Modal`   | layout/Modal        |
 | `Picker`  | layout/NestedPicker |
-
 
 ## NestedPicker
 
@@ -155,7 +153,6 @@
 ## NumberInput
 
 `...props` recipient: `input`
-
 
 ## Popover
 

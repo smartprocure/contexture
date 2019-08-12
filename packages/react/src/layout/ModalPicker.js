@@ -3,7 +3,14 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { useLens } from '../utils/react'
 
-let ModalPicker = ({ options, Button = 'button', onChange, label, Picker, Modal }) => {
+let ModalPicker = ({
+  options,
+  Button = 'button',
+  onChange,
+  label,
+  Picker,
+  Modal,
+}) => {
   let isOpen = useLens(false)
   return (
     <div>
