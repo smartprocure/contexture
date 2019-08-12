@@ -4,12 +4,13 @@ import { observer } from 'mobx-react'
 import React from 'react'
 import DefaultIcon from '../DefaultIcon'
 import Flex from './Flex'
+import { withTheme } from '../utils/theme'
 
 // Observes node, so we can activate the Continue button if it (or any child) has a value.
 // We don't observe on Step because then it would rerender its children when `node`
 // changes, which unfocuses query inputs as soon as the first character is entered.
-let Buttons = observer(
-  ({ step, totalSteps, currentStep, Button, Icon, onSubmit }) => (
+let Buttons = _.flow(observer, withTheme('Buttons'))(
+  ({ step, totalSteps, currentStep, theme: { Button = 'button', Icon = DefaultIcon }, onSubmit }) => (
     <>
       {step > 0 && (
         <Button onClick={F.sets(step - 1, currentStep)} className="back-button">
@@ -33,10 +34,9 @@ let Buttons = observer(
     </>
   )
 )
+Buttons.displayName = 'Buttons'
 
-export let AccordionStep = ({
-  Button,
-  Icon,
+export let AccordionStep = withTheme('AccordionStep')(({
   style,
   className,
   step,
@@ -46,6 +46,7 @@ export let AccordionStep = ({
   isRequired = false,
   onSubmit,
   children,
+  theme: { Icon = DefaultIcon }
 }) => {
   let isOpen = F.view(currentStep) === step
   return (
@@ -73,17 +74,16 @@ export let AccordionStep = ({
         <>
           <div className="step-contents">{children}</div>
           <Buttons
-            {...{ step, totalSteps, currentStep, onSubmit, Button, Icon }}
+            {...{ step, totalSteps, currentStep, onSubmit }}
           />
         </>
       )}
     </div>
   )
-}
+})
+AccordionStep.displayName = 'AccordionStep'
 
 let StepsAccordion = ({
-  Button = 'button',
-  Icon = DefaultIcon,
   onSubmit = _.noop,
   children,
   ...props
@@ -93,7 +93,7 @@ let StepsAccordion = ({
     <div {...props}>
       {React.Children.map(children, (child, i) => (
         <child.type
-          {...{ Button, Icon, currentStep, onSubmit }}
+          {...{ currentStep, onSubmit }}
           key={i}
           step={i}
           totalSteps={_.size(children)}
@@ -104,5 +104,4 @@ let StepsAccordion = ({
   )
 }
 
-StepsAccordion.displayName = 'StepsAccordion'
 export default StepsAccordion

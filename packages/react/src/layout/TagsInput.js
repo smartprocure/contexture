@@ -1,16 +1,24 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
-import { withState, defaultProps } from 'recompose'
+import { withState } from 'recompose'
 import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import Flex from './Flex'
-import Popover from './Popover'
+import DefaultPopover from './Popover'
 import OutsideClickHandler from 'react-outside-click-handler'
+import { withTheme } from '../utils/theme'
 
 let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
-let Tag = observer(({ value, removeTag, tagStyle, RemoveIcon, onClick }) => (
+let DefaultRemoveIcon = props => (
+  <span className="tags-input-tag-remove" {...props}>
+    x
+  </span>
+)
+
+let Tag = _.flow(observer, withTheme('Tag'))(
+  ({ value, removeTag, tagStyle, theme: { RemoveIcon = DefaultRemoveIcon }, onClick }) => (
   <span
     className="tags-input-tag"
     style={{
@@ -46,14 +54,6 @@ let Tag = observer(({ value, removeTag, tagStyle, RemoveIcon, onClick }) => (
 ))
 Tag.displayName = 'Tag'
 
-let DefaultTagComponent = defaultProps({
-  RemoveIcon: props => (
-    <span className="tags-input-tag-remove" {...props}>
-      x
-    </span>
-  ),
-})(Tag)
-
 // We're only using withState to preserve the state between renders, since
 // inject doesn't do that for us.
 let TagsInput = withState('state', 'setState', () =>
@@ -64,7 +64,7 @@ let TagsInput = withState('state', 'setState', () =>
     isOneLine: true,
   })
 )(
-  observer(
+  _.flow(observer, withTheme('TagsInput'))(
     ({
       tags,
       state,
@@ -72,10 +72,13 @@ let TagsInput = withState('state', 'setState', () =>
       removeTag,
       submit = _.noop,
       tagStyle,
-      TagComponent = DefaultTagComponent,
       placeholder = 'Search...',
       splitCommas,
-      PopoverContents,
+      theme: {
+        Popover = DefaultPopover,
+        PopoverContents = 'div',
+        TagComponent = Tag,
+      },
       style,
       ...props
     }) => {

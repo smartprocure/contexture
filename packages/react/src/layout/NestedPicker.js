@@ -5,6 +5,7 @@ import { inject, observer } from 'mobx-react'
 import { observable } from 'mobx'
 import { useLens } from '../utils/react'
 import TextHighlight from './TextHighlight'
+import { withTheme } from '../utils/theme'
 
 // Unflatten by with support for arrays (allow dots in paths) and not needing a _.keyBy first
 let unflattenObjectBy = _.curry((iteratee, x) =>
@@ -19,8 +20,8 @@ const DefaultItem = ({ children, onClick, disabled }) => (
   </div>
 )
 
-let FilteredSection = observer(
-  ({ options, onClick, highlight, Highlight, Item }) => (
+let FilteredSection = _.flow(observer, withTheme('Section'))(
+  ({ options, onClick, highlight, theme: { Highlight = TextHighlight, Item = DefaultItem } }) => (
     <div>
       {F.mapIndexed(
         (option, field) => (
@@ -38,7 +39,8 @@ FilteredSection.displayName = 'FilteredSection'
 let getItemLabel = item =>
   isField(item) ? item.shortLabel || item.label : _.startCase(item._key)
 
-let Section = observer(({ options, onClick, selected, Item }) => (
+let Section = _.flow(observer, withTheme('Section'))(
+  ({ options, onClick, selected, theme: { Item = DefaultItem } }) => (
   <div>
     {_.map(
       item => (
@@ -76,7 +78,7 @@ let PanelTreePicker = inject((store, { onChange, options }) => {
   }
   return x
 })(
-  observer(({ selectAtLevel, state, nestedOptions, Item }) => (
+  observer(({ selectAtLevel, state, nestedOptions }) => (
     <div
       className="panel-tree-picker"
       style={{ display: 'inline-flex', width: '100%', overflow: 'auto' }}
@@ -85,7 +87,6 @@ let PanelTreePicker = inject((store, { onChange, options }) => {
         options={nestedOptions}
         onClick={selectAtLevel(0)}
         selected={state.selected[0]}
-        Item={Item}
       />
       {F.mapIndexed(
         (_key, index) => (
@@ -94,7 +95,6 @@ let PanelTreePicker = inject((store, { onChange, options }) => {
             options={_.get(state.selected.slice(0, index + 1), nestedOptions)}
             onClick={selectAtLevel(index + 1)}
             selected={state.selected[index + 1]}
-            Item={Item}
           />
         ),
         state.selected
@@ -109,9 +109,7 @@ let matchLabel = str => _.filter(x => F.matchAllWords(str)(x.label))
 let NestedPicker = ({
   options,
   onChange,
-  Input = 'input',
-  Highlight = TextHighlight,
-  Item = DefaultItem,
+  theme: { Input = 'input' },
 }) => {
   let filter = useLens('')
   return (
@@ -125,14 +123,12 @@ let NestedPicker = ({
           options={matchLabel(F.view(filter))(options)}
           onClick={onChange}
           highlight={F.view(filter)}
-          Highlight={Highlight}
-          Item={Item}
         />
       ) : (
-        <PanelTreePicker options={options} onChange={onChange} Item={Item} />
+        <PanelTreePicker options={options} onChange={onChange} />
       )}
     </div>
   )
 }
 
-export default observer(NestedPicker)
+export default _.flow(observer, withTheme('NestedPicker'))(NestedPicker)

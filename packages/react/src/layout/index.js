@@ -1,39 +1,65 @@
 import Awaiter from './Awaiter'
+import BarChart from './BarChart'
+import Checkbox from './Checkbox'
+import CheckButton from './CheckButton'
+import Dynamic from './Dynamic'
+import ExpandableTable from './ExpandableTable'
 import Flex from './Flex'
 import Grid from './Grid'
+import LensInput from './LensInput'
 import Modal from './Modal'
-import Popover from './Popover'
-import SpacedList from './SpacedList'
-import TextHighlight from './TextHighlight'
 import ModalPicker from './ModalPicker'
 import NestedPicker from './NestedPicker'
-import Dynamic from './Dynamic'
-import BarChart from './BarChart'
-import { Tag, TagsInput } from './TagsInput'
-import LensInput from './LensInput'
-import ExpandableTable from './ExpandableTable'
+import Popover from './Popover'
 import Portal from './Portal'
-import CheckButton from './CheckButton'
+import SpacedList from './SpacedList'
 import StepsAccordion, { AccordionStep } from './StepsAccordion'
+import { Tag, TagsInput } from './TagsInput'
+import TextHighlight from './TextHighlight'
 
-export {
+
+export let theme = {
+  AccordionStep,
   Awaiter,
+  BarChart,
+  Checkbox,
+  CheckButton,
+  Dynamic,
+  ExpandableTable,
   Flex,
   Grid,
+  LensInput,
   Modal,
-  Popover,
-  SpacedList,
-  TextHighlight,
-  NestedPicker,
   ModalPicker,
-  Dynamic,
-  BarChart,
+  NestedPicker,
+  Popover,
+  Portal,
+  SpacedList,
+  StepsAccordion,
   Tag,
   TagsInput,
-  LensInput,
-  ExpandableTable,
-  Portal,
-  CheckButton,
-  StepsAccordion,
+  TextHighlight,
+}
+
+export {
   AccordionStep,
+  Awaiter,
+  BarChart,
+  Checkbox,
+  CheckButton,
+  Dynamic,
+  ExpandableTable,
+  Flex,
+  Grid,
+  LensInput,
+  Modal,
+  ModalPicker,
+  NestedPicker,
+  Popover,
+  Portal,
+  SpacedList,
+  StepsAccordion,
+  Tag,
+  TagsInput,
+  TextHighlight,
 }

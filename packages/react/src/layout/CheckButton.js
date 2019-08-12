@@ -1,12 +1,14 @@
 import _ from 'lodash/fp'
 import React from 'react'
 import Flex from './Flex'
-
-let CheckboxDefault = props => <input type="checkbox" {...props} />
+import CheckboxDefault from './Checkbox'
+import { withTheme } from '../utils/theme'
 
 let CheckButton = ({
-  Button = 'button',
-  Checkbox = CheckboxDefault,
+  theme: {
+    Button = 'button',
+    Checkbox = CheckboxDefault,
+  },
   checked = false,
   onClick,
   children,
@@ -23,4 +25,4 @@ let CheckButton = ({
     </Flex>
   </Button>
 )
-export default CheckButton
+export default withTheme('CheckButton')(CheckButton)
