@@ -1,5 +1,4 @@
 import React from 'react'
-import F from 'futil-js'
 import { observer } from 'mobx-react'
 import _ from 'lodash/fp'
 import StripedLoader from '../layout/StripedLoader'
