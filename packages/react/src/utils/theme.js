@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import { mergeOrReturn } from './futil'
-import { getDisplayName } from './hoc'
+import { getDisplayName } from './react'
 
 let ThemeContext = React.createContext({})
 export let ThemeProvider = ThemeContext.Provider
@@ -19,19 +19,20 @@ export let mergeNestedTheme = (theme, key) =>
     )
   )(theme)
 
-let mergeThemes = (name, propTheme) => {
-  let contextTheme = mergeNestedTheme(React.useContext(ThemeContext), name)
-  return mergeOrReturn(contextTheme, propTheme)
-}
+let useTheme = (name, propTheme) =>
+  mergeOrReturn(
+    mergeNestedTheme(React.useContext(ThemeContext), name),
+    propTheme
+  )
 
 export let ThemeConsumer = ({ name, children, theme }) => {
-  let newTheme = mergeThemes(name, theme)
+  let newTheme = useTheme(name, theme)
   return <ThemeProvider value={newTheme}>{children(newTheme)}</ThemeProvider>
 }
 
 export let withTheme = name => Component => {
   let themed = ({ theme, ...props }) => {
-    let newTheme = mergeThemes(name, theme)
+    let newTheme = useTheme(name, theme)
     return (
       <ThemeProvider value={newTheme}>
         <Component {...props} theme={newTheme} />

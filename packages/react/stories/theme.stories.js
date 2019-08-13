@@ -2,7 +2,7 @@ import React from 'react'
 import F from 'futil-js'
 import { storiesOf } from '@storybook/react'
 import { ThemeProvider, ThemeConsumer, withTheme } from '../src/utils/theme'
-import { getDisplayName } from '../src/utils/hoc'
+import { getDisplayName } from '../src/utils/react'
 
 let withStyle = (style, Component) => {
   let styled = props => <Component style={style} {...props} />
