@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { theme as defaultTheme } from '../../layout'
+import defaultTheme from '../../layout'
 import ExampleTypeConstructor from '../../exampleTypes/'
 
 import Input from './Input'
@@ -56,7 +56,7 @@ export {
   Adder,
 }
 
-export let theme = {
+export default {
   ...baseTheme,
   ...ExampleTypes,
 }
