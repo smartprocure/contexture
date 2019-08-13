@@ -1,6 +1,6 @@
 import React from 'react'
 
-export let Flex = ({
+let Flex = ({
   as: Component = 'div',
   style,
   alignItems,
@@ -23,3 +23,5 @@ export let Flex = ({
     {...props}
   />
 )
+
+export default Flex

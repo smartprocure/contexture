@@ -14,7 +14,7 @@ import {
   StepsAccordion,
   AccordionStep,
 } from '../src/layout'
-import { Flex } from '../src/layout/Flex'
+import Flex from '../src/layout/Flex'
 import { NestedPicker, ModalPicker } from '../src'
 
 let ModalDemo = observer(() => {

@@ -3,7 +3,7 @@ import F from 'futil-js'
 import { observer } from 'mobx-react'
 import React from 'react'
 import DefaultIcon from '../DefaultIcon'
-import { Flex } from './Flex'
+import Flex from './Flex'
 
 // Observes node, so we can activate the Continue button if it (or any child) has a value.
 // We don't observe on Step because then it would rerender its children when `node`

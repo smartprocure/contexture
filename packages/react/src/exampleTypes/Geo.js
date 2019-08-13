@@ -1,6 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import { Flex } from '../layout/Flex'
+import Flex from '../layout/Flex'
 import { contexturify } from '../utils/hoc'
 
 const customStyles = {

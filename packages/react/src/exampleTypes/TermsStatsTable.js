@@ -4,7 +4,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { contexturify } from '../utils/hoc'
 import ExpandableTable, { Column } from '../layout/ExpandableTable'
-import { Flex } from '../layout/Flex'
+import Flex from '../layout/Flex'
 import Select from '../layout/Select'
 
 let toolBarStyle = { justifyContent: 'space-between', alignItems: 'center' }

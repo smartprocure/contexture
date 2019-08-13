@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
-import { Flex } from './Flex'
+import Flex from './Flex'
 
 let YAxis = ({ height, borderColor, min, max }) => (
   <div>
