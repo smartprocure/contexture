@@ -1,6 +1,6 @@
 import React from 'react'
 import ErrorList from './ErrorList'
-import { Flex } from '../../layout/Flex'
+import Flex from '../../layout/Flex'
 
 let ErrorBlock = ({ children, ...props }) => (
   <Flex className="gv-block-error" alignItems="center" {...props}>

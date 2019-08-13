@@ -4,7 +4,7 @@ import F from 'futil-js'
 import { withState, defaultProps } from 'recompose'
 import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
-import { Flex } from './Flex'
+import Flex from './Flex'
 import Popover from './Popover'
 import OutsideClickHandler from 'react-outside-click-handler'
 

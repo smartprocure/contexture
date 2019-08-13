@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import { round } from 'lodash'
-import { Flex } from '../layout/Flex'
+import Flex from '../layout/Flex'
 import { contexturify } from '../utils/hoc'
 
 let NumberComponent = contexturify(

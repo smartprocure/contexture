@@ -1,6 +1,6 @@
 import Awaiter from './Awaiter'
-import { Flex } from './Flex'
-import { Grid } from './Grid'
+import Flex from './Flex'
+import Grid from './Grid'
 import Modal from './Modal'
 import Popover from './Popover'
 import SpacedList from './SpacedList'

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer, Observer } from 'mobx-react'
-import { Flex } from '../layout/Flex'
+import Flex from '../layout/Flex'
 import { contexturify } from '../utils/hoc'
 
 let CheckboxDefault = props => <input type="checkbox" {...props} />

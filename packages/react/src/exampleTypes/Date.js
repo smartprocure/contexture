@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex } from '../layout/Flex'
+import Flex from '../layout/Flex'
 import { contexturify } from '../utils/hoc'
 import F from 'futil-js'
 import _ from 'lodash/fp'

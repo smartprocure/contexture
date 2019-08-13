@@ -1,6 +1,6 @@
 import React from 'react'
 
-export let Flex = ({
+export default ({
   as: Component = 'div',
   style,
   alignItems,
