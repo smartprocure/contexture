@@ -7,28 +7,11 @@ import {
   FilterList,
   Label,
   Flex,
-  Awaiter,
-  SpacedList,
   Grid,
   componentForType,
 } from '../../../src'
-import {
-  Fonts,
-  Style,
-  Adder,
-  Button,
-  Pager,
-  ExampleTypes,
-  Checkbox,
-  ButtonRadio,
-  TypeMap,
-} from '../../../src/themes/blueberry'
-let {
-  ResultCount,
-  ResultTable,
-  TagsQuery,
-  DateRangePicker,
-} = ExampleTypes
+import { theme, TypeMap } from '../../../src/themes/blueberry'
+import { ThemeProvider, withTheme } from '../../../src/utils/theme'
 
 let tree = Contexture({
   key: 'root',
@@ -127,19 +110,20 @@ let schemas = fromPromise(
     .then(_.tap(() => tree.refresh(['root'])))
 )
 
-export default () => (
+let BlueberryStory = withTheme()(
+  ({ theme }) => (
   <div className="bb-body">
-    <Fonts />
-    <Style />
-    <Awaiter promise={schemas}>
+    <theme.Fonts />
+    <theme.Style />
+    <theme.Awaiter promise={schemas}>
       {schemas => (
         <Grid gap="22px" columns="1fr 4fr" style={{ margin: '0 22px' }}>
           <div>
             <h1>Filters</h1>
-            <SpacedList>
+            <theme.SpacedList>
               <div>
                 <Label>Released</Label>
-                <DateRangePicker
+                <theme.DateRangePicker
                   tree={tree}
                   path={['root', 'status']}
                   ranges={[
@@ -152,9 +136,9 @@ export default () => (
               <div>
                 <Label>Title</Label>
                 Contains
-                <TagsQuery tree={tree} path={['root', 'titleContains']} />
+                <theme.TagsQuery tree={tree} path={['root', 'titleContains']} />
                 Does Not Contain
-                <TagsQuery tree={tree} path={['root', 'titleDoesNotContain']} />
+                <theme.TagsQuery tree={tree} path={['root', 'titleDoesNotContain']} />
               </div>
               <FilterList
                 tree={tree}
@@ -162,18 +146,18 @@ export default () => (
                 fields={schemas.movies.fields}
                 mapNodeToProps={componentForType(TypeMap)}
               />
-              <Adder
+              <theme.Adder
                 tree={tree}
                 path={['root', 'criteria']}
                 fields={schemas.movies.fields}
                 uniqueFields
               />
-            </SpacedList>
+            </theme.SpacedList>
           </div>
           <div>
             <Grid columns="1fr 25px 150px" style={{ alignItems: 'center' }}>
-              <TagsQuery tree={tree} path={['root', 'bar']} />
-              <Checkbox
+              <theme.TagsQuery tree={tree} path={['root', 'bar']} />
+              <theme.Checkbox
                 checked={state.autoUpdate}
                 onChange={val => {
                   tree.disableAutoUpdate = !val
@@ -181,9 +165,9 @@ export default () => (
                 }}
               />
               {!state.autoUpdate && (
-                <Button onClick={tree.triggerUpdate} primary>
+                <theme.Button onClick={tree.triggerUpdate} primary>
                   Search
-                </Button>
+                </theme.Button>
               )}
             </Grid>
             <Flex
@@ -193,10 +177,10 @@ export default () => (
               }}
             >
               <h1>
-                Results (<ResultCount tree={tree} path={['root', 'results']} />)
+                Results (<theme.ResultCount tree={tree} path={['root', 'results']} />)
               </h1>
               <Flex>
-                <ButtonRadio
+                <theme.RadioList
                   options={[
                     { label: 'AutoSearch On', value: true },
                     { label: 'AutoSearch Off', value: false },
@@ -210,7 +194,7 @@ export default () => (
               </Flex>
             </Flex>
             <div className="bb-box">
-              <ResultTable
+              <theme.ResultTable
                 tree={tree}
                 path={['root', 'results']}
                 fields={schemas[tree.tree.schema].fields}
@@ -218,12 +202,17 @@ export default () => (
                 mapNodeToProps={componentForType(TypeMap)}
               />
               <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>
-                <Pager tree={tree} path={['root', 'results']} />
+                <theme.Pager tree={tree} path={['root', 'results']} />
               </Flex>
             </div>
           </div>
         </Grid>
       )}
-    </Awaiter>
+    </theme.Awaiter>
   </div>
-)
+))
+
+export default () =>
+  <ThemeProvider value={theme}>
+    <BlueberryStory />
+  </ThemeProvider>

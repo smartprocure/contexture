@@ -32,6 +32,7 @@ export let theme = {
   Modal,
   ModalPicker,
   NestedPicker,
+  // FieldPicker: NestedPicker,
   Popover,
   Portal,
   SpacedList,
