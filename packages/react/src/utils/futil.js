@@ -13,6 +13,14 @@ export let FlattenTreeLeaves = Tree =>
 export let PlainObjectTree = F.tree(onlyWhen(_.isPlainObject))
 export let flattenPlainObject = F.whenExists(FlattenTreeLeaves(PlainObjectTree))
 
+let canMerge = a => a && !_.isEmpty(a) ? a : false
+
 export let mergeOrReturn = _.curry(
-  (a, b) => (a && b && _.merge(a, b)) || a || b || {}
+  (a, b) =>
+    (canMerge(a) && canMerge(b) && _.merge(a, b)) ||
+    canMerge(a) ||
+    canMerge(b) ||
+    {}
 )
+
+export let mergeOrReturnAll = _.reduce(mergeOrReturn, null)

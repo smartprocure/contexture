@@ -16,28 +16,16 @@ import SpacedList from './SpacedList'
 import StepsAccordion, { AccordionStep } from './StepsAccordion'
 import { Tag, TagsInput } from './TagsInput'
 import TextHighlight from './TextHighlight'
+import baseTheme from './baseTheme'
 
-// theme
 export default {
-  AccordionStep,
-  Awaiter,
-  BarChart,
-  Checkbox,
+  ...baseTheme,
   CheckButton,
-  Dynamic,
-  ExpandableTable,
-  Flex,
-  Grid,
   LensInput,
-  Modal,
   ModalPicker,
   NestedPicker,
-  // FieldPicker: NestedPicker,
-  Popover,
-  Portal,
-  SpacedList,
   StepsAccordion,
-  Tag,
+  AccordionStep,
   TagsInput,
   TextHighlight,
 }
