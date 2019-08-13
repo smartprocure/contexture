@@ -3,13 +3,7 @@ import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import Contexture, { updateSchemas } from '../utils/contexture'
-import {
-  FilterList,
-  Label,
-  Flex,
-  Grid,
-  componentForType,
-} from '../../../src'
+import { FilterList, Label, Flex, Grid, componentForType } from '../../../src'
 import { theme, TypeMap } from '../../../src/themes/blueberry'
 import { ThemeProvider, withTheme } from '../../../src/utils/theme'
 
@@ -110,8 +104,7 @@ let schemas = fromPromise(
     .then(_.tap(() => tree.refresh(['root'])))
 )
 
-let BlueberryStory = withTheme()(
-  ({ theme }) => (
+let BlueberryStory = withTheme()(({ theme }) => (
   <div className="bb-body">
     <theme.Fonts />
     <theme.Style />
@@ -138,7 +131,10 @@ let BlueberryStory = withTheme()(
                 Contains
                 <theme.TagsQuery tree={tree} path={['root', 'titleContains']} />
                 Does Not Contain
-                <theme.TagsQuery tree={tree} path={['root', 'titleDoesNotContain']} />
+                <theme.TagsQuery
+                  tree={tree}
+                  path={['root', 'titleDoesNotContain']}
+                />
               </div>
               <FilterList
                 tree={tree}
@@ -177,7 +173,8 @@ let BlueberryStory = withTheme()(
               }}
             >
               <h1>
-                Results (<theme.ResultCount tree={tree} path={['root', 'results']} />)
+                Results (
+                <theme.ResultCount tree={tree} path={['root', 'results']} />)
               </h1>
               <Flex>
                 <theme.RadioList
@@ -212,7 +209,8 @@ let BlueberryStory = withTheme()(
   </div>
 ))
 
-export default () =>
+export default () => (
   <ThemeProvider value={theme}>
     <BlueberryStory />
   </ThemeProvider>
+)

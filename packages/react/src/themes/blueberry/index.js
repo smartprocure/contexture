@@ -16,7 +16,9 @@ import TagComponent from './TagComponent'
 import PagerItem from './PagerItem'
 import Adder from './Adder'
 
-export let Pager = props => <ExampleTypes.ResultPager Item={PagerItem} {...props} />
+export let Pager = props => (
+  <ExampleTypes.ResultPager Item={PagerItem} {...props} />
+)
 
 let baseTheme = {
   ...defaultTheme,
@@ -49,12 +51,12 @@ export {
   ButtonRadio,
   ListGroupItem,
   Wrap,
-  TagComponent, 
+  TagComponent,
   PagerItem,
   Adder,
 }
 
 export let theme = {
   ...baseTheme,
-  ...ExampleTypes
+  ...ExampleTypes,
 }

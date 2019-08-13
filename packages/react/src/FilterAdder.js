@@ -9,7 +9,14 @@ export let fieldsToOptions = _.map(x => ({ value: x.field, ...x }))
 
 let getGroupFields = node => _.map('field', _.getOr([], 'children', node))
 
-let FilterAdder = ({ tree, node, path, fields, theme: { Picker = NestedPicker }, uniqueFields }) => {
+let FilterAdder = ({
+  tree,
+  node,
+  path,
+  fields,
+  theme: { Picker = NestedPicker },
+  uniqueFields,
+}) => {
   let options = fieldsToOptions(fields)
   if (uniqueFields) {
     options = _.reject(x => _.includes(x.field, getGroupFields(node)), options)
@@ -22,4 +29,7 @@ let FilterAdder = ({ tree, node, path, fields, theme: { Picker = NestedPicker },
   )
 }
 
-export default _.flow(contexturify, withTheme('FilterAdder'))(FilterAdder)
+export default _.flow(
+  contexturify,
+  withTheme('FilterAdder')
+)(FilterAdder)

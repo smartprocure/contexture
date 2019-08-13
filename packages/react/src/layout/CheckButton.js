@@ -5,10 +5,7 @@ import CheckboxDefault from './Checkbox'
 import { withTheme } from '../utils/theme'
 
 let CheckButton = ({
-  theme: {
-    Button = 'button',
-    Checkbox = CheckboxDefault,
-  },
+  theme: { Button = 'button', Checkbox = CheckboxDefault },
   checked = false,
   onClick,
   children,

@@ -7,7 +7,10 @@ storiesOf('Live Demos|IMDB', module)
   .addWithJSX('Filter List', require('./filterList').default)
   .addWithJSX('Search Button', require('./searchButton').default)
   .addWithJSX('Blueberry Theme', require('./blueberry').default)
-  .addWithJSX('Blueberry Theme with Theme API', require('./blueberryThemed').default)
+  .addWithJSX(
+    'Blueberry Theme with Theme API',
+    require('./blueberryThemed').default
+  )
 
 storiesOf('Live Demos|IMDB', module)
   .addDecorator(GVDecorator)

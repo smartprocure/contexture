@@ -9,11 +9,7 @@ import NestedPicker from './NestedPicker'
 
 let ModalPicker = ({
   options,
-  theme: {
-    Button = 'button',
-    Picker = NestedPicker,
-    Modal = DefaultModal,
-  },
+  theme: { Button = 'button', Picker = NestedPicker, Modal = DefaultModal },
   onChange,
   label,
 }) => {
@@ -34,4 +30,7 @@ let ModalPicker = ({
   )
 }
 
-export default _.flow(observer, withTheme('ModalPicker'))(ModalPicker)
+export default _.flow(
+  observer,
+  withTheme('ModalPicker')
+)(ModalPicker)

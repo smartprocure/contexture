@@ -20,8 +20,16 @@ const DefaultItem = ({ children, onClick, disabled }) => (
   </div>
 )
 
-let FilteredSection = _.flow(observer, withTheme('Section'))(
-  ({ options, onClick, highlight, theme: { Highlight = TextHighlight, Item = DefaultItem } }) => (
+let FilteredSection = _.flow(
+  observer,
+  withTheme('Section')
+)(
+  ({
+    options,
+    onClick,
+    highlight,
+    theme: { Highlight = TextHighlight, Item = DefaultItem },
+  }) => (
     <div>
       {F.mapIndexed(
         (option, field) => (
@@ -39,8 +47,10 @@ FilteredSection.displayName = 'FilteredSection'
 let getItemLabel = item =>
   isField(item) ? item.shortLabel || item.label : _.startCase(item._key)
 
-let Section = _.flow(observer, withTheme('Section'))(
-  ({ options, onClick, selected, theme: { Item = DefaultItem } }) => (
+let Section = _.flow(
+  observer,
+  withTheme('Section')
+)(({ options, onClick, selected, theme: { Item = DefaultItem } }) => (
   <div>
     {_.map(
       item => (
@@ -106,11 +116,7 @@ PanelTreePicker.displayName = 'PanelTreePicker'
 
 let matchLabel = str => _.filter(x => F.matchAllWords(str)(x.label))
 
-let NestedPicker = ({
-  options,
-  onChange,
-  theme: { Input = 'input' },
-}) => {
+let NestedPicker = ({ options, onChange, theme: { Input = 'input' } }) => {
   let filter = useLens('')
   return (
     <div>
@@ -131,4 +137,7 @@ let NestedPicker = ({
   )
 }
 
-export default _.flow(observer, withTheme('NestedPicker'))(NestedPicker)
+export default _.flow(
+  observer,
+  withTheme('NestedPicker')
+)(NestedPicker)

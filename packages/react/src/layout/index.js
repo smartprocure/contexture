@@ -17,7 +17,6 @@ import StepsAccordion, { AccordionStep } from './StepsAccordion'
 import { Tag, TagsInput } from './TagsInput'
 import TextHighlight from './TextHighlight'
 
-
 export let theme = {
   AccordionStep,
   Awaiter,

@@ -23,12 +23,7 @@ import {
   ButtonRadio,
   TypeMap,
 } from '../../../src/themes/blueberry'
-let {
-  ResultCount,
-  ResultTable,
-  TagsQuery,
-  DateRangePicker,
-} = ExampleTypes
+let { ResultCount, ResultTable, TagsQuery, DateRangePicker } = ExampleTypes
 
 let tree = Contexture({
   key: 'root',
