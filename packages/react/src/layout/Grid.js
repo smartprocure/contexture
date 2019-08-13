@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default ({ style, columns, gap, ...props }) => (
+let Grid = ({ style, columns, gap, ...props }) => (
   <div
     style={{
       display: 'grid',
@@ -14,3 +14,5 @@ export default ({ style, columns, gap, ...props }) => (
     {...props}
   />
 )
+
+export default Grid
