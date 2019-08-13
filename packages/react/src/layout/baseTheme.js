@@ -10,6 +10,7 @@ import Popover from './Popover'
 import Portal from './Portal'
 import SpacedList from './SpacedList'
 import { Tag } from './TagsInput'
+import DefaultIcon from '../DefaultIcon'
 
 export default {
   Awaiter,
@@ -27,4 +28,5 @@ export default {
   SpacedList,
   Table: 'table',
   Tag,
+  Icon: DefaultIcon
 }

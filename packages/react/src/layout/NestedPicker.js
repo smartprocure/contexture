@@ -22,7 +22,7 @@ const DefaultItem = ({ children, onClick, disabled }) => (
 
 let FilteredSection = _.flow(
   observer,
-  withTheme('Section')
+  withTheme
 )(
   ({
     options,
@@ -49,7 +49,7 @@ let getItemLabel = item =>
 
 let Section = _.flow(
   observer,
-  withTheme('Section')
+  withTheme
 )(({ options, onClick, selected, theme: { Item = DefaultItem } }) => (
   <div>
     {_.map(
@@ -116,11 +116,11 @@ PanelTreePicker.displayName = 'PanelTreePicker'
 
 let matchLabel = str => _.filter(x => F.matchAllWords(str)(x.label))
 
-let NestedPicker = ({ options, onChange, theme: { Input = 'input' } }) => {
+let NestedPicker = ({ options, onChange, theme }) => {
   let filter = useLens('')
   return (
     <div>
-      <Input
+      <theme.Input
         {...F.domLens.value(filter)}
         placeholder="Enter filter keyword..."
       />
@@ -139,5 +139,5 @@ let NestedPicker = ({ options, onChange, theme: { Input = 'input' } }) => {
 
 export default _.flow(
   observer,
-  withTheme('NestedPicker')
+  withTheme
 )(NestedPicker)

@@ -11,4 +11,4 @@ let TextHighlight = ({ pattern, text, theme: { Wrap = 'i' } }) =>
     : text
 TextHighlight.displayName = 'TextHighlight'
 
-export default withTheme('TextHighlight')(TextHighlight)
+export default withTheme(TextHighlight)

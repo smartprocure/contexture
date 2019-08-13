@@ -11,13 +11,13 @@ import { withTheme } from '../utils/theme'
 // changes, which unfocuses query inputs as soon as the first character is entered.
 let Buttons = _.flow(
   observer,
-  withTheme('Buttons')
+  withTheme
 )(
   ({
     step,
     totalSteps,
     currentStep,
-    theme: { Button = 'button', Icon = DefaultIcon },
+    theme: { Button, Icon },
     onSubmit,
   }) => (
     <>
@@ -45,7 +45,7 @@ let Buttons = _.flow(
 )
 Buttons.displayName = 'Buttons'
 
-export let AccordionStep = withTheme('AccordionStep')(
+export let AccordionStep = withTheme(
   ({
     style,
     className,
@@ -56,7 +56,7 @@ export let AccordionStep = withTheme('AccordionStep')(
     isRequired = false,
     onSubmit,
     children,
-    theme: { Icon = DefaultIcon },
+    theme: { Icon },
   }) => {
     let isOpen = F.view(currentStep) === step
     return (

@@ -28,4 +28,4 @@ let ButtonRadio = ({
   </Flex>
 )
 
-export default withTheme('ButtonRadio')(ButtonRadio)
+export default withTheme(ButtonRadio)

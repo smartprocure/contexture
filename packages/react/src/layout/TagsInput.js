@@ -19,7 +19,7 @@ let DefaultRemoveIcon = props => (
 
 let Tag = _.flow(
   observer,
-  withTheme('Tag')
+  withTheme
 )(
   ({
     value,
@@ -76,7 +76,7 @@ let TagsInput = withState('state', 'setState', () =>
 )(
   _.flow(
     observer,
-    withTheme('TagsInput')
+    withTheme
   )(
     ({
       tags,
@@ -88,7 +88,7 @@ let TagsInput = withState('state', 'setState', () =>
       placeholder = 'Search...',
       splitCommas,
       theme: {
-        Popover = DefaultPopover,
+        Popover,
         PopoverContents = 'div',
         TagComponent = Tag,
       },

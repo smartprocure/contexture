@@ -1,25 +1,24 @@
 import _ from 'lodash/fp'
 import React from 'react'
 import Flex from './Flex'
-import CheckboxDefault from './Checkbox'
 import { withTheme } from '../utils/theme'
 
 let CheckButton = ({
-  theme: { Button = 'button', Checkbox = CheckboxDefault },
+  theme,
   checked = false,
   onClick,
   children,
   ...props
 }) => (
-  <Button onClick={onClick} {...props}>
+  <theme.Button onClick={onClick} {...props}>
     <Flex alignItems="center" justifyContent="center">
-      <Checkbox
+      <theme.Checkbox
         checked={!!checked} // prevent react "uncontrolled component" warning when `checked` prop is undefined
         onChange={_.noop} // prevent another react warning when `checked` is passed but `onChange` isn't
         disabled
       />
       {children}
     </Flex>
-  </Button>
+  </theme.Button>
 )
-export default withTheme('CheckButton')(CheckButton)
+export default withTheme(CheckButton)

@@ -31,5 +31,5 @@ let FilterAdder = ({
 
 export default _.flow(
   contexturify,
-  withTheme('FilterAdder')
+  withTheme
 )(FilterAdder)

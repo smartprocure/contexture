@@ -23,7 +23,6 @@ export let Pager = props => (
 let baseTheme = {
   ...defaultTheme,
   Adder,
-  'Adder.Item': ListGroupItem,
   Wrap,
   Fonts,
   Style,
@@ -32,9 +31,9 @@ let baseTheme = {
   Input,
   Checkbox,
   RadioList: ButtonRadio,
-  'FieldPicker.Item': ListGroupItem,
   'TagsInput.TagComponent': TagComponent,
   Pager,
+  Item: ListGroupItem,
 }
 
 let { TypeMap, ...ExampleTypes } = ExampleTypeConstructor(baseTheme)

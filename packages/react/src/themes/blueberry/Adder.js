@@ -20,4 +20,4 @@ let ModalFilterAdder = ({
   )
 }
 
-export default withTheme('Adder')(ModalFilterAdder)
+export default withTheme(ModalFilterAdder)

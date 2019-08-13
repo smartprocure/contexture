@@ -1,7 +1,7 @@
 import React from 'react'
 import F from 'futil-js'
 import { storiesOf } from '@storybook/react'
-import { ThemeProvider, ThemeConsumer, withTheme } from '../src/utils/theme'
+import { ThemeProvider, ThemeConsumer, withTheme, withNamedTheme } from '../src/utils/theme'
 
 let withStyle = (style, Component) => props => (
   <Component style={style} {...props} />
@@ -43,14 +43,14 @@ let GrapeButton = withStyle(
   'button'
 )
 
-let ThemedButton = withTheme('Button')(({ theme, children }) => (
+let ThemedButton = withTheme(({ theme, children }) => (
   <theme.Button>{children}</theme.Button>
 ))
 
-let ButtonGroup = ({ theme: { Button = 'button' }, buttons = [] }) =>
-  F.mapIndexed((button, i) => <Button key={i}>{button}</Button>)(buttons)
+let ButtonGroup = ({ theme, buttons = [] }) =>
+  F.mapIndexed((button, i) => <theme.Button key={i}>{button}</theme.Button>)(buttons)
 
-let ThemedButtonGroup = withTheme('ButtonGroup')(ButtonGroup)
+let ThemedButtonGroup = withNamedTheme('ButtonGroup')(ButtonGroup)
 
 storiesOf('Theme API|defaults', module)
   .addWithJSX('Global defaults', () => (
@@ -76,12 +76,12 @@ storiesOf('Theme API|defaults', module)
     </>
   ))
   .addWithJSX('Component-level defaults', () => {
-    let DefaultVanillaButton = withTheme()(
+    let DefaultVanillaButton = withTheme(
       ({ theme: { Button = VanillaButton }, children }) => (
         <Button>{children}</Button>
       )
     )
-    let DefaultVanillaFoo = withTheme()(
+    let DefaultVanillaFoo = withTheme(
       ({ theme: { Foo = VanillaButton }, children }) => <Foo>{children}</Foo>
     )
     return (
@@ -115,13 +115,13 @@ storiesOf('Theme API|withTheme', module)
     </ThemeProvider>
   ))
   .addWithJSX('Explicit naming', () => {
-    let UnnamedComponent = withTheme()(({ theme }) => (
+    let UnnamedComponent = withTheme(({ theme }) => (
       <>
         <div>I am an anonymous component</div>
         <theme.Button>Top-level buttons are Vanilla</theme.Button>
       </>
     ))
-    let ExplicitlyNamedComponent = withTheme('Jerry')(({ theme }) => (
+    let ExplicitlyNamedComponent = withNamedTheme('Jerry')(({ theme }) => (
       <>
         <div>
           I am also an anonymous component, but <code>withTheme</code> knows me
@@ -130,7 +130,7 @@ storiesOf('Theme API|withTheme', module)
         <theme.Button>Jerry buttons are Strawberry!</theme.Button>
       </>
     ))
-    let ButtonGroupGeorge = withTheme('George')(ButtonGroup)
+    let ButtonGroupGeorge = withNamedTheme('George')(ButtonGroup)
     return (
       <ThemeProvider
         value={{
@@ -186,7 +186,7 @@ let IconButton = ({ theme: { Button, Icon }, children }) => (
     {children}
   </Button>
 )
-let ThemedIconButton = withTheme('IconButton')(IconButton)
+let ThemedIconButton = withNamedTheme('IconButton')(IconButton)
 
 storiesOf('Theme API|Multi-level nesting', module)
   .addWithJSX('With theme context', () => (

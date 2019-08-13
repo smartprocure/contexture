@@ -104,7 +104,7 @@ let schemas = fromPromise(
     .then(_.tap(() => tree.refresh(['root'])))
 )
 
-let BlueberryStory = withTheme()(({ theme }) => (
+let BlueberryStory = withTheme(({ theme }) => (
   <div className="bb-body">
     <theme.Fonts />
     <theme.Style />
