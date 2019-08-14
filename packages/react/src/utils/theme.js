@@ -4,9 +4,10 @@ import F from 'futil-js'
 import { mergeOrReturnAll } from './futil'
 import { getDisplayName } from './react'
 
-import baseTheme from '../layout/baseTheme'
-
-let ThemeContext = React.createContext(baseTheme)
+// We populate the default theme by mutating this in src/layout/index.js, to
+// avoid importing withTheme-wrapped components before the function is defined.
+export let defaultTheme = {}
+let ThemeContext = React.createContext(defaultTheme)
 export let ThemeProvider = ThemeContext.Provider
 
 let hasNested = key => F.findIndexed((v, k) => _.startsWith(`${key}.`, k))
@@ -23,7 +24,7 @@ export let mergeNestedTheme = (theme, key) =>
 
 let useTheme = (name, propTheme) =>
   mergeOrReturnAll([
-    baseTheme,
+    defaultTheme,
     mergeNestedTheme(React.useContext(ThemeContext), name),
     propTheme,
   ])

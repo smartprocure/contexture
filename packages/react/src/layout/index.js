@@ -1,3 +1,4 @@
+import F from 'futil-js'
 import Awaiter from './Awaiter'
 import BarChart from './BarChart'
 import Checkbox from './Checkbox'
@@ -16,19 +17,39 @@ import SpacedList from './SpacedList'
 import StepsAccordion, { AccordionStep } from './StepsAccordion'
 import { Tag, TagsInput } from './TagsInput'
 import TextHighlight from './TextHighlight'
-import baseTheme from './baseTheme'
+import DefaultIcon from '../DefaultIcon'
 
-export default {
-  ...baseTheme,
+import { defaultTheme } from '../utils/theme'
+
+let theme = {
+  AccordionStep,
+  Awaiter,
+  BarChart,
+  Button: 'button',
+  Checkbox,
   CheckButton,
+  Dynamic,
+  ExpandableTable,
+  Flex,
+  Grid,
+  Icon: DefaultIcon,
+  Input: 'input',
+  Item: 'li',
   LensInput,
+  Modal,
   ModalPicker,
   NestedPicker,
+  Popover,
+  Portal,
+  SpacedList,
   StepsAccordion,
-  AccordionStep,
+  Table: 'table',
+  Tag,
   TagsInput,
   TextHighlight,
 }
+F.mergeOn(defaultTheme, theme)
+export default theme
 
 // components
 export {
