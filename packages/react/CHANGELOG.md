@@ -1,3 +1,6 @@
+# 1.55.1
+* Sort selected facet options on top
+
 # 1.55.0
 * Fix inputs issue with FireFox
 
