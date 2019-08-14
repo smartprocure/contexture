@@ -1,3 +1,6 @@
+# 1.55.1
+* TermsStatsTable: Fix AddAsFilter include/exclude
+
 # 1.55.0
 * Fix inputs issue with FireFox
 
