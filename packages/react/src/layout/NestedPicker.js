@@ -4,7 +4,6 @@ import _ from 'lodash/fp'
 import { inject, observer } from 'mobx-react'
 import { observable } from 'mobx'
 import { useLens } from '../utils/react'
-import TextHighlight from './TextHighlight'
 import { withTheme } from '../utils/theme'
 
 // Unflatten by with support for arrays (allow dots in paths) and not needing a _.keyBy first
@@ -28,13 +27,13 @@ let FilteredSection = _.flow(
     options,
     onClick,
     highlight,
-    theme: { Highlight = TextHighlight, Item = DefaultItem },
+    theme: { TextHighlight, Item = DefaultItem },
   }) => (
     <div>
       {F.mapIndexed(
         (option, field) => (
           <Item key={field} onClick={() => onClick(option.value)}>
-            <Highlight text={option.label} pattern={highlight} />
+            <TextHighlight text={option.label} pattern={highlight} />
           </Item>
         ),
         options

@@ -38,7 +38,7 @@ let theme = {
   LensInput,
   Modal,
   ModalPicker,
-  NestedPicker,
+  Picker: NestedPicker,
   Popover,
   Portal,
   SpacedList,

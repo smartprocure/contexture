@@ -1,11 +1,10 @@
 // import React from 'react'
 import FilterAdder from '../../FilterAdder'
-import { ModalPicker as DefaultModalPicker, NestedPicker } from '../../layout/'
 import React from 'react'
 import { withTheme } from '../../utils/theme'
 
 let ModalFilterAdder = ({
-  theme: { Picker = NestedPicker, ModalPicker = DefaultModalPicker },
+  theme: { Picker, ModalPicker },
   label = 'Add Custom Filter',
   ...props
 }) => {
