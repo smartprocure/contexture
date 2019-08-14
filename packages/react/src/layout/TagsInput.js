@@ -5,7 +5,6 @@ import { withState } from 'recompose'
 import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import Flex from './Flex'
-import DefaultPopover from './Popover'
 import OutsideClickHandler from 'react-outside-click-handler'
 import { withTheme } from '../utils/theme'
 

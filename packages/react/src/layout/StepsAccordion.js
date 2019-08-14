@@ -2,7 +2,6 @@ import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
 import React from 'react'
-import DefaultIcon from '../DefaultIcon'
 import Flex from './Flex'
 import { withTheme } from '../utils/theme'
 

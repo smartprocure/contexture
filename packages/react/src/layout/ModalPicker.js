@@ -4,7 +4,6 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { useLens } from '../utils/react'
 import { withTheme } from '../utils/theme'
-import DefaultModal from './Modal'
 import NestedPicker from './NestedPicker'
 
 let ModalPicker = ({
