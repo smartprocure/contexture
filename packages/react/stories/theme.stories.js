@@ -109,7 +109,7 @@ storiesOf('Theme API|defaults', module)
 storiesOf('Theme API|withTheme', module)
   .addWithJSX('Theme precedence', () => (
     <ThemeProvider
-      value={{
+      theme={{
         Button: VanillaButton,
         'ButtonGroup.Button': StrawberryButton,
       }}
@@ -143,7 +143,7 @@ storiesOf('Theme API|withTheme', module)
     let ButtonGroupGeorge = withNamedTheme('George')(ButtonGroup)
     return (
       <ThemeProvider
-        value={{
+        theme={{
           Button: VanillaButton,
           'Jerry.Button': StrawberryButton,
           'George.Button': PearButton,
@@ -165,7 +165,7 @@ storiesOf('Theme API|withTheme', module)
 storiesOf('Theme API|ThemeConsumer', module)
   .addWithJSX('Without name', () => (
     <ThemeProvider
-      value={{
+      theme={{
         Button: VanillaButton,
         ButtonGroup,
         'ButtonGroup.Button': PearButton,
@@ -178,7 +178,7 @@ storiesOf('Theme API|ThemeConsumer', module)
   ))
   .addWithJSX('With name', () => (
     <ThemeProvider
-      value={{
+      theme={{
         Button: VanillaButton,
         ButtonGroup,
         'ButtonGroup.Button': GrapeButton,
@@ -201,7 +201,7 @@ let ThemedIconButton = withNamedTheme('IconButton')(IconButton)
 storiesOf('Theme API|Multi-level nesting', module)
   .addWithJSX('With theme context', () => (
     <ThemeProvider
-      value={{
+      theme={{
         Icon: () => <span>🍨</span>,
         Button: VanillaButton,
         'ButtonGroup.Button': ThemedIconButton,
@@ -215,7 +215,7 @@ storiesOf('Theme API|Multi-level nesting', module)
   ))
   .addWithJSX('With theme props', () => (
     <ThemeProvider
-      value={{
+      theme={{
         Icon: () => <span>🍨</span>,
         Button: VanillaButton,
       }}

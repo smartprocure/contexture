@@ -210,7 +210,7 @@ let BlueberryStory = withTheme(({ theme }) => (
 ))
 
 export default () => (
-  <ThemeProvider value={theme}>
+  <ThemeProvider theme={theme}>
     <BlueberryStory />
   </ThemeProvider>
 )

@@ -124,8 +124,7 @@ let schemas = fromPromise(
 )
 
 export default () => (
-  <ThemeProvider value={theme}>
-    {console.log(theme)}
+  <ThemeProvider theme={theme}>
     <div className="bb-body">
       <Fonts />
       <Style />
