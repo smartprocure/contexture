@@ -3,7 +3,7 @@ import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import Contexture, { updateSchemas } from '../utils/contexture'
-import { FilterList, Label, Flex, Grid, componentForType } from '../../../src'
+import { FilterList, Label, Flex, Grid, Awaiter, componentForType } from '../../../src'
 import theme, { TypeMap } from '../../../src/themes/blueberry'
 import { ThemeProvider, withTheme } from '../../../src/utils/theme'
 
@@ -108,7 +108,7 @@ let BlueberryStory = withTheme(({ theme }) => (
   <div className="bb-body">
     <theme.Fonts />
     <theme.Style />
-    <theme.Awaiter promise={schemas}>
+    <Awaiter promise={schemas}>
       {schemas => (
         <Grid gap="22px" columns="1fr 4fr" style={{ margin: '0 22px' }}>
           <div>
@@ -205,7 +205,7 @@ let BlueberryStory = withTheme(({ theme }) => (
           </div>
         </Grid>
       )}
-    </theme.Awaiter>
+    </Awaiter>
   </div>
 ))
 

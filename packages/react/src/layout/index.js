@@ -23,16 +23,11 @@ import TextHighlight from './TextHighlight'
 import { defaultTheme } from '../utils/theme'
 
 let theme = {
-  AccordionStep,
-  Awaiter,
   BarChart,
   Button: 'button',
   Checkbox,
   CheckButton,
-  Dynamic,
   ExpandableTable,
-  Flex,
-  Grid,
   Icon: DefaultIcon,
   Input: 'input',
   Item: 'li',
@@ -42,10 +37,8 @@ let theme = {
   Picker: NestedPicker,
   Popover,
   PopoverContents: 'div',
-  Portal,
   RemoveTagIcon,
   SpacedList,
-  StepsAccordion,
   Table: 'table',
   Tag,
   TagComponent: Tag,
