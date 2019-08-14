@@ -3,7 +3,14 @@ import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import Contexture, { updateSchemas } from '../utils/contexture'
-import { FilterList, Label, Flex, Grid, Awaiter, componentForType } from '../../../src'
+import {
+  FilterList,
+  Label,
+  Flex,
+  Grid,
+  Awaiter,
+  componentForType,
+} from '../../../src'
 import theme, { TypeMap } from '../../../src/themes/blueberry'
 import { ThemeProvider, withTheme } from '../../../src/utils/theme'
 

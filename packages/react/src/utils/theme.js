@@ -9,9 +9,8 @@ import { getDisplayName } from './react'
 export let defaultTheme = {}
 let ThemeContext = React.createContext(defaultTheme)
 
-
 export let ThemeProvider = ({ theme, children }) => (
-  <ThemeContext.Provider value={{...defaultTheme, ...theme }}>
+  <ThemeContext.Provider value={{ ...defaultTheme, ...theme }}>
     {children}
   </ThemeContext.Provider>
 )
@@ -31,7 +30,7 @@ export let mergeNestedTheme = (theme, key) =>
 let useTheme = (name, propTheme) =>
   mergeOrReturn(
     mergeNestedTheme(React.useContext(ThemeContext), name),
-    propTheme,
+    propTheme
   )
 
 export let ThemeConsumer = ({ name, children, theme }) => {
