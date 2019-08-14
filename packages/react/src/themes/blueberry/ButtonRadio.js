@@ -1,7 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import Flex from '../../layout/Flex'
-import DefaultButton from './Button'
 import { withTheme } from '../../utils/theme'
 
 let ButtonRadio = ({
@@ -9,7 +8,7 @@ let ButtonRadio = ({
   onChange = () => {},
   options,
   style = {},
-  theme: { Button = DefaultButton },
+  theme: { Button },
 }) => (
   <Flex style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
     {_.map(

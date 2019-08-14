@@ -10,12 +10,6 @@ import { withTheme } from '../utils/theme'
 
 let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
-let DefaultRemoveIcon = props => (
-  <span className="tags-input-tag-remove" {...props}>
-    x
-  </span>
-)
-
 let Tag = _.flow(
   observer,
   withTheme
@@ -24,7 +18,7 @@ let Tag = _.flow(
     value,
     removeTag,
     tagStyle,
-    theme: { RemoveIcon = DefaultRemoveIcon },
+    theme: { RemoveTagIcon },
     onClick,
   }) => (
     <span
@@ -44,13 +38,13 @@ let Tag = _.flow(
             paddingBottom: '0.15em',
             // Prefer padding on the remove icon so it has more area to receive
             // clicks
-            paddingRight: RemoveIcon ? '0em' : '0.45em',
+            paddingRight: RemoveTagIcon ? '0em' : '0.45em',
           }}
         >
           {value}
         </span>
-        {RemoveIcon && (
-          <RemoveIcon
+        {RemoveTagIcon && (
+          <RemoveTagIcon
             onClick={e => {
               e.stopPropagation()
               removeTag(value)
@@ -86,7 +80,7 @@ let TagsInput = withState('state', 'setState', () =>
       tagStyle,
       placeholder = 'Search...',
       splitCommas,
-      theme: { Popover, PopoverContents = 'div', TagComponent = Tag },
+      theme: { Popover, PopoverContents, TagComponent },
       style,
       ...props
     }) => {

@@ -13,12 +13,6 @@ let unflattenObjectBy = _.curry((iteratee, x) =>
 
 let isField = x => x.typeDefault
 
-const DefaultItem = ({ children, onClick, disabled }) => (
-  <div onClick={onClick} disabled={disabled}>
-    {children}
-  </div>
-)
-
 let FilteredSection = _.flow(
   observer,
   withTheme
@@ -27,7 +21,7 @@ let FilteredSection = _.flow(
     options,
     onClick,
     highlight,
-    theme: { TextHighlight, Item = DefaultItem },
+    theme: { TextHighlight, Item },
   }) => (
     <div>
       {F.mapIndexed(
@@ -49,7 +43,7 @@ let getItemLabel = item =>
 let Section = _.flow(
   observer,
   withTheme
-)(({ options, onClick, selected, theme: { Item = DefaultItem } }) => (
+)(({ options, onClick, selected, theme: { Item } }) => (
   <div>
     {_.map(
       item => (
