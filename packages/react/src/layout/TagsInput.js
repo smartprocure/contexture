@@ -86,11 +86,7 @@ let TagsInput = withState('state', 'setState', () =>
       tagStyle,
       placeholder = 'Search...',
       splitCommas,
-      theme: {
-        Popover,
-        PopoverContents = 'div',
-        TagComponent = Tag,
-      },
+      theme: { Popover, PopoverContents = 'div', TagComponent = Tag },
       style,
       ...props
     }) => {

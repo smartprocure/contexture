@@ -8,4 +8,7 @@ let LensInput = ({ lens, theme, ...props }) => (
   <theme.Input {...F.domLens.value(lens)} {...props} />
 )
 
-export default _.flow(observer, withTheme)(LensInput)
+export default _.flow(
+  observer,
+  withTheme
+)(LensInput)

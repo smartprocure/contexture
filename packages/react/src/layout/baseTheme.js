@@ -28,5 +28,5 @@ export default {
   SpacedList,
   Table: 'table',
   Tag,
-  Icon: DefaultIcon
+  Icon: DefaultIcon,
 }

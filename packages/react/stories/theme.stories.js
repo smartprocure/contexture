@@ -1,7 +1,12 @@
 import React from 'react'
 import F from 'futil-js'
 import { storiesOf } from '@storybook/react'
-import { ThemeProvider, ThemeConsumer, withTheme, withNamedTheme } from '../src/utils/theme'
+import {
+  ThemeProvider,
+  ThemeConsumer,
+  withTheme,
+  withNamedTheme,
+} from '../src/utils/theme'
 import { getDisplayName } from '../src/utils/react'
 
 let withStyle = (style, Component) => {
@@ -51,7 +56,9 @@ let ThemedButton = withTheme(({ theme, children }) => (
 ))
 
 let ButtonGroup = ({ theme, buttons = [] }) =>
-  F.mapIndexed((button, i) => <theme.Button key={i}>{button}</theme.Button>)(buttons)
+  F.mapIndexed((button, i) => <theme.Button key={i}>{button}</theme.Button>)(
+    buttons
+  )
 
 let ThemedButtonGroup = withNamedTheme('ButtonGroup')(ButtonGroup)
 

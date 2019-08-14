@@ -152,7 +152,10 @@ export default () => (
                   Contains
                   <TagsQuery tree={tree} path={['root', 'titleContains']} />
                   Does Not Contain
-                  <TagsQuery tree={tree} path={['root', 'titleDoesNotContain']} />
+                  <TagsQuery
+                    tree={tree}
+                    path={['root', 'titleDoesNotContain']}
+                  />
                 </div>
                 <FilterList
                   tree={tree}
@@ -191,7 +194,8 @@ export default () => (
                 }}
               >
                 <h1>
-                  Results (<ResultCount tree={tree} path={['root', 'results']} />)
+                  Results (
+                  <ResultCount tree={tree} path={['root', 'results']} />)
                 </h1>
                 <Flex>
                   <ButtonRadio
@@ -215,7 +219,9 @@ export default () => (
                   criteria={['root', 'criteria']}
                   mapNodeToProps={componentForType(TypeMap)}
                 />
-                <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>
+                <Flex
+                  style={{ justifyContent: 'space-around', padding: '10px' }}
+                >
                   <Pager tree={tree} path={['root', 'results']} />
                 </Flex>
               </div>

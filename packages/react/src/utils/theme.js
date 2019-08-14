@@ -21,11 +21,11 @@ export let mergeNestedTheme = (theme, key) =>
     )
   )(theme)
 
-  let useTheme = (name, propTheme) =>
+let useTheme = (name, propTheme) =>
   mergeOrReturnAll([
     baseTheme,
     mergeNestedTheme(React.useContext(ThemeContext), name),
-    propTheme
+    propTheme,
   ])
 
 export let ThemeConsumer = ({ name, children, theme }) => {
@@ -42,7 +42,9 @@ export let withNamedTheme = name => Component => {
       </ThemeProvider>
     )
   }
-  themed.displayName = `WithTheme${name ? `("${name}")` : ''}(${getDisplayName(Component)})`
+  themed.displayName = `WithTheme${name ? `("${name}")` : ''}(${getDisplayName(
+    Component
+  )})`
   return themed
 }
 

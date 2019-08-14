@@ -3,13 +3,7 @@ import React from 'react'
 import Flex from './Flex'
 import { withTheme } from '../utils/theme'
 
-let CheckButton = ({
-  theme,
-  checked = false,
-  onClick,
-  children,
-  ...props
-}) => (
+let CheckButton = ({ theme, checked = false, onClick, children, ...props }) => (
   <theme.Button onClick={onClick} {...props}>
     <Flex alignItems="center" justifyContent="center">
       <theme.Checkbox

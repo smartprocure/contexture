@@ -11,37 +11,25 @@ import { withTheme } from '../utils/theme'
 let Buttons = _.flow(
   observer,
   withTheme
-)(
-  ({
-    step,
-    totalSteps,
-    currentStep,
-    theme: { Button, Icon },
-    onSubmit,
-  }) => (
-    <>
-      {step > 0 && (
-        <Button onClick={F.sets(step - 1, currentStep)} className="back-button">
-          <Icon icon="PreviousPage" />
-          Back
-        </Button>
-      )}
-      {step < totalSteps - 1 ? (
-        <Button
-          primary
-          onClick={F.sets(step + 1, currentStep)}
-          disabled={false}
-        >
-          Continue
-        </Button>
-      ) : (
-        <Button primary onClick={onSubmit}>
-          View Results
-        </Button>
-      )}
-    </>
-  )
-)
+)(({ step, totalSteps, currentStep, theme: { Button, Icon }, onSubmit }) => (
+  <>
+    {step > 0 && (
+      <Button onClick={F.sets(step - 1, currentStep)} className="back-button">
+        <Icon icon="PreviousPage" />
+        Back
+      </Button>
+    )}
+    {step < totalSteps - 1 ? (
+      <Button primary onClick={F.sets(step + 1, currentStep)} disabled={false}>
+        Continue
+      </Button>
+    ) : (
+      <Button primary onClick={onSubmit}>
+        View Results
+      </Button>
+    )}
+  </>
+))
 Buttons.displayName = 'Buttons'
 
 export let AccordionStep = withTheme(
