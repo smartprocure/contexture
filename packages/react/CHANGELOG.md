@@ -1,3 +1,6 @@
+# 1.55.2
+* Sort selected facet options on top
+
 # 1.55.1
 * TermsStatsTable: Fix AddAsFilter include/exclude
 

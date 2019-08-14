@@ -115,27 +115,31 @@ let Facet = injectTreeNode(
           />
         )}
         <SelectAll node={node} tree={tree} Checkbox={Checkbox} />
-        {_.map(({ name, count }) => {
-          let lens = tree.lens(node.path, 'values')
-          return (
-            <label
-              key={name}
-              style={{
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                display: 'flex',
-                cursor: 'pointer',
-              }}
-              title={`${display(name)} : ${formatCount(count)}`}
-            >
-              <Checkbox {...F.domLens.checkboxValues(name, lens)} />
-              <div style={{ flex: 2, padding: '0 5px' }}>
-                {display(name) || displayBlank()}
-              </div>
-              <div>{formatCount(count)}</div>
-            </label>
-          )
-        }, _.get('context.options', node))}
+        {_.flow(
+          _.partition(x => _.includes(x.name, node.values)),
+          _.flatten,
+          _.map(({ name, count }) => {
+            let lens = tree.lens(node.path, 'values')
+            return (
+              <label
+                key={name}
+                style={{
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  display: 'flex',
+                  cursor: 'pointer',
+                }}
+                title={`${display(name)} : ${formatCount(count)}`}
+              >
+                <Checkbox {...F.domLens.checkboxValues(name, lens)} />
+                <div style={{ flex: 2, padding: '0 5px' }}>
+                  {display(name) || displayBlank()}
+                </div>
+                <div>{formatCount(count)}</div>
+              </label>
+            )
+          })
+        )(_.get('context.options', node))}
         <Flex
           className="contexture-facet-cardinality"
           style={{ justifyContent: 'space-between' }}
