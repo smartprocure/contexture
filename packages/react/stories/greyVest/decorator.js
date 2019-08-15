@@ -1,5 +1,6 @@
 import React from 'react'
-import { Fonts, GVStyle } from './../../src/themes/greyVest'
+import theme, { Fonts, GVStyle } from '../../src/themes/greyVest'
+import { ThemeProvider } from '../../src/utils/theme'
 
 export default Story => (
   <div className="gv-body">
@@ -9,6 +10,8 @@ export default Story => (
       rel="stylesheet"
     />
     <GVStyle />
-    <Story />
+    <ThemeProvider theme={theme}>
+      <Story />
+    </ThemeProvider>
   </div>
 )

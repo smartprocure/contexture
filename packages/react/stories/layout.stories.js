@@ -123,8 +123,6 @@ storiesOf('Components (Unthemed)|Layout', module)
       options={['abcd', 'bcde', 'cdef'].map(x => ({ label: x, value: x }))}
       onChange={action('picked')}
       label="Pick"
-      Picker={NestedPicker}
-      Modal={Modal}
     />
   ))
   .addWithJSX('CheckButton', () => (

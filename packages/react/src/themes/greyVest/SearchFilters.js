@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 import PropTypes from 'prop-types'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
-import { Flex } from '../../'
+import { Flex, QueryBuilder, FilterAdder, FilterList } from '../../'
 import LinkButton from './LinkButton'
 import TreePauseButton from './TreePauseButton'
 import ToggleFiltersButton from './ToggleFiltersButton'
@@ -19,7 +19,20 @@ let LabelledList = ({ list, Component }) =>
     list
   )
 
-let BasicSearchFilters = ({ setMode, trees, children, FiltersBox }) => (
+export let AddableFilterList = props => (
+  <>
+    <FilterList {...props} />
+    <FilterAdder {...props} uniqueFields />
+  </>
+)
+
+export let FiltersBox = props => (
+  <div className="gv-box filter-list">
+    <AddableFilterList {...props} />
+  </div>
+)
+
+let BasicSearchFilters = ({ setMode, trees, children }) => (
   <div>
     <Flex style={{ alignItems: 'center' }}>
       <h1>Filters</h1>
@@ -32,7 +45,7 @@ let BasicSearchFilters = ({ setMode, trees, children, FiltersBox }) => (
     </LinkButton>
   </div>
 )
-let BuilderSearchFilters = ({ setMode, trees, QueryBuilder }) => (
+let BuilderSearchFilters = ({ setMode, trees }) => (
   <div>
     <Flex style={{ alignItems: 'center' }}>
       <h1>Filters</h1>
@@ -44,7 +57,7 @@ let BuilderSearchFilters = ({ setMode, trees, QueryBuilder }) => (
   </div>
 )
 
-let SearchFilters = ({ mode, setMode, children, QueryBuilder, FiltersBox }) => {
+let SearchFilters = ({ mode, setMode, children }) => {
   let trees = _.flow(
     React.Children.toArray,
     _.map('props')
