@@ -1,6 +1,9 @@
 # 1.56.0
 * ResultsTable: Ability to sort column by subfield
 
+# 1.55.2
+* Sort selected facet options on top
+
 # 1.55.1
 * TermsStatsTable: Fix AddAsFilter include/exclude
 
