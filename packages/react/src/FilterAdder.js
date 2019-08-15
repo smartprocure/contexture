@@ -15,6 +15,7 @@ let FilterAdder = ({
   fields,
   theme: { AdderPicker },
   uniqueFields,
+  label = 'Add Custom Filter',
 }) => {
   let options = fieldsToOptions(fields)
   if (uniqueFields) {
@@ -24,6 +25,7 @@ let FilterAdder = ({
     <AdderPicker
       options={options}
       onChange={field => tree.add(path, newNodeFromField({ field, fields }))}
+      label={label}
     />
   )
 }

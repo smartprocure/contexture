@@ -13,7 +13,7 @@ import {
 } from '../../../src'
 import theme, { TypeMap } from '../../../src/themes/blueberry'
 import { ThemeProvider, withTheme } from '../../../src/utils/theme'
-import FilterAdder from '../../../src/LabelledFilterAdder'
+import FilterAdder from '../../../src/FilterAdder'
 
 let tree = Contexture({
   key: 'root',

@@ -13,7 +13,7 @@ import {
   Grid,
   componentForType,
 } from '../../../src'
-import Adder from '../../../src/LabelledFilterAdder'
+import Adder from '../../../src/FilterAdder'
 import theme, {
   Fonts,
   Style,
