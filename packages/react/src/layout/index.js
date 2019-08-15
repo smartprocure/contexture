@@ -31,7 +31,7 @@ let theme = {
   ExpandableTable,
   Icon: DefaultIcon,
   Input: 'input',
-  Item: 'li',
+  ListItem: 'li',
   LensInput,
   Modal,
   Picker: NestedPicker,

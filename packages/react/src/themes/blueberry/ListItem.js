@@ -3,7 +3,7 @@ import F from 'futil-js'
 import { observer } from 'mobx-react'
 import { useLens } from '../../utils/react'
 
-let ListGroupItem = props => {
+let ListItem = props => {
   let hovering = useLens(false)
   return (
     <div
@@ -24,4 +24,4 @@ let ListGroupItem = props => {
   )
 }
 
-export default observer(ListGroupItem)
+export default observer(ListItem)

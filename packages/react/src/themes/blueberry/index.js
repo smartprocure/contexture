@@ -9,7 +9,7 @@ import Style from './Style'
 import Table from './Table'
 import Button from './Button'
 import ButtonRadio from './ButtonRadio'
-import ListGroupItem from './ListGroupItem'
+import ListItem from './ListItem'
 import HighlightWrap from './HighlightWrap'
 import TagComponent from './TagComponent'
 import PagerItem from './PagerItem'
@@ -24,7 +24,7 @@ let baseTheme = {
   Fonts,
   HighlightWrap,
   Input,
-  Item: ListGroupItem,
+  ListItem,
   Pager,
   RadioList: ButtonRadio,
   Style,
@@ -42,7 +42,7 @@ export {
   Fonts,
   HighlightWrap,
   Input,
-  ListGroupItem,
+  ListItem,
   PagerItem,
   Style,
   Table,
