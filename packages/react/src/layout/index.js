@@ -44,7 +44,7 @@ let theme = {
   TagComponent: Tag,
   TagsInput,
   TextHighlight,
-  Wrap: 'i',
+  HighlightWrap: 'i',
 }
 F.mergeOn(defaultTheme, theme)
 export default theme

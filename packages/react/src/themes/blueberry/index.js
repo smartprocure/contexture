@@ -1,6 +1,5 @@
 import React from 'react'
 
-import defaultTheme from '../../layout'
 import ExampleTypeConstructor from '../../exampleTypes/'
 
 import Input from './Input'
@@ -11,7 +10,7 @@ import Table from './Table'
 import Button from './Button'
 import ButtonRadio from './ButtonRadio'
 import ListGroupItem from './ListGroupItem'
-import Wrap from './Wrap'
+import HighlightWrap from './HighlightWrap'
 import TagComponent from './TagComponent'
 import PagerItem from './PagerItem'
 import Adder from './Adder'
@@ -21,38 +20,37 @@ export let Pager = props => (
 )
 
 let baseTheme = {
-  ...defaultTheme,
   Adder,
-  Wrap,
+  Button,
+  Checkbox,
   Fonts,
+  HighlightWrap,
+  Input,
+  Item: ListGroupItem,
+  Pager,
+  RadioList: ButtonRadio,
   Style,
   Table,
-  Button,
-  Input,
-  Checkbox,
-  RadioList: ButtonRadio,
-  'TagsInput.TagComponent': TagComponent,
-  Pager,
-  Item: ListGroupItem,
+  TagComponent,
 }
 
 let { TypeMap, ...ExampleTypes } = ExampleTypeConstructor(baseTheme)
 
 export {
-  TypeMap,
-  ExampleTypes,
-  Input,
-  Checkbox,
-  Fonts,
-  Style,
-  Table,
+  Adder,
   Button,
   ButtonRadio,
+  Checkbox,
+  ExampleTypes,
+  Fonts,
+  HighlightWrap,
+  Input,
   ListGroupItem,
-  Wrap,
-  TagComponent,
   PagerItem,
-  Adder,
+  Style,
+  Table,
+  TagComponent,
+  TypeMap,
 }
 
 export default {

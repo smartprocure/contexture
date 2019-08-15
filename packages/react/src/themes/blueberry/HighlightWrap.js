@@ -1,5 +1,7 @@
 import React from 'react'
 
-export default ({ style = {}, ...props }) => (
+let HighlightWrap = ({ style = {}, ...props }) => (
   <b style={{ backgroundColor: 'yellow', ...style }} {...props} />
 )
+
+export default HighlightWrap
