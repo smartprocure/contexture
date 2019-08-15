@@ -1,3 +1,6 @@
+# 1.56.0
+* ResultsTable: Ability to sort column by subfield
+
 # 1.55.1
 * TermsStatsTable: Fix AddAsFilter include/exclude
 
