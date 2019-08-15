@@ -1,3 +1,6 @@
+# 0.18.2
+* Add css clss to the pre_tags ES config for highlighting.
+
 # 0.18.1
 * Order in `term_stats` was missing special case for `value_count`.
 
