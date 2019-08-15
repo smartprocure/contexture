@@ -13,7 +13,7 @@ let FilterAdder = ({
   node,
   path,
   fields,
-  theme: { Picker },
+  theme: { AdderPicker },
   uniqueFields,
 }) => {
   let options = fieldsToOptions(fields)
@@ -21,7 +21,7 @@ let FilterAdder = ({
     options = _.reject(x => _.includes(x.field, getGroupFields(node)), options)
   }
   return (
-    <Picker
+    <AdderPicker
       options={options}
       onChange={field => tree.add(path, newNodeFromField({ field, fields }))}
     />

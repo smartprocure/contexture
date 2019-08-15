@@ -13,14 +13,12 @@ import ListGroupItem from './ListGroupItem'
 import HighlightWrap from './HighlightWrap'
 import TagComponent from './TagComponent'
 import PagerItem from './PagerItem'
-import Adder from './Adder'
 
 export let Pager = props => (
   <ExampleTypes.ResultPager Item={PagerItem} {...props} />
 )
 
 let baseTheme = {
-  Adder,
   Button,
   Checkbox,
   Fonts,
@@ -37,7 +35,6 @@ let baseTheme = {
 let { TypeMap, ...ExampleTypes } = ExampleTypeConstructor(baseTheme)
 
 export {
-  Adder,
   Button,
   ButtonRadio,
   Checkbox,

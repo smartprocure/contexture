@@ -13,6 +13,7 @@ import {
 } from '../../../src'
 import theme, { TypeMap } from '../../../src/themes/blueberry'
 import { ThemeProvider, withTheme } from '../../../src/utils/theme'
+import FilterAdder from '../../../src/LabelledFilterAdder'
 
 let tree = Contexture({
   key: 'root',
@@ -149,7 +150,7 @@ let BlueberryStory = withTheme(({ theme }) => (
                 fields={schemas.movies.fields}
                 mapNodeToProps={componentForType(TypeMap)}
               />
-              <theme.Adder
+              <FilterAdder
                 tree={tree}
                 path={['root', 'criteria']}
                 fields={schemas.movies.fields}

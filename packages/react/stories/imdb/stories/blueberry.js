@@ -13,10 +13,10 @@ import {
   Grid,
   componentForType,
 } from '../../../src'
+import Adder from '../../../src/LabelledFilterAdder'
 import theme, {
   Fonts,
   Style,
-  Adder,
   Button,
   Pager,
   ExampleTypes,

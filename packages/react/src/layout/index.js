@@ -23,6 +23,7 @@ import TextHighlight from './TextHighlight'
 import { defaultTheme } from '../utils/theme'
 
 let theme = {
+  AdderPicker: ModalPicker,
   BarChart,
   Button: 'button',
   Checkbox,
@@ -33,7 +34,6 @@ let theme = {
   Item: 'li',
   LensInput,
   Modal,
-  ModalPicker,
   Picker: NestedPicker,
   Popover,
   PopoverContents: 'div',
