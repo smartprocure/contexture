@@ -26,6 +26,7 @@ let baseTheme = {
   Input,
   ListItem,
   Pager,
+  PickerItem: ListItem,
   RadioList: ButtonRadio,
   Style,
   Table,

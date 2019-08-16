@@ -35,6 +35,7 @@ let theme = {
   LensInput,
   Modal,
   Picker: NestedPicker,
+  PickerItem: 'div',
   Popover,
   PopoverContents: 'div',
   RemoveTagIcon,

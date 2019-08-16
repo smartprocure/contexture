@@ -18,6 +18,7 @@ import DateInput from './DateInput'
 export { default as ErrorList } from './ErrorList'
 export { default as ErrorText } from './ErrorText'
 export { default as FilterButtonList } from './FilterButtonList'
+import FilterListItem from './FilterListItem'
 import Fonts from './Fonts'
 import HighlightWrap from './HighlightWrap'
 import Icon from './Icon'
@@ -56,6 +57,7 @@ export default {
   Icon,
   Input,
   ListItem: ListGroupItem,
+  PickerItem: FilterListItem,
   Modal,
   PagerItem,
   RemoveTagIcon,

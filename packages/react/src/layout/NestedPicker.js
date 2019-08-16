@@ -16,13 +16,13 @@ let isField = x => x.typeDefault
 let FilteredSection = _.flow(
   observer,
   withTheme
-)(({ options, onClick, highlight, theme: { TextHighlight, ListItem } }) => (
+)(({ options, onClick, highlight, theme: { TextHighlight, PickerItem } }) => (
   <div>
     {F.mapIndexed(
       (option, field) => (
-        <ListItem key={field} onClick={() => onClick(option.value)}>
+        <PickerItem key={field} onClick={() => onClick(option.value)}>
           <TextHighlight text={option.label} pattern={highlight} />
-        </ListItem>
+        </PickerItem>
       ),
       options
     )}
@@ -36,11 +36,11 @@ let getItemLabel = item =>
 let Section = _.flow(
   observer,
   withTheme
-)(({ options, onClick, selected, theme: { ListItem } }) => (
+)(({ options, onClick, selected, theme: { PickerItem } }) => (
   <div>
     {_.map(
       item => (
-        <ListItem
+        <PickerItem
           key={item._key}
           onClick={() => onClick(item.value || item._key, item)}
           active={selected === item._key}
@@ -48,7 +48,7 @@ let Section = _.flow(
           hasChildren={!isField(item)}
         >
           {getItemLabel(item)}
-        </ListItem>
+        </PickerItem>
       ),
       _.flow(
         F.unkeyBy('_key'),

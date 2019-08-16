@@ -1,6 +1,6 @@
 import React from 'react'
 
-let HighlightWrap = ({ props, style }) => (
+let HighlightWrap = ({ style, ...props }) => (
   <b style={{ backgroundColor: 'yellow', ...style }} {...props} />
 )
 
