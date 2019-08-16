@@ -2,18 +2,10 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
-import {
-  Flex,
-  Dynamic,
-  Popover,
-  Modal as BaseModal,
-  NestedPicker,
-} from './layout'
+import { Flex, Dynamic } from './layout'
 import { fieldsToOptions } from './FilterAdder'
 import { useLens } from './utils/react'
 import { contexturify } from './utils/hoc'
-import DefaultIcon from './DefaultIcon'
-import DefaultMissingTypeComponent from './DefaultMissingTypeComponent'
 import { bdJoin } from './styles/generic'
 import {
   newNodeFromType,
@@ -21,9 +13,13 @@ import {
   getTypeLabel,
   getTypeLabelOptions,
 } from './utils/search'
+import { withTheme } from './utils/theme'
 
-export let FilterActions = observer(
-  ({ node, tree, fields, Item, Popover, popover, Modal, Picker }) => {
+export let FilterActions = _.flow(
+  observer,
+  withTheme
+)(
+  ({ node, tree, fields, theme: { ListItem, Popover, Modal, Picker }, popover }) => {
     let modal = useLens(false)
     let typeOptions = _.flow(
       _.getOr([], [node.field, 'typeOptions']),
@@ -44,12 +40,12 @@ export let FilterActions = observer(
         <Popover isOpen={popover} className="filter-actions-popover">
           {!_.isEmpty(typeOptions) && (
             <>
-              <Item className="filter-actions-selected-type">
+              <ListItem className="filter-actions-selected-type">
                 Filter type: <strong>{getTypeLabel(tree, node.type)}</strong>
-              </Item>
+              </ListItem>
               {_.map(
                 x => (
-                  <Item
+                  <ListItem
                     key={x.value}
                     onClick={() =>
                       tree.replace(
@@ -59,27 +55,30 @@ export let FilterActions = observer(
                     }
                   >
                     —Change to {x.label}
-                  </Item>
+                  </ListItem>
                 ),
                 getTypeLabelOptions(tree, typeOptions)
               )}
               <div className="filter-actions-separator" />
             </>
           )}
-          <Item onClick={F.on(modal)}>Pick Field</Item>
+          <ListItem onClick={F.on(modal)}>Pick Field</ListItem>
           {/* If only contexture-client diffed the tree before sending a request... */}
           {(node.hasValue || false) && (
-            <Item onClick={() => tree.clear(node.path)}>Clear Filter</Item>
+            <ListItem onClick={() => tree.clear(node.path)}>Clear Filter</ListItem>
           )}
-          <Item onClick={() => tree.remove(node.path)}>Delete Filter</Item>
+          <ListItem onClick={() => tree.remove(node.path)}>Delete Filter</ListItem>
         </Popover>
       </>
     )
   }
 )
 
-export let Label = observer(
-  ({ tree, node, fields, Icon, ListItem: Item, Modal, Picker, ...props }) => {
+export let Label = _.flow(
+  observer,
+  withTheme
+)(
+  ({ tree, node, fields, theme: { Icon }, ...props }) => {
     let popover = useLens(false)
     let modal = useLens(false)
     return (
@@ -110,11 +109,7 @@ export let Label = observer(
                 node={node}
                 tree={tree}
                 fields={fields}
-                Item={Item}
-                Popover={Popover}
                 popover={popover}
-                Modal={Modal}
-                Picker={Picker}
                 modal={modal}
               />
             </span>
@@ -158,19 +153,11 @@ export let FieldLabel = contexturify(
     node,
     node: { field } = {},
     fields,
-    Icon,
-    ListItem,
-    Modal,
-    Picker,
     label,
   }) => (
     <Label
       tree={tree}
       node={node}
-      Icon={Icon}
-      ListItem={ListItem}
-      Modal={Modal}
-      Picker={Picker}
       fields={fields}
     >
       {label || _.get([field, 'label'], fields) || field}
@@ -179,20 +166,19 @@ export let FieldLabel = contexturify(
 )
 FieldLabel.displayName = 'FieldLabel'
 
-export let FilterList = contexturify(
+export let FilterList = _.flow(
+  contexturify,
+  withTheme
+)(
   ({
     tree,
     node,
     fields,
     mapNodeToProps = _.noop,
     mapNodeToLabel = _.noop,
-    Icon = DefaultIcon,
-    ListItem = 'div',
-    Modal = BaseModal,
-    Picker = NestedPicker,
     className,
     style,
-    MissingTypeComponent = DefaultMissingTypeComponent,
+    theme: { MissingTypeComponent },
   }) => (
     <div style={style} className={className}>
       {_.map(
@@ -205,12 +191,8 @@ export let FilterList = contexturify(
               fields={fields}
               mapNodeToProps={mapNodeToProps}
               mapNodeToLabel={mapNodeToLabel}
-              Icon={Icon}
               className={'filter-list-group'}
               style={bdJoin(child)}
-              ListItem={ListItem}
-              Modal={Modal}
-              Picker={Picker}
             />
           ) : (
             <div key={child.path} className="filter-list-item">
@@ -218,10 +200,6 @@ export let FilterList = contexturify(
                 tree={tree}
                 node={child}
                 fields={fields}
-                Icon={Icon}
-                ListItem={ListItem}
-                Modal={Modal}
-                Picker={Picker}
                 label={mapNodeToLabel(child, fields)}
               />
               {!child.paused && (

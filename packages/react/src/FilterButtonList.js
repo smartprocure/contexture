@@ -1,28 +1,26 @@
 import F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
-import {
-  Dynamic,
-  Flex,
-  CheckButton as DefaultCheckButton,
-  Modal as DefaultModal,
-  Popover as DefaultPopover,
-} from './layout'
-import DefaultIcon from './DefaultIcon'
-import DefaultMissingTypeComponent from './DefaultMissingTypeComponent'
+import { Dynamic, Flex } from './layout'
 import { withNode, withLoader } from './utils/hoc'
+import { withTheme } from './utils/theme'
 import styles from './styles'
 
-let FilterButtonItem = withLoader(
+let FilterButtonItem = _.flow(
+  withLoader,
+  withTheme,
+)(
   ({
     node,
     tree,
     fields,
     mapNodeToProps,
-    Button,
-    CheckButton,
-    MissingTypeComponent,
-    Modal,
+    theme: {
+      Button,
+      CheckButton,
+      MissingTypeComponent,
+      Modal,
+    },
   }) => {
     let mappedProps = mapNodeToProps(node, fields)
     let modal = F.stateLens(React.useState(false))
@@ -81,12 +79,6 @@ let FilterButtonList = withNode(
     fields = {},
     mapNodeToProps = _.noop,
     className = 'filter-button-list',
-    Button = 'button',
-    CheckButton = DefaultCheckButton,
-    Icon = DefaultIcon,
-    MissingTypeComponent = DefaultMissingTypeComponent,
-    Modal = DefaultModal,
-    Popover = DefaultPopover,
     nested = false,
   }) => (
     <GroupBox
@@ -104,12 +96,6 @@ let FilterButtonList = withNode(
               node: child,
               fields,
               mapNodeToProps,
-              Button,
-              CheckButton,
-              Icon,
-              MissingTypeComponent,
-              Modal,
-              Popover,
               className,
             }}
           />
