@@ -1,6 +1,6 @@
 import React from 'react'
 import Flex from '../../layout/Flex'
-import { withTheme } from '../../utils/theme'
+import ModalPicker from '../../layout/ModalPicker'
 
 let AddLabel = (
   <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
@@ -11,8 +11,6 @@ let AddLabel = (
   </Flex>
 )
 
-let GVAdderPicker = ({ theme: { AdderPicker }, ...props }) => (
-  <AdderPicker {...props} label={AddLabel} />
-)
+let AdderPicker = props => <ModalPicker {...props} label={AddLabel} />
 
-export default withTheme(GVAdderPicker)
+export default AdderPicker
