@@ -11,8 +11,9 @@ import {
   Awaiter,
   Flex,
   componentForType,
+  FilterAdder
 } from '../../src/'
-import { Input, ClampedHTML, Adder, Pager, ExampleTypes } from '../DemoControls'
+import { Input, ClampedHTML, Pager, ExampleTypes } from '../DemoControls'
 let { ResultCount, ResultTable, TypeMap } = ExampleTypes
 
 import Contexture, { updateClient } from './contexture'
@@ -161,7 +162,7 @@ let Story = observer(() => {
                         path={['root', 'criteria']}
                         fields={schemas[tree.tree.schema].fields}
                       />
-                      <Adder
+                      <FilterAdder
                         tree={tree}
                         path={['root', 'criteria']}
                         fields={schemas[tree.tree.schema].fields}

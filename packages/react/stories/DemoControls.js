@@ -4,7 +4,7 @@ import { observer } from 'mobx-react'
 import { useLens } from '../src/utils/react'
 import { defaultProps } from 'recompose'
 import ExampleTypeConstructor from '../src/exampleTypes/'
-import { TextHighlight, NestedPicker, ModalFilterAdder } from '../src'
+import { TextHighlight } from '../src'
 
 export let Button = x => (
   <button
@@ -48,7 +48,7 @@ export let Highlight = x => (
   />
 )
 
-export let ListGroupItem = observer(props => {
+export let ListItem = observer(props => {
   let hovering = useLens(false)
   return (
     <div
@@ -105,21 +105,9 @@ export let ClampedHTML = x => (
   <div style={textTruncate} dangerouslySetInnerHTML={{ __html: x }} />
 )
 
-export let Adder = ModalFilterAdder({
-  Button,
-  Input,
-  Highlight,
-  Item: ListGroupItem,
-})
+let theme = {
+  Button, Input, Highlight, ListItem, PagerItem
+}
 
-export let ExampleTypes = ExampleTypeConstructor({
-  Input,
-  Table: 'table',
-  FieldPicker: defaultProps({
-    Input,
-    Highlight,
-    Item: ListGroupItem,
-  })(NestedPicker),
-})
-let { ResultPager } = ExampleTypes
-export let Pager = defaultProps({ Item: PagerItem })(ResultPager)
+export let ExampleTypes = ExampleTypeConstructor(theme)
+export let Pager = defaultProps({ Item: PagerItem })(ExampleTypes.ResultPager)

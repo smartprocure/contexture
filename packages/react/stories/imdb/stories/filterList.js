@@ -11,8 +11,9 @@ import {
   Awaiter,
   SpacedList,
   componentForType,
+  FilterAdder,
 } from '../../../src'
-import { DarkBox, Adder, Pager, ExampleTypes } from '../../DemoControls'
+import { DarkBox, Pager, ExampleTypes } from '../../DemoControls'
 let {
   Query,
   ResultCount,
@@ -139,7 +140,7 @@ const Story = inject(() => {
                   fields={schemas.movies.fields}
                   mapNodeToProps={componentForType(TypeMap)}
                 />
-                <Adder
+                <FilterAdder
                   tree={tree}
                   path={['searchRoot', 'criteria']}
                   fields={schemas.movies.fields}

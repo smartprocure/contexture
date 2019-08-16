@@ -9,8 +9,9 @@ import {
   SpacedList,
   FilterList,
   componentForType,
+  FilterAdder,
 } from '../../../src'
-import { Button, Adder, Pager, ExampleTypes } from '../../DemoControls'
+import { Button, Pager, ExampleTypes } from '../../DemoControls'
 let {
   Query,
   ResultCount,
@@ -141,7 +142,7 @@ export default () => (
                 fields={schemas.movies.fields}
                 mapNodeToProps={componentForType(TypeMap)}
               />
-              <Adder
+              <FilterAdder
                 tree={tree}
                 path={['searchRoot', 'criteria']}
                 fields={schemas.movies.fields}
