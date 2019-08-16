@@ -1,9 +1,12 @@
 import F from 'futil-js'
+
+import DefaultIcon from '../DefaultIcon'
+import MissingTypeComponent from '../DefaultMissingTypeComponent'
+
 import Awaiter from './Awaiter'
 import BarChart from './BarChart'
 import Checkbox from './Checkbox'
 import CheckButton from './CheckButton'
-import DefaultIcon from '../DefaultIcon'
 import Dynamic from './Dynamic'
 import ExpandableTable from './ExpandableTable'
 import Flex from './Flex'
@@ -28,6 +31,7 @@ let theme = {
   Button: 'button',
   Checkbox,
   CheckButton,
+  MissingTypeComponent,
   ExpandableTable,
   Icon: DefaultIcon,
   Input: 'input',
@@ -47,6 +51,9 @@ let theme = {
   TextHighlight,
   HighlightWrap: 'i',
 }
+// To add `withTheme` components to the default theme, we have to mutate them onto
+// the theme object after it's declared, because importing them into `utils/theme`
+// before ThemeContext is initialized would cause dependency conflicts
 F.mergeOn(defaultTheme, theme)
 export default theme
 
