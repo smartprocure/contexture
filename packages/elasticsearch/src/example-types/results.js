@@ -56,7 +56,7 @@ module.exports = {
 
       F.extendOn(result, {
         highlight: {
-          pre_tags: ['<b>'],
+          pre_tags: ['<b class="search-highlight">'],
           post_tags: ['</b>'],
           require_field_match: false,
           number_of_fragments: 0,
