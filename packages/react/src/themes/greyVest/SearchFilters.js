@@ -64,9 +64,9 @@ let SearchFilters = ({ mode, setMode, children }) => {
   )(children)
   if (mode === 'resultsOnly') return null
   if (mode === 'basic')
-    return <BasicSearchFilters {...{ trees, setMode, children, FiltersBox }} />
+    return <BasicSearchFilters {...{ trees, setMode, children }} />
   if (mode === 'builder')
-    return <BuilderSearchFilters {...{ trees, setMode, QueryBuilder }} />
+    return <BuilderSearchFilters {...{ trees, setMode }} />
 }
 
 SearchFilters.propTypes = {

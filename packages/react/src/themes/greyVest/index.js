@@ -41,13 +41,13 @@ export { default as Select } from './Select'
 import Style from './style'
 import Table from './Table'
 export { default as TabList } from './TabList'
-export { Tabs, Tab, TabContent, TabLabel } from './Tabs'
+import { Tab, TabContent, TabLabel, Tabs } from './Tabs'
 export { default as Textarea } from './Textarea'
 export { default as ToggleFiltersButton } from './ToggleFiltersButton'
 export { default as ToggleFiltersHeader } from './ToggleFiltersHeader'
 export { default as TreePauseButton } from './TreePauseButton'
 
-export default {
+let baseTheme = {
   AdderPicker,
   Button,
   Checkbox,
@@ -62,7 +62,11 @@ export default {
   PagerItem,
   RemoveTagIcon,
   Style,
+  Tab,
+  TabContent,
+  TabLabel,
   Table,
+  Tabs,
   Tag,
   TagComponent: Tag,
 }
@@ -71,12 +75,11 @@ let SearchTree = () => {}
 let ButtonGroup = defaultProps({ className: 'gv-button-group' })(Flex)
 
 export {
-  AdderPicker as Adder,
+  AdderPicker,
   Button,
   Checkbox,
   CheckButton,
   Fonts,
-  HighlightWrap as Wrap,
   Input,
   ListGroupItem,
   Modal,
@@ -84,7 +87,11 @@ export {
   RadioList,
   SearchTree,
   Style as GVStyle,
+  Tab,
+  TabContent,
+  TabLabel,
   Table,
+  Tabs,
 }
 
 // this should all be removed after ExampleTypes refactored to use the theme API
@@ -117,3 +124,5 @@ export let PagedResultTable = ({ tree, node, path, ...props }) => (
   </>
 )
 PagedResultTable.displayName = 'PagedResultTable'
+
+export default { ...baseTheme, Pager, PagedResultTable, ...ExampleTypes }
