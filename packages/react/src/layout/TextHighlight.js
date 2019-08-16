@@ -7,7 +7,15 @@ let TextHighlight = ({ pattern, text, theme: { HighlightWrap }, style }) =>
   pattern
     ? F.highlight('<>', '<>', pattern, text)
         .split('<>')
-        .map((x, i) => (i % 2 ? <HighlightWrap key={i} style={style}>{x}</HighlightWrap> : x))
+        .map((x, i) =>
+          i % 2 ? (
+            <HighlightWrap key={i} style={style}>
+              {x}
+            </HighlightWrap>
+          ) : (
+            x
+          )
+        )
     : text
 TextHighlight.displayName = 'TextHighlight'
 

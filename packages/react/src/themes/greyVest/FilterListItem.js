@@ -1,7 +1,13 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 
-let FilterListItem = ({ active, disabled, hasChildren, children, ...props }) => (
+let FilterListItem = ({
+  active,
+  disabled,
+  hasChildren,
+  children,
+  ...props
+}) => (
   <div
     style={{
       padding: '10px 40px',

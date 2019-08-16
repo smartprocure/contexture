@@ -11,7 +11,8 @@ let AddLabel = (
   </Flex>
 )
 
-let GVAdderPicker = ({ theme: { AdderPicker }, ...props }) =>
+let GVAdderPicker = ({ theme: { AdderPicker }, ...props }) => (
   <AdderPicker {...props} label={AddLabel} />
+)
 
 export default withTheme(GVAdderPicker)
