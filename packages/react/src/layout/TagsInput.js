@@ -1,16 +1,19 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
-import { withState, defaultProps } from 'recompose'
+import { withState } from 'recompose'
 import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import Flex from './Flex'
-import Popover from './Popover'
 import OutsideClickHandler from 'react-outside-click-handler'
+import { withTheme } from '../utils/theme'
 
 let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
-let Tag = observer(({ value, removeTag, tagStyle, RemoveIcon, onClick }) => (
+let Tag = _.flow(
+  observer,
+  withTheme
+)(({ value, removeTag, tagStyle, theme: { RemoveTagIcon }, onClick }) => (
   <span
     className="tags-input-tag"
     style={{
@@ -28,13 +31,13 @@ let Tag = observer(({ value, removeTag, tagStyle, RemoveIcon, onClick }) => (
           paddingBottom: '0.15em',
           // Prefer padding on the remove icon so it has more area to receive
           // clicks
-          paddingRight: RemoveIcon ? '0em' : '0.45em',
+          paddingRight: RemoveTagIcon ? '0em' : '0.45em',
         }}
       >
         {value}
       </span>
-      {RemoveIcon && (
-        <RemoveIcon
+      {RemoveTagIcon && (
+        <RemoveTagIcon
           onClick={e => {
             e.stopPropagation()
             removeTag(value)
@@ -46,14 +49,6 @@ let Tag = observer(({ value, removeTag, tagStyle, RemoveIcon, onClick }) => (
 ))
 Tag.displayName = 'Tag'
 
-let DefaultTagComponent = defaultProps({
-  RemoveIcon: props => (
-    <span className="tags-input-tag-remove" {...props}>
-      x
-    </span>
-  ),
-})(Tag)
-
 // We're only using withState to preserve the state between renders, since
 // inject doesn't do that for us.
 let TagsInput = withState('state', 'setState', () =>
@@ -64,7 +59,10 @@ let TagsInput = withState('state', 'setState', () =>
     isOneLine: true,
   })
 )(
-  observer(
+  _.flow(
+    observer,
+    withTheme
+  )(
     ({
       tags,
       state,
@@ -72,10 +70,9 @@ let TagsInput = withState('state', 'setState', () =>
       removeTag,
       submit = _.noop,
       tagStyle,
-      TagComponent = DefaultTagComponent,
       placeholder = 'Search...',
       splitCommas,
-      PopoverContents,
+      theme: { Popover, PopoverContents, TagComponent },
       style,
       ...props
     }) => {

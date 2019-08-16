@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dynamic } from './'
+import Dynamic from './layout/Dynamic'
 
 export let iconMap = {
   SortAscending: () => <span>▲</span>,

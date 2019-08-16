@@ -1,15 +1,15 @@
 import F from 'futil-js'
+import _ from 'lodash/fp'
 import React from 'react'
 import { observer } from 'mobx-react'
 import { useLens } from '../utils/react'
+import { withTheme } from '../utils/theme'
 
 let ModalPicker = ({
   options,
-  Button = 'button',
+  theme: { Button, Picker, Modal },
   onChange,
   label,
-  Picker,
-  Modal,
 }) => {
   let isOpen = useLens(false)
   return (
@@ -28,4 +28,7 @@ let ModalPicker = ({
   )
 }
 
-export default observer(ModalPicker)
+export default _.flow(
+  observer,
+  withTheme
+)(ModalPicker)

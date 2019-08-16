@@ -4,7 +4,7 @@ import _ from 'lodash/fp'
 import { inject, observer } from 'mobx-react'
 import { observable } from 'mobx'
 import { useLens } from '../utils/react'
-import TextHighlight from './TextHighlight'
+import { withTheme } from '../utils/theme'
 
 // Unflatten by with support for arrays (allow dots in paths) and not needing a _.keyBy first
 let unflattenObjectBy = _.curry((iteratee, x) =>
@@ -13,36 +13,34 @@ let unflattenObjectBy = _.curry((iteratee, x) =>
 
 let isField = x => x.typeDefault
 
-const DefaultItem = ({ children, onClick, disabled }) => (
-  <div onClick={onClick} disabled={disabled}>
-    {children}
+let FilteredSection = _.flow(
+  observer,
+  withTheme
+)(({ options, onClick, highlight, theme: { TextHighlight, ListItem } }) => (
+  <div>
+    {F.mapIndexed(
+      (option, field) => (
+        <ListItem key={field} onClick={() => onClick(option.value)}>
+          <TextHighlight text={option.label} pattern={highlight} />
+        </ListItem>
+      ),
+      options
+    )}
   </div>
-)
-
-let FilteredSection = observer(
-  ({ options, onClick, highlight, Highlight, Item }) => (
-    <div>
-      {F.mapIndexed(
-        (option, field) => (
-          <Item key={field} onClick={() => onClick(option.value)}>
-            <Highlight text={option.label} pattern={highlight} />
-          </Item>
-        ),
-        options
-      )}
-    </div>
-  )
-)
+))
 FilteredSection.displayName = 'FilteredSection'
 
 let getItemLabel = item =>
   isField(item) ? item.shortLabel || item.label : _.startCase(item._key)
 
-let Section = observer(({ options, onClick, selected, Item }) => (
+let Section = _.flow(
+  observer,
+  withTheme
+)(({ options, onClick, selected, theme: { ListItem } }) => (
   <div>
     {_.map(
       item => (
-        <Item
+        <ListItem
           key={item._key}
           onClick={() => onClick(item.value || item._key, item)}
           active={selected === item._key}
@@ -50,7 +48,7 @@ let Section = observer(({ options, onClick, selected, Item }) => (
           hasChildren={!isField(item)}
         >
           {getItemLabel(item)}
-        </Item>
+        </ListItem>
       ),
       _.flow(
         F.unkeyBy('_key'),
@@ -76,7 +74,7 @@ let PanelTreePicker = inject((store, { onChange, options }) => {
   }
   return x
 })(
-  observer(({ selectAtLevel, state, nestedOptions, Item }) => (
+  observer(({ selectAtLevel, state, nestedOptions }) => (
     <div
       className="panel-tree-picker"
       style={{ display: 'inline-flex', width: '100%', overflow: 'auto' }}
@@ -85,7 +83,6 @@ let PanelTreePicker = inject((store, { onChange, options }) => {
         options={nestedOptions}
         onClick={selectAtLevel(0)}
         selected={state.selected[0]}
-        Item={Item}
       />
       {F.mapIndexed(
         (_key, index) => (
@@ -94,7 +91,6 @@ let PanelTreePicker = inject((store, { onChange, options }) => {
             options={_.get(state.selected.slice(0, index + 1), nestedOptions)}
             onClick={selectAtLevel(index + 1)}
             selected={state.selected[index + 1]}
-            Item={Item}
           />
         ),
         state.selected
@@ -106,17 +102,11 @@ PanelTreePicker.displayName = 'PanelTreePicker'
 
 let matchLabel = str => _.filter(x => F.matchAllWords(str)(x.label))
 
-let NestedPicker = ({
-  options,
-  onChange,
-  Input = 'input',
-  Highlight = TextHighlight,
-  Item = DefaultItem,
-}) => {
+let NestedPicker = ({ options, onChange, theme }) => {
   let filter = useLens('')
   return (
     <div>
-      <Input
+      <theme.Input
         {...F.domLens.value(filter)}
         placeholder="Enter filter keyword..."
       />
@@ -125,14 +115,15 @@ let NestedPicker = ({
           options={matchLabel(F.view(filter))(options)}
           onClick={onChange}
           highlight={F.view(filter)}
-          Highlight={Highlight}
-          Item={Item}
         />
       ) : (
-        <PanelTreePicker options={options} onChange={onChange} Item={Item} />
+        <PanelTreePicker options={options} onChange={onChange} />
       )}
     </div>
   )
 }
 
-export default observer(NestedPicker)
+export default _.flow(
+  observer,
+  withTheme
+)(NestedPicker)

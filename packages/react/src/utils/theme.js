@@ -4,8 +4,16 @@ import F from 'futil-js'
 import { mergeOrReturn } from './futil'
 import { getDisplayName } from './react'
 
-let ThemeContext = React.createContext({})
-export let ThemeProvider = ThemeContext.Provider
+// We populate the default theme by mutating this in src/layout/index.js, to
+// avoid importing withTheme-wrapped components before the function is defined.
+export let defaultTheme = {}
+let ThemeContext = React.createContext(defaultTheme)
+
+export let ThemeProvider = ({ theme, children }) => (
+  <ThemeContext.Provider value={{ ...defaultTheme, ...theme }}>
+    {children}
+  </ThemeContext.Provider>
+)
 
 let hasNested = key => F.findIndexed((v, k) => _.startsWith(`${key}.`, k))
 
@@ -27,18 +35,26 @@ let useTheme = (name, propTheme) =>
 
 export let ThemeConsumer = ({ name, children, theme }) => {
   let newTheme = useTheme(name, theme)
-  return <ThemeProvider value={newTheme}>{children(newTheme)}</ThemeProvider>
+  return (
+    <ThemeContext.Provider value={newTheme}>
+      {children(newTheme)}
+    </ThemeContext.Provider>
+  )
 }
 
-export let withTheme = name => Component => {
+export let withNamedTheme = name => Component => {
   let themed = ({ theme, ...props }) => {
     let newTheme = useTheme(name, theme)
     return (
-      <ThemeProvider value={newTheme}>
+      <ThemeContext.Provider value={newTheme}>
         <Component {...props} theme={newTheme} />
-      </ThemeProvider>
+      </ThemeContext.Provider>
     )
   }
-  themed.displayName = `WithTheme("${name}")(${getDisplayName(Component)})`
+  themed.displayName = `WithTheme${name ? `("${name}")` : ''}(${getDisplayName(
+    Component
+  )})`
   return themed
 }
+
+export let withTheme = withNamedTheme()
