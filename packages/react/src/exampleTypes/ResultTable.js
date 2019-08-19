@@ -127,12 +127,11 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
       disableFilter,
       disableSort,
       field,
-      sortBy,
+      sortField,
       label,
       hideMenu,
       typeDefault,
     } = fieldSchema
-    sortBy = sortBy ? `${field}.${sortBy}` : field
     HeaderCell = fieldSchema.HeaderCell || HeaderCell
     let filterNode =
       criteria &&
@@ -176,7 +175,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
             <Item
               onClick={() => {
                 F.off(popover)()
-                mutate({ sortField: sortBy, sortDir: 'asc' })
+                mutate({ sortField: sortField || field, sortDir: 'asc' })
               }}
             >
               <Icon icon="SortAscending" />
@@ -187,7 +186,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
             <Item
               onClick={() => {
                 F.off(popover)()
-                mutate({ sortField: sortBy, sortDir: 'desc' })
+                mutate({ sortField: sortField || field, sortDir: 'desc' })
               }}
             >
               <Icon icon="SortDescending" />
