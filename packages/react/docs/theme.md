@@ -81,18 +81,9 @@ The default theme in contexture-react is GreyVest. The full list of **theme comp
 | `RadioList` | `options`, `value`, `onChange` | A generic list of radio buttons |
 | `Style` | none | For rendering a `<style>` block with theme-specific styles |
 | `Table` | same as basic `table` | A generic table component |
+| `Tag` | `value`, `removeTag`, `tagStyle`, `onClick` | Used in TagsInput |
 | `TagsInput` | | Used in the TagsQuery and TagsText example types |
 | `TextHighlight` | `pattern`, `text`, `Wrap` | Renders the text given in the `text` prop, with the parts that match the `pattern` prop wrapped in the `Wrap` component |
-
-
-### The rest of the stuff currently in defaults that should probably not be there
-
-- LensInput (used in Text exampleType)
-- PopoverContents
-- RemoveTagIcon
-- SpacedList
-- Tag
-- TagComponent
 
 ## Using a custom theme
 
