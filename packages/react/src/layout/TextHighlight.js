@@ -6,14 +6,6 @@ let TextHighlight = ({ pattern, text, Wrap = 'i' }) =>
   pattern
     ? F.highlight('<>', '<>', pattern, text)
         .split('<>')
-        .map((x, i) =>
-          i % 2 ? (
-            <Wrap key={i}>
-              {x}
-            </Wrap>
-          ) : (
-            x
-          )
-        )
+        .map((x, i) => (i % 2 ? <Wrap key={i}>{x}</Wrap> : x))
     : text
 export default TextHighlight
