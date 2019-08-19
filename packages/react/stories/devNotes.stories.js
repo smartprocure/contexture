@@ -20,3 +20,12 @@ storiesOf('Developer Notes|Docs', module)
       header: false,
     })(() => null)
   )
+  .add(
+    'Theme API',
+    withInfo({
+      text: require('../docs/theme.md'),
+      inline: true,
+      source: false,
+      header: false,
+    })(() => null)
+  )
