@@ -20,7 +20,6 @@ export { default as ErrorText } from './ErrorText'
 export { default as FilterButtonList } from './FilterButtonList'
 import FilterListItem from './FilterListItem'
 import Fonts from './Fonts'
-import HighlightWrap from './HighlightWrap'
 import Icon from './Icon'
 export { default as IconButton } from './IconButton'
 import Input from './Input'
@@ -37,6 +36,7 @@ import Table from './Table'
 export { default as TabList } from './TabList'
 import { Tab, TabContent, TabLabel, Tabs } from './Tabs'
 export { default as Textarea } from './Textarea'
+import TextHighlight from './TextHighlight'
 export { default as ToggleFiltersButton } from './ToggleFiltersButton'
 export { default as ToggleFiltersHeader } from './ToggleFiltersHeader'
 export { default as TreePauseButton } from './TreePauseButton'
@@ -47,7 +47,6 @@ let baseTheme = {
   Checkbox,
   CheckButton,
   Fonts,
-  HighlightWrap,
   Icon,
   Input,
   ListItem: ListGroupItem,
@@ -62,7 +61,7 @@ let baseTheme = {
   Table,
   Tabs,
   Tag,
-  TagComponent: Tag,
+  TextHighlight,
 }
 
 let SearchTree = () => {}
@@ -88,6 +87,7 @@ export {
   TabLabel,
   Table,
   Tabs,
+  TextHighlight,
 }
 
 // this should all be removed after ExampleTypes refactored to use the theme API

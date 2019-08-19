@@ -11,7 +11,6 @@ import Dynamic from './Dynamic'
 import ExpandableTable from './ExpandableTable'
 import Flex from './Flex'
 import Grid from './Grid'
-import LensInput from './LensInput'
 import Modal from './Modal'
 import ModalPicker from './ModalPicker'
 import NestedPicker from './NestedPicker'
@@ -37,20 +36,16 @@ let theme = {
   Icon: DefaultIcon,
   Input: 'input',
   ListItem: 'li',
-  LensInput,
   Modal,
   Picker: NestedPicker,
   PickerItem: 'div',
   Popover,
-  PopoverContents: 'div',
   RemoveTagIcon,
   SpacedList,
   Table: 'table',
   Tag,
-  TagComponent: Tag,
   TagsInput,
   TextHighlight,
-  HighlightWrap: 'i',
 }
 // To add `withTheme` components to the default theme, we have to mutate them onto
 // the theme object after it's declared, because importing them into `utils/theme`
@@ -69,7 +64,6 @@ export {
   ExpandableTable,
   Flex,
   Grid,
-  LensInput,
   Modal,
   ModalPicker,
   NestedPicker,
