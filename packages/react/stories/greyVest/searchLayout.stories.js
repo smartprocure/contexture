@@ -1,7 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import decorator from './decorator'
-import { SearchLayout, Box } from './../../src/themes/greyVest'
+import { SearchLayout } from '../../src'
+import { Box } from '../../src/themes/greyVest'
 
 storiesOf('Components (Grey Vest)|Search Layout', module)
   .addDecorator(decorator)

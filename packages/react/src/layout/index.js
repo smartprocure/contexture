@@ -28,6 +28,7 @@ import { defaultTheme } from '../utils/theme'
 let theme = {
   AdderPicker: ModalPicker,
   BarChart,
+  Box: 'div',
   Button: 'button',
   Checkbox,
   CheckButton,

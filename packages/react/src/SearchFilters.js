@@ -3,10 +3,11 @@ import _ from 'lodash/fp'
 import PropTypes from 'prop-types'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
-import { Flex, QueryBuilder, FilterAdder, FilterList } from '../../'
-import LinkButton from './LinkButton'
-import TreePauseButton from './TreePauseButton'
-import ToggleFiltersButton from './ToggleFiltersButton'
+import { Flex, QueryBuilder, FilterAdder, FilterList } from '.'
+import LinkButton from './themes/greyVest/LinkButton'
+import TreePauseButton from './themes/greyVest/TreePauseButton'
+import ToggleFiltersButton from './themes/greyVest/ToggleFiltersButton'
+import { withTheme } from './utils/theme'
 
 let LabelledList = ({ list, Component }) =>
   F.mapIndexed(
@@ -26,11 +27,11 @@ export let AddableFilterList = props => (
   </>
 )
 
-export let FiltersBox = props => (
-  <div className="gv-box filter-list">
+export let FiltersBox = withTheme(({theme, ...props}) => (
+  <theme.Box>
     <AddableFilterList {...props} />
-  </div>
-)
+  </theme.Box>
+))
 
 let BasicSearchFilters = ({ setMode, trees, children }) => (
   <div>
@@ -45,6 +46,7 @@ let BasicSearchFilters = ({ setMode, trees, children }) => (
     </LinkButton>
   </div>
 )
+
 let BuilderSearchFilters = ({ setMode, trees }) => (
   <div>
     <Flex style={{ alignItems: 'center' }}>

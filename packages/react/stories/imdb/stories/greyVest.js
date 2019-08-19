@@ -4,7 +4,13 @@ import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import Contexture, { updateSchemas } from '../utils/contexture'
 import { mergeOverAll } from 'futil-js'
-import { Awaiter, schemaFieldProps, componentForType } from '../../../src'
+import {
+  Awaiter,
+  schemaFieldProps,
+  componentForType, 
+  SearchLayout,
+  SearchFilters,
+} from '../../../src'
 import {
   Button,
   ExampleTypes,
@@ -15,8 +21,6 @@ import {
   TabContent,
   PagedResultTable,
   Box,
-  SearchLayout,
-  SearchFilters,
   SearchTree,
   ToggleFiltersHeader,
 } from '../../../src/themes/greyVest'

@@ -31,12 +31,6 @@ import Modal from './Modal'
 import PagerItem from './PagerItem'
 import RadioList from './RadioList'
 import RemoveTagIcon from './RemoveTagIcon'
-export {
-  default as SearchFilters,
-  FiltersBox,
-  AddableFilterList,
-} from './SearchFilters'
-export { default as SearchLayout } from './SearchLayout'
 export { default as Select } from './Select'
 import Style from './style'
 import Table from './Table'
@@ -77,8 +71,10 @@ let ButtonGroup = defaultProps({ className: 'gv-button-group' })(Flex)
 export {
   AdderPicker,
   Button,
+  ButtonGroup,
   Checkbox,
   CheckButton,
+  DateInput,
   Fonts,
   Input,
   ListGroupItem,
