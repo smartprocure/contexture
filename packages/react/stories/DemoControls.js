@@ -106,7 +106,11 @@ export let ClampedHTML = x => (
 )
 
 let theme = {
-  Button, Input, Highlight, ListItem, PagerItem
+  Button,
+  Input,
+  Highlight,
+  ListItem,
+  PagerItem,
 }
 
 export let ExampleTypes = ExampleTypeConstructor(theme)

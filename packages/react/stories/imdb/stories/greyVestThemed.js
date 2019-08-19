@@ -4,8 +4,19 @@ import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import Contexture, { updateSchemas } from '../utils/contexture'
 import { mergeOverAll } from 'futil-js'
-import { Awaiter, schemaFieldProps, componentForType, SearchLayout, SearchFilters, } from '../../../src'
-import theme, { SearchTree, ToggleFiltersHeader, Box, ExampleTypes } from '../../../src/themes/greyVest'
+import {
+  Awaiter,
+  schemaFieldProps,
+  componentForType,
+  SearchLayout,
+  SearchFilters,
+} from '../../../src'
+import theme, {
+  SearchTree,
+  ToggleFiltersHeader,
+  Box,
+  ExampleTypes,
+} from '../../../src/themes/greyVest'
 import { Column } from './../../../src/layout/ExpandableTable'
 import { ThemeProvider, withTheme } from '../../../src/utils/theme'
 
@@ -213,7 +224,7 @@ let mapNodeToProps = mergeOverAll([
     },
 ])
 
-let GreyVestStory =  withTheme(({ theme }) => (
+let GreyVestStory = withTheme(({ theme }) => (
   <Awaiter promise={schemas}>
     {schemas => (
       <SearchLayout mode={state.mode}>
@@ -275,7 +286,8 @@ let GreyVestStory =  withTheme(({ theme }) => (
           <h1>Search Results</h1>
           <theme.Tabs defaultValue="results">
             <theme.TabLabel value="results">
-              Movies (<theme.ResultCount tree={tree} path={['root', 'results']} />)
+              Movies (
+              <theme.ResultCount tree={tree} path={['root', 'results']} />)
             </theme.TabLabel>
             <theme.TabContent value="results">
               <PagedResultTable

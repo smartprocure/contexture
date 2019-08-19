@@ -8,19 +8,14 @@ import styles from './styles'
 
 let FilterButtonItem = _.flow(
   withLoader,
-  withTheme,
+  withTheme
 )(
   ({
     node,
     tree,
     fields,
     mapNodeToProps,
-    theme: {
-      Button,
-      CheckButton,
-      MissingTypeComponent,
-      Modal,
-    },
+    theme: { Button, CheckButton, MissingTypeComponent, Modal },
   }) => {
     let mappedProps = mapNodeToProps(node, fields)
     let modal = F.stateLens(React.useState(false))

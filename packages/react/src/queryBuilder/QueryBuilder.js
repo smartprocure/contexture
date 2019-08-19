@@ -48,6 +48,9 @@ let QueryBuilder = ({
 }
 
 export default DDContext(
-  _.flow(contexturify, withTheme)(QueryBuilder),
+  _.flow(
+    contexturify,
+    withTheme
+  )(QueryBuilder),
   { allowEmptyNode: true }
 )

@@ -7,7 +7,7 @@ import { mergeOverAll } from 'futil-js'
 import {
   Awaiter,
   schemaFieldProps,
-  componentForType, 
+  componentForType,
   SearchLayout,
   SearchFilters,
 } from '../../../src'

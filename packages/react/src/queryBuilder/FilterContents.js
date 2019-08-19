@@ -17,10 +17,7 @@ let FilterContents = ({
   tree,
   fields,
   mapNodeToProps = _.noop,
-  theme: {
-    AdderPicker,
-    MissingTypeComponent,
-  }
+  theme: { AdderPicker, MissingTypeComponent },
 }) => {
   // `get` allows us to create a mobx dependency on field before we know it
   // exists (because the client will only add it if it's a type that uses it
@@ -86,4 +83,7 @@ let FilterContents = ({
   )
 }
 
-export default _.flow(observer, withTheme)(FilterContents)
+export default _.flow(
+  observer,
+  withTheme
+)(FilterContents)

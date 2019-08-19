@@ -11,7 +11,7 @@ import {
   Awaiter,
   Flex,
   componentForType,
-  FilterAdder
+  FilterAdder,
 } from '../../src/'
 import { Input, ClampedHTML, Pager, ExampleTypes } from '../DemoControls'
 let { ResultCount, ResultTable, TypeMap } = ExampleTypes

@@ -7,9 +7,8 @@ let style = mode => ({
   gridGap: 40,
   margin: '0 40px',
   marginBottom: 50,
-  gridTemplateColumns: mode === 'basic'
-    ? 'minmax(250px, 400px) minmax(0, 1fr)'
-    : 'minmax(0, 1fr)'
+  gridTemplateColumns:
+    mode === 'basic' ? 'minmax(250px, 400px) minmax(0, 1fr)' : 'minmax(0, 1fr)',
 })
 
 let SearchLayout = ({ mode, ...props }) => (
