@@ -169,4 +169,4 @@ let MockTagsInput = inject(() => {
 })(TagsInput)
 MockTagsInput.displayName = 'MockTagsInput'
 
-export { TagsInput, MockTagsInput }
+export { TagsInput as default, MockTagsInput }

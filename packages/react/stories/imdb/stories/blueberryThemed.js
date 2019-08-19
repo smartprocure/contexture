@@ -5,6 +5,7 @@ import { fromPromise } from 'mobx-utils'
 import Contexture, { updateSchemas } from '../utils/contexture'
 import {
   FilterList,
+  SpacedList,
   Label,
   Flex,
   Grid,
@@ -121,7 +122,7 @@ let BlueberryStory = withTheme(({ theme }) => (
         <Grid gap="22px" columns="1fr 4fr" style={{ margin: '0 22px' }}>
           <div>
             <h1>Filters</h1>
-            <theme.SpacedList>
+            <SpacedList>
               <div>
                 <Label>Released</Label>
                 <theme.DateRangePicker
@@ -156,7 +157,7 @@ let BlueberryStory = withTheme(({ theme }) => (
                 fields={schemas.movies.fields}
                 uniqueFields
               />
-            </theme.SpacedList>
+            </SpacedList>
           </div>
           <div>
             <Grid columns="1fr 25px 150px" style={{ alignItems: 'center' }}>

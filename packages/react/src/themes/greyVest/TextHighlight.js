@@ -1,9 +1,7 @@
 import React from 'react'
 import BaseTextHighlight from '../../layout/TextHighlight'
 
-let Wrap = ({ style, ...props }) => (
-  <b style={{ backgroundColor: 'yellow', ...style }} {...props} />
-)
+let Wrap = props => <b style={{ backgroundColor: 'yellow' }} {...props} />
 
-let TextHighlight = props => <BaseTextHighlight {...props} Wrap={Wrap} />
+let TextHighlight = props => <BaseTextHighlight Wrap={Wrap} {...props} />
 export default TextHighlight

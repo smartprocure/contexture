@@ -16,10 +16,10 @@ import ModalPicker from './ModalPicker'
 import NestedPicker from './NestedPicker'
 import Popover from './Popover'
 import Portal from './Portal'
-import RemoveTagIcon from './RemoveTagIcon'
 import SpacedList from './SpacedList'
 import StepsAccordion, { AccordionStep } from './StepsAccordion'
-import { Tag, TagsInput } from './TagsInput'
+import TagsInput from './TagsInput'
+import Tag from './Tag'
 import TextHighlight from './TextHighlight'
 
 import { defaultTheme } from '../utils/theme'
@@ -40,8 +40,6 @@ let theme = {
   Picker: NestedPicker,
   PickerItem: 'div',
   Popover,
-  RemoveTagIcon,
-  SpacedList,
   Table: 'table',
   Tag,
   TagsInput,

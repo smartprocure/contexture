@@ -29,7 +29,6 @@ export { default as ListItem } from './ListItem'
 import Modal from './Modal'
 import PagerItem from './PagerItem'
 import RadioList from './RadioList'
-import RemoveTagIcon from './RemoveTagIcon'
 export { default as Select } from './Select'
 import Style from './style'
 import Table from './Table'
@@ -53,7 +52,6 @@ let baseTheme = {
   PickerItem: FilterListItem,
   Modal,
   PagerItem,
-  RemoveTagIcon,
   Style,
   Tab,
   TabContent,
