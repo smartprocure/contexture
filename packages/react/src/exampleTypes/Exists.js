@@ -16,4 +16,7 @@ let Exists = ({ tree, node, theme: { RadioList } }) => (
   </div>
 )
 
-export default _.flow(contexturify, withTheme)(Exists)
+export default _.flow(
+  contexturify,
+  withTheme
+)(Exists)

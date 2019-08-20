@@ -1,14 +1,10 @@
 import _ from 'lodash/fp'
 import React from 'react'
 import { contexturify } from '../utils/hoc'
+import { withTheme } from '../utils/theme'
 
-let ResultPager = contexturify(
-  ({
-    node,
-    tree,
-    theme: { PagerItem, Link, Icon },
-    className = '',
-  }) => {
+let ResultPager = 
+  ({ node, tree, theme: { PagerItem, Link, Icon }, className = '' }) => {
     let pages = Math.ceil(
       (node.context.response.totalRecords || 1) / node.pageSize
     )
@@ -89,7 +85,5 @@ let ResultPager = contexturify(
       )
     )
   }
-)
-ResultPager.displayName = 'ResultPager'
 
-export default ResultPager
+export default _.flow(contexturify, withTheme)(ResultPager)

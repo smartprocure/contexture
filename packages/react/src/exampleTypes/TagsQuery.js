@@ -3,22 +3,21 @@ import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
 import { contexturify } from '../utils/hoc'
+import { withTheme } from '../utils/theme'
 import { bgJoin } from '../styles/generic'
-import DefaultTagsInput from '../layout/TagsInput'
-import DefaultRadioList from '../layout/RadioList'
-import DefaultSelect from '../layout/Select'
 import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
-let CheckboxDefault = props => <input type="checkbox" {...props} />
 
 let tagValueField = 'word'
 let TagsQuery = ({
   tree,
   node,
-  TagsInput = DefaultTagsInput,
-  Checkbox = CheckboxDefault,
-  RadioList = DefaultRadioList,
-  Select = DefaultSelect,
-  Button = 'button',
+  theme: {
+    TagsInput,
+    Checkbox,
+    RadioList,
+    Select,
+    Button,
+  },
   placeholder,
   ...props
 }) => {
@@ -128,4 +127,4 @@ let TagsQuery = ({
   )
 }
 
-export default contexturify(TagsQuery)
+export default _.flow(contexturify, withTheme)(TagsQuery)

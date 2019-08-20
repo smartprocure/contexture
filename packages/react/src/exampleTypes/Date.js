@@ -129,8 +129,16 @@ let rollingRangeFromString = _.flow(
   })
 )
 
-let DateComponent = _.flow(contexturify, withTheme)(
-  ({ tree, node, theme: { DateInput, RadioList, Select }, excludeRollingRanges = [] }) => {
+let DateComponent = _.flow(
+  contexturify,
+  withTheme
+)(
+  ({
+    tree,
+    node,
+    theme: { DateInput, RadioList, Select },
+    excludeRollingRanges = [],
+  }) => {
     let rollingOpts = _.reject(
       opt => _.includes(opt.type, excludeRollingRanges),
       allRollingOpts

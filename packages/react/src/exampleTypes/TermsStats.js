@@ -1,8 +1,9 @@
 import React from 'react'
 import { contexturify } from '../utils/hoc'
-import BarChart from '../layout/BarChart'
+import _ from 'lodash/fp'
+import { withTheme } from '../utils/theme'
 
-let TermsStats = contexturify(({ node, ...props }) => (
+let TermsStats = ({ node, theme: { BarChart }, ...props }) => (
   <BarChart
     data={node.context.terms}
     categoryField="key"
@@ -10,7 +11,6 @@ let TermsStats = contexturify(({ node, ...props }) => (
     yAxis
     {...props}
   />
-))
-TermsStats.displayName = 'TermsStats'
+)
 
-export default TermsStats
+export default _.flow(contexturify, withTheme)(TermsStats)

@@ -1,6 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import DefaultSelect from '../layout/Select'
+import _ from 'lodash/fp'
+import { withTheme } from '../utils/theme'
 
 export let tagToGroupJoin = (x = 'any') =>
   ({
@@ -15,7 +16,7 @@ let joinOptions = [
   { value: 'none', label: 'Match none of these keywords' },
 ]
 
-let TagsJoinPicker = ({ node, tree, Select = DefaultSelect }) => (
+let TagsJoinPicker = ({ node, tree, theme: { Select } }) => (
   <Select
     value={node.join}
     onChange={e => tree.mutate(node.path, { join: e.target.value })}
@@ -23,4 +24,4 @@ let TagsJoinPicker = ({ node, tree, Select = DefaultSelect }) => (
   />
 )
 
-export default observer(TagsJoinPicker)
+export default _.flow(observer, withTheme)(TagsJoinPicker)

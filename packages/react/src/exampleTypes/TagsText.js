@@ -3,9 +3,8 @@ import _ from 'lodash/fp'
 import F from 'futil-js'
 import { contexturify, withTreeLens } from '../utils/hoc'
 import { bgJoin } from '../styles/generic'
+import { withTheme } from '../utils/theme'
 
-import DefaultTagsInput from '../layout/TagsInput'
-import DefaultSelect from '../layout/Select'
 import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
 
 let operatorOptions = F.autoLabelOptions([
@@ -23,13 +22,13 @@ let operatorOptions = F.autoLabelOptions([
 
 let Text = _.flow(
   withTreeLens,
-  contexturify
+  contexturify,
+  withTheme
 )(
   ({
     tree,
     node,
-    TagsInput = DefaultTagsInput,
-    Select = DefaultSelect,
+    theme: { TagsInput, Select },
     placeholder,
   }) => {
     let tagStyle = bgJoin(tagToGroupJoin(node.join))

@@ -16,4 +16,7 @@ let Bool = ({ tree, node, theme: { RadioList } }) => (
   </div>
 )
 
-export default _.flow(contexturify, withTheme)(Bool)
+export default _.flow(
+  contexturify,
+  withTheme
+)(Bool)

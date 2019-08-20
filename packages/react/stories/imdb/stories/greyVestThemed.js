@@ -20,11 +20,12 @@ import theme, {
   TabLabel,
   Tabs,
   IconButton,
+  PagedResultTable,
 } from '../../../src/themes/greyVest'
 import { Column } from './../../../src/layout/ExpandableTable'
 import { ThemeConsumer } from '../../../src/utils/theme'
 
-let { TypeMap, TermsStatsTable, PagedResultTable, TagsQuery } = ExampleTypes
+let { TypeMap, TermsStatsTable, TagsQuery } = ExampleTypes
 
 let tree = Contexture({
   key: 'root',

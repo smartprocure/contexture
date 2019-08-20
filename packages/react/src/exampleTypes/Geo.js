@@ -21,7 +21,10 @@ const elementStyle = {
 
 const operatorOptions = ['within', 'not within']
 
-let GeoComponent = _.flow(contexturify, withTheme)(
+let GeoComponent = _.flow(
+  contexturify,
+  withTheme
+)(
   ({
     tree,
     node,

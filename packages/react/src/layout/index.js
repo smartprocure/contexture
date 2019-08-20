@@ -1,4 +1,5 @@
 import F from 'futil-js'
+import React from 'react'
 
 import DefaultIcon from '../DefaultIcon'
 import MissingTypeComponent from '../DefaultMissingTypeComponent'
@@ -16,11 +17,14 @@ import ModalPicker from './ModalPicker'
 import NestedPicker from './NestedPicker'
 import Popover from './Popover'
 import Portal from './Portal'
+import RadioList from './RadioList'
 import SpacedList from './SpacedList'
 import StepsAccordion, { AccordionStep } from './StepsAccordion'
+import TableHeaderCell from './TableHeaderCell'
 import TagsInput from './TagsInput'
 import Tag from './Tag'
 import TextHighlight from './TextHighlight'
+import WrappedDateInput from './WrappedDateInput'
 
 import { defaultTheme } from '../utils/theme'
 
@@ -31,19 +35,29 @@ let theme = {
   Button: 'button',
   Checkbox,
   CheckButton,
+  DateInput: WrappedDateInput,
   MissingTypeComponent,
   ExpandableTable,
   Icon: DefaultIcon,
   Input: 'input',
+  Link: 'a',
   ListItem: 'li',
   Modal,
+  NumberInput: props => <input type="number" {...props} />,
   Picker: NestedPicker,
+  PagerItem: 'div',
   PickerItem: 'div',
   Popover,
+  RadioList,
+  Select: 'select',
   Table: 'table',
+  TableCell: 'td',
+  TableHeaderCell,
+  TableRow: 'tr',
   Tag,
   TagsInput,
   TextHighlight,
+  TextInput: 'input',
 }
 // To add `withTheme` components to the default theme, we have to mutate them onto
 // the theme object after it's declared, because importing them into `utils/theme`

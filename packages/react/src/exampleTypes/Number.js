@@ -5,7 +5,10 @@ import Flex from '../layout/Flex'
 import { contexturify } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
 
-let NumberComponent = _.flow(contexturify, withTheme)(
+let NumberComponent = _.flow(
+  contexturify,
+  withTheme
+)(
   ({
     tree,
     node,

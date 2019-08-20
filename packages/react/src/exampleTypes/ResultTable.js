@@ -3,10 +3,9 @@ import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { observer } from 'mobx-react'
 import { contexturify } from '../utils/hoc'
-import { Popover, Dynamic } from '../layout'
+import { Dynamic } from '../layout'
 import { useLens } from '../utils/react'
 import { fieldsToOptions } from '../FilterAdder'
-import DefaultIcon from '../DefaultIcon'
 import {
   applyDefaults,
   getRecord,
@@ -15,6 +14,7 @@ import {
 } from '../utils/schema'
 import { newNodeFromField } from '../utils/search'
 import DefaultMissingTypeComponent from '../DefaultMissingTypeComponent'
+import { withTheme } from '../utils/theme'
 
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
@@ -44,10 +44,10 @@ let popoverStyle = {
   userSelect: 'none',
 }
 
-let HighlightedColumnHeader = observer(
+let HighlightedColumnHeader = _.flow(observer, withTheme)(
   ({
     node,
-    Cell = 'th',
+    theme: { TableHeaderCell },
     results = _.result('slice', getResults(node)),
     hasAdditionalFields = !_.flow(
       _.map('additionalFields'),
@@ -56,7 +56,7 @@ let HighlightedColumnHeader = observer(
     )(results),
   }) =>
     hasAdditionalFields && node.showOtherMatches ? (
-      <Cell key="additionalFields">Other Matches</Cell>
+      <TableHeaderCell key="additionalFields">Other Matches</TableHeaderCell>
     ) : null
 )
 HighlightedColumnHeader.displayName = 'HighlightedColumnHeader'
@@ -64,39 +64,38 @@ HighlightedColumnHeader.displayName = 'HighlightedColumnHeader'
 let labelForField = (schema, field) =>
   _.getOr(field, 'label', _.find({ field }, schema))
 
-let HighlightedColumn = observer(
+let HighlightedColumn = _.flow(
+  observer,
+  withTheme
+)(
   ({
     node,
     results = _.result('slice', getResults(node)),
     additionalFields = _.result('0.additionalFields.slice', results),
-    Cell = 'td',
-    Table = 'table',
-    Modal = null,
+    theme: { TableCell, Modal, Table },
     schema,
   }) => {
     let viewModal = useLens(false)
     return _.isEmpty(additionalFields) ? (
-      <Cell key="additionalFields" />
+      <TableCell key="additionalFields" />
     ) : (
-      <Cell key="additionalFields">
-        {Modal && (
-          <Modal isOpen={viewModal}>
-            <h3>Other Matching Fields</h3>
-            <Table>
-              <tbody>
-                {_.map(
-                  ({ label, value }) => (
-                    <tr key={label}>
-                      <td>{labelForField(schema, label)}</td>
-                      <td dangerouslySetInnerHTML={{ __html: value }} />
-                    </tr>
-                  ),
-                  additionalFields
-                )}
-              </tbody>
-            </Table>
-          </Modal>
-        )}
+      <TableCell key="additionalFields">
+        <Modal isOpen={viewModal}>
+          <h3>Other Matching Fields</h3>
+          <Table>
+            <tbody>
+              {_.map(
+                ({ label, value }) => (
+                  <tr key={label}>
+                    <td>{labelForField(schema, label)}</td>
+                    <td dangerouslySetInnerHTML={{ __html: value }} />
+                  </tr>
+                ),
+                additionalFields
+              )}
+            </tbody>
+          </Table>
+        </Modal>
         <button
           className="gv-link-button"
           onClick={e => {
@@ -106,179 +105,185 @@ let HighlightedColumn = observer(
         >
           Matched {_.size(additionalFields)} other field(s)
         </button>
-      </Cell>
+      </TableCell>
     )
   }
 )
 HighlightedColumn.displayName = 'HighlightedColumn'
 
-let HeaderCellDefault = observer(({ activeFilter, style, children }) => (
-  <th style={{ ...(activeFilter ? { fontWeight: 900 } : {}), ...style }}>
-    {children}
-  </th>
-))
-HeaderCellDefault.displayName = 'HeaderCellDefault'
-
-let Header = observer(({ // Local State
-  Modal, FieldPicker, ListGroupItem: Item, HeaderCell = HeaderCellDefault, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria, mapNodeToProps, fields, visibleFields, Icon }) => {
-  // Components (providerable?) // Contextual
-  let popover = useLens(false)
-  let adding = useLens(false)
-  let filtering = useLens(false)
-  let {
-    disableFilter,
-    disableSort,
-    field,
-    label,
-    hideMenu,
-    typeDefault,
-  } = fieldSchema
-  HeaderCell = fieldSchema.HeaderCell || HeaderCell
-  let filterNode =
-    criteria &&
-    _.find({ field }, _.getOr([], 'children', tree.getNode(criteria)))
-  let filter = () => {
-    if (!filterNode) addFilter(field)
-    filterNode =
+let Header = _.flow(observer, withTheme)(
+  ({
+    theme: { ListItem, Icon, Popover, Modal, Picker, TableHeaderCell },
+    field: fieldSchema,
+    includes,
+    addOptions,
+    addFilter,
+    tree,
+    node,
+    mutate,
+    criteria,
+    mapNodeToProps,
+    fields,
+    visibleFields,
+  }) => {
+    let popover = useLens(false)
+    let adding = useLens(false)
+    let filtering = useLens(false)
+    let {
+      disableFilter,
+      disableSort,
+      field,
+      label,
+      hideMenu,
+      typeDefault,
+    } = fieldSchema
+    TableHeaderCell = fieldSchema.HeaderCell || TableHeaderCell
+    let filterNode =
       criteria &&
       _.find({ field }, _.getOr([], 'children', tree.getNode(criteria)))
-    tree.mutate(filterNode.path, { paused: false })
-    F.flip(filtering)()
-  }
-  let Label = label
-  return (
-    <HeaderCell
-      style={{ cursor: 'pointer' }}
-      activeFilter={_.get('hasValue', filterNode)}
-    >
-      <span onClick={F.flip(popover)}>
-        {_.isFunction(label) ? <Label /> : label}{' '}
-        {field === node.sortField && (
-          <Icon
-            icon={node.sortDir === 'asc' ? 'SortAscending' : 'SortDescending'}
-          />
-        )}
-        {hideMenu ? null : <Icon icon="TableColumnMenu" />}
-      </span>
-      <Popover
-        isOpen={{
-          get() {
-            return F.view(popover)
-          },
-          set(x) {
-            // Only turn off the popover if adding is not true
-            if (!F.view(adding) && _.isBoolean(x)) F.set(x)(popover)
-          },
-        }}
-        style={popoverStyle}
+    let filter = () => {
+      if (!filterNode) addFilter(field)
+      filterNode =
+        criteria &&
+        _.find({ field }, _.getOr([], 'children', tree.getNode(criteria)))
+      tree.mutate(filterNode.path, { paused: false })
+      F.flip(filtering)()
+    }
+    let Label = label
+    return (
+      <TableHeaderCell
+        style={{ cursor: 'pointer' }}
+        activeFilter={_.get('hasValue', filterNode)}
       >
-        {!disableSort && (
-          <Item
-            onClick={() => {
-              F.off(popover)()
-              mutate({ sortField: field, sortDir: 'asc' })
-            }}
-          >
-            <Icon icon="SortAscending" />
-            Sort Ascending
-          </Item>
-        )}
-        {!disableSort && (
-          <Item
-            onClick={() => {
-              F.off(popover)()
-              mutate({ sortField: field, sortDir: 'desc' })
-            }}
-          >
-            <Icon icon="SortDescending" />
-            Sort Descending
-          </Item>
-        )}
-        <Item
-          onClick={() =>
-            moveColumn(mutate, i => i - 1, field, visibleFields, includes)
-          }
-        >
-          <Icon icon="MoveLeft" />
-          Move Left
-        </Item>
-        <Item
-          onClick={() =>
-            moveColumn(mutate, i => i + 1, field, visibleFields, includes)
-          }
-        >
-          <Icon icon="MoveRight" />
-          Move Right
-        </Item>
-        <Item onClick={() => mutate({ include: _.without([field], includes) })}>
-          <Icon icon="RemoveColumn" />
-          Remove Column
-        </Item>
-        {Modal && FieldPicker && !!addOptions.length && (
-          <Item onClick={F.on(adding)}>
-            <Icon icon="AddColumn" />
-            Add Column
-          </Item>
-        )}
-        {criteria && (typeDefault || filterNode) && !disableFilter && (
-          <div>
-            <Item onClick={filter}>
-              <Icon
-                icon={
-                  filterNode
-                    ? F.view(filtering)
-                      ? 'FilterCollapse'
-                      : 'FilterExpand'
-                    : 'FilterAdd'
-                }
-              />
-              Filter
-            </Item>
-            {F.view(filtering) && filterNode && !filterNode.paused && (
-              <Dynamic
-                component={DefaultMissingTypeComponent}
-                tree={tree}
-                path={_.toArray(filterNode.path)}
-                {...mapNodeToProps(filterNode, fields)}
-              />
-            )}
-          </div>
-        )}
-        {Modal && FieldPicker && (
-          <Modal isOpen={adding}>
-            <FieldPicker
-              options={addOptions}
-              onChange={field => {
-                if (!_.contains(field, includes))
-                  mutate({ include: [...includes, field] })
-                F.off(adding)()
-              }}
+        <span onClick={F.flip(popover)}>
+          {_.isFunction(label) ? <Label /> : label}{' '}
+          {field === node.sortField && (
+            <Icon
+              icon={node.sortDir === 'asc' ? 'SortAscending' : 'SortDescending'}
             />
-          </Modal>
-        )}
-      </Popover>
-    </HeaderCell>
-  )
-})
+          )}
+          {hideMenu ? null : <Icon icon="TableColumnMenu" />}
+        </span>
+        <Popover
+          isOpen={{
+            get() {
+              return F.view(popover)
+            },
+            set(x) {
+              // Only turn off the popover if adding is not true
+              if (!F.view(adding) && _.isBoolean(x)) F.set(x)(popover)
+            },
+          }}
+          style={popoverStyle}
+        >
+          {!disableSort && (
+            <ListItem
+              onClick={() => {
+                F.off(popover)()
+                mutate({ sortField: field, sortDir: 'asc' })
+              }}
+            >
+              <Icon icon="SortAscending" />
+              Sort Ascending
+            </ListItem>
+          )}
+          {!disableSort && (
+            <ListItem
+              onClick={() => {
+                F.off(popover)()
+                mutate({ sortField: field, sortDir: 'desc' })
+              }}
+            >
+              <Icon icon="SortDescending" />
+              Sort Descending
+            </ListItem>
+          )}
+          <ListItem
+            onClick={() =>
+              moveColumn(mutate, i => i - 1, field, visibleFields, includes)
+            }
+          >
+            <Icon icon="MoveLeft" />
+            Move Left
+          </ListItem>
+          <ListItem
+            onClick={() =>
+              moveColumn(mutate, i => i + 1, field, visibleFields, includes)
+            }
+          >
+            <Icon icon="MoveRight" />
+            Move Right
+          </ListItem>
+          <ListItem
+            onClick={() => mutate({ include: _.without([field], includes) })}
+          >
+            <Icon icon="RemoveColumn" />
+            Remove Column
+          </ListItem>
+          {Modal && Picker && !!addOptions.length && (
+            <ListItem onClick={F.on(adding)}>
+              <Icon icon="AddColumn" />
+              Add Column
+            </ListItem>
+          )}
+          {criteria && (typeDefault || filterNode) && !disableFilter && (
+            <div>
+              <ListItem onClick={filter}>
+                <Icon
+                  icon={
+                    filterNode
+                      ? F.view(filtering)
+                        ? 'FilterCollapse'
+                        : 'FilterExpand'
+                      : 'FilterAdd'
+                  }
+                />
+                Filter
+              </ListItem>
+              {F.view(filtering) && filterNode && !filterNode.paused && (
+                <Dynamic
+                  component={DefaultMissingTypeComponent}
+                  tree={tree}
+                  path={_.toArray(filterNode.path)}
+                  {...mapNodeToProps(filterNode, fields)}
+                />
+              )}
+            </div>
+          )}
+          {Modal && Picker && (
+            <Modal isOpen={adding}>
+              <Picker
+                options={addOptions}
+                onChange={field => {
+                  if (!_.contains(field, includes))
+                    mutate({ include: [...includes, field] })
+                  F.off(adding)()
+                }}
+              />
+            </Modal>
+          )}
+        </Popover>
+      </TableHeaderCell>
+    )
+  }
+)
 Header.displayName = 'Header'
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
-let TableBody = observer(
+let TableBody = _.flow(observer, withTheme)(
   ({
     node,
     visibleFields,
     fields,
     hiddenFields,
-    Modal,
-    Table,
-    Row,
+    theme: { TableRow },
     schema,
   }) => (
     <tbody>
       {!!getResults(node).length &&
         _.map(
           x => (
-            <Row
+            <TableRow
               key={x._id}
               record={getRecord(x)}
               {...{ fields, visibleFields, hiddenFields }}
@@ -296,13 +301,11 @@ let TableBody = observer(
                   {...{
                     node,
                     additionalFields: _.result('additionalFields.slice', x),
-                    Modal,
-                    Table,
                     schema,
                   }}
                 />
               )}
-            </Row>
+            </TableRow>
           ),
           getResults(node)
         )}
@@ -311,13 +314,15 @@ let TableBody = observer(
 )
 TableBody.displayName = 'TableBody'
 
+/*
 let Tr = props => (
   <tr
     {..._.omit(['record', 'fields', 'visibleFields', 'hiddenFields'], props)}
   />
 )
+*/
 
-let ResultTable = contexturify(
+let ResultTable = _.flow(contexturify, withTheme)(
   ({
     fields,
     infer,
@@ -325,14 +330,8 @@ let ResultTable = contexturify(
     criteria,
     node,
     tree,
-    Table = 'table',
-    HeaderCell,
-    Modal,
-    ListGroupItem,
-    FieldPicker,
+    theme: { Table },
     mapNodeToProps = () => ({}),
-    Icon = DefaultIcon,
-    Row = Tr,
   }) => {
     // From Theme/Components
     let mutate = tree.mutate(path)
@@ -353,11 +352,6 @@ let ResultTable = contexturify(
     let hiddenFields = _.reject(isIncluded, schema)
 
     let headerProps = {
-      Modal,
-      FieldPicker,
-      ListGroupItem,
-      HeaderCell,
-      Icon,
       mapNodeToProps,
       fields,
       visibleFields,
@@ -386,13 +380,10 @@ let ResultTable = contexturify(
         </thead>
         <TableBody
           {...{
-            Row,
             node,
             fields,
             visibleFields,
             hiddenFields,
-            Modal,
-            Table,
             schema,
           }}
         />

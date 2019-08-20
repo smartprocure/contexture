@@ -3,22 +3,26 @@ import F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
 import { contexturify } from '../utils/hoc'
+import { withTheme } from '../utils/theme'
 import ExpandableTable, { Column } from '../layout/ExpandableTable'
 import Flex from '../layout/Flex'
-import Select from '../layout/Select'
 
 let toolBarStyle = { justifyContent: 'space-between', alignItems: 'center' }
 let SimpleLabel = ({ text }) => (
   <label style={{ paddingRight: '5px' }}>{text}</label>
 )
-let SimpleFilter = observer(({ Input = 'input', ...props }) => (
-  <Flex style={{ ...toolBarStyle, width: '75%' }}>
-    <SimpleLabel text="Filter:" />
-    <Input type="text" {...props} />
-  </Flex>
-))
-let SelectSize = observer(
-  ({ node, tree, options = [10, 25, 50, 100, 500, 1000] }) => (
+let SimpleFilter = _.flow(observer, withTheme)(
+  ({ theme: { TextInput }, ...props }) => (
+    <Flex style={{ ...toolBarStyle, width: '75%' }}>
+      <SimpleLabel text="Filter:" />
+      <TextInput {...props} />
+    </Flex>
+  )
+)
+SimpleFilter.displayName = 'SimpleFilter'
+
+let SelectSize = _.flow(observer, withTheme)(
+  ({ node, theme: { Select }, tree, options = [10, 25, 50, 100, 500, 1000] }) => (
     <Flex style={toolBarStyle}>
       <SimpleLabel text="Size:" />
       <Select
@@ -33,7 +37,7 @@ let SelectSize = observer(
     </Flex>
   )
 )
-let TermsStatsTable = contexturify(
+let TermsStatsTable = _.flow(contexturify, withTheme)(
   ({
     node,
     criteria,
@@ -42,9 +46,8 @@ let TermsStatsTable = contexturify(
     criteriaGetValue = _.identity,
     tree,
     children,
-    Button,
+    theme: { Button },
     MoreControls = 'div',
-    Input = 'input',
     Filter = SimpleFilter,
     sizeOptions,
     ...props
@@ -52,7 +55,6 @@ let TermsStatsTable = contexturify(
     <div>
       <Flex style={{ ...toolBarStyle, margin: 40, marginBottom: 0 }}>
         <Filter
-          Input={Input}
           {...F.domLens.value(tree.lens(node.path, 'filter'))}
         />
         <SelectSize node={node} tree={tree} options={sizeOptions} />
