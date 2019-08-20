@@ -13,7 +13,7 @@ import {
   componentForType,
   FilterAdder,
 } from '../../src/'
-import { TextInput, ClampedHTML, } from '../DemoControls'
+import { TextInput, ClampedHTML } from '../DemoControls'
 import ExampleTypes, { TypeMap } from '../../src/exampleTypes'
 let { ResultCount, ResultTable, ResultPager } = ExampleTypes
 

@@ -14,7 +14,13 @@ import {
 } from '../../../src'
 import theme from '../../../src/themes/blueberry'
 import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
-let { ResultCount, ResultTable, ResultPager, TagsQuery, DateRangePicker } = ExampleTypes
+let {
+  ResultCount,
+  ResultTable,
+  ResultPager,
+  TagsQuery,
+  DateRangePicker,
+} = ExampleTypes
 
 import { ThemeProvider, withTheme } from '../../../src/utils/theme'
 import FilterAdder from '../../../src/FilterAdder'
@@ -143,10 +149,7 @@ let BlueberryStory = withTheme(({ theme }) => (
                 Contains
                 <TagsQuery tree={tree} path={['root', 'titleContains']} />
                 Does Not Contain
-                <TagsQuery
-                  tree={tree}
-                  path={['root', 'titleDoesNotContain']}
-                />
+                <TagsQuery tree={tree} path={['root', 'titleDoesNotContain']} />
               </div>
               <FilterList
                 tree={tree}
