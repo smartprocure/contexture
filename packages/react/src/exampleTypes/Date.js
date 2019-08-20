@@ -1,6 +1,7 @@
 import React from 'react'
 import Flex from '../layout/Flex'
 import { contexturify } from '../utils/hoc'
+import { withTheme } from '../utils/theme'
 import F from 'futil-js'
 import _ from 'lodash/fp'
 
@@ -128,8 +129,8 @@ let rollingRangeFromString = _.flow(
   })
 )
 
-let DateComponent = contexturify(
-  ({ tree, node, DateInput, RadioList, Select, excludeRollingRanges = [] }) => {
+let DateComponent = _.flow(contexturify, withTheme)(
+  ({ tree, node, theme: { DateInput, RadioList, Select }, excludeRollingRanges = [] }) => {
     let rollingOpts = _.reject(
       opt => _.includes(opt.type, excludeRollingRanges),
       allRollingOpts

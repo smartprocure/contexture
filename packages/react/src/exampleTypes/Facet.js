@@ -4,23 +4,9 @@ import F from 'futil-js'
 import { observer, Observer } from 'mobx-react'
 import Flex from '../layout/Flex'
 import { contexturify } from '../utils/hoc'
+import { withTheme } from '../utils/theme'
 
-let CheckboxDefault = props => <input type="checkbox" {...props} />
-let RadioListDefault = ({ value, onChange, options }) => (
-  <Flex style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
-    {_.map(
-      x => (
-        <label key={x.value} onClick={() => onChange(x.value)}>
-          <input type="radio" checked={x.value === value} onChange={() => {}} />
-          {x.label}
-        </label>
-      ),
-      options
-    )}
-  </Flex>
-)
-
-let SelectAll = observer(({ node, tree, Checkbox }) => {
+let SelectAll = _.flow(observer, withTheme)(({ node, tree, theme: { Checkbox } }) => {
   let missingOptions = _.difference(
     _.map('name', _.get('context.options', node)),
     node.values
@@ -52,8 +38,9 @@ let SelectAll = observer(({ node, tree, Checkbox }) => {
     </label>
   )
 })
+SelectAll.displayName = 'SelectAll'
 
-let FacetOptionsFilter = ({ tree, node, TextInput, Button, ButtonGroup }) => {
+let FacetOptionsFilter = ({ tree, node, theme: { Input, Button } }) => {
   let [val, setVal] = useState(node.optionsFilter)
   let buttonEnabled = val !== node.optionsFilter
   let submit = () =>
@@ -61,8 +48,8 @@ let FacetOptionsFilter = ({ tree, node, TextInput, Button, ButtonGroup }) => {
   return (
     <Observer>
       {() => (
-        <ButtonGroup>
-          <TextInput
+        <Flex>
+          <Input
             value={val}
             onChange={e => {
               setVal(e.target.value)
@@ -77,25 +64,21 @@ let FacetOptionsFilter = ({ tree, node, TextInput, Button, ButtonGroup }) => {
           >
             Submit
           </Button>
-        </ButtonGroup>
+        </Flex>
       )}
     </Observer>
   )
 }
 
-let Facet = contexturify(
+let Facet =
   ({
     tree,
     node,
     hide = {},
-    TextInput = 'input',
-    Button = 'button',
-    Checkbox = CheckboxDefault,
-    RadioList = RadioListDefault,
+    theme: { Checkbox, RadioList },
     display = x => x,
     displayBlank = () => <i>Not Specified</i>,
     formatCount = x => x,
-    ButtonGroup = 'div',
   }) => (
     <div className="contexture-facet">
       <RadioList
@@ -107,9 +90,6 @@ let Facet = contexturify(
         <FacetOptionsFilter
           tree={tree}
           node={node}
-          TextInput={TextInput}
-          Button={Button}
-          ButtonGroup={ButtonGroup}
         />
       )}
       <SelectAll node={node} tree={tree} Checkbox={Checkbox} />
@@ -159,7 +139,5 @@ let Facet = contexturify(
       </Flex>
     </div>
   )
-)
-Facet.displayName = 'Facet'
 
-export default Facet
+export default _.flow(contexturify, withTheme)(Facet)

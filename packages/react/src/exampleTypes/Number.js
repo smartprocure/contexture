@@ -3,13 +3,13 @@ import _ from 'lodash/fp'
 import { round } from 'lodash'
 import Flex from '../layout/Flex'
 import { contexturify } from '../utils/hoc'
+import { withTheme } from '../utils/theme'
 
-let NumberComponent = contexturify(
+let NumberComponent = _.flow(contexturify, withTheme)(
   ({
     tree,
     node,
-    NumberInput,
-    Button,
+    theme: { NumberInput, Button },
     showBestRange = false,
     formatter = _.identity,
     significantDigits,

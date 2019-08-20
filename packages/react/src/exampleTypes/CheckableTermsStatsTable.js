@@ -3,10 +3,11 @@ import F from 'futil-js'
 import React from 'react'
 import { Column } from '../layout/ExpandableTable'
 import { contexturify } from '../utils/hoc'
+import { withTheme } from '../utils/theme'
 import TermsStatsTable from './TermsStatsTable'
 
-let CheckableTermsStatsTable = contexturify(
-  ({ node, children, Checkbox, getValue, selected, ...props }) => {
+let CheckableTermsStatsTable = _.flow(contexturify, withTheme)(
+  ({ node, children, theme: { Checkbox }, getValue, selected, ...props }) => {
     let results = _.result('context.terms.slice', node)
     let allChecked = _.size(results) === _.size(F.view(selected))
     let checkAll = F.sets(

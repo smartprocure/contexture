@@ -1,9 +1,10 @@
 import React from 'react'
 import F from 'futil-js'
+import _ from 'lodash/fp'
 import { contexturify } from '../utils/hoc'
-import RadioListDefault from '../layout/RadioList'
+import { withTheme } from '../utils/theme'
 
-let Exists = ({ tree, node, RadioList = RadioListDefault }) => (
+let Exists = ({ tree, node, theme: { RadioList } }) => (
   <div className="contexture-exists">
     <RadioList
       value={node.value ? 'exists' : 'doesNotExist'}
@@ -15,4 +16,4 @@ let Exists = ({ tree, node, RadioList = RadioListDefault }) => (
   </div>
 )
 
-export default contexturify(Exists, 'exists')
+export default _.flow(contexturify, withTheme)(Exists)

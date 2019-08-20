@@ -1,8 +1,9 @@
 import React from 'react'
 import { contexturify } from '../utils/hoc'
-import BarChart from '../layout/BarChart'
+import _ from 'lodash/fp'
+import { withTheme } from '../utils/theme'
 
-let DateHistogram = contexturify(({ node, ...props }) => (
+let DateHistogram = _.flow(contexturify, withTheme)(({ node, theme: { BarChart }, ...props }) => (
   <BarChart
     data={node.context.entries}
     categoryField="key"

@@ -1,19 +1,12 @@
 import _ from 'lodash/fp'
 import React from 'react'
 import { contexturify } from '../utils/hoc'
-import DefaultIcon from '../DefaultIcon'
-
-// These are to prevent warning from `active`, `previous`, `next`
-let span = ({ children }) => <span>{children}</span>
-let a = ({ children, onClick }) => <a onClick={onClick}>{children}</a>
 
 let ResultPager = contexturify(
   ({
     node,
     tree,
-    Item = span,
-    Link = a,
-    Icon = DefaultIcon,
+    theme: { PagerItem, Link, Icon },
     className = '',
   }) => {
     let pages = Math.ceil(
@@ -23,28 +16,28 @@ let ResultPager = contexturify(
     return (
       pages > 1 && (
         <div className={`${className} contexture-result-pager`}>
-          <Item disabled={!(page > 1)}>
+          <PagerItem disabled={!(page > 1)}>
             <Link
               previous
               onClick={() => tree.mutate(node.path, { page: page - 1 })}
             >
               <Icon icon="PreviousPage" />
             </Link>
-          </Item>
+          </PagerItem>
           {page > 3 && (
-            <Item
+            <PagerItem
               onClick={() =>
                 tree.mutate(node.path, { page: _.max([0, page - 5]) })
               }
             >
               <Icon icon="Previous5Pages" />
-            </Item>
+            </PagerItem>
           )}
           {_.reverse(
             _.times(
               n =>
                 page > n + 1 && (
-                  <Item key={`prev${n}`}>
+                  <PagerItem key={`prev${n}`}>
                     <Link
                       onClick={() =>
                         tree.mutate(node.path, { page: page - (n + 1) })
@@ -52,18 +45,18 @@ let ResultPager = contexturify(
                     >
                       {page - (n + 1)}
                     </Link>
-                  </Item>
+                  </PagerItem>
                 ),
               2
             )
           )}
-          <Item active>
+          <PagerItem active>
             <Link>{page}</Link>
-          </Item>
+          </PagerItem>
           {_.times(
             n =>
               page + (n + 1) <= pages && (
-                <Item key={`next${n}`}>
+                <PagerItem key={`next${n}`}>
                   <Link
                     onClick={() =>
                       tree.mutate(node.path, { page: page + (n + 1) })
@@ -71,27 +64,27 @@ let ResultPager = contexturify(
                   >
                     {page + (n + 1)}
                   </Link>
-                </Item>
+                </PagerItem>
               ),
             2
           )}
           {page + 2 < pages && (
-            <Item
+            <PagerItem
               onClick={() =>
                 tree.mutate(node.path, { page: _.min([pages, page + 5]) })
               }
             >
               <Icon icon="Next5Pages" />
-            </Item>
+            </PagerItem>
           )}
-          <Item disabled={!(page < pages)}>
+          <PagerItem disabled={!(page < pages)}>
             <Link
               next
               onClick={() => tree.mutate(node.path, { page: page + 1 })}
             >
               <Icon icon="NextPage" />
             </Link>
-          </Item>
+          </PagerItem>
         </div>
       )
     )

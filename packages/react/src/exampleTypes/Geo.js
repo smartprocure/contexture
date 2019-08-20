@@ -2,6 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp'
 import Flex from '../layout/Flex'
 import { contexturify } from '../utils/hoc'
+import { withTheme } from '../utils/theme'
 
 const customStyles = {
   valueContainer: styles => ({
@@ -20,22 +21,18 @@ const elementStyle = {
 
 const operatorOptions = ['within', 'not within']
 
-let selectInput = 'select'
-let numberInput = props => <input type="number" {...props} />
-
-let GeoComponent = contexturify(
+let GeoComponent = _.flow(contexturify, withTheme)(
   ({
     tree,
     node,
     loadOptions,
-    SelectInput = selectInput,
-    NumberInput = numberInput,
+    theme: { Select, NumberInput },
     GeoCodeLocation = _.noop,
     AutoComplete = null,
     placeholder = 'Address ...',
   }) => (
     <Flex style={{ flexFlow: 'column' }}>
-      <SelectInput
+      <Select
         style={elementStyle}
         value={node.operator}
         onChange={e => tree.mutate(node.path, { operator: e.target.value })}
@@ -45,7 +42,7 @@ let GeoComponent = contexturify(
             {o}
           </option>
         ))}
-      </SelectInput>
+      </Select>
       <div style={elementStyle}>
         <NumberInput
           min="1"
