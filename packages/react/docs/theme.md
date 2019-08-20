@@ -57,37 +57,50 @@ export default withTheme(IconButton)
 
 ## Default theme components
 
-The default theme in contexture-react is GreyVest. The full list of **theme components** included in GreyVest is shown in the table below.
+The default theme in contexture-react is GreyVest. The full list of **theme components** included in GreyVest is shown below.
+
+### Inputs
 
 | Key | Expected props | Notes |
 | --- | --- | --- |
-| `AdderPicker` | `options`, `onChange`, `label` | *this key is actually based on specific usage in the FilterAdder component, and should probably just be removed from the defaults in favor of a nested style* |
-| `BarChart` | `height`, `borderColor`, `min`, `max` | Used in the DateHistogram and TermsStats example types |
-| `Box` | `children` | A generic container element |
 | `Button` | `isActive`, `primary`, `onClick`, `children` | A generic button. Used in the Facet and Number example types. |
 | `Checkbox` | `checked`, `onChange` | A generic checkbox. Used in the CheckableResultTable and Facet example types. |
 | `CheckButton` | `checked`, `onClick`, `children` | A button with an `onClick` handler and an on/off state, containing a checkbox that displays this state *(this really should be extrapolated to some kind of generic BinaryStateButton)* |
-| `ExpandableTable` | `data`, `columns`, `recordKey`, `sortField`, `sortDir`, `columnSort` | Used in the TermsStatsTable and CheckableTermsStatsTable example types. |
+| `Link` | | Used in the ResultPager example type |
 | `Icon` | `icon`, `onClick` | A generic icon component. Used in the ResultPager example type. |
-| `Fonts` | none | For holding `<link>` elements to fonts used in the theme |
-| `ListItem` | `children` | A generic list item |
-| `MissingTypeComponent` | `node` | Used as a fallback component in search interfaces when no other component is found for a node's contexture type |
-| `Modal` | `isOpen`, `children` | A generic modal component |
-| `PagerItem` | `active`, `disabled` | A list item for Pager components *(make this nested instead?)*. Used in the ResultPager example type. |
-| `Picker` | `options`, `onChange` | Renders a list of selectable options |
-| `PickerItem` | `active`, `disabled` | A list item for Picker components *(make this nested instead?)* |
-| `Popover` | `isOpen`, `children` | A generic context-menu component |
 | `RadioList` | `options`, `value`, `onChange` | A generic list of radio buttons. Used in the Bool, Exists, and Facet example types. |
-| `Style` | none | For rendering a `<style>` block with theme-specific styles |
-| `Table` | same as basic `table` | A generic table component |
-| `Tag` | `value`, `removeTag`, `tagStyle`, `onClick` | Used in TagsInput |
-| `TagsInput` | | Used in the TagsQuery and TagsText example types |
-| `TextHighlight` | `pattern`, `text`, `Wrap` | Renders the text given in the `text` prop, with the parts that match the `pattern` prop wrapped in the `Wrap` component |
-| `TextInput` |  same as basic `input` | A generic text input component. Used in the Facet and Query example types. |
-| `ResultTable` | | Used in the CheckableResultTable example type |
-| `DateInput` | | Used in the Date example type |
 | `Select` | | Used in the Date, DateRangePicker, and Geo example types |
+| `TextInput` |  same as basic `input` | A generic text input component. Used in the Facet and Query example types. |
+| `DateInput` | | Used in the Date example type |
 | `NumberInput` | | Used in the Geo and Number example types |
+| `TagsInput` | | Used in the TagsQuery and TagsText example types |
+| `Picker` | `options`, `onChange` | Renders a list of selectable options |
+| `AdderPicker` | `options`, `onChange`, `label` | *this key is actually based on specific usage in the FilterAdder component, and should probably just be removed from the defaults in favor of a nested style* |
+
+### Containers
+
+| Key | Expected props | Notes |
+| --- | --- | --- |
+| `Box` | `children` | A generic container element |
+| `Modal` | `isOpen`, `children` | A generic modal component |
+| `Popover` | `isOpen`, `children` | A generic context-menu component |
+| `ListItem` | `children` | A generic list item |
+| `PagerItem` | `active`, `disabled` | A list item for Pager components *(make this nested instead?)*. Used in the ResultPager example type. |
+| `PickerItem` | `active`, `disabled` | A list item for Picker components *(make this nested instead?)* |
+| `Tag` | `value`, `removeTag`, `tagStyle`, `onClick` | Used in TagsInput |
+| `TextHighlight` | `pattern`, `text`, `Wrap` | Renders the text given in the `text` prop, with the parts that match the `pattern` prop wrapped in the `Wrap` component |
+| `Table` | same as basic `table` | A generic table component |
+| `ExpandableTable` | `data`, `columns`, `recordKey`, `sortField`, `sortDir`, `columnSort` | Used in the TermsStatsTable and CheckableTermsStatsTable example types. |
+
+### Other
+
+| Key | Expected props | Notes |
+| --- | --- | --- |
+| `Fonts` | none | For holding `<link>` elements to fonts used in the theme |
+| `Style` | none | For rendering a `<style>` block with theme-specific styles |
+| `BarChart` | `height`, `borderColor`, `min`, `max` | Used in the DateHistogram and TermsStats example types |
+| `MissingTypeComponent` | `node` | Used as a fallback component in search interfaces when no other component is found for a node's contexture type |
+
 
 ## Using a custom theme
 
