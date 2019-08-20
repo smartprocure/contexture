@@ -13,7 +13,7 @@ import {
   componentForType,
   FilterAdder,
 } from '../../src/'
-import { Input, ClampedHTML, Pager, ExampleTypes } from '../DemoControls'
+import { TextInput, ClampedHTML, Pager, ExampleTypes } from '../DemoControls'
 let { ResultCount, ResultTable, TypeMap } = ExampleTypes
 
 import Contexture, { updateClient } from './contexture'
@@ -103,7 +103,7 @@ let Story = observer(() => {
   let { tree, schemas } = state
   return (
     <div style={{ background: '#f4f4f4' }}>
-      <Input value={state.url} onChange={e => updateEs(e.target.value)} />
+      <TextInput value={state.url} onChange={e => updateEs(e.target.value)} />
       {schemas && (
         <Awaiter promise={schemas}>
           {schemas =>

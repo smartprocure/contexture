@@ -2,7 +2,7 @@ import React from 'react'
 
 import ExampleTypeConstructor from '../../exampleTypes/'
 
-import Input from './Input'
+import TextInput from './TextInput'
 import Checkbox from './Checkbox'
 import Fonts from './Fonts'
 import Style from './Style'
@@ -23,7 +23,7 @@ let baseTheme = {
   Checkbox,
   Fonts,
   TextHighlight,
-  Input,
+  TextInput,
   ListItem,
   Pager,
   PickerItem: ListItem,
@@ -42,7 +42,7 @@ export {
   ExampleTypes,
   Fonts,
   TextHighlight,
-  Input,
+  TextInput,
   ListItem,
   PagerItem,
   Style,

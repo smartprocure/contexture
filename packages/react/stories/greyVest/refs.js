@@ -3,7 +3,7 @@ import {
   Fonts,
   GVStyle,
   Button,
-  Input,
+  TextInput,
   Textarea,
   Select,
 } from './../../src/themes/greyVest'
@@ -16,7 +16,7 @@ export default () => (
   <div style={{ display: 'flex', flexDirection: 'column' }} className="gv-body">
     <Fonts />
     <GVStyle />
-    <Input ref={e => (input = e)} />
+    <TextInput ref={e => (input = e)} />
     <Textarea ref={e => (textArea = e)} />
     <Select ref={e => (select = e)} />
     <Button onClick={() => input.focus()}>Focus Input</Button>

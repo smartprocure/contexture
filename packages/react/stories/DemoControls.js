@@ -18,7 +18,7 @@ export let Button = x => (
   />
 )
 
-export let Input = observer(props => {
+export let TextInput = observer(props => {
   let focusing = useLens(false)
   return (
     <input
@@ -107,7 +107,7 @@ export let ClampedHTML = x => (
 
 let theme = {
   Button,
-  Input,
+  TextInput,
   Highlight,
   ListItem,
   PagerItem,

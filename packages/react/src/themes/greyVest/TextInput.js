@@ -1,7 +1,7 @@
 import React from 'react'
 import { Observer } from 'mobx-react'
 
-let Input = ({ className = '', style, type = 'text', ...x }, ref) => (
+let TextInput = ({ className = '', style, type = 'text', ...x }, ref) => (
   <Observer>
     {() => (
       <input
@@ -16,4 +16,4 @@ let Input = ({ className = '', style, type = 'text', ...x }, ref) => (
     )}
   </Observer>
 )
-export default React.forwardRef(Input)
+export default React.forwardRef(TextInput)

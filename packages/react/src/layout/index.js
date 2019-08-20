@@ -18,6 +18,7 @@ import NestedPicker from './NestedPicker'
 import Popover from './Popover'
 import Portal from './Portal'
 import RadioList from './RadioList'
+import Select from './Select'
 import SpacedList from './SpacedList'
 import StepsAccordion, { AccordionStep } from './StepsAccordion'
 import TableHeaderCell from './TableHeaderCell'
@@ -49,7 +50,7 @@ let theme = {
   PickerItem: 'div',
   Popover,
   RadioList,
-  Select: 'select',
+  Select,
   Table: 'table',
   TableCell: 'td',
   TableHeaderCell,

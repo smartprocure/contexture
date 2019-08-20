@@ -106,7 +106,7 @@ let NestedPicker = ({ options, onChange, theme }) => {
   let filter = useLens('')
   return (
     <div>
-      <theme.Input
+      <theme.TextInput
         {...F.domLens.value(filter)}
         placeholder="Enter filter keyword..."
       />

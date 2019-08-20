@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react'
 import decorator from './decorator'
 import {
   Button,
-  Input,
+  TextInput,
   StepsAccordion,
   AccordionStep,
 } from '../../src/themes/greyVest'
@@ -38,7 +38,7 @@ storiesOf('Components (Grey Vest)|StepsAccordion', module)
           </Button>
         </AccordionStep>
         <AccordionStep title={makeStepTitle('Type something')}>
-          <Input type="text" />
+          <TextInput type="text" />
         </AccordionStep>
       </StepsAccordion>
     )

@@ -22,7 +22,7 @@ import FilterListItem from './FilterListItem'
 import Fonts from './Fonts'
 import Icon from './Icon'
 export { default as IconButton } from './IconButton'
-import Input from './Input'
+import TextInput from './TextInput'
 export { default as LinkButton } from './LinkButton'
 import ListItem from './ListItem'
 import Modal from './Modal'
@@ -46,7 +46,7 @@ let baseTheme = {
   CheckButton,
   Fonts,
   Icon,
-  Input,
+  TextInput,
   ListItem,
   PickerItem: FilterListItem,
   Modal,
@@ -68,7 +68,7 @@ export {
   CheckButton,
   DateInput,
   Fonts,
-  Input,
+  TextInput,
   ListItem,
   Modal,
   PagerItem,
