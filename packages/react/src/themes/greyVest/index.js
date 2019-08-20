@@ -24,8 +24,7 @@ import Icon from './Icon'
 export { default as IconButton } from './IconButton'
 import Input from './Input'
 export { default as LinkButton } from './LinkButton'
-import ListGroupItem from './ListGroupItem'
-export { default as ListItem } from './ListItem'
+import ListItem from './ListItem'
 import Modal from './Modal'
 import PagerItem from './PagerItem'
 import RadioList from './RadioList'
@@ -33,7 +32,7 @@ export { default as Select } from './Select'
 import Style from './style'
 import Table from './Table'
 export { default as TabList } from './TabList'
-import { Tab, TabContent, TabLabel, Tabs } from './Tabs'
+export { Tab, TabContent, TabLabel, Tabs } from './Tabs'
 export { default as Textarea } from './Textarea'
 import TextHighlight from './TextHighlight'
 export { default as ToggleFiltersButton } from './ToggleFiltersButton'
@@ -48,16 +47,12 @@ let baseTheme = {
   Fonts,
   Icon,
   Input,
-  ListItem: ListGroupItem,
+  ListItem,
   PickerItem: FilterListItem,
   Modal,
   PagerItem,
   Style,
-  Tab,
-  TabContent,
-  TabLabel,
   Table,
-  Tabs,
   Tag,
   TextHighlight,
 }
@@ -74,34 +69,19 @@ export {
   DateInput,
   Fonts,
   Input,
-  ListGroupItem,
+  ListItem,
   Modal,
   PagerItem,
   RadioList,
   SearchTree,
   Style as GVStyle,
-  Tab,
-  TabContent,
-  TabLabel,
   Table,
-  Tabs,
   TextHighlight,
 }
 
 // this should all be removed after ExampleTypes refactored to use the theme API
 
-export let ExampleTypes = ExampleTypeConstructor({
-  Button,
-  Input,
-  Checkbox,
-  RadioList,
-  Table,
-  ListGroupItem,
-  Icon,
-  DateInput,
-  ButtonGroup,
-  PagerItem,
-})
+export let ExampleTypes = ExampleTypeConstructor(baseTheme)
 export let Pager = props => (
   <ExampleTypes.ResultPager
     Item={PagerItem}

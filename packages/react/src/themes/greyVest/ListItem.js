@@ -22,4 +22,16 @@ export let ListItem = ({ style = {}, ...props }) => {
   )
 }
 
-export default observer(ListItem)
+let ListGroupItem = props => (
+  <ListItem
+    style={{
+      display: 'grid',
+      gridGap: '5px',
+      gridTemplateColumns: '20px 1fr',
+      alignItems: 'center',
+    }}
+    {...props}
+  />
+)
+
+export default observer(ListGroupItem)
