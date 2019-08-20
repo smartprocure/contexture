@@ -6,8 +6,9 @@ import { fromPromise } from 'mobx-utils'
 import { observer } from 'mobx-react'
 
 import { Awaiter, Flex, QueryBuilder, componentForType } from '../../src/'
-import { TextInput, ExampleTypes } from '../DemoControls'
-let { ResultCount, ResultTable, TypeMap } = ExampleTypes
+import { TextInput } from '../DemoControls'
+import ExampleTypes, { TypeMap } from '../../src/exampleTypes'
+let { ResultCount, ResultTable } = ExampleTypes
 
 import Contexture, { updateClient } from './contexture'
 

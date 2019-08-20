@@ -14,7 +14,6 @@ import {
 import theme, {
   SearchTree,
   ToggleFiltersHeader,
-  ExampleTypes,
   Tab,
   TabContent,
   TabLabel,
@@ -22,10 +21,11 @@ import theme, {
   IconButton,
   PagedResultTable,
 } from '../../../src/themes/greyVest'
-import { Column } from './../../../src/layout/ExpandableTable'
+import ExampleTypes from '../../../src/exampleTypes'
+import { Column } from '../../../src/layout/ExpandableTable'
 import { ThemeConsumer } from '../../../src/utils/theme'
 
-let { TypeMap, TermsStatsTable, TagsQuery } = ExampleTypes
+let { TypeMap, TermsStatsTable, TagsQuery, ResultCount } = ExampleTypes
 
 let tree = Contexture({
   key: 'root',
@@ -292,7 +292,7 @@ let GreyVestStory = theme => (
           <Tabs defaultValue="results">
             <TabLabel value="results">
               Movies (
-              <theme.ResultCount tree={tree} path={['root', 'results']} />)
+              <ResultCount tree={tree} path={['root', 'results']} />)
             </TabLabel>
             <TabContent value="results">
               <PagedResultTable

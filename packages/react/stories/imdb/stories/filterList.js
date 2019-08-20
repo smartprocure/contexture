@@ -13,14 +13,15 @@ import {
   componentForType,
   FilterAdder,
 } from '../../../src'
-import { DarkBox, Pager, ExampleTypes } from '../../DemoControls'
+import { DarkBox } from '../../DemoControls'
+import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
 let {
   Query,
   ResultCount,
   ResultTable,
+  ResultPager,
   DateHistogram,
   CheckableTermsStatsTable,
-  TypeMap,
 } = ExampleTypes
 
 import { Column } from './../../../src/layout/ExpandableTable'
@@ -195,7 +196,7 @@ const Story = inject(() => {
                             marginBottom: 10,
                           }}
                         >
-                          <Pager
+                          <ResultPager
                             tree={termDetailsTree(x)}
                             path={['detailRoot', 'results']}
                           />
@@ -231,7 +232,7 @@ const Story = inject(() => {
                   />
                 </div>
                 <Flex style={{ justifyContent: 'space-around' }}>
-                  <Pager tree={tree} path={['searchRoot', 'results']} />
+                  <ResultPager tree={tree} path={['searchRoot', 'results']} />
                 </Flex>
               </div>
             </Flex>

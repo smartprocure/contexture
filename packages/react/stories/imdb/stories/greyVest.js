@@ -13,7 +13,6 @@ import {
 } from '../../../src'
 import {
   Button,
-  ExampleTypes,
   IconButton,
   Tabs,
   Tab,
@@ -24,6 +23,7 @@ import {
   SearchTree,
   ToggleFiltersHeader,
 } from '../../../src/themes/greyVest'
+import ExampleTypes from '../../../src/exampleTypes'
 import { Column } from './../../../src/layout/ExpandableTable'
 let {
   ResultCount,

@@ -1,7 +1,3 @@
-import React from 'react'
-
-import ExampleTypeConstructor from '../../exampleTypes/'
-
 import TextInput from './TextInput'
 import Checkbox from './Checkbox'
 import Fonts from './Fonts'
@@ -14,18 +10,14 @@ import TextHighlight from './TextHighlight'
 import Tag from './Tag'
 import PagerItem from './PagerItem'
 
-export let Pager = props => (
-  <ExampleTypes.ResultPager Item={PagerItem} {...props} />
-)
-
-let baseTheme = {
+export default {
   Button,
   Checkbox,
   Fonts,
   TextHighlight,
   TextInput,
   ListItem,
-  Pager,
+  PagerItem,
   PickerItem: ListItem,
   RadioList: ButtonRadio,
   Style,
@@ -33,13 +25,10 @@ let baseTheme = {
   Tag,
 }
 
-let { TypeMap, ...ExampleTypes } = ExampleTypeConstructor(baseTheme)
-
 export {
   Button,
   ButtonRadio,
   Checkbox,
-  ExampleTypes,
   Fonts,
   TextHighlight,
   TextInput,
@@ -48,10 +37,4 @@ export {
   Style,
   Table,
   Tag,
-  TypeMap,
-}
-
-export default {
-  ...baseTheme,
-  ...ExampleTypes,
 }

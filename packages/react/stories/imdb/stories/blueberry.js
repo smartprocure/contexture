@@ -18,13 +18,11 @@ import theme, {
   Fonts,
   Style,
   Button,
-  Pager,
-  ExampleTypes,
   Checkbox,
   ButtonRadio,
-  TypeMap,
 } from '../../../src/themes/blueberry'
-let { ResultCount, ResultTable, TagsQuery, DateRangePicker } = ExampleTypes
+import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
+let { ResultCount, ResultTable, ResultPager, TagsQuery, DateRangePicker } = ExampleTypes
 
 let tree = Contexture({
   key: 'root',
@@ -221,7 +219,7 @@ export default () => (
                 <Flex
                   style={{ justifyContent: 'space-around', padding: '10px' }}
                 >
-                  <Pager tree={tree} path={['root', 'results']} />
+                  <ResultPager tree={tree} path={['root', 'results']} />
                 </Flex>
               </div>
             </div>

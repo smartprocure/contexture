@@ -2,7 +2,7 @@ import _ from 'lodash/fp'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import TestTree from '../testTree'
-import { ExampleTypes } from '../DemoControls'
+import ExampleTypes from '../../src/exampleTypes'
 let { ResultTable } = ExampleTypes
 
 storiesOf('Search Components (Unthemed)|Example Types/ResultTable', module)

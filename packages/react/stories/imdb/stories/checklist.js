@@ -15,9 +15,9 @@ import {
   componentForType,
   FilterAdder,
 } from '../../../src'
-import * as Theme from '../../../src/themes/greyVest'
-let { Button, Pager, ExampleTypes, ButtonRadio } = Theme
-let { ResultCount, CheckableResultTable, TypeMap, TagsQuery } = ExampleTypes
+import { Button, ButtonRadio } from '../../../src/themes/greyVest'
+import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
+let { ResultCount, CheckableResultTable, ResultPager, TagsQuery } = ExampleTypes
 
 let tree = Contexture({
   key: 'root',
@@ -172,7 +172,7 @@ export default () => (
               getValue="title"
             />
             <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>
-              <Pager tree={tree} path={['root', 'results']} />
+              <ResultPager tree={tree} path={['root', 'results']} />
             </Flex>
           </div>
         </div>

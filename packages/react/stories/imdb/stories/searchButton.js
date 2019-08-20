@@ -11,14 +11,14 @@ import {
   componentForType,
   FilterAdder,
 } from '../../../src'
-import { Button, Pager, ExampleTypes } from '../../DemoControls'
+import { Button } from '../../DemoControls'
+import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
 let {
   Query,
   ResultCount,
   ResultTable,
   DateHistogram,
   TermsStats,
-  TypeMap,
 } = ExampleTypes
 
 let formatYear = x => new Date(x).getUTCFullYear()

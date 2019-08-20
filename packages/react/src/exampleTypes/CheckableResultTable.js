@@ -27,6 +27,7 @@ let Label = _.flow(
   )
   return <Checkbox checked={allChecked} onChange={checkAll} />
 })
+Label.displayName = 'Label'
 
 // Extends ResultTable with a checkbox column
 // Writes to a lens called `selected`, using getValue to map the selected record to a value.

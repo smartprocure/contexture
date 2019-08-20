@@ -13,8 +13,9 @@ import {
   componentForType,
   FilterAdder,
 } from '../../src/'
-import { TextInput, ClampedHTML, Pager, ExampleTypes } from '../DemoControls'
-let { ResultCount, ResultTable, TypeMap } = ExampleTypes
+import { TextInput, ClampedHTML, } from '../DemoControls'
+import ExampleTypes, { TypeMap } from '../../src/exampleTypes'
+let { ResultCount, ResultTable, ResultPager } = ExampleTypes
 
 import Contexture, { updateClient } from './contexture'
 
@@ -160,6 +161,7 @@ let Story = observer(() => {
                       <FilterList
                         tree={tree}
                         path={['root', 'criteria']}
+                        mapNodeToProps={componentForType(TypeMap)}
                         fields={schemas[tree.tree.schema].fields}
                       />
                       <FilterAdder
@@ -179,7 +181,7 @@ let Story = observer(() => {
                         />
                       </div>
                       <Flex style={{ justifyContent: 'space-around' }}>
-                        <Pager tree={tree} path={['root', 'results']} />
+                        <ResultPager tree={tree} path={['root', 'results']} />
                       </Flex>
                     </div>
                   </Flex>

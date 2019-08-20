@@ -12,7 +12,10 @@ import {
   Awaiter,
   componentForType,
 } from '../../../src'
-import theme, { TypeMap } from '../../../src/themes/blueberry'
+import theme from '../../../src/themes/blueberry'
+import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
+let { ResultCount, ResultTable, ResultPager, TagsQuery, DateRangePicker } = ExampleTypes
+
 import { ThemeProvider, withTheme } from '../../../src/utils/theme'
 import FilterAdder from '../../../src/FilterAdder'
 
@@ -125,7 +128,7 @@ let BlueberryStory = withTheme(({ theme }) => (
             <SpacedList>
               <div>
                 <Label>Released</Label>
-                <theme.DateRangePicker
+                <DateRangePicker
                   tree={tree}
                   path={['root', 'status']}
                   ranges={[
@@ -138,9 +141,9 @@ let BlueberryStory = withTheme(({ theme }) => (
               <div>
                 <Label>Title</Label>
                 Contains
-                <theme.TagsQuery tree={tree} path={['root', 'titleContains']} />
+                <TagsQuery tree={tree} path={['root', 'titleContains']} />
                 Does Not Contain
-                <theme.TagsQuery
+                <TagsQuery
                   tree={tree}
                   path={['root', 'titleDoesNotContain']}
                 />
@@ -161,7 +164,7 @@ let BlueberryStory = withTheme(({ theme }) => (
           </div>
           <div>
             <Grid columns="1fr 25px 150px" style={{ alignItems: 'center' }}>
-              <theme.TagsQuery tree={tree} path={['root', 'bar']} />
+              <TagsQuery tree={tree} path={['root', 'bar']} />
               <theme.Checkbox
                 checked={state.autoUpdate}
                 onChange={val => {
@@ -183,7 +186,7 @@ let BlueberryStory = withTheme(({ theme }) => (
             >
               <h1>
                 Results (
-                <theme.ResultCount tree={tree} path={['root', 'results']} />)
+                <ResultCount tree={tree} path={['root', 'results']} />)
               </h1>
               <Flex>
                 <theme.RadioList
@@ -200,7 +203,7 @@ let BlueberryStory = withTheme(({ theme }) => (
               </Flex>
             </Flex>
             <div className="bb-box">
-              <theme.ResultTable
+              <ResultTable
                 tree={tree}
                 path={['root', 'results']}
                 fields={schemas[tree.tree.schema].fields}
@@ -208,7 +211,7 @@ let BlueberryStory = withTheme(({ theme }) => (
                 mapNodeToProps={componentForType(TypeMap)}
               />
               <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>
-                <theme.Pager tree={tree} path={['root', 'results']} />
+                <ResultPager tree={tree} path={['root', 'results']} />
               </Flex>
             </div>
           </div>

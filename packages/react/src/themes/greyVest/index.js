@@ -1,7 +1,5 @@
-import React from 'react'
 import { defaultProps } from 'recompose'
 import { Flex, Tag } from '../../'
-import ExampleTypeConstructor from '../../exampleTypes/'
 export { AccordionStep, StepsAccordion, TagsInput } from '../../layout'
 export { FilterList } from '../../'
 export { default as QueryBuilder } from '../../queryBuilder'
@@ -26,6 +24,7 @@ import TextInput from './TextInput'
 export { default as LinkButton } from './LinkButton'
 import ListItem from './ListItem'
 import Modal from './Modal'
+export { default as PagedResultTable } from './PagedResultTable'
 import PagerItem from './PagerItem'
 import RadioList from './RadioList'
 export { default as Select } from './Select'
@@ -39,7 +38,7 @@ export { default as ToggleFiltersButton } from './ToggleFiltersButton'
 export { default as ToggleFiltersHeader } from './ToggleFiltersHeader'
 export { default as TreePauseButton } from './TreePauseButton'
 
-let baseTheme = {
+export default {
   AdderPicker,
   Button,
   Checkbox,
@@ -78,25 +77,3 @@ export {
   Table,
   TextHighlight,
 }
-
-// this should all be removed after ExampleTypes refactored to use the theme API
-
-export let ExampleTypes = ExampleTypeConstructor(baseTheme)
-export let Pager = props => (
-  <ExampleTypes.ResultPager
-    Item={PagerItem}
-    {...props}
-    className="gv-pager gv-box"
-  />
-)
-export let PagedResultTable = ({ tree, node, path, ...props }) => (
-  <>
-    <ExampleTypes.ResultTable {...{ tree, node, path, ...props }} />
-    <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>
-      <Pager {...{ tree, node, path }} />
-    </Flex>
-  </>
-)
-PagedResultTable.displayName = 'PagedResultTable'
-
-export default { ...baseTheme, Pager, PagedResultTable, ...ExampleTypes }

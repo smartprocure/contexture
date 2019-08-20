@@ -8,7 +8,7 @@ import TestTree from '../testTree'
 
 let formatYear = x => new Date(x).getUTCFullYear()
 import { Flex, SpacedList } from '../../src/layout'
-import { ExampleTypes } from '../DemoControls'
+import ExampleTypes from '../../src/exampleTypes'
 let {
   Facet,
   Number,

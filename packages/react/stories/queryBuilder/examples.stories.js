@@ -3,9 +3,8 @@ import { storiesOf } from '@storybook/react'
 import { exampleTypes, mockService } from 'contexture-client'
 import ContextureMobx from '../../src/utils/contexture-mobx'
 import QueryBuilder from '../../src/queryBuilder/'
-import { ExampleTypes } from '../DemoControls'
+import { TypeMap } from '../../src/exampleTypes'
 import { componentForType } from '../../src'
-let { TypeMap } = ExampleTypes
 
 let Client = ContextureMobx({
   debug: true,

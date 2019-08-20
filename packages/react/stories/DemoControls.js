@@ -2,8 +2,6 @@ import F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
 import { useLens } from '../src/utils/react'
-import { defaultProps } from 'recompose'
-import ExampleTypeConstructor from '../src/exampleTypes/'
 import { TextHighlight } from '../src'
 
 export let Button = x => (
@@ -105,13 +103,10 @@ export let ClampedHTML = x => (
   <div style={textTruncate} dangerouslySetInnerHTML={{ __html: x }} />
 )
 
-let theme = {
+export let theme = {
   Button,
   TextInput,
   Highlight,
   ListItem,
   PagerItem,
 }
-
-export let ExampleTypes = ExampleTypeConstructor(theme)
-export let Pager = defaultProps({ Item: PagerItem })(ExampleTypes.ResultPager)

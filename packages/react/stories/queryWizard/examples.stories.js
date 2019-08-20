@@ -16,9 +16,8 @@ import DefaultFilterButtonList from '../../src/FilterButtonList'
 import { mergeOverAll } from 'futil-js'
 import { componentForType, schemaFieldProps } from '../../src/utils/schema'
 import GVDecorator from '../greyVest/decorator'
-import { ExampleTypes } from '../DemoControls'
+import { TypeMap } from '../../src/exampleTypes'
 import { tree, fields, types, nodeOverrides } from './config'
-let { TypeMap } = ExampleTypes
 
 let mapNodeToDescription = types => (node, fields) => ({
   description: _.join(' ', [

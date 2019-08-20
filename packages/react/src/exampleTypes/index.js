@@ -17,80 +17,40 @@ import TermsStats from './TermsStats'
 import TermsStatsTable from './TermsStatsTable'
 import CheckableTermsStatsTable from './CheckableTermsStatsTable'
 import Text from './Text'
-import { defaultProps } from 'recompose'
-import ModalDefault from '../layout/Modal'
-import DefaultSelect from '../layout/Select'
-import WrappedDateInput from '../layout/WrappedDateInput'
 
-export default ({
-  Input = 'input',
-  Button = 'button',
-  TextInput = Input,
-  NumberInput = defaultProps({ type: 'number' })(Input),
-  DateInput = WrappedDateInput,
-  Checkbox = defaultProps({ type: 'checkbox' })('input'),
-  RadioList,
-  TagsInput,
-  Table = 'table',
-  Modal = ModalDefault,
-  FieldPicker,
-  ListGroupItem = 'div',
-  Icon,
-  Select = DefaultSelect,
-  ButtonGroup,
-} = {}) => {
-  let Components = {
-    Facet: defaultProps({
-      TextInput,
-      Button,
-      Checkbox,
-      RadioList,
-      ButtonGroup,
-    })(Facet),
-    Number: defaultProps({ NumberInput, Button })(Number),
-    Date: defaultProps({ DateInput, RadioList, Select })(Date),
+export let TypeMap = {
+  facet: Facet,
+  query: Query,
+  number: Number,
+  date: Date,
+  tagsQuery: TagsQuery,
+  tagsText: TagsText,
+  geo: Geo,
+  text: Text,
+  mongoId: Text,
+  exists: Exists,
+  bool: Bool,
+}
+
+export default {
+    Facet,
+    Number,
+    Date,
     DateRangePicker,
-    Query: defaultProps({ TextInput })(Query),
-    TagsQuery: defaultProps({ TagsInput, Checkbox, RadioList, Button })(
-      TagsQuery
-    ),
-    Exists: defaultProps({ RadioList })(Exists),
-    Bool: defaultProps({ RadioList })(Bool),
-    ResultTable: defaultProps({
-      Table,
-      Modal,
-      FieldPicker,
-      ListGroupItem,
-      Icon,
-    })(ResultTable),
+    Query,
+    TagsQuery,
+    Exists,
+    Bool,
+    ResultTable,
     ResultCount,
-    ResultPager: defaultProps({ Icon })(ResultPager),
+    ResultPager,
     DateHistogram,
     TermsStats,
-    TermsStatsTable: defaultProps({ Button })(TermsStatsTable),
-    CheckableTermsStatsTable: defaultProps({ Button })(
-      CheckableTermsStatsTable
-    ),
-    Geo: defaultProps({ NumberInput })(Geo),
-    Text: defaultProps({ Input })(Text),
-    TagsText: defaultProps({ TagsInput, Select })(TagsText),
-  }
-  Components.CheckableResultTable = defaultProps({
-    ResultTable: Components.ResultTable,
-    Checkbox,
-  })(CheckableResultTable)
-  let TypeMap = {
-    facet: Components.Facet,
-    query: Components.Query,
-    number: Components.Number,
-    date: Components.Date,
-    tagsQuery: Components.TagsQuery,
-    tagsText: Components.TagsText,
-    geo: Components.Geo,
-    text: Components.Text,
-    mongoId: Components.Text,
-    exists: Components.Exists,
-    bool: Components.Bool,
-  }
-  return { ...Components, TypeMap }
+    TermsStatsTable,
+    CheckableTermsStatsTable,
+    Geo,
+    Text,
+    TagsText,
+    CheckableResultTable,
+    TypeMap,
 }
