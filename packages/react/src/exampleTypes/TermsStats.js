@@ -13,4 +13,7 @@ let TermsStats = ({ node, theme: { BarChart }, ...props }) => (
   />
 )
 
-export default _.flow(contexturify, withTheme)(TermsStats)
+export default _.flow(
+  contexturify,
+  withTheme
+)(TermsStats)

@@ -43,33 +43,34 @@ let SelectAll = _.flow(
 })
 SelectAll.displayName = 'SelectAll'
 
-let FacetOptionsFilter = _.flow(observer, withTheme)(
-  ({ tree, node, theme: { TextInput, Button } }) => {
-    let [val, setVal] = useState(node.optionsFilter)
-    let buttonEnabled = val !== node.optionsFilter
-    let submit = () =>
-      buttonEnabled && tree.mutate(node.path, { optionsFilter: val })
-    return (
-      <Flex>
-        <TextInput
-          value={val}
-          onChange={e => {
-            setVal(e.target.value)
-          }}
-          onKeyPress={e => e.key === 'Enter' && submit()}
-          onBlur={submit}
-          placeholder="Find..."
-        />
-        <Button
-          style={{ display: buttonEnabled ? 'block' : 'none' }}
-          onClick={submit}
-        >
-          Submit
-        </Button>
-      </Flex>
-    )
-  }
-)
+let FacetOptionsFilter = _.flow(
+  observer,
+  withTheme
+)(({ tree, node, theme: { TextInput, Button } }) => {
+  let [val, setVal] = useState(node.optionsFilter)
+  let buttonEnabled = val !== node.optionsFilter
+  let submit = () =>
+    buttonEnabled && tree.mutate(node.path, { optionsFilter: val })
+  return (
+    <Flex>
+      <TextInput
+        value={val}
+        onChange={e => {
+          setVal(e.target.value)
+        }}
+        onKeyPress={e => e.key === 'Enter' && submit()}
+        onBlur={submit}
+        placeholder="Find..."
+      />
+      <Button
+        style={{ display: buttonEnabled ? 'block' : 'none' }}
+        onClick={submit}
+      >
+        Submit
+      </Button>
+    </Flex>
+  )
+})
 FacetOptionsFilter.displayName = 'FacetOptionsFilter'
 
 let Facet = ({

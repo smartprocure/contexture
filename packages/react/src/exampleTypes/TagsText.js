@@ -24,44 +24,37 @@ let Text = _.flow(
   withTreeLens,
   contexturify,
   withTheme
-)(
-  ({
-    tree,
-    node,
-    theme: { TagsInput, Select },
-    placeholder,
-  }) => {
-    let tagStyle = bgJoin(tagToGroupJoin(node.join))
-    let TagPopover = () => (
-      <div>
-        <TagsJoinPicker node={node} tree={tree} Select={Select} />
-      </div>
-    )
-    return (
-      <div className="contexture-text">
-        <Select
-          value={node.operator}
-          onChange={e => tree.mutate(node.path, { operator: e.target.value })}
-          options={operatorOptions}
-        />
-        <TagsInput
-          splitCommas
-          tags={node.values}
-          addTag={tag => {
-            tree.mutate(node.path, { values: [...node.values, tag] })
-          }}
-          removeTag={tag => {
-            tree.mutate(node.path, {
-              values: _.without([tag], node.values),
-            })
-          }}
-          tagStyle={tagStyle}
-          submit={tree.triggerUpdate}
-          placeholder={placeholder}
-          PopoverContents={TagPopover}
-        />
-      </div>
-    )
-  }
-)
+)(({ tree, node, theme: { TagsInput, Select }, placeholder }) => {
+  let tagStyle = bgJoin(tagToGroupJoin(node.join))
+  let TagPopover = () => (
+    <div>
+      <TagsJoinPicker node={node} tree={tree} Select={Select} />
+    </div>
+  )
+  return (
+    <div className="contexture-text">
+      <Select
+        value={node.operator}
+        onChange={e => tree.mutate(node.path, { operator: e.target.value })}
+        options={operatorOptions}
+      />
+      <TagsInput
+        splitCommas
+        tags={node.values}
+        addTag={tag => {
+          tree.mutate(node.path, { values: [...node.values, tag] })
+        }}
+        removeTag={tag => {
+          tree.mutate(node.path, {
+            values: _.without([tag], node.values),
+          })
+        }}
+        tagStyle={tagStyle}
+        submit={tree.triggerUpdate}
+        placeholder={placeholder}
+        PopoverContents={TagPopover}
+      />
+    </div>
+  )
+})
 export default Text

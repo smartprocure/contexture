@@ -44,7 +44,10 @@ let popoverStyle = {
   userSelect: 'none',
 }
 
-let HighlightedColumnHeader = _.flow(observer, withTheme)(
+let HighlightedColumnHeader = _.flow(
+  observer,
+  withTheme
+)(
   ({
     node,
     theme: { TableHeaderCell },
@@ -111,7 +114,10 @@ let HighlightedColumn = _.flow(
 )
 HighlightedColumn.displayName = 'HighlightedColumn'
 
-let Header = _.flow(observer, withTheme)(
+let Header = _.flow(
+  observer,
+  withTheme
+)(
   ({
     theme: { ListItem, Icon, Popover, Modal, Picker, TableHeaderCell },
     field: fieldSchema,
@@ -270,7 +276,10 @@ let Header = _.flow(observer, withTheme)(
 Header.displayName = 'Header'
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
-let TableBody = _.flow(observer, withTheme)(
+let TableBody = _.flow(
+  observer,
+  withTheme
+)(
   ({
     node,
     visibleFields,
@@ -322,7 +331,10 @@ let Tr = props => (
 )
 */
 
-let ResultTable = _.flow(contexturify, withTheme)(
+let ResultTable = _.flow(
+  contexturify,
+  withTheme
+)(
   ({
     fields,
     infer,

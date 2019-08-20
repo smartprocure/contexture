@@ -11,18 +11,27 @@ let toolBarStyle = { justifyContent: 'space-between', alignItems: 'center' }
 let SimpleLabel = ({ text }) => (
   <label style={{ paddingRight: '5px' }}>{text}</label>
 )
-let SimpleFilter = _.flow(observer, withTheme)(
-  ({ theme: { TextInput }, ...props }) => (
-    <Flex style={{ ...toolBarStyle, width: '75%' }}>
-      <SimpleLabel text="Filter:" />
-      <TextInput {...props} />
-    </Flex>
-  )
-)
+let SimpleFilter = _.flow(
+  observer,
+  withTheme
+)(({ theme: { TextInput }, ...props }) => (
+  <Flex style={{ ...toolBarStyle, width: '75%' }}>
+    <SimpleLabel text="Filter:" />
+    <TextInput {...props} />
+  </Flex>
+))
 SimpleFilter.displayName = 'SimpleFilter'
 
-let SelectSize = _.flow(observer, withTheme)(
-  ({ node, theme: { Select }, tree, options = [10, 25, 50, 100, 500, 1000] }) => (
+let SelectSize = _.flow(
+  observer,
+  withTheme
+)(
+  ({
+    node,
+    theme: { Select },
+    tree,
+    options = [10, 25, 50, 100, 500, 1000],
+  }) => (
     <Flex style={toolBarStyle}>
       <SimpleLabel text="Size:" />
       <Select
@@ -37,7 +46,10 @@ let SelectSize = _.flow(observer, withTheme)(
     </Flex>
   )
 )
-let TermsStatsTable = _.flow(contexturify, withTheme)(
+let TermsStatsTable = _.flow(
+  contexturify,
+  withTheme
+)(
   ({
     node,
     criteria,
@@ -54,9 +66,7 @@ let TermsStatsTable = _.flow(contexturify, withTheme)(
   }) => (
     <div>
       <Flex style={{ ...toolBarStyle, margin: 40, marginBottom: 0 }}>
-        <Filter
-          {...F.domLens.value(tree.lens(node.path, 'filter'))}
-        />
+        <Filter {...F.domLens.value(tree.lens(node.path, 'filter'))} />
         <SelectSize node={node} tree={tree} options={sizeOptions} />
       </Flex>
       <ExpandableTable

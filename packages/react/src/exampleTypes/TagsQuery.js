@@ -11,13 +11,7 @@ let tagValueField = 'word'
 let TagsQuery = ({
   tree,
   node,
-  theme: {
-    TagsInput,
-    Checkbox,
-    RadioList,
-    Select,
-    Button,
-  },
+  theme: { TagsInput, Checkbox, RadioList, Select, Button },
   placeholder,
   ...props
 }) => {
@@ -127,4 +121,7 @@ let TagsQuery = ({
   )
 }
 
-export default _.flow(contexturify, withTheme)(TagsQuery)
+export default _.flow(
+  contexturify,
+  withTheme
+)(TagsQuery)

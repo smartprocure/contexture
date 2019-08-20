@@ -24,4 +24,7 @@ let TagsJoinPicker = ({ node, tree, theme: { Select } }) => (
   />
 )
 
-export default _.flow(observer, withTheme)(TagsJoinPicker)
+export default _.flow(
+  observer,
+  withTheme
+)(TagsJoinPicker)
