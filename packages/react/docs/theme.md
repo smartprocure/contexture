@@ -57,40 +57,43 @@ export default withTheme(IconButton)
 
 ## Default theme components
 
-The default theme in contexture-react is GreyVest. The full list of **theme components** included in GreyVest is shown below.
+The default theme in contexture-react is GreyVest. The full list of **theme components** included in GreyVest is shown in the table below.
 
 ### Inputs
 
-| Key | Expected props | Notes |
-| --- | --- | --- |
-| `Button` | `isActive`, `primary`, `onClick`, `children` | A generic button. Used in the Facet and Number example types. |
-| `Checkbox` | `checked`, `onChange` | A generic checkbox. Used in the CheckableResultTable and Facet example types. |
+| Key | Expected props | Notes | ExampleTypes usage |
+| --- | --- | --- | --- |
+| `Button` | `isActive`, `primary`, `onClick`, `children` | A generic button | Facet, Number, TagsQuery, TermsStatsTable |
+| `Checkbox` | `checked`, `onChange` | A generic checkbox | CheckableResultTable, CheckableTermsStatsTable, Facet, TagsQuery |
 | `CheckButton` | `checked`, `onClick`, `children` | A button with an `onClick` handler and an on/off state, containing a checkbox that displays this state *(this really should be extrapolated to some kind of generic BinaryStateButton)* |
-| `Link` | | Used in the ResultPager example type |
-| `Icon` | `icon`, `onClick` | A generic icon component. Used in the ResultPager example type. |
-| `RadioList` | `options`, `value`, `onChange` | A generic list of radio buttons. Used in the Bool, Exists, and Facet example types. |
-| `Select` | | Used in the Date, DateRangePicker, and Geo example types |
-| `TextInput` |  same as basic `input` | A generic text input component. Used in the Facet and Query example types. |
-| `DateInput` | | Used in the Date example type |
-| `NumberInput` | | Used in the Geo and Number example types |
-| `TagsInput` | | Used in the TagsQuery and TagsText example types |
-| `Picker` | `options`, `onChange` | Renders a list of selectable options |
+| `Link` | same as basic `a` |  | ResultPager |
+| `Icon` | `icon`, `onClick` | A generic icon component | ResultPager, ResultTable |
+| `RadioList` | `options`, `value`, `onChange` | A generic list of radio buttons | Bool, Date, Exists, Facet, TagsQuery |
+| `Select` | same as `select` | A generic dropdown select component | Date, DateRangePicker, Geo, TagsJoinPicker, TagsQuery, TagsText, TermsStatsTable |
+| `TextInput` |  same as basic `input` | A generic text input component | Facet, Query, TermsStatsTable, Text |
+| `DateInput` | | A generic date entry component | Date |
+| `NumberInput` | | An input of type `number` | Geo, Number |
+| `TagsInput` | | A text input field that turns input into `Tag`s | TagsQuery, TagsText |
+| `Tag` | `value`, `removeTag`, `tagStyle`, `onClick` | A tag component with a button to remove the tag. Used in TagsInput. |
+| `Picker` | `options`, `onChange` | Renders a list of selectable options | ResultTable |
 | `AdderPicker` | `options`, `onChange`, `label` | *this key is actually based on specific usage in the FilterAdder component, and should probably just be removed from the defaults in favor of a nested style* |
 
 ### Containers
 
-| Key | Expected props | Notes |
-| --- | --- | --- |
+| Key | Expected props | Notes | ExampleTypes usage |
+| --- | --- | --- | --- |
 | `Box` | `children` | A generic container element |
-| `Modal` | `isOpen`, `children` | A generic modal component |
-| `Popover` | `isOpen`, `children` | A generic context-menu component |
-| `ListItem` | `children` | A generic list item |
-| `PagerItem` | `active`, `disabled` | A list item for Pager components *(make this nested instead?)*. Used in the ResultPager example type. |
+| `Modal` | `isOpen`, `children` | A generic modal component | ResultTable |
+| `Popover` | `isOpen`, `children` | A generic context-menu component | ResultTable |
+| `ListItem` | `children` | A generic list item | ResultTable |
+| `PagerItem` | `active`, `disabled` | A list item for Pager components *(make this nested instead?)* | ResultPager |
 | `PickerItem` | `active`, `disabled` | A list item for Picker components *(make this nested instead?)* |
-| `Tag` | `value`, `removeTag`, `tagStyle`, `onClick` | Used in TagsInput |
 | `TextHighlight` | `pattern`, `text`, `Wrap` | Renders the text given in the `text` prop, with the parts that match the `pattern` prop wrapped in the `Wrap` component |
 | `Table` | same as basic `table` | A generic table component |
-| `ExpandableTable` | `data`, `columns`, `recordKey`, `sortField`, `sortDir`, `columnSort` | Used in the TermsStatsTable and CheckableTermsStatsTable example types. |
+| `ExpandableTable` | `data`, `columns`, `recordKey`, `sortField`, `sortDir`, `columnSort` | | TermsStatsTable, CheckableTermsStatsTable |
+| `TableCell` | same as `td` | A generic table cell | ResultTable |
+| `TableHeaderCell` | same as `th` | A generic table header | ResultTable |
+| `TableRow` | same as `tr` | A generic table row | ResultTable |
 
 ### Other
 
