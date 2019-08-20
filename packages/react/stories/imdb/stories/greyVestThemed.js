@@ -14,11 +14,15 @@ import {
 import theme, {
   SearchTree,
   ToggleFiltersHeader,
-  Box,
   ExampleTypes,
+  Tab,
+  TabContent,
+  TabLabel,
+  Tabs,
+  IconButton,
 } from '../../../src/themes/greyVest'
 import { Column } from './../../../src/layout/ExpandableTable'
-import { ThemeProvider, withTheme } from '../../../src/utils/theme'
+import { ThemeConsumer } from '../../../src/utils/theme'
 
 let { TypeMap, TermsStatsTable, PagedResultTable, TagsQuery } = ExampleTypes
 
@@ -224,7 +228,7 @@ let mapNodeToProps = mergeOverAll([
     },
 ])
 
-let GreyVestStory = withTheme(({ theme }) => (
+let GreyVestStory = theme => (
   <Awaiter promise={schemas}>
     {schemas => (
       <SearchLayout mode={state.mode}>
@@ -250,9 +254,9 @@ let GreyVestStory = withTheme(({ theme }) => (
             Search Movies
           </ToggleFiltersHeader>
           <div className="gv-search-bar">
-            <Box>
+            <theme.Box>
               <TagsQuery tree={tree} path={['root', 'bar']} autoFocus />
-            </Box>
+            </theme.Box>
             <div className="gv-button-group">
               <theme.Button
                 className="gv-search-button"
@@ -262,15 +266,15 @@ let GreyVestStory = withTheme(({ theme }) => (
                 Search
               </theme.Button>
               <div className="gv-search-toolbar">
-                <theme.IconButton
+                <IconButton
                   onClick={() => {
                     window.location.reload()
                   }}
                   title="New Search"
                 >
                   <i className="material-icons">fiber_new</i>
-                </theme.IconButton>
-                <theme.IconButton
+                </IconButton>
+                <IconButton
                   title="Auto Update"
                   primary={state.autoUpdate}
                   onClick={() => {
@@ -279,17 +283,17 @@ let GreyVestStory = withTheme(({ theme }) => (
                   }}
                 >
                   <i className="material-icons">autorenew</i>
-                </theme.IconButton>
+                </IconButton>
               </div>
             </div>
           </div>
           <h1>Search Results</h1>
-          <theme.Tabs defaultValue="results">
-            <theme.TabLabel value="results">
+          <Tabs defaultValue="results">
+            <TabLabel value="results">
               Movies (
               <theme.ResultCount tree={tree} path={['root', 'results']} />)
-            </theme.TabLabel>
-            <theme.TabContent value="results">
+            </TabLabel>
+            <TabContent value="results">
               <PagedResultTable
                 tree={tree}
                 path={['root', 'results']}
@@ -300,8 +304,8 @@ let GreyVestStory = withTheme(({ theme }) => (
                 criteria={['root', 'criteria']}
                 mapNodeToProps={componentForType(TypeMap)}
               />
-            </theme.TabContent>
-            <theme.Tab value="analytics" label="Analytics">
+            </TabContent>
+            <Tab value="analytics" label="Analytics">
               <TermsStatsTable
                 tree={tree}
                 path={['root', 'genreScores']}
@@ -330,16 +334,12 @@ let GreyVestStory = withTheme(({ theme }) => (
                   )}
                 </Column>
               </TermsStatsTable>
-            </theme.Tab>
-          </theme.Tabs>
+            </Tab>
+          </Tabs>
         </div>
       </SearchLayout>
     )}
   </Awaiter>
-))
-
-export default () => (
-  <ThemeProvider theme={theme}>
-    <GreyVestStory />
-  </ThemeProvider>
 )
+
+export default () => <ThemeConsumer>{GreyVestStory}</ThemeConsumer>
