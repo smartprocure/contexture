@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
 import { Flex, QueryBuilder, FilterAdder, FilterList } from '.'
-import LinkButton from './themes/greyVest/LinkButton'
 import TreePauseButton from './themes/greyVest/TreePauseButton'
 import ToggleFiltersButton from './themes/greyVest/ToggleFiltersButton'
 import { withTheme } from './utils/theme'
@@ -28,12 +27,13 @@ export let AddableFilterList = props => (
 )
 
 export let FiltersBox = withTheme(({ theme, ...props }) => (
-  <theme.Box>
+  <theme.Box className="filter-list">
     <AddableFilterList {...props} />
   </theme.Box>
 ))
+FiltersBox.displayName = 'FiltersBox'
 
-let BasicSearchFilters = ({ setMode, trees, children }) => (
+let BasicSearchFilters = withTheme(({ theme: { Link }, setMode, trees, children }) => (
   <div>
     <Flex style={{ alignItems: 'center' }}>
       <h1>Filters</h1>
@@ -41,34 +41,34 @@ let BasicSearchFilters = ({ setMode, trees, children }) => (
       <ToggleFiltersButton onClick={() => setMode('resultsOnly')} />
     </Flex>
     <LabelledList list={trees} Component={FiltersBox} />
-    <LinkButton onClick={() => setMode('builder')} style={{ marginTop: 15 }}>
+    <Link onClick={() => setMode('builder')} style={{ marginTop: 15 }}>
       Switch to Advanced Search Builder
-    </LinkButton>
+    </Link>
   </div>
-)
+))
+BasicSearchFilters.displayName = 'BasicSearchFilters'
 
-let BuilderSearchFilters = ({ setMode, trees }) => (
+let BuilderSearchFilters = withTheme(({ theme: { Link }, setMode, trees }) => (
   <div>
     <Flex style={{ alignItems: 'center' }}>
       <h1>Filters</h1>
-      <LinkButton onClick={() => setMode('basic')}>
+      <Link onClick={() => setMode('basic')}>
         Back to Regular Search
-      </LinkButton>
+      </Link>
     </Flex>
     <LabelledList list={trees} Component={QueryBuilder} />
   </div>
-)
+))
+BuilderSearchFilters.displayName = 'BuilderSearchFilters'
 
 let SearchFilters = ({ mode, setMode, children }) => {
   let trees = _.flow(
     React.Children.toArray,
     _.map('props')
   )(children)
-  if (mode === 'resultsOnly') return null
-  if (mode === 'basic')
-    return <BasicSearchFilters {...{ trees, setMode, children }} />
-  if (mode === 'builder')
-    return <BuilderSearchFilters {...{ trees, setMode }} />
+  return mode === 'basic' ? <BasicSearchFilters {...{ trees, setMode, children }} />
+    : mode === 'builder' ? <BuilderSearchFilters {...{ trees, setMode }} />
+    : null
 }
 
 SearchFilters.propTypes = {

@@ -23,11 +23,10 @@ import {
   SearchTree,
   ToggleFiltersHeader,
 } from '../../../src/themes/greyVest'
-import ExampleTypes from '../../../src/exampleTypes'
+import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
 import { Column } from './../../../src/layout/ExpandableTable'
 let {
   ResultCount,
-  TypeMap,
   TagsQuery,
   DateRangePicker,
   TermsStatsTable,

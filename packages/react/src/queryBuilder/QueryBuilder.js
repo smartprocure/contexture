@@ -2,7 +2,6 @@ import React from 'react'
 import F from 'futil-js'
 import _ from 'lodash/fp'
 import DDContext from './DragDrop/DDContext'
-import { Modal as DefaultModal, NestedPicker } from '../layout/'
 import Group from './Group'
 import styles from '../styles'
 import { contexturify } from '../utils/hoc'
@@ -15,11 +14,8 @@ let QueryBuilder = ({
   tree,
   node,
   fields,
-  Button = 'button',
-  Modal = DefaultModal,
-  Picker = NestedPicker,
+  theme: { Button },
   mapNodeToProps,
-  MissingTypeComponent,
 }) => {
   let adding = useLens(false)
   return (
@@ -33,10 +29,6 @@ let QueryBuilder = ({
             adding,
             fields,
             mapNodeToProps,
-            Button,
-            Modal,
-            Picker,
-            MissingTypeComponent,
           }}
         />
       )}
