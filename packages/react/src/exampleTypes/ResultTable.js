@@ -127,6 +127,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
       disableFilter,
       disableSort,
       field,
+      sortField = field,
       label,
       hideMenu,
       typeDefault,
@@ -174,7 +175,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
             <Item
               onClick={() => {
                 F.off(popover)()
-                mutate({ sortField: field, sortDir: 'asc' })
+                mutate({ sortField, sortDir: 'asc' })
               }}
             >
               <Icon icon="SortAscending" />
@@ -185,7 +186,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
             <Item
               onClick={() => {
                 F.off(popover)()
-                mutate({ sortField: field, sortDir: 'desc' })
+                mutate({ sortField, sortDir: 'desc' })
               }}
             >
               <Icon icon="SortDescending" />
