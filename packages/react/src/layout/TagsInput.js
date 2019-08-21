@@ -10,45 +10,6 @@ import { withTheme } from '../utils/theme'
 
 let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
-let Tag = _.flow(
-  observer,
-  withTheme
-)(({ value, removeTag, tagStyle, theme: { RemoveTagIcon }, onClick }) => (
-  <span
-    className="tags-input-tag"
-    style={{
-      cursor: 'pointer',
-      margin: 3,
-      borderRadius: '3px',
-      ...F.callOrReturn(tagStyle, value),
-    }}
-    onClick={onClick}
-  >
-    <Flex style={{ alignItems: 'center' }}>
-      <span
-        style={{
-          paddingLeft: '0.45em',
-          paddingBottom: '0.15em',
-          // Prefer padding on the remove icon so it has more area to receive
-          // clicks
-          paddingRight: RemoveTagIcon ? '0em' : '0.45em',
-        }}
-      >
-        {value}
-      </span>
-      {RemoveTagIcon && (
-        <RemoveTagIcon
-          onClick={e => {
-            e.stopPropagation()
-            removeTag(value)
-          }}
-        />
-      )}
-    </Flex>
-  </span>
-))
-Tag.displayName = 'Tag'
-
 // We're only using withState to preserve the state between renders, since
 // inject doesn't do that for us.
 let TagsInput = withState('state', 'setState', () =>
@@ -72,7 +33,8 @@ let TagsInput = withState('state', 'setState', () =>
       tagStyle,
       placeholder = 'Search...',
       splitCommas,
-      theme: { Popover, PopoverContents, TagComponent },
+      PopoverContents,
+      theme: { Popover, Tag },
       style,
       ...props
     }) => {
@@ -122,7 +84,7 @@ let TagsInput = withState('state', 'setState', () =>
             >
               {_.map(
                 t => (
-                  <TagComponent
+                  <Tag
                     key={t}
                     value={t}
                     {...{ removeTag, tagStyle }}
@@ -207,4 +169,4 @@ let MockTagsInput = inject(() => {
 })(TagsInput)
 MockTagsInput.displayName = 'MockTagsInput'
 
-export { Tag, TagsInput, MockTagsInput }
+export { TagsInput as default, MockTagsInput }

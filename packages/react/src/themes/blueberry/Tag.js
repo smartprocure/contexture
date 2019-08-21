@@ -2,7 +2,7 @@ import React from 'react'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
 
-let TagComponent = ({ value, removeTag, tagStyle, onClick }) => (
+let Tag = ({ value, removeTag, tagStyle, onClick }) => (
   <div
     className="tags-input-tag"
     style={F.callOrReturn(tagStyle, value)}
@@ -16,4 +16,4 @@ let TagComponent = ({ value, removeTag, tagStyle, onClick }) => (
   </div>
 )
 
-export default observer(TagComponent)
+export default observer(Tag)

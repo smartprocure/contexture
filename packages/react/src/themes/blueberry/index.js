@@ -10,8 +10,8 @@ import Table from './Table'
 import Button from './Button'
 import ButtonRadio from './ButtonRadio'
 import ListItem from './ListItem'
-import HighlightWrap from './HighlightWrap'
-import TagComponent from './TagComponent'
+import TextHighlight from './TextHighlight'
+import Tag from './Tag'
 import PagerItem from './PagerItem'
 
 export let Pager = props => (
@@ -22,14 +22,15 @@ let baseTheme = {
   Button,
   Checkbox,
   Fonts,
-  HighlightWrap,
+  TextHighlight,
   Input,
   ListItem,
   Pager,
+  PickerItem: ListItem,
   RadioList: ButtonRadio,
   Style,
   Table,
-  TagComponent,
+  Tag,
 }
 
 let { TypeMap, ...ExampleTypes } = ExampleTypeConstructor(baseTheme)
@@ -40,13 +41,13 @@ export {
   Checkbox,
   ExampleTypes,
   Fonts,
-  HighlightWrap,
+  TextHighlight,
   Input,
   ListItem,
   PagerItem,
   Style,
   Table,
-  TagComponent,
+  Tag,
   TypeMap,
 }
 

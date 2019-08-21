@@ -5,8 +5,6 @@ import { action } from '@storybook/addon-actions'
 import FilterAdder from '../src/FilterAdder'
 import { applyDefaults } from '../src/utils/schema'
 import { defaultProps } from 'recompose'
-import Modal from '../src/layout/Modal'
-import { ModalPicker, NestedPicker } from '../src'
 
 let Select = ({ options, onChange }) => (
   <select onChange={e => onChange(e.target.value)}>
@@ -21,13 +19,7 @@ let Select = ({ options, onChange }) => (
   </select>
 )
 
-let Adder = defaultProps({
-  Picker: defaultProps({
-    Modal,
-    label: '+ Include Additional Filter',
-    Picker: NestedPicker,
-  })(ModalPicker),
-})(FilterAdder)
+let Adder = defaultProps({ label: '+ Include Additional Filter' })(FilterAdder)
 
 let mockTree = {
   add: action('add'),

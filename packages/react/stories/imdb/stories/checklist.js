@@ -13,9 +13,10 @@ import {
   SpacedList,
   Grid,
   componentForType,
+  FilterAdder,
 } from '../../../src'
 import * as Theme from '../../../src/themes/greyVest'
-let { Adder, Button, Pager, ExampleTypes, ButtonRadio } = Theme
+let { Button, Pager, ExampleTypes, ButtonRadio } = Theme
 let { ResultCount, CheckableResultTable, TypeMap, TagsQuery } = ExampleTypes
 
 let tree = Contexture({
@@ -121,7 +122,7 @@ export default () => (
                   field.key === 'searchNumber' ? { showBestRange: true } : {},
               ])}
             />
-            <Adder
+            <FilterAdder
               tree={tree}
               path={['root', 'criteria']}
               fields={schemas.movies.fields}

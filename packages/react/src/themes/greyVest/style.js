@@ -497,22 +497,6 @@ export default () => (
         margin: 4px -5px;
       }
 
-      .gv-search-layout-basic,
-      .gv-search-layout-builder,
-      .gv-search-layout-resultsOnly {
-        display: grid;
-        grid-gap: 40px;
-        margin: 0 40px;
-        margin-bottom: 50px;
-      }
-      .gv-search-layout-basic {
-        grid-template-columns: minmax(250px, 400px) minmax(0, 1fr);
-      }
-      .gv-search-layout-builder,
-      .gv-search-layout-resultsOnly {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
       .popover {
         border-radius: 3px;
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);

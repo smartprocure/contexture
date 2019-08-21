@@ -2,31 +2,22 @@ import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
 import { observer } from 'mobx-react'
-import {
-  ModalPicker,
-  Modal as DefaultModal,
-  NestedPicker,
-  Dynamic,
-  Grid,
-} from '../layout/'
+import { Dynamic, Grid } from '../layout/'
 import { fieldsToOptions } from '../FilterAdder'
-import DefaultMissingTypeComponent from '../DefaultMissingTypeComponent'
 import { get } from '../utils/mobx-utils'
 import {
   newNodeFromType,
   transformNodeFromField,
   getTypeLabelOptions,
 } from '../utils/search'
+import { withTheme } from '../utils/theme'
 
 let FilterContents = ({
   node,
   tree,
   fields,
-  Button = 'button',
-  Modal = DefaultModal,
-  Picker = NestedPicker,
   mapNodeToProps = _.noop,
-  MissingTypeComponent = DefaultMissingTypeComponent,
+  theme: { AdderPicker, MissingTypeComponent },
 }) => {
   // `get` allows us to create a mobx dependency on field before we know it
   // exists (because the client will only add it if it's a type that uses it
@@ -38,8 +29,7 @@ let FilterContents = ({
   let nodeLabel = _.get([nodeField, 'label'], fields) || nodeField
   return (
     <Grid columns="auto auto minmax(0, 1fr)" style={{ width: '100%' }}>
-      <ModalPicker
-        {...{ Modal, Picker, Button }}
+      <AdderPicker
         label={nodeField ? nodeLabel : 'Pick a Field'}
         options={fieldsToOptions(fields)}
         onChange={field =>
@@ -93,4 +83,7 @@ let FilterContents = ({
   )
 }
 
-export default observer(FilterContents)
+export default _.flow(
+  observer,
+  withTheme
+)(FilterContents)

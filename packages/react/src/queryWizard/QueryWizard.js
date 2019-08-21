@@ -1,16 +1,10 @@
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import React from 'react'
-import DefaultIcon from '../DefaultIcon'
-import DefaultFilterButtonList from '../FilterButtonList'
-import DefaultMissingTypeComponent from '../DefaultMissingTypeComponent'
-import {
-  CheckButton as DefaultCheckButton,
-  Modal as DefaultModal,
-  StepsAccordion as DefaultStepsAccordion,
-  AccordionStep,
-} from '../layout'
+import FilterButtonList from '../FilterButtonList'
+import { StepsAccordion, AccordionStep } from '../layout'
 import { withNode } from '../utils/hoc'
+import { withTheme } from '../utils/theme'
 
 let generateStepTitle = (node, title) => i => (
   <h1>
@@ -23,15 +17,11 @@ let generateStepTitle = (node, title) => i => (
   </h1>
 )
 
-let QueryWizard = withNode(
+let QueryWizard = _.flow(
+  withNode,
+  withTheme
+)(
   ({
-    StepsAccordion = DefaultStepsAccordion,
-    FilterButtonList = DefaultFilterButtonList,
-    CheckButton = DefaultCheckButton,
-    Button = 'button',
-    Modal = DefaultModal,
-    MissingTypeComponent = DefaultMissingTypeComponent,
-    Icon = DefaultIcon,
     tree,
     node,
     fields = {},
@@ -40,7 +30,7 @@ let QueryWizard = withNode(
     mapNodeToProps = _.noop,
     style,
   }) => (
-    <StepsAccordion {...{ Button, Icon, style, onSubmit }}>
+    <StepsAccordion {...{ style, onSubmit }}>
       {F.mapIndexed(
         (child, i) => (
           <AccordionStep
@@ -50,11 +40,6 @@ let QueryWizard = withNode(
           >
             <FilterButtonList
               {...{
-                CheckButton,
-                Button,
-                Icon,
-                MissingTypeComponent,
-                Modal,
                 node: child,
                 tree,
                 fields,

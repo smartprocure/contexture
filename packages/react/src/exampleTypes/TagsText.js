@@ -4,7 +4,7 @@ import F from 'futil-js'
 import { contexturify, withTreeLens } from '../utils/hoc'
 import { bgJoin } from '../styles/generic'
 
-import { TagsInput as DefaultTagsInput } from '../layout/TagsInput'
+import DefaultTagsInput from '../layout/TagsInput'
 import DefaultSelect from '../layout/Select'
 import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
 

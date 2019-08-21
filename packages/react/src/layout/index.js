@@ -1,23 +1,25 @@
 import F from 'futil-js'
+
+import DefaultIcon from '../DefaultIcon'
+import MissingTypeComponent from '../DefaultMissingTypeComponent'
+
 import Awaiter from './Awaiter'
 import BarChart from './BarChart'
 import Checkbox from './Checkbox'
 import CheckButton from './CheckButton'
-import DefaultIcon from '../DefaultIcon'
 import Dynamic from './Dynamic'
 import ExpandableTable from './ExpandableTable'
 import Flex from './Flex'
 import Grid from './Grid'
-import LensInput from './LensInput'
 import Modal from './Modal'
 import ModalPicker from './ModalPicker'
 import NestedPicker from './NestedPicker'
 import Popover from './Popover'
 import Portal from './Portal'
-import RemoveTagIcon from './RemoveTagIcon'
 import SpacedList from './SpacedList'
 import StepsAccordion, { AccordionStep } from './StepsAccordion'
-import { Tag, TagsInput } from './TagsInput'
+import TagsInput from './TagsInput'
+import Tag from './Tag'
 import TextHighlight from './TextHighlight'
 
 import { defaultTheme } from '../utils/theme'
@@ -25,27 +27,27 @@ import { defaultTheme } from '../utils/theme'
 let theme = {
   AdderPicker: ModalPicker,
   BarChart,
+  Box: 'div',
   Button: 'button',
   Checkbox,
   CheckButton,
+  MissingTypeComponent,
   ExpandableTable,
   Icon: DefaultIcon,
   Input: 'input',
   ListItem: 'li',
-  LensInput,
   Modal,
   Picker: NestedPicker,
+  PickerItem: 'div',
   Popover,
-  PopoverContents: 'div',
-  RemoveTagIcon,
-  SpacedList,
   Table: 'table',
   Tag,
-  TagComponent: Tag,
   TagsInput,
   TextHighlight,
-  HighlightWrap: 'i',
 }
+// To add `withTheme` components to the default theme, we have to mutate them onto
+// the theme object after it's declared, because importing them into `utils/theme`
+// before ThemeContext is initialized would cause dependency conflicts
 F.mergeOn(defaultTheme, theme)
 export default theme
 
@@ -60,7 +62,6 @@ export {
   ExpandableTable,
   Flex,
   Grid,
-  LensInput,
   Modal,
   ModalPicker,
   NestedPicker,

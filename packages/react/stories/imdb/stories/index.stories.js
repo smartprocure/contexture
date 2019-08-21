@@ -16,3 +16,7 @@ storiesOf('Live Demos|IMDB', module)
   .addDecorator(GVDecorator)
   .addWithJSX('Check List', require('./checklist').default)
   .addWithJSX('Grey Vest Theme', require('./greyVest').default)
+  .addWithJSX(
+    'Grey Vest Theme with Theme API',
+    require('./greyVestThemed').default
+  )

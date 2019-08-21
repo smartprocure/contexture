@@ -11,27 +11,16 @@ import {
   SearchLayout,
   SearchFilters,
 } from '../../../src'
-import {
-  Button,
-  ExampleTypes,
-  IconButton,
-  Tabs,
-  Tab,
-  TabLabel,
-  TabContent,
-  PagedResultTable,
-  Box,
+import theme, {
   SearchTree,
   ToggleFiltersHeader,
+  Box,
+  ExampleTypes,
 } from '../../../src/themes/greyVest'
 import { Column } from './../../../src/layout/ExpandableTable'
-let {
-  ResultCount,
-  TypeMap,
-  TagsQuery,
-  DateRangePicker,
-  TermsStatsTable,
-} = ExampleTypes
+import { ThemeProvider, withTheme } from '../../../src/utils/theme'
+
+let { TypeMap, TermsStatsTable, PagedResultTable, TagsQuery } = ExampleTypes
 
 let tree = Contexture({
   key: 'root',
@@ -222,7 +211,7 @@ let mapNodeToProps = mergeOverAll([
   schemaFieldProps('signicantDigits'),
   ({ key }) =>
     key === 'status' && {
-      component: DateRangePicker,
+      component: theme.DateRangePicker,
       ranges: [
         { label: 'All Time', from: '', to: '' },
         { label: 'This Year', from: 'now/y', to: '' },
@@ -235,7 +224,7 @@ let mapNodeToProps = mergeOverAll([
     },
 ])
 
-export default () => (
+let GreyVestStory = withTheme(({ theme }) => (
   <Awaiter promise={schemas}>
     {schemas => (
       <SearchLayout mode={state.mode}>
@@ -265,23 +254,23 @@ export default () => (
               <TagsQuery tree={tree} path={['root', 'bar']} autoFocus />
             </Box>
             <div className="gv-button-group">
-              <Button
+              <theme.Button
                 className="gv-search-button"
                 onClick={tree.triggerUpdate}
                 primary
               >
                 Search
-              </Button>
+              </theme.Button>
               <div className="gv-search-toolbar">
-                <IconButton
+                <theme.IconButton
                   onClick={() => {
                     window.location.reload()
                   }}
                   title="New Search"
                 >
                   <i className="material-icons">fiber_new</i>
-                </IconButton>
-                <IconButton
+                </theme.IconButton>
+                <theme.IconButton
                   title="Auto Update"
                   primary={state.autoUpdate}
                   onClick={() => {
@@ -290,16 +279,17 @@ export default () => (
                   }}
                 >
                   <i className="material-icons">autorenew</i>
-                </IconButton>
+                </theme.IconButton>
               </div>
             </div>
           </div>
           <h1>Search Results</h1>
-          <Tabs defaultValue="results">
-            <TabLabel value="results">
-              Movies (<ResultCount tree={tree} path={['root', 'results']} />)
-            </TabLabel>
-            <TabContent value="results">
+          <theme.Tabs defaultValue="results">
+            <theme.TabLabel value="results">
+              Movies (
+              <theme.ResultCount tree={tree} path={['root', 'results']} />)
+            </theme.TabLabel>
+            <theme.TabContent value="results">
               <PagedResultTable
                 tree={tree}
                 path={['root', 'results']}
@@ -310,8 +300,8 @@ export default () => (
                 criteria={['root', 'criteria']}
                 mapNodeToProps={componentForType(TypeMap)}
               />
-            </TabContent>
-            <Tab value="analytics" label="Analytics">
+            </theme.TabContent>
+            <theme.Tab value="analytics" label="Analytics">
               <TermsStatsTable
                 tree={tree}
                 path={['root', 'genreScores']}
@@ -340,10 +330,16 @@ export default () => (
                   )}
                 </Column>
               </TermsStatsTable>
-            </Tab>
-          </Tabs>
+            </theme.Tab>
+          </theme.Tabs>
         </div>
       </SearchLayout>
     )}
   </Awaiter>
+))
+
+export default () => (
+  <ThemeProvider theme={theme}>
+    <GreyVestStory />
+  </ThemeProvider>
 )
