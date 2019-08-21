@@ -279,18 +279,9 @@ Header.displayName = 'Header'
 let TableBody = _.flow(
   observer,
   withTheme
-)(
-  ({
-    node,
-    visibleFields,
-    fields,
-    hiddenFields,
-    theme,
-    schema,
-    Row,
-  }) => {
-    let TableRow = Row || theme.TableRow
-    return (
+)(({ node, visibleFields, fields, hiddenFields, theme, schema, Row }) => {
+  let TableRow = Row || theme.TableRow
+  return (
     <tbody>
       {!!getResults(node).length &&
         _.map(
@@ -322,8 +313,8 @@ let TableBody = _.flow(
           getResults(node)
         )}
     </tbody>
-  )}
-)
+  )
+})
 TableBody.displayName = 'TableBody'
 
 let ResultTable = _.flow(
