@@ -33,28 +33,28 @@ export let FiltersBox = withTheme(({ theme, ...props }) => (
 ))
 FiltersBox.displayName = 'FiltersBox'
 
-let BasicSearchFilters = withTheme(({ theme: { Link }, setMode, trees, children }) => (
-  <div>
-    <Flex style={{ alignItems: 'center' }}>
-      <h1>Filters</h1>
-      <TreePauseButton children={children} />
-      <ToggleFiltersButton onClick={() => setMode('resultsOnly')} />
-    </Flex>
-    <LabelledList list={trees} Component={FiltersBox} />
-    <Link onClick={() => setMode('builder')} style={{ marginTop: 15 }}>
-      Switch to Advanced Search Builder
-    </Link>
-  </div>
-))
+let BasicSearchFilters = withTheme(
+  ({ theme: { Link }, setMode, trees, children }) => (
+    <div>
+      <Flex style={{ alignItems: 'center' }}>
+        <h1>Filters</h1>
+        <TreePauseButton children={children} />
+        <ToggleFiltersButton onClick={() => setMode('resultsOnly')} />
+      </Flex>
+      <LabelledList list={trees} Component={FiltersBox} />
+      <Link onClick={() => setMode('builder')} style={{ marginTop: 15 }}>
+        Switch to Advanced Search Builder
+      </Link>
+    </div>
+  )
+)
 BasicSearchFilters.displayName = 'BasicSearchFilters'
 
 let BuilderSearchFilters = withTheme(({ theme: { Link }, setMode, trees }) => (
   <div>
     <Flex style={{ alignItems: 'center' }}>
       <h1>Filters</h1>
-      <Link onClick={() => setMode('basic')}>
-        Back to Regular Search
-      </Link>
+      <Link onClick={() => setMode('basic')}>Back to Regular Search</Link>
     </Flex>
     <LabelledList list={trees} Component={QueryBuilder} />
   </div>
@@ -66,9 +66,11 @@ let SearchFilters = ({ mode, setMode, children }) => {
     React.Children.toArray,
     _.map('props')
   )(children)
-  return mode === 'basic' ? <BasicSearchFilters {...{ trees, setMode, children }} />
-    : mode === 'builder' ? <BuilderSearchFilters {...{ trees, setMode }} />
-    : null
+  return mode === 'basic' ? (
+    <BasicSearchFilters {...{ trees, setMode, children }} />
+  ) : mode === 'builder' ? (
+    <BuilderSearchFilters {...{ trees, setMode }} />
+  ) : null
 }
 
 SearchFilters.propTypes = {
