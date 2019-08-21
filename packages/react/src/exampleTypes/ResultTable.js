@@ -285,9 +285,12 @@ let TableBody = _.flow(
     visibleFields,
     fields,
     hiddenFields,
-    theme: { TableRow },
+    theme,
     schema,
-  }) => (
+    Row,
+  }) => {
+    let TableRow = Row || theme.TableRow
+    return (
     <tbody>
       {!!getResults(node).length &&
         _.map(
@@ -319,17 +322,9 @@ let TableBody = _.flow(
           getResults(node)
         )}
     </tbody>
-  )
+  )}
 )
 TableBody.displayName = 'TableBody'
-
-/*
-let Tr = props => (
-  <tr
-    {..._.omit(['record', 'fields', 'visibleFields', 'hiddenFields'], props)}
-  />
-)
-*/
 
 let ResultTable = _.flow(
   contexturify,
@@ -343,6 +338,7 @@ let ResultTable = _.flow(
     node,
     tree,
     theme: { Table },
+    Row, // accept a custom Row component so we can do fancy expansion things
     mapNodeToProps = () => ({}),
   }) => {
     // From Theme/Components
@@ -397,6 +393,7 @@ let ResultTable = _.flow(
             visibleFields,
             hiddenFields,
             schema,
+            Row,
           }}
         />
       </Table>

@@ -17,6 +17,7 @@ let {
   Query,
   ResultCount,
   ResultTable,
+  ResultPager,
   DateHistogram,
   TermsStats,
 } = ExampleTypes
@@ -165,7 +166,7 @@ export default () => (
                 />
               </div>
               <Flex style={{ justifyContent: 'space-around' }}>
-                <Pager tree={tree} path={['searchRoot', 'results']} />
+                <ResultPager tree={tree} path={['searchRoot', 'results']} />
               </Flex>
             </div>
           </Flex>
