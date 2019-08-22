@@ -14,13 +14,7 @@ import {
 } from '../../../src'
 import theme from '../../../src/themes/blueberry'
 import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
-let {
-  ResultCount,
-  ResultTable,
-  ResultPager,
-  TagsQuery,
-  DateRangePicker,
-} = ExampleTypes
+let { ResultCount, PagedResultTable, TagsQuery, DateRangePicker } = ExampleTypes
 
 import { ThemeProvider, withTheme } from '../../../src/utils/theme'
 import FilterAdder from '../../../src/FilterAdder'
@@ -206,16 +200,13 @@ let BlueberryStory = withTheme(({ theme }) => (
               </Flex>
             </Flex>
             <div className="bb-box">
-              <ResultTable
+              <PagedResultTable
                 tree={tree}
                 path={['root', 'results']}
                 fields={schemas[tree.tree.schema].fields}
                 criteria={['root', 'criteria']}
                 mapNodeToProps={componentForType(TypeMap)}
               />
-              <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>
-                <ResultPager tree={tree} path={['root', 'results']} />
-              </Flex>
             </div>
           </div>
         </Grid>

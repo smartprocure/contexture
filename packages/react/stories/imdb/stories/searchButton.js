@@ -16,8 +16,7 @@ import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
 let {
   Query,
   ResultCount,
-  ResultTable,
-  ResultPager,
+  PagedResultTable,
   DateHistogram,
   TermsStats,
 } = ExampleTypes
@@ -159,15 +158,12 @@ export default () => (
               />
               <TermsStats tree={tree} path={['searchRoot', 'genreScores']} />
               <div style={{ overflowX: 'auto' }}>
-                <ResultTable
+                <PagedResultTable
                   tree={tree}
                   path={['searchRoot', 'results']}
                   fields={schemas.movies.fields}
                 />
               </div>
-              <Flex style={{ justifyContent: 'space-around' }}>
-                <ResultPager tree={tree} path={['searchRoot', 'results']} />
-              </Flex>
             </div>
           </Flex>
         </SpacedList>

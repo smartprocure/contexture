@@ -15,7 +15,7 @@ import {
 } from '../../src/'
 import { TextInput, ClampedHTML } from '../DemoControls'
 import ExampleTypes, { TypeMap } from '../../src/exampleTypes'
-let { ResultCount, ResultTable, ResultPager } = ExampleTypes
+let { ResultCount, PagedResultTable } = ExampleTypes
 
 import Contexture, { updateClient } from './contexture'
 
@@ -174,15 +174,12 @@ let Story = observer(() => {
                     <div style={{ flex: 4, maxWidth: '80%', ...whiteBox }}>
                       <ResultCount tree={tree} path={['root', 'results']} />
                       <div style={{ overflowX: 'auto' }}>
-                        <ResultTable
+                        <PagedResultTable
                           tree={tree}
                           path={['root', 'results']}
                           fields={schemas[tree.tree.schema].fields}
                         />
                       </div>
-                      <Flex style={{ justifyContent: 'space-around' }}>
-                        <ResultPager tree={tree} path={['root', 'results']} />
-                      </Flex>
                     </div>
                   </Flex>
                 </div>

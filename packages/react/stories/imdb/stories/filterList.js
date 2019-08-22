@@ -18,8 +18,7 @@ import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
 let {
   Query,
   ResultCount,
-  ResultTable,
-  ResultPager,
+  PagedResultTable,
   DateHistogram,
   CheckableTermsStatsTable,
 } = ExampleTypes
@@ -181,7 +180,7 @@ const Story = inject(() => {
                   >
                     {x => (
                       <div>
-                        <ResultTable
+                        <PagedResultTable
                           tree={termDetailsTree(x)}
                           path={['detailRoot', 'results']}
                           fields={_.pick(
@@ -189,18 +188,6 @@ const Story = inject(() => {
                             schemas.movies.fields
                           )}
                         />
-                        <Flex
-                          style={{
-                            justifyContent: 'space-around',
-                            marginTop: 10,
-                            marginBottom: 10,
-                          }}
-                        >
-                          <ResultPager
-                            tree={termDetailsTree(x)}
-                            path={['detailRoot', 'results']}
-                          />
-                        </Flex>
                       </div>
                     )}
                   </Column>
@@ -219,7 +206,7 @@ const Story = inject(() => {
                   </Column>
                 </CheckableTermsStatsTable>
                 <div style={{ overflowX: 'auto' }}>
-                  <ResultTable
+                  <PagedResultTable
                     tree={tree}
                     path={['searchRoot', 'results']}
                     fields={{
@@ -231,9 +218,6 @@ const Story = inject(() => {
                     infer
                   />
                 </div>
-                <Flex style={{ justifyContent: 'space-around' }}>
-                  <ResultPager tree={tree} path={['searchRoot', 'results']} />
-                </Flex>
               </div>
             </Flex>
           </SpacedList>
