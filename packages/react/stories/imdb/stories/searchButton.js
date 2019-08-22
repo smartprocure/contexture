@@ -11,8 +11,9 @@ import {
   componentForType,
   FilterAdder,
 } from '../../../src'
-import { Button } from '../../DemoControls'
+import theme, { Button } from '../../DemoControls'
 import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
+import { ThemeProvider } from '../../../src/utils/theme'
 let {
   Query,
   ResultCount,
@@ -110,7 +111,7 @@ let whiteBox = {
   margin: '15px',
 }
 
-export default () => (
+let Story = () => (
   <Awaiter promise={schemas}>
     {schemas => (
       <div style={{ background: '#f4f4f4' }}>
@@ -170,4 +171,10 @@ export default () => (
       </div>
     )}
   </Awaiter>
+)
+
+export default () => (
+  <ThemeProvider theme={theme}>
+    <Story />
+  </ThemeProvider>
 )

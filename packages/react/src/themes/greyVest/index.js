@@ -26,7 +26,7 @@ import ListItem from './ListItem'
 import Modal from './Modal'
 import PagerItem from './PagerItem'
 import RadioList from './RadioList'
-export { default as Select } from './Select'
+import Select from './Select'
 import Style from './style'
 import Table from './Table'
 export { default as TabList } from './TabList'
@@ -52,6 +52,7 @@ export default {
   PickerItem: FilterListItem,
   Modal,
   PagerItem,
+  Select,
   Style,
   Table,
   Tag,
@@ -78,6 +79,7 @@ export {
   PagerItem,
   RadioList,
   SearchTree,
+  Select,
   Style as GVStyle,
   Table,
   TextHighlight,

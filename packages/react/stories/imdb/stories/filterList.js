@@ -13,7 +13,7 @@ import {
   componentForType,
   FilterAdder,
 } from '../../../src'
-import { DarkBox } from '../../DemoControls'
+import theme, { DarkBox } from '../../DemoControls'
 import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
 let {
   Query,
@@ -22,7 +22,7 @@ let {
   DateHistogram,
   CheckableTermsStatsTable,
 } = ExampleTypes
-
+import { ThemeProvider } from '../../../src/utils/theme'
 import { Column } from './../../../src/layout/ExpandableTable'
 
 let formatYear = x => new Date(x).getUTCFullYear()
@@ -227,4 +227,8 @@ const Story = inject(() => {
   ))
 )
 
-export default () => <Story />
+export default () => (
+  <ThemeProvider theme={theme}>
+    <Story />
+  </ThemeProvider>
+)

@@ -103,10 +103,10 @@ export let ClampedHTML = x => (
   <div style={textTruncate} dangerouslySetInnerHTML={{ __html: x }} />
 )
 
-export let theme = {
+export default {
   Button,
   TextInput,
-  Highlight,
+  TextHighlight: Highlight,
   ListItem,
   PagerItem,
 }

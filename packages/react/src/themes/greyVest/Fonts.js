@@ -1,7 +1,7 @@
 import React from 'react'
 
 let Fonts = () => (
-  <div>
+  <>
     <link
       href="https://fonts.googleapis.com/css?family=Lato:300,400,700"
       rel="stylesheet"
@@ -16,6 +16,6 @@ let Fonts = () => (
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
-  </div>
+  </>
 )
 export default Fonts

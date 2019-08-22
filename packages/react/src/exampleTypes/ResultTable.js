@@ -226,7 +226,7 @@ let Header = _.flow(
             <Icon icon="RemoveColumn" />
             Remove Column
           </ListItem>
-          {Modal && Picker && !!addOptions.length && (
+          {!!addOptions.length && (
             <ListItem onClick={F.on(adding)}>
               <Icon icon="AddColumn" />
               Add Column
@@ -256,18 +256,16 @@ let Header = _.flow(
               )}
             </div>
           )}
-          {Modal && Picker && (
-            <Modal isOpen={adding}>
-              <Picker
-                options={addOptions}
-                onChange={field => {
-                  if (!_.contains(field, includes))
-                    mutate({ include: [...includes, field] })
-                  F.off(adding)()
-                }}
-              />
-            </Modal>
-          )}
+          <Modal isOpen={adding}>
+            <Picker
+              options={addOptions}
+              onChange={field => {
+                if (!_.contains(field, includes))
+                  mutate({ include: [...includes, field] })
+                F.off(adding)()
+              }}
+            />
+          </Modal>
         </Popover>
       </TableHeaderCell>
     )
@@ -292,7 +290,7 @@ let TableBody = _.flow(
               {...{ fields, visibleFields, hiddenFields }}
             >
               {_.map(
-                ({ field, display = x => x, Cell = 'td' }) => (
+                ({ field, display = x => x, Cell = theme.TableCell }) => (
                   <Cell key={field}>
                     {display(_.get(field, getRecord(x)), getRecord(x))}
                   </Cell>
