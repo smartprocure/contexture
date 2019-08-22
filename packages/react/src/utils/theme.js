@@ -9,11 +9,16 @@ import { getDisplayName } from './react'
 export let defaultTheme = {}
 let ThemeContext = React.createContext(defaultTheme)
 
-export let ThemeProvider = ({ theme, children }) => (
-  <ThemeContext.Provider value={{ ...defaultTheme, ...theme }}>
-    {children}
-  </ThemeContext.Provider>
-)
+export let ThemeProvider = ({ theme, children }) => {
+  theme = { ...defaultTheme, ...theme }
+  return (
+    <ThemeContext.Provider value={theme}>
+      {theme.Fonts && <theme.Fonts />}
+      {theme.Style && <theme.Style />}
+      {children}
+    </ThemeContext.Provider>
+  )
+}
 
 let hasNested = key => F.findIndexed((v, k) => _.startsWith(`${key}.`, k))
 
