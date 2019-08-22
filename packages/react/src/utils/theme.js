@@ -51,7 +51,7 @@ export let withNamedTheme = name => Component => {
       </ThemeContext.Provider>
     )
   }
-  themed.displayName = `WithTheme${name ? `("${name}")` : ''}(${getDisplayName(
+  themed.displayName = `withTheme${name ? `("${name}")` : ''}(${getDisplayName(
     Component
   )})`
   return themed

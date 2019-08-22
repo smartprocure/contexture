@@ -1,5 +1,6 @@
 import _ from 'lodash/fp'
 import F from 'futil-js'
+import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
 import React from 'react'
 import Flex from './Flex'
@@ -9,6 +10,7 @@ import { withTheme } from '../utils/theme'
 // We don't observe on Step because then it would rerender its children when `node`
 // changes, which unfocuses query inputs as soon as the first character is entered.
 let Buttons = _.flow(
+  setDisplayName('Buttons'),
   observer,
   withTheme
 )(({ step, totalSteps, currentStep, theme: { Button, Icon }, onSubmit }) => (
@@ -30,9 +32,11 @@ let Buttons = _.flow(
     )}
   </>
 ))
-Buttons.displayName = 'Buttons'
 
-export let AccordionStep = withTheme(
+export let AccordionStep = _.flow(
+  setDisplayName('AccordionStep'),
+  withTheme
+)(
   ({
     style,
     className,
@@ -77,7 +81,6 @@ export let AccordionStep = withTheme(
     )
   }
 )
-AccordionStep.displayName = 'AccordionStep'
 
 let StepsAccordion = ({ onSubmit = _.noop, children, ...props }) => {
   let currentStep = F.stateLens(React.useState(0))
