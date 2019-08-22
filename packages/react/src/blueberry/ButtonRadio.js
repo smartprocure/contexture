@@ -1,10 +1,16 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import Button from './Button'
-import { Flex } from '../../'
+import Flex from '../layout/Flex'
+import { withTheme } from '../utils/theme'
 
-let ButtonRadio = ({ value, onChange = () => {}, options, style = {} }) => (
-  <Flex className="gv-button-radio" style={{ alignItems: 'baseline' }}>
+let ButtonRadio = ({
+  value,
+  onChange = () => {},
+  options,
+  style = {},
+  theme: { Button },
+}) => (
+  <Flex style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
     {_.map(
       x => (
         <Button
@@ -20,4 +26,5 @@ let ButtonRadio = ({ value, onChange = () => {}, options, style = {} }) => (
     )}
   </Flex>
 )
-export default ButtonRadio
+
+export default withTheme(ButtonRadio)

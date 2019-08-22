@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
 import { Flex, QueryBuilder, FilterAdder, FilterList } from '.'
-import TreePauseButton from './themes/greyVest/TreePauseButton'
-import ToggleFiltersButton from './themes/greyVest/ToggleFiltersButton'
+import TreePauseButton from './greyVest/TreePauseButton'
+import ToggleFiltersButton from './greyVest/ToggleFiltersButton'
 import { withTheme } from './utils/theme'
 
 let LabelledList = ({ list, Component }) =>

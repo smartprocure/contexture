@@ -1,90 +1,20 @@
-import F from 'futil-js'
-import React from 'react'
-
-import DefaultIcon from '../DefaultIcon'
-import MissingTypeComponent from '../DefaultMissingTypeComponent'
-
-import Awaiter from './Awaiter'
-import BarChart from './BarChart'
-import Checkbox from './Checkbox'
-import CheckButton from './CheckButton'
-import Dynamic from './Dynamic'
-import ExpandableTable from './ExpandableTable'
-import Flex from './Flex'
-import Grid from './Grid'
-import Modal from './Modal'
-import ModalPicker from './ModalPicker'
-import NestedPicker from './NestedPicker'
-import Popover from './Popover'
-import Portal from './Portal'
-import RadioList from './RadioList'
-import Select from './Select'
-import SpacedList from './SpacedList'
-import StepsAccordion, { AccordionStep } from './StepsAccordion'
-import TableHeaderCell from './TableHeaderCell'
-import TagsInput from './TagsInput'
-import Tag from './Tag'
-import TextHighlight from './TextHighlight'
-import WrappedDateInput from './WrappedDateInput'
-
-import { defaultTheme } from '../utils/theme'
-
-let theme = {
-  BarChart,
-  Box: 'div',
-  Button: 'button',
-  Checkbox,
-  CheckButton,
-  DateInput: WrappedDateInput,
-  MissingTypeComponent,
-  ExpandableTable,
-  Icon: DefaultIcon,
-  Input: 'input',
-  Link: 'a',
-  ListItem: 'li',
-  Modal,
-  ModalPicker,
-  NumberInput: props => <input type="number" {...props} />,
-  Picker: NestedPicker,
-  PagerItem: 'div',
-  PickerItem: 'div',
-  Popover,
-  RadioList,
-  Select,
-  Table: 'table',
-  TableCell: 'td',
-  TableHeaderCell,
-  TableRow: 'tr',
-  Tag,
-  TagsInput,
-  TextHighlight,
-  TextInput: 'input',
-}
-// To add `withTheme` components to the default theme, we have to mutate them onto
-// the theme object after it's declared, because importing them into `utils/theme`
-// before ThemeContext is initialized would cause dependency conflicts
-F.mergeOn(defaultTheme, theme)
-export default theme
-
-// components
-export {
-  AccordionStep,
-  Awaiter,
-  BarChart,
-  Checkbox,
-  CheckButton,
-  Dynamic,
-  ExpandableTable,
-  Flex,
-  Grid,
-  Modal,
-  ModalPicker,
-  NestedPicker,
-  Popover,
-  Portal,
-  SpacedList,
-  StepsAccordion,
-  Tag,
-  TagsInput,
-  TextHighlight,
-}
+export Awaiter from './Awaiter'
+export BarChart from './BarChart'
+export CheckButton from './CheckButton'
+export Dynamic from './Dynamic'
+export ExpandableTable from './ExpandableTable'
+export Flex from './Flex'
+export Grid from './Grid'
+export Modal from './Modal'
+export ModalPicker from './ModalPicker'
+export NestedPicker from './NestedPicker'
+export Popover from './Popover'
+export Portal from './Portal'
+export RadioList from './RadioList'
+export Select from './Select'
+export SpacedList from './SpacedList'
+export StepsAccordion, { AccordionStep } from './StepsAccordion'
+export TagsInput from './TagsInput'
+export Tag from './Tag'
+export TextHighlight from './TextHighlight'
+export DateInput from './DateInput'

@@ -21,7 +21,7 @@ import {
   Box,
   SearchTree,
   ToggleFiltersHeader,
-} from '../../../src/themes/greyVest'
+} from '../../../src/greyVest'
 import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
 import { Column } from './../../../src/layout/ExpandableTable'
 let {

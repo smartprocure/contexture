@@ -7,7 +7,7 @@ import {
   TextInput,
   StepsAccordion,
   AccordionStep,
-} from '../../src/themes/greyVest'
+} from '../../src/greyVest'
 
 let makeStepTitle = title => n => (
   <h1>

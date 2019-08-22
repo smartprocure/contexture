@@ -1,7 +1,7 @@
 import React from 'react'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
-import { useLens } from '../../utils/react'
+import { useLens } from '../utils/react'
 
 export let PagerItem = ({ active, disabled, style = {}, ...props }) => {
   let hovering = useLens(false)

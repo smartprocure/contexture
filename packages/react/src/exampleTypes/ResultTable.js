@@ -13,7 +13,6 @@ import {
   inferSchema,
 } from '../utils/schema'
 import { newNodeFromField } from '../utils/search'
-import DefaultMissingTypeComponent from '../DefaultMissingTypeComponent'
 import { withTheme } from '../utils/theme'
 
 let getIncludes = (schema, node) =>
@@ -119,7 +118,7 @@ let Header = _.flow(
   withTheme
 )(
   ({
-    theme: { ListItem, Icon, Popover, Modal, Picker, TableHeaderCell },
+    theme: { ListItem, Icon, Popover, Modal, Picker, TableHeaderCell, MissingTypeComponent },
     field: fieldSchema,
     includes,
     addOptions,
@@ -248,7 +247,7 @@ let Header = _.flow(
               </ListItem>
               {F.view(filtering) && filterNode && !filterNode.paused && (
                 <Dynamic
-                  component={DefaultMissingTypeComponent}
+                  component={MissingTypeComponent}
                   tree={tree}
                   path={_.toArray(filterNode.path)}
                   {...mapNodeToProps(filterNode, fields)}

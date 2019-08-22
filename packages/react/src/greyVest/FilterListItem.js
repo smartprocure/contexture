@@ -1,6 +1,6 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import Flex from '../../layout/Flex'
+import Flex from '../layout/Flex'
 
 let FilterListItem = ({
   active,

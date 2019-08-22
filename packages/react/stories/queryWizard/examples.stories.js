@@ -6,7 +6,7 @@ import {
   FilterButtonList as GVFilterButtonList,
   StepsAccordion as GVStepsAccordion,
   AccordionStep as GVAccordionStep,
-} from '../../src/themes/greyVest'
+} from '../../src/greyVest'
 import DefaultQueryWizard from '../../src/queryWizard/QueryWizard'
 import {
   StepsAccordion as DefaultStepsAccordion,

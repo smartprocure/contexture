@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import decorator from './decorator'
-import { Button } from './../../src/themes/greyVest'
+import { Button } from './../../src/greyVest'
 
 storiesOf('Components (Grey Vest)|Button', module)
   .addDecorator(decorator)

@@ -1,4 +1,4 @@
-import BaseCheckButton from '../../layout/CheckButton'
+import BaseCheckButton from '../layout/CheckButton'
 import React from 'react'
 
 let CheckButton = props => (

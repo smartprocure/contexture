@@ -1,7 +1,7 @@
 import F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { useLens } from '../../utils/react'
+import { useLens } from '../utils/react'
 
 export let ListItem = ({ style = {}, ...props }) => {
   let hovering = useLens(false)

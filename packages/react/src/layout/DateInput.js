@@ -2,7 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import moment from 'moment'
 
-let WrappedDateInput = ({ value, onChange }) => (
+let DateInput = ({ value, onChange }) => (
   <input
     type="date"
     value={value ? moment(value).format('YYYY-MM-DD') : ''}
@@ -10,4 +10,4 @@ let WrappedDateInput = ({ value, onChange }) => (
   />
 )
 
-export default observer(WrappedDateInput)
+export default observer(DateInput)

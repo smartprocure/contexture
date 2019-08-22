@@ -586,20 +586,20 @@ export default () => (
       }
 
       /* FilterButtonList */
-      .gv-filter-button-list.nested {
+      .filter-button-list.nested {
         border: 2px solid;
         border-radius: 6px;
         padding: 3px 5px;
         margin: 2px 5px;
       }
-      .gv-filter-button-list .checkbutton {
+      .filter-button-list .checkbutton {
         margin: 5px;
         white-space: nowrap;
       }
-      .gv-filter-button-list > *:first-child {
+      .filter-button-list > *:first-child {
         margin-left: 0;
       }
-      .gv-filter-button-list > *:last-child {
+      .filter-button-list > *:last-child {
         margin-right: 0;
       }
 

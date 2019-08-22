@@ -1,5 +1,5 @@
 import React from 'react'
-import { withNode } from '../../utils/hoc'
+import { withNode } from '../utils/hoc'
 import ErrorText from './ErrorText'
 
 let MissingTypeComponent = ({ node = {} }) => (

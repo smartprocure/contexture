@@ -14,13 +14,14 @@ import {
   componentForType,
 } from '../../../src'
 import Adder from '../../../src/FilterAdder'
-import theme, {
+import {
   Fonts,
   Style,
   Button,
   Checkbox,
   ButtonRadio,
-} from '../../../src/themes/blueberry'
+} from '../../../src/blueberry'
+import theme from '../../../src/themes/blueberry'
 import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
 let { ResultCount, PagedResultTable, TagsQuery, DateRangePicker } = ExampleTypes
 

@@ -1,4 +1,4 @@
-import BaseFilterButtonList from '../../FilterButtonList'
+import BaseFilterButtonList from '../FilterButtonList'
 import React from 'react'
 
 let FilterButtonList = props => (
