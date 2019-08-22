@@ -24,7 +24,13 @@ import ExampleTypes from '../../../src/exampleTypes'
 import { Column } from '../../../src/layout/ExpandableTable'
 import { ThemeConsumer } from '../../../src/utils/theme'
 
-let { TypeMap, TermsStatsTable, TagsQuery, ResultCount, PagedResultTable } = ExampleTypes
+let {
+  TypeMap,
+  TermsStatsTable,
+  TagsQuery,
+  ResultCount,
+  PagedResultTable,
+} = ExampleTypes
 
 let tree = Contexture({
   key: 'root',

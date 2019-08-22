@@ -24,7 +24,13 @@ import {
 } from '../../../src/themes/greyVest'
 import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
 import { Column } from './../../../src/layout/ExpandableTable'
-let { ResultCount, TagsQuery, DateRangePicker, TermsStatsTable, PagedResultTable } = ExampleTypes
+let {
+  ResultCount,
+  TagsQuery,
+  DateRangePicker,
+  TermsStatsTable,
+  PagedResultTable,
+} = ExampleTypes
 
 let tree = Contexture({
   key: 'root',
