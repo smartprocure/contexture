@@ -2,7 +2,6 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
-import { setDisplayName } from 'recompose'
 import { Flex, Dynamic } from './layout'
 import { fieldsToOptions } from './FilterAdder'
 import { useLens } from './utils/react'
@@ -17,7 +16,6 @@ import {
 import { withTheme } from './utils/theme'
 
 export let FilterActions = _.flow(
-  setDisplayName('FilterActions'),
   observer,
   withTheme
 )(
@@ -87,7 +85,6 @@ export let FilterActions = _.flow(
 )
 
 export let Label = _.flow(
-  setDisplayName('Label'),
   observer,
   withTheme
 )(({ tree, node, fields, theme: { Icon }, ...props }) => {
@@ -156,18 +153,18 @@ export let Label = _.flow(
     </Flex>
   )
 })
+Label.displayName = 'Label'
 
-export let FieldLabel = _.flow(
-  setDisplayName('FilterLabel'),
-  contexturify
-)(({ tree, node, node: { field } = {}, fields, label }) => (
-  <Label tree={tree} node={node} fields={fields}>
-    {label || _.get([field, 'label'], fields) || field}
-  </Label>
-))
+export let FieldLabel = contexturify(
+  ({ tree, node, node: { field } = {}, fields, label }) => (
+    <Label tree={tree} node={node} fields={fields}>
+      {label || _.get([field, 'label'], fields) || field}
+    </Label>
+  )
+)
+FieldLabel.displayName = 'FieldLabel'
 
 export let FilterList = _.flow(
-  setDisplayName('FilterList'),
   contexturify,
   withTheme
 )(
@@ -221,3 +218,4 @@ export let FilterList = _.flow(
     </div>
   )
 )
+FilterList.displayName = 'FilterList'

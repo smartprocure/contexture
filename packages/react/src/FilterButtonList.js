@@ -1,14 +1,12 @@
 import F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
-import { setDisplayName } from 'recompose'
 import { Dynamic, Flex } from './layout'
 import { withNode, withLoader } from './utils/hoc'
 import { withTheme } from './utils/theme'
 import styles from './styles'
 
 let FilterButtonItem = _.flow(
-  setDisplayName('FilterButtonItem'),
   withLoader,
   withTheme
 )(
@@ -69,10 +67,7 @@ let GroupBox = ({ nodeJoinColor, children, nested, className }) => (
   </Flex>
 )
 
-let FilterButtonList = _.flow(
-  setDisplayName('FilterButtonList'),
-  withNode
-)(
+let FilterButtonList = withNode(
   ({
     node,
     tree,
@@ -105,4 +100,5 @@ let FilterButtonList = _.flow(
   )
 )
 
+FilterButtonList.displayName = 'FilterButtonList'
 export default FilterButtonList
