@@ -18,14 +18,13 @@ import {
   Tab,
   TabLabel,
   TabContent,
-  PagedResultTable,
   Box,
   SearchTree,
   ToggleFiltersHeader,
 } from '../../../src/themes/greyVest'
 import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
 import { Column } from './../../../src/layout/ExpandableTable'
-let { ResultCount, TagsQuery, DateRangePicker, TermsStatsTable } = ExampleTypes
+let { ResultCount, TagsQuery, DateRangePicker, TermsStatsTable, PagedResultTable } = ExampleTypes
 
 let tree = Contexture({
   key: 'root',

@@ -1,7 +1,7 @@
 import React from 'react'
-import Flex from '../../layout/Flex'
-import ResultPager from '../../exampleTypes/ResultPager'
-import ResultTable from '../../exampleTypes/ResultTable'
+import Flex from '../layout/Flex'
+import ResultPager from './ResultPager'
+import ResultTable from './ResultTable'
 
 let PagedResultTable = ({ tree, node, path, ...props }) => (
   <>

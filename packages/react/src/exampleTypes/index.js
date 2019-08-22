@@ -10,6 +10,7 @@ import Exists from './Exists'
 import Bool from './Bool'
 import ResultCount from './ResultCount'
 import ResultTable from './ResultTable'
+import PagedResultTable from './PagedResultTable'
 import CheckableResultTable from './CheckableResultTable'
 import ResultPager from './ResultPager'
 import DateHistogram from './DateHistogram'
@@ -42,6 +43,7 @@ export default {
   Exists,
   Bool,
   ResultTable,
+  PagedResultTable,
   ResultCount,
   ResultPager,
   DateHistogram,
