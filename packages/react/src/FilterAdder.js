@@ -2,7 +2,7 @@ import _ from 'lodash/fp'
 import React from 'react'
 import { contexturify } from './utils/hoc'
 import { newNodeFromField } from './utils/search'
-import { withTheme } from './utils/theme'
+import { withNamedTheme } from './utils/theme'
 
 export let fieldsToOptions = _.map(x => ({ value: x.field, ...x }))
 
@@ -13,7 +13,7 @@ let FilterAdder = ({
   node,
   path,
   fields,
-  theme: { AdderPicker },
+  theme: { ModalPicker },
   uniqueFields,
   label = 'Add Custom Filter',
 }) => {
@@ -22,7 +22,7 @@ let FilterAdder = ({
     options = _.reject(x => _.includes(x.field, getGroupFields(node)), options)
   }
   return (
-    <AdderPicker
+    <ModalPicker
       options={options}
       onChange={field => tree.add(path, newNodeFromField({ field, fields }))}
       label={label}
@@ -32,5 +32,5 @@ let FilterAdder = ({
 
 export default _.flow(
   contexturify,
-  withTheme
+  withNamedTheme('FilterAdder')
 )(FilterAdder)

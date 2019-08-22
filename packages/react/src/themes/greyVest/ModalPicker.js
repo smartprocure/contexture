@@ -1,8 +1,8 @@
 import React from 'react'
 import Flex from '../../layout/Flex'
-import ModalPicker from '../../layout/ModalPicker'
+import BaseModalPicker from '../../layout/ModalPicker'
 
-let AddLabel = (
+let Label = (
   <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
     Add Custom Filter
     <i className="material-icons" style={{ opacity: 0.4 }}>
@@ -11,6 +11,6 @@ let AddLabel = (
   </Flex>
 )
 
-let AdderPicker = props => <ModalPicker {...props} label={AddLabel} />
+let ModalPicker = props => <BaseModalPicker {...props} label={Label} />
 
-export default AdderPicker
+export default ModalPicker

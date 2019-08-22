@@ -5,7 +5,6 @@ export { FilterList } from '../../'
 export { default as QueryBuilder } from '../../queryBuilder'
 export { default as QueryWizard } from '../../queryWizard'
 
-import AdderPicker from './AdderPicker'
 import Box from './Box'
 import Button from './Button'
 export { default as ButtonRadio } from './ButtonRadio'
@@ -24,6 +23,7 @@ import TextInput from './TextInput'
 import LinkButton from './LinkButton'
 import ListItem from './ListItem'
 import Modal from './Modal'
+import ModalPicker from './ModalPicker'
 import PagerItem from './PagerItem'
 import RadioList from './RadioList'
 import Select from './Select'
@@ -38,7 +38,7 @@ export { default as ToggleFiltersHeader } from './ToggleFiltersHeader'
 export { default as TreePauseButton } from './TreePauseButton'
 
 export default {
-  AdderPicker,
+  'FilterAdder.ModalPicker': ModalPicker,
   Box,
   Button,
   Checkbox,
@@ -65,7 +65,7 @@ let SearchTree = () => {}
 let ButtonGroup = defaultProps({ className: 'gv-button-group' })(Flex)
 
 export {
-  AdderPicker,
+  ModalPicker,
   Box,
   Button,
   ButtonGroup,

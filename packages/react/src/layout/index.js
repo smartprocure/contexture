@@ -30,7 +30,6 @@ import WrappedDateInput from './WrappedDateInput'
 import { defaultTheme } from '../utils/theme'
 
 let theme = {
-  AdderPicker: ModalPicker,
   BarChart,
   Box: 'div',
   Button: 'button',
@@ -44,6 +43,7 @@ let theme = {
   Link: 'a',
   ListItem: 'li',
   Modal,
+  ModalPicker,
   NumberInput: props => <input type="number" {...props} />,
   Picker: NestedPicker,
   PagerItem: 'div',
