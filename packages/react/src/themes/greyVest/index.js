@@ -50,6 +50,7 @@ export default {
   TextInput,
   ListItem,
   PickerItem: FilterListItem,
+  NumberInput: defaultProps({ type: 'number' })(TextInput),
   Modal,
   PagerItem,
   Select,

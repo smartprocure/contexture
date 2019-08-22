@@ -1,6 +1,7 @@
 import F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
+import { defaultProps } from 'recompose'
 import { useLens } from '../src/utils/react'
 import { TextHighlight } from '../src'
 
@@ -16,7 +17,7 @@ export let Button = x => (
   />
 )
 
-export let TextInput = observer(props => {
+let Input = observer(props => {
   let focusing = useLens(false)
   return (
     <input
@@ -38,6 +39,9 @@ export let TextInput = observer(props => {
     />
   )
 })
+
+export let TextInput = defaultProps({ type: 'text' })(Input)
+export let NumberInput = defaultProps({ type: 'number' })(Input)
 
 export let Highlight = x => (
   <TextHighlight
@@ -106,6 +110,7 @@ export let ClampedHTML = x => (
 export default {
   Button,
   TextInput,
+  NumberInput,
   TextHighlight: Highlight,
   ListItem,
   PagerItem,

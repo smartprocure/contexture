@@ -1,3 +1,5 @@
+import { defaultProps } from 'recompose'
+
 import TextInput from './TextInput'
 import Checkbox from './Checkbox'
 import Fonts from './Fonts'
@@ -16,6 +18,7 @@ export default {
   Fonts,
   TextHighlight,
   TextInput,
+  NumberInput: defaultProps({ type: 'number' })(TextInput),
   ListItem,
   PagerItem,
   PickerItem: ListItem,
