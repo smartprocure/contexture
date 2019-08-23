@@ -6,7 +6,6 @@ import Button from '../../greyVest/Button'
 import Checkbox from '../../greyVest/Checkbox'
 import Fonts from '../../greyVest/Fonts'
 import Icon from '../../greyVest/Icon'
-import LinkButton from '../../greyVest/LinkButton'
 import ListItem from '../../greyVest/ListItem'
 import Modal from '../../greyVest/Modal'
 import PagerItem from '../../greyVest/PagerItem'
@@ -31,7 +30,6 @@ export default {
   Checkbox,
   DateInput,
   Fonts,
-  Link: LinkButton,
   Icon,
   TextInput,
   ListItem,

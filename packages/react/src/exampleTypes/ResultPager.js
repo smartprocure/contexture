@@ -3,10 +3,12 @@ import React from 'react'
 import { contexturify } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
 
+let Link = ({ children, onClick }) => <a onClick={onClick}>{children}</a>
+
 let ResultPager = ({
   node,
   tree,
-  theme: { PagerItem, Link, Icon },
+  theme: { PagerItem, Icon },
   className = '',
 }) => {
   let pages = Math.ceil(
