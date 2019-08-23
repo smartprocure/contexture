@@ -52,7 +52,9 @@ let BuilderSearchFilters = ({ setMode, trees }) => (
   <div>
     <Flex style={{ alignItems: 'center' }}>
       <h1>Filters</h1>
-      <LinkButton onClick={() => setMode('basic')}>Back to Regular Search</LinkButton>
+      <LinkButton onClick={() => setMode('basic')}>
+        Back to Regular Search
+      </LinkButton>
     </Flex>
     <LabelledList list={trees} Component={QueryBuilder} />
   </div>
