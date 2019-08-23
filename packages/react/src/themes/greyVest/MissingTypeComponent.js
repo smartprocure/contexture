@@ -1,13 +1,13 @@
 import React from 'react'
 import { withNode } from '../../utils/hoc'
-import ErrorText from '../../greyVest/ErrorText'
+import ErrorList from '../../greyVest/ErrorList'
 
 let MissingTypeComponent = ({ node = {} }) => (
   // Min Height here is to align better in QueryBuilder
   <Flex style={{ minHeight: '40px', alignItems: 'center' }}>
-    <ErrorText>
+    <ErrorList>
       Type <b>{node.type}</b> is not supported (for key <i>{node.key}</i>)
-    </ErrorText>
+    </ErrorList>
   </Flex>
 )
 
