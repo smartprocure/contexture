@@ -1,5 +1,6 @@
 import { defaultProps } from 'recompose'
 
+// components exported from GreyVest component library
 import Box from '../../greyVest/Box'
 import Button from '../../greyVest/Button'
 import Checkbox from '../../greyVest/Checkbox'
@@ -10,7 +11,6 @@ import Fonts from '../../greyVest/Fonts'
 import Icon from '../../greyVest/Icon'
 import LinkButton from '../../greyVest/LinkButton'
 import ListItem from '../../greyVest/ListItem'
-import MissingTypeComponent from '../../greyVest/MissingTypeComponent'
 import Modal from '../../greyVest/Modal'
 import ModalPicker from '../../greyVest/ModalPicker'
 import PagerItem from '../../greyVest/PagerItem'
@@ -20,6 +20,9 @@ import Style from '../../greyVest/Style'
 import Table from '../../greyVest/Table'
 import TextHighlight from '../../greyVest/TextHighlight'
 import TextInput from '../../greyVest/TextInput'
+
+//components used only for GreyVest theme
+import MissingTypeComponent from './MissingTypeComponent'
 
 export default {
   'FilterAdder.ModalPicker': ModalPicker,

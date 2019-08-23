@@ -118,7 +118,15 @@ let Header = _.flow(
   withTheme
 )(
   ({
-    theme: { ListItem, Icon, Popover, Modal, Picker, TableHeaderCell, MissingTypeComponent },
+    theme: {
+      ListItem,
+      Icon,
+      Popover,
+      Modal,
+      Picker,
+      TableHeaderCell,
+      MissingTypeComponent,
+    },
     field: fieldSchema,
     includes,
     addOptions,

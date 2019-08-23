@@ -1,6 +1,6 @@
 import React from 'react'
-import { withNode } from '../utils/hoc'
-import ErrorText from './ErrorText'
+import { withNode } from '../../utils/hoc'
+import ErrorText from '../../greyVest/ErrorText'
 
 let MissingTypeComponent = ({ node = {} }) => (
   // Min Height here is to align better in QueryBuilder

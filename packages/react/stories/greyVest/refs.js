@@ -1,10 +1,5 @@
 import React from 'react'
-import {
-  Button,
-  TextInput,
-  Textarea,
-  Select,
-} from './../../src/greyVest'
+import { Button, TextInput, Textarea, Select } from './../../src/greyVest'
 
 let input
 let select

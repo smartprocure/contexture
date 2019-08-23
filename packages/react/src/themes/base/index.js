@@ -1,8 +1,8 @@
 import F from 'futil-js'
 import React from 'react'
 
+// components exported from base component library
 import BarChart from '../../layout/BarChart'
-import Checkbox from '../../layout/Checkbox'
 import CheckButton from '../../layout/CheckButton'
 import ExpandableTable from '../../layout/ExpandableTable'
 import Modal from '../../layout/Modal'
@@ -16,6 +16,8 @@ import Tag from '../../layout/Tag'
 import TextHighlight from '../../layout/TextHighlight'
 import DateInput from '../../layout/DateInput'
 
+// components used only for base theme
+import Checkbox from './Checkbox'
 import Icon from './Icon'
 import MissingTypeComponent from './MissingTypeComponent'
 import TableHeaderCell from './TableHeaderCell'
