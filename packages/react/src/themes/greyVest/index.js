@@ -22,6 +22,7 @@ import TextInput from '../../greyVest/TextInput'
 
 //components used only for GreyVest theme
 import MissingTypeComponent from './MissingTypeComponent'
+import Tag from './Tag'
 
 export default {
   'FilterAdder.ModalPicker': ModalPicker,
@@ -43,5 +44,6 @@ export default {
   Select,
   Style,
   Table,
+  Tag,
   TextHighlight,
 }

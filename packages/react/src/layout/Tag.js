@@ -15,7 +15,13 @@ let RemoveTagIcon = props => (
 )
 */
 
-let Tag = ({ value, removeTag, tagStyle, onClick }) => (
+let Tag = ({
+  value,
+  removeTag,
+  RemoveIcon = RemoveTagIcon,
+  tagStyle,
+  onClick,
+}) => (
   <span
     className="tags-input-tag"
     style={{
@@ -38,7 +44,7 @@ let Tag = ({ value, removeTag, tagStyle, onClick }) => (
       >
         {value}
       </span>
-      <RemoveTagIcon
+      <RemoveIcon
         onClick={e => {
           e.stopPropagation()
           removeTag(value)
