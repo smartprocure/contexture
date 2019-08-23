@@ -1,10 +1,5 @@
 import { defaultProps } from 'recompose'
 import Flex from '../layout/Flex'
-// remove all this in a sec
-export { AccordionStep, StepsAccordion, TagsInput } from '../layout'
-export { FilterList } from '../'
-export { default as QueryBuilder } from '../queryBuilder'
-export { default as QueryWizard } from '../queryWizard'
 
 export Box from './Box'
 export Button from './Button'
