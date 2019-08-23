@@ -4,7 +4,6 @@ import { defaultProps } from 'recompose'
 import Box from '../../greyVest/Box'
 import Button from '../../greyVest/Button'
 import Checkbox from '../../greyVest/Checkbox'
-import CheckButton from '../../greyVest/CheckButton'
 import DateInput from '../../greyVest/DateInput'
 import FilterListItem from '../../greyVest/FilterListItem'
 import Fonts from '../../greyVest/Fonts'
@@ -29,7 +28,6 @@ export default {
   Box,
   Button,
   Checkbox,
-  CheckButton,
   DateInput,
   Fonts,
   Link: LinkButton,

@@ -144,19 +144,19 @@ export default () => (
       }
 
       /* Checkbutton */
-      .gv-button.gv-checkbutton {
+      .gv-button.checkbutton {
         padding: 5px 23px 5px 10px;
       }
-      .gv-button.gv-checkbutton .gv-checkbox {
+      .gv-button.checkbutton .gv-checkbox {
         height: 30px;
         width: 30px;
         font-size: 20px;
         margin-right: 8px;
       }
-      .gv-button.gv-checkbutton .gv-checkbox i {
+      .gv-button.checkbutton .gv-checkbox i {
         font-size: 20px;
       }
-      .gv-button.gv-checkbutton .gv-checkbox.checked {
+      .gv-button.checkbutton .gv-checkbox.checked {
         color: #0076de;
         background-color: transparent;
         border-color: transparent;
@@ -592,7 +592,7 @@ export default () => (
         padding: 3px 5px;
         margin: 2px 5px;
       }
-      .filter-button-list .checkbutton {
+      .filter-button-list .gv-checkbutton {
         margin: 5px;
         white-space: nowrap;
       }
@@ -604,32 +604,32 @@ export default () => (
       }
 
       /* Query Wizard */
-      .gv-steps-accordion .accordion-step {
+      .steps-accordion .accordion-step {
         padding: 40px;
         border-bottom: 1px solid #eef0f1;
       }
-      .gv-steps-accordion .gv-button {
+      .steps-accordion .gv-button {
         margin-right: 10px;
         margin-top: 5px;
         margin-bottom: 5px;
       }
-      .gv-steps-accordion .step-contents {
+      .steps-accordion .step-contents {
         margin: 30px 0;
       }
     
-      .gv-steps-accordion .accordion-step-title > * {
+      .steps-accordion .accordion-step-title > * {
         margin: 0;
       }
-      .gv-steps-accordion .accordion-step-title span.step-number {
+      .steps-accordion .accordion-step-title span.step-number {
         color: #0076de;
       }
-      .gv-steps-accordion .back-button i {
+      .steps-accordion .back-button i {
         vertical-align: middle;
         line-height: 14px;
         margin: 0 10px 0 -5px;
         opacity: 0.4;
       }
-      .gv-steps-accordion .gv-button:first-child {
+      .steps-accordion .gv-button:first-child {
         margin-left: 0;
         margin-top: 5px;
         margin-bottom: 5px;
