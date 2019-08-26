@@ -11,6 +11,7 @@ storiesOf('Live Demos|IMDB', module)
     'Blueberry Theme with Theme API',
     require('./blueberryThemed').default
   )
+  .addWithJSX('Material Theme', require('./material').default)
 
 storiesOf('Live Demos|IMDB', module)
   .addDecorator(GVDecorator)
