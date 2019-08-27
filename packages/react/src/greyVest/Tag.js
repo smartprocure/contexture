@@ -3,17 +3,10 @@ import F from 'futil-js'
 import { observer } from 'mobx-react'
 import Flex from './Flex'
 
-let RemoveTagIcon = props => (
-  <span className="tags-input-tag-remove" {...props}>
-    x
-  </span>
-)
-
-/* GreyVest version - we only need one of these, really
+/* GreyVest version - we only need one of these, really */
 let RemoveTagIcon = props => (
   <span className="tags-input-tag-remove fa fa-times" {...props} />
 )
-*/
 
 let Tag = ({
   value,

@@ -11,11 +11,10 @@ let ThemeContext = React.createContext(defaultTheme)
 
 export let ThemeProvider = ({ theme, children }) => {
   theme = { ...defaultTheme, ...theme }
+  let Globals = theme.Globals || React.Fragment
   return (
     <ThemeContext.Provider value={theme}>
-      {theme.Fonts && <theme.Fonts />}
-      {theme.Style && <theme.Style />}
-      {children}
+      <Globals>{children}</Globals>
     </ThemeContext.Provider>
   )
 }

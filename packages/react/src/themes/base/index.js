@@ -30,7 +30,7 @@ let theme = {
   Button: 'button',
   Checkbox: props => <input type="checkbox" {...props} />,
   CheckButton,
-  DateInput,
+  DateInput: defaultProps({ native: true })(DateInput),
   MissingTypeComponent,
   ExpandableTable,
   Icon,

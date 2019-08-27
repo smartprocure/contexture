@@ -11,6 +11,8 @@ let Label = (
   </Flex>
 )
 
-let ModalPicker = props => <BaseModalPicker {...props} label={Label} />
+let FilterAdderModalPicker = props => (
+  <BaseModalPicker {...props} label={Label} />
+)
 
-export default ModalPicker
+export default FilterAdderModalPicker

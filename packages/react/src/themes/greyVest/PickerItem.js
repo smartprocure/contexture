@@ -2,13 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import Flex from '../../greyVest/Flex'
 
-let FilterListItem = ({
-  active,
-  disabled,
-  hasChildren,
-  children,
-  ...props
-}) => (
+let PickerItem = ({ active, disabled, hasChildren, children, ...props }) => (
   <div
     style={{
       padding: '10px 40px',
@@ -32,4 +26,4 @@ let FilterListItem = ({
   </div>
 )
 
-export default observer(FilterListItem)
+export default observer(PickerItem)
