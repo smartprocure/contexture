@@ -1,12 +1,25 @@
 import React from 'react'
 import { Observer } from 'mobx-react'
-import DefaultSelect from '../layout/Select'
+import _ from 'lodash/fp'
 
-let Select = React.forwardRef((props, ref) => (
-  <Observer>
-    {() => <DefaultSelect className="gv-input" {...props} ref={ref} />}
-  </Observer>
-))
-Select.displayName = 'Select'
+let Select = React.forwardRef(
+  ({ options, placeholder = 'Please Select...', ...props }, ref) => (
+    <Observer>
+      {() => (
+        <select className="gv-input" {...props} ref={ref}>
+          {placeholder && <option value="">{placeholder}</option>}
+          {_.map(
+            x => (
+              <option key={x.value} value={x.value}>
+                {x.label}
+              </option>
+            ),
+            options
+          )}
+        </select>
+      )}
+    </Observer>
+  )
+)
 
 export default Select

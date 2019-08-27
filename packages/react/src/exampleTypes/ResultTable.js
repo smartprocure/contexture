@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { observer } from 'mobx-react'
 import { contexturify } from '../utils/hoc'
-import { Dynamic } from '../layout'
+import { Dynamic } from '../greyVest'
 import { useLens } from '../utils/react'
 import { fieldsToOptions } from '../FilterAdder'
 import {

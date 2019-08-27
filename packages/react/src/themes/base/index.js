@@ -1,23 +1,23 @@
 import F from 'futil-js'
 import React from 'react'
+import { defaultProps } from 'recompose'
 
 // components exported from base component library
-import BarChart from '../../layout/BarChart'
-import CheckButton from '../../layout/CheckButton'
-import ExpandableTable from '../../layout/ExpandableTable'
-import Modal from '../../layout/Modal'
-import ModalPicker from '../../layout/ModalPicker'
-import NestedPicker from '../../layout/NestedPicker'
-import Popover from '../../layout/Popover'
-import RadioList from '../../layout/RadioList'
-import Select from '../../layout/Select'
-import TagsInput from '../../layout/TagsInput'
-import Tag from '../../layout/Tag'
-import TextHighlight from '../../layout/TextHighlight'
-import DateInput from '../../layout/DateInput'
+import BarChart from '../../greyVest/BarChart'
+import CheckButton from '../../greyVest/CheckButton'
+import ExpandableTable from '../../greyVest/ExpandableTable'
+import Modal from '../../greyVest/Modal'
+import ModalPicker from '../../greyVest/ModalPicker'
+import NestedPicker from '../../greyVest/NestedPicker'
+import Popover from '../../greyVest/Popover'
+import RadioList from '../../greyVest/RadioList'
+import Select from '../../greyVest/Select'
+import TagsInput from '../../greyVest/TagsInput'
+import Tag from '../../greyVest/Tag'
+import TextHighlight from '../../greyVest/TextHighlight'
+import DateInput from '../../greyVest/DateInput'
 
 // components used only for base theme
-import Checkbox from './Checkbox'
 import Icon from './Icon'
 import MissingTypeComponent from './MissingTypeComponent'
 import TableHeaderCell from './TableHeaderCell'
@@ -28,7 +28,7 @@ let theme = {
   BarChart,
   Box: 'div',
   Button: 'button',
-  Checkbox,
+  Checkbox: props => <input type="checkbox" {...props} />,
   CheckButton,
   DateInput,
   MissingTypeComponent,
@@ -43,7 +43,7 @@ let theme = {
   PagerItem: ({ children }) => <span>{children}</span>,
   PickerItem: 'div',
   Popover,
-  RadioList,
+  RadioList: defaultProps({ native: true })(RadioList),
   Select,
   Table: 'table',
   TableCell: 'td',

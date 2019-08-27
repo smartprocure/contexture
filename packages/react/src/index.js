@@ -14,7 +14,7 @@ export SearchFilters from './SearchFilters'
 export SearchLayout from './SearchLayout'
 
 // component libraries
-export * from './layout'
+export * from './greyVest'
 export * as GreyVest from './greyVest'
 export * as Blueberry from './blueberry'
 

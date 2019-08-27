@@ -1,7 +1,7 @@
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import React from 'react'
-import { Column } from '../layout/ExpandableTable'
+import { Column } from '../greyVest/ExpandableTable'
 import { contexturify } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
 import TermsStatsTable from './TermsStatsTable'

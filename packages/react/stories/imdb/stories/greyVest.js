@@ -23,7 +23,7 @@ import {
   ToggleFiltersHeader,
 } from '../../../src/greyVest'
 import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
-import { Column } from './../../../src/layout/ExpandableTable'
+import { Column } from './../../../src/greyVest/ExpandableTable'
 let {
   ResultCount,
   TagsQuery,

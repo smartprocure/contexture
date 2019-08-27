@@ -1,7 +1,16 @@
 import React from 'react'
-import BaseTextHighlight from '../layout/TextHighlight'
+import * as F from 'futil-js'
 
-let Wrap = props => <b style={{ backgroundColor: 'yellow' }} {...props} />
+let DefaultWrap = props => (
+  <b style={{ backgroundColor: 'yellow' }} {...props} />
+)
 
-let TextHighlight = props => <BaseTextHighlight Wrap={Wrap} {...props} />
+// Since start and end are the same token, splitting on it means every even element was a match
+let TextHighlight = ({ pattern, text, Wrap = DefaultWrap }) =>
+  pattern
+    ? F.highlight('<>', '<>', pattern, text)
+        .split('<>')
+        .map((x, i) => (i % 2 ? <Wrap key={i}>{x}</Wrap> : x))
+    : text
+
 export default TextHighlight

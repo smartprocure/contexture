@@ -1,5 +1,5 @@
 import React from 'react'
-import Flex from '../layout/Flex'
+import Flex from '../greyVest/Flex'
 import { contexturify } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
 import F from 'futil-js'

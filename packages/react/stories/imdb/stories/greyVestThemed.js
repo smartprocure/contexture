@@ -22,7 +22,7 @@ import {
 } from '../../../src/greyVest'
 import theme from '../../../src/themes/greyVest'
 import ExampleTypes from '../../../src/exampleTypes'
-import { Column } from '../../../src/layout/ExpandableTable'
+import { Column } from '../../../src/greyVest/ExpandableTable'
 import { ThemeConsumer } from '../../../src/utils/theme'
 
 let {

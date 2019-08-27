@@ -1,7 +1,7 @@
 import F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
-import { Dynamic, Flex } from './layout'
+import { Dynamic, Flex } from './greyVest'
 import { withNode, withLoader } from './utils/hoc'
 import { withTheme } from './utils/theme'
 import styles from './styles'

@@ -1,5 +1,5 @@
 import React from 'react'
-import BaseTextHighlight from '../layout/TextHighlight'
+import BaseTextHighlight from '../greyVest/TextHighlight'
 
 let Wrap = props => <b style={{ backgroundColor: 'yellow' }} {...props} />
 

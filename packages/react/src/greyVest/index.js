@@ -26,6 +26,25 @@ export ToggleFiltersButton from './ToggleFiltersButton'
 export ToggleFiltersHeader from './ToggleFiltersHeader'
 export TreePauseButton from './TreePauseButton'
 
+// former layout components
+// ------------------------
+export Awaiter from './Awaiter'
+export BarChart from './BarChart'
+export CheckButton from './CheckButton'
+export Dynamic from './Dynamic'
+export ExpandableTable from './ExpandableTable'
+export Flex from './Flex'
+export Grid from './Grid'
+export ModalPicker from './ModalPicker'
+export NestedPicker from './NestedPicker'
+export Popover from './Popover'
+export Portal from './Portal'
+export SpacedList from './SpacedList'
+export StepsAccordion, { AccordionStep } from './StepsAccordion'
+export TagsInput from './TagsInput'
+export Tag from './Tag'
+export DateInput from './DateInput'
+
 // removed exports
 // ----------------
 // Adder (now generic FilterAdder)
@@ -40,5 +59,4 @@ export TreePauseButton from './TreePauseButton'
 // SearchLayout
 // SearchFilters (now a generic search interface)
 // FilterButtonList
-// StepsAccordion
 // QueryWizard

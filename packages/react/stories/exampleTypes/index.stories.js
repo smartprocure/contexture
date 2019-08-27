@@ -9,7 +9,7 @@ import theme from '../DemoControls'
 import TestTree from '../testTree'
 
 let formatYear = x => new Date(x).getUTCFullYear()
-import { Flex, SpacedList } from '../../src/layout'
+import { Flex, SpacedList } from '../../src/greyVest'
 import ExampleTypes from '../../src/exampleTypes'
 let {
   Facet,

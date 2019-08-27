@@ -1,6 +1,6 @@
 import React from 'react'
-import Flex from '../../layout/Flex'
-import BaseModalPicker from '../../layout/ModalPicker'
+import Flex from '../../greyVest/Flex'
+import BaseModalPicker from '../../greyVest/ModalPicker'
 
 let Label = (
   <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
