@@ -1,29 +1,33 @@
 import { defaultProps } from 'recompose'
+import React from 'react'
 
-import TextInput from '../../blueberry/TextInput'
-import Checkbox from '../../blueberry/Checkbox'
-import Fonts from '../../blueberry/Fonts'
-import Style from '../../blueberry/Style'
-import Table from '../../blueberry/Table'
-import Button from '../../blueberry/Button'
-import ButtonRadio from '../../blueberry/ButtonRadio'
-import ListItem from '../../blueberry/ListItem'
-import TextHighlight from '../../blueberry/TextHighlight'
-import Tag from '../../blueberry/Tag'
-import PagerItem from '../../blueberry/PagerItem'
+import Button from './Button'
+import ButtonRadio from './ButtonRadio'
+import Checkbox from './Checkbox'
+import Fonts from './Fonts'
+import ListItem from './ListItem'
+import PagerItem from './PagerItem'
+import Style from './Style'
+import Tag from './Tag'
+import TextInput from './TextInput'
 
 export default {
   Button,
   Checkbox,
   Fonts,
-  TextHighlight,
-  TextInput,
-  NumberInput: defaultProps({ type: 'number' })(TextInput),
+  Globals: ({ children }) => (
+    <>
+      <Style />
+      {children}
+    </>
+  ),
   ListItem,
+  NumberInput: defaultProps({ type: 'number' })(TextInput),
   PagerItem,
   PickerItem: ListItem,
   RadioList: ButtonRadio,
   Style,
-  Table,
+  Table: props => <table className="bb-table" {...props} />,
   Tag,
+  TextInput,
 }

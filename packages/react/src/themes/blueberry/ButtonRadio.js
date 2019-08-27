@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import Flex from '../greyVest/Flex'
-import { withTheme } from '../utils/theme'
+import Flex from '../../greyVest/Flex'
+import { withTheme } from '../../utils/theme'
 
 let ButtonRadio = ({
   value,

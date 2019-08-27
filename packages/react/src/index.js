@@ -13,10 +13,8 @@ export FilterButtonList from './FilterButtonList'
 export SearchFilters from './SearchFilters'
 export SearchLayout from './SearchLayout'
 
-// component libraries
+// component library
 export * from './greyVest'
-export * as GreyVest from './greyVest'
-export * as Blueberry from './blueberry'
 
 // themes
 export baseTheme from './themes/base'
