@@ -32,7 +32,8 @@ let TagsInput = _.flow(
         onClick={() => onTagClick(value)}
         removeTag={removeTag}
         value={value}
-        style={{ marginRight: 4, ...tagStyle }}
+        style={{ marginRight: 4 }}
+        tagStyle={tagStyle}
       />
     )
     return (

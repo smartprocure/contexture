@@ -1,4 +1,3 @@
-import React from 'react'
 import { KeyboardDatePicker } from '@material-ui/pickers'
 import { defaultProps } from 'recompose'
 import { lensify } from './utils'
@@ -6,7 +5,6 @@ import {
   Box,
   Button,
   Checkbox,
-  Chip,
   Input,
   ListItem,
   Dialog,
@@ -22,12 +20,7 @@ import Icon from './Icon'
 import Popover from './Popover'
 import Style from './Style'
 import Select from './Select'
-
-let Tag = ({ removeTag, value, ...props }) => (
-  <Chip onDelete={() => removeTag(value)} label={value} {...props} />
-)
-
-let FullWidthInput = defaultProps({ fullWidth: true })(Input)
+import Tag from './Tag'
 
 export default {
   Box,
@@ -41,7 +34,7 @@ export default {
   ListItem,
   PickerItem: ListItem,
   Modal: lensify(Dialog),
-  NumberInput: defaultProps({ type: 'number' })(FullWidthInput),
+  NumberInput: defaultProps({ type: 'number', fullWidth: true })(Input),
   Popover,
   RadioList,
   Select,
@@ -51,5 +44,5 @@ export default {
   TableRow,
   Tag,
   TagsInput,
-  TextInput: FullWidthInput,
+  TextInput: defaultProps({ fullWidth: true })(Input),
 }
