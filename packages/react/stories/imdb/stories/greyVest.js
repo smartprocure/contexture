@@ -315,7 +315,7 @@ export default () => (
                 path={['root', 'genreScores']}
                 tableAttrs={{ className: 'gv-table' }}
                 sizeOptions={[10, 25, 50]}
-                getValue="key"
+                criteriaGetValue="key"
               >
                 <Column field="key" label="Genre" />
                 <Column field="count" label="Found" />
