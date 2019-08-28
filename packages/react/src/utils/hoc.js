@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import _ from 'lodash/fp'
-import StripedLoader from '../layout/StripedLoader'
+import StripedLoader from '../greyVest/StripedLoader'
 
 export let withNode = Component => props => {
   let { tree, node, path } = props

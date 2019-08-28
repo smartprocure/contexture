@@ -1,43 +1,33 @@
 import { defaultProps } from 'recompose'
+import React from 'react'
 
-import TextInput from './TextInput'
-import Checkbox from './Checkbox'
-import Fonts from './Fonts'
-import Style from './Style'
-import Table from './Table'
 import Button from './Button'
 import ButtonRadio from './ButtonRadio'
-import ListItem from './ListItem'
-import TextHighlight from './TextHighlight'
-import Tag from './Tag'
+import Checkbox from './Checkbox'
+import Fonts from './Fonts'
+import DropdownItem from './DropdownItem'
 import PagerItem from './PagerItem'
+import Style from './Style'
+import Tag from './Tag'
+import TextInput from './TextInput'
 
 export default {
   Button,
   Checkbox,
   Fonts,
-  TextHighlight,
-  TextInput,
+  Globals: ({ children }) => (
+    <>
+      <Style />
+      {children}
+    </>
+  ),
+  DropdownItem,
   NumberInput: defaultProps({ type: 'number' })(TextInput),
-  ListItem,
   PagerItem,
-  PickerItem: ListItem,
+  PickerItem: DropdownItem,
   RadioList: ButtonRadio,
   Style,
-  Table,
+  Table: props => <table className="bb-table" {...props} />,
   Tag,
-}
-
-export {
-  Button,
-  ButtonRadio,
-  Checkbox,
-  Fonts,
-  TextHighlight,
   TextInput,
-  ListItem,
-  PagerItem,
-  Style,
-  Table,
-  Tag,
 }

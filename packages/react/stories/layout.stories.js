@@ -13,8 +13,8 @@ import {
   CheckButton,
   StepsAccordion,
   AccordionStep,
-} from '../src/layout'
-import Flex from '../src/layout/Flex'
+} from '../src/greyVest'
+import Flex from '../src/greyVest/Flex'
 import { NestedPicker, ModalPicker } from '../src'
 
 let ModalDemo = observer(() => {

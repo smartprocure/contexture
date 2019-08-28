@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
-import Flex from '../layout/Flex'
+import Flex from '../greyVest/Flex'
 import { contexturify } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
 

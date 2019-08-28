@@ -3,7 +3,7 @@ import F from 'futil-js'
 import { observer } from 'mobx-react'
 import { useLens } from '../../utils/react'
 
-let ListItem = props => {
+let DropdownItem = props => {
   let hovering = useLens(false)
   return (
     <div
@@ -24,4 +24,4 @@ let ListItem = props => {
   )
 }
 
-export default observer(ListItem)
+export default observer(DropdownItem)

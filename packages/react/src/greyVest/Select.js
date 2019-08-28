@@ -6,7 +6,7 @@ let Select = React.forwardRef(
   ({ options, placeholder = 'Please Select...', ...props }, ref) => (
     <Observer>
       {() => (
-        <select {...props} ref={ref}>
+        <select className="gv-input" {...props} ref={ref}>
           {placeholder && <option value="">{placeholder}</option>}
           {_.map(
             x => (

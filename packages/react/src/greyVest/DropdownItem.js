@@ -1,9 +1,9 @@
 import F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { useLens } from '../../utils/react'
+import { useLens } from '../utils/react'
 
-export let ListItem = ({ style = {}, ...props }) => {
+export let DropdownItem = ({ style = {}, ...props }) => {
   let hovering = useLens(false)
   return (
     <div
@@ -13,6 +13,10 @@ export let ListItem = ({ style = {}, ...props }) => {
         whiteSpace: 'nowrap',
         fontSize: 13,
         color: 'initial',
+        display: 'grid',
+        gridGap: '5px',
+        gridTemplateColumns: 'auto 1fr',
+        alignItems: 'center',
         ...(F.view(hovering) && { color: '#0076de' }),
         ...style,
       }}
@@ -22,16 +26,4 @@ export let ListItem = ({ style = {}, ...props }) => {
   )
 }
 
-let ListGroupItem = props => (
-  <ListItem
-    style={{
-      display: 'grid',
-      gridGap: '5px',
-      gridTemplateColumns: '20px 1fr',
-      alignItems: 'center',
-    }}
-    {...props}
-  />
-)
-
-export default observer(ListGroupItem)
+export default observer(DropdownItem)

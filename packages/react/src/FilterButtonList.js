@@ -1,7 +1,7 @@
 import F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
-import { Dynamic, Flex } from './layout'
+import { CheckButton, Dynamic, Flex } from './greyVest'
 import { withNode, withLoader } from './utils/hoc'
 import { withTheme } from './utils/theme'
 import styles from './styles'
@@ -15,7 +15,7 @@ let FilterButtonItem = _.flow(
     tree,
     fields,
     mapNodeToProps,
-    theme: { Button, CheckButton, MissingTypeComponent, Modal },
+    theme: { Button, MissingTypeComponent, Modal },
   }) => {
     let mappedProps = mapNodeToProps(node, fields)
     let modal = F.stateLens(React.useState(false))

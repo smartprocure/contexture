@@ -3,26 +3,21 @@ import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import Contexture, { updateSchemas } from '../utils/contexture'
-import { ThemeProvider } from '../../../src/utils/theme'
 import {
   FilterList,
+  SpacedList,
   Label,
   Flex,
-  Awaiter,
-  SpacedList,
   Grid,
+  Awaiter,
   componentForType,
 } from '../../../src'
-import Adder from '../../../src/FilterAdder'
-import theme, {
-  Fonts,
-  Style,
-  Button,
-  Checkbox,
-  ButtonRadio,
-} from '../../../src/themes/blueberry'
+import theme from '../../../src/themes/blueberry'
 import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
 let { ResultCount, PagedResultTable, TagsQuery, DateRangePicker } = ExampleTypes
+
+import { ThemeProvider, withTheme } from '../../../src/utils/theme'
+import FilterAdder from '../../../src/FilterAdder'
 
 let tree = Contexture({
   key: 'root',
@@ -121,106 +116,107 @@ let schemas = fromPromise(
     .then(_.tap(() => tree.refresh(['root'])))
 )
 
-export default () => (
-  <ThemeProvider theme={theme}>
-    <div className="bb-body">
-      <Fonts />
-      <Style />
-      <Awaiter promise={schemas}>
-        {schemas => (
-          <Grid gap="22px" columns="1fr 4fr" style={{ margin: '0 22px' }}>
-            <div>
-              <h1>Filters</h1>
-              <SpacedList>
-                <div>
-                  <Label>Released</Label>
-                  <DateRangePicker
-                    tree={tree}
-                    path={['root', 'status']}
-                    ranges={[
-                      { label: 'All Time', from: '', to: '' },
-                      { label: 'This Year', from: 'now/y', to: '' },
-                      { label: 'Last Year', from: 'now-1y/y', to: 'now/y' },
-                    ]}
-                  />
-                </div>
-                <div>
-                  <Label>Title</Label>
-                  Contains
-                  <TagsQuery tree={tree} path={['root', 'titleContains']} />
-                  Does Not Contain
-                  <TagsQuery
-                    tree={tree}
-                    path={['root', 'titleDoesNotContain']}
-                  />
-                </div>
-                <FilterList
+let BlueberryStory = withTheme(({ theme }) => (
+  <div className="bb-body">
+    <theme.Fonts />
+    <theme.Style />
+    <Awaiter promise={schemas}>
+      {schemas => (
+        <Grid gap="22px" columns="1fr 4fr" style={{ margin: '0 22px' }}>
+          <div>
+            <h1>Filters</h1>
+            <SpacedList>
+              <div>
+                <Label>Released</Label>
+                <DateRangePicker
                   tree={tree}
-                  path={['root', 'criteria']}
-                  fields={schemas.movies.fields}
-                  mapNodeToProps={componentForType(TypeMap)}
+                  path={['root', 'status']}
+                  ranges={[
+                    { label: 'All Time', from: '', to: '' },
+                    { label: 'This Year', from: 'now/y', to: '' },
+                    { label: 'Last Year', from: 'now-1y/y', to: 'now/y' },
+                  ]}
                 />
-                <Adder
-                  tree={tree}
-                  path={['root', 'criteria']}
-                  fields={schemas.movies.fields}
-                  uniqueFields
-                />
-              </SpacedList>
-            </div>
-            <div>
-              <Grid columns="1fr 25px 150px" style={{ alignItems: 'center' }}>
-                <TagsQuery tree={tree} path={['root', 'bar']} />
-                <Checkbox
-                  checked={state.autoUpdate}
+              </div>
+              <div>
+                <Label>Title</Label>
+                Contains
+                <TagsQuery tree={tree} path={['root', 'titleContains']} />
+                Does Not Contain
+                <TagsQuery tree={tree} path={['root', 'titleDoesNotContain']} />
+              </div>
+              <FilterList
+                tree={tree}
+                path={['root', 'criteria']}
+                fields={schemas.movies.fields}
+                mapNodeToProps={componentForType(TypeMap)}
+              />
+              <FilterAdder
+                tree={tree}
+                path={['root', 'criteria']}
+                fields={schemas.movies.fields}
+                uniqueFields
+              />
+            </SpacedList>
+          </div>
+          <div>
+            <Grid columns="1fr 25px 150px" style={{ alignItems: 'center' }}>
+              <TagsQuery tree={tree} path={['root', 'bar']} />
+              <theme.Checkbox
+                checked={state.autoUpdate}
+                onChange={val => {
+                  tree.disableAutoUpdate = !val
+                  state.autoUpdate = !!val
+                }}
+              />
+              {!state.autoUpdate && (
+                <theme.Button onClick={tree.triggerUpdate} primary>
+                  Search
+                </theme.Button>
+              )}
+            </Grid>
+            <Flex
+              style={{
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <h1>
+                Results (
+                <ResultCount tree={tree} path={['root', 'results']} />)
+              </h1>
+              <Flex>
+                <theme.RadioList
+                  options={[
+                    { label: 'AutoSearch On', value: true },
+                    { label: 'AutoSearch Off', value: false },
+                  ]}
+                  value={state.autoUpdate}
                   onChange={val => {
                     tree.disableAutoUpdate = !val
                     state.autoUpdate = !!val
                   }}
                 />
-                {!state.autoUpdate && (
-                  <Button onClick={tree.triggerUpdate} primary>
-                    Search
-                  </Button>
-                )}
-              </Grid>
-              <Flex
-                style={{
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-              >
-                <h1>
-                  Results (
-                  <ResultCount tree={tree} path={['root', 'results']} />)
-                </h1>
-                <Flex>
-                  <ButtonRadio
-                    options={[
-                      { label: 'AutoSearch On', value: true },
-                      { label: 'AutoSearch Off', value: false },
-                    ]}
-                    value={state.autoUpdate}
-                    onChange={val => {
-                      tree.disableAutoUpdate = !val
-                      state.autoUpdate = !!val
-                    }}
-                  />
-                </Flex>
               </Flex>
-              <div className="bb-box">
-                <PagedResultTable
-                  tree={tree}
-                  path={['root', 'results']}
-                  fields={schemas[tree.tree.schema].fields}
-                  criteria={['root', 'criteria']}
-                  mapNodeToProps={componentForType(TypeMap)}
-                />
-              </div>
+            </Flex>
+            <div className="bb-box">
+              <PagedResultTable
+                tree={tree}
+                path={['root', 'results']}
+                fields={schemas[tree.tree.schema].fields}
+                criteria={['root', 'criteria']}
+                mapNodeToProps={componentForType(TypeMap)}
+              />
             </div>
-          </Grid>
-        )}
-      </Awaiter>
-    </div>
+          </div>
+        </Grid>
+      )}
+    </Awaiter>
+  </div>
+))
+
+export default () => (
+  <ThemeProvider theme={theme}>
+    <BlueberryStory />
   </ThemeProvider>
 )

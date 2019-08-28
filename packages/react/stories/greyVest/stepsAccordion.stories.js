@@ -2,12 +2,8 @@ import F from 'futil-js'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import decorator from './decorator'
-import {
-  Button,
-  TextInput,
-  StepsAccordion,
-  AccordionStep,
-} from '../../src/themes/greyVest'
+import { Button, TextInput } from '../../src/greyVest'
+import { StepsAccordion, AccordionStep } from '../../src'
 
 let makeStepTitle = title => n => (
   <h1>

@@ -11,7 +11,7 @@ let tagValueField = 'word'
 let TagsQuery = ({
   tree,
   node,
-  theme: { TagsInput, Checkbox, RadioList, Select, Button },
+  theme: { PopoverTagsInput, Checkbox, RadioList, Select, Button },
   placeholder,
   ...props
 }) => {
@@ -99,7 +99,7 @@ let TagsQuery = ({
     }
   }
   return (
-    <TagsInput
+    <PopoverTagsInput
       splitCommas
       tags={_.map(tagValueField, node.tags)}
       addTag={tag => {

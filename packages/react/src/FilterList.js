@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
-import { Flex, Dynamic } from './layout'
+import { Flex, Dynamic } from './greyVest'
 import { fieldsToOptions } from './FilterAdder'
 import { useLens } from './utils/react'
 import { contexturify } from './utils/hoc'
@@ -23,7 +23,7 @@ export let FilterActions = _.flow(
     node,
     tree,
     fields,
-    theme: { ListItem, Popover, Modal, Picker },
+    theme: { DropdownItem, Popover, Modal, Picker },
     popover,
   }) => {
     let modal = useLens(false)
@@ -46,12 +46,12 @@ export let FilterActions = _.flow(
         <Popover isOpen={popover} className="filter-actions-popover">
           {!_.isEmpty(typeOptions) && (
             <>
-              <ListItem className="filter-actions-selected-type">
+              <DropdownItem className="filter-actions-selected-type">
                 Filter type: <strong>{getTypeLabel(tree, node.type)}</strong>
-              </ListItem>
+              </DropdownItem>
               {_.map(
                 x => (
-                  <ListItem
+                  <DropdownItem
                     key={x.value}
                     onClick={() =>
                       tree.replace(
@@ -61,23 +61,23 @@ export let FilterActions = _.flow(
                     }
                   >
                     —Change to {x.label}
-                  </ListItem>
+                  </DropdownItem>
                 ),
                 getTypeLabelOptions(tree, typeOptions)
               )}
               <div className="filter-actions-separator" />
             </>
           )}
-          <ListItem onClick={F.on(modal)}>Pick Field</ListItem>
+          <DropdownItem onClick={F.on(modal)}>Pick Field</DropdownItem>
           {/* If only contexture-client diffed the tree before sending a request... */}
           {(node.hasValue || false) && (
-            <ListItem onClick={() => tree.clear(node.path)}>
+            <DropdownItem onClick={() => tree.clear(node.path)}>
               Clear Filter
-            </ListItem>
+            </DropdownItem>
           )}
-          <ListItem onClick={() => tree.remove(node.path)}>
+          <DropdownItem onClick={() => tree.remove(node.path)}>
             Delete Filter
-          </ListItem>
+          </DropdownItem>
         </Popover>
       </>
     )

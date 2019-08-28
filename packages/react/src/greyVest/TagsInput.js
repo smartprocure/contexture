@@ -1,6 +1,5 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import F from 'futil-js'
 import { withState } from 'recompose'
 import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
@@ -15,8 +14,6 @@ let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 let TagsInput = withState('state', 'setState', () =>
   observable({
     currentInput: '',
-    selectedTag: null,
-    popoverOpen: false,
     isOneLine: true,
   })
 )(
@@ -33,9 +30,11 @@ let TagsInput = withState('state', 'setState', () =>
       tagStyle,
       placeholder = 'Search...',
       splitCommas,
-      PopoverContents,
-      theme: { Popover, Tag },
+      theme: { Tag },
       style,
+      onBlur = _.noop,
+      onInputChange = _.noop,
+      onTagClick = _.noop,
       ...props
     }) => {
       let containerRef
@@ -88,10 +87,7 @@ let TagsInput = withState('state', 'setState', () =>
                     key={t}
                     value={t}
                     {...{ removeTag, tagStyle }}
-                    onClick={() => {
-                      state.popoverOpen = true
-                      state.selectedTag = t
-                    }}
+                    onClick={() => onTagClick(t)}
                   />
                 ),
                 tags
@@ -107,11 +103,13 @@ let TagsInput = withState('state', 'setState', () =>
                 ref={e => (inputRef = e)}
                 onChange={e => {
                   state.currentInput = e.target.value
+                  onInputChange()
                 }}
                 onBlur={() => {
                   if (isValidInput(state.currentInput, tags)) {
                     addTag(state.currentInput)
                     state.currentInput = ''
+                    onBlur()
                   }
                 }}
                 onKeyDown={e => {
@@ -141,11 +139,6 @@ let TagsInput = withState('state', 'setState', () =>
                 {...props}
               />
             </Flex>
-            {PopoverContents && (
-              <Popover isOpen={F.lensProp('popoverOpen', state)}>
-                <PopoverContents tag={state.selectedTag} />
-              </Popover>
-            )}
           </div>
         </OutsideClickHandler>
       )
