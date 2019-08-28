@@ -32,7 +32,7 @@ let theme = {
   MissingTypeComponent,
   Icon,
   Input: 'input',
-  ListItem: 'li',
+  DropdownItem: 'li',
   Modal,
   ModalPicker,
   NumberInput: props => <input type="number" {...props} />,

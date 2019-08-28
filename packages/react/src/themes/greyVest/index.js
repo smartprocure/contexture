@@ -8,7 +8,7 @@ import Checkbox from '../../greyVest/Checkbox'
 import DateInput from '../../greyVest/DateInput'
 import Fonts from '../../greyVest/Fonts'
 import Icon from '../../greyVest/Icon'
-import ListItem from '../../greyVest/ListItem'
+import DropdownItem from '../../greyVest/DropdownItem'
 import Modal from '../../greyVest/Modal'
 import PagerItem from '../../greyVest/PagerItem'
 import RadioList from '../../greyVest/RadioList'
@@ -39,7 +39,7 @@ export default {
   ),
   Icon,
   TextInput,
-  ListItem,
+  DropdownItem,
   PickerItem,
   NumberInput: defaultProps({ type: 'number' })(TextInput),
   MissingTypeComponent,

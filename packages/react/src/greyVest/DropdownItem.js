@@ -3,7 +3,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { useLens } from '../utils/react'
 
-export let ListItem = ({ style = {}, ...props }) => {
+export let DropdownItem = ({ style = {}, ...props }) => {
   let hovering = useLens(false)
   return (
     <div
@@ -26,4 +26,4 @@ export let ListItem = ({ style = {}, ...props }) => {
   )
 }
 
-export default observer(ListItem)
+export default observer(DropdownItem)

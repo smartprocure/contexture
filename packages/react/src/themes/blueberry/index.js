@@ -5,7 +5,7 @@ import Button from './Button'
 import ButtonRadio from './ButtonRadio'
 import Checkbox from './Checkbox'
 import Fonts from './Fonts'
-import ListItem from './ListItem'
+import DropdownItem from './DropdownItem'
 import PagerItem from './PagerItem'
 import Style from './Style'
 import Tag from './Tag'
@@ -21,10 +21,10 @@ export default {
       {children}
     </>
   ),
-  ListItem,
+  DropdownItem,
   NumberInput: defaultProps({ type: 'number' })(TextInput),
   PagerItem,
-  PickerItem: ListItem,
+  PickerItem: DropdownItem,
   RadioList: ButtonRadio,
   Style,
   Table: props => <table className="bb-table" {...props} />,

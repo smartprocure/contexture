@@ -9,7 +9,7 @@ export Fonts from './Fonts'
 export Icon from './Icon'
 export IconButton from './IconButton'
 export LinkButton from './LinkButton'
-export ListItem from './ListItem' // formerly also ListGroupItem
+export DropdownItem from './DropdownItem' // formerly also ListGroupItem
 export Modal from './Modal'
 export PagerItem from './PagerItem'
 export PopoverTagsInput from './PopoverTagsInput'

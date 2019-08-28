@@ -119,7 +119,7 @@ let Header = _.flow(
 )(
   ({
     theme: {
-      ListItem,
+      DropdownItem,
       Icon,
       Popover,
       Modal,
@@ -190,7 +190,7 @@ let Header = _.flow(
           style={popoverStyle}
         >
           {!disableSort && (
-            <ListItem
+            <DropdownItem
               onClick={() => {
                 F.off(popover)()
                 mutate({ sortField: field, sortDir: 'asc' })
@@ -198,10 +198,10 @@ let Header = _.flow(
             >
               <Icon icon="SortAscending" />
               Sort Ascending
-            </ListItem>
+            </DropdownItem>
           )}
           {!disableSort && (
-            <ListItem
+            <DropdownItem
               onClick={() => {
                 F.off(popover)()
                 mutate({ sortField: field, sortDir: 'desc' })
@@ -209,39 +209,39 @@ let Header = _.flow(
             >
               <Icon icon="SortDescending" />
               Sort Descending
-            </ListItem>
+            </DropdownItem>
           )}
-          <ListItem
+          <DropdownItem
             onClick={() =>
               moveColumn(mutate, i => i - 1, field, visibleFields, includes)
             }
           >
             <Icon icon="MoveLeft" />
             Move Left
-          </ListItem>
-          <ListItem
+          </DropdownItem>
+          <DropdownItem
             onClick={() =>
               moveColumn(mutate, i => i + 1, field, visibleFields, includes)
             }
           >
             <Icon icon="MoveRight" />
             Move Right
-          </ListItem>
-          <ListItem
+          </DropdownItem>
+          <DropdownItem
             onClick={() => mutate({ include: _.without([field], includes) })}
           >
             <Icon icon="RemoveColumn" />
             Remove Column
-          </ListItem>
+          </DropdownItem>
           {!!addOptions.length && (
-            <ListItem onClick={F.on(adding)}>
+            <DropdownItem onClick={F.on(adding)}>
               <Icon icon="AddColumn" />
               Add Column
-            </ListItem>
+            </DropdownItem>
           )}
           {criteria && (typeDefault || filterNode) && !disableFilter && (
             <div>
-              <ListItem onClick={filter}>
+              <DropdownItem onClick={filter}>
                 <Icon
                   icon={
                     filterNode
@@ -252,7 +252,7 @@ let Header = _.flow(
                   }
                 />
                 Filter
-              </ListItem>
+              </DropdownItem>
               {F.view(filtering) && filterNode && !filterNode.paused && (
                 <Dynamic
                   component={MissingTypeComponent}
