@@ -12,6 +12,7 @@ export LinkButton from './LinkButton'
 export ListItem from './ListItem' // formerly also ListGroupItem
 export Modal from './Modal'
 export PagerItem from './PagerItem'
+export PopoverTagsInput from './PopoverTagsInput'
 export RadioList from './RadioList'
 export let SearchTree = () => {}
 export Select from './Select'
