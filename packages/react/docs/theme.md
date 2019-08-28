@@ -65,32 +65,30 @@ The default theme in contexture-react is GreyVest. The full list of **theme comp
 | --- | --- | --- | --- |
 | `Button` | `isActive`, `primary`, `onClick`, `children` | A generic button | Facet, Number, TagsQuery, TermsStatsTable |
 | `Checkbox` | `checked`, `onChange` | A generic checkbox | CheckableResultTable, CheckableTermsStatsTable, Facet, TagsQuery |
-| `CheckButton` | `checked`, `onClick`, `children` | A button with an `onClick` handler and an on/off state, containing a checkbox that displays this state *(this really should be extrapolated to some kind of generic BinaryStateButton)* |
-| `Link` | same as basic `a` |  | ResultPager |
 | `Icon` | `icon`, `onClick` | A generic icon component | ResultPager, ResultTable |
-| `RadioList` | `options`, `value`, `onChange` | A generic list of radio buttons | Bool, Date, Exists, Facet, TagsQuery |
-| `Select` | same as `select` | A generic dropdown select component | Date, DateRangePicker, Geo, TagsJoinPicker, TagsQuery, TagsText, TermsStatsTable |
+| `RadioList` | `options`, `value`, `onChange` | A generic list of radio buttons. The `options` prop is an array of `{ value, label }` objects. | Bool, Date, Exists, Facet, TagsQuery |
+| `Select` | same as basic `select` | A generic dropdown select component | Date, DateRangePicker, Geo, TagsJoinPicker, TagsQuery, TagsText, TermsStatsTable |
 | `TextInput` |  same as basic `input` | A generic text input component | Facet, Query, TermsStatsTable, Text |
-| `DateInput` | | A generic date entry component | Date |
-| `NumberInput` | | An input of type `number` | Geo, Number |
-| `TagsInput` | | A text input field that turns input into `Tag`s | TagsQuery, TagsText |
-| `Tag` | `value`, `removeTag`, `tagStyle`, `onClick` | A tag component with a button to remove the tag. Used in TagsInput. |
+| `DateInput` | `value`, `onChange` | A generic date entry component | Date |
+| `NumberInput` | same as basic `input` | An input of type `number` | Geo, Number |
+| `TagsInput` | `tags`, `addTag`, `removeTagp`, `submit`, `tagStyle`, `placeholder`, `splitCommas`, `style`, `onBlur`, `onInputChange`, `onTagClick` | A text input field that turns input into `Tag`s | TagsQuery, TagsText |
+| `PopoverTagsInput` | same as TagsInput, plus `PopoverContents` | A TagsInput that opens a popover when a tag is clicked. Uses the `TagsInput` theme component. | TagsQuery, TagsText |
+| `Tag` | `value`, `removeTag`, `tagStyle`, `onClick` | A tag component with a button to remove the tag. Used in TagsInput. | none |
 | `Picker` | `options`, `onChange` | Renders a list of selectable options | ResultTable |
-| `AdderPicker` | `options`, `onChange`, `label` | *this key is actually based on specific usage in the FilterAdder component, and should probably just be removed from the defaults in favor of a nested style* |
+| `ModalPicker` | `options`, `onChange`, `label` | A picker inside a modal, with a button to open it. Uses `Picker`, `Button`, and `Modal` theme components. | none |
 
 ### Containers
 
 | Key | Expected props | Notes | ExampleTypes usage |
 | --- | --- | --- | --- |
-| `Box` | `children` | A generic container element |
+| `Box` | `children` | A generic container element | none |
 | `Modal` | `isOpen`, `children` | A generic modal component | ResultTable |
 | `Popover` | `isOpen`, `children` | A generic context-menu component | ResultTable |
 | `ListItem` | `children` | A generic list item | ResultTable |
-| `PagerItem` | `active`, `disabled` | A list item for Pager components *(make this nested instead?)* | ResultPager |
-| `PickerItem` | `active`, `disabled` | A list item for Picker components *(make this nested instead?)* |
-| `TextHighlight` | `pattern`, `text`, `Wrap` | Renders the text given in the `text` prop, with the parts that match the `pattern` prop wrapped in the `Wrap` component |
-| `Table` | same as basic `table` | A generic table component |
-| `ExpandableTable` | `data`, `columns`, `recordKey`, `sortField`, `sortDir`, `columnSort` | | TermsStatsTable, CheckableTermsStatsTable |
+| `PagerItem` | `active`, `disabled` | A list item for Pager components | ResultPager |
+| `PickerItem` | `active`, `disabled` | A list item for Picker components | none |
+| `TextHighlight` | `pattern`, `text`, `Wrap` | Renders the text given in the `text` prop, with the parts that match the `pattern` prop wrapped in the `Wrap` component | none |
+| `Table` | same as basic `table` | A generic table component | ResultTable |
 | `TableCell` | same as `td` | A generic table cell | ResultTable |
 | `TableHeaderCell` | same as `th` | A generic table header | ResultTable |
 | `TableRow` | same as `tr` | A generic table row | ResultTable |
@@ -99,8 +97,7 @@ The default theme in contexture-react is GreyVest. The full list of **theme comp
 
 | Key | Expected props | Notes |
 | --- | --- | --- |
-| `Fonts` | none | For holding `<link>` elements to fonts used in the theme |
-| `Style` | none | For rendering a `<style>` block with theme-specific styles |
+| `Globals` | `children` | This component is rendered inside `ThemeProvider`, and wraps its children. For use with other providers and/or standalone globals like stylesheets. |
 | `BarChart` | `height`, `borderColor`, `min`, `max` | Used in the DateHistogram and TermsStats example types |
 | `MissingTypeComponent` | `node` | Used as a fallback component in search interfaces when no other component is found for a node's contexture type |
 
