@@ -19,6 +19,15 @@
 * Create nodes explicitly on every contexture-client tree instance that was relying on the QuickStart functionality.
   * Example types can no longer automatically add contexture nodes to the tree. This was found in the QuickStart story and was designed to reduce barriers to entry, but the abstraction was leaky and radically increased complexity of our implementation despite no known usages in the wild. More often than not, it was just a potential source of bugs for end users. We might add support for something similar in a future release.
 
+# 1.55.2
+* Sort selected facet options on top
+
+# 1.55.1
+* TermsStatsTable: Fix AddAsFilter include/exclude
+
+# 1.55.0
+* Fix inputs issue with FireFox
+
 # 1.54.9
 * TermStatsTable: Add as filter would now add filter if the existing one is not in mode 'include'
 * Number: Better handling zero edge case when significantDigits is true

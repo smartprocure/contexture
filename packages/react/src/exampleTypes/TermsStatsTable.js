@@ -79,11 +79,10 @@ let TermsStatsTable = contexturify(
                               _.get('mode', filter) === 'exclude'
                             ) {
                               await tree.add(criteria, {
-                                key: _.uniqueId('add'),
                                 field,
                                 type: 'facet',
                               })
-                              filter = _.find(
+                              filter = _.findLast(
                                 { field },
                                 tree.getNode(criteria).children
                               )
