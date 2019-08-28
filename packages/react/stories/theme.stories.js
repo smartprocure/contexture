@@ -7,13 +7,12 @@ import {
   withTheme,
   withNamedTheme,
 } from '../src/utils/theme'
-import { getDisplayName } from '../src/utils/react'
+import { wrapDisplayName } from '../src/utils/react'
 
-let withStyle = (style, Component) => {
-  let styled = props => <Component style={style} {...props} />
-  styled.displayName = `WithStyle(${getDisplayName(Component)})`
-  return styled
-}
+let withStyle = (style, Component) =>
+  wrapDisplayName('withStyle', Component)(props => (
+    <Component style={style} {...props} />
+  ))
 
 let VanillaButton = withStyle(
   {
