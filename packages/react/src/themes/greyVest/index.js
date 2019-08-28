@@ -677,6 +677,7 @@ export let GVStyle = () => (
         max-width: 800px;
         border: 30px solid white;
         overflow: auto;
+        border-radius: 3px;
       }
 
       /* FilterButtonList */

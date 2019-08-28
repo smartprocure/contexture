@@ -1,3 +1,6 @@
+# 1.56.1
+* Modal: apply style on correct tag
+
 # 1.56.0
 * ResultsTable: Ability to sort column by subfield
 
