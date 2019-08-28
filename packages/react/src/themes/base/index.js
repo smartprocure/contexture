@@ -4,8 +4,6 @@ import { defaultProps } from 'recompose'
 
 // components exported from base component library
 import BarChart from '../../greyVest/BarChart'
-import CheckButton from '../../greyVest/CheckButton'
-import ExpandableTable from '../../greyVest/ExpandableTable'
 import Modal from '../../greyVest/Modal'
 import ModalPicker from '../../greyVest/ModalPicker'
 import NestedPicker from '../../greyVest/NestedPicker'
@@ -29,10 +27,8 @@ let theme = {
   Box: 'div',
   Button: 'button',
   Checkbox: props => <input type="checkbox" {...props} />,
-  CheckButton,
   DateInput: defaultProps({ native: true })(DateInput),
   MissingTypeComponent,
-  ExpandableTable,
   Icon,
   Input: 'input',
   ListItem: 'li',
