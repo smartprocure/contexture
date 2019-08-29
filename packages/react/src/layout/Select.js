@@ -7,7 +7,7 @@ let Select = React.forwardRef(
     <Observer>
       {() => (
         <select {...props} ref={ref}>
-          {placeholder && <option value="">{placeholder}</option>}
+          {placeholder ? <option value="">{placeholder}</option> : null}
           {_.map(
             x => (
               <option key={x.value} value={x.value}>

@@ -1,3 +1,6 @@
+# 1.56.2
+* Removed 'Please Select...' from TagsJoinPicker
+
 # 1.56.1
 * Modal: apply style on correct tag
 
