@@ -313,9 +313,12 @@ export default () => (
             <Tab value="analytics" label="Analytics">
               <TermsStatsTable
                 tree={tree}
+                criteria={['root', 'criteria']}
+                criteriaField="genres"
                 path={['root', 'genreScores']}
                 tableAttrs={{ className: 'gv-table' }}
                 sizeOptions={[10, 25, 50]}
+                criteriaGetValue="key"
               >
                 <Column field="key" label="Genre" />
                 <Column field="count" label="Found" />

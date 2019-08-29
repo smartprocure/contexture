@@ -116,6 +116,7 @@ export default () => (
 
         display: block;
         width: 100%;
+        min-width: 0;
 
         box-sizing: border-box;
         height: 40px;
@@ -387,6 +388,10 @@ export default () => (
       }
       .contexture-facet-cardinality {
         margin: 10px 0;
+      }
+      .contexture-facet > label > div {
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .contexture-number-separator {
