@@ -27,10 +27,10 @@ export let AddableFilterList = props => (
   </>
 )
 
-export let FiltersBox = withTheme(({ theme, ...props }) => (
-  <theme.Box className="filter-list">
+export let FiltersBox = withTheme(({ theme: { Box }, ...props }) => (
+  <Box className="filter-list">
     <AddableFilterList {...props} />
-  </theme.Box>
+  </Box>
 ))
 FiltersBox.displayName = 'FiltersBox'
 

@@ -1,6 +1,7 @@
 import F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
+import { setDisplayName } from 'recompose'
 import { Dynamic, Flex } from './greyVest'
 import { CheckButton } from './purgatory'
 import { withNode, withLoader } from './utils/hoc'
@@ -8,6 +9,7 @@ import { withTheme } from './utils/theme'
 import styles from './styles'
 
 let FilterButtonItem = _.flow(
+  setDisplayName('FilterButtonItem'),
   withLoader,
   withTheme
 )(
@@ -68,38 +70,35 @@ let GroupBox = ({ nodeJoinColor, children, nested, className }) => (
   </Flex>
 )
 
-let FilterButtonList = withNode(
-  ({
-    node,
-    tree,
-    fields = {},
-    mapNodeToProps = _.noop,
-    className = 'filter-button-list',
-    nested = false,
-  }) => (
-    <GroupBox
-      {...{ nested, className }}
-      nodeJoinColor={node && styles.joinColor(node)}
-    >
-      {_.map(child => {
-        let Component = child.children ? FilterButtonList : FilterButtonItem
-        return (
-          <Component
-            key={child.path}
-            nested
-            {...{
-              tree,
-              node: child,
-              fields,
-              mapNodeToProps,
-              className,
-            }}
-          />
-        )
-      }, _.get('children', node))}
-    </GroupBox>
-  )
+let FilterButtonList = ({
+  node,
+  tree,
+  fields = {},
+  mapNodeToProps = _.noop,
+  className = 'filter-button-list',
+  nested = false,
+}) => (
+  <GroupBox
+    {...{ nested, className }}
+    nodeJoinColor={node && styles.joinColor(node)}
+  >
+    {_.map(child => {
+      let Component = child.children ? FilterButtonList : FilterButtonItem
+      return (
+        <Component
+          key={child.path}
+          nested
+          {...{
+            tree,
+            node: child,
+            fields,
+            mapNodeToProps,
+            className,
+          }}
+        />
+      )
+    }, _.get('children', node))}
+  </GroupBox>
 )
 
-FilterButtonList.displayName = 'FilterButtonList'
-export default FilterButtonList
+export default withNode(FilterButtonList)

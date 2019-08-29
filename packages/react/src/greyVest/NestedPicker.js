@@ -1,6 +1,7 @@
 import React from 'react'
 import F from 'futil-js'
 import _ from 'lodash/fp'
+import { setDisplayName } from 'recompose'
 import { inject, observer } from 'mobx-react'
 import { observable } from 'mobx'
 import { useLens } from '../utils/react'
@@ -14,6 +15,7 @@ let unflattenObjectBy = _.curry((iteratee, x) =>
 let isField = x => x.typeDefault
 
 let FilteredSection = _.flow(
+  setDisplayName('FilteredSection'),
   observer,
   withTheme
 )(({ options, onClick, highlight, theme: { TextHighlight }, PickerItem }) => (
@@ -28,12 +30,14 @@ let FilteredSection = _.flow(
     )}
   </div>
 ))
-FilteredSection.displayName = 'FilteredSection'
 
 let getItemLabel = item =>
   isField(item) ? item.shortLabel || item.label : _.startCase(item._key)
 
-let Section = observer(({ options, onClick, selected, PickerItem }) => (
+let Section = _.flow(
+  setDisplayName('Section'),
+  observer
+)(({ options, onClick, selected, PickerItem }) => (
   <div>
     {_.map(
       item => (
@@ -54,7 +58,6 @@ let Section = observer(({ options, onClick, selected, PickerItem }) => (
     )}
   </div>
 ))
-Section.displayName = 'Section'
 
 let toNested = _.flow(
   _.map(x => _.defaults({ path: x.value }, x)),

@@ -1,5 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
+import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
 import F from 'futil-js'
 import { getResults, getRecord } from '../utils/schema'
@@ -8,6 +9,7 @@ import { withTheme } from '../utils/theme'
 import ResultTable from './ResultTable'
 
 let Label = _.flow(
+  setDisplayName('Label'),
   observer,
   withTheme
 )(({ node, theme: { Checkbox }, selected, getValue }) => {
@@ -27,7 +29,6 @@ let Label = _.flow(
   )
   return <Checkbox checked={allChecked} onChange={checkAll} />
 })
-Label.displayName = 'Label'
 
 // Extends ResultTable with a checkbox column
 // Writes to a lens called `selected`, using getValue to map the selected record to a value.

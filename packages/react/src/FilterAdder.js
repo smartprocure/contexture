@@ -2,7 +2,7 @@ import _ from 'lodash/fp'
 import React from 'react'
 import { contexturify } from './utils/hoc'
 import { newNodeFromField } from './utils/search'
-import { withNamedTheme } from './utils/theme'
+import { withTheme } from './utils/theme'
 import { ModalPicker } from './purgatory'
 import { Flex } from './greyVest'
 
@@ -39,5 +39,5 @@ let FilterAdder = ({
 
 export default _.flow(
   contexturify,
-  withNamedTheme('FilterAdder')
+  withTheme
 )(FilterAdder)

@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
+import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
 import Flex from '../greyVest/Flex'
 import { contexturify } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
 
 let SelectAll = _.flow(
+  setDisplayName('SelectAll'),
   observer,
   withTheme
 )(({ node, tree, theme: { Checkbox } }) => {
@@ -41,9 +43,9 @@ let SelectAll = _.flow(
     </label>
   )
 })
-SelectAll.displayName = 'SelectAll'
 
 let FacetOptionsFilter = _.flow(
+  setDisplayName('FacetOptionsFilter'),
   observer,
   withTheme
 )(({ tree, node, theme: { TextInput, Button } }) => {
@@ -71,7 +73,6 @@ let FacetOptionsFilter = _.flow(
     </Flex>
   )
 })
-FacetOptionsFilter.displayName = 'FacetOptionsFilter'
 
 let Facet = ({
   tree,

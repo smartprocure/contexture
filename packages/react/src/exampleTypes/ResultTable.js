@@ -1,6 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
+import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
 import { contexturify } from '../utils/hoc'
 import { Dynamic } from '../greyVest'
@@ -44,6 +45,7 @@ let popoverStyle = {
 }
 
 let HighlightedColumnHeader = _.flow(
+  setDisplayName('HighlightedColumnHeader'),
   observer,
   withTheme
 )(
@@ -61,12 +63,12 @@ let HighlightedColumnHeader = _.flow(
       <TableHeaderCell key="additionalFields">Other Matches</TableHeaderCell>
     ) : null
 )
-HighlightedColumnHeader.displayName = 'HighlightedColumnHeader'
 
 let labelForField = (schema, field) =>
   _.getOr(field, 'label', _.find({ field }, schema))
 
 let HighlightedColumn = _.flow(
+  setDisplayName('HighlightedColumn'),
   observer,
   withTheme
 )(
@@ -111,9 +113,9 @@ let HighlightedColumn = _.flow(
     )
   }
 )
-HighlightedColumn.displayName = 'HighlightedColumn'
 
 let Header = _.flow(
+  setDisplayName('Header'),
   observer,
   withTheme
 )(
@@ -278,10 +280,10 @@ let Header = _.flow(
     )
   }
 )
-Header.displayName = 'Header'
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
 let TableBody = _.flow(
+  setDisplayName('TableBody'),
   observer,
   withTheme
 )(({ node, visibleFields, fields, hiddenFields, theme, schema, Row }) => {
@@ -320,82 +322,77 @@ let TableBody = _.flow(
     </tbody>
   )
 })
-TableBody.displayName = 'TableBody'
 
-let ResultTable = _.flow(
+let ResultTable = ({
+  fields,
+  infer,
+  path,
+  criteria,
+  node,
+  tree,
+  theme: { Table },
+  Row, // accept a custom Row component so we can do fancy expansion things
+  mapNodeToProps = () => ({}),
+}) => {
+  // From Theme/Components
+  let mutate = tree.mutate(path)
+  // NOTE infer + add columns does not work together (except for anything explicitly passed in)
+  //   When removing a field, it's not longer on the record, so infer can't pick it up since it runs per render
+  let schema = _.flow(
+    _.merge(infer && inferSchema(node)),
+    applyDefaults,
+    _.values,
+    _.orderBy('order', 'desc')
+  )(fields)
+  let includes = getIncludes(schema, node)
+  let isIncluded = x => _.includes(x.field, includes)
+  let visibleFields = _.flow(
+    _.map(field => _.find({ field }, schema)),
+    _.compact
+  )(includes)
+  let hiddenFields = _.reject(isIncluded, schema)
+
+  let headerProps = {
+    mapNodeToProps,
+    fields,
+    visibleFields,
+    includes,
+    addOptions: fieldsToOptions(hiddenFields),
+    addFilter: field => tree.add(criteria, newNodeFromField({ field, fields })),
+    tree,
+    node,
+    mutate,
+    criteria,
+  }
+
+  return (
+    <Table>
+      <thead>
+        <tr>
+          {F.mapIndexed(
+            x => (
+              <Header key={x.field} field={x} {...headerProps} />
+            ),
+            visibleFields
+          )}
+          <HighlightedColumnHeader node={node} />
+        </tr>
+      </thead>
+      <TableBody
+        {...{
+          node,
+          fields,
+          visibleFields,
+          hiddenFields,
+          schema,
+          Row,
+        }}
+      />
+    </Table>
+  )
+}
+
+export default _.flow(
   contexturify,
   withTheme
-)(
-  ({
-    fields,
-    infer,
-    path,
-    criteria,
-    node,
-    tree,
-    theme: { Table },
-    Row, // accept a custom Row component so we can do fancy expansion things
-    mapNodeToProps = () => ({}),
-  }) => {
-    // From Theme/Components
-    let mutate = tree.mutate(path)
-    // NOTE infer + add columns does not work together (except for anything explicitly passed in)
-    //   When removing a field, it's not longer on the record, so infer can't pick it up since it runs per render
-    let schema = _.flow(
-      _.merge(infer && inferSchema(node)),
-      applyDefaults,
-      _.values,
-      _.orderBy('order', 'desc')
-    )(fields)
-    let includes = getIncludes(schema, node)
-    let isIncluded = x => _.includes(x.field, includes)
-    let visibleFields = _.flow(
-      _.map(field => _.find({ field }, schema)),
-      _.compact
-    )(includes)
-    let hiddenFields = _.reject(isIncluded, schema)
-
-    let headerProps = {
-      mapNodeToProps,
-      fields,
-      visibleFields,
-      includes,
-      addOptions: fieldsToOptions(hiddenFields),
-      addFilter: field =>
-        tree.add(criteria, newNodeFromField({ field, fields })),
-      tree,
-      node,
-      mutate,
-      criteria,
-    }
-
-    return (
-      <Table>
-        <thead>
-          <tr>
-            {F.mapIndexed(
-              x => (
-                <Header key={x.field} field={x} {...headerProps} />
-              ),
-              visibleFields
-            )}
-            <HighlightedColumnHeader node={node} />
-          </tr>
-        </thead>
-        <TableBody
-          {...{
-            node,
-            fields,
-            visibleFields,
-            hiddenFields,
-            schema,
-            Row,
-          }}
-        />
-      </Table>
-    )
-  }
-)
-ResultTable.displayName = 'ResultTable'
-
-export default ResultTable
+)(ResultTable)
