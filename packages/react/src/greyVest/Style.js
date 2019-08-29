@@ -95,7 +95,7 @@ export default () => (
         padding: 15px;
       }
 
-      .gv-body, body {
+      body {
         margin: 0;
         background: #f6f6f6;
         font-family: Lato;
@@ -106,7 +106,7 @@ export default () => (
       input.gv-input, textarea.gv-input {
         padding: 10px;
       }
-      .gv-input, .gv-body select, .gv-body input {
+      .gv-input, select, input {
         outline: none;
         font-size: 16px;
         font-family: Lato;
@@ -122,10 +122,10 @@ export default () => (
         height: 40px;
       }
 
-      .gv-body select, .gv-body input, .gv-body textarea {
+      select, input, textarea {
         border-radius: 4px;
       }
-      .gv-body select {
+      select {
         cursor: pointer;
       }
 

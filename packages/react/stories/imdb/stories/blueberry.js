@@ -13,8 +13,13 @@ import {
   componentForType,
 } from '../../../src'
 import theme from '../../../src/themes/blueberry'
-import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
-let { ResultCount, PagedResultTable, TagsQuery, DateRangePicker } = ExampleTypes
+import {
+  ResultCount,
+  PagedResultTable,
+  TagsQuery,
+  DateRangePicker,
+  TypeMap,
+} from '../../../src/exampleTypes'
 
 import { ThemeProvider, withTheme } from '../../../src/utils/theme'
 import FilterAdder from '../../../src/FilterAdder'

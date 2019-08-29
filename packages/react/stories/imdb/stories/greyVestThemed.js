@@ -21,17 +21,15 @@ import {
   IconButton,
 } from '../../../src/greyVest'
 import theme from '../../../src/themes/greyVest'
-import ExampleTypes from '../../../src/exampleTypes'
-import { Column } from '../../../src/greyVest/ExpandableTable'
-import { ThemeConsumer } from '../../../src/utils/theme'
-
-let {
+import {
   TypeMap,
   TermsStatsTable,
   TagsQuery,
   ResultCount,
   PagedResultTable,
-} = ExampleTypes
+} from '../../../src/exampleTypes'
+import { Column } from '../../../src/greyVest/ExpandableTable'
+import { ThemeConsumer } from '../../../src/utils/theme'
 
 let tree = Contexture({
   key: 'root',

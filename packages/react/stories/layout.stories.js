@@ -5,14 +5,13 @@ import { action } from '@storybook/addon-actions'
 import { observer } from 'mobx-react'
 import { fromPromise } from 'mobx-utils'
 import { useLens } from '../src/utils/react'
-import { Popover, Modal, Awaiter, TextHighlight } from '../src/greyVest'
+import { Flex, Popover, Modal, Awaiter, TextHighlight } from '../src/greyVest'
 import {
   CheckButton,
   StepsAccordion,
   AccordionStep,
   ModalPicker,
 } from '../src/purgatory'
-import Flex from '../src/greyVest/Flex'
 import { NestedPicker } from '../src'
 
 let ModalDemo = observer(() => {

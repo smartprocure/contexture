@@ -21,16 +21,16 @@ import {
   Box,
   SearchTree,
   ToggleFiltersHeader,
+  Column,
 } from '../../../src/greyVest'
-import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
-import { Column } from './../../../src/greyVest/ExpandableTable'
-let {
+import {
   ResultCount,
   TagsQuery,
   DateRangePicker,
   TermsStatsTable,
   PagedResultTable,
-} = ExampleTypes
+  TypeMap,
+} from '../../../src/exampleTypes'
 
 let tree = Contexture({
   key: 'root',

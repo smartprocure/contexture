@@ -16,8 +16,13 @@ import {
   FilterAdder,
 } from '../../../src'
 import { Button, ButtonRadio } from '../../../src/greyVest'
-import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
-let { ResultCount, CheckableResultTable, ResultPager, TagsQuery } = ExampleTypes
+import {
+  ResultCount,
+  CheckableResultTable,
+  ResultPager,
+  TagsQuery,
+  TypeMap,
+} from '../../../src/exampleTypes'
 
 let tree = Contexture({
   key: 'root',

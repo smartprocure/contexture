@@ -3,7 +3,7 @@ import F from 'futil-js'
 import React from 'react'
 import { contexturify, withTreeLens } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
-import { setDisplayName } from 'recmopose'
+import { setDisplayName } from 'recompose'
 
 let LensInput = ({ lens, theme: { TextInput }, ...props }) => (
   <TextInput {...F.domLens.value(lens)} {...props} />

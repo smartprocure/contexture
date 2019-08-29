@@ -3,8 +3,7 @@ import React from 'react'
 import { fromPromise } from 'mobx-utils'
 import { QueryBuilder, Awaiter, componentForType } from '../../../src'
 import Contexture, { updateSchemas } from '../utils/contexture'
-import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
-let { ResultCount, ResultTable } = ExampleTypes
+import { ResultCount, ResultTable, TypeMap } from '../../../src/exampleTypes'
 
 let tree = Contexture({
   key: 'root',

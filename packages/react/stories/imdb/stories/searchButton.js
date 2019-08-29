@@ -12,15 +12,15 @@ import {
   FilterAdder,
 } from '../../../src'
 import theme, { Button } from '../../DemoControls'
-import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
-import { ThemeProvider } from '../../../src/utils/theme'
-let {
+import {
   Query,
   ResultCount,
   PagedResultTable,
   DateHistogram,
   TermsStats,
-} = ExampleTypes
+  TypeMap,
+} from '../../../src/exampleTypes'
+import { ThemeProvider } from '../../../src/utils/theme'
 
 let formatYear = x => new Date(x).getUTCFullYear()
 

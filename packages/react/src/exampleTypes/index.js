@@ -33,7 +33,7 @@ export let TypeMap = {
   bool: Bool,
 }
 
-export default {
+export {
   Facet,
   Number,
   Date,
@@ -54,5 +54,4 @@ export default {
   Text,
   TagsText,
   CheckableResultTable,
-  TypeMap,
 }

@@ -10,8 +10,7 @@ import TestTree from '../testTree'
 
 let formatYear = x => new Date(x).getUTCFullYear()
 import { Flex, SpacedList } from '../../src/greyVest'
-import ExampleTypes from '../../src/exampleTypes'
-let {
+import {
   Facet,
   Number,
   Query,
@@ -21,7 +20,7 @@ let {
   DateHistogram,
   TagsQuery,
   Geo,
-} = ExampleTypes
+} from '../../src/exampleTypes'
 
 storiesOf('Search Components (Unthemed)|Example Types', module)
   .addWithJSX('Full Demo', () => {

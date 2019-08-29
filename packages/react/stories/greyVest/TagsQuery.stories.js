@@ -2,9 +2,8 @@ import _ from 'lodash/fp'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import TestTree from '../testTree'
-import ExampleTypes from './../../src/exampleTypes'
+import { TagsQuery } from './../../src/exampleTypes'
 import decorator from './decorator'
-let { TagsQuery } = ExampleTypes
 
 let tags = _.times(n => ({ word: `(${n}) This is a tag` }), 5)
 
