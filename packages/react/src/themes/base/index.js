@@ -33,7 +33,7 @@ let theme = {
   DropdownItem: 'li',
   Modal,
   NumberInput: props => <input type="number" {...props} />,
-  Picker: NestedPicker,
+  NestedPicker,
   PagerItem: ({ children }) => <span>{children}</span>,
   PickerItem: 'div',
   Popover,

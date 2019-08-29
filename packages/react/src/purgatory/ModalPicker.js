@@ -7,7 +7,7 @@ import { withTheme } from '../utils/theme'
 
 let ModalPicker = ({
   options,
-  theme: { Button, Picker, Modal },
+  theme: { Button, NestedPicker, Modal },
   onChange,
   label,
 }) => {
@@ -15,7 +15,7 @@ let ModalPicker = ({
   return (
     <div>
       <Modal isOpen={isOpen}>
-        <Picker
+        <NestedPicker
           options={options}
           onChange={x => {
             onChange(x)

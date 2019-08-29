@@ -23,7 +23,7 @@ export let FilterActions = _.flow(
     node,
     tree,
     fields,
-    theme: { DropdownItem, Popover, Modal, Picker },
+    theme: { DropdownItem, Popover, Modal, NestedPicker },
     popover,
   }) => {
     let modal = useLens(false)
@@ -35,7 +35,7 @@ export let FilterActions = _.flow(
     return (
       <>
         <Modal isOpen={modal}>
-          <Picker
+          <NestedPicker
             options={fieldsToOptions(fields)}
             onChange={field => {
               tree.replace(node.path, transformNodeFromField({ field, fields }))

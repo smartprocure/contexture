@@ -123,7 +123,7 @@ let Header = _.flow(
       Icon,
       Popover,
       Modal,
-      Picker,
+      NestedPicker,
       TableHeaderCell,
       UnmappedNodeComponent,
     },
@@ -264,7 +264,7 @@ let Header = _.flow(
             </div>
           )}
           <Modal isOpen={adding}>
-            <Picker
+            <NestedPicker
               options={addOptions}
               onChange={field => {
                 if (!_.contains(field, includes))
