@@ -152,7 +152,7 @@ This section documents all of the **theme components** used by contexture-react 
 | `NumberInput` | same as basic `input` | An input of type `number` | Geo, Number |
 | `TagsInput` | `tags`, `addTag`, `removeTag`, `submit`, `tagStyle`, `placeholder`, `splitCommas`, `style`, `onBlur`, `onInputChange`, `onTagClick` | A text input field that turns input into `Tag`s | TagsQuery, TagsText |
 | `Tag` | `value`, `removeTag`, `tagStyle`, `onClick` | A tag component with a button to remove the tag. Used in TagsInput. | none |
-| `NestedPicker` | `options`, `onChange` | Renders a list of selectable options | ResultTable |
+| `NestedPicker` | `options`, `onChange`, `PickerItem` | Renders a list of selectable options | ResultTable |
 
 ### Containers
 
@@ -163,12 +163,8 @@ This section documents all of the **theme components** used by contexture-react 
 | `Popover` | `isOpen`, `children` | A generic context-menu component | ResultTable |
 | `DropdownItem` | `children` | A generic list item used in dropdown menus | ResultTable |
 | `PagerItem` | `active`, `disabled` | A list item for Pager components | ResultPager |
-| `PickerItem` | `active`, `disabled` | A list item for Picker components | none |
 | `TextHighlight` | `pattern`, `text`, `Wrap` | Renders the text given in the `text` prop, with the parts that match the `pattern` prop wrapped in the `Wrap` component | none |
 | `Table` | same as basic `table` | A generic table component | ResultTable |
-| `TableCell` | same as `td` | A generic table cell | ResultTable |
-| `TableHeaderCell` | same as `th` | A generic table header | ResultTable |
-| `TableRow` | same as `tr` | A generic table row | ResultTable |
 
 ### Other
 
