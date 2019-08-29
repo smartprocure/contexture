@@ -5,17 +5,15 @@ import { action } from '@storybook/addon-actions'
 import { observer } from 'mobx-react'
 import { fromPromise } from 'mobx-utils'
 import { useLens } from '../src/utils/react'
+import { Popover, Modal, Awaiter, TextHighlight } from '../src/greyVest'
 import {
-  Popover,
-  Modal,
-  Awaiter,
-  TextHighlight,
   CheckButton,
   StepsAccordion,
   AccordionStep,
-} from '../src/greyVest'
+  ModalPicker,
+} from '../src/purgatory'
 import Flex from '../src/greyVest/Flex'
-import { NestedPicker, ModalPicker } from '../src'
+import { NestedPicker } from '../src'
 
 let ModalDemo = observer(() => {
   let isOpen = useLens(false)

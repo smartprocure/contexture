@@ -2,7 +2,7 @@ import _ from 'lodash/fp'
 import F from 'futil-js'
 import React from 'react'
 import FilterButtonList from '../FilterButtonList'
-import { StepsAccordion, AccordionStep } from '../greyVest'
+import { StepsAccordion, AccordionStep } from '../purgatory'
 import { withNode } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
 

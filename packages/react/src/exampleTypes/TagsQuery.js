@@ -6,12 +6,13 @@ import { contexturify } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
 import { bgJoin } from '../styles/generic'
 import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
+import PopoverTagsInput from '../purgatory/PopoverTagsInput'
 
 let tagValueField = 'word'
 let TagsQuery = ({
   tree,
   node,
-  theme: { PopoverTagsInput, Checkbox, RadioList, Select, Button },
+  theme: { Checkbox, RadioList, Select, Button },
   placeholder,
   ...props
 }) => {

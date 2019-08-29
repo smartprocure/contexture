@@ -4,6 +4,7 @@ import F from 'futil-js'
 import { contexturify, withTreeLens } from '../utils/hoc'
 import { bgJoin } from '../styles/generic'
 import { withTheme } from '../utils/theme'
+import PopoverTagsInput from '../purgatory/PopoverTagsInput'
 
 import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
 
@@ -24,7 +25,7 @@ let Text = _.flow(
   withTreeLens,
   contexturify,
   withTheme
-)(({ tree, node, theme: { PopoverTagsInput, Select }, placeholder }) => {
+)(({ tree, node, theme: { Select }, placeholder }) => {
   let tagStyle = bgJoin(tagToGroupJoin(node.join))
   let TagPopover = () => (
     <div>

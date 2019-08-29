@@ -20,12 +20,10 @@ import TextHighlight from '../../greyVest/TextHighlight'
 import TextInput from '../../greyVest/TextInput'
 
 //components used only for theme
-import FilterAdderModalPicker from './FilterAdderModalPicker'
 import MissingTypeComponent from './MissingTypeComponent'
 import PickerItem from './PickerItem'
 
 export default {
-  'FilterAdder.ModalPicker': FilterAdderModalPicker,
   Box,
   Button,
   Checkbox,

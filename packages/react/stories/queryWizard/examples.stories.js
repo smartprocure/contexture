@@ -1,12 +1,10 @@
 import _ from 'lodash/fp'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import {
-  QueryWizard,
-  FilterButtonList,
-  StepsAccordion,
+import { QueryWizard, FilterButtonList } from '../../src/'
+import StepsAccordion, {
   AccordionStep,
-} from '../../src/'
+} from '../../src/purgatory/StepsAccordion'
 import { mergeOverAll } from 'futil-js'
 import { componentForType, schemaFieldProps } from '../../src/utils/schema'
 import GVDecorator from '../greyVest/decorator'

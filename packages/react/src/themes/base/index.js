@@ -5,10 +5,8 @@ import { defaultProps } from 'recompose'
 // components exported from base component library
 import BarChart from '../../greyVest/BarChart'
 import Modal from '../../greyVest/Modal'
-import ModalPicker from '../../greyVest/ModalPicker'
 import NestedPicker from '../../greyVest/NestedPicker'
 import Popover from '../../greyVest/Popover'
-import PopoverTagsInput from '../../greyVest/PopoverTagsInput'
 import RadioList from '../../greyVest/RadioList'
 import Select from '../../greyVest/Select'
 import TagsInput from '../../greyVest/TagsInput'
@@ -34,13 +32,11 @@ let theme = {
   Input: 'input',
   DropdownItem: 'li',
   Modal,
-  ModalPicker,
   NumberInput: props => <input type="number" {...props} />,
   Picker: NestedPicker,
   PagerItem: ({ children }) => <span>{children}</span>,
   PickerItem: 'div',
   Popover,
-  PopoverTagsInput,
   RadioList: defaultProps({ native: true })(RadioList),
   Select,
   Table: 'table',

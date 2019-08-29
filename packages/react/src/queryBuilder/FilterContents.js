@@ -3,6 +3,7 @@ import _ from 'lodash/fp'
 import React from 'react'
 import { observer } from 'mobx-react'
 import { Dynamic, Grid } from '../greyVest/'
+import { ModalPicker } from '../purgatory'
 import { fieldsToOptions } from '../FilterAdder'
 import { get } from '../utils/mobx-utils'
 import {
@@ -17,7 +18,7 @@ let FilterContents = ({
   tree,
   fields,
   mapNodeToProps = _.noop,
-  theme: { ModalPicker, MissingTypeComponent },
+  theme: { MissingTypeComponent },
 }) => {
   // `get` allows us to create a mobx dependency on field before we know it
   // exists (because the client will only add it if it's a type that uses it
