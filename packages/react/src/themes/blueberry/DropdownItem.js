@@ -13,7 +13,7 @@ let DropdownItem = props => {
         borderRadius: '4px',
         display: 'grid',
         gridGap: '5px',
-        gridTemplateColumns: '20px 1fr',
+        gridTemplateColumns: 'auto 1fr',
         alignItems: 'center',
         whiteSpace: 'nowrap',
         ...(F.view(hovering) && { backgroundColor: '#f5f5f5' }),

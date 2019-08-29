@@ -35,7 +35,6 @@ let theme = {
   NumberInput: props => <input type="number" {...props} />,
   NestedPicker,
   PagerItem: ({ children }) => <span>{children}</span>,
-  PickerItem: 'div',
   Popover,
   RadioList: defaultProps({ native: true })(RadioList),
   Select,

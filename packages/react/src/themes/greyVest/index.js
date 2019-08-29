@@ -9,6 +9,7 @@ import DateInput from '../../greyVest/DateInput'
 import Fonts from '../../greyVest/Fonts'
 import Icon from '../../greyVest/Icon'
 import DropdownItem from '../../greyVest/DropdownItem'
+import NestedPicker from '../../greyVest/NestedPicker'
 import Modal from '../../greyVest/Modal'
 import PagerItem from '../../greyVest/PagerItem'
 import RadioList from '../../greyVest/RadioList'
@@ -38,7 +39,7 @@ export default {
   Icon,
   TextInput,
   DropdownItem,
-  PickerItem,
+  NestedPicker: defaultProps({ PickerItem })(NestedPicker),
   NumberInput: defaultProps({ type: 'number' })(TextInput),
   UnmappedNodeComponent,
   Modal,

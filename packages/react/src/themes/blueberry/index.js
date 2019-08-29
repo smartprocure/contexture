@@ -11,6 +11,8 @@ import Style from './Style'
 import Tag from './Tag'
 import TextInput from './TextInput'
 
+import NestedPicker from '../../greyVest/NestedPicker'
+
 export default {
   Button,
   Checkbox,
@@ -24,7 +26,7 @@ export default {
   DropdownItem,
   NumberInput: defaultProps({ type: 'number' })(TextInput),
   PagerItem,
-  PickerItem: DropdownItem,
+  NestedPicker: defaultProps({ PickerItem: DropdownItem })(NestedPicker),
   RadioList: ButtonRadio,
   Style,
   Table: props => <table className="bb-table" {...props} />,

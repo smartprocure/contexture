@@ -16,7 +16,7 @@ let isField = x => x.typeDefault
 let FilteredSection = _.flow(
   observer,
   withTheme
-)(({ options, onClick, highlight, theme: { TextHighlight, PickerItem } }) => (
+)(({ options, onClick, highlight, theme: { TextHighlight }, PickerItem }) => (
   <div>
     {F.mapIndexed(
       (option, field) => (
@@ -33,10 +33,7 @@ FilteredSection.displayName = 'FilteredSection'
 let getItemLabel = item =>
   isField(item) ? item.shortLabel || item.label : _.startCase(item._key)
 
-let Section = _.flow(
-  observer,
-  withTheme
-)(({ options, onClick, selected, theme: { PickerItem } }) => (
+let Section = observer(({ options, onClick, selected, PickerItem }) => (
   <div>
     {_.map(
       item => (
@@ -74,7 +71,7 @@ let PanelTreePicker = inject((store, { onChange, options }) => {
   }
   return x
 })(
-  observer(({ selectAtLevel, state, nestedOptions }) => (
+  observer(({ selectAtLevel, state, nestedOptions, PickerItem }) => (
     <div
       className="panel-tree-picker"
       style={{ display: 'inline-flex', width: '100%', overflow: 'auto' }}
@@ -83,6 +80,7 @@ let PanelTreePicker = inject((store, { onChange, options }) => {
         options={nestedOptions}
         onClick={selectAtLevel(0)}
         selected={state.selected[0]}
+        PickerItem={PickerItem}
       />
       {F.mapIndexed(
         (_key, index) => (
@@ -91,6 +89,7 @@ let PanelTreePicker = inject((store, { onChange, options }) => {
             options={_.get(state.selected.slice(0, index + 1), nestedOptions)}
             onClick={selectAtLevel(index + 1)}
             selected={state.selected[index + 1]}
+            PickerItem={PickerItem}
           />
         ),
         state.selected
@@ -102,7 +101,7 @@ PanelTreePicker.displayName = 'PanelTreePicker'
 
 let matchLabel = str => _.filter(x => F.matchAllWords(str)(x.label))
 
-let NestedPicker = ({ options, onChange, theme }) => {
+let NestedPicker = ({ options, onChange, theme, PickerItem = 'div' }) => {
   let filter = useLens('')
   return (
     <div>
@@ -115,9 +114,14 @@ let NestedPicker = ({ options, onChange, theme }) => {
           options={matchLabel(F.view(filter))(options)}
           onClick={onChange}
           highlight={F.view(filter)}
+          PickerItem={PickerItem}
         />
       ) : (
-        <PanelTreePicker options={options} onChange={onChange} />
+        <PanelTreePicker
+          options={options}
+          onChange={onChange}
+          PickerItem={PickerItem}
+        />
       )}
     </div>
   )
