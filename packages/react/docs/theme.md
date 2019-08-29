@@ -136,7 +136,7 @@ These potential modifications to the context theme *do* affect `useTheme`'s retu
 
 ## Default theme components
 
-This section documents all of the **theme components** used by contexture-react itself, along with the API for each one. The items in this list all have fallback components available, so 
+This section documents all of the **theme components** used by contexture-react itself, along with the API for each one. The **theme keys** in this list all have fallback components available, so overriding them in custom themes is optional.
 
 ### Inputs
 
@@ -150,7 +150,7 @@ This section documents all of the **theme components** used by contexture-react 
 | `TextInput` |  same as basic `input` | A generic text input component | Facet, Query, TermsStatsTable, Text |
 | `DateInput` | `value`, `onChange` | A generic date entry component | Date |
 | `NumberInput` | same as basic `input` | An input of type `number` | Geo, Number |
-| `TagsInput` | `tags`, `addTag`, `removeTagp`, `submit`, `tagStyle`, `placeholder`, `splitCommas`, `style`, `onBlur`, `onInputChange`, `onTagClick` | A text input field that turns input into `Tag`s | TagsQuery, TagsText |
+| `TagsInput` | `tags`, `addTag`, `removeTag`, `submit`, `tagStyle`, `placeholder`, `splitCommas`, `style`, `onBlur`, `onInputChange`, `onTagClick` | A text input field that turns input into `Tag`s | TagsQuery, TagsText |
 | `PopoverTagsInput` | same as TagsInput, plus `PopoverContents` | A TagsInput that opens a popover when a tag is clicked. Uses the `TagsInput` theme component. | TagsQuery, TagsText |
 | `Tag` | `value`, `removeTag`, `tagStyle`, `onClick` | A tag component with a button to remove the tag. Used in TagsInput. | none |
 | `Picker` | `options`, `onChange` | Renders a list of selectable options | ResultTable |
