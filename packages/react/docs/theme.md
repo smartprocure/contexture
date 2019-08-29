@@ -4,7 +4,7 @@ A theme in contexture-react is simply an object -- which we'll call a **theme ob
 
 Since they are really just identifiers for components, theme keys should follow the same naming conventions as React components themselves. For the purpose of consuming the API, we'll refer to a theme key together with the component it identifies as a **theme component**.
 
-The contexture-react theme API supports two methods of overriding themes: on a per-instance basis by passing a **theme object** as a prop, and on a per-key basis through **nested themes** (which we'll talk more about in the [Nested themes](#Nested%20themes) section).
+The contexture-react theme API supports two methods of overriding themes: on a per-instance basis by passing a **theme object** as a prop, and on a per-key basis through **nested themes** (which we'll talk more about in the [Nested themes](#nested-themes) section).
 
 ## Initializing the Theme API
 
@@ -25,7 +25,7 @@ function App() {
 
 `ThemeProvider` accepts a `theme` prop containing a **theme object**.
 
-> ℹ️ **Note:** contexture-react provides a basic **fallback theme** to all components that consume its theme API, to help prevent render errors if you forget to initialize `ThemeProvider` with a `theme` prop (or even leave out `ThemeProvider` altogether 😱). See the [Default theme components](#Default%20theme%20components) section for more details.
+> ℹ️ **Note:** contexture-react provides a basic **fallback theme** to all components that consume its theme API, to help prevent render errors if you forget to initialize `ThemeProvider` with a `theme` prop (or even leave out `ThemeProvider` altogether 😱). See the [Default theme components](#default-theme-components) section for more details.
 
 ### Globals
 
@@ -75,7 +75,7 @@ let IconButton = ({ icon, children, ...props }) => (
 export default IconButton
 ```
 
-The `ThemeConsumer` component takes two optional props: `name`, which accepts a string and can be used to supply a name for [nested theming](#Nested%20themes), and `theme`, which accepts a **theme object** that is merged with the context theme, overriding its values where applicable.
+The `ThemeConsumer` component takes two optional props: `name`, which accepts a string and can be used to supply a name for [nested theming](#nested-themes), and `theme`, which accepts a **theme object** that is merged with the context theme, overriding its values where applicable.
 
 When a nested theme is merged, or when the context theme is overridden by a `theme` prop, `ThemeConsumer` *creates a theme provider with the new theme object*. This ensures that that any of its children or grandchildren or grandchildren that consume the theme API will be able to access the updated theme object from context.
 
@@ -100,7 +100,7 @@ export default withTheme(IconButton)
 
 Directly passing a `theme` prop to the `withTheme` component -- in our case, the `IconButton` component that is exported from this file -- overrides the context theme for the component and its children, just like `ThemeConsumer`'s `theme` prop does.
 
-If you need to give your component a `name` for nested themes, use the `withNamedTheme` function instead. (See the [Nested themes](#Nested%20themes) section for more details.)
+If you need to give your component a `name` for nested themes, use the `withNamedTheme` function instead. (See the [Nested themes](#nested-themes) section for more details.)
 
 `ThemeConsumer` and `withTheme` both accomplish the same thing in different ways. You're free to use whichever one you like best. 🙂
 
@@ -197,7 +197,7 @@ export default {
 }
 ```
 
-> ℹ️ **Note:** Any theme component that is not specified in your custom theme will default to a generic fallback component, as long as its key is in the [list above](#Default%20theme%20components).
+> ℹ️ **Note:** Any theme component that is not specified in your custom theme will default to a generic fallback component, as long as its key is in the [list above](#default-theme-components).
 
 To use your custom theme, pass it to a contexture-react `ThemeProvider` using the `theme` prop. Here's a basic example using the `IconButton` component we created earlier:
 
