@@ -1,3 +1,6 @@
+# 1.56.3
+* Cleanup dist directory before starting babel
+
 # 1.56.2
 * Removed 'Please Select...' from TagsJoinPicker
 
