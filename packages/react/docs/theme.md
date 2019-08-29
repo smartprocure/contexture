@@ -142,7 +142,8 @@ This section documents all of the **theme components** used by contexture-react 
 
 | Key | Expected props | Notes | ExampleTypes usage |
 | --- | --- | --- | --- |
-| `Button` | `isActive`, `primary`, `onClick`, `children` | A generic button | Facet, Number, TagsQuery, TermsStatsTable |s
+| `Button` | `isActive`, `primary`, `onClick`, `children` | A generic button | Facet, Number, TagsQuery, TermsStatsTable |
+| `AlternateButton` | same as `Button` | An alternate style of generic button. Defaults to a text button. | |
 | `Checkbox` | `checked`, `onChange` | A generic checkbox | CheckableResultTable, CheckableTermsStatsTable, Facet, TagsQuery |
 | `Icon` | `icon`, `onClick` | A generic icon component | ResultPager, ResultTable |
 | `RadioList` | `options`, `value`, `onChange` | A generic list of radio buttons. The `options` prop is an array of `{ value, label }` objects. | Bool, Date, Exists, Facet, TagsQuery |
