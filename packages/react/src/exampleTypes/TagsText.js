@@ -21,11 +21,7 @@ let operatorOptions = F.autoLabelOptions([
   // { value: 'doesNotContain', label: 'Does Not Contain'}
 ])
 
-let Text = _.flow(
-  withTreeLens,
-  contexturify,
-  withTheme
-)(({ tree, node, theme: { Select }, placeholder }) => {
+let Text = ({ tree, node, theme: { Select }, placeholder }) => {
   let tagStyle = bgJoin(tagToGroupJoin(node.join))
   let TagPopover = () => (
     <div>
@@ -57,5 +53,10 @@ let Text = _.flow(
       />
     </div>
   )
-})
-export default Text
+}
+
+export default _.flow(
+  withTreeLens,
+  contexturify,
+  withTheme
+)(Text)

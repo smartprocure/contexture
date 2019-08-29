@@ -3,10 +3,7 @@ import { contexturify } from '../utils/hoc'
 import _ from 'lodash/fp'
 import { withTheme } from '../utils/theme'
 
-let DateHistogram = _.flow(
-  contexturify,
-  withTheme
-)(({ node, theme: { BarChart }, ...props }) => (
+let DateHistogram = ({ node, theme: { BarChart }, ...props }) => (
   <BarChart
     data={node.context.entries}
     categoryField="key"
@@ -14,7 +11,10 @@ let DateHistogram = _.flow(
     gutter={0}
     {...props}
   />
-))
+)
 DateHistogram.displayName = 'DateHistogram'
 
-export default DateHistogram
+export default _.flow(
+  contexturify,
+  withTheme
+)(DateHistogram)

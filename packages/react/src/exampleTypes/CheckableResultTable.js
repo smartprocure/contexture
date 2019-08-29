@@ -32,10 +32,14 @@ Label.displayName = 'Label'
 // Extends ResultTable with a checkbox column
 // Writes to a lens called `selected`, using getValue to map the selected record to a value.
 // getValues uses _.iteratee, so it defaults to identity and supports things like strings to get props
-let CheckableResultTable = _.flow(
-  contexturify,
-  withTheme
-)(({ node, fields, selected, getValue, theme: { Checkbox }, ...props }) => (
+let CheckableResultTable = ({
+  node,
+  fields,
+  selected,
+  getValue,
+  theme: { Checkbox },
+  ...props
+}) => (
   <ResultTable
     fields={{
       _checkbox: {
@@ -51,7 +55,9 @@ let CheckableResultTable = _.flow(
     }}
     {...props}
   />
-))
-CheckableResultTable.displayName = 'CheckableResultTable'
+)
 
-export default CheckableResultTable
+export default _.flow(
+  contexturify,
+  withTheme
+)(CheckableResultTable)

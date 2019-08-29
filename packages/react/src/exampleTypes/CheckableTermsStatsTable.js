@@ -6,10 +6,14 @@ import { contexturify } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
 import TermsStatsTable from './TermsStatsTable'
 
-let CheckableTermsStatsTable = _.flow(
-  contexturify,
-  withTheme
-)(({ node, children, theme: { Checkbox }, getValue, selected, ...props }) => {
+let CheckableTermsStatsTable = ({
+  node,
+  children,
+  theme: { Checkbox },
+  getValue,
+  selected,
+  ...props
+}) => {
   let results = _.result('context.terms.slice', node)
   let allChecked = _.size(results) === _.size(F.view(selected))
   let checkAll = F.sets(
@@ -34,7 +38,9 @@ let CheckableTermsStatsTable = _.flow(
       }}
     />
   )
-})
-CheckableTermsStatsTable.displayName = 'CheckableTermsStatsTable'
+}
 
-export default CheckableTermsStatsTable
+export default _.flow(
+  contexturify,
+  withTheme
+)(CheckableTermsStatsTable)
