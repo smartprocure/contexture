@@ -16,7 +16,7 @@ import DateInput from '../../greyVest/DateInput'
 
 // components used only for base theme
 import Icon from './Icon'
-import MissingTypeComponent from './MissingTypeComponent'
+import UnmappedNodeComponent from './UnmappedNodeComponent'
 import TableHeaderCell from './TableHeaderCell'
 
 import { defaultTheme } from '../../utils/theme'
@@ -27,7 +27,7 @@ let theme = {
   Button: 'button',
   Checkbox: props => <input type="checkbox" {...props} />,
   DateInput: defaultProps({ native: true })(DateInput),
-  MissingTypeComponent,
+  UnmappedNodeComponent,
   Icon,
   Input: 'input',
   DropdownItem: 'li',

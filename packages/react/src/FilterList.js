@@ -176,7 +176,7 @@ export let FilterList = _.flow(
     mapNodeToLabel = _.noop,
     className,
     style,
-    theme: { MissingTypeComponent },
+    theme: { UnmappedNodeComponent },
   }) => (
     <div style={style} className={className}>
       {_.map(
@@ -203,7 +203,7 @@ export let FilterList = _.flow(
               {!child.paused && (
                 <div className="filter-list-item-contents">
                   <Dynamic
-                    component={MissingTypeComponent}
+                    component={UnmappedNodeComponent}
                     tree={tree}
                     node={child}
                     path={_.toArray(child.path)}

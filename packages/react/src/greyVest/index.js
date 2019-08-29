@@ -48,7 +48,7 @@ export DateInput from './DateInput'
 // CheckButton
 // Pager (now vanilla ResultPager exampleType)
 // PagedResultTable (now a new exampleType)
-// MissingTypeComponent (now theme only)
+// UnmappedNodeComponent (now theme only)
 // FilterList
 // AddableFilterList (now part of SearchFilters)
 // FiltersBox (now part of SearchFilters)

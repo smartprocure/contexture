@@ -2,7 +2,7 @@ import React from 'react'
 import { withNode } from '../../utils/hoc'
 import ErrorList from '../../greyVest/ErrorList'
 
-let MissingTypeComponent = ({ node = {} }) => (
+let UnmappedNodeComponent = ({ node = {} }) => (
   // Min Height here is to align better in QueryBuilder
   <Flex style={{ minHeight: '40px', alignItems: 'center' }}>
     <ErrorList>
@@ -11,4 +11,4 @@ let MissingTypeComponent = ({ node = {} }) => (
   </Flex>
 )
 
-export default withNode(MissingTypeComponent)
+export default withNode(UnmappedNodeComponent)

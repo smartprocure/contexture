@@ -16,7 +16,7 @@ let FilterButtonItem = _.flow(
     tree,
     fields,
     mapNodeToProps,
-    theme: { Button, MissingTypeComponent, Modal },
+    theme: { Button, UnmappedNodeComponent, Modal },
   }) => {
     let mappedProps = mapNodeToProps(node, fields)
     let modal = F.stateLens(React.useState(false))
@@ -39,7 +39,7 @@ let FilterButtonItem = _.flow(
             )}
             <div className="filter-component">
               <Dynamic
-                Component={MissingTypeComponent}
+                Component={UnmappedNodeComponent}
                 tree={tree}
                 node={node}
                 path={_.toArray(node.path)}

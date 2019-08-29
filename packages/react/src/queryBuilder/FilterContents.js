@@ -18,7 +18,7 @@ let FilterContents = ({
   tree,
   fields,
   mapNodeToProps = _.noop,
-  theme: { MissingTypeComponent },
+  theme: { UnmappedNodeComponent },
 }) => {
   // `get` allows us to create a mobx dependency on field before we know it
   // exists (because the client will only add it if it's a type that uses it
@@ -73,7 +73,7 @@ let FilterContents = ({
           }}
         >
           <Dynamic
-            component={MissingTypeComponent}
+            component={UnmappedNodeComponent}
             tree={tree}
             node={node}
             {...mapNodeToProps(node, fields)}

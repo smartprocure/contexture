@@ -20,7 +20,7 @@ import TextHighlight from '../../greyVest/TextHighlight'
 import TextInput from '../../greyVest/TextInput'
 
 //components used only for theme
-import MissingTypeComponent from './MissingTypeComponent'
+import UnmappedNodeComponent from './UnmappedNodeComponent'
 import PickerItem from './PickerItem'
 
 export default {
@@ -40,7 +40,7 @@ export default {
   DropdownItem,
   PickerItem,
   NumberInput: defaultProps({ type: 'number' })(TextInput),
-  MissingTypeComponent,
+  UnmappedNodeComponent,
   Modal,
   PagerItem,
   RadioList,

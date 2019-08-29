@@ -125,7 +125,7 @@ let Header = _.flow(
       Modal,
       Picker,
       TableHeaderCell,
-      MissingTypeComponent,
+      UnmappedNodeComponent,
     },
     field: fieldSchema,
     includes,
@@ -255,7 +255,7 @@ let Header = _.flow(
               </DropdownItem>
               {F.view(filtering) && filterNode && !filterNode.paused && (
                 <Dynamic
-                  component={MissingTypeComponent}
+                  component={UnmappedNodeComponent}
                   tree={tree}
                   path={_.toArray(filterNode.path)}
                   {...mapNodeToProps(filterNode, fields)}
