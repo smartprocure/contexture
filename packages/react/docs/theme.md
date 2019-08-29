@@ -151,10 +151,8 @@ This section documents all of the **theme components** used by contexture-react 
 | `DateInput` | `value`, `onChange` | A generic date entry component | Date |
 | `NumberInput` | same as basic `input` | An input of type `number` | Geo, Number |
 | `TagsInput` | `tags`, `addTag`, `removeTag`, `submit`, `tagStyle`, `placeholder`, `splitCommas`, `style`, `onBlur`, `onInputChange`, `onTagClick` | A text input field that turns input into `Tag`s | TagsQuery, TagsText |
-| `PopoverTagsInput` | same as TagsInput, plus `PopoverContents` | A TagsInput that opens a popover when a tag is clicked. Uses the `TagsInput` theme component. | TagsQuery, TagsText |
 | `Tag` | `value`, `removeTag`, `tagStyle`, `onClick` | A tag component with a button to remove the tag. Used in TagsInput. | none |
-| `Picker` | `options`, `onChange` | Renders a list of selectable options | ResultTable |
-| `ModalPicker` | `options`, `onChange`, `label` | A picker inside a modal, with a button to open it. Uses `Picker`, `Button`, and `Modal` theme components. | none |
+| `NestedPicker` | `options`, `onChange` | Renders a list of selectable options | ResultTable |
 
 ### Containers
 
@@ -178,7 +176,7 @@ This section documents all of the **theme components** used by contexture-react 
 | --- | --- | --- |
 | `Globals` | `children` | This component is rendered inside `ThemeProvider`, and wraps its children. For use with other providers and/or standalone globals like stylesheets. |
 | `BarChart` | `height`, `borderColor`, `min`, `max` | Used in the DateHistogram and TermsStats example types |
-| `MissingTypeComponent` | `node` | Used as a fallback component in search interfaces when no other component is found for a node's contexture type |
+| `UnmappedNodeComponent` | `node` | Used as a fallback component in search interfaces for nodes that are not mapped to any other component |
 
 
 ## Theme Authoring
