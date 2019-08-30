@@ -11,8 +11,8 @@ let tagValueField = 'word'
 let TagsQuery = ({
   tree,
   node,
-  theme: { Checkbox, RadioList, Select, Button },
   placeholder,
+  theme: { Checkbox, RadioList, Select, Button },
   ...props
 }) => {
   let getTag = tag => _.find({ [tagValueField]: tag }, node.tags)

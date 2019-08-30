@@ -7,10 +7,10 @@ import { contexturify } from '../utils/hoc'
 let NumberComponent = ({
   tree,
   node,
-  theme: { NumberInput, Button },
   showBestRange = false,
   formatter = _.identity,
   significantDigits,
+  theme: { NumberInput, Button },
 }) => (
   <div className="contexture-number">
     <Flex style={{ alignItems: 'center' }}>

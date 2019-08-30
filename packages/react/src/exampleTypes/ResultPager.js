@@ -7,8 +7,8 @@ let Link = ({ children, onClick }) => <a onClick={onClick}>{children}</a>
 let ResultPager = ({
   node,
   tree,
-  theme: { PagerItem, Icon },
   className = '',
+  theme: { PagerItem, Icon },
 }) => {
   let pages = Math.ceil(
     (node.context.response.totalRecords || 1) / node.pageSize

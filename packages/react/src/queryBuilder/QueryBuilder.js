@@ -12,8 +12,8 @@ let QueryBuilder = ({
   tree,
   node,
   fields,
-  theme: { Button },
   mapNodeToProps,
+  theme: { Button },
 }) => {
   let adding = useLens(false)
   return (

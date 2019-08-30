@@ -29,9 +29,9 @@ let SelectSize = _.flow(
 )(
   ({
     node,
-    theme: { Select },
     tree,
     options = [10, 25, 50, 100, 500, 1000],
+    theme: { Select },
   }) => (
     <Flex style={toolBarStyle}>
       <SimpleLabel text="Size:" />

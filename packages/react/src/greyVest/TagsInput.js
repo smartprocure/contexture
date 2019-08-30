@@ -30,11 +30,11 @@ let TagsInput = withState('state', 'setState', () =>
       tagStyle,
       placeholder = 'Search...',
       splitCommas,
-      theme: { Tag },
       style,
       onBlur = _.noop,
       onInputChange = _.noop,
       onTagClick = _.noop,
+      theme: { Tag },
       ...props
     }) => {
       let containerRef

@@ -18,7 +18,7 @@ let FilteredSection = _.flow(
   setDisplayName('FilteredSection'),
   observer,
   withTheme
-)(({ options, onClick, highlight, theme: { TextHighlight }, PickerItem }) => (
+)(({ options, onClick, highlight, PickerItem, theme: { TextHighlight } }) => (
   <div>
     {F.mapIndexed(
       (option, field) => (

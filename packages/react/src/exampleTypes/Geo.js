@@ -24,10 +24,10 @@ let GeoComponent = ({
   tree,
   node,
   loadOptions,
-  theme: { Select, NumberInput },
   GeoCodeLocation = _.noop,
   AutoComplete = null,
   placeholder = 'Address ...',
+  theme: { Select, NumberInput },
 }) => (
   <Flex style={{ flexFlow: 'column' }}>
     <Select

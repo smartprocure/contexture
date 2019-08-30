@@ -14,8 +14,8 @@ let FilterAdder = ({
   node,
   path,
   fields,
-  theme: { Icon },
   uniqueFields,
+  theme: { Icon },
 }) => {
   let options = fieldsToOptions(fields)
   if (uniqueFields) {

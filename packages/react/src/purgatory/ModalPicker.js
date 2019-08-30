@@ -7,9 +7,9 @@ import { withTheme } from '../utils/theme'
 
 let ModalPicker = ({
   options,
-  theme: { Button, NestedPicker, Modal },
   onChange,
   label,
+  theme: { Button, NestedPicker, Modal },
 }) => {
   let isOpen = useLens(false)
   return (

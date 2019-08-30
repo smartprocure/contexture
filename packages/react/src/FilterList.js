@@ -25,8 +25,8 @@ export let FilterActions = _.flow(
     node,
     tree,
     fields,
-    theme: { DropdownItem, Popover, Modal, NestedPicker },
     popover,
+    theme: { DropdownItem, Popover, Modal, NestedPicker },
   }) => {
     let modal = useLens(false)
     let typeOptions = _.flow(
@@ -90,7 +90,7 @@ export let Label = _.flow(
   setDisplayName('Label'),
   observer,
   withTheme
-)(({ tree, node, fields, theme: { Icon }, children, ...props }) => {
+)(({ tree, node, fields, children, theme: { Icon }, ...props }) => {
   let popover = useLens(false)
   let modal = useLens(false)
   let field = _.get('field', node)

@@ -78,10 +78,10 @@ let Facet = ({
   tree,
   node,
   hide = {},
-  theme: { Checkbox, RadioList },
   display = x => x,
   displayBlank = () => <i>Not Specified</i>,
   formatCount = x => x,
+  theme: { Checkbox, RadioList },
 }) => (
   <div className="contexture-facet">
     <RadioList

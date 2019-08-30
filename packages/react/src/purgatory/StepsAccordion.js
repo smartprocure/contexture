@@ -13,7 +13,7 @@ let Buttons = _.flow(
   setDisplayName('Buttons'),
   observer,
   withTheme
-)(({ step, totalSteps, currentStep, theme: { Button, Icon }, onSubmit }) => (
+)(({ step, totalSteps, currentStep, onSubmit, theme: { Button, Icon } }) => (
   <>
     {step > 0 && (
       <Button onClick={F.sets(step - 1, currentStep)} className="back-button">

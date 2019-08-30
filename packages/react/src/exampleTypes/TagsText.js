@@ -20,7 +20,7 @@ let operatorOptions = F.autoLabelOptions([
   // { value: 'doesNotContain', label: 'Does Not Contain'}
 ])
 
-let Text = ({ tree, node, theme: { Select }, placeholder }) => {
+let Text = ({ tree, node, placeholder, theme: { Select } }) => {
   let tagStyle = bgJoin(tagToGroupJoin(node.join))
   let TagPopover = () => (
     <div>

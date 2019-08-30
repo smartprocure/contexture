@@ -10,9 +10,9 @@ import { withTheme } from '../utils/theme'
 // inject doesn't do that for us.
 let PopoverTagsInput = ({
   PopoverContents,
-  theme: { Popover, TagsInput },
   onTagClick,
   state,
+  theme: { Popover, TagsInput },
   ...props
 }) => (
   <>

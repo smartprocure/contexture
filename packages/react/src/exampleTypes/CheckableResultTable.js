@@ -12,7 +12,7 @@ let Label = _.flow(
   setDisplayName('Label'),
   observer,
   withTheme
-)(({ node, theme: { Checkbox }, selected, getValue }) => {
+)(({ node, selected, getValue, theme: { Checkbox } }) => {
   let results = _.toArray(getResults(node))
   let allChecked = _.size(results) === _.size(F.view(selected))
   let checkAll = F.sets(

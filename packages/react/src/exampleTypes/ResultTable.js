@@ -129,14 +129,6 @@ let Header = _.flow(
   withTheme
 )(
   ({
-    theme: {
-      DropdownItem,
-      Icon,
-      Popover,
-      Modal,
-      NestedPicker,
-      UnmappedNodeComponent,
-    },
     HeaderCell = HeaderCellDefault,
     field: fieldSchema,
     includes,
@@ -149,6 +141,14 @@ let Header = _.flow(
     mapNodeToProps,
     fields,
     visibleFields,
+    theme: {
+      DropdownItem,
+      Icon,
+      Popover,
+      Modal,
+      NestedPicker,
+      UnmappedNodeComponent,
+    },
   }) => {
     let popover = useLens(false)
     let adding = useLens(false)
@@ -342,10 +342,10 @@ let ResultTable = ({
   criteria,
   node,
   tree,
-  theme: { Table },
   HeaderCell,
   Row = Tr, // accept a custom Row component so we can do fancy expansion things
   mapNodeToProps = () => ({}),
+  theme: { Table },
 }) => {
   // From Theme/Components
   let mutate = tree.mutate(path)

@@ -8,9 +8,9 @@ import TermsStatsTable from './TermsStatsTable'
 let CheckableTermsStatsTable = ({
   node,
   children,
-  theme: { Checkbox },
   getValue,
   selected,
+  theme: { Checkbox },
   ...props
 }) => {
   let results = _.result('context.terms.slice', node)
