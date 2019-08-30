@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 import React from 'react'
-import Flex from '../greyVest/Flex'
+import { Flex } from '../greyVest'
 import { withTheme } from '../utils/theme'
 
 let CheckButton = ({

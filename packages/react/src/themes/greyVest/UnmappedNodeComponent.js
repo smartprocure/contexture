@@ -1,6 +1,6 @@
 import React from 'react'
 import { withNode } from '../../utils/hoc'
-import ErrorList from '../../greyVest/ErrorList'
+import { ErrorList } from '../../greyVest'
 
 let UnmappedNodeComponent = ({ node = {} }) => (
   // Min Height here is to align better in QueryBuilder

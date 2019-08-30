@@ -1,6 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import Flex from '../greyVest/Flex'
+import { Flex } from '../greyVest'
 
 let ErrorText = ({ children }) => (
   <div className="gv-text-error">{children}</div>

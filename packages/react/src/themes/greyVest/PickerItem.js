@@ -1,6 +1,6 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import Flex from '../../greyVest/Flex'
+import { Flex } from '../../greyVest'
 
 let PickerItem = ({ active, disabled, hasChildren, children, ...props }) => (
   <div

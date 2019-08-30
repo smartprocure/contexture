@@ -3,16 +3,18 @@ import React from 'react'
 import { defaultProps } from 'recompose'
 
 // components exported from base component library
-import BarChart from '../../greyVest/BarChart'
-import Modal from '../../greyVest/Modal'
-import NestedPicker from '../../greyVest/NestedPicker'
-import Popover from '../../greyVest/Popover'
-import RadioList from '../../greyVest/RadioList'
-import Select from '../../greyVest/Select'
-import TagsInput from '../../greyVest/TagsInput'
-import Tag from '../../greyVest/Tag'
-import TextHighlight from '../../greyVest/TextHighlight'
-import DateInput from '../../greyVest/DateInput'
+import {
+  BarChart,
+  Modal,
+  NestedPicker,
+  Popover,
+  RadioList,
+  Select,
+  TagsInput,
+  Tag,
+  TextHighlight,
+  DateInput,
+} from '../../greyVest'
 
 // components used only for base theme
 import Icon from './Icon'

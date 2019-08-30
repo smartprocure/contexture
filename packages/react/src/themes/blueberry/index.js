@@ -11,7 +11,7 @@ import Style from './Style'
 import Tag from './Tag'
 import TextInput from './TextInput'
 
-import NestedPicker from '../../greyVest/NestedPicker'
+import { NestedPicker } from '../../greyVest'
 
 export default {
   Button,

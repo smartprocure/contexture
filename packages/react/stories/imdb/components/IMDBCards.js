@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 import React from 'react'
-import Flex from '../../../src/greyVest/Flex'
+import { Flex } from '../../../src/greyVest'
 import { contexturify } from '../../../src/utils/hoc'
 
 let IMDBCards = contexturify(({ node }) => (

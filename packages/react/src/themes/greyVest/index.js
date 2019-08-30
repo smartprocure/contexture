@@ -2,23 +2,25 @@ import { defaultProps } from 'recompose'
 import React from 'react'
 
 // components exported from component library
-import Box from '../../greyVest/Box'
-import Button from '../../greyVest/Button'
-import Checkbox from '../../greyVest/Checkbox'
-import DateInput from '../../greyVest/DateInput'
-import Fonts from '../../greyVest/Fonts'
-import Icon from '../../greyVest/Icon'
-import DropdownItem from '../../greyVest/DropdownItem'
-import NestedPicker from '../../greyVest/NestedPicker'
-import Modal from '../../greyVest/Modal'
-import PagerItem from '../../greyVest/PagerItem'
-import RadioList from '../../greyVest/RadioList'
-import Select from '../../greyVest/Select'
-import Style from '../../greyVest/Style'
-import Table from '../../greyVest/Table'
-import Tag from '../../greyVest/Tag'
-import TextHighlight from '../../greyVest/TextHighlight'
-import TextInput from '../../greyVest/TextInput'
+import {
+  Box,
+  Button,
+  Checkbox,
+  DateInput,
+  Fonts,
+  Icon,
+  DropdownItem,
+  NestedPicker,
+  Modal,
+  PagerItem,
+  RadioList,
+  Select,
+  Style,
+  Table,
+  Tag,
+  TextHighlight,
+  TextInput,
+} from '../../greyVest'
 
 //components used only for theme
 import UnmappedNodeComponent from './UnmappedNodeComponent'

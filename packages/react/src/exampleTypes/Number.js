@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import { round } from 'lodash'
-import Flex from '../greyVest/Flex'
+import { Flex } from '../greyVest'
 import { contexturify } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
 

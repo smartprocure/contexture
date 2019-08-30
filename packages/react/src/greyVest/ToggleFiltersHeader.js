@@ -1,6 +1,6 @@
 import React from 'react'
 import ToggleFiltersButton from './ToggleFiltersButton'
-import Flex from '../greyVest/Flex'
+import { Flex } from '../greyVest'
 
 let ToggleFiltersHeader = ({ mode, setMode, children }) => (
   <Flex style={{ alignItems: 'center' }}>
