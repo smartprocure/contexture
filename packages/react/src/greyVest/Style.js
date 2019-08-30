@@ -213,35 +213,35 @@ export default () => (
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
       }
-      .gv-body .tags-input > * {
+      .tags-input > * {
         box-sizing: border-box;
       }
-      .gv-body .tags-input {
+      .tags-input {
         border: 2px solid #EBEBEB;
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input {
+      .tags-input input {
         height: 30px;
       }
-      .gv-body .tags-input-tag-remove {
+      .tags-input-tag-remove {
         font-size: 12px;
         padding: 8px;
       }
 
       /* Tags Popover */
-      .gv-body .tags-input-popover {
+      .tags-input-popover {
         /* counteract default popover padding */
         margin: -5px;
       }
-      .gv-body .tags-input-popover > div {
+      .tags-input-popover > div {
         border-bottom: solid 1px rgba(216, 216, 216, 0.3);
         padding: 15px;
       }
-      .gv-body .tags-input-popover .popover-item:first-child {
+      .tags-input-popover .popover-item:first-child {
         padding-top: 0;
       }
-      .gv-body .tags-input-popover .popover-item {
+      .tags-input-popover .popover-item {
         padding-top: 10px;
       }
 
@@ -530,10 +530,10 @@ export default () => (
         border-radius: 5px;
       }
 
-      .gv-body .labeled-checkbox {
+      .labeled-checkbox {
         display: flex;
       }
-      .gv-body .labeled-checkbox > span {
+      .labeled-checkbox > span {
         padding-left: 10px;
       }
 

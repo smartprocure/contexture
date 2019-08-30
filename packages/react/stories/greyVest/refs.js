@@ -6,7 +6,7 @@ let select
 let textArea
 
 export default () => (
-  <div style={{ display: 'flex', flexDirection: 'column' }} className="gv-body">
+  <div style={{ display: 'flex', flexDirection: 'column' }}>
     <TextInput ref={e => (input = e)} />
     <Textarea ref={e => (textArea = e)} />
     <Select ref={e => (select = e)} />
