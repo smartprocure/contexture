@@ -144,20 +144,20 @@ export default () => (
         font-weight: bold;
       }
 
-      /* Checkbutton */
-      .gv-button.checkbutton {
+      /* CheckButton */
+      .gv-button.check-button {
         padding: 5px 23px 5px 10px;
       }
-      .gv-button.checkbutton .gv-checkbox {
+      .gv-button.check-button .gv-checkbox {
         height: 30px;
         width: 30px;
         font-size: 20px;
         margin-right: 8px;
       }
-      .gv-button.checkbutton .gv-checkbox i {
+      .gv-button.check-button .gv-checkbox i {
         font-size: 20px;
       }
-      .gv-button.checkbutton .gv-checkbox.checked {
+      .gv-button.check-button .gv-checkbox.checked {
         color: #0076de;
         background-color: transparent;
         border-color: transparent;
@@ -597,7 +597,7 @@ export default () => (
         padding: 3px 5px;
         margin: 2px 5px;
       }
-      .filter-button-list .gv-checkbutton {
+      .filter-button-list .check-button {
         margin: 5px;
         white-space: nowrap;
       }

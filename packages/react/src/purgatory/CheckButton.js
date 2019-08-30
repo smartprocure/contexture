@@ -13,7 +13,7 @@ let CheckButton = ({
 }) => (
   <theme.Button
     onClick={onClick}
-    className={`checkbutton ${className || ''}`}
+    className={`check-button ${className || ''}`}
     {...props}
   >
     <Flex alignItems="center" justifyContent="center">
