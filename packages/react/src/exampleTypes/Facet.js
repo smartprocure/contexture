@@ -142,7 +142,4 @@ let Facet = ({
   </div>
 )
 
-export default _.flow(
-  contexturify,
-  withTheme
-)(Facet)
+export default contexturify(Facet)

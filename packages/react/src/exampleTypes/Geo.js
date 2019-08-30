@@ -2,7 +2,6 @@ import React from 'react'
 import _ from 'lodash/fp'
 import { Flex } from '../greyVest'
 import { contexturify } from '../utils/hoc'
-import { withTheme } from '../utils/theme'
 
 const customStyles = {
   valueContainer: styles => ({
@@ -82,7 +81,4 @@ let GeoComponent = ({
   </Flex>
 )
 
-export default _.flow(
-  contexturify,
-  withTheme
-)(GeoComponent)
+export default contexturify(GeoComponent)

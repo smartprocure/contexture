@@ -1,7 +1,5 @@
 import React from 'react'
-import _ from 'lodash/fp'
 import { contexturify } from '../utils/hoc'
-import { withTheme } from '../utils/theme'
 
 let Query = ({ tree, node, theme: { TextInput } }) => (
   <TextInput
@@ -16,7 +14,4 @@ let Query = ({ tree, node, theme: { TextInput } }) => (
 )
 Query.displayName = 'Query'
 
-export default _.flow(
-  contexturify,
-  withTheme
-)(Query)
+export default contexturify(Query)

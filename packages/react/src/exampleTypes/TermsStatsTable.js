@@ -132,7 +132,4 @@ let TermsStatsTable = ({
 )
 TermsStatsTable.displayName = 'TermsStatsTable'
 
-export default _.flow(
-  contexturify,
-  withTheme
-)(TermsStatsTable)
+export default contexturify(TermsStatsTable)

@@ -58,7 +58,4 @@ let CheckableResultTable = ({
   />
 )
 
-export default _.flow(
-  contexturify,
-  withTheme
-)(CheckableResultTable)
+export default contexturify(CheckableResultTable)

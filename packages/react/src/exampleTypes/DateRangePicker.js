@@ -1,7 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import { contexturify } from '../utils/hoc'
-import { withTheme } from '../utils/theme'
 
 let DateComponent = ({ tree, node, ranges, theme: { Select } }) => (
   <Select
@@ -18,7 +17,4 @@ let DateComponent = ({ tree, node, ranges, theme: { Select } }) => (
 )
 DateComponent.displayName = 'DateRangePicker'
 
-export default _.flow(
-  contexturify,
-  withTheme
-)(DateComponent)
+export default contexturify(DateComponent)

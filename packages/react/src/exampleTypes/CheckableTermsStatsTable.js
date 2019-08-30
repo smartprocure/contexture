@@ -3,7 +3,6 @@ import F from 'futil-js'
 import React from 'react'
 import { Column } from '../greyVest/ExpandableTable'
 import { contexturify } from '../utils/hoc'
-import { withTheme } from '../utils/theme'
 import TermsStatsTable from './TermsStatsTable'
 
 let CheckableTermsStatsTable = ({
@@ -40,7 +39,4 @@ let CheckableTermsStatsTable = ({
   )
 }
 
-export default _.flow(
-  contexturify,
-  withTheme
-)(CheckableTermsStatsTable)
+export default contexturify(CheckableTermsStatsTable)

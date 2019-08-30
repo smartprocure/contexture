@@ -1,7 +1,5 @@
 import React from 'react'
 import { contexturify } from '../utils/hoc'
-import _ from 'lodash/fp'
-import { withTheme } from '../utils/theme'
 
 let DateHistogram = ({ node, theme: { BarChart }, ...props }) => (
   <BarChart
@@ -14,7 +12,4 @@ let DateHistogram = ({ node, theme: { BarChart }, ...props }) => (
 )
 DateHistogram.displayName = 'DateHistogram'
 
-export default _.flow(
-  contexturify,
-  withTheme
-)(DateHistogram)
+export default contexturify(DateHistogram)

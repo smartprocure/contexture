@@ -3,7 +3,6 @@ import _ from 'lodash/fp'
 import F from 'futil-js'
 import { contexturify, withTreeLens } from '../utils/hoc'
 import { bgJoin } from '../styles/generic'
-import { withTheme } from '../utils/theme'
 import PopoverTagsInput from '../purgatory/PopoverTagsInput'
 
 import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
@@ -57,6 +56,5 @@ let Text = ({ tree, node, theme: { Select }, placeholder }) => {
 
 export default _.flow(
   withTreeLens,
-  contexturify,
-  withTheme
+  contexturify
 )(Text)

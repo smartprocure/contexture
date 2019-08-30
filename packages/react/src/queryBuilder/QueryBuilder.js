@@ -1,12 +1,10 @@
 import React from 'react'
 import F from 'futil-js'
-import _ from 'lodash/fp'
 import DDContext from './DragDrop/DDContext'
 import Group from './Group'
 import styles from '../styles'
 import { contexturify } from '../utils/hoc'
 import { useLens } from '../utils/react'
-import { withTheme } from '../utils/theme'
 
 let { background } = styles
 
@@ -39,10 +37,4 @@ let QueryBuilder = ({
   )
 }
 
-export default DDContext(
-  _.flow(
-    contexturify,
-    withTheme
-  )(QueryBuilder),
-  { allowEmptyNode: true }
-)
+export default DDContext(contexturify(QueryBuilder), { allowEmptyNode: true })

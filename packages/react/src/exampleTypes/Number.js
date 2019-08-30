@@ -3,7 +3,6 @@ import _ from 'lodash/fp'
 import { round } from 'lodash'
 import { Flex } from '../greyVest'
 import { contexturify } from '../utils/hoc'
-import { withTheme } from '../utils/theme'
 
 let NumberComponent = ({
   tree,
@@ -66,7 +65,4 @@ let NumberComponent = ({
 
 NumberComponent.displayName = 'Number'
 
-export default _.flow(
-  contexturify,
-  withTheme
-)(NumberComponent)
+export default contexturify(NumberComponent)

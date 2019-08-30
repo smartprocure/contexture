@@ -89,10 +89,11 @@ export let FilterActions = _.flow(
 export let Label = _.flow(
   setDisplayName('Label'),
   observer,
-  withTheme
-)(({ tree, node, fields, label, theme: { Icon }, ...props }) => {
+  withTheme,
+)(({ tree, node, fields, theme: { Icon }, children, ...props }) => {
   let popover = useLens(false)
   let modal = useLens(false)
+  let field = _.get('field', node)
   return (
     <Flex
       className={`filter-field-label ${
@@ -108,7 +109,7 @@ export let Label = _.flow(
       }
     >
       <span {...props}>
-        {label || _.get([node.field, 'label'], fields) || node.field}
+        {children || node && _.get([field, 'label'], fields) || field || ''}
       </span>
       {tree && node && (
         <React.Fragment>
@@ -161,8 +162,7 @@ export let Label = _.flow(
 
 export let FilterList = _.flow(
   setDisplayName('FilterList'),
-  contexturify,
-  withTheme
+  contexturify
 )(
   ({
     tree,
@@ -194,8 +194,9 @@ export let FilterList = _.flow(
                 tree={tree}
                 node={child}
                 fields={fields}
-                label={mapNodeToLabel(child, fields)}
-              />
+              >
+                {mapNodeToLabel(child, fields)}
+              </Label>
               {!child.paused && (
                 <div className="filter-list-item-contents">
                   <Dynamic

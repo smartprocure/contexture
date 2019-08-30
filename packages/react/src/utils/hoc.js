@@ -3,6 +3,7 @@ import { observer } from 'mobx-react'
 import _ from 'lodash/fp'
 import { StripedLoader } from '../greyVest'
 import { wrapDisplayName } from './react'
+import { withTheme } from './theme'
 
 export let withNode = Component =>
   wrapDisplayName('withNode', Component)(props => {
@@ -39,7 +40,8 @@ export let withInlineLoader = Component =>
 export let contexturify = _.flow(
   observer,
   withNode,
-  withLoader
+  withLoader,
+  withTheme
 )
 
 // this is used for the text components

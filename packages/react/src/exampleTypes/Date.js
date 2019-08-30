@@ -1,7 +1,6 @@
 import React from 'react'
 import { Flex } from '../greyVest'
 import { contexturify } from '../utils/hoc'
-import { withTheme } from '../utils/theme'
 import F from 'futil-js'
 import _ from 'lodash/fp'
 
@@ -196,7 +195,4 @@ let DateComponent = ({
   )
 }
 
-export default _.flow(
-  contexturify,
-  withTheme
-)(DateComponent)
+export default contexturify(DateComponent)

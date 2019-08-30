@@ -392,7 +392,4 @@ let ResultTable = ({
   )
 }
 
-export default _.flow(
-  contexturify,
-  withTheme
-)(ResultTable)
+export default contexturify(ResultTable)

@@ -3,7 +3,6 @@ import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
 import { contexturify } from '../utils/hoc'
-import { withTheme } from '../utils/theme'
 import { bgJoin } from '../styles/generic'
 import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
 import PopoverTagsInput from '../purgatory/PopoverTagsInput'
@@ -122,7 +121,4 @@ let TagsQuery = ({
   )
 }
 
-export default _.flow(
-  contexturify,
-  withTheme
-)(TagsQuery)
+export default contexturify(TagsQuery)
