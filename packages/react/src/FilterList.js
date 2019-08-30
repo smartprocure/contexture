@@ -89,7 +89,7 @@ export let FilterActions = _.flow(
 export let Label = _.flow(
   setDisplayName('Label'),
   observer,
-  withTheme,
+  withTheme
 )(({ tree, node, fields, theme: { Icon }, children, ...props }) => {
   let popover = useLens(false)
   let modal = useLens(false)
@@ -109,7 +109,7 @@ export let Label = _.flow(
       }
     >
       <span {...props}>
-        {children || node && _.get([field, 'label'], fields) || field || ''}
+        {children || (node && _.get([field, 'label'], fields)) || field || ''}
       </span>
       {tree && node && (
         <React.Fragment>
@@ -190,11 +190,7 @@ export let FilterList = _.flow(
             />
           ) : (
             <div key={child.path} className="filter-list-item">
-              <Label
-                tree={tree}
-                node={child}
-                fields={fields}
-              >
+              <Label tree={tree} node={child} fields={fields}>
                 {mapNodeToLabel(child, fields)}
               </Label>
               {!child.paused && (
