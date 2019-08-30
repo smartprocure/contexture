@@ -30,7 +30,7 @@ export default {
   Button,
   Checkbox,
   DateInput,
-  Globals: ({ children }) => (
+  Root: ({ children }) => (
     <>
       <Fonts />
       <Style />

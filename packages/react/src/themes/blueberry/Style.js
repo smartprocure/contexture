@@ -27,7 +27,7 @@ export default () => (
         padding: 15px;
       }
       
-      .bb-body, body {
+      body {
         margin: 0;
         background: #f6f6f6;
         font-family: Lato;
@@ -35,7 +35,7 @@ export default () => (
         color: #454545;
       }
       
-      .bb-input, .bb-body select, .bb-body input {
+      .bb-input, select, input {
         outline: none;
         font-size: 16px;
         font-family: Lato;
@@ -50,14 +50,14 @@ export default () => (
         height: 40px;
       }
       
-      .bb-body select, .bb-body input {
+      select, input {
         border-radius: 4px;
       }
-      .bb-body select {
+      select {
         cursor: pointer;
       }
       
-      .bb-body .tags-input {
+      .tags-input {
         border: 2px solid #EBEBEB;
         border-radius: 4px;
         min-height: 40px;
@@ -68,21 +68,21 @@ export default () => (
         padding: 7px;
       }
       /* To reach perfect 40px, remove real input padding because we have it on the fake one */
-      .bb-body .tags-input input {
+      .tags-input input {
         padding: 0;
         /* subtract padding (5+5) and borders (2+2) from 40 */
         height: 26px;
         /* Arbitrary theme design */
         padding-left: 7px;
       }
-      .bb-body .tags-input-tag {
+      .tags-input-tag {
         border-radius: 4px;
         margin: 0 2px;
         /* Arbitrary theme design */
         padding: 3px 8px 5px 6px;
         font-size: 15px;
       }
-      .bb-body .tags-input-tag-remove {
+      .tags-input-tag-remove {
         /* Arbitrary theme design */
         padding-left: 8px;
         font-size: 10px;

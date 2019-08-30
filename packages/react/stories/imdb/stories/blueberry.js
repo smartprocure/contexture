@@ -122,102 +122,98 @@ let schemas = fromPromise(
 )
 
 let BlueberryStory = withTheme(({ theme }) => (
-  <div className="bb-body">
-    <theme.Fonts />
-    <theme.Style />
-    <Awaiter promise={schemas}>
-      {schemas => (
-        <Grid gap="22px" columns="1fr 4fr" style={{ margin: '0 22px' }}>
-          <div>
-            <h1>Filters</h1>
-            <SpacedList>
-              <div>
-                <Label>Released</Label>
-                <DateRangePicker
-                  tree={tree}
-                  path={['root', 'status']}
-                  ranges={[
-                    { label: 'All Time', from: '', to: '' },
-                    { label: 'This Year', from: 'now/y', to: '' },
-                    { label: 'Last Year', from: 'now-1y/y', to: 'now/y' },
-                  ]}
-                />
-              </div>
-              <div>
-                <Label>Title</Label>
-                Contains
-                <TagsQuery tree={tree} path={['root', 'titleContains']} />
-                Does Not Contain
-                <TagsQuery tree={tree} path={['root', 'titleDoesNotContain']} />
-              </div>
-              <FilterList
+  <Awaiter promise={schemas}>
+    {schemas => (
+      <Grid gap="22px" columns="1fr 4fr" style={{ margin: '0 22px' }}>
+        <div>
+          <h1>Filters</h1>
+          <SpacedList>
+            <div>
+              <Label>Released</Label>
+              <DateRangePicker
                 tree={tree}
-                path={['root', 'criteria']}
-                fields={schemas.movies.fields}
-                mapNodeToProps={componentForType(TypeMap)}
+                path={['root', 'status']}
+                ranges={[
+                  { label: 'All Time', from: '', to: '' },
+                  { label: 'This Year', from: 'now/y', to: '' },
+                  { label: 'Last Year', from: 'now-1y/y', to: 'now/y' },
+                ]}
               />
-              <FilterAdder
-                tree={tree}
-                path={['root', 'criteria']}
-                fields={schemas.movies.fields}
-                uniqueFields
-              />
-            </SpacedList>
-          </div>
-          <div>
-            <Grid columns="1fr 25px 150px" style={{ alignItems: 'center' }}>
-              <TagsQuery tree={tree} path={['root', 'bar']} />
-              <theme.Checkbox
-                checked={state.autoUpdate}
+            </div>
+            <div>
+              <Label>Title</Label>
+              Contains
+              <TagsQuery tree={tree} path={['root', 'titleContains']} />
+              Does Not Contain
+              <TagsQuery tree={tree} path={['root', 'titleDoesNotContain']} />
+            </div>
+            <FilterList
+              tree={tree}
+              path={['root', 'criteria']}
+              fields={schemas.movies.fields}
+              mapNodeToProps={componentForType(TypeMap)}
+            />
+            <FilterAdder
+              tree={tree}
+              path={['root', 'criteria']}
+              fields={schemas.movies.fields}
+              uniqueFields
+            />
+          </SpacedList>
+        </div>
+        <div>
+          <Grid columns="1fr 25px 150px" style={{ alignItems: 'center' }}>
+            <TagsQuery tree={tree} path={['root', 'bar']} />
+            <theme.Checkbox
+              checked={state.autoUpdate}
+              onChange={val => {
+                tree.disableAutoUpdate = !val
+                state.autoUpdate = !!val
+              }}
+            />
+            {!state.autoUpdate && (
+              <theme.Button onClick={tree.triggerUpdate} primary>
+                Search
+              </theme.Button>
+            )}
+          </Grid>
+          <Flex
+            style={{
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <h1>
+              Results (
+              <ResultCount tree={tree} path={['root', 'results']} />)
+            </h1>
+            <Flex>
+              <theme.RadioList
+                options={[
+                  { label: 'AutoSearch On', value: true },
+                  { label: 'AutoSearch Off', value: false },
+                ]}
+                value={state.autoUpdate}
                 onChange={val => {
                   tree.disableAutoUpdate = !val
                   state.autoUpdate = !!val
                 }}
               />
-              {!state.autoUpdate && (
-                <theme.Button onClick={tree.triggerUpdate} primary>
-                  Search
-                </theme.Button>
-              )}
-            </Grid>
-            <Flex
-              style={{
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <h1>
-                Results (
-                <ResultCount tree={tree} path={['root', 'results']} />)
-              </h1>
-              <Flex>
-                <theme.RadioList
-                  options={[
-                    { label: 'AutoSearch On', value: true },
-                    { label: 'AutoSearch Off', value: false },
-                  ]}
-                  value={state.autoUpdate}
-                  onChange={val => {
-                    tree.disableAutoUpdate = !val
-                    state.autoUpdate = !!val
-                  }}
-                />
-              </Flex>
             </Flex>
-            <div className="bb-box">
-              <PagedResultTable
-                tree={tree}
-                path={['root', 'results']}
-                fields={schemas[tree.tree.schema].fields}
-                criteria={['root', 'criteria']}
-                mapNodeToProps={componentForType(TypeMap)}
-              />
-            </div>
-          </div>
-        </Grid>
-      )}
-    </Awaiter>
-  </div>
+          </Flex>
+          <theme.Box>
+            <PagedResultTable
+              tree={tree}
+              path={['root', 'results']}
+              fields={schemas[tree.tree.schema].fields}
+              criteria={['root', 'criteria']}
+              mapNodeToProps={componentForType(TypeMap)}
+            />
+          </theme.Box>
+        </div>
+      </Grid>
+    )}
+  </Awaiter>
 ))
 
 export default () => (

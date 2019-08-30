@@ -14,12 +14,14 @@ import TextInput from './TextInput'
 import { NestedPicker } from '../../greyVest'
 
 export default {
+  Box: props => <div className="bb-box" {...props} />,
   Button,
   Checkbox,
   Fonts,
-  Globals: ({ children }) => (
+  Root: ({ children }) => (
     <>
       <Style />
+      <Fonts />
       {children}
     </>
   ),

@@ -11,7 +11,7 @@ let ThemeContext = React.createContext(defaultTheme)
 
 export let ThemeProvider = ({ theme, children }) => {
   theme = { ...defaultTheme, ...theme }
-  let Root = theme.Globals || React.Fragment
+  let Root = theme.Root || React.Fragment
   return (
     <ThemeContext.Provider value={theme}>
       <Root>{children}</Root>
