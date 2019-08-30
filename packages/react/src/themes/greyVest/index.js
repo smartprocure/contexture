@@ -23,7 +23,6 @@ import {
 } from '../../greyVest'
 
 //components used only for theme
-import UnmappedNodeComponent from './UnmappedNodeComponent'
 import PickerItem from './PickerItem'
 
 export default {
@@ -43,7 +42,6 @@ export default {
   DropdownItem,
   NestedPicker: defaultProps({ PickerItem })(NestedPicker),
   NumberInput: defaultProps({ type: 'number' })(TextInput),
-  UnmappedNodeComponent,
   Modal,
   PagerItem,
   RadioList,

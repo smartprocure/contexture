@@ -20,8 +20,8 @@ import {
   Tabs,
   IconButton,
 } from '../../../src/greyVest'
-import theme from '../../../src/themes/greyVest'
 import {
+  DateRangePicker,
   TypeMap,
   TermsStatsTable,
   TagsQuery,
@@ -220,7 +220,7 @@ let mapNodeToProps = mergeOverAll([
   schemaFieldProps('signicantDigits'),
   ({ key }) =>
     key === 'status' && {
-      component: theme.DateRangePicker,
+      component: DateRangePicker,
       ranges: [
         { label: 'All Time', from: '', to: '' },
         { label: 'This Year', from: 'now/y', to: '' },
