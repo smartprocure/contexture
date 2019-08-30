@@ -1,7 +1,5 @@
 // utils
-export * from './utils/hoc'
 export * from './utils/schema'
-export * from './utils/react'
 export * from './utils/theme'
 
 // generic search layouts
