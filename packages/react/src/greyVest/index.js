@@ -16,7 +16,7 @@ export RadioList from './RadioList'
 export let SearchTree = () => {}
 export Select from './Select'
 export Style from './Style' // formerly GVStyle
-export { Tab, TabContent, TabLabel, Tabs } from './Tabs'
+export * from './Tabs'
 export Table from './Table'
 export TabList from './TabList'
 export Textarea from './Textarea'
