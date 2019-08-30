@@ -17,13 +17,13 @@ import {
   Select,
   Style,
   Table,
-  Tag,
   TextHighlight,
   TextInput,
 } from '../../greyVest'
 
 //components used only for theme
 import PickerItem from './PickerItem'
+import TagsInput from './TagsInput'
 
 export default {
   Box,
@@ -42,11 +42,11 @@ export default {
   DropdownItem,
   NestedPicker: defaultProps({ PickerItem })(NestedPicker),
   NumberInput: defaultProps({ type: 'number' })(TextInput),
+  TagsInput,
   Modal,
   PagerItem,
   RadioList,
   Select,
   Table,
-  Tag,
   TextHighlight,
 }
