@@ -56,15 +56,13 @@ let TermsStatsTable = ({
   criteriaGetValue = _.identity,
   tree,
   children,
-  theme: { Button },
-  MoreControls = 'div',
-  Filter = SimpleFilter,
   sizeOptions,
+  theme: { Button },
   ...props
 }) => (
   <div>
     <Flex style={{ ...toolBarStyle, margin: 40, marginBottom: 0 }}>
-      <Filter {...F.domLens.value(tree.lens(node.path, 'filter'))} />
+      <SimpleFilter {...F.domLens.value(tree.lens(node.path, 'filter'))} />
       <SelectSize node={node} tree={tree} options={sizeOptions} />
     </Flex>
     <ExpandableTable
@@ -105,7 +103,6 @@ let TermsStatsTable = ({
                       >
                         Add as Filter
                       </Button>
-                      <MoreControls />
                     </div>
                   ),
                 }}
