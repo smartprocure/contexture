@@ -19,7 +19,6 @@ import {
 // components used only for base theme
 import Icon from './Icon'
 import UnmappedNodeComponent from './UnmappedNodeComponent'
-import TableHeaderCell from './TableHeaderCell'
 
 import { defaultTheme } from '../../utils/theme'
 
@@ -41,9 +40,6 @@ let theme = {
   RadioList: defaultProps({ native: true })(RadioList),
   Select,
   Table: 'table',
-  TableCell: 'td',
-  TableHeaderCell,
-  TableRow: 'tr',
   Tag,
   TagsInput,
   TextHighlight,

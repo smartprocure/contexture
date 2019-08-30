@@ -46,13 +46,12 @@ let popoverStyle = {
 
 let HighlightedColumnHeader = _.flow(
   setDisplayName('HighlightedColumnHeader'),
-  observer,
-  withTheme
+  observer
 )(
   ({
     node,
-    theme: { TableHeaderCell },
     results = _.result('slice', getResults(node)),
+    Cell = 'th',
     hasAdditionalFields = !_.flow(
       _.map('additionalFields'),
       _.compact,
@@ -60,7 +59,7 @@ let HighlightedColumnHeader = _.flow(
     )(results),
   }) =>
     hasAdditionalFields && node.showOtherMatches ? (
-      <TableHeaderCell key="additionalFields">Other Matches</TableHeaderCell>
+      <Cell key="additionalFields">Other Matches</Cell>
     ) : null
 )
 
@@ -76,14 +75,15 @@ let HighlightedColumn = _.flow(
     node,
     results = _.result('slice', getResults(node)),
     additionalFields = _.result('0.additionalFields.slice', results),
-    theme: { TableCell, Modal, Table },
     schema,
+    Cell = 'td',
+    theme: { Modal, Table },
   }) => {
     let viewModal = useLens(false)
     return _.isEmpty(additionalFields) ? (
-      <TableCell key="additionalFields" />
+      <Cell key="additionalFields" />
     ) : (
-      <TableCell key="additionalFields">
+      <Cell key="additionalFields">
         <Modal isOpen={viewModal}>
           <h3>Other Matching Fields</h3>
           <Table>
@@ -109,10 +109,19 @@ let HighlightedColumn = _.flow(
         >
           Matched {_.size(additionalFields)} other field(s)
         </button>
-      </TableCell>
+      </Cell>
     )
   }
 )
+
+let HeaderCellDefault = _.flow(
+  setDisplayName('HeaderCell'),
+  observer
+)(({ activeFilter, style, children }) => (
+  <th style={{ ...(activeFilter ? { fontWeight: 900 } : {}), ...style }}>
+    {children}
+  </th>
+))
 
 let Header = _.flow(
   setDisplayName('Header'),
@@ -126,9 +135,9 @@ let Header = _.flow(
       Popover,
       Modal,
       NestedPicker,
-      TableHeaderCell,
       UnmappedNodeComponent,
     },
+    HeaderCell = HeaderCellDefault,
     field: fieldSchema,
     includes,
     addOptions,
@@ -152,7 +161,7 @@ let Header = _.flow(
       hideMenu,
       typeDefault,
     } = fieldSchema
-    TableHeaderCell = fieldSchema.HeaderCell || TableHeaderCell
+    HeaderCell = fieldSchema.HeaderCell || HeaderCell
     let filterNode =
       criteria &&
       _.find({ field }, _.getOr([], 'children', tree.getNode(criteria)))
@@ -166,7 +175,7 @@ let Header = _.flow(
     }
     let Label = label
     return (
-      <TableHeaderCell
+      <HeaderCell
         style={{ cursor: 'pointer' }}
         activeFilter={_.get('hasValue', filterNode)}
       >
@@ -276,7 +285,7 @@ let Header = _.flow(
             />
           </Modal>
         </Popover>
-      </TableHeaderCell>
+      </HeaderCell>
     )
   }
 )
@@ -286,42 +295,45 @@ let TableBody = _.flow(
   setDisplayName('TableBody'),
   observer,
   withTheme
-)(({ node, visibleFields, fields, hiddenFields, theme, schema, Row }) => {
-  let TableRow = Row || theme.TableRow
-  return (
-    <tbody>
-      {!!getResults(node).length &&
-        _.map(
-          x => (
-            <TableRow
-              key={x._id}
-              record={getRecord(x)}
-              {...{ fields, visibleFields, hiddenFields }}
-            >
-              {_.map(
-                ({ field, display = x => x, Cell = theme.TableCell }) => (
-                  <Cell key={field}>
-                    {display(_.get(field, getRecord(x)), getRecord(x))}
-                  </Cell>
-                ),
-                visibleFields
-              )}
-              {node.showOtherMatches && (
-                <HighlightedColumn
-                  {...{
-                    node,
-                    additionalFields: _.result('additionalFields.slice', x),
-                    schema,
-                  }}
-                />
-              )}
-            </TableRow>
-          ),
-          getResults(node)
-        )}
-    </tbody>
-  )
-})
+)(({ node, visibleFields, fields, hiddenFields, schema, Row = 'tr' }) => (
+  <tbody>
+    {!!getResults(node).length &&
+      _.map(
+        x => (
+          <Row
+            key={x._id}
+            record={getRecord(x)}
+            {...{ fields, visibleFields, hiddenFields }}
+          >
+            {_.map(
+              ({ field, display = x => x, Cell = 'td' }) => (
+                <Cell key={field}>
+                  {display(_.get(field, getRecord(x)), getRecord(x))}
+                </Cell>
+              ),
+              visibleFields
+            )}
+            {node.showOtherMatches && (
+              <HighlightedColumn
+                {...{
+                  node,
+                  additionalFields: _.result('additionalFields.slice', x),
+                  schema,
+                }}
+              />
+            )}
+          </Row>
+        ),
+        getResults(node)
+      )}
+  </tbody>
+))
+
+let Tr = props => (
+  <tr
+    {..._.omit(['record', 'fields', 'visibleFields', 'hiddenFields'], props)}
+  />
+)
 
 let ResultTable = ({
   fields,
@@ -331,7 +343,8 @@ let ResultTable = ({
   node,
   tree,
   theme: { Table },
-  Row, // accept a custom Row component so we can do fancy expansion things
+  HeaderCell,
+  Row = Tr, // accept a custom Row component so we can do fancy expansion things
   mapNodeToProps = () => ({}),
 }) => {
   // From Theme/Components
@@ -353,6 +366,7 @@ let ResultTable = ({
   let hiddenFields = _.reject(isIncluded, schema)
 
   let headerProps = {
+    HeaderCell,
     mapNodeToProps,
     fields,
     visibleFields,
