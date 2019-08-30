@@ -90,7 +90,7 @@ export let Label = _.flow(
   setDisplayName('Label'),
   observer,
   withTheme
-)(({ tree, node, fields, theme: { Icon }, ...props }) => {
+)(({ tree, node, fields, label, theme: { Icon }, ...props }) => {
   let popover = useLens(false)
   let modal = useLens(false)
   return (
@@ -107,7 +107,9 @@ export let Label = _.flow(
         tree && node && tree.mutate(node.path, { paused: !node.paused })
       }
     >
-      <span {...props} />
+      <span {...props}>
+        {label || _.get([node.field, 'label'], fields) || node.field}
+      </span>
       {tree && node && (
         <React.Fragment>
           <span
@@ -157,15 +159,6 @@ export let Label = _.flow(
   )
 })
 
-export let FieldLabel = _.flow(
-  setDisplayName('FieldLabel'),
-  contexturify
-)(({ tree, node, node: { field } = {}, fields, label }) => (
-  <Label tree={tree} node={node} fields={fields}>
-    {label || _.get([field, 'label'], fields) || field}
-  </Label>
-))
-
 export let FilterList = _.flow(
   setDisplayName('FilterList'),
   contexturify,
@@ -197,7 +190,7 @@ export let FilterList = _.flow(
             />
           ) : (
             <div key={child.path} className="filter-list-item">
-              <FieldLabel
+              <Label
                 tree={tree}
                 node={child}
                 fields={fields}
