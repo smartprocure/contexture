@@ -2,8 +2,6 @@ import _ from 'lodash/fp'
 import React from 'react'
 import { contexturify } from '../utils/hoc'
 
-let Link = ({ children, onClick }) => <a onClick={onClick}>{children}</a>
-
 let ResultPager = ({
   node,
   tree,
@@ -17,13 +15,12 @@ let ResultPager = ({
   return (
     pages > 1 && (
       <div className={`${className} contexture-result-pager`}>
-        <PagerItem disabled={!(page > 1)}>
-          <Link
-            previous
-            onClick={() => tree.mutate(node.path, { page: page - 1 })}
-          >
-            <Icon icon="PreviousPage" />
-          </Link>
+        <PagerItem
+          disabled={!(page > 1)}
+          previous
+          onClick={() => tree.mutate(node.path, { page: page - 1 })}
+        >
+          <Icon icon="PreviousPage" />
         </PagerItem>
         {page > 3 && (
           <PagerItem
@@ -38,33 +35,27 @@ let ResultPager = ({
           _.times(
             n =>
               page > n + 1 && (
-                <PagerItem key={`prev${n}`}>
-                  <Link
-                    onClick={() =>
-                      tree.mutate(node.path, { page: page - (n + 1) })
-                    }
-                  >
-                    {page - (n + 1)}
-                  </Link>
+                <PagerItem
+                  key={`prev${n}`}
+                  onClick={() =>
+                    tree.mutate(node.path, { page: page - (n + 1) })
+                  }
+                >
+                  {page - (n + 1)}
                 </PagerItem>
               ),
             2
           )
         )}
-        <PagerItem active>
-          <Link>{page}</Link>
-        </PagerItem>
+        <PagerItem active>{page}</PagerItem>
         {_.times(
           n =>
             page + (n + 1) <= pages && (
-              <PagerItem key={`next${n}`}>
-                <Link
-                  onClick={() =>
-                    tree.mutate(node.path, { page: page + (n + 1) })
-                  }
-                >
-                  {page + (n + 1)}
-                </Link>
+              <PagerItem
+                key={`next${n}`}
+                onClick={() => tree.mutate(node.path, { page: page + (n + 1) })}
+              >
+                {page + (n + 1)}
               </PagerItem>
             ),
           2
@@ -78,10 +69,12 @@ let ResultPager = ({
             <Icon icon="Next5Pages" />
           </PagerItem>
         )}
-        <PagerItem disabled={!(page < pages)}>
-          <Link next onClick={() => tree.mutate(node.path, { page: page + 1 })}>
-            <Icon icon="NextPage" />
-          </Link>
+        <PagerItem
+          disabled={!(page < pages)}
+          next
+          onClick={() => tree.mutate(node.path, { page: page + 1 })}
+        >
+          <Icon icon="NextPage" />
         </PagerItem>
       </div>
     )
