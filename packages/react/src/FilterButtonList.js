@@ -41,10 +41,12 @@ let FilterButtonItem = _.flow(
             )}
             <div className="filter-component">
               <Dynamic
-                Component={UnmappedNodeComponent}
-                tree={tree}
-                node={node}
-                path={_.toArray(node.path)}
+                defaultProps={{
+                  component: UnmappedNodeComponent,
+                  tree,
+                  node,
+                  path: _.toArray(node.path),
+                }}
                 {...mappedProps}
               />
             </div>

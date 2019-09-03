@@ -1,5 +1,15 @@
 import React from 'react'
-let Dynamic = ({ component: C = null, ...props }) => C && <C {...props} />
-Dynamic.displayName = 'Dynamic'
+import _ from 'lodash/fp'
+import { observer } from 'mobx-react'
 
-export default Dynamic
+let Dynamic = ({ component: C = null, defaultProps, ...props }) =>
+  C && (
+    <C
+      {..._.flow(
+        _.pickBy(_.identity),
+        _.merge(defaultProps)
+      )(props)}
+    />
+  )
+
+export default observer(Dynamic)
