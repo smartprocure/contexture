@@ -26,6 +26,7 @@ let theme = {
   BarChart,
   Box: 'div',
   Button: 'button',
+  ButtonGroup: 'div',
   Checkbox: props => <input type="checkbox" {...props} />,
   DateInput: defaultProps({ native: true })(DateInput),
   UnmappedNodeComponent,

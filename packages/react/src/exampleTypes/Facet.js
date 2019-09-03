@@ -48,13 +48,13 @@ let FacetOptionsFilter = _.flow(
   setDisplayName('FacetOptionsFilter'),
   observer,
   withTheme
-)(({ tree, node, theme: { TextInput, Button } }) => {
+)(({ tree, node, theme: { TextInput, Button, ButtonGroup } }) => {
   let [val, setVal] = useState(node.optionsFilter)
   let buttonEnabled = val !== node.optionsFilter
   let submit = () =>
     buttonEnabled && tree.mutate(node.path, { optionsFilter: val })
   return (
-    <Flex>
+    <ButtonGroup>
       <TextInput
         value={val}
         onChange={e => {
@@ -70,7 +70,7 @@ let FacetOptionsFilter = _.flow(
       >
         Submit
       </Button>
-    </Flex>
+    </ButtonGroup>
   )
 })
 
@@ -90,7 +90,7 @@ let Facet = ({
       options={F.autoLabelOptions(['include', 'exclude'])}
     />
     {!hide.facetFilter && <FacetOptionsFilter tree={tree} node={node} />}
-    <SelectAll node={node} tree={tree} Checkbox={Checkbox} />
+    <SelectAll node={node} tree={tree} />
     {_.flow(
       _.partition(x => _.includes(x.name, node.values)),
       _.flatten,

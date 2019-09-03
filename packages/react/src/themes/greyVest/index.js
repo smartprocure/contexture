@@ -7,6 +7,7 @@ import {
   Button,
   Checkbox,
   DateInput,
+  Flex,
   Fonts,
   Icon,
   DropdownItem,
@@ -28,6 +29,7 @@ import TagsInput from './TagsInput'
 export default {
   Box,
   Button,
+  ButtonGroup: defaultProps({ className: 'gv-button-group' })(Flex),
   Checkbox,
   DateInput,
   Root: ({ children }) => (
