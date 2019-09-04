@@ -556,6 +556,7 @@ export default () => (
         min-width: 20px!important;
         text-align: center;
         border: none!important;
+        height: 40px;
       }
       .react-date-picker__inputGroup__input::placeholder {
         opacity: 0.5;
