@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { observable } from 'mobx'
 import { TreePauseButton, SearchTree } from '../../src/purgatory'
+import ThemePicker from '../themePicker'
 
 let pauseWith = action('set paused')
 
@@ -17,7 +18,11 @@ let tree = {
   isPausedNested: () => state.paused,
 }
 
-storiesOf('Components|Search components/TreePauseButton', module)
+storiesOf(
+  'Components|Search components/Other components/TreePauseButton',
+  module
+)
+  .addDecorator(ThemePicker('greyVest'))
   .addWithJSX('One Tree', () => (
     <TreePauseButton>
       <SearchTree tree={tree} path={['root']} />

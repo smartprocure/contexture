@@ -154,7 +154,7 @@ export default () => (
         cursor: pointer;
         font-size: 20px;
         color: #9b9b9b;
-        display: flex;
+        display: inline-flex;
         justify-content: center;
         align-items: center;
         transition: background-color .1s linear, color .1s linear;

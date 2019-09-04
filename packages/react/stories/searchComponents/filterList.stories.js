@@ -2,10 +2,11 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { FilterList } from '../../src/FilterList'
 import { componentForType } from '../../src'
+import ThemePicker from '../themePicker'
 
-storiesOf('Components|Search components', module).addWithJSX(
-  'FilterList',
-  () => (
+storiesOf('Components|Search components', module)
+  .addDecorator(ThemePicker('blueberry'))
+  .addWithJSX('FilterList', () => (
     <FilterList
       node={{
         children: [
@@ -36,5 +37,4 @@ storiesOf('Components|Search components', module).addWithJSX(
         typeB: () => <div>B TYPE</div>,
       })}
     />
-  )
-)
+  ))

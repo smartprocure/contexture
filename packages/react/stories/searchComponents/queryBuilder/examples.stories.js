@@ -5,6 +5,7 @@ import ContextureMobx from '../../../src/utils/contexture-mobx'
 import QueryBuilder from '../../../src/queryBuilder'
 import { TypeMap } from '../../../src/exampleTypes'
 import { componentForType } from '../../../src'
+import ThemePicker from '../../themePicker'
 
 let Client = ContextureMobx({
   debug: true,
@@ -15,6 +16,7 @@ let Client = ContextureMobx({
 let Node = (type, key) => ({ key, type })
 
 storiesOf('Components|Search components/QueryBuilder', module)
+  .addDecorator(ThemePicker('greyVest'))
   .addWithJSX('One Filter', () => (
     <QueryBuilder
       tree={Client({

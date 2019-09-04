@@ -9,6 +9,7 @@ import { mergeOverAll } from 'futil-js'
 import { componentForType, schemaFieldProps } from '../../../src/utils/schema'
 import { TypeMap } from '../../../src/exampleTypes'
 import { tree, fields, types, nodeOverrides } from './config'
+import ThemePicker from '../../themePicker'
 
 let mapNodeToDescription = types => (node, fields) => ({
   description: _.join(' ', [
@@ -63,5 +64,6 @@ let AccordionStory = () => (
 )
 
 storiesOf('Components|Search components/QueryWizard', module)
+  .addDecorator(ThemePicker('greyVest'))
   .addWithJSX('QueryWizard', WizardStory)
   .addWithJSX('Accordion with FilterButtonList', AccordionStory)
