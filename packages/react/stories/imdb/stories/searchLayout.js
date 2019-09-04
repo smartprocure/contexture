@@ -10,27 +10,20 @@ import {
   componentForType,
   SearchLayout,
   SearchFilters,
-} from '../../../src'
-import {
-  Button,
-  IconButton,
-  Tabs,
-  Tab,
-  TabLabel,
-  TabContent,
-  Box,
-  SearchTree,
   ToggleFiltersHeader,
-  Column,
-} from '../../../src/greyVest'
+} from '../../../src'
+import { SearchTree } from '../../../src/purgatory'
+import { Tab, TabContent, TabLabel, Tabs } from '../../../src/greyVest'
 import {
-  ResultCount,
-  TagsQuery,
   DateRangePicker,
-  TermsStatsTable,
-  PagedResultTable,
   TypeMap,
+  TermsStatsTable,
+  TagsQuery,
+  ResultCount,
+  PagedResultTable,
 } from '../../../src/exampleTypes'
+import { Column } from '../../../src/greyVest/ExpandableTable'
+import { ThemeConsumer } from '../../../src/utils/theme'
 
 let tree = Contexture({
   key: 'root',
@@ -234,7 +227,7 @@ let mapNodeToProps = mergeOverAll([
     },
 ])
 
-export default () => (
+let GreyVestStory = theme => (
   <Awaiter promise={schemas}>
     {schemas => (
       <SearchLayout mode={state.mode}>
@@ -260,27 +253,27 @@ export default () => (
             Search Movies
           </ToggleFiltersHeader>
           <div className="gv-search-bar">
-            <Box>
+            <theme.Box>
               <TagsQuery tree={tree} path={['root', 'bar']} autoFocus />
-            </Box>
+            </theme.Box>
             <div className="gv-button-group">
-              <Button
+              <theme.Button
                 className="gv-search-button"
                 onClick={tree.triggerUpdate}
                 primary
               >
                 Search
-              </Button>
+              </theme.Button>
               <div className="gv-search-toolbar">
-                <IconButton
+                <theme.AlternateButton
                   onClick={() => {
                     window.location.reload()
                   }}
                   title="New Search"
                 >
                   <i className="material-icons">fiber_new</i>
-                </IconButton>
-                <IconButton
+                </theme.AlternateButton>
+                <theme.AlternateButton
                   title="Auto Update"
                   primary={state.autoUpdate}
                   onClick={() => {
@@ -289,14 +282,15 @@ export default () => (
                   }}
                 >
                   <i className="material-icons">autorenew</i>
-                </IconButton>
+                </theme.AlternateButton>
               </div>
             </div>
           </div>
           <h1>Search Results</h1>
-          <Tabs defaultValue="results">
+          <Tabs defaultValue="results" TabPanel={theme.Box}>
             <TabLabel value="results">
-              Movies (<ResultCount tree={tree} path={['root', 'results']} />)
+              Movies (
+              <ResultCount tree={tree} path={['root', 'results']} />)
             </TabLabel>
             <TabContent value="results">
               <PagedResultTable
@@ -313,12 +307,9 @@ export default () => (
             <Tab value="analytics" label="Analytics">
               <TermsStatsTable
                 tree={tree}
-                criteria={['root', 'criteria']}
-                criteriaField="genres"
                 path={['root', 'genreScores']}
                 tableAttrs={{ className: 'gv-table' }}
                 sizeOptions={[10, 25, 50]}
-                criteriaGetValue="key"
               >
                 <Column field="key" label="Genre" />
                 <Column field="count" label="Found" />
@@ -349,3 +340,5 @@ export default () => (
     )}
   </Awaiter>
 )
+
+export default () => <ThemeConsumer>{GreyVestStory}</ThemeConsumer>
