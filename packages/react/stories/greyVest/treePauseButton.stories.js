@@ -17,7 +17,7 @@ let tree = {
   isPausedNested: () => state.paused,
 }
 
-storiesOf('Search Components (Grey Vest)|/TreePauseButton', module)
+storiesOf('Components|Search components/TreePauseButton', module)
   .addWithJSX('One Tree', () => (
     <TreePauseButton>
       <SearchTree tree={tree} path={['root']} />

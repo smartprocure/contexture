@@ -68,7 +68,7 @@ Used in conjunction with TabLabel as an alternative to a combined Tab.
 
 let state = observable({ tab: 'results' })
 
-storiesOf('Components|GreyVest/Tabs', module)
+storiesOf('Components|GreyVest library/Tabs', module)
   .add(
     'Docs',
     withInfo({ text: tabDocs, inline: true, source: false, header: false })(

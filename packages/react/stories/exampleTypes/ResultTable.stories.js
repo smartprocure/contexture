@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react'
 import TestTree from '../testTree'
 import { ResultTable } from '../../src/exampleTypes'
 
-storiesOf('Search Components (Unthemed)|Example Types/ResultTable', module)
+storiesOf('Components|Search components/ExampleTypes/ResultTable', module)
   .addWithJSX('Customizations', () => (
     <div>
       <style>

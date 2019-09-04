@@ -1,10 +1,10 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { exampleTypes, mockService } from 'contexture-client'
-import ContextureMobx from '../../src/utils/contexture-mobx'
-import QueryBuilder from '../../src/queryBuilder/'
-import { TypeMap } from '../../src/exampleTypes'
-import { componentForType } from '../../src'
+import ContextureMobx from '../../../src/utils/contexture-mobx'
+import QueryBuilder from '../../../src/queryBuilder'
+import { TypeMap } from '../../../src/exampleTypes'
+import { componentForType } from '../../../src'
 
 let Client = ContextureMobx({
   debug: true,
@@ -14,7 +14,7 @@ let Client = ContextureMobx({
 
 let Node = (type, key) => ({ key, type })
 
-storiesOf('Search Components (Unthemed)|QueryBuilder', module)
+storiesOf('Components|Search components/QueryBuilder', module)
   .addWithJSX('One Filter', () => (
     <QueryBuilder
       tree={Client({

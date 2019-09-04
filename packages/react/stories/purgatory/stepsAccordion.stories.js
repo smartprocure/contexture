@@ -11,7 +11,7 @@ let makeStepTitle = title => n => (
   </h1>
 )
 
-storiesOf('Components (Purgatory)|StepsAccordion', module).addWithJSX(
+storiesOf('Components|Search components', module).addWithJSX(
   'StepsAccordion',
   () => {
     let isClicked = F.stateLens(React.useState(false))

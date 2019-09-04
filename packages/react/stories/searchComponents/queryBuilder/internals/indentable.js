@@ -1,10 +1,10 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import Indentable from '../../../src/queryBuilder/preview/Indentable'
+import Indentable from '../../../../src/queryBuilder/preview/Indentable'
 
 export default () =>
   storiesOf(
-    'Search Components (Unthemed)|QueryBuilder/Internals/Indentable',
+    'Components|Search components/QueryBuilder/Internals/Indentable',
     module
   )
     .addWithJSX('and', () => (

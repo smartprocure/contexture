@@ -1,11 +1,11 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import Rule from '../../../src/queryBuilder/Rule'
+import Rule from '../../../../src/queryBuilder/Rule'
 
 export default (parent, root, DnDDecorator) =>
-  storiesOf('Search Components (Unthemed)|QueryBuilder/Internals/Rule', module)
+  storiesOf('Components|Search components/QueryBuilder/Internals', module)
     .addDecorator(DnDDecorator)
-    .addWithJSX('index', () => (
+    .addWithJSX('Rule', () => (
       <Rule
         node={{
           type: 'test',

@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { fromPromise } from 'mobx-utils'
 import { Awaiter } from '../../src/greyVest'
 
-storiesOf('Components|GreyVest', module).addWithJSX('Awaiter', () => {
+storiesOf('Components|GreyVest library/', module).addWithJSX('Awaiter', () => {
   let resolve
   let reject
   let p = fromPromise(

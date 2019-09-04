@@ -1,11 +1,11 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import AddPreview from '../../../src/queryBuilder/preview/AddPreview'
+import AddPreview from '../../../../src/queryBuilder/preview/AddPreview'
 
 export default () =>
   storiesOf(
-    'Search Components (Unthemed)|QueryBuilder/Internals/AddPreview',
+    'Components|Search components/QueryBuilder/Internals/AddPreview',
     module
   )
     .addWithJSX('and', () => <AddPreview onClick={action('join')} join="and" />)

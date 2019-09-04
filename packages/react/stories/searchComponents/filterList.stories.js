@@ -1,10 +1,10 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { FilterList } from '../src/FilterList'
-import { componentForType } from '../src'
+import { FilterList } from '../../src/FilterList'
+import { componentForType } from '../../src'
 
-storiesOf('Search Components (Unthemed)|FilterList', module).addWithJSX(
-  'Example',
+storiesOf('Components|Search components', module).addWithJSX(
+  'FilterList',
   () => (
     <FilterList
       node={{

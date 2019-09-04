@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 import { exampleTypes, mockService } from 'contexture-client'
-import ContextureMobx from '../../src/utils/contexture-mobx'
+import ContextureMobx from '../../../src/utils/contexture-mobx'
 
 let typeDescriptions = {
   tagsQuery: {

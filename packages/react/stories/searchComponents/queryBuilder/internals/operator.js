@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import Operator from '../../../src/queryBuilder/Operator'
+import Operator from '../../../../src/queryBuilder/Operator'
 
 let operatorStory = (join, index, root) => () => (
   <Operator
@@ -18,7 +18,7 @@ let operatorStory = (join, index, root) => () => (
 )
 export default (parent, root, DnDDecorator) =>
   storiesOf(
-    'Search Components (Unthemed)|QueryBuilder/Internals/Operator',
+    'Components|Search components/QueryBuilder/Internals/Operator',
     module
   )
     .addDecorator(DnDDecorator)

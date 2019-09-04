@@ -11,7 +11,7 @@ let treeWithTags = TestTree(testTree => {
   return testTree
 })
 
-storiesOf('Search Components (Unthemed)|Example Types/Tags Query', module)
+storiesOf('Components|Search components/ExampleTypes/Tags Query', module)
   .addWithJSX('Default', () => (
     <TagsQuery tree={treeWithTags} path={['tagsQuery']} />
   ))

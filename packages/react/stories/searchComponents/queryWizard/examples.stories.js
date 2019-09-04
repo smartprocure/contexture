@@ -1,13 +1,13 @@
 import _ from 'lodash/fp'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { QueryWizard, FilterButtonList } from '../../src/'
+import { QueryWizard, FilterButtonList } from '../../../src/'
 import StepsAccordion, {
   AccordionStep,
-} from '../../src/purgatory/StepsAccordion'
+} from '../../../src/purgatory/StepsAccordion'
 import { mergeOverAll } from 'futil-js'
-import { componentForType, schemaFieldProps } from '../../src/utils/schema'
-import { TypeMap } from '../../src/exampleTypes'
+import { componentForType, schemaFieldProps } from '../../../src/utils/schema'
+import { TypeMap } from '../../../src/exampleTypes'
 import { tree, fields, types, nodeOverrides } from './config'
 
 let mapNodeToDescription = types => (node, fields) => ({
@@ -62,10 +62,6 @@ let AccordionStory = () => (
   </StepsAccordion>
 )
 
-storiesOf('Search Components (Unthemed)|Wizard', module)
-  .addWithJSX('QueryWizard', WizardStory)
-  .addWithJSX('Accordion with FilterButtonList', AccordionStory)
-
-storiesOf('Search Components (Grey Vest)|Wizard', module)
+storiesOf('Components|Search components/QueryWizard', module)
   .addWithJSX('QueryWizard', WizardStory)
   .addWithJSX('Accordion with FilterButtonList', AccordionStory)

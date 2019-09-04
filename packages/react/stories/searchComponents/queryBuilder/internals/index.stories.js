@@ -1,7 +1,7 @@
 import React from 'react'
 import * as F from 'futil-js'
 import { action } from '@storybook/addon-actions'
-import DDContext from '../../../src/queryBuilder/DragDrop/DDContext'
+import DDContext from '../../../../src/queryBuilder/DragDrop/DDContext'
 
 let DnDWrap = DDContext(({ children }) => <div>{children}</div>)
 const DnDDecorator = storyFn => <DnDWrap>{storyFn()}</DnDWrap>

@@ -2,8 +2,8 @@ import React from 'react'
 import _ from 'lodash/fp'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import FilterAdder from '../src/FilterAdder'
-import { applyDefaults } from '../src/utils/schema'
+import FilterAdder from '../../src/FilterAdder'
+import { applyDefaults } from '../../src/utils/schema'
 import { defaultProps } from 'recompose'
 
 let Select = ({ options, onChange }) => (
@@ -27,7 +27,7 @@ let mockTree = {
   getNode: () => true,
 }
 
-storiesOf('Search Components (Unthemed)|FilterAdder', module)
+storiesOf('Components|Search components/FilterAdder', module)
   .addWithJSX('Example', () => (
     <div>
       <FilterAdder
