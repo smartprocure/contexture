@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { SearchLayout } from '../../src'
 import { Box } from '../../src/greyVest'
 
-storiesOf('Components (Grey Vest)|Search Layout', module)
+storiesOf('Components|GreyVest/SearchLayout', module)
   .addWithJSX('Basic', () => (
     <SearchLayout mode="basic">
       <Box>Filters</Box>

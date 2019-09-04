@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Flex, Box, ErrorList, TextInput } from './../../src/greyVest'
 
-storiesOf('Components (Grey Vest)|Error', module)
+storiesOf('Components|GreyVest/Error', module)
   .addWithJSX('Text', () => <ErrorList>I am an error</ErrorList>)
   .addWithJSX('Block', () => (
     <ErrorList block>

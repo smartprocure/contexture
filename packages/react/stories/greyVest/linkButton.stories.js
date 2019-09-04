@@ -5,7 +5,6 @@ import { LinkButton } from './../../src/greyVest'
 
 let click = action('clicked')
 
-storiesOf('Components (Grey Vest)|LinkButton', module).addWithJSX(
-  'LinkButton',
-  () => <LinkButton onClick={() => click()}>Click</LinkButton>
-)
+storiesOf('Components|GreyVest', module).addWithJSX('LinkButton', () => (
+  <LinkButton onClick={() => click()}>Click</LinkButton>
+))

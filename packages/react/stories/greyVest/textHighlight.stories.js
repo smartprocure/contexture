@@ -19,7 +19,6 @@ let HighlightDemo = observer(() => {
   )
 })
 
-storiesOf('Components (Grey Vest)|TextHighlight', module).addWithJSX(
-  'TextHighlight',
-  () => <HighlightDemo />
-)
+storiesOf('Components|GreyVest', module).addWithJSX('TextHighlight', () => (
+  <HighlightDemo />
+))

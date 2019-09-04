@@ -15,6 +15,6 @@ let ModalDemo = observer(() => {
   )
 })
 
-storiesOf('Components (Grey Vest)|Modal', module).addWithJSX('Modal', () => (
+storiesOf('Components|GreyVest', module).addWithJSX('Modal', () => (
   <ModalDemo />
 ))

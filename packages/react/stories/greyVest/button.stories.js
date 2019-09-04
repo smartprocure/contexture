@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { Button } from './../../src/greyVest'
 
-storiesOf('Components (Grey Vest)|Button', module)
+storiesOf('Components|GreyVest/Button', module)
   .addWithJSX('Basic Usage', () => (
     <Button onClick={() => action('clicked')()}>Click</Button>
   ))

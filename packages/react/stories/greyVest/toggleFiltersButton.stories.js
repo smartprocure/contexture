@@ -5,7 +5,7 @@ import { ToggleFiltersButton } from './../../src/greyVest'
 
 let click = action('clicked')
 
-storiesOf('Components (Grey Vest)|ToggleFiltersButton', module).addWithJSX(
-  'Basic Usage',
+storiesOf('Components|GreyVest', module).addWithJSX(
+  'ToggleFiltersButton',
   () => <ToggleFiltersButton onClick={() => click()} />
 )

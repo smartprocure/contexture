@@ -15,7 +15,6 @@ let PopoverDemo = observer(() => {
   )
 })
 
-storiesOf('Components (Grey Vest)|Popover', module).addWithJSX(
-  'Popover',
-  () => <PopoverDemo />
-)
+storiesOf('Components|GreyVest', module).addWithJSX('Popover', () => (
+  <PopoverDemo />
+))

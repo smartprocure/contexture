@@ -20,13 +20,13 @@ let ThemeSwitcher = ({ children }) => {
     <ThemeProvider theme={themes[F.view(theme)]}>
       <ThemeConsumer>
         {({ Box, Select }) => (
-          <Box style={{ marginBottom: 20 }}>
+          <Box>
             <Flex alignItems="center">
               <p
                 className="filter-field-label"
                 style={{ margin: 0, marginRight: 8 }}
               >
-                Current theme:{' '}
+                Current theme:
               </p>
               <Select
                 options={options}
