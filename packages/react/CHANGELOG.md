@@ -13,15 +13,20 @@
   * Move or remove several GreyVest component exports:
     * Adder - deprecated by theme support on FilterAdder
     * Pager - deprecated by theme support on ResultPager
+    * PagedResultTable - added to ExampleTypes
     * FilterButtonList - deprecated by theme support (use the top-level export instead)
     * FilterList - deprecated by theme support (use the top-level export instead)
     * QueryBuilder - deprecated by theme support (use the top-level export instead)
     * QueryWizard - deprecated by theme support (use the top-level export instead)
     * UnmappedNodeComponent - now a theme component
     * CheckButton - moved to purgatory
-    * PagedResultTable - added to ExampleTypes
-    * SearchLayout - now a generic search interface
-    * SearchFilters - now a generic search interface
+    * ToggleFiltersButton - moved to purgatory
+    * TreePauseButton - moved to purgatory
+    * SearchTree - moved to purgatory
+    * ToggleFiltersHeader - moved to top-level export
+    * SearchLayout - now a generic search interface (moved to top-level export)
+    * SearchLayout - now a generic search interface (moved to top-level export)
+    * SearchFilters - now a generic search interface (moved to top-level export)
     * AddableFilterList - now part of SearchFilters
     * FiltersBox - now part of SearchFilters
   * Rename some GreyVest component exports:

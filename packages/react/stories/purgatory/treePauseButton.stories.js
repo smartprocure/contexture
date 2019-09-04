@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { observable } from 'mobx'
-import { TreePauseButton, SearchTree } from './../../src/greyVest'
+import { TreePauseButton, SearchTree } from '../../src/purgatory'
 
 let pauseWith = action('set paused')
 

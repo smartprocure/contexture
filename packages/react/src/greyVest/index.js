@@ -12,7 +12,6 @@ export DropdownItem from './DropdownItem'
 export Modal from './Modal'
 export PagerItem from './PagerItem'
 export RadioList from './RadioList'
-export let SearchTree = () => {}
 export Select from './Select'
 export Style from './Style'
 export * from './Tabs'
@@ -22,9 +21,6 @@ export Textarea from './Textarea'
 export TextButton from './TextButton'
 export TextHighlight from './TextHighlight'
 export TextInput from './TextInput'
-export ToggleFiltersButton from './ToggleFiltersButton'
-export ToggleFiltersHeader from './ToggleFiltersHeader'
-export TreePauseButton from './TreePauseButton'
 
 // former layout components
 // ------------------------
