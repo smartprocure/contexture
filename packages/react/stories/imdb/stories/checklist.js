@@ -6,6 +6,7 @@ import { fromPromise } from 'mobx-utils'
 import { observer } from 'mobx-react'
 import Contexture, { updateSchemas } from '../utils/contexture'
 import { useLens } from '../../../src/utils/react'
+import { useTheme } from '../../../src/utils/theme'
 import {
   FilterList,
   Flex,
@@ -15,7 +16,6 @@ import {
   componentForType,
   FilterAdder,
 } from '../../../src'
-import { Button, ButtonRadio } from '../../../src/greyVest'
 import {
   ResultCount,
   CheckableResultTable,
@@ -110,78 +110,81 @@ let CheckboxResultTable = observer(props => {
   )
 })
 
-export default () => (
-  <Awaiter promise={schemas}>
-    {schemas => (
-      <Grid gap="22px" columns="1fr 4fr" style={{ margin: '0 22px' }}>
-        <div>
-          <h1>Filters</h1>
-          <SpacedList>
-            <FilterList
-              tree={tree}
-              path={['root', 'criteria']}
-              fields={schemas.movies.fields}
-              mapNodeToProps={F.mergeOverAll([
-                componentForType(TypeMap),
-                field =>
-                  field.key === 'searchNumber' ? { showBestRange: true } : {},
-              ])}
-            />
-            <FilterAdder
-              tree={tree}
-              path={['root', 'criteria']}
-              fields={schemas.movies.fields}
-              uniqueFields
-            />
-          </SpacedList>
-        </div>
-        <div>
-          <Grid columns="1fr 25px 150px" style={{ alignItems: 'center' }}>
-            <TagsQuery tree={tree} path={['root', 'bar']} />
-            {!state.autoUpdate && (
-              <Button onClick={tree.triggerUpdate} primary>
-                Search
-              </Button>
-            )}
-          </Grid>
-          <Flex
-            style={{
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <h1>
-              Results (<ResultCount tree={tree} path={['root', 'results']} />)
-            </h1>
-            <Flex>
-              <ButtonRadio
-                options={[
-                  { label: 'AutoSearch On', value: true },
-                  { label: 'AutoSearch Off', value: false },
-                ]}
-                value={state.autoUpdate}
-                onChange={val => {
-                  tree.disableAutoUpdate = !val
-                  state.autoUpdate = !!val
-                }}
+export default () => {
+  let theme = useTheme()
+  return (
+    <Awaiter promise={schemas}>
+      {schemas => (
+        <Grid gap="22px" columns="1fr 4fr" style={{ margin: '22px' }}>
+          <div>
+            <h1>Filters</h1>
+            <SpacedList>
+              <FilterList
+                tree={tree}
+                path={['root', 'criteria']}
+                fields={schemas.movies.fields}
+                mapNodeToProps={F.mergeOverAll([
+                  componentForType(TypeMap),
+                  field =>
+                    field.key === 'searchNumber' ? { showBestRange: true } : {},
+                ])}
               />
-            </Flex>
-          </Flex>
-          <div className="gv-box">
-            <CheckboxResultTable
-              tree={tree}
-              fields={schemas[tree.tree.schema].fields}
-              path={['root', 'results']}
-              criteria={['root', 'criteria']}
-              mapNodeToProps={componentForType(TypeMap)}
-              getValue="title"
-            />
-            <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>
-              <ResultPager tree={tree} path={['root', 'results']} />
-            </Flex>
+              <FilterAdder
+                tree={tree}
+                path={['root', 'criteria']}
+                fields={schemas.movies.fields}
+                uniqueFields
+              />
+            </SpacedList>
           </div>
-        </div>
-      </Grid>
-    )}
-  </Awaiter>
-)
+          <div>
+            <Grid columns="1fr auto" style={{ alignItems: 'center' }}>
+              <TagsQuery tree={tree} path={['root', 'bar']} />
+              {!state.autoUpdate && (
+                <theme.Button onClick={tree.triggerUpdate} primary>
+                  Search
+                </theme.Button>
+              )}
+            </Grid>
+            <Flex
+              style={{
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <h1>
+                Results (<ResultCount tree={tree} path={['root', 'results']} />)
+              </h1>
+              <Flex>
+                <theme.RadioList
+                  options={[
+                    { label: 'AutoSearch On', value: true },
+                    { label: 'AutoSearch Off', value: false },
+                  ]}
+                  value={state.autoUpdate}
+                  onChange={val => {
+                    tree.disableAutoUpdate = !val
+                    state.autoUpdate = !!val
+                  }}
+                />
+              </Flex>
+            </Flex>
+            <theme.Box>
+              <CheckboxResultTable
+                tree={tree}
+                fields={schemas[tree.tree.schema].fields}
+                path={['root', 'results']}
+                criteria={['root', 'criteria']}
+                mapNodeToProps={componentForType(TypeMap)}
+                getValue="title"
+              />
+              <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>
+                <ResultPager tree={tree} path={['root', 'results']} />
+              </Flex>
+            </theme.Box>
+          </div>
+        </Grid>
+      )}
+    </Awaiter>
+  )
+}

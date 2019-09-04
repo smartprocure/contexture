@@ -31,7 +31,7 @@ export let mergeNestedTheme = (theme, key) =>
     )
   )(theme)
 
-let useTheme = (name, propTheme) =>
+export let useTheme = (name, propTheme) =>
   mergeOrReturn(
     mergeNestedTheme(React.useContext(ThemeContext), name),
     propTheme
