@@ -1,11 +1,10 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import decorator from './decorator'
 import { Checkbox } from '../../src/greyVest'
 
-storiesOf('Components (Grey Vest)|Checkbox', module)
-  .addDecorator(decorator)
-  .addWithJSX('Checkbox', () => (
+storiesOf('Components (Grey Vest)|Checkbox', module).addWithJSX(
+  'Checkbox',
+  () => (
     <>
       <div>
         Unchecked:
@@ -16,4 +15,5 @@ storiesOf('Components (Grey Vest)|Checkbox', module)
         <Checkbox checked />
       </div>
     </>
-  ))
+  )
+)

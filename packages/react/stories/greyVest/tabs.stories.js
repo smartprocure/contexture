@@ -4,7 +4,6 @@ import { withInfo } from '@storybook/addon-info'
 import { action } from '@storybook/addon-actions'
 import { observable } from 'mobx'
 import { Observer } from 'mobx-react'
-import decorator from './decorator'
 import {
   Tabs,
   Tab,
@@ -70,7 +69,6 @@ Used in conjunction with TabLabel as an alternative to a combined Tab.
 let state = observable({ tab: 'results' })
 
 storiesOf('Components (Grey Vest)|Tabs', module)
-  .addDecorator(decorator)
   .add(
     'Docs',
     withInfo({ text: tabDocs, inline: true, source: false, header: false })(

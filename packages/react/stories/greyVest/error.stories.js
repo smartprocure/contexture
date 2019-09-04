@@ -1,10 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import decorator from './decorator'
 import { Flex, Box, ErrorList, TextInput } from './../../src/greyVest'
 
 storiesOf('Components (Grey Vest)|Error', module)
-  .addDecorator(decorator)
   .addWithJSX('Text', () => <ErrorList>I am an error</ErrorList>)
   .addWithJSX('Block', () => (
     <ErrorList block>

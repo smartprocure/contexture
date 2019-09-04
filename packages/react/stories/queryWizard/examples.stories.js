@@ -7,7 +7,6 @@ import StepsAccordion, {
 } from '../../src/purgatory/StepsAccordion'
 import { mergeOverAll } from 'futil-js'
 import { componentForType, schemaFieldProps } from '../../src/utils/schema'
-import GVDecorator from '../greyVest/decorator'
 import { TypeMap } from '../../src/exampleTypes'
 import { tree, fields, types, nodeOverrides } from './config'
 
@@ -68,6 +67,5 @@ storiesOf('Search Components (Unthemed)|Wizard', module)
   .addWithJSX('Accordion with FilterButtonList', AccordionStory)
 
 storiesOf('Search Components (Grey Vest)|Wizard', module)
-  .addDecorator(GVDecorator)
   .addWithJSX('QueryWizard', WizardStory)
   .addWithJSX('Accordion with FilterButtonList', AccordionStory)
