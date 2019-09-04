@@ -12,6 +12,7 @@ import {
   ButtonRadio,
   Button,
 } from './../../src/greyVest'
+import decorator from './decorator'
 
 let tabDocs = `
 # Overview
@@ -75,6 +76,7 @@ storiesOf('Components|GreyVest library/Tabs', module)
       () => null
     )
   )
+  .addDecorator(decorator)
   .addWithJSX('Base Usage', () => (
     <Tabs>
       <Tab label="Tab One">Tab One Contents</Tab>

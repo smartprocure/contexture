@@ -2,8 +2,10 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { SearchLayout } from '../../src'
 import { Box } from '../../src/greyVest'
+import ThemePicker from '../themePicker'
 
-storiesOf('Components|GreyVest library/SearchLayout', module)
+storiesOf('Components|Search components/Other components/SearchLayout', module)
+  .addDecorator(ThemePicker('greyVest'))
   .addWithJSX('Basic', () => (
     <SearchLayout mode="basic">
       <Box>Filters</Box>
