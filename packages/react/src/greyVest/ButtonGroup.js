@@ -1,4 +1,5 @@
 import { defaultProps } from 'recompose'
-import { Flex } from '../greyVest'
+import Flex from './Flex'
 
-export default defaultProps({ className: 'gv-button-group' })(Flex)
+let ButtonGroup = defaultProps({ className: 'gv-button-group' })(Flex)
+export default ButtonGroup

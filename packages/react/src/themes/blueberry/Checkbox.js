@@ -3,7 +3,7 @@ import React from 'react'
 // Low effort custom checkbox
 export default ({ checked, onChange, style = {} }) => (
   <label
-    className="bb-input"
+    className="gv-input"
     style={{
       height: '24px',
       width: '24px',

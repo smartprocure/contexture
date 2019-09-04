@@ -256,7 +256,7 @@ let GreyVestStory = theme => (
             <theme.Box>
               <TagsQuery tree={tree} path={['root', 'bar']} autoFocus />
             </theme.Box>
-            <div className="gv-button-group">
+            <theme.ButtonGroup>
               <theme.Button
                 className="gv-search-button"
                 onClick={tree.triggerUpdate}
@@ -266,14 +266,6 @@ let GreyVestStory = theme => (
               </theme.Button>
               <div className="gv-search-toolbar">
                 <theme.AlternateButton
-                  onClick={() => {
-                    window.location.reload()
-                  }}
-                  title="New Search"
-                >
-                  <i className="material-icons">fiber_new</i>
-                </theme.AlternateButton>
-                <theme.AlternateButton
                   title="Auto Update"
                   primary={state.autoUpdate}
                   onClick={() => {
@@ -281,10 +273,18 @@ let GreyVestStory = theme => (
                     tree.disableAutoUpdate = !state.autoUpdate
                   }}
                 >
-                  <i className="material-icons">autorenew</i>
+                  <theme.Icon icon="AutoUpdate" />
+                </theme.AlternateButton>
+                <theme.AlternateButton
+                  onClick={() => {
+                    window.location.reload()
+                  }}
+                  title="New Search"
+                >
+                  <span style={{ fontVariant: 'small-caps' }}>new</span>
                 </theme.AlternateButton>
               </div>
-            </div>
+            </theme.ButtonGroup>
           </div>
           <h1>Search Results</h1>
           <Tabs defaultValue="results" TabPanel={theme.Box}>

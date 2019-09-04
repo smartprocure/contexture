@@ -5,9 +5,9 @@ import React from 'react'
 import {
   Box,
   Button,
+  ButtonGroup,
   Checkbox,
   DateInput,
-  Flex,
   Fonts,
   Icon,
   DropdownItem,
@@ -31,7 +31,7 @@ export default {
   AlternateButton: TextButton,
   Box,
   Button,
-  ButtonGroup: defaultProps({ className: 'gv-button-group' })(Flex),
+  ButtonGroup,
   Checkbox,
   DateInput,
   Root: ({ children }) => (

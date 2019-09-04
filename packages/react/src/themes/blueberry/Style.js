@@ -5,22 +5,22 @@ export default () => (
     {`
       h1 { font-size: 22px; }
       
-      .bb-table {
+      .gv-table {
         border-collapse: collapse;
         width: 100%;
       }
-      .bb-table tbody tr {
+      .gv-table tbody tr {
         border-bottom: solid 2px #EDEDED;
       }
-      .bb-table td, .bb-table th {
+      .gv-table td, .gv-table th {
         padding: 20px;
         text-align: left;
       }
-      .bb-table thead tr {
+      .gv-table thead tr {
         border-bottom: solid 2px #9ABCDA;
       }
       
-      .bb-box {
+      .gv-box {
         border-radius: 4px;
         background-color: #fff;
         box-shadow: 0 2px 2px 0 #EDEDED;
@@ -35,7 +35,7 @@ export default () => (
         color: #454545;
       }
       
-      .bb-input, select, input {
+      .gv-input, select, input {
         outline: none;
         font-size: 16px;
         font-family: Lato;
@@ -96,6 +96,84 @@ export default () => (
         border-radius: 4px;
         box-shadow: 0 2px 4px 0 #ededed;
         border: 1px solid #ebebeb;
+      }
+
+      .filter-list-item {
+        margin-bottom: 25px;
+      }
+
+      .gv-tab-container {
+        display: flex;
+      }
+
+      .gv-tab {
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+
+      .gv-tab.active {
+        font-weight: bold;
+        border-bottom: solid 2px #9ABCDA;
+      }
+
+      .gv-box.filter-list {
+        background-color: transparent;
+        padding: 0;
+        box-shadow: none;
+      }
+
+      .gv-search-bar .gv-box {
+        padding: 0;
+        box-shadow: none;
+      }
+
+      .gv-search-bar .tags-input {
+        margin: 0;
+      }
+
+      .gv-search-bar {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-gap: 5px;
+        top: 5px;
+        z-index: 1;
+        /* background: #f6f6f6; */
+      }
+
+      .gv-search-toolbar {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        justify-content: space-evenly;
+      }
+
+      /* Icon Button */
+      .gv-icon-button {
+        border-radius: 100px;
+        padding: 0 5px;
+        cursor: pointer;
+        font-size: 20px;
+        color: #9b9b9b;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background-color .1s linear, color .1s linear;
+      }
+      .gv-icon-button > * {
+        vertical-align: middle;
+      }
+      .gv-icon-button i {
+        width: 20px;
+        height: 20px;
+        font-size: 20px;
+      }
+      .gv-icon-button:hover {
+        background-color: rgba(216, 216, 216, 0.4);
+        color: #000;
+      }
+      .gv-icon-button.active, .gv-icon-button.primary {
+        background-color: #0076de;
+        color: #fff;
       }
     `}
   </style>

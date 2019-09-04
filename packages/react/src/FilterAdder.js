@@ -22,9 +22,9 @@ let FilterAdder = ({
     options = _.reject(x => _.includes(x.field, getGroupFields(node)), options)
   }
   let Label = (
-    <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+    <Flex justifyContent="center" alignItems="center">
       Add Custom Filter
-      <Icon style={{ opacity: 0.4 }} icon="FilterAdd" />
+      <Icon style={{ paddingLeft: 5 }} icon="FilterAdd" />
     </Flex>
   )
   return (

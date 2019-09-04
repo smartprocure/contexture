@@ -1,29 +1,40 @@
 import React from 'react'
 import { Dynamic } from '../../greyVest'
 
+let toIcon = symbol => props => <span {...props}>{symbol}</span>
+
 export let iconMap = {
-  SortAscending: () => <span>▲</span>,
-  SortDescending: () => <span>▼</span>,
-  MoveLeft: () => <span>←</span>,
-  MoveRight: () => <span>→</span>,
-  RemoveColumn: () => <span>x</span>,
-  AddColumn: () => <span>+</span>,
-  FilterExpand: () => <span>></span>,
-  FilterCollapse: () => <span>V</span>,
-  FilterAdd: () => <span>+</span>,
-  TableColumnMenu: () => <span>:</span>,
-  FilterListExpand: () => <span>◀</span>,
-  FilterListCollapse: () => <span>▼</span>,
-  TreePause: () => <span>⊖</span>,
-  TreeUnpause: () => <span>⊕</span>,
-  NextPage: () => <span>→</span>,
-  PreviousPage: () => <span>←</span>,
-  Previous5Pages: () => <span>⇜</span>,
-  Next5Pages: () => <span>⇝</span>,
-  Refresh: () => <span>⟳</span>,
+  SortAscending: toIcon('▲'),
+  SortDescending: toIcon('▼'),
+  MoveLeft: toIcon('←'),
+  MoveRight: toIcon('→'),
+  RemoveColumn: toIcon('x'),
+  AddColumn: toIcon('+'),
+  FilterExpand: toIcon('>'),
+  FilterCollapse: toIcon('V'),
+  FilterAdd: toIcon('+'),
+  TableColumnMenu: toIcon(`${String.fromCharCode(160)}:`),
+  FilterListExpand: toIcon('◀'),
+  FilterListCollapse: toIcon('▼'),
+  TreePause: toIcon('⊖'),
+  TreeUnpause: toIcon('⊕'),
+  NextPage: toIcon('→'),
+  PreviousPage: toIcon('←'),
+  Previous5Pages: toIcon('⇜'),
+  Next5Pages: toIcon('⇝'),
+  Refresh: toIcon('⟳'),
+  AutoUpdate: ({ style, ...props }) => (
+    <span
+      style={{ display: 'inline-flex', flexDirection: 'column', ...style }}
+      {...props}
+    >
+      <span style={{ lineHeight: '1em', marginBottom: '-0.25em' }}>⤺</span>
+      <span style={{ lineHeight: '1em', marginTop: '-0.25em' }}>⤻</span>
+    </span>
+  ),
 }
-let DefaultIcon = ({ icon, onClick }) => (
-  <Dynamic component={iconMap[icon]} onClick={onClick} />
+let DefaultIcon = ({ icon, ...props }) => (
+  <Dynamic component={iconMap[icon]} {...props} />
 )
 
 export default DefaultIcon

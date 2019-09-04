@@ -11,12 +11,20 @@ import Style from './Style'
 import Tag from './Tag'
 import TextInput from './TextInput'
 
-import { TextButton, NestedPicker } from '../../greyVest'
+import {
+  Box,
+  ButtonGroup,
+  Table,
+  TextButton,
+  NestedPicker,
+  TagsInput,
+} from '../../greyVest'
 
 export default {
   AlternateButton: TextButton,
-  Box: props => <div className="bb-box" {...props} />,
+  Box,
   Button,
+  ButtonGroup,
   Checkbox,
   Fonts,
   Root: ({ children }) => (
@@ -32,7 +40,7 @@ export default {
   NestedPicker: defaultProps({ PickerItem: DropdownItem })(NestedPicker),
   RadioList: ButtonRadio,
   Style,
-  Table: props => <table className="bb-table" {...props} />,
-  Tag,
+  Table,
+  TagsInput: defaultProps({ Tag })(TagsInput),
   TextInput,
 }
