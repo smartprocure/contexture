@@ -2,7 +2,7 @@ import React from 'react'
 
 let TextButton = ({ className, primary, ...props }) => (
   <div
-    className={`gv-icon-button ${className || ''} ${primary ? 'primary' : ''}`}
+    className={`gv-text-button ${className || ''} ${primary ? 'primary' : ''}`}
     {...props}
   />
 )

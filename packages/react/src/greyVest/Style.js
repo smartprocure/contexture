@@ -289,7 +289,7 @@ export default () => (
       }
 
       /* Icon Button */
-      .gv-icon-button {
+      .gv-text-button {
         border-radius: 100px;
         padding: 5px;
         cursor: pointer;
@@ -297,19 +297,19 @@ export default () => (
         display: inline-block;
         transition: background-color .1s linear, color .1s linear;
       }
-      .gv-icon-button > * {
+      .gv-text-button > * {
         vertical-align: middle;
       }
-      .gv-icon-button i {
+      .gv-text-button i {
         width: 20px;
         height: 20px;
         font-size: 20px;
       }
-      .gv-icon-button:hover {
+      .gv-text-button:hover {
         background-color: rgba(216, 216, 216, 0.4);
         color: #000;
       }
-      .gv-icon-button.active, .gv-icon-button.primary {
+      .gv-text-button.active, .gv-text-button.primary {
         background-color: #0076de;
         color: #fff;
       }
@@ -363,10 +363,10 @@ export default () => (
         padding: 15px;
         background-color: #fff;
       }
-      .gv-search-toolbar .gv-icon-button {
+      .gv-search-toolbar .gv-text-button {
         margin-right: 5px;
       }
-      .gv-search-toolbar .gv-icon-button:last-child {
+      .gv-search-toolbar .gv-text-button:last-child {
         margin-right: 0;
       }
 
@@ -466,10 +466,10 @@ export default () => (
       .filter-field-has-value {
         color: #0076de;
       }
-      .filter-field-icon-refresh .gv-icon-button {
+      .filter-field-icon-refresh .gv-text-button {
         color: #0076de;
       }
-      .filter-field-icon-refresh .gv-icon-button:hover {
+      .filter-field-icon-refresh .gv-text-button:hover {
         color: #f6f6f6;
         background-color: #0076de;
       }

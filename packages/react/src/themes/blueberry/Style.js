@@ -148,7 +148,7 @@ export default () => (
       }
 
       /* Icon Button */
-      .gv-icon-button {
+      .gv-text-button {
         border-radius: 100px;
         padding: 0 5px;
         cursor: pointer;
@@ -159,19 +159,19 @@ export default () => (
         align-items: center;
         transition: background-color .1s linear, color .1s linear;
       }
-      .gv-icon-button > * {
+      .gv-text-button > * {
         vertical-align: middle;
       }
-      .gv-icon-button i {
+      .gv-text-button i {
         width: 20px;
         height: 20px;
         font-size: 20px;
       }
-      .gv-icon-button:hover {
+      .gv-text-button:hover {
         background-color: rgba(216, 216, 216, 0.4);
         color: #000;
       }
-      .gv-icon-button.active, .gv-icon-button.primary {
+      .gv-text-button.active, .gv-text-button.primary {
         background-color: #0076de;
         color: #fff;
       }
