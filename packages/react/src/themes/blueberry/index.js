@@ -11,9 +11,10 @@ import Style from './Style'
 import Tag from './Tag'
 import TextInput from './TextInput'
 
-import { NestedPicker } from '../../greyVest'
+import { TextButton, NestedPicker } from '../../greyVest'
 
 export default {
+  AlternateButton: TextButton,
   Box: props => <div className="bb-box" {...props} />,
   Button,
   Checkbox,

@@ -1,9 +1,9 @@
 import React from 'react'
-import IconButton from './IconButton'
+import { withTheme } from '../utils/theme'
 
-let ToggleFiltersButton = ({ onClick }) => (
-  <IconButton title="Toggle Filters" onClick={onClick}>
-    <i className="material-icons">filter_list</i>
-  </IconButton>
+let ToggleFiltersButton = ({ onClick, theme: { AlternateButton, Icon } }) => (
+  <AlternateButton title="Toggle Filters" onClick={onClick}>
+    <Icon icon="FilterAdd" />
+  </AlternateButton>
 )
-export default ToggleFiltersButton
+export default withTheme(ToggleFiltersButton)

@@ -18,6 +18,7 @@ import {
   Select,
   Style,
   Table,
+  TextButton,
   TextHighlight,
   TextInput,
 } from '../../greyVest'
@@ -27,6 +28,7 @@ import PickerItem from './PickerItem'
 import TagsInput from './TagsInput'
 
 export default {
+  AlternateButton: TextButton,
   Box,
   Button,
   ButtonGroup: defaultProps({ className: 'gv-button-group' })(Flex),

@@ -18,7 +18,6 @@ import {
   TabContent,
   TabLabel,
   Tabs,
-  IconButton,
 } from '../../../src/greyVest'
 import {
   DateRangePicker,
@@ -271,15 +270,15 @@ let GreyVestStory = theme => (
                 Search
               </theme.Button>
               <div className="gv-search-toolbar">
-                <IconButton
+                <theme.AlternateButton
                   onClick={() => {
                     window.location.reload()
                   }}
                   title="New Search"
                 >
                   <i className="material-icons">fiber_new</i>
-                </IconButton>
-                <IconButton
+                </theme.AlternateButton>
+                <theme.AlternateButton
                   title="Auto Update"
                   primary={state.autoUpdate}
                   onClick={() => {
@@ -288,7 +287,7 @@ let GreyVestStory = theme => (
                   }}
                 >
                   <i className="material-icons">autorenew</i>
-                </IconButton>
+                </theme.AlternateButton>
               </div>
             </div>
           </div>

@@ -1,12 +1,12 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
-import IconButton from './IconButton'
+import { withTheme } from '../utils/theme'
 
 let setPausedNested = (tree, path, value) =>
   tree[`${value ? '' : 'un'}pauseNested`](path)
 
-let TreePauseButton = ({ children }) => {
+let TreePauseButton = ({ children, theme: { AlternateButton, Icon } }) => {
   let trees = _.flow(
     React.Children.toArray,
     _.map('props')
@@ -16,12 +16,13 @@ let TreePauseButton = ({ children }) => {
     _.each(({ tree, path }) => setPausedNested(tree, path, !allPaused), trees)
   let title = `${allPaused ? 'Expand' : 'Collapse'} Filters`
   return (
-    <IconButton title={title} onClick={flip}>
-      <i className="material-icons">
-        {allPaused ? 'add_circle_outline' : 'remove_circle_outline'}
-      </i>
-    </IconButton>
+    <AlternateButton title={title} onClick={flip}>
+      <Icon icon={allPaused ? 'TreeUnpause' : 'TreePause'} />
+    </AlternateButton>
   )
 }
 
-export default observer(TreePauseButton)
+export default _.flow(
+  observer,
+  withTheme
+)(TreePauseButton)

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Dynamic } from '../greyVest'
-import IconButton from './IconButton'
+import TextButton from './TextButton'
 
 let SmallIcon = ({ icon }) => (
   <i className="material-icons" style={{ fontSize: 20 }}>
@@ -19,23 +19,25 @@ let iconMap = {
   FilterCollapse: () => <SmallIcon icon="filter_list" />,
   FilterAdd: () => <SmallIcon icon="filter_list" />,
   TableColumnMenu: () => (
-    <IconButton>
+    <TextButton>
       <SmallIcon icon="more_vert" />
-    </IconButton>
+    </TextButton>
   ),
   FilterListExpand: () => <SmallIcon icon="add" />,
   FilterListCollapse: () => <SmallIcon icon="remove" />,
+  TreePause: () => <SmallIcon icon="remove_circle_outline" />,
+  TreeUnpause: () => <SmallIcon icon="add_circle_outline" />,
   PreviousPage: () => <SmallIcon icon="chevron_left" />,
   NextPage: () => <SmallIcon icon="chevron_right" />,
   Previous5Pages: () => <span>...</span>,
   Next5Pages: () => <span>...</span>,
   Refresh: () => (
-    <IconButton
+    <TextButton
       className="animated pulse slow infinite"
       style={{ animationDuration: '500ms' }}
     >
       <SmallIcon icon="refresh" />
-    </IconButton>
+    </TextButton>
   ),
 }
 

@@ -29,6 +29,7 @@
     * GVStyle -> Style
     * Highlight -> TextHighlight
     * Input -> TextInput
+    * IconButton -> TextButton
 
 ## Migration Guide
 * Stop using any utils that aren't explicitly exposed.

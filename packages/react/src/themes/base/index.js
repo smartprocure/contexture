@@ -23,6 +23,7 @@ import UnmappedNodeComponent from './UnmappedNodeComponent'
 import { defaultTheme } from '../../utils/theme'
 
 let theme = {
+  AlternateButton: 'button',
   BarChart,
   Box: 'div',
   Button: 'button',

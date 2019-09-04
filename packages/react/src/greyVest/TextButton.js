@@ -1,9 +1,9 @@
 import React from 'react'
 
-let IconButton = ({ className, primary, ...props }) => (
+let TextButton = ({ className, primary, ...props }) => (
   <div
     className={`gv-icon-button ${className || ''} ${primary ? 'primary' : ''}`}
     {...props}
   />
 )
-export default IconButton
+export default TextButton
