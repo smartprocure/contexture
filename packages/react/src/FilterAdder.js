@@ -15,8 +15,8 @@ let FilterAdder = ({
   path,
   fields,
   uniqueFields,
-  theme: { Icon },
   Picker = ModalPicker,
+  theme: { Icon },
 }) => {
   let options = fieldsToOptions(fields)
   if (uniqueFields) {
