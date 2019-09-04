@@ -27,24 +27,24 @@ function App() {
 
 > ℹ️ **Note:** contexture-react provides a basic **fallback theme** to all components that consume its theme API, to help prevent render errors if you forget to initialize `ThemeProvider` with a `theme` prop (or even leave out `ThemeProvider` altogether 😱). See the [Default theme components](#default-theme-components) section for more details.
 
-### Globals
+### The Root component
 
-`Globals` is a special **theme key** that allows you to include global components such as styles, fonts, or other providers within your theme. When `ThemeProvider` is rendered, it *wraps its own children in the `Globals` **theme component*** if one exists on the provided theme:
+`Root` is a special **theme key** that allows you to include global components such as styles, fonts, or other providers within your theme. When `ThemeProvider` is rendered, it *wraps its own children in the `Root` **theme component*** if one exists on the provided theme:
 
 ```jsx
 export let ThemeProvider = ({ theme, children }) => {
   theme = { ...defaultTheme, ...theme }
-  let Globals = theme.Globals || React.Fragment
+  let Root = theme.Root || React.Fragment
   return (
     <ThemeContext.Provider value={theme}>
-      <Globals>{children}</Globals>
+      <Root>{children}</Root>
     </ThemeContext.Provider>
   )
 }
 ```
 <sup>^ The actual source code for ThemeProvider</source>
 
-> ⚠️ **IMPORTANT:** If you use a `Globals` theme component, it ***must*** handle its `children` prop, or nothing inside of `ThemeProvider` will render!
+> ⚠️ **IMPORTANT:** If you use a `Root` theme component, it ***must*** handle its `children` prop, or nothing inside of `ThemeProvider` will render!
 
 ## Consuming the Theme API
 
@@ -140,7 +140,7 @@ This section documents all of the **theme components** used by contexture-react 
 
 ### Inputs
 
-| Key | Expected props | Notes | ExampleTypes usage |
+| Key | Expected props | Notes | contexture-react usage |
 | --- | --- | --- | --- |
 | `Button` | `isActive`, `primary`, `onClick`, `children` | A generic button | Facet, Number, TagsQuery, TermsStatsTable |
 | `AlternateButton` | same as `Button` | An alternate style of generic button. Defaults to a text button. | |
@@ -160,6 +160,7 @@ This section documents all of the **theme components** used by contexture-react 
 | Key | Expected props | Notes | ExampleTypes usage |
 | --- | --- | --- | --- |
 | `Box` | `children` | A generic container element | none |
+| `ButtonGroup` | `children` | A container for holding |
 | `Modal` | `isOpen`, `children` | A generic modal component | ResultTable |
 | `Popover` | `isOpen`, `children` | A generic context-menu component | ResultTable |
 | `DropdownItem` | `children` | A generic list item used in dropdown menus | ResultTable |
@@ -171,7 +172,7 @@ This section documents all of the **theme components** used by contexture-react 
 
 | Key | Expected props | Notes |
 | --- | --- | --- |
-| `Globals` | `children` | This component is rendered inside `ThemeProvider`, and wraps its children. For use with other providers and/or standalone globals like stylesheets. |
+| `Root` | `children` | This component is rendered inside `ThemeProvider`, and wraps its children. For use with other providers and/or standalone globals like stylesheets. |
 | `BarChart` | `height`, `borderColor`, `min`, `max` | Used in the DateHistogram and TermsStats example types |
 | `UnmappedNodeComponent` | `node` | Used as a fallback component in search interfaces for nodes that are not mapped to any other component |
 
