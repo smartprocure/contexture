@@ -5,7 +5,10 @@ import { setDisplayName } from 'recompose'
 import { inject, observer } from 'mobx-react'
 import { observable } from 'mobx'
 import { useLens } from '../utils/react'
-import { withTheme } from '../utils/theme'
+import GVTextHighlight from './TextHighlight'
+import GVTextInput from './TextInput'
+
+let PickerContext = React.createContext()
 
 // Unflatten by with support for arrays (allow dots in paths) and not needing a _.keyBy first
 let unflattenObjectBy = _.curry((iteratee, x) =>
@@ -16,20 +19,22 @@ let isField = x => x.typeDefault
 
 let FilteredSection = _.flow(
   setDisplayName('FilteredSection'),
-  observer,
-  withTheme
-)(({ options, onClick, highlight, PickerItem, theme: { TextHighlight } }) => (
-  <div>
-    {F.mapIndexed(
-      (option, field) => (
-        <PickerItem key={field} onClick={() => onClick(option.value)}>
-          <TextHighlight text={option.label} pattern={highlight} />
-        </PickerItem>
-      ),
-      options
-    )}
-  </div>
-))
+  observer
+)(({ options, onClick, highlight }) => {
+  let { PickerItem, TextHighlight } = React.useContext(PickerContext)
+  return (
+    <div>
+      {F.mapIndexed(
+        (option, field) => (
+          <PickerItem key={field} onClick={() => onClick(option.value)}>
+            <TextHighlight text={option.label} pattern={highlight} />
+          </PickerItem>
+        ),
+        options
+      )}
+    </div>
+  )
+})
 
 let getItemLabel = item =>
   isField(item) ? item.shortLabel || item.label : _.startCase(item._key)
@@ -37,27 +42,30 @@ let getItemLabel = item =>
 let Section = _.flow(
   setDisplayName('Section'),
   observer
-)(({ options, onClick, selected, PickerItem }) => (
-  <div>
-    {_.map(
-      item => (
-        <PickerItem
-          key={item._key}
-          onClick={() => onClick(item.value || item._key, item)}
-          active={selected === item._key}
-          disabled={selected && selected !== item._key}
-          hasChildren={!isField(item)}
-        >
-          {getItemLabel(item)}
-        </PickerItem>
-      ),
-      _.flow(
-        F.unkeyBy('_key'),
-        _.sortBy(getItemLabel)
-      )(options)
-    )}
-  </div>
-))
+)(({ options, onClick, selected }) => {
+  let { PickerItem } = React.useContext(PickerContext)
+  return (
+    <div>
+      {_.map(
+        item => (
+          <PickerItem
+            key={item._key}
+            onClick={() => onClick(item.value || item._key, item)}
+            active={selected === item._key}
+            disabled={selected && selected !== item._key}
+            hasChildren={!isField(item)}
+          >
+            {getItemLabel(item)}
+          </PickerItem>
+        ),
+        _.flow(
+          F.unkeyBy('_key'),
+          _.sortBy(getItemLabel)
+        )(options)
+      )}
+    </div>
+  )
+})
 
 let toNested = _.flow(
   _.map(x => _.defaults({ path: x.value }, x)),
@@ -74,7 +82,7 @@ let PanelTreePicker = inject((store, { onChange, options }) => {
   }
   return x
 })(
-  observer(({ selectAtLevel, state, nestedOptions, PickerItem }) => (
+  observer(({ selectAtLevel, state, nestedOptions }) => (
     <div
       className="panel-tree-picker"
       style={{ display: 'inline-flex', width: '100%', overflow: 'auto' }}
@@ -83,7 +91,6 @@ let PanelTreePicker = inject((store, { onChange, options }) => {
         options={nestedOptions}
         onClick={selectAtLevel(0)}
         selected={state.selected[0]}
-        PickerItem={PickerItem}
       />
       {F.mapIndexed(
         (_key, index) => (
@@ -92,7 +99,6 @@ let PanelTreePicker = inject((store, { onChange, options }) => {
             options={_.get(state.selected.slice(0, index + 1), nestedOptions)}
             onClick={selectAtLevel(index + 1)}
             selected={state.selected[index + 1]}
-            PickerItem={PickerItem}
           />
         ),
         state.selected
@@ -104,11 +110,17 @@ PanelTreePicker.displayName = 'PanelTreePicker'
 
 let matchLabel = str => _.filter(x => F.matchAllWords(str)(x.label))
 
-let NestedPicker = ({ options, onChange, theme, PickerItem = 'div' }) => {
+let NestedPicker = ({
+  options,
+  onChange,
+  PickerItem = 'div',
+  TextInput = GVTextInput,
+  TextHighlight = GVTextHighlight,
+}) => {
   let filter = useLens('')
   return (
-    <div>
-      <theme.TextInput
+    <PickerContext.Provider value={{ PickerItem, TextHighlight }}>
+      <TextInput
         {...F.domLens.value(filter)}
         placeholder="Enter filter keyword..."
       />
@@ -117,20 +129,12 @@ let NestedPicker = ({ options, onChange, theme, PickerItem = 'div' }) => {
           options={matchLabel(F.view(filter))(options)}
           onClick={onChange}
           highlight={F.view(filter)}
-          PickerItem={PickerItem}
         />
       ) : (
-        <PanelTreePicker
-          options={options}
-          onChange={onChange}
-          PickerItem={PickerItem}
-        />
+        <PanelTreePicker options={options} onChange={onChange} />
       )}
-    </div>
+    </PickerContext.Provider>
   )
 }
 
-export default _.flow(
-  observer,
-  withTheme
-)(NestedPicker)
+export default observer(NestedPicker)
