@@ -50,7 +50,7 @@ export let Highlight = x => (
   />
 )
 
-export let ListItem = observer(props => {
+export let DropdownItem = observer(props => {
   let hovering = useLens(false)
   return (
     <div
@@ -112,6 +112,6 @@ export default {
   TextInput,
   NumberInput,
   TextHighlight: Highlight,
-  ListItem,
+  DropdownItem,
   PagerItem,
 }

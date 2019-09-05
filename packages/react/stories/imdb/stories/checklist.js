@@ -15,7 +15,7 @@ import {
   componentForType,
   FilterAdder,
 } from '../../../src'
-import { Button, ButtonRadio } from '../../../src/themes/greyVest'
+import { Button, ButtonRadio } from '../../../src/greyVest'
 import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
 let { ResultCount, CheckableResultTable, ResultPager, TagsQuery } = ExampleTypes
 

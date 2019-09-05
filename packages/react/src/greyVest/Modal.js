@@ -23,7 +23,7 @@ let Modal = ({ isOpen, children, style = {}, className = '' }) => (
           ...style,
         }}
         onClick={F.off(isOpen)}
-        className={`default-modal-bg ${className}`}
+        className={`default-modal-bg ${className /* gv-body */}`}
       >
         <div
           style={{

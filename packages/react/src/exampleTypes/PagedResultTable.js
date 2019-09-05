@@ -1,5 +1,5 @@
 import React from 'react'
-import Flex from '../layout/Flex'
+import Flex from '../greyVest/Flex'
 import ResultPager from './ResultPager'
 import ResultTable from './ResultTable'
 

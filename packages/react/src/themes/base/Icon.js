@@ -1,5 +1,5 @@
 import React from 'react'
-import Dynamic from './layout/Dynamic'
+import Dynamic from '../../greyVest/Dynamic'
 
 export let iconMap = {
   SortAscending: () => <span>▲</span>,

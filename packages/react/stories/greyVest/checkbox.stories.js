@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import decorator from './decorator'
-import { Checkbox } from '../../src/themes/greyVest'
+import { Checkbox } from '../../src/greyVest'
 
 storiesOf('Components (Grey Vest)|Checkbox', module)
   .addDecorator(decorator)

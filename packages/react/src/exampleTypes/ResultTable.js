@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { observer } from 'mobx-react'
 import { contexturify } from '../utils/hoc'
-import { Dynamic } from '../layout'
+import { Dynamic } from '../greyVest'
 import { useLens } from '../utils/react'
 import { fieldsToOptions } from '../FilterAdder'
 import {
@@ -13,7 +13,6 @@ import {
   inferSchema,
 } from '../utils/schema'
 import { newNodeFromField } from '../utils/search'
-import DefaultMissingTypeComponent from '../DefaultMissingTypeComponent'
 import { withTheme } from '../utils/theme'
 
 let getIncludes = (schema, node) =>
@@ -119,7 +118,15 @@ let Header = _.flow(
   withTheme
 )(
   ({
-    theme: { ListItem, Icon, Popover, Modal, Picker, TableHeaderCell },
+    theme: {
+      DropdownItem,
+      Icon,
+      Popover,
+      Modal,
+      Picker,
+      TableHeaderCell,
+      MissingTypeComponent,
+    },
     field: fieldSchema,
     includes,
     addOptions,
@@ -183,7 +190,7 @@ let Header = _.flow(
           style={popoverStyle}
         >
           {!disableSort && (
-            <ListItem
+            <DropdownItem
               onClick={() => {
                 F.off(popover)()
                 mutate({ sortField: field, sortDir: 'asc' })
@@ -191,10 +198,10 @@ let Header = _.flow(
             >
               <Icon icon="SortAscending" />
               Sort Ascending
-            </ListItem>
+            </DropdownItem>
           )}
           {!disableSort && (
-            <ListItem
+            <DropdownItem
               onClick={() => {
                 F.off(popover)()
                 mutate({ sortField: field, sortDir: 'desc' })
@@ -202,39 +209,39 @@ let Header = _.flow(
             >
               <Icon icon="SortDescending" />
               Sort Descending
-            </ListItem>
+            </DropdownItem>
           )}
-          <ListItem
+          <DropdownItem
             onClick={() =>
               moveColumn(mutate, i => i - 1, field, visibleFields, includes)
             }
           >
             <Icon icon="MoveLeft" />
             Move Left
-          </ListItem>
-          <ListItem
+          </DropdownItem>
+          <DropdownItem
             onClick={() =>
               moveColumn(mutate, i => i + 1, field, visibleFields, includes)
             }
           >
             <Icon icon="MoveRight" />
             Move Right
-          </ListItem>
-          <ListItem
+          </DropdownItem>
+          <DropdownItem
             onClick={() => mutate({ include: _.without([field], includes) })}
           >
             <Icon icon="RemoveColumn" />
             Remove Column
-          </ListItem>
+          </DropdownItem>
           {!!addOptions.length && (
-            <ListItem onClick={F.on(adding)}>
+            <DropdownItem onClick={F.on(adding)}>
               <Icon icon="AddColumn" />
               Add Column
-            </ListItem>
+            </DropdownItem>
           )}
           {criteria && (typeDefault || filterNode) && !disableFilter && (
             <div>
-              <ListItem onClick={filter}>
+              <DropdownItem onClick={filter}>
                 <Icon
                   icon={
                     filterNode
@@ -245,10 +252,10 @@ let Header = _.flow(
                   }
                 />
                 Filter
-              </ListItem>
+              </DropdownItem>
               {F.view(filtering) && filterNode && !filterNode.paused && (
                 <Dynamic
-                  component={DefaultMissingTypeComponent}
+                  component={MissingTypeComponent}
                   tree={tree}
                   path={_.toArray(filterNode.path)}
                   {...mapNodeToProps(filterNode, fields)}

@@ -24,7 +24,7 @@ let Text = _.flow(
   withTreeLens,
   contexturify,
   withTheme
-)(({ tree, node, theme: { TagsInput, Select }, placeholder }) => {
+)(({ tree, node, theme: { PopoverTagsInput, Select }, placeholder }) => {
   let tagStyle = bgJoin(tagToGroupJoin(node.join))
   let TagPopover = () => (
     <div>
@@ -38,7 +38,7 @@ let Text = _.flow(
         onChange={e => tree.mutate(node.path, { operator: e.target.value })}
         options={operatorOptions}
       />
-      <TagsInput
+      <PopoverTagsInput
         splitCommas
         tags={node.values}
         addTag={tag => {

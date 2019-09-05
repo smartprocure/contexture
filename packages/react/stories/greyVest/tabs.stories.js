@@ -12,7 +12,7 @@ import {
   TabContent,
   ButtonRadio,
   Button,
-} from './../../src/themes/greyVest'
+} from './../../src/greyVest'
 
 let tabDocs = `
 # Overview

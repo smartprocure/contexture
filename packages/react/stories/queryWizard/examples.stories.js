@@ -2,17 +2,11 @@ import _ from 'lodash/fp'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import {
-  QueryWizard as GVQueryWizard,
-  FilterButtonList as GVFilterButtonList,
-  StepsAccordion as GVStepsAccordion,
-  AccordionStep as GVAccordionStep,
-} from '../../src/themes/greyVest'
-import DefaultQueryWizard from '../../src/queryWizard/QueryWizard'
-import {
-  StepsAccordion as DefaultStepsAccordion,
-  AccordionStep as DefaultAccordionStep,
-} from '../../src/layout'
-import DefaultFilterButtonList from '../../src/FilterButtonList'
+  QueryWizard,
+  FilterButtonList,
+  StepsAccordion,
+  AccordionStep,
+} from '../../src/'
 import { mergeOverAll } from 'futil-js'
 import { componentForType, schemaFieldProps } from '../../src/utils/schema'
 import GVDecorator from '../greyVest/decorator'
@@ -26,7 +20,7 @@ let mapNodeToDescription = types => (node, fields) => ({
   ]),
 })
 
-let wizardStory = QueryWizard => () => (
+let WizardStory = () => (
   <QueryWizard
     tree={tree}
     path={['root']}
@@ -41,11 +35,7 @@ let wizardStory = QueryWizard => () => (
   />
 )
 
-let accordionStory = (
-  StepsAccordion,
-  AccordionStep,
-  FilterButtonList
-) => () => (
+let AccordionStory = () => (
   <StepsAccordion>
     <AccordionStep isRequired={true} title={<h1>Test title</h1>}>
       <FilterButtonList
@@ -76,20 +66,10 @@ let accordionStory = (
 )
 
 storiesOf('Search Components (Unthemed)|Wizard', module)
-  .addWithJSX('QueryWizard', wizardStory(DefaultQueryWizard))
-  .addWithJSX(
-    'Accordion with FilterButtonList',
-    accordionStory(
-      DefaultStepsAccordion,
-      DefaultAccordionStep,
-      DefaultFilterButtonList
-    )
-  )
+  .addWithJSX('QueryWizard', WizardStory)
+  .addWithJSX('Accordion with FilterButtonList', AccordionStory)
 
 storiesOf('Search Components (Grey Vest)|Wizard', module)
   .addDecorator(GVDecorator)
-  .addWithJSX('QueryWizard', wizardStory(GVQueryWizard))
-  .addWithJSX(
-    'Accordion with FilterButtonList',
-    accordionStory(GVStepsAccordion, GVAccordionStep, GVFilterButtonList)
-  )
+  .addWithJSX('QueryWizard', WizardStory)
+  .addWithJSX('Accordion with FilterButtonList', AccordionStory)

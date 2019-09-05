@@ -23,7 +23,7 @@ let {
   CheckableTermsStatsTable,
 } = ExampleTypes
 import { ThemeProvider } from '../../../src/utils/theme'
-import { Column } from './../../../src/layout/ExpandableTable'
+import { Column } from './../../../src/greyVest/ExpandableTable'
 
 let formatYear = x => new Date(x).getUTCFullYear()
 

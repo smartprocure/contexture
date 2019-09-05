@@ -1,12 +1,22 @@
-import QueryBuilder from './queryBuilder/'
-
-export * from './FilterList'
-export * from './layout'
+// utils
+export * from './utils/hoc'
 export * from './utils/schema'
 export * from './utils/react'
-import FilterAdder from './FilterAdder'
-import FilterButtonList from './FilterButtonList'
-export { default as SearchFilters } from './SearchFilters'
-export { default as SearchLayout } from './SearchLayout'
+export * from './utils/theme'
 
-export { QueryBuilder, FilterAdder, FilterButtonList }
+// generic search layouts
+export QueryBuilder from './queryBuilder/'
+export QueryWizard from './queryWizard'
+export * from './FilterList'
+export FilterAdder from './FilterAdder'
+export FilterButtonList from './FilterButtonList'
+export SearchFilters from './SearchFilters'
+export SearchLayout from './SearchLayout'
+
+// component library
+export * from './greyVest'
+
+// themes
+export baseTheme from './themes/base'
+export greyVestTheme from './themes/greyVest'
+export blueberryTheme from './themes/blueberry'

@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import decorator from './decorator'
-import { LinkButton } from './../../src/themes/greyVest'
+import { LinkButton } from './../../src/greyVest'
 
 let click = action('clicked')
 

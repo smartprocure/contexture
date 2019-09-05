@@ -4,8 +4,8 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { contexturify } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
-import ExpandableTable, { Column } from '../layout/ExpandableTable'
-import Flex from '../layout/Flex'
+import ExpandableTable, { Column } from '../greyVest/ExpandableTable'
+import Flex from '../greyVest/Flex'
 
 let toolBarStyle = { justifyContent: 'space-between', alignItems: 'center' }
 let SimpleLabel = ({ text }) => (

@@ -2,7 +2,7 @@ import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { Dynamic, Grid } from '../layout/'
+import { Dynamic, Grid } from '../greyVest/'
 import { fieldsToOptions } from '../FilterAdder'
 import { get } from '../utils/mobx-utils'
 import {

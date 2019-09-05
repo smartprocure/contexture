@@ -47,10 +47,7 @@ export let AccordionStep = withTheme(
   }) => {
     let isOpen = F.view(currentStep) === step
     return (
-      <div
-        className={`accordion-step ${className ? className : ''}`}
-        style={style}
-      >
+      <div className={`accordion-step ${className || ''}`} style={style}>
         <Flex
           alignItems="center"
           justifyContent="space-between"
@@ -79,10 +76,10 @@ export let AccordionStep = withTheme(
 )
 AccordionStep.displayName = 'AccordionStep'
 
-let StepsAccordion = ({ onSubmit = _.noop, children, ...props }) => {
+let StepsAccordion = ({ onSubmit = _.noop, children, className, ...props }) => {
   let currentStep = F.stateLens(React.useState(0))
   return (
-    <div {...props}>
+    <div className={`steps-accordion ${className || ''}`} {...props}>
       {React.Children.map(children, (child, i) => (
         <child.type
           {...{ currentStep, onSubmit }}
