@@ -129,6 +129,7 @@ let Header = observer(({ // Local State
     disableFilter,
     disableSort,
     field,
+    sortField = field,
     label,
     hideMenu,
     typeDefault,
@@ -176,7 +177,7 @@ let Header = observer(({ // Local State
           <Item
             onClick={() => {
               F.off(popover)()
-              mutate({ sortField: field, sortDir: 'asc' })
+              mutate({ sortField, sortDir: 'asc' })
             }}
           >
             <Icon icon="SortAscending" />
@@ -187,7 +188,7 @@ let Header = observer(({ // Local State
           <Item
             onClick={() => {
               F.off(popover)()
-              mutate({ sortField: field, sortDir: 'desc' })
+              mutate({ sortField, sortDir: 'desc' })
             }}
           >
             <Icon icon="SortDescending" />

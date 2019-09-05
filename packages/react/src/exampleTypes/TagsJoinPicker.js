@@ -20,6 +20,7 @@ let TagsJoinPicker = ({ node, tree, Select = DefaultSelect }) => (
     value={node.join}
     onChange={e => tree.mutate(node.path, { join: e.target.value })}
     options={joinOptions}
+    placeholder={false}
   />
 )
 

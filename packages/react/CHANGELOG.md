@@ -19,6 +19,18 @@
 * Create nodes explicitly on every contexture-client tree instance that was relying on the QuickStart functionality.
   * Example types can no longer automatically add contexture nodes to the tree. This was found in the QuickStart story and was designed to reduce barriers to entry, but the abstraction was leaky and radically increased complexity of our implementation despite no known usages in the wild. More often than not, it was just a potential source of bugs for end users. We might add support for something similar in a future release.
 
+# 1.56.3
+* Cleanup dist directory before starting babel
+
+# 1.56.2
+* Removed 'Please Select...' from TagsJoinPicker
+
+# 1.56.1
+* Modal: apply style on correct tag
+
+# 1.56.0
+* ResultsTable: Ability to sort column by subfield
+
 # 1.55.2
 * Sort selected facet options on top
 
