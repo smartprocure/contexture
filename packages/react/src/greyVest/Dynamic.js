@@ -1,12 +1,13 @@
 import React from 'react'
 import _ from 'lodash/fp'
+import F from 'futil-js'
 import { observer } from 'mobx-react'
 
 let Dynamic = ({ component: C = null, defaultProps, ...props }) =>
   C && (
     <C
       {..._.flow(
-        _.pickBy(_.identity),
+        F.compactObject,
         _.merge(defaultProps)
       )(props)}
     />

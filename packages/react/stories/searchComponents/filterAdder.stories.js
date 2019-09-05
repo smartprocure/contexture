@@ -14,7 +14,21 @@ let mockTree = {
 
 storiesOf('Components|Search components/Other components/FilterAdder', module)
   .addDecorator(ThemePicker('greyVest'))
-  .addWithJSX('Example', () => {
+  .addWithJSX('With ModalPicker', () => (
+    <FilterAdder
+      tree={mockTree}
+      path={['path']}
+      fields={applyDefaults({
+        directors: {
+          typeDefault: 'facet',
+        },
+        runtimeMinutes: {
+          typeDefault: 'number',
+        },
+      })}
+    />
+  ))
+  .addWithJSX('With Select', () => {
     let theme = useTheme()
     return (
       <div>
@@ -35,17 +49,24 @@ storiesOf('Components|Search components/Other components/FilterAdder', module)
       </div>
     )
   })
-  .addWithJSX('With NestedPickerModal', () => (
-    <FilterAdder
-      tree={mockTree}
-      path={['path']}
-      fields={applyDefaults({
-        directors: {
-          typeDefault: 'facet',
-        },
-        runtimeMinutes: {
-          typeDefault: 'number',
-        },
-      })}
-    />
-  ))
+  .addWithJSX('With NestedPicker', () => {
+    let theme = useTheme()
+    return (
+      <div>
+        <FilterAdder
+          Picker={theme.NestedPicker}
+          tree={mockTree}
+          path={['path']}
+          fields={applyDefaults({
+            directors: {
+              typeDefault: 'facet',
+            },
+            runtimeMinutes: {
+              typeDefault: 'number',
+            },
+          })}
+        />
+        <div>Check action log to see adding being dispatched</div>
+      </div>
+    )
+  })

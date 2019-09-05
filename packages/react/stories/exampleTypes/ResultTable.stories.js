@@ -30,7 +30,7 @@ storiesOf('Components|Search components/ExampleTypes/ResultTable', module)
       <ResultTable
         tree={TestTree()}
         path={['results']}
-        Table={x => <table className="example-table" {...x} />}
+        theme={{ Table: x => <table className="example-table" {...x} /> }}
         infer
         fields={{
           b: {

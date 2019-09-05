@@ -5,8 +5,6 @@ import { observer } from 'mobx-react'
 import { withTheme } from '../utils/theme'
 import { useLens } from '../utils/react'
 
-// We're only using withState to preserve the state between renders, since
-// inject doesn't do that for us.
 let PopoverTagsInput = ({
   PopoverContents,
   onTagClick,

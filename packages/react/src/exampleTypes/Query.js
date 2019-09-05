@@ -12,6 +12,5 @@ let Query = ({ tree, node, theme: { TextInput } }) => (
     placeholder="Search"
   />
 )
-Query.displayName = 'Query'
 
 export default contexturify(Query)

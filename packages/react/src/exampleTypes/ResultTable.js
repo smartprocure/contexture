@@ -129,7 +129,6 @@ let Header = _.flow(
   withTheme
 )(
   ({
-    HeaderCell = HeaderCellDefault,
     field: fieldSchema,
     includes,
     addOptions,
@@ -161,7 +160,7 @@ let Header = _.flow(
       hideMenu,
       typeDefault,
     } = fieldSchema
-    HeaderCell = fieldSchema.HeaderCell || HeaderCell
+    let HeaderCell = fieldSchema.HeaderCell || HeaderCellDefault
     let filterNode =
       criteria &&
       _.find({ field }, _.getOr([], 'children', tree.getNode(criteria)))
@@ -295,8 +294,7 @@ let Header = _.flow(
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
 let TableBody = _.flow(
   setDisplayName('TableBody'),
-  observer,
-  withTheme
+  observer
 )(({ node, visibleFields, fields, hiddenFields, schema, Row = 'tr' }) => (
   <tbody>
     {!!getResults(node).length &&
