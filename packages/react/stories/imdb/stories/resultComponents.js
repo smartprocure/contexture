@@ -94,7 +94,7 @@ let schemas = fromPromise(
             },
             title: {
               display: x => <span dangerouslySetInnerHTML={{ __html: x }} />,
-              order: 1 ,
+              order: 1,
             },
             genres: { display: divs },
             actors: { display: divs },
@@ -187,16 +187,18 @@ export default () => {
                   }}
                 />
               </Flex>
-              {state.showCards ? <IMDBCards tree={tree} 
-                path={['root', 'results']} />
-              : <CheckboxResultTable
-                tree={tree}
-                fields={schemas[tree.tree.schema].fields}
-                path={['root', 'results']}
-                criteria={['root', 'criteria']}
-                mapNodeToProps={componentForType(TypeMap)}
-                getValue="title"
-              />}
+              {state.showCards ? (
+                <IMDBCards tree={tree} path={['root', 'results']} />
+              ) : (
+                <CheckboxResultTable
+                  tree={tree}
+                  fields={schemas[tree.tree.schema].fields}
+                  path={['root', 'results']}
+                  criteria={['root', 'criteria']}
+                  mapNodeToProps={componentForType(TypeMap)}
+                  getValue="title"
+                />
+              )}
               <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>
                 <ResultPager tree={tree} path={['root', 'results']} />
               </Flex>
