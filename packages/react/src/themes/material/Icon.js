@@ -14,11 +14,14 @@ let iconMap = {
   TableColumnMenu: 'more_vert',
   FilterListExpand: 'add',
   FilterListCollapse: 'remove',
+  TreePause: 'remove_circle_outline',
+  TreeUnpause: 'add_circle_outline',
   PreviousPage: 'chevron_left',
   NextPage: 'chevron_right',
   Previous5Pages: 'more_horiz',
   Next5Pages: 'more_horiz',
   Refresh: 'refresh',
+  AutoUpdate: 'autorenew',
 }
 
 export default ({ icon, ...props }) => (

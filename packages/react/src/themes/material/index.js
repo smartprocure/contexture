@@ -1,4 +1,10 @@
-import { KeyboardDatePicker } from '@material-ui/pickers'
+import React from 'react'
+
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers'
+import MomentUtils from '@date-io/moment'
 import { defaultProps } from 'recompose'
 import { lensify } from './utils'
 import {
@@ -25,20 +31,29 @@ import Tag from './Tag'
 export default {
   Box,
   Button: defaultProps({ variant: 'contained' })(Button),
+  AlternateButton: Button,
   Checkbox,
   DateInput: defaultProps({ variant: 'inline', disableToolbar: true })(
     KeyboardDatePicker
   ),
   Icon,
-  Fonts,
   ListItem,
   PickerItem: ListItem,
   Modal: lensify(Dialog),
   NumberInput: defaultProps({ type: 'number', fullWidth: true })(Input),
   Popover,
   RadioList,
+  Root: ({ children }) => (
+    <>
+      <Fonts />
+      <Style />
+      {/* all this just for a silly date picker */}
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        {children}
+      </MuiPickersUtilsProvider>
+    </>
+  ),
   Select,
-  Style,
   Table,
   TableCell,
   TableRow,
