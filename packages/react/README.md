@@ -1,6 +1,6 @@
-## contexture-react
-`contexture-react` is a suite of react components for building contexture interfaces
+# contexture-react
 
+React components for building contexture interfaces https://smartprocure.github.io/contexture-react
 
 [![CircleCI](https://circleci.com/gh/smartprocure/contexture-react.svg?style=svg)](https://circleci.com/gh/smartprocure/contexture-react)
 [![Greenkeeper badge](https://badges.greenkeeper.io/smartprocure/contexture-react.svg)](https://greenkeeper.io/)
@@ -8,24 +8,11 @@
 ![dependencies](https://david-dm.org/smartprocure/contexture-react.svg)
 [![Storybook](https://img.shields.io/badge/BUILT_WITH-STORYBOOK-f1618c.svg?style=for-the-badge)](https://smartprocure.github.io/contexture-react)
 
-
 # Documentation
 
-Documentation is largely provided via our [Storybook](https://smartprocure.github.io/contexture-react).
+Documentation lives under `./docs` and our [Storybook](https://smartprocure.github.io/contexture-react)**.
 
 **The most complete example is the [Live Demo using IMDB data and the Grey Vest theme](https://smartprocure.github.io/contexture-react/?path=/story/live-demos-imdb--grey-vest-theme)**
-
-
-
-## Theming
-Warning: we currently support a very alpha and unstable theming API that is bound to change without notice. Use it like:
-```js
-import { Provider } from 'mobx-react'
-<Provider theme={ ... }>
-    ...
-</Provider>
-```
-Documentation around overridable components is coming later...
 
 ## Installing
 
@@ -33,17 +20,11 @@ Documentation around overridable components is coming later...
 
 ## Version History/Changelog
 
-See our
-[changelog](https://github.com/smartprocure/contexture-react/blob/master/CHANGELOG.md)
+See our [changelog](https://github.com/smartprocure/contexture-react/blob/master/CHANGELOG.md)
 
 ## Notes on this repository
 
-This project was scaffolded generally following this link:
-https://medium.com/@efreyreg/create-react-component-libraries-with-storybook-and-styled-jsx-8999f423f06b
-
-In general, the two directories of interset are `/src` which contains the
-component source, and `/stories` which contain the storybook stories (which also
-function as snapshot tests)
+This project was scaffolded generally following this link: https://medium.com/@efreyreg/create-react-component-libraries-with-storybook-and-styled-jsx-8999f423f06b
 
 ## Cross Browser Testing
 
