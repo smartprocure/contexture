@@ -1,12 +1,11 @@
 import React from 'react'
-
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers'
 import MomentUtils from '@date-io/moment'
 import { defaultProps } from 'recompose'
-import { lensify } from './utils'
+import { openify } from '../../utils/react'
 import {
   Box,
   Button,
@@ -39,7 +38,7 @@ export default {
   Icon,
   ListItem,
   PickerItem: ListItem,
-  Modal: lensify(Dialog),
+  Modal: openify(Dialog),
   NumberInput: defaultProps({ type: 'number', fullWidth: true })(Input),
   Popover,
   RadioList,
