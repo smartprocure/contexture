@@ -43,15 +43,9 @@ let FilterContents = ({
             onChange={({ target: { value: type } }) => {
               tree.replace(node.path, newNodeFromType(type, fields, node))
             }}
+            placeholder="Select Type"
             value={F.when(_.isNil, undefined)(node.type)} // fix null value issue...
-            options={[
-              {
-                value: null,
-                label: 'Select Type',
-                disabled: node.type,
-              },
-              ...getTypeLabelOptions(tree, typeOptions),
-            ]}
+            options={getTypeLabelOptions(tree, typeOptions)}
           />
         </div>
       )}
