@@ -23,6 +23,7 @@ import {
   TagsQuery,
   TypeMap,
 } from '../../../src/exampleTypes'
+import IMDBCards from '../components/IMDBCards'
 
 let tree = Contexture({
   key: 'root',
@@ -76,6 +77,7 @@ tree.disableAutoUpdate = true
 
 let state = observable({
   autoUpdate: false,
+  showCards: true,
 })
 
 let divs = _.map(x => <div key={x}>{x}</div>)
@@ -90,7 +92,10 @@ let schemas = fromPromise(
               display: x => <img src={x} width="180" height="270" />,
               order: 2,
             },
-            title: { order: 1 },
+            title: {
+              display: x => <span dangerouslySetInnerHTML={{ __html: x }} />,
+              order: 1 ,
+            },
             genres: { display: divs },
             actors: { display: divs },
           },
@@ -170,14 +175,28 @@ export default () => {
               </Flex>
             </Flex>
             <theme.Box>
-              <CheckboxResultTable
+              <Flex>
+                <theme.RadioList
+                  options={[
+                    { label: 'Title Cards', value: true },
+                    { label: 'Checkable Table', value: false },
+                  ]}
+                  value={state.showCards}
+                  onChange={val => {
+                    state.showCards = val
+                  }}
+                />
+              </Flex>
+              {state.showCards ? <IMDBCards tree={tree} 
+                path={['root', 'results']} />
+              : <CheckboxResultTable
                 tree={tree}
                 fields={schemas[tree.tree.schema].fields}
                 path={['root', 'results']}
                 criteria={['root', 'criteria']}
                 mapNodeToProps={componentForType(TypeMap)}
                 getValue="title"
-              />
+              />}
               <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>
                 <ResultPager tree={tree} path={['root', 'results']} />
               </Flex>

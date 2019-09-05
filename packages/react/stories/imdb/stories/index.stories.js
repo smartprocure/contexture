@@ -12,7 +12,7 @@ storiesOf('Live Demos|IMDB Search', module)
 
 storiesOf('Live Demos|IMDB Search', module)
   .addDecorator(ThemePicker('blueberry'))
-  .addWithJSX('Checkable Result Table', require('./checklist').default)
+  .addWithJSX('Custom Result Components', require('./resultComponents').default)
 
 storiesOf('Live Demos|IMDB Search', module)
   .addDecorator(ThemePicker('greyVest'))
