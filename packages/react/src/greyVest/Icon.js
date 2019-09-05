@@ -1,46 +1,51 @@
 import React from 'react'
-import Dynamic from '../greyVest/Dynamic'
-import IconButton from './IconButton'
+import { Dynamic } from '../greyVest'
+import TextButton from './TextButton'
 
-let SmallIcon = ({ icon }) => (
-  <i className="material-icons" style={{ fontSize: 20 }}>
+let SmallIcon = ({ icon, style, ...props }) => (
+  <i className="material-icons" style={{ fontSize: 20, ...style }} {...props}>
     {icon}
   </i>
 )
 
+let toIcon = id => props => <SmallIcon icon={id} {...props} />
+
 let iconMap = {
-  SortAscending: () => <SmallIcon icon="expand_less" />,
-  SortDescending: () => <SmallIcon icon="expand_more" />,
-  MoveLeft: () => <SmallIcon icon="chevron_left" />,
-  MoveRight: () => <SmallIcon icon="chevron_right" />,
-  RemoveColumn: () => <SmallIcon icon="remove" />,
-  AddColumn: () => <SmallIcon icon="add" />,
-  FilterExpand: () => <SmallIcon icon="filter_list" />,
-  FilterCollapse: () => <SmallIcon icon="filter_list" />,
-  FilterAdd: () => <SmallIcon icon="filter_list" />,
+  SortAscending: toIcon('expand_less'),
+  SortDescending: toIcon('expand_more'),
+  MoveLeft: toIcon('chevron_left'),
+  MoveRight: toIcon('chevron_right'),
+  RemoveColumn: toIcon('remove'),
+  AddColumn: toIcon('add'),
+  FilterExpand: toIcon('filter_list'),
+  FilterCollapse: toIcon('filter_list'),
+  FilterAdd: toIcon('filter_list'),
   TableColumnMenu: () => (
-    <IconButton>
+    <TextButton>
       <SmallIcon icon="more_vert" />
-    </IconButton>
+    </TextButton>
   ),
-  FilterListExpand: () => <SmallIcon icon="add" />,
-  FilterListCollapse: () => <SmallIcon icon="remove" />,
-  PreviousPage: () => <SmallIcon icon="chevron_left" />,
-  NextPage: () => <SmallIcon icon="chevron_right" />,
+  FilterListExpand: toIcon('add'),
+  FilterListCollapse: toIcon('remove'),
+  TreePause: toIcon('remove_circle_outline'),
+  TreeUnpause: toIcon('add_circle_outline'),
+  PreviousPage: toIcon('chevron_left'),
+  NextPage: toIcon('chevron_right'),
   Previous5Pages: () => <span>...</span>,
   Next5Pages: () => <span>...</span>,
   Refresh: () => (
-    <IconButton
+    <TextButton
       className="animated pulse slow infinite"
       style={{ animationDuration: '500ms' }}
     >
       <SmallIcon icon="refresh" />
-    </IconButton>
+    </TextButton>
   ),
+  AutoUpdate: toIcon('autorenew'),
 }
 
 let Icon = ({ icon, ...props }) => (
-  <Dynamic component={iconMap[icon]} {...props} />
+  <Dynamic component={iconMap[icon] || toIcon(icon)} {...props} />
 )
 
 export default Icon

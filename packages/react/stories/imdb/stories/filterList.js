@@ -14,14 +14,14 @@ import {
   FilterAdder,
 } from '../../../src'
 import theme, { DarkBox } from '../../DemoControls'
-import ExampleTypes, { TypeMap } from '../../../src/exampleTypes'
-let {
+import {
   Query,
   ResultCount,
   PagedResultTable,
   DateHistogram,
   CheckableTermsStatsTable,
-} = ExampleTypes
+  TypeMap,
+} from '../../../src/exampleTypes'
 import { ThemeProvider } from '../../../src/utils/theme'
 import { Column } from './../../../src/greyVest/ExpandableTable'
 

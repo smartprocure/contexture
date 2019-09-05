@@ -3,16 +3,16 @@ import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
 import { contexturify } from '../utils/hoc'
-import { withTheme } from '../utils/theme'
 import { bgJoin } from '../styles/generic'
 import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
+import PopoverTagsInput from '../purgatory/PopoverTagsInput'
 
 let tagValueField = 'word'
 let TagsQuery = ({
   tree,
   node,
-  theme: { PopoverTagsInput, Checkbox, RadioList, Select, Button },
   placeholder,
+  theme: { Checkbox, RadioList, Select, Button },
   ...props
 }) => {
   let getTag = tag => _.find({ [tagValueField]: tag }, node.tags)
@@ -121,7 +121,4 @@ let TagsQuery = ({
   )
 }
 
-export default _.flow(
-  contexturify,
-  withTheme
-)(TagsQuery)
+export default contexturify(TagsQuery)

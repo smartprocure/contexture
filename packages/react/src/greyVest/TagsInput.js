@@ -4,151 +4,133 @@ import { withState } from 'recompose'
 import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import Flex from './Flex'
+import DefaultTag from './Tag'
 import OutsideClickHandler from 'react-outside-click-handler'
-import { withTheme } from '../utils/theme'
 
 let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
 // We're only using withState to preserve the state between renders, since
 // inject doesn't do that for us.
-let TagsInput = withState('state', 'setState', () =>
-  observable({
-    currentInput: '',
-    isOneLine: true,
-  })
-)(
-  _.flow(
-    observer,
-    withTheme
-  )(
-    ({
-      tags,
-      state,
-      addTag,
-      removeTag,
-      submit = _.noop,
-      tagStyle,
-      placeholder = 'Search...',
-      splitCommas,
-      theme: { Tag },
-      style,
-      onBlur = _.noop,
-      onInputChange = _.noop,
-      onTagClick = _.noop,
-      ...props
-    }) => {
-      let containerRef
-      let inputRef
-      addTag = splitCommas
-        ? _.flow(
-            _.split(','),
-            _.invokeMap('trim'),
-            _.compact,
-            _.uniq,
-            _.difference(_, tags),
-            _.map(addTag)
-          )
-        : _.flow(
-            _.trim,
-            addTag
-          )
-      return (
-        <OutsideClickHandler
-          onOutsideClick={() => {
-            state.isOneLine = true
-            containerRef.scrollTop = 0
+let TagsInput = ({
+  tags,
+  state,
+  addTag,
+  removeTag,
+  submit = _.noop,
+  tagStyle,
+  placeholder = 'Search...',
+  splitCommas,
+  style,
+  onBlur = _.noop,
+  onInputChange = _.noop,
+  onTagClick = _.noop,
+  Tag = DefaultTag,
+  ...props
+}) => {
+  let containerRef
+  let inputRef
+  addTag = splitCommas
+    ? _.flow(
+        _.split(','),
+        _.invokeMap('trim'),
+        _.compact,
+        _.uniq,
+        _.difference(_, tags),
+        _.map(addTag)
+      )
+    : _.flow(
+        _.trim,
+        addTag
+      )
+  return (
+    <OutsideClickHandler
+      onOutsideClick={() => {
+        state.isOneLine = true
+        containerRef.scrollTop = 0
+      }}
+    >
+      <div
+        className={`tags-input ${state.isOneLine ? 'tags-input-one-line' : ''}`}
+        ref={e => (containerRef = e ? e : containerRef)}
+        style={{ ...style }}
+        onClick={() => {
+          if (state.isOneLine) {
+            state.isOneLine = false
+            inputRef.focus()
+          }
+        }}
+      >
+        <Flex
+          wrap
+          alignItems="center"
+          style={{
+            cursor: 'text',
+            height: '100%',
+            padding: 2,
           }}
         >
-          <div
-            className={`tags-input ${
-              state.isOneLine ? 'tags-input-one-line' : ''
-            }`}
-            ref={e => (containerRef = e ? e : containerRef)}
-            style={{ ...style }}
-            onClick={() => {
-              if (state.isOneLine) {
-                state.isOneLine = false
-                inputRef.focus()
+          {_.map(
+            t => (
+              <Tag
+                key={t}
+                value={t}
+                {...{ removeTag, tagStyle }}
+                onClick={() => onTagClick(t)}
+              />
+            ),
+            tags
+          )}
+          <input
+            style={{
+              border: 'none',
+              outline: 'none',
+              flex: 1,
+              margin: 3,
+              minWidth: 120,
+            }}
+            ref={e => (inputRef = e)}
+            onChange={e => {
+              state.currentInput = e.target.value
+              onInputChange()
+            }}
+            onBlur={() => {
+              if (isValidInput(state.currentInput, tags)) {
+                addTag(state.currentInput)
+                state.currentInput = ''
+                onBlur()
               }
             }}
-          >
-            <Flex
-              wrap
-              alignItems="center"
-              style={{
-                cursor: 'text',
-                height: '100%',
-                padding: 2,
-              }}
-            >
-              {_.map(
-                t => (
-                  <Tag
-                    key={t}
-                    value={t}
-                    {...{ removeTag, tagStyle }}
-                    onClick={() => onTagClick(t)}
-                  />
-                ),
-                tags
-              )}
-              <input
-                style={{
-                  border: 'none',
-                  outline: 'none',
-                  flex: 1,
-                  margin: 3,
-                  minWidth: 120,
-                }}
-                ref={e => (inputRef = e)}
-                onChange={e => {
-                  state.currentInput = e.target.value
-                  onInputChange()
-                }}
-                onBlur={() => {
-                  if (isValidInput(state.currentInput, tags)) {
-                    addTag(state.currentInput)
-                    state.currentInput = ''
-                    onBlur()
-                  }
-                }}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' && !state.currentInput) submit()
-                  if (
-                    (_.includes(e.key, ['Enter', 'Tab']) ||
-                      (splitCommas && e.key === ',')) &&
-                    isValidInput(state.currentInput, tags)
-                  ) {
-                    addTag(state.currentInput)
-                    state.currentInput = ''
-                    e.preventDefault()
-                  }
-                  if (
-                    e.key === 'Backspace' &&
-                    !state.currentInput &&
-                    tags.length
-                  ) {
-                    let last = _.last(tags)
-                    removeTag(last)
-                    state.currentInput = last
-                    e.preventDefault()
-                  }
-                }}
-                value={state.currentInput}
-                placeholder={placeholder}
-                {...props}
-              />
-            </Flex>
-          </div>
-        </OutsideClickHandler>
-      )
-    }
+            onKeyDown={e => {
+              if (e.key === 'Enter' && !state.currentInput) submit()
+              if (
+                (_.includes(e.key, ['Enter', 'Tab']) ||
+                  (splitCommas && e.key === ',')) &&
+                isValidInput(state.currentInput, tags)
+              ) {
+                addTag(state.currentInput)
+                state.currentInput = ''
+                e.preventDefault()
+              }
+              if (e.key === 'Backspace' && !state.currentInput && tags.length) {
+                let last = _.last(tags)
+                removeTag(last)
+                state.currentInput = last
+                e.preventDefault()
+              }
+            }}
+            value={state.currentInput}
+            placeholder={placeholder}
+            {...props}
+          />
+        </Flex>
+      </div>
+    </OutsideClickHandler>
   )
-)
+}
 TagsInput.displayName = 'TagsInput'
 
 // Just uses an internal observable array
-let MockTagsInput = inject(() => {
+export let MockTagsInput = inject(() => {
   let tags = observable([])
   return {
     tags,
@@ -162,4 +144,12 @@ let MockTagsInput = inject(() => {
 })(TagsInput)
 MockTagsInput.displayName = 'MockTagsInput'
 
-export { TagsInput as default, MockTagsInput }
+export default _.flow(
+  observer,
+  withState('state', 'setState', () =>
+    observable({
+      currentInput: '',
+      isOneLine: true,
+    })
+  )
+)(TagsInput)

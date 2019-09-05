@@ -1,7 +1,5 @@
 import React from 'react'
 import { contexturify } from '../utils/hoc'
-import _ from 'lodash/fp'
-import { withTheme } from '../utils/theme'
 
 let TermsStats = ({ node, theme: { BarChart }, ...props }) => (
   <BarChart
@@ -13,7 +11,4 @@ let TermsStats = ({ node, theme: { BarChart }, ...props }) => (
   />
 )
 
-export default _.flow(
-  contexturify,
-  withTheme
-)(TermsStats)
+export default contexturify(TermsStats)

@@ -2,10 +2,11 @@ import _ from 'lodash/fp'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import TestTree from '../testTree'
-import ExampleTypes from '../../src/exampleTypes'
-let { ResultTable } = ExampleTypes
+import { ResultTable } from '../../src/exampleTypes'
+import ThemePicker from '../themePicker'
 
-storiesOf('Search Components (Unthemed)|Example Types/ResultTable', module)
+storiesOf('Components|Search components/ExampleTypes/ResultTable', module)
+  .addDecorator(ThemePicker('greyVest'))
   .addWithJSX('Customizations', () => (
     <div>
       <style>
@@ -29,7 +30,7 @@ storiesOf('Search Components (Unthemed)|Example Types/ResultTable', module)
       <ResultTable
         tree={TestTree()}
         path={['results']}
-        Table={x => <table className="example-table" {...x} />}
+        theme={{ Table: x => <table className="example-table" {...x} /> }}
         infer
         fields={{
           b: {

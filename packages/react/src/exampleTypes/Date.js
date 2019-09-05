@@ -1,7 +1,6 @@
 import React from 'react'
-import Flex from '../greyVest/Flex'
+import { Flex } from '../greyVest'
 import { contexturify } from '../utils/hoc'
-import { withTheme } from '../utils/theme'
 import F from 'futil-js'
 import _ from 'lodash/fp'
 
@@ -129,79 +128,71 @@ let rollingRangeFromString = _.flow(
   })
 )
 
-let DateComponent = _.flow(
-  contexturify,
-  withTheme
-)(
-  ({
-    tree,
-    node,
-    theme: { DateInput, RadioList, Select },
-    excludeRollingRanges = [],
-  }) => {
-    let rollingOpts = _.reject(
-      opt => _.includes(opt.type, excludeRollingRanges),
-      allRollingOpts
-    )
+let DateComponent = ({
+  tree,
+  node,
+  excludeRollingRanges = [],
+  theme: { DateInput, RadioList, Select },
+}) => {
+  let rollingOpts = _.reject(
+    opt => _.includes(opt.type, excludeRollingRanges),
+    allRollingOpts
+  )
 
-    return (
-      <div>
-        <RadioList
-          options={F.autoLabelOptions(['exact', 'rolling'])}
-          value={node.useDateMath ? 'rolling' : 'exact'}
-          style={{ marginBottom: 10 }}
-          onChange={mode => {
-            tree.mutate(
-              node.path,
-              mode === 'rolling'
-                ? {
-                    useDateMath: true,
-                    from: '',
-                    to: '',
-                  }
-                : {
-                    useDateMath: false,
-                    from: null,
-                    to: null,
-                  }
-            )
-          }}
-        />
-        {!node.useDateMath && (
-          <Flex
-            style={{ justifyContent: 'space-between', alignItems: 'center' }}
-          >
-            <DateInput
-              value={node.from}
-              onChange={date => tree.mutate(node.path, { from: date })}
-            />
-            <div>-</div>
-            <DateInput
-              value={node.to}
-              onChange={date => tree.mutate(node.path, { to: date })}
-            />
-          </Flex>
-        )}
-        {node.useDateMath && (
-          <Select
-            value={rollingRangeToString(node)}
-            onChange={e =>
-              tree.mutate(node.path, rollingRangeFromString(e.target.value))
-            }
-            options={F.map(
-              opt => ({
-                label: opt.label,
-                value: rollingRangeToString(opt.range),
-                selected: rollingOptIsSelected(node, opt),
-              }),
-              rollingOpts
-            )}
+  return (
+    <div>
+      <RadioList
+        options={F.autoLabelOptions(['exact', 'rolling'])}
+        value={node.useDateMath ? 'rolling' : 'exact'}
+        style={{ marginBottom: 10 }}
+        onChange={mode => {
+          tree.mutate(
+            node.path,
+            mode === 'rolling'
+              ? {
+                  useDateMath: true,
+                  from: '',
+                  to: '',
+                }
+              : {
+                  useDateMath: false,
+                  from: null,
+                  to: null,
+                }
+          )
+        }}
+      />
+      {!node.useDateMath && (
+        <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+          <DateInput
+            value={node.from}
+            onChange={date => tree.mutate(node.path, { from: date })}
           />
-        )}
-      </div>
-    )
-  }
-)
-DateComponent.displayName = 'Date'
+          <div>-</div>
+          <DateInput
+            value={node.to}
+            onChange={date => tree.mutate(node.path, { to: date })}
+          />
+        </Flex>
+      )}
+      {node.useDateMath && (
+        <Select
+          value={rollingRangeToString(node)}
+          onChange={e =>
+            tree.mutate(node.path, rollingRangeFromString(e.target.value))
+          }
+          options={F.map(
+            opt => ({
+              label: opt.label,
+              value: rollingRangeToString(opt.range),
+              selected: rollingOptIsSelected(node, opt),
+            }),
+            rollingOpts
+          )}
+        />
+      )}
+    </div>
+  )
+}
 
-export default DateComponent
+export default contexturify(DateComponent)

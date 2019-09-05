@@ -14,8 +14,7 @@ import {
   FilterAdder,
 } from '../../src/'
 import { TextInput, ClampedHTML } from '../DemoControls'
-import ExampleTypes, { TypeMap } from '../../src/exampleTypes'
-let { ResultCount, PagedResultTable } = ExampleTypes
+import { ResultCount, PagedResultTable, TypeMap } from '../../src/exampleTypes'
 
 import Contexture, { updateClient } from './contexture'
 

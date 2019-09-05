@@ -26,9 +26,7 @@ let RadioList = ({
               width: 'auto',
               height: 'auto',
             }}
-            onChange={e => {
-              onChange(e.target.value)
-            }}
+            onChange={() => onChange(option.value)}
             value={option.value}
             checked={value === option.value}
           />

@@ -1,12 +1,15 @@
 import F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
-import { CheckButton, Dynamic, Flex } from './greyVest'
+import { setDisplayName } from 'recompose'
+import { Dynamic, Flex } from './greyVest'
+import { CheckButton } from './purgatory'
 import { withNode, withLoader } from './utils/hoc'
 import { withTheme } from './utils/theme'
 import styles from './styles'
 
 let FilterButtonItem = _.flow(
+  setDisplayName('FilterButtonItem'),
   withLoader,
   withTheme
 )(
@@ -15,7 +18,7 @@ let FilterButtonItem = _.flow(
     tree,
     fields,
     mapNodeToProps,
-    theme: { Button, MissingTypeComponent, Modal },
+    theme: { Button, UnmappedNodeComponent, Modal },
   }) => {
     let mappedProps = mapNodeToProps(node, fields)
     let modal = F.stateLens(React.useState(false))
@@ -38,10 +41,12 @@ let FilterButtonItem = _.flow(
             )}
             <div className="filter-component">
               <Dynamic
-                Component={MissingTypeComponent}
-                tree={tree}
-                node={node}
-                path={_.toArray(node.path)}
+                defaultProps={{
+                  component: UnmappedNodeComponent,
+                  tree,
+                  node,
+                  path: _.toArray(node.path),
+                }}
                 {...mappedProps}
               />
             </div>
@@ -67,38 +72,35 @@ let GroupBox = ({ nodeJoinColor, children, nested, className }) => (
   </Flex>
 )
 
-let FilterButtonList = withNode(
-  ({
-    node,
-    tree,
-    fields = {},
-    mapNodeToProps = _.noop,
-    className = 'filter-button-list',
-    nested = false,
-  }) => (
-    <GroupBox
-      {...{ nested, className }}
-      nodeJoinColor={node && styles.joinColor(node)}
-    >
-      {_.map(child => {
-        let Component = child.children ? FilterButtonList : FilterButtonItem
-        return (
-          <Component
-            key={child.path}
-            nested
-            {...{
-              tree,
-              node: child,
-              fields,
-              mapNodeToProps,
-              className,
-            }}
-          />
-        )
-      }, _.get('children', node))}
-    </GroupBox>
-  )
+let FilterButtonList = ({
+  node,
+  tree,
+  fields = {},
+  mapNodeToProps = _.noop,
+  className = 'filter-button-list',
+  nested = false,
+}) => (
+  <GroupBox
+    {...{ nested, className }}
+    nodeJoinColor={node && styles.joinColor(node)}
+  >
+    {_.map(child => {
+      let Component = child.children ? FilterButtonList : FilterButtonItem
+      return (
+        <Component
+          key={child.path}
+          nested
+          {...{
+            tree,
+            node: child,
+            fields,
+            mapNodeToProps,
+            className,
+          }}
+        />
+      )
+    }, _.get('children', node))}
+  </GroupBox>
 )
 
-FilterButtonList.displayName = 'FilterButtonList'
-export default FilterButtonList
+export default withNode(FilterButtonList)

@@ -1,5 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
+import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
 import F from 'futil-js'
 import { getResults, getRecord } from '../utils/schema'
@@ -8,9 +9,10 @@ import { withTheme } from '../utils/theme'
 import ResultTable from './ResultTable'
 
 let Label = _.flow(
+  setDisplayName('Label'),
   observer,
   withTheme
-)(({ node, theme: { Checkbox }, selected, getValue }) => {
+)(({ node, selected, getValue, theme: { Checkbox } }) => {
   let results = _.toArray(getResults(node))
   let allChecked = _.size(results) === _.size(F.view(selected))
   let checkAll = F.sets(
@@ -27,15 +29,18 @@ let Label = _.flow(
   )
   return <Checkbox checked={allChecked} onChange={checkAll} />
 })
-Label.displayName = 'Label'
 
 // Extends ResultTable with a checkbox column
 // Writes to a lens called `selected`, using getValue to map the selected record to a value.
 // getValues uses _.iteratee, so it defaults to identity and supports things like strings to get props
-let CheckableResultTable = _.flow(
-  contexturify,
-  withTheme
-)(({ node, fields, selected, getValue, theme: { Checkbox }, ...props }) => (
+let CheckableResultTable = ({
+  node,
+  fields,
+  selected,
+  getValue,
+  theme: { Checkbox },
+  ...props
+}) => (
   <ResultTable
     fields={{
       _checkbox: {
@@ -51,7 +56,6 @@ let CheckableResultTable = _.flow(
     }}
     {...props}
   />
-))
-CheckableResultTable.displayName = 'CheckableResultTable'
+)
 
-export default CheckableResultTable
+export default contexturify(CheckableResultTable)

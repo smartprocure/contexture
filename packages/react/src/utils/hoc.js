@@ -1,19 +1,26 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import _ from 'lodash/fp'
-import StripedLoader from '../greyVest/StripedLoader'
+import { StripedLoader } from '../greyVest'
+import { wrapDisplayName } from './react'
+import { withTheme } from './theme'
 
-export let withNode = Component => props => {
-  let { tree, node, path } = props
-  node = node || (tree && path && tree.getNode(path))
+export let withNode = Component =>
+  wrapDisplayName('withNode', Component)(props => {
+    let { tree, node, path } = props
+    node = node || (tree && path && tree.getNode(path))
 
-  if (!node) throw Error(`Node not provided, and couldn't find node at ${path}`)
+    if (!node)
+      throw Error(`Node not provided, and couldn't find node at ${path}`)
 
-  return <Component {...props} node={node} />
-}
+    return <Component {...props} node={node} />
+  })
 
 export let withLoader = Component =>
-  observer(({ Loader = StripedLoader, node, ...props }) => (
+  _.flow(
+    wrapDisplayName('withLoader', Component),
+    observer
+  )(({ Loader = StripedLoader, node, ...props }) => (
     <Loader loading={node && node.updating}>
       <Component node={node} {...props} />
     </Loader>
@@ -21,7 +28,10 @@ export let withLoader = Component =>
 
 // I am a band-aid, please rip me off as quickly as possible
 export let withInlineLoader = Component =>
-  observer(({ Loader = StripedLoader, node, ...props }) => (
+  _.flow(
+    wrapDisplayName('withInlineLoader', Component),
+    observer
+  )(({ Loader = StripedLoader, node, ...props }) => (
     <Loader loading={node && node.updating} style={{ display: 'inline-block' }}>
       <Component node={node} {...props} />
     </Loader>
@@ -30,10 +40,14 @@ export let withInlineLoader = Component =>
 export let contexturify = _.flow(
   observer,
   withNode,
-  withLoader
+  withLoader,
+  withTheme
 )
 
 // this is used for the text components
-export let withTreeLens = Component => ({ prop = 'value', ...props }) => (
-  <Component {...{ lens: props.tree.lens(props.node.path, prop), ...props }} />
-)
+export let withTreeLens = Component =>
+  wrapDisplayName('withTreeLens', Component)(({ prop = 'value', ...props }) => (
+    <Component
+      {...{ lens: props.tree.lens(props.node.path, prop), ...props }}
+    />
+  ))

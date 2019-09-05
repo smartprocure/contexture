@@ -4,7 +4,6 @@ import { withInfo } from '@storybook/addon-info'
 import { action } from '@storybook/addon-actions'
 import { observable } from 'mobx'
 import { Observer } from 'mobx-react'
-import decorator from './decorator'
 import {
   Tabs,
   Tab,
@@ -13,6 +12,7 @@ import {
   ButtonRadio,
   Button,
 } from './../../src/greyVest'
+import decorator from './decorator'
 
 let tabDocs = `
 # Overview
@@ -69,14 +69,14 @@ Used in conjunction with TabLabel as an alternative to a combined Tab.
 
 let state = observable({ tab: 'results' })
 
-storiesOf('Components (Grey Vest)|Tabs', module)
-  .addDecorator(decorator)
+storiesOf('Components|GreyVest library/Tabs', module)
   .add(
     'Docs',
     withInfo({ text: tabDocs, inline: true, source: false, header: false })(
       () => null
     )
   )
+  .addDecorator(decorator)
   .addWithJSX('Base Usage', () => (
     <Tabs>
       <Tab label="Tab One">Tab One Contents</Tab>

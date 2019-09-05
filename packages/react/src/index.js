@@ -1,7 +1,5 @@
 // utils
-export * from './utils/hoc'
 export * from './utils/schema'
-export * from './utils/react'
 export * from './utils/theme'
 
 // generic search layouts
@@ -12,6 +10,7 @@ export FilterAdder from './FilterAdder'
 export FilterButtonList from './FilterButtonList'
 export SearchFilters from './SearchFilters'
 export SearchLayout from './SearchLayout'
+export ToggleFiltersHeader from './ToggleFiltersHeader'
 
 // component library
 export * from './greyVest'

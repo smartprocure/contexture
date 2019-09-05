@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
+import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
-import Flex from '../greyVest/Flex'
+import { Flex } from '../greyVest'
 import { contexturify } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
 
 let SelectAll = _.flow(
+  setDisplayName('SelectAll'),
   observer,
   withTheme
 )(({ node, tree, theme: { Checkbox } }) => {
@@ -41,18 +43,18 @@ let SelectAll = _.flow(
     </label>
   )
 })
-SelectAll.displayName = 'SelectAll'
 
 let FacetOptionsFilter = _.flow(
+  setDisplayName('FacetOptionsFilter'),
   observer,
   withTheme
-)(({ tree, node, theme: { TextInput, Button } }) => {
+)(({ tree, node, theme: { TextInput, Button, ButtonGroup } }) => {
   let [val, setVal] = useState(node.optionsFilter)
   let buttonEnabled = val !== node.optionsFilter
   let submit = () =>
     buttonEnabled && tree.mutate(node.path, { optionsFilter: val })
   return (
-    <Flex>
+    <ButtonGroup>
       <TextInput
         value={val}
         onChange={e => {
@@ -68,19 +70,18 @@ let FacetOptionsFilter = _.flow(
       >
         Submit
       </Button>
-    </Flex>
+    </ButtonGroup>
   )
 })
-FacetOptionsFilter.displayName = 'FacetOptionsFilter'
 
 let Facet = ({
   tree,
   node,
   hide = {},
-  theme: { Checkbox, RadioList },
   display = x => x,
   displayBlank = () => <i>Not Specified</i>,
   formatCount = x => x,
+  theme: { Checkbox, RadioList },
 }) => (
   <div className="contexture-facet">
     <RadioList
@@ -89,28 +90,32 @@ let Facet = ({
       options={F.autoLabelOptions(['include', 'exclude'])}
     />
     {!hide.facetFilter && <FacetOptionsFilter tree={tree} node={node} />}
-    <SelectAll node={node} tree={tree} Checkbox={Checkbox} />
-    {_.map(({ name, count }) => {
-      let lens = tree.lens(node.path, 'values')
-      return (
-        <label
-          key={name}
-          style={{
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            display: 'flex',
-            cursor: 'pointer',
-          }}
-          title={`${display(name)} : ${formatCount(count)}`}
-        >
-          <Checkbox {...F.domLens.checkboxValues(name, lens)} />
-          <div style={{ flex: 2, padding: '0 5px' }}>
-            {display(name) || displayBlank()}
-          </div>
-          <div>{formatCount(count)}</div>
-        </label>
-      )
-    }, _.get('context.options', node))}
+    <SelectAll node={node} tree={tree} />
+    {_.flow(
+      _.partition(x => _.includes(x.name, node.values)),
+      _.flatten,
+      _.map(({ name, count }) => {
+        let lens = tree.lens(node.path, 'values')
+        return (
+          <label
+            key={name}
+            style={{
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              display: 'flex',
+              cursor: 'pointer',
+            }}
+            title={`${display(name)} : ${formatCount(count)}`}
+          >
+            <Checkbox {...F.domLens.checkboxValues(name, lens)} />
+            <div style={{ flex: 2, padding: '0 5px' }}>
+              {display(name) || displayBlank()}
+            </div>
+            <div>{formatCount(count)}</div>
+          </label>
+        )
+      })
+    )(_.get('context.options', node))}
     <Flex
       className="contexture-facet-cardinality"
       style={{ justifyContent: 'space-between' }}
@@ -137,7 +142,4 @@ let Facet = ({
   </div>
 )
 
-export default _.flow(
-  contexturify,
-  withTheme
-)(Facet)
+export default contexturify(Facet)

@@ -1,8 +1,9 @@
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import React from 'react'
+import { setDisplayName } from 'recompose'
 import FilterButtonList from '../FilterButtonList'
-import { StepsAccordion, AccordionStep } from '../greyVest'
+import { StepsAccordion, AccordionStep } from '../purgatory'
 import { withNode } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
 
@@ -18,6 +19,7 @@ let generateStepTitle = (node, title) => i => (
 )
 
 let QueryWizard = _.flow(
+  setDisplayName('QueryWizard'),
   withNode,
   withTheme
 )(
@@ -55,5 +57,4 @@ let QueryWizard = _.flow(
   )
 )
 
-QueryWizard.displayName = 'QueryWizard'
 export default QueryWizard

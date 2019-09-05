@@ -2,8 +2,8 @@ import _ from 'lodash/fp'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import TestTree from '../testTree'
-import ExampleTypes from '../../src/exampleTypes'
-let { TagsQuery } = ExampleTypes
+import { TagsQuery } from '../../src/exampleTypes'
+import ThemePicker from '../themePicker'
 
 let tags = _.map(n => ({ word: `(${n}) This is a tag` }), _.range(1, 5))
 
@@ -12,7 +12,8 @@ let treeWithTags = TestTree(testTree => {
   return testTree
 })
 
-storiesOf('Search Components (Unthemed)|Example Types/Tags Query', module)
+storiesOf('Components|Search components/ExampleTypes/Tags Query', module)
+  .addDecorator(ThemePicker('greyVest'))
   .addWithJSX('Default', () => (
     <TagsQuery tree={treeWithTags} path={['tagsQuery']} />
   ))

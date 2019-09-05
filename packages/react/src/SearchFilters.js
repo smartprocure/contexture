@@ -4,9 +4,8 @@ import PropTypes from 'prop-types'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
 import { Flex, QueryBuilder, FilterAdder, FilterList } from '.'
-import TreePauseButton from './greyVest/TreePauseButton'
-import ToggleFiltersButton from './greyVest/ToggleFiltersButton'
-import LinkButton from './greyVest/LinkButton'
+import { ToggleFiltersButton, TreePauseButton } from './purgatory'
+import { LinkButton } from './greyVest'
 import { withTheme } from './utils/theme'
 
 let LabelledList = ({ list, Component }) =>
@@ -27,10 +26,10 @@ export let AddableFilterList = props => (
   </>
 )
 
-export let FiltersBox = withTheme(({ theme, ...props }) => (
-  <theme.Box className="filter-list">
+export let FiltersBox = withTheme(({ theme: { Box }, ...props }) => (
+  <Box className="filter-list">
     <AddableFilterList {...props} />
-  </theme.Box>
+  </Box>
 ))
 FiltersBox.displayName = 'FiltersBox'
 

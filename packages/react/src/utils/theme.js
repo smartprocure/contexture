@@ -11,10 +11,10 @@ let ThemeContext = React.createContext(defaultTheme)
 
 export let ThemeProvider = ({ theme, children }) => {
   theme = { ...defaultTheme, ...theme }
-  let Globals = theme.Globals || React.Fragment
+  let Root = theme.Root || React.Fragment
   return (
     <ThemeContext.Provider value={theme}>
-      <Globals>{children}</Globals>
+      <Root>{children}</Root>
     </ThemeContext.Provider>
   )
 }
@@ -31,7 +31,7 @@ export let mergeNestedTheme = (theme, key) =>
     )
   )(theme)
 
-let useTheme = (name, propTheme) =>
+export let useTheme = (name, propTheme) =>
   mergeOrReturn(
     mergeNestedTheme(React.useContext(ThemeContext), name),
     propTheme
@@ -55,7 +55,7 @@ export let withNamedTheme = name => Component => {
       </ThemeContext.Provider>
     )
   }
-  themed.displayName = `WithTheme${name ? `("${name}")` : ''}(${getDisplayName(
+  themed.displayName = `withTheme${name ? `("${name}")` : ''}(${getDisplayName(
     Component
   )})`
   return themed

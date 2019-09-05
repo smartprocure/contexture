@@ -1,6 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
+import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
 import { contexturify } from '../utils/hoc'
 import { Dynamic } from '../greyVest'
@@ -44,13 +45,13 @@ let popoverStyle = {
 }
 
 let HighlightedColumnHeader = _.flow(
-  observer,
-  withTheme
+  setDisplayName('HighlightedColumnHeader'),
+  observer
 )(
   ({
     node,
-    theme: { TableHeaderCell },
     results = _.result('slice', getResults(node)),
+    Cell = 'th',
     hasAdditionalFields = !_.flow(
       _.map('additionalFields'),
       _.compact,
@@ -58,15 +59,15 @@ let HighlightedColumnHeader = _.flow(
     )(results),
   }) =>
     hasAdditionalFields && node.showOtherMatches ? (
-      <TableHeaderCell key="additionalFields">Other Matches</TableHeaderCell>
+      <Cell key="additionalFields">Other Matches</Cell>
     ) : null
 )
-HighlightedColumnHeader.displayName = 'HighlightedColumnHeader'
 
 let labelForField = (schema, field) =>
   _.getOr(field, 'label', _.find({ field }, schema))
 
 let HighlightedColumn = _.flow(
+  setDisplayName('HighlightedColumn'),
   observer,
   withTheme
 )(
@@ -74,14 +75,15 @@ let HighlightedColumn = _.flow(
     node,
     results = _.result('slice', getResults(node)),
     additionalFields = _.result('0.additionalFields.slice', results),
-    theme: { TableCell, Modal, Table },
     schema,
+    Cell = 'td',
+    theme: { Modal, Table },
   }) => {
     let viewModal = useLens(false)
     return _.isEmpty(additionalFields) ? (
-      <TableCell key="additionalFields" />
+      <Cell key="additionalFields" />
     ) : (
-      <TableCell key="additionalFields">
+      <Cell key="additionalFields">
         <Modal isOpen={viewModal}>
           <h3>Other Matching Fields</h3>
           <Table>
@@ -107,26 +109,26 @@ let HighlightedColumn = _.flow(
         >
           Matched {_.size(additionalFields)} other field(s)
         </button>
-      </TableCell>
+      </Cell>
     )
   }
 )
-HighlightedColumn.displayName = 'HighlightedColumn'
+
+let HeaderCellDefault = _.flow(
+  setDisplayName('HeaderCell'),
+  observer
+)(({ activeFilter, style, children }) => (
+  <th style={{ ...(activeFilter ? { fontWeight: 900 } : {}), ...style }}>
+    {children}
+  </th>
+))
 
 let Header = _.flow(
+  setDisplayName('Header'),
   observer,
   withTheme
 )(
   ({
-    theme: {
-      DropdownItem,
-      Icon,
-      Popover,
-      Modal,
-      Picker,
-      TableHeaderCell,
-      MissingTypeComponent,
-    },
     field: fieldSchema,
     includes,
     addOptions,
@@ -138,6 +140,14 @@ let Header = _.flow(
     mapNodeToProps,
     fields,
     visibleFields,
+    theme: {
+      DropdownItem,
+      Icon,
+      Popover,
+      Modal,
+      NestedPicker,
+      UnmappedNodeComponent,
+    },
   }) => {
     let popover = useLens(false)
     let adding = useLens(false)
@@ -150,7 +160,7 @@ let Header = _.flow(
       hideMenu,
       typeDefault,
     } = fieldSchema
-    TableHeaderCell = fieldSchema.HeaderCell || TableHeaderCell
+    let HeaderCell = fieldSchema.HeaderCell || HeaderCellDefault
     let filterNode =
       criteria &&
       _.find({ field }, _.getOr([], 'children', tree.getNode(criteria)))
@@ -164,7 +174,7 @@ let Header = _.flow(
     }
     let Label = label
     return (
-      <TableHeaderCell
+      <HeaderCell
         style={{ cursor: 'pointer' }}
         activeFilter={_.get('hasValue', filterNode)}
       >
@@ -255,16 +265,18 @@ let Header = _.flow(
               </DropdownItem>
               {F.view(filtering) && filterNode && !filterNode.paused && (
                 <Dynamic
-                  component={MissingTypeComponent}
-                  tree={tree}
-                  path={_.toArray(filterNode.path)}
+                  defaultProps={{
+                    component: UnmappedNodeComponent,
+                    tree,
+                    path: _.toArray(filterNode.path),
+                  }}
                   {...mapNodeToProps(filterNode, fields)}
                 />
               )}
             </div>
           )}
           <Modal isOpen={adding}>
-            <Picker
+            <NestedPicker
               options={addOptions}
               onChange={field => {
                 if (!_.contains(field, includes))
@@ -274,128 +286,124 @@ let Header = _.flow(
             />
           </Modal>
         </Popover>
-      </TableHeaderCell>
+      </HeaderCell>
     )
   }
 )
-Header.displayName = 'Header'
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
 let TableBody = _.flow(
-  observer,
-  withTheme
-)(({ node, visibleFields, fields, hiddenFields, theme, schema, Row }) => {
-  let TableRow = Row || theme.TableRow
-  return (
-    <tbody>
-      {!!getResults(node).length &&
-        _.map(
-          x => (
-            <TableRow
-              key={x._id}
-              record={getRecord(x)}
-              {...{ fields, visibleFields, hiddenFields }}
-            >
-              {_.map(
-                ({ field, display = x => x, Cell = theme.TableCell }) => (
-                  <Cell key={field}>
-                    {display(_.get(field, getRecord(x)), getRecord(x))}
-                  </Cell>
-                ),
-                visibleFields
-              )}
-              {node.showOtherMatches && (
-                <HighlightedColumn
-                  {...{
-                    node,
-                    additionalFields: _.result('additionalFields.slice', x),
-                    schema,
-                  }}
-                />
-              )}
-            </TableRow>
-          ),
-          getResults(node)
-        )}
-    </tbody>
-  )
-})
-TableBody.displayName = 'TableBody'
-
-let ResultTable = _.flow(
-  contexturify,
-  withTheme
-)(
-  ({
-    fields,
-    infer,
-    path,
-    criteria,
-    node,
-    tree,
-    theme: { Table },
-    Row, // accept a custom Row component so we can do fancy expansion things
-    mapNodeToProps = () => ({}),
-  }) => {
-    // From Theme/Components
-    let mutate = tree.mutate(path)
-    // NOTE infer + add columns does not work together (except for anything explicitly passed in)
-    //   When removing a field, it's not longer on the record, so infer can't pick it up since it runs per render
-    let schema = _.flow(
-      _.merge(infer && inferSchema(node)),
-      applyDefaults,
-      _.values,
-      _.orderBy('order', 'desc')
-    )(fields)
-    let includes = getIncludes(schema, node)
-    let isIncluded = x => _.includes(x.field, includes)
-    let visibleFields = _.flow(
-      _.map(field => _.find({ field }, schema)),
-      _.compact
-    )(includes)
-    let hiddenFields = _.reject(isIncluded, schema)
-
-    let headerProps = {
-      mapNodeToProps,
-      fields,
-      visibleFields,
-      includes,
-      addOptions: fieldsToOptions(hiddenFields),
-      addFilter: field =>
-        tree.add(criteria, newNodeFromField({ field, fields })),
-      tree,
-      node,
-      mutate,
-      criteria,
-    }
-
-    return (
-      <Table>
-        <thead>
-          <tr>
-            {F.mapIndexed(
-              x => (
-                <Header key={x.field} field={x} {...headerProps} />
+  setDisplayName('TableBody'),
+  observer
+)(({ node, visibleFields, fields, hiddenFields, schema, Row = 'tr' }) => (
+  <tbody>
+    {!!getResults(node).length &&
+      _.map(
+        x => (
+          <Row
+            key={x._id}
+            record={getRecord(x)}
+            {...{ fields, visibleFields, hiddenFields }}
+          >
+            {_.map(
+              ({ field, display = x => x, Cell = 'td' }) => (
+                <Cell key={field}>
+                  {display(_.get(field, getRecord(x)), getRecord(x))}
+                </Cell>
               ),
               visibleFields
             )}
-            <HighlightedColumnHeader node={node} />
-          </tr>
-        </thead>
-        <TableBody
-          {...{
-            node,
-            fields,
-            visibleFields,
-            hiddenFields,
-            schema,
-            Row,
-          }}
-        />
-      </Table>
-    )
-  }
-)
-ResultTable.displayName = 'ResultTable'
+            {node.showOtherMatches && (
+              <HighlightedColumn
+                {...{
+                  node,
+                  additionalFields: _.result('additionalFields.slice', x),
+                  schema,
+                }}
+              />
+            )}
+          </Row>
+        ),
+        getResults(node)
+      )}
+  </tbody>
+))
 
-export default ResultTable
+let Tr = props => (
+  <tr
+    {..._.omit(['record', 'fields', 'visibleFields', 'hiddenFields'], props)}
+  />
+)
+
+let ResultTable = ({
+  fields,
+  infer,
+  path,
+  criteria,
+  node,
+  tree,
+  HeaderCell,
+  Row = Tr, // accept a custom Row component so we can do fancy expansion things
+  mapNodeToProps = () => ({}),
+  theme: { Table },
+}) => {
+  // From Theme/Components
+  let mutate = tree.mutate(path)
+  // NOTE infer + add columns does not work together (except for anything explicitly passed in)
+  //   When removing a field, it's not longer on the record, so infer can't pick it up since it runs per render
+  let schema = _.flow(
+    _.merge(infer && inferSchema(node)),
+    applyDefaults,
+    _.values,
+    _.orderBy('order', 'desc')
+  )(fields)
+  let includes = getIncludes(schema, node)
+  let isIncluded = x => _.includes(x.field, includes)
+  let visibleFields = _.flow(
+    _.map(field => _.find({ field }, schema)),
+    _.compact
+  )(includes)
+  let hiddenFields = _.reject(isIncluded, schema)
+
+  let headerProps = {
+    HeaderCell,
+    mapNodeToProps,
+    fields,
+    visibleFields,
+    includes,
+    addOptions: fieldsToOptions(hiddenFields),
+    addFilter: field => tree.add(criteria, newNodeFromField({ field, fields })),
+    tree,
+    node,
+    mutate,
+    criteria,
+  }
+
+  return (
+    <Table>
+      <thead>
+        <tr>
+          {F.mapIndexed(
+            x => (
+              <Header key={x.field} field={x} {...headerProps} />
+            ),
+            visibleFields
+          )}
+          <HighlightedColumnHeader node={node} />
+        </tr>
+      </thead>
+      <TableBody
+        {...{
+          node,
+          fields,
+          visibleFields,
+          hiddenFields,
+          schema,
+          Row,
+        }}
+      />
+    </Table>
+  )
+}
+
+export default contexturify(ResultTable)

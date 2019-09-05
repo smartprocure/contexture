@@ -1,8 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import decorator from './decorator'
 import { Box } from './../../src/greyVest'
+import decorator from './decorator'
 
-storiesOf('Components (Grey Vest)|Box', module)
+storiesOf('Components|GreyVest library', module)
   .addDecorator(decorator)
   .addWithJSX('Box', () => <Box>Box Contents</Box>)

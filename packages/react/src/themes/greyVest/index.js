@@ -2,35 +2,39 @@ import { defaultProps } from 'recompose'
 import React from 'react'
 
 // components exported from component library
-import Box from '../../greyVest/Box'
-import Button from '../../greyVest/Button'
-import Checkbox from '../../greyVest/Checkbox'
-import DateInput from '../../greyVest/DateInput'
-import Fonts from '../../greyVest/Fonts'
-import Icon from '../../greyVest/Icon'
-import DropdownItem from '../../greyVest/DropdownItem'
-import Modal from '../../greyVest/Modal'
-import PagerItem from '../../greyVest/PagerItem'
-import RadioList from '../../greyVest/RadioList'
-import Select from '../../greyVest/Select'
-import Style from '../../greyVest/Style'
-import Table from '../../greyVest/Table'
-import Tag from '../../greyVest/Tag'
-import TextHighlight from '../../greyVest/TextHighlight'
-import TextInput from '../../greyVest/TextInput'
-
-//components used only for theme
-import FilterAdderModalPicker from './FilterAdderModalPicker'
-import MissingTypeComponent from './MissingTypeComponent'
-import PickerItem from './PickerItem'
-
-export default {
-  'FilterAdder.ModalPicker': FilterAdderModalPicker,
+import {
   Box,
   Button,
+  ButtonGroup,
   Checkbox,
   DateInput,
-  Globals: ({ children }) => (
+  Fonts,
+  Icon,
+  DropdownItem,
+  NestedPicker,
+  Modal,
+  PagerItem,
+  RadioList,
+  Select,
+  Style,
+  Table,
+  TextButton,
+  TextHighlight,
+  TextInput,
+} from '../../greyVest'
+
+//components used only for theme
+import PickerItem from './PickerItem'
+import TagsInput from './TagsInput'
+
+export default {
+  AlternateButton: TextButton,
+  Box,
+  Button,
+  ButtonGroup,
+  Checkbox,
+  DateInput,
+  Root: ({ children }) => (
     <>
       <Fonts />
       <Style />
@@ -40,14 +44,13 @@ export default {
   Icon,
   TextInput,
   DropdownItem,
-  PickerItem,
+  NestedPicker: defaultProps({ PickerItem })(NestedPicker),
   NumberInput: defaultProps({ type: 'number' })(TextInput),
-  MissingTypeComponent,
+  TagsInput,
   Modal,
   PagerItem,
   RadioList,
   Select,
   Table,
-  Tag,
   TextHighlight,
 }

@@ -3,50 +3,45 @@ import React from 'react'
 import { defaultProps } from 'recompose'
 
 // components exported from base component library
-import BarChart from '../../greyVest/BarChart'
-import Modal from '../../greyVest/Modal'
-import ModalPicker from '../../greyVest/ModalPicker'
-import NestedPicker from '../../greyVest/NestedPicker'
-import Popover from '../../greyVest/Popover'
-import PopoverTagsInput from '../../greyVest/PopoverTagsInput'
-import RadioList from '../../greyVest/RadioList'
-import Select from '../../greyVest/Select'
-import TagsInput from '../../greyVest/TagsInput'
-import Tag from '../../greyVest/Tag'
-import TextHighlight from '../../greyVest/TextHighlight'
-import DateInput from '../../greyVest/DateInput'
+import {
+  BarChart,
+  Modal,
+  NestedPicker,
+  Popover,
+  RadioList,
+  Select,
+  TagsInput,
+  Tag,
+  TextHighlight,
+  DateInput,
+} from '../../greyVest'
 
 // components used only for base theme
 import Icon from './Icon'
-import MissingTypeComponent from './MissingTypeComponent'
-import TableHeaderCell from './TableHeaderCell'
+import UnmappedNodeComponent from './UnmappedNodeComponent'
 
 import { defaultTheme } from '../../utils/theme'
 
 let theme = {
+  AlternateButton: 'button',
   BarChart,
   Box: 'div',
   Button: 'button',
+  ButtonGroup: 'div',
   Checkbox: props => <input type="checkbox" {...props} />,
   DateInput: defaultProps({ native: true })(DateInput),
-  MissingTypeComponent,
+  UnmappedNodeComponent,
   Icon,
   Input: 'input',
   DropdownItem: 'li',
   Modal,
-  ModalPicker,
   NumberInput: props => <input type="number" {...props} />,
-  Picker: NestedPicker,
+  NestedPicker,
   PagerItem: ({ children }) => <span>{children}</span>,
-  PickerItem: 'div',
   Popover,
-  PopoverTagsInput,
   RadioList: defaultProps({ native: true })(RadioList),
   Select,
   Table: 'table',
-  TableCell: 'td',
-  TableHeaderCell,
-  TableRow: 'tr',
   Tag,
   TagsInput,
   TextHighlight,

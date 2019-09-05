@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 import F from 'futil-js'
 import { contexturify, withTreeLens } from '../utils/hoc'
 import { bgJoin } from '../styles/generic'
-import { withTheme } from '../utils/theme'
+import PopoverTagsInput from '../purgatory/PopoverTagsInput'
 
 import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
 
@@ -20,11 +20,7 @@ let operatorOptions = F.autoLabelOptions([
   // { value: 'doesNotContain', label: 'Does Not Contain'}
 ])
 
-let Text = _.flow(
-  withTreeLens,
-  contexturify,
-  withTheme
-)(({ tree, node, theme: { PopoverTagsInput, Select }, placeholder }) => {
+let Text = ({ tree, node, placeholder, theme: { Select } }) => {
   let tagStyle = bgJoin(tagToGroupJoin(node.join))
   let TagPopover = () => (
     <div>
@@ -56,5 +52,9 @@ let Text = _.flow(
       />
     </div>
   )
-})
-export default Text
+}
+
+export default _.flow(
+  withTreeLens,
+  contexturify
+)(Text)

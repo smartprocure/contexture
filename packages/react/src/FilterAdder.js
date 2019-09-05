@@ -2,7 +2,8 @@ import _ from 'lodash/fp'
 import React from 'react'
 import { contexturify } from './utils/hoc'
 import { newNodeFromField } from './utils/search'
-import { withNamedTheme } from './utils/theme'
+import { ModalPicker } from './purgatory'
+import { Flex } from './greyVest'
 
 export let fieldsToOptions = _.map(x => ({ value: x.field, ...x }))
 
@@ -13,24 +14,27 @@ let FilterAdder = ({
   node,
   path,
   fields,
-  theme: { ModalPicker },
   uniqueFields,
-  label = 'Add Custom Filter',
+  Picker = ModalPicker,
+  theme: { Icon },
 }) => {
   let options = fieldsToOptions(fields)
   if (uniqueFields) {
     options = _.reject(x => _.includes(x.field, getGroupFields(node)), options)
   }
+  let Label = (
+    <Flex justifyContent="center" alignItems="center">
+      Add Custom Filter
+      <Icon style={{ paddingLeft: 5 }} icon="FilterAdd" />
+    </Flex>
+  )
   return (
-    <ModalPicker
+    <Picker
       options={options}
       onChange={field => tree.add(path, newNodeFromField({ field, fields }))}
-      label={label}
+      label={Label}
     />
   )
 }
 
-export default _.flow(
-  contexturify,
-  withNamedTheme('FilterAdder')
-)(FilterAdder)
+export default contexturify(FilterAdder)

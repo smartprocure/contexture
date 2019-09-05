@@ -95,7 +95,7 @@ export default () => (
         padding: 15px;
       }
 
-      .gv-body, body {
+      body {
         margin: 0;
         background: #f6f6f6;
         font-family: Lato;
@@ -106,7 +106,7 @@ export default () => (
       input.gv-input, textarea.gv-input {
         padding: 10px;
       }
-      .gv-input, .gv-body select, .gv-body input {
+      .gv-input, select, input {
         outline: none;
         font-size: 16px;
         font-family: Lato;
@@ -116,15 +116,16 @@ export default () => (
 
         display: block;
         width: 100%;
+        min-width: 0;
 
         box-sizing: border-box;
         height: 40px;
       }
 
-      .gv-body select, .gv-body input, .gv-body textarea {
+      select, input, textarea {
         border-radius: 4px;
       }
-      .gv-body select {
+      select {
         cursor: pointer;
       }
 
@@ -143,20 +144,20 @@ export default () => (
         font-weight: bold;
       }
 
-      /* Checkbutton */
-      .gv-button.checkbutton {
+      /* CheckButton */
+      .gv-button.check-button {
         padding: 5px 23px 5px 10px;
       }
-      .gv-button.checkbutton .gv-checkbox {
+      .gv-button.check-button .gv-checkbox {
         height: 30px;
         width: 30px;
         font-size: 20px;
         margin-right: 8px;
       }
-      .gv-button.checkbutton .gv-checkbox i {
+      .gv-button.check-button .gv-checkbox i {
         font-size: 20px;
       }
-      .gv-button.checkbutton .gv-checkbox.checked {
+      .gv-button.check-button .gv-checkbox.checked {
         color: #0076de;
         background-color: transparent;
         border-color: transparent;
@@ -212,35 +213,35 @@ export default () => (
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
       }
-      .gv-body .tags-input > * {
+      .tags-input > * {
         box-sizing: border-box;
       }
-      .gv-body .tags-input {
+      .tags-input {
         border: 2px solid #EBEBEB;
         border-radius: 4px;
         background: #fff;
       }
-      .gv-body .tags-input input {
+      .tags-input input {
         height: 30px;
       }
-      .gv-body .tags-input-tag-remove {
+      .tags-input-tag-remove {
         font-size: 12px;
         padding: 8px;
       }
 
       /* Tags Popover */
-      .gv-body .tags-input-popover {
+      .tags-input-popover {
         /* counteract default popover padding */
         margin: -5px;
       }
-      .gv-body .tags-input-popover > div {
+      .tags-input-popover > div {
         border-bottom: solid 1px rgba(216, 216, 216, 0.3);
         padding: 15px;
       }
-      .gv-body .tags-input-popover .popover-item:first-child {
+      .tags-input-popover .popover-item:first-child {
         padding-top: 0;
       }
-      .gv-body .tags-input-popover .popover-item {
+      .tags-input-popover .popover-item {
         padding-top: 10px;
       }
 
@@ -288,7 +289,7 @@ export default () => (
       }
 
       /* Icon Button */
-      .gv-icon-button {
+      .gv-text-button {
         border-radius: 100px;
         padding: 5px;
         cursor: pointer;
@@ -296,19 +297,19 @@ export default () => (
         display: inline-block;
         transition: background-color .1s linear, color .1s linear;
       }
-      .gv-icon-button > * {
+      .gv-text-button > * {
         vertical-align: middle;
       }
-      .gv-icon-button i {
+      .gv-text-button i {
         width: 20px;
         height: 20px;
         font-size: 20px;
       }
-      .gv-icon-button:hover {
+      .gv-text-button:hover {
         background-color: rgba(216, 216, 216, 0.4);
         color: #000;
       }
-      .gv-icon-button.active, .gv-icon-button.primary {
+      .gv-text-button.active, .gv-text-button.primary {
         background-color: #0076de;
         color: #fff;
       }
@@ -362,10 +363,10 @@ export default () => (
         padding: 15px;
         background-color: #fff;
       }
-      .gv-search-toolbar .gv-icon-button {
+      .gv-search-toolbar .gv-text-button {
         margin-right: 5px;
       }
-      .gv-search-toolbar .gv-icon-button:last-child {
+      .gv-search-toolbar .gv-text-button:last-child {
         margin-right: 0;
       }
 
@@ -387,6 +388,10 @@ export default () => (
       }
       .contexture-facet-cardinality {
         margin: 10px 0;
+      }
+      .contexture-facet > label > div {
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .contexture-number-separator {
@@ -461,10 +466,10 @@ export default () => (
       .filter-field-has-value {
         color: #0076de;
       }
-      .filter-field-icon-refresh .gv-icon-button {
+      .filter-field-icon-refresh .gv-text-button {
         color: #0076de;
       }
-      .filter-field-icon-refresh .gv-icon-button:hover {
+      .filter-field-icon-refresh .gv-text-button:hover {
         color: #f6f6f6;
         background-color: #0076de;
       }
@@ -525,10 +530,10 @@ export default () => (
         border-radius: 5px;
       }
 
-      .gv-body .labeled-checkbox {
+      .labeled-checkbox {
         display: flex;
       }
-      .gv-body .labeled-checkbox > span {
+      .labeled-checkbox > span {
         padding-left: 10px;
       }
 
@@ -551,6 +556,7 @@ export default () => (
         min-width: 20px!important;
         text-align: center;
         border: none!important;
+        height: 40px;
       }
       .react-date-picker__inputGroup__input::placeholder {
         opacity: 0.5;
@@ -592,7 +598,7 @@ export default () => (
         padding: 3px 5px;
         margin: 2px 5px;
       }
-      .filter-button-list .gv-checkbutton {
+      .filter-button-list .check-button {
         margin: 5px;
         white-space: nowrap;
       }
