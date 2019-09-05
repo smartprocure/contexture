@@ -3,11 +3,38 @@
 ## Changes
 * Bump mobx-react to latest version
 * Remove usages of mobx-react Provider
-* Refactor `injectTreeNode` into `withNode` and `withLoader`
+* Refactor `injectTreeNode` into `withNode`, `withLoader`, and `contexturify` HOCs
 * Remove QuickStart story
 * Remove `utils/mobx-react-utils`, `utils/dsl`, and `utils/tree`
 * Add `utils/react`, with new `useLens` and `useLensObject` functions
 * Remove `types` and `typeComponents` props from QueryBuilder and FilterList
+* Restructure the component library
+  * Consolidate the following layout components into the GreyVest component library: Awaiter, BarChart, Dynamic, ExpandableTable, Flex, Grid, NestedPicker, Popover, Portal, SpacedList, TagsInput, Tag, DateInput, StripedLoader
+  * Move or remove several GreyVest component exports:
+    * Adder - deprecated by theme support on FilterAdder
+    * Pager - deprecated by theme support on ResultPager
+    * PagedResultTable - added to ExampleTypes
+    * FilterButtonList - deprecated by theme support (use the top-level export instead)
+    * FilterList - deprecated by theme support (use the top-level export instead)
+    * QueryBuilder - deprecated by theme support (use the top-level export instead)
+    * QueryWizard - deprecated by theme support (use the top-level export instead)
+    * UnmappedNodeComponent - now a theme component
+    * CheckButton - moved to purgatory
+    * ToggleFiltersButton - moved to purgatory
+    * TreePauseButton - moved to purgatory
+    * SearchTree - moved to purgatory
+    * ToggleFiltersHeader - moved to top-level export
+    * SearchLayout - now a generic search interface (moved to top-level export)
+    * SearchLayout - now a generic search interface (moved to top-level export)
+    * SearchFilters - now a generic search interface (moved to top-level export)
+    * AddableFilterList - now part of SearchFilters
+    * FiltersBox - now part of SearchFilters
+  * Rename some GreyVest component exports:
+    * ListItem/ListGroupItem -> DropdownItem
+    * GVStyle -> Style
+    * Highlight -> TextHighlight
+    * Input -> TextInput
+    * IconButton -> TextButton
 
 ## Migration Guide
 * Stop using any utils that aren't explicitly exposed.

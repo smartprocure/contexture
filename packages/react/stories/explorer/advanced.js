@@ -6,8 +6,8 @@ import { fromPromise } from 'mobx-utils'
 import { observer } from 'mobx-react'
 
 import { Awaiter, Flex, QueryBuilder, componentForType } from '../../src/'
-import { Input, ExampleTypes } from '../DemoControls'
-let { ResultCount, ResultTable, TypeMap } = ExampleTypes
+import { TextInput } from '../DemoControls'
+import { ResultCount, ResultTable, TypeMap } from '../../src/exampleTypes'
 
 import Contexture, { updateClient } from './contexture'
 
@@ -66,7 +66,7 @@ let Story = observer(() => {
   let { tree, schemas } = state
   return (
     <div>
-      <Input value={state.url} onChange={e => updateEs(e.target.value)} />
+      <TextInput value={state.url} onChange={e => updateEs(e.target.value)} />
       {schemas && (
         <Awaiter promise={schemas}>
           {schemas =>

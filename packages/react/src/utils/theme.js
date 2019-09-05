@@ -9,11 +9,15 @@ import { getDisplayName } from './react'
 export let defaultTheme = {}
 let ThemeContext = React.createContext(defaultTheme)
 
-export let ThemeProvider = ({ theme, children }) => (
-  <ThemeContext.Provider value={{ ...defaultTheme, ...theme }}>
-    {children}
-  </ThemeContext.Provider>
-)
+export let ThemeProvider = ({ theme, children }) => {
+  theme = { ...defaultTheme, ...theme }
+  let Root = theme.Root || React.Fragment
+  return (
+    <ThemeContext.Provider value={theme}>
+      <Root>{children}</Root>
+    </ThemeContext.Provider>
+  )
+}
 
 let hasNested = key => F.findIndexed((v, k) => _.startsWith(`${key}.`, k))
 
@@ -27,7 +31,7 @@ export let mergeNestedTheme = (theme, key) =>
     )
   )(theme)
 
-let useTheme = (name, propTheme) =>
+export let useTheme = (name, propTheme) =>
   mergeOrReturn(
     mergeNestedTheme(React.useContext(ThemeContext), name),
     propTheme

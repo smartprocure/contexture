@@ -1,13 +1,10 @@
 import React from 'react'
 import F from 'futil-js'
-import _ from 'lodash/fp'
 import DDContext from './DragDrop/DDContext'
-import { Modal as DefaultModal, NestedPicker } from '../layout/'
 import Group from './Group'
 import styles from '../styles'
 import { contexturify } from '../utils/hoc'
 import { useLens } from '../utils/react'
-import { withTheme } from '../utils/theme'
 
 let { background } = styles
 
@@ -15,11 +12,8 @@ let QueryBuilder = ({
   tree,
   node,
   fields,
-  Button = 'button',
-  Modal = DefaultModal,
-  Picker = NestedPicker,
   mapNodeToProps,
-  MissingTypeComponent,
+  theme: { Button },
 }) => {
   let adding = useLens(false)
   return (
@@ -33,10 +27,6 @@ let QueryBuilder = ({
             adding,
             fields,
             mapNodeToProps,
-            Button,
-            Modal,
-            Picker,
-            MissingTypeComponent,
           }}
         />
       )}
@@ -47,10 +37,4 @@ let QueryBuilder = ({
   )
 }
 
-export default DDContext(
-  _.flow(
-    contexturify,
-    withTheme
-  )(QueryBuilder),
-  { allowEmptyNode: true }
-)
+export default DDContext(contexturify(QueryBuilder), { allowEmptyNode: true })

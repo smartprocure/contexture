@@ -4,9 +4,8 @@ import PropTypes from 'prop-types'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
 import { Flex, QueryBuilder, FilterAdder, FilterList } from '.'
-import LinkButton from './themes/greyVest/LinkButton'
-import TreePauseButton from './themes/greyVest/TreePauseButton'
-import ToggleFiltersButton from './themes/greyVest/ToggleFiltersButton'
+import { ToggleFiltersButton, TreePauseButton } from './purgatory'
+import { LinkButton } from './greyVest'
 import { withTheme } from './utils/theme'
 
 let LabelledList = ({ list, Component }) =>
@@ -27,11 +26,12 @@ export let AddableFilterList = props => (
   </>
 )
 
-export let FiltersBox = withTheme(({ theme, ...props }) => (
-  <theme.Box>
+export let FiltersBox = withTheme(({ theme: { Box }, ...props }) => (
+  <Box className="filter-list">
     <AddableFilterList {...props} />
-  </theme.Box>
+  </Box>
 ))
+FiltersBox.displayName = 'FiltersBox'
 
 let BasicSearchFilters = ({ setMode, trees, children }) => (
   <div>
@@ -64,11 +64,11 @@ let SearchFilters = ({ mode, setMode, children }) => {
     React.Children.toArray,
     _.map('props')
   )(children)
-  if (mode === 'resultsOnly') return null
-  if (mode === 'basic')
-    return <BasicSearchFilters {...{ trees, setMode, children }} />
-  if (mode === 'builder')
-    return <BuilderSearchFilters {...{ trees, setMode }} />
+  return mode === 'basic' ? (
+    <BasicSearchFilters {...{ trees, setMode, children }} />
+  ) : mode === 'builder' ? (
+    <BuilderSearchFilters {...{ trees, setMode }} />
+  ) : null
 }
 
 SearchFilters.propTypes = {

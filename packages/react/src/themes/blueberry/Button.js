@@ -5,10 +5,11 @@ export default ({
   primary,
   style = {},
   as: As = 'button',
+  className,
   ...props
 }) => (
   <As
-    className="bb-input"
+    className={`gv-input ${className}`}
     style={{
       minWidth: '150px',
       padding: '5px',

@@ -1,10 +1,10 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
+import { Button } from './../../src/greyVest'
 import decorator from './decorator'
-import { Button } from './../../src/themes/greyVest'
 
-storiesOf('Components (Grey Vest)|Button', module)
+storiesOf('Components|GreyVest library/Button', module)
   .addDecorator(decorator)
   .addWithJSX('Basic Usage', () => (
     <Button onClick={() => action('clicked')()}>Click</Button>

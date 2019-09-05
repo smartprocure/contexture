@@ -1,8 +1,7 @@
 import React from 'react'
 import { contexturify } from '../utils/hoc'
-import BarChart from '../layout/BarChart'
 
-let DateHistogram = contexturify(({ node, ...props }) => (
+let DateHistogram = ({ node, theme: { BarChart }, ...props }) => (
   <BarChart
     data={node.context.entries}
     categoryField="key"
@@ -10,7 +9,7 @@ let DateHistogram = contexturify(({ node, ...props }) => (
     gutter={0}
     {...props}
   />
-))
+)
 DateHistogram.displayName = 'DateHistogram'
 
-export default DateHistogram
+export default contexturify(DateHistogram)

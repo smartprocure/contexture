@@ -1,9 +1,8 @@
 import React from 'react'
 import F from 'futil-js'
 import { contexturify } from '../utils/hoc'
-import RadioListDefault from '../layout/RadioList'
 
-let Bool = ({ tree, node, RadioList = RadioListDefault }) => (
+let Bool = ({ tree, node, theme: { RadioList } }) => (
   <div className="contexture-bool">
     <RadioList
       value={node.value ? 'yes' : 'no'}
