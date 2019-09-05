@@ -1,33 +1,24 @@
 import React from 'react'
-import F from 'futil-js'
-import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 import ChipInput from 'material-ui-chip-input'
-import { withTheme } from '../../utils/theme'
-import { useLens } from '../../utils/react'
+import MaterialTag from './Tag'
 
-let TagsInput = _.flow(
-  observer,
-  withTheme
-)(
-  ({
-    tags,
-    addTag,
-    removeTag,
-    tagStyle,
-    placeholder = 'Search...',
-    PopoverContents,
-    theme: { Popover, Tag },
-    style,
-    ...props
-  }) => {
-    let popover = useLens(false)
-    let [selectedTag, setSelectedTag] = React.useState(null)
-    let onTagClick = tag => {
-      setSelectedTag(tag)
-      F.on(popover)()
-    }
-    let chipRenderer = ({ value }) => (
+let TagsInput = ({
+  tags,
+  addTag,
+  removeTag,
+  onTagClick,
+  tagStyle,
+  placeholder = 'Search...',
+  Tag = MaterialTag,
+  style,
+}) => (
+  <ChipInput
+    onAdd={addTag}
+    onDelete={removeTag}
+    placeholder={placeholder}
+    value={tags}
+    chipRenderer={({ value }) => (
       <Tag
         onClick={() => onTagClick(value)}
         removeTag={removeTag}
@@ -35,27 +26,11 @@ let TagsInput = _.flow(
         style={{ marginRight: 4 }}
         tagStyle={tagStyle}
       />
-    )
-    return (
-      <>
-        <ChipInput
-          onAdd={addTag}
-          onDelete={removeTag}
-          placeholder={placeholder}
-          value={tags}
-          chipRenderer={chipRenderer}
-          style={style}
-          fullWidth
-          alwaysShowPlaceholder
-          {...props}
-        />
-        {PopoverContents && (
-          <Popover isOpen={popover}>
-            <PopoverContents tag={selectedTag} />
-          </Popover>
-        )}
-      </>
-    )
-  }
+    )}
+    style={style}
+    fullWidth
+    alwaysShowPlaceholder
+  />
 )
-export default TagsInput
+
+export default observer(TagsInput)
