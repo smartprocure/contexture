@@ -1,3 +1,6 @@
+# 1.57.0
+* WrappedDateInput: Forward props
+
 # 1.56.3
 * Cleanup dist directory before starting babel
 
