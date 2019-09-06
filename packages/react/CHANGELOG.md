@@ -1,3 +1,6 @@
+# 1.58.0
+* DateInput: new component
+
 # 1.57.0
 * WrappedDateInput: Forward props
 

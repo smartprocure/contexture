@@ -69,6 +69,7 @@ export {
   ToggleFiltersButton,
   ToggleFiltersHeader,
   AccordionStep,
+  DateInput,
 }
 
 export let SearchTree = () => {}
