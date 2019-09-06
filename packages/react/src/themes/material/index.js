@@ -1,12 +1,11 @@
 import { KeyboardDatePicker } from '@material-ui/pickers'
 import { defaultProps } from 'recompose'
-import { openify } from '../../utils/react'
+import { openify } from './utils'
 import {
-  Box,
   Button,
   Checkbox,
   Input,
-  ListItem,
+  MenuItem,
   Dialog,
   Table,
 } from '@material-ui/core'
@@ -18,6 +17,7 @@ import Popover from './Popover'
 import Select from './Select'
 import Tag from './Tag'
 import Root from './Root'
+import Box from './Box'
 
 export default {
   Box,
@@ -28,8 +28,8 @@ export default {
     KeyboardDatePicker
   ),
   Icon,
-  DropdownItem: ListItem,
-  PickerItem: ListItem,
+  DropdownItem: MenuItem,
+  PickerItem: MenuItem,
   Modal: openify(Dialog),
   NumberInput: defaultProps({ type: 'number', fullWidth: true })(Input),
   Popover,

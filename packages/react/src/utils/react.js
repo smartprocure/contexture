@@ -28,6 +28,3 @@ export let lensify = _.flow(
   expandObject,
   mapProps
 )
-
-let open = (...lens) => ({ open: F.view(...lens), onClose: F.off(...lens) })
-export let openify = lensify(open, 'isOpen')

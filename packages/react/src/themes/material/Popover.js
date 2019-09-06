@@ -1,8 +1,8 @@
-import { openify } from '../../utils/react'
-import { Popover } from '@material-ui/core'
+import { openify } from './utils'
+import { Menu } from '@material-ui/core'
 import React from 'react'
 
-let LensPopover = openify(Popover)
+let LensPopover = openify(Menu)
 
 let AnchoredPopover = ({ ...props }) => {
   let anchorRef = React.useRef()

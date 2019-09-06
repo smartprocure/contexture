@@ -3,13 +3,11 @@ import { observer } from 'mobx-react'
 import _ from 'lodash/fp'
 import { Select as MaterialSelect, MenuItem } from '@material-ui/core'
 
-let Select = ({
-  options,
-  placeholder = 'Please Select...',
-  value = '',
-  ...props
-}) => (
-  <MaterialSelect fullWidth displayEmpty value={value} {...props}>
+let Select = (
+  { options, placeholder = 'Please Select...', value = '', ...props },
+  ref
+) => (
+  <MaterialSelect fullWidth displayEmpty value={value} {...props} ref={ref}>
     {placeholder && <MenuItem value="">{placeholder}</MenuItem>}
     {_.map(
       x => (
