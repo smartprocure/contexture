@@ -20,7 +20,7 @@ let getWith = _.curry((customizer, path, object) =>
   customizer(_.get(path, object))
 )
 // ({a} -> {b}) -> {a} -> {a, b}
-let expandObject = _.curry(transform => obj => ({ ...obj, ...transform(obj) }))
+let expandObject = _.curry((transform, obj) => ({ ...obj, ...transform(obj) }))
 
 // (a -> {b}, k) -> Component<{k: a}> -> Component<{b}>
 export let lensify = _.flow(
