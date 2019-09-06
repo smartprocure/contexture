@@ -3,24 +3,24 @@
 React components for building contexture interfaces https://smartprocure.github.io/contexture-react
 
 [![CircleCI](https://circleci.com/gh/smartprocure/contexture-react.svg?style=svg)](https://circleci.com/gh/smartprocure/contexture-react)
+<!---
+Comment this out once we enable greenkeeper
 [![Greenkeeper badge](https://badges.greenkeeper.io/smartprocure/contexture-react.svg)](https://greenkeeper.io/)
+--->
 [![npm version](https://badge.fury.io/js/contexture-react.svg)](https://badge.fury.io/js/contexture-react)
 ![dependencies](https://david-dm.org/smartprocure/contexture-react.svg)
 [![Storybook](https://img.shields.io/badge/BUILT_WITH-STORYBOOK-f1618c.svg?style=for-the-badge)](https://smartprocure.github.io/contexture-react)
 
 # Documentation
 
-Documentation lives under `./docs` and our [Storybook](https://smartprocure.github.io/contexture-react)**.
-
-**The most complete example is the [Live Demo using IMDB data and the Grey Vest theme](https://smartprocure.github.io/contexture-react/?path=/story/live-demos-imdb--grey-vest-theme)**
+Documentation lives in our [Storybook](https://smartprocure.github.io/contexture-react). Stories of interest include:
+- [Theming documentation](https://smartprocure.github.io/contexture-react/?path=/story/developer-notes-docs--theme-api)
+- A [Live Demo](https://smartprocure.github.io/contexture-react/?path=/story/live-demos-imdb-search--dynamic-search-layout) using IMDB data
+- [Changelog](https://github.com/smartprocure/contexture-react/blob/master/CHANGELOG.md)
 
 ## Installing
 
 `npm i contexture-react`
-
-## Version History/Changelog
-
-See our [changelog](https://github.com/smartprocure/contexture-react/blob/master/CHANGELOG.md)
 
 ## Notes on this repository
 
