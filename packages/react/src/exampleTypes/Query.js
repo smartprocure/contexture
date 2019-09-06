@@ -1,7 +1,7 @@
 import React from 'react'
 import { contexturify } from '../utils/hoc'
 
-let Query = contexturify(({ tree, node, TextInput = 'input' }) => (
+let Query = ({ tree, node, theme: { TextInput } }) => (
   <TextInput
     value={node.query || ''}
     onChange={e =>
@@ -11,7 +11,6 @@ let Query = contexturify(({ tree, node, TextInput = 'input' }) => (
     }
     placeholder="Search"
   />
-))
-Query.displayName = 'Query'
+)
 
-export default Query
+export default contexturify(Query)

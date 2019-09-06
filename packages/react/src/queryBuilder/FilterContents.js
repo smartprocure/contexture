@@ -2,7 +2,8 @@ import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { Dynamic, Grid } from '../layout/'
+import { Dynamic, Grid } from '../greyVest/'
+import { ModalPicker } from '../purgatory'
 import { fieldsToOptions } from '../FilterAdder'
 import { get } from '../utils/mobx-utils'
 import {
@@ -17,7 +18,7 @@ let FilterContents = ({
   tree,
   fields,
   mapNodeToProps = _.noop,
-  theme: { AdderPicker, MissingTypeComponent },
+  theme: { UnmappedNodeComponent },
 }) => {
   // `get` allows us to create a mobx dependency on field before we know it
   // exists (because the client will only add it if it's a type that uses it
@@ -29,7 +30,7 @@ let FilterContents = ({
   let nodeLabel = _.get([nodeField, 'label'], fields) || nodeField
   return (
     <Grid columns="auto auto minmax(0, 1fr)" style={{ width: '100%' }}>
-      <AdderPicker
+      <ModalPicker
         label={nodeField ? nodeLabel : 'Pick a Field'}
         options={fieldsToOptions(fields)}
         onChange={field =>
@@ -72,9 +73,11 @@ let FilterContents = ({
           }}
         >
           <Dynamic
-            component={MissingTypeComponent}
-            tree={tree}
-            node={node}
+            defaultProps={{
+              component: UnmappedNodeComponent,
+              tree,
+              node,
+            }}
             {...mapNodeToProps(node, fields)}
           />
         </div>

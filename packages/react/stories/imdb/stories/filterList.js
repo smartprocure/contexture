@@ -13,17 +13,17 @@ import {
   componentForType,
   FilterAdder,
 } from '../../../src'
-import { DarkBox, Pager, ExampleTypes } from '../../DemoControls'
-let {
+import theme, { DarkBox } from '../../DemoControls'
+import {
   Query,
   ResultCount,
-  ResultTable,
+  PagedResultTable,
   DateHistogram,
   CheckableTermsStatsTable,
   TypeMap,
-} = ExampleTypes
-
-import { Column } from './../../../src/layout/ExpandableTable'
+} from '../../../src/exampleTypes'
+import { ThemeProvider } from '../../../src/utils/theme'
+import { Column } from './../../../src/greyVest/ExpandableTable'
 
 let formatYear = x => new Date(x).getUTCFullYear()
 
@@ -180,7 +180,7 @@ const Story = inject(() => {
                   >
                     {x => (
                       <div>
-                        <ResultTable
+                        <PagedResultTable
                           tree={termDetailsTree(x)}
                           path={['detailRoot', 'results']}
                           fields={_.pick(
@@ -188,18 +188,6 @@ const Story = inject(() => {
                             schemas.movies.fields
                           )}
                         />
-                        <Flex
-                          style={{
-                            justifyContent: 'space-around',
-                            marginTop: 10,
-                            marginBottom: 10,
-                          }}
-                        >
-                          <Pager
-                            tree={termDetailsTree(x)}
-                            path={['detailRoot', 'results']}
-                          />
-                        </Flex>
                       </div>
                     )}
                   </Column>
@@ -218,7 +206,7 @@ const Story = inject(() => {
                   </Column>
                 </CheckableTermsStatsTable>
                 <div style={{ overflowX: 'auto' }}>
-                  <ResultTable
+                  <PagedResultTable
                     tree={tree}
                     path={['searchRoot', 'results']}
                     fields={{
@@ -230,9 +218,6 @@ const Story = inject(() => {
                     infer
                   />
                 </div>
-                <Flex style={{ justifyContent: 'space-around' }}>
-                  <Pager tree={tree} path={['searchRoot', 'results']} />
-                </Flex>
               </div>
             </Flex>
           </SpacedList>
@@ -242,4 +227,8 @@ const Story = inject(() => {
   ))
 )
 
-export default () => <Story />
+export default () => (
+  <ThemeProvider theme={theme}>
+    <Story />
+  </ThemeProvider>
+)

@@ -1,9 +1,8 @@
 import F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { useLens } from '../src/utils/react'
 import { defaultProps } from 'recompose'
-import ExampleTypeConstructor from '../src/exampleTypes/'
+import { useLens } from '../src/utils/react'
 import { TextHighlight } from '../src'
 
 export let Button = x => (
@@ -18,7 +17,7 @@ export let Button = x => (
   />
 )
 
-export let Input = observer(props => {
+let Input = observer(props => {
   let focusing = useLens(false)
   return (
     <input
@@ -41,6 +40,9 @@ export let Input = observer(props => {
   )
 })
 
+export let TextInput = defaultProps({ type: 'text' })(Input)
+export let NumberInput = defaultProps({ type: 'number' })(Input)
+
 export let Highlight = x => (
   <TextHighlight
     Wrap={x => <b style={{ backgroundColor: 'yellow' }} {...x} />}
@@ -48,7 +50,7 @@ export let Highlight = x => (
   />
 )
 
-export let ListItem = observer(props => {
+export let DropdownItem = observer(props => {
   let hovering = useLens(false)
   return (
     <div
@@ -105,13 +107,11 @@ export let ClampedHTML = x => (
   <div style={textTruncate} dangerouslySetInnerHTML={{ __html: x }} />
 )
 
-let theme = {
+export default {
   Button,
-  Input,
-  Highlight,
-  ListItem,
+  TextInput,
+  NumberInput,
+  TextHighlight: Highlight,
+  DropdownItem,
   PagerItem,
 }
-
-export let ExampleTypes = ExampleTypeConstructor(theme)
-export let Pager = defaultProps({ Item: PagerItem })(ExampleTypes.ResultPager)

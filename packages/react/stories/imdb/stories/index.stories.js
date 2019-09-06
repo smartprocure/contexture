@@ -1,22 +1,19 @@
 import 'babel-polyfill'
 import { storiesOf } from '@storybook/react'
-import GVDecorator from '../../greyVest/decorator'
+import ThemePicker from '../../themePicker'
 
-storiesOf('Live Demos|IMDB', module)
-  .addWithJSX('Advanced Search', require('./advanced').default)
+storiesOf('Live Demos|IMDB Search/Legacy demos', module)
   .addWithJSX('Filter List', require('./filterList').default)
   .addWithJSX('Search Button', require('./searchButton').default)
-  .addWithJSX('Blueberry Theme', require('./blueberry').default)
-  .addWithJSX(
-    'Blueberry Theme with Theme API',
-    require('./blueberryThemed').default
-  )
 
-storiesOf('Live Demos|IMDB', module)
-  .addDecorator(GVDecorator)
-  .addWithJSX('Check List', require('./checklist').default)
-  .addWithJSX('Grey Vest Theme', require('./greyVest').default)
-  .addWithJSX(
-    'Grey Vest Theme with Theme API',
-    require('./greyVestThemed').default
-  )
+storiesOf('Live Demos|IMDB Search', module)
+  .addDecorator(ThemePicker('greyVest'))
+  .addWithJSX('Advanced Search', require('./advanced').default)
+
+storiesOf('Live Demos|IMDB Search', module)
+  .addDecorator(ThemePicker('blueberry'))
+  .addWithJSX('Custom Result Components', require('./resultComponents').default)
+
+storiesOf('Live Demos|IMDB Search', module)
+  .addDecorator(ThemePicker('greyVest'))
+  .addWithJSX('Dynamic Search Layout', require('./searchLayout').default)

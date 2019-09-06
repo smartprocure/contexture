@@ -61,7 +61,7 @@ let ButtonGroup = ({ theme, buttons = [] }) =>
 
 let ThemedButtonGroup = withNamedTheme('ButtonGroup')(ButtonGroup)
 
-storiesOf('Theme API|defaults', module)
+storiesOf('Developer Notes|Theming/Demo stories', module)
   .addWithJSX('Global defaults', () => (
     <>
       <ThemedButton>
@@ -104,8 +104,6 @@ storiesOf('Theme API|defaults', module)
       </ThemeProvider>
     )
   })
-
-storiesOf('Theme API|withTheme', module)
   .addWithJSX('Theme precedence', () => (
     <ThemeProvider
       theme={{
@@ -123,7 +121,7 @@ storiesOf('Theme API|withTheme', module)
       />
     </ThemeProvider>
   ))
-  .addWithJSX('Explicit naming', () => {
+  .addWithJSX('withNamedTheme', () => {
     let UnnamedComponent = withTheme(({ theme }) => (
       <>
         <div>I am an anonymous component</div>
@@ -161,7 +159,7 @@ storiesOf('Theme API|withTheme', module)
     )
   })
 
-storiesOf('Theme API|ThemeConsumer', module)
+storiesOf('Developer Notes|Theming/Demo stories/ThemeConsumer', module)
   .addWithJSX('Without name', () => (
     <ThemeProvider
       theme={{
@@ -197,7 +195,7 @@ let IconButton = ({ theme: { Button, Icon }, children }) => (
 )
 let ThemedIconButton = withNamedTheme('IconButton')(IconButton)
 
-storiesOf('Theme API|Multi-level nesting', module)
+storiesOf('Developer Notes|Theming/Demo stories/Multi-level nesting', module)
   .addWithJSX('With theme context', () => (
     <ThemeProvider
       theme={{

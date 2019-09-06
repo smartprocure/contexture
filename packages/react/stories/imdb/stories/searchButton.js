@@ -11,15 +11,16 @@ import {
   componentForType,
   FilterAdder,
 } from '../../../src'
-import { Button, Pager, ExampleTypes } from '../../DemoControls'
-let {
+import theme, { Button } from '../../DemoControls'
+import {
   Query,
   ResultCount,
-  ResultTable,
+  PagedResultTable,
   DateHistogram,
   TermsStats,
   TypeMap,
-} = ExampleTypes
+} from '../../../src/exampleTypes'
+import { ThemeProvider } from '../../../src/utils/theme'
 
 let formatYear = x => new Date(x).getUTCFullYear()
 
@@ -110,7 +111,7 @@ let whiteBox = {
   margin: '15px',
 }
 
-export default () => (
+let Story = () => (
   <Awaiter promise={schemas}>
     {schemas => (
       <div style={{ background: '#f4f4f4' }}>
@@ -158,19 +159,22 @@ export default () => (
               />
               <TermsStats tree={tree} path={['searchRoot', 'genreScores']} />
               <div style={{ overflowX: 'auto' }}>
-                <ResultTable
+                <PagedResultTable
                   tree={tree}
                   path={['searchRoot', 'results']}
                   fields={schemas.movies.fields}
                 />
               </div>
-              <Flex style={{ justifyContent: 'space-around' }}>
-                <Pager tree={tree} path={['searchRoot', 'results']} />
-              </Flex>
             </div>
           </Flex>
         </SpacedList>
       </div>
     )}
   </Awaiter>
+)
+
+export default () => (
+  <ThemeProvider theme={theme}>
+    <Story />
+  </ThemeProvider>
 )

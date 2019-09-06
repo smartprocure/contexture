@@ -13,8 +13,8 @@ import {
   componentForType,
   FilterAdder,
 } from '../../src/'
-import { Input, ClampedHTML, Pager, ExampleTypes } from '../DemoControls'
-let { ResultCount, ResultTable, TypeMap } = ExampleTypes
+import { TextInput, ClampedHTML } from '../DemoControls'
+import { ResultCount, PagedResultTable, TypeMap } from '../../src/exampleTypes'
 
 import Contexture, { updateClient } from './contexture'
 
@@ -103,7 +103,7 @@ let Story = observer(() => {
   let { tree, schemas } = state
   return (
     <div style={{ background: '#f4f4f4' }}>
-      <Input value={state.url} onChange={e => updateEs(e.target.value)} />
+      <TextInput value={state.url} onChange={e => updateEs(e.target.value)} />
       {schemas && (
         <Awaiter promise={schemas}>
           {schemas =>
@@ -160,6 +160,7 @@ let Story = observer(() => {
                       <FilterList
                         tree={tree}
                         path={['root', 'criteria']}
+                        mapNodeToProps={componentForType(TypeMap)}
                         fields={schemas[tree.tree.schema].fields}
                       />
                       <FilterAdder
@@ -172,15 +173,12 @@ let Story = observer(() => {
                     <div style={{ flex: 4, maxWidth: '80%', ...whiteBox }}>
                       <ResultCount tree={tree} path={['root', 'results']} />
                       <div style={{ overflowX: 'auto' }}>
-                        <ResultTable
+                        <PagedResultTable
                           tree={tree}
                           path={['root', 'results']}
                           fields={schemas[tree.tree.schema].fields}
                         />
                       </div>
-                      <Flex style={{ justifyContent: 'space-around' }}>
-                        <Pager tree={tree} path={['root', 'results']} />
-                      </Flex>
                     </div>
                   </Flex>
                 </div>

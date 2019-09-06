@@ -4,22 +4,15 @@ import F from 'futil-js'
 import { observer } from 'mobx-react'
 import { contexturify } from '../utils/hoc'
 import { bgJoin } from '../styles/generic'
-import DefaultTagsInput from '../layout/TagsInput'
-import DefaultRadioList from '../layout/RadioList'
-import DefaultSelect from '../layout/Select'
 import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
-let CheckboxDefault = props => <input type="checkbox" {...props} />
+import PopoverTagsInput from '../purgatory/PopoverTagsInput'
 
 let tagValueField = 'word'
 let TagsQuery = ({
   tree,
   node,
-  TagsInput = DefaultTagsInput,
-  Checkbox = CheckboxDefault,
-  RadioList = DefaultRadioList,
-  Select = DefaultSelect,
-  Button = 'button',
   placeholder,
+  theme: { Checkbox, RadioList, Select, Button },
   ...props
 }) => {
   let getTag = tag => _.find({ [tagValueField]: tag }, node.tags)
@@ -106,7 +99,7 @@ let TagsQuery = ({
     }
   }
   return (
-    <TagsInput
+    <PopoverTagsInput
       splitCommas
       tags={_.map(tagValueField, node.tags)}
       addTag={tag => {
