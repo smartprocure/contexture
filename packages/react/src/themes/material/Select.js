@@ -1,5 +1,5 @@
 import React from 'react'
-import { Observer } from 'mobx-react'
+import { observer } from 'mobx-react'
 import _ from 'lodash/fp'
 import { Select as MaterialSelect, MenuItem } from '@material-ui/core'
 
@@ -9,21 +9,20 @@ let Select = ({
   value = '',
   ...props
 }) => (
-  <Observer>
-    {() => (
-      <MaterialSelect fullWidth displayEmpty value={value} {...props}>
-        {placeholder && <MenuItem value="">{placeholder}</MenuItem>}
-        {_.map(
-          x => (
-            <MenuItem key={x.value} value={x.value}>
-              {x.label}
-            </MenuItem>
-          ),
-          options
-        )}
-      </MaterialSelect>
+  <MaterialSelect fullWidth displayEmpty value={value} {...props}>
+    {placeholder && <MenuItem value="">{placeholder}</MenuItem>}
+    {_.map(
+      x => (
+        <MenuItem key={x.value} value={x.value}>
+          {x.label}
+        </MenuItem>
+      ),
+      options
     )}
-  </Observer>
+  </MaterialSelect>
 )
 
-export default Select
+export default _.flow(
+  React.forwardRef,
+  observer
+)(Select)
