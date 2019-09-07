@@ -18,7 +18,7 @@ let FilterContents = ({
   tree,
   fields,
   mapNodeToProps = _.noop,
-  theme: { UnmappedNodeComponent },
+  theme: { Select, UnmappedNodeComponent },
 }) => {
   // `get` allows us to create a mobx dependency on field before we know it
   // exists (because the client will only add it if it's a type that uses it
@@ -39,28 +39,14 @@ let FilterContents = ({
       />
       {nodeField && (
         <div style={{ margin: '0 5px' }}>
-          <select
+          <Select
             onChange={({ target: { value: type } }) => {
               tree.replace(node.path, newNodeFromType(type, fields, node))
             }}
+            placeholder="Select Type"
             value={F.when(_.isNil, undefined)(node.type)} // fix null value issue...
-          >
-            {_.map(
-              x => (
-                <option key={x.value} value={x.value} disabled={x.disabled}>
-                  {x.label}
-                </option>
-              ),
-              [
-                {
-                  value: null,
-                  label: 'Select Type',
-                  disabled: node.type,
-                },
-                ...getTypeLabelOptions(tree, typeOptions),
-              ]
-            )}
-          </select>
+            options={getTypeLabelOptions(tree, typeOptions)}
+          />
         </div>
       )}
       {node.type && (

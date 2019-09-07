@@ -1,19 +1,20 @@
 import React from 'react'
-import { Observer } from 'mobx-react'
+import { observer } from 'mobx-react'
+import _ from 'lodash/fp'
 
 let TextInput = ({ className = '', style, type = 'text', ...x }, ref) => (
-  <Observer>
-    {() => (
-      <input
-        className={`${className} gv-input`}
-        style={{
-          ...style,
-        }}
-        type={type}
-        ref={ref}
-        {...x}
-      />
-    )}
-  </Observer>
+  <input
+    className={`${className} gv-input`}
+    style={{
+      ...style,
+    }}
+    type={type}
+    ref={ref}
+    {...x}
+  />
 )
-export default React.forwardRef(TextInput)
+
+export default _.flow(
+  React.forwardRef,
+  observer
+)(TextInput)

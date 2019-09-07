@@ -1,11 +1,12 @@
 import React from 'react'
-import { Observer } from 'mobx-react'
+import { observer } from 'mobx-react'
+import _ from 'lodash/fp'
 
-let Textarea = React.forwardRef((props, ref) => (
-  <Observer>
-    {() => <textarea className="gv-input" {...props} ref={ref} />}
-  </Observer>
-))
-Textarea.displayName = 'Textarea'
+let Textarea = (props, ref) => (
+  <textarea className="gv-input" {...props} ref={ref} />
+)
 
-export default Textarea
+export default _.flow(
+  React.forwardRef,
+  observer
+)(Textarea)
