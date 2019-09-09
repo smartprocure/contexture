@@ -5,8 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "npm run storybook",
-    "pre-build": "rm -rf ./dist",
-    "build": "babel ./src --out-dir ./dist --source-maps",
+    "build": "babel ./src --out-dir ./dist --source-maps --delete-dir-on-start",
     "prepublish": "npm run build",
     "storybook": "start-storybook -p 3000",
     "build-storybook": "build-storybook",

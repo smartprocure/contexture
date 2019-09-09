@@ -156,6 +156,7 @@ let Header = _.flow(
       disableFilter,
       disableSort,
       field,
+      sortField = field,
       label,
       hideMenu,
       typeDefault,
@@ -203,7 +204,7 @@ let Header = _.flow(
             <DropdownItem
               onClick={() => {
                 F.off(popover)()
-                mutate({ sortField: field, sortDir: 'asc' })
+                mutate({ sortField, sortDir: 'asc' })
               }}
             >
               <Icon icon="SortAscending" />
@@ -214,7 +215,7 @@ let Header = _.flow(
             <DropdownItem
               onClick={() => {
                 F.off(popover)()
-                mutate({ sortField: field, sortDir: 'desc' })
+                mutate({ sortField, sortDir: 'desc' })
               }}
             >
               <Icon icon="SortDescending" />
