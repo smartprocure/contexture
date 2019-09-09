@@ -1,5 +1,4 @@
 import { defaultProps } from 'recompose'
-import React from 'react'
 
 // components exported from component library
 import {
@@ -8,7 +7,6 @@ import {
   ButtonGroup,
   Checkbox,
   DateInput,
-  Fonts,
   Icon,
   DropdownItem,
   NestedPicker,
@@ -16,7 +14,6 @@ import {
   PagerItem,
   RadioList,
   Select,
-  Style,
   Table,
   TextButton,
   TextHighlight,
@@ -26,6 +23,7 @@ import {
 //components used only for theme
 import PickerItem from './PickerItem'
 import TagsInput from './TagsInput'
+import Root from './Root'
 
 export default {
   AlternateButton: TextButton,
@@ -34,13 +32,7 @@ export default {
   ButtonGroup,
   Checkbox,
   DateInput,
-  Root: ({ children }) => (
-    <>
-      <Fonts />
-      <Style />
-      {children}
-    </>
-  ),
+  Root,
   Icon,
   TextInput,
   DropdownItem,
