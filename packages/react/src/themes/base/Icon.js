@@ -28,8 +28,18 @@ export let iconMap = {
       style={{ display: 'inline-flex', flexDirection: 'column', ...style }}
       {...props}
     >
-      <span style={{ lineHeight: '1em', marginBottom: '-0.25em' }}>⤺</span>
-      <span style={{ lineHeight: '1em', marginTop: '-0.25em' }}>⤻</span>
+      <span style={{ lineHeight: '0.8em' }}>⤺</span>
+      <span style={{ lineHeight: '1.2em', marginTop: '-0.5em' }}>⤻</span>
+    </span>
+  ),
+  New: () => (
+    <span
+      style={{
+        fontSize: '0.6em',
+        padding: '0.5em 0.2em',
+      }}
+    >
+      NEW
     </span>
   ),
 }

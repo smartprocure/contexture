@@ -281,7 +281,7 @@ let GreyVestStory = theme => (
                   }}
                   title="New Search"
                 >
-                  <span style={{ fontVariant: 'small-caps' }}>new</span>
+                  <theme.Icon icon="New" />
                 </theme.AlternateButton>
               </div>
             </theme.ButtonGroup>
