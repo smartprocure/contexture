@@ -1,9 +1,10 @@
 import React from 'react'
-import greyVest from '../../src/themes/greyVest'
-import { ThemeProvider } from '../../src/utils/theme'
+import { Fonts, Style } from '../../src/greyVest'
 
 export default Story => (
-  <ThemeProvider theme={greyVest}>
+  <>
+    <Fonts />
+    <Style />
     <Story />
-  </ThemeProvider>
+  </>
 )
