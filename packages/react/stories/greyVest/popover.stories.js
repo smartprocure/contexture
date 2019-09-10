@@ -7,12 +7,12 @@ import { useTheme } from '../../src/utils/theme'
 import decorator from './decorator'
 
 let PopoverDemo = observer(() => {
-  let isOpen = useLens(false)
+  let open = useLens(false)
   let { Popover, Button } = useTheme()
   return (
     <div>
-      <Popover isOpen={isOpen}>Some Popover Content</Popover>
-      <Button onClick={F.on(isOpen)}>Open Popover</Button>
+      <Popover open={open}>Some Popover Content</Popover>
+      <Button onClick={F.on(open)}>Open Popover</Button>
     </div>
   )
 })
