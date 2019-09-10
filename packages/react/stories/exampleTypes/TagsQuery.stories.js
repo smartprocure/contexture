@@ -12,7 +12,7 @@ let treeWithTags = TestTree(testTree => {
   return testTree
 })
 
-storiesOf('Components|Search components/ExampleTypes/Tags Query', module)
+storiesOf('Components|ExampleTypes/Tags Query', module)
   .addDecorator(ThemePicker('greyVest'))
   .addWithJSX('Default', () => (
     <TagsQuery tree={treeWithTags} path={['tagsQuery']} />
