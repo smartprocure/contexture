@@ -1,7 +1,8 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import Portal from './Portal'
-import { bindLens } from './utils'
+import { openBinding } from './utils'
+import { expandProp } from '../utils/react'
 
 let Modal = ({ isOpen, onClose, children, style = {}, className = '' }) => (
   <Portal>
@@ -39,4 +40,4 @@ let Modal = ({ isOpen, onClose, children, style = {}, className = '' }) => (
   </Portal>
 )
 
-export default bindLens(observer(Modal))
+export default expandProp('open', openBinding)(observer(Modal))

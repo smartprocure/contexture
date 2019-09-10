@@ -1,13 +1,13 @@
 import React from 'react'
 import OutsideClickHandler from 'react-outside-click-handler'
 import { observer } from 'mobx-react'
-import * as F from 'futil-js'
-import { bindLens } from './utils'
+import { openBinding } from './utils'
+import { expandProp } from '../utils/react'
 
 // Simple popover
-let Popover = ({ open, children, style }) =>
-  F.view(open) && (
-    <OutsideClickHandler onOutsideClick={F.off(open)}>
+let Popover = ({ isOpen, onClose, children, style }) =>
+  isOpen && (
+    <OutsideClickHandler onOutsideClick={onClose}>
       <div
         style={{
           position: 'relative',
@@ -17,7 +17,7 @@ let Popover = ({ open, children, style }) =>
           className="popover"
           style={{
             position: 'absolute',
-            zIndex: 100,
+            Index: 100,
             fontWeight: 'normal',
             textAlign: 'left',
             background: 'white',
@@ -31,4 +31,4 @@ let Popover = ({ open, children, style }) =>
     </OutsideClickHandler>
   )
 
-export default bindLens(observer(Popover))
+export default expandProp('open', openBinding)(observer(Popover))
