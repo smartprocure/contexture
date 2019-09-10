@@ -6,7 +6,7 @@ import { loadHereOptions, geoCodeLocation } from '../utils/geo'
 import { ThemeProvider } from '../utils/theme'
 import theme from '../../stories/DemoControls'
 
-import TestTree from '../../stories/testTree'
+import TestTree from './stories/testTree'
 
 let formatYear = x => new Date(x).getUTCFullYear()
 import { Flex, SpacedList } from '../../src/greyVest'

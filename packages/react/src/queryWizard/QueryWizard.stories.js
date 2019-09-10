@@ -1,15 +1,14 @@
 import _ from 'lodash/fp'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { QueryWizard, FilterButtonList } from '../../../src/'
-import StepsAccordion, {
-  AccordionStep,
-} from '../../../src/purgatory/StepsAccordion'
+import QueryWizard from '.'
+import { FilterButtonList } from '..'
+import StepsAccordion, { AccordionStep } from '../purgatory/StepsAccordion'
 import { mergeOverAll } from 'futil-js'
-import { componentForType, schemaFieldProps } from '../../../src/utils/schema'
-import { TypeMap } from '../../../src/exampleTypes'
-import { tree, fields, types, nodeOverrides } from './config'
-import ThemePicker from '../../themePicker'
+import { componentForType, schemaFieldProps } from '../utils/schema'
+import { TypeMap } from '../exampleTypes'
+import { tree, fields, types, nodeOverrides } from './stories/config'
+import ThemePicker from '../../stories/themePicker'
 
 let mapNodeToDescription = types => (node, fields) => ({
   description: _.join(' ', [
