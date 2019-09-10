@@ -26,7 +26,7 @@ let Text = ({
   placeholder,
   theme: { Select, TagsInput, Popover },
 }) => {
-  let isOpen = useLens(false)
+  let open = useLens(false)
   let [selectedTag, setSelectedTag] = React.useState(null)
   return (
     <div className="contexture-text">
@@ -39,7 +39,7 @@ let Text = ({
         splitCommas
         tags={node.values}
         onTagClick={tag => {
-          F.on(isOpen)()
+          F.on(open)()
           setSelectedTag(tag)
         }}
         addTag={tag => {
@@ -54,7 +54,7 @@ let Text = ({
         submit={tree.triggerUpdate}
         placeholder={placeholder}
       />
-      <Popover isOpen={isOpen}>
+      <Popover open={open}>
         <TagsJoinPicker tag={selectedTag} node={node} tree={tree} />
       </Popover>
     </div>

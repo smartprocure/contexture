@@ -106,7 +106,7 @@ let TagsQuery = ({
   theme: { Popover, TagsInput },
   ...props
 }) => {
-  let isOpen = useLens(false)
+  let open = useLens(false)
   let [selectedTag, setSelectedTag] = React.useState(null)
   return (
     <>
@@ -114,7 +114,7 @@ let TagsQuery = ({
         splitCommas
         tags={_.map(tagValueField, node.tags)}
         onTagClick={tag => {
-          F.on(isOpen)()
+          F.on(open)()
           setSelectedTag(tag)
         }}
         addTag={tag => {
@@ -132,7 +132,7 @@ let TagsQuery = ({
         placeholder={placeholder}
         {...props}
       />
-      <Popover isOpen={isOpen}>
+      <Popover open={open}>
         <TagQueryPopover tag={selectedTag} node={node} tree={tree} />
       </Popover>
     </>

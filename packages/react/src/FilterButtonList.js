@@ -33,7 +33,7 @@ let FilterButtonItem = _.flow(
         <CheckButton checked={node.hasValue} onClick={F.on(modal)}>
           {title}
         </CheckButton>
-        <Modal isOpen={modal}>
+        <Modal open={modal}>
           <div className="filter-button-modal">
             <h1>{title}</h1>
             {description && (

@@ -36,7 +36,7 @@ export let FilterActions = _.flow(
 
     return (
       <>
-        <Modal isOpen={modal}>
+        <Modal open={modal}>
           <NestedPicker
             options={fieldsToOptions(fields)}
             onChange={field => {
@@ -45,7 +45,7 @@ export let FilterActions = _.flow(
             }}
           />
         </Modal>
-        <Popover isOpen={popover} className="filter-actions-popover">
+        <Popover open={popover} className="filter-actions-popover">
           {!_.isEmpty(typeOptions) && (
             <>
               <DropdownItem className="filter-actions-selected-type">

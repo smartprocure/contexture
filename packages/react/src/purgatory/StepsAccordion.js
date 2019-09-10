@@ -49,13 +49,13 @@ export let AccordionStep = _.flow(
     children,
     theme: { Icon },
   }) => {
-    let isOpen = F.view(currentStep) === step
+    let open = F.view(currentStep) === step
     return (
       <div className={`accordion-step ${className || ''}`} style={style}>
         <Flex
           alignItems="center"
           justifyContent="space-between"
-          onClick={F.sets(isOpen ? -1 : step, currentStep)}
+          onClick={F.sets(open ? -1 : step, currentStep)}
           style={{ cursor: 'pointer' }}
         >
           <Flex alignItems="center">
@@ -65,10 +65,10 @@ export let AccordionStep = _.flow(
             {!isRequired && <em style={{ marginLeft: 6 }}>(Optional)</em>}
           </Flex>
           <div className="filter-field-label-icon">
-            <Icon icon={isOpen ? 'FilterListCollapse' : 'FilterListExpand'} />
+            <Icon icon={open ? 'FilterListCollapse' : 'FilterListExpand'} />
           </div>
         </Flex>
-        {isOpen && (
+        {open && (
           <>
             <div className="step-contents">{children}</div>
             <Buttons {...{ step, totalSteps, currentStep, onSubmit }} />

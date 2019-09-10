@@ -3,9 +3,9 @@ import * as F from 'futil-js'
 import { observer } from 'mobx-react'
 import Portal from './Portal'
 
-let Modal = ({ isOpen, children, style = {}, className = '' }) => (
+let Modal = ({ open, children, style = {}, className = '' }) => (
   <Portal>
-    {F.view(isOpen) && (
+    {F.view(open) && (
       <div
         style={{
           position: 'fixed',
@@ -21,7 +21,7 @@ let Modal = ({ isOpen, children, style = {}, className = '' }) => (
           justifyContent: 'space-around',
           alignItems: 'flex-start',
         }}
-        onClick={F.off(isOpen)}
+        onClick={F.off(open)}
         className={`default-modal-bg ${className}`}
       >
         <div

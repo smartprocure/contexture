@@ -5,9 +5,9 @@ import * as F from 'futil-js'
 
 // Simple popover
 let Popover = observer(
-  ({ isOpen, children, style }) =>
-    F.view(isOpen) && (
-      <OutsideClickHandler onOutsideClick={F.off(isOpen)}>
+  ({ open, children, style }) =>
+    F.view(open) && (
+      <OutsideClickHandler onOutsideClick={F.off(open)}>
         <div
           style={{
             position: 'relative',
