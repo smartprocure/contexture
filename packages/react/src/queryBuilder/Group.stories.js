@@ -1,8 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import Group from '../../../../src/queryBuilder/Group'
+import { root, DnDDecorator } from './stories/util'
+import Group from './Group'
 
-export default (parent, root, DnDDecorator) =>
   storiesOf('Components|Search Components/QueryBuilder/Internals/Group', module)
     .addDecorator(DnDDecorator)
     .addWithJSX('One Filter', () => (

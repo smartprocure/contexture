@@ -1,8 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import OperatorMenu from '../../../../src/queryBuilder/OperatorMenu'
+import { parent, root } from './stories/util'
+import OperatorMenu from './OperatorMenu'
 
-export default (parent, root) =>
   storiesOf(
     'Components|Search Components/QueryBuilder/Internals',
     module

@@ -1,8 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import Rule from '../../../../src/queryBuilder/Rule'
+import { root, DnDDecorator } from './stories/util'
+import Rule from './Rule'
 
-export default (parent, root, DnDDecorator) =>
   storiesOf('Components|Search Components/QueryBuilder/Internals', module)
     .addDecorator(DnDDecorator)
     .addWithJSX('Rule', () => (

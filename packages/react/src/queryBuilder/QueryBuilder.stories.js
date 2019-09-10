@@ -1,11 +1,11 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { exampleTypes, mockService } from 'contexture-client'
-import ContextureMobx from '../../../src/utils/contexture-mobx'
-import QueryBuilder from '../../../src/queryBuilder'
-import { TypeMap } from '../../../src/exampleTypes'
-import { componentForType } from '../../../src'
-import ThemePicker from '../../themePicker'
+import ContextureMobx from '../utils/contexture-mobx'
+import { TypeMap } from '../exampleTypes'
+import { componentForType } from '../utils/schema'
+import ThemePicker from '../../stories/themePicker'
+import QueryBuilder from '.'
 
 let Client = ContextureMobx({
   debug: true,

@@ -1,8 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import Indentable from '../../../../src/queryBuilder/preview/Indentable'
+import Indentable from './Indentable'
 
-export default () =>
   storiesOf(
     'Components|Search Components/QueryBuilder/Internals/Indentable',
     module

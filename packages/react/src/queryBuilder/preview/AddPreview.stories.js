@@ -1,9 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import AddPreview from '../../../../src/queryBuilder/preview/AddPreview'
+import AddPreview from './AddPreview'
 
-export default () =>
   storiesOf(
     'Components|Search Components/QueryBuilder/Internals/AddPreview',
     module

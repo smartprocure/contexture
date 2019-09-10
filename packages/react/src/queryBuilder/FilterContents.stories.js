@@ -1,8 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import FilterContents from '../../../../src/queryBuilder/FilterContents'
+import { root } from './stories/util'
+import FilterContents from './FilterContents'
 
-export default (parent, root) =>
   storiesOf(
     'Components|Search Components/QueryBuilder/Internals',
     module
