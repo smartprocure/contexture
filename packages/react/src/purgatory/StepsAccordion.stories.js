@@ -1,9 +1,9 @@
 import F from 'futil-js'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { StepsAccordion, AccordionStep } from '../../src/purgatory'
-import ThemePicker from '../themePicker'
-import { useTheme } from '../../src/utils/theme'
+import ThemePicker from '../../stories/themePicker'
+import { useTheme } from '../utils/theme'
+import { StepsAccordion, AccordionStep } from '.'
 
 let makeStepTitle = title => n => (
   <h1>
