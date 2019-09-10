@@ -1,9 +1,9 @@
 import _ from 'lodash/fp'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import TestTree from '../testTree'
-import { ResultTable } from '../../src/exampleTypes'
-import ThemePicker from '../themePicker'
+import TestTree from '../../stories/testTree'
+import ThemePicker from '../../stories/themePicker'
+import { ResultTable } from '.'
 
 storiesOf('Components|ExampleTypes/ResultTable', module)
   .addDecorator(ThemePicker('greyVest'))

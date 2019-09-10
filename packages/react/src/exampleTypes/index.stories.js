@@ -1,12 +1,12 @@
 import * as F from 'futil-js'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { loadHereOptions, geoCodeLocation } from '../../src/utils/geo'
 import AsyncSelect from 'react-select/lib/Async'
-import { ThemeProvider } from '../../src/utils/theme'
-import theme from '../DemoControls'
+import { loadHereOptions, geoCodeLocation } from '../utils/geo'
+import { ThemeProvider } from '../utils/theme'
+import theme from '../../stories/DemoControls'
 
-import TestTree from '../testTree'
+import TestTree from '../../stories/testTree'
 
 let formatYear = x => new Date(x).getUTCFullYear()
 import { Flex, SpacedList } from '../../src/greyVest'
