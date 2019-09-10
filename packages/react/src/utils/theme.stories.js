@@ -6,8 +6,8 @@ import {
   ThemeConsumer,
   withTheme,
   withNamedTheme,
-} from '../src/utils/theme'
-import { wrapDisplayName } from '../src/utils/react'
+} from './theme'
+import { wrapDisplayName } from './react'
 
 let withStyle = (style, Component) =>
   wrapDisplayName('withStyle', Component)(props => (
