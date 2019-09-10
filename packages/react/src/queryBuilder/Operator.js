@@ -7,10 +7,10 @@ import { Popover } from '../greyVest'
 import OperatorMenu from './OperatorMenu'
 import { OperatorMoveTarget } from './DragDrop/MoveTargets'
 
-let BlankOperator = ({ isOpen, node, child }) => (
+let BlankOperator = ({ open, node, child }) => (
   <div>
     <div
-      onClick={F.flip(isOpen)}
+      onClick={F.flip(open)}
       style={{
         ...styles.blankOperator,
         borderBottomColor: styles.joinColor(node.join),
@@ -43,10 +43,10 @@ let OperatorLine = observer(({ node, child, style }) => (
 ))
 OperatorLine.displayName = 'OperatorLine'
 
-let JoinOperator = ({ isOpen, hover, node, child }) => (
+let JoinOperator = ({ open, hover, node, child }) => (
   <div>
     <div
-      onClick={F.flip(isOpen)}
+      onClick={F.flip(open)}
       style={{
         ...styles.operator,
         ...styles.bgJoin(F.view(hover.join) || node),
@@ -69,17 +69,17 @@ let JoinOperator = ({ isOpen, hover, node, child }) => (
 JoinOperator.displayName = 'JoinOperator'
 
 let Operator = observer(({ hover, node, child, parent, tree, index }) => {
-  let isOpen = useLens(false)
+  let open = useLens(false)
   return (
     <div>
       {!(index !== 0 || node.join === 'not') ? (
-        <BlankOperator {...{ isOpen, node, child }} />
+        <BlankOperator {...{ open, node, child }} />
       ) : (
-        <JoinOperator {...{ isOpen, node, child, hover }} />
+        <JoinOperator {...{ open, node, child, hover }} />
       )}
       <OperatorMoveTarget {...{ node, tree, index }} />
       <Popover
-        isOpen={isOpen}
+        open={open}
         style={{
           ...styles.operatorPopover,
           ...styles.bdJoin(node),

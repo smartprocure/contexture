@@ -11,19 +11,19 @@ let ModalPicker = ({
   label,
   theme: { Button, NestedPicker, Modal },
 }) => {
-  let isOpen = useLens(false)
+  let open = useLens(false)
   return (
     <div>
-      <Modal isOpen={isOpen}>
+      <Modal open={open}>
         <NestedPicker
           options={options}
           onChange={x => {
             onChange(x)
-            F.off(isOpen)()
+            F.off(open)()
           }}
         />
       </Modal>
-      <Button onClick={F.on(isOpen)}>{label}</Button>
+      <Button onClick={F.on(open)}>{label}</Button>
     </div>
   )
 }

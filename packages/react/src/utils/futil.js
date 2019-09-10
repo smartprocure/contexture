@@ -22,3 +22,19 @@ export let mergeOrReturn = _.curry(
     canMerge(b) ||
     {}
 )
+
+// (x -> y) -> k -> {k: x} -> y
+export let getWith = _.curry((customizer, path, object) =>
+  customizer(_.get(path, object))
+)
+
+// ({a} -> {b}) -> {a} -> {a, b}
+export let expandObject = _.curry((transform, obj) => ({
+  ...obj,
+  ...transform(obj),
+}))
+
+// k -> (a -> {b}) -> {k: a} -> {a, b}
+export let expandObjectBy = _.curry((key, fn, obj) =>
+  expandObject(getWith(fn, key))(obj)
+)

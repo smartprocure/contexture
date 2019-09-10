@@ -1,11 +1,12 @@
 import React from 'react'
-import * as F from 'futil-js'
 import { observer } from 'mobx-react'
 import Portal from './Portal'
+import { openBinding } from './utils'
+import { expandProp } from '../utils/react'
 
-let Modal = ({ isOpen, children, style = {}, className = '' }) => (
+let Modal = ({ isOpen, onClose, children, style = {}, className = '' }) => (
   <Portal>
-    {F.view(isOpen) && (
+    {isOpen && (
       <div
         style={{
           position: 'fixed',
@@ -21,7 +22,7 @@ let Modal = ({ isOpen, children, style = {}, className = '' }) => (
           justifyContent: 'space-around',
           alignItems: 'flex-start',
         }}
-        onClick={F.off(isOpen)}
+        onClick={onClose}
         className={`default-modal-bg ${className}`}
       >
         <div
@@ -39,4 +40,4 @@ let Modal = ({ isOpen, children, style = {}, className = '' }) => (
   </Portal>
 )
 
-export default observer(Modal)
+export default expandProp('open', openBinding)(observer(Modal))

@@ -7,11 +7,11 @@ import { Modal, Button } from '../../src/greyVest'
 import decorator from './decorator'
 
 let ModalDemo = observer(() => {
-  let isOpen = useLens(false)
+  let open = useLens(false)
   return (
     <div>
-      <Modal isOpen={isOpen}>Some Modal Content</Modal>
-      <Button onClick={F.on(isOpen)}>Open Modal</Button>
+      <Modal open={open}>Some Modal Content</Modal>
+      <Button onClick={F.on(open)}>Open Modal</Button>
     </div>
   )
 })

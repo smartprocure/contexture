@@ -1,6 +1,7 @@
 import { KeyboardDatePicker } from '@material-ui/pickers'
 import { defaultProps } from 'recompose'
-import { openify } from './utils'
+import { openBinding } from './utils'
+import { expandProp } from '../../utils/react'
 import {
   Button,
   Checkbox,
@@ -30,7 +31,7 @@ export default {
   Icon,
   DropdownItem: MenuItem,
   PickerItem: MenuItem,
-  Modal: openify(Dialog),
+  Modal: expandProp('open', openBinding)(Dialog),
   NumberInput: defaultProps({ type: 'number', fullWidth: true })(Input),
   Popover,
   RadioList,

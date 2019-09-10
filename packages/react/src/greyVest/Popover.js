@@ -1,36 +1,34 @@
 import React from 'react'
 import OutsideClickHandler from 'react-outside-click-handler'
 import { observer } from 'mobx-react'
-import * as F from 'futil-js'
+import { openBinding } from './utils'
+import { expandProp } from '../utils/react'
 
 // Simple popover
-let Popover = observer(
-  ({ isOpen, children, style }) =>
-    F.view(isOpen) && (
-      <OutsideClickHandler onOutsideClick={F.off(isOpen)}>
+let Popover = ({ isOpen, onClose, children, style }) =>
+  isOpen && (
+    <OutsideClickHandler onOutsideClick={onClose}>
+      <div
+        style={{
+          position: 'relative',
+        }}
+      >
         <div
+          className="popover"
           style={{
-            position: 'relative',
+            position: 'absolute',
+            Index: 100,
+            fontWeight: 'normal',
+            textAlign: 'left',
+            background: 'white',
+            border: '1px solid #ebebeb',
+            ...style,
           }}
         >
-          <div
-            className="popover"
-            style={{
-              position: 'absolute',
-              zIndex: 100,
-              fontWeight: 'normal',
-              textAlign: 'left',
-              background: 'white',
-              border: '1px solid #ebebeb',
-              ...style,
-            }}
-          >
-            {children}
-          </div>
+          {children}
         </div>
-      </OutsideClickHandler>
-    )
-)
-Popover.displayName = 'Popover'
+      </div>
+    </OutsideClickHandler>
+  )
 
-export default Popover
+export default expandProp('open', openBinding)(observer(Popover))

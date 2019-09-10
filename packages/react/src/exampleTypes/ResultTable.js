@@ -84,7 +84,7 @@ let HighlightedColumn = _.flow(
       <Cell key="additionalFields" />
     ) : (
       <Cell key="additionalFields">
-        <Modal isOpen={viewModal}>
+        <Modal open={viewModal}>
           <h3>Other Matching Fields</h3>
           <Table>
             <tbody>
@@ -189,7 +189,7 @@ let Header = _.flow(
           {hideMenu ? null : <Icon icon="TableColumnMenu" />}
         </span>
         <Popover
-          isOpen={{
+          open={{
             get() {
               return F.view(popover)
             },
@@ -276,7 +276,7 @@ let Header = _.flow(
               )}
             </div>
           )}
-          <Modal isOpen={adding}>
+          <Modal open={adding}>
             <NestedPicker
               options={addOptions}
               onChange={field => {
