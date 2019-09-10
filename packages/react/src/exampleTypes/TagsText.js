@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 import F from 'futil-js'
 import { contexturify, withTreeLens } from '../utils/hoc'
 import { bgJoin } from '../styles/generic'
-import PopoverTagsInput from '../purgatory/PopoverTagsInput'
+import { useLens } from '../utils/react'
 
 import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
 
@@ -20,13 +20,14 @@ let operatorOptions = F.autoLabelOptions([
   // { value: 'doesNotContain', label: 'Does Not Contain'}
 ])
 
-let Text = ({ tree, node, placeholder, theme: { Select } }) => {
-  let tagStyle = bgJoin(tagToGroupJoin(node.join))
-  let TagPopover = () => (
-    <div>
-      <TagsJoinPicker node={node} tree={tree} Select={Select} />
-    </div>
-  )
+let Text = ({
+  tree,
+  node,
+  placeholder,
+  theme: { Select, TagsInput, Popover },
+}) => {
+  let isOpen = useLens(false)
+  let [selectedTag, setSelectedTag] = React.useState(null)
   return (
     <div className="contexture-text">
       <Select
@@ -34,9 +35,13 @@ let Text = ({ tree, node, placeholder, theme: { Select } }) => {
         onChange={e => tree.mutate(node.path, { operator: e.target.value })}
         options={operatorOptions}
       />
-      <PopoverTagsInput
+      <TagsInput
         splitCommas
         tags={node.values}
+        onTagClick={tag => {
+          F.on(isOpen)()
+          setSelectedTag(tag)
+        }}
         addTag={tag => {
           tree.mutate(node.path, { values: [...node.values, tag] })
         }}
@@ -45,11 +50,13 @@ let Text = ({ tree, node, placeholder, theme: { Select } }) => {
             values: _.without([tag], node.values),
           })
         }}
-        tagStyle={tagStyle}
+        tagStyle={bgJoin(tagToGroupJoin(node.join))}
         submit={tree.triggerUpdate}
         placeholder={placeholder}
-        PopoverContents={TagPopover}
       />
+      <Popover isOpen={isOpen}>
+        <TagsJoinPicker tag={selectedTag} node={node} tree={tree} />
+      </Popover>
     </div>
   )
 }
