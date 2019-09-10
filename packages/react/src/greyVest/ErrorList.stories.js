@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Flex, Box, ErrorList, TextInput } from './../../src/greyVest'
-import decorator from './decorator'
+import { Flex, Box, ErrorList, TextInput } from '.'
+import decorator from './stories/decorator'
 
 storiesOf('Components|GreyVest Library/Error', module)
   .addDecorator(decorator)

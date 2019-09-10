@@ -2,9 +2,9 @@ import React from 'react'
 import F from 'futil-js'
 import { storiesOf } from '@storybook/react'
 import { observer } from 'mobx-react'
-import { useLens } from '../../src/utils/react'
-import { useTheme } from '../../src/utils/theme'
-import decorator from './decorator'
+import { useLens } from '../utils/react'
+import { useTheme } from '../utils/theme'
+import decorator from './stories/decorator'
 
 let PopoverDemo = observer(() => {
   let open = useLens(false)

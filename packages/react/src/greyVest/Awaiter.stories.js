@@ -1,8 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { fromPromise } from 'mobx-utils'
-import { Awaiter, Button, Box } from '../../src/greyVest'
-import decorator from './decorator'
+import { Awaiter, Button, Box } from '.'
+import decorator from './stories/decorator'
 
 storiesOf('Components|GreyVest Library/', module)
   .addDecorator(decorator)

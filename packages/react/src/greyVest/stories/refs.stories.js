@@ -1,6 +1,6 @@
 import { storiesOf } from '@storybook/react'
 import React from 'react'
-import { Button, TextInput, Textarea, Select } from '../../src/greyVest'
+import { Button, TextInput, Textarea, Select } from '..'
 import decorator from './decorator'
 
 let input

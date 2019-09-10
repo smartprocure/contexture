@@ -1,5 +1,5 @@
 import React from 'react'
-import { Fonts, Style } from '../../src/greyVest'
+import { Fonts, Style } from '..'
 
 export default Story => (
   <>

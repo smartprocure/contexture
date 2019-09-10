@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Flex } from '../../src/greyVest'
+import { Flex } from '.'
 
 let FlexDemo = ({ style, ...props }) => (
   <Flex

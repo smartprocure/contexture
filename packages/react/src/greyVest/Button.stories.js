@@ -1,8 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import { Button } from './../../src/greyVest'
-import decorator from './decorator'
+import { Button } from '.'
+import decorator from './stories/decorator'
 
 storiesOf('Components|GreyVest Library/Button', module)
   .addDecorator(decorator)

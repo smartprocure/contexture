@@ -4,15 +4,8 @@ import { withInfo } from '@storybook/addon-info'
 import { action } from '@storybook/addon-actions'
 import { observable } from 'mobx'
 import { Observer } from 'mobx-react'
-import {
-  Tabs,
-  Tab,
-  TabLabel,
-  TabContent,
-  ButtonRadio,
-  Button,
-} from './../../src/greyVest'
-import decorator from './decorator'
+import { Tabs, Tab, TabLabel, TabContent, ButtonRadio, Button } from '.'
+import decorator from './stories/decorator'
 
 let tabDocs = `
 # Overview
