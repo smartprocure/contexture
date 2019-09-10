@@ -5,7 +5,7 @@ import AddPreview from '../../../../src/queryBuilder/preview/AddPreview'
 
 export default () =>
   storiesOf(
-    'Components|Search components/QueryBuilder/Internals/AddPreview',
+    'Components|Search Components/QueryBuilder/Internals/AddPreview',
     module
   )
     .addWithJSX('and', () => <AddPreview onClick={action('join')} join="and" />)

@@ -18,10 +18,7 @@ let tree = {
   isPausedNested: () => state.paused,
 }
 
-storiesOf(
-  'Components|Search components/Other components/TreePauseButton',
-  module
-)
+storiesOf('Components|Search Components/Internals/TreePauseButton', module)
   .addDecorator(ThemePicker('greyVest'))
   .addWithJSX('One Tree', () => (
     <TreePauseButton>

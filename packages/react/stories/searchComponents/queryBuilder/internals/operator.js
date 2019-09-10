@@ -18,7 +18,7 @@ let operatorStory = (join, index, root) => () => (
 )
 export default (parent, root, DnDDecorator) =>
   storiesOf(
-    'Components|Search components/QueryBuilder/Internals/Operator',
+    'Components|Search Components/QueryBuilder/Internals/Operator',
     module
   )
     .addDecorator(DnDDecorator)

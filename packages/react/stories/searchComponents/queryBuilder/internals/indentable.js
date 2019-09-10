@@ -4,7 +4,7 @@ import Indentable from '../../../../src/queryBuilder/preview/Indentable'
 
 export default () =>
   storiesOf(
-    'Components|Search components/QueryBuilder/Internals/Indentable',
+    'Components|Search Components/QueryBuilder/Internals/Indentable',
     module
   )
     .addWithJSX('and', () => (

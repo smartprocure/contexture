@@ -4,7 +4,7 @@ import { FilterList } from '../../src/FilterList'
 import { componentForType } from '../../src'
 import ThemePicker from '../themePicker'
 
-storiesOf('Components|Search components', module)
+storiesOf('Components|Search Components', module)
   .addDecorator(ThemePicker('blueberry'))
   .addWithJSX('FilterList', () => (
     <FilterList

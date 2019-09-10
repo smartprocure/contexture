@@ -4,7 +4,7 @@ import { SearchLayout } from '../../src'
 import { Box } from '../../src/greyVest'
 import ThemePicker from '../themePicker'
 
-storiesOf('Components|Search components/Other components/SearchLayout', module)
+storiesOf('Components|Search Components/SearchLayout', module)
   .addDecorator(ThemePicker('greyVest'))
   .addWithJSX('Basic', () => (
     <SearchLayout mode="basic">

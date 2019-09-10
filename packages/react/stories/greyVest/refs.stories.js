@@ -7,9 +7,9 @@ let input
 let select
 let textArea
 
-storiesOf('Components|GreyVest library', module)
+storiesOf('Components|GreyVest Library', module)
   .addDecorator(decorator)
-  .addWithJSX('refs', () => (
+  .addWithJSX('Refs', () => (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <TextInput ref={e => (input = e)} />
       <Textarea ref={e => (textArea = e)} />

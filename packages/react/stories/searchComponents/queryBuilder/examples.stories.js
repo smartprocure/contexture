@@ -15,7 +15,7 @@ let Client = ContextureMobx({
 
 let Node = (type, key) => ({ key, type })
 
-storiesOf('Components|Search components/QueryBuilder', module)
+storiesOf('Components|Search Components/QueryBuilder', module)
   .addDecorator(ThemePicker('greyVest'))
   .addWithJSX('One Filter', () => (
     <QueryBuilder

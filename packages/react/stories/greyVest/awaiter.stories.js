@@ -4,7 +4,7 @@ import { fromPromise } from 'mobx-utils'
 import { Awaiter, Button, Box } from '../../src/greyVest'
 import decorator from './decorator'
 
-storiesOf('Components|GreyVest library/', module)
+storiesOf('Components|GreyVest Library/', module)
   .addDecorator(decorator)
   .addWithJSX('Awaiter', () => {
     let resolve

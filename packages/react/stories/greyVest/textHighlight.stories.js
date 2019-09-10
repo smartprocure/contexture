@@ -20,6 +20,6 @@ let HighlightDemo = observer(() => {
   )
 })
 
-storiesOf('Components|GreyVest library', module)
+storiesOf('Components|GreyVest Library', module)
   .addDecorator(decorator)
   .addWithJSX('TextHighlight', () => <HighlightDemo />)

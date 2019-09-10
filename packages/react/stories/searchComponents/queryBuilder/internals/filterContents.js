@@ -4,7 +4,7 @@ import FilterContents from '../../../../src/queryBuilder/FilterContents'
 
 export default (parent, root) =>
   storiesOf(
-    'Components|Search components/QueryBuilder/Internals',
+    'Components|Search Components/QueryBuilder/Internals',
     module
   ).addWithJSX('FilterContents', () => (
     <FilterContents

@@ -6,7 +6,7 @@ import decorator from './decorator'
 
 let click = action('clicked')
 
-storiesOf('Components|GreyVest library', module)
+storiesOf('Components|GreyVest Library', module)
   .addDecorator(decorator)
   .addWithJSX('LinkButton', () => (
     <LinkButton onClick={() => click()}>Click</LinkButton>

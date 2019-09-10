@@ -22,7 +22,7 @@ import {
   Geo,
 } from '../../src/exampleTypes'
 
-storiesOf('Components|Search components/ExampleTypes', module)
+storiesOf('Components|Search Components/ExampleTypes', module)
   .addWithJSX('Full Demo', () => {
     let tree = TestTree()
     return (

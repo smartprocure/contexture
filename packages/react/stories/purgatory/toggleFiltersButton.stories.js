@@ -6,7 +6,7 @@ import ThemePicker from '../themePicker'
 
 let click = action('clicked')
 
-storiesOf('Components|Search components/Other components', module)
+storiesOf('Components|Search Components/Internals', module)
   .addDecorator(ThemePicker('greyVest'))
   .addWithJSX('ToggleFiltersButton', () => (
     <ToggleFiltersButton onClick={() => click()} />

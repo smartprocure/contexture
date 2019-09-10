@@ -23,7 +23,7 @@ let FlexDemo = ({ style, ...props }) => (
   </Flex>
 )
 
-storiesOf('Components|GreyVest library/Flex', module)
+storiesOf('Components|GreyVest Library/Flex', module)
   .addWithJSX('As button', () => (
     <Flex column alignItems="center">
       <FlexDemo as="button" />

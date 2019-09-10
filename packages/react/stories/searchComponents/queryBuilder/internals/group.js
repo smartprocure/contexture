@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import Group from '../../../../src/queryBuilder/Group'
 
 export default (parent, root, DnDDecorator) =>
-  storiesOf('Components|Search components/QueryBuilder/Internals/Group', module)
+  storiesOf('Components|Search Components/QueryBuilder/Internals/Group', module)
     .addDecorator(DnDDecorator)
     .addWithJSX('One Filter', () => (
       <Group

@@ -4,7 +4,7 @@ import OperatorMenu from '../../../../src/queryBuilder/OperatorMenu'
 
 export default (parent, root) =>
   storiesOf(
-    'Components|Search components/QueryBuilder/Internals',
+    'Components|Search Components/QueryBuilder/Internals',
     module
   ).addWithJSX('OperatorMenu', () => (
     <OperatorMenu {...{ node: { join: 'and' }, parent, root }} />
