@@ -12,7 +12,7 @@ let makeStepTitle = title => n => (
   </h1>
 )
 
-storiesOf('Components|Search components/Internals', module)
+storiesOf('Components|Search Components/Internals', module)
   .addDecorator(ThemePicker('greyVest'))
   .addWithJSX('StepsAccordion', () => {
     let isClicked = F.stateLens(React.useState(false))

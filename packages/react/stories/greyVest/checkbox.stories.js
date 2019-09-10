@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { Checkbox } from '../../src/greyVest'
 import decorator from './decorator'
 
-storiesOf('Components|GreyVest library', module)
+storiesOf('Components|GreyVest Library', module)
   .addDecorator(decorator)
   .addWithJSX('Checkbox', () => (
     <>

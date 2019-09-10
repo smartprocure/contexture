@@ -16,6 +16,6 @@ let ModalDemo = observer(() => {
   )
 })
 
-storiesOf('Components|GreyVest library', module)
+storiesOf('Components|GreyVest Library', module)
   .addDecorator(decorator)
   .addWithJSX('Modal', () => <ModalDemo />)

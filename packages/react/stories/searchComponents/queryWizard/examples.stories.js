@@ -63,7 +63,7 @@ let AccordionStory = () => (
   </StepsAccordion>
 )
 
-storiesOf('Components|Search components/QueryWizard', module)
+storiesOf('Components|Search Components/QueryWizard', module)
   .addDecorator(ThemePicker('greyVest'))
   .addWithJSX('QueryWizard', WizardStory)
   .addWithJSX('Accordion with FilterButtonList', AccordionStory)

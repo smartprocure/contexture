@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import Rule from '../../../../src/queryBuilder/Rule'
 
 export default (parent, root, DnDDecorator) =>
-  storiesOf('Components|Search components/QueryBuilder/Internals', module)
+  storiesOf('Components|Search Components/QueryBuilder/Internals', module)
     .addDecorator(DnDDecorator)
     .addWithJSX('Rule', () => (
       <Rule
