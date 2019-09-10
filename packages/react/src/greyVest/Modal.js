@@ -1,11 +1,11 @@
 import React from 'react'
-import * as F from 'futil-js'
 import { observer } from 'mobx-react'
 import Portal from './Portal'
+import { bindLens } from './utils'
 
-let Modal = ({ open, children, style = {}, className = '' }) => (
+let Modal = ({ isOpen, onClose, children, style = {}, className = '' }) => (
   <Portal>
-    {F.view(open) && (
+    {isOpen && (
       <div
         style={{
           position: 'fixed',
@@ -21,7 +21,7 @@ let Modal = ({ open, children, style = {}, className = '' }) => (
           justifyContent: 'space-around',
           alignItems: 'flex-start',
         }}
-        onClick={F.off(open)}
+        onClick={onClose}
         className={`default-modal-bg ${className}`}
       >
         <div
@@ -39,4 +39,4 @@ let Modal = ({ open, children, style = {}, className = '' }) => (
   </Portal>
 )
 
-export default observer(Modal)
+export default bindLens(observer(Modal))
