@@ -8,6 +8,8 @@
 * Remove `utils/mobx-react-utils`, `utils/dsl`, and `utils/tree`
 * Add `utils/react`, with new `useLens` and `useLensObject` functions
 * Remove `types` and `typeComponents` props from QueryBuilder and FilterList
+* Add support for a conventional value/setter prop API to the GreyVest Modal and Popover components (as `isOpen`/`onClose`) in addition to the existing futil lens API
+  * Rename the lens prop from `isOpen`, now used for the boolean value, to `open` (breaking change)
 * Restructure the component library
   * Consolidate the following layout components into the GreyVest component library: Awaiter, BarChart, Dynamic, ExpandableTable, Flex, Grid, NestedPicker, Popover, Portal, SpacedList, TagsInput, Tag, DateInput, StripedLoader
   * Move or remove several GreyVest component exports:
@@ -45,6 +47,14 @@
   * `QueryBuilder` and `FilterList` dropped support for `types` and `typeComponents` to simplify the API surface and reduce the number of things needed to understand the library. `mapNodeToProps` lets you completely replace the react component for a given node, so supporting both that and an type->component object map was just another thing to know about the API.
 * Create nodes explicitly on every contexture-client tree instance that was relying on the QuickStart functionality.
   * Example types can no longer automatically add contexture nodes to the tree. This was found in the QuickStart story and was designed to reduce barriers to entry, but the abstraction was leaky and radically increased complexity of our implementation despite no known usages in the wild. More often than not, it was just a potential source of bugs for end users. We might add support for something similar in a future release.
+* Rename the `isOpen` prop to `open` in all GreyVest Modal and Popover components
+  * We renamed the lens prop on the Modal and Popover from `isOpen` to `open`, in order to add support for a more conventional value/setter API. The new API accepts the `isOpen` and `onClose` props for value and setter in addition to the `open` prop for a lens.
+
+# 1.58.0
+* DateInput: new component
+
+# 1.57.0
+* WrappedDateInput: Forward props
 
 # 1.56.3
 * Cleanup dist directory before starting babel
