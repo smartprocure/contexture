@@ -12,8 +12,8 @@ let RadioList = ({ options, value, onChange, ...props }) => (
           style={{ cursor: 'pointer', marginRight: 25 }}
         >
           <Radio
-            onChange={e => {
-              onChange(e.target.value)
+            onChange={() => {
+              onChange(option.value)
             }}
             value={option.value}
             checked={value === option.value}

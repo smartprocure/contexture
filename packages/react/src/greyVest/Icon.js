@@ -42,6 +42,7 @@ let iconMap = {
     </TextButton>
   ),
   AutoUpdate: toIcon('autorenew'),
+  New: toIcon('fiber_new'),
 }
 
 let Icon = ({ icon, ...props }) => (

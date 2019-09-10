@@ -2,6 +2,7 @@ import React from 'react'
 import { CssBaseline } from '@material-ui/core'
 import MomentUtils from '@date-io/moment'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
+import Style from './Style'
 
 let Root = ({ children }) => (
   <>
@@ -15,15 +16,7 @@ let Root = ({ children }) => (
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
     />
 
-    {/* styles */}
-    <style>{`
-      .material-table th span {
-        display: flex;
-        flex-wrap: nowrap;
-        align-items: center;
-        justify-content: center;
-      }
-    `}</style>
+    <Style />
     <CssBaseline />
 
     {/* all this just for a silly date picker */}

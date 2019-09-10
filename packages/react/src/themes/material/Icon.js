@@ -22,6 +22,7 @@ let iconMap = {
   Next5Pages: 'more_horiz',
   Refresh: 'refresh',
   AutoUpdate: 'autorenew',
+  New: 'fiber_new',
 }
 
 export default ({ icon, ...props }) => (
