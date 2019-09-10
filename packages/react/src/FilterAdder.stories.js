@@ -1,10 +1,10 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import FilterAdder from '../../src/FilterAdder'
-import { applyDefaults } from '../../src/utils/schema'
-import { useTheme } from '../../src/utils/theme'
-import ThemePicker from '../themePicker'
+import { applyDefaults } from './utils/schema'
+import { useTheme } from './utils/theme'
+import ThemePicker from '../stories/themePicker'
+import { FilterAdder } from '.'
 
 let mockTree = {
   add: action('add'),

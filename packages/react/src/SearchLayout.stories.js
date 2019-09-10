@@ -1,8 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { SearchLayout } from '../../src'
-import { Box } from '../../src/greyVest'
-import ThemePicker from '../themePicker'
+import { Box } from './greyVest'
+import ThemePicker from '../stories/themePicker'
+import { SearchLayout } from '.'
 
 storiesOf('Components|Search Components/SearchLayout', module)
   .addDecorator(ThemePicker('greyVest'))

@@ -1,8 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { FilterList } from '../../src/FilterList'
-import { componentForType } from '../../src'
-import ThemePicker from '../themePicker'
+import { componentForType } from './utils/schema'
+import ThemePicker from '../stories/themePicker'
+import { FilterList } from '.'
 
 storiesOf('Components|Search Components', module)
   .addDecorator(ThemePicker('blueberry'))
