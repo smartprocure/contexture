@@ -59,12 +59,12 @@ let FilterContents = ({
           }}
         >
           <Dynamic
-            defaultProps={{
+            {...{
               component: UnmappedNodeComponent,
               tree,
               node,
+              ...mapNodeToProps(node, fields),
             }}
-            {...mapNodeToProps(node, fields)}
           />
         </div>
       )}
