@@ -24,7 +24,7 @@
     * CheckButton - moved to purgatory
     * ToggleFiltersButton - moved to purgatory
     * TreePauseButton - moved to purgatory
-    * SearchTree - moved to purgatory
+    * SearchTree - moved to top-level export
     * ToggleFiltersHeader - moved to top-level export
     * SearchLayout - now a generic search interface (moved to top-level export)
     * SearchLayout - now a generic search interface (moved to top-level export)

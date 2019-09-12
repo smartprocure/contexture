@@ -8,7 +8,7 @@ export QueryWizard from './queryWizard'
 export * from './FilterList'
 export FilterAdder from './FilterAdder'
 export FilterButtonList from './FilterButtonList'
-export SearchFilters from './SearchFilters'
+export SearchFilters, { SearchTree } from './SearchFilters'
 export SearchLayout from './SearchLayout'
 export ToggleFiltersHeader from './ToggleFiltersHeader'
 

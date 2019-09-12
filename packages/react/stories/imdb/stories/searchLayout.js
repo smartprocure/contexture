@@ -10,9 +10,9 @@ import {
   componentForType,
   SearchLayout,
   SearchFilters,
+  SearchTree,
   ToggleFiltersHeader,
 } from '../../../src'
-import { SearchTree } from '../../../src/purgatory'
 import { Tab, TabContent, TabLabel, Tabs } from '../../../src/greyVest'
 import {
   DateRangePicker,
