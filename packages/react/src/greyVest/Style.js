@@ -235,11 +235,7 @@ export default () => (
         padding: 8px;
       }
 
-      /* Pager */
-      .gv-pager {
-        position: relative;
-        top: 50px;
-      }
+      /* PagerItem */
       .gv-pager-item {
         padding: 5px;
         width: 30px;
