@@ -14,28 +14,55 @@ export default (f = _.identity) => {
       key: 'facet',
       type: 'facet',
       path: ['facet'],
-      values: ['a'],
+      values: [],
       optionsFilter: '',
       context: {
         options: [
-          {
-            name: 'a',
-            count: 15,
-          },
           {
             name: '',
             count: 4,
           },
           {
-            name: 'b',
+            name: 'Apple',
+            count: 15,
+          },
+          {
+            name: 'Blueberry',
             count: 3,
           },
           {
-            name: 'c',
+            name: 'Coconut',
             count: 1,
+          },
+          {
+            name: 'Orange',
+            count: 8,
+          },
+          {
+            name: 'Grape',
+            count: '20',
+          },
+          {
+            name: 'Pear',
+            count: 5,
+          },
+          {
+            name: 'Strawberry',
+            count: 12,
           },
         ],
       },
+    },
+    bool: {
+      key: 'bool',
+      value: false,
+      path: ['bool'],
+    },
+    date: {
+      key: 'date',
+      path: ['date'],
+      from: '2011-01-01T05:00:00.000Z',
+      to: '2019-09-12T12:07:20.000Z',
     },
     query: {
       key: 'searchQuery',
