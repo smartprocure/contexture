@@ -196,13 +196,13 @@ export let FilterList = _.flow(
               {!child.paused && (
                 <div className="filter-list-item-contents">
                   <Dynamic
-                    defaultProps={{
+                    {...{
                       component: UnmappedNodeComponent,
                       tree,
                       node: child,
                       path: _.toArray(child.path),
+                      ...mapNodeToProps(child, fields),
                     }}
-                    {...mapNodeToProps(child, fields)}
                   />
                 </div>
               )}

@@ -266,12 +266,12 @@ let Header = _.flow(
               </DropdownItem>
               {F.view(filtering) && filterNode && !filterNode.paused && (
                 <Dynamic
-                  defaultProps={{
+                  {...{
                     component: UnmappedNodeComponent,
                     tree,
                     path: _.toArray(filterNode.path),
+                    ...mapNodeToProps(filterNode, fields),
                   }}
-                  {...mapNodeToProps(filterNode, fields)}
                 />
               )}
             </div>
