@@ -1,10 +1,11 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import { withState } from 'recompose'
+import F from 'futil-js'
 import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import Flex from './Flex'
 import DefaultTag from './Tag'
+import { useLensObject } from '../utils/react'
 import OutsideClickHandler from 'react-outside-click-handler'
 
 let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
@@ -13,7 +14,6 @@ let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 // inject doesn't do that for us.
 let TagsInput = ({
   tags,
-  state,
   addTag,
   removeTag,
   submit = _.noop,
@@ -29,6 +29,7 @@ let TagsInput = ({
 }) => {
   let containerRef
   let inputRef
+  let state = useLensObject({ currentInput: '', isOneLine: true })
   addTag = splitCommas
     ? _.flow(
         _.split(','),
@@ -45,7 +46,7 @@ let TagsInput = ({
   return (
     <OutsideClickHandler
       onOutsideClick={() => {
-        state.isOneLine = true
+        F.on(state.isOneLine)()
         containerRef.scrollTop = 0
       }}
     >
@@ -54,8 +55,8 @@ let TagsInput = ({
         ref={e => (containerRef = e ? e : containerRef)}
         style={{ ...style }}
         onClick={() => {
-          if (state.isOneLine) {
-            state.isOneLine = false
+          if (F.view(state.isOneLine)) {
+            F.off(state.isOneLine)()
             inputRef.focus()
           }
         }}
@@ -90,35 +91,39 @@ let TagsInput = ({
             }}
             ref={e => (inputRef = e)}
             onChange={e => {
-              state.currentInput = e.target.value
+              F.set(e.target.value, state.currentInput)
               onInputChange()
             }}
             onBlur={() => {
-              if (isValidInput(state.currentInput, tags)) {
-                addTag(state.currentInput)
-                state.currentInput = ''
+              if (isValidInput(F.view(state.currentInput), tags)) {
+                addTag(F.view(state.currentInput))
+                F.set('', state.currentInput)
                 onBlur()
               }
             }}
             onKeyDown={e => {
-              if (e.key === 'Enter' && !state.currentInput) submit()
+              if (e.key === 'Enter' && !F.view(state.currentInput)) submit()
               if (
                 (_.includes(e.key, ['Enter', 'Tab']) ||
                   (splitCommas && e.key === ',')) &&
-                isValidInput(state.currentInput, tags)
+                isValidInput(F.view(state.currentInput), tags)
               ) {
-                addTag(state.currentInput)
-                state.currentInput = ''
+                addTag(F.view(state.currentInput))
+                F.set('', state.currentInput)
                 e.preventDefault()
               }
-              if (e.key === 'Backspace' && !state.currentInput && tags.length) {
+              if (
+                e.key === 'Backspace' &&
+                !F.view(state.currentInput) &&
+                tags.length
+              ) {
                 let last = _.last(tags)
                 removeTag(last)
-                state.currentInput = last
+                F.set(last, state.currentInput)
                 e.preventDefault()
               }
             }}
-            value={state.currentInput}
+            value={F.view(state.currentInput)}
             placeholder={placeholder}
             {...props}
           />
@@ -144,12 +149,4 @@ export let MockTagsInput = inject(() => {
 })(TagsInput)
 MockTagsInput.displayName = 'MockTagsInput'
 
-export default _.flow(
-  observer,
-  withState('state', 'setState', () =>
-    observable({
-      currentInput: '',
-      isOneLine: true,
-    })
-  )
-)(TagsInput)
+export default observer(TagsInput)
