@@ -1,11 +1,9 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import F from 'futil-js'
 import { observable } from 'mobx'
-import { observer, inject } from 'mobx-react'
+import { observer, inject, useLocalStore } from 'mobx-react'
 import Flex from './Flex'
 import DefaultTag from './Tag'
-import { useLensObject } from '../utils/react'
 import OutsideClickHandler from 'react-outside-click-handler'
 
 let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
@@ -29,7 +27,7 @@ let TagsInput = ({
 }) => {
   let containerRef
   let inputRef
-  let state = useLensObject({ currentInput: '', isOneLine: true })
+  let state = useLocalStore(() => ({ currentInput: '', isOneLine: true }))
   addTag = splitCommas
     ? _.flow(
         _.split(','),
@@ -46,7 +44,7 @@ let TagsInput = ({
   return (
     <OutsideClickHandler
       onOutsideClick={() => {
-        F.on(state.isOneLine)()
+        state.isOneLine = true
         containerRef.scrollTop = 0
       }}
     >
@@ -55,8 +53,8 @@ let TagsInput = ({
         ref={e => (containerRef = e ? e : containerRef)}
         style={{ ...style }}
         onClick={() => {
-          if (F.view(state.isOneLine)) {
-            F.off(state.isOneLine)()
+          if (state.isOneLine) {
+            state.isOneLine = false
             inputRef.focus()
           }
         }}
@@ -91,39 +89,35 @@ let TagsInput = ({
             }}
             ref={e => (inputRef = e)}
             onChange={e => {
-              F.set(e.target.value, state.currentInput)
+              state.currentInput = e.target.value
               onInputChange()
             }}
             onBlur={() => {
-              if (isValidInput(F.view(state.currentInput), tags)) {
-                addTag(F.view(state.currentInput))
-                F.set('', state.currentInput)
+              if (isValidInput(state.currentInput, tags)) {
+                addTag(state.currentInput)
+                state.currentInput = ''
                 onBlur()
               }
             }}
             onKeyDown={e => {
-              if (e.key === 'Enter' && !F.view(state.currentInput)) submit()
+              if (e.key === 'Enter' && !state.currentInput) submit()
               if (
                 (_.includes(e.key, ['Enter', 'Tab']) ||
                   (splitCommas && e.key === ',')) &&
-                isValidInput(F.view(state.currentInput), tags)
+                isValidInput(state.currentInput, tags)
               ) {
-                addTag(F.view(state.currentInput))
-                F.set('', state.currentInput)
+                addTag(state.currentInput)
+                state.currentInput = ''
                 e.preventDefault()
               }
-              if (
-                e.key === 'Backspace' &&
-                !F.view(state.currentInput) &&
-                tags.length
-              ) {
+              if (e.key === 'Backspace' && !state.currentInput && tags.length) {
                 let last = _.last(tags)
                 removeTag(last)
-                F.set(last, state.currentInput)
+                state.currentInput = last
                 e.preventDefault()
               }
             }}
-            value={F.view(state.currentInput)}
+            value={state.currentInput}
             placeholder={placeholder}
             {...props}
           />
