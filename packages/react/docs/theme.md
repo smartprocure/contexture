@@ -12,15 +12,13 @@ To start using themes, simply wrap your application in contexture-react's `Theme
 
 ```jsx
 import { ThemeProvider } from 'contexture-react'
-import { greyVest } from 'contexture-react/themes' // or use your own!
+import { greyVestTheme } from 'contexture-react' // or use your own!
 
-function App() {
-  return (
-    <ThemeProvider theme={greyVest}>
-      {/* rest of your app */}
-    </ThemeProvider>
-  );
-}
+let App = () => (
+  <ThemeProvider theme={greyVestTheme}>
+    {/* rest of your app */}
+  </ThemeProvider>
+)
 ```
 
 `ThemeProvider` accepts a `theme` prop containing a **theme object**.
@@ -77,7 +75,7 @@ export default IconButton
 
 The `ThemeConsumer` component takes two optional props: `name`, which accepts a string and can be used to supply a name for [nested theming](#nested-themes), and `theme`, which accepts a **theme object** that is merged with the context theme, overriding its values where applicable.
 
-When a nested theme is merged, or when the context theme is overridden by a `theme` prop, `ThemeConsumer` *creates a theme provider with the new theme object*. This ensures that that any of its children or grandchildren or grandchildren that consume the theme API will be able to access the updated theme object from context.
+When a nested theme is merged, or when the context theme is overridden by a `theme` prop, `ThemeConsumer` *creates a theme provider with the new theme object*. This ensures that that any of its children or grandchildren that consume the theme API will be able to access the updated theme object from context.
 
 ### withTheme
 
