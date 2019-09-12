@@ -226,7 +226,7 @@ export default stampKey('type', {
     subquery: {
       getValues: x => _.map('key', x.context.terms),
     },
-    autoKey: x => F.compactJoin('-', [x.key_field, x.value_field, x.type])
+    autoKey: x => F.compactJoin('-', [x.key_field, x.value_field, x.type]),
   },
   cardinality: {
     reactors: {
