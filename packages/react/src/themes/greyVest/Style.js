@@ -31,6 +31,12 @@ export default () => (
       .contexture-result-pager {
         display: flex;
         align-items: center;
+        position: relative;
+        top: 50px;
+        border-radius: 4px;
+        background-color: #fff;
+        box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
+        padding: 15px;
       }
 
 

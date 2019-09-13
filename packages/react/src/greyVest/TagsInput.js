@@ -1,8 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import { withState } from 'recompose'
 import { observable } from 'mobx'
-import { observer, inject } from 'mobx-react'
+import { observer, inject, useLocalStore } from 'mobx-react'
 import Flex from './Flex'
 import DefaultTag from './Tag'
 import OutsideClickHandler from 'react-outside-click-handler'
@@ -13,7 +12,6 @@ let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 // inject doesn't do that for us.
 let TagsInput = ({
   tags,
-  state,
   addTag,
   removeTag,
   submit = _.noop,
@@ -29,6 +27,7 @@ let TagsInput = ({
 }) => {
   let containerRef
   let inputRef
+  let state = useLocalStore(() => ({ currentInput: '', isOneLine: true }))
   addTag = splitCommas
     ? _.flow(
         _.split(','),
@@ -127,7 +126,6 @@ let TagsInput = ({
     </OutsideClickHandler>
   )
 }
-TagsInput.displayName = 'TagsInput'
 
 // Just uses an internal observable array
 export let MockTagsInput = inject(() => {
@@ -144,12 +142,4 @@ export let MockTagsInput = inject(() => {
 })(TagsInput)
 MockTagsInput.displayName = 'MockTagsInput'
 
-export default _.flow(
-  observer,
-  withState('state', 'setState', () =>
-    observable({
-      currentInput: '',
-      isOneLine: true,
-    })
-  )
-)(TagsInput)
+export default observer(TagsInput)

@@ -17,7 +17,6 @@ let ResultPager = ({
       <div className={`${className} contexture-result-pager`}>
         <PagerItem
           disabled={!(page > 1)}
-          previous
           onClick={() => tree.mutate(node.path, { page: page - 1 })}
         >
           <Icon icon="PreviousPage" />
@@ -71,7 +70,6 @@ let ResultPager = ({
         )}
         <PagerItem
           disabled={!(page < pages)}
-          next
           onClick={() => tree.mutate(node.path, { page: page + 1 })}
         >
           <Icon icon="NextPage" />

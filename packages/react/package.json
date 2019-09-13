@@ -6,8 +6,9 @@
   "scripts": {
     "start": "npm run storybook",
     "build": "babel ./src --out-dir ./dist --source-maps --delete-dir-on-start",
+    "watch": "npm run build -- --watch",
     "prepublish": "npm run build",
-    "storybook": "start-storybook -p 3000",
+    "storybook": "start-storybook -p 3001",
     "build-storybook": "build-storybook",
     "deploy-storybook": "storybook-to-ghpages",
     "lint": "eslint src stories .storybook .circleci __tests__",

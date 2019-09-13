@@ -27,7 +27,6 @@ let BlankOperator = ({ open, node, child }) => (
     )}
   </div>
 )
-BlankOperator.displayName = 'BlankOperator'
 
 let OperatorLine = observer(({ node, child, style }) => (
   <div
@@ -66,9 +65,8 @@ let JoinOperator = ({ open, hover, node, child }) => (
     <OperatorLine {...{ node, child }} />
   </div>
 )
-JoinOperator.displayName = 'JoinOperator'
 
-let Operator = observer(({ hover, node, child, parent, tree, index }) => {
+let Operator = ({ hover, node, child, parent, tree, index }) => {
   let open = useLens(false)
   return (
     <div>
@@ -90,7 +88,6 @@ let Operator = observer(({ hover, node, child, parent, tree, index }) => {
       </Popover>
     </div>
   )
-})
-Operator.displayName = 'Operator'
+}
 
-export default Operator
+export default observer(Operator)

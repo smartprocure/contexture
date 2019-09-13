@@ -18,5 +18,5 @@ let TabList = ({ value, onChange = () => {}, options }) => (
     )}
   </div>
 )
-TabList.displayName = 'TabList'
+
 export default observer(TabList)

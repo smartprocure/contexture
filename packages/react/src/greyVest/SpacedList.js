@@ -10,6 +10,5 @@ let SpacedList = ({ children, style = { marginBottom: '25px' } }) =>
     ),
     children
   )
-SpacedList.displayName = 'SpacedList'
 
 export default SpacedList

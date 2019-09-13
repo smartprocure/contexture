@@ -127,6 +127,5 @@ let TermsStatsTable = ({
     />
   </div>
 )
-TermsStatsTable.displayName = 'TermsStatsTable'
 
 export default contexturify(TermsStatsTable)

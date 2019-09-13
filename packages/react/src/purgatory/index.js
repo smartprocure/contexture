@@ -1,6 +1,5 @@
 export CheckButton from './CheckButton'
 export ModalPicker from './ModalPicker'
-export SearchTree from './SearchTree'
 export StepsAccordion, { AccordionStep } from './StepsAccordion'
 export ToggleFiltersButton from './ToggleFiltersButton'
 export TreePauseButton from './TreePauseButton'

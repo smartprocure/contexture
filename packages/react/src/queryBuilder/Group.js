@@ -43,7 +43,7 @@ let GroupItem = FilterDragSource(props => {
   )
 })
 
-let Group = observer(props => {
+let Group = props => {
   let { parent, node, tree, adding, isRoot } = props
   let hover = useLensObject({ wrap: false, join: '', remove: false })
   return (
@@ -96,7 +96,6 @@ let Group = observer(props => {
       </div>
     </Indentable>
   )
-})
-Group.displayName = 'Group'
+}
 
-export default Group
+export default observer(Group)

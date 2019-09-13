@@ -8,6 +8,8 @@ import { ToggleFiltersButton, TreePauseButton } from './purgatory'
 import { LinkButton } from './greyVest'
 import { withTheme } from './utils/theme'
 
+export let SearchTree = () => {}
+
 let LabelledList = ({ list, Component }) =>
   F.mapIndexed(
     ({ label, ...props }, i) => (
