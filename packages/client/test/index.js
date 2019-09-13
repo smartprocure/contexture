@@ -1572,9 +1572,16 @@ let AllTests = ContextureClient => {
       ],
     })
     expect(tree.getNode(['root', 'group', 'birthday-date'])).to.exist
-    // should still deupe nodes with user-created keys
+    // should still dedupe nodes with user-created keys
     await tree.add(['root', 'group'], { key: 'birthday-date' })
     expect(tree.getNode(['root', 'group', 'birthday-date1'])).to.exist
+    // should use the type-config autokey if one exists (as it does for terms_stats)
+    await tree.add(['root'], {
+      type: 'terms_stats',
+      key_field: 'holland',
+      value_field: 'oats',
+    })
+    expect(tree.getNode(['root', 'holland-oats-terms_stats'])).to.exist
   })
   it('should autogenerate keys on tree initialization', () => {
     let service = sinon.spy(mockService())
@@ -1604,7 +1611,7 @@ let AllTests = ContextureClient => {
                     // should autokey blank nodes
                     {},
                     {},
-                    // should still deupe nodes with user-created keys
+                    // should still dedupe nodes with user-created keys
                     { key: 'node1' },
                     { key: 'node' },
                   ],

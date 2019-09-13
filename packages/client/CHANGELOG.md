@@ -1,3 +1,6 @@
+# 2.26.1
+* Add custom autoKey function for terms_stats type (uses `key_field` and `value_field` instead of `field`)
+
 # 2.26.0
 * Expose additional properties on tree instance: `flat`, `snapshot`, `extend`, `types`, `initNode`, `initObject`
 
