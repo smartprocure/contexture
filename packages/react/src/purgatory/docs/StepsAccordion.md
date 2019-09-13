@@ -1,4 +1,3 @@
-
 ## StepsAccordion
 
 ### Props
