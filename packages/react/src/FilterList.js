@@ -213,4 +213,3 @@ export let FilterList = _.flow(
     </div>
   )
 )
-FilterList.displayName = 'FilterList'

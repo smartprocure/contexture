@@ -2,19 +2,25 @@
 
 ## Highlights
 
-1. **HOC overhaul**
+### HOC overhaul
 
-    In 1.0, many contexture-react search components relied on byzantine wrappers like [`injectTreeNode`]() and [`Component`](), which were difficult to reason about for new contributors. They also often depended on deprecated APIs like mobx-react's Provider, which is obsolete in the age of React hooks.
+In 1.0, many contexture-react search components relied on byzantine wrappers like [`injectTreeNode`]() and [`Component`](), which were difficult to reason about for new contributors. They also often depended on deprecated APIs like mobx-react's Provider, which is obsolete in the age of React hooks.
 
-    All of our HOCs have been removed or rewritten in version 2.0, and our search components have been modernized to take advantage of React hooks for state management where it makes sense to do so (while keeping the good parts of mobx, of course). We also vastly improved our displayName handling, thanks in large part to @stellarhoof, which should lead to a much better debugging experience.
-    
-    We broke down `injectTreeNode` into two small, composable HOCs: `withNode`, which fetches a contexture node from `tree` and `path` props, and `withLoader`, which wraps the component in a loader element that activates based on the node's status. Since they are often (but not always!) used together, we also added the brand-new `contexturify` HOC, which composes these two together with `withTheme` (more on that [shortly]()).
+All of our HOCs have been removed or rewritten in version 2.0, and our search components have been modernized to take advantage of React hooks for state management where it makes sense to do so (while keeping the good parts of mobx, of course).
 
-2. **Theme overhaul**
+We [broke down](src/) `injectTreeNode` into two small, composable HOCs: `withNode`, which fetches a contexture node from `tree` and `path` props, and `withLoader`, which wraps the component in a loader element that activates based on the node's status. Since they are often (but not always!) used together, we also added the `contexturify` HOC, which composes those two together with the theme-consuming HOC `withTheme`.
 
-    Contexture-react is themed at the _component_ level -- that is, our search interfaces accept props for components like Button and Modal, and render whatever is given. The benefit of this approach is that it allows any degree of customization, from a small style adjustment to a major functionality overhaul, through the same relatively simple API.
+We also vastly improved our displayName handling throughout, thanks in large part to @stellarhoof, which should lead to a much better debugging experience. 😊
 
-    WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP
+### Theme overhaul
+
+Contexture-react is themed at the _component_ level -- that is, our search interfaces accept props for components like Button and Modal, and render whatever is given. The benefit of this approach is that it supports any degree of customization, from a small style adjustment to a major functionality overhaul, through the same relatively simple API.
+
+Version 1.0 laid the groundwork for the theme API, but it was unpolished and had several  disadvantages. Without external state, prop drilling was a major issue: theme props often had to be passed uselessly through multiple levels of hierarchy before arriving at whichever deeply-nested component actually needed them. And, because applying a theme to a search interface required explicitly passing in each theme component, actually using themes was tedious, inflexible, and heavy with boilerplate.
+
+For version 2.0, we added a brand-new theme API that leverages React context to manage state, with several options for consuming theme props from it on a per-component basis -- no more need for prop drilling or re-exporting search components with `defaultProps`. The new theme API is documented in prose form [here](), and in storybook form [here]().
+
+### New library structure
 
 ## Changes
 * Bump mobx-react to latest version

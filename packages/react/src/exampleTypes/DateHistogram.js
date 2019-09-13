@@ -10,6 +10,5 @@ let DateHistogram = ({ node, theme: { BarChart }, ...props }) => (
     {...props}
   />
 )
-DateHistogram.displayName = 'DateHistogram'
 
 export default contexturify(DateHistogram)

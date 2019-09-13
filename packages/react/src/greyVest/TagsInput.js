@@ -126,7 +126,6 @@ let TagsInput = ({
     </OutsideClickHandler>
   )
 }
-TagsInput.displayName = 'TagsInput'
 
 // Just uses an internal observable array
 export let MockTagsInput = inject(() => {

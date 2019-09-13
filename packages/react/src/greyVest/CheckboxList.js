@@ -25,6 +25,5 @@ let CheckboxList = ({ options, value, onChange, ...props }) => (
     )}
   </div>
 )
-CheckboxList.displayName = 'CheckboxList'
 
 export default observer(CheckboxList)
