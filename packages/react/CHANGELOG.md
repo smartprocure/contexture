@@ -1,64 +1,58 @@
 # 2.0.0
 
-
 ## Changes
-* Bump mobx-react to latest version
-* Remove usages of mobx-react Provider
-* Refactor `injectTreeNode` into `withNode`, `withLoader`, and `contexturify` HOCs
-* Remove QuickStart story
-* Remove `utils/mobx-react-utils`, `utils/dsl`, and `utils/tree`
+
+* New theme API! No more prop drilling! Nested theme support! 🎉
+* Rework higher-order components
+  * Refactor `injectTreeNode` into `withNode`, `withLoader`, and `contexturify` HOCs
+  * Remove usages of mobx-react Provider
 * Add `utils/react`, with new `useLens` and `useLensObject` functions
-* Remove `types` and `typeComponents` props from QueryBuilder and FilterList
-* Add support for a conventional value/setter prop API to the GreyVest Modal and Popover components (as `isOpen`/`onClose`) in addition to the existing futil lens API
-  * Rename the lens prop from `isOpen`, now used for the boolean value, to `open` (breaking change)
-* Restructure the component library
+* API changes
+  * Remove `types` and `typeComponents` props from QueryBuilder and FilterList
+  * Add support for a conventional value/setter prop API to the GreyVest Modal and Popover components (as `isOpen`/`onClose`) in addition to the existing futil lens API
+    * Rename the lens prop from `isOpen`, now used for the boolean value, to `open`
+* Restructure the component library for a cleaner distinction between search components, themes, and GreyVest
   * Consolidate the following layout components into the GreyVest component library: Awaiter, BarChart, Dynamic, ExpandableTable, Flex, Grid, NestedPicker, Popover, Portal, SpacedList, TagsInput, Tag, DateInput, StripedLoader
   * Move or remove several GreyVest component exports:
-    * Adder - removed (use FilterAdder)
-    * Pager - removed (use ResultPager)
-    * PagedResultTable - added to ExampleTypes
-    * FilterButtonList - removed (use the top-level export)
-    * FilterList - removed (use the top-level export)
-    * QueryBuilder - removed (use the top-level export)
-    * QueryWizard - removed (use the top-level export)
-    * UnmappedNodeComponent - now a theme component
-    * CheckButton - moved to purgatory
-    * ToggleFiltersButton - moved to purgatory
-    * TreePauseButton - moved to purgatory
-    * SearchTree - moved to top-level export
-    * ToggleFiltersHeader - moved to top-level export
-    * SearchLayout - moved to top-level export
-    * SearchLayout - moved to top-level export
-    * SearchFilters - moved to top-level export
-    * AddableFilterList - now part of SearchFilters
-    * FiltersBox - now part of SearchFilters
+    * Removed:  Adder (use FilterAdder), Pager (use ResultPager)
+    * Moved to ExampleTypes: PagedResultTable
+    * Moved to top-level exports: FilterButtonList, FilterList, QueryBuilder, QueryWizard, SearchTree, ToggleFiltersHeader, SearchLayout, SearchFilters
+    * Moved to GreyVest theme: MissingTypeComponent (also renamed to UnmappedNodeComponent)
+    * Moved to purgatory: CheckButton, ToggleFiltersButton, TreePauseButton
+    * Moved to SearchFilters: AddableFilterList, FiltersBox
   * Rename some GreyVest component exports:
     * ListItem/ListGroupItem -> DropdownItem
     * GVStyle -> Style
     * Highlight -> TextHighlight
     * Input -> TextInput
     * IconButton -> TextButton
+* Add new docs and stories
 * Use port 3001 for the storybook server instead of 3000 (to avoid conflicts with other servers that might be running on 3000)
+* Bump mobx-react to latest version
+* Kill unused things
+  * Remove QuickStart story
+  * Remove `utils/mobx-react-utils`, `utils/dsl`, and `utils/tree`
+
 
 ## Highlights
-
-### HOC overhaul
-
-In 1.0, many contexture-react search components relied on byzantine wrappers like [`injectTreeNode`]() and [`Component`](), which were difficult to reason about for new contributors. They also often depended on deprecated APIs like mobx-react's Provider, which is obsolete in the age of React hooks.
-
-All of our HOCs have been removed or rewritten in version 2.0, and our search components have been modernized to take advantage of React hooks for state management where it makes sense to do so (while keeping the good parts of mobx, of course).
-
-We [broke down]() `injectTreeNode` into two small, composable HOCs: `withNode`, which fetches a contexture node from `tree` and `path` props, and `withLoader`, which wraps the component in a loader element that activates based on the node's status. Since they are often (but not always!) used together, we also added the `contexturify` HOC, which composes those two together with the theme-consuming HOC `withTheme`.
-
-We also vastly improved our displayName handling throughout, thanks in large part to @stellarhoof, which should lead to a much better debugging experience. 😊
 
 ### Theme overhaul
 
 Contexture-react is themed at the _component_ level -- that is, our search interfaces accept props for components like Button and Modal, and render whatever is given. The benefit of this approach is that it supports any degree of customization, from a small style adjustment to a major functionality overhaul, through the same relatively simple API.
 
-Version 1.0 laid the groundwork for the theme API, but it was unpolished and had several  disadvantages. Without external state, prop drilling was a major issue: theme props often had to be passed uselessly through multiple levels of hierarchy before arriving at whichever deeply-nested component actually needed them. And, because applying a theme to a search interface required explicitly passing in each theme component, actually using themes was tedious, inflexible, and heavy with boilerplate.
+Version 1.0 laid the groundwork for the theme API, but it was unpolished and had several disadvantages. Without external state, prop drilling was a major issue: theme props often had to be passed uselessly through multiple levels of hierarchy before arriving at whichever deeply-nested component needed them. And, because applying a theme to a search interface required explicitly passing in each theme component, actually using themes was tedious, inflexible, and heavy with boilerplate.
 
-For version 2.0, we added a brand-new theme API that leverages React context to manage state, with several options for consuming theme props from it on a per-component basis -- no more need for prop drilling or re-exporting search components with `defaultProps`. The new theme API is documented in prose form [here](), and in storybook form [here]().
+For version 2.0, we added a brand-new theme API that leverages React context to manage state, with several options for consuming theme props from it on a per-component basis -- no more need for prop drilling or re-exporting search components with `defaultProps`.
+
+### HOC overhaul
+
+In 1.0, many contexture-react search components relied on byzantine wrappers like `injectTreeNode` and `Component`, which were difficult to reason about for new contributors. They also often depended on deprecated APIs like mobx-react's Provider, which is obsolete in the age of React hooks.
+
+All of our HOCs have been removed or rewritten in version 2.0, and our search components have been modernized to take advantage of React hooks for state management where it makes sense to do so (while keeping the good parts of mobx, of course).
+
+We broke down `injectTreeNode` into two small, composable HOCs: `withNode`, which fetches a contexture node from `tree` and `path` props, and `withLoader`, which wraps the component in a loader element that activates based on the node's status. Since they are often (but not always!) used together, we also added the `contexturify` HOC, which composes those two together with the theme-consuming HOC `withTheme`.
+
+We also vastly improved our displayName handling throughout, which should lead to a much better debugging experience. 😊
 
 ## Migration Guide
 1.  **Stop using any utils that aren't explicitly exposed.**
