@@ -132,7 +132,7 @@ These potential modifications to the context theme *do* affect `useTheme`'s retu
 
 > 💁 **Trivia:** The `useTheme` hook is used internally by both `ThemeConsumer` and `withTheme`.
 
-## Default theme components
+## Theme components used in contexture-react
 
 This section documents all of the **theme components** used by contexture-react itself, along with the API for each one. The **theme keys** in this list all have fallback components available, so overriding them in custom themes is optional.
 
