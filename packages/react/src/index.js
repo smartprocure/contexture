@@ -19,6 +19,4 @@ export ToggleFiltersHeader from './ToggleFiltersHeader'
 export * from './greyVest'
 
 // themes
-export baseTheme from './themes/base'
-export greyVestTheme from './themes/greyVest'
-export blueberryTheme from './themes/blueberry'
+export * as themes from './themes'
