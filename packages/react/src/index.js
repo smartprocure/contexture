@@ -3,7 +3,7 @@ export * from './utils/schema'
 export * from './utils/theme'
 
 // exampleTypes
-export * as ExampleTypes from './exampleTypes'
+export * from './exampleTypes'
 
 // generic search layouts
 export QueryBuilder from './queryBuilder/'
