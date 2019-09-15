@@ -11,6 +11,7 @@
   * Remove `types` and `typeComponents` props from QueryBuilder and FilterList
   * Add support for a conventional value/setter prop API to the GreyVest Modal and Popover components (as `isOpen`/`onClose`) in addition to the existing futil lens API
     * Rename the lens prop from `isOpen`, now used for the boolean value, to `open`
+  * Remove `Input` prop from TermsStatsTable (now consumes `TextInput` from theme)
 * Restructure the component library for a cleaner distinction between search components, themes, and GreyVest
   * Consolidate the following layout components into the GreyVest component library: Awaiter, BarChart, Dynamic, ExpandableTable, Flex, Grid, NestedPicker, Popover, Portal, SpacedList, TagsInput, Tag, DateInput, StripedLoader
   * Move or remove several GreyVest component exports:
