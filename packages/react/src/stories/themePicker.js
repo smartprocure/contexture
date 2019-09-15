@@ -1,13 +1,13 @@
 import React from 'react'
 import F from 'futil-js'
 import _ from 'lodash/fp'
-import greyVest from '../src/themes/greyVest'
-import blueberry from '../src/themes/blueberry'
-import base from '../src/themes/base'
-import material from '../src/themes/material'
-import { ThemeProvider, ThemeConsumer } from '../src/utils/theme'
-import { Flex } from '../src/greyVest'
-import { useLens } from '../src/utils/react'
+import greyVest from '../themes/greyVest'
+import blueberry from '../themes/blueberry'
+import base from '../themes/base'
+import material from '../themes/material'
+import { ThemeProvider, ThemeConsumer } from '../utils/theme'
+import { Flex } from '../greyVest'
+import { useLens } from '../utils/react'
 
 let themes = { base, blueberry, greyVest, material }
 

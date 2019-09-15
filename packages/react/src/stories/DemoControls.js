@@ -2,8 +2,8 @@ import F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
 import { defaultProps } from 'recompose'
-import { useLens } from '../src/utils/react'
-import { TextHighlight } from '../src'
+import { useLens } from '../utils/react'
+import { TextHighlight } from '..'
 
 export let Button = x => (
   <button

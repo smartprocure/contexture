@@ -5,7 +5,7 @@ storiesOf('Developer Notes|Docs', module)
   .add(
     'README.md',
     withInfo({
-      text: require('../README.md'),
+      text: require('../../README.md'),
       inline: true,
       source: false,
       header: false,
@@ -14,7 +14,7 @@ storiesOf('Developer Notes|Docs', module)
   .add(
     'CHANGELOG.md',
     withInfo({
-      text: require('../CHANGELOG.md'),
+      text: require('../../CHANGELOG.md'),
       inline: true,
       source: false,
       header: false,
@@ -23,7 +23,7 @@ storiesOf('Developer Notes|Docs', module)
   .add(
     'Theme API',
     withInfo({
-      text: require('../docs/theme.md'),
+      text: require('../../docs/theme.md'),
       inline: true,
       source: false,
       header: false,

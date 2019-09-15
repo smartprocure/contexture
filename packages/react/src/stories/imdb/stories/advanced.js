@@ -1,9 +1,9 @@
 import _ from 'lodash/fp'
 import React from 'react'
 import { fromPromise } from 'mobx-utils'
-import { QueryBuilder, Awaiter, componentForType } from '../../../src'
+import { QueryBuilder, Awaiter, componentForType } from '../../..'
 import Contexture, { updateSchemas } from '../utils/contexture'
-import { ResultCount, ResultTable, TypeMap } from '../../../src/exampleTypes'
+import { ResultCount, ResultTable, TypeMap } from '../../../exampleTypes'
 
 let tree = Contexture({
   key: 'root',

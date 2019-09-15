@@ -10,7 +10,7 @@ import {
   FilterList,
   componentForType,
   FilterAdder,
-} from '../../../src'
+} from '../../..'
 import theme, { Button } from '../../DemoControls'
 import {
   Query,
@@ -19,8 +19,8 @@ import {
   DateHistogram,
   TermsStats,
   TypeMap,
-} from '../../../src/exampleTypes'
-import { ThemeProvider } from '../../../src/utils/theme'
+} from '../../../exampleTypes'
+import { ThemeProvider } from '../../../utils/theme'
 
 let formatYear = x => new Date(x).getUTCFullYear()
 

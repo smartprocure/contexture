@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { componentForType } from './utils/schema'
-import ThemePicker from '../stories/themePicker'
+import ThemePicker from './stories/themePicker'
 import { FilterList } from '.'
 
 storiesOf('Components|Search Components', module)

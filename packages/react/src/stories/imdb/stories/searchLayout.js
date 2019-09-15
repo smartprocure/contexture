@@ -12,8 +12,8 @@ import {
   SearchFilters,
   SearchTree,
   ToggleFiltersHeader,
-} from '../../../src'
-import { Tab, TabContent, TabLabel, Tabs } from '../../../src/greyVest'
+} from '../../..'
+import { Tab, TabContent, TabLabel, Tabs } from '../../../greyVest'
 import {
   DateRangePicker,
   TypeMap,
@@ -21,9 +21,9 @@ import {
   TagsQuery,
   ResultCount,
   PagedResultTable,
-} from '../../../src/exampleTypes'
-import { Column } from '../../../src/greyVest/ExpandableTable'
-import { ThemeConsumer } from '../../../src/utils/theme'
+} from '../../../exampleTypes'
+import { Column } from '../../../greyVest/ExpandableTable'
+import { ThemeConsumer } from '../../../utils/theme'
 
 let tree = Contexture({
   key: 'root',
