@@ -49,6 +49,11 @@ let schemas = fromPromise(
   )
 )
 
+export default {
+  title: 'Live Demos|Advanced Search',
+  parameters: { docs: { page: null } },
+}
+
 export let advanced = () => (
   <Awaiter promise={schemas}>
     {schemas => (
