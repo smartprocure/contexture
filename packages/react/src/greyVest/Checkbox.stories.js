@@ -5,7 +5,7 @@ import decorator from './stories/decorator'
 export default {
   title: 'GreyVest|Checkbox',
   decorators: [decorator],
-  // component: Checkbox,
+  component: Checkbox,
   parameters: {
     componentSubtitle: 'Handy status label',
     notes: 'test',

@@ -21,6 +21,8 @@ let Checkbox = ({ checked, onChange = () => {}, style = {} }) => (
 export default Checkbox
 
 Checkbox.info = {
+  classes: {}, // for css overrides - maybe a hierarchy object?
+  themeProps: [], // this can just be a list
   props: {
     checked: {
       type: Boolean,
@@ -37,5 +39,6 @@ Checkbox.info = {
       description: 'Style overrides',
       defaultValue: {},
     },
+    // need to represent enums and objects like tree or node
   },
 }
