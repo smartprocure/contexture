@@ -2,15 +2,15 @@ let _ = require('lodash/fp')
 let readPkg = require('read-pkg')
 let writePkg = require('write-pkg')
 
-let updatePackage = async (path, newValue) => {
+let updatePackage = async mergeObj => {
   let current = await readPkg()
-  writePkg(
+  await writePkg(
     _.flow(
-      _.set(path, newValue),
+      _.merge(_, mergeObj),
       _.omit(['_id'])
     )(current)
   )
-  console.info(`Updated ${path} from ${_.get(path, current)} to ${newValue}`)
+  console.info(`Updated package with ${JSON.stringify(mergeObj)}`)
 }
 
-updatePackage(process.argv[2], process.argv[3])
+updatePackage({ main: 'dist/greyVest/index.js', name: 'grey-vest' })
