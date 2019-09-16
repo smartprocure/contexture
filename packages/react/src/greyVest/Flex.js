@@ -25,3 +25,10 @@ let Flex = ({
 )
 
 export default Flex
+
+Flex.info = {
+  props: {
+    style: {},
+    alignItems: {},
+  },
+}

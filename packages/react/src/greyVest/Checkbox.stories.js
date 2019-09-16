@@ -1,19 +1,17 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { Checkbox } from '.'
 import decorator from './stories/decorator'
 
-storiesOf('Components|GreyVest Library', module)
-  .addDecorator(decorator)
-  .add('Checkbox', () => (
-    <>
-      <div>
-        Unchecked:
-        <Checkbox />
-      </div>
-      <div>
-        Checked:
-        <Checkbox checked />
-      </div>
-    </>
-  ))
+export default {
+  title: 'GreyVest|Checkbox',
+  decorators: [decorator],
+  // component: Checkbox,
+  parameters: {
+    componentSubtitle: 'Handy status label',
+    notes: 'test',
+    props: Checkbox.info.props,
+  },
+}
+
+export let unchecked = () => <Checkbox />
+export let checked = () => <Checkbox checked />

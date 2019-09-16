@@ -1,7 +1,7 @@
 import React from 'react'
 
 // Low effort custom checkbox
-let Checkbox = ({ checked, onChange, style = {} }) => (
+let Checkbox = ({ checked, onChange = () => {}, style = {} }) => (
   <label
     className={`gv-input gv-checkbox ${checked ? 'checked' : ''}`}
     style={style}
@@ -19,3 +19,23 @@ let Checkbox = ({ checked, onChange, style = {} }) => (
   </label>
 )
 export default Checkbox
+
+Checkbox.info = {
+  props: {
+    checked: {
+      type: Boolean,
+      description:
+        'Determines if the checkbox is checked. Adds the `checked` className if true.',
+      defaultValue: false,
+    },
+    onChange: {
+      type: Function,
+      description: 'Executed when the `checked` property is changed.',
+    },
+    style: {
+      type: Object,
+      description: 'Style overrides',
+      defaultValue: {},
+    },
+  },
+}

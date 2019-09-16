@@ -6,7 +6,7 @@ import { Modal, Button } from '.'
 import decorator from './stories/decorator'
 
 export default {
-  title: 'Components|GreyVest Library',
+  title: 'GreyVest Library|Modal',
   component: Modal,
   decorators: [decorator],
 }
@@ -21,4 +21,4 @@ let ModalDemo = observer(() => {
   )
 })
 
-export let modal = () => <ModalDemo />
+export let story = () => <ModalDemo />
