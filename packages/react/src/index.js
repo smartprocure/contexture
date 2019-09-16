@@ -3,7 +3,7 @@ export * from './utils/schema'
 export * from './utils/theme'
 
 // exampleTypes
-export * as ExampleTypes from './exampleTypes'
+export * from './exampleTypes'
 
 // generic search layouts
 export QueryBuilder from './queryBuilder/'
@@ -19,6 +19,4 @@ export ToggleFiltersHeader from './ToggleFiltersHeader'
 export * from './greyVest'
 
 // themes
-export baseTheme from './themes/base'
-export greyVestTheme from './themes/greyVest'
-export blueberryTheme from './themes/blueberry'
+export * as themes from './themes'

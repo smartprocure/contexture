@@ -343,7 +343,6 @@ let ResultTable = ({
   criteria,
   node,
   tree,
-  HeaderCell,
   Row = Tr, // accept a custom Row component so we can do fancy expansion things
   mapNodeToProps = () => ({}),
   theme: { Table },
@@ -367,7 +366,6 @@ let ResultTable = ({
   let hiddenFields = _.reject(isIncluded, schema)
 
   let headerProps = {
-    HeaderCell,
     mapNodeToProps,
     fields,
     visibleFields,

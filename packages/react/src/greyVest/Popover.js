@@ -8,11 +8,7 @@ import { expandProp } from '../utils/react'
 let Popover = ({ isOpen, onClose, children, style }) =>
   isOpen && (
     <OutsideClickHandler onOutsideClick={onClose}>
-      <div
-        style={{
-          position: 'relative',
-        }}
-      >
+      <div style={{ position: 'relative' }}>
         <div
           className="popover"
           style={{

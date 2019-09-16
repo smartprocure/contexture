@@ -1,6 +1,6 @@
-import { componentForType } from '../src/utils/schema'
-import { TypeMap, Facet } from '../src/exampleTypes'
-import { UnmappedNodeComponent } from '../src/themes/base'
+import { componentForType } from './schema'
+import { TypeMap, Facet } from '../exampleTypes'
+import { UnmappedNodeComponent } from '../themes/base'
 
 test('componentForType', () => {
   let mapNodeToComponent = componentForType(TypeMap)

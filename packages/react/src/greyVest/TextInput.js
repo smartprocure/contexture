@@ -2,16 +2,8 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import _ from 'lodash/fp'
 
-let TextInput = ({ className = '', style, type = 'text', ...x }, ref) => (
-  <input
-    className={`${className} gv-input`}
-    style={{
-      ...style,
-    }}
-    type={type}
-    ref={ref}
-    {...x}
-  />
+let TextInput = ({ className = '', type = 'text', ...props }, ref) => (
+  <input className={`${className} gv-input`} {...{ type, ref, ...props }} />
 )
 
 export default _.flow(

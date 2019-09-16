@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
-import { contexturify, withTreeLens } from '../utils/hoc'
+import { contexturify } from '../utils/hoc'
 import { bgJoin } from '../styles/generic'
 import { useLens } from '../utils/react'
 
@@ -61,7 +61,4 @@ let Text = ({
   )
 }
 
-export default _.flow(
-  withTreeLens,
-  contexturify
-)(Text)
+export default contexturify(Text)

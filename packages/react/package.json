@@ -18,13 +18,16 @@
     "test-ci": "npm t -- --json --outputFile=test-results.json",
     "duti": "duti",
     "fmt": "prettier --write '{src,stories,.storybook}/**/*'",
-    "duti:fix": "npm run lint-fix && npm run fmt"
+    "duti:fix": "npm run lint-fix && npm run fmt",
+    "update-pkg": "node updatePackage"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/smartprocure/contexture-react.git"
   },
-  "author": "Samuel Greene",
+  "author": {
+    "name": "Samuel Greene"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/smartprocure/contexture-react/issues"
@@ -104,7 +107,9 @@
     "react-dom": "^16.8.0",
     "react-select": "^2.0.0",
     "react-test-renderer": "^16.2.0",
-    "storybook-addon-jsx": "^7.1.0"
+    "read-pkg": "^5.2.0",
+    "storybook-addon-jsx": "^7.1.0",
+    "write-pkg": "^4.0.0"
   },
   "dependencies": {
     "futil-js": "^1.61.0",
@@ -115,5 +120,6 @@
     "react-dnd-html5-backend": "^2.5.4",
     "react-outside-click-handler": "^1.2.3",
     "recompose": "^0.30.0"
-  }
+  },
+  "readme": "README.md"
 }
