@@ -1,17 +1,12 @@
 import { configure, addParameters } from '@storybook/react'
 import { DocsPage } from '@storybook/addon-docs/blocks'
 import { PropsTable } from '@storybook/components'
+import F from 'futil-js'
+
+let propDefGetter = type => F.unkeyBy('name', type.info.props)
 
 addParameters({
-  docs: ({ context }) => (
-    <DocsPage
-      context={context}
-      descriptionSlot={({ parameters }) => parameters.notes}
-      propsSlot={({ parameters }) => ({
-        rows: F.unkeyBy('name', parameters.props),
-      })}
-    />
-  ),
+  docs: { getPropDefs: propDefGetter },
 })
 
 configure(

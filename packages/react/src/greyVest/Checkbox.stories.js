@@ -1,6 +1,9 @@
 import React from 'react'
 import { Checkbox } from '.'
 import decorator from './stories/decorator'
+import F from 'futil-js'
+
+let propDefGetter = type => F.unkeyBy('name', type.info.props)
 
 export default {
   title: 'GreyVest|Checkbox',
@@ -9,7 +12,6 @@ export default {
   parameters: {
     componentSubtitle: 'Handy status label',
     notes: 'test',
-    props: Checkbox.info.props,
   },
 }
 
