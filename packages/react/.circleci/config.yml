@@ -36,6 +36,15 @@ jobs:
               npm publish
             fi
       - deploy:
+          name: Maybe Deploy GreyVest
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+              npm run update-pkg main dist/greyVest/index.js
+              npm run update-pkg name grey-vest
+              npm publish || true
+            fi
+      - deploy:
           name: Maybe Deploy Storybook
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
