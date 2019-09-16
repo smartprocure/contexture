@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Box } from './greyVest'
-import ThemePicker from '../stories/themePicker'
+import ThemePicker from './stories/themePicker'
 import { SearchLayout } from '.'
 
 storiesOf('Components|Search Components/SearchLayout', module)

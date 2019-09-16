@@ -5,10 +5,8 @@ import 'babel-polyfill'
 setAddon(JSXAddon)
 
 function loadStories() {
-  const stories = require.context('../stories', true, /\.stories\.js$/)
+  const stories = require.context('../src', true, /\.stories\.js$/)
   stories.keys().forEach(stories)
-  const src = require.context('../src', true, /\.stories\.js$/)
-  src.keys().forEach(src)
 }
 
 configure(loadStories, module)

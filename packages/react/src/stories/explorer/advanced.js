@@ -5,9 +5,9 @@ import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { observer } from 'mobx-react'
 
-import { Awaiter, Flex, QueryBuilder, componentForType } from '../../src/'
+import { Awaiter, Flex, QueryBuilder, componentForType } from '../../'
 import { TextInput } from '../DemoControls'
-import { ResultCount, ResultTable, TypeMap } from '../../src/exampleTypes'
+import { ResultCount, ResultTable, TypeMap } from '../../exampleTypes'
 
 import Contexture, { updateClient } from './contexture'
 

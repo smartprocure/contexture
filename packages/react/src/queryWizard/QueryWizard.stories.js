@@ -8,7 +8,7 @@ import { mergeOverAll } from 'futil-js'
 import { componentForType, schemaFieldProps } from '../utils/schema'
 import { TypeMap } from '../exampleTypes'
 import { tree, fields, types, nodeOverrides } from './stories/config'
-import ThemePicker from '../../stories/themePicker'
+import ThemePicker from '../stories/themePicker'
 
 let mapNodeToDescription = types => (node, fields) => ({
   description: _.join(' ', [

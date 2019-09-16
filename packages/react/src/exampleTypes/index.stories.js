@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react'
 import AsyncSelect from 'react-select/lib/Async'
 import { loadHereOptions, geoCodeLocation } from '../utils/geo'
 import { ThemeProvider } from '../utils/theme'
-import theme from '../../stories/DemoControls'
+import theme from '../stories/DemoControls'
 
 import TestTree from './stories/testTree'
 

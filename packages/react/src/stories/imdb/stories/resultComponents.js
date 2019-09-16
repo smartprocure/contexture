@@ -5,8 +5,8 @@ import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { observer } from 'mobx-react'
 import Contexture, { updateSchemas } from '../utils/contexture'
-import { useLens } from '../../../src/utils/react'
-import { useTheme } from '../../../src/utils/theme'
+import { useLens } from '../../../utils/react'
+import { useTheme } from '../../../utils/theme'
 import {
   FilterList,
   Flex,
@@ -15,14 +15,14 @@ import {
   Grid,
   componentForType,
   FilterAdder,
-} from '../../../src'
+} from '../../..'
 import {
   ResultCount,
   CheckableResultTable,
   ResultPager,
   TagsQuery,
   TypeMap,
-} from '../../../src/exampleTypes'
+} from '../../../exampleTypes'
 import IMDBCards from '../components/IMDBCards'
 
 let tree = Contexture({

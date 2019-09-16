@@ -12,7 +12,7 @@ import {
   SpacedList,
   componentForType,
   FilterAdder,
-} from '../../../src'
+} from '../../..'
 import theme, { DarkBox } from '../../DemoControls'
 import {
   Query,
@@ -21,9 +21,9 @@ import {
   DateHistogram,
   CheckableTermsStatsTable,
   TypeMap,
-} from '../../../src/exampleTypes'
-import { ThemeProvider } from '../../../src/utils/theme'
-import { Column } from './../../../src/greyVest/ExpandableTable'
+} from '../../../exampleTypes'
+import { ThemeProvider } from '../../../utils/theme'
+import { Column } from './../../../greyVest/ExpandableTable'
 
 let formatYear = x => new Date(x).getUTCFullYear()
 

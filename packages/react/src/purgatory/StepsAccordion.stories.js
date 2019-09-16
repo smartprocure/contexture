@@ -1,7 +1,7 @@
 import F from 'futil-js'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import ThemePicker from '../../stories/themePicker'
+import ThemePicker from '../stories/themePicker'
 import { useTheme } from '../utils/theme'
 import { StepsAccordion, AccordionStep } from '.'
 

@@ -1,7 +1,7 @@
 import _ from 'lodash/fp'
 import React from 'react'
-import { Flex } from '../../../src/greyVest'
-import { contexturify } from '../../../src/utils/hoc'
+import { Flex } from '../../../greyVest'
+import { contexturify } from '../../../utils/hoc'
 
 let IMDBCards = ({ node }) => (
   <Flex style={{ flexWrap: 'wrap', justifyContent: 'center' }}>

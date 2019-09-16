@@ -2,7 +2,7 @@ import _ from 'lodash/fp'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import TestTree from './stories/testTree'
-import ThemePicker from '../../stories/themePicker'
+import ThemePicker from '../stories/themePicker'
 import { ResultTable } from '.'
 
 storiesOf('Components|ExampleTypes/ResultTable', module)

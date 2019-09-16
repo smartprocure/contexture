@@ -12,9 +12,9 @@ import {
   Flex,
   componentForType,
   FilterAdder,
-} from '../../src/'
+} from '../../'
 import { TextInput, ClampedHTML } from '../DemoControls'
-import { ResultCount, PagedResultTable, TypeMap } from '../../src/exampleTypes'
+import { ResultCount, PagedResultTable, TypeMap } from '../../exampleTypes'
 
 import Contexture, { updateClient } from './contexture'
 

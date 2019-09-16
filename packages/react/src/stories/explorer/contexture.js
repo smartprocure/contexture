@@ -5,7 +5,7 @@ import elasticsearch from 'elasticsearch-browser'
 import contextureES from 'contexture-elasticsearch'
 import contextureESTypes from 'contexture-elasticsearch/src/types'
 import typeMap from 'contexture-elasticsearch/src/example-types/schemaMapping'
-import ContextureMobx from '../../src/utils/contexture-mobx'
+import ContextureMobx from '../../utils/contexture-mobx'
 
 export let es = { client: {} }
 export let updateClient = config => {
