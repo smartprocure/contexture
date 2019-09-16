@@ -14,7 +14,7 @@
     "lint": "eslint src stories .storybook .circleci __tests__",
     "lint-fix": "npm run lint -- --fix",
     "lint-ci": "npm run lint -- -o lint-results.json -f json",
-    "test": "jest --coverage --passWithNoTests",
+    "test": "jest --passWithNoTests",
     "test-ci": "npm t -- --json --outputFile=test-results.json",
     "duti": "duti",
     "fmt": "prettier --write '{src,stories,.storybook}/**/*'",
@@ -49,10 +49,13 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "\\.(md)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css|less|sass)$": "<rootDir>/__mocks__/styleMock.js"
+      "\\.(md)$": "<rootDir>/../__mocks__/fileMock.js",
+      "\\.(css|less|sass)$": "<rootDir>/../__mocks__/styleMock.js"
     },
-    "testURL": "http://localhost/"
+    "testURL": "http://localhost/",
+    "rootDir": "src",
+    "collectCoverage": false,
+    "collectCoverageFrom": ["<rootDir>"]
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
