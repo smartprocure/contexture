@@ -17,7 +17,7 @@ let Node = (type, key) => ({ key, type })
 
 storiesOf('Components|Search Components/QueryBuilder', module)
   .addDecorator(ThemePicker('greyVest'))
-  .addWithJSX('One Filter', () => (
+  .add('One Filter', () => (
     <QueryBuilder
       tree={Client({
         key: 'root',
@@ -28,7 +28,7 @@ storiesOf('Components|Search Components/QueryBuilder', module)
       mapNodeToProps={componentForType(TypeMap)}
     />
   ))
-  .addWithJSX('One Filter with fields', () => (
+  .add('One Filter with fields', () => (
     <QueryBuilder
       path={['root']}
       tree={Client({
@@ -51,7 +51,7 @@ storiesOf('Components|Search Components/QueryBuilder', module)
       mapNodeToProps={componentForType(TypeMap)}
     />
   ))
-  .addWithJSX('One Filter with facet options', () => (
+  .add('One Filter with facet options', () => (
     <QueryBuilder
       path={['root']}
       tree={Client({
@@ -80,7 +80,7 @@ storiesOf('Components|Search Components/QueryBuilder', module)
       mapNodeToProps={componentForType(TypeMap)}
     />
   ))
-  .addWithJSX('One Filter on a misplaced root', () => (
+  .add('One Filter on a misplaced root', () => (
     <QueryBuilder
       tree={Client({
         key: 'root',
@@ -97,7 +97,7 @@ storiesOf('Components|Search Components/QueryBuilder', module)
       mapNodeToProps={componentForType(TypeMap)}
     />
   ))
-  .addWithJSX('Multiple Filters', () => (
+  .add('Multiple Filters', () => (
     <QueryBuilder
       path={['root']}
       tree={Client({

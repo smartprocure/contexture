@@ -14,7 +14,7 @@ let makeStepTitle = title => n => (
 
 storiesOf('Components|Search Components/Internals', module)
   .addDecorator(ThemePicker('greyVest'))
-  .addWithJSX('StepsAccordion', () => {
+  .add('StepsAccordion', () => {
     let isClicked = F.stateLens(React.useState(false))
     let theme = useTheme()
     return (

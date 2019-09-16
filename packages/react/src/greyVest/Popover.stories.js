@@ -19,4 +19,4 @@ let PopoverDemo = observer(() => {
 
 storiesOf('Components|GreyVest Library', module)
   .addDecorator(decorator)
-  .addWithJSX('Popover', () => <PopoverDemo />)
+  .add('Popover', () => <PopoverDemo />)

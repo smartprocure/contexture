@@ -9,7 +9,7 @@ import { Geo } from '.'
 
 storiesOf('Components|ExampleTypes', module)
   .addDecorator(ThemePicker('greyVest'))
-  .addWithJSX('Geo filter & HERE maps', () => (
+  .add('Geo filter & HERE maps', () => (
     <div
       style={{
         backgroundColor: '#333',

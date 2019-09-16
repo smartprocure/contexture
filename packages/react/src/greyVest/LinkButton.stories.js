@@ -8,6 +8,6 @@ let click = action('clicked')
 
 storiesOf('Components|GreyVest Library', module)
   .addDecorator(decorator)
-  .addWithJSX('LinkButton', () => (
+  .add('LinkButton', () => (
     <LinkButton onClick={() => click()}>Click</LinkButton>
   ))

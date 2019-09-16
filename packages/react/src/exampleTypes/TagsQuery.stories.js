@@ -14,10 +14,8 @@ let treeWithTags = TestTree(testTree => {
 
 storiesOf('Components|ExampleTypes/Tags Query', module)
   .addDecorator(ThemePicker('greyVest'))
-  .addWithJSX('Default', () => (
-    <TagsQuery tree={treeWithTags} path={['tagsQuery']} />
-  ))
-  .addWithJSX('Responsive', () => (
+  .add('Default', () => <TagsQuery tree={treeWithTags} path={['tagsQuery']} />)
+  .add('Responsive', () => (
     <div style={{ maxWidth: 500 }}>
       <TagsQuery tree={treeWithTags} path={['tagsQuery']} />
     </div>

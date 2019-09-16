@@ -6,4 +6,4 @@ import { Query } from '.'
 
 storiesOf('Components|ExampleTypes', module)
   .addDecorator(ThemePicker('greyVest'))
-  .addWithJSX('Query', () => <Query tree={TestTree()} path={['query']} />)
+  .add('Query', () => <Query tree={TestTree()} path={['query']} />)

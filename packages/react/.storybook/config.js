@@ -1,12 +1,10 @@
-import { configure, setAddon } from '@storybook/react'
-import JSXAddon from 'storybook-addon-jsx'
-import 'babel-polyfill'
+import { configure } from '@storybook/react'
 
-setAddon(JSXAddon)
-
-function loadStories() {
-  const stories = require.context('../src', true, /\.stories\.js$/)
-  stories.keys().forEach(stories)
-}
-
-configure(loadStories, module)
+configure(
+  require.context(
+    '../src',
+    true,
+    /^((?![\\/]node_modules[\\/]).)*\.stories\.(js|mdx)$/
+  ),
+  module
+)

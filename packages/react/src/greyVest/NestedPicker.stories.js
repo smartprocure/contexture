@@ -6,7 +6,7 @@ import decorator from './stories/decorator'
 
 storiesOf('Components|GreyVest Library', module)
   .addDecorator(decorator)
-  .addWithJSX('NestedPicker', () => (
+  .add('NestedPicker', () => (
     <NestedPicker
       options={['abcd', 'bcde', 'cdef'].map(x => ({ label: x, value: x }))}
       onChange={action(`picked`)}

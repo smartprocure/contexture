@@ -1,10 +1,15 @@
 import React from 'react'
 import F from 'futil-js'
-import { storiesOf } from '@storybook/react'
 import { observer } from 'mobx-react'
 import { useLens } from '../utils/react'
 import { Modal, Button } from '.'
 import decorator from './stories/decorator'
+
+export default {
+  title: 'Components|GreyVest Library',
+  component: Modal,
+  decorators: [decorator],
+}
 
 let ModalDemo = observer(() => {
   let open = useLens(false)
@@ -16,6 +21,4 @@ let ModalDemo = observer(() => {
   )
 })
 
-storiesOf('Components|GreyVest Library', module)
-  .addDecorator(decorator)
-  .addWithJSX('Modal', () => <ModalDemo />)
+export let modal = () => <ModalDemo />

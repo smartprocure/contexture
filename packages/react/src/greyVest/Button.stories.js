@@ -6,30 +6,30 @@ import decorator from './stories/decorator'
 
 storiesOf('Components|GreyVest Library/Button', module)
   .addDecorator(decorator)
-  .addWithJSX('Basic Usage', () => (
+  .add('Basic Usage', () => (
     <Button onClick={() => action('clicked')()}>Click</Button>
   ))
-  .addWithJSX('Disabled', () => (
+  .add('Disabled', () => (
     <Button disabled onClick={() => action('clicked')()}>
       Don't click
     </Button>
   ))
-  .addWithJSX('Active', () => (
+  .add('Active', () => (
     <Button isActive onClick={() => action('clicked')()}>
       Click
     </Button>
   ))
-  .addWithJSX('Primary', () => (
+  .add('Primary', () => (
     <Button primary onClick={() => action('clicked')()}>
       Click
     </Button>
   ))
-  .addWithJSX('Primary Disabled', () => (
+  .add('Primary Disabled', () => (
     <Button primary disabled onClick={() => action('clicked')()}>
       Can't touch this
     </Button>
   ))
-  .addWithJSX('As Div', () => (
+  .add('As Div', () => (
     <Button as="div" onClick={() => action('clicked')()}>
       Click
     </Button>

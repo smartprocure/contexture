@@ -6,7 +6,7 @@ import decorator from './stories/decorator'
 
 storiesOf('Components|GreyVest Library/', module)
   .addDecorator(decorator)
-  .addWithJSX('Awaiter', () => {
+  .add('Awaiter', () => {
     let resolve
     let reject
     let p = fromPromise(

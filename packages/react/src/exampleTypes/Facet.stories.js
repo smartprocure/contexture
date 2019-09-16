@@ -6,4 +6,4 @@ import { Facet } from '.'
 
 storiesOf('Components|ExampleTypes', module)
   .addDecorator(ThemePicker('greyVest'))
-  .addWithJSX('Facet', () => <Facet tree={TestTree()} path={['facet']} />)
+  .add('Facet', () => <Facet tree={TestTree()} path={['facet']} />)

@@ -24,12 +24,12 @@ let FlexDemo = ({ style, ...props }) => (
 )
 
 storiesOf('Components|GreyVest Library/Flex', module)
-  .addWithJSX('As button', () => (
+  .add('As button', () => (
     <Flex column alignItems="center">
       <FlexDemo as="button" />
     </Flex>
   ))
-  .addWithJSX('No children', () => (
+  .add('No children', () => (
     <Flex column alignItems="center">
       <Flex />
     </Flex>

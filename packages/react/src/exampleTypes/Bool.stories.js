@@ -6,4 +6,4 @@ import { Bool } from '.'
 
 storiesOf('Components|ExampleTypes', module)
   .addDecorator(ThemePicker('greyVest'))
-  .addWithJSX('Bool', () => <Bool tree={TestTree()} path={['bool']} />)
+  .add('Bool', () => <Bool tree={TestTree()} path={['bool']} />)

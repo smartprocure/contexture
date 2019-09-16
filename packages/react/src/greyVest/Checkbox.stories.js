@@ -5,7 +5,7 @@ import decorator from './stories/decorator'
 
 storiesOf('Components|GreyVest Library', module)
   .addDecorator(decorator)
-  .addWithJSX('Checkbox', () => (
+  .add('Checkbox', () => (
     <>
       <div>
         Unchecked:

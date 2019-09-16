@@ -5,13 +5,13 @@ import decorator from './stories/decorator'
 
 storiesOf('Components|GreyVest Library/Error', module)
   .addDecorator(decorator)
-  .addWithJSX('Text', () => <ErrorList>I am an error</ErrorList>)
-  .addWithJSX('Block', () => (
+  .add('Text', () => <ErrorList>I am an error</ErrorList>)
+  .add('Block', () => (
     <ErrorList block>
       {['Error 1', 'Error 2', ['Error 3A', 'Error 3B']]}
     </ErrorList>
   ))
-  .addWithJSX('Form Demo', () => (
+  .add('Form Demo', () => (
     <Box>
       <h1 style={{ margin: '15px 0' }}>Header</h1>
       <ErrorList block>Block error</ErrorList>

@@ -64,5 +64,5 @@ let AccordionStory = () => (
 
 storiesOf('Components|Search Components/QueryWizard', module)
   .addDecorator(ThemePicker('greyVest'))
-  .addWithJSX('QueryWizard', WizardStory)
-  .addWithJSX('Accordion with FilterButtonList', AccordionStory)
+  .add('QueryWizard', WizardStory)
+  .add('Accordion with FilterButtonList', AccordionStory)

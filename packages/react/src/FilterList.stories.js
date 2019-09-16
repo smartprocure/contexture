@@ -6,7 +6,7 @@ import { FilterList } from '.'
 
 storiesOf('Components|Search Components', module)
   .addDecorator(ThemePicker('blueberry'))
-  .addWithJSX('FilterList', () => (
+  .add('FilterList', () => (
     <FilterList
       node={{
         children: [

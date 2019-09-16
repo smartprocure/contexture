@@ -5,4 +5,4 @@ import decorator from './stories/decorator'
 
 storiesOf('Components|GreyVest Library', module)
   .addDecorator(decorator)
-  .addWithJSX('Box', () => <Box>Box Contents</Box>)
+  .add('Box', () => <Box>Box Contents</Box>)

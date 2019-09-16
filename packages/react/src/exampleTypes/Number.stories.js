@@ -6,4 +6,4 @@ import { Number } from '.'
 
 storiesOf('Components|ExampleTypes', module)
   .addDecorator(ThemePicker('greyVest'))
-  .addWithJSX('Number', () => <Number tree={TestTree()} path={['number']} />)
+  .add('Number', () => <Number tree={TestTree()} path={['number']} />)

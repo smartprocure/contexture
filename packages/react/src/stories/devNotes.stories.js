@@ -23,7 +23,7 @@ storiesOf('Developer Notes|Docs', module)
   .add(
     'Theme API',
     withInfo({
-      text: require('../../docs/theme.md'),
+      text: require('../../docs/theme.mdx'),
       inline: true,
       source: false,
       header: false,

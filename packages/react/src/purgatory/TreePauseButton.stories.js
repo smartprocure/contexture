@@ -21,18 +21,18 @@ let tree = {
 
 storiesOf('Components|Search Components/Internals/TreePauseButton', module)
   .addDecorator(ThemePicker('greyVest'))
-  .addWithJSX('One Tree', () => (
+  .add('One Tree', () => (
     <TreePauseButton>
       <SearchTree tree={tree} path={['root']} />
     </TreePauseButton>
   ))
-  .addWithJSX('Multiple Trees', () => (
+  .add('Multiple Trees', () => (
     <TreePauseButton>
       <SearchTree tree={tree} path={['root']} />
       <SearchTree tree={tree} path={['root']} />
     </TreePauseButton>
   ))
-  .addWithJSX('Falsey Trees', () => (
+  .add('Falsey Trees', () => (
     <TreePauseButton>
       <SearchTree tree={tree} path={['root']} />
       {false && <SearchTree tree={tree} path={['root']} />}

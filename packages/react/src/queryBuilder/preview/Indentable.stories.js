@@ -6,17 +6,17 @@ storiesOf(
   'Components|Search Components/QueryBuilder/Internals/Indentable',
   module
 )
-  .addWithJSX('and', () => (
+  .add('and', () => (
     <Indentable indent={() => true} node={{ join: 'and' }}>
       <div style={{ height: '100px' }}>Contents</div>
     </Indentable>
   ))
-  .addWithJSX('or', () => (
+  .add('or', () => (
     <Indentable indent={() => true} node={{ join: 'or' }}>
       <div style={{ height: '100px' }}>Contents</div>
     </Indentable>
   ))
-  .addWithJSX('not', () => (
+  .add('not', () => (
     <Indentable indent={() => true} node={{ join: 'not' }}>
       <div style={{ height: '100px' }}>Contents</div>
     </Indentable>

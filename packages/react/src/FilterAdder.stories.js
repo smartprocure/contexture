@@ -14,7 +14,7 @@ let mockTree = {
 
 storiesOf('Components|Search Components/FilterAdder', module)
   .addDecorator(ThemePicker('greyVest'))
-  .addWithJSX('With ModalPicker', () => (
+  .add('With ModalPicker', () => (
     <FilterAdder
       tree={mockTree}
       path={['path']}
@@ -28,7 +28,7 @@ storiesOf('Components|Search Components/FilterAdder', module)
       })}
     />
   ))
-  .addWithJSX('With Select', () => {
+  .add('With Select', () => {
     let theme = useTheme()
     return (
       <div>
@@ -49,7 +49,7 @@ storiesOf('Components|Search Components/FilterAdder', module)
       </div>
     )
   })
-  .addWithJSX('With NestedPicker', () => {
+  .add('With NestedPicker', () => {
     let theme = useTheme()
     return (
       <div>

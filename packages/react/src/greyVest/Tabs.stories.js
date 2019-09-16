@@ -18,19 +18,19 @@ storiesOf('Components|GreyVest Library/Tabs', module)
     )
   )
   .addDecorator(decorator)
-  .addWithJSX('Base Usage', () => (
+  .add('Base Usage', () => (
     <Tabs>
       <Tab label="Tab One">Tab One Contents</Tab>
       <Tab label="Tab Two">Tab Two Contents</Tab>
     </Tabs>
   ))
-  .addWithJSX('Anonymous Values', () => (
+  .add('Anonymous Values', () => (
     <Tabs defaultValue={0}>
       <Tab label="First Tab">First Tab Contents</Tab>
       <Tab label="Second Tab">Second Tab Contents</Tab>
     </Tabs>
   ))
-  .addWithJSX('TabLabel and TabContent', () => (
+  .add('TabLabel and TabContent', () => (
     <Tabs>
       <TabLabel value="results">Results</TabLabel>
       <TabContent value="results">Results Tables</TabContent>
@@ -39,7 +39,7 @@ storiesOf('Components|GreyVest Library/Tabs', module)
       </Tab>
     </Tabs>
   ))
-  .addWithJSX('Tab Render Function', () => (
+  .add('Tab Render Function', () => (
     <Tabs>
       <Tab label="Analytics">Charts and Stuff</Tab>
       <Tab label="Analytics2" value="tab 2">
@@ -47,7 +47,7 @@ storiesOf('Components|GreyVest Library/Tabs', module)
       </Tab>
     </Tabs>
   ))
-  .addWithJSX('Uncontrolled with defaultValue', () => (
+  .add('Uncontrolled with defaultValue', () => (
     <Tabs defaultValue="analytics">
       <Tab value="results" label="Results">
         Results Tables
@@ -57,7 +57,7 @@ storiesOf('Components|GreyVest Library/Tabs', module)
       </Tab>
     </Tabs>
   ))
-  .addWithJSX('Controlled', () => (
+  .add('Controlled', () => (
     <Observer>
       {() => (
         <>
@@ -82,7 +82,7 @@ storiesOf('Components|GreyVest Library/Tabs', module)
       )}
     </Observer>
   ))
-  .addWithJSX('Custom TabList and TabPanel', () => (
+  .add('Custom TabList and TabPanel', () => (
     <Tabs TabsList={ButtonRadio} TabPanel={React.Fragment}>
       <Tab value="results" label="Results">
         Results Tables
