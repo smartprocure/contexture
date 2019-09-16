@@ -10,8 +10,8 @@ let LensInput = ({ lens, theme: { TextInput }, ...props }) => (
 
 let Text = _.flow(
   setDisplayName('Text'),
-  withTreeLens,
-  contexturify
+  contexturify,
+  withTreeLens
 )(LensInput)
 
 export default Text
