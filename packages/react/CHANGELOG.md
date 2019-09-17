@@ -14,6 +14,8 @@
   * Remove `Input` prop from TermsStatsTable (now consumes `TextInput` from theme)
   * Remove `HeaderCell` prop from ResultTable (still accessible through the `HeaderCell` property on the field schema)
 * Restructure the component library for a cleaner distinction between search components, themes, and GreyVest
+  * Publish the GreyVest component library on npm as the `grey-vest` package!
+  * Export exampleTypes components individually from contexture-react, rather than in an `ExampleTypes` object
   * Consolidate the following layout components into the GreyVest component library: Awaiter, BarChart, Dynamic, ExpandableTable, Flex, Grid, NestedPicker, Popover, Portal, SpacedList, TagsInput, Tag, DateInput, StripedLoader
   * Move or remove several GreyVest component exports:
     * Removed:  Adder (use FilterAdder), Pager (use ResultPager)
