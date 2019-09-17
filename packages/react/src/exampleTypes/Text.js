@@ -1,12 +1,17 @@
-import { inject } from 'mobx-react'
-import injectTreeNode from '../utils/injectTreeNode'
-import LensInput from '../layout/LensInput'
+import _ from 'lodash/fp'
+import F from 'futil-js'
+import React from 'react'
+import { contexturify, withTreeLens } from '../utils/hoc'
+import { setDisplayName } from 'recompose'
 
-let Text = injectTreeNode(
-  inject((context, { tree, node, prop = 'value' }) => ({
-    lens: tree.lens(node.path, prop),
-  }))(LensInput)
+let LensInput = ({ lens, theme: { TextInput }, ...props }) => (
+  <TextInput {...F.domLens.value(lens)} {...props} />
 )
-Text.displayName = 'Text'
+
+let Text = _.flow(
+  setDisplayName('Text'),
+  contexturify,
+  withTreeLens
+)(LensInput)
 
 export default Text

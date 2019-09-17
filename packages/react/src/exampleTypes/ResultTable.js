@@ -1,12 +1,12 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
+import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
-import InjectTreeNode from '../utils/injectTreeNode'
-import { Popover, Dynamic } from '../layout'
-import { withStateLens } from '../utils/mobx-react-utils'
+import { contexturify } from '../utils/hoc'
+import { Dynamic } from '../greyVest'
+import { useLens } from '../utils/react'
 import { fieldsToOptions } from '../FilterAdder'
-import DefaultIcon from '../DefaultIcon'
 import {
   applyDefaults,
   getRecord,
@@ -14,6 +14,7 @@ import {
   inferSchema,
 } from '../utils/schema'
 import { newNodeFromField } from '../utils/search'
+import { withTheme } from '../utils/theme'
 
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
@@ -43,11 +44,14 @@ let popoverStyle = {
   userSelect: 'none',
 }
 
-let HighlightedColumnHeader = observer(
+let HighlightedColumnHeader = _.flow(
+  setDisplayName('HighlightedColumnHeader'),
+  observer
+)(
   ({
     node,
-    Cell = 'th',
     results = _.result('slice', getResults(node)),
+    Cell = 'th',
     hasAdditionalFields = !_.flow(
       _.map('additionalFields'),
       _.compact,
@@ -58,71 +62,96 @@ let HighlightedColumnHeader = observer(
       <Cell key="additionalFields">Other Matches</Cell>
     ) : null
 )
-HighlightedColumnHeader.displayName = 'HighlightedColumnHeader'
 
 let labelForField = (schema, field) =>
   _.getOr(field, 'label', _.find({ field }, schema))
 
-let HighlightedColumn = withStateLens({ viewModal: false })(
-  observer(
-    ({
-      node,
-      results = _.result('slice', getResults(node)),
-      additionalFields = _.result('0.additionalFields.slice', results),
-      Cell = 'td',
-      Table = 'table',
-      Modal = null,
-      viewModal,
-      schema,
-    }) =>
-      _.isEmpty(additionalFields) ? (
-        <Cell key="additionalFields" />
-      ) : (
-        <Cell key="additionalFields">
-          {Modal && (
-            <Modal isOpen={viewModal}>
-              <h3>Other Matching Fields</h3>
-              <Table>
-                <tbody>
-                  {_.map(
-                    ({ label, value }) => (
-                      <tr key={label}>
-                        <td>{labelForField(schema, label)}</td>
-                        <td dangerouslySetInnerHTML={{ __html: value }} />
-                      </tr>
-                    ),
-                    additionalFields
-                  )}
-                </tbody>
-              </Table>
-            </Modal>
-          )}
-          <button
-            className="gv-link-button"
-            onClick={e => {
-              e.preventDefault()
-              F.on(viewModal)()
-            }}
-          >
-            Matched {_.size(additionalFields)} other field(s)
-          </button>
-        </Cell>
-      )
-  )
+let HighlightedColumn = _.flow(
+  setDisplayName('HighlightedColumn'),
+  observer,
+  withTheme
+)(
+  ({
+    node,
+    results = _.result('slice', getResults(node)),
+    additionalFields = _.result('0.additionalFields.slice', results),
+    schema,
+    Cell = 'td',
+    theme: { Modal, Table },
+  }) => {
+    let viewModal = useLens(false)
+    return _.isEmpty(additionalFields) ? (
+      <Cell key="additionalFields" />
+    ) : (
+      <Cell key="additionalFields">
+        <Modal open={viewModal}>
+          <h3>Other Matching Fields</h3>
+          <Table>
+            <tbody>
+              {_.map(
+                ({ label, value }) => (
+                  <tr key={label}>
+                    <td>{labelForField(schema, label)}</td>
+                    <td dangerouslySetInnerHTML={{ __html: value }} />
+                  </tr>
+                ),
+                additionalFields
+              )}
+            </tbody>
+          </Table>
+        </Modal>
+        <button
+          className="gv-link-button"
+          onClick={e => {
+            e.preventDefault()
+            F.on(viewModal)()
+          }}
+        >
+          Matched {_.size(additionalFields)} other field(s)
+        </button>
+      </Cell>
+    )
+  }
 )
-HighlightedColumn.displayName = 'HighlightedColumn'
 
-let HeaderCellDefault = observer(({ activeFilter, style, children }) => (
+let HeaderCellDefault = _.flow(
+  setDisplayName('HeaderCell'),
+  observer
+)(({ activeFilter, style, children }) => (
   <th style={{ ...(activeFilter ? { fontWeight: 900 } : {}), ...style }}>
     {children}
   </th>
 ))
-HeaderCellDefault.displayName = 'HeaderCellDefault'
 
-let Header = withStateLens({ popover: false, adding: false, filtering: false })(
-  observer(({ // Local State
-    popover, adding, filtering, Modal, FieldPicker, ListGroupItem: Item, typeComponents = {}, HeaderCell = HeaderCellDefault, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria, mapNodeToProps, fields, visibleFields, Icon }) => {
-    // Components (providerable?) // Contextual
+let Header = _.flow(
+  setDisplayName('Header'),
+  observer,
+  withTheme
+)(
+  ({
+    field: fieldSchema,
+    includes,
+    addOptions,
+    addFilter,
+    tree,
+    node,
+    mutate,
+    criteria,
+    mapNodeToProps,
+    fields,
+    visibleFields,
+    theme: {
+      DropdownItem,
+      Icon,
+      Popover,
+      Modal,
+      NestedPicker,
+      UnmappedNodeComponent,
+    },
+  }) => {
+    let popover = useLens(false)
+    let adding = useLens(false)
+    let filtering = useLens(false)
     let {
       disableFilter,
       disableSort,
@@ -132,7 +161,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
       hideMenu,
       typeDefault,
     } = fieldSchema
-    HeaderCell = fieldSchema.HeaderCell || HeaderCell
+    let HeaderCell = fieldSchema.HeaderCell || HeaderCellDefault
     let filterNode =
       criteria &&
       _.find({ field }, _.getOr([], 'children', tree.getNode(criteria)))
@@ -160,7 +189,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
           {hideMenu ? null : <Icon icon="TableColumnMenu" />}
         </span>
         <Popover
-          isOpen={{
+          open={{
             get() {
               return F.view(popover)
             },
@@ -172,7 +201,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
           style={popoverStyle}
         >
           {!disableSort && (
-            <Item
+            <DropdownItem
               onClick={() => {
                 F.off(popover)()
                 mutate({ sortField, sortDir: 'asc' })
@@ -180,10 +209,10 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
             >
               <Icon icon="SortAscending" />
               Sort Ascending
-            </Item>
+            </DropdownItem>
           )}
           {!disableSort && (
-            <Item
+            <DropdownItem
               onClick={() => {
                 F.off(popover)()
                 mutate({ sortField, sortDir: 'desc' })
@@ -191,39 +220,39 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
             >
               <Icon icon="SortDescending" />
               Sort Descending
-            </Item>
+            </DropdownItem>
           )}
-          <Item
+          <DropdownItem
             onClick={() =>
               moveColumn(mutate, i => i - 1, field, visibleFields, includes)
             }
           >
             <Icon icon="MoveLeft" />
             Move Left
-          </Item>
-          <Item
+          </DropdownItem>
+          <DropdownItem
             onClick={() =>
               moveColumn(mutate, i => i + 1, field, visibleFields, includes)
             }
           >
             <Icon icon="MoveRight" />
             Move Right
-          </Item>
-          <Item
+          </DropdownItem>
+          <DropdownItem
             onClick={() => mutate({ include: _.without([field], includes) })}
           >
             <Icon icon="RemoveColumn" />
             Remove Column
-          </Item>
-          {Modal && FieldPicker && !!addOptions.length && (
-            <Item onClick={F.on(adding)}>
+          </DropdownItem>
+          {!!addOptions.length && (
+            <DropdownItem onClick={F.on(adding)}>
               <Icon icon="AddColumn" />
               Add Column
-            </Item>
+            </DropdownItem>
           )}
           {criteria && (typeDefault || filterNode) && !disableFilter && (
             <div>
-              <Item onClick={filter}>
+              <DropdownItem onClick={filter}>
                 <Icon
                   icon={
                     filterNode
@@ -234,84 +263,72 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
                   }
                 />
                 Filter
-              </Item>
+              </DropdownItem>
               {F.view(filtering) && filterNode && !filterNode.paused && (
                 <Dynamic
-                  component={typeComponents[filterNode.type]}
-                  tree={tree}
-                  path={_.toArray(filterNode.path)}
-                  {...mapNodeToProps(filterNode, fields, typeComponents)}
+                  {...{
+                    component: UnmappedNodeComponent,
+                    tree,
+                    path: _.toArray(filterNode.path),
+                    ...mapNodeToProps(filterNode, fields),
+                  }}
                 />
               )}
             </div>
           )}
-          {Modal && FieldPicker && (
-            <Modal isOpen={adding}>
-              <FieldPicker
-                options={addOptions}
-                onChange={field => {
-                  if (!_.contains(field, includes))
-                    mutate({ include: [...includes, field] })
-                  F.off(adding)()
-                }}
-              />
-            </Modal>
-          )}
+          <Modal open={adding}>
+            <NestedPicker
+              options={addOptions}
+              onChange={field => {
+                if (!_.contains(field, includes))
+                  mutate({ include: [...includes, field] })
+                F.off(adding)()
+              }}
+            />
+          </Modal>
         </Popover>
       </HeaderCell>
     )
-  })
+  }
 )
-Header.displayName = 'Header'
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
-let TableBody = observer(
-  ({
-    node,
-    visibleFields,
-    fields,
-    hiddenFields,
-    Modal,
-    Table,
-    Row,
-    schema,
-  }) => (
-    <tbody>
-      {!!getResults(node).length &&
-        _.map(
-          x => (
-            <Row
-              key={x._id}
-              record={getRecord(x)}
-              {...{ fields, visibleFields, hiddenFields }}
-            >
-              {_.map(
-                ({ field, display = x => x, Cell = 'td' }) => (
-                  <Cell key={field}>
-                    {display(_.get(field, getRecord(x)), getRecord(x))}
-                  </Cell>
-                ),
-                visibleFields
-              )}
-              {node.showOtherMatches && (
-                <HighlightedColumn
-                  {...{
-                    node,
-                    additionalFields: _.result('additionalFields.slice', x),
-                    Modal,
-                    Table,
-                    schema,
-                  }}
-                />
-              )}
-            </Row>
-          ),
-          getResults(node)
-        )}
-    </tbody>
-  )
-)
-TableBody.displayName = 'TableBody'
+let TableBody = _.flow(
+  setDisplayName('TableBody'),
+  observer
+)(({ node, visibleFields, fields, hiddenFields, schema, Row = 'tr' }) => (
+  <tbody>
+    {!!getResults(node).length &&
+      _.map(
+        x => (
+          <Row
+            key={x._id}
+            record={getRecord(x)}
+            {...{ fields, visibleFields, hiddenFields }}
+          >
+            {_.map(
+              ({ field, display = x => x, Cell = 'td' }) => (
+                <Cell key={field}>
+                  {display(_.get(field, getRecord(x)), getRecord(x))}
+                </Cell>
+              ),
+              visibleFields
+            )}
+            {node.showOtherMatches && (
+              <HighlightedColumn
+                {...{
+                  node,
+                  additionalFields: _.result('additionalFields.slice', x),
+                  schema,
+                }}
+              />
+            )}
+          </Row>
+        ),
+        getResults(node)
+      )}
+  </tbody>
+))
 
 let Tr = props => (
   <tr
@@ -319,93 +336,73 @@ let Tr = props => (
   />
 )
 
-let ResultTable = InjectTreeNode(
-  observer(
-    ({
-      fields,
-      infer,
-      path,
-      criteria,
-      node,
-      tree,
-      Table = 'table',
-      HeaderCell,
-      Modal,
-      ListGroupItem,
-      FieldPicker,
-      typeComponents,
-      mapNodeToProps = () => ({}),
-      Icon = DefaultIcon,
-      Row = Tr,
-    }) => {
-      // From Provider // Theme/Components
-      let mutate = tree.mutate(path)
-      // NOTE infer + add columns does not work together (except for anything explicitly passed in)
-      //   When removing a field, it's not longer on the record, so infer can't pick it up since it runs per render
-      let schema = _.flow(
-        _.merge(infer && inferSchema(node)),
-        applyDefaults,
-        _.values,
-        _.orderBy('order', 'desc')
-      )(fields)
-      let includes = getIncludes(schema, node)
-      let isIncluded = x => _.includes(x.field, includes)
-      let visibleFields = _.flow(
-        _.map(field => _.find({ field }, schema)),
-        _.compact
-      )(includes)
-      let hiddenFields = _.reject(isIncluded, schema)
+let ResultTable = ({
+  fields,
+  infer,
+  path,
+  criteria,
+  node,
+  tree,
+  Row = Tr, // accept a custom Row component so we can do fancy expansion things
+  mapNodeToProps = () => ({}),
+  theme: { Table },
+}) => {
+  // From Theme/Components
+  let mutate = tree.mutate(path)
+  // NOTE infer + add columns does not work together (except for anything explicitly passed in)
+  //   When removing a field, it's not longer on the record, so infer can't pick it up since it runs per render
+  let schema = _.flow(
+    _.merge(infer && inferSchema(node)),
+    applyDefaults,
+    _.values,
+    _.orderBy('order', 'desc')
+  )(fields)
+  let includes = getIncludes(schema, node)
+  let isIncluded = x => _.includes(x.field, includes)
+  let visibleFields = _.flow(
+    _.map(field => _.find({ field }, schema)),
+    _.compact
+  )(includes)
+  let hiddenFields = _.reject(isIncluded, schema)
 
-      let headerProps = {
-        Modal,
-        FieldPicker,
-        ListGroupItem,
-        typeComponents,
-        HeaderCell,
-        Icon,
-        mapNodeToProps,
-        fields,
-        visibleFields,
-        includes,
-        addOptions: fieldsToOptions(hiddenFields),
-        addFilter: field =>
-          tree.add(criteria, newNodeFromField({ field, fields })),
-        tree,
-        node,
-        mutate,
-        criteria,
-      }
+  let headerProps = {
+    mapNodeToProps,
+    fields,
+    visibleFields,
+    includes,
+    addOptions: fieldsToOptions(hiddenFields),
+    addFilter: field => tree.add(criteria, newNodeFromField({ field, fields })),
+    tree,
+    node,
+    mutate,
+    criteria,
+  }
 
-      return (
-        <Table>
-          <thead>
-            <tr>
-              {F.mapIndexed(
-                x => (
-                  <Header key={x.field} field={x} {...headerProps} />
-                ),
-                visibleFields
-              )}
-              <HighlightedColumnHeader node={node} />
-            </tr>
-          </thead>
-          <TableBody
-            {...{
-              Row,
-              node,
-              fields,
-              visibleFields,
-              hiddenFields,
-              Modal,
-              Table,
-              schema,
-            }}
-          />
-        </Table>
-      )
-    }
+  return (
+    <Table>
+      <thead>
+        <tr>
+          {F.mapIndexed(
+            x => (
+              <Header key={x.field} field={x} {...headerProps} />
+            ),
+            visibleFields
+          )}
+          <HighlightedColumnHeader node={node} />
+        </tr>
+      </thead>
+      <TableBody
+        {...{
+          node,
+          fields,
+          visibleFields,
+          hiddenFields,
+          schema,
+          Row,
+        }}
+      />
+    </Table>
   )
-)
-ResultTable.displayName = 'ResultTable'
+}
 
-export default ResultTable
+export default contexturify(ResultTable)

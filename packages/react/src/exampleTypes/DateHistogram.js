@@ -1,21 +1,14 @@
 import React from 'react'
-import { observer } from 'mobx-react'
-import { exampleTypes } from 'contexture-client'
-import injectTreeNode from '../utils/injectTreeNode'
-import BarChart from '../layout/BarChart'
+import { contexturify } from '../utils/hoc'
 
-let DateHistogram = injectTreeNode(
-  observer(({ node, ...props }) => (
-    <BarChart
-      data={node.context.entries}
-      categoryField="key"
-      valueField="count"
-      gutter={0}
-      {...props}
-    />
-  )),
-  exampleTypes.dateHistogram
+let DateHistogram = ({ node, theme: { BarChart }, ...props }) => (
+  <BarChart
+    data={node.context.entries}
+    categoryField="key"
+    valueField="count"
+    gutter={0}
+    {...props}
+  />
 )
-DateHistogram.displayName = 'DateHistogram'
 
-export default DateHistogram
+export default contexturify(DateHistogram)

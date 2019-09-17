@@ -1,15 +1,16 @@
 import React from 'react'
 import * as F from 'futil-js'
-import { Component, lenservable } from '../utils/mobx-react-utils'
+import { observer } from 'mobx-react'
+import { useLens } from '../utils/react'
 import styles from '../styles'
-import Popover from '../layout/Popover'
+import { Popover } from '../greyVest'
 import OperatorMenu from './OperatorMenu'
 import { OperatorMoveTarget } from './DragDrop/MoveTargets'
 
-let BlankOperator = ({ state, node, child }) => (
+let BlankOperator = ({ open, node, child }) => (
   <div>
     <div
-      onClick={F.flip(state.lens.isOpen)}
+      onClick={F.flip(open)}
       style={{
         ...styles.blankOperator,
         borderBottomColor: styles.joinColor(node.join),
@@ -26,9 +27,8 @@ let BlankOperator = ({ state, node, child }) => (
     )}
   </div>
 )
-BlankOperator.displayName = 'BlankOperator'
 
-let OperatorLine = Component(({ node, child, style }) => (
+let OperatorLine = observer(({ node, child, style }) => (
   <div
     style={{
       ...styles.operatorLine,
@@ -42,58 +42,52 @@ let OperatorLine = Component(({ node, child, style }) => (
 ))
 OperatorLine.displayName = 'OperatorLine'
 
-let JoinOperator = ({ state, parentState, node, child }) => (
+let JoinOperator = ({ open, hover, node, child }) => (
   <div>
     <div
-      onClick={F.flip(state.lens.isOpen)}
+      onClick={F.flip(open)}
       style={{
         ...styles.operator,
-        ...styles.bgJoin(parentState.joinHover || node),
+        ...styles.bgJoin(F.view(hover.join) || node),
       }}
     >
       <span
         style={{
-          ...(parentState.joinHover && {
+          ...(F.view(hover.join) && {
             fontStyle: 'italic',
             opacity: 0.5,
           }),
         }}
       >
-        {parentState.joinHover || node.join}
+        {F.view(hover.join) || node.join}
       </span>
     </div>
     <OperatorLine {...{ node, child }} />
   </div>
 )
-JoinOperator.displayName = 'JoinOperator'
 
-let Operator = Component(
-  () => ({
-    state: lenservable({
-      isOpen: false,
-    }),
-  }),
-  ({ state, parentState, node, child, parent, tree, index }) => (
+let Operator = ({ hover, node, child, parent, tree, index }) => {
+  let open = useLens(false)
+  return (
     <div>
       {!(index !== 0 || node.join === 'not') ? (
-        <BlankOperator {...{ state, node, child }} />
+        <BlankOperator {...{ open, node, child }} />
       ) : (
-        <JoinOperator {...{ state, node, child, parentState }} />
+        <JoinOperator {...{ open, node, child, hover }} />
       )}
       <OperatorMoveTarget {...{ node, tree, index }} />
       <Popover
-        isOpen={state.lens.isOpen}
+        open={open}
         style={{
           ...styles.operatorPopover,
           ...styles.bdJoin(node),
-          ...(parentState.wrapHover && { marginLeft: 0 }),
+          ...(F.view(hover.wrap) && { marginLeft: 0 }),
         }}
       >
-        <OperatorMenu {...{ node, parentState, tree, parent }} />
+        <OperatorMenu {...{ node, hover, tree, parent }} />
       </Popover>
     </div>
-  ),
-  'Operator'
-)
+  )
+}
 
-export default Operator
+export default observer(Operator)

@@ -1,13 +1,10 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
-import { inject, observer } from 'mobx-react'
-
-import injectTreeNode from '../utils/injectTreeNode'
+import { contexturify } from '../utils/hoc'
 import { bgJoin } from '../styles/generic'
+import { useLens } from '../utils/react'
 
-import { TagsInput as DefaultTagsInput } from '../layout/TagsInput'
-import DefaultSelect from '../layout/Select'
 import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
 
 let operatorOptions = F.autoLabelOptions([
@@ -23,54 +20,45 @@ let operatorOptions = F.autoLabelOptions([
   // { value: 'doesNotContain', label: 'Does Not Contain'}
 ])
 
-let Text = injectTreeNode(
-  inject((context, { tree, node, prop = 'value' }) => ({
-    lens: tree.lens(node.path, prop),
-  }))(
-    observer(
-      ({
-        tree,
-        node,
-        TagsInput = DefaultTagsInput,
-        Select = DefaultSelect,
-        placeholder,
-      }) => {
-        let tagStyle = bgJoin(tagToGroupJoin(node.join))
-        let TagPopover = () => (
-          <div>
-            <TagsJoinPicker node={node} tree={tree} Select={Select} />
-          </div>
-        )
-        return (
-          <div className="contexture-text">
-            <Select
-              value={node.operator}
-              onChange={e =>
-                tree.mutate(node.path, { operator: e.target.value })
-              }
-              options={operatorOptions}
-            />
-            <TagsInput
-              splitCommas
-              tags={node.values}
-              addTag={tag => {
-                tree.mutate(node.path, { values: [...node.values, tag] })
-              }}
-              removeTag={tag => {
-                tree.mutate(node.path, {
-                  values: _.without([tag], node.values),
-                })
-              }}
-              tagStyle={tagStyle}
-              submit={tree.triggerUpdate}
-              placeholder={placeholder}
-              PopoverContents={TagPopover}
-            />
-          </div>
-        )
-      }
-    )
+let Text = ({
+  tree,
+  node,
+  placeholder,
+  theme: { Select, TagsInput, Popover },
+}) => {
+  let open = useLens(false)
+  let [selectedTag, setSelectedTag] = React.useState(null)
+  return (
+    <div className="contexture-text">
+      <Select
+        value={node.operator}
+        onChange={e => tree.mutate(node.path, { operator: e.target.value })}
+        options={operatorOptions}
+      />
+      <TagsInput
+        splitCommas
+        tags={node.values}
+        onTagClick={tag => {
+          F.on(open)()
+          setSelectedTag(tag)
+        }}
+        addTag={tag => {
+          tree.mutate(node.path, { values: [...node.values, tag] })
+        }}
+        removeTag={tag => {
+          tree.mutate(node.path, {
+            values: _.without([tag], node.values),
+          })
+        }}
+        tagStyle={bgJoin(tagToGroupJoin(node.join))}
+        submit={tree.triggerUpdate}
+        placeholder={placeholder}
+      />
+      <Popover open={open}>
+        <TagsJoinPicker tag={selectedTag} node={node} tree={tree} />
+      </Popover>
+    </div>
   )
-)
+}
 
-export default Text
+export default contexturify(Text)

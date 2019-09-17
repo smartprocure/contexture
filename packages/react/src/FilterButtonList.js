@@ -1,66 +1,65 @@
 import F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
-import { observer } from 'mobx-react'
-import {
-  Dynamic,
-  Flex,
-  CheckButton as DefaultCheckButton,
-  Modal as DefaultModal,
-  Popover as DefaultPopover,
-} from './layout'
-import DefaultIcon from './DefaultIcon'
-import DefaultMissingTypeComponent from './DefaultMissingTypeComponent'
-import InjectTreeNode from './utils/injectTreeNode'
+import { setDisplayName } from 'recompose'
+import { Dynamic, Flex } from './greyVest'
+import { CheckButton } from './purgatory'
+import { withNode, withLoader } from './utils/hoc'
+import { withTheme } from './utils/theme'
 import styles from './styles'
 
-let FilterButtonItem = ({
-  node,
-  tree,
-  fields,
-  mapNodeToProps,
-  Button,
-  CheckButton,
-  MissingTypeComponent,
-  Modal,
-}) => {
-  let mappedProps = mapNodeToProps(node, fields)
-  let modal = F.stateLens(React.useState(false))
-  let title = // we really need a title, so here's every possible fallback
-    _.get('label', mappedProps) ||
-    _.get([node.field, 'label'], fields) ||
-    node.field ||
-    node.key
-  let description = _.get('description', mappedProps)
-  return (
-    <>
-      <CheckButton checked={node.hasValue} onClick={F.on(modal)}>
-        {title}
-      </CheckButton>
-      <Modal isOpen={modal}>
-        <div className="filter-button-modal">
-          <h1>{title}</h1>
-          {description && (
-            <div className="filter-description">{description}</div>
-          )}
-          <div className="filter-component">
-            <Dynamic
-              Component={MissingTypeComponent}
-              tree={tree}
-              node={node}
-              path={_.toArray(node.path)}
-              {...mappedProps}
-            />
+let FilterButtonItem = _.flow(
+  setDisplayName('FilterButtonItem'),
+  withLoader,
+  withTheme
+)(
+  ({
+    node,
+    tree,
+    fields,
+    mapNodeToProps,
+    theme: { Button, UnmappedNodeComponent, Modal },
+  }) => {
+    let mappedProps = mapNodeToProps(node, fields)
+    let modal = F.stateLens(React.useState(false))
+    let title = // we really need a title, so here's every possible fallback
+      _.get('label', mappedProps) ||
+      _.get([node.field, 'label'], fields) ||
+      node.field ||
+      node.key
+    let description = _.get('description', mappedProps)
+    return (
+      <>
+        <CheckButton checked={node.hasValue} onClick={F.on(modal)}>
+          {title}
+        </CheckButton>
+        <Modal open={modal}>
+          <div className="filter-button-modal">
+            <h1>{title}</h1>
+            {description && (
+              <div className="filter-description">{description}</div>
+            )}
+            <div className="filter-component">
+              <Dynamic
+                {...{
+                  component: UnmappedNodeComponent,
+                  tree,
+                  node,
+                  path: _.toArray(node.path),
+                  ...mappedProps,
+                }}
+              />
+            </div>
+            <Button onClick={() => tree.clear(node.path)}>Clear</Button>
+            <Button primary onClick={F.off(modal)}>
+              Done
+            </Button>
           </div>
-          <Button onClick={() => tree.clear(node.path)}>Clear</Button>
-          <Button primary onClick={F.off(modal)}>
-            Done
-          </Button>
-        </div>
-      </Modal>
-    </>
-  )
-}
+        </Modal>
+      </>
+    )
+  }
+)
 
 let GroupBox = ({ nodeJoinColor, children, nested, className }) => (
   <Flex
@@ -73,53 +72,35 @@ let GroupBox = ({ nodeJoinColor, children, nested, className }) => (
   </Flex>
 )
 
-let FilterButtonList = InjectTreeNode(
-  observer(
-    ({
-      node,
-      tree,
-      fields = {},
-      mapNodeToProps = _.noop,
-      className = 'filter-button-list',
-      Button = 'button',
-      CheckButton = DefaultCheckButton,
-      Icon = DefaultIcon,
-      MissingTypeComponent = DefaultMissingTypeComponent,
-      Modal = DefaultModal,
-      Popover = DefaultPopover,
-      nested = false,
-    }) => (
-      <GroupBox
-        {...{ nested, className }}
-        nodeJoinColor={node && styles.joinColor(node)}
-      >
-        {_.map(child => {
-          let Component = child.children ? FilterButtonList : FilterButtonItem
-          return (
-            <Component
-              key={child.path}
-              nested
-              {...{
-                tree,
-                node: child,
-                fields,
-                mapNodeToProps,
-                Button,
-                CheckButton,
-                Icon,
-                MissingTypeComponent,
-                Modal,
-                Popover,
-                className,
-              }}
-            />
-          )
-        }, _.get('children', node))}
-      </GroupBox>
-    )
-  ),
-  { allowEmptyNode: true }
+let FilterButtonList = ({
+  node,
+  tree,
+  fields = {},
+  mapNodeToProps = _.noop,
+  className = 'filter-button-list',
+  nested = false,
+}) => (
+  <GroupBox
+    {...{ nested, className }}
+    nodeJoinColor={node && styles.joinColor(node)}
+  >
+    {_.map(child => {
+      let Component = child.children ? FilterButtonList : FilterButtonItem
+      return (
+        <Component
+          key={child.path}
+          nested
+          {...{
+            tree,
+            node: child,
+            fields,
+            mapNodeToProps,
+            className,
+          }}
+        />
+      )
+    }, _.get('children', node))}
+  </GroupBox>
 )
 
-FilterButtonList.displayName = 'FilterButtonList'
-export default FilterButtonList
+export default withNode(FilterButtonList)

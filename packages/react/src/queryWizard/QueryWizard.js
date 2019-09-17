@@ -1,16 +1,11 @@
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import React from 'react'
-import DefaultIcon from '../DefaultIcon'
-import DefaultFilterButtonList from '../FilterButtonList'
-import DefaultMissingTypeComponent from '../DefaultMissingTypeComponent'
-import {
-  CheckButton as DefaultCheckButton,
-  Modal as DefaultModal,
-  StepsAccordion as DefaultStepsAccordion,
-  AccordionStep,
-} from '../layout'
-import InjectTreeNode from '../utils/injectTreeNode'
+import { setDisplayName } from 'recompose'
+import FilterButtonList from '../FilterButtonList'
+import { StepsAccordion, AccordionStep } from '../purgatory'
+import { withNode } from '../utils/hoc'
+import { withTheme } from '../utils/theme'
 
 let generateStepTitle = (node, title) => i => (
   <h1>
@@ -23,15 +18,12 @@ let generateStepTitle = (node, title) => i => (
   </h1>
 )
 
-let QueryWizard = InjectTreeNode(
+let QueryWizard = _.flow(
+  setDisplayName('QueryWizard'),
+  withNode,
+  withTheme
+)(
   ({
-    StepsAccordion = DefaultStepsAccordion,
-    FilterButtonList = DefaultFilterButtonList,
-    CheckButton = DefaultCheckButton,
-    Button = 'button',
-    Modal = DefaultModal,
-    MissingTypeComponent = DefaultMissingTypeComponent,
-    Icon = DefaultIcon,
     tree,
     node,
     fields = {},
@@ -40,7 +32,7 @@ let QueryWizard = InjectTreeNode(
     mapNodeToProps = _.noop,
     style,
   }) => (
-    <StepsAccordion {...{ Button, Icon, style, onSubmit }}>
+    <StepsAccordion {...{ style, onSubmit }}>
       {F.mapIndexed(
         (child, i) => (
           <AccordionStep
@@ -50,11 +42,6 @@ let QueryWizard = InjectTreeNode(
           >
             <FilterButtonList
               {...{
-                CheckButton,
-                Button,
-                Icon,
-                MissingTypeComponent,
-                Modal,
                 node: child,
                 tree,
                 fields,
@@ -70,5 +57,4 @@ let QueryWizard = InjectTreeNode(
   )
 )
 
-QueryWizard.displayName = 'QueryWizard'
 export default QueryWizard

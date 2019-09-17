@@ -1,11 +1,8 @@
 import React from 'react'
 import F from 'futil-js'
-import { observer } from 'mobx-react'
-import { exampleTypes } from 'contexture-client'
-import injectTreeNode from '../utils/injectTreeNode'
-import RadioListDefault from '../layout/RadioList'
+import { contexturify } from '../utils/hoc'
 
-let Bool = ({ tree, node, RadioList = RadioListDefault }) => (
+let Bool = ({ tree, node, theme: { RadioList } }) => (
   <div className="contexture-bool">
     <RadioList
       value={node.value ? 'yes' : 'no'}
@@ -17,4 +14,4 @@ let Bool = ({ tree, node, RadioList = RadioListDefault }) => (
   </div>
 )
 
-export default injectTreeNode(observer(Bool), exampleTypes.bool)
+export default contexturify(Bool)

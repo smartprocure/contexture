@@ -1,21 +1,14 @@
 import React from 'react'
-import { observer } from 'mobx-react'
-import { exampleTypes } from 'contexture-client'
-import injectTreeNode from '../utils/injectTreeNode'
-import BarChart from '../layout/BarChart'
+import { contexturify } from '../utils/hoc'
 
-let TermsStats = injectTreeNode(
-  observer(({ node, ...props }) => (
-    <BarChart
-      data={node.context.terms}
-      categoryField="key"
-      valueField={node.order}
-      yAxis
-      {...props}
-    />
-  )),
-  exampleTypes.TermsStats
+let TermsStats = ({ node, theme: { BarChart }, ...props }) => (
+  <BarChart
+    data={node.context.terms}
+    categoryField="key"
+    valueField={node.order}
+    yAxis
+    {...props}
+  />
 )
-TermsStats.displayName = 'TermsStats'
 
-export default TermsStats
+export default contexturify(TermsStats)

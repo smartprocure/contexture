@@ -1,29 +1,33 @@
 {
   "name": "contexture-react",
-  "version": "1.58.0",
+  "version": "2.0.0",
   "description": "React components for building contexture interfaces",
   "main": "dist/index.js",
   "scripts": {
     "start": "npm run storybook",
     "build": "babel ./src --out-dir ./dist --source-maps --delete-dir-on-start",
+    "watch": "npm run build -- --watch",
     "prepublish": "npm run build",
-    "storybook": "start-storybook -p 3000",
+    "storybook": "start-storybook -p 3001",
     "build-storybook": "build-storybook",
     "deploy-storybook": "storybook-to-ghpages",
     "lint": "eslint src stories .storybook .circleci __tests__",
     "lint-fix": "npm run lint -- --fix",
     "lint-ci": "npm run lint -- -o lint-results.json -f json",
-    "test": "jest --coverage --passWithNoTests",
+    "test": "jest --passWithNoTests",
     "test-ci": "npm t -- --json --outputFile=test-results.json",
     "duti": "duti",
     "fmt": "prettier --write '{src,stories,.storybook}/**/*'",
-    "duti:fix": "npm run lint-fix && npm run fmt"
+    "duti:fix": "npm run lint-fix && npm run fmt",
+    "update-pkg": "node updatePackage"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/smartprocure/contexture-react.git"
   },
-  "author": "Samuel Greene",
+  "author": {
+    "name": "Samuel Greene"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/smartprocure/contexture-react/issues"
@@ -31,7 +35,7 @@
   "homepage": "https://github.com/smartprocure/contexture-react#readme",
   "peerDependencies": {
     "mobx": "^4.3.1",
-    "mobx-react": "^5.2.0",
+    "mobx-react": "^6.1.1",
     "mobx-utils": "^5.0.0",
     "react": "^16.8.0"
   },
@@ -45,10 +49,13 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "\\.(md)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css|less|sass)$": "<rootDir>/__mocks__/styleMock.js"
+      "\\.(md)$": "<rootDir>/../__mocks__/fileMock.js",
+      "\\.(css|less|sass)$": "<rootDir>/../__mocks__/styleMock.js"
     },
-    "testURL": "http://localhost/"
+    "testURL": "http://localhost/",
+    "rootDir": "src",
+    "collectCoverage": false,
+    "collectCoverageFrom": ["<rootDir>"]
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
@@ -71,6 +78,9 @@
     "@babel/polyfill": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
+    "@date-io/moment": "^1.3.9",
+    "@material-ui/core": "^4.3.3",
+    "@material-ui/pickers": "^3.2.3",
     "@storybook/addon-actions": "^5.0.10",
     "@storybook/addon-info": "^3.4.12",
     "@storybook/addon-storysource": "^5.0.10",
@@ -89,25 +99,30 @@
     "eslint": "^4.12.1",
     "eslint-config-smartprocure": "^1.1.0",
     "jest": "^24.7.1",
+    "material-ui-chip-input": "^1.0.0",
     "mobx": "^4.3.1",
-    "mobx-react": "^5.2.0",
+    "mobx-react": "^6.1.1",
     "mobx-utils": "^5.0.0",
+    "moment": "^2.24.0",
     "prettier": "^1.8.2",
     "raw-loader": "^2.0.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "react-select": "^2.0.0",
     "react-test-renderer": "^16.2.0",
-    "storybook-addon-jsx": "^7.1.0"
+    "read-pkg": "^5.2.0",
+    "storybook-addon-jsx": "^7.1.0",
+    "write-pkg": "^4.0.0"
   },
   "dependencies": {
-    "futil-js": "^1.58.0",
-    "lodash": "^4.17.4",
+    "futil-js": "^1.61.0",
+    "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "react-date-picker": "^7.2.0",
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4",
     "react-outside-click-handler": "^1.2.3",
     "recompose": "^0.30.0"
-  }
+  },
+  "readme": "README.md"
 }

@@ -1,18 +1,14 @@
+import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
-import injectTreeNode from '../utils/injectTreeNode'
-import { exampleTypes } from 'contexture-client'
+import { withNode, withInlineLoader } from '../utils/hoc'
 
-let ResultCount = injectTreeNode(
-  observer(({ node, display = x => x }) =>
-    node.context.response.results.length
-      ? display(node.context.response.totalRecords)
-      : 'No Results'
-  ),
-  {
-    ...exampleTypes.results,
-    style: { display: 'inline-block' },
-  }
-)
-ResultCount.displayName = 'ResultCount'
+let ResultCount = ({ node, display = x => x }) =>
+  node.context.response.results.length
+    ? display(node.context.response.totalRecords)
+    : 'No Results'
 
-export default ResultCount
+export default _.flow(
+  observer,
+  withNode,
+  withInlineLoader
+)(ResultCount)

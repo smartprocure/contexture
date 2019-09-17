@@ -13,14 +13,28 @@ export let FlattenTreeLeaves = Tree =>
 export let PlainObjectTree = F.tree(onlyWhen(_.isPlainObject))
 export let flattenPlainObject = F.whenExists(FlattenTreeLeaves(PlainObjectTree))
 
-// (f, g) -> (x, y) -> {...f(x, y), ...g(x, y)}
-export let mergeOverAll = fns =>
-  _.flow(
-    _.over(fns),
-    _.mergeAll
-  )
+let canMerge = a => !_.isEmpty(a) && a
 
-export let splitKeys = _.curry((keys, obj) => [
-  _.pick(keys, obj),
-  _.omit(keys, obj),
-])
+export let mergeOrReturn = _.curry(
+  (a, b) =>
+    (canMerge(a) && canMerge(b) && _.merge(a, b)) ||
+    canMerge(a) ||
+    canMerge(b) ||
+    {}
+)
+
+// (x -> y) -> k -> {k: x} -> y
+export let getWith = _.curry((customizer, path, object) =>
+  customizer(_.get(path, object))
+)
+
+// ({a} -> {b}) -> {a} -> {a, b}
+export let expandObject = _.curry((transform, obj) => ({
+  ...obj,
+  ...transform(obj),
+}))
+
+// k -> (a -> {b}) -> {k: a} -> {a, b}
+export let expandObjectBy = _.curry((key, fn, obj) =>
+  expandObject(getWith(fn, key))(obj)
+)
