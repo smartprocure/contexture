@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "React components for building contexture interfaces",
   "main": "dist/index.js",
   "scripts": {
@@ -55,7 +55,9 @@
     "testURL": "http://localhost/",
     "rootDir": "src",
     "collectCoverage": false,
-    "collectCoverageFrom": ["<rootDir>"]
+    "collectCoverageFrom": [
+      "<rootDir>"
+    ]
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
