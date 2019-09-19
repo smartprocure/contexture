@@ -1,3 +1,6 @@
+﻿# 0.2.2
+* Fix an issue with dataStrategies which prevents mongo exports
+
 # 0.2.1
 * Enable support for include in terms stats data strategy.
 
