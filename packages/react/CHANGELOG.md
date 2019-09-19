@@ -1,3 +1,6 @@
+# 2.0.2
+* camelCase `defaultNodeProps` schema util
+
 # 2.0.1
 * Don't export the material theme
 
