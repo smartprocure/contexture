@@ -1,5 +1,5 @@
 ﻿# 0.2.3
-* Add the `populate` to the `result` data strategy
+* Support arbitrary props (like `populate`) to the `result` data strategy
 
 # 0.2.2
 * Fix an issue with dataStrategies which prevents mongo exports
