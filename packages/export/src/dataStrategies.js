@@ -22,6 +22,7 @@ export const results = ({
   sortDir,
   highlight,
   scroll,
+  ...rest
 }) => {
   let formatTree = ({ pageSize, page, scrollId }) => {
     let resultsConfig = {
@@ -33,6 +34,7 @@ export const results = ({
       sortField,
       sortDir,
       highlight,
+      ...rest,
     }
 
     if (scroll) {
