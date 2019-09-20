@@ -1,4 +1,7 @@
-﻿# 0.2.2
+﻿# 0.2.3
+* Add the `populate` to the `result` data strategy
+
+# 0.2.2
 * Fix an issue with dataStrategies which prevents mongo exports
 
 # 0.2.1
