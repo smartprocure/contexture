@@ -18,11 +18,11 @@ export const results = ({
   page = 1,
   totalPages = 100,
   include,
-  populate,
   sortField,
   sortDir,
   highlight,
   scroll,
+  ...rest
 }) => {
   let formatTree = ({ pageSize, page, scrollId }) => {
     let resultsConfig = {
@@ -31,10 +31,10 @@ export const results = ({
       pageSize,
       page,
       include,
-      populate,
       sortField,
       sortDir,
       highlight,
+      ...rest
     }
 
     if (scroll) {
