@@ -34,7 +34,7 @@ export const results = ({
       sortField,
       sortDir,
       highlight,
-      ...rest
+      ...rest,
     }
 
     if (scroll) {
