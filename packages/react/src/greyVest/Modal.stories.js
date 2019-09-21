@@ -1,21 +1,21 @@
 import React from 'react'
 import F from 'futil-js'
+import { observable } from 'mobx'
 import { storiesOf } from '@storybook/react'
-import { observer } from 'mobx-react'
-import { useLens } from '../utils/react'
-import { Modal, Button } from '.'
+import { useTheme } from '../utils/theme'
 import decorator from './stories/decorator'
 
-let ModalDemo = observer(() => {
-  let open = useLens(false)
+let ModalDemo = () => {
+  let open = observable.box(false)
+  let { Modal, Button } = useTheme()
   return (
-    <div>
-      <Modal open={open}>Some Modal Content</Modal>
+    <>
       <Button onClick={F.on(open)}>Open Modal</Button>
-    </div>
+      <Modal open={open}>Some Modal Content</Modal>
+    </>
   )
-})
+}
 
 storiesOf('Components|GreyVest Library', module)
   .addDecorator(decorator)
-  .addWithJSX('Modal', () => <ModalDemo />)
+  .addWithJSX('Modal', ModalDemo)

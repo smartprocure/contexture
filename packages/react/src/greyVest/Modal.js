@@ -2,42 +2,44 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import Portal from './Portal'
 import { openBinding } from './utils'
-import { expandProp } from '../utils/react'
 
-let Modal = ({ isOpen, onClose, children, style = {}, className = '' }) => (
-  <Portal>
-    {isOpen && (
-      <div
-        style={{
-          position: 'fixed',
-          top: 0,
-          bottom: 0,
-          left: 0,
-          right: 0,
-          backgroundColor: 'rgba(0,0,0,0.3)',
-          padding: 50,
-          overflowY: 'auto',
-          zIndex: 1000,
-          display: 'flex',
-          justifyContent: 'space-around',
-          alignItems: 'flex-start',
-        }}
-        onClick={onClose}
-        className={`default-modal-bg ${className}`}
-      >
+let Modal = ({ open, children, style = {}, className = '' }) => {
+  let { isOpen, onClose } = openBinding(open)
+  return (
+    <Portal>
+      {isOpen && (
         <div
           style={{
-            backgroundColor: '#fff',
-            ...style,
+            position: 'fixed',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: 'rgba(0,0,0,0.3)',
+            padding: 50,
+            overflowY: 'auto',
+            zIndex: 1000,
+            display: 'flex',
+            justifyContent: 'space-around',
+            alignItems: 'flex-start',
           }}
-          onClick={e => e.stopPropagation()}
-          className="default-modal-wrap"
+          onClick={onClose}
+          className={`default-modal-bg ${className}`}
         >
-          {children}
+          <div
+            style={{
+              backgroundColor: '#fff',
+              ...style,
+            }}
+            onClick={e => e.stopPropagation()}
+            className="default-modal-wrap"
+          >
+            {children}
+          </div>
         </div>
-      </div>
-    )}
-  </Portal>
-)
+      )}
+    </Portal>
+  )
+}
 
-export default expandProp('open', openBinding)(observer(Modal))
+export default observer(Modal)

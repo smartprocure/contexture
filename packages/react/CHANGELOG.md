@@ -1,3 +1,6 @@
+# 2.0.2
+* Ensure components using `openBinding` observe the correct things
+
 # 2.0.1
 * Don't export the material theme
 
