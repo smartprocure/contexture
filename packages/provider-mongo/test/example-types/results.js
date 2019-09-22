@@ -1,10 +1,12 @@
 let { expect } = require('chai')
+let _ = require('lodash/fp')
 let {
   defaults,
   lookupFromPopulate,
   getResultsQuery,
   getStartRecord,
   projectFromInclude,
+  rowsToObjectConverter,
 } = require('../../src/example-types/results')
 
 let getSchema = collection => ({ mongo: { collection } })
@@ -192,6 +194,22 @@ describe('results', () => {
         'bar.baz': 1,
         foo: 1,
       })
+    })
+  })
+  describe('rowsToObjectConverter', () => {
+    it('should convert array of objects to a single object based on populate config prop "singularObject"', () => {
+      let results = [
+        { other: { a: 1 }, user: [{ name: 'A'}, { name: 'A'}]},
+        { user: [{ name: 'B'}, { name: 'B'}]},
+      ]
+      let populate = {
+        other: { someProp: 1 },
+        user: { singularObject: true }
+      }
+      let converter = rowsToObjectConverter(populate)
+
+      results = _.map(row => _.extend(row, converter(row)), results)
+      expect(results).to.deep.equal([ { other: { a: 1 }, user: { name: 'A' } }, { user: { name: 'B' } } ])
     })
   })
 })

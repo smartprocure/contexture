@@ -1,3 +1,6 @@
+# 0.9.0
+* Add support for singularObject on the populate configuration
+
 # 0.8.5
 * Results example type: Don't `$project` redundant child paths when parent path is already projected.
 
