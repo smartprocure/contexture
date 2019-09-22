@@ -81,16 +81,35 @@ let defaults = _.defaults({
   include: [],
 })
 
+let rowsToObjectConverter = _.curry((populateConfig, row) => {
+  let singularProps = _.flow(
+    _.pickBy(obj => obj.singularObject),
+    _.keys
+  )(populateConfig)
+
+  return _.flow(
+    _.pick(singularProps),
+    _.mapValues(arr => _.first(arr))
+  )(row)
+})
+
 let result = async (context, search, schema, { getSchema }) => {
   context = defaults(context)
   let startRecord = getStartRecord(context)
   let resultsQuery = getResultsQuery(context, getSchema, startRecord)
   let countQuery = [{ $group: { _id: null, count: { $sum: 1 } } }]
+  let { populate } = context
 
   let [results, count] = await Promise.all([
     search(resultsQuery),
     search(countQuery),
   ])
+
+  // Handle the "singularObject" for each populate config
+  if (populate) {
+    let converter = rowsToObjectConverter(populate)
+    results = _.map(row => _.extend(row, converter(row)), results)
+  }
 
   return {
     response: {
@@ -98,7 +117,7 @@ let result = async (context, search, schema, { getSchema }) => {
       startRecord: startRecord + 1,
       endRecord: startRecord + results.length,
       results,
-    },
+    }
   }
 }
 
@@ -109,6 +128,7 @@ module.exports = {
   getResultsQuery,
   defaults,
   projectFromInclude,
+  rowsToObjectConverter,
   // API
   result,
 }
