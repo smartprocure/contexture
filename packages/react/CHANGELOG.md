@@ -1,3 +1,6 @@
+# 2.0.2
+* Fix order of Text HOCs
+
 # 2.0.1
 * Don't export the material theme
 
