@@ -1,3 +1,6 @@
+# 2.0.4
+* Fix nested groups not updating in QueryBuilder
+
 # 2.0.3
 * Fix "within"/"not within" dropdown in Geo component
 
