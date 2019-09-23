@@ -17,6 +17,6 @@ export let wrapDisplayName = (name, Component) => Wrapped => {
 
 // (k, a -> {b}) -> Component<{k: a}> -> Component<{b}>
 export let expandProp = _.flow(
-  expandObjectBy,
+  (key, fn) => expandObjectBy(key, F.whenExists(fn)),
   mapProps
 )

@@ -1,3 +1,6 @@
+# 2.0.5
+* Ensure components using `openBinding` observe the correct things
+
 # 2.0.4
 * Fix nested groups not updating in QueryBuilder
 
