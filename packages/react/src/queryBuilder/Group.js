@@ -13,6 +13,7 @@ import { FilterMoveTarget } from './DragDrop/MoveTargets'
 let { background } = styles
 import { blankNode } from '../utils/search'
 import { useLensObject } from '../utils/react'
+import { setDisplayName } from 'recompose'
 
 let GroupItem = FilterDragSource(props => {
   let {
@@ -43,7 +44,11 @@ let GroupItem = FilterDragSource(props => {
   )
 })
 
-let Group = props => {
+// we need to observe this here and not on the export because Group is referenced elsewhere in the file
+let Group = _.flow(
+  setDisplayName('Group'),
+  observer
+)(props => {
   let { parent, node, tree, adding, isRoot } = props
   let hover = useLensObject({ wrap: false, join: '', remove: false })
   return (
@@ -96,6 +101,6 @@ let Group = props => {
       </div>
     </Indentable>
   )
-}
+})
 
-export default observer(Group)
+export default Group
