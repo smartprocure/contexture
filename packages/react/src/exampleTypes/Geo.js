@@ -1,5 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
+import F from 'futil-js'
 import { Flex } from '../greyVest'
 import { contexturify } from '../utils/hoc'
 
@@ -34,13 +35,8 @@ let GeoComponent = ({
       style={elementStyle}
       value={node.operator}
       onChange={e => tree.mutate(node.path, { operator: e.target.value })}
-    >
-      {operatorOptions.map(o => (
-        <option key={o} value={o}>
-          {o}
-        </option>
-      ))}
-    </Select>
+      options={F.autoLabelOptions(operatorOptions)}
+    />
     <div style={elementStyle}>
       <NumberInput
         min="1"

@@ -1,3 +1,6 @@
+# 2.0.3
+* Fix "within"/"not within" dropdown in Geo component
+
 # 2.0.2
 * Fix order of Text HOCs
 
