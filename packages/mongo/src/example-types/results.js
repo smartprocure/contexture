@@ -117,7 +117,7 @@ let result = async (context, search, schema, { getSchema }) => {
       startRecord: startRecord + 1,
       endRecord: startRecord + results.length,
       results,
-    }
+    },
   }
 }
 
