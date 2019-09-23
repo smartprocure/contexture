@@ -1,5 +1,8 @@
-# 2.0.2
+# 2.0.3
 * Ensure components using `openBinding` observe the correct things
+
+# 2.0.2
+* Fix order of Text HOCs
 
 # 2.0.1
 * Don't export the material theme
