@@ -1,5 +1,6 @@
 import { KeyboardDatePicker } from '@material-ui/pickers'
 import { defaultProps } from 'recompose'
+import { observer } from 'mobx-react'
 import { openBinding } from './utils'
 import { expandProp } from '../../utils/react'
 import {
@@ -31,7 +32,7 @@ export default {
   Icon,
   DropdownItem: MenuItem,
   PickerItem: MenuItem,
-  Modal: expandProp('open', openBinding)(Dialog),
+  Modal: observer(expandProp('open', openBinding)(Dialog)),
   NumberInput: defaultProps({ type: 'number', fullWidth: true })(Input),
   Popover,
   RadioList,

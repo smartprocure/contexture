@@ -1,5 +1,18 @@
-# 2.0.2
+# 2.0.6
 * camelCase `defaultNodeProps` schema util
+* Clean up utils exports
+
+# 2.0.5
+* Ensure components using `openBinding` observe the correct things
+
+# 2.0.4
+* Fix nested groups not updating in QueryBuilder
+
+# 2.0.3
+* Fix "within"/"not within" dropdown in Geo component
+
+# 2.0.2
+* Fix order of Text HOCs
 
 # 2.0.1
 * Don't export the material theme
