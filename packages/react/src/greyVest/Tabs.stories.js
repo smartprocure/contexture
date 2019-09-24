@@ -10,7 +10,7 @@ import tabDocs from './docs/tabs.md'
 
 let state = observable({ tab: 'results' })
 
-storiesOf('Components|GreyVest Library/Tabs', module)
+storiesOf('GreyVest Library|Tabs', module)
   .add(
     'Docs',
     withInfo({ text: tabDocs, inline: true, source: false, header: false })(

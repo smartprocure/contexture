@@ -19,8 +19,9 @@ export let withOpenProp = () => {
     </>
   )
 }
+withOpenProp.story = { name: "With 'open' prop" }
 
-export let with_isOpen_onClose_props = () => {
+export let withIsOpenOnCloseProps = () => {
   let [isOpen, setIsOpen] = React.useState(false)
   return (
     <>
@@ -31,3 +32,4 @@ export let with_isOpen_onClose_props = () => {
     </>
   )
 }
+withIsOpenOnCloseProps.story = { name: "With 'isOpen'/'onClose' props" }

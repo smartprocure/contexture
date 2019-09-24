@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { root } from './stories/util'
 import FilterContents from './FilterContents'
 
-storiesOf('Components|Search Components/QueryBuilder/Internals', module).add(
+storiesOf('Search Components|QueryBuilder/Internals', module).add(
   'FilterContents',
   () => (
     <FilterContents

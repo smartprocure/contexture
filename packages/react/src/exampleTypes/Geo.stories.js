@@ -7,7 +7,7 @@ import { Flex } from '../greyVest'
 import TestTree from './stories/testTree'
 import { Geo } from '.'
 
-storiesOf('Components|ExampleTypes', module)
+storiesOf('ExampleTypes|Geo filter & HERE maps', module)
   .addDecorator(ThemePicker('greyVest'))
   .add('Geo filter & HERE maps', () => (
     <div

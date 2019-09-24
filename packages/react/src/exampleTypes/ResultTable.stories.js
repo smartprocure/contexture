@@ -5,7 +5,7 @@ import TestTree from './stories/testTree'
 import ThemePicker from '../stories/themePicker'
 import { ResultTable } from '.'
 
-storiesOf('Components|ExampleTypes/ResultTable', module)
+storiesOf('ExampleTypes|ResultTable', module)
   .addDecorator(ThemePicker('greyVest'))
   .add('Customizations', () => (
     <div>

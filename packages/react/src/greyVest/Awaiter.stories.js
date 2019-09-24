@@ -4,7 +4,7 @@ import { Awaiter, Button, Box } from '.'
 import decorator from './stories/decorator'
 
 export default {
-  title: 'GreyVest|Awaiter',
+  title: 'GreyVest Library|Awaiter',
   decorators: [decorator],
   component: Awaiter,
 }

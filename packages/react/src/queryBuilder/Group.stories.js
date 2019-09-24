@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { root, DnDDecorator } from './stories/util'
 import Group from './Group'
 
-storiesOf('Components|Search Components/QueryBuilder/Internals/Group', module)
+storiesOf('Search Components|QueryBuilder/Internals/Group', module)
   .addDecorator(DnDDecorator)
   .add('One Filter', () => (
     <Group

@@ -12,7 +12,7 @@ let mockTree = {
   getNode: () => true,
 }
 
-storiesOf('Components|Search Components/FilterAdder', module)
+storiesOf('Search Components|FilterAdder', module)
   .addDecorator(ThemePicker('greyVest'))
   .add('With ModalPicker', () => (
     <FilterAdder

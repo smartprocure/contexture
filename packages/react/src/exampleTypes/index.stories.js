@@ -22,7 +22,7 @@ import {
   Geo,
 } from '../../src/exampleTypes'
 
-storiesOf('Components|ExampleTypes', module).add('Full Demo', () => {
+storiesOf('ExampleTypes|Full Demo', module).add('Full Demo', () => {
   let tree = TestTree()
   return (
     <ThemeProvider theme={theme}>

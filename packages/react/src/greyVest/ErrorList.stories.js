@@ -3,7 +3,7 @@ import { Flex, Box, ErrorList, TextInput } from '.'
 import decorator from './stories/decorator'
 
 export default {
-  title: 'GreyVest|ErrorList',
+  title: 'GreyVest Library|ErrorList',
   decorators: [decorator],
   component: ErrorList,
 }

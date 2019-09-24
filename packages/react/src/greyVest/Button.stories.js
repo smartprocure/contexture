@@ -4,7 +4,7 @@ import { Button } from '.'
 import decorator from './stories/decorator'
 
 export default {
-  title: 'GreyVest|Button',
+  title: 'GreyVest Library|Button',
   component: Button,
   decorators: [decorator],
 }

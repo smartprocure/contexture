@@ -3,7 +3,7 @@ import { Box } from '.'
 import decorator from './stories/decorator'
 
 export default {
-  title: 'GreyVest|Box',
+  title: 'GreyVest Library|Box',
   decorators: [decorator],
   component: Box,
   descriptionSlot: () => 'box description',

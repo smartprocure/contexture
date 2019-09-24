@@ -38,6 +38,7 @@ Checkbox.info = {
       type: Object,
       description: 'Style overrides',
       defaultValue: {},
+      // type: { oneOf: ['A', 'B', 'C'] }
     },
     // need to represent enums and objects like tree or node
   },

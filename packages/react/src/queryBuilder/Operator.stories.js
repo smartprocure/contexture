@@ -18,10 +18,7 @@ let operatorStory = (join, index, root) => () => (
   />
 )
 
-storiesOf(
-  'Components|Search Components/QueryBuilder/Internals/Operator',
-  module
-)
+storiesOf('Search Components|QueryBuilder/Internals/Operator', module)
   .addDecorator(DnDDecorator)
   .add('and', operatorStory('and', 1, root))
   .add('or', operatorStory('or', 1, root))

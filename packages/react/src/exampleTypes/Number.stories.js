@@ -4,6 +4,6 @@ import TestTree from './stories/testTree'
 import ThemePicker from '../stories/themePicker'
 import { Number } from '.'
 
-storiesOf('Components|ExampleTypes', module)
+storiesOf('ExampleTypes|Number', module)
   .addDecorator(ThemePicker('greyVest'))
   .add('Number', () => <Number tree={TestTree()} path={['number']} />)

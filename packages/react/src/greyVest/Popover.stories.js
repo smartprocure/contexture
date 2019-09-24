@@ -10,7 +10,7 @@ export default {
   decorators: [decorator],
 }
 
-export let withLens = () => {
+export let withOpenProp = () => {
   let open = observable.box(false)
   return (
     <>
@@ -19,9 +19,9 @@ export let withLens = () => {
     </>
   )
 }
-withLens.story = { name: "With 'open' prop" }
+withOpenProp.story = { name: "With 'open' prop" }
 
-export let withValueSetter = () => {
+export let withIsOpenOnCloseProps = () => {
   let [isOpen, setIsOpen] = React.useState(false)
   return (
     <>
@@ -32,4 +32,4 @@ export let withValueSetter = () => {
     </>
   )
 }
-withValueSetter.story = { name: "With 'isOpen'/'onClose' props" }
+withIsOpenOnCloseProps.story = { name: "With 'isOpen'/'onClose' props" }

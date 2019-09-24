@@ -4,7 +4,7 @@ import { componentForType } from './utils/schema'
 import ThemePicker from './stories/themePicker'
 import { FilterList } from '.'
 
-storiesOf('Components|Search Components', module)
+storiesOf('Search Components|FilterList', module)
   .addDecorator(ThemePicker('blueberry'))
   .add('FilterList', () => (
     <FilterList

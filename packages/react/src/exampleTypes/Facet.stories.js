@@ -4,6 +4,6 @@ import TestTree from './stories/testTree'
 import ThemePicker from '../stories/themePicker'
 import { Facet } from '.'
 
-storiesOf('Components|ExampleTypes', module)
+storiesOf('ExampleTypes|Facet', module)
   .addDecorator(ThemePicker('greyVest'))
   .add('Facet', () => <Facet tree={TestTree()} path={['facet']} />)

@@ -11,7 +11,7 @@ import { useLens } from '../utils/react'
 
 let themes = { base, blueberry, greyVest, material }
 
-let ThemeSwitcher = ({ defaultTheme = 'base', children }) => {
+export let ThemeSwitcher = ({ defaultTheme = 'base', children }) => {
   let theme = useLens(defaultTheme)
   return (
     <ThemeProvider theme={themes[F.view(theme)]}>
