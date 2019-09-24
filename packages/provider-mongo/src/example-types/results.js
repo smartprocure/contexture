@@ -83,16 +83,17 @@ let defaults = _.defaults({
 
 let rowsToObjectConverter = _.curry((populateConfig, row) => {
   let singularProps = _.flow(
-    _.pickBy(obj => obj.singularObject),
+    _.pickBy('singularObject'),
     _.keys
   )(populateConfig)
 
   return _.flow(
     _.pick(singularProps),
-    _.mapValues(arr => _.first(arr))
+    _.mapValues(_.first)
   )(row)
 })
 
+let convertRows = (converter, results) => _.map(row => _.extend(row, converter(row)), results)
 let result = async (context, search, schema, { getSchema }) => {
   context = defaults(context)
   let startRecord = getStartRecord(context)
@@ -108,7 +109,7 @@ let result = async (context, search, schema, { getSchema }) => {
   // Handle the "singularObject" for each populate config
   if (populate) {
     let converter = rowsToObjectConverter(populate)
-    results = _.map(row => _.extend(row, converter(row)), results)
+    results = convertRows(converter, results)
   }
 
   return {
@@ -129,6 +130,7 @@ module.exports = {
   defaults,
   projectFromInclude,
   rowsToObjectConverter,
+  convertRows,
   // API
   result,
 }

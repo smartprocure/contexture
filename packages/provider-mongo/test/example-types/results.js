@@ -7,6 +7,7 @@ let {
   getStartRecord,
   projectFromInclude,
   rowsToObjectConverter,
+  convertRows,
 } = require('../../src/example-types/results')
 
 let getSchema = collection => ({ mongo: { collection } })
@@ -197,19 +198,23 @@ describe('results', () => {
     })
   })
   describe('rowsToObjectConverter', () => {
-    it('should convert array of objects to a single object based on populate config prop "singularObject"', () => {
+    it('should convert array of objects to a single object (first from the array) based on populate config prop "singularObject"', () => {
       let results = [
-        { other: { a: 1 }, user: [{ name: 'A'}, { name: 'A'}]},
-        { user: [{ name: 'B'}, { name: 'B'}]},
+        { user: [{ name: 'A', other: 1 }, { name: 'A', other: 2 }, { other: 3 }]},
+        { user: [{ name: 'B'}, { other: 1 }]},
+        { user: [{ other: 1 }, { other: 2 }]},
       ]
       let populate = {
-        other: { someProp: 1 },
-        user: { singularObject: true }
+        user: {
+          schema: 'user',
+          localField: 'user',
+          foreignField: '_id',
+          singularObject: true
+        }
       }
       let converter = rowsToObjectConverter(populate)
-
-      results = _.map(row => _.extend(row, converter(row)), results)
-      expect(results).to.deep.equal([ { other: { a: 1 }, user: { name: 'A' } }, { user: { name: 'B' } } ])
+      results = convertRows(converter, results)
+      expect(results).to.deep.equal([ { user: { name: 'A', other: 1 } }, { user: { name: 'B' } }, { user: { other: 1 }} ])
     })
   })
 })
