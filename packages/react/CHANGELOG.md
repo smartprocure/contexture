@@ -1,6 +1,6 @@
 # 2.0.6
 * camelCase `defaultNodeProps` schema util
-* Clean up utils exports
+* Be explicit about utility function exports in `src/index.js`
 
 # 2.0.5
 * Ensure components using `openBinding` observe the correct things
