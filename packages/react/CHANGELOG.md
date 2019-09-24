@@ -1,3 +1,18 @@
+# 2.0.5
+* Ensure components using `openBinding` observe the correct things
+
+# 2.0.4
+* Fix nested groups not updating in QueryBuilder
+
+# 2.0.3
+* Fix "within"/"not within" dropdown in Geo component
+
+# 2.0.2
+* Fix order of Text HOCs
+
+# 2.0.1
+* Don't export the material theme
+
 # 2.0.0
 
 ## Changes
@@ -14,6 +29,8 @@
   * Remove `Input` prop from TermsStatsTable (now consumes `TextInput` from theme)
   * Remove `HeaderCell` prop from ResultTable (still accessible through the `HeaderCell` property on the field schema)
 * Restructure the component library for a cleaner distinction between search components, themes, and GreyVest
+  * Publish the GreyVest component library on npm as the `grey-vest` package!
+  * Export exampleTypes components individually from contexture-react, rather than in an `ExampleTypes` object
   * Consolidate the following layout components into the GreyVest component library: Awaiter, BarChart, Dynamic, ExpandableTable, Flex, Grid, NestedPicker, Popover, Portal, SpacedList, TagsInput, Tag, DateInput, StripedLoader
   * Move or remove several GreyVest component exports:
     * Removed:  Adder (use FilterAdder), Pager (use ResultPager)

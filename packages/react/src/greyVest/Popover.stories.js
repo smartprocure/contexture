@@ -1,22 +1,35 @@
 import React from 'react'
 import F from 'futil-js'
-import { storiesOf } from '@storybook/react'
-import { observer } from 'mobx-react'
-import { useLens } from '../utils/react'
-import { useTheme } from '../utils/theme'
+import { observable } from 'mobx'
+import { Button, Popover } from '.'
 import decorator from './stories/decorator'
 
-let PopoverDemo = observer(() => {
-  let open = useLens(false)
-  let { Popover, Button } = useTheme()
-  return (
-    <div>
-      <Popover open={open}>Some Popover Content</Popover>
-      <Button onClick={F.on(open)}>Open Popover</Button>
-    </div>
-  )
-})
+export default {
+  title: 'GreyVest Library|Popover',
+  component: Popover,
+  decorators: [decorator],
+}
 
-storiesOf('Components|GreyVest Library', module)
-  .addDecorator(decorator)
-  .add('Popover', () => <PopoverDemo />)
+export let withLens = () => {
+  let open = observable.box(false)
+  return (
+    <>
+      <Button onClick={F.on(open)}>Open Popover</Button>
+      <Popover open={open}>Some Popover Content</Popover>
+    </>
+  )
+}
+withLens.story = { name: "With 'open' prop" }
+
+export let withValueSetter = () => {
+  let [isOpen, setIsOpen] = React.useState(false)
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Popover</Button>
+      <Popover isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        Some Popover Content
+      </Popover>
+    </>
+  )
+}
+withValueSetter.story = { name: "With 'isOpen'/'onClose' props" }

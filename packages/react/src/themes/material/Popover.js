@@ -1,9 +1,10 @@
+import { observer } from 'mobx-react'
 import { openBinding } from './utils'
 import { expandProp } from '../../utils/react'
 import { Menu } from '@material-ui/core'
 import React from 'react'
 
-let LensPopover = expandProp('open', openBinding)(Menu)
+let LensPopover = observer(expandProp('open', openBinding)(Menu))
 
 let AnchoredPopover = ({ ...props }) => {
   let anchorRef = React.useRef()
