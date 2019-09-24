@@ -93,7 +93,8 @@ let rowsToObjectConverter = _.curry((populateConfig, row) => {
   )(row)
 })
 
-let convertRows = (converter, results) => _.map(row => _.extend(row, converter(row)), results)
+let convertRows = (converter, results) =>
+  _.map(row => _.extend(row, converter(row)), results)
 let result = async (context, search, schema, { getSchema }) => {
   context = defaults(context)
   let startRecord = getStartRecord(context)

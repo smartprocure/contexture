@@ -200,21 +200,31 @@ describe('results', () => {
   describe('rowsToObjectConverter', () => {
     it('should convert array of objects to a single object (first from the array) based on populate config prop "singularObject"', () => {
       let results = [
-        { user: [{ name: 'A', other: 1 }, { name: 'A', other: 2 }, { other: 3 }]},
-        { user: [{ name: 'B'}, { other: 1 }]},
-        { user: [{ other: 1 }, { other: 2 }]},
+        {
+          user: [
+            { name: 'A', other: 1 },
+            { name: 'A', other: 2 },
+            { other: 3 },
+          ],
+        },
+        { user: [{ name: 'B' }, { other: 1 }] },
+        { user: [{ other: 1 }, { other: 2 }] },
       ]
       let populate = {
         user: {
           schema: 'user',
           localField: 'user',
           foreignField: '_id',
-          singularObject: true
-        }
+          singularObject: true,
+        },
       }
       let converter = rowsToObjectConverter(populate)
       results = convertRows(converter, results)
-      expect(results).to.deep.equal([ { user: { name: 'A', other: 1 } }, { user: { name: 'B' } }, { user: { other: 1 }} ])
+      expect(results).to.deep.equal([
+        { user: { name: 'A', other: 1 } },
+        { user: { name: 'B' } },
+        { user: { other: 1 } },
+      ])
     })
   })
 })
