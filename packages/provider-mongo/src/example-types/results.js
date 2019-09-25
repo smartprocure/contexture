@@ -1,11 +1,12 @@
 let F = require('futil-js')
 let _ = require('lodash/fp')
 
-let lookupFromPopulate = getSchema =>
+let convertPopulate = getSchema => _.flow(
   F.mapIndexed((x, as) => {
-    let targetSchema = getSchema(x.schema) //|| toSingular(as), //<-- needs compromise-fp
+    let { unwind, schema } = x
+    let targetSchema = getSchema(schema) //|| toSingular(as), //<-- needs compromise-fp
     if (!targetSchema)
-      throw Error(`Couldn't find schema configuration for ${x.schema}`)
+      throw Error(`Couldn't find schema configuration for ${schema}`)
     if (!targetSchema.mongo)
       throw Error(
         'Populating a non mongo provider schema on a mongo provider schema is not supported'
@@ -16,15 +17,19 @@ let lookupFromPopulate = getSchema =>
         `The ${targetCollection} schema has a mongo configuration, but doesn't have a 'collection' property`
       )
 
-    return {
+    let $unwind = unwind ? [{ $unwind: `$${targetCollection}` }] : []
+    let $lookup = [{
       $lookup: {
         as,
         from: targetCollection,
         localField: x.localField, // || '_id',
         foreignField: x.foreignField, // || context.schema, <-- needs schema lookup
       },
-    }
-  })
+    }]
+    return [...$lookup, ...$unwind]
+  }),
+  _.flatten
+)
 
 let getStartRecord = ({ page, pageSize }) => {
   page = page < 1 ? 0 : page - 1
@@ -64,13 +69,15 @@ let getResultsQuery = (context, getSchema, startRecord) => {
     _.keys(populate)
   )
   // $project
-  let $project = [{ $project: projectFromInclude(include) }]
+  let $project = _.isEmpty(include)
+    ? []
+    : [{ $project: projectFromInclude(include) }]
 
   return [
     ...(!sortOnJoinField ? sortSkipLimit : []),
-    ...lookupFromPopulate(getSchema)(populate),
+    ...convertPopulate(getSchema)(populate),
     ...(sortOnJoinField ? sortSkipLimit : []),
-    ...(!_.isEmpty(include) ? $project : []),
+    ...$project,
   ]
 }
 
@@ -81,36 +88,16 @@ let defaults = _.defaults({
   include: [],
 })
 
-let rowsToObjectConverter = _.curry((populateConfig, row) => {
-  let singularProps = _.flow(
-    _.pickBy('singularObject'),
-    _.keys
-  )(populateConfig)
-
-  return _.flow(
-    _.pick(singularProps),
-    _.mapValues(_.first)
-  )(row)
-})
-
-let convertRows = (converter, results) => _.map(row => _.extend(row, converter(row)), results)
 let result = async (context, search, schema, { getSchema }) => {
   context = defaults(context)
   let startRecord = getStartRecord(context)
   let resultsQuery = getResultsQuery(context, getSchema, startRecord)
   let countQuery = [{ $group: { _id: null, count: { $sum: 1 } } }]
-  let { populate } = context
 
   let [results, count] = await Promise.all([
     search(resultsQuery),
     search(countQuery),
   ])
-
-  // Handle the "singularObject" for each populate config
-  if (populate) {
-    let converter = rowsToObjectConverter(populate)
-    results = convertRows(converter, results)
-  }
 
   return {
     response: {
@@ -124,13 +111,11 @@ let result = async (context, search, schema, { getSchema }) => {
 
 // NOTE: pageSize of 0 will return all records
 module.exports = {
-  lookupFromPopulate,
   getStartRecord,
   getResultsQuery,
   defaults,
   projectFromInclude,
-  rowsToObjectConverter,
-  convertRows,
+  convertPopulate,
   // API
   result,
 }
