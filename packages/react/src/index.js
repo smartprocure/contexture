@@ -1,6 +1,16 @@
 // utils
-export * from './utils/schema'
-export * from './utils/theme'
+export {
+  fieldsFromSchema,
+  componentForType,
+  schemaFieldProps,
+} from './utils/schema'
+export {
+  ThemeProvider,
+  useTheme,
+  ThemeConsumer,
+  withNamedTheme,
+  withTheme,
+} from './utils/theme'
 
 // exampleTypes
 export * from './exampleTypes'

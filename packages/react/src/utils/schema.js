@@ -24,7 +24,7 @@ export let inferSchema = _.flow(
   flattenPlainObject
 )
 
-export let DefaultNodeProps = (field, fields, type) =>
+export let defaultNodeProps = (field, fields, type) =>
   _.get([field, 'defaultNodeProps', type], fields)
 
 export let schemaFieldProps = _.curry((props, { field }, fields) =>
