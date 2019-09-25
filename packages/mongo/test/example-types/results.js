@@ -2,18 +2,16 @@ let { expect } = require('chai')
 let _ = require('lodash/fp')
 let {
   defaults,
-  lookupFromPopulate,
+  convertPopulate,
   getResultsQuery,
   getStartRecord,
   projectFromInclude,
-  rowsToObjectConverter,
-  convertRows,
 } = require('../../src/example-types/results')
 
 let getSchema = collection => ({ mongo: { collection } })
 
 describe('results', () => {
-  describe('lookupFromPopulate', () => {
+  describe('convertPopulate', () => {
     it('should translate populate object into an array of $lookup objects', () => {
       let populate = {
         user: {
@@ -27,7 +25,7 @@ describe('results', () => {
           foreignField: '_id',
         },
       }
-      expect(lookupFromPopulate(getSchema)(populate)).to.deep.equal([
+      expect(convertPopulate(getSchema)(populate)).to.deep.equal([
         {
           $lookup: {
             as: 'user',
@@ -44,6 +42,29 @@ describe('results', () => {
             foreignField: '_id',
           },
         },
+      ])
+    })
+    it('should add "$unwind" stage if "unwind" is present in the populate config', () => {
+      let populate = {
+        user: {
+          schema: 'user',
+          localField: 'user',
+          foreignField: '_id',
+          unwind: true
+        }
+      }
+      expect(convertPopulate(getSchema)(populate)).to.deep.equal([
+        {
+          "$lookup": {
+            "as": "user",
+            "foreignField": "_id",
+            "from": "user",
+            "localField": "user"
+          }
+        },
+        {
+          "$unwind": "$user"
+        }
       ])
     })
   })
@@ -195,26 +216,6 @@ describe('results', () => {
         'bar.baz': 1,
         foo: 1,
       })
-    })
-  })
-  describe('rowsToObjectConverter', () => {
-    it('should convert array of objects to a single object (first from the array) based on populate config prop "singularObject"', () => {
-      let results = [
-        { user: [{ name: 'A', other: 1 }, { name: 'A', other: 2 }, { other: 3 }]},
-        { user: [{ name: 'B'}, { other: 1 }]},
-        { user: [{ other: 1 }, { other: 2 }]},
-      ]
-      let populate = {
-        user: {
-          schema: 'user',
-          localField: 'user',
-          foreignField: '_id',
-          singularObject: true
-        }
-      }
-      let converter = rowsToObjectConverter(populate)
-      results = convertRows(converter, results)
-      expect(results).to.deep.equal([ { user: { name: 'A', other: 1 } }, { user: { name: 'B' } }, { user: { other: 1 }} ])
     })
   })
 })
