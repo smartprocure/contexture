@@ -50,21 +50,21 @@ describe('results', () => {
           schema: 'user',
           localField: 'user',
           foreignField: '_id',
-          unwind: true
-        }
+          unwind: true,
+        },
       }
       expect(convertPopulate(getSchema)(populate)).to.deep.equal([
         {
-          "$lookup": {
-            "as": "user",
-            "foreignField": "_id",
-            "from": "user",
-            "localField": "user"
-          }
+          $lookup: {
+            as: 'user',
+            foreignField: '_id',
+            from: 'user',
+            localField: 'user',
+          },
         },
         {
-          "$unwind": "$user"
-        }
+          $unwind: '$user',
+        },
       ])
     })
   })
