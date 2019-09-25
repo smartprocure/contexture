@@ -1,7 +1,8 @@
 let { expect } = require('chai')
+let _ = require('lodash/fp')
 let {
   defaults,
-  lookupFromPopulate,
+  convertPopulate,
   getResultsQuery,
   getStartRecord,
   projectFromInclude,
@@ -10,7 +11,7 @@ let {
 let getSchema = collection => ({ mongo: { collection } })
 
 describe('results', () => {
-  describe('lookupFromPopulate', () => {
+  describe('convertPopulate', () => {
     it('should translate populate object into an array of $lookup objects', () => {
       let populate = {
         user: {
@@ -24,7 +25,7 @@ describe('results', () => {
           foreignField: '_id',
         },
       }
-      expect(lookupFromPopulate(getSchema)(populate)).to.deep.equal([
+      expect(convertPopulate(getSchema)(populate)).to.deep.equal([
         {
           $lookup: {
             as: 'user',
@@ -40,6 +41,29 @@ describe('results', () => {
             localField: 'organization',
             foreignField: '_id',
           },
+        },
+      ])
+    })
+    it('should add "$unwind" stage if "unwind" is present in the populate config', () => {
+      let populate = {
+        user: {
+          schema: 'user',
+          localField: 'user',
+          foreignField: '_id',
+          unwind: true,
+        },
+      }
+      expect(convertPopulate(getSchema)(populate)).to.deep.equal([
+        {
+          $lookup: {
+            as: 'user',
+            foreignField: '_id',
+            from: 'user',
+            localField: 'user',
+          },
+        },
+        {
+          $unwind: '$user',
         },
       ])
     })
