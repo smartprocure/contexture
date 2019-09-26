@@ -1,3 +1,6 @@
+# 0.9.1
+* Add "preserveNullAndEmptyArrays" to the unwind for the populate configuration
+
 # 0.9.0
 * Add support for unwind on the populate configuration
 
