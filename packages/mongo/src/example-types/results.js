@@ -18,7 +18,12 @@ let convertPopulate = getSchema =>
           `The ${targetCollection} schema has a mongo configuration, but doesn't have a 'collection' property`
         )
 
-      let $unwind = unwind ? [{ $unwind: `$${targetCollection}` }] : []
+      let $unwind = unwind ? [{
+        $unwind: {
+            path: `$${targetCollection}`,
+            preserveNullAndEmptyArrays: true
+        }
+      }] : []
       let $lookup = [
         {
           $lookup: {
