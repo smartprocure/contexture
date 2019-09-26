@@ -63,7 +63,10 @@ describe('results', () => {
           },
         },
         {
-          $unwind: '$user',
+          $unwind: {
+            path: '$user',
+            "preserveNullAndEmptyArrays": true
+          }
         },
       ])
     })
