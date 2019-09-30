@@ -1,3 +1,6 @@
+# 2.1.0
+* Add `BasicFilters` and `BuilderFilters` props to SearchFilters for overriding/customizing filter components in the layout
+
 # 2.0.6
 * camelCase `defaultNodeProps` schema util
 * Be explicit about utility function exports in `src/index.js`
