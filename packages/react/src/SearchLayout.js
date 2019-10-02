@@ -12,7 +12,11 @@ let styles = mode => ({
 })
 
 let SearchLayout = ({ mode, style, ...props }) => (
-  <div style={{ ...styles(mode), ...style }} {...props} />
+  <div
+    className={`search-layout search-layout-${mode}`}
+    style={{ ...styles(mode), ...style }}
+    {...props}
+  />
 )
 
 SearchLayout.propTypes = {
