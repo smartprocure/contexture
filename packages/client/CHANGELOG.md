@@ -1,3 +1,6 @@
+# 2.26.2
+* Handle better empty values in sourceTree with subQuery
+
 # 2.26.1
 * Add custom autoKey function for terms_stats type (uses `key_field` and `value_field` instead of `field`)
 

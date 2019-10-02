@@ -49,7 +49,9 @@ export default _.curry(
     sourceNode.afterSearch = () =>
       _.flow(
         mapSubqueryValues,
-        targetTree.mutate(targetPath)
+        _.get('tree.hasValue', sourceTree)
+          ? targetTree.mutate(targetPath)
+          : targetTree.clear(targetPath)
       )(sourceNode, targetNode, types)
   }
 )
