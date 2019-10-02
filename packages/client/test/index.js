@@ -1072,10 +1072,9 @@ let AllTests = ContextureClient => {
     expect(targetTree.getNode(['root', 'a']).markedForUpdate).to.be.true
 
     await promise
-    expect(sourceTree.getNode(['innerRoot', 'c']).context.options).to.deep.equal([
-      { name: 1 },
-      { name: 2 },
-    ])
+    expect(
+      sourceTree.getNode(['innerRoot', 'c']).context.options
+    ).to.deep.equal([{ name: 1 }, { name: 2 }])
     expect(targetTree.getNode(['root', 'a']).values).to.deep.equal([1, 2])
 
     // Mutate on sourceTree will await the Subquery into targetTree
@@ -1138,7 +1137,9 @@ let AllTests = ContextureClient => {
     expect(targetTree.getNode(['root', 'a']).markedForUpdate).to.be.true
 
     await promise
-    expect(sourceTree.getNode(['innerRoot', 'c']).context.options).to.deep.equal([])
+    expect(
+      sourceTree.getNode(['innerRoot', 'c']).context.options
+    ).to.deep.equal([])
     expect(targetTree.getNode(['root', 'a']).values).to.deep.equal([])
 
     // Mutate on sourceTree will await the Subquery into targetTree
