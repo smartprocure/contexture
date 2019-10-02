@@ -11,9 +11,9 @@ let styles = mode => ({
     mode === 'basic' ? 'minmax(250px, 400px) minmax(0, 1fr)' : 'minmax(0, 1fr)',
 })
 
-let SearchLayout = ({ mode, style, ...props }) => (
+let SearchLayout = ({ mode, style, className, ...props }) => (
   <div
-    className={`search-layout search-layout-${mode}`}
+    className={`search-layout search-layout-${mode} ${className}`}
     style={{ ...styles(mode), ...style }}
     {...props}
   />
