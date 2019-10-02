@@ -1,3 +1,6 @@
+# 2.1.1
+* Add `search-layout` and `search-layout-{mode}` classNames to SearchLayout
+
 # 2.1.0
 * Add `BasicFilters` and `BuilderFilters` props to SearchFilters for overriding/customizing filter components in the layout
 
