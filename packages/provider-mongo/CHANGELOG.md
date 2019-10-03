@@ -1,3 +1,6 @@
+# 0.9.2
+* Make sure to use the populate key when `$unwind`ing a `$lookup`.
+
 # 0.9.1
 * Add "preserveNullAndEmptyArrays" to the unwind for the populate configuration
 

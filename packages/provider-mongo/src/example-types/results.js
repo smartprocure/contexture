@@ -22,7 +22,7 @@ let convertPopulate = getSchema =>
         ? [
             {
               $unwind: {
-                path: `$${targetCollection}`,
+                path: `$${as}`,
                 preserveNullAndEmptyArrays: true,
               },
             },
