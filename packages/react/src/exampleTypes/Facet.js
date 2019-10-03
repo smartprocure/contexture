@@ -78,8 +78,8 @@ let Facet = ({
   tree,
   node,
   hide = {
-    facetFilter: false,  // Hide the search box above the facet checkboxes
-    counts: false        // Hide the facet counts so only the labels are displayed
+    facetFilter: false, // Hide the search box above the facet checkboxes
+    counts: false, // Hide the facet counts so only the labels are displayed
   },
   display = x => x,
   displayBlank = () => <i>Not Specified</i>,
