@@ -14,12 +14,12 @@ describe('results', () => {
   describe('convertPopulate', () => {
     it('should translate populate object into an array of $lookup objects', () => {
       let populate = {
-        user: {
+        author: {
           schema: 'user',
-          localField: 'user',
+          localField: 'createdBy',
           foreignField: '_id',
         },
-        organization: {
+        org: {
           schema: 'organization',
           localField: 'organization',
           foreignField: '_id',
@@ -28,15 +28,15 @@ describe('results', () => {
       expect(convertPopulate(getSchema)(populate)).to.deep.equal([
         {
           $lookup: {
-            as: 'user',
+            as: 'author',
             from: 'user',
-            localField: 'user',
+            localField: 'createdBy',
             foreignField: '_id',
           },
         },
         {
           $lookup: {
-            as: 'organization',
+            as: 'org',
             from: 'organization',
             localField: 'organization',
             foreignField: '_id',
@@ -46,9 +46,9 @@ describe('results', () => {
     })
     it('should add "$unwind" stage if "unwind" is present in the populate config', () => {
       let populate = {
-        user: {
+        author: {
           schema: 'user',
-          localField: 'user',
+          localField: 'createdBy',
           foreignField: '_id',
           unwind: true,
         },
@@ -56,18 +56,13 @@ describe('results', () => {
       expect(convertPopulate(getSchema)(populate)).to.deep.equal([
         {
           $lookup: {
-            as: 'user',
-            foreignField: '_id',
+            as: 'author',
             from: 'user',
-            localField: 'user',
+            localField: 'createdBy',
+            foreignField: '_id',
           },
         },
-        {
-          $unwind: {
-            path: '$user',
-            preserveNullAndEmptyArrays: true,
-          },
-        },
+        { $unwind: { path: '$author', preserveNullAndEmptyArrays: true } },
       ])
     })
   })
