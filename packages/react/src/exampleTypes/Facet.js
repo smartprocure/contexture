@@ -77,7 +77,10 @@ let FacetOptionsFilter = _.flow(
 let Facet = ({
   tree,
   node,
-  hide = {},
+  hide = {
+    facetFilter: false, // Hide the search box above the facet checkboxes
+    counts: false, // Hide the facet counts so only the labels are displayed
+  },
   display = x => x,
   displayBlank = () => <i>Not Specified</i>,
   formatCount = x => x,
@@ -111,7 +114,7 @@ let Facet = ({
             <div style={{ flex: 2, padding: '0 5px' }}>
               {display(name) || displayBlank()}
             </div>
-            <div>{formatCount(count)}</div>
+            {!hide.counts && <div>{formatCount(count)}</div>}
           </label>
         )
       })
