@@ -4,10 +4,8 @@ let GridItem = ({
   column,
   colStart,
   colEnd,
-  colSpan,
   row,
   rowStart,
-  rowSpan,
   rowEnd,
   children,
   style,
@@ -16,10 +14,10 @@ let GridItem = ({
     style={{
       gridColumn: column,
       gridColumnStart: colStart,
-      gridColumnEnd: colEnd || (!!colSpan && `span ${colSpan}`),
+      gridColumnEnd: colEnd,
       gridRow: row,
       gridRowStart: rowStart,
-      gridRowEnd: rowEnd || (!!rowSpan && `span ${rowSpan}`),
+      gridRowEnd: rowEnd,
       ...style,
     }}
   >
