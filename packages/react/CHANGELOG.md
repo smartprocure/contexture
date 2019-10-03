@@ -1,3 +1,6 @@
+# 2.1.2
+* Add 'counts' to the facet hide config in order to hide the facet counts
+
 # 2.1.1
 * Add `search-layout` and `search-layout-{mode}` classNames to SearchLayout
 
