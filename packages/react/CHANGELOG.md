@@ -1,3 +1,7 @@
+# 2.2.0
+* GreyVest: Add GridItem component
+* GreyVest: Add `row` prop to Grid
+
 # 2.1.1
 * Add `search-layout` and `search-layout-{mode}` classNames to SearchLayout
 
