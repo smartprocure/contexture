@@ -1,4 +1,4 @@
-# 2.1.2
+# 2.2.0
 * Add 'counts' to the facet hide config in order to hide the facet counts
 
 # 2.1.1
