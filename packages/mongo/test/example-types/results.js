@@ -1,5 +1,4 @@
 let { expect } = require('chai')
-let _ = require('lodash/fp')
 let {
   defaults,
   convertPopulate,
