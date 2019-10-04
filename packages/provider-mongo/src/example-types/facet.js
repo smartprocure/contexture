@@ -8,8 +8,8 @@ module.exports = {
     [node.field]: {
       [node.mode === 'exclude' ? '$nin' : '$in']: node.isMongoId
         ? _.map(ObjectID, node.values)
-        : node.values
-    }
+        : node.values,
+    },
   }),
   result: (node, search) =>
     Promise.all([
@@ -24,20 +24,20 @@ module.exports = {
             $match: {
               _id: {
                 $regex: F.wordsToRegexp(node.optionsFilter),
-                $options: 'i'
-              }
-            }
+                $options: 'i',
+              },
+            },
           },
-          node.size !== 0 && { $limit: node.size || 10 }
+          node.size !== 0 && { $limit: node.size || 10 },
         ])
       ),
       search([
         { $unwind: `$${node.field}` },
         { $group: { _id: `$${node.field}` } },
-        { $group: { _id: 1, count: { $sum: 1 } } }
-      ])
+        { $group: { _id: 1, count: { $sum: 1 } } },
+      ]),
     ]).then(([options, cardinality]) => ({
       cardinality: _.get('0.count', cardinality),
-      options: _.map(x => ({ name: x._id, count: x.count }), options)
-    }))
+      options: _.map(x => ({ name: x._id, count: x.count }), options),
+    })),
 }
