@@ -1,6 +1,6 @@
 # 0.9.3
+* Leverage new futil export regex builders in the facet options filter
 * Move from `futil-js` to lastest `futil` (just package rename + version bump)
-* Leverage futil regex methods
 * Change internal naming from `context` to `node`
 
 # 0.9.2
