@@ -1,5 +1,5 @@
+let F = require('futil')
 let _ = require('lodash/fp')
-let F = require('futil-js')
 
 let joinmap = {
   all: '$and',
@@ -8,11 +8,11 @@ let joinmap = {
 }
 
 module.exports = {
-  hasValue: x => F.cascade(['value', 'values.length'])(x),
-  filter: context => ({
-    [joinmap[context.join || 'all']]: _.map(
+  hasValue: F.cascade(['value', 'values.length']),
+  filter: node => ({
+    [joinmap[node.join || 'all']]: _.map(
       val => ({
-        [context.field]: {
+        [node.field]: {
           $regex: {
             containsWord: val,
             startsWith: `^${val}`,
@@ -21,11 +21,11 @@ module.exports = {
             wordEndsWith: `${val}\\b`,
             is: `^${val}$`,
             containsExact: `\\b${val}\\b`,
-          }[context.operator],
+          }[node.operator],
           $options: 'i',
         },
       }),
-      context.values || [context.value]
+      node.values || [node.value]
     ),
   }),
 }

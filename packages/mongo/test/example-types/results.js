@@ -67,21 +67,21 @@ describe('results', () => {
   })
   describe('getStartRecord', () => {
     it('should return 0 if page is 1', () => {
-      let context = { page: 1, pageSize: 10 }
-      expect(getStartRecord(context)).to.equal(0)
+      let node = { page: 1, pageSize: 10 }
+      expect(getStartRecord(node)).to.equal(0)
     })
     it('should return 0 if page is < 1', () => {
-      let context = { page: 0, pageSize: 10 }
-      expect(getStartRecord(context)).to.equal(0)
+      let node = { page: 0, pageSize: 10 }
+      expect(getStartRecord(node)).to.equal(0)
     })
     it('should return 10 if page is 2', () => {
-      let context = { page: 2, pageSize: 10 }
-      expect(getStartRecord(context)).to.equal(10)
+      let node = { page: 2, pageSize: 10 }
+      expect(getStartRecord(node)).to.equal(10)
     })
   })
   describe('getResultsQuery', () => {
     it('should put $sort, $skip, $limit first in pipeline', () => {
-      let context = defaults({
+      let node = defaults({
         key: 'results',
         type: 'results',
         sortField: 'createdAt',
@@ -95,7 +95,7 @@ describe('results', () => {
           },
         },
       })
-      expect(getResultsQuery(context, getSchema, 0)).to.deep.equal([
+      expect(getResultsQuery(node, getSchema, 0)).to.deep.equal([
         { $sort: { createdAt: 1 } },
         { $skip: 0 },
         { $limit: 10 },
@@ -111,7 +111,7 @@ describe('results', () => {
       ])
     })
     it('should put $sort, $skip, $limit first in pipeline where sort field is not part of a join', () => {
-      let context = defaults({
+      let node = defaults({
         key: 'results',
         type: 'results',
         sortField: 'metrics.sessionsCount',
@@ -125,7 +125,7 @@ describe('results', () => {
           },
         },
       })
-      expect(getResultsQuery(context, getSchema, 0)).to.deep.equal([
+      expect(getResultsQuery(node, getSchema, 0)).to.deep.equal([
         { $sort: { 'metrics.sessionsCount': 1 } },
         { $skip: 0 },
         { $limit: 10 },
@@ -141,7 +141,7 @@ describe('results', () => {
       ])
     })
     it('should put $sort, $skip, $limit first after $lookup', () => {
-      let context = defaults({
+      let node = defaults({
         key: 'results',
         type: 'results',
         sortField: 'user.firstName',
@@ -155,7 +155,7 @@ describe('results', () => {
           },
         },
       })
-      expect(getResultsQuery(context, getSchema, 0)).to.deep.equal([
+      expect(getResultsQuery(node, getSchema, 0)).to.deep.equal([
         {
           $lookup: {
             as: 'user',
@@ -171,36 +171,36 @@ describe('results', () => {
       ])
     })
     it('should sort descending and skip $lookup and $project', () => {
-      let context = defaults({
+      let node = defaults({
         key: 'results',
         type: 'results',
         sortField: 'createdAt',
         sortDir: 'desc',
       })
-      expect(getResultsQuery(context, getSchema, 0)).to.deep.equal([
+      expect(getResultsQuery(node, getSchema, 0)).to.deep.equal([
         { $sort: { createdAt: -1 } },
         { $skip: 0 },
         { $limit: 10 },
       ])
     })
     it('should not have $limit stage if pageSize is 0', () => {
-      let context = defaults({
+      let node = defaults({
         key: 'results',
         type: 'results',
         sortField: 'createdAt',
         pageSize: 0,
       })
-      expect(getResultsQuery(context, getSchema, 0)).to.deep.equal([
+      expect(getResultsQuery(node, getSchema, 0)).to.deep.equal([
         { $sort: { createdAt: -1 } },
         { $skip: 0 },
       ])
     })
     it('should not have $sort stage if sortField is missing', () => {
-      let context = defaults({
+      let node = defaults({
         key: 'results',
         type: 'results',
       })
-      expect(getResultsQuery(context, getSchema, 0)).to.deep.equal([
+      expect(getResultsQuery(node, getSchema, 0)).to.deep.equal([
         { $skip: 0 },
         { $limit: 10 },
       ])

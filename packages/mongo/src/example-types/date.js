@@ -1,9 +1,9 @@
-let _ = require('lodash')
+let F = require('futil')
 let moment = require('moment')
 let datemath = require('@elastic/datemath')
 
 module.exports = {
-  hasValue: context => context.from || context.to,
+  hasValue: node => node.from || node.to,
   filter({ from, to, field, useDateMath, dateType = 'date' }) {
     if (useDateMath) {
       if (from === 'thisQuarter') {
@@ -36,13 +36,10 @@ module.exports = {
     }[dateType]
 
     return {
-      [field]: _.pickBy(
-        {
-          $gte: format(from),
-          $lte: format(to),
-        },
-        _.identity
-      ),
+      [field]: F.compactObject({
+        $gte: format(from),
+        $lte: format(to),
+      }),
     }
   },
 }

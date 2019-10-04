@@ -58,8 +58,8 @@ describe('Grouping text and mongoId', () => {
         type: 'results'
       }]
     }
-    let context = await process(dsl, { debug: true })
-    let response = _.last(context.items).context.response
+    let result = await process(dsl, { debug: true })
+    let response = _.last(result.items).context.response
     expect(response.totalRecords).to.equal(1)
     expect(response.results[0]._id.toString()).to.equal(id.toString())
   })
@@ -99,8 +99,8 @@ describe('Grouping text and mongoId', () => {
         }
       }]
     }
-    let context = await process(dsl, { debug: true })
-    let response = _.last(context.items).context.response
+    let result = await process(dsl, { debug: true })
+    let response = _.last(result.items).context.response
     expect(response.totalRecords).to.equal(1)
     expect(response.results[0]._id.toString()).to.equal(id.toString())
     expect(response.results[0].child[0]._id.toString()).to.equal(id2.toString())
