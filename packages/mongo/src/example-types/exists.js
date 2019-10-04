@@ -4,32 +4,15 @@ module.exports = {
     value
       ? {
           $and: [
-            {
-              [field]: {
-                $exists: value,
-                $ne: '',
-              },
-            },
-            {
-              [field]: {
-                $ne: null,
-              },
-            },
-          ],
+            { [field]: { $exists: value, $ne: '' } },
+            { [field]: { $ne: null } }
+          ]
         }
       : {
           $or: [
-            {
-              [field]: {
-                $exists: false,
-              },
-            },
-            {
-              [field]: '',
-            },
-            {
-              [field]: null,
-            },
-          ],
-        },
+            { [field]: { $exists: false } },
+            { [field]: '' },
+            { [field]: null }
+          ]
+        }
 }
