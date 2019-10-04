@@ -4,14 +4,14 @@ let facet = require('../../src/example-types/facet')
 
 describe('facet', () => {
   describe('facet.hasValue', () => {
-    it('Should allow contexts with values', () => {
+    it('Should allow nodes with values', () => {
       expect(
         facet.hasValue({
           values: [1, 2],
         })
       ).to.equal(2)
     })
-    it('Should not allow contexts with values', () => {
+    it('Should not allow nodes with values', () => {
       expect(
         facet.hasValue({
           values: [],
@@ -27,39 +27,39 @@ describe('facet', () => {
     }
     it('should call the search function and wait for it', async () => {
       queries = []
-      let context = {
+      let node = {
         field: 'myField',
       }
-      let result = await facet.result(context, search)
+      let result = await facet.result(node, search)
       expect(result.options.length).to.equal(3)
       expect(_.every(x => _.isNumber(x.count), result.options)).to.equal(true)
     })
     it('should default the limit query to 10 if size is not provided', async () => {
       queries = []
-      let context = {
+      let node = {
         field: 'myField',
       }
-      await facet.result(context, search)
+      await facet.result(node, search)
       let limitAgg = _.find('$limit', queries[0])
       expect(limitAgg.$limit).to.equal(10)
     })
     it('should allow unlimited queries', async () => {
       queries = []
-      let context = {
+      let node = {
         field: 'myField',
         size: 0,
       }
-      await facet.result(context, search)
+      await facet.result(node, search)
       let limitAgg = _.find('$limit', queries[0])
       expect(limitAgg).to.be.undefined
     })
     it('should support optionsFilter', async () => {
       queries = []
-      let context = {
+      let node = {
         field: 'myField',
         optionsFilter: 'cable',
       }
-      await facet.result(context, search)
+      await facet.result(node, search)
       let filterAgg = _.find('$match', queries[0])
       expect(filterAgg).to.deep.equal({
         $match: {
@@ -76,11 +76,11 @@ describe('facet', () => {
     })
     it('should support optionsFilter with multiple words and spaces', async () => {
       queries = []
-      let context = {
+      let node = {
         field: 'categoriesInfo',
         optionsFilter: '  dis  comp    ',
       }
-      await facet.result(context, search)
+      await facet.result(node, search)
       let filterAgg = _.find('$match', queries[0])
       expect(filterAgg).to.deep.equal({
         $match: {
@@ -96,11 +96,11 @@ describe('facet', () => {
       expect(limitIndex > filterIndex).to.be.true
     })
     it('should support isMongoId', async () => {
-      let context = {
+      let node = {
         field: 'field',
         values: ['5a4ea8052c635b002ade8e45', '5a4ea8052c635b002ade8e45'],
       }
-      let result = await facet.filter(context)
+      let result = await facet.filter(node)
       expect(result.field.$in.map(x => x.toString())).to.deep.equal([
         '5a4ea8052c635b002ade8e45',
         '5a4ea8052c635b002ade8e45',

@@ -9,10 +9,10 @@ let joinmap = {
 
 module.exports = {
   hasValue: x => F.cascade(['value', 'values.length'])(x),
-  filter: context => ({
-    [joinmap[context.join || 'all']]: _.map(
+  filter: node => ({
+    [joinmap[node.join || 'all']]: _.map(
       val => ({
-        [context.field]: {
+        [node.field]: {
           $regex: {
             containsWord: val,
             startsWith: `^${val}`,
@@ -21,11 +21,11 @@ module.exports = {
             wordEndsWith: `${val}\\b`,
             is: `^${val}$`,
             containsExact: `\\b${val}\\b`,
-          }[context.operator],
+          }[node.operator],
           $options: 'i',
         },
       }),
-      context.values || [context.value]
+      node.values || [node.value]
     ),
   }),
 }

@@ -1,6 +1,7 @@
 # 0.9.3
-* Moved from `futil-js` to lastest `futil` (just package rename + version bump)
+* Move from `futil-js` to lastest `futil` (just package rename + version bump)
 * Leverage futil regex methods
+* Change internal naming from `context` to `node`
 
 # 0.9.2
 * Make sure to use the populate key when `$unwind`ing a `$lookup`.

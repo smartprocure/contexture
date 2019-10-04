@@ -12,7 +12,7 @@ var MongoProvider = config => ({
     [`$${group.join === 'not' ? 'nor' : group.join}`]: filters,
   }),
   types: config.types,
-  runSearch(options, context, schema, filters, aggs) {
+  runSearch(options, node, schema, filters, aggs) {
     var client = config.getClient()
 
     var request = {
@@ -27,7 +27,7 @@ var MongoProvider = config => ({
     }
 
     // Log Request
-    context._meta.requests.push(request)
+    node._meta.requests.push(request)
 
     var result = Promise.resolve(mongoDSL(client, request))
     return result.tap(results => {
