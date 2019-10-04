@@ -49,6 +49,8 @@ export default _.curry(
     sourceNode.afterSearch = () =>
       _.flow(
         mapSubqueryValues,
+        // If the sourceTree has no values at all clear the targetTree, otherwise mutate with the new values.
+        // This is needed in the cases where the intial values are removed and there are no values in the source tree anymore.
         _.get('tree.hasValue', sourceTree)
           ? targetTree.mutate(targetPath)
           : targetTree.clear(targetPath)
