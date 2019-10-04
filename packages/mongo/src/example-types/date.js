@@ -38,8 +38,8 @@ module.exports = {
     return {
       [field]: F.compactObject({
         $gte: format(from),
-        $lte: format(to)
-      })
+        $lte: format(to),
+      }),
     }
-  }
+  },
 }

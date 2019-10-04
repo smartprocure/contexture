@@ -5,14 +5,14 @@ module.exports = {
       ? {
           $and: [
             { [field]: { $exists: value, $ne: '' } },
-            { [field]: { $ne: null } }
-          ]
+            { [field]: { $ne: null } },
+          ],
         }
       : {
           $or: [
             { [field]: { $exists: false } },
             { [field]: '' },
-            { [field]: null }
-          ]
-        }
+            { [field]: null },
+          ],
+        },
 }

@@ -11,9 +11,9 @@ module.exports = {
             max: { $max: `$${field}` },
             min: { $min: `$${field}` },
             avg: { $avg: `$${field}` },
-            sum: { $sum: `$${field}` }
-          }
-        }
+            sum: { $sum: `$${field}` },
+          },
+        },
       ])
-    ) || { count: 0, avg: 0, max: 0, min: 0, sum: 0 }
+    ) || { count: 0, avg: 0, max: 0, min: 0, sum: 0 },
 }
