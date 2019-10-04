@@ -1,30 +1,47 @@
 let F = require('futil')
 let _ = require('lodash/fp')
 
-let lookupFromPopulate = getSchema =>
-  F.mapIndexed((x, as) => {
-    let targetSchema = getSchema(x.schema) //|| toSingular(as), //<-- needs compromise-fp
-    if (!targetSchema)
-      throw Error(`Couldn't find schema configuration for ${x.schema}`)
-    if (!targetSchema.mongo)
-      throw Error(
-        'Populating a non mongo provider schema on a mongo provider schema is not supported'
-      )
-    let targetCollection = _.get('mongo.collection', targetSchema)
-    if (!targetCollection)
-      throw Error(
-        `The ${targetCollection} schema has a mongo configuration, but doesn't have a 'collection' property`
-      )
+let convertPopulate = getSchema =>
+  _.flow(
+    F.mapIndexed((x, as) => {
+      let { unwind, schema } = x
+      let targetSchema = getSchema(schema) //|| toSingular(as), //<-- needs compromise-fp
+      if (!targetSchema)
+        throw Error(`Couldn't find schema configuration for ${schema}`)
+      if (!targetSchema.mongo)
+        throw Error(
+          'Populating a non mongo provider schema on a mongo provider schema is not supported'
+        )
+      let targetCollection = _.get('mongo.collection', targetSchema)
+      if (!targetCollection)
+        throw Error(
+          `The ${targetCollection} schema has a mongo configuration, but doesn't have a 'collection' property`
+        )
 
-    return {
-      $lookup: {
-        as,
-        from: targetCollection,
-        localField: x.localField, // || '_id',
-        foreignField: x.foreignField, // || context.schema, <-- needs schema lookup
-      },
-    }
-  })
+      let $unwind = unwind
+        ? [
+            {
+              $unwind: {
+                path: `$${as}`,
+                preserveNullAndEmptyArrays: true,
+              },
+            },
+          ]
+        : []
+      let $lookup = [
+        {
+          $lookup: {
+            as,
+            from: targetCollection,
+            localField: x.localField, // || '_id',
+            foreignField: x.foreignField, // || context.schema, <-- needs schema lookup
+          },
+        },
+      ]
+      return [...$lookup, ...$unwind]
+    }),
+    _.flatten
+  )
 
 let getStartRecord = ({ page, pageSize }) => {
   page = page < 1 ? 0 : page - 1
@@ -64,13 +81,15 @@ let getResultsQuery = (context, getSchema, startRecord) => {
     _.keys(populate)
   )
   // $project
-  let $project = [{ $project: projectFromInclude(include) }]
+  let $project = _.isEmpty(include)
+    ? []
+    : [{ $project: projectFromInclude(include) }]
 
   return [
     ...(!sortOnJoinField ? sortSkipLimit : []),
-    ...lookupFromPopulate(getSchema)(populate),
+    ...convertPopulate(getSchema)(populate),
     ...(sortOnJoinField ? sortSkipLimit : []),
-    ...(!_.isEmpty(include) ? $project : []),
+    ...$project,
   ]
 }
 
@@ -104,11 +123,11 @@ let result = async (context, search, schema, { getSchema }) => {
 
 // NOTE: pageSize of 0 will return all records
 module.exports = {
-  lookupFromPopulate,
   getStartRecord,
   getResultsQuery,
   defaults,
   projectFromInclude,
+  convertPopulate,
   // API
   result,
 }
