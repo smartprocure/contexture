@@ -1,4 +1,4 @@
-let F = require('futil-js')
+let F = require('futil')
 let _ = require('lodash/fp')
 
 let convertPopulate = getSchema =>
@@ -34,7 +34,7 @@ let convertPopulate = getSchema =>
             as,
             from: targetCollection,
             localField: x.localField, // || '_id',
-            foreignField: x.foreignField, // || context.schema, <-- needs schema lookup
+            foreignField: x.foreignField, // || node.schema, <-- needs schema lookup
           },
         },
       ]
@@ -59,8 +59,8 @@ let projectFromInclude = include =>
     _.countBy(_.identity)
   )(include)
 
-let getResultsQuery = (context, getSchema, startRecord) => {
-  let { pageSize, sortField, sortDir, populate, include } = context
+let getResultsQuery = (node, getSchema, startRecord) => {
+  let { pageSize, sortField, sortDir, populate, include } = node
 
   // $sort, $skip, $limit
   let $sort = {
@@ -100,10 +100,10 @@ let defaults = _.defaults({
   include: [],
 })
 
-let result = async (context, search, schema, { getSchema }) => {
-  context = defaults(context)
-  let startRecord = getStartRecord(context)
-  let resultsQuery = getResultsQuery(context, getSchema, startRecord)
+let result = async (node, search, schema, { getSchema }) => {
+  node = defaults(node)
+  let startRecord = getStartRecord(node)
+  let resultsQuery = getResultsQuery(node, getSchema, startRecord)
   let countQuery = [{ $group: { _id: null, count: { $sum: 1 } } }]
 
   let [results, count] = await Promise.all([
