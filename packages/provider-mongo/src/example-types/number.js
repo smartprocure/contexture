@@ -1,4 +1,4 @@
-var _ = require('lodash/fp')
+let _ = require('lodash/fp')
 
 let predicate = x =>
   (_.isString(x) || _.isNumber(x)) && x !== '' && _.isFinite(_.toNumber(x))

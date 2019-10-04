@@ -1,5 +1,5 @@
-let _ = require('lodash/fp')
 let F = require('futil')
+let _ = require('lodash/fp')
 
 let joinmap = {
   all: '$and',
@@ -8,7 +8,7 @@ let joinmap = {
 }
 
 module.exports = {
-  hasValue: x => F.cascade(['value', 'values.length'])(x),
+  hasValue: F.cascade(['value', 'values.length']),
   filter: node => ({
     [joinmap[node.join || 'all']]: _.map(
       val => ({

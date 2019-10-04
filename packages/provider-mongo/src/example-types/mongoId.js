@@ -1,12 +1,12 @@
 let _ = require('lodash/fp')
-let ObjectID = require('mongodb').ObjectID
+let { ObjectID } = require('mongodb')
 
 module.exports = {
   hasValue: node => node.values || node.value,
   filter: node => ({
     [node.field]: {
       [node.mode === 'exclude' ? '$nin' : '$in']: _.map(
-        x => new ObjectID(x),
+        ObjectID,
         node.values || [node.value]
       ),
     },

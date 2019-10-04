@@ -1,4 +1,4 @@
-let _ = require('lodash')
+let F = require('futil')
 let moment = require('moment')
 let datemath = require('@elastic/datemath')
 
@@ -36,13 +36,10 @@ module.exports = {
     }[dateType]
 
     return {
-      [field]: _.pickBy(
-        {
-          $gte: format(from),
-          $lte: format(to),
-        },
-        _.identity
-      ),
+      [field]: F.compactObject({
+        $gte: format(from),
+        $lte: format(to)
+      })
     }
-  },
+  }
 }
