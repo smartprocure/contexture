@@ -22,6 +22,7 @@ let Tag = ({
       cursor: 'pointer',
       margin: 3,
       borderRadius: '3px',
+      wordBreak: 'break-word',
       ...F.callOrReturn(tagStyle, value),
     }}
     onClick={onClick}
