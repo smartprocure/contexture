@@ -1052,38 +1052,98 @@ let AllTests = ContextureClient => {
     }
     let Tree = ContextureClient({ debounce: 1, service, types })
 
-    let tree1 = Tree({
+    let sourceTree = Tree({
       key: 'innerRoot',
       join: 'and',
       children: [{ key: 'c', type: 'facet' }, { key: 'd', type: 'facet' }],
     })
-    let tree2 = Tree({
+    let targetTree = Tree({
       key: 'root',
       join: 'and',
       children: [{ key: 'a', type: 'facet' }, { key: 'b', type: 'results' }],
     })
 
-    // subquery(types, tree2, ['root', 'a'], tree1, ['innerRoot', 'c'])
-    tree2.subquery(['root', 'a'], tree1, ['innerRoot', 'c'])
-    let promise = tree1.mutate(['innerRoot', 'd'], { values: ['test'] })
+    // subquery(types, targetTree, ['root', 'a'], sourceTree, ['innerRoot', 'c'])
+    targetTree.subquery(['root', 'a'], sourceTree, ['innerRoot', 'c'])
+    let promise = sourceTree.mutate(['innerRoot', 'd'], { values: ['test'] })
 
     // Expect the toNode to be marked for update immediately
     await Promise.delay(1)
-    expect(tree2.getNode(['root', 'a']).markedForUpdate).to.be.true
+    expect(targetTree.getNode(['root', 'a']).markedForUpdate).to.be.true
 
     await promise
-    expect(tree1.getNode(['innerRoot', 'c']).context.options).to.deep.equal([
-      { name: 1 },
-      { name: 2 },
-    ])
-    expect(tree2.getNode(['root', 'a']).values).to.deep.equal([1, 2])
+    expect(
+      sourceTree.getNode(['innerRoot', 'c']).context.options
+    ).to.deep.equal([{ name: 1 }, { name: 2 }])
+    expect(targetTree.getNode(['root', 'a']).values).to.deep.equal([1, 2])
 
-    // Mutate on tree1 will await the Subquery into tree2
+    // Mutate on sourceTree will await the Subquery into targetTree
     expect(spy).to.have.callCount(2)
 
-    expect(tree2.getNode(['root', 'b']).markedForUpdate).to.be.false
-    expect(tree2.getNode(['root', 'b']).updating).to.be.false
-    expect(tree2.getNode(['root', 'b']).context.count).to.equal(1)
+    expect(targetTree.getNode(['root', 'b']).markedForUpdate).to.be.false
+    expect(targetTree.getNode(['root', 'b']).updating).to.be.false
+    expect(targetTree.getNode(['root', 'b']).context.count).to.equal(1)
+  })
+  it('should support subquery clearing target tree', async () => {
+    let spy = sinon.spy(
+      mockService({
+        mocks({ key, type }) {
+          if (type === 'facet')
+            return {
+              options: {
+                c: [],
+                a: [{ name: 3 }, { name: 4 }],
+              }[key],
+            }
+          if (type === 'results')
+            return {
+              count: 1,
+              results: [{ title: 'some result' }],
+            }
+        },
+      })
+    )
+    let service = addDelay(10, spy)
+    let types = {
+      facet: {
+        reactors: { values: 'others' },
+        subquery: {
+          useValues: x => ({ values: x }),
+          getValues: x => _.map('name', x.context.options),
+        },
+        defaults: {
+          context: {
+            options: [],
+          },
+        },
+      },
+    }
+    let Tree = ContextureClient({ debounce: 1, service, types })
+
+    let sourceTree = Tree({
+      key: 'innerRoot',
+      join: 'and',
+      children: [{ key: 'c', type: 'facet' }, { key: 'd', type: 'facet' }],
+    })
+    let targetTree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [{ key: 'a', type: 'facet', values: [] }],
+    })
+
+    targetTree.subquery(['root', 'a'], sourceTree, ['innerRoot', 'c'])
+    let promise = sourceTree.mutate(['innerRoot', 'd'], { values: ['test'] })
+    await Promise.delay(1)
+    expect(targetTree.getNode(['root', 'a']).markedForUpdate).to.be.true
+
+    await promise
+    expect(
+      sourceTree.getNode(['innerRoot', 'c']).context.options
+    ).to.deep.equal([])
+    expect(targetTree.getNode(['root', 'a']).values).to.deep.equal([])
+
+    // Mutate on sourceTree will await the Subquery into targetTree
+    expect(spy).to.have.callCount(2)
   })
   it('should respect disableAutoUpdate', async () => {
     let service = sinon.spy(mockService())
