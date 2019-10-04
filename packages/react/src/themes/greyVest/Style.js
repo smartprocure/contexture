@@ -93,7 +93,7 @@ export default () => (
       .filter-field-label {
         font-size: 16px;
         font-weight: bold;
-        word-break: break-word;
+        word-break: break-all;
       }
       .filter-field-label-icon {
         color: #9b9b9b;
