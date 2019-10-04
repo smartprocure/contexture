@@ -1,7 +1,7 @@
 let _ = require('lodash/fp')
 let Promise = require('bluebird')
 let { ObjectID } = require('mongodb')
-let F = require('futil-js')
+let F = require('futil')
 
 module.exports = {
   hasValue: _.get('values.length'),
