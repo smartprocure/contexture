@@ -1,17 +1,17 @@
 module.exports = {
   hasValue: () => true,
-  filter: context =>
-    context.value
+  filter: ({ field, value }) =>
+    value
       ? {
           $and: [
             {
-              [context.field]: {
-                $exists: context.value,
+              [field]: {
+                $exists: value,
                 $ne: '',
               },
             },
             {
-              [context.field]: {
+              [field]: {
                 $ne: null,
               },
             },
@@ -20,15 +20,15 @@ module.exports = {
       : {
           $or: [
             {
-              [context.field]: {
+              [field]: {
                 $exists: false,
               },
             },
             {
-              [context.field]: '',
+              [field]: '',
             },
             {
-              [context.field]: null,
+              [field]: null,
             },
           ],
         },

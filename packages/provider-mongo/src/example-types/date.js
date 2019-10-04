@@ -3,7 +3,7 @@ let moment = require('moment')
 let datemath = require('@elastic/datemath')
 
 module.exports = {
-  hasValue: context => context.from || context.to,
+  hasValue: node => node.from || node.to,
   filter({ from, to, field, useDateMath, dateType = 'date' }) {
     if (useDateMath) {
       if (from === 'thisQuarter') {
