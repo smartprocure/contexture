@@ -1,3 +1,8 @@
+# 2.2.1
+* Fixes the tags with no space breaking the UI
+* Fixes the tag popover where the refresh facet icon was showing over it
+* Fixes the tag popover keyword breaking the UI
+
 # 2.2.0
 * Add 'counts' to the facet hide config in order to hide the facet counts
 
