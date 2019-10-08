@@ -62,7 +62,7 @@ let FacetOptionsFilter = _.flow(
         }}
         onKeyPress={e => e.key === 'Enter' && submit()}
         onBlur={submit}
-        placeholder="Search ..."
+        placeholder="Search..."
       />
       <Button primary={node.optionsFilter !== val} onClick={submit}>
         Find
