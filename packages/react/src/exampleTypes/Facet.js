@@ -64,10 +64,7 @@ let FacetOptionsFilter = _.flow(
         onBlur={submit}
         placeholder="Search ..."
       />
-      <Button
-        primary={node.optionsFilter !== val}
-        onClick={submit}
-      >
+      <Button primary={node.optionsFilter !== val} onClick={submit}>
         Find
       </Button>
     </ButtonGroup>
