@@ -1,3 +1,6 @@
+# 2.2.2
+* Fixes facets search box by making it more intuitive to the user when filtering the facet checkboxes
+
 # 2.2.1
 * Fixes the tags with no space breaking the UI
 * Fixes the tag popover where the refresh facet icon was showing over it
