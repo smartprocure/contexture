@@ -1,6 +1,7 @@
 # 2.3.0
 * GreyVest: Add GridItem component
-* GreyVest: Add `rows`, `autoColumns`, `autoRows`, `autoFlow`, `areas`, `columnGap`, `rowGap`, `justifyContent`, and `alignContent` props to Grid
+* GreyVest: Add `rows`, `autoColumns`, `autoRows`, `autoFlow`, `areas`, `columnGap`, `rowGap`, `justifyContent`, `alignContent`, `justifyItems` and `alignItems` props to Grid
+* GreyVest: Add `inline` flag prop to Grid and Flex
 
 # 2.2.2
 * Fixes facets search box by making it more intuitive to the user when filtering the facet checkboxes
