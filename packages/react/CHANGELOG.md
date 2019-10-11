@@ -1,6 +1,17 @@
-# 2.2.0
+# 2.3.0
 * GreyVest: Add GridItem component
 * GreyVest: Add `row` prop to Grid
+
+# 2.2.2
+* Fixes facets search box by making it more intuitive to the user when filtering the facet checkboxes
+
+# 2.2.1
+* Fixes the tags with no space breaking the UI
+* Fixes the tag popover where the refresh facet icon was showing over it
+* Fixes the tag popover keyword breaking the UI
+
+# 2.2.0
+* Add 'counts' to the facet hide config in order to hide the facet counts
 
 # 2.1.1
 * Add `search-layout` and `search-layout-{mode}` classNames to SearchLayout
