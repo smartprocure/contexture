@@ -14,34 +14,45 @@ let getOptions = node =>
 let FacetSelect = ({
   tree,
   node,
+  hide = {},
   isMulti = true,
   display = x => x,
   formatCount = x => x,
   displayBlank = () => <i>Not Specified</i>,
+  theme: { RadioList },
 }) => (
-  <Async
-    placeholder="Search..."
-    isMulti={isMulti}
-    cacheOptions
-    defaultOptions={getOptions(node)}
-    loadOptions={async val => {
-      await tree.mutate(node.path, { optionsFilter: val })
-      return getOptions(node)
-    }}
-    formatOptionLabel={({ label, count }, { context }) =>
-      context === 'menu' ? (
-        <Flex justifyContent="space-between">
-          {display(label) || displayBlank()}
-          <span>{formatCount(count)}</span>
-        </Flex>
-      ) : (
-        <span>
-          {display(label) || displayBlank()} ({formatCount(count)})
-        </span>
-      )
-    }
-    onChange={x => tree.mutate(node.path, { values: _.map('value', x) })}
-  />
+  <div className="contexture-facet-select">
+    {!hide.modeToggle && (
+      <RadioList
+        value={node.mode || 'include'}
+        onChange={mode => tree.mutate(node.path, { mode })}
+        options={F.autoLabelOptions(['include', 'exclude'])}
+      />
+    )}
+    <Async
+      placeholder="Search..."
+      isMulti={isMulti}
+      cacheOptions
+      defaultOptions={getOptions(node)}
+      loadOptions={async val => {
+        await tree.mutate(node.path, { optionsFilter: val })
+        return getOptions(node)
+      }}
+      formatOptionLabel={({ label, count }, { context }) =>
+        context === 'menu' ? (
+          <Flex justifyContent="space-between">
+            {display(label) || displayBlank()}
+            <span>{formatCount(count)}</span>
+          </Flex>
+        ) : (
+          <span>
+            {display(label) || displayBlank()} ({formatCount(count)})
+          </span>
+        )
+      }
+      onChange={x => tree.mutate(node.path, { values: _.map('value', x) })}
+    />
+  </div>
 )
 
 export default contexturify(FacetSelect)
