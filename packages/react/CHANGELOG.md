@@ -1,6 +1,6 @@
 # 2.3.0
 * GreyVest: Add GridItem component
-* GreyVest: Add `row` prop to Grid
+* GreyVest: Add `rows`, `autoColumns`, `autoRows`, `autoFlow`, `areas`, `columnGap`, `rowGap`, `justifyContent`, and `alignContent` props to Grid
 
 # 2.2.2
 * Fixes facets search box by making it more intuitive to the user when filtering the facet checkboxes
