@@ -20,8 +20,8 @@ let GridItem = ({
   // fancy extra stuff
   width = 1, // alias for column-end span
   height = 1, // alias for row-end span
-  left, // alias for column-start
-  top, // alias for row-start
+  left = columnStart, // alias for column-start
+  top = rowStart, // alias for row-start
   middle,
   center,
 
@@ -32,12 +32,12 @@ let GridItem = ({
   <div
     style={{
       gridColumn: column,
-      gridColumnStart: columnStart || left,
+      gridColumnStart: left,
       gridColumnEnd: columnEnd || `span ${width}`,
       gridRow: row,
-      gridRowStart: rowStart || top,
+      ...(top && { gridRowStart: top }),
       gridRowEnd: rowEnd || `span ${height}`,
-      gridArea: area,
+      ...(area && { gridArea: area }),
       textAlign: center && 'center',
       ...(middle && middleStyle),
       ...style,
