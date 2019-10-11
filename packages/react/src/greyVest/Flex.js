@@ -8,11 +8,12 @@ let Flex = ({
   justifyContent,
   wrap = false,
   column = false,
+  inline = false,
   ...props
 }) => (
   <Component
     style={{
-      display: 'flex',
+      display: `${inline ? 'inline-' : ''}flex`,
       flexWrap: wrap && 'wrap',
       flexDirection: column && 'column',
       alignItems,

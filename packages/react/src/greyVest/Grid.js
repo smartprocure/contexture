@@ -19,13 +19,16 @@ let Grid = ({
   rowGap,
   justifyContent,
   alignContent,
+  justifyItems,
+  alignItems,
+  inline = false,
   style,
   className,
   ...props
 }) => (
   <div
     style={{
-      display: 'grid',
+      display: `${inline ? 'inline-' : ''}grid`,
       gridTemplateColumns: columns,
       gridTemplateRows: rows,
       gridAutoColumns: autoColumns,
@@ -37,6 +40,8 @@ let Grid = ({
       ...(rowGap && { rowGap }),
       justifyContent,
       alignContent,
+      justifyItems,
+      alignItems,
       ...style,
     }}
     className={`gv-grid ${className || ''}`}
