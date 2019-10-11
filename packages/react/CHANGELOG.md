@@ -1,5 +1,6 @@
 # 2.2.0
-* Add FacetSelect (a dropdown interface for the `facet` type)
+* Add new FacetSelect component (a dropdown interface for the `facet` type) to ExampleTypes
+* Add option to hide Facet's mode selector (the "include"/"exclude" switch) by passing `{ modeToggle: true }` to the `hide` prop
 
 # 2.1.0
 * Add `BasicFilters` and `BuilderFilters` props to SearchFilters for overriding/customizing filter components in the layout
