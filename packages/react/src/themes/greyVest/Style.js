@@ -42,7 +42,7 @@ export default () => (
 
       /* Facet */
 
-      .contexture-facet a {
+      .contexture-facet a, .contexture-facet-select a {
         color: #0076de
       }
       .contexture-facet {

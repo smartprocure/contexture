@@ -7,6 +7,35 @@ import { Flex } from '../greyVest'
 import { contexturify } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
 
+export let Cardinality = _.flow(
+  setDisplayName('Cardinality'),
+  observer
+)(({ node, tree }) => (
+  <Flex
+    className="contexture-facet-cardinality"
+    style={{ justifyContent: 'space-between' }}
+  >
+    {!!node.context.cardinality && (
+      <div>
+        Showing {_.min([node.size || 10, node.context.options.length])} of{' '}
+        {node.context.cardinality}
+      </div>
+    )}
+    {node.context.cardinality > (node.size || 10) && (
+      <div>
+        <a
+          onClick={() =>
+            tree.mutate(node.path, { size: (node.size || 10) + 10 })
+          }
+          style={{ cursor: 'pointer' }}
+        >
+          View More
+        </a>
+      </div>
+    )}
+  </Flex>
+))
+
 let SelectAll = _.flow(
   setDisplayName('SelectAll'),
   observer,
@@ -77,6 +106,8 @@ let Facet = ({
   hide = {
     facetFilter: false, // Hide the search box above the facet checkboxes
     counts: false, // Hide the facet counts so only the labels are displayed
+    modeToggle: false, // Hide the toggle for the filter mode (include or exclude)
+    cardinality: false, // Hide the total results and 'view more' controls
   },
   display = x => x,
   displayBlank = () => <i>Not Specified</i>,
@@ -118,29 +149,7 @@ let Facet = ({
         )
       })
     )(_.get('context.options', node))}
-    <Flex
-      className="contexture-facet-cardinality"
-      style={{ justifyContent: 'space-between' }}
-    >
-      {!!node.context.cardinality && (
-        <div>
-          Showing {_.min([node.size || 10, node.context.options.length])} of{' '}
-          {node.context.cardinality}
-        </div>
-      )}
-      {node.context.cardinality > (node.size || 10) && (
-        <div>
-          <a
-            onClick={() =>
-              tree.mutate(node.path, { size: (node.size || 10) + 10 })
-            }
-            style={{ cursor: 'pointer' }}
-          >
-            View More
-          </a>
-        </div>
-      )}
-    </Flex>
+    {!hide.cardinality && <Cardinality {...{ node, tree }} />}
   </div>
 )
 
