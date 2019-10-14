@@ -16,7 +16,6 @@ let GridItem = ({
       gridColumn: column,
       ...(width && { gridColumnEnd: `span ${width}` }),
       gridRow: row,
-      ...(top && { gridRowStart: top }),
       ...(height && { gridRowEnd: `span ${height}` }),
       ...(area && { gridArea: area }),
       placeSelf: place,
