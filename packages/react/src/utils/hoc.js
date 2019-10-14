@@ -20,11 +20,14 @@ export let withLoader = Component =>
   _.flow(
     wrapDisplayName('withLoader', Component),
     observer
-  )(({ Loader = StripedLoader, node, ...props }) => (
-    <Loader loading={node && node.updating}>
-      <Component node={node} {...props} />
-    </Loader>
-  ))
+  )(({ Loader, theme = {}, node, ...props }) => {
+    Loader = Loader || theme.Loader || StripedLoader
+    return (
+      <Loader loading={node && node.updating}>
+        <Component node={node} {...props} />
+      </Loader>
+    )
+  })
 
 // I am a band-aid, please rip me off as quickly as possible
 export let withInlineLoader = Component =>
@@ -40,8 +43,8 @@ export let withInlineLoader = Component =>
 export let contexturify = _.flow(
   observer,
   withNode,
-  withLoader,
-  withTheme
+  withTheme,
+  withLoader
 )
 
 // this is used for the text components
