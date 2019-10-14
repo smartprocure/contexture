@@ -1,6 +1,8 @@
 # 2.3.0
-* Add new FacetSelect component (a dropdown interface for the `facet` type) to ExampleTypes
-* Add option to hide Facet's mode selector (the "include"/"exclude" switch) by passing `{ modeToggle: true }` to the `hide` prop
+* Add FacetSelect component (a dropdown interface for the `facet` type) to ExampleTypes
+* Add new `hide` options to Facet:
+  * `modeToggle`: hide Facet's mode selector (the "Include"/"Exclude" switch) 
+  * `cardinality`: hide "Showing X of Y" and the "view more" link
 
 # 2.2.2
 * Fixes facets search box by making it more intuitive to the user when filtering the facet checkboxes
