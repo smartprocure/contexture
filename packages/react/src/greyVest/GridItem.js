@@ -1,18 +1,18 @@
 import React from 'react'
 
 let GridItem = ({
-  // CSS API
+  as: Component = 'div',
   column,
   row,
   area,
   width,
   height,
-  placeSelf,
+  place,
   style,
   className,
   ...props
 }) => (
-  <div
+  <Component
     style={{
       gridColumn: column,
       ...(width && { gridColumnEnd: `span ${width}` }),
@@ -20,7 +20,7 @@ let GridItem = ({
       ...(top && { gridRowStart: top }),
       ...(height && { gridRowEnd: `span ${height}` }),
       ...(area && { gridArea: area }),
-      placeSelf,
+      placeSelf: place,
       ...style,
     }}
     className={`gv-grid-item ${className || ''}`}

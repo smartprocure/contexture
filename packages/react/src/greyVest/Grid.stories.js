@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash/fp'
 import { storiesOf } from '@storybook/react'
 import { Grid, GridItem } from '.'
 import decorator from './stories/decorator'
@@ -65,6 +66,23 @@ storiesOf('Components|GreyVest Library/Grid', module)
         <GridItem>A</GridItem>
         <GridItem>B</GridItem>
         <GridItem width={2}>C; 2w</GridItem>
+      </Grid>
+    </>
+  ))
+  .addWithJSX('Rows/columns shorthand', () => (
+    <>
+      <style>{`
+        .gv-grid > * {
+          border: 2px solid black;
+        }
+      `}</style>
+      <Grid columns={5} gap={10}>
+        {_.times(
+          n => (
+            <div>{n}</div>
+          ),
+          20
+        )}
       </Grid>
     </>
   ))

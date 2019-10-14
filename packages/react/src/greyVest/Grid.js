@@ -7,7 +7,10 @@ let formatAreas = _.flow(
   _.join(' ')
 )
 
+let repeatNumber = F.when(_.isNumber, x => `repeat(${x}, 1fr)`)
+
 let Grid = ({
+  as: Component = 'div',
   columns,
   rows,
   areas,
@@ -21,11 +24,11 @@ let Grid = ({
   className,
   ...props
 }) => (
-  <div
+  <Component
     style={{
       display: `${inline ? 'inline-' : ''}grid`,
-      gridTemplateColumns: columns,
-      gridTemplateRows: rows,
+      gridTemplateColumns: repeatNumber(columns),
+      gridTemplateRows: repeatNumber(rows),
       gridTemplateAreas: formatAreas(areas),
       ...(gap && { gridGap: gap }),
       justifyContent,
