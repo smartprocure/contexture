@@ -15,10 +15,8 @@ let Grid = ({
   rows,
   areas,
   gap,
-  justifyContent,
-  alignContent,
-  justifyItems,
-  alignItems,
+  placeContent,
+  placeItems,
   inline = false,
   style,
   ...props
@@ -29,11 +27,9 @@ let Grid = ({
       gridTemplateColumns: repeatNumber(columns),
       gridTemplateRows: repeatNumber(rows),
       gridTemplateAreas: formatAreas(areas),
-      ...(gap && { gridGap: gap }),
-      justifyContent,
-      alignContent,
-      justifyItems,
-      alignItems,
+      gridGap: gap,
+      placeContent,
+      placeItems,
       ...style,
     }}
     {...props}
