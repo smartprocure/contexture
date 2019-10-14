@@ -1,30 +1,13 @@
 import React from 'react'
 
-let middleStyle = {
-  display: 'inline-flex',
-  flexFlow: 'column wrap',
-  justifyContent: 'center',
-  justifySelf: 'stretch',
-}
-
 let GridItem = ({
   // CSS API
   column,
-  columnStart,
-  columnEnd,
   row,
-  rowStart,
-  rowEnd,
   area,
-
-  // fancy extra stuff
-  width = 1, // alias for column-end span
-  height = 1, // alias for row-end span
-  left = columnStart, // alias for column-start
-  top = rowStart, // alias for row-start
-  middle,
-  center,
-
+  width,
+  height,
+  placeSelf,
   style,
   className,
   ...props
@@ -32,14 +15,12 @@ let GridItem = ({
   <div
     style={{
       gridColumn: column,
-      gridColumnStart: left,
-      gridColumnEnd: columnEnd || `span ${width}`,
+      ...(width && { gridColumnEnd: `span ${width}` }),
       gridRow: row,
       ...(top && { gridRowStart: top }),
-      gridRowEnd: rowEnd || `span ${height}`,
+      ...(height && { gridRowEnd: `span ${height}` }),
       ...(area && { gridArea: area }),
-      textAlign: center && 'center',
-      ...(middle && middleStyle),
+      placeSelf,
       ...style,
     }}
     className={`gv-grid-item ${className || ''}`}

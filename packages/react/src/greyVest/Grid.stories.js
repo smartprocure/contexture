@@ -22,19 +22,11 @@ storiesOf('Components|GreyVest Library/Grid', module)
         rows="2fr 5fr 1fr"
         columns="1fr 3fr 1fr"
       >
-        <GridItem area="header" middle center>
-          header
-        </GridItem>
-        <GridItem area="footer" middle center>
-          footer
-        </GridItem>
+        <GridItem area="header">header</GridItem>
+        <GridItem area="footer">footer</GridItem>
         <GridItem area="main">main content</GridItem>
-        <GridItem area="right" center>
-          right sidebar
-        </GridItem>
-        <GridItem area="left" center>
-          left sidebar
-        </GridItem>
+        <GridItem area="right">right sidebar</GridItem>
+        <GridItem area="left">left sidebar</GridItem>
       </Grid>
     </>
   ))
@@ -57,22 +49,22 @@ storiesOf('Components|GreyVest Library/Grid', module)
         gap={2}
         style={{ backgroundColor: 'lightgrey', display: 'inline-grid' }}
       >
-        <GridItem left={4} top={3}>
+        <GridItem column={4} row={3}>
           (4, 3)
         </GridItem>
-        <GridItem left={4} top={8} width={5}>
+        <GridItem column={4} row={8} width={5}>
           (4, 8); 5w
         </GridItem>
-        <GridItem columnStart={7} rowStart={2} height={4} columnEnd={9}>
+        <GridItem column="7/9" row={2} height={4} placeSelf="center center">
           (7:9, 2); 4h
         </GridItem>
-        <GridItem left={3} top={4} rowEnd={8} columnEnd={5}>
+        <GridItem column="3/5" row="4/8">
           (3:5, 4:8)
         </GridItem>
-        <GridItem area="2 / 1 / 4 / 3">(1:3, 2:4)</GridItem>
+        <GridItem area="2/1/4/3">(1:3, 2:4)</GridItem>
         <GridItem>A</GridItem>
         <GridItem>B</GridItem>
-        <GridItem columnEnd="span 2">C; 2w</GridItem>
+        <GridItem width={2}>C; 2w</GridItem>
       </Grid>
     </>
   ))
