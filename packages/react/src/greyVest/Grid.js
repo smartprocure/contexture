@@ -21,7 +21,6 @@ let Grid = ({
   alignItems,
   inline = false,
   style,
-  className,
   ...props
 }) => (
   <Component
@@ -37,7 +36,6 @@ let Grid = ({
       alignItems,
       ...style,
     }}
-    className={`gv-grid ${className || ''}`}
     {...props}
   />
 )

@@ -9,7 +9,6 @@ let GridItem = ({
   height,
   place,
   style,
-  className,
   ...props
 }) => (
   <Component
@@ -23,7 +22,6 @@ let GridItem = ({
       placeSelf: place,
       ...style,
     }}
-    className={`gv-grid-item ${className || ''}`}
     {...props}
   />
 )
