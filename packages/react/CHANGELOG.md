@@ -1,6 +1,20 @@
-# 2.2.0
+# 2.3.0
 * Add new FacetSelect component (a dropdown interface for the `facet` type) to ExampleTypes
 * Add option to hide Facet's mode selector (the "include"/"exclude" switch) by passing `{ modeToggle: true }` to the `hide` prop
+
+# 2.2.2
+* Fixes facets search box by making it more intuitive to the user when filtering the facet checkboxes
+
+# 2.2.1
+* Fixes the tags with no space breaking the UI
+* Fixes the tag popover where the refresh facet icon was showing over it
+* Fixes the tag popover keyword breaking the UI
+
+# 2.2.0
+* Add 'counts' to the facet hide config in order to hide the facet counts
+
+# 2.1.1
+* Add `search-layout` and `search-layout-{mode}` classNames to SearchLayout
 
 # 2.1.0
 * Add `BasicFilters` and `BuilderFilters` props to SearchFilters for overriding/customizing filter components in the layout
