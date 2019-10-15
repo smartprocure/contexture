@@ -50,8 +50,8 @@ export let withInlineLoader = Component =>
 
 export let contexturify = _.flow(
   observer,
-  withNode,
   withLoader,
+  withNode,
   withTheme
 )
 
