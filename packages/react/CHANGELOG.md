@@ -1,3 +1,6 @@
+# 2.3.0
+* Add theme support to contexturify's `withLoader`: it now uses `theme.Loader` for the Loader component if it exists, and if a Loader component hasn't been passed as a prop
+
 # 2.2.2
 * Fixes facets search box by making it more intuitive to the user when filtering the facet checkboxes
 
