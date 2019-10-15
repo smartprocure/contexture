@@ -19,7 +19,7 @@ let Popover = ({ isOpen, onClose, children, style }) =>
             textAlign: 'left',
             background: 'white',
             border: '1px solid #ebebeb',
-            zIndex: 2,
+            zIndex: 20,
             ...style,
           }}
         >

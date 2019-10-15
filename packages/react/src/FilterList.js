@@ -6,7 +6,7 @@ import { observer } from 'mobx-react'
 import { Flex, Dynamic } from './greyVest'
 import { fieldsToOptions } from './FilterAdder'
 import { useLens } from './utils/react'
-import { contexturify } from './utils/hoc'
+import { withNode } from './utils/hoc'
 import { bdJoin } from './styles/generic'
 import {
   newNodeFromType,
@@ -162,7 +162,9 @@ export let Label = _.flow(
 
 export let FilterList = _.flow(
   setDisplayName('FilterList'),
-  contexturify
+  observer,
+  withNode,
+  withTheme
 )(
   ({
     tree,
