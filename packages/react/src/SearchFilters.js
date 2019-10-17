@@ -39,8 +39,8 @@ let BasicSearchFilters = ({ setMode, trees, children, BasicFilters }) => (
   <div>
     <Flex style={{ alignItems: 'center' }}>
       <h1>Filters</h1>
-      <TreePauseButton children={children} />
       <ToggleFiltersButton onClick={() => setMode('resultsOnly')} />
+      <TreePauseButton children={children} />
     </Flex>
     <LabelledList list={trees} Component={BasicFilters} />
     <LinkButton onClick={() => setMode('builder')} style={{ marginTop: 15 }}>
