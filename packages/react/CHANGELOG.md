@@ -1,6 +1,6 @@
 # 2.3.1
 * GreyVest: Change the TreePause and TreeUnpause icons to use material's `unfold_less` and `unfold_more` (formerly the circled plus/minus icons)
-* SearchFilters: Swap the order of TreePauesButton and ToggleFiltersButton in the BasicFilters header
+* SearchFilters: Swap the order of TreePauseButton and ToggleFiltersButton in the BasicFilters header
 
 # 2.3.0
 * Add theme support to contexturify's `withLoader`: it now uses `theme.Loader` for the Loader component if it exists, and if a Loader component hasn't been passed as a prop
