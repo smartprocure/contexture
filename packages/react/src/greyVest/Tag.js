@@ -19,6 +19,7 @@ let Tag = ({
   <span
     className="tags-input-tag"
     style={{
+      display: 'inline-block',
       cursor: 'pointer',
       margin: 3,
       borderRadius: '3px',
