@@ -1,3 +1,9 @@
+# 2.4.0
+* GreyVest: Add GridItem component
+* GreyVest: Add `rows`, `areas`, `placeContent` and `placeItems` props to Grid
+* GreyVest: Drop IE support for Grid component
+* GreyVest: Add `inline` flag prop to Grid and Flex
+
 # 2.3.1
 * GreyVest: Change the TreePause and TreeUnpause icons to use material's `unfold_less` and `unfold_more` (formerly the circled plus/minus icons)
 * SearchFilters: Swap the order of TreePauseButton and ToggleFiltersButton in the BasicFilters header
