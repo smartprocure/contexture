@@ -1,8 +1,15 @@
-# 2.3.0
+# 2.4.0
 * GreyVest: Add GridItem component
 * GreyVest: Add `rows`, `areas`, `placeContent` and `placeItems` props to Grid
 * GreyVest: Drop IE support for Grid component
 * GreyVest: Add `inline` flag prop to Grid and Flex
+
+# 2.3.1
+* GreyVest: Change the TreePause and TreeUnpause icons to use material's `unfold_less` and `unfold_more` (formerly the circled plus/minus icons)
+* SearchFilters: Swap the order of TreePauseButton and ToggleFiltersButton in the BasicFilters header
+
+# 2.3.0
+* Add theme support to contexturify's `withLoader`: it now uses `theme.Loader` for the Loader component if it exists, and if a Loader component hasn't been passed as a prop
 
 # 2.2.2
 * Fixes facets search box by making it more intuitive to the user when filtering the facet checkboxes
