@@ -18,8 +18,6 @@ let FacetSelect = ({
   node,
   hide = {
     counts: false, // Hide the facet counts so only the labels are displayed
-    modeToggle: false, // Hide the toggle for the filter mode (include or exclude)
-    cardinality: false, // Hide the total results and 'view more' controls
   },
   isMulti = true,
   display = x => x,
@@ -29,7 +27,7 @@ let FacetSelect = ({
 }) => {
   let MenuList = props => (
     <components.MenuList {...props}>
-      {!hide.cardinality && (
+      {!!node.context.cardinality && (
         <div
           style={{
             boxShadow: '0 2px 2px -2px #CCC',
@@ -48,13 +46,11 @@ let FacetSelect = ({
 
   return (
     <div className="contexture-facet-select">
-      {!hide.modeToggle && (
-        <RadioList
-          value={node.mode || 'include'}
-          onChange={mode => tree.mutate(node.path, { mode })}
-          options={F.autoLabelOptions(['include', 'exclude'])}
-        />
-      )}
+      <RadioList
+        value={node.mode || 'include'}
+        onChange={mode => tree.mutate(node.path, { mode })}
+        options={F.autoLabelOptions(['include', 'exclude'])}
+      />
       <Async
         placeholder="Search..."
         isMulti={isMulti}

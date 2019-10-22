@@ -106,8 +106,6 @@ let Facet = ({
   hide = {
     facetFilter: false, // Hide the search box above the facet checkboxes
     counts: false, // Hide the facet counts so only the labels are displayed
-    modeToggle: false, // Hide the toggle for the filter mode (include or exclude)
-    cardinality: false, // Hide the total results and 'view more' controls
   },
   display = x => x,
   displayBlank = () => <i>Not Specified</i>,
@@ -115,13 +113,11 @@ let Facet = ({
   theme: { Checkbox, RadioList },
 }) => (
   <div className="contexture-facet">
-    {!hide.modeToggle && (
-      <RadioList
-        value={node.mode || 'include'} // Fix by changing defaults in client example type
-        onChange={mode => tree.mutate(node.path, { mode })}
-        options={F.autoLabelOptions(['include', 'exclude'])}
-      />
-    )}
+    <RadioList
+      value={node.mode || 'include'} // Fix by changing defaults in client example type
+      onChange={mode => tree.mutate(node.path, { mode })}
+      options={F.autoLabelOptions(['include', 'exclude'])}
+    />
     {!hide.facetFilter && <FacetOptionsFilter tree={tree} node={node} />}
     <SelectAll node={node} tree={tree} />
     {_.flow(
@@ -149,7 +145,7 @@ let Facet = ({
         )
       })
     )(_.get('context.options', node))}
-    {!hide.cardinality && <Cardinality {...{ node, tree }} />}
+    <Cardinality {...{ node, tree }} />
   </div>
 )
 

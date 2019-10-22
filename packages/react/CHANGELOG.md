@@ -1,8 +1,5 @@
 # 2.5.0
 * Add FacetSelect component (a dropdown interface for the `facet` type) to ExampleTypes
-* Add new `hide` options to Facet:
-  * `modeToggle`: hide Facet's mode selector (the "Include"/"Exclude" switch) 
-  * `cardinality`: hide "Showing X of Y" and the "view more" link
 
 # 2.4.0
 * GreyVest: Add GridItem component
