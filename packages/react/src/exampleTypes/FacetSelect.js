@@ -71,10 +71,7 @@ let FacetSelect = ({
               <span>{!hide.counts && formatCount(count)}</span>
             </Flex>
           ) : (
-            <span>
-              {display(label) || displayBlank()}{' '}
-              {!hide.counts && F.parens(formatCount(count))}
-            </span>
+            <span>{display(label) || displayBlank()}</span>
           )
         }
         onChange={x => tree.mutate(node.path, { values: _.map('value', x) })}
