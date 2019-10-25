@@ -2,14 +2,14 @@ import React from 'react'
 import _ from 'lodash/fp'
 import { observable } from 'mobx'
 import { observer, inject, useLocalStore } from 'mobx-react'
-import Flex from './Flex'
-import DefaultTag from './Tag'
+import { Flex, Tag as DefaultTag } from '../../greyVest'
+import OutsideClickHandler from 'react-outside-click-handler'
 
 let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
 // We're only using withState to preserve the state between renders, since
 // inject doesn't do that for us.
-let TagsInput = ({
+let TagsInputSearchBar = ({
   tags,
   addTag,
   removeTag,
@@ -26,7 +26,7 @@ let TagsInput = ({
 }) => {
   let containerRef
   let inputRef
-  let state = useLocalStore(() => ({ currentInput: '' }))
+  let state = useLocalStore(() => ({ currentInput: '', isOneLine: true }))
   addTag = splitCommas
     ? _.flow(
         _.split(','),
@@ -41,10 +41,22 @@ let TagsInput = ({
         addTag
       )
   return (
+    <OutsideClickHandler
+      onOutsideClick={() => {
+        state.isOneLine = true
+        containerRef.scrollTop = 0
+      }}
+    >
       <div
-        className={'tags-input'}
+        className={`tags-input ${state.isOneLine ? 'tags-input-one-line' : ''}`}
         ref={e => (containerRef = e ? e : containerRef)}
         style={{ ...style }}
+        onClick={() => {
+          if (state.isOneLine) {
+            state.isOneLine = false
+            inputRef.focus()
+          }
+        }}
       >
         <Flex
           wrap
@@ -110,11 +122,12 @@ let TagsInput = ({
           />
         </Flex>
       </div>
+    </OutsideClickHandler>
   )
 }
 
 // Just uses an internal observable array
-export let MockTagsInput = inject(() => {
+export let MockTagsInputSearchBar = inject(() => {
   let tags = observable([])
   return {
     tags,
@@ -125,7 +138,7 @@ export let MockTagsInput = inject(() => {
       tags = _.without(tag, tags)
     },
   }
-})(TagsInput)
-MockTagsInput.displayName = 'MockTagsInput'
+})(TagsInputSearchBar)
+MockTagsInputSearchBar.displayName = 'MockTagsInputSearchBar'
 
-export default observer(TagsInput)
+export default observer(TagsInputSearchBar)

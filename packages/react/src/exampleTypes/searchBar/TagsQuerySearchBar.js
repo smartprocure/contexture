@@ -1,25 +1,26 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
-import { contexturify } from '../utils/hoc'
-import { getTagStyle } from '../utils/tagsQuery'
-import { useLens } from '../utils/react'
-import TagQueryPopover from './TagQueryPopover'
+import { contexturify } from '../../utils/hoc'
+import { useLens } from '../../utils/react'
+import TagsInputSearchBar from './TagsInputSearchBar'
+import TagQueryPopover from '../TagQueryPopover'
+import { getTagStyle } from '../../utils/tagsQuery'
 
 const field = 'word'
 
-let TagsQuery = ({
+let TagsQuerySearchBar = ({
   tree,
   node,
   placeholder,
-  theme: { Popover, TagsInput },
+  theme: { Popover },
   ...props
 }) => {
   let open = useLens(false)
   let [selectedTag, setSelectedTag] = React.useState(null)
   return (
     <>
-      <TagsInput
+      <TagsInputSearchBar
         splitCommas
         tags={_.map(field, node.tags)}
         onTagClick={tag => {
@@ -48,4 +49,4 @@ let TagsQuery = ({
   )
 }
 
-export default contexturify(TagsQuery)
+export default contexturify(TagsQuerySearchBar)
