@@ -24,8 +24,8 @@ let TagsInput = ({
   Tag = DefaultTag,
   ...props
 }) => {
-  let containerRef
-  let inputRef
+  let containerRef = React.useRef()
+  let inputRef = React.useRef()
   let state = useLocalStore(() => ({ currentInput: '' }))
   addTag = splitCommas
     ? _.flow(
@@ -41,75 +41,71 @@ let TagsInput = ({
         addTag
       )
   return (
-      <div
-        className={'tags-input'}
-        ref={e => (containerRef = e ? e : containerRef)}
-        style={{ ...style }}
+    <div className={'tags-input'} ref={containerRef} style={{ ...style }}>
+      <Flex
+        wrap
+        alignItems="center"
+        style={{
+          cursor: 'text',
+          height: '100%',
+          padding: 2,
+        }}
       >
-        <Flex
-          wrap
-          alignItems="center"
+        {_.map(
+          t => (
+            <Tag
+              key={t}
+              value={t}
+              {...{ removeTag, tagStyle }}
+              onClick={() => onTagClick(t)}
+            />
+          ),
+          tags
+        )}
+        <input
           style={{
-            cursor: 'text',
-            height: '100%',
-            padding: 2,
+            border: 'none',
+            outline: 'none',
+            flex: 1,
+            margin: 3,
+            minWidth: 120,
           }}
-        >
-          {_.map(
-            t => (
-              <Tag
-                key={t}
-                value={t}
-                {...{ removeTag, tagStyle }}
-                onClick={() => onTagClick(t)}
-              />
-            ),
-            tags
-          )}
-          <input
-            style={{
-              border: 'none',
-              outline: 'none',
-              flex: 1,
-              margin: 3,
-              minWidth: 120,
-            }}
-            ref={e => (inputRef = e)}
-            onChange={e => {
-              state.currentInput = e.target.value
-              onInputChange()
-            }}
-            onBlur={() => {
-              if (isValidInput(state.currentInput, tags)) {
-                addTag(state.currentInput)
-                state.currentInput = ''
-                onBlur()
-              }
-            }}
-            onKeyDown={e => {
-              if (e.key === 'Enter' && !state.currentInput) submit()
-              if (
-                (_.includes(e.key, ['Enter', 'Tab']) ||
-                  (splitCommas && e.key === ',')) &&
-                isValidInput(state.currentInput, tags)
-              ) {
-                addTag(state.currentInput)
-                state.currentInput = ''
-                e.preventDefault()
-              }
-              if (e.key === 'Backspace' && !state.currentInput && tags.length) {
-                let last = _.last(tags)
-                removeTag(last)
-                state.currentInput = last
-                e.preventDefault()
-              }
-            }}
-            value={state.currentInput}
-            placeholder={placeholder}
-            {...props}
-          />
-        </Flex>
-      </div>
+          ref={inputRef}
+          onChange={e => {
+            state.currentInput = e.target.value
+            onInputChange()
+          }}
+          onBlur={() => {
+            if (isValidInput(state.currentInput, tags)) {
+              addTag(state.currentInput)
+              state.currentInput = ''
+              onBlur()
+            }
+          }}
+          onKeyDown={e => {
+            if (e.key === 'Enter' && !state.currentInput) submit()
+            if (
+              (_.includes(e.key, ['Enter', 'Tab']) ||
+                (splitCommas && e.key === ',')) &&
+              isValidInput(state.currentInput, tags)
+            ) {
+              addTag(state.currentInput)
+              state.currentInput = ''
+              e.preventDefault()
+            }
+            if (e.key === 'Backspace' && !state.currentInput && tags.length) {
+              let last = _.last(tags)
+              removeTag(last)
+              state.currentInput = last
+              e.preventDefault()
+            }
+          }}
+          value={state.currentInput}
+          placeholder={placeholder}
+          {...props}
+        />
+      </Flex>
+    </div>
   )
 }
 

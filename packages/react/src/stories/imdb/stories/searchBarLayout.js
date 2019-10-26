@@ -252,40 +252,32 @@ let GreyVestSearchBarStory = theme => (
           >
             Search Movies
           </ToggleFiltersHeader>
-          <div className="gv-search-bar">
-            <theme.Box>
-              <TagsQuerySearchBar tree={tree} path={['root', 'bar']} autoFocus />
-            </theme.Box>
-            <theme.ButtonGroup>
-              <theme.Button
-                className="gv-search-button"
-                onClick={tree.triggerUpdate}
-                primary
-              >
-                Search
-              </theme.Button>
-              <div className="gv-search-toolbar">
-                <theme.AlternateButton
-                  title="Auto Update"
-                  primary={state.autoUpdate}
-                  onClick={() => {
-                    state.autoUpdate = !state.autoUpdate
-                    tree.disableAutoUpdate = !state.autoUpdate
-                  }}
-                >
-                  <theme.Icon icon="AutoUpdate" />
-                </theme.AlternateButton>
-                <theme.AlternateButton
-                  onClick={() => {
-                    window.location.reload()
-                  }}
-                  title="New Search"
-                >
-                  <theme.Icon icon="New" />
-                </theme.AlternateButton>
-              </div>
-            </theme.ButtonGroup>
-          </div>
+          <TagsQuerySearchBar
+            tree={tree}
+            criteriaPath={['root', 'bar']}
+            resultsPath={['root', 'results']}
+            autoFocus
+          />
+          <theme.ButtonGroup>
+            <theme.AlternateButton
+              title="Auto Update"
+              primary={state.autoUpdate}
+              onClick={() => {
+                state.autoUpdate = !state.autoUpdate
+                tree.disableAutoUpdate = !state.autoUpdate
+              }}
+            >
+              <theme.Icon icon="AutoUpdate" />
+            </theme.AlternateButton>
+            <theme.AlternateButton
+              onClick={() => {
+                window.location.reload()
+              }}
+              title="New Search"
+            >
+              <theme.Icon icon="New" />
+            </theme.AlternateButton>
+          </theme.ButtonGroup>
           <h1>Search Results</h1>
           <Tabs defaultValue="results" TabPanel={theme.Box}>
             <TabLabel value="results">

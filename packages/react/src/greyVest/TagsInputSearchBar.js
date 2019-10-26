@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp'
 import { observable } from 'mobx'
 import { observer, inject, useLocalStore } from 'mobx-react'
-import { Flex, Tag as DefaultTag } from '../../greyVest'
+import { Flex, Tag as DefaultTag } from '.'
 import OutsideClickHandler from 'react-outside-click-handler'
 
 let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
