@@ -31,7 +31,7 @@ let TagsQuery = ({
           {...props}
         />
         <Popover open={tagOpen}>
-          <TagActionsMenu {...{ tag: props.tag, node, tree }} />
+          <TagActionsMenu {...{ tag: props.value, node, tree }} />
         </Popover>
       </>
     )
@@ -60,7 +60,7 @@ let TagsQuery = ({
       />
       <div onClick={F.on(open)}>
         <Icon icon="TableColumnMenu" />
-        <Popover open={open}>
+        <Popover open={open} style={{ right: 0 }}>
           <ActionsMenu {...{ node, tree, open }} />
         </Popover>
       </div>

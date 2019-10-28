@@ -4,14 +4,20 @@ import F from 'futil-js'
 import { observer } from 'mobx-react'
 import TagsJoinPicker from '../TagsJoinPicker'
 import { withTheme } from '../../utils/theme'
+import { Flex } from '../../greyVest'
 import { copyTags } from './utils'
 
 let ActionsMenu = ({ node, tree, open, theme: { Button, Checkbox } }) => (
-  <div className="tags-popover">
+  <Flex
+    style={{ minWidth: 240, padding: 10 }}
+    className="tags-query-actions-menu"
+    column
+    justifyContent="stretch"
+    alignItems="stretch"
+  >
     {!!_.get('tags.length', node) && (
       <>
         <Button
-          className="popover-item"
           onClick={() => {
             copyTags(node)
             F.off(open)()
@@ -20,8 +26,7 @@ let ActionsMenu = ({ node, tree, open, theme: { Button, Checkbox } }) => (
           Copy Keywords
         </Button>
         <Button
-          className="popover-item"
-          style={{ marginTop: 15 }}
+          style={{ margin: '10px 0' }}
           onClick={() => {
             tree.mutate(node.path, {
               tags: [],
@@ -34,17 +39,18 @@ let ActionsMenu = ({ node, tree, open, theme: { Button, Checkbox } }) => (
         <div className="line-separator" />
       </>
     )}
-    <label className="labeled-checkbox">
+    <label className="labeled-checkbox" style={{ margin: '10px 0' }}>
       <Checkbox
+        htmlId="stemming"
         checked={!node.exact}
         onChange={e => tree.mutate(node.path, { exact: !e.target.checked })}
       />
       <span>Enable stemming</span>
     </label>
-    <div className="popover-item">
+    <div>
       <TagsJoinPicker node={node} tree={tree} />
     </div>
-  </div>
+  </Flex>
 )
 
 export default _.flow(
