@@ -88,20 +88,20 @@ let ExpandableTagsInput = ({
           alignItems="center"
           style={{
             cursor: 'text',
-            padding: 2,
+            margin: '0 -2px',
           }}
         >
-          {_.map(
-            t => (
+          {_.flow(
+            _.reverse,
+            _.map(t => (
               <Tag
                 key={t}
                 value={t}
                 {...{ removeTag, tagStyle }}
                 onClick={() => onTagClick(t)}
               />
-            ),
-            tags
-          )}
+            ))
+          )(tags)}
         </Flex>
       </span>
       {children}
