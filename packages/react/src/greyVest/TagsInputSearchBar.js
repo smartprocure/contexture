@@ -1,8 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import { observer, useLocalStore } from 'mobx-react'
-import { Tag as DefaultTag } from '.'
-import OutsideClickHandler from 'react-outside-click-handler'
+import { observer } from 'mobx-react'
+import { Tag as DefaultTag, Flex } from '.'
 
 let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
@@ -21,12 +20,10 @@ let TagsInputSearchBar = ({
   onInputChange = _.noop,
   onTagClick = _.noop,
   Tag = DefaultTag,
+  isOneLine,
   children,
   ...props
 }) => {
-  let containerRef
-  let inputRef
-  let state = useLocalStore(() => ({ currentInput: '', isOneLine: true }))
   addTag = splitCommas
     ? _.flow(
         _.split(','),
@@ -40,72 +37,58 @@ let TagsInputSearchBar = ({
         _.trim,
         addTag
       )
+  let [currentInput, setCurrentInput] = React.useState('')
   return (
-    <OutsideClickHandler
-      onOutsideClick={() => {
-        state.isOneLine = true
-        containerRef.scrollTop = 0
-      }}
+    <div
+      className={`tags-input ${isOneLine ? 'tags-input-one-line' : ''}`}
+      style={style}
     >
-      <div
-        className={`tags-input ${state.isOneLine ? 'tags-input-one-line' : ''}`}
-        ref={e => {
-          if (e) {
-            containerRef = e
-          }
-        }}
-        style={{ ...style }}
-      >
-        <span
-          className="tags-input-container"
-          onClick={() => {
-            state.isInputVisible = true
-            state.isOneLine = false
-            inputRef && inputRef.focus()
+      <span className="tags-input-container" columns="1fr auto" gap="8px 4px">
+        {!(isOneLine && tags.length) && (
+          <input
+            style={{ flex: 1, border: 0 }}
+            onChange={e => {
+              setCurrentInput(e.target.value)
+              onInputChange()
+            }}
+            onBlur={() => {
+              if (isValidInput(currentInput, tags)) {
+                addTag(currentInput)
+                setCurrentInput('')
+                onBlur()
+              }
+            }}
+            onKeyDown={e => {
+              if (e.key === 'Enter' && !currentInput) submit()
+              if (
+                (_.includes(e.key, ['Enter', 'Tab']) ||
+                  (splitCommas && e.key === ',')) &&
+                isValidInput(currentInput, tags)
+              ) {
+                addTag(currentInput)
+                setCurrentInput('')
+                e.preventDefault()
+              }
+              if (e.key === 'Backspace' && !currentInput && tags.length) {
+                let last = _.last(tags)
+                removeTag(last)
+                setCurrentInput(last)
+                e.preventDefault()
+              }
+            }}
+            value={currentInput}
+            placeholder={placeholder}
+            {...props}
+          />
+        )}
+        <Flex
+          wrap
+          alignItems="center"
+          style={{
+            cursor: 'text',
+            padding: 2,
           }}
         >
-          {(state.isInputVisible || !tags.length) && (
-            <input
-              ref={e => (inputRef = e)}
-              onChange={e => {
-                state.currentInput = e.target.value
-                onInputChange()
-              }}
-              onBlur={() => {
-                if (isValidInput(state.currentInput, tags)) {
-                  addTag(state.currentInput)
-                  state.currentInput = ''
-                  onBlur()
-                }
-              }}
-              onKeyDown={e => {
-                if (e.key === 'Enter' && !state.currentInput) submit()
-                if (
-                  (_.includes(e.key, ['Enter', 'Tab']) ||
-                    (splitCommas && e.key === ',')) &&
-                  isValidInput(state.currentInput, tags)
-                ) {
-                  addTag(state.currentInput)
-                  state.currentInput = ''
-                  state.isInputVisible = true
-                  e.preventDefault()
-                }
-                if (
-                  e.key === 'Backspace' &&
-                  !state.currentInput &&
-                  tags.length
-                ) {
-                  let last = _.last(tags)
-                  removeTag(last)
-                  state.currentInput = last
-                  e.preventDefault()
-                }
-              }}
-              value={state.currentInput}
-              placeholder={placeholder}
-              {...props}
-            />
-          )}
           {_.map(
             t => (
               <Tag
@@ -117,30 +100,10 @@ let TagsInputSearchBar = ({
             ),
             tags
           )}
-        </span>
-        {children}
-      </div>
-      {!!(state.isOneLine && tags.length) && (
-        <div
-          className="down-arrow-shape-container"
-          onClick={() => {
-            if (state.isOneLine) {
-              state.isOneLine = false
-              state.isInputVisible = true
-            }
-          }}
-        >
-          <div className="down-arrow-shape" title="Expand to see all keywords">
-            <i
-              className="material-icons"
-              style={{ zIndex: 10, position: 'relative' }}
-            >
-              keyboard_arrow_down
-            </i>
-          </div>
-        </div>
-      )}
-    </OutsideClickHandler>
+        </Flex>
+      </span>
+      {children}
+    </div>
   )
 }
 

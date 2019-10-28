@@ -1,6 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
+import { Flex } from '../../greyVest'
 import { contexturify } from '../../utils/hoc'
 import { useLens } from '../../utils/react'
 import { getTagStyle } from './utils'
@@ -13,7 +14,9 @@ let TagsQuery = ({
   tree,
   node,
   placeholder,
+  isOneLine,
   theme: { Icon, Popover, TagsInput, Tag },
+  style,
   ...props
 }) => {
   let open = useLens(false)
@@ -35,7 +38,7 @@ let TagsQuery = ({
     )
   }
   return (
-    <>
+    <Flex className="tags-query">
       <TagsInput
         splitCommas
         tags={_.map(field, node.tags)}
@@ -52,7 +55,9 @@ let TagsQuery = ({
         tagStyle={getTagStyle(node, field)}
         submit={tree.triggerUpdate}
         placeholder={placeholder}
+        isOneLine={isOneLine}
         Tag={TagWithPopover}
+        style={{ flex: 1, ...style }}
         {...props}
       />
       <div onClick={F.on(open)}>
@@ -61,7 +66,7 @@ let TagsQuery = ({
           <ActionsMenu {...{ node, tree, open }} />
         </Popover>
       </div>
-    </>
+    </Flex>
   )
 }
 

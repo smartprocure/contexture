@@ -3,6 +3,7 @@ import { observer } from 'mobx-react'
 import { Box, ButtonGroup, Button } from '../greyVest'
 import TagsInputSearchBar from '../greyVest/TagsInputSearchBar'
 import TagsQuery from './TagsQuery'
+import OutsideClickHandler from 'react-outside-click-handler'
 
 let searchBarStyle = {
   overflow: 'visible', // for the search button animation
@@ -49,20 +50,24 @@ let SearchButton = observer(({ tree, resultsPath }) => (
   </AnimatedButton>
 ))
 
-let SearchBar = ({ tree, path, resultsPath }) => (
-  <ButtonGroup style={searchBarStyle}>
-    <Box style={searchBarBoxStyle}>
-      <TagsQuery
-        tree={tree}
-        path={path}
-        Loader={({ children }) => <div>{children}</div>}
-        style={inputStyle}
-        theme={{ TagsInput: TagsInputSearchBar }}
-        autoFocus
-      />
-    </Box>
-    <SearchButton tree={tree} resultsPath={resultsPath} />
-  </ButtonGroup>
-)
+let SearchBar = ({ tree, path, resultsPath }) => {
+  let [isOneLine, setIsOneLine] = React.useState(false)
+  return (
+    <OutsideClickHandler onOutsideClick={() => setIsOneLine(true)}>
+      <ButtonGroup style={searchBarStyle}>
+        <Box style={searchBarBoxStyle} onClick={() => setIsOneLine(false)}>
+          <TagsQuery
+            {...{ tree, path, isOneLine }}
+            Loader={({ children }) => <div>{children}</div>}
+            style={inputStyle}
+            theme={{ TagsInput: TagsInputSearchBar }}
+            autoFocus
+          />
+        </Box>
+        <SearchButton tree={tree} resultsPath={resultsPath} />
+      </ButtonGroup>
+    </OutsideClickHandler>
+  )
+}
 
 export default SearchBar
