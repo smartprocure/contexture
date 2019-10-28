@@ -8,18 +8,16 @@ import { getTag } from './utils'
 const tagValueField = 'word'
 
 let TagActionsMenu = ({
-  open,
   tag,
   node,
   tree,
-  theme: { Button, Checkbox, RadioList, Popover },
+  theme: { Button, Checkbox, RadioList },
 }) => {
   let tagInstance = getTag(tag, node)
   return (
-    <Popover
+    <div
       className="tags-query-tag-actions-menu"
       style={{ minWidth: 200, padding: 10 }}
-      isOpen={F.view(open) === tag}
     >
       <div>
         Keyword: <span className="filter-field-label">{tag}</span>
@@ -59,7 +57,7 @@ let TagActionsMenu = ({
         />
         <span>Only view this keyword</span>
       </label>
-    </Popover>
+    </div>
   )
 }
 
