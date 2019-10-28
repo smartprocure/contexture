@@ -12,17 +12,31 @@ let TagsQuery = ({
   tree,
   node,
   placeholder,
-  theme: { Popover, TagsInput },
+  theme: { Popover, TagsInput, Tag },
   ...props
 }) => {
-  let openTag = useLens('')
+  let TagWithPopover = ({ onClick, ...props }) => {
+    let open = useLens(false)
+    return (
+      <>
+        <Tag
+          onClick={tag => {
+            F.on(open)()
+            onClick(tag)
+          }}
+          {...props}
+        />
+        <Popover open={open}>
+          <TagQueryPopover {...{ tag: props.tag, node, tree }} />
+        </Popover>
+      </>
+    )
+  }
+
   return (
     <TagsInput
       splitCommas
       tags={_.map(field, node.tags)}
-      onTagClick={tag => {
-        F.set(tag, openTag)
-      }}
       addTag={tag => {
         tree.mutate(node.path, {
           tags: [...node.tags, { [field]: tag, distance: 3 }],
@@ -36,17 +50,7 @@ let TagsQuery = ({
       tagStyle={getTagStyle(node, field)}
       submit={tree.triggerUpdate}
       placeholder={placeholder}
-      wrapTag={Tag => tagProps => (
-        <>
-          <Tag {...tagProps} />
-          <Popover
-            isOpen={F.view(openTag) === tagProps.tag}
-            onClose={F.sets('', openTag)}
-          >
-            <TagQueryPopover {...{ tag: tagProps.tag, node, tree }} />
-          </Popover>
-        </>
-      )}
+      Tag={TagWithPopover}
       {...props}
     />
   )

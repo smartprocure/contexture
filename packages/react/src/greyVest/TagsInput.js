@@ -22,13 +22,11 @@ let TagsInput = ({
   onInputChange = _.noop,
   onTagClick = _.noop,
   Tag = DefaultTag,
-  wrapTag = _.identity,
   ...props
 }) => {
   let containerRef = React.useRef()
   let inputRef = React.useRef()
   let state = useLocalStore(() => ({ currentInput: '' }))
-  Tag = wrapTag(Tag)
   addTag = splitCommas
     ? _.flow(
         _.split(','),
