@@ -48,12 +48,12 @@ let SearchButton = observer(({ tree, resultsPath }) => (
   </AnimatedButton>
 ))
 
-let SearchBar = ({ tree, criteriaPath, resultsPath }) => (
+let SearchBar = ({ tree, path, resultsPath }) => (
   <ButtonGroup style={searchBarStyle}>
     <Box style={searchBarBoxStyle}>
       <TagsQuery
         tree={tree}
-        path={criteriaPath}
+        path={path}
         Loader={({ children }) => <div>{children}</div>}
         style={inputStyle}
         autoFocus

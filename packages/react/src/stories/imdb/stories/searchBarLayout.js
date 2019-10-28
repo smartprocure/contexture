@@ -254,7 +254,7 @@ let GreyVestSearchBarStory = theme => (
           </ToggleFiltersHeader>
           <TagsQuerySearchBar
             tree={tree}
-            criteriaPath={['root', 'bar']}
+            path={['root', 'bar']}
             resultsPath={['root', 'results']}
             autoFocus
           />
