@@ -1,9 +1,11 @@
 import React from 'react'
+import F from 'futil-js'
 import { observer } from 'mobx-react'
+import OutsideClickHandler from 'react-outside-click-handler'
+import { useLens } from '../utils/react'
 import { Box, ButtonGroup, Button } from '../greyVest'
 import TagsInputSearchBar from '../greyVest/TagsInputSearchBar'
 import TagsQuery from './TagsQuery'
-import OutsideClickHandler from 'react-outside-click-handler'
 
 let searchBarStyle = {
   overflow: 'visible', // for the search button animation
@@ -51,13 +53,13 @@ let SearchButton = observer(({ tree, resultsPath }) => (
 ))
 
 let SearchBar = ({ tree, path, resultsPath }) => {
-  let [isOneLine, setIsOneLine] = React.useState(false)
+  let collapse = useLens(false)
   return (
-    <OutsideClickHandler onOutsideClick={() => setIsOneLine(true)}>
+    <OutsideClickHandler onOutsideClick={F.on(collapse)}>
       <ButtonGroup style={searchBarStyle}>
-        <Box style={searchBarBoxStyle} onClick={() => setIsOneLine(false)}>
+        <Box style={searchBarBoxStyle} onClick={F.off(collapse)}>
           <TagsQuery
-            {...{ tree, path, isOneLine }}
+            {...{ tree, path, collapse }}
             Loader={({ children }) => <div>{children}</div>}
             style={inputStyle}
             theme={{ TagsInput: TagsInputSearchBar }}
