@@ -2,6 +2,17 @@ import _ from 'lodash/fp'
 import { bgJoin } from '../../styles/generic'
 import { tagToGroupJoin } from '../TagsJoinPicker'
 
+export let copyTags = node => {
+  if (node.tags) {
+    let words = _.flow(
+      _.map('word'),
+      _.reverse,
+      _.join(',')
+    )(node.tags)
+    navigator.clipboard.writeText(words)
+  }
+}
+
 export let getTag = (tag, node = {}, key = 'word') =>
   _.find({ [key]: tag }, node.tags) || {}
 

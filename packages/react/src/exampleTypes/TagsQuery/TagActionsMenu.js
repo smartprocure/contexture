@@ -2,16 +2,15 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
-import TagsJoinPicker from '../TagsJoinPicker'
 import { withTheme } from '../../utils/theme'
 import { getTag } from './utils'
 
-let TagQueryPopover = ({
-  tag,
-  node,
-  tree,
-  theme: { Button, Checkbox, RadioList, Select },
-}) => {
+const tagValueField = 'word'
+
+let TagActionsMenu = _.flow(
+  observer,
+  withTheme
+)(({ tag, node, tree, theme: { Button, Checkbox, RadioList } }) => {
   let tagInstance = getTag(tag, node)
   return (
     <div className="tags-input-popover">
@@ -36,7 +35,7 @@ let TagQueryPopover = ({
                 onClick={() => {
                   tree.mutate(node.path, {
                     tags: _.map(tag => {
-                      if (_.includes(' ', tag['word']))
+                      if (_.includes(' ', tag[tagValueField]))
                         tag.distance = tagInstance.distance
                       return tag
                     }, node.tags),
@@ -59,28 +58,11 @@ let TagQueryPopover = ({
           <span>Only view this keyword</span>
         </label>
       </div>
-      <div>
-        <div style={{ paddingBottom: '15px' }}>
-          <small>
-            <b>Applies to all keywords:</b>
-          </small>
-        </div>
-        <label className="popover-item labeled-checkbox">
-          <Checkbox
-            checked={!node.exact}
-            onChange={e => tree.mutate(node.path, { exact: !e.target.checked })}
-          />
-          <span>Enable stemming</span>
-        </label>
-        <div className="popover-item">
-          <TagsJoinPicker node={node} tree={tree} Select={Select} />
-        </div>
-      </div>
     </div>
   )
-}
+})
 
 export default _.flow(
   observer,
   withTheme
-)(TagQueryPopover)
+)(TagActionsMenu)
