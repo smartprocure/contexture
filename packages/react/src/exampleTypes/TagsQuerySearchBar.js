@@ -5,7 +5,7 @@ import OutsideClickHandler from 'react-outside-click-handler'
 import { useLens } from '../utils/react'
 import { Box, ButtonGroup, Button } from '../greyVest'
 import ExpandableTagsInput from '../greyVest/ExpandableTagsInput'
-import ExpandableTagsQuery from './TagsQuery/ExpandableTagsQuery'
+import ExpandableTagsQuery from './ExpandableTagsQuery'
 
 let searchBarStyle = {
   overflow: 'visible', // for the search button animation

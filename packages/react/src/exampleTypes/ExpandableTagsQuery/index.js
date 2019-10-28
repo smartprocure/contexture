@@ -1,7 +1,7 @@
 import React from 'react'
 import { contexturify } from '../../utils/hoc'
 import ExpandArrow from './ExpandArrow'
-import TagsQuery from '.'
+import TagsQuery from '../TagsQuery'
 
 let ExpandableTagsQuery = props => {
   let { node, collapse } = props
