@@ -2,16 +2,16 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
-import { setDisplayName } from 'recompose'
 import TagsJoinPicker from './TagsJoinPicker'
 import { withTheme } from '../utils/theme'
 import { getTag } from '../utils/tagsQuery'
 
-let TagQueryPopover = _.flow(
-  setDisplayName('TagQueryPopover'),
-  observer,
-  withTheme
-)(({ tag, node, tree, theme: { Button, Checkbox, RadioList, Select } }) => {
+let TagQueryPopover = ({
+  tag,
+  node,
+  tree,
+  theme: { Button, Checkbox, RadioList, Select },
+}) => {
   let tagInstance = getTag(tag, node)
   return (
     <div className="tags-input-popover">
@@ -78,6 +78,9 @@ let TagQueryPopover = _.flow(
       </div>
     </div>
   )
-})
+}
 
-export default TagQueryPopover
+export default _.flow(
+  observer,
+  withTheme
+)(TagQueryPopover)
