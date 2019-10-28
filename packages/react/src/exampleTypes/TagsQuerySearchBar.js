@@ -4,8 +4,8 @@ import { observer } from 'mobx-react'
 import OutsideClickHandler from 'react-outside-click-handler'
 import { useLens } from '../utils/react'
 import { Box, ButtonGroup, Button } from '../greyVest'
-import TagsInputSearchBar from '../greyVest/TagsInputSearchBar'
-import TagsQuery from './TagsQuery'
+import ExpandableTagsInput from '../greyVest/ExpandableTagsInput'
+import ExpandableTagsQuery from './TagsQuery/ExpandableTagsQuery'
 
 let searchBarStyle = {
   overflow: 'visible', // for the search button animation
@@ -58,11 +58,11 @@ let SearchBar = ({ tree, path, resultsPath }) => {
     <OutsideClickHandler onOutsideClick={F.on(collapse)}>
       <ButtonGroup style={searchBarStyle}>
         <Box style={searchBarBoxStyle} onClick={F.off(collapse)}>
-          <TagsQuery
+          <ExpandableTagsQuery
             {...{ tree, path, collapse }}
             Loader={({ children }) => <div>{children}</div>}
             style={inputStyle}
-            theme={{ TagsInput: TagsInputSearchBar }}
+            theme={{ TagsInput: ExpandableTagsInput }}
             autoFocus
           />
         </Box>

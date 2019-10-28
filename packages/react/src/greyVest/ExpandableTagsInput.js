@@ -1,4 +1,5 @@
 import React from 'react'
+import F from 'futil-js'
 import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 import { Tag as DefaultTag, Flex } from '.'
@@ -7,7 +8,7 @@ let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
 // We're only using withState to preserve the state between renders, since
 // inject doesn't do that for us.
-let TagsInputSearchBar = ({
+let ExpandableTagsInput = ({
   tags,
   addTag,
   removeTag,
@@ -20,10 +21,11 @@ let TagsInputSearchBar = ({
   onInputChange = _.noop,
   onTagClick = _.noop,
   Tag = DefaultTag,
-  isOneLine,
+  collapse,
   children,
   ...props
 }) => {
+  let isOneLine = F.view(collapse)
   addTag = splitCommas
     ? _.flow(
         _.split(','),
@@ -107,4 +109,4 @@ let TagsInputSearchBar = ({
   )
 }
 
-export default observer(TagsInputSearchBar)
+export default observer(ExpandableTagsInput)
