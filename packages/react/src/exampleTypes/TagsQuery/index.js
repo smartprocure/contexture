@@ -13,29 +13,19 @@ const field = 'word'
 let TagsQuery = ({
   tree,
   node,
-  theme: { Icon, Popover, TagsInput, Tag },
+  theme: { Icon, TagsInput, Tag, Popover },
   style,
   ...props
 }) => {
   let open = useLens(false)
+  let tagOpen = useLens('')
 
-  let TagWithPopover = ({ onClick, ...props }) => {
-    let tagOpen = useLens(false)
-    return (
-      <>
-        <Tag
-          onClick={tag => {
-            F.on(tagOpen)()
-            onClick(tag)
-          }}
-          {...props}
-        />
-        <Popover open={tagOpen}>
-          <TagActionsMenu {...{ tag: props.value, node, tree }} />
-        </Popover>
-      </>
-    )
-  }
+  let TagWithPopover = props => (
+    <>
+      <Tag {...props} />
+      <TagActionsMenu open={tagOpen} tag={props.value} {...{ node, tree }} />
+    </>
+  )
 
   return (
     <Flex className="tags-query" style={style}>
@@ -47,6 +37,7 @@ let TagsQuery = ({
             tags: [...node.tags, { [field]: tag, distance: 3 }],
           })
         }}
+        onTagClick={tag => F.set(tag, tagOpen)}
         removeTag={tag => {
           tree.mutate(node.path, {
             tags: _.reject({ [field]: tag }, node.tags),
