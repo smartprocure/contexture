@@ -1,10 +1,10 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
-import { contexturify } from '../utils/hoc'
-import { getTagStyle } from '../utils/tagsQuery'
-import { useLens } from '../utils/react'
-import TagQueryPopover from './TagQueryPopover'
+import { contexturify } from '../../utils/hoc'
+import { useLens } from '../../utils/react'
+import { getTagStyle } from './utils'
+import TagPopover from './TagPopover'
 
 const field = 'word'
 
@@ -27,7 +27,7 @@ let TagsQuery = ({
           {...props}
         />
         <Popover open={open}>
-          <TagQueryPopover {...{ tag: props.tag, node, tree }} />
+          <TagPopover {...{ tag: props.tag, node, tree }} />
         </Popover>
       </>
     )

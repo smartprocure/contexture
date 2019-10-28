@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
-import { bgJoin } from '../styles/generic'
-import { tagToGroupJoin } from '../exampleTypes/TagsJoinPicker'
+import { bgJoin } from '../../styles/generic'
+import { tagToGroupJoin } from '../TagsJoinPicker'
 
 export let getTag = (tag, node = {}, key = 'word') =>
   _.find({ [key]: tag }, node.tags) || {}
