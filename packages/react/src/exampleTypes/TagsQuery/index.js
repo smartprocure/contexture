@@ -81,7 +81,7 @@ let TagsQuery = ({
   }
   return (
     <>
-      <Flex className="tags-query">
+      <Flex className="tags-query" style={style}>
         <TagsInput
           splitCommas
           tags={_.map(field, node.tags)}
@@ -100,7 +100,7 @@ let TagsQuery = ({
           placeholder={placeholder}
           isOneLine={collapse && F.view(collapse)}
           Tag={TagWithPopover}
-          style={{ flex: 1, ...style }}
+          style={{ flex: 1, border: 0 }}
           {...props}
         />
         <div onClick={F.on(open)}>

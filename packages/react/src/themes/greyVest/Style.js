@@ -8,7 +8,13 @@ theme.
 export default () => (
   <style>
     {`
-      /* Tags Popover */
+      /* Tags Query */
+
+      .tags-query {
+        border: 2px solid #EBEBEB;
+        border-radius: 4px;
+        background: #fff;
+      }
 
       .tags-input-popover {
         /* counteract default popover padding */
