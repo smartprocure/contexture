@@ -15,36 +15,40 @@ let TagsQuery = ({
   theme: { Popover, TagsInput },
   ...props
 }) => {
-  let open = useLens(false)
-  let [selectedTag, setSelectedTag] = React.useState(null)
+  let openTag = useLens('')
   return (
-    <>
-      <TagsInput
-        splitCommas
-        tags={_.map(field, node.tags)}
-        onTagClick={tag => {
-          F.on(open)()
-          setSelectedTag(tag)
-        }}
-        addTag={tag => {
-          tree.mutate(node.path, {
-            tags: [...node.tags, { [field]: tag, distance: 3 }],
-          })
-        }}
-        removeTag={tag => {
-          tree.mutate(node.path, {
-            tags: _.reject({ [field]: tag }, node.tags),
-          })
-        }}
-        tagStyle={getTagStyle(node, field)}
-        submit={tree.triggerUpdate}
-        placeholder={placeholder}
-        {...props}
-      />
-      <Popover open={open}>
-        <TagQueryPopover tag={selectedTag} node={node} tree={tree} />
-      </Popover>
-    </>
+    <TagsInput
+      splitCommas
+      tags={_.map(field, node.tags)}
+      onTagClick={tag => {
+        F.set(tag, openTag)
+      }}
+      addTag={tag => {
+        tree.mutate(node.path, {
+          tags: [...node.tags, { [field]: tag, distance: 3 }],
+        })
+      }}
+      removeTag={tag => {
+        tree.mutate(node.path, {
+          tags: _.reject({ [field]: tag }, node.tags),
+        })
+      }}
+      tagStyle={getTagStyle(node, field)}
+      submit={tree.triggerUpdate}
+      placeholder={placeholder}
+      wrapTag={Tag => tagProps => (
+        <>
+          <Tag {...tagProps} />
+          <Popover
+            isOpen={F.view(openTag) === tagProps.tag}
+            onClose={F.sets('', openTag)}
+          >
+            <TagQueryPopover {...{ tag: tagProps.tag, node, tree }} />
+          </Popover>
+        </>
+      )}
+      {...props}
+    />
   )
 }
 
