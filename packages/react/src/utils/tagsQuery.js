@@ -2,7 +2,8 @@ import _ from 'lodash/fp'
 import { bgJoin } from '../styles/generic'
 import { tagToGroupJoin } from '../exampleTypes/TagsJoinPicker'
 
-export let getTag = (tag, node = {}, key) => key ? _.find({ [key]: tag }, node.tags) : key
+export let getTag = (tag, node = {}, key = 'word') =>
+  _.find({ [key]: tag }, node.tags) || {}
 
 // TagsInput expects a `tagStyle` prop, which is a function of `tag`
 export let getTagStyle = (node, key) => tag => {
