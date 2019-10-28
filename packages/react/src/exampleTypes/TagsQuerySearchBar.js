@@ -1,6 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { Box, ButtonGroup, Button } from '../greyVest'
+import TagsInputSearchBar from '../greyVest/TagsInputSearchBar'
 import TagsQuery from './TagsQuery'
 
 let searchBarStyle = {
@@ -56,6 +57,7 @@ let SearchBar = ({ tree, path, resultsPath }) => (
         path={path}
         Loader={({ children }) => <div>{children}</div>}
         style={inputStyle}
+        theme={{ TagsInput: TagsInputSearchBar }}
         autoFocus
       />
     </Box>
