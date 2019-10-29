@@ -45,7 +45,7 @@ let ActionsMenu = ({ node, tree, open, theme: { Button, Checkbox } }) => (
         checked={!node.exact}
         onChange={e => tree.mutate(node.path, { exact: !e.target.checked })}
       />
-      <span>Enable stemming</span>
+      <span>Include word variations</span>
     </label>
     <div>
       <TagsJoinPicker node={node} tree={tree} />

@@ -14,7 +14,7 @@ let ExpandArrow = ({ collapse, tagsLength, style, theme: { Icon } }) =>
           cursor: 'pointer',
           textAlign: 'center',
         }}
-        title="Expand to see all keywords"
+        title="Expand to see all tags"
       >
         <Flex
           style={{

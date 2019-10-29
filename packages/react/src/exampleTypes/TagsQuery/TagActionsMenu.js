@@ -43,7 +43,7 @@ let TagActionsMenu = ({
               })
             }}
           >
-            Apply to all keywords
+            Apply to all tags
           </Button>
         </div>
       )}
@@ -55,7 +55,7 @@ let TagActionsMenu = ({
             tree.mutate(node.path, { tags: [...node.tags] })
           }}
         />
-        <span>Only view this keyword</span>
+        <span>Only view this tag</span>
       </label>
     </div>
   )
