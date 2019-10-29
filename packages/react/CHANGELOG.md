@@ -1,3 +1,6 @@
+# 2.5.0
+* ExampleTypes: Add an expanding/collapsing TagsQuerySearchBar component
+
 # 2.4.0
 * GreyVest: Add GridItem component
 * GreyVest: Add `rows`, `areas`, `placeContent` and `placeItems` props to Grid
