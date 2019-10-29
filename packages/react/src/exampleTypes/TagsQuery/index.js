@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 import F from 'futil-js'
 import { Grid, GridItem } from '../../greyVest'
 import { contexturify } from '../../utils/hoc'
-import { useLens } from '../../utils/react'
+import { useLensObject } from '../../utils/react'
 import { getTagStyle } from './utils'
 import TagActionsMenu from './TagActionsMenu'
 import ActionsMenu from './ActionsMenu'
@@ -15,16 +15,17 @@ let TagsQuery = ({
   node,
   theme: { Icon, TagsInput, Tag, Popover },
   style,
+  popoverState,
   ...props
 }) => {
-  let open = useLens(false)
-  let tagOpen = useLens('')
+  let newPopoverState = useLensObject({ open: false, tagOpen: '' })
+  popoverState = popoverState || newPopoverState
 
   let TagWithPopover = props => (
     <>
       <Popover
-        isOpen={F.view(tagOpen) === props.value}
-        onClose={F.sets('', tagOpen)}
+        isOpen={F.view(popoverState.tagOpen) === props.value}
+        onClose={F.sets('', popoverState)}
         style={{ left: 0, top: 20 }}
       >
         <TagActionsMenu tag={props.value} {...{ node, tree }} />
@@ -49,7 +50,7 @@ let TagsQuery = ({
               tags: [...node.tags, { [field]: tag, distance: 3 }],
             })
           }}
-          onTagClick={tag => F.set(tag, tagOpen)}
+          onTagClick={tag => F.set(tag, popoverState.tagOpen)}
           removeTag={tag => {
             tree.mutate(node.path, {
               tags: _.reject({ [field]: tag }, node.tags),
@@ -63,10 +64,10 @@ let TagsQuery = ({
         />
       </GridItem>
       <GridItem place="center">
-        <div onClick={F.on(open)}>
+        <div onClick={F.on(popoverState.open)}>
           <Icon icon="TableColumnMenu" />
-          <Popover open={open} style={{ right: 0 }}>
-            <ActionsMenu {...{ node, tree, open }} />
+          <Popover open={popoverState.open} style={{ right: 0 }}>
+            <ActionsMenu {...{ node, tree, open: popoverState.open }} />
           </Popover>
         </div>
       </GridItem>
