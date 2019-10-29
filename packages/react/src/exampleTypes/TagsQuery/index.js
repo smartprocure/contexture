@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
-import { Flex } from '../../greyVest'
+import { Grid, GridItem } from '../../greyVest'
 import { contexturify } from '../../utils/hoc'
 import { useLens } from '../../utils/react'
 import { getTagStyle } from './utils'
@@ -34,34 +34,43 @@ let TagsQuery = ({
   )
 
   return (
-    <Flex className="tags-query" style={style}>
-      <TagsInput
-        splitCommas
-        tags={_.map(field, node.tags)}
-        addTag={tag => {
-          tree.mutate(node.path, {
-            tags: [...node.tags, { [field]: tag, distance: 3 }],
-          })
-        }}
-        onTagClick={tag => F.set(tag, tagOpen)}
-        removeTag={tag => {
-          tree.mutate(node.path, {
-            tags: _.reject({ [field]: tag }, node.tags),
-          })
-        }}
-        tagStyle={getTagStyle(node, field)}
-        submit={tree.triggerUpdate}
-        Tag={TagWithPopover}
-        style={{ flex: 1, border: 0 }}
-        {...props}
-      />
-      <div onClick={F.on(open)}>
-        <Icon icon="TableColumnMenu" />
-        <Popover open={open} style={{ right: 0 }}>
-          <ActionsMenu {...{ node, tree, open }} />
-        </Popover>
-      </div>
-    </Flex>
+    <Grid
+      className="tags-query"
+      rows="40px minmax(0, auto)"
+      columns="1fr auto"
+      style={style}
+    >
+      <GridItem height={2} place="center stretch">
+        <TagsInput
+          splitCommas
+          tags={_.map(field, node.tags)}
+          addTag={tag => {
+            tree.mutate(node.path, {
+              tags: [...node.tags, { [field]: tag, distance: 3 }],
+            })
+          }}
+          onTagClick={tag => F.set(tag, tagOpen)}
+          removeTag={tag => {
+            tree.mutate(node.path, {
+              tags: _.reject({ [field]: tag }, node.tags),
+            })
+          }}
+          tagStyle={getTagStyle(node, field)}
+          submit={tree.triggerUpdate}
+          Tag={TagWithPopover}
+          style={{ flex: 1, border: 0 }}
+          {...props}
+        />
+      </GridItem>
+      <GridItem place="center">
+        <div onClick={F.on(open)}>
+          <Icon icon="TableColumnMenu" />
+          <Popover open={open} style={{ right: 0 }}>
+            <ActionsMenu {...{ node, tree, open }} />
+          </Popover>
+        </div>
+      </GridItem>
+    </Grid>
   )
 }
 
