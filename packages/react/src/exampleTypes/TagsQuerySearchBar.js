@@ -4,7 +4,7 @@ import { observer } from 'mobx-react'
 import OutsideClickHandler from 'react-outside-click-handler'
 import { useLens, useLensObject } from '../utils/react'
 import { Box, ButtonGroup, Button } from '../greyVest'
-import ExpandableTagsInput from '../greyVest/ExpandableTagsInput'
+import ExpandableTagsInput, { Tags } from '../greyVest/ExpandableTagsInput'
 import ExpandableTagsQuery from './ExpandableTagsQuery'
 
 let searchBarStyle = {
@@ -69,7 +69,7 @@ let SearchBar = ({ tree, path, resultsPath }) => {
             {...{ tree, path, collapse, popoverState }}
             Loader={({ children }) => <div>{children}</div>}
             style={inputStyle}
-            theme={{ TagsInput: ExpandableTagsInput }}
+            theme={{ TagsInput: F.view(collapse) ? Tags : ExpandableTagsInput }}
             autoFocus
           />
         </Box>

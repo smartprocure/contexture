@@ -205,10 +205,7 @@ export default () => (
 
 
       /* Tags Input */
-      .tags-input-one-line {
-        max-height: 40px;
-        overflow-y: auto;
-      }
+      
       .tags-input > * {
         box-sizing: border-box;
       }
