@@ -6,7 +6,7 @@ let Tag = ({ removeTag, value, tagStyle, style, ...props }) => (
   <Chip
     onDelete={() => removeTag(value)}
     label={value}
-    style={{ ...F.callOrReturn(tagStyle, value), ...style }}
+    style={{ margin: '3px 2px', ...F.callOrReturn(tagStyle, value), ...style }}
     {...props}
   />
 )

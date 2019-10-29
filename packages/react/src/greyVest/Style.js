@@ -205,31 +205,9 @@ export default () => (
 
 
       /* Tags Input */
-      .tags-input-one-line {
-        max-height: 40px;
-        overflow-y: auto;
-      }
-      .tags-input-one-line::-webkit-scrollbar {
-        -webkit-appearance: none;
-      }
-      .tags-input-one-line::-webkit-scrollbar-thumb {
-        border-radius: 8px;
-        border: 2.5px solid #f1f1f1; /* should match background, can't be transparent */
-        background-color: #c2c2c2;
-      }
-      .tags-input-one-line::-webkit-scrollbar-track {
-        background-color: #f1f1f1;
-        border-radius: 5px;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-      }
+      
       .tags-input > * {
         box-sizing: border-box;
-      }
-      .tags-input {
-        border: 2px solid #EBEBEB;
-        border-radius: 4px;
-        background: #fff;
       }
       .tags-input input {
         height: 30px;

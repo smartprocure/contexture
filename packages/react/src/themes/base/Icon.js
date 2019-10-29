@@ -42,6 +42,7 @@ export let iconMap = {
       NEW
     </span>
   ),
+  Expand: toIcon('v'),
 }
 let DefaultIcon = ({ icon, ...props }) => (
   <Dynamic component={iconMap[icon]} {...props} />

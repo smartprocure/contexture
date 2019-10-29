@@ -1,3 +1,6 @@
+# 2.5.0
+* ExampleTypes: Add an expanding/collapsing TagsQuerySearchBar component
+
 # 2.4.1
 * Adds the latest version of Moment to the dependencies
 

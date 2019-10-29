@@ -22,7 +22,7 @@ import {
 
 //components used only for theme
 import PickerItem from './PickerItem'
-import TagsInput from './TagsInput'
+import TagsInput, { Tag } from './TagsInput'
 import Root from './Root'
 
 export default {
@@ -39,6 +39,7 @@ export default {
   NestedPicker: defaultProps({ PickerItem })(NestedPicker),
   NumberInput: defaultProps({ type: 'number' })(TextInput),
   TagsInput,
+  Tag,
   Modal,
   PagerItem,
   RadioList,

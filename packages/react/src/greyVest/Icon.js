@@ -43,6 +43,7 @@ let iconMap = {
   ),
   AutoUpdate: toIcon('autorenew'),
   New: toIcon('fiber_new'),
+  Expand: toIcon('keyboard_arrow_down'),
 }
 
 let Icon = ({ icon, ...props }) => (

@@ -6,6 +6,6 @@ let RemoveIcon = props => (
   <span className="tags-input-tag-remove fa fa-times" {...props} />
 )
 
-let Tag = defaultProps({ RemoveIcon })(DefaultTag)
+export let Tag = defaultProps({ RemoveIcon })(DefaultTag)
 
 export default defaultProps({ Tag })(TagsInput)
