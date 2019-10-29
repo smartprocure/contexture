@@ -1,6 +1,9 @@
 # 2.5.0
 * ExampleTypes: Add an expanding/collapsing TagsQuerySearchBar component
 
+# 2.4.1
+* Adds the latest version of Moment to the dependencies
+
 # 2.4.0
 * GreyVest: Add GridItem component
 * GreyVest: Add `rows`, `areas`, `placeContent` and `placeItems` props to Grid
