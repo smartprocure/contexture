@@ -55,6 +55,12 @@ export let contexturify = _.flow(
   withTheme
 )
 
+export let contexturifyWithoutLoader = _.flow(
+  observer,
+  withNode,
+  withTheme
+)
+
 // this is used for the text components
 export let withTreeLens = Component =>
   wrapDisplayName('withTreeLens', Component)(({ prop = 'value', ...props }) => (

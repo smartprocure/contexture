@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import { Grid, GridItem } from '../../greyVest'
-import { contexturify } from '../../utils/hoc'
+import { contexturifyWithoutLoader } from '../../utils/hoc'
 import { useLensObject } from '../../utils/react'
 import { getTagStyle } from './utils'
 import TagActionsMenu from './TagActionsMenu'
@@ -75,4 +75,4 @@ let TagsQuery = ({
   )
 }
 
-export default contexturify(TagsQuery)
+export default contexturifyWithoutLoader(TagsQuery)

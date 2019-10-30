@@ -1,3 +1,8 @@
+# 2.5.1
+* FilterList/SearchFilters: update pause icon styling
+* ExampleTypes: Remove loader from TagsQuery
+* Add `contexturifyWithoutLoader` HOC
+
 # 2.5.0
 * ExampleTypes: Add an expanding/collapsing TagsQuerySearchBar component
 
