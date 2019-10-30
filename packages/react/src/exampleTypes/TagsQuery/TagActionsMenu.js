@@ -3,9 +3,7 @@ import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
 import { withTheme } from '../../utils/theme'
-import { getTag } from './utils'
-
-const tagValueField = 'word'
+import { getTag, TAG_TERM, FIELD } from './utils'
 
 let TagActionsMenu = ({
   tag,
@@ -20,7 +18,8 @@ let TagActionsMenu = ({
       style={{ minWidth: 200, padding: 10 }}
     >
       <div>
-        Keyword: <span className="filter-field-label">{tag}</span>
+        {_.startCase(TAG_TERM)}:{' '}
+        <span className="filter-field-label">{tag}</span>
       </div>
       {_.includes(' ', tag) && (
         <div style={{ margin: '10px 0' }}>
@@ -36,14 +35,14 @@ let TagActionsMenu = ({
             onClick={() => {
               tree.mutate(node.path, {
                 tags: _.map(tag => {
-                  if (_.includes(' ', tag[tagValueField]))
+                  if (_.includes(' ', tag[FIELD]))
                     tag.distance = tagInstance.distance
                   return tag
                 }, node.tags),
               })
             }}
           >
-            Apply to all tags
+            Apply to all {TAG_TERM}s
           </Button>
         </div>
       )}
@@ -55,7 +54,7 @@ let TagActionsMenu = ({
             tree.mutate(node.path, { tags: [...node.tags] })
           }}
         />
-        <span>Only view this tag</span>
+        <span>Only view this {TAG_TERM}</span>
       </label>
     </div>
   )

@@ -5,7 +5,7 @@ import { observer } from 'mobx-react'
 import TagsJoinPicker from '../TagsJoinPicker'
 import { withTheme } from '../../utils/theme'
 import { Flex } from '../../greyVest'
-import { copyTags } from './utils'
+import { copyTags, TAG_TERM } from './utils'
 
 let ActionsMenu = ({ node, tree, open, theme: { Button, Checkbox } }) => (
   <Flex
@@ -23,7 +23,7 @@ let ActionsMenu = ({ node, tree, open, theme: { Button, Checkbox } }) => (
             F.off(open)()
           }}
         >
-          Copy Keywords
+          Copy {_.startCase(TAG_TERM)}s
         </Button>
         <Button
           style={{ margin: '10px 0' }}
@@ -34,7 +34,7 @@ let ActionsMenu = ({ node, tree, open, theme: { Button, Checkbox } }) => (
             F.off(open)()
           }}
         >
-          Clear Keywords
+          Clear {_.startCase(TAG_TERM)}s
         </Button>
         <div className="line-separator" />
       </>
