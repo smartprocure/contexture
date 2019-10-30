@@ -1,3 +1,7 @@
+# 2.5.2
+* Remove loader from FilterAdder
+* TagsQuery: add a constant for "tags"/"keywords" terminology
+
 # 2.5.1
 * FilterList/SearchFilters: update pause icon styling
 * ExampleTypes: Remove loader from TagsQuery
