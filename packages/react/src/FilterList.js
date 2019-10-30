@@ -6,7 +6,7 @@ import { observer } from 'mobx-react'
 import { Flex, Dynamic } from './greyVest'
 import { fieldsToOptions } from './FilterAdder'
 import { useLens } from './utils/react'
-import { withNode } from './utils/hoc'
+import { contexturifyWithoutLoader } from './utils/hoc'
 import { bdJoin } from './styles/generic'
 import {
   newNodeFromType,
@@ -160,11 +160,10 @@ export let Label = _.flow(
   )
 })
 
+// we can't do this on export because FilterList is used internally
 export let FilterList = _.flow(
   setDisplayName('FilterList'),
-  observer,
-  withNode,
-  withTheme
+  contexturifyWithoutLoader
 )(
   ({
     tree,
