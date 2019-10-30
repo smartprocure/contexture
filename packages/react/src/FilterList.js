@@ -161,7 +161,7 @@ export let Label = _.flow(
 })
 
 // we can't do this on export because FilterList is used internally
-export let FilterList = _.flow(
+let FilterList = _.flow(
   setDisplayName('FilterList'),
   contexturifyWithoutLoader
 )(
@@ -214,3 +214,5 @@ export let FilterList = _.flow(
     </div>
   )
 )
+
+export default FilterList
