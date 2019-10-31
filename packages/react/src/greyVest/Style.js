@@ -207,6 +207,11 @@ export default () => (
 
 
       /* Tags Input */
+      .tags-input {
+        border: 2px solid #EBEBEB;
+        border-radius: 4px;
+        background: #fff;
+      }
 
       .tags-input > * {
         box-sizing: border-box;

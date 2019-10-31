@@ -17,6 +17,9 @@ export default () => (
         border-radius: 4px;
         background: #fff;
       }
+      .tags-query .tags-input {
+        border: 0;
+      }
 
       .tags-input-popover {
         /* counteract default popover padding */
