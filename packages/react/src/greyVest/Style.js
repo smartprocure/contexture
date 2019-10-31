@@ -1,5 +1,7 @@
 import React from 'react'
 
+let tableCellPadding = 8
+
 /*
 Component styles for the Grey Vest library. Each of these should be associated
 with a specific omponent in the lib. The css/emotion refactor will move each of
@@ -89,7 +91,7 @@ export default () => (
         border-bottom: solid 2px rgba(237, 237, 237, 0.43);
       }
       .gv-table td, .gv-table th {
-        padding: 20px;
+        padding: ${tableCellPadding}px;
         text-align: left;
       }
       .gv-table th > span {
@@ -205,7 +207,7 @@ export default () => (
 
 
       /* Tags Input */
-      
+
       .tags-input > * {
         box-sizing: border-box;
       }
