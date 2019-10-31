@@ -2,10 +2,13 @@ import _ from 'lodash/fp'
 import { bgJoin } from '../../styles/generic'
 import { tagToGroupJoin } from '../TagsJoinPicker'
 
+export let tagTerm = 'keyword'
+export let tagValueField = 'word'
+
 export let copyTags = node => {
   if (node.tags) {
     let words = _.flow(
-      _.map('word'),
+      _.map(tagValueField),
       _.reverse,
       _.join(',')
     )(node.tags)
@@ -13,7 +16,7 @@ export let copyTags = node => {
   }
 }
 
-export let getTag = (tag, node = {}, key = 'word') =>
+export let getTag = (tag, node = {}, key = tagValueField) =>
   _.find({ [key]: tag }, node.tags) || {}
 
 // TagsInput expects a `tagStyle` prop, which is a function of `tag`

@@ -4,6 +4,7 @@ import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 import { Flex } from '../../greyVest'
 import { withTheme } from '../../utils/theme'
+import { tagTerm } from '../TagsQuery/utils'
 
 let ExpandArrow = ({ collapse, tagsLength, style, theme: { Icon } }) =>
   !!(F.view(collapse) && tagsLength) && (
@@ -29,7 +30,7 @@ let ExpandArrow = ({ collapse, tagsLength, style, theme: { Icon } }) =>
           alignItems="center"
           justifyContent="center"
         >
-          View all {tagsLength} tags
+          View all {tagsLength} {tagTerm}s
           <Icon icon="Expand" style={{ fontSize: 16, marginLeft: 6 }} />
         </Flex>
       </div>

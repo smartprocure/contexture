@@ -4,11 +4,9 @@ import F from 'futil-js'
 import { Grid, GridItem } from '../../greyVest'
 import { contexturifyWithoutLoader } from '../../utils/hoc'
 import { useLensObject } from '../../utils/react'
-import { getTagStyle } from './utils'
+import { getTagStyle, tagValueField } from './utils'
 import TagActionsMenu from './TagActionsMenu'
 import ActionsMenu from './ActionsMenu'
-
-const field = 'word'
 
 let TagsQuery = ({
   tree,
@@ -44,19 +42,19 @@ let TagsQuery = ({
       <GridItem height={2} place="center stretch">
         <TagsInput
           splitCommas
-          tags={_.map(field, node.tags)}
+          tags={_.map(tagValueField, node.tags)}
           addTag={tag => {
             tree.mutate(node.path, {
-              tags: [...node.tags, { [field]: tag, distance: 3 }],
+              tags: [...node.tags, { [tagValueField]: tag, distance: 3 }],
             })
           }}
           onTagClick={tag => F.set(tag, popoverState.tagOpen)}
           removeTag={tag => {
             tree.mutate(node.path, {
-              tags: _.reject({ [field]: tag }, node.tags),
+              tags: _.reject({ [tagValueField]: tag }, node.tags),
             })
           }}
-          tagStyle={getTagStyle(node, field)}
+          tagStyle={getTagStyle(node, tagValueField)}
           submit={tree.triggerUpdate}
           Tag={TagWithPopover}
           style={{ flex: 1, border: 0 }}
