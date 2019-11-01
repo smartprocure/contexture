@@ -1,3 +1,6 @@
+# 2.5.4
+* TagsQuery: slightly reduce the inner height
+
 # 2.5.3
 * ExampleTypes: Remove loader from Date
 * FilterList: hide overflow menu & update button on paused filters
