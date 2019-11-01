@@ -119,7 +119,7 @@ export let Label = _.flow(
               F.flip(popover)()
             }}
           >
-            <Icon icon="TableColumnMenu" />
+            {!node.paused && <Icon icon="TableColumnMenu" />}
             <FilterActions
               node={node}
               tree={tree}
@@ -132,7 +132,8 @@ export let Label = _.flow(
             // Whitespace separator
             <div style={{ flexGrow: 1 }} />
           }
-          {!node.updating &&
+          {!node.paused &&
+            !node.updating &&
             tree.disableAutoUpdate &&
             // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
             _.some(

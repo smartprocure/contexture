@@ -1,5 +1,7 @@
 import React from 'react'
 
+let filterListMargin = 16
+
 /*
 Styles for the Grey Vest theme. These are ~external~ to the Grey Vest library,
 and are meant for styling generic contexture-react components according to the
@@ -14,6 +16,9 @@ export default () => (
         border: 2px solid #EBEBEB;
         border-radius: 4px;
         background: #fff;
+      }
+      .tags-query .tags-input {
+        border: 0;
       }
 
       .tags-input-popover {
@@ -85,21 +90,20 @@ export default () => (
       /* Filter List */
 
       .filter-list.gv-box {
-        padding: 30px;
+        padding: ${filterListMargin}px;
       }
       .filter-list-item {
         border-bottom: solid 1px rgba(216, 216, 216, 0.3);
-        padding-bottom: 30px;
-        margin-bottom: 30px;
-        margin-left: -30px;
-        margin-right: -30px;
-        padding-left: 30px;
-        padding-right: 30px;
+        padding-bottom: ${filterListMargin}px;
+        margin-bottom: ${filterListMargin}px;
+        margin-left: -${filterListMargin}px;
+        margin-right: -${filterListMargin}px;
+        padding-left: ${filterListMargin}px;
+        padding-right: ${filterListMargin}px;
       }
       .filter-field-label {
         font-size: 16px;
         font-weight: bold;
-        word-break: break-all;
       }
       .filter-field-label-icon {
         color: #9b9b9b;
@@ -119,10 +123,12 @@ export default () => (
       }
       .filter-list-group {
         border-left: solid 2px;
-        padding-left: 35px; /* 30 for filter-list-item + 5 space */
-        margin-left: -30px;
-        margin-top: -25px; /* -30 for filter-list-item + 5 space */
-        padding-top: 30px;
+        padding-left: ${filterListMargin +
+          5}px; /* 30 for filter-list-item + 5 space */
+        margin-left: -${filterListMargin}px;
+        margin-top: -${filterListMargin -
+          5}px; /* -30 for filter-list-item + 5 space */
+        padding-top: ${filterListMargin}px;
       }
       .filter-actions-popover {
         userSelect: none;

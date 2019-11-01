@@ -1,3 +1,8 @@
+# 2.5.3
+* ExampleTypes: Remove loader from Date
+* FilterList: hide overflow menu & update button on paused filters
+* GreyVest: reduce margins/padding on FilterList, Table & SearchLayout
+
 # 2.5.2
 * Remove loader from FilterAdder
 * TagsQuery: add a constant for "tags"/"keywords" terminology
