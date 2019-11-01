@@ -3,11 +3,11 @@ import _ from 'lodash/fp'
 import F from 'futil-js'
 import { withContentRect } from 'react-measure'
 import { contexturify } from '../../utils/hoc'
-import TagsQuery from '../TagsQuery'
+import TagsQuery, { innerHeight } from '../TagsQuery'
 import ExpandArrow from './ExpandArrow'
 
 let collapsedStyle = {
-  maxHeight: 40,
+  maxHeight: innerHeight,
   overflowY: 'auto',
 }
 
@@ -18,7 +18,7 @@ let ExpandableTagsQuery = ({ measureRef, contentRect, collapse, ...props }) => (
         <TagsQuery {...props} />
       </div>
     </div>
-    {F.view(collapse) && contentRect.entry.height > 41 && (
+    {F.view(collapse) && contentRect.entry.height > innerHeight && (
       <ExpandArrow collapse={collapse} tagsLength={props.node.tags.length} />
     )}
   </>

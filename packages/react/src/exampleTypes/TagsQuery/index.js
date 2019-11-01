@@ -8,6 +8,8 @@ import { getTagStyle, tagValueField } from './utils'
 import TagActionsMenu from './TagActionsMenu'
 import ActionsMenu from './ActionsMenu'
 
+export let innerHeight = 36
+
 let TagsQuery = ({
   tree,
   node,
@@ -35,7 +37,7 @@ let TagsQuery = ({
   return (
     <Grid
       className="tags-query"
-      rows="40px minmax(0, auto)"
+      rows={`${innerHeight}px minmax(0, auto)`}
       columns="1fr auto"
       style={style}
     >
