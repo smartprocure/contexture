@@ -69,7 +69,7 @@ export default () => (
         margin-bottom: 10px;
       }
       .contexture-facet-cardinality {
-        margin: 10px 0;
+        margin-top: 10px;
       }
       .contexture-facet > label > div {
         overflow: hidden;
@@ -88,6 +88,11 @@ export default () => (
 
 
       /* Filter List */
+
+      .apply-filter-button button {
+        margin-top: 10px;
+        width: 100%;
+      }
 
       .filter-list.gv-box {
         padding: ${filterListMargin}px;
@@ -110,13 +115,6 @@ export default () => (
       }
       .filter-field-has-value {
         color: #0076de;
-      }
-      .filter-field-icon-refresh .gv-text-button {
-        color: #0076de;
-      }
-      .filter-field-icon-refresh .gv-text-button:hover {
-        color: #f6f6f6;
-        background-color: #0076de;
       }
       .filter-list-item-contents {
         margin-top: 15px;

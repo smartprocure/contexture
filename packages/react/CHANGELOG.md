@@ -1,5 +1,8 @@
-# 2.5.5
+# 2.6.1
 * ActionMenu/TagsQuerySearchBar: Adds onClick handling for action menu button feedback
+
+# 2.6.0
+* FilterList: remove refresh icon & replace it with an "apply filter" button
 
 # 2.5.4
 * TagsQuery: slightly reduce the inner height
