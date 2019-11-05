@@ -132,24 +132,7 @@ export let Label = _.flow(
             // Whitespace separator
             <div style={{ flexGrow: 1 }} />
           }
-          {!node.paused &&
-            !node.updating &&
-            tree.disableAutoUpdate &&
-            // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
-            _.some(
-              treeNode => treeNode !== node && treeNode.markedForUpdate,
-              F.treeToArray(_.get('children'))(tree.tree)
-            ) && (
-              <div
-                className="filter-field-icon-refresh"
-                onClick={e => {
-                  e.stopPropagation()
-                  tree.triggerUpdate()
-                }}
-              >
-                <Icon icon="Refresh" />
-              </div>
-            )}
+
           <div className="filter-field-label-icon">
             <Icon
               icon={node.paused ? 'FilterListExpand' : 'FilterListCollapse'}
@@ -174,7 +157,7 @@ let FilterList = _.flow(
     mapNodeToLabel = _.noop,
     className,
     style,
-    theme: { UnmappedNodeComponent },
+    theme: { UnmappedNodeComponent, Button },
   }) => (
     <div style={style} className={className}>
       {_.map(
@@ -206,6 +189,25 @@ let FilterList = _.flow(
                       ...mapNodeToProps(child, fields),
                     }}
                   />
+                  {!child.updating &&
+                    tree.disableAutoUpdate &&
+                    // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
+                    _.some(
+                      treeNode => treeNode !== node && treeNode.markedForUpdate,
+                      F.treeToArray(_.get('children'))(tree.tree)
+                    ) && (
+                      <div
+                        className="apply-filter-button"
+                        onClick={e => {
+                          e.stopPropagation()
+                          tree.triggerUpdate()
+                        }}
+                      >
+                        <Button primary>
+                          APPLY FILTER
+                        </Button>
+                      </div>
+                    )}
                 </div>
               )}
             </div>
