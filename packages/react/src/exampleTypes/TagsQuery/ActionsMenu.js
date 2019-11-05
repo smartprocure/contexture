@@ -5,9 +5,11 @@ import { observer } from 'mobx-react'
 import TagsJoinPicker from '../TagsJoinPicker'
 import { withTheme } from '../../utils/theme'
 import { Flex } from '../../greyVest'
-import { copyTags, tagTerm } from './utils'
+import { copyTags, tagTerm, onClickWrapper } from './utils'
 
-let ActionsMenu = ({ node, tree, open, theme: { Button, Checkbox } }) => (
+let ActionsMenu = ({ node, tree, open, theme: { Button, Checkbox }, onClick=_.noop }) => {
+  let wrapper = onClickWrapper(node, onClick, open)
+  return (
   <Flex
     style={{ minWidth: 240, padding: 10 }}
     className="tags-query-actions-menu"
@@ -17,23 +19,12 @@ let ActionsMenu = ({ node, tree, open, theme: { Button, Checkbox } }) => (
   >
     {!!_.get('tags.length', node) && (
       <>
-        <Button
-          onClick={() => {
-            copyTags(node)
-            F.off(open)()
-          }}
-        >
+        <Button onClick = {() => wrapper('copy', () => copyTags(node))}>
           Copy {_.startCase(tagTerm)}s
         </Button>
         <Button
           style={{ margin: '10px 0' }}
-          onClick={() => {
-            tree.mutate(node.path, {
-              tags: [],
-            })
-            F.off(open)()
-          }}
-        >
+          onClick = {() => wrapper('clear', () => tree.mutate(node.path, { tags: [] }))}>
           Clear {_.startCase(tagTerm)}s
         </Button>
         <div className="line-separator" />
@@ -52,6 +43,7 @@ let ActionsMenu = ({ node, tree, open, theme: { Button, Checkbox } }) => (
     </div>
   </Flex>
 )
+}
 
 export default _.flow(
   observer,

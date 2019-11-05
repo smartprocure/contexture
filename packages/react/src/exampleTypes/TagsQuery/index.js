@@ -16,6 +16,7 @@ let TagsQuery = ({
   theme: { Icon, TagsInput, Tag, Popover },
   style,
   popoverState,
+  onActionMenuClick,
   ...props
 }) => {
   let newPopoverState = useLensObject({ open: false, tagOpen: '' })
@@ -67,7 +68,7 @@ let TagsQuery = ({
         <div onClick={F.flip(popoverState.open)}>
           <Icon icon="TableColumnMenu" />
           <Popover open={popoverState.open} style={{ right: 0 }}>
-            <ActionsMenu {...{ node, tree, open: popoverState.open }} />
+            <ActionsMenu {...{ node, tree, open: popoverState.open, onClick: onActionMenuClick } } />
           </Popover>
         </div>
       </GridItem>

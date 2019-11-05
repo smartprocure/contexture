@@ -1,4 +1,6 @@
 import _ from 'lodash/fp'
+import F from 'futil-js'
+import { toJS } from 'mobx'
 import { bgJoin } from '../../styles/generic'
 import { tagToGroupJoin } from '../TagsJoinPicker'
 
@@ -31,4 +33,18 @@ export let getTagStyle = (node, key) => tag => {
         ? 1
         : 0.5,
   }
+}
+
+export let onClickWrapper = (node, onClick, open) => (action, fn) => {
+  let result = {
+    action,
+    items: toJS(node.tags)
+  }
+  try { fn() }
+  catch (error) {
+    result = _.extend({error}, result)
+    console.error(error)
+  }
+  onClick(result)
+  F.off(open)()
 }
