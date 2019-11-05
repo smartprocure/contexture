@@ -203,9 +203,7 @@ let FilterList = _.flow(
                           tree.triggerUpdate()
                         }}
                       >
-                        <Button primary>
-                          APPLY FILTER
-                        </Button>
+                        <Button primary>APPLY FILTER</Button>
                       </div>
                     )}
                 </div>
