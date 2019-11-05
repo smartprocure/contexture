@@ -1,3 +1,6 @@
+# 2.5.5
+* ActionMenu/TagsQuerySearchBar: Adds onClick handling for action menu button feedback
+
 # 2.5.4
 * TagsQuery: slightly reduce the inner height
 
