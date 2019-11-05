@@ -1,3 +1,6 @@
+# 2.6.0
+* FilterList: remove refresh icon & replace it with an "apply filter" button
+
 # 2.5.4
 * TagsQuery: slightly reduce the inner height
 
