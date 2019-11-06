@@ -8,14 +8,15 @@ import { getTagStyle, tagValueField } from './utils'
 import TagActionsMenu from './TagActionsMenu'
 import ActionsMenu from './ActionsMenu'
 
-export let innerHeight = 36
+export let innerHeight = 40
 
 let TagsQuery = ({
   tree,
   node,
-  theme: { Icon, TagsInput, Tag, Popover },
+  onAddTag,
   style,
   popoverState,
+  theme: { Icon, TagsInput, Tag, Popover },
   ...props
 }) => {
   let newPopoverState = useLensObject({ open: false, tagOpen: '' })
@@ -49,6 +50,7 @@ let TagsQuery = ({
             tree.mutate(node.path, {
               tags: [...node.tags, { [tagValueField]: tag, distance: 3 }],
             })
+            onAddTag(tag)
           }}
           onTagClick={tag => F.set(tag, popoverState.tagOpen)}
           removeTag={tag => {
