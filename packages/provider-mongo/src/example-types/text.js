@@ -15,7 +15,7 @@ let hasValue = _.flow(
   _.castArray,
   _.remove(_.eq('')),
   _.size,
-  x => x >= 1,
+  x => x >= 1
 )
 
 module.exports = {

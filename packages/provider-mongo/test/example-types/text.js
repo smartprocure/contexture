@@ -5,38 +5,50 @@ describe('text', () => {
   describe('text.hasValue', () => {
     it('should detect a value', () => {
       expect(
-        !!text.hasValue({
-          type: 'text',
-          field: 'test',
-          values: ['asdf'],
-        }, {})
+        !!text.hasValue(
+          {
+            type: 'text',
+            field: 'test',
+            values: ['asdf'],
+          },
+          {}
+        )
       ).to.be.true
     })
     it('should detect if values is empty', () => {
       expect(
-        !!text.hasValue({
-          type: 'text',
-          field: 'test',
-          values: [],
-        }, {})
+        !!text.hasValue(
+          {
+            type: 'text',
+            field: 'test',
+            values: [],
+          },
+          {}
+        )
       ).to.be.false
     })
     it('should detect if values only contains an empty string', () => {
       expect(
-        !!text.hasValue({
-          type: 'text',
-          field: 'test',
-          values: [''],
-        }, {})
+        !!text.hasValue(
+          {
+            type: 'text',
+            field: 'test',
+            values: [''],
+          },
+          {}
+        )
       ).to.be.false
     })
     it('should detect if value is the empty string', () => {
       expect(
-        !!text.hasValue({
-          type: 'text',
-          field: 'test',
-          value: '',
-        }, {})
+        !!text.hasValue(
+          {
+            type: 'text',
+            field: 'test',
+            value: '',
+          },
+          {}
+        )
       ).to.be.false
     })
   }),
