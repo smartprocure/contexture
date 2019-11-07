@@ -262,9 +262,7 @@ let GreyVestSearchBarStory = theme => (
               <theme.AlternateButton
                 title="Auto Update"
                 primary={!tree.disableAutoUpdate}
-                onClick={() => {
-                  tree.disableAutoUpdate = !tree.disableAutoUpdate
-                }}
+                onClick={F.flip('disableAutoUpdate', tree)}
               >
                 <theme.Icon icon="AutoUpdate" />
               </theme.AlternateButton>

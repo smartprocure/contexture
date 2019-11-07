@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
+import F from 'futil'
 import React from 'react'
-import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import Contexture, { updateSchemas } from '../utils/contexture'
 import {
@@ -120,9 +120,7 @@ let Story = () => (
               <input
                 type="checkbox"
                 checked={!tree.disableAutoUpdate}
-                onChange={e => {
-                  tree.disableAutoUpdate = !tree.disableAutoUpdate
-                }}
+                onChange={F.flip('disableAutoUpdate', tree)}
               />
               {tree.disableAutoUpdate && (
                 <Button onClick={tree.triggerUpdate}>Search</Button>
