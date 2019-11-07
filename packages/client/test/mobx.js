@@ -411,7 +411,7 @@ describe('usage with mobx should generally work', () => {
     tree.children.push(observableNode)
     expect(tree.children[2]).to.equal(observableNode)
   })
-  it.only('should support observing disableAutoUpdate', () => {
+  it('should support observing disableAutoUpdate', () => {
     service.reset()
     let reactor = sinon.spy()
     let tree = ContextureMobx({ service, debounce: 1 })({
