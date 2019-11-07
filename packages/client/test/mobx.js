@@ -411,4 +411,23 @@ describe('usage with mobx should generally work', () => {
     tree.children.push(observableNode)
     expect(tree.children[2]).to.equal(observableNode)
   })
+  it('should support observing disableAutoUpdate', () => {
+    service.reset()
+    let reactor = sinon.spy()
+    let tree = ContextureMobx({ service, debounce: 1 })({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'filter 1',
+          type: 'facet',
+          field: 'facetfield',
+          value: 'some value',
+        },
+      ],
+    })
+    reaction(() => tree.disableAutoUpdate, reactor)
+    tree.disableAutoUpdate = true
+    expect(reactor).to.have.callCount(1)
+  })
 })
