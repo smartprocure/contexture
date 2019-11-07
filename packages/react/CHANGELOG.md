@@ -1,5 +1,8 @@
-# 2.6.1
+# 2.6.2
 * ActionMenu/TagsQuerySearchBar: Adds onClick handling for action menu button feedback
+
+# 2.6.1
+* GreyVest: debounce Popover's `onClose` handler (fixes a bug where toggling a popover's open state just kept the popver open)
 
 # 2.6.0
 * FilterList: remove refresh icon & replace it with an "apply filter" button
