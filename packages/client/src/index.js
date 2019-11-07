@@ -170,7 +170,7 @@ export let ContextTree = _.curry(
       initObject,
     }
 
-    let TreeInstance = {
+    let TreeInstance = initObject({
       serialize: () => serialize(snapshot(tree), {}),
       tree,
       ...actionProps,
@@ -179,7 +179,7 @@ export let ContextTree = _.curry(
       onResult,
       onChange,
       disableAutoUpdate,
-    }
+    })
 
     TreeInstance.addActions(actions)
     TreeInstance.lens = lens(TreeInstance)
