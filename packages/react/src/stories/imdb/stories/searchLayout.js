@@ -151,7 +151,6 @@ let tree = Contexture({
 tree.disableAutoUpdate = true
 
 let state = observable({
-  autoUpdate: false,
   mode: 'basic',
 })
 
@@ -262,10 +261,9 @@ let GreyVestSearchBarStory = theme => (
             <theme.ButtonGroup>
               <theme.AlternateButton
                 title="Auto Update"
-                primary={state.autoUpdate}
+                primary={!tree.disableAutoUpdate}
                 onClick={() => {
-                  state.autoUpdate = !state.autoUpdate
-                  tree.disableAutoUpdate = !state.autoUpdate
+                  tree.disableAutoUpdate = !tree.disableAutoUpdate
                 }}
               >
                 <theme.Icon icon="AutoUpdate" />
