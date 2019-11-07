@@ -79,10 +79,6 @@ let tree = Contexture({
 })
 tree.disableAutoUpdate = true
 
-let state = observable({
-  autoUpdate: false,
-})
-
 let schemas = fromPromise(
   updateSchemas().then(
     _.merge(_, {
@@ -123,14 +119,12 @@ let Story = () => (
             <div style={{ flex: 1, marginLeft: '5px', display: 'flex' }}>
               <input
                 type="checkbox"
-                checked={state.autoUpdate}
+                checked={!tree.disableAutoUpdate}
                 onChange={e => {
-                  let val = !!e.target.checked
-                  tree.disableAutoUpdate = !val
-                  state.autoUpdate = val
+                  tree.disableAutoUpdate = !tree.disableAutoUpdate
                 }}
               />
-              {!state.autoUpdate && (
+              {tree.disableAutoUpdate && (
                 <Button onClick={tree.triggerUpdate}>Search</Button>
               )}
             </div>
