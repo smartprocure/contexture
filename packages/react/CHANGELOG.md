@@ -1,5 +1,12 @@
+# 2.7.1
+* ActionMenu/TagsQuerySearchBar: Adds actionWrapper for handling action menu button feedback etc
+
+# 2.7.0
+* TagsQuerySearchBar: Hide search button when the tree is not in disableAutoUpdate mode
+
 # 2.6.2
-* ActionMenu/TagsQuerySearchBar: Adds onClick handling for action menu button feedback
+* TagsQuery: add `onAddTag` callback prop (takes the added `tag` as its argument)
+* ExpandableTagsQuery & TagsQuerySearchBar: improve collapse behavior
 
 # 2.6.1
 * GreyVest: debounce Popover's `onClose` handler (fixes a bug where toggling a popover's open state just kept the popver open)

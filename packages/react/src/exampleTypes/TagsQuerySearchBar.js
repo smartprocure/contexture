@@ -1,8 +1,10 @@
 import React from 'react'
 import F from 'futil-js'
+import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 import OutsideClickHandler from 'react-outside-click-handler'
 import { useLens, useLensObject } from '../utils/react'
+import { withNode } from '../utils/hoc'
 import { Box, ButtonGroup, Button } from '../greyVest'
 import ExpandableTagsInput, { Tags } from '../greyVest/ExpandableTagsInput'
 import ExpandableTagsQuery from './ExpandableTagsQuery'
@@ -52,8 +54,8 @@ let SearchButton = observer(({ tree, resultsPath }) => (
   </AnimatedButton>
 ))
 
-let SearchBar = ({ tree, path, resultsPath, actionWrapper }) => {
-  let collapse = useLens(false)
+let SearchBar = ({ tree, node, resultsPath, actionWrapper }) => {
+  let collapse = useLens(true)
   let popoverState = useLensObject({ open: false, tagOpen: '' })
   return (
     <OutsideClickHandler
@@ -66,17 +68,28 @@ let SearchBar = ({ tree, path, resultsPath, actionWrapper }) => {
       <ButtonGroup style={searchBarStyle}>
         <Box style={searchBarBoxStyle} onClick={F.off(collapse)}>
           <ExpandableTagsQuery
-            {...{ tree, path, collapse, popoverState, actionWrapper }}
+            {...{ tree, node, collapse, popoverState, actionWrapper }}
+            onAddTag={F.off(collapse)}
             Loader={({ children }) => <div>{children}</div>}
             style={inputStyle}
-            theme={{ TagsInput: F.view(collapse) ? Tags : ExpandableTagsInput }}
+            theme={{
+              TagsInput:
+                F.view(collapse) && !_.isEmpty(node.tags)
+                  ? Tags
+                  : ExpandableTagsInput,
+            }}
             autoFocus
           />
         </Box>
-        <SearchButton tree={tree} resultsPath={resultsPath} />
+        {tree.disableAutoUpdate && (
+          <SearchButton tree={tree} resultsPath={resultsPath} />
+        )}
       </ButtonGroup>
     </OutsideClickHandler>
   )
 }
 
-export default SearchBar
+export default _.flow(
+  observer,
+  withNode
+)(SearchBar)
