@@ -73,7 +73,9 @@ let SearchBar = ({ tree, path, resultsPath }) => {
             autoFocus
           />
         </Box>
-        {tree.disableAutoUpdate && <SearchButton tree={tree} resultsPath={resultsPath} />}
+        {tree.disableAutoUpdate && (
+          <SearchButton tree={tree} resultsPath={resultsPath} />
+        )}
       </ButtonGroup>
     </OutsideClickHandler>
   )
