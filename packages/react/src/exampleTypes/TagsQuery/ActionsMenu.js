@@ -22,12 +22,12 @@ let ActionsMenu = ({
   >
     {!!_.get('tags.length', node) && (
       <>
-        <Button onClick={actionWrapper(() => copyTags(node))}>
+        <Button onClick={actionWrapper(open)(() => copyTags(node))}>
           Copy {_.startCase(tagTerm)}s
         </Button>
         <Button
           style={{ margin: '10px 0' }}
-          onClick={actionWrapper(() => tree.mutate(node.path, { tags: [] }))}
+          onClick={actionWrapper(open)(() => tree.mutate(node.path, { tags: [] }))}
         >
           Clear {_.startCase(tagTerm)}s
         </Button>

@@ -1,6 +1,4 @@
 import _ from 'lodash/fp'
-import F from 'futil-js'
-import { toJS } from 'mobx'
 import { bgJoin } from '../../styles/generic'
 import { tagToGroupJoin } from '../TagsJoinPicker'
 
