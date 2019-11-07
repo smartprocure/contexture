@@ -3,7 +3,7 @@ let text = require('../../src/example-types/text')
 
 describe('text', () => {
   describe('text.hasValue', () => {
-    it('should check for values', () => {
+    it('should detect a value', () => {
       expect(
         !!text.hasValue({
           type: 'text',
@@ -11,11 +11,22 @@ describe('text', () => {
           values: ['asdf'],
         })
       ).to.be.true
+    })
+    it('should detect missing value', () => {
       expect(
         !!text.hasValue({
           type: 'text',
           field: 'test',
           values: [],
+        })
+      ).to.be.false
+    })
+    it('should detect missing value if given empty string', () => {
+      expect(
+        !!text.hasValue({
+          type: 'text',
+          field: 'test',
+          values: [''],
         })
       ).to.be.false
     })
