@@ -1,3 +1,6 @@
+# 2.7.0
+* TagsQuerySearchBar: Hide search button when the tree is not in disableAutoUpdate mode
+
 # 2.6.1
 * GreyVest: debounce Popover's `onClose` handler (fixes a bug where toggling a popover's open state just kept the popver open)
 
