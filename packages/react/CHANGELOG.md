@@ -1,3 +1,6 @@
+# 2.7.1
+* Updated `contexture-client` dev dependency and stories to use newly observable `disableAutoUpdate`
+
 # 2.7.0
 * TagsQuerySearchBar: Hide search button when the tree is not in disableAutoUpdate mode
 
