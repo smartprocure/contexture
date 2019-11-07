@@ -38,3 +38,8 @@ export let expandObject = _.curry((transform, obj) => ({
 export let expandObjectBy = _.curry((key, fn, obj) =>
   expandObject(getWith(fn, key))(obj)
 )
+
+export let aspectWrapper = F.aspect({
+  after: result => console.log('"after" aspect fired!', result),
+  onError: e => console.error('"onError" aspect fired!', e)
+})

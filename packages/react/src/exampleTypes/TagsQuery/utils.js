@@ -34,18 +34,3 @@ export let getTagStyle = (node, key) => tag => {
         : 0.5,
   }
 }
-
-export let onClickWrapper = (node, onClick, open) => (action, fn) => {
-  let result = {
-    action,
-    items: toJS(node.tags),
-  }
-  try {
-    fn()
-  } catch (error) {
-    result = _.extend({ error }, result)
-    console.error(error)
-  }
-  onClick(result)
-  F.off(open)()
-}

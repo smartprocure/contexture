@@ -16,7 +16,7 @@ let TagsQuery = ({
   theme: { Icon, TagsInput, Tag, Popover },
   style,
   popoverState,
-  onActionMenuClick,
+  actionWrapper,
   ...props
 }) => {
   let newPopoverState = useLensObject({ open: false, tagOpen: '' })
@@ -72,8 +72,8 @@ let TagsQuery = ({
               {...{
                 node,
                 tree,
+                actionWrapper,
                 open: popoverState.open,
-                onClick: onActionMenuClick,
               }}
             />
           </Popover>
