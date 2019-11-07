@@ -9,11 +9,13 @@ let joinmap = {
 
 // Convert to an array, strip empty strings, and determine if there are any values
 let hasValue = _.flow(
-  F.cascade(['value', 'values']),
+  // NOTE: Don't change the below, otherwise things will explode!
+  x => F.cascade(['value', 'values'], x),
+  _.defaultTo([]),
   _.castArray,
   _.remove(_.eq('')),
   _.size,
-  x => x >= 1
+  x => x >= 1,
 )
 
 module.exports = {

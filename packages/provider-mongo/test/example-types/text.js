@@ -9,25 +9,34 @@ describe('text', () => {
           type: 'text',
           field: 'test',
           values: ['asdf'],
-        })
+        }, {})
       ).to.be.true
     })
-    it('should detect missing value', () => {
+    it('should detect if values is empty', () => {
       expect(
         !!text.hasValue({
           type: 'text',
           field: 'test',
           values: [],
-        })
+        }, {})
       ).to.be.false
     })
-    it('should detect missing value if given empty string', () => {
+    it('should detect if values only contains an empty string', () => {
       expect(
         !!text.hasValue({
           type: 'text',
           field: 'test',
           values: [''],
-        })
+        }, {})
+      ).to.be.false
+    })
+    it('should detect if value is the empty string', () => {
+      expect(
+        !!text.hasValue({
+          type: 'text',
+          field: 'test',
+          value: '',
+        }, {})
       ).to.be.false
     })
   }),
