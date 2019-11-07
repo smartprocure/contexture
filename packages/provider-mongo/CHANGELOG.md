@@ -1,3 +1,6 @@
+# 0.9.4
+* Make sure `hasValue` takes into account empty strings for `text` type.
+
 # 0.9.3
 * Leverage new futil export regex builders in the facet options filter
 * Move from `futil-js` to lastest `futil` (just package rename + version bump)

@@ -7,8 +7,17 @@ let joinmap = {
   none: '$nor',
 }
 
+// Convert to an array, strip empty strings, and determine if there are any values
+let hasValue = _.flow(
+  F.cascade(['value', 'values']),
+  _.castArray,
+  _.remove(_.eq('')),
+  _.size,
+  x => x >= 1
+)
+
 module.exports = {
-  hasValue: F.cascade(['value', 'values.length']),
+  hasValue,
   filter: node => ({
     [joinmap[node.join || 'all']]: _.map(
       val => ({
