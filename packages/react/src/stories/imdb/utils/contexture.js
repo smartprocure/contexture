@@ -1,5 +1,5 @@
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
+import * as F from 'futil'
 import Contexture from 'contexture'
 import { exampleTypes } from 'contexture-client'
 import elasticsearch from 'elasticsearch-browser'

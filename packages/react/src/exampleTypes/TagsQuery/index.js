@@ -1,6 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import F from 'futil-js'
+import F from 'futil'
 import { Grid, GridItem } from '../../greyVest'
 import { contexturifyWithoutLoader } from '../../utils/hoc'
 import { useLensObject } from '../../utils/react'
@@ -13,10 +13,10 @@ export let innerHeight = 40
 let TagsQuery = ({
   tree,
   node,
-  onAddTag,
   style,
   popoverState,
   actionWrapper,
+  onAddTag = _.noop,
   theme: { Icon, TagsInput, Tag, Popover },
   ...props
 }) => {

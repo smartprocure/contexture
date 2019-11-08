@@ -1,5 +1,5 @@
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
+import * as F from 'futil'
 
 // Logic
 export let onlyWhen = f => F.unless(f, () => {})

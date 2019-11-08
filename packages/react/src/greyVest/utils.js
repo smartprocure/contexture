@@ -1,4 +1,4 @@
-import F from 'futil-js'
+import F from 'futil'
 
 export let openBinding = (...lens) => ({
   isOpen: F.view(...lens),

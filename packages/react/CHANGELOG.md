@@ -1,5 +1,12 @@
-# 2.7.1
+# 2.7.3
 * ActionMenu/TagsQuerySearchBar: Adds actionWrapper for handling action menu button feedback etc
+
+# 2.7.2
+* Default to `_.noop` for `TagsQuery`'s `addTag` prop
+
+# 2.7.1
+* Use `futil` package instead of `futil-js`
+* Deprecate `useLens` in favor of the new futil arrayLens API
 
 # 2.7.0
 * TagsQuerySearchBar: Hide search button when the tree is not in disableAutoUpdate mode

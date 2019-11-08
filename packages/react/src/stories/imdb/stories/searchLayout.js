@@ -3,7 +3,7 @@ import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import Contexture, { updateSchemas } from '../utils/contexture'
-import { mergeOverAll } from 'futil-js'
+import { mergeOverAll } from 'futil'
 import {
   Awaiter,
   schemaFieldProps,

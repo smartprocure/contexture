@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import _ from 'lodash/fp'
-import F from 'futil-js'
+import F from 'futil'
 import styles from '../styles'
 import { oppositeJoin, indent } from '../utils/search'
 let { btn, joinColor, bgJoin } = styles
