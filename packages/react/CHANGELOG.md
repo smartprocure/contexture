@@ -1,3 +1,7 @@
+# 2.7.1
+* Use `futil` package instead of `futil-js`
+* Deprecate `useLens` in favor of the new futil arrayLens API
+
 # 2.7.0
 * TagsQuerySearchBar: Hide search button when the tree is not in disableAutoUpdate mode
 
