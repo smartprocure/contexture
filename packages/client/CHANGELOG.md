@@ -1,5 +1,8 @@
-# 2.26.3
+# 2.26.4
 * Add `clear` tree action tests
+
+# 2.26.3
+* Call `initObject` on `TreeInstance`. In the mobx case, this should allow observing tree instance properties like `disableAutoUpdate`
 
 # 2.26.2
 * Handle better empty values in sourceTree with subQuery
