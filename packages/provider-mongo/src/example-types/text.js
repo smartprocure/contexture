@@ -9,9 +9,9 @@ let joinmap = {
 
 // Convert to an array, strip empty strings, and determine if there are any values
 let hasValue = _.flow(
-// NOTE: Don't change the below, otherwise things will explode!
-// Cascade can take a third arg which causes this to behave weird (since hasValue is actually called with extra args like the schema, etc)
-// See https://github.com/smartprocure/futil-js/issues/218
+  // NOTE: Don't change the below, otherwise things will explode!
+  // Cascade can take a third arg which causes this to behave weird (since hasValue is actually called with extra args like the schema, etc)
+  // See https://github.com/smartprocure/futil-js/issues/218
   x => F.cascade(['value', 'values'], x),
   _.castArray,
   _.compact,
