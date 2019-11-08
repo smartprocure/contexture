@@ -1,3 +1,6 @@
+# 0.9.5
+* Refactor `hasValue` flow.
+
 # 0.9.4
 * Make sure `hasValue` takes into account empty strings for `text` type.
 
