@@ -4,8 +4,7 @@ import { useState } from 'react'
 import { mapProps } from 'recompose'
 import { expandObjectBy } from './futil'
 
-export let useLens = x => F.stateLens(useState(x))
-export let useLensObject = _.mapValues(useLens)
+export let useLensObject = _.mapValues(useState)
 
 export let getDisplayName = Component =>
   F.cascade(['displayName', 'name'], Component) || 'Unknown'

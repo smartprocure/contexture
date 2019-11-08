@@ -4,7 +4,7 @@ import _ from 'lodash/fp'
 import { setDisplayName } from 'recompose'
 import { inject, observer } from 'mobx-react'
 import { observable } from 'mobx'
-import { useLens } from '../utils/react'
+
 import GVTextHighlight from './TextHighlight'
 import GVTextInput from './TextInput'
 
@@ -117,7 +117,7 @@ let NestedPicker = ({
   TextInput = GVTextInput,
   TextHighlight = GVTextHighlight,
 }) => {
-  let filter = useLens('')
+  let filter = React.useState('')
   return (
     <PickerContext.Provider value={{ PickerItem, TextHighlight }}>
       <TextInput

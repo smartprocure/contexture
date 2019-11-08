@@ -3,7 +3,6 @@ import _ from 'lodash/fp'
 import F from 'futil'
 import { contexturify } from '../utils/hoc'
 import { bgJoin } from '../styles/generic'
-import { useLens } from '../utils/react'
 
 import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
 
@@ -26,7 +25,7 @@ let Text = ({
   placeholder,
   theme: { Select, TagsInput, Popover },
 }) => {
-  let open = useLens(false)
+  let open = React.useState(false)
   let [selectedTag, setSelectedTag] = React.useState(null)
   return (
     <div className="contexture-text">

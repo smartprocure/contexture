@@ -1,7 +1,7 @@
 import React from 'react'
 import * as F from 'futil'
 import { observer } from 'mobx-react'
-import { useLens } from '../utils/react'
+
 import styles from '../styles'
 import { Popover } from '../greyVest'
 import OperatorMenu from './OperatorMenu'
@@ -67,7 +67,7 @@ let JoinOperator = ({ open, hover, node, child }) => (
 )
 
 let Operator = ({ hover, node, child, parent, tree, index }) => {
-  let open = useLens(false)
+  let open = React.useState(false)
   return (
     <div>
       {!(index !== 0 || node.join === 'not') ? (

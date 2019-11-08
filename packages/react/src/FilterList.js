@@ -5,7 +5,6 @@ import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
 import { Flex, Dynamic } from './greyVest'
 import { fieldsToOptions } from './FilterAdder'
-import { useLens } from './utils/react'
 import { contexturifyWithoutLoader } from './utils/hoc'
 import { bdJoin } from './styles/generic'
 import {
@@ -28,7 +27,7 @@ export let FilterActions = _.flow(
     popover,
     theme: { DropdownItem, Popover, Modal, NestedPicker },
   }) => {
-    let modal = useLens(false)
+    let modal = React.useState(false)
     let typeOptions = _.flow(
       _.getOr([], [node.field, 'typeOptions']),
       _.without([node.type])
@@ -91,8 +90,8 @@ export let Label = _.flow(
   observer,
   withTheme
 )(({ tree, node, fields, children, theme: { Icon }, ...props }) => {
-  let popover = useLens(false)
-  let modal = useLens(false)
+  let popover = React.useState(false)
+  let modal = React.useState(false)
   let field = _.get('field', node)
   return (
     <Flex

@@ -4,7 +4,6 @@ import DDContext from './DragDrop/DDContext'
 import Group from './Group'
 import styles from '../styles'
 import { contexturifyWithoutLoader } from '../utils/hoc'
-import { useLens } from '../utils/react'
 
 let { background } = styles
 
@@ -15,7 +14,7 @@ let QueryBuilder = ({
   mapNodeToProps,
   theme: { Button },
 }) => {
-  let adding = useLens(false)
+  let adding = React.useState(false)
   return (
     <div style={{ background }}>
       {node && (
