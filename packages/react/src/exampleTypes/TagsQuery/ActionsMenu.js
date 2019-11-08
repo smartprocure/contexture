@@ -28,7 +28,9 @@ let ActionsMenu = ({
         </Button>
         <Button
           style={{ margin: '10px 0' }}
-          onClick={actionWrapper(() => F.off(open)() || tree.mutate(node.path, { tags: [] }))}
+          onClick={actionWrapper(
+            () => F.off(open)() || tree.mutate(node.path, { tags: [] })
+          )}
         >
           Clear {_.startCase(tagTerm)}s
         </Button>
