@@ -13,9 +13,9 @@ export let innerHeight = 40
 let TagsQuery = ({
   tree,
   node,
-  onAddTag,
   style,
   popoverState,
+  onAddTag = _.noop,
   theme: { Icon, TagsInput, Tag, Popover },
   ...props
 }) => {
