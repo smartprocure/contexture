@@ -1,5 +1,5 @@
 import React from 'react'
-import F from 'futil-js'
+import F from 'futil'
 import { observer } from 'mobx-react'
 
 let Tag = ({ value, removeTag, tagStyle, onClick }) => (

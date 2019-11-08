@@ -1,5 +1,5 @@
 import React from 'react'
-import F from 'futil-js'
+import F from 'futil'
 import DDContext from './DragDrop/DDContext'
 import Group from './Group'
 import styles from '../styles'

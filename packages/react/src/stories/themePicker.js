@@ -1,5 +1,5 @@
 import React from 'react'
-import F from 'futil-js'
+import F from 'futil'
 import _ from 'lodash/fp'
 import greyVest from '../themes/greyVest'
 import blueberry from '../themes/blueberry'

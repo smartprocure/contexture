@@ -1,5 +1,5 @@
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
+import * as F from 'futil'
 import { flattenPlainObject } from './futil'
 
 export let applyDefaults = F.mapValuesIndexed((val, field) => ({

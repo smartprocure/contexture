@@ -1,4 +1,4 @@
-import F from 'futil-js'
+import F from 'futil'
 import React from 'react'
 import { observer } from 'mobx-react'
 import { defaultProps } from 'recompose'

@@ -1,5 +1,5 @@
 import React from 'react'
-import * as F from 'futil-js'
+import * as F from 'futil'
 import { observer } from 'mobx-react'
 import { useLens } from '../utils/react'
 import styles from '../styles'

@@ -1,5 +1,5 @@
 import React from 'react'
-import F from 'futil-js'
+import F from 'futil'
 import _ from 'lodash/fp'
 import { setDisplayName } from 'recompose'
 import { inject, observer } from 'mobx-react'
