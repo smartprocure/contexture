@@ -65,7 +65,7 @@ The following config options are available:
 | onResult          | (path, response, target) => {} |  _.noop      | A hook to capture when the client updates a node with results from the server. Can be modified at run time by reassigning the property on a tree instance. |
 | debug             | boolean                        | false        | Debug mode will log all dispatched events and generally help debugging |
 | extend            | function                       | F.extendOn   | Used to mutate nodes internally |
-| initObject        | function                       | _.identity   | Called on the tree at initialization and on payloads before add. With `mobx`, this would be `observable` |
+| initObject        | function                       | _.identity   | Called on the tree (and the "TreeInstance" return value of the client) at initialization and on payloads before add. With `mobx`, this would be `observable` |
 | snapshot          | function                       | _.cloneDeep  | Used to take snapshots |
 | disableAutoUpdate | boolean                        | false        | Will disable automatically triggering updates at the end of dispatches, except for events that affect their target node. This is useful for a search button use case, similar to pausing the entire tree but always allowing through specific changes. This is typically used with the `triggerUpdate` action to kick off a dispatch that will update everything `markedForUpdate`. Can be changed at run time. | 
 
