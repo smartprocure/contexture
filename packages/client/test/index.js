@@ -1423,6 +1423,51 @@ let AllTests = ContextureClient => {
     expect(tree.getNode(['root', 'criteria2']).children).to.not.exist
     expect(tree.tree.children[1].key).to.deep.equal('criteria2')
   })
+  it('should clear', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'results',
+          type: 'results',
+          page: 1,
+        },
+        {
+          key: 'criteria',
+          children: [
+            {
+              key: 'filter1',
+              type: 'tagsQuery',
+              field: 'field1',
+              defaults: {
+                join: 'none',
+                tags: []
+              }
+            },
+            {
+              key: 'filter2',
+              type: 'tagsQuery',
+              field: 'field2',
+            }
+          ],
+        },
+      ],
+    })
+    await tree.mutate(['root', 'criteria', 'filter1'], { tags: [{ word: 'abc', distance: 3 }] })
+    await tree.mutate(['root', 'criteria', 'filter2'], { tags: [{ word: 'opa', distance: 3 }] })
+
+    tree.clear(['root', 'criteria', 'filter1'])
+    tree.clear(['root', 'criteria', 'filter2'])
+
+    expect(tree.getNode(['root', 'criteria', 'filter1']).tags).to.deep.equal([])
+    expect(tree.getNode(['root', 'criteria', 'filter2']).tags).to.deep.equal([])
+
+    expect(tree.getNode(['root', 'criteria', 'filter1']).join).to.equal('none')
+    expect(tree.getNode(['root', 'criteria', 'filter2']).join).to.equal('any')
+  })
   it('should wrapInGroup replace', async () => {
     let service = sinon.spy(mockService())
     let Tree = ContextureClient({ debounce: 1, service })

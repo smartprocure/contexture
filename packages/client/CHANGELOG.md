@@ -1,3 +1,6 @@
+# 2.26.3
+* Add `clear` tree action tests
+
 # 2.26.2
 * Handle better empty values in sourceTree with subQuery
 
