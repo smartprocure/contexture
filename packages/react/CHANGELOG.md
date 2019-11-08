@@ -1,3 +1,6 @@
+# 2.7.2
+* Default to `_.noop` for `TagsQuery`'s `addTag` prop
+
 # 2.7.1
 * Use `futil` package instead of `futil-js`
 * Deprecate `useLens` in favor of the new futil arrayLens API
