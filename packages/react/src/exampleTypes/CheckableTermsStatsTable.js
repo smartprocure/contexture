@@ -1,5 +1,5 @@
 import _ from 'lodash/fp'
-import F from 'futil-js'
+import F from 'futil'
 import React from 'react'
 import { Column } from '../greyVest/ExpandableTable'
 import { contexturify } from '../utils/hoc'

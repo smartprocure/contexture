@@ -1,5 +1,5 @@
 import React from 'react'
-import F from 'futil-js'
+import F from 'futil'
 import { Chip } from '@material-ui/core'
 
 let Tag = ({ removeTag, value, tagStyle, style, ...props }) => (

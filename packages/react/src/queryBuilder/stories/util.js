@@ -1,5 +1,5 @@
 import React from 'react'
-import * as F from 'futil-js'
+import * as F from 'futil'
 import { action } from '@storybook/addon-actions'
 import DDContext from '../DragDrop/DDContext'
 

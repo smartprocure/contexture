@@ -1,9 +1,9 @@
 import React from 'react'
-import F from 'futil-js'
+import F from 'futil'
 import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 import OutsideClickHandler from 'react-outside-click-handler'
-import { useLens, useLensObject } from '../utils/react'
+import { useLensObject } from '../utils/react'
 import { withNode } from '../utils/hoc'
 import { Box, ButtonGroup, Button } from '../greyVest'
 import ExpandableTagsInput, { Tags } from '../greyVest/ExpandableTagsInput'
@@ -55,7 +55,7 @@ let SearchButton = observer(({ tree, resultsPath }) => (
 ))
 
 let SearchBar = ({ tree, node, resultsPath }) => {
-  let collapse = useLens(true)
+  let collapse = React.useState(true)
   let popoverState = useLensObject({ open: false, tagOpen: '' })
   return (
     <OutsideClickHandler

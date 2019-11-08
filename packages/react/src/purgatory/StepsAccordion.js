@@ -1,5 +1,5 @@
 import _ from 'lodash/fp'
-import F from 'futil-js'
+import F from 'futil'
 import { observer } from 'mobx-react'
 import React from 'react'
 import { setDisplayName } from 'recompose'
@@ -80,7 +80,7 @@ export let AccordionStep = _.flow(
 )
 
 let StepsAccordion = ({ onSubmit = _.noop, children, className, ...props }) => {
-  let currentStep = F.stateLens(React.useState(0))
+  let currentStep = React.useState(0)
   return (
     <div className={`steps-accordion ${className || ''}`} {...props}>
       {React.Children.map(children, (child, i) => (

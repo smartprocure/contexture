@@ -1,5 +1,5 @@
 import React from 'react'
-import F from 'futil-js'
+import F from 'futil'
 import { storiesOf } from '@storybook/react'
 import {
   ThemeProvider,

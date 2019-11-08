@@ -1,5 +1,5 @@
 import React from 'react'
-import F from 'futil-js'
+import F from 'futil'
 import _ from 'lodash/fp'
 import greyVest from '../themes/greyVest'
 import blueberry from '../themes/blueberry'
@@ -7,12 +7,11 @@ import base from '../themes/base'
 import material from '../themes/material'
 import { ThemeProvider, ThemeConsumer } from '../utils/theme'
 import { Flex } from '../greyVest'
-import { useLens } from '../utils/react'
 
 let themes = { base, blueberry, greyVest, material }
 
 let ThemeSwitcher = ({ defaultTheme = 'base', children }) => {
-  let theme = useLens(defaultTheme)
+  let theme = React.useState(defaultTheme)
   return (
     <ThemeProvider theme={themes[F.view(theme)]}>
       <ThemeConsumer>

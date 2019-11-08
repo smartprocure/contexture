@@ -1,6 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import F from 'futil-js'
+import F from 'futil'
 import { Grid, GridItem } from '../../greyVest'
 import { contexturifyWithoutLoader } from '../../utils/hoc'
 import { useLensObject } from '../../utils/react'
