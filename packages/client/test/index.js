@@ -1444,20 +1444,24 @@ let AllTests = ContextureClient => {
               field: 'field1',
               defaults: {
                 join: 'none',
-                tags: []
-              }
+                tags: [],
+              },
             },
             {
               key: 'filter2',
               type: 'tagsQuery',
               field: 'field2',
-            }
+            },
           ],
         },
       ],
     })
-    await tree.mutate(['root', 'criteria', 'filter1'], { tags: [{ word: 'abc', distance: 3 }] })
-    await tree.mutate(['root', 'criteria', 'filter2'], { tags: [{ word: 'opa', distance: 3 }] })
+    await tree.mutate(['root', 'criteria', 'filter1'], {
+      tags: [{ word: 'abc', distance: 3 }],
+    })
+    await tree.mutate(['root', 'criteria', 'filter2'], {
+      tags: [{ word: 'opa', distance: 3 }],
+    })
 
     tree.clear(['root', 'criteria', 'filter1'])
     tree.clear(['root', 'criteria', 'filter2'])
