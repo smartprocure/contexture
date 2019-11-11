@@ -48,10 +48,15 @@ let CheckableResultTable = ({
     fields={{
       _checkbox: {
         hideMenu: true,
-        label: () => <Label {...{ node, selected: [selectedValue, onChange], getValue }} />,
+        label: () => (
+          <Label {...{ node, selected: [selectedValue, onChange], getValue }} />
+        ),
         display: (x, y) => (
           <Checkbox
-            {...F.domLens.checkboxValues(_.iteratee(getValue)(y), [selectedValue, onChange])}
+            {...F.domLens.checkboxValues(_.iteratee(getValue)(y), [
+              selectedValue,
+              onChange,
+            ])}
           />
         ),
       },
