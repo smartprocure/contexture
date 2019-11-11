@@ -1,6 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import F from 'futil-js'
+import F from 'futil'
 import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
 import { getResults, getRecord } from '../utils/schema'
@@ -8,7 +8,7 @@ import { contexturify } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
 import ResultTable from './ResultTable'
 import { selectedBinding } from './utils'
-import { expandProps } from '../utils/react'
+import { expandProp } from '../utils/react'
 
 let Label = _.flow(
   setDisplayName('Label'),
@@ -67,6 +67,6 @@ let CheckableResultTable = ({
 )
 
 export default _.flow(
-  expandProps('selected', selectedBinding),
+  expandProp('selected', selectedBinding),
   contexturify
 )(CheckableResultTable)
