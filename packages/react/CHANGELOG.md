@@ -1,3 +1,6 @@
+# 2.8.1
+* ActionMenu/TagsQuerySearchBar: Adds actionWrapper for handling action menu button feedback etc
+
 # 2.8.0
 * ExampleTypes: Update `CheckableResultTable` api to also accept `selectedValue` and `onChange` as alternatives to `selected`
 

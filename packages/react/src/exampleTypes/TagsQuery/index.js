@@ -15,6 +15,7 @@ let TagsQuery = ({
   node,
   style,
   popoverState,
+  actionWrapper,
   onAddTag = _.noop,
   theme: { Icon, TagsInput, Tag, Popover },
   ...props
@@ -69,7 +70,14 @@ let TagsQuery = ({
         <div onClick={F.flip(popoverState.open)}>
           <Icon icon="TableColumnMenu" />
           <Popover open={popoverState.open} style={{ right: 0 }}>
-            <ActionsMenu {...{ node, tree, open: popoverState.open }} />
+            <ActionsMenu
+              {...{
+                node,
+                tree,
+                actionWrapper,
+                open: popoverState.open,
+              }}
+            />
           </Popover>
         </div>
       </GridItem>

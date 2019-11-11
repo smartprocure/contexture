@@ -54,7 +54,7 @@ let SearchButton = observer(({ tree, resultsPath }) => (
   </AnimatedButton>
 ))
 
-let SearchBar = ({ tree, node, resultsPath }) => {
+let SearchBar = ({ tree, node, resultsPath, actionWrapper }) => {
   let collapse = React.useState(true)
   let popoverState = useLensObject({ open: false, tagOpen: '' })
   return (
@@ -68,7 +68,7 @@ let SearchBar = ({ tree, node, resultsPath }) => {
       <ButtonGroup style={searchBarStyle}>
         <Box style={searchBarBoxStyle} onClick={F.off(collapse)}>
           <ExpandableTagsQuery
-            {...{ tree, node, collapse, popoverState }}
+            {...{ tree, node, collapse, popoverState, actionWrapper }}
             onAddTag={F.off(collapse)}
             Loader={({ children }) => <div>{children}</div>}
             style={inputStyle}
