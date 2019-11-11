@@ -1,3 +1,6 @@
+# 2.8.0
+* ExampleTypes: Update `CheckableResultTable` api to also accept `selectedValue` and `onChange` as alternatives to `selected`
+
 # 2.7.2
 * Default to `_.noop` for `TagsQuery`'s `addTag` prop
 
