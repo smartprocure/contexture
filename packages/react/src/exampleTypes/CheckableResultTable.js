@@ -1,12 +1,14 @@
 import React from 'react'
 import _ from 'lodash/fp'
+import F from 'futil-js'
 import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
-import F from 'futil'
 import { getResults, getRecord } from '../utils/schema'
 import { contexturify } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
 import ResultTable from './ResultTable'
+import { selectedBinding } from './utils'
+import { expandProps } from '../utils/react'
 
 let Label = _.flow(
   setDisplayName('Label'),
@@ -36,7 +38,8 @@ let Label = _.flow(
 let CheckableResultTable = ({
   node,
   fields,
-  selected,
+  selectedValue,
+  onChange,
   getValue,
   theme: { Checkbox },
   ...props
@@ -45,10 +48,10 @@ let CheckableResultTable = ({
     fields={{
       _checkbox: {
         hideMenu: true,
-        label: () => <Label {...{ node, selected, getValue }} />,
+        label: () => <Label {...{ node, selected: [selectedValue, onChange], getValue }} />,
         display: (x, y) => (
           <Checkbox
-            {...F.domLens.checkboxValues(_.iteratee(getValue)(y), selected)}
+            {...F.domLens.checkboxValues(_.iteratee(getValue)(y), [selectedValue, onChange])}
           />
         ),
       },
@@ -58,4 +61,7 @@ let CheckableResultTable = ({
   />
 )
 
-export default contexturify(CheckableResultTable)
+export default _.flow(
+  expandProps('selected', selectedBinding),
+  contexturify
+)(CheckableResultTable)
