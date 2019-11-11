@@ -12,7 +12,7 @@ let ActionsMenu = ({
   tree,
   open,
   theme: { Button, Checkbox },
-  actionWrapper = _.noop,
+  actionWrapper = _.identity,
 }) => (
   <Flex
     style={{ minWidth: 240, padding: 10 }}
