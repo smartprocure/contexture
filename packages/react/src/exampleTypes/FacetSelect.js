@@ -60,16 +60,14 @@ let FacetSelect = ({
           await tree.mutate(node.path, { optionsFilter: val })
           return getOptions(node)
         }}
-        formatOptionLabel={({ label, count }, { context }) =>
-          context === 'menu' ? (
-            <Flex justifyContent="space-between">
-              {display(label) || displayBlank()}
-              <span>{!hide.counts && formatCount(count)}</span>
-            </Flex>
-          ) : (
+        formatOptionLabel={({ label, count }, { context }) => (
+          <Flex justifyContent="space-between">
             <span>{display(label) || displayBlank()}</span>
-          )
-        }
+            {context === 'menu' && !hide.counts && (
+              <span>{formatCount(count)}</span>
+            )}
+          </Flex>
+        )}
         onChange={x => tree.mutate(node.path, { values: _.map('value', x) })}
         components={{ MenuList }}
       />
