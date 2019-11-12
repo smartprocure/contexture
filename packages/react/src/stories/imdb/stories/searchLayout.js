@@ -4,7 +4,6 @@ import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import Contexture, { updateSchemas } from '../utils/contexture'
-import { mergeOverAll } from 'futil'
 import {
   Awaiter,
   schemaFieldProps,
@@ -210,7 +209,7 @@ let schemas = fromPromise(
     .then(_.tap(() => tree.refresh(['root'])))
 )
 
-let mapNodeToProps = mergeOverAll([
+let mapNodeToProps = F.mergeOverAll([
   componentForType(TypeMap),
   schemaFieldProps('signicantDigits'),
   ({ key }) =>
