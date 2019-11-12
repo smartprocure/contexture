@@ -1,5 +1,5 @@
 import React from 'react'
-import F from 'futil-js'
+import F from 'futil'
 import { contexturify } from '../utils/hoc'
 
 let Exists = ({ tree, node, theme: { RadioList } }) => (

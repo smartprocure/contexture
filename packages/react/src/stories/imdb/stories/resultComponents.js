@@ -1,11 +1,11 @@
-import * as F from 'futil-js'
+import * as F from 'futil'
 import _ from 'lodash/fp'
 import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { observer } from 'mobx-react'
 import Contexture, { updateSchemas } from '../utils/contexture'
-import { useLens } from '../../../utils/react'
+
 import { useTheme } from '../../../utils/theme'
 import {
   FilterList,
@@ -105,7 +105,7 @@ let schemas = fromPromise(
 )
 
 let CheckboxResultTable = observer(props => {
-  let selected = useLens([])
+  let selected = React.useState([])
   return (
     <div>
       {JSON.stringify(F.view(selected))}

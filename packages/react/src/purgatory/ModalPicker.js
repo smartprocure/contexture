@@ -1,8 +1,8 @@
-import F from 'futil-js'
+import F from 'futil'
 import _ from 'lodash/fp'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { useLens } from '../utils/react'
+
 import { withTheme } from '../utils/theme'
 
 let ModalPicker = ({
@@ -11,7 +11,7 @@ let ModalPicker = ({
   label,
   theme: { Button, NestedPicker, Modal },
 }) => {
-  let open = useLens(false)
+  let open = React.useState(false)
   return (
     <div>
       <Modal open={open}>

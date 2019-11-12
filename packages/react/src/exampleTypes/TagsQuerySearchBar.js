@@ -1,9 +1,9 @@
 import React from 'react'
-import F from 'futil-js'
+import F from 'futil'
 import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 import OutsideClickHandler from 'react-outside-click-handler'
-import { useLens, useLensObject } from '../utils/react'
+import { useLensObject } from '../utils/react'
 import { withNode } from '../utils/hoc'
 import { Box, ButtonGroup, Button } from '../greyVest'
 import ExpandableTagsInput, { Tags } from '../greyVest/ExpandableTagsInput'
@@ -54,8 +54,8 @@ let SearchButton = observer(({ tree, resultsPath }) => (
   </AnimatedButton>
 ))
 
-let SearchBar = ({ tree, node, resultsPath }) => {
-  let collapse = useLens(true)
+let SearchBar = ({ tree, node, resultsPath, actionWrapper }) => {
+  let collapse = React.useState(true)
   let popoverState = useLensObject({ open: false, tagOpen: '' })
   return (
     <OutsideClickHandler
@@ -68,7 +68,7 @@ let SearchBar = ({ tree, node, resultsPath }) => {
       <ButtonGroup style={searchBarStyle}>
         <Box style={searchBarBoxStyle} onClick={F.off(collapse)}>
           <ExpandableTagsQuery
-            {...{ tree, node, collapse, popoverState }}
+            {...{ tree, node, collapse, popoverState, actionWrapper }}
             onAddTag={F.off(collapse)}
             Loader={({ children }) => <div>{children}</div>}
             style={inputStyle}

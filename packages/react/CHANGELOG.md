@@ -1,5 +1,25 @@
-# 2.7.1
+# 2.9.1
 * Updated `contexture-client` dev dependency and stories to use newly observable `disableAutoUpdate`
+
+# 2.9.0
+* Add FacetSelect component (a dropdown interface for the `facet` type) to ExampleTypes
+
+# 2.8.2
+* Fix bug in `selectedBinding`
+* Add stories for CheckableResultTable to illustrate lens (`selected`) and non-lens (`selectedValues`/`onChange`) APIs
+
+# 2.8.1
+* ActionMenu/TagsQuerySearchBar: Adds actionWrapper for handling action menu button feedback etc
+
+# 2.8.0
+* ExampleTypes: Update `CheckableResultTable` api to also accept `selectedValues` and `onChange` as alternatives to `selected`
+
+# 2.7.2
+* Default to `_.noop` for `TagsQuery`'s `addTag` prop
+
+# 2.7.1
+* Use `futil` package instead of `futil-js`
+* Deprecate `useLens` in favor of the new futil arrayLens API
 
 # 2.7.0
 * TagsQuerySearchBar: Hide search button when the tree is not in disableAutoUpdate mode

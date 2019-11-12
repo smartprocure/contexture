@@ -4,7 +4,7 @@ import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import Contexture, { updateSchemas } from '../utils/contexture'
-import { mergeOverAll } from 'futil-js'
+import { mergeOverAll } from 'futil'
 import {
   Awaiter,
   schemaFieldProps,
@@ -25,6 +25,7 @@ import {
 } from '../../../exampleTypes'
 import { Column } from '../../../greyVest/ExpandableTable'
 import { ThemeConsumer } from '../../../utils/theme'
+import { aspectWrapper } from '../../../utils/futil'
 
 let tree = Contexture({
   key: 'root',
@@ -258,6 +259,7 @@ let GreyVestSearchBarStory = theme => (
               path={['root', 'bar']}
               resultsPath={['root', 'results']}
               autoFocus
+              actionWrapper={aspectWrapper}
             />
             <theme.ButtonGroup>
               <theme.AlternateButton

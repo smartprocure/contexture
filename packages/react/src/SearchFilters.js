@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import PropTypes from 'prop-types'
-import F from 'futil-js'
+import F from 'futil'
 import { observer } from 'mobx-react'
 import { Flex, QueryBuilder, FilterAdder, FilterList } from '.'
 import { ToggleFiltersButton, TreePauseButton } from './purgatory'

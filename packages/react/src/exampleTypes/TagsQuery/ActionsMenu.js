@@ -1,13 +1,19 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import F from 'futil-js'
+import F from 'futil'
 import { observer } from 'mobx-react'
 import TagsJoinPicker from '../TagsJoinPicker'
 import { withTheme } from '../../utils/theme'
 import { Flex } from '../../greyVest'
 import { copyTags, tagTerm } from './utils'
 
-let ActionsMenu = ({ node, tree, open, theme: { Button, Checkbox } }) => (
+let ActionsMenu = ({
+  node,
+  tree,
+  open,
+  theme: { Button, Checkbox },
+  actionWrapper = _.identity,
+}) => (
   <Flex
     style={{ minWidth: 240, padding: 10 }}
     className="tags-query-actions-menu"
@@ -17,22 +23,14 @@ let ActionsMenu = ({ node, tree, open, theme: { Button, Checkbox } }) => (
   >
     {!!_.get('tags.length', node) && (
       <>
-        <Button
-          onClick={() => {
-            copyTags(node)
-            F.off(open)()
-          }}
-        >
+        <Button onClick={actionWrapper(() => F.off(open)() || copyTags(node))}>
           Copy {_.startCase(tagTerm)}s
         </Button>
         <Button
           style={{ margin: '10px 0' }}
-          onClick={() => {
-            tree.mutate(node.path, {
-              tags: [],
-            })
-            F.off(open)()
-          }}
+          onClick={actionWrapper(
+            () => F.off(open)() || tree.mutate(node.path, { tags: [] })
+          )}
         >
           Clear {_.startCase(tagTerm)}s
         </Button>

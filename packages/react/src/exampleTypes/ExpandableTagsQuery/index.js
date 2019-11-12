@@ -1,6 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import F from 'futil-js'
+import F from 'futil'
 import { withContentRect } from 'react-measure'
 import { contexturify } from '../../utils/hoc'
 import TagsQuery, { innerHeight } from '../TagsQuery'

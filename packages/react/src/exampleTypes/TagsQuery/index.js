@@ -1,6 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import F from 'futil-js'
+import F from 'futil'
 import { Grid, GridItem } from '../../greyVest'
 import { contexturifyWithoutLoader } from '../../utils/hoc'
 import { useLensObject } from '../../utils/react'
@@ -13,9 +13,10 @@ export let innerHeight = 40
 let TagsQuery = ({
   tree,
   node,
-  onAddTag,
   style,
   popoverState,
+  actionWrapper,
+  onAddTag = _.noop,
   theme: { Icon, TagsInput, Tag, Popover },
   ...props
 }) => {
@@ -69,7 +70,14 @@ let TagsQuery = ({
         <div onClick={F.flip(popoverState.open)}>
           <Icon icon="TableColumnMenu" />
           <Popover open={popoverState.open} style={{ right: 0 }}>
-            <ActionsMenu {...{ node, tree, open: popoverState.open }} />
+            <ActionsMenu
+              {...{
+                node,
+                tree,
+                actionWrapper,
+                open: popoverState.open,
+              }}
+            />
           </Popover>
         </div>
       </GridItem>
