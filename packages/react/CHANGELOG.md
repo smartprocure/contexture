@@ -1,3 +1,6 @@
+# 2.9.0
+* Add FacetSelect component (a dropdown interface for the `facet` type) to ExampleTypes
+
 # 2.8.2
 * Fix bug in `selectedBinding`
 * Add stories for CheckableResultTable to illustrate lens (`selected`) and non-lens (`selectedValues`/`onChange`) APIs
