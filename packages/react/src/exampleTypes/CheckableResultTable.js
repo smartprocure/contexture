@@ -38,7 +38,7 @@ let Label = _.flow(
 let CheckableResultTable = ({
   node,
   fields,
-  selectedValue,
+  selectedValues,
   onChange,
   getValue,
   theme: { Checkbox },
@@ -49,12 +49,14 @@ let CheckableResultTable = ({
       _checkbox: {
         hideMenu: true,
         label: () => (
-          <Label {...{ node, selected: [selectedValue, onChange], getValue }} />
+          <Label
+            {...{ node, selected: [selectedValues, onChange], getValue }}
+          />
         ),
         display: (x, y) => (
           <Checkbox
             {...F.domLens.checkboxValues(_.iteratee(getValue)(y), [
-              selectedValue,
+              selectedValues,
               onChange,
             ])}
           />

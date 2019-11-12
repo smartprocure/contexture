@@ -26,15 +26,15 @@ storiesOf('Components|ExampleTypes/CheckableResultTable', module)
       </div>
     )
   })
-  .addWithJSX('With selectedValue/onChange props', () => {
-    let [selectedValue, onChange] = React.useState([])
+  .addWithJSX('With selectedValues/onChange props', () => {
+    let [selectedValues, onChange] = React.useState([])
     return (
       <div>
-        Selected: {JSON.stringify(selectedValue)}
+        Selected: {JSON.stringify(selectedValues)}
         <CheckableResultTable
           tree={TestTree()}
           path={['results']}
-          {...{ selectedValue, onChange }}
+          {...{ selectedValues, onChange }}
           getValue="_id"
           fields={{
             _id: true,
