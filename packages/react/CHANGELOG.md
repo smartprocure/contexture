@@ -1,3 +1,7 @@
+# 2.8.2
+* Fix bug in `selectedBinding`
+* Add stories for CheckableResultTable to illustrate lens (`selected`) and non-lens (`selectedValue`/`onChange`) APIs
+
 # 2.8.1
 * ActionMenu/TagsQuerySearchBar: Adds actionWrapper for handling action menu button feedback etc
 
