@@ -19,7 +19,7 @@ let FacetSelect = ({
   hide = {
     counts: false, // Hide the facet counts so only the labels are displayed
   },
-  isMulti = true,
+  singleValue = false,
   display = x => x,
   formatCount = x => x,
   displayBlank = () => <i>Not Specified</i>,
@@ -53,7 +53,7 @@ let FacetSelect = ({
       />
       <Async
         placeholder="Search..."
-        isMulti={isMulti}
+        isMulti={!singleValue}
         cacheOptions
         defaultOptions={getOptions(node)}
         loadOptions={async val => {
