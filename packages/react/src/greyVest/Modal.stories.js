@@ -36,6 +36,13 @@ storiesOf('Components|GreyVest Library/Modal', module)
     let { Modal, Button, Popover, DropdownItem } = useTheme()
     return (
       <>
+        <p>
+          Demonstrates how to use modals inside of popovers. Ideally, the modal
+          component should live outside the popover even if its opener is inside
+          the popover, but in cases where it's absolutely necessary, modals can
+          survive inside of popovers as long as steps are taken to keep the
+          popover open as long as the modal is.
+        </p>
         <Button onClick={F.on(open.popover)}>Open Popover</Button>
         <Popover
           isOpen={F.view(open.popover)}
