@@ -1,6 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
+import * as F from 'futil'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { observer } from 'mobx-react'

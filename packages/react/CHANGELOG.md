@@ -1,5 +1,58 @@
-# 2.5.0
+# 2.9.0
 * Add FacetSelect component (a dropdown interface for the `facet` type) to ExampleTypes
+
+# 2.8.2
+* Fix bug in `selectedBinding`
+* Add stories for CheckableResultTable to illustrate lens (`selected`) and non-lens (`selectedValues`/`onChange`) APIs
+
+# 2.8.1
+* ActionMenu/TagsQuerySearchBar: Adds actionWrapper for handling action menu button feedback etc
+
+# 2.8.0
+* ExampleTypes: Update `CheckableResultTable` api to also accept `selectedValues` and `onChange` as alternatives to `selected`
+
+# 2.7.2
+* Default to `_.noop` for `TagsQuery`'s `addTag` prop
+
+# 2.7.1
+* Use `futil` package instead of `futil-js`
+* Deprecate `useLens` in favor of the new futil arrayLens API
+
+# 2.7.0
+* TagsQuerySearchBar: Hide search button when the tree is not in disableAutoUpdate mode
+
+# 2.6.2
+* TagsQuery: add `onAddTag` callback prop (takes the added `tag` as its argument)
+* ExpandableTagsQuery & TagsQuerySearchBar: improve collapse behavior
+
+# 2.6.1
+* GreyVest: debounce Popover's `onClose` handler (fixes a bug where toggling a popover's open state just kept the popver open)
+
+# 2.6.0
+* FilterList: remove refresh icon & replace it with an "apply filter" button
+
+# 2.5.4
+* TagsQuery: slightly reduce the inner height
+
+# 2.5.3
+* ExampleTypes: Remove loader from Date
+* FilterList: hide overflow menu & update button on paused filters
+* GreyVest: reduce margins/padding on FilterList, Table & SearchLayout
+
+# 2.5.2
+* Remove loader from FilterAdder
+* TagsQuery: add a constant for "tags"/"keywords" terminology
+
+# 2.5.1
+* FilterList/SearchFilters: update pause icon styling
+* ExampleTypes: Remove loader from TagsQuery
+* Add `contexturifyWithoutLoader` HOC
+
+# 2.5.0
+* ExampleTypes: Add an expanding/collapsing TagsQuerySearchBar component
+
+# 2.4.1
+* Adds the latest version of Moment to the dependencies
 
 # 2.4.0
 * GreyVest: Add GridItem component

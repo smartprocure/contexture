@@ -1,12 +1,11 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import F from 'futil-js'
+import F from 'futil'
 import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
 import { Flex, Dynamic } from './greyVest'
 import { fieldsToOptions } from './FilterAdder'
-import { useLens } from './utils/react'
-import { withNode } from './utils/hoc'
+import { contexturifyWithoutLoader } from './utils/hoc'
 import { bdJoin } from './styles/generic'
 import {
   newNodeFromType,
@@ -28,7 +27,7 @@ export let FilterActions = _.flow(
     popover,
     theme: { DropdownItem, Popover, Modal, NestedPicker },
   }) => {
-    let modal = useLens(false)
+    let modal = React.useState(false)
     let typeOptions = _.flow(
       _.getOr([], [node.field, 'typeOptions']),
       _.without([node.type])
@@ -91,8 +90,8 @@ export let Label = _.flow(
   observer,
   withTheme
 )(({ tree, node, fields, children, theme: { Icon }, ...props }) => {
-  let popover = useLens(false)
-  let modal = useLens(false)
+  let popover = React.useState(false)
+  let modal = React.useState(false)
   let field = _.get('field', node)
   return (
     <Flex
@@ -119,7 +118,7 @@ export let Label = _.flow(
               F.flip(popover)()
             }}
           >
-            <Icon icon="TableColumnMenu" />
+            {!node.paused && <Icon icon="TableColumnMenu" />}
             <FilterActions
               node={node}
               tree={tree}
@@ -132,23 +131,7 @@ export let Label = _.flow(
             // Whitespace separator
             <div style={{ flexGrow: 1 }} />
           }
-          {!node.updating &&
-            tree.disableAutoUpdate &&
-            // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
-            _.some(
-              treeNode => treeNode !== node && treeNode.markedForUpdate,
-              F.treeToArray(_.get('children'))(tree.tree)
-            ) && (
-              <div
-                className="filter-field-icon-refresh"
-                onClick={e => {
-                  e.stopPropagation()
-                  tree.triggerUpdate()
-                }}
-              >
-                <Icon icon="Refresh" />
-              </div>
-            )}
+
           <div className="filter-field-label-icon">
             <Icon
               icon={node.paused ? 'FilterListExpand' : 'FilterListCollapse'}
@@ -160,11 +143,10 @@ export let Label = _.flow(
   )
 })
 
-export let FilterList = _.flow(
+// we can't do this on export because FilterList is used internally
+let FilterList = _.flow(
   setDisplayName('FilterList'),
-  observer,
-  withNode,
-  withTheme
+  contexturifyWithoutLoader
 )(
   ({
     tree,
@@ -174,7 +156,7 @@ export let FilterList = _.flow(
     mapNodeToLabel = _.noop,
     className,
     style,
-    theme: { UnmappedNodeComponent },
+    theme: { UnmappedNodeComponent, Button },
   }) => (
     <div style={style} className={className}>
       {_.map(
@@ -206,6 +188,23 @@ export let FilterList = _.flow(
                       ...mapNodeToProps(child, fields),
                     }}
                   />
+                  {!child.updating &&
+                    tree.disableAutoUpdate &&
+                    // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
+                    _.some(
+                      treeNode => treeNode !== node && treeNode.markedForUpdate,
+                      F.treeToArray(_.get('children'))(tree.tree)
+                    ) && (
+                      <div
+                        className="apply-filter-button"
+                        onClick={e => {
+                          e.stopPropagation()
+                          tree.triggerUpdate()
+                        }}
+                      >
+                        <Button primary>Apply Filter</Button>
+                      </div>
+                    )}
                 </div>
               )}
             </div>
@@ -215,3 +214,5 @@ export let FilterList = _.flow(
     </div>
   )
 )
+
+export default FilterList

@@ -23,6 +23,7 @@ let iconMap = {
   Refresh: 'refresh',
   AutoUpdate: 'autorenew',
   New: 'fiber_new',
+  Expand: 'keyboard_arrow_down',
 }
 
 export default ({ icon, ...props }) => (

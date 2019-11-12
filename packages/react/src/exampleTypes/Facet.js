@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import _ from 'lodash/fp'
-import F from 'futil-js'
+import F from 'futil'
 import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
 import { Flex } from '../greyVest'

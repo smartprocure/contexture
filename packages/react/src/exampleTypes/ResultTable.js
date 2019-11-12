@@ -1,11 +1,11 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
+import * as F from 'futil'
 import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
 import { contexturify } from '../utils/hoc'
 import { Dynamic } from '../greyVest'
-import { useLens } from '../utils/react'
+
 import { fieldsToOptions } from '../FilterAdder'
 import {
   applyDefaults,
@@ -79,7 +79,7 @@ let HighlightedColumn = _.flow(
     Cell = 'td',
     theme: { Modal, Table },
   }) => {
-    let viewModal = useLens(false)
+    let viewModal = React.useState(false)
     return _.isEmpty(additionalFields) ? (
       <Cell key="additionalFields" />
     ) : (
@@ -149,9 +149,9 @@ let Header = _.flow(
       UnmappedNodeComponent,
     },
   }) => {
-    let popover = useLens(false)
-    let adding = useLens(false)
-    let filtering = useLens(false)
+    let popover = React.useState(false)
+    let adding = React.useState(false)
+    let filtering = React.useState(false)
     let {
       disableFilter,
       disableSort,

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Flex } from '../greyVest'
-import { contexturify } from '../utils/hoc'
-import F from 'futil-js'
+import { contexturifyWithoutLoader } from '../utils/hoc'
+import F from 'futil'
 import _ from 'lodash/fp'
 
 let allRollingOpts = [
@@ -195,4 +195,4 @@ let DateComponent = ({
   )
 }
 
-export default contexturify(DateComponent)
+export default contexturifyWithoutLoader(DateComponent)

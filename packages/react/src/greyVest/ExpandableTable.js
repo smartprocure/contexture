@@ -1,5 +1,5 @@
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
+import * as F from 'futil'
 import React from 'react'
 import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'

@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import PropTypes from 'prop-types'
-import F from 'futil-js'
+import F from 'futil'
 import { observer } from 'mobx-react'
 import { Flex, QueryBuilder, FilterAdder, FilterList } from '.'
 import { ToggleFiltersButton, TreePauseButton } from './purgatory'
@@ -37,10 +37,14 @@ FiltersBox.displayName = 'FiltersBox'
 
 let BasicSearchFilters = ({ setMode, trees, children, BasicFilters }) => (
   <div>
-    <Flex style={{ alignItems: 'center' }}>
-      <h1>Filters</h1>
-      <ToggleFiltersButton onClick={() => setMode('resultsOnly')} />
-      <TreePauseButton children={children} />
+    <Flex alignItems="center" justifyContent="space-between">
+      <Flex alignItems="center">
+        <h1>Filters</h1>
+        <ToggleFiltersButton onClick={() => setMode('resultsOnly')} />
+      </Flex>
+      <div>
+        <TreePauseButton children={children} />
+      </div>
     </Flex>
     <LabelledList list={trees} Component={BasicFilters} />
     <LinkButton onClick={() => setMode('builder')} style={{ marginTop: 15 }}>

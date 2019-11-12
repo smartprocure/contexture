@@ -1,8 +1,6 @@
 import _ from 'lodash/fp'
 import React from 'react'
-import { observer } from 'mobx-react'
-import { withNode } from '../utils/hoc'
-import { withTheme } from '../utils/theme'
+import { contexturifyWithoutLoader } from '../utils/hoc'
 
 let ResultPager = ({
   node,
@@ -81,8 +79,4 @@ let ResultPager = ({
   )
 }
 
-export default _.flow(
-  observer,
-  withNode,
-  withTheme
-)(ResultPager)
+export default contexturifyWithoutLoader(ResultPager)
