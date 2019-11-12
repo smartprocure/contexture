@@ -2,7 +2,6 @@ import _ from 'lodash/fp'
 import * as F from 'futil'
 import { useState } from 'react'
 import { mapProps } from 'recompose'
-import { expandObjectBy } from './futil'
 
 export let useLensObject = _.mapValues(useState)
 
@@ -16,6 +15,6 @@ export let wrapDisplayName = (name, Component) => Wrapped => {
 
 // (k, a -> {b}) -> Component<{k: a}> -> Component<{b}>
 export let expandProp = _.flow(
-  (key, fn) => expandObjectBy(key, F.whenExists(fn)),
+  (key, fn) => F.expandObjectBy(key, F.whenExists(fn)),
   mapProps
 )
