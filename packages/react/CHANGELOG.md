@@ -1,5 +1,6 @@
 # 2.9.1
-* Updated `contexture-client` dev dependency and stories to use newly observable `disableAutoUpdate`
+* Update `contexture-client` dev dependency and stories to use newly observable `disableAutoUpdate`
+* Add a GreyVest Modal story to demonstrate opening a modal from inside a popover
 
 # 2.9.0
 * Add FacetSelect component (a dropdown interface for the `facet` type) to ExampleTypes
