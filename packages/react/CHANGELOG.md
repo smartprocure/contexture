@@ -1,8 +1,12 @@
+# 2.8.2
+* Fix bug in `selectedBinding`
+* Add stories for CheckableResultTable to illustrate lens (`selected`) and non-lens (`selectedValues`/`onChange`) APIs
+
 # 2.8.1
 * ActionMenu/TagsQuerySearchBar: Adds actionWrapper for handling action menu button feedback etc
 
 # 2.8.0
-* ExampleTypes: Update `CheckableResultTable` api to also accept `selectedValue` and `onChange` as alternatives to `selected`
+* ExampleTypes: Update `CheckableResultTable` api to also accept `selectedValues` and `onChange` as alternatives to `selected`
 
 # 2.7.2
 * Default to `_.noop` for `TagsQuery`'s `addTag` prop
