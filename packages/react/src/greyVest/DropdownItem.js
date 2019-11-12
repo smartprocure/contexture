@@ -1,10 +1,9 @@
-import F from 'futil-js'
+import F from 'futil'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { useLens } from '../utils/react'
 
 export let DropdownItem = ({ style = {}, ...props }) => {
-  let hovering = useLens(false)
+  let hovering = React.useState(false)
   return (
     <div
       style={{

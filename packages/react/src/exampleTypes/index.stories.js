@@ -1,4 +1,4 @@
-import * as F from 'futil-js'
+import * as F from 'futil'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import AsyncSelect from 'react-select/lib/Async'

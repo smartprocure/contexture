@@ -25,10 +25,10 @@ let iconMap = {
       <SmallIcon icon="more_vert" />
     </TextButton>
   ),
-  FilterListExpand: toIcon('add'),
-  FilterListCollapse: toIcon('remove'),
-  TreePause: toIcon('remove_circle_outline'),
-  TreeUnpause: toIcon('add_circle_outline'),
+  FilterListExpand: toIcon('keyboard_arrow_down'),
+  FilterListCollapse: toIcon('keyboard_arrow_up'),
+  TreePause: toIcon('unfold_less'),
+  TreeUnpause: toIcon('unfold_more'),
   PreviousPage: toIcon('chevron_left'),
   NextPage: toIcon('chevron_right'),
   Previous5Pages: () => <span>...</span>,
@@ -43,6 +43,7 @@ let iconMap = {
   ),
   AutoUpdate: toIcon('autorenew'),
   New: toIcon('fiber_new'),
+  Expand: toIcon('keyboard_arrow_down'),
 }
 
 let Icon = ({ icon, ...props }) => (

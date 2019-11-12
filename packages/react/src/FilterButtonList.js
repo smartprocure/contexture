@@ -1,4 +1,4 @@
-import F from 'futil-js'
+import F from 'futil'
 import _ from 'lodash/fp'
 import React from 'react'
 import { setDisplayName } from 'recompose'
@@ -21,7 +21,7 @@ let FilterButtonItem = _.flow(
     theme: { Button, UnmappedNodeComponent, Modal },
   }) => {
     let mappedProps = mapNodeToProps(node, fields)
-    let modal = F.stateLens(React.useState(false))
+    let modal = React.useState(false)
     let title = // we really need a title, so here's every possible fallback
       _.get('label', mappedProps) ||
       _.get([node.field, 'label'], fields) ||

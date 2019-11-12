@@ -1,4 +1,4 @@
-import F from 'futil-js'
+import F from 'futil'
 import _ from 'lodash/fp'
 import { defaultNodeProps } from './schema'
 

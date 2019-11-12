@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 import React from 'react'
-import { contexturify } from './utils/hoc'
+import { contexturifyWithoutLoader } from './utils/hoc'
 import { newNodeFromField } from './utils/search'
 import { ModalPicker } from './purgatory'
 import { Flex } from './greyVest'
@@ -37,4 +37,4 @@ let FilterAdder = ({
   )
 }
 
-export default contexturify(FilterAdder)
+export default contexturifyWithoutLoader(FilterAdder)

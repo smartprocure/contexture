@@ -20,27 +20,44 @@ export let withLoader = Component =>
   _.flow(
     wrapDisplayName('withLoader', Component),
     observer
-  )(({ Loader = StripedLoader, node, ...props }) => (
-    <Loader loading={node && node.updating}>
-      <Component node={node} {...props} />
-    </Loader>
-  ))
+  )(({ Loader, ...props }) => {
+    let { theme = {}, node } = props
+    Loader = Loader || theme.Loader || StripedLoader
+    return (
+      <Loader loading={node && node.updating}>
+        <Component node={node} {...props} />
+      </Loader>
+    )
+  })
 
 // I am a band-aid, please rip me off as quickly as possible
 export let withInlineLoader = Component =>
   _.flow(
     wrapDisplayName('withInlineLoader', Component),
     observer
-  )(({ Loader = StripedLoader, node, ...props }) => (
-    <Loader loading={node && node.updating} style={{ display: 'inline-block' }}>
-      <Component node={node} {...props} />
-    </Loader>
-  ))
+  )(({ Loader, ...props }) => {
+    let { theme = {}, node } = props
+    Loader = Loader || theme.Loader || StripedLoader
+    return (
+      <Loader
+        loading={node && node.updating}
+        style={{ display: 'inline-block' }}
+      >
+        <Component {...props} />
+      </Loader>
+    )
+  })
 
 export let contexturify = _.flow(
   observer,
-  withNode,
   withLoader,
+  withNode,
+  withTheme
+)
+
+export let contexturifyWithoutLoader = _.flow(
+  observer,
+  withNode,
   withTheme
 )
 

@@ -1,4 +1,4 @@
-import * as F from 'futil-js'
+import * as F from 'futil'
 import _ from 'lodash/fp'
 import React from 'react'
 import { observer } from 'mobx-react'

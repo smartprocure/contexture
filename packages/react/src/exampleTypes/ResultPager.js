@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 import React from 'react'
-import { contexturify } from '../utils/hoc'
+import { contexturifyWithoutLoader } from '../utils/hoc'
 
 let ResultPager = ({
   node,
@@ -79,4 +79,4 @@ let ResultPager = ({
   )
 }
 
-export default contexturify(ResultPager)
+export default contexturifyWithoutLoader(ResultPager)
