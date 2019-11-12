@@ -1,9 +1,9 @@
 import _ from 'lodash/fp'
+import F from 'futil-js'
 import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import Contexture, { updateSchemas } from '../utils/contexture'
-import { mergeOverAll } from 'futil'
 import {
   Awaiter,
   schemaFieldProps,
@@ -152,7 +152,6 @@ let tree = Contexture({
 tree.disableAutoUpdate = true
 
 let state = observable({
-  autoUpdate: false,
   mode: 'basic',
 })
 
@@ -210,7 +209,7 @@ let schemas = fromPromise(
     .then(_.tap(() => tree.refresh(['root'])))
 )
 
-let mapNodeToProps = mergeOverAll([
+let mapNodeToProps = F.mergeOverAll([
   componentForType(TypeMap),
   schemaFieldProps('signicantDigits'),
   ({ key }) =>
@@ -264,11 +263,8 @@ let GreyVestSearchBarStory = theme => (
             <theme.ButtonGroup>
               <theme.AlternateButton
                 title="Auto Update"
-                primary={state.autoUpdate}
-                onClick={() => {
-                  state.autoUpdate = !state.autoUpdate
-                  tree.disableAutoUpdate = !state.autoUpdate
-                }}
+                primary={!tree.disableAutoUpdate}
+                onClick={F.flip('disableAutoUpdate', tree)}
               >
                 <theme.Icon icon="AutoUpdate" />
               </theme.AlternateButton>
