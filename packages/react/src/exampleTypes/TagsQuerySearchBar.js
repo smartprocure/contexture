@@ -44,12 +44,12 @@ let AnimatedButton = ({ disabled, style, className, ...props }) => (
   />
 )
 
-let SearchButton = observer(({ tree, resultsPath, buttonAttributes }) => (
+let SearchButton = observer(({ tree, resultsPath, searchButtonProps }) => (
   <AnimatedButton
     disabled={!tree.getNode(resultsPath).markedForUpdate}
     onClick={tree.triggerUpdate}
     style={buttonStyle}
-    {...buttonAttributes}
+    {...searchButtonProps}
   >
     Search
   </AnimatedButton>
@@ -60,7 +60,7 @@ let SearchBar = ({
   node,
   resultsPath,
   actionWrapper,
-  buttonProps,
+  searchButtonProps,
 }) => {
   let collapse = React.useState(true)
   let popoverState = useLensObject({ open: false, tagOpen: '' })
@@ -92,7 +92,7 @@ let SearchBar = ({
           <SearchButton
             tree={tree}
             resultsPath={resultsPath}
-            buttonProps={buttonProps}
+            searchButtonProps={searchButtonProps}
           />
         )}
       </ButtonGroup>

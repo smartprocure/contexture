@@ -259,7 +259,7 @@ let GreyVestSearchBarStory = theme => (
               resultsPath={['root', 'results']}
               autoFocus
               actionWrapper={aspectWrapper}
-              buttonProps={{ ['data-attribute']: 'attribute1' }}
+              searchButtonProps={{ ['data-attribute']: 'attribute1' }}
             />
             <theme.ButtonGroup>
               <theme.AlternateButton
