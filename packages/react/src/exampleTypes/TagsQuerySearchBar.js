@@ -60,7 +60,7 @@ let SearchBar = ({
   node,
   resultsPath,
   actionWrapper,
-  buttonAttributes,
+  buttonProps,
 }) => {
   let collapse = React.useState(true)
   let popoverState = useLensObject({ open: false, tagOpen: '' })
@@ -92,7 +92,7 @@ let SearchBar = ({
           <SearchButton
             tree={tree}
             resultsPath={resultsPath}
-            buttonAttributes={buttonAttributes}
+            buttonProps={buttonProps}
           />
         )}
       </ButtonGroup>
