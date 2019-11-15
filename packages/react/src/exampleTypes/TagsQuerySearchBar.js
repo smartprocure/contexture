@@ -55,13 +55,7 @@ let SearchButton = observer(({ tree, resultsPath, buttonAttributes }) => (
   </AnimatedButton>
 ))
 
-let SearchBar = ({
-  tree,
-  node,
-  resultsPath,
-  actionWrapper,
-  buttonProps,
-}) => {
+let SearchBar = ({ tree, node, resultsPath, actionWrapper, buttonProps }) => {
   let collapse = React.useState(true)
   let popoverState = useLensObject({ open: false, tagOpen: '' })
   return (
