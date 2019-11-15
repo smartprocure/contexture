@@ -1,5 +1,5 @@
 # 2.9.2
-* Add support for the "buttonAtrribute" prop to the SearchBar
+* Add support for the "searchButtonProps" prop to the SearchBar
 
 # 2.9.1
 * Update `contexture-client` dev dependency and stories to use newly observable `disableAutoUpdate`
