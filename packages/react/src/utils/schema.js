@@ -6,6 +6,7 @@ export let applyDefaults = F.mapValuesIndexed((val, field) => ({
   field,
   label: F.autoLabel(field),
   order: 0,
+  // `_.get('push') is used instead of `_.isArray` to match mobx4 arrays
   display: x => F.when(_.get('push'), _.join(', '))(x),
   ...val,
 }))

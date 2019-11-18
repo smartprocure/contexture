@@ -67,19 +67,19 @@ let TagsQuery = ({
         />
       </GridItem>
       <GridItem place="center">
-        <div onClick={F.flip(popoverState.open)}>
+        <div onClick={F.on(popoverState.open)}>
           <Icon icon="TableColumnMenu" />
-          <Popover open={popoverState.open} style={{ right: 0 }}>
-            <ActionsMenu
-              {...{
-                node,
-                tree,
-                actionWrapper,
-                open: popoverState.open,
-              }}
-            />
-          </Popover>
         </div>
+        <Popover open={popoverState.open} style={{ right: 0 }}>
+          <ActionsMenu
+            {...{
+              node,
+              tree,
+              actionWrapper,
+              open: popoverState.open,
+            }}
+          />
+        </Popover>
       </GridItem>
     </Grid>
   )
