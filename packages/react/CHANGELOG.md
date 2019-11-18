@@ -1,3 +1,6 @@
+# 2.9.3
+* TagsQuery: fix a bug where the actions popover closed itself when clicked on
+
 # 2.9.2
 * Add support for the "searchButtonProps" prop to the SearchBar
 
