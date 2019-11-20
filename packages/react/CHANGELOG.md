@@ -1,3 +1,103 @@
+# 2.9.3
+* TagsQuery: fix a bug where the actions popover closed itself when clicked on
+
+# 2.9.2
+* Add support for the "searchButtonProps" prop to the SearchBar
+
+# 2.9.1
+* Update `contexture-client` dev dependency and stories to use newly observable `disableAutoUpdate`
+* Add a GreyVest Modal story to demonstrate opening a modal from inside a popover
+
+# 2.9.0
+* Add FacetSelect component (a dropdown interface for the `facet` type) to ExampleTypes
+
+# 2.8.2
+* Fix bug in `selectedBinding`
+* Add stories for CheckableResultTable to illustrate lens (`selected`) and non-lens (`selectedValues`/`onChange`) APIs
+
+# 2.8.1
+* ActionMenu/TagsQuerySearchBar: Adds actionWrapper for handling action menu button feedback etc
+
+# 2.8.0
+* ExampleTypes: Update `CheckableResultTable` api to also accept `selectedValues` and `onChange` as alternatives to `selected`
+
+# 2.7.2
+* Default to `_.noop` for `TagsQuery`'s `addTag` prop
+
+# 2.7.1
+* Use `futil` package instead of `futil-js`
+* Deprecate `useLens` in favor of the new futil arrayLens API
+
+# 2.7.0
+* TagsQuerySearchBar: Hide search button when the tree is not in disableAutoUpdate mode
+
+# 2.6.2
+* TagsQuery: add `onAddTag` callback prop (takes the added `tag` as its argument)
+* ExpandableTagsQuery & TagsQuerySearchBar: improve collapse behavior
+
+# 2.6.1
+* GreyVest: debounce Popover's `onClose` handler (fixes a bug where toggling a popover's open state just kept the popver open)
+
+# 2.6.0
+* FilterList: remove refresh icon & replace it with an "apply filter" button
+
+# 2.5.4
+* TagsQuery: slightly reduce the inner height
+
+# 2.5.3
+* ExampleTypes: Remove loader from Date
+* FilterList: hide overflow menu & update button on paused filters
+* GreyVest: reduce margins/padding on FilterList, Table & SearchLayout
+
+# 2.5.2
+* Remove loader from FilterAdder
+* TagsQuery: add a constant for "tags"/"keywords" terminology
+
+# 2.5.1
+* FilterList/SearchFilters: update pause icon styling
+* ExampleTypes: Remove loader from TagsQuery
+* Add `contexturifyWithoutLoader` HOC
+
+# 2.5.0
+* ExampleTypes: Add an expanding/collapsing TagsQuerySearchBar component
+
+# 2.4.1
+* Adds the latest version of Moment to the dependencies
+
+# 2.4.0
+* GreyVest: Add GridItem component
+* GreyVest: Add `rows`, `areas`, `placeContent` and `placeItems` props to Grid
+* GreyVest: Drop IE support for Grid component
+* GreyVest: Add `inline` flag prop to Grid and Flex
+
+# 2.3.1
+* GreyVest: Change the TreePause and TreeUnpause icons to use material's `unfold_less` and `unfold_more` (formerly the circled plus/minus icons)
+* SearchFilters: Swap the order of TreePauseButton and ToggleFiltersButton in the BasicFilters header
+
+# 2.3.0
+* Add theme support to contexturify's `withLoader`: it now uses `theme.Loader` for the Loader component if it exists, and if a Loader component hasn't been passed as a prop
+
+# 2.2.2
+* Fixes facets search box by making it more intuitive to the user when filtering the facet checkboxes
+
+# 2.2.1
+* Fixes the tags with no space breaking the UI
+* Fixes the tag popover where the refresh facet icon was showing over it
+* Fixes the tag popover keyword breaking the UI
+
+# 2.2.0
+* Add 'counts' to the facet hide config in order to hide the facet counts
+
+# 2.1.1
+* Add `search-layout` and `search-layout-{mode}` classNames to SearchLayout
+
+# 2.1.0
+* Add `BasicFilters` and `BuilderFilters` props to SearchFilters for overriding/customizing filter components in the layout
+
+# 2.0.6
+* camelCase `defaultNodeProps` schema util
+* Be explicit about utility function exports in `src/index.js`
+
 # 2.0.5
 * Ensure components using `openBinding` observe the correct things
 

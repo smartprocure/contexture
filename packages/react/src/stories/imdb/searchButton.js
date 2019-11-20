@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
+import F from 'futil'
 import React from 'react'
-import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import Contexture, { updateSchemas } from './utils/contexture'
 import {
@@ -79,10 +79,6 @@ let tree = Contexture({
 })
 tree.disableAutoUpdate = true
 
-let state = observable({
-  autoUpdate: false,
-})
-
 let schemas = fromPromise(
   updateSchemas().then(
     _.merge(_, {
@@ -123,14 +119,10 @@ let Story = () => (
             <div style={{ flex: 1, marginLeft: '5px', display: 'flex' }}>
               <input
                 type="checkbox"
-                checked={state.autoUpdate}
-                onChange={e => {
-                  let val = !!e.target.checked
-                  tree.disableAutoUpdate = !val
-                  state.autoUpdate = val
-                }}
+                checked={!tree.disableAutoUpdate}
+                onChange={F.flip('disableAutoUpdate', tree)}
               />
-              {!state.autoUpdate && (
+              {tree.disableAutoUpdate && (
                 <Button onClick={tree.triggerUpdate}>Search</Button>
               )}
             </div>

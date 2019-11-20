@@ -1,12 +1,11 @@
-import * as F from 'futil-js'
+import * as F from 'futil'
 import _ from 'lodash/fp'
 import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { observer } from 'mobx-react'
-import Contexture, { updateSchemas } from './utils/contexture'
-import { useLens } from '../../utils/react'
-import { useTheme } from '../../utils/theme'
+import Contexture, { updateSchemas } from '../utils/contexture'
+import { useTheme } from '../../../utils/theme'
 import {
   FilterList,
   Flex,
@@ -76,7 +75,6 @@ let tree = Contexture({
 tree.disableAutoUpdate = true
 
 let state = observable({
-  autoUpdate: false,
   showCards: true,
 })
 
@@ -106,7 +104,7 @@ let schemas = fromPromise(
 )
 
 let CheckboxResultTable = observer(props => {
-  let selected = useLens([])
+  let selected = React.useState([])
   return (
     <div>
       {JSON.stringify(F.view(selected))}
@@ -145,7 +143,7 @@ export default () => {
           <div>
             <Grid columns="1fr auto" style={{ alignItems: 'center' }}>
               <TagsQuery tree={tree} path={['root', 'bar']} />
-              {!state.autoUpdate && (
+              {tree.disableAutoUpdate && (
                 <theme.Button onClick={tree.triggerUpdate} primary>
                   Search
                 </theme.Button>
@@ -166,10 +164,9 @@ export default () => {
                     { label: 'AutoSearch On', value: true },
                     { label: 'AutoSearch Off', value: false },
                   ]}
-                  value={state.autoUpdate}
+                  value={!tree.disableAutoUpdate}
                   onChange={val => {
                     tree.disableAutoUpdate = !val
-                    state.autoUpdate = !!val
                   }}
                 />
               </Flex>

@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "2.0.5",
+  "version": "2.9.3",
   "description": "React components for building contexture interfaces",
   "main": "dist/index.js",
   "scripts": {
@@ -95,7 +95,7 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-require-context-hook": "^1.0.0",
     "contexture": "^0.2.1",
-    "contexture-client": "^2.26.0",
+    "contexture-client": "^2.26.3",
     "contexture-elasticsearch": "^0.10.2",
     "danger": "^6.1.13",
     "duti": "^0.15.0",
@@ -119,12 +119,14 @@
     "write-pkg": "^4.0.0"
   },
   "dependencies": {
-    "futil-js": "^1.61.0",
+    "futil": "^1.64.0",
     "lodash": "^4.17.15",
+    "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "react-date-picker": "^7.2.0",
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4",
+    "react-measure": "^2.3.0",
     "react-outside-click-handler": "^1.2.3",
     "recompose": "^0.30.0"
   },

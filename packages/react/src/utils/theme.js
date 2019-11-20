@@ -1,6 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import F from 'futil-js'
+import F from 'futil'
 import { mergeOrReturn } from './futil'
 import { getDisplayName } from './react'
 

@@ -1,11 +1,40 @@
 import React, { useState } from 'react'
 import _ from 'lodash/fp'
-import F from 'futil-js'
+import F from 'futil'
 import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
 import { Flex } from '../greyVest'
 import { contexturify } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
+
+export let Cardinality = _.flow(
+  setDisplayName('Cardinality'),
+  observer
+)(({ node, tree }) => (
+  <Flex
+    className="contexture-facet-cardinality"
+    style={{ justifyContent: 'space-between' }}
+  >
+    {!!node.context.cardinality && (
+      <div>
+        Showing {_.min([node.size || 10, node.context.options.length])} of{' '}
+        {node.context.cardinality}
+      </div>
+    )}
+    {node.context.cardinality > (node.size || 10) && (
+      <div>
+        <a
+          onClick={() =>
+            tree.mutate(node.path, { size: (node.size || 10) + 10 })
+          }
+          style={{ cursor: 'pointer' }}
+        >
+          View More
+        </a>
+      </div>
+    )}
+  </Flex>
+))
 
 let SelectAll = _.flow(
   setDisplayName('SelectAll'),
@@ -62,13 +91,10 @@ let FacetOptionsFilter = _.flow(
         }}
         onKeyPress={e => e.key === 'Enter' && submit()}
         onBlur={submit}
-        placeholder="Find..."
+        placeholder="Search..."
       />
-      <Button
-        style={{ display: buttonEnabled ? 'block' : 'none' }}
-        onClick={submit}
-      >
-        Submit
+      <Button primary={node.optionsFilter !== val} onClick={submit}>
+        Find
       </Button>
     </ButtonGroup>
   )
@@ -77,7 +103,10 @@ let FacetOptionsFilter = _.flow(
 let Facet = ({
   tree,
   node,
-  hide = {},
+  hide = {
+    facetFilter: false, // Hide the search box above the facet checkboxes
+    counts: false, // Hide the facet counts so only the labels are displayed
+  },
   display = x => x,
   displayBlank = () => <i>Not Specified</i>,
   formatCount = x => x,
@@ -111,34 +140,12 @@ let Facet = ({
             <div style={{ flex: 2, padding: '0 5px' }}>
               {display(name) || displayBlank()}
             </div>
-            <div>{formatCount(count)}</div>
+            {!hide.counts && <div>{formatCount(count)}</div>}
           </label>
         )
       })
     )(_.get('context.options', node))}
-    <Flex
-      className="contexture-facet-cardinality"
-      style={{ justifyContent: 'space-between' }}
-    >
-      {!!node.context.cardinality && (
-        <div>
-          Showing {_.min([node.size || 10, node.context.options.length])} of{' '}
-          {node.context.cardinality}
-        </div>
-      )}
-      {node.context.cardinality > (node.size || 10) && (
-        <div>
-          <a
-            onClick={() =>
-              tree.mutate(node.path, { size: (node.size || 10) + 10 })
-            }
-            style={{ cursor: 'pointer' }}
-          >
-            View More
-          </a>
-        </div>
-      )}
-    </Flex>
+    <Cardinality {...{ node, tree }} />
   </div>
 )
 

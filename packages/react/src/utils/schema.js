@@ -1,11 +1,12 @@
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
+import * as F from 'futil'
 import { flattenPlainObject } from './futil'
 
 export let applyDefaults = F.mapValuesIndexed((val, field) => ({
   field,
   label: F.autoLabel(field),
   order: 0,
+  // `_.get('push') is used instead of `_.isArray` to match mobx4 arrays
   display: x => F.when(_.get('push'), _.join(', '))(x),
   ...val,
 }))
@@ -24,7 +25,7 @@ export let inferSchema = _.flow(
   flattenPlainObject
 )
 
-export let DefaultNodeProps = (field, fields, type) =>
+export let defaultNodeProps = (field, fields, type) =>
   _.get([field, 'defaultNodeProps', type], fields)
 
 export let schemaFieldProps = _.curry((props, { field }, fields) =>

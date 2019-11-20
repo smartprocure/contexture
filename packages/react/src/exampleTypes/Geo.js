@@ -1,6 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import F from 'futil-js'
+import F from 'futil'
 import { Flex } from '../greyVest'
 import { contexturify } from '../utils/hoc'
 

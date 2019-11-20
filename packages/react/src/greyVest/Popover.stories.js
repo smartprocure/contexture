@@ -1,5 +1,5 @@
 import React from 'react'
-import F from 'futil-js'
+import F from 'futil'
 import { observable } from 'mobx'
 import { Button, Popover } from '.'
 import decorator from './stories/decorator'

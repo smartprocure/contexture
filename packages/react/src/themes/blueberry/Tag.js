@@ -1,11 +1,11 @@
 import React from 'react'
-import F from 'futil-js'
+import F from 'futil'
 import { observer } from 'mobx-react'
 
 let Tag = ({ value, removeTag, tagStyle, onClick }) => (
   <div
     className="tags-input-tag"
-    style={F.callOrReturn(tagStyle, value)}
+    style={{ display: 'inline-block', ...F.callOrReturn(tagStyle, value) }}
     onClick={onClick}
   >
     {value}

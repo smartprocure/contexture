@@ -1,9 +1,9 @@
 import _ from 'lodash/fp'
+import F from 'futil-js'
 import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
-import Contexture, { updateSchemas } from './utils/contexture'
-import { mergeOverAll } from 'futil-js'
+import Contexture, { updateSchemas } from '../utils/contexture'
 import {
   Awaiter,
   schemaFieldProps,
@@ -18,12 +18,13 @@ import {
   DateRangePicker,
   TypeMap,
   TermsStatsTable,
-  TagsQuery,
+  TagsQuerySearchBar,
   ResultCount,
   PagedResultTable,
 } from '../../exampleTypes'
 import { Column } from '../../greyVest/ExpandableTable'
 import { ThemeConsumer } from '../../utils/theme'
+import { aspectWrapper } from '../../utils/futil'
 
 let tree = Contexture({
   key: 'root',
@@ -151,7 +152,6 @@ let tree = Contexture({
 tree.disableAutoUpdate = true
 
 let state = observable({
-  autoUpdate: false,
   mode: 'basic',
 })
 
@@ -209,7 +209,7 @@ let schemas = fromPromise(
     .then(_.tap(() => tree.refresh(['root'])))
 )
 
-let mapNodeToProps = mergeOverAll([
+let mapNodeToProps = F.mergeOverAll([
   componentForType(TypeMap),
   schemaFieldProps('signicantDigits'),
   ({ key }) =>
@@ -227,7 +227,7 @@ let mapNodeToProps = mergeOverAll([
     },
 ])
 
-let GreyVestStory = theme => (
+let GreyVestSearchBarStory = theme => (
   <Awaiter promise={schemas}>
     {schemas => (
       <SearchLayout mode={state.mode}>
@@ -252,40 +252,33 @@ let GreyVestStory = theme => (
           >
             Search Movies
           </ToggleFiltersHeader>
-          <div className="gv-search-bar">
-            <theme.Box>
-              <TagsQuery tree={tree} path={['root', 'bar']} autoFocus />
-            </theme.Box>
+          <Grid columns="1fr auto" gap={10} placeItems="center stretch">
+            <TagsQuerySearchBar
+              tree={tree}
+              path={['root', 'bar']}
+              resultsPath={['root', 'results']}
+              autoFocus
+              actionWrapper={aspectWrapper}
+              searchButtonProps={{ ['data-attribute']: 'attribute1' }}
+            />
             <theme.ButtonGroup>
-              <theme.Button
-                className="gv-search-button"
-                onClick={tree.triggerUpdate}
-                primary
+              <theme.AlternateButton
+                title="Auto Update"
+                primary={!tree.disableAutoUpdate}
+                onClick={F.flip('disableAutoUpdate', tree)}
               >
-                Search
-              </theme.Button>
-              <div className="gv-search-toolbar">
-                <theme.AlternateButton
-                  title="Auto Update"
-                  primary={state.autoUpdate}
-                  onClick={() => {
-                    state.autoUpdate = !state.autoUpdate
-                    tree.disableAutoUpdate = !state.autoUpdate
-                  }}
-                >
-                  <theme.Icon icon="AutoUpdate" />
-                </theme.AlternateButton>
-                <theme.AlternateButton
-                  onClick={() => {
-                    window.location.reload()
-                  }}
-                  title="New Search"
-                >
-                  <theme.Icon icon="New" />
-                </theme.AlternateButton>
-              </div>
+                <theme.Icon icon="AutoUpdate" />
+              </theme.AlternateButton>
+              <theme.AlternateButton
+                onClick={() => {
+                  window.location.reload()
+                }}
+                title="New Search"
+              >
+                <theme.Icon icon="New" />
+              </theme.AlternateButton>
             </theme.ButtonGroup>
-          </div>
+          </Grid>
           <h1>Search Results</h1>
           <Tabs defaultValue="results" TabPanel={theme.Box}>
             <TabLabel value="results">
@@ -344,4 +337,4 @@ let GreyVestStory = theme => (
   </Awaiter>
 )
 
-export default () => <ThemeConsumer>{GreyVestStory}</ThemeConsumer>
+export default () => <ThemeConsumer>{GreyVestSearchBarStory}</ThemeConsumer>

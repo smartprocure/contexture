@@ -1,10 +1,9 @@
 import React from 'react'
-import F from 'futil-js'
+import F from 'futil'
 import DDContext from './DragDrop/DDContext'
 import Group from './Group'
 import styles from '../styles'
-import { contexturify } from '../utils/hoc'
-import { useLens } from '../utils/react'
+import { contexturifyWithoutLoader } from '../utils/hoc'
 
 let { background } = styles
 
@@ -15,7 +14,7 @@ let QueryBuilder = ({
   mapNodeToProps,
   theme: { Button },
 }) => {
-  let adding = useLens(false)
+  let adding = React.useState(false)
   return (
     <div style={{ background }}>
       {node && (
@@ -37,4 +36,6 @@ let QueryBuilder = ({
   )
 }
 
-export default DDContext(contexturify(QueryBuilder), { allowEmptyNode: true })
+export default DDContext(contexturifyWithoutLoader(QueryBuilder), {
+  allowEmptyNode: true,
+})
