@@ -27,7 +27,7 @@ let TagsQuery = ({
     <>
       <Popover
         isOpen={F.view(popoverState.tagOpen) === props.value}
-        onClose={F.sets('', popoverState)}
+        onClose={F.sets('', popoverState.tagOpen)}
         style={{ left: 0, top: 20 }}
       >
         <TagActionsMenu tag={props.value} {...{ node, tree }} />
