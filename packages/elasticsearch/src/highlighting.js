@@ -13,15 +13,19 @@ function anyRegexesMatch(regexes, criteria) {
 // Highlight fields can be either strings or objects with a single key which value is the ES highlights object config
 // If the highlight field is specific as a string only then it uses the default highlights config
 function arrayToHighlightsFieldMap(array) {
-  return _.reduce(array, (a, c) => {
-    if (_.isPlainObject(c)) {
-      let key = _.findKey(c, _.identity) // get the first key
-      a[key] = c[key]
-    } else {
-      a[c] = {}
-    }
-    return a
-  }, {})
+  return _.reduce(
+    array,
+    (a, c) => {
+      if (_.isPlainObject(c)) {
+        let key = _.findKey(c, _.identity) // get the first key
+        a[key] = c[key]
+      } else {
+        a[c] = {}
+      }
+      return a
+    },
+    {}
+  )
 }
 
 // TODO: Support multiple pathToNesteds...
@@ -30,7 +34,13 @@ function highlightResults(highlightFields, hit, pathToNested, include) {
 
   // Handle Results Highlighting
   let additionalFields = []
-  let { additional, additionalExclusions, inline, inlineAliases, nested, } = highlightFields
+  let {
+    additional,
+    additionalExclusions,
+    inline,
+    inlineAliases,
+    nested,
+  } = highlightFields
   let inlineKeys = _.keys(arrayToHighlightsFieldMap(inline))
 
   _.each(hit.highlight, (value, key) => {
@@ -87,12 +97,18 @@ function highlightResults(highlightFields, hit, pathToNested, include) {
         // get the root key e.g. "documents" from "documents.*"
         let root = val.split('.*')[0]
         // get all the highlights that start with the root key
-        let matchedKeys = _.filter(_.keys(hit.highlight), key => _.startsWith(key, `${root}.`))
+        let matchedKeys = _.filter(_.keys(hit.highlight), key =>
+          _.startsWith(key, `${root}.`)
+        )
         _.each(matchedKeys, key => _.set(hit._source, key, hit.highlight[key]))
       } else {
         let highlights = hit.highlight[val]
         if (highlights) {
-          _.set(hit._source, val, highlights.length > 1 ? highlights : highlights[0])
+          _.set(
+            hit._source,
+            val,
+            highlights.length > 1 ? highlights : highlights[0]
+          )
           mainHighlighted = true
         }
       }
@@ -124,5 +140,5 @@ function highlightResults(highlightFields, hit, pathToNested, include) {
 
 module.exports = {
   highlightResults,
-  arrayToHighlightsFieldMap
+  arrayToHighlightsFieldMap,
 }
