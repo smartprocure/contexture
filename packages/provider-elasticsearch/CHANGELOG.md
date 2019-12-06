@@ -1,3 +1,6 @@
+# 0.18.3
+* Add support for inline highlighting to be provided via an object and via `.*` approach
+
 # 0.18.2
 * Add css clss to the pre_tags ES config for highlighting.
 

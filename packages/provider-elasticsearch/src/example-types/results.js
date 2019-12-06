@@ -1,6 +1,6 @@
 let F = require('futil-js')
 let _ = require('lodash/fp')
-let highlightResults = require('../highlighting').highlightResults
+let { highlightResults, arrayToHighlightsFieldMap } = require('../highlighting')
 let { getField } = require('../fields')
 
 module.exports = {
@@ -31,28 +31,22 @@ module.exports = {
 
     let highlight =
       _.getOr(true, 'highlight', context) && schema.elasticsearch.highlight
-    let inlineAliases = _.getOr(
-      {},
-      'elasticsearch.highlight.inlineAliases',
-      schema
-    )
+    let inlineAliases = _.getOr({}, 'inlineAliases', highlight)
+    let showOtherMatches = _.getOr(false, 'showOtherMatches', context)
 
     if (highlight) {
-      // Only take the fields that matter to highlighting which are the inline, inlineAliases and additionalFields sections
-      let schemaHighlightFields = _.flow(
+      // Convert the highlight fields from array to an object map
+      let fields = _.flow(
         _.pick(['inline', 'additionalFields']),
         _.values,
         _.flatten,
-        _.concat(_.keys(inlineAliases)),
+        _.concat(_.values(inlineAliases)),
         _.uniq(),
-        // intersect with context.include so we only highlight fields we specified in the context if showOtherMatches is set to false
-        fields =>
-          _.getOr(false, 'showOtherMatches', context)
-            ? fields
-            : _.intersection(context.include, fields),
-        // concat the inlineAliases KEYS so they are part of the highlight.fields object so we highlight on them in the ES response
-        _.concat(_.values(inlineAliases))
-      )(schema.elasticsearch.highlight)
+        arrayToHighlightsFieldMap,
+        filtered => showOtherMatches
+          ? filtered
+          : _.pick(_.intersection(context.include, _.keys(filtered)), filtered),
+      )(highlight)
 
       F.extendOn(result, {
         highlight: {
@@ -60,7 +54,7 @@ module.exports = {
           post_tags: ['</b>'],
           require_field_match: false,
           number_of_fragments: 0,
-          fields: _.fromPairs(_.map(val => [val, {}], schemaHighlightFields)),
+          fields
         },
       })
     }
@@ -73,7 +67,7 @@ module.exports = {
         endRecord: startRecord + results.hits.hits.length,
         results: _.map(hit => {
           let highlightObject
-          let additionalFields // , mainHighlighted;
+          let additionalFields
           if (highlight) {
             highlightObject = highlightResults(
               schema.elasticsearch.highlight,
@@ -82,7 +76,6 @@ module.exports = {
               context.include
             )
             additionalFields = highlightObject.additionalFields
-            // mainHighlighted  = highlightObject.mainHighlighted;
           }
 
           // TODO - If nested path, iterate properties on nested path, filtering out nested path results unless mainHighlighted or relevant nested fields have b tags in them

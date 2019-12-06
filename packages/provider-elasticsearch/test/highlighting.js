@@ -1,4 +1,4 @@
-let highlighting = require('../src/highlighting')
+let { highlightResults, arrayToHighlightsFieldMap } = require('../src/highlighting')
 let { expect } = require('chai')
 
 describe('highlighting', () => {
@@ -18,7 +18,7 @@ describe('highlighting', () => {
         highlight: { summary: ['a'], description: ['b'], title: ['c'] },
       }
       let include = ['title']
-      let result = highlighting.highlightResults(
+      let result = highlightResults(
         highlightFields,
         hit,
         undefined,
@@ -52,7 +52,7 @@ describe('highlighting', () => {
         },
         highlight: { summary: ['a'], description: ['b'], title: ['c'] },
       }
-      let result = highlighting.highlightResults(highlightFields, hit)
+      let result = highlightResults(highlightFields, hit)
       expect(result).to.deep.equal({
         additionalFields: [],
         mainHighlighted: true,
@@ -69,10 +69,68 @@ describe('highlighting', () => {
         },
         highlight: { title: ['<a>foo</a>'], description: ['<a>bar</a>'] },
       }
-      let result = highlighting.highlightResults(highlightFields, hit)
+      let result = highlightResults(highlightFields, hit)
       expect(hit._source).to.deep.equal({
         title: '<a>foo</a>',
         description: '<a>bar</a>',
+      })
+      expect(result).to.deep.equal({
+        additionalFields: [],
+        mainHighlighted: true,
+      })
+    })
+    it('should work with inline and .* object', () => {
+      let highlightFields = {
+        inline: ['title', 'description', {
+          'documents.*': {
+            file0: {
+              number_of_fragments: 1,
+            }
+          }
+        }],
+      }
+      let hit = {
+        _source: {
+          title: '...',
+          description: '...',
+        },
+        highlight: { title: ['<a>foo</a>'], description: ['<a>bar</a>'], 'documents.file0.parseBoxText': ['<a>fooBar</a>'] },
+      }
+      let result = highlightResults(highlightFields, hit)
+      expect(hit._source).to.deep.equal({
+        title: '<a>foo</a>',
+        description: '<a>bar</a>',
+        documents: {
+          file0: {
+            parseBoxText: ['<a>fooBar</a>']
+          }
+        }
+      })
+      expect(result).to.deep.equal({
+        additionalFields: [],
+        mainHighlighted: true,
+      })
+    })
+    it('should work with inline and object', () => {
+      let highlightFields = {
+        inline: ['title', 'description', {
+          'documents': {
+            number_of_fragments: 1,
+          }
+        }],
+      }
+      let hit = {
+        _source: {
+          title: '...',
+          description: '...',
+        },
+        highlight: { title: ['<a>foo</a>'], description: ['<a>bar</a>'], 'documents': ['<a>fooBar</a>'] },
+      }
+      let result = highlightResults(highlightFields, hit)
+      expect(hit._source).to.deep.equal({
+        title: '<a>foo</a>',
+        description: '<a>bar</a>',
+        documents: '<a>fooBar</a>'
       })
       expect(result).to.deep.equal({
         additionalFields: [],
@@ -96,7 +154,7 @@ describe('highlighting', () => {
           'description.exact': ['<a>bar</a>'],
         },
       }
-      let result = highlighting.highlightResults(highlightFields, hit)
+      let result = highlightResults(highlightFields, hit)
       expect(hit._source).to.deep.equal({
         title: '<a>foo</a>',
         description: '<a>bar</a>',
@@ -122,13 +180,28 @@ describe('highlighting', () => {
           'description.exact': ['<a>bar</a>'],
         },
       }
-      let result = highlighting.highlightResults(highlightFields, hit)
+      let result = highlightResults(highlightFields, hit)
       expect(hit._source).to.deep.equal({
         description: '<a>foo</a>',
       })
       expect(result).to.deep.equal({
         additionalFields: [],
         mainHighlighted: true,
+      })
+    })
+    it('arrayToHighlightsFieldMap should work', () => {
+      let inline = ['title', 'description', {
+        'documents': {
+          number_of_fragments: 1,
+        }
+      }]
+      let result = arrayToHighlightsFieldMap(inline)
+      expect(result).to.deep.equal({
+        title: {},
+        description: {},
+        documents: {
+          number_of_fragments: 1,
+        }
       })
     })
   })
