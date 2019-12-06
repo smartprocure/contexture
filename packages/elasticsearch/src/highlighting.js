@@ -9,23 +9,41 @@ function anyRegexesMatch(regexes, criteria) {
   return _.some(_.invokeMap(_.map(regexes, regexify), 'test', criteria))
 }
 
+// Convert the fields array to object map where we only pick the first key from the objects
+// Highlight fields can be either strings or objects with a single key which value is the ES highlights object config
+// If the highlight field is specific as a string only then it uses the default highlights config
+function arrayToHighlightsFieldMap(array) {
+  return _.reduce(array, (a, c) => {
+    if (_.isPlainObject(c)) {
+      let key = _.findKey(c, _.identity) // get the first key
+      a[key] = c[key]
+    } else {
+      a[c] = {}
+    }
+    return a
+  }, {})
+}
+
 // TODO: Support multiple pathToNesteds...
 function highlightResults(highlightFields, hit, pathToNested, include) {
   // TODO: Support Regex and Function basis for all options
 
   // Handle Results Highlighting
   let additionalFields = []
+  let { additional, additionalExclusions, inline, inlineAliases, nested, } = highlightFields
+  let inlineKeys = _.keys(arrayToHighlightsFieldMap(inline))
+
   _.each(hit.highlight, (value, key) => {
     // Populate Additional Fields
-    let additionalMatches = anyRegexesMatch(highlightFields.additional, key)
+    let additionalMatches = anyRegexesMatch(additional, key)
     // Exclude explicit exclusions, inline, and nested highlight fields
     let additionalExclusionMatches =
-      anyRegexesMatch(highlightFields.additionalExclusions, key) ||
-      anyRegexesMatch(highlightFields.inline, key) ||
-      anyRegexesMatch(highlightFields.nested, key)
+      anyRegexesMatch(additionalExclusions, key) ||
+      anyRegexesMatch(inline, key) ||
+      anyRegexesMatch(nested, key)
     // If we have an include array, and if the field is inline but is not in the includes, add it to the additionalFields
     let inlineButNotIncluded =
-      include && _.includes(_.difference(highlightFields.inline, include), key)
+      include && _.includes(_.difference(inlineKeys, include), key)
 
     if (
       inlineButNotIncluded ||
@@ -35,9 +53,7 @@ function highlightResults(highlightFields, hit, pathToNested, include) {
         label: key,
         value: value[0],
       })
-    } else if (_.includes(highlightFields.nested, key)) {
-      // Handle Nested Item Highlighting Replacement
-
+    } else if (_.includes(nested, key)) {
       if (_.isArray(value) && !_.includes(key, pathToNested)) {
         additionalFields.push({
           label: key,
@@ -65,12 +81,20 @@ function highlightResults(highlightFields, hit, pathToNested, include) {
   let mainHighlighted = false
   // Copy over all inline highlighted fields
   if (hit.highlight) {
-    let { inline, inlineAliases } = highlightFields
     // do the field replacement for the inline fields
-    _.each(inline, val => {
-      if (hit.highlight[val]) {
-        _.set(hit._source, val, hit.highlight[val][0])
-        mainHighlighted = true
+    _.each(inlineKeys, val => {
+      if (val.endsWith('.*')) {
+        // get the root key e.g. "documents" from "documents.*"
+        let root = val.split('.*')[0]
+        // get all the highlights that start with the root key
+        let matchedKeys = _.filter(_.keys(hit.highlight), key => _.startsWith(key, `${root}.`))
+        _.each(matchedKeys, key => _.set(hit._source, key, hit.highlight[key]))
+      } else {
+        let highlights = hit.highlight[val]
+        if (highlights) {
+          _.set(hit._source, val, highlights.length > 1 ? highlights : highlights[0])
+          mainHighlighted = true
+        }
       }
     })
     // do the field replacement for the inlineAliases fields
@@ -81,8 +105,8 @@ function highlightResults(highlightFields, hit, pathToNested, include) {
         if (hit.highlight[mapToField]) {
           // if the field is only in inlineAliases OR it is in both but not inlined/highlighted already by the inline section
           if (
-            !_.includes(inline, field) ||
-            (_.includes(inline, field) && !hit.highlight[field])
+            !_.includes(inlineKeys, field) ||
+            (_.includes(inlineKeys, field) && !hit.highlight[field])
           ) {
             _.set(hit._source, field, hit.highlight[mapToField][0])
             mainHighlighted = true
@@ -100,4 +124,5 @@ function highlightResults(highlightFields, hit, pathToNested, include) {
 
 module.exports = {
   highlightResults,
+  arrayToHighlightsFieldMap
 }
