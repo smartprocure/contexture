@@ -87,12 +87,22 @@ function highlightResults(highlightFields, hit, pathToNested, include) {
         // get the root key e.g. "documents" from "documents.*"
         let root = val.split('.*')[0]
         // get all the highlights that start with the root key
-        let matchedKeys = _.filter(key => _.startsWith(`${root}.`, key), _.keys(hit.highlight))
-        _.each(key => F.setOn(key, hit.highlight[key], hit._source), matchedKeys)
+        let matchedKeys = _.filter(
+          key => _.startsWith(`${root}.`, key),
+          _.keys(hit.highlight)
+        )
+        _.each(
+          key => F.setOn(key, hit.highlight[key], hit._source),
+          matchedKeys
+        )
       } else {
         let highlights = hit.highlight[val]
         if (highlights) {
-          F.setOn(val, highlights.length > 1 ? highlights : highlights[0], hit._source)
+          F.setOn(
+            val,
+            highlights.length > 1 ? highlights : highlights[0],
+            hit._source
+          )
           mainHighlighted = true
         }
       }
