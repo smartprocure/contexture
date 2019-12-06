@@ -43,9 +43,13 @@ module.exports = {
         _.concat(_.values(inlineAliases)),
         _.uniq(),
         arrayToHighlightsFieldMap,
-        filtered => showOtherMatches
-          ? filtered
-          : _.pick(_.intersection(context.include, _.keys(filtered)), filtered),
+        filtered =>
+          showOtherMatches
+            ? filtered
+            : _.pick(
+                _.intersection(context.include, _.keys(filtered)),
+                filtered
+              )
       )(highlight)
 
       F.extendOn(result, {
@@ -54,7 +58,7 @@ module.exports = {
           post_tags: ['</b>'],
           require_field_match: false,
           number_of_fragments: 0,
-          fields
+          fields,
         },
       })
     }

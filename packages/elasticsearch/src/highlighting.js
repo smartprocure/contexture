@@ -24,7 +24,13 @@ function highlightResults(highlightFields, hit, pathToNested, include) {
 
   // Handle Results Highlighting
   let additionalFields = []
-  let { additional, additionalExclusions, inline, inlineAliases, nested, } = highlightFields
+  let {
+    additional,
+    additionalExclusions,
+    inline,
+    inlineAliases,
+    nested,
+  } = highlightFields
   let inlineKeys = _.keys(arrayToHighlightsFieldMap(inline))
 
   F.eachIndexed((value, key) => {
@@ -118,5 +124,5 @@ function highlightResults(highlightFields, hit, pathToNested, include) {
 
 module.exports = {
   highlightResults,
-  arrayToHighlightsFieldMap
+  arrayToHighlightsFieldMap,
 }
