@@ -1,5 +1,3 @@
-// TODO: modernize and move to fp
-
 let F = require('futil-js')
 let _ = require('lodash/fp')
 
