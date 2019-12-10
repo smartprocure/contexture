@@ -32,6 +32,7 @@ storiesOf('Search Components|FilterList', module)
         b: { label: 'B Field' },
         c: { label: 'c' },
       }}
+      tree={{}}
       mapNodeToProps={componentForType({
         typeA: () => <div>A TYPE</div>,
         typeB: () => <div>B TYPE</div>,
