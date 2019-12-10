@@ -1,4 +1,4 @@
-# 0.18.3
+# 0.19.0
 * Add support for inline highlighting to be provided via an object and via `.*` approach
 
 # 0.18.2
