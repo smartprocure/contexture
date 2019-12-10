@@ -1,3 +1,6 @@
+# 2.9.4
+* TagsQuery: fix bug where tag popover wasn't closing
+
 # 2.9.3
 * TagsQuery: fix a bug where the actions popover closed itself when clicked on
 
