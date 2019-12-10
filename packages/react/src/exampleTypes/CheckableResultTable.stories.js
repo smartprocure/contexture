@@ -5,7 +5,7 @@ import TestTree from './stories/testTree'
 import ThemePicker from '../stories/themePicker'
 import { CheckableResultTable } from '.'
 
-storiesOf('Components|ExampleTypes/CheckableResultTable', module)
+storiesOf('ExampleTypes|CheckableResultTable', module)
   .addDecorator(ThemePicker('greyVest'))
   .add('With selected prop', () => {
     let selected = React.useState([])

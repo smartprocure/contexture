@@ -7,7 +7,7 @@ import decorator from './stories/decorator'
 
 let GridItem = defaultProps({ className: 'gv-grid-item' })(BaseGridItem)
 
-storiesOf('Components|GreyVest Library/Grid', module)
+storiesOf('GreyVest Library|Grid', module)
   .addDecorator(decorator)
   .add('Grail Demo', () => (
     <>
