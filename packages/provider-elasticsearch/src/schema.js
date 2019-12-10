@@ -16,10 +16,7 @@ let firstValue = _.curry((field, data) => _.get(field, _.find(field, data)))
 
 let Tree = F.tree(x => x.properties)
 // flatLeaves should auto detect reject vs omit (or just more general obj vs arr method)
-let flatten = _.flow(
-  Tree.flatten(),
-  _.omitBy(Tree.traverse)
-)
+let flatten = _.flow(Tree.flatten(), _.omitBy(Tree.traverse))
 
 let fromEsIndexMapping = _.mapValues(
   _.flow(
@@ -86,9 +83,10 @@ let fromMappingsWithAliases = (mappings, aliases) => {
 }
 
 let getESSchemas = client =>
-  Promise.all([client.indices.getMapping(), client.indices.getAlias()]).then(
-    ([mappings, aliases]) => fromMappingsWithAliases(mappings, aliases)
-  )
+  Promise.all([
+    client.indices.getMapping(),
+    client.indices.getAlias(),
+  ]).then(([mappings, aliases]) => fromMappingsWithAliases(mappings, aliases))
 
 module.exports = {
   // flagFields,
