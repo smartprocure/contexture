@@ -1,3 +1,6 @@
+# 0.19.2
+* Refactor slightly the results highlighting
+
 # 0.19.1
 * Fix the highlighting to match the fields properly
 
