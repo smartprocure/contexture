@@ -112,7 +112,6 @@
     "raw-loader": "^2.0.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
-    "react-markdown": "^4.2.2",
     "react-select": "^2.0.0",
     "react-test-renderer": "^16.2.0",
     "read-pkg": "^5.2.0",
@@ -131,5 +130,5 @@
     "react-outside-click-handler": "^1.2.3",
     "recompose": "^0.30.0"
   },
-  "readme": "README.md"
+  "readme": "README.mdx"
 }

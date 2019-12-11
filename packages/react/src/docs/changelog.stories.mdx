@@ -1,10 +1,9 @@
 import { Meta, Story } from '@storybook/addon-docs/blocks'
 import ReactMarkdown from 'react-markdown'
-import changelog from '../../CHANGELOG.md'
+import changelog from '../../CHANGELOG.mdx'
 
+<Meta title="Developer Notes|CHANGELOG" />
 
-<Meta title="Developer Notes|Changelog" />
+# CHANGELOG
 
-# Changelog
-
-<ReactMarkdown>{changelog}</ReactMarkdown>
+<React.Fragment>{mdx(changelog)}</React.Fragment>
