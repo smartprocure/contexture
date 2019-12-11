@@ -6,8 +6,8 @@ import {
   ThemeConsumer,
   withTheme,
   withNamedTheme,
-} from './theme'
-import { wrapDisplayName } from './react'
+} from '../utils/theme'
+import { wrapDisplayName } from '../utils/react'
 
 let withStyle = (style, Component) =>
   wrapDisplayName('withStyle', Component)(props => (
@@ -61,7 +61,7 @@ let ButtonGroup = ({ theme, buttons = [] }) =>
 
 let ThemedButtonGroup = withNamedTheme('ButtonGroup')(ButtonGroup)
 
-storiesOf('Developer Notes|Theming/Demo stories', module)
+storiesOf('Theme API|Examples', module)
   .add('Global defaults', () => (
     <>
       <ThemedButton>
@@ -159,7 +159,7 @@ storiesOf('Developer Notes|Theming/Demo stories', module)
     )
   })
 
-storiesOf('Developer Notes|Theming/Demo stories/ThemeConsumer', module)
+storiesOf('Theme API|Examples/ThemeConsumer', module)
   .add('Without name', () => (
     <ThemeProvider
       theme={{
@@ -195,7 +195,7 @@ let IconButton = ({ theme: { Button, Icon }, children }) => (
 )
 let ThemedIconButton = withNamedTheme('IconButton')(IconButton)
 
-storiesOf('Developer Notes|Theming/Demo stories/Multi-level nesting', module)
+storiesOf('Theme API|Examples/Multi-level nesting', module)
   .add('With theme context', () => (
     <ThemeProvider
       theme={{
