@@ -1,7 +1,4 @@
-import { configure, addParameters } from '@storybook/react'
-import { DocsPage } from '@storybook/addon-docs/blocks'
-import { PropsTable } from '@storybook/components'
-import F from 'futil-js'
+import { configure } from '@storybook/react'
 
 configure(
   require.context(
