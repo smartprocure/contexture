@@ -1,3 +1,6 @@
+# 0.19.1
+* Fix the highlighting to match the fields properly
+
 # 0.19.0
 * Add support for inline highlighting to be provided via an object and via `.*` approach
 
