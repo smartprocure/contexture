@@ -19,9 +19,7 @@ import { ThemeProvider } from 'contexture-react'
 import { greyVestTheme } from 'contexture-react' // or use your own!
 
 let App = () => (
-  <ThemeProvider theme={greyVestTheme}>
-    {/* rest of your app */}
-  </ThemeProvider>
+  <ThemeProvider theme={greyVestTheme}>{/* rest of your app */}</ThemeProvider>
 )
 ```
 
@@ -31,7 +29,7 @@ let App = () => (
 
 ### The Root component
 
-`Root` is a special **theme key** that allows you to include global components such as styles, fonts, or other providers within your theme. When `ThemeProvider` is rendered, it *wraps its own children in the `Root` **theme component*** if one exists on the provided theme:
+`Root` is a special **theme key** that allows you to include global components such as styles, fonts, or other providers within your theme. When `ThemeProvider` is rendered, it \*wraps its own children in the `Root` **theme component\*** if one exists on the provided theme:
 
 ```jsx
 export let ThemeProvider = ({ theme, children }) => {
@@ -44,9 +42,10 @@ export let ThemeProvider = ({ theme, children }) => {
   )
 }
 ```
+
 <sup>^ The actual source code for ThemeProvider</sup>
 
-> ⚠️ **IMPORTANT:** If you use a `Root` theme component, it ***must*** handle its `children` prop, or nothing inside of `ThemeProvider` will render!
+> ⚠️ **IMPORTANT:** If you use a `Root` theme component, it **_must_** handle its `children` prop, or nothing inside of `ThemeProvider` will render!
 
 ## Consuming the Theme API
 
@@ -66,12 +65,12 @@ import { ThemeConsumer } from 'contexture-react'
 
 let IconButton = ({ icon, children, ...props }) => (
   <ThemeConsumer>
-    {theme =>
+    {theme => (
       <theme.Button {...props}>
         <theme.Icon icon={icon} />
         {children}
       </theme.Button>
-    }
+    )}
   </ThemeConsumer>
 )
 export default IconButton
@@ -79,7 +78,7 @@ export default IconButton
 
 The `ThemeConsumer` component takes two optional props: `name`, which accepts a string and can be used to supply a name for [nested theming](#nested-themes), and `theme`, which accepts a **theme object** that is merged with the context theme, overriding its values where applicable.
 
-When a nested theme is merged, or when the context theme is overridden by a `theme` prop, `ThemeConsumer` *creates a theme provider with the new theme object*. This ensures that that any of its children or grandchildren that consume the theme API will be able to access the updated theme object from context.
+When a nested theme is merged, or when the context theme is overridden by a `theme` prop, `ThemeConsumer` _creates a theme provider with the new theme object_. This ensures that that any of its children or grandchildren that consume the theme API will be able to access the updated theme object from context.
 
 ### withTheme
 
@@ -108,7 +107,7 @@ If you need to give your component a `name` for nested themes, use the `withName
 
 ### useTheme
 
-The `useTheme` hook functions just like the other two methods, with one important exception: *`useTheme` does **not** create a new theme provider, so it cannot affect the theme context for the component's children.*
+The `useTheme` hook functions just like the other two methods, with one important exception: _`useTheme` does **not** create a new theme provider, so it cannot affect the theme context for the component's children._
 
 Here's the IconButton example with `useTheme`:
 
@@ -132,7 +131,7 @@ export default IconButton
 
 `useTheme` takes two optional arguments, `name` and `theme`, and returns a **theme object**. Just like with `ThemeConsumer`, the `name` parameter accepts a string and is used to merge nested themes, while the `theme` parameter accepts a **theme object** that is used to selectively override the context theme.
 
-These potential modifications to the context theme *do* affect `useTheme`'s return value, so they are still useful for the component itself. However, as noted, `useTheme` does *not* create a new theme provider for its children, so any overrides will *not* be propagated further down the component tree.
+These potential modifications to the context theme _do_ affect `useTheme`'s return value, so they are still useful for the component itself. However, as noted, `useTheme` does _not_ create a new theme provider for its children, so any overrides will _not_ be propagated further down the component tree.
 
 > 💁 **Trivia:** The `useTheme` hook is used internally by both `ThemeConsumer` and `withTheme`.
 
@@ -142,42 +141,41 @@ This section documents all of the **theme components** used by contexture-react 
 
 ### Inputs
 
-| Key | Expected props | Notes | contexture-react usage |
-| --- | --- | --- | --- |
-| `Button` | `isActive`, `primary`, `onClick`, `children` | A generic button | Facet, Number, TagsQuery, TermsStatsTable |
-| `AlternateButton` | same as `Button` | An alternate style of generic button. Defaults to a text button. | |
-| `Checkbox` | `checked`, `onChange` | A generic checkbox | CheckableResultTable, CheckableTermsStatsTable, Facet, TagsQuery |
-| `Icon` | `icon`, `onClick` | A generic icon component | ResultPager, ResultTable |
-| `RadioList` | `options`, `value`, `onChange` | A generic list of radio buttons. The `options` prop is an array of `{ value, label }` objects. | Bool, Date, Exists, Facet, TagsQuery |
-| `Select` | same as basic `select` | A generic dropdown select component | Date, DateRangePicker, Geo, TagsJoinPicker, TagsQuery, TagsText, TermsStatsTable |
-| `TextInput` |  same as basic `input` | A generic text input component | Facet, Query, TermsStatsTable, Text |
-| `DateInput` | `value`, `onChange` | A generic date entry component | Date |
-| `NumberInput` | same as basic `input` | An input of type `number` | Geo, Number |
-| `TagsInput` | `tags`, `addTag`, `removeTag`, `submit`, `tagStyle`, `placeholder`, `splitCommas`, `style`, `onBlur`, `onInputChange`, `onTagClick` | A text input field that turns input into `Tag`s | TagsQuery, TagsText |
-| `Tag` | `value`, `removeTag`, `tagStyle`, `onClick` | A tag component with a button to remove the tag. Used in TagsInput. | none |
-| `NestedPicker` | `options`, `onChange`, `PickerItem` | Renders a list of selectable options | ResultTable |
+| Key               | Expected props                                                                                                                      | Notes                                                                                          | contexture-react usage                                                           |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `Button`          | `isActive`, `primary`, `onClick`, `children`                                                                                        | A generic button                                                                               | Facet, Number, TagsQuery, TermsStatsTable                                        |
+| `AlternateButton` | same as `Button`                                                                                                                    | An alternate style of generic button. Defaults to a text button.                               |                                                                                  |
+| `Checkbox`        | `checked`, `onChange`                                                                                                               | A generic checkbox                                                                             | CheckableResultTable, CheckableTermsStatsTable, Facet, TagsQuery                 |
+| `Icon`            | `icon`, `onClick`                                                                                                                   | A generic icon component                                                                       | ResultPager, ResultTable                                                         |
+| `RadioList`       | `options`, `value`, `onChange`                                                                                                      | A generic list of radio buttons. The `options` prop is an array of `{ value, label }` objects. | Bool, Date, Exists, Facet, TagsQuery                                             |
+| `Select`          | same as basic `select`                                                                                                              | A generic dropdown select component                                                            | Date, DateRangePicker, Geo, TagsJoinPicker, TagsQuery, TagsText, TermsStatsTable |
+| `TextInput`       | same as basic `input`                                                                                                               | A generic text input component                                                                 | Facet, Query, TermsStatsTable, Text                                              |
+| `DateInput`       | `value`, `onChange`                                                                                                                 | A generic date entry component                                                                 | Date                                                                             |
+| `NumberInput`     | same as basic `input`                                                                                                               | An input of type `number`                                                                      | Geo, Number                                                                      |
+| `TagsInput`       | `tags`, `addTag`, `removeTag`, `submit`, `tagStyle`, `placeholder`, `splitCommas`, `style`, `onBlur`, `onInputChange`, `onTagClick` | A text input field that turns input into `Tag`s                                                | TagsQuery, TagsText                                                              |
+| `Tag`             | `value`, `removeTag`, `tagStyle`, `onClick`                                                                                         | A tag component with a button to remove the tag. Used in TagsInput.                            | none                                                                             |
+| `NestedPicker`    | `options`, `onChange`, `PickerItem`                                                                                                 | Renders a list of selectable options                                                           | ResultTable                                                                      |
 
 ### Containers
 
-| Key | Expected props | Notes | ExampleTypes usage |
-| --- | --- | --- | --- |
-| `Box` | `children` | A generic container element | none |
-| `ButtonGroup` | `children` | A container for holding |
-| `Modal` | `isOpen`, `children` | A generic modal component | ResultTable |
-| `Popover` | `isOpen`, `children` | A generic context-menu component | ResultTable |
-| `DropdownItem` | `children` | A generic list item used in dropdown menus | ResultTable |
-| `PagerItem` | `active`, `disabled` | A list item for Pager components | ResultPager |
-| `TextHighlight` | `pattern`, `text`, `Wrap` | Renders the text given in the `text` prop, with the parts that match the `pattern` prop wrapped in the `Wrap` component | none |
-| `Table` | same as basic `table` | A generic table component | ResultTable |
+| Key             | Expected props            | Notes                                                                                                                   | ExampleTypes usage |
+| --------------- | ------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `Box`           | `children`                | A generic container element                                                                                             | none               |
+| `ButtonGroup`   | `children`                | A container for holding                                                                                                 |
+| `Modal`         | `isOpen`, `children`      | A generic modal component                                                                                               | ResultTable        |
+| `Popover`       | `isOpen`, `children`      | A generic context-menu component                                                                                        | ResultTable        |
+| `DropdownItem`  | `children`                | A generic list item used in dropdown menus                                                                              | ResultTable        |
+| `PagerItem`     | `active`, `disabled`      | A list item for Pager components                                                                                        | ResultPager        |
+| `TextHighlight` | `pattern`, `text`, `Wrap` | Renders the text given in the `text` prop, with the parts that match the `pattern` prop wrapped in the `Wrap` component | none               |
+| `Table`         | same as basic `table`     | A generic table component                                                                                               | ResultTable        |
 
 ### Other
 
-| Key | Expected props | Notes |
-| --- | --- | --- |
-| `Root` | `children` | This component is rendered inside `ThemeProvider`, and wraps its children. For use with other providers and/or standalone globals like stylesheets. |
-| `BarChart` | `height`, `borderColor`, `min`, `max` | Used in the DateHistogram and TermsStats example types |
-| `UnmappedNodeComponent` | `node` | Used as a fallback component in search interfaces for nodes that are not mapped to any other component |
-
+| Key                     | Expected props                        | Notes                                                                                                                                               |
+| ----------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Root`                  | `children`                            | This component is rendered inside `ThemeProvider`, and wraps its children. For use with other providers and/or standalone globals like stylesheets. |
+| `BarChart`              | `height`, `borderColor`, `min`, `max` | Used in the DateHistogram and TermsStats example types                                                                                              |
+| `UnmappedNodeComponent` | `node`                                | Used as a fallback component in search interfaces for nodes that are not mapped to any other component                                              |
 
 ## Theme Authoring
 
@@ -191,7 +189,7 @@ import ImpressiveIcon from './components/ImpressiveIcon'
 
 export default {
   Button: BeautifulButton,
-  Icon: ImpressiveIcon
+  Icon: ImpressiveIcon,
 }
 ```
 
@@ -209,9 +207,7 @@ import IconButton from './components/IconButton.js'
 export default props => (
   <ThemeProvider theme={totallyTubularTheme}>
     {/* Some other stuff... */}
-    <IconButton icon="some-icon">
-      My icon button!
-    </IconButton>
+    <IconButton icon="some-icon">My icon button!</IconButton>
   </ThemeProvider>
 )
 ```
@@ -220,7 +216,7 @@ The `IconButton` component should now render your `BeautifulButton` and `Impress
 
 ## Nested themes
 
-A **nested theme** is a special case of **theme component**: one whose **theme key** is a *path* rather than a *string*. Nested themes allow a single **theme key** -- like, say, `Icon` -- to have an alternate value for some specific parent or chain of parents, in addition to its normal value.
+A **nested theme** is a special case of **theme component**: one whose **theme key** is a _path_ rather than a _string_. Nested themes allow a single **theme key** -- like, say, `Icon` -- to have an alternate value for some specific parent or chain of parents, in addition to its normal value.
 
 To illustrate nested themes, we'll be modifying our `totallyTubularTheme` from the previous section to use a **nested key** for `IconButton`'s `Icon`, in addition to the standard `Icon`:
 
@@ -234,7 +230,7 @@ import InvisibleIcon from './components/InvisibleIcon'
 export default {
   Button: BeautifulButton,
   Icon: ImpressiveIcon,
-  'IconButton.Icon': InvisibleIcon
+  'IconButton.Icon': InvisibleIcon,
 }
 ```
 
@@ -244,7 +240,7 @@ Now that our theme is configured to use a nested theme for `IconButton`, we need
 
 ### Naming components
 
-> ⚠️ **IMPORTANT:** *Only named components support nested themes.* A component ***must*** be given a `name` in order to support nested themes.
+> ⚠️ **IMPORTANT:** _Only named components support nested themes._ A component **_must_** be given a `name` in order to support nested themes.
 
 When a component is given a `name` through `ThemeConsumer`, `withNamedTheme`, or `useTheme`, contexture-react performs an additional step after it fetches the theme from context: it looks for **nested keys** that start with that `name`, chops the `name` off of each one, and merges the resulting theme components on top of the context theme, overriding its existing components where applicable. Thus, for any component named `'IconButton'`, the theme object it receives will look like this:
 
@@ -256,18 +252,17 @@ When a component is given a `name` through `ThemeConsumer`, `withNamedTheme`, or
 }
 ```
 
-This behavior *does not mutate the context theme*, so `IconButton`'s siblings and parents are not affected. However, both `ThemeConsumer` and `withTheme`/`withNamedTheme` initialize new theme providers, so that the overrides will remain in context for their children's children. 
+This behavior _does not mutate the context theme_, so `IconButton`'s siblings and parents are not affected. However, both `ThemeConsumer` and `withTheme`/`withNamedTheme` initialize new theme providers, so that the overrides will remain in context for their children's children.
 
-> ℹ️ **Note:** Remember that `useTheme` does *not* initialize a new provider, so it is **not** the best choice for use with nested themes.
+> ℹ️ **Note:** Remember that `useTheme` does _not_ initialize a new provider, so it is **not** the best choice for use with nested themes.
 
 Naming your components is dead simple:
 
 #### Using `ThemeConsumer`
+
 ```jsx
 let IconButton = ({ icon, children, ...props }) => (
-  <ThemeConsumer name="IconButton">
-    {/* theme => ... */}
-  </ThemeConsumer>
+  <ThemeConsumer name="IconButton">{/* theme => ... */}</ThemeConsumer>
 )
 export default IconButton
 ```
