@@ -45,7 +45,7 @@ module.exports = {
         arrayToHighlightsFieldMap, // Convert the array to object map so we can simply _.pick again
         filtered =>
           showOtherMatches
-            ? filtered  // Highlight on all fields specified in the initial _.pick above
+            ? filtered // Highlight on all fields specified in the initial _.pick above
             : _.pick(context.include, filtered) // Only highlight on the fields listed in the context include section
       )(highlight)
 
