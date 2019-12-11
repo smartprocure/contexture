@@ -532,7 +532,7 @@ We also vastly improved our displayName handling throughout, which should lead t
 * Popovers now close when users click outside of them.
 
 # 1.40.0
-* New style "gv-link-button", to use a button in place of an <a> tag with no 
+* New style "gv-link-button", to use a button in place of an `<a>` tag with no 
   href
 
 # 1.39.3
