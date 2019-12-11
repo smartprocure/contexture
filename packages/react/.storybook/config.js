@@ -3,12 +3,6 @@ import { DocsPage } from '@storybook/addon-docs/blocks'
 import { PropsTable } from '@storybook/components'
 import F from 'futil-js'
 
-let propDefGetter = type => F.unkeyBy('name', type.info.props)
-
-addParameters({
-  docs: { getPropDefs: propDefGetter },
-})
-
 configure(
   require.context(
     '../src',
