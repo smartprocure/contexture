@@ -6,8 +6,8 @@ import { ToggleFiltersButton } from '.'
 
 let click = action('clicked')
 
-storiesOf('Search Components|Internals', module)
+storiesOf('Search Components|Internals/ToggleFiltersButton', module)
   .addDecorator(ThemePicker('greyVest'))
-  .add('ToggleFiltersButton', () => (
+  .add('Story', () => (
     <ToggleFiltersButton onClick={() => click()} />
   ))
