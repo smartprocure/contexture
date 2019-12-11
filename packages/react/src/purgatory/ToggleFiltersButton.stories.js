@@ -8,6 +8,4 @@ let click = action('clicked')
 
 storiesOf('Search Components|Internals/ToggleFiltersButton', module)
   .addDecorator(ThemePicker('greyVest'))
-  .add('Story', () => (
-    <ToggleFiltersButton onClick={() => click()} />
-  ))
+  .add('Story', () => <ToggleFiltersButton onClick={() => click()} />)
