@@ -37,19 +37,16 @@ module.exports = {
     if (highlight) {
       // Convert the highlight fields from array to an object map
       let fields = _.flow(
-        _.pick(['inline', 'additionalFields']),
+        _.pick(['inline', 'additionalFields']), // Get the highlight fields we will be working with
         _.values,
         _.flatten,
-        _.concat(_.values(inlineAliases)),
+        _.concat(_.values(inlineAliases)), // Include the provided field aliases if any
         _.uniq(),
-        arrayToHighlightsFieldMap,
+        arrayToHighlightsFieldMap, // Convert the array to object map so we can simply _.pick again
         filtered =>
           showOtherMatches
-            ? filtered
-            : _.pick(
-              _.intersection(context.include, _.keys(filtered)),
-              filtered
-            )
+            ? filtered  // Highlight on all fields specified in the initial _.pick above
+            : _.pick(context.include, filtered) // Only highlight on the fields listed in the context include section
       )(highlight)
 
       F.extendOn(result, {
