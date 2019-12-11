@@ -46,7 +46,10 @@ module.exports = {
         filtered =>
           showOtherMatches
             ? filtered
-            : _.pick(context.include, _.keys(filtered))
+            : _.pick(
+              _.intersection(context.include, _.keys(filtered)),
+              filtered
+            )
       )(highlight)
 
       F.extendOn(result, {
