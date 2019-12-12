@@ -1,9 +1,9 @@
 import _ from 'lodash/fp'
 import React from 'react'
 import { fromPromise } from 'mobx-utils'
-import { QueryBuilder, Awaiter, componentForType } from '../../..'
-import Contexture, { updateSchemas } from '../utils/contexture'
-import { ResultCount, ResultTable, TypeMap } from '../../../exampleTypes'
+import { QueryBuilder, Awaiter, componentForType } from '../..'
+import Contexture, { updateSchemas } from './utils/contexture'
+import { ResultCount, ResultTable, TypeMap } from '../../exampleTypes'
 
 let tree = Contexture({
   key: 'root',
@@ -49,7 +49,12 @@ let schemas = fromPromise(
   )
 )
 
-export default () => (
+export default {
+  title: 'Live Demos|Advanced Search',
+  parameters: { docs: { page: null } },
+}
+
+export let advanced = () => (
   <Awaiter promise={schemas}>
     {schemas => (
       <div>

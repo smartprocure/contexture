@@ -4,6 +4,6 @@ import TestTree from './stories/testTree'
 import ThemePicker from '../stories/themePicker'
 import { Date } from '.'
 
-storiesOf('Components|ExampleTypes', module)
+storiesOf('ExampleTypes|Date', module)
   .addDecorator(ThemePicker('greyVest'))
-  .addWithJSX('Date', () => <Date tree={TestTree()} path={['date']} />)
+  .add('Date', () => <Date tree={TestTree()} path={['date']} />)

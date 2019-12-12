@@ -4,7 +4,7 @@ import React from 'react'
 import { observable, autorun } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { observer, inject } from 'mobx-react'
-import Contexture, { updateSchemas } from '../utils/contexture'
+import Contexture, { updateSchemas } from './utils/contexture'
 import {
   FilterList,
   Flex,
@@ -12,8 +12,8 @@ import {
   SpacedList,
   componentForType,
   FilterAdder,
-} from '../../..'
-import theme, { DarkBox } from '../../DemoControls'
+} from '../..'
+import theme, { DarkBox } from '../DemoControls'
 import {
   Query,
   ResultCount,
@@ -21,9 +21,9 @@ import {
   DateHistogram,
   CheckableTermsStatsTable,
   TypeMap,
-} from '../../../exampleTypes'
-import { ThemeProvider } from '../../../utils/theme'
-import { Column } from './../../../greyVest/ExpandableTable'
+} from '../../exampleTypes'
+import { ThemeProvider } from '../../utils/theme'
+import { Column } from '../../greyVest/ExpandableTable'
 
 let formatYear = x => new Date(x).getUTCFullYear()
 

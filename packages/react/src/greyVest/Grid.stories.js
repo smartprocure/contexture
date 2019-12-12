@@ -7,9 +7,9 @@ import decorator from './stories/decorator'
 
 let GridItem = defaultProps({ className: 'gv-grid-item' })(BaseGridItem)
 
-storiesOf('Components|GreyVest Library/Grid', module)
+storiesOf('GreyVest Library|Grid', module)
   .addDecorator(decorator)
-  .addWithJSX('Grail Demo', () => (
+  .add('Grail Demo', () => (
     <>
       <style>{`
         .gv-grid-item {
@@ -34,7 +34,7 @@ storiesOf('Components|GreyVest Library/Grid', module)
       </Grid>
     </>
   ))
-  .addWithJSX('GridItem positioning', () => (
+  .add('GridItem positioning', () => (
     <>
       <style>{`
         .gv-grid-item {
@@ -72,7 +72,7 @@ storiesOf('Components|GreyVest Library/Grid', module)
       </Grid>
     </>
   ))
-  .addWithJSX('Rows/columns shorthand', () => (
+  .add('Rows/columns shorthand', () => (
     <Grid columns={5} gap={10}>
       {_.times(
         n => (

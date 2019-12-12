@@ -5,9 +5,9 @@ import TestTree from './stories/testTree'
 import ThemePicker from '../stories/themePicker'
 import { CheckableResultTable } from '.'
 
-storiesOf('Components|ExampleTypes/CheckableResultTable', module)
+storiesOf('ExampleTypes|CheckableResultTable', module)
   .addDecorator(ThemePicker('greyVest'))
-  .addWithJSX('With selected prop', () => {
+  .add('With selected prop', () => {
     let selected = React.useState([])
     return (
       <div>
@@ -26,7 +26,7 @@ storiesOf('Components|ExampleTypes/CheckableResultTable', module)
       </div>
     )
   })
-  .addWithJSX('With selectedValues/onChange props', () => {
+  .add('With selectedValues/onChange props', () => {
     let [selectedValues, onChange] = React.useState([])
     return (
       <div>

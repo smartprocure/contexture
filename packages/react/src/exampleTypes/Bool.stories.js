@@ -4,6 +4,6 @@ import TestTree from './stories/testTree'
 import ThemePicker from '../stories/themePicker'
 import { Bool } from '.'
 
-storiesOf('Components|ExampleTypes', module)
+storiesOf('ExampleTypes|Bool', module)
   .addDecorator(ThemePicker('greyVest'))
-  .addWithJSX('Bool', () => <Bool tree={TestTree()} path={['bool']} />)
+  .add('Bool', () => <Bool tree={TestTree()} path={['bool']} />)

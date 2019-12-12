@@ -3,9 +3,9 @@ import { storiesOf } from '@storybook/react'
 import { root, DnDDecorator } from './stories/util'
 import Rule from './Rule'
 
-storiesOf('Components|Search Components/QueryBuilder/Internals', module)
+storiesOf('Search Components|QueryBuilder/Internals', module)
   .addDecorator(DnDDecorator)
-  .addWithJSX('Rule', () => (
+  .add('Rule', () => (
     <Rule
       node={{
         type: 'test',

@@ -10,7 +10,7 @@ import { Flex } from '../greyVest'
 
 let themes = { base, blueberry, greyVest, material }
 
-let ThemeSwitcher = ({ defaultTheme = 'base', children }) => {
+export let ThemeSwitcher = ({ defaultTheme = 'base', children }) => {
   let theme = React.useState(defaultTheme)
   return (
     <ThemeProvider theme={themes[F.view(theme)]}>

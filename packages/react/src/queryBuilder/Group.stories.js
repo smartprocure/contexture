@@ -3,9 +3,9 @@ import { storiesOf } from '@storybook/react'
 import { root, DnDDecorator } from './stories/util'
 import Group from './Group'
 
-storiesOf('Components|Search Components/QueryBuilder/Internals/Group', module)
+storiesOf('Search Components|QueryBuilder/Internals/Group', module)
   .addDecorator(DnDDecorator)
-  .addWithJSX('One Filter', () => (
+  .add('One Filter', () => (
     <Group
       node={{
         key: 'root',
@@ -16,7 +16,7 @@ storiesOf('Components|Search Components/QueryBuilder/Internals/Group', module)
       isRoot={true}
     />
   ))
-  .addWithJSX('Multiple Filters', () => (
+  .add('Multiple Filters', () => (
     <Group
       node={{
         key: 'root',

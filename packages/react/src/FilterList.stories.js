@@ -4,9 +4,9 @@ import { componentForType } from './utils/schema'
 import ThemePicker from './stories/themePicker'
 import { FilterList } from '.'
 
-storiesOf('Components|Search Components', module)
+storiesOf('Search Components|FilterList', module)
   .addDecorator(ThemePicker('blueberry'))
-  .addWithJSX('FilterList', () => (
+  .add('FilterList', () => (
     <FilterList
       node={{
         children: [
@@ -32,6 +32,7 @@ storiesOf('Components|Search Components', module)
         b: { label: 'B Field' },
         c: { label: 'c' },
       }}
+      tree={{}}
       mapNodeToProps={componentForType({
         typeA: () => <div>A TYPE</div>,
         typeB: () => <div>B TYPE</div>,

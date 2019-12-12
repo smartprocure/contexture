@@ -4,9 +4,7 @@ import TestTree from './stories/testTree'
 import ThemePicker from '../stories/themePicker'
 import { Facet, FacetSelect } from '.'
 
-storiesOf('Components|ExampleTypes', module)
+storiesOf('ExampleTypes|Facet', module)
   .addDecorator(ThemePicker('greyVest'))
-  .addWithJSX('Facet', () => <Facet tree={TestTree()} path={['facet']} />)
-  .addWithJSX('FacetSelect', () => (
-    <FacetSelect tree={TestTree()} path={['facet']} />
-  ))
+  .add('Facet', () => <Facet tree={TestTree()} path={['facet']} />)
+  .add('FacetSelect', () => <FacetSelect tree={TestTree()} path={['facet']} />)

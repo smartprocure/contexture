@@ -1,7 +1,7 @@
 import React from 'react'
 
 // Low effort custom checkbox
-let Checkbox = ({ checked, onChange, style = {} }) => (
+let Checkbox = ({ checked, onChange = () => {}, style = {} }) => (
   <label
     className={`gv-input gv-checkbox ${checked ? 'checked' : ''}`}
     style={style}

@@ -1,24 +1,24 @@
-import React from 'react'
+import * as React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Box } from './greyVest'
-import ThemePicker from './stories/themePicker'
+import { default as ThemePicker } from './stories/themePicker'
 import { SearchLayout } from '.'
 
-storiesOf('Components|Search Components/SearchLayout', module)
+storiesOf('Search Components|SearchLayout', module)
   .addDecorator(ThemePicker('greyVest'))
-  .addWithJSX('Basic', () => (
+  .add('Basic', () => (
     <SearchLayout mode="basic">
       <Box>Filters</Box>
       <Box>Results</Box>
     </SearchLayout>
   ))
-  .addWithJSX('Builder', () => (
+  .add('Builder', () => (
     <SearchLayout mode="builder">
       <Box>Filters</Box>
       <Box>Results</Box>
     </SearchLayout>
   ))
-  .addWithJSX('Results Only', () => (
+  .add('Results Only', () => (
     <SearchLayout mode="resultsOnly">
       {/* <Box>Filters</Box> */}
       <Box>Results</Box>

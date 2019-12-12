@@ -5,9 +5,9 @@ import TestTree from './stories/testTree'
 import ThemePicker from '../stories/themePicker'
 import { ResultTable } from '.'
 
-storiesOf('Components|ExampleTypes/ResultTable', module)
+storiesOf('ExampleTypes|ResultTable', module)
   .addDecorator(ThemePicker('greyVest'))
-  .addWithJSX('Customizations', () => (
+  .add('Customizations', () => (
     <div>
       <style>
         {`
@@ -51,7 +51,7 @@ storiesOf('Components|ExampleTypes/ResultTable', module)
       />
     </div>
   ))
-  .addWithJSX('Display Field Optional', () => {
+  .add('Display Field Optional', () => {
     let tree = TestTree(testTree => {
       testTree.getNode(['results']).include = ['title', 'a', 'b']
       return testTree
