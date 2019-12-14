@@ -1,6 +1,6 @@
 import React from 'react'
 
-let filterListMargin = 16
+let filterListMargin = 12
 
 /*
 Styles for the Grey Vest theme. These are ~external~ to the Grey Vest library,
