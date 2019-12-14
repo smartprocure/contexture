@@ -10,7 +10,7 @@ let styles = mode => ({
   margin: `0 ${margin}px`,
   marginBottom: margin,
   gridTemplateColumns:
-    mode === 'basic' ? 'minmax(250px, 400px) minmax(0, 1fr)' : 'minmax(0, 1fr)',
+    mode === 'basic' ? '320px minmax(0, 1fr)' : 'minmax(0, 1fr)',
 })
 
 let SearchLayout = ({ mode, style, className, ...props }) => (
