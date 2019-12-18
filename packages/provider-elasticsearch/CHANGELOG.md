@@ -1,3 +1,6 @@
+# 0.19.3
+* More results highlight refactoring
+
 # 0.19.2
 * Refactor slightly the results highlighting
 

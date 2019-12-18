@@ -70,7 +70,7 @@ describe('results', () => {
   })
 
   it('should be able to filter fields with include', async () => {
-    F.extendOn(context, { include: 'field' })
+    F.extendOn(context, { include: ['field'] })
     expectedResult.response.results[0].hit = {
       _id: 'test-id',
       field: 'test field',
@@ -78,7 +78,7 @@ describe('results', () => {
     await resultsTest(context, [
       _.extend(expectedCalls[0], {
         _source: {
-          includes: 'field',
+          includes: ['field'],
         },
         sort: {
           _score: 'desc',
@@ -118,7 +118,7 @@ describe('results', () => {
     await resultsTest(context, [
       _.extend(expectedCalls[0], {
         _source: {
-          includes: 'anotherField',
+          includes: ['anotherField'],
         },
         sort: {
           _score: 'desc',
@@ -146,7 +146,7 @@ describe('results', () => {
     await resultsTest(context, [
       _.extend(expectedCalls[0], {
         _source: {
-          includes: 'anotherField',
+          includes: ['anotherField'],
         },
         sort: {
           _score: 'desc',
