@@ -1,5 +1,6 @@
 # 0.19.3
-* More results highlight refactoring
+* Allow contexture search trees to override ES highlight section
+* Auto include in ES _.source.includes fields specified in the search highlight override
 
 # 0.19.2
 * Refactor slightly the results highlighting
