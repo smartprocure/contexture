@@ -36,9 +36,13 @@ module.exports = {
     if (context.exclude) searchObj._source.excludes = context.exclude
 
     // Global schema highlight configuration
-    let schemaHighlight = _.getOr(true, 'highlight', context) && _.cloneDeep(schema.elasticsearch.highlight)
+    let schemaHighlight =
+      _.getOr(true, 'highlight', context) &&
+      _.cloneDeep(schema.elasticsearch.highlight)
     // Specific search highlight override
-    let searchHighlight = _.isPlainObject(context.highlight) ? context.highlight : {}
+    let searchHighlight = _.isPlainObject(context.highlight)
+      ? context.highlight
+      : {}
     let resultColumns = context.include
 
     // Highlighting starts with defaults in the schema first
@@ -48,7 +52,11 @@ module.exports = {
       let schemaInlineAliases = _.getOr({}, 'inlineAliases', schemaHighlight)
 
       // Concat the search specific override fields with the schema `inline` so we have them as targets for highlight replacement
-      F.setOn('inline', _.concat(schemaInline, _.keys(searchHighlight.fields)), schemaHighlight)
+      F.setOn(
+        'inline',
+        _.concat(schemaInline, _.keys(searchHighlight.fields)),
+        schemaHighlight
+      )
       // Convert the highlight fields from array to an object map
       let fields = _.flow(
         _.pick(['inline', 'additionalFields']), // Get the highlight fields we will be working with
@@ -58,17 +66,23 @@ module.exports = {
         _.uniq,
         arrayToHighlightsFieldMap, // Convert the array to object map so we can simply _.pick again
         filtered =>
-        showOtherMatches
+          showOtherMatches
             ? filtered // Highlight on all fields specified in the initial _.pick above
-            : _.pick(context.include, filtered), // Only highlight on the fields listed in the context include section
+            : _.pick(context.include, filtered) // Only highlight on the fields listed in the context include section
       )(schemaHighlight)
 
       // Setup the DEFAULT highlight config object with the calculated fields above
       // and merge with the search specific config
-      F.extendOn(searchObj,
-        _.merge({
-          highlight: {...defaultHighlightingConfig, fields } }, {
-          highlight: searchHighlight })
+      F.extendOn(
+        searchObj,
+        _.merge(
+          {
+            highlight: { ...defaultHighlightingConfig, fields },
+          },
+          {
+            highlight: searchHighlight,
+          }
+        )
       )
 
       // Make sure the search specific overrides are part of the context include.
@@ -94,10 +108,10 @@ module.exports = {
           let additionalFields
           if (schemaHighlight) {
             highlightObject = highlightResults(
-              schemaHighlight,  // The highlight configuration
-              hit,              // The ES result
+              schemaHighlight, // The highlight configuration
+              hit, // The ES result
               schema.elasticsearch.nestedPath,
-              resultColumns     // The columns to return
+              resultColumns // The columns to return
             )
             additionalFields = highlightObject.additionalFields
           }
@@ -114,5 +128,5 @@ module.exports = {
         }, results.hits.hits),
       },
     }))
-  }
+  },
 }
