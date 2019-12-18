@@ -75,7 +75,8 @@ module.exports = {
       // This way they do not have to be added manually. All that is needed is the highlight config
       resultColumns = _.flow(
         _.concat(_.keys(searchHighlight.fields)),
-        _.uniq
+        _.uniq,
+        _.compact
       )(context.include)
 
       // Make sure search returns the resultColumns we want by setting the _.source.includes
