@@ -3,7 +3,7 @@ let _ = require('lodash/fp')
 let F = require('futil-js')
 let sequentialResultTest = require('./testUtils').sequentialResultTest
 
-describe.only('results', () => {
+describe('results', () => {
   let schema
   let context
   let service
