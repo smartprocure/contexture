@@ -106,8 +106,8 @@ describe('results', () => {
     F.extendOn(context, {
       highlight: {
         fields: {
-          myField: {}
-        }
+          myField: {},
+        },
       },
     })
     await resultsTest(context, [
@@ -120,7 +120,7 @@ describe('results', () => {
         },
         highlight: {
           fields: {
-            myField: {}
+            myField: {},
           },
           number_of_fragments: 0,
           post_tags: ['</b>'],
