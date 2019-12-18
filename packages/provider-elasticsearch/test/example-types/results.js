@@ -101,6 +101,35 @@ describe('results', () => {
     ])
     delete context.exclude
   })
+  it('should add fields to "_source.include" if in highlight override', async () => {
+    schema.elasticsearch.highlight = {}
+    F.extendOn(context, {
+      highlight: {
+        fields: {
+          myField: {}
+        }
+      },
+    })
+    await resultsTest(context, [
+      _.extend(expectedCalls[0], {
+        _source: {
+          includes: ['myField'],
+        },
+        sort: {
+          _score: 'desc',
+        },
+        highlight: {
+          fields: {
+            myField: {}
+          },
+          number_of_fragments: 0,
+          post_tags: ['</b>'],
+          pre_tags: ['<b class="search-highlight">'],
+          require_field_match: false,
+        },
+      }),
+    ])
+  })
   it('should highlight additionalFields if showOtherMatches is set', async () => {
     schema.elasticsearch.highlight = { test: ['field'] }
     service[0].hits.hits[0].anotherField = 'test another field'
