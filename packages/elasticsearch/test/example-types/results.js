@@ -3,7 +3,7 @@ let _ = require('lodash/fp')
 let F = require('futil-js')
 let sequentialResultTest = require('./testUtils').sequentialResultTest
 
-describe('results', () => {
+describe.only('results', () => {
   let schema
   let context
   let service
@@ -123,6 +123,44 @@ describe('results', () => {
             myField: {},
           },
           number_of_fragments: 0,
+          post_tags: ['</b>'],
+          pre_tags: ['<b class="search-highlight">'],
+          require_field_match: false,
+        },
+      }),
+    ])
+  })
+  it('should override schema highlight via context highlight', async () => {
+    schema.elasticsearch.highlight = {}
+    F.extendOn(context, {
+      highlight: {
+        fields: {
+          myField: {
+            number_of_fragments: 3,
+            fragment_size: 250,
+            order: 'score',
+          },
+        },
+        number_of_fragments: 4,
+      },
+    })
+    await resultsTest(context, [
+      _.extend(expectedCalls[0], {
+        _source: {
+          includes: ['myField'],
+        },
+        sort: {
+          _score: 'desc',
+        },
+        highlight: {
+          fields: {
+            myField: {
+              number_of_fragments: 3,
+              fragment_size: 250,
+              order: 'score',
+            },
+          },
+          number_of_fragments: 4,
           post_tags: ['</b>'],
           pre_tags: ['<b class="search-highlight">'],
           require_field_match: false,
