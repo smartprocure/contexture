@@ -36,7 +36,8 @@ module.exports = {
     if (context.exclude) searchObj._source.excludes = context.exclude
 
     // Global schema highlight configuration
-    let schemaHighlight = _.getOr(true, 'highlight', context) && schema.elasticsearch.highlight
+    let schemaHighlight =
+      _.getOr(true, 'highlight', context) && schema.elasticsearch.highlight
     // Specific search highlight override
     let searchHighlight = _.isPlainObject(context.highlight)
       ? context.highlight
