@@ -36,9 +36,7 @@ module.exports = {
     if (context.exclude) searchObj._source.excludes = context.exclude
 
     // Global schema highlight configuration
-    let schemaHighlight =
-      _.getOr(true, 'highlight', context) &&
-      _.cloneDeep(schema.elasticsearch.highlight)
+    let schemaHighlight = _.getOr(true, 'highlight', context) && schema.elasticsearch.highlight
     // Specific search highlight override
     let searchHighlight = _.isPlainObject(context.highlight)
       ? context.highlight
@@ -52,7 +50,7 @@ module.exports = {
       let schemaInlineAliases = _.getOr({}, 'inlineAliases', schemaHighlight)
 
       // Concat the search specific override fields with the schema `inline` so we have them as targets for highlight replacement
-      F.setOn(
+      schemaHighlight = _.set(
         'inline',
         _.concat(schemaInline, _.keys(searchHighlight.fields)),
         schemaHighlight
