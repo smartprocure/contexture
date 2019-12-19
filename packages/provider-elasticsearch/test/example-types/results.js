@@ -70,7 +70,7 @@ describe('results', () => {
   })
 
   it('should be able to filter fields with include', async () => {
-    F.extendOn(context, { include: 'field' })
+    F.extendOn(context, { include: ['field'] })
     expectedResult.response.results[0].hit = {
       _id: 'test-id',
       field: 'test field',
@@ -78,7 +78,7 @@ describe('results', () => {
     await resultsTest(context, [
       _.extend(expectedCalls[0], {
         _source: {
-          includes: 'field',
+          includes: ['field'],
         },
         sort: {
           _score: 'desc',
@@ -101,6 +101,73 @@ describe('results', () => {
     ])
     delete context.exclude
   })
+  it('should add fields to "_source.include" if in highlight override', async () => {
+    schema.elasticsearch.highlight = {}
+    F.extendOn(context, {
+      highlight: {
+        fields: {
+          myField: {},
+        },
+      },
+    })
+    await resultsTest(context, [
+      _.extend(expectedCalls[0], {
+        _source: {
+          includes: ['myField'],
+        },
+        sort: {
+          _score: 'desc',
+        },
+        highlight: {
+          fields: {
+            myField: {},
+          },
+          number_of_fragments: 0,
+          post_tags: ['</b>'],
+          pre_tags: ['<b class="search-highlight">'],
+          require_field_match: false,
+        },
+      }),
+    ])
+  })
+  it('should override schema highlight via context highlight', async () => {
+    schema.elasticsearch.highlight = {}
+    F.extendOn(context, {
+      highlight: {
+        fields: {
+          myField: {
+            number_of_fragments: 3,
+            fragment_size: 250,
+            order: 'score',
+          },
+        },
+        number_of_fragments: 4,
+      },
+    })
+    await resultsTest(context, [
+      _.extend(expectedCalls[0], {
+        _source: {
+          includes: ['myField'],
+        },
+        sort: {
+          _score: 'desc',
+        },
+        highlight: {
+          fields: {
+            myField: {
+              number_of_fragments: 3,
+              fragment_size: 250,
+              order: 'score',
+            },
+          },
+          number_of_fragments: 4,
+          post_tags: ['</b>'],
+          pre_tags: ['<b class="search-highlight">'],
+          require_field_match: false,
+        },
+      }),
+    ])
+  })
   it('should highlight additionalFields if showOtherMatches is set', async () => {
     schema.elasticsearch.highlight = { test: ['field'] }
     service[0].hits.hits[0].anotherField = 'test another field'
@@ -118,7 +185,7 @@ describe('results', () => {
     await resultsTest(context, [
       _.extend(expectedCalls[0], {
         _source: {
-          includes: 'anotherField',
+          includes: ['anotherField'],
         },
         sort: {
           _score: 'desc',
@@ -146,7 +213,7 @@ describe('results', () => {
     await resultsTest(context, [
       _.extend(expectedCalls[0], {
         _source: {
-          includes: 'anotherField',
+          includes: ['anotherField'],
         },
         sort: {
           _score: 'desc',
