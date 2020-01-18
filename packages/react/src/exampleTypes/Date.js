@@ -66,7 +66,7 @@ let allRollingOpts = [
   {
     type: 'present',
     label: 'This Calendar Month',
-    range: { from: 'now/M', to: 'now' },
+    range: { from: 'now/M', to: 'now+1M/M-1d' },
   },
   {
     type: 'present',
