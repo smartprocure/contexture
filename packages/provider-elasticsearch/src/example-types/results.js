@@ -52,7 +52,7 @@ module.exports = {
         _.getOr({}, 'inlineAliases'),
         _.entries,
         _.filter(([k]) => _.includes(k, context.include)),
-        _.flatten,
+        _.flatten
       )(schemaHighlight)
 
       // Concat the search specific override fields with the schema `inline` so we have them as targets for highlight replacement
@@ -71,10 +71,10 @@ module.exports = {
         arrayToHighlightsFieldMap, // Convert the array to object map so we can simply _.pick again
         filtered =>
           showOtherMatches
-            // Highlight on all fields specified in the initial _.pick above.
-            ? filtered
-            // Only highlight on the fields listed in the context include section and their aliases (if any)
-            : _.pick(_.concat(context.include, schemaInlineAliases), filtered)
+            ? // Highlight on all fields specified in the initial _.pick above.
+              filtered
+            : // Only highlight on the fields listed in the context include section and their aliases (if any)
+              _.pick(_.concat(context.include, schemaInlineAliases), filtered)
       )(schemaHighlight)
 
       // Setup the DEFAULT highlight config object with the calculated fields above
