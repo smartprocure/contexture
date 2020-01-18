@@ -1,3 +1,6 @@
+# 0.19.4
+* Include variations fix for highlighting
+
 # 0.19.3
 * Allow contexture search trees to override ES highlight section
 * Auto include in ES _.source.includes fields specified in the search highlight override
