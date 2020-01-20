@@ -48,7 +48,12 @@ module.exports = {
     if (schemaHighlight) {
       let showOtherMatches = _.getOr(false, 'showOtherMatches', context)
       let schemaInline = _.getOr([], 'inline', schemaHighlight)
-      let schemaInlineAliases = _.getOr({}, 'inlineAliases', schemaHighlight)
+      let schemaInlineAliases = _.flow(
+        _.getOr({}, 'inlineAliases'),
+        _.entries,
+        _.filter(([k]) => _.includes(k, context.include)),
+        _.flatten
+      )(schemaHighlight)
 
       // Concat the search specific override fields with the schema `inline` so we have them as targets for highlight replacement
       schemaHighlight = _.set(
@@ -61,13 +66,15 @@ module.exports = {
         _.pick(['inline', 'additionalFields']), // Get the highlight fields we will be working with
         _.values,
         _.flatten,
-        _.concat(_.values(schemaInlineAliases)), // Include the provided field aliases if any
+        _.concat(schemaInlineAliases), // Include the provided field aliases if any
         _.uniq,
         arrayToHighlightsFieldMap, // Convert the array to object map so we can simply _.pick again
         filtered =>
           showOtherMatches
-            ? filtered // Highlight on all fields specified in the initial _.pick above
-            : _.pick(context.include, filtered) // Only highlight on the fields listed in the context include section
+            ? // Highlight on all fields specified in the initial _.pick above.
+              filtered
+            : // Only highlight on the fields listed in the context include section and their aliases (if any)
+              _.pick(_.concat(context.include, schemaInlineAliases), filtered)
       )(schemaHighlight)
 
       // Setup the DEFAULT highlight config object with the calculated fields above
