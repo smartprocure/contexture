@@ -16,7 +16,7 @@ export let getRecord = F.when('_source', x => ({
   ...x._source,
 }))
 
-export let getResults = _.get('context.response.results')
+export let getResults = F.cascade(['context.response.results', 'context.results'])
 
 export let inferSchema = _.flow(
   getResults,

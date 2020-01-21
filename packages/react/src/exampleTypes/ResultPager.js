@@ -1,3 +1,4 @@
+import F from 'futil'
 import _ from 'lodash/fp'
 import React from 'react'
 import { contexturifyWithoutLoader } from '../utils/hoc'
@@ -9,7 +10,8 @@ let ResultPager = ({
   theme: { PagerItem, Icon },
 }) => {
   let pages = Math.ceil(
-    (node.context.response.totalRecords || 1) / node.pageSize
+    F.cascade(['response.totalRecords', 'totalRecords'], node.context, 1) /
+      node.pageSize
   )
   let page = node.page || 1
   return (
