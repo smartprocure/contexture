@@ -3,6 +3,12 @@ import React from 'react'
 import TestTree from '../stories/testTree'
 import ThemePicker from '../../stories/themePicker'
 import ResultTable from '.'
+import { Observer } from 'mobx-react'
+import { Box } from '../../greyVest'
+import Contexture from 'contexture'
+import ContextureMobx from '../../utils/contexture-mobx'
+import memory from 'contexture/src/provider-memory'
+import types from 'contexture/src/provider-memory/exampleTypes'
 
 export default {
   title: 'ExampleTypes | ResultTable',
@@ -77,5 +83,34 @@ export let displayFieldOptional = () => {
         }}
       />
     </div>
+  )
+}
+
+export let pagination = () => {
+  let data = _.times(x => ({ _id: x, value: _.random(0, 20000) }), 221)
+  let tree = {
+    key: 'root',
+    schema: 'test',
+    children: [{ key: 'results', type: 'results', pageSize: 5 }],
+  }
+  let service = Contexture({
+    debug: true,
+    schemas: { test: { memory: { records: data } } },
+    providers: { memory: { ...memory, types: types() } },
+  })
+  let search = ContextureMobx({ service })(tree)
+  search.refresh(['root'])
+  return (
+    <Box>
+      <Observer>
+        {() => (
+          <ResultTable
+            fields={{ _id: { label: 'id' }, value: { label: 'val' } }}
+            tree={search}
+            path={['root', 'results']}
+          />
+        )}
+      </Observer>
+    </Box>
   )
 }
