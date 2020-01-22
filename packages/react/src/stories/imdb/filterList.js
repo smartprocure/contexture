@@ -144,7 +144,6 @@ const Story = inject(() => {
                   tree={tree}
                   path={['searchRoot', 'criteria']}
                   fields={schemas.movies.fields}
-                  uniqueFields
                 />
               </div>
               <div style={{ flex: 4, maxWidth: '80%' }}>
