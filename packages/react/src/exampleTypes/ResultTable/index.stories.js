@@ -3,7 +3,6 @@ import React from 'react'
 import TestTree from '../stories/testTree'
 import ThemePicker from '../../stories/themePicker'
 import ResultTable from '.'
-import PagedResultTable from '../PagedResultTable'
 
 export default {
   title: 'ExampleTypes | ResultTable',
@@ -35,7 +34,7 @@ let style = (
 export let customizations = () => (
   <div>
     {style}
-    <PagedResultTable
+    <ResultTable
       tree={TestTree()}
       path={['results']}
       theme={{ Table: x => <table className="example-table" {...x} /> }}
