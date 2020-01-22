@@ -6,17 +6,22 @@ import ResultPager from './ResultPager'
 import ResultTable from './ResultTable'
 import { contexturifyWithoutLoader } from '../utils/hoc'
 
+let getTotalRecords = F.cascade([
+  'context.response.totalRecords',
+  'context.totalRecords',
+])
+
 let PageSize = ({
   value,
   onChange = () => {},
   sizeOptions = [20, 50, 100, 250],
 }) => (
   <div>
-    View
+    <span style={{ marginRight: 4 }}>View</span>
     {_.map(
       size => (
         <PagerItem
-          style={{ margin: 4, width: 'auto', minWidth: '2em' }}
+          style={{ margin: 2, width: 'auto', minWidth: '2em' }}
           key={size}
           active={size === value}
           onClick={() => onChange(size)}
@@ -31,14 +36,19 @@ let PageSize = ({
 
 let ResultPageSize = contexturifyWithoutLoader(({ tree, node, ...props }) => (
   <PageSize
-    value={_.getOr(10, 'pageSize', node)}
-    onChange={pageSize => tree.mutate(node.path, { pageSize })}
+    value={node.pageSize}
+    onChange={pageSize => {
+      tree.mutate(node.path, {
+        pageSize,
+        page: _.min([node.page, _.ceil(getTotalRecords(node) / pageSize)]),
+      })
+    }}
     {...props}
   />
 ))
 
 let ResultPageDetails = contexturifyWithoutLoader(({ node, ...props }) => {
-  let { totalRecords } = F.cascade(['context.response', 'context'], node)
+  let totalRecords = getTotalRecords(node)
   let { pageSize, page } = node
   return (
     <div {...props}>
@@ -49,10 +59,21 @@ let ResultPageDetails = contexturifyWithoutLoader(({ node, ...props }) => {
 })
 
 let ResultTableFooter = ({ tree, node, path, ...props }) => (
-  <Grid columns={3} style={{ paddingTop: 16 }} {...props}>
-    <ResultPageSize {...{ tree, node, path }} />
+  <Grid
+    columns={3}
+    style={{ paddingTop: 16 }}
+    areas={['left middle right']}
+    {...props}
+  >
+    <GridItem
+      as={ResultPageSize}
+      area="left"
+      place="center start"
+      {...{ tree, node, path }}
+    />
     <ResultPager {...{ tree, node, path }} />
     <GridItem
+      area="right"
       as={ResultPageDetails}
       place="center end"
       {...{ tree, node, path }}
