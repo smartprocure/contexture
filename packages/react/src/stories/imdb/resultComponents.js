@@ -136,7 +136,6 @@ export default () => {
                 tree={tree}
                 path={['root', 'criteria']}
                 fields={schemas.movies.fields}
-                uniqueFields
               />
             </SpacedList>
           </div>

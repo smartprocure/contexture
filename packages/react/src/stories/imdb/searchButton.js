@@ -139,7 +139,6 @@ let Story = () => (
                 tree={tree}
                 path={['searchRoot', 'criteria']}
                 fields={schemas.movies.fields}
-                uniqueFields
               />
             </div>
             <div style={{ flex: 4, maxWidth: '80%', ...whiteBox }}>

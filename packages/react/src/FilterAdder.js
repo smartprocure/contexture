@@ -14,12 +14,12 @@ let FilterAdder = ({
   node,
   path,
   fields,
-  uniqueFields,
+  allowDuplicateFields,
   Picker = ModalPicker,
   theme: { Icon },
 }) => {
   let options = fieldsToOptions(fields)
-  if (uniqueFields) {
+  if (!allowDuplicateFields) {
     options = _.reject(x => _.includes(x.field, getGroupFields(node)), options)
   }
   let Label = (

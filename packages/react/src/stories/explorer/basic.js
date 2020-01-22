@@ -167,7 +167,6 @@ let Story = observer(() => {
                         tree={tree}
                         path={['root', 'criteria']}
                         fields={schemas[tree.tree.schema].fields}
-                        uniqueFields
                       />
                     </div>
                     <div style={{ flex: 4, maxWidth: '80%', ...whiteBox }}>
