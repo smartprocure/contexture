@@ -6,7 +6,7 @@ import { observer } from 'mobx-react'
 import { getResults, getRecord } from '../utils/schema'
 import { contexturify } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
-import ResultTable from './ResultTable'
+import { PagedResultTable } from './ResultTable'
 import { selectedBinding } from './utils'
 import { expandProp } from '../utils/react'
 
@@ -44,7 +44,7 @@ let CheckableResultTable = ({
   theme: { Checkbox },
   ...props
 }) => (
-  <ResultTable
+  <PagedResultTable
     fields={{
       _checkbox: {
         hideMenu: true,

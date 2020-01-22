@@ -144,7 +144,7 @@ export default (f = _.identity) => {
           ],
           startRecord: 1,
           endRecord: 1,
-          totalRecords: 1,
+          totalRecords: 3,
         },
       },
     },
