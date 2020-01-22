@@ -96,4 +96,3 @@ let ResultTable = ({
 
 export let PagedResultTable = contexturify(ResultTable)
 export default PagedResultTable
-
