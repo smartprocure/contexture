@@ -68,7 +68,7 @@ let BuilderSearchFilters = ({ setMode, trees, BuilderFilters }) => (
 let SearchFilters = ({
   mode,
   setMode,
-  children,
+  children, // pass allowDuplicateFields in children to override uniqueFields
   BasicFilters = FiltersBox,
   BuilderFilters = QueryBuilder,
 }) => {
