@@ -48,18 +48,22 @@ let ResultPageDetails = contexturifyWithoutLoader(({ node, ...props }) => {
   )
 })
 
+let ResultTableFooter = ({ tree, node, path, ...props }) => (
+  <Grid columns={3} style={{ paddingTop: 16 }} {...props}>
+    <ResultPageSize {...{ tree, node, path }} />
+    <ResultPager {...{ tree, node, path }} />
+    <GridItem
+      as={ResultPageDetails}
+      place="center end"
+      {...{ tree, node, path }}
+    />
+  </Grid>
+)
+
 let PagedResultTable = ({ tree, node, path, ...props }) => (
   <>
     <ResultTable {...{ tree, node, path, ...props }} />
-    <Grid columns={3} style={{ paddingTop: 16 }}>
-      <ResultPageSize {...{ tree, node, path }} />
-      <ResultPager {...{ tree, node, path }} />
-      <GridItem
-        as={ResultPageDetails}
-        place="center end"
-        {...{ tree, node, path }}
-      />
-    </Grid>
+    <ResultTableFooter {...{ tree, node, path }} />
   </>
 )
 export default PagedResultTable
