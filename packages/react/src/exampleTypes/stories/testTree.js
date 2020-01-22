@@ -105,7 +105,7 @@ export default (f = _.identity) => {
       key: 'results',
       path: ['results'],
       type: 'results',
-      pageSize: 1,
+      pageSize: 6,
       page: 1,
       context: {
         response: {
@@ -144,7 +144,7 @@ export default (f = _.identity) => {
           ],
           startRecord: 1,
           endRecord: 1,
-          totalRecords: 3,
+          totalRecords: 1,
         },
       },
     },

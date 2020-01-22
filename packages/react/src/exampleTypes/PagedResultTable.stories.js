@@ -32,7 +32,6 @@ search.refresh(['root'])
 
 export let story = () => (
   <Box>
-    <button onClick={() => search.refresh(['root'])}>refresh</button>
     <Observer>
       {() => (
         <PagedResultTable
