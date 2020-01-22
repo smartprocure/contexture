@@ -1,10 +1,9 @@
 import React from 'react'
 import F from 'futil'
 import _ from 'lodash/fp'
-import { Grid, GridItem, PagerItem } from '../greyVest/'
-import ResultPager from './ResultPager'
-import ResultTable from './ResultTable'
-import { contexturifyWithoutLoader } from '../utils/hoc'
+import { Grid, GridItem, PagerItem } from '../../greyVest'
+import ResultPager from '../ResultPager'
+import { contexturifyWithoutLoader } from '../../utils/hoc'
 
 let getTotalRecords = F.cascade([
   'context.response.totalRecords',
@@ -81,10 +80,4 @@ let ResultTableFooter = ({ tree, node, path, sizeOptions, ...props }) => (
   </Grid>
 )
 
-let PagedResultTable = ({ tree, node, path, sizeOptions, ...props }) => (
-  <>
-    <ResultTable {...{ tree, node, path, ...props }} />
-    <ResultTableFooter {...{ tree, node, path, sizeOptions }} />
-  </>
-)
-export default PagedResultTable
+export default ResultTableFooter

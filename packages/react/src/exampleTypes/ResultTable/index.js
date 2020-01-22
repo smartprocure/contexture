@@ -27,6 +27,7 @@ let ResultTable = ({
   tree,
   Row = Tr, // accept a custom Row component so we can do fancy expansion things
   mapNodeToProps = () => ({}),
+  pageSizeOptions, // an array of options to set the # of rows per page (default [20, 50, 100, 250])
   theme: { Table },
 }) => {
   // From Theme/Components
@@ -61,29 +62,34 @@ let ResultTable = ({
   }
 
   return (
-    <Table>
-      <thead>
-        <tr>
-          {F.mapIndexed(
-            x => (
-              <Header key={x.field} field={x} {...headerProps} />
-            ),
-            visibleFields
-          )}
-          <HighlightedColumnHeader node={node} />
-        </tr>
-      </thead>
-      <TableBody
-        {...{
-          node,
-          fields,
-          visibleFields,
-          hiddenFields,
-          schema,
-          Row,
-        }}
+    <>
+      <Table>
+        <thead>
+          <tr>
+            {F.mapIndexed(
+              x => (
+                <Header key={x.field} field={x} {...headerProps} />
+              ),
+              visibleFields
+            )}
+            <HighlightedColumnHeader node={node} />
+          </tr>
+        </thead>
+        <TableBody
+          {...{
+            node,
+            fields,
+            visibleFields,
+            hiddenFields,
+            schema,
+            Row,
+          }}
+        />
+      </Table>
+      <ResultTableFooter
+        {...{ tree, node, path, sizeOptions: pageSizeOptions }}
       />
-    </Table>
+    </>
   )
 }
 
