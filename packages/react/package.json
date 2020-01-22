@@ -1,6 +1,10 @@
 {
   "name": "contexture-react",
+<<<<<<< HEAD
   "version": "3.0.0",
+=======
+  "version": "2.11.0",
+>>>>>>> update changelog
   "description": "React components for building contexture interfaces",
   "main": "dist/index.js",
   "scripts": {
