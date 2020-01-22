@@ -58,7 +58,7 @@ let ResultTableCount = contexturifyWithoutLoader(({ node, ...props }) => {
   )
 })
 
-let ResultTableFooter = ({ tree, node, path, ...props }) => (
+let ResultTableFooter = ({ tree, node, path, sizeOptions, ...props }) => (
   <Grid
     columns={3}
     style={{ paddingTop: 16 }}
@@ -69,7 +69,7 @@ let ResultTableFooter = ({ tree, node, path, ...props }) => (
       as={ResultPageSize}
       area="left"
       place="center start"
-      {...{ tree, node, path }}
+      {...{ tree, node, path, sizeOptions }}
     />
     <ResultPager {...{ tree, node, path }} />
     <GridItem
@@ -81,10 +81,10 @@ let ResultTableFooter = ({ tree, node, path, ...props }) => (
   </Grid>
 )
 
-let PagedResultTable = ({ tree, node, path, ...props }) => (
+let PagedResultTable = ({ tree, node, path, sizeOptions, ...props }) => (
   <>
     <ResultTable {...{ tree, node, path, ...props }} />
-    <ResultTableFooter {...{ tree, node, path }} />
+    <ResultTableFooter {...{ tree, node, path, sizeOptions }} />
   </>
 )
 export default PagedResultTable
