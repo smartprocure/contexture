@@ -47,7 +47,7 @@ let ResultPageSize = contexturifyWithoutLoader(({ tree, node, ...props }) => (
   />
 ))
 
-let ResultPageDetails = contexturifyWithoutLoader(({ node, ...props }) => {
+let ResultTableCount = contexturifyWithoutLoader(({ node, ...props }) => {
   let totalRecords = getTotalRecords(node)
   let { pageSize, page } = node
   return (
@@ -74,7 +74,7 @@ let ResultTableFooter = ({ tree, node, path, ...props }) => (
     <ResultPager {...{ tree, node, path }} />
     <GridItem
       area="right"
-      as={ResultPageDetails}
+      as={ResultTableCount}
       place="center end"
       {...{ tree, node, path }}
     />
