@@ -8,6 +8,7 @@ import { newNodeFromField } from '../../utils/search'
 import Header from './Header'
 import TableBody from './TableBody'
 import HighlightedColumnHeader from './HighlightedColumnHeader'
+import ResultTableFooter from './ResultTableFooter'
 
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
@@ -93,4 +94,6 @@ let ResultTable = ({
   )
 }
 
-export default contexturify(ResultTable)
+export let PagedResultTable = contexturify(ResultTable)
+export default PagedResultTable
+

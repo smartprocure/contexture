@@ -1,7 +1,7 @@
 import _ from 'lodash/fp'
 import React from 'react'
 import ThemePicker from '../../stories/themePicker'
-import PagedResultTable from './ResultTableFooter'
+import { PagedResultTable } from '.'
 import { Observer } from 'mobx-react'
 import { Box } from '../../greyVest'
 import Contexture from 'contexture'

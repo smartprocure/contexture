@@ -6,7 +6,7 @@ import { observer } from 'mobx-react'
 import { getResults, getRecord } from '../utils/schema'
 import { contexturify } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
-import PagedResultTable from './PagedResultTable'
+import { PagedResultTable } from './ResultTable'
 import { selectedBinding } from './utils'
 import { expandProp } from '../utils/react'
 
