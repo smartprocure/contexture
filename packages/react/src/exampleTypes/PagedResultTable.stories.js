@@ -3,7 +3,7 @@ import React from 'react'
 import ThemePicker from '../stories/themePicker'
 import PagedResultTable from './PagedResultTable'
 import { Observer } from 'mobx-react'
-
+import { Box } from '../greyVest'
 import Contexture from 'contexture'
 import ContextureMobx from '../utils/contexture-mobx'
 import memory from 'contexture/src/provider-memory'
@@ -15,7 +15,7 @@ export default {
   decorators: [ThemePicker('greyVest')],
 }
 
-let data = _.times(x => ({ _id: x, value: _.random(0, 20000) }), 200)
+let data = _.times(x => ({ _id: x, value: _.random(0, 20000) }), 21)
 
 let tree = {
   key: 'root',
@@ -31,7 +31,7 @@ let search = ContextureMobx({ service })(tree)
 search.refresh(['root'])
 
 export let story = () => (
-  <div>
+  <Box>
     <button onClick={() => search.refresh(['root'])}>refresh</button>
     <Observer>
       {() => (
@@ -42,5 +42,5 @@ export let story = () => (
         />
       )}
     </Observer>
-  </div>
+  </Box>
 )
