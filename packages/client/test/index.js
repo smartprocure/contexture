@@ -15,8 +15,6 @@ let ContextureMobx = _.curry((x, y) =>
   ContextureClient({ ...mobxAdapter, ...x })(y)
 )
 
-sinon.spy.reset = sinon.spy.resetHistory
-
 let addDelay = (delay, fn) => async (...args) => {
   await Promise.delay(delay)
   return fn(...args)
@@ -102,7 +100,7 @@ let AllTests = ContextureClient => {
       })
     })
     it('should remove filterOnly nodes with no value', async () => {
-      service.reset()
+      service.resetHistory()
       await Tree.mutate(['root', 'filter'], {
         size: 10,
       })
@@ -127,14 +125,14 @@ let AllTests = ContextureClient => {
       })
     })
     it('should not block blank searches', async () => {
-      service.reset()
+      service.resetHistory()
       await Tree.mutate(['root', 'filter'], {
         values: [],
       })
       expect(service).to.have.callCount(1)
     })
     it('should not search if nothing needs updating', async () => {
-      service.reset()
+      service.resetHistory()
       expect(service).to.have.callCount(0)
       await Tree.dispatch({
         path: ['root'],
@@ -144,7 +142,7 @@ let AllTests = ContextureClient => {
     })
     // it('should not dispatch if there is no mutation')
     it('should handle join changes', async () => {
-      service.reset()
+      service.resetHistory()
       expect(service).to.have.callCount(0)
       Tree.getNode(['root', 'filter']).values = ['real val']
       await Tree.mutate(['root'], {
@@ -159,7 +157,7 @@ let AllTests = ContextureClient => {
       // console.log('call', dto)
     })
     it('should support add', async () => {
-      service.reset()
+      service.resetHistory()
       await Tree.add(['root'], {
         key: 'newFilter',
         type: 'text',
@@ -173,7 +171,7 @@ let AllTests = ContextureClient => {
       expect(service).to.have.callCount(1)
     })
     it('should support remove', async () => {
-      service.reset()
+      service.resetHistory()
       await Tree.add(['root'], {
         key: 'newEmptyFilter',
         type: 'text',
@@ -197,7 +195,7 @@ let AllTests = ContextureClient => {
       expect(service).to.have.callCount(2)
     })
     it('should support refresh', async () => {
-      service.reset()
+      service.resetHistory()
       await Tree.refresh(['root'])
       expect(service).to.have.callCount(1)
     })
@@ -205,7 +203,7 @@ let AllTests = ContextureClient => {
     it('should probably support type changes ¯\\_(ツ)_/¯')
 
     it('should (un)pause', async () => {
-      service.reset()
+      service.resetHistory()
       await Tree.mutate(['root', 'filter'], {
         paused: true,
       })
