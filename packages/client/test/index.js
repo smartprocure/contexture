@@ -1741,6 +1741,29 @@ let AllTests = ContextureClient => {
       )
     ).to.deep.equal(['node', 'node1', 'node11', 'node2'])
   })
+  it('should have debugInfo', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({ debounce: 1, service, debug: true })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        { type: 'results', page: 1 },
+        {
+          key: 'filter',
+          type: 'facet',
+        },
+      ],
+    })
+    expect(tree.debugInfo.dispatchHistory).to.deep.equal([])
+    await tree.mutate(['root', 'filter'], {
+      values: ['a'],
+    })
+    let dispatchRecord = tree.debugInfo.dispatchHistory[0]
+    expect(dispatchRecord.node).to.exist
+    expect(dispatchRecord.type).to.equal('mutate')
+    expect(dispatchRecord.path).to.deep.equal(['root', 'filter'])
+  })
 }
 
 describe('lib', () => AllTests(ContextureClient))
