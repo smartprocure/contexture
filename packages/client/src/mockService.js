@@ -24,10 +24,8 @@ export default ({ mocks = defaultMocks, logInput, logOutput } = {}) => (
   let result = Tree.transform(node => {
     let context = mocks(node)
     if (!node.filterOnly && context) {
-      F.extendOn(node, {
-        context,
-        lastUpdateTime,
-      })
+      let extending = context.context ? context : { context }
+      F.extendOn(node, { ...extending, lastUpdateTime })
     }
   }, dto)
   if (logOutput) console.info('result', JSON.stringify(result, 0, 2))
