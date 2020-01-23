@@ -57,6 +57,7 @@ export let ContextTree = _.curry(
       extend = F.extendOn,
       snapshot = _.cloneDeep,
       initObject = _.identity,
+      log = x => debug && console.info(x)
     },
     tree
   ) => {
@@ -64,7 +65,6 @@ export let ContextTree = _.curry(
     let debugInfo = initObject({
       dispatchHistory: [],
     })
-    let log = x => debug && console.info(x)
     let customReactors = {}
 
     // initNode now generates node keys, so it must be run before flattening the tree
