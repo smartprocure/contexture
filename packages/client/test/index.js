@@ -1754,7 +1754,7 @@ let AllTests = ContextureClient => {
       debounce: 1,
       service,
       debug: true,
-      log() {}
+      log() {},
     })
     let tree = Tree({
       key: 'root',
