@@ -1,3 +1,6 @@
+// DO NOT RENAME THIS FILE... because we need it to run before the other tests...
+// No, we don't know why. We're sorry. #hackathon
+
 import { Tree } from '../src/util/tree'
 import * as F from 'futil-js'
 import _ from 'lodash/fp'
