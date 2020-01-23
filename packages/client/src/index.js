@@ -53,15 +53,18 @@ export let ContextTree = _.curry(
       onChange = _.noop,
       onError = F.throws,
       debug,
+      disableAutoUpdate,
       extend = F.extendOn,
       snapshot = _.cloneDeep,
-      disableAutoUpdate,
       initObject = _.identity,
+      log = x => debug && console.info(x),
     },
     tree
   ) => {
     tree = initObject(tree)
-    let log = x => debug && console.info(x)
+    let debugInfo = initObject({
+      dispatchHistory: [],
+    })
     let customReactors = {}
 
     // initNode now generates node keys, so it must be run before flattening the tree
@@ -81,15 +84,17 @@ export let ContextTree = _.curry(
         // Mark children only if it's not a parent of the target so we don't incorrectly mark siblings
         // flatMap because traversing children can create arrays
         _.flatMap(n =>
-          F.unless(isParent(snapshot(n.path), event.path), Tree.toArrayBy)(
-            markForUpdate
-          )(n)
+          F.unless(
+            isParent(snapshot(n.path), event.path),
+            Tree.toArrayBy
+          )(markForUpdate)(n)
         )
       )(event, path)
 
     // Event Handling
     let dispatch = async event => {
       log(`${event.type} event at ${event.path}`)
+      if (debug) debugInfo.dispatchHistory.push(event)
       await validate(runTypeFunction(types, 'validate'), extend, tree)
       let updatedNodes = _.flatten(bubbleUp(processEvent(event), event.path))
       await Promise.all(_.invokeMap('onMarkForUpdate', updatedNodes))
@@ -142,6 +147,7 @@ export let ContextTree = _.curry(
             if (!_.isEmpty(responseNode)) {
               TreeInstance.onResult(decode(path), node, target)
               mergeWith((oldValue, newValue) => newValue, target, responseNode)
+              if (debug && node._meta) target.metaHistory.push(node._meta)
             }
             extend(target, { updating: false })
             try {
@@ -173,6 +179,7 @@ export let ContextTree = _.curry(
     let TreeInstance = initObject({
       serialize: () => serialize(snapshot(tree), {}),
       tree,
+      debugInfo,
       ...actionProps,
       addActions: create => F.extendOn(TreeInstance, create(actionProps)),
       addReactors: create => F.extendOn(customReactors, create()),

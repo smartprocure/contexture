@@ -15,8 +15,6 @@ let ContextureMobx = _.curry((x, y) =>
   ContextureClient({ ...mobxAdapter, ...x })(y)
 )
 
-sinon.spy.reset = sinon.spy.resetHistory
-
 let addDelay = (delay, fn) => async (...args) => {
   await Promise.delay(delay)
   return fn(...args)
@@ -102,7 +100,7 @@ let AllTests = ContextureClient => {
       })
     })
     it('should remove filterOnly nodes with no value', async () => {
-      service.reset()
+      service.resetHistory()
       await Tree.mutate(['root', 'filter'], {
         size: 10,
       })
@@ -127,14 +125,14 @@ let AllTests = ContextureClient => {
       })
     })
     it('should not block blank searches', async () => {
-      service.reset()
+      service.resetHistory()
       await Tree.mutate(['root', 'filter'], {
         values: [],
       })
       expect(service).to.have.callCount(1)
     })
     it('should not search if nothing needs updating', async () => {
-      service.reset()
+      service.resetHistory()
       expect(service).to.have.callCount(0)
       await Tree.dispatch({
         path: ['root'],
@@ -144,7 +142,7 @@ let AllTests = ContextureClient => {
     })
     // it('should not dispatch if there is no mutation')
     it('should handle join changes', async () => {
-      service.reset()
+      service.resetHistory()
       expect(service).to.have.callCount(0)
       Tree.getNode(['root', 'filter']).values = ['real val']
       await Tree.mutate(['root'], {
@@ -159,7 +157,7 @@ let AllTests = ContextureClient => {
       // console.log('call', dto)
     })
     it('should support add', async () => {
-      service.reset()
+      service.resetHistory()
       await Tree.add(['root'], {
         key: 'newFilter',
         type: 'text',
@@ -173,7 +171,7 @@ let AllTests = ContextureClient => {
       expect(service).to.have.callCount(1)
     })
     it('should support remove', async () => {
-      service.reset()
+      service.resetHistory()
       await Tree.add(['root'], {
         key: 'newEmptyFilter',
         type: 'text',
@@ -197,7 +195,7 @@ let AllTests = ContextureClient => {
       expect(service).to.have.callCount(2)
     })
     it('should support refresh', async () => {
-      service.reset()
+      service.resetHistory()
       await Tree.refresh(['root'])
       expect(service).to.have.callCount(1)
     })
@@ -205,7 +203,7 @@ let AllTests = ContextureClient => {
     it('should probably support type changes ¯\\_(ツ)_/¯')
 
     it('should (un)pause', async () => {
-      service.reset()
+      service.resetHistory()
       await Tree.mutate(['root', 'filter'], {
         paused: true,
       })
@@ -1055,12 +1053,18 @@ let AllTests = ContextureClient => {
     let sourceTree = Tree({
       key: 'innerRoot',
       join: 'and',
-      children: [{ key: 'c', type: 'facet' }, { key: 'd', type: 'facet' }],
+      children: [
+        { key: 'c', type: 'facet' },
+        { key: 'd', type: 'facet' },
+      ],
     })
     let targetTree = Tree({
       key: 'root',
       join: 'and',
-      children: [{ key: 'a', type: 'facet' }, { key: 'b', type: 'results' }],
+      children: [
+        { key: 'a', type: 'facet' },
+        { key: 'b', type: 'results' },
+      ],
     })
 
     // subquery(types, targetTree, ['root', 'a'], sourceTree, ['innerRoot', 'c'])
@@ -1123,7 +1127,10 @@ let AllTests = ContextureClient => {
     let sourceTree = Tree({
       key: 'innerRoot',
       join: 'and',
-      children: [{ key: 'c', type: 'facet' }, { key: 'd', type: 'facet' }],
+      children: [
+        { key: 'c', type: 'facet' },
+        { key: 'd', type: 'facet' },
+      ],
     })
     let targetTree = Tree({
       key: 'root',
@@ -1740,6 +1747,104 @@ let AllTests = ContextureClient => {
         tree.getNode(['root', 'criteria', 'group', 'group']).children
       )
     ).to.deep.equal(['node', 'node1', 'node11', 'node2'])
+  })
+  it('should have debugInfo', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({
+      debounce: 1,
+      service,
+      debug: true,
+      log() {},
+    })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        { type: 'results', page: 1 },
+        {
+          key: 'filter',
+          type: 'facet',
+        },
+      ],
+    })
+    expect(tree.debugInfo.dispatchHistory).to.deep.equal([])
+    await tree.mutate(['root', 'filter'], {
+      values: ['a'],
+    })
+    let dispatchRecord = tree.debugInfo.dispatchHistory[0]
+    expect(dispatchRecord.node).to.exist
+    expect(dispatchRecord.type).to.equal('mutate')
+    expect(dispatchRecord.path).to.deep.equal(['root', 'filter'])
+  })
+  it('should have metaHistory', async () => {
+    let mocks = ({ type }) =>
+      ({
+        results: {
+          context: {
+            count: 1,
+            results: [
+              {
+                title: 'some OTHER result',
+              },
+            ],
+          },
+          _meta: {
+            requests: [
+              {
+                request: { body: {}, headers: {} },
+                response: {
+                  took: 39,
+                  timed_out: false,
+                  _shards: {
+                    total: 1,
+                    successful: 1,
+                    skipped: 0,
+                    failed: 0,
+                  },
+                  hits: {
+                    total: 1,
+                    max_score: 0,
+                    hits: [
+                      {
+                        _source: {
+                          title: 'some result',
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
+          },
+        },
+      }[type])
+    let service = mockService({ mocks })
+    let TreeJustForthisTest = ContextureClient({
+      debounce: 1,
+      service,
+      debug: true,
+      log() {},
+    })
+    let tree = TreeJustForthisTest({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'filter',
+          type: 'facet',
+        },
+        { type: 'results', page: 1 },
+      ],
+    })
+    expect(tree.debugInfo.dispatchHistory).to.deep.equal([])
+    await tree.mutate(['root', 'filter'], {
+      values: ['a'],
+    })
+    let resultsNode = tree.getNode(['root', 'results'])
+    expect(resultsNode.metaHistory).to.exist
+    expect(resultsNode.metaHistory[0].requests[0].response.hits.total).to.equal(
+      1
+    )
   })
 }
 
