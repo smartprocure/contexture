@@ -113,6 +113,7 @@ describe('usage with mobx should generally work', () => {
         options: [],
         cardinality: null,
       },
+      metaHistory: []
     })
     // should update contexts
     expect(Tree.getNode(['root', 'results']).updating).to.be.false
@@ -172,6 +173,7 @@ describe('usage with mobx should generally work', () => {
         options: [],
         cardinality: null,
       },
+      metaHistory: []
     })
     disposer()
   })
@@ -224,6 +226,7 @@ describe('usage with mobx should generally work', () => {
       path: ['root', 'newEmptyFilter'],
       context: {},
       values: [],
+      metaHistory: [],
     })
     expect(
       _.flow(
@@ -237,6 +240,7 @@ describe('usage with mobx should generally work', () => {
       context: {},
       path: ['root', 'newEmptyFilter'],
       values: [],
+      metaHistory: [],
     })
 
     expect(
