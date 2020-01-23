@@ -41,14 +41,7 @@ export let StandardReactors = {
     // If it's in an OR group and now there's only 1 rule left that rule becomes required
     if (hasValue(previous)) return reactor('all')
   },
-  paused(
-    parent,
-    node,
-    {
-      value: { paused },
-    },
-    reactor
-  ) {
+  paused(parent, node, { value: { paused } }, reactor) {
     if (!paused && node.missedUpdate) {
       // Reactor probably shouldn't mutate but this needs to clear somewhere :/
       node.missedUpdate = false
