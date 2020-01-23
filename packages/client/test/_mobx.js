@@ -147,8 +147,8 @@ describe('usage with mobx should generally work', () => {
   })
 
   it('should support add', async () => {
-    reactor.reset()
-    service.reset()
+    reactor.resetHistory()
+    service.resetHistory()
     let disposer = reaction(() => toJS(Tree.tree), reactor)
     await Tree.add(['root'], {
       key: 'newFilter',
@@ -182,8 +182,8 @@ describe('usage with mobx should generally work', () => {
   })
 
   it('should support remove', async () => {
-    reactor.reset()
-    service.reset()
+    reactor.resetHistory()
+    service.resetHistory()
     let disposer = reaction(() => toJS(Tree.tree), reactor)
 
     await Tree.add(['root'], {
@@ -262,8 +262,8 @@ describe('usage with mobx should generally work', () => {
   })
 
   it('should support retrieving results with different array sizes', async () => {
-    reactor.reset()
-    service.reset()
+    reactor.resetHistory()
+    service.resetHistory()
     let disposer = reaction(() => toJS(Tree.tree), reactor)
 
     await Tree.mutate(['root', 'filter'], {
@@ -310,7 +310,7 @@ describe('usage with mobx should generally work', () => {
     expect(service).to.have.callCount(3)
   })
   it('onUpdateByOthers should work with mobx (and not be called on self updates)', async () => {
-    service.reset()
+    service.resetHistory()
     let Tree = ContextureMobx({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -344,7 +344,7 @@ describe('usage with mobx should generally work', () => {
   })
   it(`should be possible to change a group's join property`, async () => {
     // This wasn't possible before this PR: https://github.com/smartprocure/contexture-client/pull/74
-    service.reset()
+    service.resetHistory()
     let Tree = ContextureMobx({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -374,7 +374,7 @@ describe('usage with mobx should generally work', () => {
     await tree.mutate(['root', 'subgroup'], { join: 'and' })
   })
   it('should match flat and nested trees after add', async () => {
-    service.reset()
+    service.resetHistory()
     let Tree = ContextureMobx({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -419,7 +419,7 @@ describe('usage with mobx should generally work', () => {
     expect(tree.children[2]).to.equal(observableNode)
   })
   it('should support observing disableAutoUpdate', () => {
-    service.reset()
+    service.resetHistory()
     let reactor = sinon.spy()
     let tree = ContextureMobx({ service, debounce: 1 })({
       key: 'root',
