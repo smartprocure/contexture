@@ -1750,7 +1750,12 @@ let AllTests = ContextureClient => {
   })
   it('should have debugInfo', async () => {
     let service = sinon.spy(mockService())
-    let Tree = ContextureClient({ debounce: 1, service, debug: true })
+    let Tree = ContextureClient({
+      debounce: 1,
+      service,
+      debug: true,
+      log() {}
+    })
     let tree = Tree({
       key: 'root',
       join: 'and',
