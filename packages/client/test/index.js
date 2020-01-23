@@ -1764,6 +1764,59 @@ let AllTests = ContextureClient => {
     expect(dispatchRecord.type).to.equal('mutate')
     expect(dispatchRecord.path).to.deep.equal(['root', 'filter'])
   })
+  it('should have metaHistory', async () => {
+    let mocks = ({ type }) => {
+      return {
+        results: {
+          context: {count: 1,
+          results: [
+            {
+              title: 'some OTHER result',
+            },
+          ],
+        },
+        _meta: {
+          requests: [
+            {
+              request: { body: {}, headers: {} },
+              response: {
+                took: 39,
+                timed_out: false,
+                _shards: {
+                  total: 1,
+                  successful: 1,
+                  skipped: 0,
+                  failed: 0
+                },
+                hits: { total: 1, max_score: 0, hits: [{_source:  {
+                  title: 'some result',
+                },}] },
+            }}]
+          }
+        },
+      }[type]
+    }
+    let service = mockService({ mocks })
+    let TreeJustForthisTest = ContextureClient({ debounce: 1, service, debug: true })
+    let tree = TreeJustForthisTest({
+      key: 'root',
+      join: 'and',
+      children: [
+        { type: 'results', page: 1 },
+        {
+          key: 'filter',
+          type: 'facet',
+        },
+      ],
+    })
+    expect(tree.debugInfo.dispatchHistory).to.deep.equal([])
+    await tree.mutate(['root', 'filter'], {
+      values: ['a'],
+    })
+    let resultsNode = tree.getNode(['root', 'results'])
+    expect(resultsNode.metaHistory).to.exist
+    expect(resultsNode.metaHistory[0].requests[0].response.hits.total).to.equal(1)
+  })
 }
 
 describe('lib', () => AllTests(ContextureClient))
