@@ -1055,12 +1055,18 @@ let AllTests = ContextureClient => {
     let sourceTree = Tree({
       key: 'innerRoot',
       join: 'and',
-      children: [{ key: 'c', type: 'facet' }, { key: 'd', type: 'facet' }],
+      children: [
+        { key: 'c', type: 'facet' },
+        { key: 'd', type: 'facet' },
+      ],
     })
     let targetTree = Tree({
       key: 'root',
       join: 'and',
-      children: [{ key: 'a', type: 'facet' }, { key: 'b', type: 'results' }],
+      children: [
+        { key: 'a', type: 'facet' },
+        { key: 'b', type: 'results' },
+      ],
     })
 
     // subquery(types, targetTree, ['root', 'a'], sourceTree, ['innerRoot', 'c'])
@@ -1123,7 +1129,10 @@ let AllTests = ContextureClient => {
     let sourceTree = Tree({
       key: 'innerRoot',
       join: 'and',
-      children: [{ key: 'c', type: 'facet' }, { key: 'd', type: 'facet' }],
+      children: [
+        { key: 'c', type: 'facet' },
+        { key: 'd', type: 'facet' },
+      ],
     })
     let targetTree = Tree({
       key: 'root',
@@ -1765,39 +1774,53 @@ let AllTests = ContextureClient => {
     expect(dispatchRecord.path).to.deep.equal(['root', 'filter'])
   })
   it('should have metaHistory', async () => {
-    let mocks = ({ type }) => {
-      return {
+    let mocks = ({ type }) =>
+      ({
         results: {
-          context: {count: 1,
-          results: [
-            {
-              title: 'some OTHER result',
-            },
-          ],
-        },
-        _meta: {
-          requests: [
-            {
-              request: { body: {}, headers: {} },
-              response: {
-                took: 39,
-                timed_out: false,
-                _shards: {
-                  total: 1,
-                  successful: 1,
-                  skipped: 0,
-                  failed: 0
+          context: {
+            count: 1,
+            results: [
+              {
+                title: 'some OTHER result',
+              },
+            ],
+          },
+          _meta: {
+            requests: [
+              {
+                request: { body: {}, headers: {} },
+                response: {
+                  took: 39,
+                  timed_out: false,
+                  _shards: {
+                    total: 1,
+                    successful: 1,
+                    skipped: 0,
+                    failed: 0,
+                  },
+                  hits: {
+                    total: 1,
+                    max_score: 0,
+                    hits: [
+                      {
+                        _source: {
+                          title: 'some result',
+                        },
+                      },
+                    ],
+                  },
                 },
-                hits: { total: 1, max_score: 0, hits: [{_source:  {
-                  title: 'some result',
-                },}] },
-            }}]
-          }
+              },
+            ],
+          },
         },
-      }[type]
-    }
+      }[type])
     let service = mockService({ mocks })
-    let TreeJustForthisTest = ContextureClient({ debounce: 1, service, debug: true })
+    let TreeJustForthisTest = ContextureClient({
+      debounce: 1,
+      service,
+      debug: true,
+    })
     let tree = TreeJustForthisTest({
       key: 'root',
       join: 'and',
@@ -1815,7 +1838,9 @@ let AllTests = ContextureClient => {
     })
     let resultsNode = tree.getNode(['root', 'results'])
     expect(resultsNode.metaHistory).to.exist
-    expect(resultsNode.metaHistory[0].requests[0].response.hits.total).to.equal(1)
+    expect(resultsNode.metaHistory[0].requests[0].response.hits.total).to.equal(
+      1
+    )
   })
 }
 

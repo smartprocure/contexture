@@ -8,10 +8,11 @@ let mapSubqueryValuesByType = (sourceNode, targetNode, types) =>
     getTypePropOrError(types, 'subquery.getValues', sourceNode),
     // Looks up the function for targetNode's type to return a changeset that can be passed to `mutate` from a list of a values list (the output of a subquery.getValues call)
     values =>
-      getTypePropOrError(types, 'subquery.useValues', targetNode)(
-        values,
+      getTypePropOrError(
+        types,
+        'subquery.useValues',
         targetNode
-      )
+      )(values, targetNode)
   )(sourceNode)
 
 // A subquery (in contexture-client) is about taking the output of one search and makng it the input for another search.
