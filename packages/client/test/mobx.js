@@ -113,7 +113,7 @@ describe('usage with mobx should generally work', () => {
         options: [],
         cardinality: null,
       },
-      metaHistory: []
+      metaHistory: [],
     })
     // should update contexts
     expect(Tree.getNode(['root', 'results']).updating).to.be.false
@@ -173,7 +173,7 @@ describe('usage with mobx should generally work', () => {
         options: [],
         cardinality: null,
       },
-      metaHistory: []
+      metaHistory: [],
     })
     disposer()
   })

@@ -9,12 +9,7 @@ export let Tree = F.tree(
 export let flatten = Tree.flatten(F.propTreePath('key'))
 export let { encode, decode } = F.slashEncoder
 
-export let bubbleUp = (f, path) =>
-  _.flow(
-    F.prefixes,
-    _.reverse,
-    _.map(f)
-  )(path)
+export let bubbleUp = (f, path) => _.flow(F.prefixes, _.reverse, _.map(f))(path)
 
 let isNotEqual = _.negate(_.isEqual)
 export let isParent = _.overEvery([isNotEqual, _.startsWith])

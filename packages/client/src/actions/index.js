@@ -11,10 +11,7 @@ let pushOrSpliceOn = (array, item, index) => {
   return array
 }
 
-let arrayDropLast = _.flow(
-  _.toArray,
-  _.dropRight(1)
-)
+let arrayDropLast = _.flow(_.toArray, _.dropRight(1))
 
 export default config => {
   let {
@@ -128,14 +125,8 @@ export default config => {
   let pauseNested = path => mutateNested(path, { paused: true })
   let unpauseNested = path => mutateNested(path, { paused: false })
 
-  let nodeLeaves = _.flow(
-    getNode,
-    Tree.leaves
-  )
-  let isPausedNested = _.flow(
-    nodeLeaves,
-    _.every('paused')
-  )
+  let nodeLeaves = _.flow(getNode, Tree.leaves)
+  let isPausedNested = _.flow(nodeLeaves, _.every('paused'))
 
   return {
     add,
