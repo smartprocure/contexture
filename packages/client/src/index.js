@@ -57,7 +57,7 @@ export let ContextTree = _.curry(
       extend = F.extendOn,
       snapshot = _.cloneDeep,
       initObject = _.identity,
-      log = x => debug && console.info(x)
+      log = x => debug && console.info(x),
     },
     tree
   ) => {
