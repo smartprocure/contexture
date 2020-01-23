@@ -16,6 +16,7 @@ export let defaults = {
   type: null,
   updatingPromise: null,
   updatingDeferred: null,
+  metaHistory: [],
 }
 export let internalStateKeys = {
   ..._.omit(['type', 'paused'], defaults),
