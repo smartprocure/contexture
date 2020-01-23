@@ -1,3 +1,7 @@
+# 2.27.0
+* Add `debugInfo.dispatchHistory` to the tree
+* Add `metaHistory` to individual nodes
+
 # 2.26.4
 * Add `clear` tree action tests
 
