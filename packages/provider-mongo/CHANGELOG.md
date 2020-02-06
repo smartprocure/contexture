@@ -1,5 +1,6 @@
 # 0.10.0
 * Add `termsStats` example type
+* Add `dateHistogram` example type
 * Add `skipCount` flag to results to avoid getting counts 
 * Fix meta request logging to wrap `collection` and `aggs` under a `request` key
 
