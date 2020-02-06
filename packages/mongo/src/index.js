@@ -24,7 +24,7 @@ let MongoProvider = config => ({
           },
           ...aggs,
         ],
-      }
+      },
     }
 
     // Log Request
