@@ -7,7 +7,7 @@ let aggregate = sampleData => aggs => new mingo.Aggregator(aggs).run(sampleData)
 
 let sampleData = _.times(
   i => ({
-    createdAt: new Date(`2020-02-0${(i % 5) + 1}`),//T1${i % 10}:00:00.000Z`),
+    createdAt: new Date(`2020-02-0${(i % 5) + 1}`), //T1${i % 10}:00:00.000Z`),
     metrics: { usersCount: i * 100 },
   }),
   50
