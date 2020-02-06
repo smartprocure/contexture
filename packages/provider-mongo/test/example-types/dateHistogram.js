@@ -17,6 +17,7 @@ let simulateAggregation = aggregate(sampleData)
 describe('dateHistogram', () => {
   describe('dateHistogram.result', () => {
     it('result should output the expected query and results', async () => {
+      let query = null
       let search = _.flow(
         _.tap(x => (query = x)),
         simulateAggregation
