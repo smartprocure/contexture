@@ -95,6 +95,9 @@ If you have dates that aren't store as dates, you can use `dateType` to change h
 `$max`, `$min`, `$avg` and `$sum` after running other available
 filters.
 
+### `termsStats`
+`termsStats` is like statistical, grouped by the keyField
+
 ## Integration Tests
 
 This repository offers integration tests to practice and understand the example
