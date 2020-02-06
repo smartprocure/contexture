@@ -5,7 +5,7 @@ let { statsAgg } = require('./statistical')
 let keysToObject = F.arrayToObject(x => x)
 
 module.exports = {
-  result: async (
+  async result(
     {
       key_field,
       value_field,
@@ -14,7 +14,7 @@ module.exports = {
       timezone,
     },
     search
-  ) => {
+  ) {
     let stats = {
       ..._.omit(['_id'], statsAgg(value_field).$group),
       cardinality: { $addToSet: `$${value_field}` },
