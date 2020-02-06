@@ -1,6 +1,7 @@
 # 0.10.0
-* Fix meta request logging to wrap `collection` and `aggs` under a `request` key
 * Add `termsStats` example type
+* Add `skipCount` flag to results to avoid getting counts 
+* Fix meta request logging to wrap `collection` and `aggs` under a `request` key
 
 # 0.9.5
 * Refactor `hasValue` flow.
