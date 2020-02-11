@@ -30,6 +30,16 @@ let allRollingOpts = [
   },
   {
     type: 'past',
+    label: 'Last 15 Months',
+    range: { from: 'now/d-15M', to: 'now' },
+  },
+  {
+    type: 'past',
+    label: 'Last 18 Months',
+    range: { from: 'now/d-18M', to: 'now' },
+  },
+  {
+    type: 'past',
     label: 'Last 24 Months',
     range: { from: 'now/d-24M', to: 'now' },
   },
