@@ -15,10 +15,8 @@ module.exports = {
     },
     search
   ) {
-    let stats = {
-      ..._.omit(['_id'], statsAgg(value_field).$group),
-      cardinality: { $addToSet: `$${value_field}` },
-    }
+    let stats = _.omit(['_id'], statsAgg(value_field).$group)
+    stats.cardinality = { $addToSet: `$${value_field}` }
     let timeAgg = timezone
       ? { date: `$${key_field}`, timezone }
       : `$${key_field}`
