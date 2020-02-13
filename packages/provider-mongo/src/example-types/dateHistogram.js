@@ -25,7 +25,7 @@ module.exports = {
         x => ({
           ...x,
           key:
-            new Date(`${x.year}-${x.month || 1}-${x.day || 1}`).getTime() /
+            new Date(`${x.year}-${x.month || 1}-${x.day || 1}Z`).getTime() /
             1000,
         }),
         await search([
