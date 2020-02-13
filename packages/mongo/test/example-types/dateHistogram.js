@@ -5,9 +5,18 @@ let dateHistogram = require('../../src/example-types/dateHistogram')
 
 let aggregate = sampleData => aggs => new mingo.Aggregator(aggs).run(sampleData)
 
+// This is super ridiculous to make sure we're working in UTC
+// Without this circleci fails - had to ssh in to figure it out
+let hoursOffset = (new Date()).getTimezoneOffset() / 60
+let utcDate = x => {
+  var d = new Date(x)
+  d.setHours(d.getHours() + hoursOffset)
+  return d
+}
+
 let sampleData = _.times(
   i => ({
-    createdAt: new Date(`2020-02-0${(i % 5) + 1}`), //T1${i % 10}:00:00.000Z`),
+    createdAt: utcDate(`2020-02-0${(i % 5) + 1}`),
     metrics: { usersCount: i * 100 },
   }),
   50
@@ -69,10 +78,10 @@ describe('dateHistogram', () => {
       expect(result).eql({
         entries: [
           {
-            key: 1580446800,
+            key: 1580515200,
             year: 2020,
-            month: 1,
-            day: 31,
+            month: 2,
+            day: 1,
             count: 10,
             max: 4500,
             min: 0,
@@ -81,10 +90,10 @@ describe('dateHistogram', () => {
             cardinality: 10,
           },
           {
-            key: 1580533200,
+            key: 1580601600,
             year: 2020,
             month: 2,
-            day: 1,
+            day: 2,
             count: 10,
             max: 4600,
             min: 100,
@@ -93,10 +102,10 @@ describe('dateHistogram', () => {
             cardinality: 10,
           },
           {
-            key: 1580619600,
+            key: 1580688000,
             year: 2020,
             month: 2,
-            day: 2,
+            day: 3,
             count: 10,
             max: 4700,
             min: 200,
@@ -105,10 +114,10 @@ describe('dateHistogram', () => {
             cardinality: 10,
           },
           {
-            key: 1580706000,
+            key: 1580774400,
             year: 2020,
             month: 2,
-            day: 3,
+            day: 4,
             count: 10,
             max: 4800,
             min: 300,
@@ -117,10 +126,10 @@ describe('dateHistogram', () => {
             cardinality: 10,
           },
           {
-            key: 1580792400,
+            key: 1580860800,
             year: 2020,
             month: 2,
-            day: 4,
+            day: 5,
             count: 10,
             max: 4900,
             min: 400,
