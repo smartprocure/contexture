@@ -34,17 +34,6 @@
     "semi": false,
     "trailingComma": "es5"
   },
-  "duti": {
-    "prNetChangeThreshold": 500,
-    "recommendedPrReviewers": 1,
-    "lintResultsPath": ".",
-    "testResultsPath": ".",
-    "autoFix": {
-      "extensions": [
-        ".js"
-      ]
-    }
-  },
   "dependencies": {
     "@elastic/datemath": "^2.3.0",
     "bluebird": "^3.5.0",
