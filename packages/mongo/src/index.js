@@ -15,20 +15,22 @@ let MongoProvider = config => ({
     let client = config.getClient()
 
     let request = {
-      // criteria: filters,
-      collection: schema.mongo.collection,
-      aggs: [
-        {
-          $match: filters || {},
-        },
-        ...aggs,
-      ],
+      request: {
+        // criteria: filters,
+        collection: schema.mongo.collection,
+        aggs: [
+          {
+            $match: filters || {},
+          },
+          ...aggs,
+        ],
+      },
     }
 
     // Log Request
     node._meta.requests.push(request)
 
-    let result = Promise.resolve(mongoDSL(client, request))
+    let result = Promise.resolve(mongoDSL(client, request.request))
     return result.tap(results => {
       // Log response
       request.response = results
