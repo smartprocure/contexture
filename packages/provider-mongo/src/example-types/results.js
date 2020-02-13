@@ -108,7 +108,7 @@ let result = async (node, search, schema, { getSchema }) => {
 
   let [results, count] = await Promise.all([
     search(resultsQuery),
-    search(countQuery),
+    !node.skipCount && search(countQuery),
   ])
 
   return {
