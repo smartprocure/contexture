@@ -24,8 +24,7 @@ module.exports = {
       entries: _.map(
         x => ({
           ...x,
-          key:
-            new Date(`${x.year}-${x.month || 1}-${x.day || 1}Z`).getTime(),
+          key: new Date(`${x.year}-${x.month || 1}-${x.day || 1}Z`).getTime(),
         }),
         await search([
           {
