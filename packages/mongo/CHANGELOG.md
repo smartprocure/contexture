@@ -1,3 +1,6 @@
+# 0.10.1
+* [DateHistogram] Fix key timestamp bug
+
 # 0.10.0
 * Add `termsStats` example type
 * Add `dateHistogram` example type
