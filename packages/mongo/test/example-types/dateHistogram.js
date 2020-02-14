@@ -78,7 +78,7 @@ describe('dateHistogram', () => {
       expect(result).eql({
         entries: [
           {
-            key: 1580515200,
+            key: 1580515200000,
             year: 2020,
             month: 2,
             day: 1,
@@ -90,7 +90,7 @@ describe('dateHistogram', () => {
             cardinality: 10,
           },
           {
-            key: 1580601600,
+            key: 1580601600000,
             year: 2020,
             month: 2,
             day: 2,
@@ -102,7 +102,7 @@ describe('dateHistogram', () => {
             cardinality: 10,
           },
           {
-            key: 1580688000,
+            key: 1580688000000,
             year: 2020,
             month: 2,
             day: 3,
@@ -114,7 +114,7 @@ describe('dateHistogram', () => {
             cardinality: 10,
           },
           {
-            key: 1580774400,
+            key: 1580774400000,
             year: 2020,
             month: 2,
             day: 4,
@@ -126,7 +126,7 @@ describe('dateHistogram', () => {
             cardinality: 10,
           },
           {
-            key: 1580860800,
+            key: 1580860800000,
             year: 2020,
             month: 2,
             day: 5,
