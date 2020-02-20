@@ -1847,7 +1847,31 @@ let AllTests = ContextureClient => {
     )
   })
   it('should support processResponseNode', () => {
-    // Test case in development
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient(
+      { service, debounce: 1 },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'analysis',
+            join: 'and',
+            children: [
+              {
+                key: 'results',
+                type: 'results',
+              },
+            ],
+          },
+        ],
+      }
+    )
+    Tree.processResponseNode(['root', 'analysis', 'results'], {
+      context: { response: { totalRecords: 1337 } }
+    })
+    expect(Tree.tree.children[0].children[0].context.response.totalRecords).to.equal(1337)
+    expect(service).to.have.callCount(0)
   })
 }
 
