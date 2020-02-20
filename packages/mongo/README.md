@@ -14,7 +14,7 @@ MongoDB client.
 
 | Option      | Type       | Description                                      | Required |
 | ------      | ----       | -----------                                      | -------- |
-| `getClient` | `function` | Returns an instantiated elasticsearch client     | x        |
+| `getClient` | `function` | Returns an instantiated MongoDB client           | x        |
 | `types`     | `object`   | Contexture node types, like all other providers  |          |
 
 ### Schemas
