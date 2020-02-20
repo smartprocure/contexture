@@ -104,10 +104,15 @@ let defaults = _.defaults({
 
 let getResponse = (node, results, count) => {
   let startRecord = getStartRecord(node)
+  let endRecord = startRecord + _.min([results.length, node.pageSize])
   return {
-    totalRecords: _.get('0.count', count),
+    totalRecords: _.max([
+      _.get('context.response.totalRecords', node),
+      count,
+      endRecord,
+    ]),
     startRecord: startRecord + 1,
-    endRecord: startRecord + _.min([results.length, node.pageSize]),
+    endRecord,
     ...(node.skipCount && { hasMore: results.length > node.pageSize }),
     results: _.take(node.pageSize, results),
   }
@@ -123,7 +128,7 @@ let result = async (node, search, schema, { getSchema }) => {
     !node.skipCount && search(countQuery),
   ])
 
-  return { response: getResponse(node, results, count) }
+  return { response: getResponse(node, results, _.get('0.count', count)) }
 }
 
 // NOTE: pageSize of 0 will return all records
