@@ -106,11 +106,8 @@ let getResponse = (node, results, count) => {
   let startRecord = getStartRecord(node)
   let endRecord = startRecord + _.min([results.length, node.pageSize])
   return {
-    totalRecords: _.max([
-      _.get('context.response.totalRecords', node),
-      count,
-      endRecord,
-    ]),
+    totalRecords:
+      count || _.max([_.get('context.response.totalRecords', node), endRecord]),
     startRecord: startRecord + 1,
     endRecord,
     ...(node.skipCount && { hasMore: results.length > node.pageSize }),
