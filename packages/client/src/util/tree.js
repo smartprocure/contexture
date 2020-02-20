@@ -7,6 +7,9 @@ export let Tree = F.tree(
 )
 
 export let flatten = Tree.flatten(F.propTreePath('key'))
+// contexture trees use a slash encoder to disambiguate it from lodash object paths
+// if you saw 'root.criteria.filters' you might think that’s an object structure, but the actual object structure in that example is 'children[0].children[0]'
+// so 'root/criteria/filters' is the encoding
 export let { encode, decode } = F.slashEncoder
 
 export let bubbleUp = (f, path) => _.flow(F.prefixes, _.reverse, _.map(f))(path)
