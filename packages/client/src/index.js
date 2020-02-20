@@ -190,7 +190,7 @@ export let ContextTree = _.curry(
       onResult,
       onChange,
       disableAutoUpdate,
-      processResponseNode
+      processResponseNode,
     })
 
     TreeInstance.addActions(actions)
