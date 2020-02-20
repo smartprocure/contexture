@@ -1,3 +1,4 @@
+let F = require('futil')
 let { expect } = require('chai')
 let {
   defaults,
@@ -196,14 +197,19 @@ describe('results', () => {
       ])
     })
     it('should not have $sort stage if sortField is missing', () => {
-      let node = defaults({
-        key: 'results',
-        type: 'results',
-      })
+      let node = defaults({ key: 'results', type: 'results' })
       expect(getResultsQuery(node, getSchema, 0)).to.deep.equal([
         { $skip: 0 },
         { $limit: 10 },
       ])
+    })
+    it('should fetch an extra item if skipCount is true', () => {
+      let node = defaults({ key: 'results', type: 'results', pageSize: 10 })
+      let query = getResultsQuery(node, getSchema, 0)
+      expect(F.findApply('$limit', query)).to.equal(10)
+      let skipCountNode = { ...node, skipCount: true }
+      let skipCountQuery = getResultsQuery(skipCountNode, getSchema, 0)
+      expect(F.findApply('$limit', skipCountQuery)).to.equal(11)
     })
   })
   describe('projectFromInclude', () => {
