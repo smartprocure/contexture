@@ -98,7 +98,7 @@
     "contexture-client": "^2.26.4",
     "contexture-elasticsearch": "^0.18.2",
     "danger": "^6.1.13",
-    "duti": "^0.15.1",
+    "duti": "^0.15.2",
     "elasticsearch-browser": "^14.2.2",
     "eslint": "^4.12.1",
     "eslint-config-smartprocure": "^1.1.0",
