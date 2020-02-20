@@ -224,16 +224,22 @@ describe('results', () => {
   })
   describe('getResponse', () => {
     let node = defaults({ key: 'results', type: 'results', pageSize: 4 })
+    let results = [1, 2, 3, 4, 5]
     it('should only set hasMore if count is skipped', async () => {
-      console.log(getResponse(node, [1, 2, 3, 4, 5]))
-      expect(getResponse(node, [1, 2, 3, 4, 5])).to.equal(undefined)
+      expect(getResponse(node, results).hasMore).to.equal(undefined)
     })
     it('should set hasMore if there are extra results', async () => {
-      console.log(getResponse(node, [1, 2, 3, 4, 5]))
       expect(
-        getResponse({ ...node, skipCount: true }, [1, 2, 3, 4, 5]).hasMore
+        getResponse({ ...node, skipCount: true }, results).hasMore
       ).to.equal(true)
     })
-    it('should not set endRecord ')
+    it('should set startRecord and endRecord based on the page', () => {
+      let { startRecord, endRecord } = getResponse(
+        { ...node, page: 2 },
+        results
+      )
+      expect(startRecord).to.equal(5)
+      expect(endRecord).to.equal(8)
+    })
   })
 })
