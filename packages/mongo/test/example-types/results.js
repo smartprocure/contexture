@@ -1,9 +1,11 @@
+let F = require('futil')
 let { expect } = require('chai')
 let {
   defaults,
   convertPopulate,
   getResultsQuery,
   getStartRecord,
+  getResponse,
   projectFromInclude,
 } = require('../../src/example-types/results')
 
@@ -196,14 +198,19 @@ describe('results', () => {
       ])
     })
     it('should not have $sort stage if sortField is missing', () => {
-      let node = defaults({
-        key: 'results',
-        type: 'results',
-      })
+      let node = defaults({ key: 'results', type: 'results' })
       expect(getResultsQuery(node, getSchema, 0)).to.deep.equal([
         { $skip: 0 },
         { $limit: 10 },
       ])
+    })
+    it('should fetch an extra item if skipCount is true', () => {
+      let node = defaults({ key: 'results', type: 'results', pageSize: 10 })
+      let query = getResultsQuery(node, getSchema, 0)
+      expect(F.findApply('$limit', query)).to.equal(10)
+      let skipCountNode = { ...node, skipCount: true }
+      let skipCountQuery = getResultsQuery(skipCountNode, getSchema, 0)
+      expect(F.findApply('$limit', skipCountQuery)).to.equal(11)
     })
   })
   describe('projectFromInclude', () => {
@@ -213,6 +220,30 @@ describe('results', () => {
         'bar.baz': 1,
         foo: 1,
       })
+    })
+  })
+  describe('getResponse', () => {
+    let node = defaults({ key: 'results', type: 'results', pageSize: 4 })
+    let results = [1, 2, 3, 4, 5]
+    it('should only set hasMore if count is skipped', async () => {
+      expect(getResponse(node, results).hasMore).to.equal(undefined)
+    })
+    it('should set hasMore if there are extra results', async () => {
+      expect(
+        getResponse({ ...node, skipCount: true }, results).hasMore
+      ).to.equal(true)
+    })
+    it('should set startRecord and endRecord based on the page', () => {
+      let { startRecord, endRecord } = getResponse(
+        { ...node, page: 2 },
+        results
+      )
+      expect(startRecord).to.equal(5)
+      expect(endRecord).to.equal(8)
+    })
+    it('should set totalRecords based on the count (if it exists)', () => {
+      expect(getResponse(node, results, 9001).totalRecords).to.equal(9001)
+      expect(getResponse(node, results).totalRecords).to.equal(undefined)
     })
   })
 })

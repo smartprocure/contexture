@@ -1,3 +1,10 @@
+# 0.11.1
+* Fix typo in README
+* Fix accidental NPM publish in 0.11.0
+
+# 0.11.0
+* Results example type: Add `hasMore` flag to context if `skipCount` is true and the query has results beyond the current page
+
 # 0.10.1
 * [DateHistogram] Fix key timestamp bug
 
