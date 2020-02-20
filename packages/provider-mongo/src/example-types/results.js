@@ -60,7 +60,7 @@ let projectFromInclude = include =>
   )(include)
 
 let getResultsQuery = (node, getSchema, startRecord) => {
-  let { pageSize, sortField, sortDir, populate, include } = node
+  let { pageSize, sortField, sortDir, populate, include, skipCount } = node
 
   // $sort, $skip, $limit
   let $sort = {
@@ -68,7 +68,8 @@ let getResultsQuery = (node, getSchema, startRecord) => {
       [sortField]: sortDir === 'asc' ? 1 : -1,
     },
   }
-  let $limit = { $limit: pageSize }
+
+  let $limit = { $limit: F.when(skipCount, _.add(1), pageSize) }
   let sortSkipLimit = _.compact([
     sortField && $sort,
     { $skip: startRecord },
@@ -97,13 +98,24 @@ let defaults = _.defaults({
   page: 1,
   pageSize: 10,
   sortDir: 'desc',
+  skipCount: false, // F.when doesn't like undefined
   include: [],
 })
 
+let getResponse = (node, results, count) => {
+  let startRecord = getStartRecord(node)
+  return {
+    totalRecords: _.get('0.count', count),
+    startRecord: startRecord + 1,
+    endRecord: startRecord + _.min([results.length, node.pageSize]),
+    ...(node.skipCount && { hasMore: results.length > node.pageSize }),
+    results: _.take(node.pageSize, results),
+  }
+}
+
 let result = async (node, search, schema, { getSchema }) => {
   node = defaults(node)
-  let startRecord = getStartRecord(node)
-  let resultsQuery = getResultsQuery(node, getSchema, startRecord)
+  let resultsQuery = getResultsQuery(node, getSchema, getStartRecord(node))
   let countQuery = [{ $group: { _id: null, count: { $sum: 1 } } }]
 
   let [results, count] = await Promise.all([
@@ -111,20 +123,14 @@ let result = async (node, search, schema, { getSchema }) => {
     !node.skipCount && search(countQuery),
   ])
 
-  return {
-    response: {
-      totalRecords: _.get('0.count', count),
-      startRecord: startRecord + 1,
-      endRecord: startRecord + results.length,
-      results,
-    },
-  }
+  return { response: getResponse(node, results, count) }
 }
 
 // NOTE: pageSize of 0 will return all records
 module.exports = {
   getStartRecord,
   getResultsQuery,
+  getResponse,
   defaults,
   projectFromInclude,
   convertPopulate,
