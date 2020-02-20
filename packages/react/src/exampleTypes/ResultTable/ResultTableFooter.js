@@ -74,7 +74,7 @@ let ResultTableFooter = ({ tree, node, path, sizeOptions, ...props }) => (
       place="center start"
       {...{ tree, node, path, sizeOptions }}
     />
-    <ResultPager {...{ tree, node, path }} />
+    <GridItem as={ResultPager} place="center" {...{ tree, node, path }} />
     <GridItem
       area="right"
       as={ResultTableCount}

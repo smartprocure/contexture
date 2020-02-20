@@ -227,7 +227,7 @@ export default () => (
       /* PagerItem */
       .gv-pager-item {
         padding: 5px;
-        width: 30px;
+        min-width: 30px;
         background: white;
         border-radius: 2px;
         cursor: pointer;
