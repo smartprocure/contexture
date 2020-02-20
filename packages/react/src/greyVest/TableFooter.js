@@ -17,30 +17,36 @@ let TableFooter = ({
   onChangePageSize,
   pageSizeOptions,
   totalRecords = 0,
+  hasMore,
   ...props
-}) => (
-  <Flex
-    justifyContent="space-between"
-    alignItems="center"
-    style={{ padding: 8 }}
-    {...props}
-  >
-    <PageSize
-      sizeOptions={pageSizeOptions}
-      value={pageSize}
-      onChange={onChangePageSize}
-      style={{ flex: 1 }}
-    />
-    <Pager
-      style={{ flex: 1 }}
-      value={page}
-      onChange={onChangePage}
-      pageCount={_.ceil(totalRecords / pageSize)}
-    />
-    <span style={{ flex: 1, textAlign: 'right' }}>
-      <b>Showing</b> {showing(totalRecords, page, pageSize)} of {totalRecords}
-    </span>
-  </Flex>
-)
+}) => {
+  let pageCount = _.ceil(totalRecords / pageSize)
+  return (
+    <Flex
+      justifyContent="space-between"
+      alignItems="center"
+      style={{ padding: 8 }}
+      {...props}
+    >
+      <PageSize
+        sizeOptions={pageSizeOptions}
+        value={pageSize}
+        onChange={onChangePageSize}
+        style={{ flex: 1 }}
+      />
+      <Flex style={{ flex: 1 }} alignItems="center" justifyContent="center">
+        <Pager
+          value={page}
+          onChange={onChangePage}
+          {...{ pageCount, hasMore }}
+        />
+      </Flex>
+      <span style={{ flex: 1, textAlign: 'right' }}>
+        <b>Showing</b> {showing(totalRecords, page, pageSize)}
+        {!hasMore && ` of ${totalRecords}`}
+      </span>
+    </Flex>
+  )
+}
 
 export default TableFooter

@@ -248,12 +248,6 @@ export default () => (
         cursor: not-allowed;
         pointer-events: none;
       }
-      .gv-pager-item:first-child {
-        margin-right: 20px;
-      }
-      .gv-pager-item:last-child {
-        margin-left: 20px;
-      }
       .gv-pager-item:first-child.disabled,
       .gv-pager-item:last-child.disabled {
         display: none;
