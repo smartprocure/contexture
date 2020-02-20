@@ -139,6 +139,7 @@ The following methods are exposed on an instantiated client:
 | addReactors | `(() => {customReactors}) => null` | *Experimental* A method for adding new reactors on a per instance basis. You pass in a function which returns an object of new reactors to support (`{reactorName: reactorFunction}`). Reactors are passed `(parent, node, event, reactor, types, lookup)` and are expected to return an array of affected nodes. |
 | subquery | `(targetPath, sourceTree, sourcePath, mapSubqueryValues?) => {}` | Sets up a subquery, using the types passed in to the client and assuming this tree instance is the target tree. For more info, see the [subquery](#Subquery) section below. |
 | isPausedNested | `path -> bool` | Returns a bool for whether the node at the path and all of its children are paused. |
+| processResponseNode | `(path, node) => {}` | Used to process intermediate partial results from the server |
 
 #### Actions
 
