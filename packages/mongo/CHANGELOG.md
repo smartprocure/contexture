@@ -1,3 +1,6 @@
+# 0.11.2
+*  Results example type: Add a doesn't-have-more test case for `hasMore`
+
 # 0.11.1
 * Fix typo in README
 * Fix accidental NPM publish in 0.11.0
