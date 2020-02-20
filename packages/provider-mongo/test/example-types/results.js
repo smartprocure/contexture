@@ -233,6 +233,11 @@ describe('results', () => {
         getResponse({ ...node, skipCount: true }, results).hasMore
       ).to.equal(true)
     })
+    it('should not set hasMore if there are no extra results', async () => {
+      expect(
+        getResponse({ ...node, skipCount: true }, [1, 2, 3, 4]).hasMore
+      ).to.equal(false)
+    })
     it('should set startRecord and endRecord based on the page', () => {
       let { startRecord, endRecord } = getResponse(
         { ...node, page: 2 },
