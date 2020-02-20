@@ -61,27 +61,48 @@ let ResultTableCount = contexturifyWithoutLoader(({ node, ...props }) => {
   )
 })
 
-let ResultTableFooter = ({ tree, node, path, sizeOptions, ...props }) => (
-  <Grid
-    columns={3}
-    style={{ paddingTop: 16 }}
-    areas={['left middle right']}
-    {...props}
-  >
-    <GridItem
-      as={ResultPageSize}
-      area="left"
-      place="center start"
-      {...{ tree, node, path, sizeOptions }}
-    />
-    <GridItem as={ResultPager} place="center" {...{ tree, node, path }} />
-    <GridItem
-      area="right"
-      as={ResultTableCount}
-      place="center end"
-      {...{ tree, node, path }}
-    />
-  </Grid>
-)
+let ResultTableFooter = ({ tree, node, path, sizeOptions, ...props }) => {
+  let totalRecords = React.useRef(getFromContext('totalRecords', node))
+  let endRecord = getFromContext('endRecord', node)
+  totalRecords.current = _.max([totalRecords.current, endRecord])
+
+  let getFromContext = (key, node) =>
+    F.cascade([`context.${key}`, `context.response.${key}`], node)
+
+  return (
+    <Grid
+      columns={3}
+      style={{ paddingTop: 16 }}
+      areas={['left middle right']}
+      {...props}
+    >
+      <GridItem
+        as={ResultPageSize}
+        area="left"
+        place="center start"
+        {...{ tree, node, path, sizeOptions }}
+      />
+      <GridItem place="center">
+        <ResultPager {...{ tree, node, path }} />
+        {endRecord >= totalRecords.current && (
+        <PagerItem
+          onClick={() => {
+            tree.mutate(node.path, { page: page + 1 })
+            // setTotalRecords(records => _.max([records, endRecord]))
+          }}
+        >
+          More...
+        </PagerItem>
+      )}
+      </GridItem>
+      <GridItem
+        area="right"
+        as={ResultTableCount}
+        place="center end"
+        {...{ tree, node, path }}
+      />
+    </Grid>
+  )
+}
 
 export default ResultTableFooter
