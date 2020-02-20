@@ -5,6 +5,7 @@ let {
   convertPopulate,
   getResultsQuery,
   getStartRecord,
+  getResponse,
   projectFromInclude,
 } = require('../../src/example-types/results')
 
@@ -219,6 +220,17 @@ describe('results', () => {
         'bar.baz': 1,
         foo: 1,
       })
+    })
+  })
+  describe('getResponse', () => {
+    let node = defaults({ key: 'results', type: 'results', pageSize: 4 })
+    it('should only set hasMore if count is skipped', async () => {
+      expect(getResponse(node, [1, 2, 3, 4, 5]).hasMore).to.equal(undefined)
+    })
+    it('should set hasMore if there are extra results', async () => {
+      expect(
+        getResponse({ ...node, skipCount: true }, [1, 2, 3, 4, 5]).hasMore
+      ).to.equal(true)
     })
   })
 })
