@@ -140,29 +140,33 @@ export let ContextTree = _.curry(
       let { error } = data
       if (error) extend(tree, { error })
       await Promise.all(
-        F.mapIndexed(async (node, path) => {
-          let target = flat[path]
-          let responseNode = _.pick(['context', 'error'], node)
-          if (target && !isStale(node, target)) {
-            if (!_.isEmpty(responseNode)) {
-              TreeInstance.onResult(decode(path), node, target)
-              mergeWith((oldValue, newValue) => newValue, target, responseNode)
-              if (debug && node._meta) target.metaHistory.push(node._meta)
-            }
-            extend(target, { updating: false })
-            try {
-              target.updatingDeferred.resolve()
-            } catch (e) {
-              log(
-                'Tried to resolve a node that had no updatingDeferred. This usually means there was unsolicited results from the server for a node that has never been udpated.'
-              )
-            }
-            if (!_.isEmpty(responseNode)) {
-              await F.maybeCall(target.afterSearch)
-            }
-          }
-        }, flatten(data))
+        F.mapIndexed(
+          (node, path) => processResponseNode(decode(path), node),
+          flatten(data)
+        )
       )
+    }
+    let processResponseNode = async (path, node) => {
+      let target = flat[encode(path)]
+      let responseNode = _.pick(['context', 'error'], node)
+      if (target && !isStale(node, target)) {
+        if (!_.isEmpty(responseNode)) {
+          TreeInstance.onResult(path, node, target)
+          mergeWith((oldValue, newValue) => newValue, target, responseNode)
+          if (debug && node._meta) target.metaHistory.push(node._meta)
+        }
+        extend(target, { updating: false })
+        try {
+          target.updatingDeferred.resolve()
+        } catch (e) {
+          log(
+            'Tried to resolve a node that had no updatingDeferred. This usually means there was unsolicited results from the server for a node that has never been udpated.'
+          )
+        }
+        if (!_.isEmpty(responseNode)) {
+          await F.maybeCall(target.afterSearch)
+        }
+      }
     }
 
     let actionProps = {
@@ -186,6 +190,7 @@ export let ContextTree = _.curry(
       onResult,
       onChange,
       disableAutoUpdate,
+      processResponseNode,
     })
 
     TreeInstance.addActions(actions)

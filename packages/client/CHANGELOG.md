@@ -1,3 +1,6 @@
+# 2.28.0
+* Add `processResponseNode` to support intermediate partial results from the server
+
 # 2.27.0
 * Add `debugInfo.dispatchHistory` to the tree
 * Add `metaHistory` to individual nodes
