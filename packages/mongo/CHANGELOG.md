@@ -1,6 +1,5 @@
 # 0.11.0
 * Results example type: Add `hasMore` flag to context if `skipCount` is true and the query has results beyond the current page
-* Results example type: Calculate `totalRecords` from `endRecord` if `skipCount` is true
 
 # 0.10.1
 * [DateHistogram] Fix key timestamp bug

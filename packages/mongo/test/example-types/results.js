@@ -241,20 +241,9 @@ describe('results', () => {
       expect(startRecord).to.equal(5)
       expect(endRecord).to.equal(8)
     })
-    let nodeWithTotal = {
-      ...node,
-      context: { response: { totalRecords: 7 } },
-    }
     it('should set totalRecords based on the count (if it exists)', () => {
-      expect(getResponse(nodeWithTotal, results, 6).totalRecords).to.equal(6)
-    })
-    it('should preserve totalRecords on the node', () => {
-      expect(getResponse(nodeWithTotal, results).totalRecords).to.equal(7)
-    })
-    it('should set totalRecords based on endRecord if count is not available', () => {
-      expect(
-        getResponse({ ...nodeWithTotal, page: 2 }, results).totalRecords
-      ).to.equal(8)
+      expect(getResponse(node, results, 9001).totalRecords).to.equal(9001)
+      expect(getResponse(node, results).totalRecords).to.equal(undefined)
     })
   })
 })
