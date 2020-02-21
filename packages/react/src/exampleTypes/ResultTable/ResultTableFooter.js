@@ -4,19 +4,17 @@ import _ from 'lodash/fp'
 import TableFooter from '../../greyVest/TableFooter'
 import { contexturifyWithoutLoader } from '../../utils/hoc'
 
-let getFromContext = _.curry((key, obj) =>
-  F.cascade([`context.response.${key}`, `context.${key}`], obj)
-)
-
 let ResultTableFooter = ({ tree, node, pageSizeOptions }) => {
+  let getFromContext = key =>
+    F.cascade([`context.response.${key}`, `context.${key}`], node)
   // We keep track of a running totalRecords in case the results node doesn't
   // contain a count (eg. for very expensive queries using contexture-mongo,
   // where the count may be disabled for performance).
   let totalRecords = React.useRef(0)
   totalRecords.current = _.max([
     totalRecords.current,
-    getFromContext('totalRecords', node),
-    getFromContext('endRecord', node),
+    getFromContext('totalRecords'),
+    getFromContext('endRecord'),
   ])
   return (
     <TableFooter
@@ -31,7 +29,7 @@ let ResultTableFooter = ({ tree, node, pageSizeOptions }) => {
       }}
       pageSizeOptions={pageSizeOptions}
       totalRecords={totalRecords.current}
-      hasMore={node.skipCount}
+      hasMore={getFromContext('hasMore')}
     />
   )
 }
