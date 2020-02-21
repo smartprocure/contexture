@@ -6,7 +6,7 @@ import Flex from './Flex'
 let PageSize = ({
   value,
   onChange = () => {},
-  sizeOptions = [20, 50, 100, 250],
+  sizeOptions = [10, 20, 50, 100, 250],
   PagerItem = GVPagerItem,
   ...props
 }) => (
