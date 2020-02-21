@@ -87,9 +87,7 @@ let ResultTable = ({
           }}
         />
       </Table>
-      <ResultTableFooter
-        {...{ tree, node, path, pageSizeOptions }}
-      />
+      <ResultTableFooter {...{ tree, node, path, pageSizeOptions }} />
     </>
   )
 }
