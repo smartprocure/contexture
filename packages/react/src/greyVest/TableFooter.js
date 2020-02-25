@@ -1,15 +1,15 @@
 import React from 'react'
 import _ from 'lodash/fp'
+import F from 'futil'
 import Pager from './Pager'
 import PagerItem from './PagerItem'
 import PageSize from './PageSize'
 import Flex from './Flex'
 
-let getRange = (firstRecord, lastRecord) =>
-  firstRecord >= lastRecord ? lastRecord : `${firstRecord}-${lastRecord}`
+let getRange = (first, last) => (first >= last ? last : `${first}-${last}`)
 
 let getTotal = (totalRecords, hasMore) =>
-  totalRecords ? `of ${totalRecords}${hasMore ? '+' : ''}` : ''
+  F.isNotNil(totalRecords) ? `of ${totalRecords}${hasMore ? '+' : ''}` : ''
 
 let TableFooter = ({
   page = 1,
@@ -18,13 +18,13 @@ let TableFooter = ({
   onChangePageSize,
   pageSizeOptions,
   startRecord = pageSize * (page - 1) + 1,
-  endRecord = pageSize * page,
-  totalRecords = endRecord,
+  endRecord = 0,
   hasMore,
+  totalRecords = hasMore ? undefined : endRecord,
   ...props
 }) => {
-  let lastRecord = _.min([totalRecords, endRecord])
-  let pageCount = _.ceil(totalRecords / pageSize)
+  if (totalRecords) endRecord = _.min([totalRecords, endRecord])
+  let pageCount = _.ceil((totalRecords || endRecord) / pageSize)
   return (
     <Flex
       justifyContent="space-between"
@@ -50,7 +50,7 @@ let TableFooter = ({
         )}
       </Flex>
       <span style={{ flex: 1, textAlign: 'right' }}>
-        <b>Showing</b> {getRange(startRecord, lastRecord)}{' '}
+        <b>Showing</b> {getRange(startRecord, endRecord)}{' '}
         {getTotal(totalRecords, hasMore)}
       </span>
     </Flex>
