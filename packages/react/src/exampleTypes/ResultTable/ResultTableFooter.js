@@ -25,8 +25,12 @@ let ResultTableFooter = ({ tree, node, pageSizeOptions }) => {
         })
       }}
       pageSizeOptions={pageSizeOptions}
-      totalRecords={totalRecords}
-      hasMore={getFromContext('hasMore')}
+      {...F.arrayToObject(x => x, getFromContext, [
+        'hasMore',
+        'totalRecords',
+        'startRecord',
+        'endRecord',
+      ])}
     />
   )
 }

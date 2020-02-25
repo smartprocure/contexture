@@ -5,11 +5,11 @@ import PagerItem from './PagerItem'
 import PageSize from './PageSize'
 import Flex from './Flex'
 
-let showing = (totalRecords, page, pageSize) => {
-  let min = _.min([totalRecords, pageSize * (page - 1) + 1])
-  let max = _.min([totalRecords, pageSize * page])
-  return min >= max ? max : `${min}-${max}`
-}
+let getRange = (firstRecord, lastRecord) =>
+  firstRecord >= lastRecord ? lastRecord : `${firstRecord}-${lastRecord}`
+
+let getTotal = (totalRecords, hasMore) =>
+  totalRecords ? `of ${totalRecords}${hasMore ? '+' : ''}` : ''
 
 let TableFooter = ({
   page = 1,
@@ -17,10 +17,13 @@ let TableFooter = ({
   pageSize,
   onChangePageSize,
   pageSizeOptions,
-  totalRecords = 0,
+  startRecord = pageSize * (page - 1) + 1,
+  endRecord = pageSize * page,
+  totalRecords = endRecord,
   hasMore,
   ...props
 }) => {
+  let lastRecord = _.min([totalRecords, endRecord])
   let pageCount = _.ceil(totalRecords / pageSize)
   return (
     <Flex
@@ -37,7 +40,7 @@ let TableFooter = ({
       />
       <Flex style={{ flex: 1 }} alignItems="center" justifyContent="center">
         <Pager value={page} onChange={onChangePage} pageCount={pageCount} />
-        {hasMore && page === pageCount && (
+        {hasMore && page >= pageCount && (
           <PagerItem
             style={{ margin: '0 8px', paddingLeft: 12, paddingRight: 12 }}
             onClick={() => onChangePage(page + 1)}
@@ -47,8 +50,8 @@ let TableFooter = ({
         )}
       </Flex>
       <span style={{ flex: 1, textAlign: 'right' }}>
-        <b>Showing</b> {showing(totalRecords, page, pageSize)}
-        {!hasMore && ` of ${totalRecords}`}
+        <b>Showing</b> {getRange(startRecord, lastRecord)}{' '}
+        {getTotal(totalRecords, hasMore)}
       </span>
     </Flex>
   )
