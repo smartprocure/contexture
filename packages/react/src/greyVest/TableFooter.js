@@ -14,7 +14,11 @@ let PageDetails = ({ startRecord, endRecord, totalRecords, hasMore }) => (
   </span>
 )
 
-// Accepts either `totalRecords` or 
+// Requires either `totalRecords` or `hasMore` to do pagination properly.
+// `hasMore` is a flag signifying that there is at least one page of records
+// after the current one; it allows us to support some pagination functionality
+// even when `totalRecords` is not given (eg. for APIs that return paginated
+// results without a total count).
 let TableFooter = ({
   page = 1,
   onChangePage,
@@ -24,10 +28,13 @@ let TableFooter = ({
   hasMore,
   totalRecords,
   startRecord = pageSize * (page - 1) + 1,
-  endRecord = totalRecords ? _.min([totalRecords, pageSize * page]) : 0,
+  endRecord = hasMore ? page * pageSize : 0,
   ...props
 }) => {
-  totalRecords = totalRecords || (hasMore ? undefined : endRecord)
+  // if endRecord isn't given, approximate it from totalRecords
+  if (totalRecords)
+    endRecord = endRecord || _.min([page * pageSize, totalRecords])
+  if (!hasMore && !totalRecords) totalRecords = endRecord
   let pageCount = _.ceil((totalRecords || endRecord) / pageSize)
   return (
     <Flex
