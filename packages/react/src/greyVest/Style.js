@@ -122,7 +122,6 @@ export default () => (
         border: solid 2px #EDEDED;
         background: #fff;
 
-        display: block;
         width: 100%;
         min-width: 0;
 

@@ -44,7 +44,7 @@ export default () => (
         background: #fff;
         
         width: 100%;
-        
+        display: block;
         box-sizing: border-box;
         height: 40px;
       }
