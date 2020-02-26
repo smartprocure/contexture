@@ -43,9 +43,8 @@ export default () => (
         border: solid 2px #EDEDED;
         background: #fff;
         
-        display: block;
         width: 100%;
-        
+        display: block;
         box-sizing: border-box;
         height: 40px;
       }
