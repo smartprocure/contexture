@@ -227,7 +227,7 @@ export default () => (
       /* PagerItem */
       .gv-pager-item {
         padding: 5px;
-        width: 30px;
+        min-width: 30px;
         background: white;
         border-radius: 2px;
         cursor: pointer;
@@ -247,12 +247,6 @@ export default () => (
       .gv-pager-item.disabled {
         cursor: not-allowed;
         pointer-events: none;
-      }
-      .gv-pager-item:first-child {
-        margin-right: 20px;
-      }
-      .gv-pager-item:last-child {
-        margin-left: 20px;
       }
       .gv-pager-item:first-child.disabled,
       .gv-pager-item:last-child.disabled {
