@@ -7,7 +7,7 @@ import React from 'react'
 import ContextureMobx from './utils/contexture-mobx'
 import { ResultTable } from './exampleTypes'
 
-let MemoryTable = ({ data, fields, pageSize, ...props }) => {
+let MemoryTable = ({ data, fields, pageSize = 10, ...props }) => {
   let tree = {
     key: 'root',
     schema: 'schema',
