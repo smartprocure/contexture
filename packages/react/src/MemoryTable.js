@@ -7,7 +7,7 @@ import React from 'react'
 import ContextureMobx from './utils/contexture-mobx'
 import { ResultTable } from './exampleTypes'
 
-let MemoryTable = ({ data, fields }) => {
+let MemoryTable = ({ data, fields, pageSize, ...props }) => {
   let tree = {
     key: 'root',
     schema: 'schema',
@@ -15,7 +15,7 @@ let MemoryTable = ({ data, fields }) => {
       {
         key: 'results',
         type: 'results',
-        pageSize: 5,
+        pageSize,
         include: _.keys(_.head(data)),
       },
     ],
@@ -28,7 +28,12 @@ let MemoryTable = ({ data, fields }) => {
   let search = ContextureMobx({ service })(tree)
   search.refresh(['root'])
   return (
-    <ResultTable fields={fields} tree={search} path={['root', 'results']} />
+    <ResultTable
+      fields={fields}
+      tree={search}
+      path={['root', 'results']}
+      {...props}
+    />
   )
 }
 
