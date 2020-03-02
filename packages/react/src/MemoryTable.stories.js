@@ -12,19 +12,19 @@ export default {
 }
 
 export let story = () => {
-  let fields = { _id: { label: 'id' }, value: { label: 'val' } }
-  let data = _.times(x => ({ _id: x, value: _.random(0, 20000) }), 221)
+  let fields = { id: { label: '#' }, value: { label: 'Count' } }
+  let data = _.times(x => ({ id: x, value: _.random(0, 20000) }), 221)
   return <MemoryTable {...{ data, fields }} />
 }
 
 export let withInfer = () => {
-  let data = _.times(x => ({ _id: x, value: _.random(0, 20000) }), 221)
+  let data = _.times(x => ({ id: x, value: _.random(0, 20000) }), 221)
   return <MemoryTable infer {...{ data }} />
 }
 
 export let resultTableProps = () => {
-  let fields = { _id: { label: 'id' }, value: { label: 'val' } }
-  let data = _.times(x => ({ _id: x, value: _.random(0, 20000) }), 221)
+  let fields = { id: { label: '#' }, value: { label: 'Count' } }
+  let data = _.times(x => ({ id: x, value: _.random(0, 20000) }), 221)
   return (
     <MemoryTable
       {...{ data, fields }}
