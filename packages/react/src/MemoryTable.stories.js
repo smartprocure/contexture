@@ -1,8 +1,9 @@
-//import emoji from 'emoji-datasource'
+import F from 'futil'
 import _ from 'lodash/fp'
 import React from 'react'
 import EmojiIcon from './stories/EmojiIcon'
 import ThemePicker from './stories/themePicker'
+import { Select } from './greyVest'
 import MemoryTable from './MemoryTable'
 
 export default {
@@ -41,7 +42,26 @@ export let emojis = () => (
     fields={{
       image: {
         order: 1,
-        display: (x, record) => <EmojiIcon set="facebook" record={record} />,
+        display: (x, record) => <EmojiIcon set={record.set} record={record} />,
+      },
+      test: {
+        order: 2,
+        display: (x, record) => (
+          <>
+            <Select
+              options={F.autoLabelOptions([
+                'twitter',
+                'google',
+                'facebook',
+                'apple',
+              ])}
+              onChange={value => {
+                record.set = value
+              }}
+              value={record.set}
+            />
+          </>
+        ),
       },
     }}
   />
