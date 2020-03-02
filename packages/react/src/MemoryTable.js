@@ -6,15 +6,19 @@ import React from 'react'
 import ContextureMobx from './utils/contexture-mobx'
 import { ResultTable } from './exampleTypes'
 
-let MemoryTable = ({ data, fields, pageSize = 10, ...props }) => {
-  let service = Contexture({
-    debug: true,
-    schemas: { schema: { memory: { records: data } } },
+export let memoryService = (records, { debug }) =>
+  Contexture({
+    debug,
+    // Hack to effectively set a default schema: if our tree root doesn't have
+    // a `schema` property, it will get the schema at key `undefined`.
+    schemas: { undefined: { memory: { records } } },
     providers: { memory: { ...memory, types: types() } },
   })
+
+let MemoryTable = ({ data, fields, pageSize = 10, debug, ...props }) => {
+  let service = memoryService(data, { debug })
   let tree = ContextureMobx({ service })({
     key: 'root',
-    schema: 'schema',
     children: [{ key: 'results', type: 'results', pageSize }],
   })
   tree.refresh(['root'])
