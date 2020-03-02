@@ -1,6 +1,7 @@
 import Contexture from 'contexture'
 import memory from 'contexture/src/provider-memory'
 import types from 'contexture/src/provider-memory/exampleTypes'
+import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 import React from 'react'
 import ContextureMobx from './utils/contexture-mobx'
@@ -10,7 +11,14 @@ let MemoryTable = ({ data, fields }) => {
   let tree = {
     key: 'root',
     schema: 'schema',
-    children: [{ key: 'results', type: 'results', pageSize: 5 }],
+    children: [
+      {
+        key: 'results',
+        type: 'results',
+        pageSize: 5,
+        include: _.keys(_.head(data)),
+      },
+    ],
   }
   let service = Contexture({
     debug: true,
