@@ -7,25 +7,19 @@ import ContextureMobx from './utils/contexture-mobx'
 import { ResultTable } from './exampleTypes'
 
 let MemoryTable = ({ data, fields, pageSize = 10, ...props }) => {
-  let tree = {
-    key: 'root',
-    schema: 'schema',
-    children: [{ key: 'results', type: 'results', pageSize }],
-  }
   let service = Contexture({
     debug: true,
     schemas: { schema: { memory: { records: data } } },
     providers: { memory: { ...memory, types: types() } },
   })
-  let search = ContextureMobx({ service })(tree)
-  search.refresh(['root'])
+  let tree = ContextureMobx({ service })({
+    key: 'root',
+    schema: 'schema',
+    children: [{ key: 'results', type: 'results', pageSize }],
+  })
+  tree.refresh(['root'])
   return (
-    <ResultTable
-      fields={fields}
-      tree={search}
-      path={['root', 'results']}
-      {...props}
-    />
+    <ResultTable path={['root', 'results']} {...{ fields, tree, ...props }} />
   )
 }
 
