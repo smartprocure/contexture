@@ -4,7 +4,8 @@ import types from 'contexture/src/provider-memory/exampleTypes'
 import { observer } from 'mobx-react'
 import React from 'react'
 import ContextureMobx from './utils/contexture-mobx'
-import { ResultTable } from './exampleTypes'
+import { componentForType } from './utils/schema'
+import { ResultTable, TypeMap } from './exampleTypes'
 
 export let memoryService = (records, { debug } = {}) =>
   Contexture({
@@ -19,11 +20,19 @@ let MemoryTable = ({ data, fields, pageSize = 10, debug, ...props }) => {
   let service = memoryService(data, { debug })
   let tree = ContextureMobx({ service })({
     key: 'root',
-    children: [{ key: 'results', type: 'results', pageSize }],
+    children: [
+      { key: 'results', type: 'results', pageSize },
+      { key: 'criteria', type: 'group' },
+    ],
   })
   tree.refresh(['root'])
   return (
-    <ResultTable path={['root', 'results']} {...{ fields, tree, ...props }} />
+    <ResultTable
+      path={['root', 'results']}
+      criteria={['root', 'criteria']}
+      mapNodeToProps={componentForType(TypeMap)}
+      {...{ fields, tree, ...props }}
+    />
   )
 }
 
