@@ -1,3 +1,6 @@
+# 2.28.1
+* Fix an issue updating the target search from a subquery
+
 # 2.28.0
 * Add `processResponseNode` to support intermediate partial results from the server
 
