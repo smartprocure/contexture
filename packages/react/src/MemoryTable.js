@@ -6,7 +6,7 @@ import React from 'react'
 import ContextureMobx from './utils/contexture-mobx'
 import { ResultTable } from './exampleTypes'
 
-export let memoryService = (records, { debug }) =>
+export let memoryService = (records, { debug } = {}) =>
   Contexture({
     debug,
     // Hack to effectively set a default schema: if our tree root doesn't have
