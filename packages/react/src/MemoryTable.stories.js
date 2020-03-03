@@ -34,7 +34,7 @@ export let resultTableProps = () => {
   )
 }
 
-export let emojis = () => (
+export let emojiDataset = () => (
   <MemoryTable
     infer
     data={require('emoji-datasource')}
