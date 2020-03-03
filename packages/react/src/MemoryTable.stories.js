@@ -39,6 +39,9 @@ export let resultTableProps = () => (
     fields={{ id: { label: '#' }, value: { label: 'Count' } }}
     pageSize={12}
     pageSizeOptions={[12, 24, 48, 96]}
+    page={4}
+    sortField="value"
+    sortDir="desc"
   />
 )
 
