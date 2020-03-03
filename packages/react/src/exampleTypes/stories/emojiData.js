@@ -1,4 +1,8 @@
+import React from 'react'
 import _ from 'lodash/fp'
+import F from 'futil'
+import MemoryTable from '../../MemoryTable'
+import EmojiIcon from '../../stories/EmojiIcon'
 
 let typeDefaults = {
   name: 'text',
@@ -17,7 +21,7 @@ let typeDefaults = {
   texts: null,
   category: 'facet',
   sort_order: 'number',
-  added_in: 'text',
+  added_in: 'facet',
   has_img_apple: 'bool',
   has_img_google: 'bool',
   has_img_twitter: 'bool',
@@ -27,4 +31,19 @@ let typeDefaults = {
   obsoleted_by: 'facet',
 }
 
-export let schema = _.mapValues(typeDefault => ({ typeDefault }), typeDefaults)
+let overrides = {
+  skin_variations: {
+    display: x => x && <MemoryTable infer data={F.unkeyBy('foo', x)} />,
+  },
+  image: {
+    order: 1,
+    display: (x, record) => <EmojiIcon set="facebook" record={record} />,
+  },
+}
+
+let schema = _.flow(
+  _.mapValues(typeDefault => ({ typeDefault })),
+  _.merge(overrides)
+)(typeDefaults)
+
+export default schema

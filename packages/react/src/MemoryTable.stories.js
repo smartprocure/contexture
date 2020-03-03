@@ -1,9 +1,8 @@
 import _ from 'lodash/fp'
 import React from 'react'
-import EmojiIcon from './stories/EmojiIcon'
 import ThemePicker from './stories/themePicker'
 import MemoryTable from './MemoryTable'
-import { schema } from './exampleTypes/stories/emojiData'
+import emojiData from './exampleTypes/stories/emojiData'
 
 export default {
   title: 'MemoryTable',
@@ -44,15 +43,5 @@ export let resultTableProps = () => (
 )
 
 export let emojiDataset = () => (
-  <MemoryTable
-    infer
-    data={require('emoji-datasource')}
-    fields={{
-      ...schema,
-      image: {
-        order: 1,
-        display: (x, record) => <EmojiIcon set="facebook" record={record} />,
-      },
-    }}
-  />
+  <MemoryTable data={require('emoji-datasource')} fields={emojiData} />
 )
