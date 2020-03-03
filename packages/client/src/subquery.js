@@ -54,7 +54,7 @@ export default _.curry(
         // This is needed in the cases where the intial values are removed and there are no values in the source tree anymore.
         _.get('tree.hasValue', sourceTree)
           ? targetTree.mutate(targetPath)
-          : targetTree.clear(targetPath)
+          : () => targetTree.clear(targetPath)
       )(sourceNode, targetNode, types)
   }
 )
