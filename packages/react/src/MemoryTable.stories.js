@@ -20,28 +20,28 @@ However, in place of ResultTable's contexture-relevant \`tree\`/\`node\`/\`path\
   },
 }
 
-export let story = () => {
-  let fields = { id: { label: '#' }, value: { label: 'Count' } }
-  let data = _.times(x => ({ id: x, value: _.random(0, 20000) }), 221)
-  return <MemoryTable {...{ data, fields }} />
-}
+export let story = () => (
+  <MemoryTable
+    data={_.times(x => ({ id: x, value: _.random(0, 20000) }), 221)}
+    fields={{ id: { label: '#' }, value: { label: 'Count' } }}
+  />
+)
 
-export let withInfer = () => {
-  let data = _.times(x => ({ id: x, value: _.random(0, 20000) }), 221)
-  return <MemoryTable infer {...{ data }} />
-}
+export let withInfer = () => (
+  <MemoryTable
+    infer
+    data={_.times(x => ({ id: x, value: _.random(0, 20000) }), 221)}
+  />
+)
 
-export let resultTableProps = () => {
-  let fields = { id: { label: '#' }, value: { label: 'Count' } }
-  let data = _.times(x => ({ id: x, value: _.random(0, 20000) }), 221)
-  return (
-    <MemoryTable
-      {...{ data, fields }}
-      pageSize={12}
-      pageSizeOptions={[12, 24, 48, 96]}
-    />
-  )
-}
+export let resultTableProps = () => (
+  <MemoryTable
+    data={_.times(x => ({ id: x, value: _.random(0, 20000) }), 221)}
+    fields={{ id: { label: '#' }, value: { label: 'Count' } }}
+    pageSize={12}
+    pageSizeOptions={[12, 24, 48, 96]}
+  />
+)
 
 export let emojiDataset = () => (
   <MemoryTable
