@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 
-let defaultTypes = {
+let typeDefaults = {
   name: 'text',
   unified: 'text',
   non_qualified: 'text',
@@ -27,4 +27,4 @@ let defaultTypes = {
   obsoleted_by: 'facet',
 }
 
-export let schema = _.mapValues(defaultType => ({ defaultType }), defaultTypes)
+export let schema = _.mapValues(typeDefault => ({ typeDefault }), typeDefaults)
