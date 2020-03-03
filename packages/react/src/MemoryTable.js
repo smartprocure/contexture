@@ -18,14 +18,16 @@ export let memoryService = (records, { schema, debug } = {}) =>
 
 let MemoryTable = ({ data, fields, pageSize = 10, debug, ...props }) => {
   let service = memoryService(data, { schema: 'data', debug })
-  let tree = ContextureMobx({ service })({
-    key: 'root',
-    schema: 'data',
-    children: [
-      { key: 'results', type: 'results', pageSize },
-      { key: 'criteria', type: 'group' },
-    ],
-  })
+  let [tree] = React.useState(
+    ContextureMobx({ service })({
+      key: 'root',
+      schema: 'data',
+      children: [
+        { key: 'results', type: 'results', pageSize },
+        { key: 'criteria', type: 'group', children: [] },
+      ],
+    })
+  )
   tree.refresh(['root'])
   return (
     <ResultTable
