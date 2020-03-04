@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "2.13.1",
+  "version": "2.14.0",
   "description": "React components for building contexture interfaces",
   "main": "dist/index.js",
   "scripts": {
@@ -100,6 +100,7 @@
     "danger": "^6.1.13",
     "duti": "^0.15.2",
     "elasticsearch-browser": "^14.2.2",
+    "emoji-datasource": "^5.0.1",
     "eslint": "^4.12.1",
     "eslint-config-smartprocure": "^1.1.0",
     "jest": "^24.7.1",
