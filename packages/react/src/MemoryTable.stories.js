@@ -37,11 +37,7 @@ export let resultTableProps = () => (
   <MemoryTable
     data={_.times(x => ({ id: x, value: _.random(0, 20000) }), 221)}
     fields={{ id: { label: '#' }, value: { label: 'Count' } }}
-    pageSize={12}
     pageSizeOptions={[12, 24, 48, 96]}
-    page={4}
-    sortField="value"
-    sortDir="desc"
   />
 )
 
