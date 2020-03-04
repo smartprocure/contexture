@@ -25,6 +25,8 @@ export SearchFilters, { SearchTree } from './SearchFilters'
 export SearchLayout from './SearchLayout'
 export ToggleFiltersHeader from './ToggleFiltersHeader'
 
+export MemoryTable from './MemoryTable'
+
 // component library
 export * from './greyVest'
 
