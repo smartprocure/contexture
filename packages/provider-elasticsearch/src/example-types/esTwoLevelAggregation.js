@@ -71,13 +71,15 @@ module.exports = {
           (bucket, key) =>
             _.extend(
               {
-                // Generally bucket.key works, but for twoLevelMatch it needed to be key because buckets is an object and not an array
+                // Generally bucket.key works, but for twoLevelMatch it needed
+                // to be key because buckets is an object and not an array
                 key: bucket.key || key,
                 doc_count: bucket.doc_count,
               },
+              // If any one of the metrics in our bucket has a nil value, we
+              // pull that out instead of returning the whole bucket
               _.find(
-                value =>
-                  !F.cascade(['value', 'values'], value) && _.isObject(value),
+                x => _.isObject(x) && _.isNil(x.value) && _.isNil(x.values),
                 bucket
               ) ||
                 _.flow(
