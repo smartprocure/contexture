@@ -20,6 +20,18 @@ describe('matchCardinality', () => {
                     value: 471,
                   },
                 },
+                succeed: {
+                  doc_count: 50,
+                  cardinality: {
+                    value: 0,
+                  },
+                },
+                retry: {
+                  doc_count: 50,
+                  cardinality: {
+                    value: null,
+                  },
+                },
               },
             },
           },
@@ -47,6 +59,16 @@ describe('matchCardinality', () => {
             key: 'fail',
             doc_count: 50,
             cardinality: 471,
+          },
+          {
+            key: 'succeed',
+            doc_count: 50,
+            cardinality: 0,
+          },
+          {
+            key: 'retry',
+            doc_count: 50,
+            value: null,
           },
         ],
       },
