@@ -160,7 +160,7 @@ export let ContextTree = _.curry(
           target.updatingDeferred.resolve()
         } catch (e) {
           log(
-            'Tried to resolve a node that had no updatingDeferred. This usually means there was unsolicited results from the server for a node that has never been udpated.'
+            'Tried to resolve a node that had no updatingDeferred. This usually means there was unsolicited results from the server for a node that has never been updated.'
           )
         }
         if (!_.isEmpty(responseNode)) {
