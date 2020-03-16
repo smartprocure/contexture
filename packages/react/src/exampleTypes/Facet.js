@@ -10,30 +10,31 @@ import { withTheme } from '../utils/theme'
 export let Cardinality = _.flow(
   setDisplayName('Cardinality'),
   observer
-)(({ node, tree }) => (
-  <Flex className="contexture-facet-cardinality" justifyContent="space-between">
-    {!!_.get('context.cardinality', node) && (
-      <>
+)(({ node, tree }) =>
+  _.get('context.cardinality', node) ? (
+    <Flex
+      className="contexture-facet-cardinality"
+      justifyContent="space-between"
+    >
+      <div>
+        Showing {_.min([node.size || 10, _.size(node.context.options)])} of{' '}
+        {node.context.cardinality}
+      </div>
+      {node.context.cardinality > (node.size || 10) && (
         <div>
-          Showing {_.min([node.size || 10, _.size(node.context.options)])} of{' '}
-          {node.context.cardinality}
+          <a
+            onClick={() =>
+              tree.mutate(node.path, { size: (node.size || 10) + 10 })
+            }
+            style={{ cursor: 'pointer' }}
+          >
+            View More
+          </a>
         </div>
-        {node.context.cardinality > (node.size || 10) && (
-          <div>
-            <a
-              onClick={() =>
-                tree.mutate(node.path, { size: (node.size || 10) + 10 })
-              }
-              style={{ cursor: 'pointer' }}
-            >
-              View More
-            </a>
-          </div>
-        )}
-      </>
-    )}
-  </Flex>
-))
+      )}
+    </Flex>
+  ) : null
+)
 
 let SelectAll = _.flow(
   setDisplayName('SelectAll'),
