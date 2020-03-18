@@ -75,13 +75,9 @@ describe('dateHistogram', () => {
         },
         { $sort: { year: 1, month: 1, day: 1 } },
       ])
-      expect(result).eql({
+      expect({ entries: _.map(_.omit(['day', 'month', 'year', 'key']), result.entries)}).eql({
         entries: [
           {
-            key: 1580428800000,
-            year: 2020,
-            month: 1,
-            day: 31,
             count: 10,
             max: 4500,
             min: 0,
@@ -90,10 +86,6 @@ describe('dateHistogram', () => {
             cardinality: 22500,
           },
           {
-            key: 1580515200000,
-            year: 2020,
-            month: 2,
-            day: 1,
             count: 10,
             max: 4600,
             min: 100,
@@ -102,10 +94,6 @@ describe('dateHistogram', () => {
             cardinality: 23500,
           },
           {
-            key: 1580601600000,
-            year: 2020,
-            month: 2,
-            day: 2,
             count: 10,
             max: 4700,
             min: 200,
@@ -114,10 +102,6 @@ describe('dateHistogram', () => {
             cardinality: 24500,
           },
           {
-            key: 1580688000000,
-            year: 2020,
-            month: 2,
-            day: 3,
             count: 10,
             max: 4800,
             min: 300,
@@ -126,10 +110,6 @@ describe('dateHistogram', () => {
             cardinality: 25500,
           },
           {
-            key: 1580774400000,
-            year: 2020,
-            month: 2,
-            day: 4,
             count: 10,
             max: 4900,
             min: 400,
