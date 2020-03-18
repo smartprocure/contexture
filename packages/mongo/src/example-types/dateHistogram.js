@@ -46,7 +46,7 @@ module.exports = {
               month: '$_id.month',
               year: '$_id.year',
               _id: 0,
-              ...keysToObject(x => 1, include),
+              ...keysToObject(_.constant(1), include),
             },
           },
           { $sort: { year: 1, month: 1, day: 1 } },
