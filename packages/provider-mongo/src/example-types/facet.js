@@ -64,8 +64,8 @@ module.exports = {
       options: _.map(
         ({ _id, labelData, count }) => ({
           name: _id,
-          ...(labelData ? { labelData: labelData } : {}),
-          count: count,
+          ...(labelData ? { labelData } : {}),
+          count,
         }),
         options
       ),
