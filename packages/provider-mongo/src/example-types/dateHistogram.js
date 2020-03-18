@@ -16,7 +16,7 @@ module.exports = {
     search
   ) {
     let stats = _.omit(['_id'], statsAgg(value_field).$group)
-    stats.cardinality = { $addToSet: `$${value_field}` }
+    stats.cardinality = { $sum: `$${value_field}` }
     let timeAgg = timezone
       ? { date: `$${key_field}`, timezone }
       : `$${key_field}`
@@ -46,10 +46,7 @@ module.exports = {
               month: '$_id.month',
               year: '$_id.year',
               _id: 0,
-              ...keysToObject(
-                x => (x === 'cardinality' ? { $size: '$cardinality' } : 1),
-                include
-              ),
+              ...keysToObject(x => 1, include),
             },
           },
           { $sort: { year: 1, month: 1, day: 1 } },
