@@ -2,6 +2,19 @@ let F = require('futil')
 let _ = require('lodash/fp')
 let { ObjectID } = require('mongodb')
 
+let projectStageFromLabelFields = node => {
+  let labelFields = _.get('valueLabelFields', node)
+  return {
+    $project: {
+      count: 1,
+      ..._.zipObject(
+        _.map(fieldName => `labelData.${fieldName}`, labelFields),
+        _.map(_.constant(1), labelFields)
+      ),
+    },
+  }
+}
+
 module.exports = {
   hasValue: _.get('values.length'),
   filter: node => ({
@@ -29,6 +42,16 @@ module.exports = {
             },
           },
           node.size !== 0 && { $limit: node.size || 10 },
+          _.get('valueLabelCollection', node) && {
+            $lookup: {
+              from: _.get('valueLabelCollection', node),
+              as: 'labelData',
+              localField: '_id',
+              foreignField: _.get('valueLabelForeignField', node),
+            },
+          },
+          _.get('valueLabelCollection', node) && { $unwind: '$labelData' },
+          _.get('valueLabelFields', node) && projectStageFromLabelFields(node),
         ])
       ),
       search([
@@ -38,6 +61,13 @@ module.exports = {
       ]),
     ]).then(([options, cardinality]) => ({
       cardinality: _.get('0.count', cardinality),
-      options: _.map(x => ({ name: x._id, count: x.count }), options),
+      options: _.map(
+        x => ({
+          name: x._id,
+          ...(x.labelData ? { labelData: x.labelData } : {}),
+          count: x.count,
+        }),
+        options
+      ),
     })),
 }
