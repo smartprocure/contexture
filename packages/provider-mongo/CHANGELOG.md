@@ -1,3 +1,6 @@
+# 0.12.0
+* support foreign collection lookups of data for facet labels
+
 # 0.11.2
 *  Results example type: Add a doesn't-have-more test case for `hasMore`
 
