@@ -75,7 +75,9 @@ describe('dateHistogram', () => {
         },
         { $sort: { year: 1, month: 1, day: 1 } },
       ])
-      expect({ entries: _.map(_.omit(['day', 'month', 'year', 'key']), result.entries)}).eql({
+      expect({
+        entries: _.map(_.omit(['day', 'month', 'year', 'key']), result.entries),
+      }).eql({
         entries: [
           {
             count: 10,
