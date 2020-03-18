@@ -62,10 +62,10 @@ module.exports = {
     ]).then(([options, cardinality]) => ({
       cardinality: _.get('0.count', cardinality),
       options: _.map(
-        x => ({
-          name: x._id,
-          ...(x.labelData ? { labelData: x.labelData } : {}),
-          count: x.count,
+        ({ _id, labelData, count }) => ({
+          name: _id,
+          ...(labelData ? { labelData: labelData } : {}),
+          count: count,
         }),
         options
       ),
