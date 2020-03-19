@@ -50,7 +50,10 @@ module.exports = {
               foreignField: _.get('valueLabelForeignField', node),
             },
           },
-          _.get('valueLabelCollection', node) && { $unwind: '$labelData' },
+          _.get('valueLabelCollection', node) && { $unwind: {
+            path: '$labelData',
+            preserveNullAndEmptyArrays: true,
+          } },
           _.get('valueLabelFields', node) && projectStageFromLabelFields(node),
         ])
       ),
