@@ -7,10 +7,7 @@ let projectStageFromLabelFields = node => {
   return {
     $project: {
       count: 1,
-      ..._.zipObject(
-        _.map(fieldName => `labelData.${fieldName}`, labelFields),
-        _.map(_.constant(1), labelFields)
-      ),
+      ...F.arrayToObject(fieldName => `labelData.${fieldName}`, _.constant(1))(labelFields),
     },
   }
 }
