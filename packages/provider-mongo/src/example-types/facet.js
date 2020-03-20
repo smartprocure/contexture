@@ -2,10 +2,15 @@ let F = require('futil')
 let _ = require('lodash/fp')
 let { ObjectID } = require('mongodb')
 
-let projectStageFromLabelFields = node => ({ $project: {
-  count: 1,
-  ...F.arrayToObject(fieldName => `labelData.${fieldName}`, _.constant(1))(_.get('lookup.fields', node))
-} })
+let projectStageFromLabelFields = node => ({
+  $project: {
+    count: 1,
+    ...F.arrayToObject(
+      fieldName => `labelData.${fieldName}`,
+      _.constant(1)
+    )(_.get('lookup.fields', node)),
+  },
+})
 
 module.exports = {
   hasValue: _.get('values.length'),
@@ -34,17 +39,21 @@ module.exports = {
             },
           },
           node.size !== 0 && { $limit: node.size || 10 },
-          _.get('lookup', node) && { $lookup: {
-            from: _.get('lookup.collection', node),
-            as: 'labelData',
-            localField: '_id',
-            foreignField: _.get('lookup.foreignField', node)
-          } },
-          _.get('lookup', node) && { $unwind: {
-            path: '$labelData',
-            preserveNullAndEmptyArrays: true,
-          } },
-          _.get('lookup.fields', node) && projectStageFromLabelFields(node)
+          _.get('lookup', node) && {
+            $lookup: {
+              from: _.get('lookup.collection', node),
+              as: 'labelData',
+              localField: '_id',
+              foreignField: _.get('lookup.foreignField', node),
+            },
+          },
+          _.get('lookup', node) && {
+            $unwind: {
+              path: '$labelData',
+              preserveNullAndEmptyArrays: true,
+            },
+          },
+          _.get('lookup.fields', node) && projectStageFromLabelFields(node),
         ])
       ),
       search([
@@ -57,7 +66,7 @@ module.exports = {
       options: _.map(
         ({ _id, labelData, count }) => ({
           name: _id,
-          ...(_.get('lookup', node) ? { labelData: (labelData || {}) } : {}),
+          ...(_.get('lookup', node) ? { labelData: labelData || {} } : {}),
           count,
         }),
         options
