@@ -1,11 +1,6 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
 
-// For futil
-export let stampKey = _.curry((key, x) =>
-  F.mapValuesIndexed((val, k) => ({ ...val, [key]: k }), x)
-)
-
 let validateValues = ({ value, values = [] }) => value || values.length
 
 let twoLevelMatch = {
@@ -22,7 +17,7 @@ let twoLevelMatch = {
   },
 }
 
-export default stampKey('type', {
+export default F.stampKey('type', {
   facet: {
     label: 'List',
     validate: validateValues,
