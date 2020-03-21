@@ -127,19 +127,21 @@ describe('facet', () => {
         label: {
           collection: users,
           foreignField: '_id',
-          fields: ['name']
-        }
+          fields: ['name'],
+        },
       }
 
-      let result = await facet.result(node, agg => mingo.aggregate(activities, agg) )
+      let result = await facet.result(node, agg =>
+        mingo.aggregate(activities, agg)
+      )
 
       expect(result).to.deep.equal({
         cardinality: 3,
         options: [
           { name: 1, label: { name: 'Fred' }, count: 3 },
           { name: 2, label: { name: 'Jane' }, count: 2 },
-          { name: 3, count: 1 }
-        ]
+          { name: 3, count: 1 },
+        ],
       })
     })
   })
