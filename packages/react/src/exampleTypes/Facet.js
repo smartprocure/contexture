@@ -123,7 +123,7 @@ let Facet = ({
     {_.flow(
       _.partition(x => _.includes(x.name, node.values)),
       _.flatten,
-      _.map(({ name, count, labelData }) => {
+      _.map(({ name, label, count }) => {
         let lens = tree.lens(node.path, 'values')
         return (
           <label
@@ -134,11 +134,11 @@ let Facet = ({
               display: 'flex',
               cursor: 'pointer',
             }}
-            title={`${display(name, labelData)} : ${formatCount(count)}`}
+            title={`${display(name, label)} : ${formatCount(count)}`}
           >
             <Checkbox {...F.domLens.checkboxValues(name, lens)} />
             <div style={{ flex: 2, padding: '0 5px' }}>
-              {display(name, labelData) || displayBlank()}
+              {display(name, label) || displayBlank()}
             </div>
             {!hide.counts && <div>{formatCount(count)}</div>}
           </label>
