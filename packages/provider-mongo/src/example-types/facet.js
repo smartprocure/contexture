@@ -39,20 +39,18 @@ module.exports = {
             },
           },
           node.size !== 0 && { $limit: node.size || 10 },
-          _.get('lookup', node) && {
-            $lookup: {
+          ...(_.get('lookup', node) ? [
+            { $lookup: {
               from: _.get('lookup.collection', node),
               as: 'labelData',
               localField: '_id',
-              foreignField: _.get('lookup.foreignField', node),
-            },
-          },
-          _.get('lookup', node) && {
-            $unwind: {
+              foreignField: _.get('lookup.foreignField', node)
+            } },
+            { $unwind: {
               path: '$labelData',
               preserveNullAndEmptyArrays: true,
-            },
-          },
+            } }
+          ]: []),
           _.get('lookup.fields', node) && projectStageFromLabelFields(node),
         ])
       ),
