@@ -6,9 +6,9 @@ let projectStageFromLabelFields = node => ({
   $project: {
     count: 1,
     ...F.arrayToObject(
-      fieldName => `labelData.${fieldName}`,
+      fieldName => `label.${fieldName}`,
       _.constant(1)
-    )(_.get('lookup.fields', node)),
+    )(_.get('label.fields', node)),
   },
 })
 
@@ -39,19 +39,19 @@ module.exports = {
             },
           },
           node.size !== 0 && { $limit: node.size || 10 },
-          ...(_.get('lookup', node) ? [
+          ...(_.get('label', node) ? [
             { $lookup: {
-              from: _.get('lookup.collection', node),
-              as: 'labelData',
+              from: _.get('label.collection', node),
+              as: 'label',
               localField: '_id',
-              foreignField: _.get('lookup.foreignField', node)
+              foreignField: _.get('label.foreignField', node)
             } },
             { $unwind: {
-              path: '$labelData',
+              path: '$label',
               preserveNullAndEmptyArrays: true,
             } }
           ]: []),
-          _.get('lookup.fields', node) && projectStageFromLabelFields(node),
+          _.get('label.fields', node) && projectStageFromLabelFields(node),
         ])
       ),
       search([
@@ -62,11 +62,7 @@ module.exports = {
     ]).then(([options, cardinality]) => ({
       cardinality: _.get('0.count', cardinality),
       options: _.map(
-        ({ _id, labelData, count }) => ({
-          name: _id,
-          ...(_.get('lookup', node) ? { labelData: labelData || {} } : {}),
-          count,
-        }),
+        ({ _id, label, count }) => F.compactObject({ name: _id, label, count }),
         options
       ),
     })),
