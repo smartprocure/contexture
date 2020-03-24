@@ -19,11 +19,8 @@ let facetValueLabel = (node, label) => {
   if (!node.label.fields || _.isArray(node.label.fields)) {
     return { label }
   }
-  return { 
-    label: _.flow(
-      _.values,
-      _.first
-    )(label)
+  return {
+    label: _.flow(_.values, _.first)(label),
   }
 }
 
@@ -83,7 +80,12 @@ module.exports = {
     ]).then(([options, cardinality]) => ({
       cardinality: _.get('0.count', cardinality),
       options: _.map(
-        ({ _id, label, count }) => F.compactObject({ name: _id, count, ...facetValueLabel(node, label) }),
+        ({ _id, label, count }) =>
+          F.compactObject({
+            name: _id,
+            count,
+            ...facetValueLabel(node, label),
+          }),
         options
       ),
     })),
