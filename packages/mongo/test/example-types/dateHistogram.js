@@ -43,6 +43,7 @@ describe('dateHistogram', () => {
         },
         search
       )
+      console.log(JSON.stringify(query, 0, 2))
       expect(query).eql([
         {
           $group: {
@@ -85,7 +86,7 @@ describe('dateHistogram', () => {
             min: 0,
             avg: 2250,
             sum: 22500,
-            cardinality: 10,
+            cardinality: [{}],
           },
           {
             count: 10,
@@ -93,7 +94,7 @@ describe('dateHistogram', () => {
             min: 100,
             avg: 2350,
             sum: 23500,
-            cardinality: 10,
+            cardinality: [{}],
           },
           {
             count: 10,
@@ -101,7 +102,7 @@ describe('dateHistogram', () => {
             min: 200,
             avg: 2450,
             sum: 24500,
-            cardinality: 10,
+            cardinality: [{}],
           },
           {
             count: 10,
@@ -109,7 +110,7 @@ describe('dateHistogram', () => {
             min: 300,
             avg: 2550,
             sum: 25500,
-            cardinality: 10,
+            cardinality: [{}],
           },
           {
             count: 10,
@@ -117,7 +118,7 @@ describe('dateHistogram', () => {
             min: 400,
             avg: 2650,
             sum: 26500,
-            cardinality: 10,
+            cardinality: [{}],
           },
         ],
       })
