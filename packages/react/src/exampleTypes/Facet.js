@@ -107,7 +107,7 @@ let Facet = ({
     facetFilter: false, // Hide the search box above the facet checkboxes
     counts: false, // Hide the facet counts so only the labels are displayed
   },
-  display = (x, y) => (_.isString(y) ? y : x),
+  display = (name, label) => (_.isString(label) ? label : name),
   displayBlank = () => <i>Not Specified</i>,
   formatCount = x => x,
   theme: { Checkbox, RadioList },
