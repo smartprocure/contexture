@@ -8,7 +8,10 @@ let projectStageFromLabelFields = node => ({
     ...F.arrayToObject(
       fieldName => `label.${fieldName}`,
       _.constant(1)
-    )(_.get('label.fields', node)),
+    )(_.flow(
+      _.get('label.fields'),
+      _.castArray
+    )(node)),
   },
 })
 
