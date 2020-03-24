@@ -10,7 +10,7 @@ let aggregate = sampleData => aggs => new mingo.Aggregator(aggs).run(sampleData)
 let hoursOffset = new Date().getTimezoneOffset() / 60
 let utcDate = x => {
   var d = new Date(x)
-  d.setHours(d.getHours() - hoursOffset)
+  d.setHours(d.getHours() + hoursOffset)
   return d
 }
 
