@@ -1,3 +1,6 @@
+# 0.19.5
+* TwoLevelAggregation: Fix bug where zero values were being treated as missing 
+
 # 0.19.4
 * Include variations fix for highlighting
 
