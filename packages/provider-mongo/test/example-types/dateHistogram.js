@@ -56,7 +56,7 @@ describe('dateHistogram', () => {
             min: { $min: '$metrics.usersCount' },
             sum: { $sum: '$metrics.usersCount' },
             count: { $sum: 1 },
-            cardinality: { $sum: '$metrics.usersCount' },
+            cardinality: { $addToSet: '$metrics.usersCount' },
           },
         },
         {
@@ -70,7 +70,7 @@ describe('dateHistogram', () => {
             min: 1,
             sum: 1,
             count: 1,
-            cardinality: 1,
+            cardinality: { $size: '$cardinality' },
           },
         },
         { $sort: { year: 1, month: 1, day: 1 } },
@@ -85,7 +85,7 @@ describe('dateHistogram', () => {
             min: 0,
             avg: 2250,
             sum: 22500,
-            cardinality: 22500,
+            cardinality: 10,
           },
           {
             count: 10,
@@ -93,7 +93,7 @@ describe('dateHistogram', () => {
             min: 100,
             avg: 2350,
             sum: 23500,
-            cardinality: 23500,
+            cardinality: 10,
           },
           {
             count: 10,
@@ -101,7 +101,7 @@ describe('dateHistogram', () => {
             min: 200,
             avg: 2450,
             sum: 24500,
-            cardinality: 24500,
+            cardinality: 10,
           },
           {
             count: 10,
@@ -109,7 +109,7 @@ describe('dateHistogram', () => {
             min: 300,
             avg: 2550,
             sum: 25500,
-            cardinality: 25500,
+            cardinality: 10,
           },
           {
             count: 10,
@@ -117,7 +117,7 @@ describe('dateHistogram', () => {
             min: 400,
             avg: 2650,
             sum: 26500,
-            cardinality: 26500,
+            cardinality: 10,
           },
         ],
       })
