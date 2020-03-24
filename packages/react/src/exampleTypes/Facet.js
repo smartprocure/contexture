@@ -107,7 +107,7 @@ let Facet = ({
     facetFilter: false, // Hide the search box above the facet checkboxes
     counts: false, // Hide the facet counts so only the labels are displayed
   },
-  display = x => x,
+  display = (name, label) => (_.isString(label) ? label : name),
   displayBlank = () => <i>Not Specified</i>,
   formatCount = x => x,
   theme: { Checkbox, RadioList },
@@ -123,7 +123,7 @@ let Facet = ({
     {_.flow(
       _.partition(x => _.includes(x.name, node.values)),
       _.flatten,
-      _.map(({ name, count }) => {
+      _.map(({ name, label, count }) => {
         let lens = tree.lens(node.path, 'values')
         return (
           <label
@@ -134,11 +134,11 @@ let Facet = ({
               display: 'flex',
               cursor: 'pointer',
             }}
-            title={`${display(name)} : ${formatCount(count)}`}
+            title={`${display(name, label)} : ${formatCount(count)}`}
           >
             <Checkbox {...F.domLens.checkboxValues(name, lens)} />
             <div style={{ flex: 2, padding: '0 5px' }}>
-              {display(name) || displayBlank()}
+              {display(name, label) || displayBlank()}
             </div>
             {!hide.counts && <div>{formatCount(count)}</div>}
           </label>
