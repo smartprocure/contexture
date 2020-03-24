@@ -127,7 +127,7 @@ describe('facet', () => {
         label: {
           collection: users,
           foreignField: '_id',
-          fields: ['name'],
+          fields: 'name',
         },
       }
 
