@@ -1,5 +1,8 @@
-# 0.11.4
+# 0.12.1
 * Correct fix of dateHistogram cardinality implementation
+
+# 0.12.0
+* support foreign collection lookups of data for facet labels
 
 # 0.11.3
 * Fix dateHistogram cardinality aggregation and accompanying test

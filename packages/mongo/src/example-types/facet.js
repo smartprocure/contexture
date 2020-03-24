@@ -2,6 +2,28 @@ let F = require('futil')
 let _ = require('lodash/fp')
 let { ObjectID } = require('mongodb')
 
+let projectStageFromLabelFields = node => ({
+  $project: {
+    count: 1,
+    ...F.arrayToObject(
+      fieldName => `label.${fieldName}`,
+      _.constant(1)
+    )(_.flow(_.get('label.fields'), _.castArray)(node)),
+  },
+})
+
+let facetValueLabel = (node, label) => {
+  if (!node.label) {
+    return {}
+  }
+  if (!node.label.fields || _.isArray(node.label.fields)) {
+    return { label }
+  }
+  return {
+    label: _.flow(_.values, _.first)(label),
+  }
+}
+
 module.exports = {
   hasValue: _.get('values.length'),
   filter: node => ({
@@ -29,6 +51,25 @@ module.exports = {
             },
           },
           node.size !== 0 && { $limit: node.size || 10 },
+          ...(_.get('label', node)
+            ? [
+                {
+                  $lookup: {
+                    from: _.get('label.collection', node),
+                    as: 'label',
+                    localField: '_id',
+                    foreignField: _.get('label.foreignField', node),
+                  },
+                },
+                {
+                  $unwind: {
+                    path: '$label',
+                    preserveNullAndEmptyArrays: true,
+                  },
+                },
+              ]
+            : []),
+          _.get('label.fields', node) && projectStageFromLabelFields(node),
         ])
       ),
       search([
@@ -38,6 +79,14 @@ module.exports = {
       ]),
     ]).then(([options, cardinality]) => ({
       cardinality: _.get('0.count', cardinality),
-      options: _.map(x => ({ name: x._id, count: x.count }), options),
+      options: _.map(
+        ({ _id, label, count }) =>
+          F.compactObject({
+            name: _id,
+            count,
+            ...facetValueLabel(node, label),
+          }),
+        options
+      ),
     })),
 }
