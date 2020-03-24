@@ -43,6 +43,7 @@ describe('dateHistogram', () => {
         },
         search
       )
+
       expect(query).eql([
         {
           $group: {
