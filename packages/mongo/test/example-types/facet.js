@@ -158,7 +158,7 @@ describe('facet', () => {
         { _id: 1, firstName: 'Fred', lastName: 'Smith', type: 'basic' },
         { _id: 2, firstName: 'Jane', lastName: 'Williams', type: 'admin' },
       ]
-  
+
       let node = {
         field: 'user',
         label: {
@@ -167,7 +167,7 @@ describe('facet', () => {
           fields: ['firstName', 'lastName'],
         },
       }
-  
+
       let result = await facet.result(node, agg =>
         mingo.aggregate(activities, agg)
       )
@@ -175,8 +175,16 @@ describe('facet', () => {
       expect(result).to.deep.equal({
         cardinality: 3,
         options: [
-          { name: 1, label: { firstName: 'Fred', lastName: 'Smith' }, count: 3 },
-          { name: 2, label: { firstName: 'Jane', lastName: 'Williams' }, count: 2 },
+          {
+            name: 1,
+            label: { firstName: 'Fred', lastName: 'Smith' },
+            count: 3,
+          },
+          {
+            name: 2,
+            label: { firstName: 'Jane', lastName: 'Williams' },
+            count: 2,
+          },
           { name: 3, count: 1 },
         ],
       })
@@ -190,11 +198,11 @@ describe('facet', () => {
         { _id: 1, type: 'delete', user: 2 },
         { _id: 1, type: 'read', user: 1 },
       ]
-  
+
       let node = {
         field: 'user',
       }
-  
+
       let result = await facet.result(node, agg =>
         mingo.aggregate(activities, agg)
       )
