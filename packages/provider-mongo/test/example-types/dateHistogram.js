@@ -43,7 +43,6 @@ describe('dateHistogram', () => {
         },
         search
       )
-      console.log(JSON.stringify(query, 0, 2))
       expect(query).eql([
         {
           $group: {
