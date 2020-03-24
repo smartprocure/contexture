@@ -51,7 +51,7 @@
     "duti": "latest",
     "eslint": "^4.12.1",
     "eslint-config-smartprocure": "^1.1.0",
-    "mingo": "^2.4.0",
+    "mingo": "^2.5.2",
     "mocha": "^3.5.3",
     "prettier": "^1.8.2"
   }
