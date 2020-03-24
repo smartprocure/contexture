@@ -107,7 +107,7 @@ describe('facet', () => {
         '5a4ea8052c635b002ade8e45',
       ])
     })
-    it('should support label lookup', async () => {
+    it('should support string label lookups', async () => {
       let activities = [
         { _id: 1, type: 'create', user: 2 },
         { _id: 1, type: 'update', user: 1 },
@@ -138,8 +138,72 @@ describe('facet', () => {
       expect(result).to.deep.equal({
         cardinality: 3,
         options: [
-          { name: 1, label: { name: 'Fred' }, count: 3 },
-          { name: 2, label: { name: 'Jane' }, count: 2 },
+          { name: 1, label: 'Fred', count: 3 },
+          { name: 2, label: 'Jane', count: 2 },
+          { name: 3, count: 1 },
+        ],
+      })
+    })
+    it('should support array label lookups', async () => {
+      let activities = [
+        { _id: 1, type: 'create', user: 2 },
+        { _id: 1, type: 'update', user: 1 },
+        { _id: 1, type: 'create', user: 1 },
+        { _id: 1, type: 'delete', user: 3 },
+        { _id: 1, type: 'delete', user: 2 },
+        { _id: 1, type: 'read', user: 1 },
+      ]
+
+      let users = [
+        { _id: 1, firstName: 'Fred', lastName: 'Smith', type: 'basic' },
+        { _id: 2, firstName: 'Jane', lastName: 'Williams', type: 'admin' },
+      ]
+  
+      let node = {
+        field: 'user',
+        label: {
+          collection: users,
+          foreignField: '_id',
+          fields: ['firstName', 'lastName'],
+        },
+      }
+  
+      let result = await facet.result(node, agg =>
+        mingo.aggregate(activities, agg)
+      )
+
+      expect(result).to.deep.equal({
+        cardinality: 3,
+        options: [
+          { name: 1, label: { firstName: 'Fred', lastName: 'Smith' }, count: 3 },
+          { name: 2, label: { firstName: 'Jane', lastName: 'Williams' }, count: 2 },
+          { name: 3, count: 1 },
+        ],
+      })
+    })
+    it('should ignore label lookup when not present', async () => {
+      let activities = [
+        { _id: 1, type: 'create', user: 2 },
+        { _id: 1, type: 'update', user: 1 },
+        { _id: 1, type: 'create', user: 1 },
+        { _id: 1, type: 'delete', user: 3 },
+        { _id: 1, type: 'delete', user: 2 },
+        { _id: 1, type: 'read', user: 1 },
+      ]
+  
+      let node = {
+        field: 'user',
+      }
+  
+      let result = await facet.result(node, agg =>
+        mingo.aggregate(activities, agg)
+      )
+
+      expect(result).to.deep.equal({
+        cardinality: 3,
+        options: [
+          { name: 1, count: 3 },
+          { name: 2, count: 2 },
           { name: 3, count: 1 },
         ],
       })
