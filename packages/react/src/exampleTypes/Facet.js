@@ -134,7 +134,7 @@ let Facet = ({
               display: 'flex',
               cursor: 'pointer',
             }}
-            title={`${invokeDisplayFn(name, label)} : ${formatCount(count)}`}
+            title={`${display(name, label)} : ${formatCount(count)}`}
           >
             <Checkbox {...F.domLens.checkboxValues(name, lens)} />
             <div style={{ flex: 2, padding: '0 5px' }}>
