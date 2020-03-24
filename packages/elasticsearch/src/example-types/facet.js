@@ -51,7 +51,7 @@ module.exports = {
                 context.size ||
                 (context.size === 0 ? elasticsearchIntegerMax : 10),
               order: {
-                term: { _term: 'asc' },
+                term: { _key: 'asc' },
                 count: { _count: 'desc' },
               }[context.sort || 'count'],
             },
@@ -133,7 +133,7 @@ module.exports = {
                 field,
                 size: missing.length,
                 order: {
-                  term: { _term: 'asc' },
+                  term: { _key: 'asc' },
                   count: { _count: 'desc' },
                 }[context.sort || 'count'],
               },
