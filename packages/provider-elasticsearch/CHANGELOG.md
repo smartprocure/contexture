@@ -1,3 +1,6 @@
+# 0.19.5
+* [Facet] Move from `_term` to `_key`
+
 # 0.19.4
 * Include variations fix for highlighting
 
