@@ -86,7 +86,7 @@ describe('dateHistogram', () => {
             min: 0,
             avg: 2250,
             sum: 22500,
-            cardinality: [{}],
+            cardinality: [{}], // mingo $project with $size is broken -- real mongo returns a number here
           },
           {
             count: 10,
