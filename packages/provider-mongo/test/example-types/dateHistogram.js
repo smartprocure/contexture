@@ -57,7 +57,7 @@ describe('dateHistogram', () => {
             min: { $min: '$metrics.usersCount' },
             sum: { $sum: '$metrics.usersCount' },
             count: { $sum: 1 },
-            cardinality: { $addToSet: '$createdAt' },
+            cardinality: { $addToSet: '$metrics.usersCount' },
           },
         },
         {
