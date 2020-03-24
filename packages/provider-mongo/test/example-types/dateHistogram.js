@@ -76,7 +76,9 @@ describe('dateHistogram', () => {
         },
         { $sort: { year: 1, month: 1, day: 1 } },
       ])
-      expect(result).eql({
+      // omit cardinality from test as mingo $project { $size } does not correctly
+      // implement mongo
+      expect({ entries: _.map(_.omit(['cardinality']), result.entries) }).eql({
         entries: [
           {
             key: 1580515200000,
@@ -88,7 +90,6 @@ describe('dateHistogram', () => {
             min: 0,
             avg: 2250,
             sum: 22500,
-            cardinality: [{}], // mingo $project with $size is broken -- real mongo returns a number here
           },
           {
             key: 1580601600000,
@@ -100,7 +101,6 @@ describe('dateHistogram', () => {
             min: 100,
             avg: 2350,
             sum: 23500,
-            cardinality: [{}],
           },
           {
             key: 1580688000000,
@@ -112,7 +112,6 @@ describe('dateHistogram', () => {
             min: 200,
             avg: 2450,
             sum: 24500,
-            cardinality: [{}],
           },
           {
             key: 1580774400000,
@@ -124,7 +123,6 @@ describe('dateHistogram', () => {
             min: 300,
             avg: 2550,
             sum: 25500,
-            cardinality: [{}],
           },
           {
             key: 1580860800000,
@@ -136,7 +134,6 @@ describe('dateHistogram', () => {
             min: 400,
             avg: 2650,
             sum: 26500,
-            cardinality: [{}],
           },
         ],
       })
