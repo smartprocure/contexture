@@ -8,7 +8,6 @@ let aggregate = sampleData => aggs => new mingo.Aggregator(aggs).run(sampleData)
 // This is super ridiculous to make sure we're working in UTC
 // Without this circleci fails - had to ssh in to figure it out
 let hoursOffset = new Date().getTimezoneOffset() / 60
-console.log(`~~~~~~ HOURS OFFSET: ${hoursOffset} ~~~~~~`)
 let utcDate = x => {
   var d = new Date(x)
   d.setHours(d.getHours() - hoursOffset)
