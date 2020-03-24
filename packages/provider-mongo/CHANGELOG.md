@@ -1,3 +1,6 @@
+# 0.11.4
+* Correct fix of dateHistogram cardinality implementation
+
 # 0.11.3
 * Fix dateHistogram cardinality aggregation and accompanying test
 
