@@ -1,3 +1,6 @@
+# 2.28.2
+* Fix a typo "udpated" in a node resolve catch block log 
+
 # 2.28.1
 * Fix an issue updating the target search from a subquery
 
