@@ -18,6 +18,7 @@ let Tr = props => (
     {..._.omit(['record', 'fields', 'visibleFields', 'hiddenFields'], props)}
   />
 )
+let DefaultNoResultsComponent = () => 'No Results Found'
 
 let ResultTable = ({
   fields,
@@ -26,6 +27,7 @@ let ResultTable = ({
   criteria,
   node,
   tree,
+  NoResultsComponent = DefaultNoResultsComponent,
   Row = Tr, // accept a custom Row component so we can do fancy expansion things
   mapNodeToProps = () => ({}),
   pageSizeOptions, // an array of options to set the # of rows per page (default [20, 50, 100, 250])
@@ -33,6 +35,7 @@ let ResultTable = ({
 }) => {
   // From Theme/Components
   let mutate = tree.mutate(path)
+  let hasResults = !!_.get('context.response.totalRecords', node)
   // NOTE infer + add columns does not work together (except for anything explicitly passed in)
   //   When removing a field, it's not longer on the record, so infer can't pick it up since it runs per render
   let schema = _.flow(
@@ -62,34 +65,38 @@ let ResultTable = ({
     criteria,
   }
 
-  return (
-    <>
-      <Table>
-        <thead>
-          <tr>
-            {F.mapIndexed(
-              x => (
-                <Header key={x.field} field={x} {...headerProps} />
-              ),
-              visibleFields
-            )}
-            <HighlightedColumnHeader node={node} />
-          </tr>
-        </thead>
-        <TableBody
-          {...{
-            node,
-            fields,
-            visibleFields,
-            hiddenFields,
-            schema,
-            Row,
-          }}
-        />
-      </Table>
-      <ResultTableFooter {...{ tree, node, path, pageSizeOptions }} />
-    </>
-  )
+  if (hasResults) {
+    return (
+      <>
+        <Table>
+          <thead>
+            <tr>
+              {F.mapIndexed(
+                x => (
+                  <Header key={x.field} field={x} {...headerProps} />
+                ),
+                visibleFields
+              )}
+              <HighlightedColumnHeader node={node} />
+            </tr>
+          </thead>
+          <TableBody
+            {...{
+              node,
+              fields,
+              visibleFields,
+              hiddenFields,
+              schema,
+              Row,
+            }}
+          />
+        </Table>
+        <ResultTableFooter {...{ tree, node, path, pageSizeOptions }} />
+      </>
+    )
+  } else {
+    return <NoResultsComponent />
+  }
 }
 
 export let PagedResultTable = contexturify(ResultTable)
