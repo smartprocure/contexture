@@ -18,7 +18,6 @@ let Tr = props => (
     {..._.omit(['record', 'fields', 'visibleFields', 'hiddenFields'], props)}
   />
 )
-let DefaultNoResultsComponent = () => 'No Results Found'
 
 let ResultTable = ({
   fields,
@@ -27,7 +26,7 @@ let ResultTable = ({
   criteria,
   node,
   tree,
-  NoResultsComponent = DefaultNoResultsComponent,
+  NoResultsComponent = 'No Results Found',
   Row = Tr, // accept a custom Row component so we can do fancy expansion things
   mapNodeToProps = () => ({}),
   pageSizeOptions, // an array of options to set the # of rows per page (default [20, 50, 100, 250])
@@ -64,7 +63,6 @@ let ResultTable = ({
     mutate,
     criteria,
   }
-
   if (hasResults) {
     return (
       <>
@@ -95,7 +93,7 @@ let ResultTable = ({
       </>
     )
   } else {
-    return <NoResultsComponent />
+    return NoResultsComponent
   }
 }
 
