@@ -92,7 +92,7 @@ let ResultTable = ({
         <ResultTableFooter {...{ tree, node, path, pageSizeOptions }} />
       </>
     )
-  } 
+  }
   if (!node.markedForUpdate && !hasResults) {
     return NoResultsComponent
   }
