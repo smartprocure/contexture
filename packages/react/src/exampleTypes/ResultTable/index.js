@@ -24,7 +24,7 @@ let ResultTable = ({
   infer,
   path,
   criteria,
-  node,
+  node = {},
   tree,
   NoResultsComponent = 'No Results Found',
   Row = Tr, // accept a custom Row component so we can do fancy expansion things
@@ -63,7 +63,7 @@ let ResultTable = ({
     mutate,
     criteria,
   }
-  if (hasResults) {
+  if (!node.updating && hasResults) {
     return (
       <>
         <Table>
@@ -92,7 +92,8 @@ let ResultTable = ({
         <ResultTableFooter {...{ tree, node, path, pageSizeOptions }} />
       </>
     )
-  } else {
+  } 
+  if (!node.markedForUpdate && !hasResults) {
     return NoResultsComponent
   }
 }
