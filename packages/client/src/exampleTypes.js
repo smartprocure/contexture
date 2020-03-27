@@ -82,7 +82,7 @@ export default F.stampKey('type', {
   },
   tagsQuery: {
     label: 'Matches',
-    validate: x => _.get('tags.length', x),
+    validate: _.get('tags.length'),
     reactors: {
       join: 'others',
       tags: 'others',
