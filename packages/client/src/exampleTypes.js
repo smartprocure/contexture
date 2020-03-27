@@ -82,7 +82,7 @@ export default F.stampKey('type', {
   },
   tagsQuery: {
     label: 'Matches',
-    validate: x => x.tags.length,
+    validate: x => _.get('tags.length', x),
     reactors: {
       join: 'others',
       tags: 'others',
@@ -142,6 +142,7 @@ export default F.stampKey('type', {
     },
   },
   bool: {
+    validate: validateValues,
     reactors: {
       value: 'others',
     },
@@ -151,6 +152,7 @@ export default F.stampKey('type', {
     },
   },
   exists: {
+    validate: validateValues,
     reactors: {
       value: 'others',
     },
