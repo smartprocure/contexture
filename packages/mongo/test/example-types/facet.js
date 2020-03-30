@@ -216,5 +216,48 @@ describe('facet', () => {
         ],
       })
     })
+    it('should allow for an optional node.unwind to distinguish a nested array field being searched', async () => {
+      let collection = [
+        {
+          _id: 1,
+          myFields: [
+            {
+              _id: 5,
+              field: 'firstField',
+            },
+          ],
+        },
+        {
+          _id: 2,
+          myFields: [
+            {
+              _id: 6,
+              field: 'firstField',
+            },
+            {
+              _id: 7,
+              field: 'secondField',
+            },
+          ],
+        },
+      ]
+
+      let node = {
+        field: 'myFields.field',
+        unwind: 'myFields',
+      }
+
+      let result = await facet.result(node, agg =>
+        mingo.aggregate(collection, agg)
+      )
+
+      expect(result).to.deep.equal({
+        cardinality: 2,
+        options: [
+          { name: 'firstField', count: 2 },
+          { name: 'secondField', count: 1 },
+        ],
+      })
+    })
   })
 })
