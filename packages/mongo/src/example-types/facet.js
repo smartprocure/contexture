@@ -33,11 +33,7 @@ module.exports = {
         : node.values,
     },
   }),
-<<<<<<< HEAD
   result: (node, search) => 
-=======
-  result: (node, search, schema) =>
->>>>>>> 4ba8bcb2b7fd21558dce11f5fa7aa091fa1490c4
     Promise.all([
       search(
         _.compact([
