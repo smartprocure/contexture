@@ -39,7 +39,10 @@ module.exports = {
         _.compact([
           // Unwind allows supporting array and non array fields - for non arrays, it will treat as an array with 1 value
           // https://docs.mongodb.com/manual/reference/operator/aggregation/unwind/#non-array-field-path
-          { $unwind: `$${node.field}` },
+          ..._.map(
+            field => ({ $unwind: `$${field}` }),
+            _.castArray(node.unwind || node.field)
+          ),
           { $group: { _id: `$${node.field}`, count: { $sum: 1 } } },
           { $sort: { count: -1 } },
           node.optionsFilter && {
