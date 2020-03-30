@@ -1,5 +1,5 @@
 # 0.13.0
-* support an optional unwind override in the call for facet results
+* support an optional unwind override in the call for facet results in order to access a nested property inside an array of objects
 
 # 0.12.0
 * support foreign collection lookups of data for facet labels
