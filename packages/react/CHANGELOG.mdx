@@ -1,3 +1,6 @@
+### 2.16.2
+* Enable default outline for greyVest buttons
+
 ### 2.16.1
 * Fix PagedResultTable "NoResultsComponent"
 
@@ -226,7 +229,7 @@ We also vastly improved our displayName handling throughout, which should lead t
     We removed a number of internal utils which weren't technically publicly exposed, but we've seen usage where devs reach deep into the package for things like `injectTreeNode`
 
 2.  **Explicitly pass `tree` to everything that was previous wrapped in a `Provider` with `tree` on it.**
-   
+
      Passing `tree` via context with `Provider` from `mobx-react` is no longer supported. We might add similar functionality with native react context in a future release but do not have specific plans to do so yet. Usage by end users was dropping off and it adds a non-obvious level of indirection for only a few characters of savings.
 
 3.  **Replace all usage of `types` and `typeComponents` with `mapNodeToProps` leveraging `componentForType`.**
@@ -271,7 +274,7 @@ We also vastly improved our displayName handling throughout, which should lead t
      Example types can no longer automatically add contexture nodes to the tree. This was found in the QuickStart story and was designed to reduce barriers to entry, but the abstraction was leaky and radically increased complexity of our implementation despite no known usages in the wild. More often than not, it was just a potential source of bugs for end users. We might add support for something similar in a future release.
 
 5. **Rename the `isOpen` prop to `open` in all GreyVest Modal and Popover components.**
-   
+
      In 2.0, the lens prop on the GreyVest Modal and Popover components has been changed from `isOpen` to `open`. The new API accepts the `isOpen` and `onClose` props for a boolean value and setter function, respectively, in addition to the `open` prop for a lens. This is a *serious breaking change*, but we feel that adding support for a more conventional value/setter API to our component library will be worth it in the long run.
 
 ## 1.58.0
@@ -576,7 +579,7 @@ We also vastly improved our displayName handling throughout, which should lead t
 * Popovers now close when users click outside of them.
 
 ## 1.40.0
-* New style "gv-link-button", to use a button in place of an `<a>` tag with no 
+* New style "gv-link-button", to use a button in place of an `<a>` tag with no
   href
 
 ### 1.39.3
@@ -764,7 +767,7 @@ We also vastly improved our displayName handling throughout, which should lead t
 * ResultPager: hide pager if only 1 page and support className override
 * GreyVest: Increase spacing between facet options and left alight include toggle
 * GreyVest: Give nested tables a grey background
-* GreyVest ResultPager: hide disabled items, add margin between left/right page and +/-5 page, use chevron icons 
+* GreyVest ResultPager: hide disabled items, add margin between left/right page and +/-5 page, use chevron icons
 * GreyVest: Update tab padding
 * GreyVest: Facet spacing tweaks
 
@@ -984,7 +987,7 @@ We also vastly improved our displayName handling throughout, which should lead t
 * utils like injectTreeNode, mobx-react-utils, etc are available under `utils` instead of root
 * `SearchRoot` is now `QueryBuilder`
 * Popover show lens prop renamed to isOpen
-* Added `layout/Modal`         
+* Added `layout/Modal`
 * Rearranged storybook set up to split things into separate files with a folder hierarchy
 * Added IMDB storybook section
 * Added `layout/Awaiter`
