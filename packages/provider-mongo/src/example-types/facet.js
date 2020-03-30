@@ -33,7 +33,7 @@ module.exports = {
         : node.values,
     },
   }),
-  result: (node, search, schema) => 
+  result: (node, search, schema) =>
     Promise.all([
       search(
         _.compact([
