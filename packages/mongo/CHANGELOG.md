@@ -1,3 +1,6 @@
+# 0.13.0
+* support an optional unwind override in the call for facet results
+
 # 0.12.0
 * support foreign collection lookups of data for facet labels
 
