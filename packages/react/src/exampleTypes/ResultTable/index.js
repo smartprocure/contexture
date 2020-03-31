@@ -24,7 +24,7 @@ let ResultTable = ({
   infer,
   path,
   criteria,
-  node,
+  node = {},
   tree,
   NoResultsComponent = 'No Results Found',
   Row = Tr, // accept a custom Row component so we can do fancy expansion things
@@ -34,7 +34,10 @@ let ResultTable = ({
 }) => {
   // From Theme/Components
   let mutate = tree.mutate(path)
-  let hasResults = !!_.get('context.response.totalRecords', node)
+  // Account for all providers here (memory provider has results with no response parent)
+  let hasResults =
+    !!_.get('context.response.results.length', node) ||
+    !!_.get('context.results.length', node)
   // NOTE infer + add columns does not work together (except for anything explicitly passed in)
   //   When removing a field, it's not longer on the record, so infer can't pick it up since it runs per render
   let schema = _.flow(
@@ -63,7 +66,7 @@ let ResultTable = ({
     mutate,
     criteria,
   }
-  if (hasResults) {
+  if (!node.updating && hasResults) {
     return (
       <>
         <Table>
@@ -92,7 +95,8 @@ let ResultTable = ({
         <ResultTableFooter {...{ tree, node, path, pageSizeOptions }} />
       </>
     )
-  } else {
+  }
+  if (!node.markedForUpdate && !hasResults) {
     return NoResultsComponent
   }
 }
