@@ -27,6 +27,7 @@ let ResultTable = ({
   node = {},
   tree,
   NoResultsComponent = 'No Results Found',
+  IntroComponent = null, // Initial component to be shown instead of the grid when no data has been loaded
   Row = Tr, // accept a custom Row component so we can do fancy expansion things
   mapNodeToProps = () => ({}),
   pageSizeOptions, // an array of options to set the # of rows per page (default [20, 50, 100, 250])
@@ -96,9 +97,10 @@ let ResultTable = ({
       </>
     )
   }
-  if (!node.markedForUpdate && !hasResults) {
+  if (!node.markedForUpdate && !node.updating && !hasResults) {
     return NoResultsComponent
   }
+  return IntroComponent
 }
 
 export let PagedResultTable = contexturify(ResultTable)
