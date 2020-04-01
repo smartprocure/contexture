@@ -1,7 +1,7 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
 
-let validateValues = ({ value, values = [] }) => value || values.length
+let validateValues = ({ value, values = [] }) => _.isNil(value) || values.length
 
 let twoLevelMatch = {
   validate: context =>
