@@ -1,6 +1,9 @@
-# 2.28.2
+# 2.28.3
 * Add a fallback in the unlikely chance a tagsQuery tags property isn't an array or doesn't exist
 * Add the basic validate values function on some example types which didn't previously have a validate function
+
+# 2.28.2
+* Fix a typo "udpated" in a node resolve catch block log 
 
 # 2.28.1
 * Fix an issue updating the target search from a subquery
