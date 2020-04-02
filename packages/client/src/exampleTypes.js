@@ -1,12 +1,8 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
 
-// For futil
-export let stampKey = _.curry((key, x) =>
-  F.mapValuesIndexed((val, k) => ({ ...val, [key]: k }), x)
-)
-
 let validateValues = ({ value, values = [] }) => value || values.length
+let validateValueExistence = !_.isNil(_.get('value'))
 
 let twoLevelMatch = {
   validate: context =>
@@ -22,7 +18,7 @@ let twoLevelMatch = {
   },
 }
 
-export default stampKey('type', {
+export default F.stampKey('type', {
   facet: {
     label: 'List',
     validate: validateValues,
@@ -87,7 +83,7 @@ export default stampKey('type', {
   },
   tagsQuery: {
     label: 'Matches',
-    validate: x => x.tags.length,
+    validate: _.get('tags.length'),
     reactors: {
       join: 'others',
       tags: 'others',
@@ -147,6 +143,7 @@ export default stampKey('type', {
     },
   },
   bool: {
+    validate: validateValueExistence,
     reactors: {
       value: 'others',
     },
@@ -156,6 +153,7 @@ export default stampKey('type', {
     },
   },
   exists: {
+    validate: validateValueExistence,
     reactors: {
       value: 'others',
     },
