@@ -1,7 +1,7 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
 
-let validateValues = ({ value, values = [] }) => _.isNil(value) || values.length
+let validateValues = ({ value, values = [] }) => value || values.length
 
 let twoLevelMatch = {
   validate: context =>
@@ -142,7 +142,7 @@ export default F.stampKey('type', {
     },
   },
   bool: {
-    validate: validateValues,
+    validate: !_.isNil,
     reactors: {
       value: 'others',
     },
@@ -152,7 +152,7 @@ export default F.stampKey('type', {
     },
   },
   exists: {
-    validate: validateValues,
+    validate: !_.isNil,
     reactors: {
       value: 'others',
     },
