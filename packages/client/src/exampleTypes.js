@@ -142,7 +142,7 @@ export default F.stampKey('type', {
     },
   },
   bool: {
-    validate: !_.isNil,
+    validate: !_.isNil(_.get('value')),
     reactors: {
       value: 'others',
     },
@@ -152,7 +152,7 @@ export default F.stampKey('type', {
     },
   },
   exists: {
-    validate: !_.isNil,
+    validate: !_.isNil(_.get('value')),
     reactors: {
       value: 'others',
     },
