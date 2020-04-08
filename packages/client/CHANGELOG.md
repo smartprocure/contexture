@@ -1,5 +1,5 @@
 # 2.28.4
-* Fix exampleTypes validateValueExistence. It should be a function
+* Fix exampleTypes validateValueExistence to be an actual function
 
 # 2.28.3
 * Add a fallback in the unlikely chance a tagsQuery tags property isn't an array or doesn't exist
