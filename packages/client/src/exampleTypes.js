@@ -2,10 +2,7 @@ import _ from 'lodash/fp'
 import * as F from 'futil-js'
 
 let validateValues = ({ value, values = [] }) => value || values.length
-let validateValueExistence = _.flow(
-  _.get('value'),
-  _.negate(_.isNil),
-)
+let validateValueExistence = _.flow(_.get('value'), _.negate(_.isNil))
 
 let twoLevelMatch = {
   validate: context =>
