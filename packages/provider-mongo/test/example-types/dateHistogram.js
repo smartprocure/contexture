@@ -5,11 +5,17 @@ let dateHistogram = require('../../src/example-types/dateHistogram')
 
 let aggregate = sampleData => aggs => new mingo.Aggregator(aggs).run(sampleData)
 
-// This is super ridiculous to make sure we're working in UTC
-// Without this circleci fails - had to ssh in to figure it out
+
 let hoursOffset = new Date().getTimezoneOffset() / 60
 let utcDate = x => {
   var d = new Date(x)
+  // we need to double the timezone offset because the test uses mingo
+  // and mingo isn't timezone aware: https://github.com/kofrasa/mingo/issues/122.
+  // When simulateAggregation is run below, mingo won't timezone adjust these dates
+  // and it won't adjust them when generating the date histogram keys inside the 
+  // component, either, so you lose your offset twice: once when interpreting the
+  // sample data and once when creating the dateHistogram keys. Doubling the UTC
+  // offset makes the test always pass whether the offset is 0 or not.
   d.setHours(d.getHours() + hoursOffset * 2)
   return d
 }
