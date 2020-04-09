@@ -99,7 +99,7 @@ filters.
 `termsStats` is like statistical, grouped by the keyField
 
 ### `dateHistogram`
-Aggregates values for a field and groups into time periods specified by `interval`. Implements the statistical values listed above plus a `cardinality` count of unique keys providing values within each interval.
+Aggregates values for a field and groups into time periods specified by `interval`. Implements the statistical values listed above plus a `cardinality` count of unique values within each interval (the use case for this is when `value_field` isn't numeric).
 
 ## Integration Tests
 
