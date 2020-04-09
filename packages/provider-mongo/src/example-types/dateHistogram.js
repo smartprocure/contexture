@@ -44,7 +44,11 @@ module.exports = {
               month: '$_id.month',
               year: '$_id.year',
               _id: 0,
-              ...F.arrayToObject(_.identity, x => (x === 'cardinality' ? { $size: '$cardinality' } : 1), include),
+              ...F.arrayToObject(
+                _.identity,
+                x => (x === 'cardinality' ? { $size: '$cardinality' } : 1),
+                include
+              ),
             },
           },
           { $sort: { year: 1, month: 1, day: 1 } },
