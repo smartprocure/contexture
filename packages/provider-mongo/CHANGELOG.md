@@ -1,5 +1,11 @@
-# 0.12.1
+# 0.13.2
 * Correct fix of dateHistogram cardinality implementation
+
+# 0.13.1
+* Fix the facet results function to use the unwind prop or field in both options and cardinality results searches
+
+# 0.13.0
+* support an optional unwind override in the call for facet results in order to access a nested property inside an array of objects
 
 # 0.12.0
 * support foreign collection lookups of data for facet labels
