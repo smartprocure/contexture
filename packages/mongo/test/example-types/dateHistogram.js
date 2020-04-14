@@ -1,32 +1,32 @@
 let _ = require('lodash/fp')
 let { expect } = require('chai')
-let mingo = require('mingo')
+let { MongoClient } = require('mongodb')
+let { MongoMemoryServer } = require('mongodb-memory-server')
 let dateHistogram = require('../../src/example-types/dateHistogram')
 
-let aggregate = sampleData => aggs => new mingo.Aggregator(aggs).run(sampleData)
+let aggregate
 
-let hoursOffset = new Date().getTimezoneOffset() / 60
-let utcDate = x => {
-  var d = new Date(x)
-  // we need to double the timezone offset because the test uses mingo
-  // and mingo isn't timezone aware: https://github.com/kofrasa/mingo/issues/122.
-  // When simulateAggregation is run below, mingo won't timezone adjust these dates
-  // and it won't adjust them when generating the date histogram keys inside the
-  // component, either, so you lose your offset twice: once when interpreting the
-  // sample data and once when creating the dateHistogram keys. Doubling the UTC
-  // offset makes the test always pass whether the offset is 0 or not.
-  d.setHours(d.getHours() + hoursOffset * 2)
-  return d
-}
+before(async () => {
+  let mongoServer = new MongoMemoryServer()
+  let mongoUri = await mongoServer.getConnectionString()
+  let conn = await MongoClient.connect(mongoUri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  let db = conn.db(await mongoServer.getDbName())
+  let col = db.collection('test')
 
-let sampleData = _.times(
-  i => ({
-    createdAt: utcDate(`2020-02-0${(i % 5) + 1}`),
-    metrics: { usersCount: i * 100 },
-  }),
-  50
-)
-let simulateAggregation = aggregate(sampleData)
+  // Generate sample data
+  let sampleData = _.times(
+    i => ({
+      createdAt: new Date(`2020-02-0${(i % 5) + 1}`),
+      metrics: { usersCount: i * 100 },
+    }),
+    50
+  )
+  col.insertMany(sampleData)
+  aggregate = aggs => col.aggregate(aggs).toArray()
+})
 
 describe('dateHistogram', () => {
   describe('dateHistogram.result', () => {
@@ -34,7 +34,7 @@ describe('dateHistogram', () => {
       let query = null
       let search = _.flow(
         _.tap(x => (query = x)),
-        simulateAggregation
+        aggregate
       )
 
       let result = await dateHistogram.result(
@@ -83,7 +83,7 @@ describe('dateHistogram', () => {
       ])
       // omit cardinality from test as mingo $project { $size } does not correctly
       // implement mongo
-      expect({ entries: _.map(_.omit(['cardinality']), result.entries) }).eql({
+      expect(result).eql({
         entries: [
           {
             key: 1580515200000,
@@ -95,6 +95,7 @@ describe('dateHistogram', () => {
             min: 0,
             avg: 2250,
             sum: 22500,
+            cardinality: 10,
           },
           {
             key: 1580601600000,
@@ -106,6 +107,7 @@ describe('dateHistogram', () => {
             min: 100,
             avg: 2350,
             sum: 23500,
+            cardinality: 10,
           },
           {
             key: 1580688000000,
@@ -117,6 +119,7 @@ describe('dateHistogram', () => {
             min: 200,
             avg: 2450,
             sum: 24500,
+            cardinality: 10,
           },
           {
             key: 1580774400000,
@@ -128,6 +131,7 @@ describe('dateHistogram', () => {
             min: 300,
             avg: 2550,
             sum: 25500,
+            cardinality: 10,
           },
           {
             key: 1580860800000,
@@ -139,6 +143,7 @@ describe('dateHistogram', () => {
             min: 400,
             avg: 2650,
             sum: 26500,
+            cardinality: 10,
           },
         ],
       })
