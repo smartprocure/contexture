@@ -1,27 +1,32 @@
 let _ = require('lodash/fp')
 let { expect } = require('chai')
-let mingo = require('mingo')
+let { MongoClient } = require('mongodb')
+let { MongoMemoryServer } = require('mongodb-memory-server')
 let dateHistogram = require('../../src/example-types/dateHistogram')
 
-let aggregate = sampleData => aggs => new mingo.Aggregator(aggs).run(sampleData)
+let aggregate
 
-// This is super ridiculous to make sure we're working in UTC
-// Without this circleci fails - had to ssh in to figure it out
-let hoursOffset = new Date().getTimezoneOffset() / 60
-let utcDate = x => {
-  var d = new Date(x)
-  d.setHours(d.getHours() + hoursOffset)
-  return d
-}
+before(async () => {
+  let mongoServer = new MongoMemoryServer()
+  let mongoUri = await mongoServer.getConnectionString()
+  let conn = await MongoClient.connect(mongoUri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  let db = conn.db(await mongoServer.getDbName())
+  let col = db.collection('test')
 
-let sampleData = _.times(
-  i => ({
-    createdAt: utcDate(`2020-02-0${(i % 5) + 1}`),
-    metrics: { usersCount: i * 100 },
-  }),
-  50
-)
-let simulateAggregation = aggregate(sampleData)
+  // Generate sample data
+  let sampleData = _.times(
+    i => ({
+      createdAt: new Date(`2020-02-0${(i % 5) + 1}`),
+      metrics: { usersCount: i * 100 },
+    }),
+    50
+  )
+  col.insertMany(sampleData)
+  aggregate = aggs => col.aggregate(aggs).toArray()
+})
 
 describe('dateHistogram', () => {
   describe('dateHistogram.result', () => {
@@ -29,7 +34,7 @@ describe('dateHistogram', () => {
       let query = null
       let search = _.flow(
         _.tap(x => (query = x)),
-        simulateAggregation
+        aggregate
       )
 
       let result = await dateHistogram.result(
@@ -43,6 +48,7 @@ describe('dateHistogram', () => {
         },
         search
       )
+
       expect(query).eql([
         {
           $group: {
@@ -56,7 +62,7 @@ describe('dateHistogram', () => {
             min: { $min: '$metrics.usersCount' },
             sum: { $sum: '$metrics.usersCount' },
             count: { $sum: 1 },
-            cardinality: { $sum: '$metrics.usersCount' },
+            cardinality: { $addToSet: '$metrics.usersCount' },
           },
         },
         {
@@ -70,54 +76,72 @@ describe('dateHistogram', () => {
             min: 1,
             sum: 1,
             count: 1,
-            cardinality: 1,
+            cardinality: { $size: '$cardinality' },
           },
         },
         { $sort: { year: 1, month: 1, day: 1 } },
       ])
-      expect({
-        entries: _.map(_.omit(['day', 'month', 'year', 'key']), result.entries),
-      }).eql({
+      expect(result).eql({
         entries: [
           {
+            key: 1580515200000,
+            day: 1,
+            month: 2,
+            year: 2020,
             count: 10,
             max: 4500,
             min: 0,
             avg: 2250,
             sum: 22500,
-            cardinality: 22500,
+            cardinality: 10,
           },
           {
+            key: 1580601600000,
+            day: 2,
+            month: 2,
+            year: 2020,
             count: 10,
             max: 4600,
             min: 100,
             avg: 2350,
             sum: 23500,
-            cardinality: 23500,
+            cardinality: 10,
           },
           {
+            key: 1580688000000,
+            day: 3,
+            month: 2,
+            year: 2020,
             count: 10,
             max: 4700,
             min: 200,
             avg: 2450,
             sum: 24500,
-            cardinality: 24500,
+            cardinality: 10,
           },
           {
+            key: 1580774400000,
+            day: 4,
+            month: 2,
+            year: 2020,
             count: 10,
             max: 4800,
             min: 300,
             avg: 2550,
             sum: 25500,
-            cardinality: 25500,
+            cardinality: 10,
           },
           {
+            key: 1580860800000,
+            day: 5,
+            month: 2,
+            year: 2020,
             count: 10,
             max: 4900,
             min: 400,
             avg: 2650,
             sum: 26500,
-            cardinality: 26500,
+            cardinality: 10,
           },
         ],
       })
