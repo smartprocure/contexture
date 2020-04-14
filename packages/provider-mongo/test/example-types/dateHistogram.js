@@ -81,8 +81,6 @@ describe('dateHistogram', () => {
         },
         { $sort: { year: 1, month: 1, day: 1 } },
       ])
-      // omit cardinality from test as mingo $project { $size } does not correctly
-      // implement mongo
       expect(result).eql({
         entries: [
           {
