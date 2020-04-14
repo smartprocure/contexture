@@ -1,3 +1,6 @@
+# 0.13.2
+* Correct fix of dateHistogram cardinality implementation
+
 # 0.13.1
 * Fix the facet results function to use the unwind prop or field in both options and cardinality results searches
 
