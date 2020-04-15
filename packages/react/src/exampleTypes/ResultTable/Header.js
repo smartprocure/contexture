@@ -172,10 +172,12 @@ let Header = ({
           Remove Column
         </DropdownItem>
         {!!addOptions.length && (
-          <DropdownItem onClick={() => {
-            setAddColumnTriggerField(field)
-            F.on(adding)()
-          }}>
+          <DropdownItem
+            onClick={() => {
+              setAddColumnTriggerField(field)
+              F.on(adding)()
+            }}
+          >
             <Icon icon="AddColumn" />
             Add Column
           </DropdownItem>
