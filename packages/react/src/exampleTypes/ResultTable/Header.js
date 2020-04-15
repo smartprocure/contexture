@@ -31,10 +31,10 @@ const addColumn = (
   mutate,
   computeSideIndex,
   includes,
-  addColumnField,
+  triggerField,
   field
 ) => {
-  let index = includes.indexOf(addColumnField)
+  let index = includes.indexOf(triggerField)
   if (index >= 0) {
     includes.splice(computeSideIndex(index), 0, field)
     mutate({ include: includes })
