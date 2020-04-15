@@ -32,7 +32,7 @@ const addColumn = (
   computeSideIndex,
   includes,
   addColumnField,
-  field,
+  field
 ) => {
   let index = includes.indexOf(addColumnField)
   if (index >= 0) {
@@ -172,10 +172,12 @@ let Header = ({
           Remove Column
         </DropdownItem>
         {!!addOptions.length && (
-          <DropdownItem onClick={() => {
-            setAddColumnField(field)
-            F.on(adding)()
-          }}>
+          <DropdownItem
+            onClick={() => {
+              setAddColumnField(field)
+              F.on(adding)()
+            }}
+          >
             <Icon icon="AddColumn" />
             Add Column
           </DropdownItem>
