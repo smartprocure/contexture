@@ -32,7 +32,7 @@ const addColumn = (
   computeSideIndex,
   includes,
   addColumnField,
-  field,
+  field
 ) => {
   let index = includes.indexOf(addColumnField)
   if (index >= 0) {
