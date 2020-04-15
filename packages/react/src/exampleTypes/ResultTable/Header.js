@@ -77,7 +77,7 @@ let Header = ({
 }) => {
   let popover = React.useState(false)
   let adding = React.useState(false)
-  let [addColumnField, setAddColumnField] = React.useState(null)
+  let [addColumnTriggerField, setAddColumnTriggerField] = React.useState(null)
   let filtering = React.useState(false)
   let {
     disableFilter,
@@ -173,7 +173,7 @@ let Header = ({
         </DropdownItem>
         {!!addOptions.length && (
           <DropdownItem onClick={() => {
-            setAddColumnField(field)
+            setAddColumnTriggerField(field)
             F.on(adding)()
           }}>
             <Icon icon="AddColumn" />
@@ -214,7 +214,7 @@ let Header = ({
                 mutate,
                 i => i + 1, // Add to the right of the clicked column
                 includes,
-                addColumnField,
+                addColumnTriggerField,
                 field
               )
               F.off(adding)()
