@@ -27,13 +27,7 @@ const moveColumn = (
   })
 }
 
-const addColumn = (
-  mutate,
-  computeSideIndex,
-  includes,
-  triggerField,
-  field
-) => {
+const addColumn = (mutate, computeSideIndex, includes, triggerField, field) => {
   let index = includes.indexOf(triggerField)
   if (index >= 0) {
     includes.splice(computeSideIndex(index), 0, field)
