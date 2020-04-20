@@ -27,20 +27,6 @@ const moveColumn = (
   })
 }
 
-const addColumn = (
-  mutate,
-  computeSideIndex,
-  includes,
-  triggerField,
-  field
-) => {
-  let index = includes.indexOf(triggerField)
-  if (index >= 0) {
-    includes.splice(computeSideIndex(index), 0, field)
-    mutate({ include: includes })
-  }
-}
-
 let popoverStyle = {
   userSelect: 'none',
 }
@@ -77,7 +63,6 @@ let Header = ({
 }) => {
   let popover = React.useState(false)
   let adding = React.useState(false)
-  let [addColumnTriggerField, setAddColumnTriggerField] = React.useState(null)
   let filtering = React.useState(false)
   let {
     disableFilter,
@@ -172,12 +157,7 @@ let Header = ({
           Remove Column
         </DropdownItem>
         {!!addOptions.length && (
-          <DropdownItem
-            onClick={() => {
-              setAddColumnTriggerField(field)
-              F.on(adding)()
-            }}
-          >
+          <DropdownItem onClick={F.on(adding)}>
             <Icon icon="AddColumn" />
             Add Column
           </DropdownItem>
@@ -211,14 +191,12 @@ let Header = ({
         <Modal open={adding}>
           <NestedPicker
             options={addOptions}
-            onChange={field => {
-              addColumn(
-                mutate,
-                i => i + 1, // Add to the right of the clicked column
-                includes,
-                addColumnTriggerField,
-                field
-              )
+            onChange={triggerField => {
+              let index = includes.indexOf(field)
+              if (index >= 0) {
+                includes.splice(index+1, 0, triggerField)
+                mutate({ include: includes })
+              }
               F.off(adding)()
             }}
           />
