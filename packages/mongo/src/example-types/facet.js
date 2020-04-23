@@ -12,6 +12,38 @@ let projectStageFromLabelFields = node => ({
   },
 })
 
+let getSearchableKeysList = _.flow(
+  _.getOr('_id', 'label.fields'),
+  _.castArray,
+  _.map(label => (label === '_id' ? label : `label.${label}`))
+)
+
+let setMatchOperators = (list, node) =>
+  list.length > 1
+    ? {
+        $or: _.map(
+          key => ({
+            [key]: {
+              $regex: F.wordsToRegexp(node.optionsFilter),
+              $options: 'i',
+            },
+          }),
+          list
+        ),
+      }
+    : {
+        [_.first(list)]: {
+          $regex: F.wordsToRegexp(node.optionsFilter),
+          $options: 'i',
+        },
+      }
+
+let mapKeywordFilters = node =>
+  node.optionsFilter &&
+  _.flow(getSearchableKeysList, list => ({
+    $match: setMatchOperators(list, node),
+  }))(node)
+
 let facetValueLabel = (node, label) => {
   if (!node.label) {
     return {}
@@ -48,15 +80,7 @@ module.exports = {
           ...unwindPropOrField(node),
           { $group: { _id: `$${node.field}`, count: { $sum: 1 } } },
           { $sort: { count: -1 } },
-          node.optionsFilter && {
-            $match: {
-              _id: {
-                $regex: F.wordsToRegexp(node.optionsFilter),
-                $options: 'i',
-              },
-            },
-          },
-          node.size !== 0 && { $limit: node.size || 10 },
+          mapKeywordFilters(node),
           ...(_.get('label', node)
             ? [
                 {
@@ -75,6 +99,7 @@ module.exports = {
                 },
               ]
             : []),
+          node.size !== 0 && { $limit: node.size || 10 },
           _.get('label.fields', node) && projectStageFromLabelFields(node),
         ])
       ),
