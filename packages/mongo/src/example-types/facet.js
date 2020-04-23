@@ -79,8 +79,6 @@ module.exports = {
           // https://docs.mongodb.com/manual/reference/operator/aggregation/unwind/#non-array-field-path
           ...unwindPropOrField(node),
           { $group: { _id: `$${node.field}`, count: { $sum: 1 } } },
-          { $sort: { count: -1 } },
-          mapKeywordFilters(node),
           ...(_.get('label', node)
             ? [
                 {
@@ -99,8 +97,10 @@ module.exports = {
                 },
               ]
             : []),
-          node.size !== 0 && { $limit: node.size || 10 },
           _.get('label.fields', node) && projectStageFromLabelFields(node),
+          mapKeywordFilters(node),
+          { $sort: { count: -1 } },
+          node.size !== 0 && { $limit: node.size || 10 },
         ])
       ),
       search([
