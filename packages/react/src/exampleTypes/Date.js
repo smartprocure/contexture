@@ -110,6 +110,21 @@ let allRollingOpts = [
   },
   {
     type: 'future',
+    label: 'Next 60 days',
+    range: { from: 'now/d', to: 'now/d+60d' },
+  },
+  {
+    type: 'future',
+    label: 'Next 90 days',
+    range: { from: 'now/d', to: 'now/d+90d' },
+  },
+  {
+    type: 'future',
+    label: 'Next 6 Months',
+    range: { from: 'now/d', to: 'now/d+6M' },
+  },
+  {
+    type: 'future',
     label: 'Next 12 Months',
     range: { from: 'now/d', to: 'now/d+12M' },
   },
