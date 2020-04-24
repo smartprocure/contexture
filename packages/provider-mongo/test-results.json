@@ -5,9 +5,9 @@
     "passes": 0,
     "pending": 0,
     "failures": 1,
-    "start": "2020-04-24T19:33:39.865Z",
-    "end": "2020-04-24T19:33:39.977Z",
-    "duration": 113
+    "start": "2020-04-24T19:34:14.849Z",
+    "end": "2020-04-24T19:34:14.970Z",
+    "duration": 121
   },
   "tests": [],
   "pending": [],
@@ -15,7 +15,7 @@
     {
       "title": "\"before all\" hook",
       "fullTitle": " \"before all\" hook",
-      "duration": 86,
+      "duration": 82,
       "currentRetry": 0,
       "err": {
         "stack": "Error: Status Code is 403 (MongoDB's 404)\n\nThis means that the requested version-platform combination dosnt exist\n    at ClientRequest.<anonymous> (node_modules/mongodb-memory-server-core/lib/util/MongoBinaryDownload.js:367:44)\n    at HTTPParser.parserOnIncomingClient [as onIncoming] (_http_client.js:540:21)\n    at HTTPParser.parserOnHeadersComplete (_http_common.js:117:17)\n    at TLSSocket.socketOnData (_http_client.js:445:20)\n    at addChunk (_stream_readable.js:274:12)\n    at readableAddChunk (_stream_readable.js:261:11)\n    at TLSSocket.Readable.push (_stream_readable.js:218:10)\n    at TLSWrap.onread (net.js:581:20)",
