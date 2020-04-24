@@ -19,17 +19,20 @@ let getSearchableKeysList = _.flow(
 )
 
 let getMatchesForMultipleKeywords = (list, optionsFilter) => ({
-  $and: _.map((option) => ({
+  $and: _.map(
+    option => ({
       $or: _.map(
-          key => ({
-            [key]: {
-              $regex: F.wordsToRegexp(option),
-              $options: 'i',
-            },
-          }),
-          list
-        )
-    }), _.words(optionsFilter))
+        key => ({
+          [key]: {
+            $regex: F.wordsToRegexp(option),
+            $options: 'i',
+          },
+        }),
+        list
+      ),
+    }),
+    _.words(optionsFilter)
+  ),
 })
 
 let setMatchOperators = (list, node) =>
