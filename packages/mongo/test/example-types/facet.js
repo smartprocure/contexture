@@ -216,6 +216,122 @@ describe('facet', () => {
         ],
       })
     })
+    it('should support optionsFilter with a lookup that returns a single field', async () => {
+      queries = []
+
+      let activities = [
+        { _id: 1, type: 'create', user: 2 },
+        { _id: 1, type: 'update', user: 1 },
+        { _id: 1, type: 'create', user: 1 },
+        { _id: 1, type: 'delete', user: 3 },
+        { _id: 1, type: 'delete', user: 2 },
+        { _id: 1, type: 'read', user: 1 },
+      ]
+
+      let users = [
+        { _id: 1, firstName: 'Fred', type: 'basic' },
+        { _id: 2, firstName: 'Jane', type: 'admin' },
+      ]
+
+      let node = {
+        field: 'user',
+        optionsFilter: 'jane',
+        label: {
+          collection: users,
+          foreignField: '_id',
+          fields: 'firstName',
+        },
+      }
+
+      await facet.result(node, search)
+      let filterAgg = _.find('$match', queries[0])
+      expect(filterAgg).to.deep.equal({
+        $match: {
+          'label.firstName': {
+            $regex: '.*(?=.*jane.*).*',
+            $options: 'i',
+          },
+        },
+      })
+
+      let result = await facet.result(node, agg =>
+        mingo.aggregate(activities, agg)
+      )
+
+      expect(result).to.deep.equal({
+        cardinality: 3,
+        options: [
+          {
+            name: 2,
+            label: 'Jane',
+            count: 2,
+          },
+        ],
+      })
+    })
+    it('should support optionsFilter with a lookup that returns multiple fields', async () => {
+      queries = []
+
+      let activities = [
+        { _id: 1, type: 'create', user: 2 },
+        { _id: 1, type: 'update', user: 1 },
+        { _id: 1, type: 'create', user: 1 },
+        { _id: 1, type: 'delete', user: 3 },
+        { _id: 1, type: 'delete', user: 2 },
+        { _id: 1, type: 'read', user: 1 },
+      ]
+
+      let users = [
+        { _id: 1, firstName: 'Fred', lastName: 'Smith', type: 'basic' },
+        { _id: 2, firstName: 'Jane', lastName: 'Williams', type: 'admin' },
+      ]
+
+      let node = {
+        field: 'user',
+        optionsFilter: 'fred',
+        label: {
+          collection: users,
+          foreignField: '_id',
+          fields: ['firstName', 'lastName'],
+        },
+      }
+
+      await facet.result(node, search)
+      let filterAgg = _.find('$match', queries[0])
+      expect(filterAgg).to.deep.equal({
+        $match: {
+          $or: [
+            {
+              'label.firstName': {
+                $regex: '.*(?=.*fred.*).*',
+                $options: 'i',
+              },
+            },
+            {
+              'label.lastName': {
+                $regex: '.*(?=.*fred.*).*',
+                $options: 'i',
+              },
+            },
+          ],
+        },
+      })
+
+      let result = await facet.result(node, agg =>
+        mingo.aggregate(activities, agg)
+      )
+
+      expect(result).to.deep.equal({
+        cardinality: 3,
+        options: [
+          {
+            name: 1,
+            label: { firstName: 'Fred', lastName: 'Smith' },
+            count: 3,
+          },
+        ],
+      })
+    })
     it('should allow for an optional node.unwind to distinguish a nested array field being searched', async () => {
       let collection = [
         {
