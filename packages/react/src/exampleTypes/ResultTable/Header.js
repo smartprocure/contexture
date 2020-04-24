@@ -151,13 +151,14 @@ let Header = ({
           <Icon icon="MoveRight" />
           Move Right
         </DropdownItem>
-          {!hideRemoveColumn && <DropdownItem
+        {!hideRemoveColumn && (
+          <DropdownItem
             onClick={() => mutate({ include: _.without([field], includes) })}
           >
             <Icon icon="RemoveColumn" />
             Remove Column
           </DropdownItem>
-        }
+        )}
         {!!addOptions.length && (
           <DropdownItem onClick={F.on(adding)}>
             <Icon icon="AddColumn" />
