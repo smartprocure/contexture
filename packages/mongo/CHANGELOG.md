@@ -1,3 +1,6 @@
+# 0.14.0
+* Facet example type: Add ability to filter/match over multiple fields projected in the lookup stage
+
 # 0.13.2
 * Correct fix of dateHistogram cardinality implementation
 
