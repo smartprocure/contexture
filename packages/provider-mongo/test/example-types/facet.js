@@ -269,7 +269,7 @@ describe('facet', () => {
         ],
       })
     })
-    it('should support optionsFilter with a lookup that returns multiple fields', async () => {
+    it('should support a lookup with an optionsFilter with multiple keywords that span multiple fields', async () => {
       queries = []
 
       let activities = [
@@ -288,7 +288,7 @@ describe('facet', () => {
 
       let node = {
         field: 'user',
-        optionsFilter: 'fred',
+        optionsFilter: 'fred smith',
         label: {
           collection: users,
           foreignField: '_id',
@@ -300,18 +300,38 @@ describe('facet', () => {
       let filterAgg = _.find('$match', queries[0])
       expect(filterAgg).to.deep.equal({
         $match: {
-          $or: [
+          $and: [
             {
-              'label.firstName': {
-                $regex: '.*(?=.*fred.*).*',
-                $options: 'i',
-              },
+              $or: [
+                {
+                  'label.firstName': {
+                    $regex: '.*(?=.*fred.*).*',
+                    $options: 'i',
+                  },
+                },
+                {
+                  'label.lastName': {
+                    $regex: '.*(?=.*fred.*).*',
+                    $options: 'i',
+                  },
+                },
+              ],
             },
             {
-              'label.lastName': {
-                $regex: '.*(?=.*fred.*).*',
-                $options: 'i',
-              },
+              $or: [
+                {
+                  'label.firstName': {
+                    $regex: '.*(?=.*smith.*).*',
+                    $options: 'i',
+                  },
+                },
+                {
+                  'label.lastName': {
+                    $regex: '.*(?=.*smith.*).*',
+                    $options: 'i',
+                  },
+                },
+              ],
             },
           ],
         },
