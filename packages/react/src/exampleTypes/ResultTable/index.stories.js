@@ -46,12 +46,34 @@ export let customizations = () => (
       theme={{ Table: x => <table className="example-table" {...x} /> }}
       infer
       fields={{
-        b: {
-          label: 'Field B',
+        a: {
+          label: 'Colored Header',
           order: -2,
           HeaderCell: ({ style, ...props }) => (
             <th
               style={{ color: 'green', ...style }}
+              {..._.omit('activeFilter', props)}
+            />
+          ),
+        },
+        b: {
+          label: 'Hidden Remove Column',
+          order: -3,
+          hideRemoveColumn: true,
+          HeaderCell: ({ style, ...props }) => (
+            <th
+              style={{ color: 'gray', ...style }}
+              {..._.omit('activeFilter', props)}
+            />
+          ),
+        },
+        c: {
+          label: 'Hidden Menu',
+          order: -4,
+          hideMenu: true,
+          HeaderCell: ({ style, ...props }) => (
+            <th
+              style={{ color: 'gray', ...style }}
               {..._.omit('activeFilter', props)}
             />
           ),
