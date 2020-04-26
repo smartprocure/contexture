@@ -6,7 +6,7 @@ let node = {
   field: 'test',
 }
 
-describe.only('bool', () => {
+describe('bool', () => {
   describe('bool.hasValue', () => {
     it('should detect a boolean value and not anything else', () => {
       expect(bool.hasValue({ ...node, value: true })).to.be.true
