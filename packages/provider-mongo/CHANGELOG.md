@@ -1,3 +1,6 @@
+# 0.15.0
+* Add `bool` example type and tests
+
 # 0.14.0
 * Facet example type: Add ability to filter/match keywords that span over multiple projected fields
 
