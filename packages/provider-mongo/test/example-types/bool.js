@@ -29,15 +29,7 @@ describe.only('bool', () => {
       })
     })
     it('falsySupport should work', () => {
-      let falsyResult = {
-        $or: [
-          { test: false },
-          { test: { $exists: false }},
-          { test: '' },
-          { test: null },
-          { test: 0 },
-        ]
-      }
+      let falsyResult = { test: { $ne: true } }
       let falsySupportNode = {...node, falsySupport: true }
       expect(bool.filter(falsySupportNode)).to.deep.equal(falsyResult)
       expect(bool.filter({...falsySupportNode, value: false })).to.deep.equal(falsyResult)
