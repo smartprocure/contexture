@@ -12,10 +12,10 @@ let projectStageFromLabelFields = node => ({
   },
 })
 
-let sortAndLimitIfSearching = (shouldSortAndLimit, limit) => [
-  shouldSortAndLimit &&
-    ({ $sort: { count: -1 } }, limit !== 0 && { $limit: limit || 10 }),
-]
+let sortAndLimitIfSearching = (shouldSortAndLimit, limit) =>
+  shouldSortAndLimit
+    ? [{ $sort: { count: -1 } }, limit !== 0 && { $limit: limit || 10 }]
+    : []
 
 let sortAndLimitIfNotSearching = (should, limit) =>
   sortAndLimitIfSearching(!should, limit)
@@ -116,6 +116,7 @@ module.exports = {
           _.get('label.fields', node) && projectStageFromLabelFields(node),
           mapKeywordFilters(node),
           ...sortAndLimitIfSearching(node.optionsFilter, node.size),
+          // { $sort: { count: -1 } }, node.size !== 0 && { $limit: node.size || 10 }
         ])
       ),
       search([
