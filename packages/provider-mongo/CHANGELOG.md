@@ -1,3 +1,6 @@
+# 0.14.1
+* Facet example type: Add a case to sort and limit earlier in the pipeline if there is no facet search
+
 # 0.14.0
 * Facet example type: Add ability to filter/match keywords that span over multiple projected fields
 
