@@ -9,7 +9,10 @@ let aggregate
 before(async () => {
   let mongoServer = new MongoMemoryServer()
   let mongoUri = await mongoServer.getConnectionString()
-  let conn = await MongoClient.connect(mongoUri)
+  let conn = await MongoClient.connect(mongoUri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   let db = conn.db(await mongoServer.getDbName())
   let col = db.collection('test')
 
