@@ -12,13 +12,13 @@ let projectStageFromLabelFields = node => ({
   },
 })
 
-let sortAndLimitIfSearching = (shouldSortAndLimit, limit) => 
-  shouldSortAndLimit && [
-    { $sort: { count: -1 } },
-    limit !== 0 && { $limit: limit || 10 },
-  ]
+let sortAndLimitIfSearching = (shouldSortAndLimit, limit) => [
+  shouldSortAndLimit &&
+    ({ $sort: { count: -1 } }, limit !== 0 && { $limit: limit || 10 }),
+]
 
-let sortAndLimitIfNotSearching = (should, limit) => sortAndLimitIfSearching(!should, limit)
+let sortAndLimitIfNotSearching = (should, limit) =>
+  sortAndLimitIfSearching(!should, limit)
 
 let getSearchableKeysList = _.flow(
   _.getOr('_id', 'label.fields'),
