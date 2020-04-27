@@ -3,6 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:lts
+      - image: circleci/mongo:4
     steps:
       - checkout
       - restore_cache:
