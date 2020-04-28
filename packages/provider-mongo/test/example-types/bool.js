@@ -31,7 +31,7 @@ describe('bool', () => {
       expect(
         bool.filter({
           field: 'myField',
-          value: false
+          value: false,
         })
       ).to.deep.equal(neResult)
       expect(
@@ -42,7 +42,7 @@ describe('bool', () => {
       expect(
         bool.filter({
           field: 'myField',
-          value: null
+          value: null,
         })
       ).to.deep.equal(neResult)
     })
