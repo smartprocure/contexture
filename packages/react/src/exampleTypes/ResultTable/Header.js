@@ -70,6 +70,7 @@ let Header = ({
     field,
     sortField = field,
     label,
+    hideRemoveColumn,
     hideMenu,
     typeDefault,
   } = fieldSchema
@@ -88,10 +89,10 @@ let Header = ({
   let Label = label
   return (
     <HeaderCell
-      style={{ cursor: 'pointer' }}
+      style={{ cursor: hideMenu ? 'default' : 'pointer' }}
       activeFilter={_.get('hasValue', filterNode)}
     >
-      <span onClick={F.flip(popover)}>
+      <span onClick={F.when(!hideMenu, F.flip(popover))}>
         {_.isFunction(label) ? <Label /> : label}{' '}
         {field === node.sortField && (
           <Icon
@@ -150,12 +151,14 @@ let Header = ({
           <Icon icon="MoveRight" />
           Move Right
         </DropdownItem>
-        <DropdownItem
-          onClick={() => mutate({ include: _.without([field], includes) })}
-        >
-          <Icon icon="RemoveColumn" />
-          Remove Column
-        </DropdownItem>
+        {!hideRemoveColumn && (
+          <DropdownItem
+            onClick={() => mutate({ include: _.without([field], includes) })}
+          >
+            <Icon icon="RemoveColumn" />
+            Remove Column
+          </DropdownItem>
+        )}
         {!!addOptions.length && (
           <DropdownItem onClick={F.on(adding)}>
             <Icon icon="AddColumn" />
