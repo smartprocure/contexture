@@ -1,3 +1,7 @@
+# 0.15.0
+* Support for `bool` example type and tests
+* Updated 'hasValue` for the exists type and added tests for it
+
 # 0.14.2
 * Add tests for facet pipeline
 * Remove console log
