@@ -116,7 +116,6 @@ module.exports = {
           _.get('label.fields', node) && projectStageFromLabelFields(node),
           mapKeywordFilters(node),
           ...sortAndLimitIfSearching(node.optionsFilter, node.size),
-          // { $sort: { count: -1 } }, node.size !== 0 && { $limit: node.size || 10 }
         ])
       ),
       search([
