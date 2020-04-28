@@ -9,15 +9,12 @@ let node = {
 
 describe('exists', () => {
   describe('exists.hasValue', () => {
-    it('Should detect a boolean value, null or undefined only', () => {
+    it('Should detect a boolean value only', () => {
       expect(exists.hasValue({ ...node, value: true })).to.be.true
       expect(exists.hasValue({ ...node, value: false })).to.be.true
       expect(exists.hasValue(node)).to.be.false
       expect(exists.hasValue({ ...node, value: null })).to.be.false
       expect(exists.hasValue({ ...node, value: undefined })).to.be.false
-      expect(exists.hasValue({ ...node, value: 0 })).to.be.false
-      expect(exists.hasValue({ ...node, value: '' })).to.be.false
-      expect(exists.hasValue({ ...node, value: [] })).to.be.false
     })
   })
   describe('exists.filter', () => {
