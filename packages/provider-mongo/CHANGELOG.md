@@ -1,5 +1,10 @@
 # 0.15.0
-* Add `bool` example type and tests
+* Support for `bool` example type and tests
+* Updated 'hasValue` for the exists type and added tests for it
+
+# 0.14.2
+* Add tests for facet pipeline
+* Remove console log
 
 # 0.14.1
 * Facet example type: Add a case to sort and limit earlier in the pipeline if there is no facet search
