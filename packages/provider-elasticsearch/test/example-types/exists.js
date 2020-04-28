@@ -5,7 +5,7 @@ describe('exists', () => {
   describe('hasValue', () => {
     let node = {
       type: 'bool',
-      field: 'test'
+      field: 'test',
     }
     it('should detect a boolean value only', () => {
       expect(exists.hasValue({ ...node, value: true })).to.be.true
