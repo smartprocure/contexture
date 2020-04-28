@@ -96,6 +96,45 @@ describe('facet', () => {
       let limitIndex = _.findIndex('$limit', queries[0])
       expect(limitIndex > filterIndex).to.be.true
     })
+    it('should sort and limit results as early as possible if there is no search, for performance benefits', async () => {
+      queries = []
+      let node = {
+        field: 'myField',
+        label: 'myField',
+      }
+
+      await facet.result(node, search)
+
+      let sortIndex = _.findIndex('$sort', queries[0])
+      let limitIndex = _.findIndex('$limit', queries[0])
+
+      let lastIndex = queries[0].length - 1
+      let secondToLastIndex = lastIndex - 1
+
+      expect(limitIndex > sortIndex).to.be.true
+      expect(sortIndex < secondToLastIndex).to.be.true
+      expect(limitIndex < lastIndex).to.be.true
+    })
+    it('should sort and limit results later in the pipeline if there is a facet search', async () => {
+      queries = []
+      let node = {
+        field: 'myField',
+        label: 'myField',
+        optionsFilter: 'keyword',
+      }
+
+      await facet.result(node, search)
+
+      let sortIndex = _.findIndex('$sort', queries[0])
+      let limitIndex = _.findIndex('$limit', queries[0])
+
+      let lastIndex = queries[0].length - 1
+      let secondToLastIndex = lastIndex - 1
+
+      expect(limitIndex > sortIndex).to.be.true
+      expect(sortIndex === secondToLastIndex).to.be.true
+      expect(limitIndex === lastIndex).to.be.true
+    })
     it('should support isMongoId', async () => {
       let node = {
         field: 'field',
