@@ -7,4 +7,6 @@ import { Exists } from '.'
 storiesOf('ExampleTypes|Exists', module)
   .addDecorator(ThemePicker('greyVest'))
   .add('Exists', () => <Exists tree={TestTree()} path={['exists']} />)
-  .add('Exists Customized', () => <Exists tree={TestTree()} path={['exists']} options={['Foo', 'Boo']} />)
+  .add('Exists Customized', () => (
+    <Exists tree={TestTree()} path={['exists']} options={['Foo', 'Boo']} />
+  ))
