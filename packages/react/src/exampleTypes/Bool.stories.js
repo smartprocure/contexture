@@ -7,3 +7,4 @@ import { Bool } from '.'
 storiesOf('ExampleTypes|Bool', module)
   .addDecorator(ThemePicker('greyVest'))
   .add('Bool', () => <Bool tree={TestTree()} path={['bool']} />)
+  .add('Bool Customized', () => <Bool tree={TestTree()} path={['bool']} options={['Agree', 'Disagree']} />)

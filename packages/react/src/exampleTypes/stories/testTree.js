@@ -58,6 +58,11 @@ export default (f = _.identity) => {
       value: false,
       path: ['bool'],
     },
+    exists: {
+      key: 'exists',
+      value: false,
+      path: ['exists'],
+    },
     date: {
       key: 'date',
       path: ['date'],

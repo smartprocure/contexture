@@ -2,14 +2,14 @@ import React from 'react'
 import F from 'futil'
 import { contexturify } from '../utils/hoc'
 
-let Bool = ({ tree, node, theme: { RadioList } }) => (
+let Bool = ({ tree, node, options = ['yes', 'no'], theme: { RadioList } }) => (
   <div className="contexture-bool">
     <RadioList
-      value={node.value ? 'yes' : 'no'}
+      value={node.value ? options[0] : options[1]}
       onChange={value => {
-        tree.mutate(node.path, { value: value === 'yes' })
+        tree.mutate(node.path, { value: value === options[0] })
       }}
-      options={F.autoLabelOptions(['yes', 'no'])}
+      options={F.autoLabelOptions(options)}
     />
   </div>
 )
