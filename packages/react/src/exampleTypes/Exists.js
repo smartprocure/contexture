@@ -5,18 +5,21 @@ import { contexturify } from '../utils/hoc'
 let Exists = ({
   tree,
   node,
-  options = ['exists', 'doesNotExist'],
+  display = (options=['exists', 'doesNotExist']) => options,
   theme: { RadioList },
-}) => (
-  <div className="contexture-exists">
-    <RadioList
-      value={node.value ? options[0] : options[1]}
-      onChange={value => {
-        tree.mutate(node.path, { value: value === options[0] })
-      }}
-      options={F.autoLabelOptions(options)}
-    />
-  </div>
-)
+}) => {
+  let options = display()
+  return (
+    <div className="contexture-exists">
+      <RadioList
+        value={node.value ? options[0] : options[1]}
+        onChange={value => {
+          tree.mutate(node.path, { value: value === options[0] })
+        }}
+        options={F.autoLabelOptions(options)}
+      />
+    </div>
+  )
+}
 
 export default contexturify(Exists)
