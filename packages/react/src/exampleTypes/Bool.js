@@ -1,5 +1,4 @@
 import React from 'react'
-import F from 'futil'
 import _ from 'lodash/fp'
 import { contexturify } from '../utils/hoc'
 
@@ -30,6 +29,7 @@ let Bool = ({
         ]}
       />
     </div>
+
   )
 }
 

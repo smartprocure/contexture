@@ -1,5 +1,4 @@
 import React from 'react'
-import F from 'futil'
 import { contexturify } from '../utils/hoc'
 
 let getValue = (value, either) => _.isBoolean(value)
