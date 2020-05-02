@@ -55,12 +55,12 @@ export default (f = _.identity) => {
     },
     bool: {
       key: 'bool',
-      value: false,
+      value: null,
       path: ['bool'],
     },
     exists: {
       key: 'exists',
-      value: false,
+      value: null,
       path: ['exists'],
     },
     date: {

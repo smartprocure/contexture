@@ -2,21 +2,31 @@ import React from 'react'
 import F from 'futil'
 import { contexturify } from '../utils/hoc'
 
+let getValue = (value, either) => _.isBoolean(value)
+  ? value
+  : either ? null : false
+
 let Exists = ({
   tree,
   node,
-  display = (options=['exists', 'doesNotExist']) => options,
+  display = () => ['Exists', 'Does Not Exist', 'Either'],
   theme: { RadioList },
 }) => {
-  let options = display()
+  let [exists, doesNotExist, either] = display()
   return (
     <div className="contexture-exists">
       <RadioList
-        value={node.value ? options[0] : options[1]}
+        value={getValue(node.value, either)}
         onChange={value => {
-          tree.mutate(node.path, { value: value === options[0] })
+          tree.mutate(node.path, {
+            value: getValue(value, either)
+          })
         }}
-        options={F.autoLabelOptions(options)}
+        options={[
+          { label: exists, value: true }, 
+          { label: doesNotExist, value: false }, 
+          ...(either ? [{ label: either, value: null}] : [])
+        ]}
       />
     </div>
   )
