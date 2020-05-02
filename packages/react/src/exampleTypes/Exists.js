@@ -5,7 +5,7 @@ import { contexturify } from '../utils/hoc'
 let Exists = ({
   tree,
   node,
-  display = (options=['exists', 'doesNotExist']) => options,
+  display = (options = ['exists', 'doesNotExist']) => options,
   theme: { RadioList },
 }) => {
   let options = display()

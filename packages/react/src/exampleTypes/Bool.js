@@ -5,8 +5,8 @@ import { contexturify } from '../utils/hoc'
 let Bool = ({
   tree,
   node,
-  display = (options=['yes', 'no']) => options,
-  theme: { RadioList }
+  display = (options = ['yes', 'no']) => options,
+  theme: { RadioList },
 }) => {
   let options = display()
   return (

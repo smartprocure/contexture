@@ -8,5 +8,9 @@ storiesOf('ExampleTypes|Bool', module)
   .addDecorator(ThemePicker('greyVest'))
   .add('Bool', () => <Bool tree={TestTree()} path={['bool']} />)
   .add('Bool Customized', () => (
-    <Bool tree={TestTree()} path={['bool']} display={() => ['Agree', 'Disagree']} />
+    <Bool
+      tree={TestTree()}
+      path={['bool']}
+      display={() => ['Agree', 'Disagree']}
+    />
   ))
