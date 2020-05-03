@@ -2,9 +2,8 @@ import React from 'react'
 import _ from 'lodash/fp'
 import { contexturify } from '../utils/hoc'
 
-let getValue = (value, either) => _.isBoolean(value)
-  ? value
-  : either ? null : false
+let getValue = (value, either) =>
+  _.isBoolean(value) ? value : either ? null : false
 
 let Exists = ({
   tree,
@@ -19,13 +18,13 @@ let Exists = ({
         value={getValue(node.value, either)}
         onChange={value => {
           tree.mutate(node.path, {
-            value: getValue(value, either)
+            value: getValue(value, either),
           })
         }}
         options={[
-          { label: exists, value: true }, 
-          { label: doesNotExist, value: false }, 
-          ...(either ? [{ label: either, value: null}] : [])
+          { label: exists, value: true },
+          { label: doesNotExist, value: false },
+          ...(either ? [{ label: either, value: null }] : []),
         ]}
       />
     </div>
