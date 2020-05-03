@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash/fp'
 import { contexturify } from '../utils/hoc'
 
 let getValue = (value, either) => _.isBoolean(value)
