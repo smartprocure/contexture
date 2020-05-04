@@ -74,4 +74,8 @@ export let getLocationInfo = async (
 export let geoCodeLocation = async (
   locationId,
   hereConfig = defaultHereConfig
-) => _.get('Location.DisplayPosition', await getLocationInfo(locationId, hereConfig))
+) =>
+  _.get(
+    'Location.DisplayPosition',
+    await getLocationInfo(locationId, hereConfig)
+  )
