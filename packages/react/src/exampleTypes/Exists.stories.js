@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash/fp'
 import { storiesOf } from '@storybook/react'
 import TestTree from './stories/testTree'
 import ThemePicker from '../stories/themePicker'
@@ -11,6 +12,6 @@ storiesOf('ExampleTypes|Exists', module)
     <Exists
       tree={TestTree()}
       path={['exists']}
-      display={() => ['Foo', 'Boo']}
+      display={value => _.isNil(value) ? 'Both' : value ? 'There' : 'Not there'}
     />
   ))
