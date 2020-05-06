@@ -12,6 +12,8 @@ storiesOf('ExampleTypes|Exists', module)
     <Exists
       tree={TestTree()}
       path={['exists']}
-      display={value => _.isNil(value) ? 'Both' : value ? 'There' : 'Not there'}
+      display={value =>
+        _.isNil(value) ? 'Both' : value ? 'There' : 'Not there'
+      }
     />
   ))
