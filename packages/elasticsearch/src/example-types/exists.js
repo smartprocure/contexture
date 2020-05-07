@@ -1,5 +1,7 @@
+let _ = require('lodash/fp')
+
 module.exports = {
-  hasValue: () => true,
+  hasValue: ({ value }) => _.isBoolean(value),
   filter(context) {
     let result = {
       exists: {

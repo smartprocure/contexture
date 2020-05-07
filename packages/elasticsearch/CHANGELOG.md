@@ -1,3 +1,6 @@
+# 0.20.0
+* [Bool/Exists] hasValue is now based on _.isBoolean so we do not impact searches if there is no boolean value set
+
 # 0.19.6
 * [Facet] Move from `_term` to `_key`
 
