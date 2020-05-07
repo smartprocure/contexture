@@ -53,7 +53,8 @@ export let loadHereOptions = async (
     }))
   }
 }
-export let geoCodeLocation = async (
+
+export let getLocationInfo = async (
   locationId,
   hereConfig = defaultHereConfig
 ) => {
@@ -66,14 +67,15 @@ export let geoCodeLocation = async (
     console.error('geoCodeLocation', data.error)
     throw new Error(data.error)
   } else {
-    var position = _.get(
-      'Response.View.0.Result.0.Location.DisplayPosition',
-      data
-    )
-
-    return {
-      latitude: position.Latitude,
-      longitude: position.Longitude,
-    }
+    return _.get('Response.View.0.Result.0', data)
   }
 }
+
+export let geoCodeLocation = async (
+  locationId,
+  hereConfig = defaultHereConfig
+) =>
+  _.flow(
+    _.get('Location.DisplayPosition'),
+    _.mapKeys(_.toLower)
+  )(await getLocationInfo(locationId, hereConfig))
