@@ -3,17 +3,17 @@ import _ from 'lodash/fp'
 import { storiesOf } from '@storybook/react'
 import TestTree from './stories/testTree'
 import ThemePicker from '../stories/themePicker'
-import { Bool } from '.'
+import { Exists } from '.'
 
-storiesOf('ExampleTypes|Bool', module)
+storiesOf('ExampleTypes|Exists', module)
   .addDecorator(ThemePicker('greyVest'))
-  .add('Bool', () => <Bool tree={TestTree()} path={['bool']} />)
-  .add('Bool Custom Options', () => (
-    <Bool
+  .add('Exists', () => <Exists tree={TestTree()} path={['exists']} />)
+  .add('Exists Customized', () => (
+    <Exists
       tree={TestTree()}
-      path={['bool']}
+      path={['exists']}
       display={value =>
-        _.isNil(value) ? 'Both' : value ? 'Agree' : 'Disagree'
+        _.isNil(value) ? 'Both' : value ? 'There' : 'Not there'
       }
     />
   ))
