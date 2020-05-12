@@ -1,3 +1,6 @@
+# 0.16.0
+* Support passing a timezone for rolling dates.
+
 # 0.15.0
 * Support for `bool` example type and tests
 * Updated 'hasValue` for the exists type and added tests for it
