@@ -1,13 +1,11 @@
 let _ = require('lodash/fp')
-let moment = require('moment')
+let moment = require('moment-timezone')
 let datemath = require('@elastic/datemath')
 
 module.exports = {
   hasValue: context => context.from || context.to,
-  filter(context) {
-    let from = context.from
-    let to = context.to
-    if (context.useDateMath) {
+  filter({ from, to, field, useDateMath, isDateTime, timezone }) {
+    if (useDateMath) {
       if (from === 'thisQuarter') {
         from = moment()
           .quarter(moment().quarter())
@@ -27,8 +25,8 @@ module.exports = {
           .format('YYYY-MM-DD')
         to = `${from}||+3M-1d/d`
       }
-      from = datemath.parse(from)
-      to = datemath.parse(to)
+      from = moment.tz(datemath.parse(from), timezone).utc().toDate()
+      to = moment.tz(datemath.parse(to), timezone).utc().toDate()
     }
     let gte = from
     let lte = to
@@ -38,13 +36,13 @@ module.exports = {
       moment.utc(new Date(x)).format('YYYY-MM-DD')
 
     // If isDateTime we do not format but rely on the input to be in ES date & time format currently
-    if (!context.isDateTime) {
+    if (!isDateTime) {
       gte = getDateIfValid(from)
       lte = getDateIfValid(to)
     }
     return {
       range: {
-        [context.field]: _.pickBy(_.identity, {
+        [field]: _.pickBy(_.identity, {
           gte,
           lte,
           // Only force date formatting on the date range filter.
