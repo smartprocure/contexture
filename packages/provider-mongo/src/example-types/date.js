@@ -25,8 +25,14 @@ module.exports = {
           .format('YYYY-MM-DD')
         to = `${from}||+3M-1d/d`
       }
-      from = moment.tz(datemath.parse(from), timezone).utc().toDate()
-      to = moment.tz(datemath.parse(to), timezone).utc().toDate()
+      from = moment
+        .tz(datemath.parse(from), timezone)
+        .utc()
+        .toDate()
+      to = moment
+        .tz(datemath.parse(to), timezone)
+        .utc()
+        .toDate()
     }
 
     let format = {
