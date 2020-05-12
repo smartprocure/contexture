@@ -2,31 +2,39 @@ let _ = require('lodash/fp')
 let moment = require('moment-timezone')
 let datemath = require('@elastic/datemath')
 
+let getStartOfQuarter = (quarterOffset, timezone = 'UTC') => {
+  let quarter =
+    moment()
+      .tz(timezone)
+      .quarter() + quarterOffset
+  return moment()
+    .tz(timezone)
+    .quarter(quarter)
+    .startOf('quarter')
+}
+
+let getEndOfQuarter = date =>
+  moment(date)
+    .add(1, 'Q')
+    .subtract(1, 'ms')
+
 module.exports = {
   hasValue: context => context.from || context.to,
   filter({ from, to, field, useDateMath, isDateTime, timezone }) {
     if (useDateMath) {
       if (from === 'thisQuarter') {
-        from = moment()
-          .quarter(moment().quarter())
-          .startOf('quarter')
-          .format('YYYY-MM-DD')
-        to = `${from}||+3M-1d/d`
+        from = getStartOfQuarter(0, timezone)
+        to = getEndOfQuarter(from)
       } else if (from === 'lastQuarter') {
-        from = moment()
-          .quarter(moment().quarter() - 1)
-          .startOf('quarter')
-          .format('YYYY-MM-DD')
-        to = `${from}||+3M-1d/d`
+        from = getStartOfQuarter(-1, timezone)
+        to = getEndOfQuarter(from)
       } else if (from === 'nextQuarter') {
-        from = moment()
-          .quarter(moment().quarter() + 1)
-          .startOf('quarter')
-          .format('YYYY-MM-DD')
-        to = `${from}||+3M-1d/d`
+        from = getStartOfQuarter(1, timezone)
+        to = getEndOfQuarter(from)
+      } else {
+        from = datemath.parse(from)
+        to = datemath.parse(to)
       }
-      from = moment.tz(datemath.parse(from), timezone).utc().toDate()
-      to = moment.tz(datemath.parse(to), timezone).utc().toDate()
     }
     let gte = from
     let lte = to
