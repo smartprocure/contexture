@@ -3,6 +3,7 @@ import { Flex } from '../greyVest'
 import { contexturifyWithoutLoader } from '../utils/hoc'
 import F from 'futil'
 import _ from 'lodash/fp'
+import moment from 'moment'
 
 let allRollingOpts = [
   { type: 'all', label: 'All Dates', range: { from: '', to: '' } },
@@ -153,6 +154,11 @@ let rollingRangeFromString = _.flow(
   })
 )
 
+let endOfDay = date =>
+  moment(date)
+    .endOf('day')
+    .toDate()
+
 let DateComponent = ({
   tree,
   node,
@@ -196,7 +202,7 @@ let DateComponent = ({
           <div>-</div>
           <DateInput
             value={node.to}
-            onChange={date => tree.mutate(node.path, { to: date })}
+            onChange={date => tree.mutate(node.path, { to: endOfDay(date) })}
           />
         </Flex>
       )}
