@@ -20,7 +20,14 @@ let getEndOfQuarter = date =>
 
 module.exports = {
   hasValue: node => node.from || node.to,
-  filter({ from, to, field, useDateMath, dateType = 'date', timezone = 'UTC' }) {
+  filter({
+    from,
+    to,
+    field,
+    useDateMath,
+    dateType = 'date',
+    timezone = 'UTC',
+  }) {
     if (useDateMath) {
       if (from === 'thisQuarter') {
         from = getStartOfQuarter(0, timezone)
