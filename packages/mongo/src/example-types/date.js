@@ -2,7 +2,7 @@ let F = require('futil')
 let moment = require('moment-timezone')
 let datemath = require('@elastic/datemath')
 
-let getStartOfQuarter = (quarterOffset, timezone = 'UTC') => {
+let getStartOfQuarter = (quarterOffset, timezone) => {
   let quarter =
     moment()
       .tz(timezone)
@@ -20,7 +20,7 @@ let getEndOfQuarter = date =>
 
 module.exports = {
   hasValue: node => node.from || node.to,
-  filter({ from, to, field, useDateMath, dateType = 'date', timezone }) {
+  filter({ from, to, field, useDateMath, dateType = 'date', timezone = 'UTC' }) {
     if (useDateMath) {
       if (from === 'thisQuarter') {
         from = getStartOfQuarter(0, timezone)
@@ -32,8 +32,8 @@ module.exports = {
         from = getStartOfQuarter(1, timezone)
         to = getEndOfQuarter(from)
       } else {
-        from = datemath.parse(from)
-        to = datemath.parse(to)
+        from = moment.tz(datemath.parse(from), timezone)
+        to = moment.tz(datemath.parse(to), timezone)
       }
     }
 
