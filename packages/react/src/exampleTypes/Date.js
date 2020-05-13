@@ -62,7 +62,7 @@ let allRollingOpts = [
   {
     type: 'past',
     label: 'Last Calendar Month',
-    range: { from: 'now-1M/M', to: 'now/M-1d' },
+    range: { from: 'now-1M/M', to: 'now/M-1ms' },
   },
   {
     type: 'past',
@@ -72,12 +72,12 @@ let allRollingOpts = [
   {
     type: 'past',
     label: 'Last Calendar Year',
-    range: { from: 'now-1y/y', to: 'now/y-1d' },
+    range: { from: 'now-1y/y', to: 'now/y-1ms' },
   },
   {
     type: 'present',
     label: 'This Calendar Month',
-    range: { from: 'now/M', to: 'now+1M/M-1d' },
+    range: { from: 'now/M', to: 'now+1M/M-1ms' },
   },
   {
     type: 'present',
@@ -92,7 +92,7 @@ let allRollingOpts = [
   {
     type: 'future',
     label: 'Next Calendar Month',
-    range: { from: 'now+1M/M', to: 'now+2M/M' },
+    range: { from: 'now+1M/M', to: 'now+2M/M-1ms' },
   },
   {
     type: 'future',
@@ -102,42 +102,42 @@ let allRollingOpts = [
   {
     type: 'future',
     label: 'Next Calendar Year',
-    range: { from: 'now+1y/y', to: 'now+2y/y' },
+    range: { from: 'now+1y/y', to: 'now+2y/y-1ms' },
   },
   {
     type: 'future',
     label: 'Next 30 Days',
-    range: { from: 'now/d', to: 'now/d+30d' },
+    range: { from: 'now/d', to: 'now/d+30d-1ms' },
   },
   {
     type: 'future',
     label: 'Next 60 days',
-    range: { from: 'now/d', to: 'now/d+60d' },
+    range: { from: 'now/d', to: 'now/d+60d-1ms' },
   },
   {
     type: 'future',
     label: 'Next 90 days',
-    range: { from: 'now/d', to: 'now/d+90d' },
+    range: { from: 'now/d', to: 'now/d+90d-1ms' },
   },
   {
     type: 'future',
     label: 'Next 6 Months',
-    range: { from: 'now/d', to: 'now/d+6M' },
+    range: { from: 'now/d', to: 'now/d+6M-1ms' },
   },
   {
     type: 'future',
     label: 'Next 12 Months',
-    range: { from: 'now/d', to: 'now/d+12M' },
+    range: { from: 'now/d', to: 'now/d+12M-1ms' },
   },
   {
     type: 'future',
     label: 'Next 24 Months',
-    range: { from: 'now/d', to: 'now/d+24M' },
+    range: { from: 'now/d', to: 'now/d+24M-1ms' },
   },
   {
     type: 'future',
     label: 'Next 36 Months',
-    range: { from: 'now/d', to: 'now/d+36M' },
+    range: { from: 'now/d', to: 'now/d+36M-1ms' },
   },
 ]
 
