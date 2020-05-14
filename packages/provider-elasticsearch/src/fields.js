@@ -1,5 +1,5 @@
 let _ = require('lodash/fp')
-let F = require('futil-js')
+let F = require('futil')
 
 let rawFieldName = _.replace(/(\.untouched)|(\.shingle)/g, '')
 let modeMap = {

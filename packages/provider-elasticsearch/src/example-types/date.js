@@ -1,7 +1,9 @@
+let F = require('futil')
 let _ = require('lodash/fp')
 let moment = require('moment-timezone')
 let datemath = require('@elastic/datemath')
 
+// https://www.elastic.co/guide/en/elasticsearch/reference/7.x/common-options.html#date-math
 let getStartOfQuarter = (quarterOffset, timezone) => {
   let quarter =
     moment()
@@ -50,7 +52,7 @@ module.exports = {
     }
     return {
       range: {
-        [field]: _.pickBy(_.identity, {
+        [field]: F.compactObject({
           gte,
           lte,
           // Only force date formatting on the date range filter.

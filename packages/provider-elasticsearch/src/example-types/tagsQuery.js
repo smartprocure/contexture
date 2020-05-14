@@ -1,5 +1,5 @@
 let _ = require('lodash/fp')
-let F = require('futil-js')
+let F = require('futil')
 let { parens, quote } = F
 let Combinatorics = require('js-combinatorics')
 
