@@ -51,7 +51,7 @@ let rangeToDatemath = {
 }
 
 let rollingRangeToDates = (range, timezone) => {
-  if (/quarter/.test(range)) {
+  if (_.has(range, quarterToOffset)) {
     let from = getStartOfQuarter(quarterToOffset[range], timezone)
     let to = getEndOfQuarter(from)
     return { from, to }
@@ -72,9 +72,10 @@ let dateTypeToFormatFn = {
 module.exports = {
   hasValue: node => node.from || node.to,
   filter({ field, range, dateType = 'date', timezone = 'UTC', ...context }) {
-    let { from, to } = !_.includes(range, ['exact', 'all'])
-      ? rollingRangeToDates(range, timezone)
-      : context
+    let { from, to } =
+      _.includes(range, ['exact', 'allDates']) || !range
+        ? context
+        : rollingRangeToDates(range, timezone)
 
     let format = dateTypeToFormatFn[dateType]
 
