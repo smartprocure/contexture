@@ -48,6 +48,10 @@ let DateComponent = ({
   excludeRollingRanges = [],
   theme: { DateInput, RadioList, Select },
 }) => {
+  let [dateType, setDateType] = React.useState(
+    node.range === 'exact' || !node.range ? 'exact' : 'rolling'
+  )
+
   let rollingOpts = _.reject(
     opt => _.includes(opt.type, excludeRollingRanges),
     allRollingOpts
@@ -57,18 +61,19 @@ let DateComponent = ({
     <div>
       <RadioList
         options={F.autoLabelOptions(['exact', 'rolling'])}
-        value={node.range === 'exact' ? 'exact' : 'rolling'}
+        value={dateType}
         style={{ marginBottom: 10 }}
-        onChange={range => {
+        onChange={value => {
+          setDateType(value)
           tree.mutate(
             node.path,
-            range === 'rolling'
-              ? { range, from: '', to: '' }
-              : { range, from: null, to: null }
+            value === 'exact'
+              ? { range: 'exact', from: '', to: '' }
+              : { range: null, from: null, to: null }
           )
         }}
       />
-      {node.range === 'exact' && (
+      {dateType === 'exact' && (
         <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
           <DateInput
             value={node.from}
@@ -81,21 +86,15 @@ let DateComponent = ({
           />
         </Flex>
       )}
-      {node.range !== 'exact' && (
+      {dateType === 'rolling' && (
         <Select
           value={node.range}
-          onChange={e =>
-            tree.mutate(node.path, {
-              range: e.target.value,
-              from: null,
-              to: null,
-            })
-          }
+          onChange={e => tree.mutate(node.path, { range: e.target.value })}
           options={F.map(
-            opt => ({
-              label: _.startCase(opt.range),
-              value: opt.range,
-              selected: node.range === opt.range,
+            ({ range }) => ({
+              label: _.startCase(range),
+              value: range,
+              selected: node.range === range,
             }),
             rollingOpts
           )}
