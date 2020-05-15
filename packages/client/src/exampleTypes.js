@@ -177,6 +177,7 @@ export default F.stampKey('type', {
       from: null,
       to: null,
       range: null,
+      timezone: null,
     },
   },
   geo: {
