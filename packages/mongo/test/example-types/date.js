@@ -18,6 +18,7 @@ describe('date', () => {
       expect(
         !!date.hasValue(
           dateBuilder({
+            range: 'exact',
             from: '2017-09-28',
           })
         )
@@ -25,6 +26,7 @@ describe('date', () => {
       expect(
         !!date.hasValue(
           dateBuilder({
+            range: 'exact',
             from: null,
           })
         )
@@ -36,6 +38,7 @@ describe('date', () => {
       expect(
         date.filter(
           dateBuilder({
+            range: 'exact',
             from: '2017-09-28',
           })
         )
@@ -45,25 +48,12 @@ describe('date', () => {
         },
       })
     })
-    it('basic datemath', () => {
-      expect(
-        date.filter(
-          dateBuilder({
-            useDateMath: true,
-            from: '2017-09-28T00:00:00.000Z||-1d',
-          })
-        )
-      ).to.deep.equal({
-        test: {
-          $gte: new Date('2017-09-27T00:00:00.000Z'),
-        },
-      })
-    })
     // TODO: lastQuarter, thisQuarter, nextQuarter
     it('ms timestamp', () => {
       expect(
         date.filter(
           dateBuilder({
+            range: 'exact',
             dateType: 'timestamp',
             from: '2018-07-10',
           })
@@ -78,6 +68,7 @@ describe('date', () => {
       expect(
         date.filter(
           dateBuilder({
+            range: 'exact',
             dateType: 'unix',
             from: '2018-07-10',
           })
