@@ -1,5 +1,6 @@
 # 0.16.0
 * Support passing a timezone for rolling dates.
+* NOTE: Passing datemath expressions is no longer supported.
 
 # 0.15.0
 * Support for `bool` example type and tests
