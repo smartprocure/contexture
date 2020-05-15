@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 let _ = require('lodash/fp')
-let F = require('futil-js')
+let F = require('futil')
 let sequentialResultTest = require('./testUtils').sequentialResultTest
 
 describe('results', () => {

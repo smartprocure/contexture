@@ -1,4 +1,4 @@
-let F = require('futil-js')
+let F = require('futil')
 
 module.exports = (config = {}) =>
   F.mapValuesIndexed(
