@@ -77,12 +77,16 @@ let DateComponent = ({
         <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
           <DateInput
             value={node.from}
-            onChange={date => tree.mutate(node.path, { from: date })}
+            onChange={date =>
+              tree.mutate(node.path, { range: 'exact', from: date })
+            }
           />
           <div>-</div>
           <DateInput
             value={node.to}
-            onChange={date => tree.mutate(node.path, { to: endOfDay(date) })}
+            onChange={date =>
+              tree.mutate(node.path, { range: 'exact', to: endOfDay(date) })
+            }
           />
         </Flex>
       )}
