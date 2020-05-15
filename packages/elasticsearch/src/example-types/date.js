@@ -19,7 +19,11 @@ let getEndOfQuarter = date =>
     .add(1, 'Q')
     .subtract(1, 'ms')
 
-let quarterToOffset = { thisQuarter: 0, lastQuarter: -1, nextQuarter: 1 }
+let quarterToOffset = {
+  thisCalendarQuarter: 0,
+  lastCalendarQuarter: -1,
+  nextCalendarQuarter: 1,
+}
 
 // https://www.elastic.co/guide/en/elasticsearch/reference/7.x/common-options.html#date-math
 let rangeToDatemath = {
@@ -50,6 +54,13 @@ let rangeToDatemath = {
   next36Months: { from: 'now/d', to: 'now/d+36M-1ms' },
 }
 
+let parseAndShift = (exp, timezone) => {
+  let computed = datemath.parse(exp)
+  // Replace the server timezone with the user's timezone if the expression
+  // is relative to the start of a day, month, year, etc.
+  return /\//.test(exp) ? moment(computed).tz(timezone, true) : computed
+}
+
 let rollingRangeToDates = (range, timezone) => {
   if (_.has(range, quarterToOffset)) {
     let from = getStartOfQuarter(quarterToOffset[range], timezone)
@@ -57,8 +68,8 @@ let rollingRangeToDates = (range, timezone) => {
     return { from, to }
   } else {
     let expressions = rangeToDatemath[range]
-    let from = moment.tz(datemath.parse(expressions.from), timezone)
-    let to = moment.tz(datemath.parse(expressions.to), timezone)
+    let from = parseAndShift(expressions.from, timezone)
+    let to = parseAndShift(expressions.to, timezone)
     return { from, to }
   }
 }
@@ -73,6 +84,7 @@ let hasValue = ({ from, to, range }) =>
 
 module.exports = {
   hasValue,
+  // NOTE: timezone is only used for rolling dates
   filter({ field, range, isDateTime, timezone = 'UTC', ...context }) {
     let { from, to } = _.includes(range, ['exact', 'allDates'])
       ? context
