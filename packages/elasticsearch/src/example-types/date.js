@@ -42,7 +42,7 @@ let rangeToDatemath = {
   lastCalendarMonth: { from: 'now-1M/M', to: 'now/M-1ms' },
   lastCalendarYear: { from: 'now-1y/y', to: 'now/y-1ms' },
   thisCalendarMonth: { from: 'now/M', to: 'now+1M/M-1ms' },
-  thisCalendarYear: { from: 'now/y', to: 'now' },
+  thisCalendarYear: { from: 'now/y', to: 'now+1y/y-1ms' },
   nextCalendarMonth: { from: 'now+1M/M', to: 'now+2M/M-1ms' },
   nextCalendarYear: { from: 'now+1y/y', to: 'now+2y/y-1ms' },
   next30Days: { from: 'now/d', to: 'now/d+30d-1ms' },
