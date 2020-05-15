@@ -69,13 +69,17 @@ let dateTypeToFormatFn = {
   timestamp: x => x && new Date(x).getTime(),
 }
 
+let hasValue = ({ from, to, range }) =>
+  range &&
+  range !== 'allDates' &&
+  ((range === 'exact' && (from || to)) || range !== 'exact')
+
 module.exports = {
-  hasValue: node => node.from || node.to,
+  hasValue,
   filter({ field, range, dateType = 'date', timezone = 'UTC', ...context }) {
-    let { from, to } =
-      _.includes(range, ['exact', 'allDates']) || !range
-        ? context
-        : rollingRangeToDates(range, timezone)
+    let { from, to } = _.includes(range, ['exact', 'allDates'])
+      ? context
+      : rollingRangeToDates(range, timezone)
 
     let format = dateTypeToFormatFn[dateType]
 
