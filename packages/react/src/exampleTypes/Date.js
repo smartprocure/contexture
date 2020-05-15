@@ -6,153 +6,36 @@ import _ from 'lodash/fp'
 import moment from 'moment'
 
 let allRollingOpts = [
-  { type: 'all', label: 'All Dates', range: { from: '', to: '' } },
-  { type: 'past', label: 'Last 3 Days', range: { from: 'now-3d', to: 'now' } },
-  { type: 'past', label: 'Last 7 Days', range: { from: 'now-7d', to: 'now' } },
-  {
-    type: 'past',
-    label: 'Last 30 Days',
-    range: { from: 'now-30d', to: 'now' },
-  },
-  {
-    type: 'past',
-    label: 'Last 90 Days',
-    range: { from: 'now-90d', to: 'now' },
-  },
-  {
-    type: 'past',
-    label: 'Last 180 Days',
-    range: { from: 'now-180d', to: 'now' },
-  },
-  {
-    type: 'past',
-    label: 'Last 12 Months',
-    range: { from: 'now/d-12M', to: 'now' },
-  },
-  {
-    type: 'past',
-    label: 'Last 15 Months',
-    range: { from: 'now/d-15M', to: 'now' },
-  },
-  {
-    type: 'past',
-    label: 'Last 18 Months',
-    range: { from: 'now/d-18M', to: 'now' },
-  },
-  {
-    type: 'past',
-    label: 'Last 24 Months',
-    range: { from: 'now/d-24M', to: 'now' },
-  },
-  {
-    type: 'past',
-    label: 'Last 36 Months',
-    range: { from: 'now/d-36M', to: 'now' },
-  },
-  {
-    type: 'past',
-    label: 'Last 48 Months',
-    range: { from: 'now/d-48M', to: 'now' },
-  },
-  {
-    type: 'past',
-    label: 'Last 60 Months',
-    range: { from: 'now/d-60M', to: 'now' },
-  },
-  {
-    type: 'past',
-    label: 'Last Calendar Month',
-    range: { from: 'now-1M/M', to: 'now/M-1d' },
-  },
-  {
-    type: 'past',
-    label: 'Last Calendar Quarter',
-    range: { from: 'lastQuarter', to: 'lastQuarter' },
-  },
-  {
-    type: 'past',
-    label: 'Last Calendar Year',
-    range: { from: 'now-1y/y', to: 'now/y-1d' },
-  },
-  {
-    type: 'present',
-    label: 'This Calendar Month',
-    range: { from: 'now/M', to: 'now+1M/M-1d' },
-  },
-  {
-    type: 'present',
-    label: 'This Calendar Quarter',
-    range: { from: 'thisQuarter', to: 'thisQuarter' },
-  },
-  {
-    type: 'present',
-    label: 'This Calendar Year',
-    range: { from: 'now/y', to: 'now' },
-  },
-  {
-    type: 'future',
-    label: 'Next Calendar Month',
-    range: { from: 'now+1M/M', to: 'now+2M/M' },
-  },
-  {
-    type: 'future',
-    label: 'Next Calendar Quarter',
-    range: { from: 'nextQuarter', to: 'nextQuarter' },
-  },
-  {
-    type: 'future',
-    label: 'Next Calendar Year',
-    range: { from: 'now+1y/y', to: 'now+2y/y' },
-  },
-  {
-    type: 'future',
-    label: 'Next 30 Days',
-    range: { from: 'now/d', to: 'now/d+30d' },
-  },
-  {
-    type: 'future',
-    label: 'Next 60 days',
-    range: { from: 'now/d', to: 'now/d+60d' },
-  },
-  {
-    type: 'future',
-    label: 'Next 90 days',
-    range: { from: 'now/d', to: 'now/d+90d' },
-  },
-  {
-    type: 'future',
-    label: 'Next 6 Months',
-    range: { from: 'now/d', to: 'now/d+6M' },
-  },
-  {
-    type: 'future',
-    label: 'Next 12 Months',
-    range: { from: 'now/d', to: 'now/d+12M' },
-  },
-  {
-    type: 'future',
-    label: 'Next 24 Months',
-    range: { from: 'now/d', to: 'now/d+24M' },
-  },
-  {
-    type: 'future',
-    label: 'Next 36 Months',
-    range: { from: 'now/d', to: 'now/d+36M' },
-  },
+  { type: 'all', range: 'allDates' },
+  { type: 'past', range: 'last3Days' },
+  { type: 'past', range: 'last7Days' },
+  { type: 'past', range: 'last30Days' },
+  { type: 'past', range: 'last90Days' },
+  { type: 'past', range: 'last180Days' },
+  { type: 'past', range: 'last12Months' },
+  { type: 'past', range: 'last15Months' },
+  { type: 'past', range: 'last18Months' },
+  { type: 'past', range: 'last24Months' },
+  { type: 'past', range: 'last36Months' },
+  { type: 'past', range: 'last48Months' },
+  { type: 'past', range: 'last60Months' },
+  { type: 'past', range: 'lastCalendarMonth' },
+  { type: 'past', range: 'lastCalendarQuarter' },
+  { type: 'past', range: 'lastCalendarYear' },
+  { type: 'present', range: 'thisCalendarMonth' },
+  { type: 'present', range: 'thisCalendarQuarter' },
+  { type: 'present', range: 'thisCalendarYear' },
+  { type: 'future', range: 'nextCalendarMonth' },
+  { type: 'future', range: 'nextCalendarQuarter' },
+  { type: 'future', range: 'nextCalendarYear' },
+  { type: 'future', range: 'next30Days' },
+  { type: 'future', range: 'next60Days' },
+  { type: 'future', range: 'next90Days' },
+  { type: 'future', range: 'next6Months' },
+  { type: 'future', range: 'next12Months' },
+  { type: 'future', range: 'next24Months' },
+  { type: 'future', range: 'next36Months' },
 ]
-
-let rollingOptIsSelected = (node, opt) =>
-  node.from === opt.range.from && node.to === opt.range.to
-
-let rollingRangeToString = ({ from, to }) => `${from}::${to}`
-
-let rollingRangeFromString = _.flow(
-  _.split('::'),
-  ([from, to]) => ({
-    from,
-    to,
-  })
-)
 
 let endOfDay = date =>
   moment(date)
@@ -165,6 +48,10 @@ let DateComponent = ({
   excludeRollingRanges = [],
   theme: { DateInput, RadioList, Select },
 }) => {
+  let [dateType, setDateType] = React.useState(
+    node.range === 'exact' || !node.range ? 'exact' : 'rolling'
+  )
+
   let rollingOpts = _.reject(
     opt => _.includes(opt.type, excludeRollingRanges),
     allRollingOpts
@@ -174,49 +61,49 @@ let DateComponent = ({
     <div>
       <RadioList
         options={F.autoLabelOptions(['exact', 'rolling'])}
-        value={node.useDateMath ? 'rolling' : 'exact'}
+        value={dateType}
         style={{ marginBottom: 10 }}
-        onChange={mode => {
+        onChange={value => {
           tree.mutate(
             node.path,
-            mode === 'rolling'
-              ? {
-                  useDateMath: true,
-                  from: '',
-                  to: '',
-                }
-              : {
-                  useDateMath: false,
-                  from: null,
-                  to: null,
-                }
+            value === 'exact'
+              ? { range: 'exact', from: null, to: null }
+              : { range: '', from: null, to: null }
           )
+          setDateType(value)
         }}
       />
-      {!node.useDateMath && (
+      {dateType === 'exact' && (
         <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
           <DateInput
             value={node.from}
-            onChange={date => tree.mutate(node.path, { from: date })}
+            onChange={date =>
+              tree.mutate(node.path, { range: 'exact', from: date })
+            }
           />
           <div>-</div>
           <DateInput
             value={node.to}
-            onChange={date => tree.mutate(node.path, { to: endOfDay(date) })}
+            onChange={date =>
+              tree.mutate(node.path, { range: 'exact', to: endOfDay(date) })
+            }
           />
         </Flex>
       )}
-      {node.useDateMath && (
+      {dateType === 'rolling' && (
         <Select
-          value={rollingRangeToString(node)}
+          value={node.range}
           onChange={e =>
-            tree.mutate(node.path, rollingRangeFromString(e.target.value))
+            tree.mutate(node.path, {
+              range: e.target.value,
+              timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            })
           }
           options={F.map(
-            opt => ({
-              label: opt.label,
-              value: rollingRangeToString(opt.range),
-              selected: rollingOptIsSelected(node, opt),
+            ({ range }) => ({
+              label: _.startCase(range),
+              value: range,
+              selected: node.range === range,
             }),
             rollingOpts
           )}
