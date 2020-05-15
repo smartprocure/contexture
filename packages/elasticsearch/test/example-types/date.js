@@ -1,6 +1,4 @@
 let date = require('../../src/example-types/date')
-let moment = require('moment')
-let datemath = require('@elastic/datemath')
 let { expect } = require('chai')
 
 describe('date/filter', () => {
