@@ -1,5 +1,5 @@
 let _ = require('lodash/fp')
-let F = require('futil-js')
+let F = require('futil')
 let moment = require('moment')
 let dateMath = require('@elastic/datemath')
 let esTwoLevel = require('./esTwoLevelAggregation').result

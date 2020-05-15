@@ -1,3 +1,7 @@
+# 0.21.0
+* Support passing a timezone for rolling dates.
+* NOTE: Passing datemath expressions is no longer supported.
+
 # 0.20.0
 * [Bool/Exists] hasValue is now based on _.isBoolean so we do not impact searches if there is no boolean value set
 
