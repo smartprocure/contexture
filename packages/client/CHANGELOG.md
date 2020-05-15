@@ -1,3 +1,6 @@
+# 2.29.0
+* Support changes to `date` type.
+
 # 2.28.4
 * Fix exampleTypes validateValueExistence to be an actual function
 
