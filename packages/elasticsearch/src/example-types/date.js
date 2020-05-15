@@ -66,19 +66,24 @@ let rollingRangeToDates = (range, timezone) => {
 let getDateIfValid = x =>
   moment.utc(new Date(x)).isValid() && moment.utc(new Date(x)).toISOString()
 
+let hasValue = ({ from, to, range }) =>
+  range &&
+  range !== 'allDates' &&
+  ((range === 'exact' && (from || to)) || range !== 'exact')
+
 module.exports = {
-  hasValue: context => context.from || context.to,
+  hasValue,
   filter({ field, range, isDateTime, timezone = 'UTC', ...context }) {
-    let { from, to } =
-      _.includes(range, ['exact', 'allDates']) || !range
-        ? context
-        : rollingRangeToDates(range, timezone)
+    let { from, to } = _.includes(range, ['exact', 'allDates'])
+      ? context
+      : rollingRangeToDates(range, timezone)
 
     // If isDateTime we do not format but rely on the input to be in ES date & time format currently
     if (!isDateTime) {
       from = getDateIfValid(from)
       to = getDateIfValid(to)
     }
+
     return {
       range: {
         [field]: F.compactObject({
