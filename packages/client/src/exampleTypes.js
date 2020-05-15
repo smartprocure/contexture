@@ -163,17 +163,20 @@ export default F.stampKey('type', {
     },
   },
   date: {
-    validate: x => !_.isNil(x.from) || !_.isNil(x.to),
+    validate: ({ from, to, range }) =>
+      range &&
+      range !== 'allDates' &&
+      ((range === 'exact' && (from || to)) || range !== 'exact'),
     reactors: {
       from: 'others',
       to: 'others',
-      useDateMath: 'others',
-      useRaw: 'others',
+      range: 'others',
     },
     defaults: {
       field: null,
       from: null,
       to: null,
+      range: null,
     },
   },
   geo: {
