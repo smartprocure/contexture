@@ -64,13 +64,13 @@ let DateComponent = ({
         value={dateType}
         style={{ marginBottom: 10 }}
         onChange={value => {
-          setDateType(value)
           tree.mutate(
             node.path,
             value === 'exact'
-              ? { range: 'exact', from: '', to: '' }
-              : { range: null, from: null, to: null }
+              ? { range: 'exact', from: null, to: null }
+              : { range: '', from: null, to: null }
           )
+          setDateType(value)
         }}
       />
       {dateType === 'exact' && (
