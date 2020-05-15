@@ -93,7 +93,12 @@ let DateComponent = ({
       {dateType === 'rolling' && (
         <Select
           value={node.range}
-          onChange={e => tree.mutate(node.path, { range: e.target.value })}
+          onChange={e =>
+            tree.mutate(node.path, {
+              range: e.target.value,
+              timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            })
+          }
           options={F.map(
             ({ range }) => ({
               label: _.startCase(range),
