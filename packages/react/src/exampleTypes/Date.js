@@ -7,6 +7,8 @@ import moment from 'moment'
 
 let allRollingOpts = [
   { type: 'all', range: 'allDates' },
+  { type: 'all', range: 'allPastDates' },
+  { type: 'all', range: 'allFutureDates' },
   { type: 'past', range: 'last3Days' },
   { type: 'past', range: 'last7Days' },
   { type: 'past', range: 'last30Days' },
