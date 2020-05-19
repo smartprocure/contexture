@@ -52,6 +52,8 @@ let rangeToDatemath = {
   next12Months: { from: 'now/d', to: 'now/d+12M-1ms' },
   next24Months: { from: 'now/d', to: 'now/d+24M-1ms' },
   next36Months: { from: 'now/d', to: 'now/d+36M-1ms' },
+  allPastDates: { from: '', to: 'now/d-1ms' },
+  allFutureDates: { from: 'now/d', to: '' },
 }
 
 let parseAndShift = (exp, timezone) => {
