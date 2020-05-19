@@ -1,3 +1,6 @@
+# 0.17.0
+* Add more rolling date types.
+
 # 0.16.0
 * Support passing a timezone for rolling dates.
 * NOTE: Passing datemath expressions is no longer supported.
