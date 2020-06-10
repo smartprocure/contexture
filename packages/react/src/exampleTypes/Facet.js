@@ -68,7 +68,7 @@ let SelectAll = _.flow(
             })
         }}
       />
-      <div style={{ flex: 2, padding: '0 5px' }}>Select All</div>
+      <div style={{ flex: 2, padding: '0 5px' }}>Select All Visible</div>
     </label>
   )
 })
