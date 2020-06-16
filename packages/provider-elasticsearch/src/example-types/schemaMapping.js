@@ -9,6 +9,7 @@ let addNodeType = x => {
     text: hasNested ? 'facet' : 'tagsQuery',
     long: 'number',
     float: 'number',
+    scaled_float: 'number',
     double: 'number',
     integer: 'number',
     geo_point: 'geo',
