@@ -1,3 +1,6 @@
+# 0.22.1
+* Added support for scaled_float number type.
+
 # 0.22.0
 * Add more rolling date types.
 
