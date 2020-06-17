@@ -38,26 +38,28 @@ FiltersBox.displayName = 'FiltersBox'
 let BasicSearchFilters = ({ setMode, trees, children, BasicFilters }) => {
   let [isOpen, setIsOpen] = React.useState(false)
   return (
-  <div>
-    <Flex alignItems="center" justifyContent="space-between">
-      <h1>Filters</h1>
-      <div>
-        <Popover
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-        >
-          <DropdownItem onClick={() => setMode('resultsOnly')}>Toggle Filters</DropdownItem>
-          <TreePauseButton children={children} Component={DropdownItem} />
-          <DropdownItem onClick={() => setMode('builder')}>Advanced Search Builder</DropdownItem>
-        </Popover>
-        <DropdownItem onClick={() => setIsOpen(true)}>
-          <Icon icon="more_vert"/>
-        </DropdownItem>
-      </div>
-    </Flex>
-    <LabelledList list={trees} Component={BasicFilters} />
-  </div>
-)}
+    <div>
+      <Flex alignItems="center" justifyContent="space-between">
+        <h1>Filters</h1>
+        <div>
+          <Popover isOpen={isOpen} onClose={() => setIsOpen(false)}>
+            <DropdownItem onClick={() => setMode('resultsOnly')}>
+              Toggle Filters
+            </DropdownItem>
+            <TreePauseButton children={children} Component={DropdownItem} />
+            <DropdownItem onClick={() => setMode('builder')}>
+              Advanced Search Builder
+            </DropdownItem>
+          </Popover>
+          <DropdownItem onClick={() => setIsOpen(true)}>
+            <Icon icon="more_vert" />
+          </DropdownItem>
+        </div>
+      </Flex>
+      <LabelledList list={trees} Component={BasicFilters} />
+    </div>
+  )
+}
 
 let BuilderSearchFilters = ({ setMode, trees, BuilderFilters }) => (
   <div>
