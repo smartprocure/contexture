@@ -9,7 +9,7 @@ let setPausedNested = (tree, path, value) =>
 let TreePauseButton = ({
   children,
   theme: { AlternateButton },
-  Component=AlternateButton
+  Component = AlternateButton,
 }) => {
   let trees = _.flow(
     React.Children.toArray,
