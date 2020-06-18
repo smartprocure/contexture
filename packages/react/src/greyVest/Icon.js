@@ -17,7 +17,7 @@ let iconMap = {
   MoveRight: toIcon('chevron_right'),
   RemoveColumn: toIcon('remove'),
   AddColumn: toIcon('add'),
-  FilterExpand: toIcon('filter_list'),
+  FilterExpand: toIcon('filter_alt'),
   FilterCollapse: toIcon('filter_list'),
   FilterAdd: toIcon('filter_list'),
   TableColumnMenu: () => (

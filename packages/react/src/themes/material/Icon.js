@@ -8,7 +8,7 @@ let iconMap = {
   MoveRight: 'chevron_right',
   RemoveColumn: 'remove',
   AddColumn: 'add',
-  FilterExpand: 'filter_list',
+  FilterExpand: 'filter_alt',
   FilterCollapse: 'filter_list',
   FilterAdd: 'filter_list',
   TableColumnMenu: 'more_vert',
