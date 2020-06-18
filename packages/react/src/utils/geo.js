@@ -4,8 +4,8 @@ const defaultHereConfig = {
   app_id: 'KzmI0fMwTyOG10rqZacS', // TEMP EMAIL USED - USE/GET YOUR APP_ID
   app_code: 'PykXtnTUeH7DDM-RLlpwyA', // TEMP EMAIL USED - USE/GET YOUR APP_CODE
   country: 'USA',
-  autocomplete: 'http://autocomplete.geocoder.api.here.com/6.2/suggest.json',
-  geoCoding: 'http://geocoder.api.here.com/6.2/geocode.json?gen=9',
+  autocomplete: 'https://autocomplete.geocoder.api.here.com/6.2/suggest.json',
+  geoCoding: 'https://geocoder.api.here.com/6.2/geocode.json?gen=9',
 }
 
 let formatAddress = ({ address, matchLevel }) => {
