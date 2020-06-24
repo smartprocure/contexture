@@ -175,6 +175,7 @@ export default () => (
 
       /* Radio Buttons */
       .gv-radio {
+        min-width: 16px;
         width: 16px;
         height: 16px;
         background: #FFFFFF;
