@@ -1,4 +1,9 @@
+import _ from 'lodash/fp'
+
 export let toNumber = (number, ...params) => {
-  let formatter = Intl.NumberFormat(params)
-  return formatter.format(number)
+  if (_.isNumber(number)) {
+    let formatter = Intl.NumberFormat(params)
+    return formatter.format(number)
+  }
+  return NaN
 }
