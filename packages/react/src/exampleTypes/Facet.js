@@ -6,6 +6,7 @@ import { observer } from 'mobx-react'
 import { Flex } from '../greyVest'
 import { contexturify } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
+import { toNumber } from '../utils/format'
 
 export let Cardinality = _.flow(
   setDisplayName('Cardinality'),
@@ -17,8 +18,8 @@ export let Cardinality = _.flow(
       justifyContent="space-between"
     >
       <div>
-        Showing {_.min([node.size || 10, _.size(node.context.options)])} of{' '}
-        {node.context.cardinality}
+        Showing {toNumber(_.min([node.size || 10, _.size(node.context.options)]))} of{' '}
+        {toNumber(node.context.cardinality)}
       </div>
       {node.context.cardinality > (node.size || 10) && (
         <div>
@@ -109,7 +110,7 @@ let Facet = ({
   },
   display = (name, label) => (_.isString(label) ? label : name),
   displayBlank = () => <i>Not Specified</i>,
-  formatCount = x => x,
+  formatCount = toNumber,
   theme: { Checkbox, RadioList },
 }) => (
   <div className="contexture-facet">
