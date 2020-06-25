@@ -18,7 +18,8 @@ export let Cardinality = _.flow(
       justifyContent="space-between"
     >
       <div>
-        Showing {toNumber(_.min([node.size || 10, _.size(node.context.options)]))} of{' '}
+        Showing{' '}
+        {toNumber(_.min([node.size || 10, _.size(node.context.options)]))} of{' '}
         {toNumber(node.context.cardinality)}
       </div>
       {node.context.cardinality > (node.size || 10) && (

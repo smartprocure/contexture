@@ -10,8 +10,11 @@ import { toNumber } from '../utils/format'
 let PageDetails = ({ startRecord, endRecord, totalRecords, hasMore }) => (
   <span style={{ flex: '0 1 30%', textAlign: 'right' }}>
     <b>Showing </b>
-    {startRecord >= endRecord ? endRecord : `${toNumber(startRecord)}-${toNumber(endRecord)}`}
-    {F.isNotNil(totalRecords) && ` of ${toNumber(totalRecords)}${hasMore ? '+' : ''}`}
+    {startRecord >= endRecord
+      ? endRecord
+      : `${toNumber(startRecord)}-${toNumber(endRecord)}`}
+    {F.isNotNil(totalRecords) &&
+      ` of ${toNumber(totalRecords)}${hasMore ? '+' : ''}`}
   </span>
 )
 
