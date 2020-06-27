@@ -1,7 +1,6 @@
 let F = require('futil')
 let _ = require('lodash/fp')
 let moment = require('moment-timezone')
-let datemath = require('@elastic/datemath')
 let { parseAndShift } = require('../dateUtil')
 
 let getStartOfQuarter = (quarterOffset, timezone) => {
