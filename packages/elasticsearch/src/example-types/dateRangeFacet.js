@@ -42,7 +42,7 @@ module.exports = {
         { to: 'now-1d/d', key: "expired" }
       ]
    */
-  result: (context, search) => {
+  result(context, search) {
     return search({
       aggs: {
         range: {
