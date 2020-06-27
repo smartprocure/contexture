@@ -2,6 +2,7 @@ let F = require('futil')
 let _ = require('lodash/fp')
 let moment = require('moment-timezone')
 let datemath = require('@elastic/datemath')
+let { parseAndShift } = require('../dateUtil')
 
 let getStartOfQuarter = (quarterOffset, timezone) => {
   let quarter =
@@ -54,13 +55,6 @@ let rangeToDatemath = {
   next36Months: { from: 'now/d', to: 'now/d+36M-1ms' },
   allPastDates: { from: '', to: 'now/d-1ms' },
   allFutureDates: { from: 'now/d', to: '' },
-}
-
-let parseAndShift = (exp, timezone) => {
-  let computed = datemath.parse(exp)
-  // Replace the server timezone with the user's timezone if the expression
-  // is relative to the start of a day, month, year, etc.
-  return /\//.test(exp) ? moment(computed).tz(timezone, true) : computed
 }
 
 let rollingRangeToDates = (range, timezone) => {

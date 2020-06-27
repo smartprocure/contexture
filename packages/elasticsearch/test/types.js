@@ -11,6 +11,7 @@ describe('All Example Types', function() {
       'cardinality',
       'date',
       'dateHistogram',
+      'dateRangeFacet',
       'default',
       'esTwoLevelAggregation',
       'exists',

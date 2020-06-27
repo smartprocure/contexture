@@ -3,6 +3,7 @@ module.exports = {
   cardinality: require('./cardinality'),
   date: require('./date'),
   dateHistogram: require('./dateHistogram'),
+  dateRangeFacet: require('./dateRangeFacet'),
   default: require('./default'),
   esTwoLevelAggregation: require('./esTwoLevelAggregation'),
   exists: require('./exists'),
