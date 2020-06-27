@@ -1,3 +1,6 @@
+# 0.23.0
+* Added dateRangeFacet type.
+
 # 0.22.1
 * Added support for scaled_float number type.
 
