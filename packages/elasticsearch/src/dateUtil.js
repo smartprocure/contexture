@@ -9,5 +9,5 @@ let parseAndShift = (exp, timezone) => {
 }
 
 module.exports = {
-  parseAndShift
+  parseAndShift,
 }
