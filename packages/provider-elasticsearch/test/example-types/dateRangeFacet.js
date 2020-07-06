@@ -12,10 +12,8 @@ let commonFilterParts = {
   ],
 }
 
-let getDatePart = (range, part) => _.flow(
-  _.get(part),
-  getDateIfValid
-)(rollingRangeToDates(range, 'UTC'))
+let getDatePart = (range, part) =>
+  _.flow(_.get(part), getDateIfValid)(rollingRangeToDates(range, 'UTC'))
 
 describe('validContext', () => {
   it('should validate a context with all required fields', () => {
@@ -52,14 +50,16 @@ describe('dateRangeFacet/filter', () => {
       })
     ).to.deep.equal({
       bool: {
-        should: [{
-          range: {
+        should: [
+          {
+            range: {
               test: {
-                from: getDatePart('allFutureDates', 'from')
-            }
-          }
-        }]
-      }
+                from: getDatePart('allFutureDates', 'from'),
+              },
+            },
+          },
+        ],
+      },
     })
   })
   it('should handle "allPastDates range"', () => {
@@ -70,14 +70,16 @@ describe('dateRangeFacet/filter', () => {
       })
     ).to.deep.equal({
       bool: {
-        should: [{
-          range: {
+        should: [
+          {
+            range: {
               test: {
-                to: getDatePart('allPastDates', 'to')
-            }
-          }
-        }]
-      }
+                to: getDatePart('allPastDates', 'to'),
+              },
+            },
+          },
+        ],
+      },
     })
   })
 })
