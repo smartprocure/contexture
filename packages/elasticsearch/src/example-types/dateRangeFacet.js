@@ -1,4 +1,14 @@
+let F = require('futil')
 let _ = require('lodash/fp')
+let { getDateIfValid, rollingRangeToDates } = require('../dateUtil')
+
+let getDateRange = (range, timezone) => {
+  let { from, to } = rollingRangeToDates(range, timezone)
+  return F.compactObject({
+    from: getDateIfValid(from),
+    to: getDateIfValid(to)
+  })
+}
 
 module.exports = {
   hasValue: context => _.get('values.length', context),
@@ -6,29 +16,28 @@ module.exports = {
    * VALID CONTEXT
    * 1. Must have "field" (String) and "ranges" (Array) properties
    * 2. Each range object must have a "key" property
-   * 3. Each range must have either "from" or "to" property
+   * 3. Each range must have a "range" property with the range phrase
    */
   validContext: context =>
     _.has('field', context) &&
     !!_.get('ranges.length', context) &&
     _.every(
-      r => _.has('key', r) && (_.has('from', r) || _.has('to', r)),
+      r => _.has('key', r) && (_.has('range', r)),
       context.ranges
     ),
   /**
    * FILTER
-   * Based on the keys checked we get the actual datemath values
+   * Based on the keys checked we get the actual values
    * from the context.ranges and compose a bool/should query.
    **/
   filter(context) {
-    let { field, ranges, values } = context
+    let { field, ranges, values, timezone = 'UTC' } = context
     let should = _.flow(
       _.filter(r => _.includes(r.key, values)),
-      _.map(({ from, to }) => ({
+      _.map(({ range }) => ({
         range: {
           [field]: {
-            ...(from && { from }),
-            ...(to && { to }),
+            ...(getDateRange(range, timezone)),
           },
         },
       }))
@@ -38,21 +47,26 @@ module.exports = {
   },
   /**
    * RESULT
-   * Contest should have `ranges` prop where each range has a "key" prop.
+   * Context should have `ranges` prop where each range has a "key"
+   * Ranges should have 'range' prop containing the range phrase (eg. 'allFutureDates')
    * Example:
       ranges: [
-        { from: 'now/d', key: "open" },
-        { to: 'now-1d/d', key: "expired" }
+        { range: 'allFutureDates', key: "open" },
+        { range: 'allPastDates', key: "expired" }
       ]
    */
   result(context, search) {
+    let { field, format, timezone, ranges } = context
     return search({
       aggs: {
         range: {
           date_range: {
-            field: _.getOr('', 'field', context),
-            format: _.getOr('MM-yyyy', 'format', context),
-            ranges: context.ranges, // ranges must have a key
+            field,
+            format: format || "yyyy-MM-dd'T'HH:mm:ss.SSSZ",
+            ranges: _.map(({ range, key }) => ({
+              key,
+              ...(getDateRange(range, timezone))
+            }), ranges)
           },
         },
       },
