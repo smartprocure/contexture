@@ -1,3 +1,6 @@
+# 2.29.1
+* Add the dateRangeFacet type.
+
 # 2.29.0
 * Support changes to `date` type.
 
