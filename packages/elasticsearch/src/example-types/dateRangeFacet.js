@@ -73,14 +73,14 @@ module.exports = {
       },
       size: 0,
     })
-    return ({
+    return {
       options: _.flow(
         _.get('aggregations.range.buckets'),
         _.map(({ key, doc_count }) => ({
           name: key,
           count: doc_count,
         }))
-      )(counts)
-    })
+      )(counts),
+    }
   },
 }
