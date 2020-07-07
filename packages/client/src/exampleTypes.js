@@ -44,6 +44,26 @@ export default F.stampKey('type', {
       getValues: x => _.map('name', x.context.options),
     },
   },
+  dateRangeFacet: {
+    label: 'List',
+    validate: validateValues,
+    reactors: {
+      values: 'others',
+      mode: 'others',
+      size: 'self',
+      optionsFilter: 'self',
+      sort: 'self',
+    },
+    defaults: {
+      field: null,
+      values: [],
+      mode: 'include',
+      optionsFilter: '',
+      context: {
+        options: [],
+      },
+    },
+  },
   text: {
     validate: validateValues,
     reactors: {
