@@ -6,7 +6,7 @@ let getDateRange = (range, timezone) => {
   let { from, to } = rollingRangeToDates(range, timezone)
   return F.compactObject({
     from: getDateIfValid(from),
-    to: getDateIfValid(to)
+    to: getDateIfValid(to),
   })
 }
 
@@ -21,10 +21,7 @@ module.exports = {
   validContext: context =>
     _.has('field', context) &&
     !!_.get('ranges.length', context) &&
-    _.every(
-      r => _.has('key', r) && (_.has('range', r)),
-      context.ranges
-    ),
+    _.every(r => _.has('key', r) && _.has('range', r), context.ranges),
   /**
    * FILTER
    * Based on the keys checked we get the actual values
@@ -64,10 +61,13 @@ module.exports = {
           date_range: {
             field,
             format: format || "yyyy-MM-dd'T'HH:mm:ss.SSSZ",
-            ranges: _.map(({ range, key }) => ({
-              key,
-              ...(getDateRange(range, timezone))
-            }), ranges)
+            ranges: _.map(
+              ({ range, key }) => ({
+                key,
+                ...getDateRange(range, timezone),
+              }),
+              ranges
+            ),
           },
         },
       },
