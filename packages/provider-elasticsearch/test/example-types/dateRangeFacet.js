@@ -35,14 +35,14 @@ describe('validContext', () => {
     expect(
       dateRangeFacet.validContext({
         field: 'value_field',
-        ranges: [{ to: 'now/d' }],
+        ranges: [{ range: 'allPastDates' }],
       })
     ).to.be.false
   })
 })
 
 describe('dateRangeFacet/filter', () => {
-  it('should handle "allFutureDates range"', () => {
+  it('should handle a "range"', () => {
     expect(
       dateRangeFacet.filter({
         ...commonFilterParts,
@@ -56,26 +56,6 @@ describe('dateRangeFacet/filter', () => {
               test: {
                 "format": "dateOptionalTime",
                 from: getDatePart('allFutureDates', 'from')
-            }
-          }
-        }]
-      }
-    })
-  })
-  it('should handle "allPastDates range"', () => {
-    expect(
-      dateRangeFacet.filter({
-        ...commonFilterParts,
-        values: ['expired'],
-      })
-    ).to.deep.equal({
-      bool: {
-        should: [
-          {
-            range: {
-              test: {
-                "format": "dateOptionalTime",
-                to: getDatePart('allPastDates', 'to')
             }
           }
         }]
