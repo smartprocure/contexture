@@ -37,6 +37,7 @@ module.exports = {
       _.map(({ range }) => ({
         range: {
           [field]: {
+            format: 'dateOptionalTime',
             ...(getDateRange(range, timezone)),
           },
         },

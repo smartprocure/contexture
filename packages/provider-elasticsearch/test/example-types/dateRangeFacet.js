@@ -55,6 +55,7 @@ describe('dateRangeFacet/filter', () => {
         should: [{
           range: {
               test: {
+                "format": "dateOptionalTime",
                 from: getDatePart('allFutureDates', 'from')
             }
           }
@@ -73,6 +74,7 @@ describe('dateRangeFacet/filter', () => {
         should: [{
           range: {
               test: {
+                "format": "dateOptionalTime",
                 to: getDatePart('allPastDates', 'to')
             }
           }
