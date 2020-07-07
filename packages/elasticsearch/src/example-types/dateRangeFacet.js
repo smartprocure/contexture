@@ -72,13 +72,13 @@ module.exports = {
         },
       },
       size: 0,
-    }).then(response =>
+    }).then(
       _.flow(
         _.get('aggregations.range.buckets'),
         _.map(({ key, doc_count }) => ({
           name: key,
           count: doc_count,
-        }))(response)
+        }))
       )
     )
   },
