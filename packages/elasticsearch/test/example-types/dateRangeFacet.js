@@ -54,12 +54,13 @@ describe('dateRangeFacet/filter', () => {
           {
             range: {
               test: {
-                "format": "dateOptionalTime",
-                from: getDatePart('allFutureDates', 'from')
-            }
-          }
-        }]
-      }
+                format: 'dateOptionalTime',
+                from: getDatePart('allFutureDates', 'from'),
+              },
+            },
+          },
+        ],
+      },
     })
   })
   it('should handle "allPastDates range"', () => {
@@ -74,12 +75,13 @@ describe('dateRangeFacet/filter', () => {
           {
             range: {
               test: {
-                "format": "dateOptionalTime",
-                to: getDatePart('allPastDates', 'to')
-            }
-          }
-        }]
-      }
+                format: 'dateOptionalTime',
+                to: getDatePart('allPastDates', 'to'),
+              },
+            },
+          },
+        ],
+      },
     })
   })
 })
