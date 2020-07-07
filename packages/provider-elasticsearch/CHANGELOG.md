@@ -1,3 +1,6 @@
+# 0.23.1
+* dateRangeFacet changes for consistency with the facet type output.
+
 # 0.23.0
 * Added dateRangeFacet type.
 

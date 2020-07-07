@@ -53,9 +53,9 @@ module.exports = {
         { range: 'allPastDates', key: "expired" }
       ]
    */
-  result(context, search) {
+  async result(context, search) {
     let { field, format, timezone, ranges } = context
-    return search({
+    let counts = await search({
       aggs: {
         range: {
           date_range: {
@@ -72,14 +72,15 @@ module.exports = {
         },
       },
       size: 0,
-    }).then(
-      _.flow(
+    })
+    return ({
+      options: _.flow(
         _.get('aggregations.range.buckets'),
         _.map(({ key, doc_count }) => ({
           name: key,
           count: doc_count,
         }))
-      )
-    )
+      )(counts)
+    })
   },
 }
