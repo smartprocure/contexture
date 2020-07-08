@@ -49,16 +49,11 @@ export default F.stampKey('type', {
     validate: validateValues,
     reactors: {
       values: 'others',
-      mode: 'others',
-      size: 'self',
-      optionsFilter: 'self',
-      sort: 'self',
+      ranges: 'others',
     },
     defaults: {
       field: null,
       values: [],
-      mode: 'include',
-      optionsFilter: '',
       context: {
         options: [],
       },
