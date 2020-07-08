@@ -11,6 +11,7 @@ import Text from './Text'
 
 export default {
   facet: Facet,
+  dateRangeFacet: Facet,
   query: Query,
   number: Number,
   date: Date,
