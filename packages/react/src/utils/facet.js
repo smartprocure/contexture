@@ -104,32 +104,34 @@ export let FacetOptionsFilter = _.flow(
   )
 })
 
-export let FacetCheckboxList = withTheme(({
-  tree,
-  node,
-  hide,
-  display = displayFn,
-  displayBlank = displayBlankFn,
-  formatCount,
-  theme: { Checkbox },
-}) =>
-_.flow(
-  _.partition(x => _.includes(x.name, node.values)),
-  _.flatten,
-  _.map(({ name, label, count }) => {
-    let lens = tree.lens(node.path, 'values')
-    return (
-      <label
-        key={name}
-        style={commonStyle}
-        title={`${display(name, label)} : ${formatCount(count)}`}
-      >
-        <Checkbox {...F.domLens.checkboxValues(name, lens)} />
-        <div style={{ flex: 2, padding: '0 5px' }}>
-          {display(name, label) || displayBlank()}
-        </div>
-        {!hide.counts && <div>{formatCount(count)}</div>}
-      </label>
-    )
-  })
-)(_.get('context.options', node)))
+export let FacetCheckboxList = withTheme(
+  ({
+    tree,
+    node,
+    hide,
+    display = displayFn,
+    displayBlank = displayBlankFn,
+    formatCount,
+    theme: { Checkbox },
+  }) =>
+    _.flow(
+      _.partition(x => _.includes(x.name, node.values)),
+      _.flatten,
+      _.map(({ name, label, count }) => {
+        let lens = tree.lens(node.path, 'values')
+        return (
+          <label
+            key={name}
+            style={commonStyle}
+            title={`${display(name, label)} : ${formatCount(count)}`}
+          >
+            <Checkbox {...F.domLens.checkboxValues(name, lens)} />
+            <div style={{ flex: 2, padding: '0 5px' }}>
+              {display(name, label) || displayBlank()}
+            </div>
+            {!hide.counts && <div>{formatCount(count)}</div>}
+          </label>
+        )
+      })
+    )(_.get('context.options', node))
+)
