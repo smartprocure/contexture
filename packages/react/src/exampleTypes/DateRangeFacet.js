@@ -13,7 +13,7 @@ let DateRangeFacet = ({
   displayBlank = displayBlankFn,
   formatCount = toNumber,
 }) => (
-  <div className="contexture-facet">
+  <div className="contexture-daterangefacet">
     <FacetCheckboxList
       tree={tree}
       node={node}
