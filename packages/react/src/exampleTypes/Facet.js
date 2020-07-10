@@ -106,6 +106,8 @@ let Facet = ({
   tree,
   node,
   hide = {
+    selectAll: false, // Hide the initial "Select All" checkbox
+    radioList: false, // Hide the Include/Exclude radio list
     facetFilter: false, // Hide the search box above the facet checkboxes
     counts: false, // Hide the facet counts so only the labels are displayed
   },
@@ -115,13 +117,13 @@ let Facet = ({
   theme: { Checkbox, RadioList },
 }) => (
   <div className="contexture-facet">
-    <RadioList
+    {!hide.facetFilter && <RadioList
       value={node.mode || 'include'} // Fix by changing defaults in client example type
       onChange={mode => tree.mutate(node.path, { mode })}
       options={F.autoLabelOptions(['include', 'exclude'])}
-    />
+    />}
     {!hide.facetFilter && <FacetOptionsFilter tree={tree} node={node} />}
-    <SelectAll node={node} tree={tree} />
+    {!hide.selectAll && <SelectAll node={node} tree={tree} />}
     {_.flow(
       _.partition(x => _.includes(x.name, node.values)),
       _.flatten,
