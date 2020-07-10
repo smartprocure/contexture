@@ -117,7 +117,7 @@ let Facet = ({
   theme: { Checkbox, RadioList },
 }) => (
   <div className="contexture-facet">
-    {!hide.facetFilter && <RadioList
+    {!hide.radioList && <RadioList
       value={node.mode || 'include'} // Fix by changing defaults in client example type
       onChange={mode => tree.mutate(node.path, { mode })}
       options={F.autoLabelOptions(['include', 'exclude'])}
