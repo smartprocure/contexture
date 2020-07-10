@@ -49,12 +49,12 @@ module.exports = {
    * Ranges should have 'range' prop containing the range phrase (eg. 'allFutureDates')
    * Example:
       ranges: [
-        { range: 'allFutureDates', key: "open" },
-        { range: 'allPastDates', key: "expired" }
+        { range: 'allFutureDates', key: "Open" },
+        { range: 'allPastDates', key: "Expired" }
       ]
    */
   async result(context, search) {
-    let { field, format, timezone, ranges } = context
+    let { field, format, timezone = 'UTC', ranges } = context
     let counts = await search({
       aggs: {
         range: {

@@ -1,3 +1,7 @@
+
+# 0.23.2
+* dateRangeFacet changes - Add timeZone default value.
+
 # 0.23.1
 * dateRangeFacet changes for consistency with the facet type output.
 
