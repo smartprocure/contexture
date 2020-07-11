@@ -6,6 +6,7 @@ import { toNumber } from '../utils/format'
 import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
 import { Flex } from '../greyVest'
+import { contexturifyWithoutLoader } from '../utils/hoc'
 
 let commonStyle = {
   justifyContent: 'space-between',
@@ -104,7 +105,7 @@ export let FacetOptionsFilter = _.flow(
   )
 })
 
-export let FacetCheckboxList = withTheme(
+export let FacetCheckboxList = contexturifyWithoutLoader(
   ({
     tree,
     node,
