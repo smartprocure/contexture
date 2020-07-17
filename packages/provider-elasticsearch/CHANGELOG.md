@@ -1,4 +1,7 @@
 
+# 0.24.0
+* Added support for half_float,short and byte type.
+
 # 0.23.2
 * dateRangeFacet changes - Add timeZone default value.
 
