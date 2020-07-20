@@ -11,6 +11,7 @@ export {
   withNamedTheme,
   withTheme,
 } from './utils/theme'
+export { contexturify, contexturifyWithoutLoader } from './utils/hoc'
 
 // exampleTypes
 export * from './exampleTypes'
