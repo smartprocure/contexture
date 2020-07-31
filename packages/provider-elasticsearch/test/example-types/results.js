@@ -20,6 +20,7 @@ describe('results', () => {
           hits: [
             {
               _id: 'test-id',
+              _score: 'test-score',
               field: 'test field',
             },
           ],
@@ -40,6 +41,7 @@ describe('results', () => {
         results: [
           {
             _id: 'test-id',
+            _score: 'test-score',
             additionalFields: [],
             field: 'test field',
           },
@@ -73,6 +75,7 @@ describe('results', () => {
     F.extendOn(context, { include: ['field'] })
     expectedResult.response.results[0].hit = {
       _id: 'test-id',
+      _score: 'test-score',
       field: 'test field',
     }
     await resultsTest(context, [
@@ -179,6 +182,7 @@ describe('results', () => {
     expectedResult.response.results[0].anotherField = 'test another field'
     expectedResult.response.results[0].hit = {
       _id: 'test-id',
+      _score: 'test-score',
       field: 'test field',
       anotherField: 'test another field',
     }
@@ -207,6 +211,7 @@ describe('results', () => {
     expectedResult.response.results[0].anotherField = 'test another field'
     expectedResult.response.results[0].hit = {
       _id: 'test-id',
+      _score: 'test-score',
       field: 'test field',
       anotherField: 'test another field',
     }
@@ -241,10 +246,12 @@ describe('results', () => {
     F.extendOn(expectedResult.response.results, [
       {
         _id: 'test-id',
+        _score: 'test-score',
         additionalFields: [],
         field: 'test field',
         hit: {
           _id: 'test-id',
+          _score: 'test-score',
           field: 'test field',
         },
       },

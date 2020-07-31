@@ -127,6 +127,7 @@ module.exports = {
             context.verbose || _.size(context.include) > 0 ? { hit } : {},
             {
               _id: hit._id,
+              _score: hit._score,
               additionalFields: schemaHighlight ? additionalFields : [],
             },
             _.getOr(_.identity, 'elasticsearch.summaryView', schema)(hit),

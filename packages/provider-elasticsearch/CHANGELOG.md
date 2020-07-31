@@ -1,4 +1,7 @@
 
+# 0.23.3
+* Added _score field to the results type
+
 # 0.23.2
 * dateRangeFacet changes - Add timeZone default value.
 
