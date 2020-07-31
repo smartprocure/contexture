@@ -1,4 +1,7 @@
 
+# 0.24.1
+* Added _score field to the results type
+
 # 0.24.0
 * Added support for half_float,short and byte type.
 
