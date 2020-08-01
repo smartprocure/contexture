@@ -1,7 +1,7 @@
 import React from 'react'
 
 // Low effort custom checkbox
-let Checkbox = ({ checked, onChange = () => {}, style = {} }) => (
+let Checkbox = React.forwardRef(({ checked, onChange = () => {}, style = {} },Ref) => (
   <label
     className={`gv-input gv-checkbox ${checked ? 'checked' : ''}`}
     style={style}
@@ -10,6 +10,7 @@ let Checkbox = ({ checked, onChange = () => {}, style = {} }) => (
       type="checkbox"
       style={{ display: 'none' }}
       {...{ checked, onChange }}
+      ref={Ref}
     />
     {checked ? (
       <i className="material-icons">check</i>
@@ -17,5 +18,5 @@ let Checkbox = ({ checked, onChange = () => {}, style = {} }) => (
       String.fromCharCode(160) // non-breaking space
     )}
   </label>
-)
+))
 export default Checkbox
