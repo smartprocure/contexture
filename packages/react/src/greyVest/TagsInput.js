@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import _ from 'lodash/fp'
 import { observable } from 'mobx'
 import { observer, inject, useLocalStore } from 'mobx-react'
@@ -7,7 +7,7 @@ import DefaultTag from './Tag'
 
 let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
-let TagsInput = ({
+let TagsInput = forwardRef(({
   tags,
   addTag,
   removeTag,
@@ -21,9 +21,10 @@ let TagsInput = ({
   onTagClick = _.noop,
   Tag = DefaultTag,
   ...props
-}) => {
+},ref) => {
   let containerRef = React.useRef()
-  let inputRef = React.useRef()
+
+  let inputRef = ref?ref:React.useRef()
   let state = useLocalStore(() => ({ currentInput: '' }))
   addTag = splitCommas
     ? _.flow(
@@ -105,7 +106,7 @@ let TagsInput = ({
       </Flex>
     </div>
   )
-}
+})
 
 // Just uses an internal observable array
 export let MockTagsInput = inject(() => {
