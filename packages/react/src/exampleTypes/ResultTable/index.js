@@ -93,7 +93,9 @@ let ResultTable = ({
             }}
           />
         </Table>
-        <ResultTableFooter {...{ tree, node, path, pageSizeOptions }} />
+        {node.pageSize > 0 && (
+          <ResultTableFooter {...{ tree, node, path, pageSizeOptions }} />
+        )}
       </>
     )
   }

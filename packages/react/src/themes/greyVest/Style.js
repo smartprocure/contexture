@@ -59,7 +59,7 @@ export default () => (
       .contexture-facet {
         font-size: 14px;
       }
-      .contexture-facet > label {
+      .contexture-facet > label, .contexture-daterangefacet > label {
         margin: 5px 0;
       }
       .contexture-facet .gv-checkbox {

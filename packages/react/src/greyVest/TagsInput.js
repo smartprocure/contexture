@@ -21,10 +21,8 @@ let TagsInput = forwardRef(({
   onTagClick = _.noop,
   Tag = DefaultTag,
   ...props
-},ref) => {
+},inputRef) => {
   let containerRef = React.useRef()
-
-  let inputRef = ref?ref:React.useRef()
   let state = useLocalStore(() => ({ currentInput: '' }))
   addTag = splitCommas
     ? _.flow(

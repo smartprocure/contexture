@@ -45,7 +45,7 @@ let Section = _.flow(
 )(({ options, onClick, selected }) => {
   let { PickerItem } = React.useContext(PickerContext)
   return (
-    <div>
+    <div style={{ overflow: 'auto', width: '100%' }}>
       {_.map(
         item => (
           <PickerItem
@@ -85,7 +85,7 @@ let PanelTreePicker = inject((store, { onChange, options }) => {
   observer(({ selectAtLevel, state, nestedOptions }) => (
     <div
       className="panel-tree-picker"
-      style={{ display: 'inline-flex', width: '100%', overflow: 'auto' }}
+      style={{ display: 'inline-flex', width: '100%' }}
     >
       <Section
         options={nestedOptions}

@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import F from 'futil'
 import { observer } from 'mobx-react'
 import { Flex, QueryBuilder, FilterAdder, FilterList } from '.'
-import { ToggleFiltersButton, TreePauseButton } from './purgatory'
-import { LinkButton } from './greyVest'
+import { TreePauseButton } from './purgatory'
+import { LinkButton, Icon, Popover, DropdownItem } from './greyVest'
 import { withTheme } from './utils/theme'
 
 export let SearchTree = () => {}
@@ -35,27 +35,35 @@ export let FiltersBox = withTheme(({ theme: { Box }, ...props }) => (
 ))
 FiltersBox.displayName = 'FiltersBox'
 
-let BasicSearchFilters = ({ setMode, trees, children, BasicFilters }) => (
-  <div>
-    <Flex alignItems="center" justifyContent="space-between">
-      <Flex alignItems="center">
+let BasicSearchFilters = ({ setMode, trees, children, BasicFilters }) => {
+  let [isOpen, setIsOpen] = React.useState(false)
+  return (
+    <div>
+      <Flex alignItems="center" justifyContent="space-between">
         <h1>Filters</h1>
-        <ToggleFiltersButton onClick={() => setMode('resultsOnly')} />
+        <div>
+          <Popover isOpen={isOpen} onClose={() => setIsOpen(false)}>
+            <DropdownItem onClick={() => setMode('resultsOnly')}>
+              Toggle Filters
+            </DropdownItem>
+            <TreePauseButton children={children} Component={DropdownItem} />
+            <DropdownItem onClick={() => setMode('builder')}>
+              Advanced Search Builder
+            </DropdownItem>
+          </Popover>
+          <DropdownItem onClick={() => setIsOpen(true)}>
+            <Icon icon="more_vert" />
+          </DropdownItem>
+        </div>
       </Flex>
-      <div>
-        <TreePauseButton children={children} />
-      </div>
-    </Flex>
-    <LabelledList list={trees} Component={BasicFilters} />
-    <LinkButton onClick={() => setMode('builder')} style={{ marginTop: 15 }}>
-      Switch to Advanced Search Builder
-    </LinkButton>
-  </div>
-)
+      <LabelledList list={trees} Component={BasicFilters} />
+    </div>
+  )
+}
 
 let BuilderSearchFilters = ({ setMode, trees, BuilderFilters }) => (
   <div>
-    <Flex style={{ alignItems: 'center' }}>
+    <Flex alignItems="center" justifyContent="space-between">
       <h1>Filters</h1>
       <LinkButton onClick={() => setMode('basic')}>
         Back to Regular Search

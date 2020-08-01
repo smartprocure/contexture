@@ -1,4 +1,5 @@
 import Facet from './Facet'
+import DateRangeFacet from './DateRangeFacet'
 import Number from './Number'
 import Date from './Date'
 import Query from './Query'
@@ -11,6 +12,7 @@ import Text from './Text'
 
 export default {
   facet: Facet,
+  dateRangeFacet: DateRangeFacet,
   query: Query,
   number: Number,
   date: Date,
