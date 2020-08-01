@@ -1,7 +1,7 @@
 import React from 'react'
 
 // Low effort custom checkbox
-let Checkbox = React.forwardRef(({ checked, onChange = () => {}, style = {} },Ref) => (
+let Checkbox = React.forwardRef(({ checked, onChange = () => {}, style = {} },ref) => (
   <label
     className={`gv-input gv-checkbox ${checked ? 'checked' : ''}`}
     style={style}
@@ -10,7 +10,7 @@ let Checkbox = React.forwardRef(({ checked, onChange = () => {}, style = {} },Re
       type="checkbox"
       style={{ display: 'none' }}
       {...{ checked, onChange }}
-      ref={Ref}
+      ref={ref}
     />
     {checked ? (
       <i className="material-icons">check</i>
