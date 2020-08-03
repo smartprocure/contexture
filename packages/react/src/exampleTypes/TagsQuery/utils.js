@@ -7,11 +7,7 @@ export let tagValueField = 'word'
 
 export let copyTags = node => {
   if (node.tags) {
-    let words = _.flow(
-      _.map(tagValueField),
-      _.reverse,
-      _.join(',')
-    )(node.tags)
+    let words = _.flow(_.map(tagValueField), _.reverse, _.join(','))(node.tags)
     navigator.clipboard.writeText(words)
   }
 }

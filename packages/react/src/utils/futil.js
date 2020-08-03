@@ -6,10 +6,7 @@ export let onlyWhen = f => F.unless(f, () => {})
 
 // Tree
 export let FlattenTreeLeaves = Tree =>
-  _.flow(
-    Tree.flatten(),
-    _.omitBy(Tree.traverse)
-  )
+  _.flow(Tree.flatten(), _.omitBy(Tree.traverse))
 export let PlainObjectTree = F.tree(onlyWhen(_.isPlainObject))
 export let flattenPlainObject = F.whenExists(FlattenTreeLeaves(PlainObjectTree))
 

@@ -11,10 +11,7 @@ let TreePauseButton = ({
   theme: { AlternateButton },
   Component = AlternateButton,
 }) => {
-  let trees = _.flow(
-    React.Children.toArray,
-    _.map('props')
-  )(children)
+  let trees = _.flow(React.Children.toArray, _.map('props'))(children)
   let allPaused = _.every(({ tree, path }) => tree.isPausedNested(path), trees)
   let flip = () =>
     _.each(({ tree, path }) => setPausedNested(tree, path, !allPaused), trees)
@@ -25,7 +22,4 @@ let TreePauseButton = ({
   )
 }
 
-export default _.flow(
-  observer,
-  withTheme
-)(TreePauseButton)
+export default _.flow(observer, withTheme)(TreePauseButton)

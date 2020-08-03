@@ -63,13 +63,13 @@ let TableBody = inject(TableBodyState)(
                 ({ field, display = x => x, details = {} }, i) => (
                   <td
                     key={`${field}${i}`}
-                    {...!_.isEmpty(details) && {
+                    {...(!_.isEmpty(details) && {
                       style: {
                         cursor: !_.isEmpty(details) ? 'pointer' : 'auto',
                       },
                       onClick: () =>
                         onClick(field, recordKey, x, i, details, expanded),
-                    }}
+                    })}
                   >
                     {_.getOr(
                       display,
@@ -134,10 +134,10 @@ let ExpandableTable = inject(TableState)(
               (c, i) => (
                 <th
                   key={`${c.field}${i}`}
-                  {...c.enableSort && {
+                  {...(c.enableSort && {
                     onClick: () => columnSort(c),
                     style: { cursor: 'pointer', textDecoration: 'underline' },
-                  }}
+                  })}
                 >
                   {F.callOrReturn(_.getOr(F.autoLabel(c.field), 'label', c))}
                   {c.enableSort && c.field === sortField && sortDir

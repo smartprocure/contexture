@@ -20,7 +20,4 @@ let Select = (
   </MaterialSelect>
 )
 
-export default _.flow(
-  React.forwardRef,
-  observer
-)(Select)
+export default _.flow(React.forwardRef, observer)(Select)

@@ -72,7 +72,4 @@ let FilterContents = ({
   )
 }
 
-export default _.flow(
-  observer,
-  withTheme
-)(FilterContents)
+export default _.flow(observer, withTheme)(FilterContents)

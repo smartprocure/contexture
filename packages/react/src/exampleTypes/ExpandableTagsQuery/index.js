@@ -24,7 +24,4 @@ let ExpandableTagsQuery = ({ measureRef, contentRect, collapse, ...props }) => (
   </>
 )
 
-export default _.flow(
-  contexturify,
-  withContentRect()
-)(ExpandableTagsQuery)
+export default _.flow(contexturify, withContentRect())(ExpandableTagsQuery)

@@ -8,8 +8,4 @@ let ResultCount = ({ node, display = toNumber }) => {
   return count ? display(node.context.response.totalRecords) : 'No Results'
 }
 
-export default _.flow(
-  observer,
-  withNode,
-  withInlineLoader
-)(ResultCount)
+export default _.flow(observer, withNode, withInlineLoader)(ResultCount)
