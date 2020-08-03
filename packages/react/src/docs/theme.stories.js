@@ -10,9 +10,10 @@ import {
 import { wrapDisplayName } from '../utils/react'
 
 let withStyle = (style, Component) =>
-  wrapDisplayName('withStyle', Component)(props => (
-    <Component style={style} {...props} />
-  ))
+  wrapDisplayName(
+    'withStyle',
+    Component
+  )(props => <Component style={style} {...props} />)
 
 let VanillaButton = withStyle(
   {

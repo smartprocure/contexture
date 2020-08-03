@@ -75,7 +75,4 @@ let Rule = ({
   )
 }
 
-export default _.flow(
-  observer,
-  FilterDragSource
-)(Rule)
+export default _.flow(observer, FilterDragSource)(Rule)

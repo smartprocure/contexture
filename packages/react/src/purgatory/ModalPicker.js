@@ -28,7 +28,4 @@ let ModalPicker = ({
   )
 }
 
-export default _.flow(
-  observer,
-  withTheme
-)(ModalPicker)
+export default _.flow(observer, withTheme)(ModalPicker)

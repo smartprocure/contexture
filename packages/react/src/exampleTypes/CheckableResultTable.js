@@ -18,15 +18,7 @@ let Label = _.flow(
   let results = _.toArray(getResults(node))
   let allChecked = _.size(results) === _.size(F.view(selected))
   let checkAll = F.sets(
-    allChecked
-      ? []
-      : _.map(
-          _.flow(
-            getRecord,
-            _.iteratee(getValue)
-          ),
-          results
-        ),
+    allChecked ? [] : _.map(_.flow(getRecord, _.iteratee(getValue)), results),
     selected
   )
   return <Checkbox checked={allChecked} onChange={checkAll} />

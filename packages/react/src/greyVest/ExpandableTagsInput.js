@@ -59,10 +59,7 @@ let ExpandableTagsInput = ({
         _.difference(_, tags),
         _.map(addTag)
       )
-    : _.flow(
-        _.trim,
-        addTag
-      )
+    : _.flow(_.trim, addTag)
   let [currentInput, setCurrentInput] = React.useState('')
   return (
     <div style={style}>

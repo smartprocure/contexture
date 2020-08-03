@@ -58,10 +58,7 @@ let Section = _.flow(
             {getItemLabel(item)}
           </PickerItem>
         ),
-        _.flow(
-          F.unkeyBy('_key'),
-          _.sortBy(getItemLabel)
-        )(options)
+        _.flow(F.unkeyBy('_key'), _.sortBy(getItemLabel))(options)
       )}
     </div>
   )

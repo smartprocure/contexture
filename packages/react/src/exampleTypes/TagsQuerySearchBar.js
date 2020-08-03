@@ -100,7 +100,4 @@ let SearchBar = ({
   )
 }
 
-export default _.flow(
-  observer,
-  withNode
-)(SearchBar)
+export default _.flow(observer, withNode)(SearchBar)

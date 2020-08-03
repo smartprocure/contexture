@@ -37,10 +37,7 @@ let TagsInput = forwardRef(
           _.difference(_, tags),
           _.map(addTag)
         )
-      : _.flow(
-          _.trim,
-          addTag
-        )
+      : _.flow(_.trim, addTag)
     return (
       <div className={'tags-input'} ref={containerRef} style={{ ...style }}>
         <Flex

@@ -60,7 +60,4 @@ let TagActionsMenu = ({
   )
 }
 
-export default _.flow(
-  observer,
-  withTheme
-)(TagActionsMenu)
+export default _.flow(observer, withTheme)(TagActionsMenu)
