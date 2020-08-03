@@ -33,6 +33,9 @@ let ResultTable = ({
   pageSizeOptions, // an array of options to set the # of rows per page (default [20, 50, 100, 250])
   theme: { Table },
 }) => {
+  // If there are no fields, we won't render anything. This is most definitely a
+  // user error when it happens
+  if (_.isEmpty(fields)) throw new Error('Fields are empty')
   // From Theme/Components
   let mutate = tree.mutate(path)
   // Account for all providers here (memory provider has results with no response parent)
