@@ -23,11 +23,7 @@ let PageSize = ({
           {size}
         </PagerItem>
       ),
-      _.flow(
-        _.concat(value),
-        _.sortBy(_.identity),
-        _.sortedUniq
-      )(sizeOptions)
+      _.flow(_.concat(value), _.sortBy(_.identity), _.sortedUniq)(sizeOptions)
     )}
   </Flex>
 )

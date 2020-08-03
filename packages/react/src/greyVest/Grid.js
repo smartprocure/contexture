@@ -2,10 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil'
 
-let formatAreas = _.flow(
-  _.map(F.quote),
-  _.join(' ')
-)
+let formatAreas = _.flow(_.map(F.quote), _.join(' '))
 
 let repeatNumber = F.when(_.isNumber, x => `repeat(${x}, 1fr)`)
 

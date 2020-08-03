@@ -29,7 +29,4 @@ let Popover = ({ isOpen, onClose, children, style }) =>
     </OutsideClickHandler>
   )
 
-export default _.flow(
-  expandProp('open', openBinding),
-  observer
-)(Popover)
+export default _.flow(expandProp('open', openBinding), observer)(Popover)

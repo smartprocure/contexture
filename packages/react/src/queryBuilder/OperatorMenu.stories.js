@@ -3,7 +3,9 @@ import { storiesOf } from '@storybook/react'
 import { parent, root } from './stories/util'
 import OperatorMenu from './OperatorMenu'
 
-storiesOf('Search Components|QueryBuilder/Internals', module).add(
-  'OperatorMenu',
-  () => <OperatorMenu {...{ node: { join: 'and' }, parent, root }} />
-)
+storiesOf(
+  'Search Components|QueryBuilder/Internals',
+  module
+).add('OperatorMenu', () => (
+  <OperatorMenu {...{ node: { join: 'and' }, parent, root }} />
+))

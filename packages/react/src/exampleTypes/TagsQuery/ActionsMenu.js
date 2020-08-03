@@ -51,7 +51,4 @@ let ActionsMenu = ({
   </Flex>
 )
 
-export default _.flow(
-  observer,
-  withTheme
-)(ActionsMenu)
+export default _.flow(observer, withTheme)(ActionsMenu)

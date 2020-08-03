@@ -16,7 +16,4 @@ let Select = ({ options, placeholder = 'Please Select...', ...props }, ref) => (
   </select>
 )
 
-export default _.flow(
-  React.forwardRef,
-  observer
-)(Select)
+export default _.flow(React.forwardRef, observer)(Select)

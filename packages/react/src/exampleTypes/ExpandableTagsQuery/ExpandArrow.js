@@ -37,7 +37,4 @@ let ExpandArrow = ({ collapse, tagsLength, style, theme: { Icon } }) =>
     </div>
   )
 
-export default _.flow(
-  observer,
-  withTheme
-)(ExpandArrow)
+export default _.flow(observer, withTheme)(ExpandArrow)

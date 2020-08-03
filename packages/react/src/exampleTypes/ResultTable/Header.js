@@ -209,7 +209,4 @@ let Header = ({
   )
 }
 
-export default _.flow(
-  observer,
-  withTheme
-)(Header)
+export default _.flow(observer, withTheme)(Header)

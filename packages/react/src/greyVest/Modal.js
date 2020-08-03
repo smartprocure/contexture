@@ -41,7 +41,4 @@ let Modal = ({ isOpen, onClose, children, style = {}, className = '' }) => (
   </Portal>
 )
 
-export default _.flow(
-  expandProp('open', openBinding),
-  observer
-)(Modal)
+export default _.flow(expandProp('open', openBinding), observer)(Modal)

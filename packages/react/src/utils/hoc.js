@@ -6,7 +6,10 @@ import { wrapDisplayName } from './react'
 import { withTheme } from './theme'
 
 export let withNode = Component =>
-  wrapDisplayName('withNode', Component)(props => {
+  wrapDisplayName(
+    'withNode',
+    Component
+  )(props => {
     let { tree, node, path } = props
     node = node || (tree && path && tree.getNode(path))
 
@@ -48,22 +51,16 @@ export let withInlineLoader = Component =>
     )
   })
 
-export let contexturify = _.flow(
-  observer,
-  withLoader,
-  withNode,
-  withTheme
-)
+export let contexturify = _.flow(observer, withLoader, withNode, withTheme)
 
-export let contexturifyWithoutLoader = _.flow(
-  observer,
-  withNode,
-  withTheme
-)
+export let contexturifyWithoutLoader = _.flow(observer, withNode, withTheme)
 
 // this is used for the text components
 export let withTreeLens = Component =>
-  wrapDisplayName('withTreeLens', Component)(({ prop = 'value', ...props }) => (
+  wrapDisplayName(
+    'withTreeLens',
+    Component
+  )(({ prop = 'value', ...props }) => (
     <Component
       {...{ lens: props.tree.lens(props.node.path, prop), ...props }}
     />

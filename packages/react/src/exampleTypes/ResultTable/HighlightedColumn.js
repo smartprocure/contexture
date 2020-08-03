@@ -50,7 +50,4 @@ let HighlightedColumn = ({
   )
 }
 
-export default _.flow(
-  observer,
-  withTheme
-)(HighlightedColumn)
+export default _.flow(observer, withTheme)(HighlightedColumn)
