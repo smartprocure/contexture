@@ -86,7 +86,7 @@ let getESSchemas = client =>
   Promise.all([
     client.indices.getMapping(),
     client.indices.getAlias(),
-  ]).then(([mappings, aliases]) => fromMappingsWithAliases(mappings, aliases))
+  ]).then(([{body:mappings}, {body:aliases}]) => fromMappingsWithAliases(mappings, aliases))
 
 module.exports = {
   // flagFields,
