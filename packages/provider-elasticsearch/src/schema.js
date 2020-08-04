@@ -24,7 +24,7 @@ let fromEsIndexMapping = _.mapValues(
     // Always 1 type per index but sometimes there's a `_default_` type thing
     _.omit(['_default_']),
     x =>
-      _.size(_.keys(x)) == 1
+      _.size(_.keys(x)) === 1
         ? // 1 key implies es6 and below with types
           _.flow(
             _.toPairs,
