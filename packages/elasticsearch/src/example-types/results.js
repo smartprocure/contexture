@@ -27,7 +27,7 @@ module.exports = {
         [sortField]: sortDir,
       },
       explain: context.explain,
-      track_total_hits: true
+      track_total_hits: true,
     }
 
     if (context.forceExclude && _.isArray(schema.forceExclude))
