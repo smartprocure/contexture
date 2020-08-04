@@ -60,6 +60,7 @@ describe('results', () => {
         from: 0,
         size: 10,
         explain: false,
+        track_total_hits: true,
       },
     ]
     resultsTest = _.partial(sequentialResultTest, [
