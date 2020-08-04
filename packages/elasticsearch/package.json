@@ -36,7 +36,6 @@
   },
   "dependencies": {
     "@elastic/datemath": "^2.3.0",
-    "bluebird": "^3.5.0",
     "futil": "^1.67.0",
     "js-combinatorics": "^0.5.3",
     "json-stable-stringify": "^1.0.1",

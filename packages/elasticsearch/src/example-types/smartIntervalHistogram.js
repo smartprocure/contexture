@@ -1,5 +1,4 @@
 let _ = require('lodash/fp')
-let Promise = require('bluebird')
 let statsResults = require('./statistical').result
 let calcSmartInterval = require('../smartInterval').calcSmartInterval
 
