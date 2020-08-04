@@ -1,13 +1,13 @@
 let _ = require('lodash/fp')
-let Promise = require('bluebird')
 let deterministic_stringify = require('json-stable-stringify')
 let { getESSchemas } = require('./schema')
 
-let ElasticsearchProvider = (
-  config = {
-    request: {},
-  }
-) => ({
+let constantScore = filter => ({ constant_score: { filter } })
+
+// Deterministic ordering of JSON keys for request cache optimization
+let stableKeys = x => JSON.parse(deterministic_stringify(x))
+
+let ElasticsearchProvider = (config = { request: {} }) => ({
   types: config.types,
   groupCombinator(group, filters) {
     let join = {
@@ -16,98 +16,54 @@ let ElasticsearchProvider = (
       not: 'must_not',
     }[group.join || 'and']
 
-    let result = {
+    return {
       bool: {
         [join]: filters,
+        ...(join === 'should' && { minimum_should_match: 1 }),
       },
     }
-    if (join === 'should') result.bool.minimum_should_match = 1
-
-    return result
   },
-  runSearch(options = {}, context, schema, filters, aggs) {
-    let query = filters
+  async runSearch({ requestorContext } = {}, node, schema, filters, aggs) {
+    let { scroll, scrollId } = node
+    let request = scrollId
+      ? // If we have scrollId then keep scrolling, no query needed
+        { scroll: scroll === true ? '2m' : scroll, scrollId }
+      : // Deterministic ordering of JSON keys for request cache optimization
+        stableKeys({
+          index: schema.elasticsearch.index,
+          // Scroll support (used for bulk export)
+          ...(scroll && { scroll: scroll === true ? '2m' : scroll }),
+          body: {
+            // Wrap in constant_score when not sorting by score to avoid wasting time on relevance scoring
+            query:
+              filters && !_.has('sort._score', aggs)
+                ? constantScore(filters)
+                : filters,
+            // If there are aggs, skip search results
+            ...(aggs.aggs && { size: 0 }),
+            // Sorting by _doc is more efficient for scrolling since it won't waste time on any sorting
+            ...(scroll && { sort: ['_doc'] }),
+            ...aggs,
+          },
+        })
 
-    // Wrapping any query NOT sorted by _score in a constant_score,
-    // so that it returns a constant score equal to the query boost
-    // for every document in the filter.
-    // Filter clauses are executed in filter context, meaning that scoring
-    // is ignored and clauses are considered for caching.
-    if (query && !_.has('sort._score', aggs))
-      query = {
-        constant_score: {
-          filter: query,
-        },
-      }
+    let requestOptions = _.merge({ headers: requestorContext }, config.request)
 
-    // Could nestify aggs here generically based on schema
-    let request = {
-      body: _.extend({ query }, aggs),
+    let client = config.getClient()
+    // If we have a scrollId, use a different client API method
+    let search = scrollId ? client.scroll : client.search
+    var response
+    try {
+      var { body: response } = await search(request, requestOptions)
+    } catch (e) {
+      response = e
+      node.error = e.meta.body
     }
-    // If there are aggs, skip search results
-    if (aggs.aggs) request.body.size = 0
-
-    // Additional config for ES searches
-    request = _.defaultsAll([
-      {
-        type: schema.elasticsearch.type,
-        index: schema.elasticsearch.index,
-
-        // Scroll Support
-        scroll: context.scroll === true ? '2m' : context.scroll,
-        // searchType:         context.searchType
-      },
-      config.request,
-      request,
-    ])
-
-    request.headers = _.defaults(request.headers, options.requestorContext)
-
-    // Deterministic ordering of JSON keys for request cache optimization
-    request = JSON.parse(deterministic_stringify(request))
 
     // Log Request
-    context._meta.requests.push({
-      request,
-    })
+    node._meta.requests.push({ request, requestOptions, response })
 
-    // Required for scroll since 2.1.0 ES
-    if (context.scroll) {
-      request.body.sort = ['_doc']
-      request.size = context.size
-    }
-    // Run Search
-    let scrollId = context.scrollId
-    let client = config.getClient()
-    // If we have scrollId then keep scrolling if not search
-    let result = scrollId
-      ? client.scroll({
-          scroll: context.scroll === true ? '2m' : context.scroll,
-          scrollId,
-        })
-      : client.search(request)
-    return Promise.resolve(result)
-      .tap(results => {
-        if (results.timed_out) context.timedout = true
-        // Log response
-        _.last(context._meta.requests).response = results
-      })
-      .catch(({ message, body }) => {
-        throw {
-          message,
-          ..._.get('error.caused_by', body),
-        }
-      })
-  },
-  // Utility function to get a mapping used for building a schema directly from ES
-  async getMappingProperties(schema) {
-    let client = config.getClient()
-    let { type, index } = schema.elasticsearch
-    let mapping = await client.indices.getMapping({ index, type })
-
-    for (let key in mapping) {
-      return _.get([key, 'mappings', type, 'properties'], mapping)
-    }
+    return response
   },
   getSchemas: () => getESSchemas(config.getClient()),
 })
