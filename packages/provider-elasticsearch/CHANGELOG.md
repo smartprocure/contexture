@@ -6,6 +6,7 @@
 * Get mappings now handles type-less mappings, which is the default on ES7+ (while still handling types for ES6-)
 * [DateRangeFacet] converted to `dateOptionalTime` format which works on ES 6 and 7
 * [Results] track_total_hits and handle total.hits being an object for ES 7 support
+* Remove `bluebird` dependency
 
 # 0.24.1
 * Added _score field to the results type
