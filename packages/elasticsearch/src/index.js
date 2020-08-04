@@ -52,9 +52,10 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
     let client = config.getClient()
     // If we have a scrollId, use a different client API method
     let search = scrollId ? client.scroll : client.search
-    var response
+    let response
     try {
-      var { body: response } = await search(request, requestOptions)
+      let { body } = await search(request, requestOptions)
+      response = body
     } catch (e) {
       response = e
       node.error = e.meta.body
