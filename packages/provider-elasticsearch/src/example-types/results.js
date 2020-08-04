@@ -27,6 +27,7 @@ module.exports = {
         [sortField]: sortDir,
       },
       explain: context.explain,
+      // Without this, ES7+ stops counting at 10k instead of returning the actual count
       track_total_hits: true,
     }
 
