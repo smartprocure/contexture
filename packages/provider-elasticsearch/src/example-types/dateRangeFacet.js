@@ -60,7 +60,7 @@ module.exports = {
         range: {
           date_range: {
             field,
-            format: format || "yyyy-MM-dd'T'HH:mm:ss.SSSZ",
+            format: format || 'dateOptionalTime',
             ranges: _.map(
               ({ range, key }) => ({
                 key,
