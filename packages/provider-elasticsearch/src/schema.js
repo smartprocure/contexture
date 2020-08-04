@@ -23,9 +23,15 @@ let fromEsIndexMapping = _.mapValues(
     _.get('mappings'),
     // Always 1 type per index but sometimes there's a `_default_` type thing
     _.omit(['_default_']),
-    _.toPairs,
-    // Capture esType
-    ([[type, fields]]) => ({ fields, elasticsearch: { type } }),
+    x => _.size(_.keys(x)) == 1
+      // 1 key implies es6 and below with types
+      ? _.flow(
+          _.toPairs,
+          // Capture esType
+          ([[type, fields]]) => ({ fields, elasticsearch: { type } })
+        )(x)
+      // More than one key seems like no types (es7+)
+      : ({ fields: x, elasticsearch: {} }),
     _.update(
       'fields',
       _.flow(
