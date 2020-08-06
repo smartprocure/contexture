@@ -11,7 +11,7 @@ let getDateRange = (range, timezone) => {
 }
 
 module.exports = {
-  hasValue: context => _.get('values.length', context),
+  hasValue: _.get('values.length'),
   /**
    * VALID CONTEXT
    * 1. Must have "field" (String) and "ranges" (Array) properties

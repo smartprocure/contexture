@@ -10,9 +10,9 @@ let hasValue = ({ from, to, range }) =>
 module.exports = {
   hasValue,
   // NOTE: timezone is only used for rolling dates
-  filter({ field, range, isDateTime, timezone = 'UTC', ...context }) {
+  filter({ field, range, isDateTime, timezone = 'UTC', ...node }) {
     let { from, to } = _.includes(range, ['exact', 'allDates'])
-      ? context
+      ? node
       : rollingRangeToDates(range, timezone)
 
     // If isDateTime we do not format but rely on the input to be in ES date & time format currently
