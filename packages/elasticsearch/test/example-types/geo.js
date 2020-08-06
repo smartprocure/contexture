@@ -183,9 +183,7 @@ describe('geo', () => {
       operator: 'within',
       _meta: {},
     }
-    return expect(
-      geo.filter(node).then(() => geo.result(node))
-    ).to.become({
+    return expect(geo.filter(node).then(() => geo.result(node))).to.become({
       Latitude: 26.3170479,
       Longitude: -80.1131784,
     })

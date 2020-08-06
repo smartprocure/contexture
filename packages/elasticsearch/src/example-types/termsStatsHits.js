@@ -80,7 +80,7 @@ module.exports = {
           doc_count: bucket.doc_count,
           ...bucket.Stats,
           hits: _.map('_source', _.get('hits.hits', bucket.Hits)),
-          ...isDetails && {
+          ...(isDetails && {
             details: _.map(
               detailsBucket => ({
                 key: detailsBucket.key,
@@ -90,7 +90,7 @@ module.exports = {
               }),
               bucket.Details.buckets
             ),
-          },
+          }),
         }),
         (results.aggregations.termsStatsHits || results.aggregations)
           .termsStatsHitsStats.buckets

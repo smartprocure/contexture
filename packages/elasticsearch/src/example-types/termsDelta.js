@@ -44,7 +44,7 @@ let getFieldMode = ({ field, fieldMode }) =>
 
 module.exports = {
   validContext: () => true,
-  result: async (node, search) => {
+  async result(node, search) {
     let response = await search({
       aggs: {
         results: {
@@ -74,5 +74,5 @@ module.exports = {
       results: node.isJsonString ? _.map(JSON.parse, diff) : diff,
       totalRecords: diff.length,
     }
-  }
+  },
 }

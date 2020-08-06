@@ -76,7 +76,7 @@ let filter = ({ tags, join, field, exact }) => ({
     query: tagsToQueryString(tags, join),
     default_operator: 'AND',
     default_field: field.replace('.untouched', '') + (exact ? '.exact' : ''),
-    ...exact && { analyzer: 'exact' },
+    ...(exact && { analyzer: 'exact' }),
   },
 })
 
