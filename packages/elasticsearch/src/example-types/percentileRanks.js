@@ -1,5 +1,3 @@
-let _ = require('lodash/fp')
-
 module.exports = {
   validContext: node => node.field && node.values,
   result: ({ field, values, keyed = false }, search) =>
