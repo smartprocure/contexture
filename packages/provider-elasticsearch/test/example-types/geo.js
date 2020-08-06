@@ -8,8 +8,8 @@ chai.use(chaiAsPromised)
 describe('geo', () => {
   let geo = geoType({
     geocodeLocation: () => ({
-      latitude: 26.3170479,
-      longitude: -80.1131784,
+      Latitude: 26.3170479,
+      Longitude: -80.1131784,
     }),
   })
 
@@ -175,7 +175,7 @@ describe('geo', () => {
   })
 
   it('result should work', () => {
-    let context = {
+    let node = {
       type: 'geo',
       field: 'test',
       location: 'SmartProcure',
@@ -184,7 +184,7 @@ describe('geo', () => {
       _meta: {},
     }
     return expect(
-      geo.filter(context).then(() => geo.result(context))
+      geo.filter(node).then(() => geo.result(node))
     ).to.become({
       Latitude: 26.3170479,
       Longitude: -80.1131784,
