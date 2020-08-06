@@ -18,7 +18,6 @@ Schemas with with an elasticsearch provider can specify any or all of the follow
 | Option         | Type       | Description                          | Required |
 | ------         | ----       | -----------                          | -------- |
 | `index`        | `string`   | Which ES index to use when querying  | x        |
-| `type`         | `string`   | Which ES type to use when querying   |          |
 | `highlight`    | `object`   | Used by `results` to determine what fields to highlight, and whether or not they are `inline` (copied over inline on to the source) or `additional` (in a list of additional fields that matched) | |
 
 ### Example Schema for SomeType in SomeIndex
@@ -26,8 +25,7 @@ Schemas with with an elasticsearch provider can specify any or all of the follow
 ```js
 module.exports = {
   elasticsearch: {
-    index: 'SomeIndex',
-    type: 'SomeType'
+    index: 'SomeIndex'
   }
 }
 ```
