@@ -23,7 +23,7 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
       },
     }
   },
-  async runSearch({ requestorContext } = {}, node, schema, filters, aggs) {
+  async runSearch({ requestOptions } = {}, node, schema, filters, aggs) {
     let { scroll, scrollId } = node
     let request = scrollId
       ? // If we have scrollId then keep scrolling, no query needed
@@ -46,8 +46,6 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
             ...aggs,
           },
         })
-
-    let requestOptions = _.merge({ headers: requestorContext }, config.request)
 
     let client = config.getClient()
     // If we have a scrollId, use a different client API method

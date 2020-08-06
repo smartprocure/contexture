@@ -1,6 +1,8 @@
 # 1.0.0
 * BREAKING: Assumes the elasticsearch client is the new @elastic/elasticsearch npm package. Will not work with the old `elasticsearch` package
 * BREAKING: Removed unused `getMappingProperties` API
+* BREAKING: Top level `config.request` deprecated in favor of per request config
+* BREAKING: `requestorContext` replaced with `{requestOptions: headers}`
 * Errors are now gracefully caught on a per node basis and properly set on node.error. This means that a node can throw an error, but the rest of the search will continue properly and also not log an uncaught exception to the console. This means the contexture dev tools can now be used to see raw ES errors.
 * Simplifed runSearch with modern JS syntax
 * Get mappings now handles type-less mappings, which is the default on ES7+ (while still handling types for ES6-)
@@ -13,6 +15,7 @@
     * Kill forceExclude
     * Kill verbose
     * Kill summaryView
+    * Remove duplicated `hit` on results
 
 # 0.24.1
 * Added _score field to the results type

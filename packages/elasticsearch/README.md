@@ -10,7 +10,6 @@ This provider takes a config object as a parameter:
 | Option      | Type       | Description                                      | Required |
 | ------      | ----       | -----------                                      | -------- |
 | `getClient` | `function` | Returns an instantiated elasticsearch client     | x        |
-| `request`   | `object`   | Merged in the json body of every request to elasticsearch (e.g. to add custom headers) |          |
 | `types`     | `object`   | Contexture node types, like all other providers  |          |
 
 ### Schemas
@@ -45,6 +44,7 @@ let schemas = require('./path/to/schemas')
 let elasticsearch = require('elasticsearch')
 let AgentKeepAlive  = require('agentkeepalive'),
 
+// Setup
 let process = Contexture({
   schemas,
   providers: {
@@ -59,11 +59,6 @@ let process = Contexture({
             new AgentKeepAlive(connection.makeAgentConfig(config))
         })
       ),
-      request: {
-        headers: {
-          'custom-header-app-name': 'my-app-sent-this'
-        }
-      },
       types: types({
         geo: {
           geocodeLocation: query =>
@@ -74,6 +69,18 @@ let process = Contexture({
       })
     })
   }
+})
+
+// Simple usage (tree would come from the client)
+process(tree)
+
+// Usage with custom headers applied to every elasticsearch request (tree would come from the client)
+process(tree, {
+  requestOptions: {
+    headers: {
+      'custom-header-app-name': 'my-app-sent-this'
+    }
+  },  
 })
 ```
 
