@@ -8,7 +8,7 @@ module.exports = {
       query: utils.luceneQueryProcessor(query),
       default_operator: 'AND',
       default_field: field.replace('.untouched', '') + (exact ? '.exact' : ''),
-      ...exact && { analyzer: 'exact' },
+      ...(exact && { analyzer: 'exact' }),
     },
   }),
 }
