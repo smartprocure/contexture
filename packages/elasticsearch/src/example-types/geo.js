@@ -12,18 +12,14 @@ let geo = ({
       node.radius &&
       node.operator
     ),
-  filter: node =>
-    Promise.resolve(node)
-      .then(context => {
-        if (context.latitude && context.longitude) {
-          return {
-            Latitude: context.latitude,
-            Longitude: context.longitude,
-          }
-        } else {
-          return geocodeLocation(context.location)
-        }
-      })
+  filter: node => {
+    if (node.latitude && node.longitude)
+      return {
+        Latitude: node.latitude,
+        Longitude: node.longitude,
+      }
+    
+    return geocodeLocation(node.location)
       .then(response => {
         node._meta.preprocessorResult = response
 
@@ -37,7 +33,8 @@ let geo = ({
       })
       .catch(err =>
         console.error('An error occured within the geo provider: ', err)
-      ),
+      )
+  },
   validContext: node =>
     !!(
       (node.location || (node.latitude && node.longitude)) &&
