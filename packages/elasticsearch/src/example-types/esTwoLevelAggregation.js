@@ -13,56 +13,47 @@ let { metrics, hasValidMetrics } = require('../aggUtils')
 //   value_data: {}
 // }
 module.exports = {
-  validContext: context =>
-    context.key_field &&
-    context.key_type &&
-    context.value_field &&
-    context.value_type,
-  result(context, search) {
+  validContext: node =>
+    node.key_field && node.key_type && node.value_field && node.value_type,
+  result(node, search) {
     // 'count' as alias for `value_count'
-    context.include = F.replaceElement('count', 'value_count', context.include)
-    let validMetrics = hasValidMetrics(context)
+    node.include = F.replaceElement('count', 'value_count', node.include)
+    let validMetrics = hasValidMetrics(node)
     if (!validMetrics)
       throw new Error(
-        `Unsupported include options ${_.difference(metrics, context.include)}`
+        `Unsupported include options ${_.difference(metrics, node.include)}`
       )
     let query = {
       aggs: {
         twoLevelAgg: {
-          [context.key_type]: F.omitNil(
-            _.extend(
-              {
-                field: context.key_field,
-              },
-              context.key_data
-            )
-          ),
+          [node.key_type]: F.omitNil({
+            field: node.key_field,
+            ...node.key_data
+          }),
           aggs: F.arrayToObject(
             _.identity,
             metric => ({
               [metric]: {
-                field: context.value_field,
-                ...F.omitNil(context.value_data),
+                field: node.value_field,
+                ...F.omitNil(node.value_data),
               },
             }),
-            _.size(context.include) ? context.include : [context.value_type]
+            _.size(node.include) ? node.include : [node.value_type]
           ),
         },
       },
     }
     _.each(agg => {
       query.aggs[agg.key] = agg.config.data
-    }, context.extraAggs)
+    }, node.extraAggs)
 
-    if (context.filter_agg)
+    if (node.filter_agg)
       query = {
         aggs: {
-          twoLevelFilter: _.extend(
-            {
-              filter: context.filter_agg,
-            },
-            query
-          ),
+          twoLevelFilter: {
+            filter: node.filter_agg,
+            ...query
+          },
         },
       }
     return search(query).then(results => {
@@ -91,10 +82,10 @@ module.exports = {
             .twoLevelAgg.buckets
         ),
       }
-      if (context.extraAggs) {
+      if (node.extraAggs) {
         _.each(agg => {
           rtn[agg.key] = results.aggregations[agg.key][agg.config.value_field]
-        }, context.extraAggs)
+        }, node.extraAggs)
       }
       return rtn
     })

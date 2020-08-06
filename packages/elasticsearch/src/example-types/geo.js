@@ -1,18 +1,19 @@
 let _ = require('lodash/fp')
+let { negate } = require('../elasticDSL')
 
 let geo = ({
   geocodeLocation = () => {
     throw new Error('Geo filter was not passed a geocode service')
   },
 } = {}) => ({
-  hasValue: context =>
+  hasValue: node =>
     !!(
-      (context.location || (context.latitude && context.longitude)) &&
-      context.radius &&
-      context.operator
+      (node.location || (node.latitude && node.longitude)) &&
+      node.radius &&
+      node.operator
     ),
-  filter: context =>
-    Promise.resolve(context)
+  filter: node =>
+    Promise.resolve(node)
       .then(context => {
         if (context.latitude && context.longitude) {
           return {
@@ -24,35 +25,28 @@ let geo = ({
         }
       })
       .then(response => {
-        context._meta.preprocessorResult = response
+        node._meta.preprocessorResult = response
 
         let result = {
           geo_distance: {
-            [context.field]: `${response.Latitude},${response.Longitude}`,
-            distance: `${context.radius}mi`,
+            [node.field]: `${response.Latitude},${response.Longitude}`,
+            distance: `${node.radius}mi`,
           },
         }
-        if (context.operator !== 'within') {
-          result = {
-            bool: {
-              must_not: result,
-            },
-          }
-        }
-        return result
+        return node.operator !== 'within' ? negate(result) : result
       })
       .catch(err =>
         console.error('An error occured within the geo provider: ', err)
       ),
-  validContext: context =>
+  validContext: node =>
     !!(
-      (context.location || (context.latitude && context.longitude)) &&
-      context.radius &&
-      context.operator
+      (node.location || (node.latitude && node.longitude)) &&
+      node.radius &&
+      node.operator
     ),
-  result: context => ({
-    Latitude: _.get('_meta.preprocessorResult.latitude', context),
-    Longitude: _.get('_meta.preprocessorResult.longitude', context),
+  result: node => ({
+    Latitude: _.get('_meta.preprocessorResult.latitude', node),
+    Longitude: _.get('_meta.preprocessorResult.longitude', node),
   }),
 })
 
