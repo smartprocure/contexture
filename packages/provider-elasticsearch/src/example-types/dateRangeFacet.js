@@ -18,17 +18,16 @@ module.exports = {
    * 2. Each range object must have a "key" property
    * 3. Each range must have a "range" property with the range phrase
    */
-  validContext: context =>
-    _.has('field', context) &&
-    !!_.get('ranges.length', context) &&
-    _.every(r => _.has('key', r) && _.has('range', r), context.ranges),
+  validContext: node =>
+    _.has('field', node) &&
+    !!_.get('ranges.length', node) &&
+    _.every(r => _.has('key', r) && _.has('range', r), node.ranges),
   /**
    * FILTER
    * Based on the keys checked we get the actual values
    * from the context.ranges and compose a bool/should query.
    **/
-  filter(context) {
-    let { field, ranges, values, timezone = 'UTC' } = context
+  filter({ field, ranges, values, timezone = 'UTC' }) {
     let should = _.flow(
       _.filter(r => _.includes(r.key, values)),
       _.map(({ range }) => ({
@@ -53,8 +52,7 @@ module.exports = {
         { range: 'allPastDates', key: "Expired" }
       ]
    */
-  async result(context, search) {
-    let { field, format, timezone = 'UTC', ranges } = context
+  async result({ field, format, timezone = 'UTC', ranges }, search) {
     let counts = await search({
       aggs: {
         range: {
