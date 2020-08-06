@@ -1,4 +1,3 @@
-let _ = require('lodash/fp')
 let twoLevelMatch = require('./twoLevelMatch')
 
 module.exports = {
