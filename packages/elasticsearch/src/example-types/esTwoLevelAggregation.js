@@ -28,7 +28,7 @@ module.exports = {
         twoLevelAgg: {
           [node.key_type]: F.omitNil({
             field: node.key_field,
-            ...node.key_data
+            ...node.key_data,
           }),
           aggs: F.arrayToObject(
             _.identity,
@@ -52,7 +52,7 @@ module.exports = {
         aggs: {
           twoLevelFilter: {
             filter: node.filter_agg,
-            ...query
+            ...query,
           },
         },
       }
