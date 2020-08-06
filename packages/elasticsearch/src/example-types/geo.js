@@ -1,5 +1,4 @@
 let _ = require('lodash/fp')
-let Promise = require('bluebird')
 
 let geo = ({
   geocodeLocation = () => {
