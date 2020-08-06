@@ -9,8 +9,8 @@ module.exports = {
           percentile_ranks: {
             field,
             keyed,
-            values
-          }
+            values,
+          },
         },
       },
     }).then(response => ({

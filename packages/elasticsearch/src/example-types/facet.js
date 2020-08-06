@@ -46,14 +46,14 @@ module.exports = {
             // Size 0 no longer supported natively by ES: https://github.com/elastic/elasticsearch/issues/18838
             size: size || (size === 0 ? elasticsearchIntegerMax : 10),
             order,
-            ...context.includeZeroes && { min_doc_count: 0 },
-            ...context.optionsFilter && {
+            ...(context.includeZeroes && { min_doc_count: 0 }),
+            ...(context.optionsFilter && {
               include: buildRegexForWords(
                 context.caseSensitive,
                 context.anyOrder, // Scary
                 context.maxWords
               )(context.optionsFilter),
-            },
+            }),
           },
         },
         facetCardinality: {
