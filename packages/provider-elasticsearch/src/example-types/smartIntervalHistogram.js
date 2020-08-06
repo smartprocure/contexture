@@ -3,51 +3,32 @@ let statsResults = require('./statistical').result
 let calcSmartInterval = require('../smartInterval').calcSmartInterval
 
 module.exports = {
-  validContext: context => context.field,
-  result(context, search) {
-    let field = context.field
-    let interval = context.interval
+  validContext: node => node.field,
+  async result({ key, field, interval }, search) {
     if (!interval) {
-      interval = statsResults(
-        {
-          key: context.key,
-          field,
-        },
-        search
-      ).then(statResult => calcSmartInterval(statResult.min, statResult.max))
+      let { min, max } = await statsResults({ key, field }, search)
+      interval = calcSmartInterval(min, max)
     }
-
-    return Promise.resolve(interval).then(intervalResult =>
-      search({
-        aggs: {
+    let results = await search({
+      aggs: {
+        histogram: {
           histogram: {
-            histogram: {
-              field,
-              interval: intervalResult,
-              min_doc_count: 0,
-            }, // ,
-            // aggs: {
-            //   histogram: {
-            //     stats: {
-            //       field: context.value_field
-            //     }
-            //   }
-            // }
+            field,
+            interval,
+            min_doc_count: 0,
           },
         },
-      }).then(results => ({
-        interval: intervalResult,
-        entries: _.map(
-          bucket =>
-            //_.extend
-            ({
-              key: bucket.key,
-              count: bucket.doc_count,
-            }), //,
-          //{} /* bucket.histogram */
-          results.aggregations.histogram.buckets
-        ),
-      }))
-    )
+      },
+    })
+    return {
+      interval,
+      entries: _.map(
+        bucket => ({
+          key: bucket.key,
+          count: bucket.doc_count,
+        }), 
+        results.aggregations.histogram.buckets
+      ),
+    }
   },
 }
