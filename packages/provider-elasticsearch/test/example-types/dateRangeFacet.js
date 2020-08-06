@@ -16,7 +16,7 @@ let getDatePart = (range, part) =>
   _.flow(_.get(part), getDateIfValid)(rollingRangeToDates(range, 'UTC'))
 
 describe('validContext', () => {
-  it('should validate a context with all required fields', () => {
+  it('should validate a node with all required fields', () => {
     expect(
       dateRangeFacet.validContext({
         field: 'value_field',
@@ -24,14 +24,14 @@ describe('validContext', () => {
       })
     ).to.be.true
   })
-  it('should invalidate a context with no ranges prop', () => {
+  it('should invalidate a node with no ranges prop', () => {
     expect(
       dateRangeFacet.validContext({
         field: 'value_field',
       })
     ).to.be.false
   })
-  it('should invalidate a context with missing range key', () => {
+  it('should invalidate a node with missing range key', () => {
     expect(
       dateRangeFacet.validContext({
         field: 'value_field',

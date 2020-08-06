@@ -23,7 +23,7 @@ describe('Core Provider', () => {
       search: sinon.stub().returns(Promise.resolve({})),
     }
 
-    const context = { config: {}, _meta: { requests: [] } }
+    const node = { config: {}, _meta: { requests: [] } }
     const schema = { elasticsearch: {} }
 
     const query_string = {
@@ -34,7 +34,7 @@ describe('Core Provider', () => {
 
     provider({
       getClient: () => client,
-    }).runSearch({}, context, schema, { query_string }, {})
+    }).runSearch({}, node, schema, { query_string }, {})
 
     expect(
       client.search.getCalls(0)[0].args[0].body.query.constant_score.filter
@@ -45,12 +45,12 @@ describe('Core Provider', () => {
       search: sinon.stub().returns(Promise.resolve({})),
     }
 
-    const context = { config: {}, _meta: { requests: [] } }
+    const node = { config: {}, _meta: { requests: [] } }
     const schema = { elasticsearch: {} }
 
     provider({
       getClient: () => client,
-    }).runSearch({}, context, schema, null, {})
+    }).runSearch({}, node, schema, null, {})
 
     expect(client.search.getCalls(0)[0].args[0].body).to.eql({ query: null })
   })
@@ -59,7 +59,7 @@ describe('Core Provider', () => {
       search: sinon.stub().returns(Promise.resolve({})),
     }
 
-    const context = { config: {}, _meta: { requests: [] } }
+    const node = { config: {}, _meta: { requests: [] } }
     const schema = { elasticsearch: {} }
 
     const query_string = {
@@ -72,7 +72,7 @@ describe('Core Provider', () => {
       getClient: () => client,
     }).runSearch(
       {},
-      context,
+      node,
       schema,
       { query_string },
       { sort: { _score: 'desc' } }

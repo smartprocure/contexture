@@ -2,7 +2,7 @@ let _ = require('lodash/fp')
 let percentiles = require('./percentiles').result
 
 module.exports = {
-  validContext: context => context.field,
+  validContext: node => node.field,
   result(node, search) {
     let { field, percents } = node
     return percentiles(node, search).then(percentilesResult => {

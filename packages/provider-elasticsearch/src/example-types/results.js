@@ -65,7 +65,7 @@ module.exports = {
           showOtherMatches
             ? // Highlight on all fields specified in the initial _.pick above.
               filtered
-            : // Only highlight on the fields listed in the context include section and their aliases (if any)
+            : // Only highlight on the fields listed in the node include section and their aliases (if any)
               _.pick(_.concat(node.include, schemaInlineAliases), filtered)
       )(schemaHighlight)
 
@@ -85,7 +85,7 @@ module.exports = {
         ),
       })
 
-      // Make sure the search specific overrides are part of the context include.
+      // Make sure the search specific overrides are part of the node include.
       // This way they do not have to be added manually. All that is needed is the highlight config
       resultColumns = _.flow(
         _.concat(_.keys(searchHighlight.fields)),
