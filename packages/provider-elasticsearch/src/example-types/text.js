@@ -18,7 +18,7 @@ module.exports = {
           query: _.map(x => `"${x}"`, filterParts).join(' '),
           default_field: fieldName,
           default_operator: node.join === 'any' ? 'OR' : 'AND',
-          ...node.operator === 'containsExact' && { analyzer: 'exact' },
+          ...(node.operator === 'containsExact' && { analyzer: 'exact' }),
         },
       }
       return node.join === 'none' ? negate(result) : result
@@ -55,11 +55,12 @@ module.exports = {
             ? ''
             : '.*'
 
-          let builtCriteria = node.operator === 'regexp'
-            ? criteria
-            : unidecode(
-                prefix + toSafeRegex(node.caseSensitive)(criteria) + suffix
-              )
+          let builtCriteria =
+            node.operator === 'regexp'
+              ? criteria
+              : unidecode(
+                  prefix + toSafeRegex(node.caseSensitive)(criteria) + suffix
+                )
 
           return {
             regexp: {
