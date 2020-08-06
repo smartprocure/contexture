@@ -1,3 +1,12 @@
+# 1.0.0
+* BREAKING: Assumes the elasticsearch client is the new @elastic/elasticsearch npm package. Will not work with the old `elasticsearch` package
+* BREAKING: Removed unused `getMappingProperties` API
+* Errors are now gracefully caught on a per node basis and properly set on node.error. This means that a node can throw an error, but the rest of the search will continue properly and also not log an uncaught exception to the console. This means the contexture dev tools can now be used to see raw ES errors.
+* Simplifed runSearch with modern JS syntax
+* Get mappings now handles type-less mappings, which is the default on ES7+ (while still handling types for ES6-)
+* [DateRangeFacet] converted to `dateOptionalTime` format which works on ES 6 and 7
+* [Results] track_total_hits and handle total.hits being an object for ES 7 support
+* Remove `bluebird` dependency
 
 # 0.24.1
 * Added _score field to the results type

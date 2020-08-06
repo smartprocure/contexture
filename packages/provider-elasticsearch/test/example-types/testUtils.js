@@ -1,6 +1,5 @@
 const chai = require('chai')
 const sinon = require('sinon')
-const Promise = require('bluebird')
 const F = require('futil')
 const _ = require('lodash/fp')
 const sinonChai = require('sinon-chai')

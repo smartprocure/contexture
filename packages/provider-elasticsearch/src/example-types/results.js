@@ -27,6 +27,8 @@ module.exports = {
         [sortField]: sortDir,
       },
       explain: context.explain,
+      // Without this, ES7+ stops counting at 10k instead of returning the actual count
+      track_total_hits: true,
     }
 
     if (context.forceExclude && _.isArray(schema.forceExclude))
@@ -106,7 +108,8 @@ module.exports = {
     return search(searchObj).then(results => ({
       scrollId: results._scroll_id,
       response: {
-        totalRecords: results.hits.total,
+        // ES 7+ is total.value, ES 6- is hits.total
+        totalRecords: F.getOrReturn('value', results.hits.total),
         startRecord: startRecord + 1,
         endRecord: startRecord + results.hits.hits.length,
         results: _.map(hit => {
