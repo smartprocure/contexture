@@ -1,10 +1,10 @@
 module.exports = {
-  result: (context, search) =>
+  result: ({ field }, search) =>
     search({
       aggs: {
         statistical: {
           stats: {
-            field: context.field,
+            field,
           },
         },
       },
