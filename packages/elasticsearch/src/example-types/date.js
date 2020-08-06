@@ -26,7 +26,6 @@ module.exports = {
         [field]: F.compactObject({
           gte: from,
           lte: to,
-          // Only force date formatting on the date range filter.
           format: 'dateOptionalTime',
         }),
       },
