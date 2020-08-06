@@ -30,13 +30,13 @@ module.exports = {
 
     return result
   },
-  async result(context, search, schema) {
-    let { values, size, cardinality } = context
-    let field = getField(schema, context.field, context.fieldMode)
+  async result(node, search, schema) {
+    let { values, size, cardinality } = node
+    let field = getField(schema, node.field, node.fieldMode)
     let order = {
       term: { _key: 'asc' },
       count: { _count: 'desc' },
-    }[context.sort || 'count']
+    }[node.sort || 'count']
 
     let resultRequest = {
       aggs: {
@@ -46,13 +46,13 @@ module.exports = {
             // Size 0 no longer supported natively by ES: https://github.com/elastic/elasticsearch/issues/18838
             size: size || (size === 0 ? elasticsearchIntegerMax : 10),
             order,
-            ...(context.includeZeroes && { min_doc_count: 0 }),
-            ...(context.optionsFilter && {
+            ...(node.includeZeroes && { min_doc_count: 0 }),
+            ...(node.optionsFilter && {
               include: buildRegexForWords(
-                context.caseSensitive,
-                context.anyOrder, // Scary
-                context.maxWords
-              )(context.optionsFilter),
+                node.caseSensitive,
+                node.anyOrder, // Scary
+                node.maxWords
+              )(node.optionsFilter),
             }),
           },
         },
@@ -65,10 +65,10 @@ module.exports = {
         },
       },
     }
-    if (context.optionsFilter) {
+    if (node.optionsFilter) {
       resultRequest.aggs = {
         topLevelFilter: {
-          filter: buildRegexQueryForWords(field)(context.optionsFilter),
+          filter: buildRegexQueryForWords(field)(node.optionsFilter),
           aggs: resultRequest.aggs,
         },
       }
@@ -83,7 +83,7 @@ module.exports = {
         name: x.key,
         count: x.doc_count,
       })),
-      cardinality: context.includeZeroes
+      cardinality: node.includeZeroes
         ? _.get(
             'aggregations.facetCardinality.value',
             await search({

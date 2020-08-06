@@ -3,14 +3,12 @@ let twoLevelMatch = require('./twoLevelMatch')
 
 module.exports = {
   validContext: twoLevelMatch.validContext,
-  result: (context, search) =>
+  result: (node, search) =>
     twoLevelMatch.result(
-      _.merge(
-        {
-          value_type: 'stats',
-        },
-        context
-      ),
+      {
+        value_type: 'stats',
+        ...node
+      },
       search
     ),
 }
