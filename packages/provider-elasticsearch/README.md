@@ -144,6 +144,30 @@ Output
 
 The result can be used to show what location the server on a map, though in practice it's usually better to geocode on the client. This type is planned to be extended to support passing along raw lat/lng.
 
+#### `dateRangeFacet`
+dateRangeFacet is like a `facet` but the options correspond to named date range buckets
+
+Input
+
+| Name            | Type                            | Default           | Description |
+| ----            | ----                            | -------           | ----------- |
+| `field`         | string                          | None, *required*  | The field it's operating on |
+| `ranges`        | array[{ range: NamedDateRange, key: string}]                   | None, *required*                | Ranges should have 'range' prop containing the range phrase (eg. 'allFutureDates') and a key to represent the value |
+| `values`        | array[string]                   | []                | What is checked |
+| `timezone`        | string                   | 'UTC'                | What timezone to use |
+
+
+Output
+
+```js
+{
+  options: [{
+    name: String,
+    count: Number
+  }]
+}
+```
+
 
 ### Filter Only Types
 Filter only types just filter and nothing more. They don't have contextual results of their own.
@@ -165,9 +189,10 @@ Date represents a data range filter, with support datemath
 ```js
 {
   field: String,
-  from: DateString|'thisQuarter|lastQuarter|nextQuarter', // Date string or one of three custom date math options
+  range: String, // Choice of an explicit hard coded date range option:
+    // allDates | exact | last3Days | last7Days | last30Days | last90Days | last180Days | last12Months | last15Months | last18Months | last24Months | last36Months | last48Months | last60Months | lastCalendarMonth | lastCalendarYear | thisCalendarMonth | thisCalendarYear | nextCalendarMonth | nextCalendarYear | next30Days | next60Days | next90Days | next6Months | next12Months | next24Months | next36Months | allPastDates | allFutureDates
+  from: DateString, // Date string - *No longer supports date math*, requires range to be `exact`
   to: DateString,
-  useDateMath: Boolean, // If true, it will parse dates as dateMath using @elastic/datemath
   isDateTime: Boolean // If true, it will pass the from and to values as is, without formatting assuming it is valid date & time ES string
 }
 ```
