@@ -7,7 +7,7 @@ module.exports = {
     twoLevelMatch.result(
       {
         value_type: 'stats',
-        ...node
+        ...node,
       },
       search
     ),
