@@ -60,7 +60,7 @@ let joinTags = _.curry((join, tags) => {
   return joinedTags
 })
 
-let limitResultsToCertainTags = tags => _.find('onlyShowTheseResults', tags)
+let limitResultsToCertainTags = _.find('onlyShowTheseResults')
 
 let tagsToQueryString = (tags, join) =>
   _.flow(
@@ -71,24 +71,14 @@ let tagsToQueryString = (tags, join) =>
 
 let hasValue = _.get('tags.length')
 
-let filter = context => {
-  let query = tagsToQueryString(context.tags, context.join)
-
-  // Drop .untouched
-  let field = context.field.replace('.untouched', '')
-
-  // https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
-  let result = {
-    query_string: {
-      query,
-      default_operator: 'AND',
-      default_field: field + (context.exact ? '.exact' : ''),
-    },
-  }
-  if (context.exact) result.query_string.analyzer = 'exact'
-
-  return result
-}
+let filter = ({ tags, join, field, exact }) => ({
+  query_string: {
+    query: tagsToQueryString(tags, join),
+    default_operator: 'AND',
+    default_field: field.replace('.untouched', '') + (exact ? '.exact' : ''),
+    ...exact && { analyzer: 'exact' },
+  },
+})
 
 module.exports = {
   wordPermutations,
