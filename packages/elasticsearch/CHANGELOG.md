@@ -8,6 +8,11 @@
 * [Results] track_total_hits and handle total.hits being an object for ES 7 support
 * Remove `bluebird` dependency
 * Remove last bit of non fp lodash
+* BREAKING:
+  * [Results]
+    * Kill forceExclude
+    * Kill verbose
+    * Kill summaryView
 
 # 0.24.1
 * Added _score field to the results type
