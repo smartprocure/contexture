@@ -21,7 +21,7 @@ module.exports = {
             value_field: 'value',
             data: {
               max: {
-                field: 'PO.IssuedDate',
+                field: node.key_field,
               },
             },
           },
@@ -32,7 +32,7 @@ module.exports = {
             value_field: 'value',
             data: {
               min: {
-                field: 'PO.IssuedDate',
+                field: node.key_field,
               },
             },
           },
