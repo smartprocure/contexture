@@ -26,7 +26,7 @@ module.exports = {
         bucket => ({
           key: bucket.key,
           count: bucket.doc_count,
-        }), 
+        }),
         results.aggregations.histogram.buckets
       ),
     }
