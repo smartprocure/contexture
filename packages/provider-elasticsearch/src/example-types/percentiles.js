@@ -5,10 +5,10 @@ module.exports = {
       aggs: {
         percentiles: {
           percentiles: {
-              field,
-              keyed,
-              ...percents && { percents }
-          }
+            field,
+            keyed,
+            ...(percents && { percents }),
+          },
         },
       },
     }).then(response => ({

@@ -12,7 +12,7 @@ module.exports = {
       ? // default to word (aka '') for backwards compatibility
         getField(schema, node.sortField, node.sortMode || 'word')
       : '_score'
-    
+
     let searchObj = {
       from: startRecord,
       size: pageSize,
@@ -27,15 +27,13 @@ module.exports = {
     if (node.include || node.exclude)
       searchObj._source = F.compactObject({
         includes: node.include,
-        excludes: node.exclude
+        excludes: node.exclude,
       })
 
     // Global schema highlight configuration
     let schemaHighlight = schema.elasticsearch.highlight
     // Specific search highlight override
-    let searchHighlight = _.isPlainObject(node.highlight)
-      ? node.highlight
-      : {}
+    let searchHighlight = _.isPlainObject(node.highlight) ? node.highlight : {}
     let resultColumns = node.include
 
     // Highlighting starts with defaults in the schema first
@@ -73,23 +71,19 @@ module.exports = {
 
       // Setup the DEFAULT highlight config object with the calculated fields above
       // and merge with the search specific config
-      F.extendOn(
-        searchObj,
-        {
-          highlight: _.merge(
-            { 
-              // The default schema highlighting settings w/o the fields
-              pre_tags: ['<b class="search-highlight">'],
-              post_tags: ['</b>'],
-              require_field_match: false,
-              number_of_fragments: 0,
-              fields
-            },
-            searchHighlight
-          )
-        }
-        
-      )
+      F.extendOn(searchObj, {
+        highlight: _.merge(
+          {
+            // The default schema highlighting settings w/o the fields
+            pre_tags: ['<b class="search-highlight">'],
+            post_tags: ['</b>'],
+            require_field_match: false,
+            number_of_fragments: 0,
+            fields,
+          },
+          searchHighlight
+        ),
+      })
 
       // Make sure the search specific overrides are part of the context include.
       // This way they do not have to be added manually. All that is needed is the highlight config
