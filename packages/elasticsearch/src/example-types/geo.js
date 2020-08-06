@@ -11,7 +11,7 @@ let geo = ({
 } = {}) => ({
   hasValue,
   validContext: hasValue,
-  filter: async node => {
+  async filter(node) {
     if (node.latitude && node.longitude)
       return {
         Latitude: node.latitude,
@@ -27,8 +27,8 @@ let geo = ({
         },
       }
       return node.operator !== 'within' ? negate(result) : result
-    } catch(err) { 
-        console.error('An error occured within the geo provider: ', err)
+    } catch (err) {
+      console.error('An error occured within the geo provider: ', err)
     }
   },
   result: _.get('_meta.preprocessorResult'),

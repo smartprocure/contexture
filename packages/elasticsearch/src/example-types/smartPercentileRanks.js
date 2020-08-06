@@ -34,12 +34,10 @@ module.exports = {
     let buckets = percentileRanksResult.aggregations.price_ranges.buckets
     return {
       percentileRanks: _.map(
-        range => _.extend(
-          { percent: range },
-          buckets[_.indexOf(range, percents)]
-        ),
+        range =>
+          _.extend({ percent: range }, buckets[_.indexOf(range, percents)]),
         percents
       ),
-    }    
+    }
   },
 }
