@@ -29,11 +29,7 @@ module.exports = {
   result: (node, search) =>
     histogramResult(node, search).then(histResult => ({
       clusters: _.map(
-        cluster => ({
-          min: cluster[0],
-          max: cluster[1],
-          count: cluster[2],
-        }),
+        ([min, max, count]) => ({ min, max, count }),
         calcClusters(histResult.entries, histResult.interval)
       ),
     })),
