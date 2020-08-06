@@ -24,5 +24,5 @@ module.exports = {
     },
   }),
   metrics,
-  hasValidMetrics: context => !_.difference(context.include, metrics).length,
+  hasValidMetrics: node => !_.difference(node.include, metrics).length,
 }

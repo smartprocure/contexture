@@ -25,7 +25,7 @@ module.exports = {
   /**
    * FILTER
    * Based on the keys checked we get the actual values
-   * from the context.ranges and compose a bool/should query.
+   * from the node.ranges and compose a bool/should query.
    **/
   filter({ field, ranges, values, timezone = 'UTC' }) {
     let should = _.flow(
@@ -44,7 +44,7 @@ module.exports = {
   },
   /**
    * RESULT
-   * Context should have `ranges` prop where each range has a "key"
+   * Node should have `ranges` prop where each range has a "key"
    * Ranges should have 'range' prop containing the range phrase (eg. 'allFutureDates')
    * Example:
       ranges: [
