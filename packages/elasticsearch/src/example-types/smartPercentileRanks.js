@@ -1,58 +1,45 @@
 let _ = require('lodash/fp')
 
 module.exports = {
-  validContext: context => context.field,
-  result(context, search) {
-    let keyField = _.get('field', context)
-    let percentsArray = _.get('percents', context)
-    return search({
+  validContext: node => node.field,
+  async result({ field, percents }, search) {
+    let statsResults = await search({
       aggs: {
         statistical: {
           stats: {
-            field: keyField,
+            field,
             missing: 0,
           },
         },
       },
-    }).then(statsResults => {
-      let { max } = statsResults.aggregations.statistical
-      let ranges = _.map(range => {
-        let index = _.indexOf(range, percentsArray)
-        let val = max * (range / 100)
-        if (index === 0) return { to: val }
-        if (index === percentsArray.length - 1) return { from: val }
-        else {
-          return {
-            from: val,
-            to: max * (percentsArray[index + 1] / 100),
-          }
-        }
-      }, percentsArray)
-      return search({
-        aggs: {
-          price_ranges: {
-            range: {
-              field: keyField,
-              ranges,
-            },
+    })
+    let { max } = statsResults.aggregations.statistical
+    let ranges = _.map(range => {
+      let index = _.indexOf(range, percents)
+      let val = max * (range / 100)
+      if (index === 0) return { to: val }
+      if (index === percents.length - 1) return { from: val }
+      return { from: val, to: max * (percents[index + 1] / 100) }
+    }, percents)
+    let percentileRanksResult = await search({
+      aggs: {
+        price_ranges: {
+          range: {
+            field,
+            ranges,
           },
         },
-      }).then(percentileRanksResult => {
-        let buckets = _.get(
-          'aggregations.price_ranges.buckets',
-          percentileRanksResult
-        )
-        return {
-          percentileRanks: _.map(
-            range =>
-              _.extend(
-                { percent: range },
-                buckets[_.indexOf(range, percentsArray)]
-              ),
-            percentsArray
-          ),
-        }
-      })
+      },
     })
+    let buckets = percentileRanksResult.aggregations.price_ranges.buckets
+    return {
+      percentileRanks: _.map(
+        range => _.extend(
+          { percent: range },
+          buckets[_.indexOf(range, percents)]
+        ),
+        percents
+      ),
+    }    
   },
 }
