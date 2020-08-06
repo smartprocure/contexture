@@ -37,7 +37,7 @@ module.exports = {
 
 ### Seting up contexture
 ```js
-let _ = require('lodash')
+let _ = require('lodash/fp')
 let Contexture = require('contexture')
 let provider = require('contexture-elasticsearch')
 let types = require('contexture-elasticsearch/types')
