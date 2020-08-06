@@ -28,9 +28,7 @@ describe('results', () => {
       },
     ]
     schema = {
-      elasticsearch: {
-        summaryView: _.identity,
-      },
+      elasticsearch: {},
     }
     expectedResult = {
       scrollId: 1,
@@ -74,11 +72,6 @@ describe('results', () => {
 
   it('should be able to filter fields with include', async () => {
     F.extendOn(context, { include: ['field'] })
-    expectedResult.response.results[0].hit = {
-      _id: 'test-id',
-      _score: 'test-score',
-      field: 'test field',
-    }
     await resultsTest(context, [
       _.extend(expectedCalls[0], {
         _source: {
@@ -181,12 +174,6 @@ describe('results', () => {
       highlight: true,
     })
     expectedResult.response.results[0].anotherField = 'test another field'
-    expectedResult.response.results[0].hit = {
-      _id: 'test-id',
-      _score: 'test-score',
-      field: 'test field',
-      anotherField: 'test another field',
-    }
     await resultsTest(context, [
       _.extend(expectedCalls[0], {
         _source: {
@@ -210,12 +197,6 @@ describe('results', () => {
     service[0].hits.hits[0].anotherField = 'test another field'
     F.extendOn(context, { include: 'anotherField', highlight: true })
     expectedResult.response.results[0].anotherField = 'test another field'
-    expectedResult.response.results[0].hit = {
-      _id: 'test-id',
-      _score: 'test-score',
-      field: 'test field',
-      anotherField: 'test another field',
-    }
     await resultsTest(context, [
       _.extend(expectedCalls[0], {
         _source: {
@@ -242,29 +223,6 @@ describe('results', () => {
         },
       }),
     ]))
-  it('verbose should work', async () => {
-    F.extendOn(context, { verbose: true })
-    F.extendOn(expectedResult.response.results, [
-      {
-        _id: 'test-id',
-        _score: 'test-score',
-        additionalFields: [],
-        field: 'test field',
-        hit: {
-          _id: 'test-id',
-          _score: 'test-score',
-          field: 'test field',
-        },
-      },
-    ])
-    await resultsTest(context, [
-      _.extend(expectedCalls[0], {
-        sort: {
-          _score: 'desc',
-        },
-      }),
-    ])
-  })
   it('should order by sortDir config', async () => {
     F.extendOn(context, { sortDir: 'asc' })
     await resultsTest(context, [
@@ -335,21 +293,6 @@ describe('results', () => {
       _.extend(expectedCalls[0], {
         sort: {
           [`${sortField}.untouched`]: 'desc',
-        },
-      }),
-    ])
-  })
-  it('forceExclude', async () => {
-    F.extendOn(context, { forceExclude: true })
-    let excludes = ['a', 'b', 'c']
-    F.extendOn(schema, { forceExclude: excludes })
-    await resultsTest(context, [
-      _.extend(expectedCalls[0], {
-        _source: {
-          excludes,
-        },
-        sort: {
-          _score: 'desc',
         },
       }),
     ])
