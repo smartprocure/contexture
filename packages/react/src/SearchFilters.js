@@ -44,7 +44,7 @@ let BasicSearchFilters = ({ setMode, trees, children, BasicFilters }) => {
         <div>
           <Popover isOpen={isOpen} onClose={() => setIsOpen(false)}>
             <DropdownItem onClick={() => setMode('resultsOnly')}>
-              Toggle Filters
+              Hide Filters
             </DropdownItem>
             <TreePauseButton children={children} Component={DropdownItem} />
             <DropdownItem onClick={() => setMode('builder')}>
