@@ -4,7 +4,7 @@ const utils = require('./testUtils')
 
 describe('rangeStats', () => {
   describe('validContext', () => {
-    it('should validate a context with config key_field, value_field and ranges', () => {
+    it('should validate a node with config key_field, value_field and ranges', () => {
       utils.validContexts(rangeStats)([
         {
           key_field: true,
@@ -18,7 +18,7 @@ describe('rangeStats', () => {
         },
       ])
     })
-    it('should validate a context without config key_field, value_field or ranges', () => {
+    it('should validate a node without config key_field, value_field or ranges', () => {
       utils.noValidContexts(rangeStats)([
         {
           key_field: true,

@@ -3,7 +3,7 @@ const utils = require('./testUtils')
 
 describe('groupedMetric', () => {
   describe('validContext', () => {
-    it('should validate a context with config metric type value_count|top_hits, or an existing metric.field', () => {
+    it('should validate a node with config metric type value_count|top_hits, or an existing metric.field', () => {
       utils.validContexts(groupedMetric)([
         {
           metric: {
@@ -29,7 +29,7 @@ describe('groupedMetric', () => {
         },
       ])
     })
-    it('should not validate a context with an invalid config metric type (even if the metric field is non-negative)', () => {
+    it('should not validate a node with an invalid config metric type (even if the metric field is non-negative)', () => {
       utils.noValidContexts(groupedMetric)([
         {
           metric: {

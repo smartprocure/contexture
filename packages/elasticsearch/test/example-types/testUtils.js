@@ -19,7 +19,7 @@ let EsProcessor = {
 }
 
 let sequentialResultTest = _.curry(
-  async (getService, context, expectedResult, expectedCalls, schema = {}) => {
+  async (getService, node, expectedResult, expectedCalls, schema = {}) => {
     let service
 
     if (_.isFunction(getService)) service = getService()
@@ -31,12 +31,12 @@ let sequentialResultTest = _.curry(
       )
     }
 
-    let result = await types[context.type].result(
+    let result = await types[node.type].result(
       _.defaults(
         {
           meta: {},
         },
-        context
+        node
       ),
       service,
       schema,

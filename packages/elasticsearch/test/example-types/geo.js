@@ -192,7 +192,7 @@ describe('geo', () => {
   })
   it('Should faild is no geoCodeLocation service is passed', () => {
     let _geo = geoType()
-    let context = {
+    let node = {
       type: 'geo',
       field: 'test',
       location: 'SmartProcure',
@@ -200,6 +200,6 @@ describe('geo', () => {
       operator: 'within',
       _meta: {},
     }
-    return expect(Promise.resolve(_geo.filter(context))).to.throw
+    return expect(Promise.resolve(_geo.filter(node))).to.throw
   })
 })
