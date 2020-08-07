@@ -59,7 +59,7 @@ module.exports = {
             node.operator === 'regexp'
               ? criteria
               : unidecode(
-                  prefix + toSafeRegex(node.caseSensitive)(criteria) + suffix
+                  prefix + toSafeRegex(criteria) + suffix
                 )
 
           return {
