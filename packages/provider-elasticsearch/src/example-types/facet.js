@@ -52,8 +52,6 @@ module.exports = {
         facetCardinality: {
           cardinality: {
             field,
-            // setting default precision to reasonable default (40000 is max),
-            precision_threshold: _.isNumber(cardinality) ? cardinality : 5000,
           },
         },
       },

@@ -145,7 +145,6 @@ describe('facet', () => {
               facetCardinality: {
                 cardinality: {
                   field: 'testField.untouched',
-                  precision_threshold: 5000,
                 },
               },
             },
@@ -194,7 +193,6 @@ describe('facet', () => {
               facetCardinality: {
                 cardinality: {
                   field: 'testField.untouched',
-                  precision_threshold: 5000,
                 },
               },
             },
@@ -254,7 +252,6 @@ describe('facet', () => {
               facetCardinality: {
                 cardinality: {
                   field: 'testField.untouched',
-                  precision_threshold: 5000,
                 },
               },
             },
@@ -356,7 +353,6 @@ describe('facet', () => {
                   facetCardinality: {
                     cardinality: {
                       field: 'Organization.NameState.untouched',
-                      precision_threshold: 5000,
                     },
                   },
                   facetOptions: {
@@ -462,7 +458,6 @@ describe('facet', () => {
                   facetCardinality: {
                     cardinality: {
                       field: 'Organization.NameState.untouched',
-                      precision_threshold: 5000,
                     },
                   },
                   facetOptions: {
