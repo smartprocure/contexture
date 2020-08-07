@@ -7,23 +7,12 @@ let facetTest = sequentialResultTest([
     aggregations: {
       facetOptions: {
         buckets: [
-          {
-            key: 'a',
-            doc_count: 10,
-          },
-          {
-            key: 'b',
-            doc_count: 10,
-          },
-          {
-            key: 'c',
-            doc_count: 10,
-          },
+          { key: 'a', doc_count: 10, },
+          { key: 'b', doc_count: 10, },
+          { key: 'c', doc_count: 10, },
         ],
       },
-      facetCardinality: {
-        value: 10,
-      },
+      facetCardinality: { value: 10 },
     },
   },
   {
@@ -32,19 +21,11 @@ let facetTest = sequentialResultTest([
         doc_count: 20,
         facetOptions: {
           buckets: [
-            {
-              key: 'x',
-              doc_count: 10,
-            },
-            {
-              key: 'y',
-              doc_count: 10,
-            },
+            { key: 'x', doc_count: 10 },
+            { key: 'y', doc_count: 10 },
           ],
         },
-        facetCardinality: {
-          value: 10,
-        },
+        facetCardinality: { value: 10 },
       },
     },
   },
@@ -116,18 +97,9 @@ describe('facet', () => {
         {
           cardinality: 10,
           options: [
-            {
-              name: 'a',
-              count: 10,
-            },
-            {
-              name: 'b',
-              count: 10,
-            },
-            {
-              name: 'c',
-              count: 10,
-            },
+            { name: 'a', count: 10 },
+            { name: 'b', count: 10 },
+            { name: 'c', count: 10 },
           ],
         },
         [
@@ -164,18 +136,9 @@ describe('facet', () => {
         {
           cardinality: 10,
           options: [
-            {
-              name: 'a',
-              count: 10,
-            },
-            {
-              name: 'b',
-              count: 10,
-            },
-            {
-              name: 'c',
-              count: 10,
-            },
+            { name: 'a', count: 10 },
+            { name: 'b', count: 10 },
+            { name: 'c', count: 10 },
           ],
         },
         [
@@ -211,30 +174,12 @@ describe('facet', () => {
         {
           cardinality: 10,
           options: [
-            {
-              name: 'a',
-              count: 10,
-            },
-            {
-              name: 'b',
-              count: 10,
-            },
-            {
-              name: 'c',
-              count: 10,
-            },
-            {
-              name: 'x',
-              count: 10,
-            },
-            {
-              name: 'y',
-              count: 10,
-            },
-            {
-              name: 'z',
-              count: 0,
-            },
+            { name: 'a', count: 10 },
+            { name: 'b', count: 10 },
+            { name: 'c', count: 10 },
+            { name: 'x', count: 10 },
+            { name: 'y', count: 10 },
+            { name: 'z', count: 0 },
           ],
         },
         [
