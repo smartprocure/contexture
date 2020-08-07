@@ -1,6 +1,6 @@
 let _ = require('lodash/fp')
 let F = require('futil')
-let { buildRegexQueryForWords, buildRegexForWords } = require('../regex')
+let { buildRegexQueryForWords } = require('../regex')
 let { getField } = require('../fields')
 let { negate } = require('../elasticDSL')
 
@@ -9,8 +9,8 @@ const elasticsearchIntegerMax = 2 ** 31 - 1
 
 module.exports = {
   hasValue: _.get('values.length'),
-  filter(node, schema = {}) {
-    let field = getField(schema, node.field, node.fieldMode)
+  filter(node, schema) {
+    let field = getField(schema, node.field)
     let result = {
       terms: {
         [field]: node.values,
@@ -31,8 +31,8 @@ module.exports = {
     return result
   },
   async result(node, search, schema) {
-    let { values, size, cardinality } = node
-    let field = getField(schema, node.field, node.fieldMode)
+    let { values, size } = node
+    let field = getField(schema, node.field)
     let order = {
       term: { _key: 'asc' },
       count: { _count: 'desc' },
@@ -47,20 +47,11 @@ module.exports = {
             size: size || (size === 0 ? elasticsearchIntegerMax : 10),
             order,
             ...(node.includeZeroes && { min_doc_count: 0 }),
-            ...(node.optionsFilter && {
-              include: buildRegexForWords(
-                node.caseSensitive,
-                node.anyOrder, // Scary
-                node.maxWords
-              )(node.optionsFilter),
-            }),
           },
         },
         facetCardinality: {
           cardinality: {
             field,
-            // setting default precision to reasonable default (40000 is max),
-            precision_threshold: _.isNumber(cardinality) ? cardinality : 5000,
           },
         },
       },

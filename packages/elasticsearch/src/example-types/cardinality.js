@@ -1,13 +1,12 @@
 let { getField } = require('../fields')
 
 module.exports = {
-  result: ({ field, fieldMode }, search, schema) =>
+  result: ({ field }, search, schema) =>
     search({
       aggs: {
         cardinality: {
           cardinality: {
-            // fieldMode defaults to 'word' for backwards compatibility
-            field: fieldMode ? getField(schema, field, fieldMode) : field,
+            field: getField(schema, field),
           },
         },
       },

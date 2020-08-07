@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 let _ = require('lodash/fp')
 let F = require('futil')
-let sequentialResultTest = require('./testUtils').sequentialResultTest
+let { sequentialResultTest } = require('./testUtils')
 
 describe('results', () => {
   let schema
@@ -216,45 +216,19 @@ describe('results', () => {
     ])
   })
   it('should sort on "_score: desc" with no sortField config', () =>
-    resultsTest(node, [
-      _.extend(expectedCalls[0], {
-        sort: {
-          _score: 'desc',
-        },
-      }),
-    ]))
+    resultsTest(node, [{ ...expectedCalls[0], sort: { _score: 'desc' } }]))
   it('should order by sortDir config', async () => {
     F.extendOn(node, { sortDir: 'asc' })
-    await resultsTest(node, [
-      _.extend(expectedCalls[0], {
-        sort: {
-          _score: 'asc',
-        },
-      }),
-    ])
+    await resultsTest(node, [{ ...expectedCalls[0], sort: { _score: 'asc' } }])
   })
   it('should sort on sortField config', async () => {
     let sortField = 'test.field'
     F.extendOn(node, { sortField })
     await resultsTest(node, [
-      _.extend(expectedCalls[0], {
-        sort: {
-          [node.sortField]: 'desc',
-        },
-      }),
+      { ...expectedCalls[0], sort: { [node.sortField]: 'desc' } },
     ])
   })
-  it('should strip ".untouched" from sortField config', async () => {
-    let sortField = 'test.field'
-    F.extendOn(node, { sortField: `${sortField}.untouched` })
-    await resultsTest(node, [
-      _.extend(expectedCalls[0], {
-        sort: {
-          [sortField]: 'desc',
-        },
-      }),
-    ])
-  })
+
   it('should add ".untouched" suffix from schema notAnalyzedField', async () => {
     let sortField = 'test.field'
     F.extendOn(node, { sortField })
@@ -282,17 +256,6 @@ describe('results', () => {
       _.extend(expectedCalls[0], {
         sort: {
           [sortField]: 'desc',
-        },
-      }),
-    ])
-  })
-  it('should sort on sortField + ".untouched" when sortMode config is "field"', async () => {
-    let sortField = 'test.field'
-    F.extendOn(node, { sortField, sortMode: 'field' })
-    await resultsTest(node, [
-      _.extend(expectedCalls[0], {
-        sort: {
-          [`${sortField}.untouched`]: 'desc',
         },
       }),
     ])

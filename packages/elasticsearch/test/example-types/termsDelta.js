@@ -1,4 +1,4 @@
-let sequentialResultTest = require('./testUtils').sequentialResultTest
+let { sequentialResultTest, testSchema } = require('./testUtils')
 
 describe('termsDelta', () => {
   let test = sequentialResultTest([
@@ -216,7 +216,8 @@ describe('termsDelta', () => {
             },
           },
         },
-      ]
+      ],
+      testSchema('Organization.State')
     ))
   it('should parse JSON keys when using a computed field', () =>
     testJSONKey(
@@ -224,7 +225,6 @@ describe('termsDelta', () => {
         key: 'widget',
         type: 'termsDelta',
         field: 'Organization.NameStateLatLongJson',
-        fieldMode: 'word',
         isScript: false,
         isJsonString: true,
         size: 50000,

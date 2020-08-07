@@ -1,29 +1,18 @@
 let _ = require('lodash/fp')
 let facet = require('../../src/example-types/facet')
-let sequentialResultTest = require('./testUtils').sequentialResultTest
+let { sequentialResultTest, testSchema } = require('./testUtils')
 let { expect } = require('chai')
 let facetTest = sequentialResultTest([
   {
     aggregations: {
       facetOptions: {
         buckets: [
-          {
-            key: 'a',
-            doc_count: 10,
-          },
-          {
-            key: 'b',
-            doc_count: 10,
-          },
-          {
-            key: 'c',
-            doc_count: 10,
-          },
+          { key: 'a', doc_count: 10 },
+          { key: 'b', doc_count: 10 },
+          { key: 'c', doc_count: 10 },
         ],
       },
-      facetCardinality: {
-        value: 10,
-      },
+      facetCardinality: { value: 10 },
     },
   },
   {
@@ -32,19 +21,11 @@ let facetTest = sequentialResultTest([
         doc_count: 20,
         facetOptions: {
           buckets: [
-            {
-              key: 'x',
-              doc_count: 10,
-            },
-            {
-              key: 'y',
-              doc_count: 10,
-            },
+            { key: 'x', doc_count: 10 },
+            { key: 'y', doc_count: 10 },
           ],
         },
-        facetCardinality: {
-          value: 10,
-        },
+        facetCardinality: { value: 10 },
       },
     },
   },
@@ -54,12 +35,15 @@ describe('facet', () => {
   describe('filter', () => {
     it('simple', () =>
       expect(
-        facet.filter({
-          key: 'test',
-          type: 'facet',
-          field: 'testField',
-          values: ['abc', '123'],
-        })
+        facet.filter(
+          {
+            key: 'test',
+            type: 'facet',
+            field: 'testField',
+            values: ['abc', '123'],
+          },
+          testSchema('testField')
+        )
       ).to.deep.equal({
         terms: {
           'testField.untouched': ['abc', '123'],
@@ -68,13 +52,16 @@ describe('facet', () => {
 
     it('exclude', () =>
       expect(
-        facet.filter({
-          key: 'test',
-          type: 'facet',
-          field: 'testField',
-          mode: 'exclude',
-          values: ['abc', '123'],
-        })
+        facet.filter(
+          {
+            key: 'test',
+            type: 'facet',
+            field: 'testField',
+            mode: 'exclude',
+            values: ['abc', '123'],
+          },
+          testSchema('testField')
+        )
       ).to.deep.equal({
         bool: {
           must_not: {
@@ -88,12 +75,15 @@ describe('facet', () => {
     let values = _.times(_.random, 5000)
     it('number of values exceeds 4095', () =>
       expect(
-        facet.filter({
-          key: 'test',
-          type: 'facet',
-          field: 'testField',
-          values,
-        })
+        facet.filter(
+          {
+            key: 'test',
+            type: 'facet',
+            field: 'testField',
+            values,
+          },
+          testSchema('testField')
+        )
       ).to.deep.equal({
         bool: {
           filter: {
@@ -116,18 +106,9 @@ describe('facet', () => {
         {
           cardinality: 10,
           options: [
-            {
-              name: 'a',
-              count: 10,
-            },
-            {
-              name: 'b',
-              count: 10,
-            },
-            {
-              name: 'c',
-              count: 10,
-            },
+            { name: 'a', count: 10 },
+            { name: 'b', count: 10 },
+            { name: 'c', count: 10 },
           ],
         },
         [
@@ -137,16 +118,11 @@ describe('facet', () => {
                 terms: {
                   field: 'testField.untouched',
                   size: 10,
-                  order: {
-                    _count: 'desc',
-                  },
+                  order: { _count: 'desc' },
                 },
               },
               facetCardinality: {
-                cardinality: {
-                  field: 'testField.untouched',
-                  precision_threshold: 5000,
-                },
+                cardinality: { field: 'testField.untouched' },
               },
             },
           },
@@ -165,18 +141,9 @@ describe('facet', () => {
         {
           cardinality: 10,
           options: [
-            {
-              name: 'a',
-              count: 10,
-            },
-            {
-              name: 'b',
-              count: 10,
-            },
-            {
-              name: 'c',
-              count: 10,
-            },
+            { name: 'a', count: 10 },
+            { name: 'b', count: 10 },
+            { name: 'c', count: 10 },
           ],
         },
         [
@@ -186,16 +153,11 @@ describe('facet', () => {
                 terms: {
                   field: 'testField.untouched',
                   size: 2 ** 31 - 1,
-                  order: {
-                    _count: 'desc',
-                  },
+                  order: { _count: 'desc' },
                 },
               },
               facetCardinality: {
-                cardinality: {
-                  field: 'testField.untouched',
-                  precision_threshold: 5000,
-                },
+                cardinality: { field: 'testField.untouched' },
               },
             },
           },
@@ -204,41 +166,26 @@ describe('facet', () => {
 
     it('missing values', () =>
       facetTest(
+        // node
         {
           key: 'test',
           type: 'facet',
           field: 'testField',
           values: ['a', 'x', 'y', 'z'],
         },
+        // expected result
         {
           cardinality: 10,
           options: [
-            {
-              name: 'a',
-              count: 10,
-            },
-            {
-              name: 'b',
-              count: 10,
-            },
-            {
-              name: 'c',
-              count: 10,
-            },
-            {
-              name: 'x',
-              count: 10,
-            },
-            {
-              name: 'y',
-              count: 10,
-            },
-            {
-              name: 'z',
-              count: 0,
-            },
+            { name: 'a', count: 10 },
+            { name: 'b', count: 10 },
+            { name: 'c', count: 10 },
+            { name: 'x', count: 10 },
+            { name: 'y', count: 10 },
+            { name: 'z', count: 0 },
           ],
         },
+        // expexted calls
         [
           {
             aggs: {
@@ -254,7 +201,6 @@ describe('facet', () => {
               facetCardinality: {
                 cardinality: {
                   field: 'testField.untouched',
-                  precision_threshold: 5000,
                 },
               },
             },
@@ -281,7 +227,8 @@ describe('facet', () => {
               },
             },
           },
-        ]
+        ],
+        testSchema('testField')
       ))
 
     it('find filter box', () =>
@@ -356,13 +303,11 @@ describe('facet', () => {
                   facetCardinality: {
                     cardinality: {
                       field: 'Organization.NameState.untouched',
-                      precision_threshold: 5000,
                     },
                   },
                   facetOptions: {
                     terms: {
                       field: 'Organization.NameState.untouched',
-                      include: '.*(([Ss][Tt][Aa][Tt][Ee])).*',
                       order: {
                         _count: 'desc',
                       },
@@ -463,13 +408,11 @@ describe('facet', () => {
                   facetCardinality: {
                     cardinality: {
                       field: 'Organization.NameState.untouched',
-                      precision_threshold: 5000,
                     },
                   },
                   facetOptions: {
                     terms: {
                       field: 'Organization.NameState.untouched',
-                      include: '.*([Ss][Tt][Aa][Tt][Ee].*1.*2.*3).*',
                       order: {
                         _count: 'desc',
                       },

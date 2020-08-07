@@ -1,5 +1,6 @@
 let _ = require('lodash/fp')
 let aggUtils = require('../aggUtils')
+let { getField } = require('../fields')
 
 // let example = {
 //   field: 'Organization.NameState.untouched',
@@ -23,28 +24,9 @@ let aggUtils = require('../aggUtils')
 //   }
 // }
 
-let rawFieldName = _.pipe(
-  _.replace('.untouched', ''),
-  _.replace('.shingle', '')
-)
-let modeMap = {
-  word: {
-    suffix: '',
-  },
-  autocomplete: {
-    suffix: '.untouched',
-  },
-  suggest: {
-    suffix: '.shingle',
-  },
-}
-
-let getFieldMode = ({ field, fieldMode }) =>
-  rawFieldName(field) + modeMap[fieldMode || 'autocomplete'].suffix
-
 module.exports = {
   validContext: () => true,
-  async result(node, search) {
+  async result(node, search, schema) {
     let response = await search({
       aggs: {
         results: {
@@ -57,7 +39,10 @@ module.exports = {
           aggs: {
             field: {
               terms: {
-                [node.isScript ? 'script' : 'field']: getFieldMode(node),
+                [node.isScript ? 'script' : 'field']: getField(
+                  schema,
+                  node.field
+                ),
                 size: node.size || 50000, // Arbitrary value instead integer max value.
               },
             },

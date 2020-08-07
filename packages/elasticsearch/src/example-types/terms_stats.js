@@ -10,13 +10,12 @@ let orderField = ({ include, order = 'sum' }) =>
 module.exports = {
   validContext: node => node.key_field && node.value_field,
   async result(node, search, schema) {
-    let field = getField(schema, node.key_field, node.fieldMode)
+    let field = getField(schema, node.key_field)
     let x = await esTwoLevel(
       _.merge(
         {
           filter_agg:
-            node.filter &&
-            buildRegexQueryForWords(field, node.caseSensitive)(node.filter),
+            node.filter && buildRegexQueryForWords(field)(node.filter),
           key_type: 'terms',
           key_data: {
             field,

@@ -1,24 +1,13 @@
 let _ = require('lodash/fp')
-let F = require('futil')
 
-let rawFieldName = _.replace(/(\.untouched)|(\.shingle)/g, '')
-let modeMap = {
-  word: '',
-  autocomplete: 'untouched',
-  field: 'untouched',
-  suggest: 'shingle',
-}
+let maybeAppend = (suffix, str) =>
+  _.endsWith(suffix, str) ? str : str + suffix
+
+let dot = x => (x ? `.${x}` : '')
+
+let path = (schema, field) =>
+  dot(_.get(['fields', field, 'elasticsearch', 'notAnalyzedField'], schema))
+
 module.exports = {
-  getField(schema, field, fieldMode = 'autocomplete') {
-    if (schema.getField) return schema.getField(schema, field, fieldMode)
-
-    let fieldName = (schema.rawFieldName || rawFieldName)(field)
-    // Maintains backwards compatibility with "modeMap" approach
-    let suffix = schema.fields
-      ? _.get([fieldName, 'elasticsearch', 'notAnalyzedField'], schema.fields)
-      : (schema.modeMap || modeMap)[fieldMode]
-    return _.endsWith(suffix, fieldName)
-      ? fieldName
-      : F.compactJoin('.', [fieldName, suffix])
-  },
+  getField: (schema, field) => maybeAppend(path(schema, field), field),
 }
