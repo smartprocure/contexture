@@ -1,4 +1,4 @@
-const sequentialResultTest = require('./testUtils').sequentialResultTest
+const { sequentialResultTest, testSchema } = require('./testUtils')
 
 describe('termStatsHits', () => {
   let test = sequentialResultTest([
@@ -315,6 +315,7 @@ describe('termStatsHits', () => {
             },
           },
         },
-      ]
+      ],
+      testSchema('Organization.Name')
     ))
 })

@@ -9,8 +9,8 @@ const elasticsearchIntegerMax = 2 ** 31 - 1
 
 module.exports = {
   hasValue: _.get('values.length'),
-  filter(node, schema = {}) {
-    let field = getField(schema, node.field, node.fieldMode)
+  filter(node, schema) {
+    let field = getField(schema, node.field)
     let result = {
       terms: {
         [field]: node.values,
@@ -31,8 +31,8 @@ module.exports = {
     return result
   },
   async result(node, search, schema) {
-    let { values, size, cardinality } = node
-    let field = getField(schema, node.field, node.fieldMode)
+    let { values, size } = node
+    let field = getField(schema, node.field)
     let order = {
       term: { _key: 'asc' },
       count: { _count: 'desc' },

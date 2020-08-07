@@ -9,8 +9,7 @@ module.exports = {
     let pageSize = node.pageSize || 10
     let startRecord = page * pageSize
     let sortField = node.sortField
-      ? // default to word (aka '') for backwards compatibility
-        getField(schema, node.sortField, node.sortMode || 'word')
+      ? getField(schema, node.sortField)
       : '_score'
 
     let searchObj = {
