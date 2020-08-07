@@ -46,22 +46,7 @@ let fromEsIndexMapping = _.mapValues(
         })),
         applyDefaults
       )
-    ),
-    // TODO: Add contexture-elasticsearch support for per field notAnalyzedField
-    // In the mean time, this will set the subfields used by things like facet autpcomplete for each index as a whole
-    schema =>
-      _.extend(
-        {
-          modeMap: {
-            word: '',
-            autocomplete: `.${firstValue(
-              'elasticsearch.notAnalyzedField',
-              schema.fields
-            )}`,
-          },
-        },
-        schema
-      )
+    )
   )
 )
 
