@@ -1,6 +1,6 @@
 let _ = require('lodash/fp')
 let F = require('futil')
-let { buildRegexQueryForWords, buildRegexForWords } = require('../regex')
+let { buildRegexQueryForWords } = require('../regex')
 let { getField } = require('../fields')
 let { negate } = require('../elasticDSL')
 
@@ -47,13 +47,6 @@ module.exports = {
             size: size || (size === 0 ? elasticsearchIntegerMax : 10),
             order,
             ...(node.includeZeroes && { min_doc_count: 0 }),
-            ...(node.optionsFilter && {
-              include: buildRegexForWords(
-                node.caseSensitive,
-                node.anyOrder, // Scary
-                node.maxWords
-              )(node.optionsFilter),
-            }),
           },
         },
         facetCardinality: {
