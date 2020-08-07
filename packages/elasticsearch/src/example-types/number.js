@@ -2,7 +2,7 @@ const _ = require('lodash/fp')
 const util = require('./numberUtil')
 
 module.exports = {
-  hasValue: context => !_.isNil(context.min) || !_.isNil(context.max),
+  hasValue: node => !_.isNil(node.min) || !_.isNil(node.max),
   filter: ({ field, min, max }) => util.rangeFilter(field, min, max),
   async result(
     {

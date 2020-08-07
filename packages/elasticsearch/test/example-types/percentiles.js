@@ -6,7 +6,7 @@ describe('percentiles', () => {
       [
         {
           aggregations: {
-            agg_percentiles: {
+            percentiles: {
               keyed: false,
               values: {
                 10.0: 44,
@@ -24,7 +24,7 @@ describe('percentiles', () => {
       [
         {
           aggregations: {
-            agg_percentiles: {
+            percentiles: {
               keyed: true,
               values: [
                 {
@@ -67,7 +67,7 @@ describe('percentiles', () => {
       [
         {
           aggs: {
-            agg_percentiles: {
+            percentiles: {
               percentiles: {
                 keyed: false,
                 field: 'LineItem.UnitPrice',
@@ -109,7 +109,7 @@ describe('percentiles', () => {
       [
         {
           aggs: {
-            agg_percentiles: {
+            percentiles: {
               percentiles: {
                 keyed: true,
                 field: 'LineItem.UnitPrice',

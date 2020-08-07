@@ -1,59 +1,37 @@
 let _ = require('lodash/fp')
+let { negate } = require('../elasticDSL')
+
+let hasValue = ({ location, latitude, longitude, radius, operator }) =>
+  !!((location || (latitude && longitude)) && radius && operator)
 
 let geo = ({
   geocodeLocation = () => {
     throw new Error('Geo filter was not passed a geocode service')
   },
 } = {}) => ({
-  hasValue: context =>
-    !!(
-      (context.location || (context.latitude && context.longitude)) &&
-      context.radius &&
-      context.operator
-    ),
-  filter: context =>
-    Promise.resolve(context)
-      .then(context => {
-        if (context.latitude && context.longitude) {
-          return {
-            Latitude: context.latitude,
-            Longitude: context.longitude,
-          }
-        } else {
-          return geocodeLocation(context.location)
-        }
-      })
-      .then(response => {
-        context._meta.preprocessorResult = response
-
-        let result = {
-          geo_distance: {
-            [context.field]: `${response.Latitude},${response.Longitude}`,
-            distance: `${context.radius}mi`,
-          },
-        }
-        if (context.operator !== 'within') {
-          result = {
-            bool: {
-              must_not: result,
-            },
-          }
-        }
-        return result
-      })
-      .catch(err =>
-        console.error('An error occured within the geo provider: ', err)
-      ),
-  validContext: context =>
-    !!(
-      (context.location || (context.latitude && context.longitude)) &&
-      context.radius &&
-      context.operator
-    ),
-  result: context => ({
-    Latitude: _.get('_meta.preprocessorResult.latitude', context),
-    Longitude: _.get('_meta.preprocessorResult.longitude', context),
-  }),
+  hasValue,
+  validContext: hasValue,
+  async filter(node) {
+    if (node.latitude && node.longitude)
+      return {
+        Latitude: node.latitude,
+        Longitude: node.longitude,
+      }
+    try {
+      let response = await geocodeLocation(node.location)
+      node._meta.preprocessorResult = response
+      let result = {
+        geo_distance: {
+          [node.field]: `${response.Latitude},${response.Longitude}`,
+          distance: `${node.radius}mi`,
+        },
+      }
+      return node.operator !== 'within' ? negate(result) : result
+    } catch (err) {
+      console.error('An error occured within the geo provider: ', err)
+    }
+  },
+  result: _.get('_meta.preprocessorResult'),
 })
 
 module.exports = geo

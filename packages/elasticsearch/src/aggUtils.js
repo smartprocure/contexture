@@ -10,18 +10,19 @@ let metrics = [
   'median_absolute_deviation',
 ]
 module.exports = {
-  buildAgg: agg => ({
-    [agg.key || agg.type]: {
-      [agg.type]: _.extend(agg.data, {
-        field: agg.field,
-      }),
+  buildAgg: ({ key, type, data, field }) => ({
+    [key || type]: {
+      [type]: {
+        ...data,
+        field,
+      },
     },
   }),
-  buildFilter: agg => ({
-    [agg.type]: {
-      [agg.field]: agg.data,
+  buildFilter: ({ type, field, data }) => ({
+    [type]: {
+      [field]: data,
     },
   }),
   metrics,
-  hasValidMetrics: context => !_.difference(context.include, metrics).length,
+  hasValidMetrics: node => !_.difference(node.include, metrics).length,
 }

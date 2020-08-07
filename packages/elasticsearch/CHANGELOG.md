@@ -1,12 +1,21 @@
 # 1.0.0
 * BREAKING: Assumes the elasticsearch client is the new @elastic/elasticsearch npm package. Will not work with the old `elasticsearch` package
 * BREAKING: Removed unused `getMappingProperties` API
+* BREAKING: Top level `config.request` deprecated in favor of per request config
+* BREAKING: `requestorContext` replaced with `{requestOptions: headers}`
 * Errors are now gracefully caught on a per node basis and properly set on node.error. This means that a node can throw an error, but the rest of the search will continue properly and also not log an uncaught exception to the console. This means the contexture dev tools can now be used to see raw ES errors.
 * Simplifed runSearch with modern JS syntax
 * Get mappings now handles type-less mappings, which is the default on ES7+ (while still handling types for ES6-)
 * [DateRangeFacet] converted to `dateOptionalTime` format which works on ES 6 and 7
 * [Results] track_total_hits and handle total.hits being an object for ES 7 support
 * Remove `bluebird` dependency
+* Remove last bit of non fp lodash
+* BREAKING:
+  * [Results]
+    * Kill forceExclude
+    * Kill verbose
+    * Kill summaryView
+    * Remove duplicated `hit` on results
 
 # 0.24.1
 * Added _score field to the results type
@@ -138,16 +147,16 @@
 * Added `exampleTypeSchemaMapping` to map es types to example contexture node types
 
 # 0.9.1
-* Use field mode for terms stats.
+* [terms_stats] Use field mode for terms stats.
 
 # 0.9.0
 * Added `tagsQuery` type.
 
 # 0.8.5
-* Number types will now return extended instead of standard stats.
+* [Number] Number types will now return extended instead of standard stats.
 
 # 0.8.4
-* Number types will interpret interval min or max null values as open left or right boundaries.
+* [Number] Number types will interpret interval min or max null values as open left or right boundaries.
 
 # 0.8.3
 * Fix regEx for words
@@ -162,7 +171,7 @@
 * forceExclude on the results type allows us to extend any existing exclude value (even if empty) with a default list of forceExclude fields defined at the schema.
 
 # 0.7.2
-* If includeZeroes, facet should make another search for it's cardinality with query match_all.
+* [Facet] If includeZeroes, facet should make another search for it's cardinality with query match_all.
 
 # 0.7.1
 * Using combinatorics of the received words on regexp includes if optionsFilter is present on the facet example type.
@@ -185,28 +194,28 @@
 * Added documentation for termsStatsHits
 
 # 0.6.5
-* Facet now allows size 0
+* [Facet] Support size 0
 
 # 0.6.4
-* Number type no longer wraps results in a results property.
+* [Number] No longer wraps results in a results property.
 
 # 0.6.3
-* Improved number type by providing a configurable interval value for the percentile aggregation.
+* [Number] Improved number type by providing a configurable interval value for the percentile aggregation.
 
 # 0.6.2
-* Improved number type by providing additional feedback as filtered range aggregations.
+* [Number] Improved number type by providing additional feedback as filtered range aggregations.
 
 # 0.6.1
 * Allow min 0 and max undefined to be evaluated as truthy or vice-versa.
 
 # 0.6.0
-* Improved number type by providing feedback as statistics and histogram results.
+* [Number] Improved number type by providing feedback as statistics and histogram results.
 
 # 0.5.0
 * Added utility function `getSchemaMapping` to get a mapping used for building a schema directly from ES.
 
 # 0.4.1
-* Removed the last reference of context.data from the facet type.
+* [Facet] Removed the last reference of context.data from the facet type.
 
 # 0.4.0
 * Removed the root level usage of context.data and context.config, now
@@ -229,7 +238,8 @@
 * [Facet] Add support for `anyOrder` and `caseSensitive` flags for options filter
 
 # 0.2.0
-* Add `includeZeroes` support to facet type.
+* [Facet] Add `includeZeroes` support to facet type.
+* [Facet] Remove `filterJunk`
 
 # 0.1.4
 * Removed `__all` from .gitignore.

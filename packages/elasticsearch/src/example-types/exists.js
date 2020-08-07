@@ -1,22 +1,14 @@
 let _ = require('lodash/fp')
+let { negate } = require('../elasticDSL')
 
 module.exports = {
   hasValue: ({ value }) => _.isBoolean(value),
-  filter(context) {
-    let result = {
+  filter({ field, value }) {
+    let filter = {
       exists: {
-        field: context.field,
+        field,
       },
     }
-
-    if (!context.value) {
-      result = {
-        bool: {
-          must_not: result,
-        },
-      }
-    }
-
-    return result
+    return value ? filter : negate(filter)
   },
 }
