@@ -1,17 +1,6 @@
 let _ = require('lodash/fp')
 let F = require('futil')
 
-let applyDefaults = F.mapValuesIndexed((node, field) =>
-  _.defaults(
-    {
-      field,
-      label: F.autoLabel(field),
-      order: 0,
-    },
-    node
-  )
-)
-
 let Tree = F.tree(x => x.properties)
 // flatLeaves should auto detect reject vs omit (or just more general obj vs arr method)
 let flatten = _.flow(Tree.flatten(), _.omitBy(Tree.traverse))
@@ -35,14 +24,15 @@ let fromEsIndexMapping = _.mapValues(
       'fields',
       _.flow(
         flatten,
-        _.mapValues(({ type, fields }) => ({
+        F.mapValuesIndexed(({ type, fields }, field) => ({
+          field,
+          label: _.startCase(field),
           elasticsearch: F.compactObject({
             dataType: type,
             // Find the child notAnalyzedField to set up facet autocomplete vs word
             notAnalyzedField: _.findKey({ type: 'keyword' }, fields),
           }),
-        })),
-        applyDefaults
+        }))
       )
     )
   )
