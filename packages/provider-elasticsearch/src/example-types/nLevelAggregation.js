@@ -55,7 +55,7 @@ let getInnerMost = result => {
 }
 module.exports = {
   validContext: () => true,
-  result(context, search) {
+  result(node, search) {
     let body = _.reduce((r, agg) => {
       getInnerMost(r).aggs = {
         [agg.type]: {
@@ -68,18 +68,18 @@ module.exports = {
         },
       }
       return r
-    }, {})(context.aggs)
+    }, {})(node.aggs)
     return search(body).then(results => {
       let buckets =
         results.aggregations[_.keys(results.aggregations)[0]].buckets
 
-      if (context.reducers) {
-        let reducedResults = processReducers(buckets, context.reducers, context)
+      if (node.reducers) {
+        let reducedResults = processReducers(buckets, node.reducers, node)
 
-        if (context.page) {
-          let offset = (context.page - 1) * context.pageSize
+        if (node.page) {
+          let offset = (node.page - 1) * node.pageSize
           return {
-            results: _.drop(offset)(reducedResults).slice(0, context.pageSize),
+            results: _.drop(offset)(reducedResults).slice(0, node.pageSize),
             totalRecords: reducedResults.length,
           }
         }

@@ -89,7 +89,7 @@ describe('smartIntervalHistogram', () => {
         },
       ]
     ))
-  it('should work with context.interval', () =>
+  it('should work with node.interval', () =>
     sequentialResultTest(
       [
         {

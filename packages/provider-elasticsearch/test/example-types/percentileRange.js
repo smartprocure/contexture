@@ -6,7 +6,7 @@ describe('percentilesRange', function() {
       [
         {
           aggregations: {
-            agg_percentiles: {
+            percentiles: {
               keyed: false,
               values: [
                 {
@@ -79,7 +79,7 @@ describe('percentilesRange', function() {
       [
         {
           aggs: {
-            agg_percentiles: {
+            percentiles: {
               percentiles: {
                 keyed: false,
                 field: 'LineItem.UnitPrice',

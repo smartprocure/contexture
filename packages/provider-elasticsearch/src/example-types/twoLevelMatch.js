@@ -1,13 +1,14 @@
 let _ = require('lodash/fp')
 let esTwoLevel = require('./esTwoLevelAggregation').result
+let { negate } = require('../elasticDSL')
 
 module.exports = {
-  validContext: context =>
-    !!(context.key_field && context.value_field && context.key_value),
-  result(context, search) {
+  validContext: node =>
+    !!(node.key_field && node.value_field && node.key_value),
+  result(node, search) {
     let filter = {
-      [_.get('key_type', context) || 'term']: {
-        [context.key_field]: context.key_value,
+      [node.key_type || 'term']: {
+        [node.key_field]: node.key_value,
       },
     }
     return esTwoLevel(
@@ -17,16 +18,12 @@ module.exports = {
           key_data: {
             filters: {
               pass: filter,
-              fail: {
-                bool: {
-                  must_not: filter,
-                },
-              },
+              fail: negate(filter),
             },
             field: null,
           },
         },
-        context
+        node
       ),
       search
     )

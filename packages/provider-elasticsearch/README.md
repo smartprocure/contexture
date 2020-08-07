@@ -10,7 +10,6 @@ This provider takes a config object as a parameter:
 | Option      | Type       | Description                                      | Required |
 | ------      | ----       | -----------                                      | -------- |
 | `getClient` | `function` | Returns an instantiated elasticsearch client     | x        |
-| `request`   | `object`   | Merged in the json body of every request to elasticsearch (e.g. to add custom headers) |          |
 | `types`     | `object`   | Contexture node types, like all other providers  |          |
 
 ### Schemas
@@ -19,25 +18,21 @@ Schemas with with an elasticsearch provider can specify any or all of the follow
 | Option         | Type       | Description                          | Required |
 | ------         | ----       | -----------                          | -------- |
 | `index`        | `string`   | Which ES index to use when querying  | x        |
-| `type`         | `string`   | Which ES type to use when querying   |          |
-| `summaryView`  | `function` | Used by `results` to return a summary view instead of the whole document, (e.g. for indexes with many fields). Defaults to returning the `hit` property. | |
 | `highlight`    | `object`   | Used by `results` to determine what fields to highlight, and whether or not they are `inline` (copied over inline on to the source) or `additional` (in a list of additional fields that matched) | |
-| `forceExclude` | `array`    | Used by `results` to extend the exclude fields provided on the search tree. The extension happens only if the results node has a `forceExclude` flag set to true.
 
 ### Example Schema for SomeType in SomeIndex
 
 ```js
 module.exports = {
   elasticsearch: {
-    index: 'SomeIndex',
-    type: 'SomeType'
+    index: 'SomeIndex'
   }
 }
 ```
 
 ### Seting up contexture
 ```js
-let _ = require('lodash')
+let _ = require('lodash/fp')
 let Contexture = require('contexture')
 let provider = require('contexture-elasticsearch')
 let types = require('contexture-elasticsearch/types')
@@ -45,6 +40,7 @@ let schemas = require('./path/to/schemas')
 let elasticsearch = require('elasticsearch')
 let AgentKeepAlive  = require('agentkeepalive'),
 
+// Setup
 let process = Contexture({
   schemas,
   providers: {
@@ -59,11 +55,6 @@ let process = Contexture({
             new AgentKeepAlive(connection.makeAgentConfig(config))
         })
       ),
-      request: {
-        headers: {
-          'custom-header-app-name': 'my-app-sent-this'
-        }
-      },
       types: types({
         geo: {
           geocodeLocation: query =>
@@ -74,6 +65,18 @@ let process = Contexture({
       })
     })
   }
+})
+
+// Simple usage (tree would come from the client)
+process(tree)
+
+// Usage with custom headers applied to every elasticsearch request (tree would come from the client)
+process(tree, {
+  requestOptions: {
+    headers: {
+      'custom-header-app-name': 'my-app-sent-this'
+    }
+  },  
 })
 ```
 
@@ -141,6 +144,30 @@ Output
 
 The result can be used to show what location the server on a map, though in practice it's usually better to geocode on the client. This type is planned to be extended to support passing along raw lat/lng.
 
+#### `dateRangeFacet`
+dateRangeFacet is like a `facet` but the options correspond to named date range buckets
+
+Input
+
+| Name            | Type                            | Default           | Description |
+| ----            | ----                            | -------           | ----------- |
+| `field`         | string                          | None, *required*  | The field it's operating on |
+| `ranges`        | array[{ range: NamedDateRange, key: string}]                   | None, *required*                | Ranges should have 'range' prop containing the range phrase (eg. 'allFutureDates') and a key to represent the value |
+| `values`        | array[string]                   | []                | What is checked |
+| `timezone`        | string                   | 'UTC'                | What timezone to use |
+
+
+Output
+
+```js
+{
+  options: [{
+    name: String,
+    count: Number
+  }]
+}
+```
+
 
 ### Filter Only Types
 Filter only types just filter and nothing more. They don't have contextual results of their own.
@@ -162,9 +189,10 @@ Date represents a data range filter, with support datemath
 ```js
 {
   field: String,
-  from: DateString|'thisQuarter|lastQuarter|nextQuarter', // Date string or one of three custom date math options
+  range: String, // Choice of an explicit hard coded date range option:
+    // allDates | exact | last3Days | last7Days | last30Days | last90Days | last180Days | last12Months | last15Months | last18Months | last24Months | last36Months | last48Months | last60Months | lastCalendarMonth | lastCalendarYear | thisCalendarMonth | thisCalendarYear | nextCalendarMonth | nextCalendarYear | next30Days | next60Days | next90Days | next6Months | next12Months | next24Months | next36Months | allPastDates | allFutureDates
+  from: DateString, // Date string - *No longer supports date math*, requires range to be `exact`
   to: DateString,
-  useDateMath: Boolean, // If true, it will parse dates as dateMath using @elastic/datemath
   isDateTime: Boolean // If true, it will pass the from and to values as is, without formatting assuming it is valid date & time ES string
 }
 ```

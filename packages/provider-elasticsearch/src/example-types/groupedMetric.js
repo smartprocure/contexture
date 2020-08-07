@@ -20,12 +20,9 @@ let _ = require('lodash/fp')
 // }
 
 module.exports = {
-  validContext: context =>
-    context.metric.type &&
-    !!(
-      /value_count|top_hits/.test(context.metric.type) || context.metric.field
-    ),
-  result: (context, search) =>
+  validContext: ({ metric: { type, field } }) =>
+    type && !!(/value_count|top_hits/.test(type) || field),
+  result: ({ metric, aggs }, search) =>
     search(
       _.reduce(
         (r, agg) => ({
@@ -33,11 +30,7 @@ module.exports = {
             [agg.key || 'child']: _.extend(
               {
                 [agg.type]: _.extend(
-                  agg.type === 'top_hits'
-                    ? {}
-                    : {
-                        field: agg.field,
-                      },
+                  agg.type === 'top_hits' ? {} : { field: agg.field },
                   agg.data
                 ),
               },
@@ -46,7 +39,7 @@ module.exports = {
           },
         }),
         {}
-      )([context.metric].concat(_.reverse(context.aggs)))
+      )([metric, ..._.reverse(aggs)])
     ).then(results => ({
       results: results.aggregations,
     })),

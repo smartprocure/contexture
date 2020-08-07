@@ -4,7 +4,7 @@ let { expect } = require('chai')
 
 describe('twoLevelMatch', function() {
   describe('validContext', function() {
-    it('should validate a context with config key_field, value_field and key_value', function() {
+    it('should validate a node with config key_field, value_field and key_value', function() {
       expect(
         twoLevelMatch.validContext({
           key_field: true,
@@ -13,7 +13,7 @@ describe('twoLevelMatch', function() {
         })
       ).to.be.true
     })
-    it('any context missing a config value for key_field, value_field or key_value should be invalid', function() {
+    it('any node missing a config value for key_field, value_field or key_value should be invalid', function() {
       utils.noValidContexts(twoLevelMatch)([
         {
           key_field: true,
@@ -47,7 +47,7 @@ describe('twoLevelMatch', function() {
   })
 
   describe('result', function() {
-    const context = {
+    const node = {
       key: 'test',
       type: 'twoLevelMatch',
       key_field: 'Vendor.City.untouched',
@@ -101,7 +101,7 @@ describe('twoLevelMatch', function() {
             },
           },
         ],
-        context,
+        node,
         { results: [] },
         callsArguments
       )
@@ -138,7 +138,7 @@ describe('twoLevelMatch', function() {
             },
           },
         ],
-        context,
+        node,
         {
           results: [
             {

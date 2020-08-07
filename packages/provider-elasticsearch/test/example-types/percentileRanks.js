@@ -6,7 +6,7 @@ describe('percentileRanks', function() {
       [
         {
           aggregations: {
-            agg_percentileRanks: {
+            percentile_ranks: {
               keyed: false,
               values: {
                 10: 44,
@@ -24,7 +24,7 @@ describe('percentileRanks', function() {
       [
         {
           aggregations: {
-            agg_percentileRanks: {
+            percentile_ranks: {
               keyed: true,
               values: [
                 {
@@ -68,7 +68,7 @@ describe('percentileRanks', function() {
       [
         {
           aggs: {
-            agg_percentileRanks: {
+            percentile_ranks: {
               percentile_ranks: {
                 field: 'LineItem.UnitPrice',
                 keyed: false,
@@ -110,7 +110,7 @@ describe('percentileRanks', function() {
       [
         {
           aggs: {
-            agg_percentileRanks: {
+            percentile_ranks: {
               percentile_ranks: {
                 field: 'LineItem.UnitPrice',
                 keyed: true,

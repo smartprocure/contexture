@@ -1,19 +1,15 @@
 let { getField } = require('../fields')
 
 module.exports = {
-  result(context, search, schema) {
-    let field = context.field || context.config.field
-    return search({
+  result: ({ field, fieldMode }, search, schema) =>
+    search({
       aggs: {
         cardinality: {
           cardinality: {
             // fieldMode defaults to 'word' for backwards compatibility
-            field: context.fieldMode
-              ? getField(schema, field, context.fieldMode)
-              : field,
+            field: fieldMode ? getField(schema, field, fieldMode) : field,
           },
         },
       },
-    }).then(results => results.aggregations.cardinality)
-  },
+    }).then(results => results.aggregations.cardinality),
 }
