@@ -21,6 +21,10 @@
     * kill caseSensitive, anyOrder, maxWords which weren't relevant anyway
     * kill fieldMode - facet will now always use the notAnalyzed field if available
     * kill cardinality, which was a proxy for precision_threshold
+  * [TermsStats]
+    * killed useless caseSensitive flag
+  * [Text]
+    * killed useless caseSensitive flag
 * BREAKING:
   * Killed schema `rawFieldName` and `getField`
 

@@ -16,7 +16,7 @@ module.exports = {
         {
           filter_agg:
             node.filter &&
-            buildRegexQueryForWords(field, node.caseSensitive)(node.filter),
+            buildRegexQueryForWords(field)(node.filter),
           key_type: 'terms',
           key_data: {
             field,
