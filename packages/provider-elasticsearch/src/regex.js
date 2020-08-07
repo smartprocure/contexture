@@ -2,7 +2,7 @@ let _ = require('lodash/fp')
 
 let toSafeRegex = _.flow(
   _.replace(/[.?+*|{}[\]()]/g, '\\$&'),
-  _.map(x => x.match(/[A-Za-z]/) ? `[${_.toUpper(x)}${_.toLower(x)}]` : x),
+  _.map(x => (x.match(/[A-Za-z]/) ? `[${_.toUpper(x)}${_.toLower(x)}]` : x)),
   _.join('')
 )
 

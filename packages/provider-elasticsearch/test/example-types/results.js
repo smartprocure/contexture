@@ -219,14 +219,16 @@ describe('results', () => {
     resultsTest(node, [{ ...expectedCalls[0], sort: { _score: 'desc' } }]))
   it('should order by sortDir config', async () => {
     F.extendOn(node, { sortDir: 'asc' })
-    await resultsTest(node, [{ ...expectedCalls[0], sort: { _score: 'asc', } }])
+    await resultsTest(node, [{ ...expectedCalls[0], sort: { _score: 'asc' } }])
   })
   it('should sort on sortField config', async () => {
     let sortField = 'test.field'
     F.extendOn(node, { sortField })
-    await resultsTest(node, [{ ...expectedCalls[0], sort: { [node.sortField]: 'desc' } }])
+    await resultsTest(node, [
+      { ...expectedCalls[0], sort: { [node.sortField]: 'desc' } },
+    ])
   })
-  
+
   it('should add ".untouched" suffix from schema notAnalyzedField', async () => {
     let sortField = 'test.field'
     F.extendOn(node, { sortField })

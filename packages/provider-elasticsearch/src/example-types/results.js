@@ -8,9 +8,7 @@ module.exports = {
     let page = (node.page || 1) - 1
     let pageSize = node.pageSize || 10
     let startRecord = page * pageSize
-    let sortField = node.sortField
-      ? getField(schema, node.sortField)
-      : '_score'
+    let sortField = node.sortField ? getField(schema, node.sortField) : '_score'
 
     let searchObj = {
       from: startRecord,

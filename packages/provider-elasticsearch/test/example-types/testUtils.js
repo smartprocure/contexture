@@ -9,7 +9,6 @@ let { expect } = require('chai')
 
 chai.use(sinonChai)
 
-
 let sequentialResultTest = _.curry(
   async (getService, node, expectedResult, expectedCalls, schema = {}) => {
     let service
@@ -30,7 +29,7 @@ let sequentialResultTest = _.curry(
         node
       ),
       service,
-      schema,
+      schema
     )
 
     expect(result).to.deep.equal(expectedResult)
@@ -53,6 +52,7 @@ module.exports = {
   noValueContexts: type => F.flowMap(type.hasValue, chai.assert.isFalse),
   sequentialResultTest,
 
-  testSchema: (field, notAnalyzedField = 'untouched') =>
-    ({ fields: { [field]: { elasticsearch: { notAnalyzedField } } } })
+  testSchema: (field, notAnalyzedField = 'untouched') => ({
+    fields: { [field]: { elasticsearch: { notAnalyzedField } } },
+  }),
 }
