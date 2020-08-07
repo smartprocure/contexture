@@ -16,9 +16,13 @@
     * Kill verbose
     * Kill summaryView
     * Remove duplicated `hit` on results
+    * Kill `sortMode` - results will always sort on the notAnalyzed field (other use cases make no sense anyway since you'll get a missing fielddata exception)
   * [Facet]
     * kill caseSensitive, anyOrder, maxWords which weren't relevant anyway
+    * kill fieldMode - facet will now always use the notAnalyzed field if available
     * kill cardinality, which was a proxy for precision_threshold
+* BREAKING:
+  * Killed schema `rawFieldName` and `getField`
 
 # 0.24.1
 * Added _score field to the results type

@@ -1,6 +1,6 @@
 let _ = require('lodash/fp')
 let facet = require('../../src/example-types/facet')
-let sequentialResultTest = require('./testUtils').sequentialResultTest
+let { sequentialResultTest, testSchema } = require('./testUtils')
 let { expect } = require('chai')
 let facetTest = sequentialResultTest([
   {
@@ -35,12 +35,15 @@ describe('facet', () => {
   describe('filter', () => {
     it('simple', () =>
       expect(
-        facet.filter({
-          key: 'test',
-          type: 'facet',
-          field: 'testField',
-          values: ['abc', '123'],
-        })
+        facet.filter(
+          {
+            key: 'test',
+            type: 'facet',
+            field: 'testField',
+            values: ['abc', '123'],
+          },
+          testSchema('testField')
+        )
       ).to.deep.equal({
         terms: {
           'testField.untouched': ['abc', '123'],
@@ -55,7 +58,7 @@ describe('facet', () => {
           field: 'testField',
           mode: 'exclude',
           values: ['abc', '123'],
-        })
+        }, testSchema('testField'))
       ).to.deep.equal({
         bool: {
           must_not: {
@@ -74,7 +77,7 @@ describe('facet', () => {
           type: 'facet',
           field: 'testField',
           values,
-        })
+        }, testSchema('testField'))
       ).to.deep.equal({
         bool: {
           filter: {
@@ -109,15 +112,11 @@ describe('facet', () => {
                 terms: {
                   field: 'testField.untouched',
                   size: 10,
-                  order: {
-                    _count: 'desc',
-                  },
+                  order: { _count: 'desc' },
                 },
               },
               facetCardinality: {
-                cardinality: {
-                  field: 'testField.untouched',
-                },
+                cardinality: { field: 'testField.untouched' },
               },
             },
           },
@@ -148,15 +147,11 @@ describe('facet', () => {
                 terms: {
                   field: 'testField.untouched',
                   size: 2 ** 31 - 1,
-                  order: {
-                    _count: 'desc',
-                  },
+                  order: { _count: 'desc' },
                 },
               },
               facetCardinality: {
-                cardinality: {
-                  field: 'testField.untouched',
-                },
+                cardinality: { field: 'testField.untouched' },
               },
             },
           },
@@ -165,12 +160,14 @@ describe('facet', () => {
 
     it('missing values', () =>
       facetTest(
+        // node
         {
           key: 'test',
           type: 'facet',
           field: 'testField',
           values: ['a', 'x', 'y', 'z'],
         },
+        // expected result
         {
           cardinality: 10,
           options: [
@@ -182,6 +179,7 @@ describe('facet', () => {
             { name: 'z', count: 0 },
           ],
         },
+        // expexted calls
         [
           {
             aggs: {
@@ -223,7 +221,8 @@ describe('facet', () => {
               },
             },
           },
-        ]
+        ],
+        testSchema('testField')
       ))
 
     it('find filter box', () =>

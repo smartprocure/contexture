@@ -9,14 +9,6 @@ let { expect } = require('chai')
 
 chai.use(sinonChai)
 
-let EsProcessor = {
-  config: {
-    request: {
-      defaultShardSize: 12500, // Used by terms_stats
-      accuracyShardSize: 5000, // Used by faces
-    },
-  },
-}
 
 let sequentialResultTest = _.curry(
   async (getService, node, expectedResult, expectedCalls, schema = {}) => {
@@ -30,7 +22,6 @@ let sequentialResultTest = _.curry(
         getService
       )
     }
-
     let result = await types[node.type].result(
       _.defaults(
         {
@@ -40,7 +31,6 @@ let sequentialResultTest = _.curry(
       ),
       service,
       schema,
-      EsProcessor
     )
 
     expect(result).to.deep.equal(expectedResult)
@@ -62,4 +52,7 @@ module.exports = {
   hasValueContexts: type => F.flowMap(type.hasValue, chai.assert.isTrue),
   noValueContexts: type => F.flowMap(type.hasValue, chai.assert.isFalse),
   sequentialResultTest,
+
+  testSchema: (field, notAnalyzedField = 'untouched') =>
+    ({ fields: { [field]: { elasticsearch: { notAnalyzedField } } } })
 }
