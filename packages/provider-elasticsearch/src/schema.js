@@ -12,8 +12,6 @@ let applyDefaults = F.mapValuesIndexed((node, field) =>
   )
 )
 
-let firstValue = _.curry((field, data) => _.get(field, _.find(field, data)))
-
 let Tree = F.tree(x => x.properties)
 // flatLeaves should auto detect reject vs omit (or just more general obj vs arr method)
 let flatten = _.flow(Tree.flatten(), _.omitBy(Tree.traverse))
@@ -46,22 +44,7 @@ let fromEsIndexMapping = _.mapValues(
         })),
         applyDefaults
       )
-    ),
-    // TODO: Add contexture-elasticsearch support for per field notAnalyzedField
-    // In the mean time, this will set the subfields used by things like facet autpcomplete for each index as a whole
-    schema =>
-      _.extend(
-        {
-          modeMap: {
-            word: '',
-            autocomplete: `.${firstValue(
-              'elasticsearch.notAnalyzedField',
-              schema.fields
-            )}`,
-          },
-        },
-        schema
-      )
+    )
   )
 )
 
