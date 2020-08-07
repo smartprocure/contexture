@@ -10,7 +10,7 @@ let orderField = ({ include, order = 'sum' }) =>
 module.exports = {
   validContext: node => node.key_field && node.value_field,
   async result(node, search, schema) {
-    let field = getField(schema, node.key_field, node.fieldMode)
+    let field = getField(schema, node.key_field)
     let x = await esTwoLevel(
       _.merge(
         {

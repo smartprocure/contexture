@@ -100,12 +100,9 @@ Input
 | `field`         | string                          | None, *required*  | The field it's operating on |
 | `mode`          | `include`/`exclude`             | include           | Should this filter act as inclusion or exclusion of the values |
 | `values`        | array[string]                   | []                | What is checked |
-| `fieldMode`     | `autocomplete`/`word`/`suggest` | autocomplete      | Whether to look at the entire field (autocomplete), the analyzed words in the field, or magic suggestions. This generally means switching field/analyzers but abstracts that lower level es/index knowledge away from the client. |
 | `size`          | number                          | 12                | How many options to return |
-| `cardinality`   | number                          | 5000              | Precision threshold override |
 | `includeZeroes` | boolean                         | false             | If true, it will include options with 0 matching documents (aka `min_doc_count: 0`) |
 | `optionsFilter` | string                          | ''                | Filters the options further, e.g. a find box above a checkbox list |
-| `caseSensitive` | boolean                         | false             | Whether options filter is case sensitive. *no known usages* |
 | `sort`          | `term`/`count`                  | count             | Sort results alphabetically or by count of matching records |
 
 
@@ -314,7 +311,6 @@ Input
 | Name            | Type                            | Default           | Description |
 | ----            | ----                            | -------           | ----------- |
 | `field`         | string                          | None, *required*  | The field it's operating on |
-| `fieldMode`     | `autocomplete`/`word`/`suggest` | word              | Whether to look at the entire field (autocomplete), the analyzed words in the field, or magic suggestions. This generally means switching field/analyzers but abstracts that lower level es/index knowledge away from the client. |
 
 Output
 
