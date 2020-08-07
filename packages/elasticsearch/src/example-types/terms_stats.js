@@ -15,8 +15,7 @@ module.exports = {
       _.merge(
         {
           filter_agg:
-            node.filter &&
-            buildRegexQueryForWords(field)(node.filter),
+            node.filter && buildRegexQueryForWords(field)(node.filter),
           key_type: 'terms',
           key_data: {
             field,

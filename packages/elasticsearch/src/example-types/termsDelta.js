@@ -39,7 +39,10 @@ module.exports = {
           aggs: {
             field: {
               terms: {
-                [node.isScript ? 'script' : 'field']: getField(schema, node.field),
+                [node.isScript ? 'script' : 'field']: getField(
+                  schema,
+                  node.field
+                ),
                 size: node.size || 50000, // Arbitrary value instead integer max value.
               },
             },

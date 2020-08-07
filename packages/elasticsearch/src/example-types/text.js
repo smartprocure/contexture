@@ -58,9 +58,7 @@ module.exports = {
           let builtCriteria =
             node.operator === 'regexp'
               ? criteria
-              : unidecode(
-                  prefix + toSafeRegex(criteria) + suffix
-                )
+              : unidecode(prefix + toSafeRegex(criteria) + suffix)
 
           return {
             regexp: {

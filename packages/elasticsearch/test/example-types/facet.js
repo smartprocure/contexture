@@ -7,9 +7,9 @@ let facetTest = sequentialResultTest([
     aggregations: {
       facetOptions: {
         buckets: [
-          { key: 'a', doc_count: 10, },
-          { key: 'b', doc_count: 10, },
-          { key: 'c', doc_count: 10, },
+          { key: 'a', doc_count: 10 },
+          { key: 'b', doc_count: 10 },
+          { key: 'c', doc_count: 10 },
         ],
       },
       facetCardinality: { value: 10 },
@@ -52,13 +52,16 @@ describe('facet', () => {
 
     it('exclude', () =>
       expect(
-        facet.filter({
-          key: 'test',
-          type: 'facet',
-          field: 'testField',
-          mode: 'exclude',
-          values: ['abc', '123'],
-        }, testSchema('testField'))
+        facet.filter(
+          {
+            key: 'test',
+            type: 'facet',
+            field: 'testField',
+            mode: 'exclude',
+            values: ['abc', '123'],
+          },
+          testSchema('testField')
+        )
       ).to.deep.equal({
         bool: {
           must_not: {
@@ -72,12 +75,15 @@ describe('facet', () => {
     let values = _.times(_.random, 5000)
     it('number of values exceeds 4095', () =>
       expect(
-        facet.filter({
-          key: 'test',
-          type: 'facet',
-          field: 'testField',
-          values,
-        }, testSchema('testField'))
+        facet.filter(
+          {
+            key: 'test',
+            type: 'facet',
+            field: 'testField',
+            values,
+          },
+          testSchema('testField')
+        )
       ).to.deep.equal({
         bool: {
           filter: {
