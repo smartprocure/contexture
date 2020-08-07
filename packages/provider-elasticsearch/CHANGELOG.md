@@ -25,6 +25,8 @@
     * killed useless caseSensitive flag
   * [Text]
     * killed useless caseSensitive flag
+  * [TermsDelta]
+    * no more mode map, fieldmode, etc
 * BREAKING:
   * Killed schema `rawFieldName` and `getField`
 
