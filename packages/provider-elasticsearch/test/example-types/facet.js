@@ -362,7 +362,6 @@ describe('facet', () => {
                   facetOptions: {
                     terms: {
                       field: 'Organization.NameState.untouched',
-                      include: '.*(([Ss][Tt][Aa][Tt][Ee])).*',
                       order: {
                         _count: 'desc',
                       },
@@ -469,7 +468,6 @@ describe('facet', () => {
                   facetOptions: {
                     terms: {
                       field: 'Organization.NameState.untouched',
-                      include: '.*([Ss][Tt][Aa][Tt][Ee].*1.*2.*3).*',
                       order: {
                         _count: 'desc',
                       },

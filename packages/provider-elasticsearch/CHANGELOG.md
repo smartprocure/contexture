@@ -16,6 +16,8 @@
     * Kill verbose
     * Kill summaryView
     * Remove duplicated `hit` on results
+  * [Facet]
+    * kill caseSensitive, anyOrder, maxWords which weren't relevant anyway
 
 # 0.24.1
 * Added _score field to the results type
