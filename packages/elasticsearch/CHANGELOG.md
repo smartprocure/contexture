@@ -18,6 +18,7 @@
     * Remove duplicated `hit` on results
   * [Facet]
     * kill caseSensitive, anyOrder, maxWords which weren't relevant anyway
+    * kill cardinality, which was a proxy for precision_threshold
 
 # 0.24.1
 * Added _score field to the results type
