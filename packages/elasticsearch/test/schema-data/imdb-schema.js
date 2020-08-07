@@ -4,10 +4,6 @@ module.exports = {
       index: 'movies',
       type: 'movie',
     },
-    modeMap: {
-      word: '',
-      autocomplete: '.keyword',
-    },
     fields: {
       actors: {
         typeDefault: 'facet',
@@ -228,10 +224,6 @@ module.exports = {
     elasticsearch: {
       index: 'imdb',
       type: 'movie',
-    },
-    modeMap: {
-      word: '',
-      autocomplete: '.keyword',
     },
     fields: {
       actors: {
