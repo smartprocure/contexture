@@ -21,7 +21,6 @@ describe('All Example Types', function() {
       'matchCardinality',
       'matchStats',
       'nLevelAggregation',
-      'nonzeroClusters',
       'number',
       'numberRangeHistogram',
       'numberUtil',

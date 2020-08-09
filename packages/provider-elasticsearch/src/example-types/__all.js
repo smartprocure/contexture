@@ -13,7 +13,6 @@ module.exports = {
   matchCardinality: require('./matchCardinality'),
   matchStats: require('./matchStats'),
   nLevelAggregation: require('./nLevelAggregation'),
-  nonzeroClusters: require('./nonzeroClusters'),
   number: require('./number'),
   numberRangeHistogram: require('./numberRangeHistogram'),
   numberUtil: require('./numberUtil'),
