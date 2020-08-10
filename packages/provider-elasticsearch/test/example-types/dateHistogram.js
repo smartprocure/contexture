@@ -71,23 +71,11 @@ describe('dateHistogram', () => {
             avg: 78.5,
             sum: 471,
           },
-        ],
-        maxDate: '2010',
-        minDate: '2008',
+        ]
       },
       [
         {
           aggs: {
-            max_date: {
-              max: {
-                field: 'PO.IssuedDate',
-              },
-            },
-            min_date: {
-              min: {
-                field: 'PO.IssuedDate',
-              },
-            },
             twoLevelAgg: {
               date_histogram: {
                 field: 'PO.IssuedDate',
