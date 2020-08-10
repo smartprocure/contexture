@@ -71,7 +71,7 @@ describe('dateHistogram', () => {
             avg: 78.5,
             sum: 471,
           },
-        ]
+        ],
       },
       [
         {
