@@ -14,6 +14,9 @@
     * Top level `config.request` deprecated in favor of per request config
     * `requestorContext` replaced with `{requestOptions: headers}`
     * Killed schema `rawFieldName` and `getField`
+  * [Removed Example Types]
+    * `nonzeroClusters` (arbitrary with limited utility over regular histogram)
+    * `nLevelAggregation` (irrelevant now that ES supports pipeline aggs)
   * [Results]
     * Kill `forceExclude`
     * Kill `verbose`
@@ -32,7 +35,6 @@
     * No more `modeMap`, `fieldmode`, etc  
   * [Schema]
     * No longer adds `order: 0` by default (which was a pure UI concern which isn't used by the latest contexture-react usage examples anyway)
-  * [nonzeroClusters] killed entire type
 
 # 0.24.1
 * Added _score field to the results type

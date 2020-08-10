@@ -12,7 +12,6 @@ module.exports = {
   groupedMetric: require('./groupedMetric'),
   matchCardinality: require('./matchCardinality'),
   matchStats: require('./matchStats'),
-  nLevelAggregation: require('./nLevelAggregation'),
   number: require('./number'),
   numberRangeHistogram: require('./numberRangeHistogram'),
   numberUtil: require('./numberUtil'),
