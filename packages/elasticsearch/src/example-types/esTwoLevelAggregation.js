@@ -43,9 +43,6 @@ module.exports = {
         },
       },
     }
-    _.each(agg => {
-      query.aggs[agg.key] = agg.config.data
-    }, node.extraAggs)
 
     if (node.filter_agg)
       query = {
@@ -81,11 +78,6 @@ module.exports = {
           (results.aggregations.twoLevelFilter || results.aggregations)
             .twoLevelAgg.buckets
         ),
-      }
-      if (node.extraAggs) {
-        _.each(agg => {
-          rtn[agg.key] = results.aggregations[agg.key][agg.config.value_field]
-        }, node.extraAggs)
       }
       return rtn
     })

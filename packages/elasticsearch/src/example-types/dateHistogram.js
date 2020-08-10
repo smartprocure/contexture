@@ -14,30 +14,6 @@ module.exports = {
         min_doc_count: 0,
       },
       value_type: 'stats',
-      extraAggs: [
-        {
-          key: 'max_date',
-          config: {
-            value_field: 'value',
-            data: {
-              max: {
-                field: node.key_field,
-              },
-            },
-          },
-        },
-        {
-          key: 'min_date',
-          config: {
-            value_field: 'value',
-            data: {
-              min: {
-                field: node.key_field,
-              },
-            },
-          },
-        },
-      ],
     }
 
     if (node.boundsRange_min && node.boundsRange_max) {
@@ -58,8 +34,6 @@ module.exports = {
 
     return esTwoLevel(_.merge(payload, node), search).then(x => ({
       entries: x.results,
-      minDate: x.min_date,
-      maxDate: x.max_date,
     }))
   },
 }

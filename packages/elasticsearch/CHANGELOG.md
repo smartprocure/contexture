@@ -14,6 +14,11 @@
     * Top level `config.request` deprecated in favor of per request config
     * `requestorContext` replaced with `{requestOptions: headers}`
     * Killed schema `rawFieldName` and `getField`
+  * [Removed Example Types]
+    * `nonzeroClusters` (arbitrary with limited utility over regular histogram)
+    * `nLevelAggregation` (irrelevant now that ES supports pipeline aggs)
+    * `percentileRanks` (no known usage)
+    * `smartPercentileRanks` (no known usage)
   * [Results]
     * Kill `forceExclude`
     * Kill `verbose`
@@ -30,6 +35,10 @@
     * Killed useless `caseSensitive` flag
   * [TermsDelta]
     * No more `modeMap`, `fieldmode`, etc  
+  * [DateHistogram]
+    * Killed unused `minDate` and `maxDate` on response
+  * [esTwoLevelAggregation]
+    * Killed `extraAggs`
   * [Schema]
     * No longer adds `order: 0` by default (which was a pure UI concern which isn't used by the latest contexture-react usage examples anyway)
 

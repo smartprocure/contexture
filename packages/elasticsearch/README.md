@@ -341,12 +341,6 @@ A filters bucket which puts results into a pass and fail bucket, along with a ca
 #### `matchStats`
 A filters bucket which puts results into a pass and fail bucket, along with a stats metric nested inside.
 
-#### `nLevelAggregation`
-An infinitely nestable tree of aggs along with some support for a pipeline of specific reducers.
-
-#### `nonzeroClusters`
-Starts with a smart interval histogram merges buckets with nonzero counts.
-
 #### `percentileRanks`
 An ES percentile_ranks aggregation.
 
