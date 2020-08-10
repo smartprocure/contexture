@@ -17,6 +17,8 @@
   * [Removed Example Types]
     * `nonzeroClusters` (arbitrary with limited utility over regular histogram)
     * `nLevelAggregation` (irrelevant now that ES supports pipeline aggs)
+    * `percentileRanks` (no known usage)
+    * `smartPercentileRanks` (no known usage)
   * [Results]
     * Kill `forceExclude`
     * Kill `verbose`
