@@ -20,7 +20,6 @@ describe('All Example Types', function() {
       'groupedMetric',
       'matchCardinality',
       'matchStats',
-      'nLevelAggregation',
       'number',
       'numberRangeHistogram',
       'numberUtil',
