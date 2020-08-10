@@ -41,11 +41,9 @@ module.exports = {
             _.size(node.include) ? node.include : [node.value_type]
           ),
         },
+        ...F.arrayToObject('key', 'config.data', node.extraAggs)
       },
     }
-    _.each(agg => {
-      query.aggs[agg.key] = agg.config.data
-    }, node.extraAggs)
 
     if (node.filter_agg)
       query = {
