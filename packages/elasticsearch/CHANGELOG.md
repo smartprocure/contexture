@@ -37,6 +37,7 @@
     * No more `modeMap`, `fieldmode`, etc  
   * [DateHistogram]
     * Killed unused `minDate` and `maxDate` on response
+    * Killed unused extendedBounds support
   * [esTwoLevelAggregation]
     * Killed `extraAggs`
   * [Schema]
