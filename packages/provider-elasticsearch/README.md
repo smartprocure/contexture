@@ -326,7 +326,7 @@ Output
  
 
 #### `dateHistogram`
-A nested stats aggregation inside a dateHistogram aggregation, with support for tweaking min/max bounds.
+A nested stats aggregation inside a dateHistogram aggregation.
 
 #### `esTwoLevelAggregation`
 An attempt at a generic version of many of these types, which nests two aggregations - generally a metric inside a bucket. 
