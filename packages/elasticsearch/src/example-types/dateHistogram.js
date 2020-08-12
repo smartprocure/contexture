@@ -1,39 +1,16 @@
-let _ = require('lodash/fp')
-let F = require('futil')
-let moment = require('moment')
-let dateMath = require('@elastic/datemath')
 let esTwoLevel = require('./esTwoLevelAggregation').result
 
 module.exports = {
   validContext: node => node.key_field && node.value_field,
-  result(node, search) {
-    let payload = {
-      key_type: 'date_histogram',
-      key_data: {
-        interval: node.interval || 'year',
-        min_doc_count: 0,
+  result: ({ key_field, value_field, interval = 'year' }, search) =>
+    esTwoLevel(
+      {
+        key_type: 'date_histogram',
+        key_field,
+        key_data: { interval, min_doc_count: 0 },
+        value_field,
+        value_type: 'stats',
       },
-      value_type: 'stats',
-    }
-
-    if (node.boundsRange_min && node.boundsRange_max) {
-      let useDateMath = node.boundsRange_useDateMath
-      let min = node.boundsRange_min
-      let max = node.boundsRange_max
-      F.extendOn(payload.key_data, {
-        extended_bounds: {
-          min: useDateMath
-            ? dateMath.parse(min)
-            : moment(new Date(min)).format('YYYY-MM-DD'),
-          max: useDateMath
-            ? dateMath.parse(max)
-            : moment(new Date(max)).format('YYYY-MM-DD'),
-        },
-      })
-    }
-
-    return esTwoLevel(_.merge(payload, node), search).then(x => ({
-      entries: x.results,
-    }))
-  },
+      search
+    ).then(x => ({ entries: x.results })),
 }
