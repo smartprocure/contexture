@@ -8,9 +8,7 @@ module.exports = {
       _.merge(
         {
           key_type: 'range',
-          key_data: {
-            ranges: node.ranges,
-          },
+          key_data: { ranges: node.ranges },
           value_type: 'stats',
         },
         node

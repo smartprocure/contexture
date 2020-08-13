@@ -30,12 +30,7 @@ module.exports = {
         range_filter: {
           filter: rangeFilter(field, min, max),
           aggs: {
-            statistical: {
-              extended_stats: {
-                field,
-                missing: 0,
-              },
-            },
+            statistical: { extended_stats: { field, missing: 0 } },
             all_percentiles: {
               percentiles: {
                 field,
@@ -69,9 +64,6 @@ module.exports = {
       statisticalResult
     )
 
-    return {
-      statistical,
-      percentiles,
-    }
+    return { statistical, percentiles }
   },
 }
