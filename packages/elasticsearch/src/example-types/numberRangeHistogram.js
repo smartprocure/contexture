@@ -26,23 +26,14 @@ module.exports = {
           range_filter: {
             filter: util.rangeFilter(field, min, max),
             aggs: {
-              values: {
-                histogram: {
-                  field,
-                  interval,
-                  min_doc_count: 0,
-                },
-              },
+              values: { histogram: { field, interval, min_doc_count: 0 } },
             },
           },
         },
       })
 
       histogram = _.map(
-        entry => ({
-          value: Math.round(entry.key),
-          count: entry.doc_count,
-        }),
+        entry => ({ value: Math.round(entry.key), count: entry.doc_count }),
         _.get('aggregations.range_filter.values.buckets', histogramResult)
       )
     }

@@ -40,7 +40,5 @@ module.exports = {
         }),
         {}
       )([metric, ..._.reverse(aggs)])
-    ).then(results => ({
-      results: results.aggregations,
-    })),
+    ).then(results => ({ results: results.aggregations })),
 }
