@@ -6,7 +6,7 @@ module.exports = {
     search({
       aggs: {
         percentiles: {
-          percentiles: _.pick(['field', 'percents', 'keyed'], node)
+          percentiles: _.pick(['field', 'percents', 'keyed'], node),
         },
       },
     }).then(response => ({
