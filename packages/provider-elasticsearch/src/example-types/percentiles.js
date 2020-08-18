@@ -1,14 +1,12 @@
+let _ = require('lodash/fp')
+
 module.exports = {
   validContext: node => node.field,
-  result: ({ field, percents, keyed = false }, search) =>
+  result: (node, search) =>
     search({
       aggs: {
         percentiles: {
-          percentiles: {
-            field,
-            keyed,
-            ...(percents && { percents }),
-          },
+          percentiles: _.pick(['field', 'percents', 'keyed'], node),
         },
       },
     }).then(response => ({

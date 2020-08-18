@@ -11,21 +11,13 @@ module.exports = {
   hasValue: _.get('values.length'),
   filter(node, schema) {
     let field = getField(schema, node.field)
-    let result = {
-      terms: {
-        [field]: node.values,
-      },
-    }
+    let result = { terms: { [field]: node.values } }
     if (node.mode === 'exclude') result = negate(result)
 
     // trying to prevent 'Too Many Clauses' exception ... http://george-stathis.com/2013/10/18/setting-the-booleanquery-maxclausecount-in-elasticsearch/
     if (node.values.length > 4095) {
       // 4096 is our actual limit
-      result = {
-        bool: {
-          filter: result,
-        },
-      }
+      result = { bool: { filter: result } }
     }
 
     return result
@@ -49,11 +41,7 @@ module.exports = {
             ...(node.includeZeroes && { min_doc_count: 0 }),
           },
         },
-        facetCardinality: {
-          cardinality: {
-            field,
-          },
-        },
+        facetCardinality: { cardinality: { field } },
       },
     }
     if (node.optionsFilter) {
@@ -78,16 +66,8 @@ module.exports = {
         ? _.get(
             'aggregations.facetCardinality.value',
             await search({
-              aggs: {
-                facetCardinality: {
-                  cardinality: {
-                    field,
-                  },
-                },
-              },
-              query: {
-                match_all: {},
-              },
+              aggs: { facetCardinality: { cardinality: { field } } },
+              query: { match_all: {} },
             })
           )
         : agg.facetCardinality.value,
@@ -102,19 +82,9 @@ module.exports = {
     let missingRequest = {
       aggs: {
         facetAggregation: {
-          filter: {
-            terms: {
-              [field]: missing,
-            },
-          },
+          filter: { terms: { [field]: missing } },
           aggs: {
-            facetOptions: {
-              terms: {
-                field,
-                size: missing.length,
-                order,
-              },
-            },
+            facetOptions: { terms: { field, size: missing.length, order } },
           },
         },
       },
@@ -129,10 +99,7 @@ module.exports = {
     // Add zeroes for options that are still missing (since es wont return 0)
     let stillMissing = _.difference(missing, _.map('name', moreOptions))
     moreOptions = moreOptions.concat(
-      stillMissing.map(x => ({
-        name: x,
-        count: 0,
-      }))
+      stillMissing.map(name => ({ name, count: 0 }))
     )
 
     result.options = result.options.concat(moreOptions)

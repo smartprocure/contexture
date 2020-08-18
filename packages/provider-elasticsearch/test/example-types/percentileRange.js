@@ -1,4 +1,4 @@
-let sequentialResultTest = require('./testUtils').sequentialResultTest
+let { sequentialResultTest } = require('./testUtils')
 
 describe('percentilesRange', function() {
   let test = (...x) =>
@@ -81,7 +81,6 @@ describe('percentilesRange', function() {
           aggs: {
             percentiles: {
               percentiles: {
-                keyed: false,
                 field: 'LineItem.UnitPrice',
                 percents: [20, 95],
               },
