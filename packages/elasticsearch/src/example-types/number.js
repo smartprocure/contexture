@@ -11,7 +11,7 @@ module.exports = {
       max,
       percentileInterval = 1,
       rangeThreshold = 0.1,
-      findBestRange = false,
+      findBestRange,
     },
     search
   ) {
@@ -38,8 +38,7 @@ module.exports = {
         )
 
         let { statistical, percentiles } = results
-        let rangeMin = _.get('min', statistical)
-        let rangeMax = _.get('max', statistical)
+        let { min: rangeMin, max: rangeMax } = statistical
         hasMaxOutlier =
           percentiles &&
           (rangeMax - percentiles.intervalMax) / (rangeMax - rangeMin) >
@@ -59,10 +58,7 @@ module.exports = {
       }
 
       results = _.extend(results, {
-        bestRange: {
-          min: minValue,
-          max: maxValue,
-        },
+        bestRange: { min: minValue, max: maxValue },
       })
     } else {
       results = await util.getStatisticalResults(

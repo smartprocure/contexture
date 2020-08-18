@@ -69,7 +69,6 @@ describe('percentiles', () => {
           aggs: {
             percentiles: {
               percentiles: {
-                keyed: false,
                 field: 'LineItem.UnitPrice',
                 percents: [10, 30, 75],
               },

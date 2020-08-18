@@ -13,10 +13,7 @@ let geo = ({
   validContext: hasValue,
   async filter(node) {
     if (node.latitude && node.longitude)
-      return {
-        Latitude: node.latitude,
-        Longitude: node.longitude,
-      }
+      return { Latitude: node.latitude, Longitude: node.longitude }
     try {
       let response = await geocodeLocation(node.location)
       node._meta.preprocessorResult = response
