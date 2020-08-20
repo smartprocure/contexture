@@ -6,7 +6,7 @@ import { observer } from 'mobx-react'
 import { withTheme } from '../utils/theme'
 
 let ModalPicker = ({
-  options,
+  options = [],
   onChange,
   label,
   theme: { Button, NestedPicker, Modal },
@@ -23,7 +23,7 @@ let ModalPicker = ({
           }}
         />
       </Modal>
-      <Button onClick={F.on(open)}>{label}</Button>
+      {!!options.length && <Button onClick={F.on(open)}>{label}</Button>}
     </div>
   )
 }
