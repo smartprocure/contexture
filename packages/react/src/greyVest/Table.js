@@ -1,7 +1,7 @@
 import React from 'react'
 
 let Table = x => (
-  <div style={{ overflow: 'auto' }}>
+  <div clasName="gv-table-parent" style={{ overflow: 'auto' }}>
     <table className="gv-table" {...x} />
   </div>
 )
