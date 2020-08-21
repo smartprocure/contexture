@@ -31,7 +31,6 @@ describe('All Example Types', function() {
       'statistical',
       'tagsQuery',
       'tagsText',
-      'terms',
       'termsDelta',
       'termsStatsHits',
       'terms_stats',

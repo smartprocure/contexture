@@ -20,6 +20,7 @@
     * `nLevelAggregation` (irrelevant now that ES supports pipeline aggs)
     * `percentileRanks` (no known usage)
     * `smartPercentileRanks` (no known usage)
+    * `terms` (just a `facet` without a filter, or a new `groupedByFieldValue` without stats)
   * [Results]
     * Kill `forceExclude`
     * Kill `verbose`

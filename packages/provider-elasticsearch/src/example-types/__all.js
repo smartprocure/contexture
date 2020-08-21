@@ -25,7 +25,6 @@ module.exports = {
   // Legacy (covered by metric groups)
   esTwoLevelAggregation: require('./esTwoLevelAggregation'),
   terms_stats: require('./terms_stats'),
-  terms: require('./terms'),
   dateHistogram: require('./dateHistogram'),
   rangeStats: require('./rangeStats'),
   smartIntervalHistogram: require('./smartIntervalHistogram'),
