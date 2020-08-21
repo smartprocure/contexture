@@ -42,7 +42,8 @@
   "prettier": {
     "singleQuote": true,
     "semi": false,
-    "trailingComma": "es5"
+    "trailingComma": "es5",
+    "arrowParens": "avoid"
   },
   "storybook-deployer": {
     "commitMessage": "Deploy Storybook [ci skip]"
@@ -109,7 +110,7 @@
     "mobx-react": "^6.1.1",
     "mobx-utils": "^5.0.0",
     "moment": "^2.24.0",
-    "prettier": "^1.8.2",
+    "prettier": "^2.0.5",
     "raw-loader": "^2.0.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
