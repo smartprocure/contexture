@@ -22,13 +22,18 @@ module.exports = {
   percentiles: require('./percentiles'),
   statistical: require('./statistical'),
 
+  // // MetricGroups
+  // groupedByFieldValue: require('./metricGroups/groupedByFieldValue'),
+  // groupedByDateInterval: require('./metricGroups/groupedByDateInterval'),
+  // groupedByNumberRanges: require('./metricGroups/groupedByNumberRanges'),
+  // groupedByNumberInterval: require('./metricGroups/groupedByNumberInterval'),
+  // groupedByValuePartition: require('./metricGroups/groupedByValuePartition'),
+
   // Legacy (covered by metric groups)
-  esTwoLevelAggregation: require('./esTwoLevelAggregation'),
   terms_stats: require('./terms_stats'),
   dateHistogram: require('./dateHistogram'),
   rangeStats: require('./rangeStats'),
   smartIntervalHistogram: require('./smartIntervalHistogram'),
-  twoLevelMatch: require('./twoLevelMatch'),
   matchStats: require('./matchStats'),
   matchCardinality: require('./matchCardinality'),
   // Legacy (wip)
