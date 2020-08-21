@@ -6,12 +6,12 @@ let Checkbox = React.forwardRef(
     <label
       className={`gv-input gv-checkbox ${checked ? 'checked' : ''}`}
       style={style}
+      ref={ref}
     >
       <input
         type="checkbox"
         style={{ display: 'none' }}
         {...{ checked, onChange }}
-        ref={ref}
       />
       {checked ? (
         <i className="material-icons">check</i>
