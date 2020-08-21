@@ -5,10 +5,7 @@ import { defaultNodeProps } from './schema'
 export let oppositeJoin = node =>
   F.getOrReturn('join', node) === 'and' ? 'or' : 'and'
 
-export let randomString = () =>
-  Math.random()
-    .toString(36)
-    .substring(7)
+export let randomString = () => Math.random().toString(36).substring(7)
 
 export let blankNode = () => ({ key: randomString() })
 

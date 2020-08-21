@@ -30,9 +30,9 @@ let buttonStyle = {
 
 let AnimatedButton = ({ disabled, style, className, ...props }) => (
   <Button
-    className={`${
-      disabled ? 'disabled' : 'animated pulse infinite'
-    } ${className || ''}`}
+    className={`${disabled ? 'disabled' : 'animated pulse infinite'} ${
+      className || ''
+    }`}
     // BG Color is 50% white + primary button background, replacing 50% opacity
     style={{
       ...style,
