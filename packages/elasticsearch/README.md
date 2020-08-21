@@ -341,9 +341,6 @@ A filters bucket which puts results into a pass and fail bucket, along with a ca
 #### `matchStats`
 A filters bucket which puts results into a pass and fail bucket, along with a stats metric nested inside.
 
-#### `percentileRanks`
-An ES percentile_ranks aggregation.
-
 #### `percentiles`
 An ES percentiles aggregation.
 
@@ -359,14 +356,8 @@ Search result "hits", with support for highlighting, paging, sorting, etc.
 #### `smartIntervalHistogram`
 A stats aggregation inside a histogram aggreation - divided into intelligent chunks based on the min and max and snapping to clean "smart" business friendly intervals (roughly 25% of powers of 10).
 
-#### `smartPercentileRanks`
-¯\_(ツ)_/¯ 
-
 #### `statistical`
 A stats aggregation.
-
-#### `terms`
-A terms aggregation.
 
 #### `termsDelta`
 Shows the difference in terms between a foreground filter and a background filter. Very useful e.g. for showing things like new term values for time series (e.g. what new values are new in the past 90 days).
