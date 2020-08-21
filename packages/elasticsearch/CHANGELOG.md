@@ -7,6 +7,7 @@
 * [Results] track_total_hits and handle total.hits being an object for ES 7 support
 * Remove `bluebird` dependency
 * Remove last bit of non fp lodash
+* Removed directory-metagen dependency
 * 🚨BREAKING Changes:
   * [Provider Setup / Top Level]
     * Assumes the elasticsearch client is the new @elastic/elasticsearch npm package. Will not work with the old `elasticsearch` package
