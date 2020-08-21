@@ -6,7 +6,7 @@ describe('All Example Types', function() {
   this.timeout(5000)
   it('should load', () => {
     let types = Types()
-    expect(_.keys(types)).to.have.members([
+    expect(_.sortBy(x => x, _.keys(types))).to.have.members([
       'bool',
       'cardinality',
       'date',
@@ -22,7 +22,6 @@ describe('All Example Types', function() {
       'matchStats',
       'number',
       'numberRangeHistogram',
-      'numberUtil',
       'percentiles',
       'percentilesRange',
       'query',
