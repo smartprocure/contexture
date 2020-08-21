@@ -76,9 +76,11 @@ let Group = _.flow(
                 <FilterIndentTarget {...{ ...props, child, index }} />
                 {/*<FilterMoveTarget index={index} tree={tree} />*/}
                 <GroupItem {...{ ...props, child, index, adding, hover }} />
-                {/*index !== (tree.children.length-1) &&*/ !child.children && (
-                  <FilterMoveTarget {...{ ...props, child, index }} />
-                )}
+                {
+                  /*index !== (tree.children.length-1) &&*/ !child.children && (
+                    <FilterMoveTarget {...{ ...props, child, index }} />
+                  )
+                }
               </div>
             ),
             _.toArray(node.children)

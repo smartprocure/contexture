@@ -121,11 +121,13 @@ export default () => (
       }
       .filter-list-group {
         border-left: solid 2px;
-        padding-left: ${filterListMargin +
-          5}px; /* 30 for filter-list-item + 5 space */
+        padding-left: ${
+          filterListMargin + 5
+        }px; /* 30 for filter-list-item + 5 space */
         margin-left: -${filterListMargin}px;
-        margin-top: -${filterListMargin -
-          5}px; /* -30 for filter-list-item + 5 space */
+        margin-top: -${
+          filterListMargin - 5
+        }px; /* -30 for filter-list-item + 5 space */
         padding-top: ${filterListMargin}px;
       }
       .filter-actions-popover {

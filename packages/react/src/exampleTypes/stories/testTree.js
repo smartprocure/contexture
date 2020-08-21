@@ -224,7 +224,7 @@ export default (f = _.identity) => {
 
   let r = f(testTree)
 
-  let Obj = function() {
+  let Obj = function () {
     return r
   }
   Obj.prototype.toString = () => 'THIS IS A CONTEXTURE TEST TREE'

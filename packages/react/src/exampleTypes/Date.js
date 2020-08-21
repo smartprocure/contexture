@@ -39,10 +39,7 @@ let allRollingOpts = [
   { type: 'future', range: 'next36Months' },
 ]
 
-let endOfDay = date =>
-  moment(date)
-    .endOf('day')
-    .toDate()
+let endOfDay = date => moment(date).endOf('day').toDate()
 
 let DateComponent = ({
   tree,
