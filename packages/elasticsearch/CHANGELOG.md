@@ -21,6 +21,8 @@
     * `percentileRanks` (no known usage)
     * `smartPercentileRanks` (no known usage)
     * `terms` (just a `facet` without a filter, or a new `groupedByFieldValue` without stats)
+    * `twoLevelMatch` (never intended to be exposed)
+    * `esTwoLevelAggregation` (never intended to be exposed)
   * [Results]
     * Kill `forceExclude`
     * Kill `verbose`
