@@ -13,7 +13,6 @@ describe('All Example Types', function() {
       'dateHistogram',
       'dateRangeFacet',
       'default',
-      'esTwoLevelAggregation',
       'exists',
       'facet',
       'geo',
@@ -35,7 +34,6 @@ describe('All Example Types', function() {
       'termsStatsHits',
       'terms_stats',
       'text',
-      'twoLevelMatch',
     ])
   })
 })
