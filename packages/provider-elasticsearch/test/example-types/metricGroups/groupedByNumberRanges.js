@@ -1,4 +1,6 @@
-let { buildQuery } = require('../../../src/example-types/metricGroups/groupedByNumberRanges')
+let {
+  buildQuery,
+} = require('../../../src/example-types/metricGroups/groupedByNumberRanges')
 let { expect } = require('chai')
 
 describe('groupedByNumberRanges', () => {
@@ -13,7 +15,7 @@ describe('groupedByNumberRanges', () => {
           { from: '0', to: '500' },
           { from: '500', to: '10000' },
         ],
-      },)
+      })
     ).to.eql({
       aggs: {
         groups: {

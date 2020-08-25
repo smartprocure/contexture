@@ -1,21 +1,26 @@
-let { buildQuery } = require('../../../src/example-types/metricGroups/groupedByFieldValue')
+let {
+  buildQuery,
+} = require('../../../src/example-types/metricGroups/groupedByFieldValue')
 let { expect } = require('chai')
 
 describe('groupedByFieldValue', () => {
   it('should buildQuery', () => {
     expect(
-      buildQuery({
-        key: 'test',
-        type: 'groupedByFieldValue',
-        groupField: 'Organization.Name',
-        statsField: 'LineItem.TotalPrice',
-      }, {
-        fields: {
-          'Organization.Name': {
-            elasticsearch: { notAnalyzedField: 'untouched' }
-          }
+      buildQuery(
+        {
+          key: 'test',
+          type: 'groupedByFieldValue',
+          groupField: 'Organization.Name',
+          statsField: 'LineItem.TotalPrice',
+        },
+        {
+          fields: {
+            'Organization.Name': {
+              elasticsearch: { notAnalyzedField: 'untouched' },
+            },
+          },
         }
-      })
+      )
     ).to.eql({
       aggs: {
         groups: {
@@ -41,11 +46,11 @@ describe('groupedByFieldValue', () => {
         type: 'groupedByFieldValue',
         groupField: 'Organization.Name',
         statsField: 'LineItem.TotalPrice',
-        sort: { field: 'max', order: 'asc' }
+        sort: { field: 'max', order: 'asc' },
       })
     ).to.eql({
       aggs: {
-        groups: {  
+        groups: {
           terms: {
             field: 'Organization.Name',
             size: 10,
@@ -67,7 +72,7 @@ describe('groupedByFieldValue', () => {
         key: 'test',
         type: 'groupedByFieldValue',
         groupField: 'Organization.Name',
-        sort: { field: 'count' }
+        sort: { field: 'count' },
       })
     ).to.eql({
       aggs: {
@@ -87,7 +92,7 @@ describe('groupedByFieldValue', () => {
         key: 'test',
         type: 'groupedByFieldValue',
         groupField: 'Organization.Name',
-        sort: { field: 'key' }
+        sort: { field: 'key' },
       })
     ).to.eql({
       aggs: {
@@ -118,7 +123,7 @@ describe('groupedByFieldValue', () => {
           filter: {
             bool: {
               must: [
-                { regexp: { 'Organization.Name': '.*([Cc][Ii][Tt][Yy]).*' } }
+                { regexp: { 'Organization.Name': '.*([Cc][Ii][Tt][Yy]).*' } },
               ],
             },
           },
@@ -144,7 +149,7 @@ describe('groupedByFieldValue', () => {
         groupField: 'Organization.Name',
         statsField: 'LineItem.TotalPrice',
         filter: 'city   of    ',
-        stats: ['sum']
+        stats: ['sum'],
       })
     ).to.eql({
       aggs: {
@@ -153,7 +158,7 @@ describe('groupedByFieldValue', () => {
             bool: {
               must: [
                 { regexp: { 'Organization.Name': '.*([Cc][Ii][Tt][Yy]).*' } },
-                { regexp: { 'Organization.Name': '.*([Oo][Ff]).*' } }
+                { regexp: { 'Organization.Name': '.*([Oo][Ff]).*' } },
               ],
             },
           },
