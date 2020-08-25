@@ -13,18 +13,12 @@ describe('groupedByPercentiles', () => {
           groupField: 'LineItem.UnitPrice',
           percents: [20, 95],
         },
-        field => ({
+        () => ({
           percentiles: {
             keyed: false,
             values: [
-              {
-                key: 20,
-                value: 30.549999237060547,
-              },
-              {
-                key: 95,
-                value: 39.20000076293945,
-              },
+              { key: 20, value: 30.549999237060547 },
+              { key: 95, value: 39.20000076293945 },
             ],
           },
         })
@@ -35,16 +29,9 @@ describe('groupedByPercentiles', () => {
           range: {
             field: 'LineItem.UnitPrice',
             ranges: [
-              {
-                to: 30.549999237060547,
-              },
-              {
-                from: 30.549999237060547,
-                to: 39.20000076293945,
-              },
-              {
-                from: 39.20000076293945,
-              },
+              { to: 30.549999237060547 },
+              { from: 30.549999237060547, to: 39.20000076293945 },
+              { from: 39.20000076293945 },
             ],
           },
         },
