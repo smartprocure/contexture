@@ -13,6 +13,7 @@
   * `valuesDelta` - replaces `termsDelta`, standardized input/output names
   * `groupedByFieldValue` - repalces `terms_stats`
   * `groupedByDateInterval` - repalces `dateHistogram`
+  * `groupedByNumberInterval` - repalces `smartIntervalHistogram`
 * 🚨BREAKING Changes:
   * [Provider Setup / Top Level]
     * Assumes the elasticsearch client is the new @elastic/elasticsearch npm package. Will not work with the old `elasticsearch` package
