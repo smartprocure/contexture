@@ -13,19 +13,21 @@ describe('groupedByPercentiles', () => {
           groupField: 'LineItem.UnitPrice',
           percents: [20, 95],
         },
-        field => ({percentiles: {
-          keyed: false,
-          values: [
-            {
-              key: 20,
-              value: 30.549999237060547,
-            },
-            {
-              key: 95,
-              value: 39.20000076293945,
-            },
-          ],
-        }})
+        field => ({
+          percentiles: {
+            keyed: false,
+            values: [
+              {
+                key: 20,
+                value: 30.549999237060547,
+              },
+              {
+                key: 95,
+                value: 39.20000076293945,
+              },
+            ],
+          },
+        })
       )
     ).to.eql({
       aggs: {
@@ -47,6 +49,6 @@ describe('groupedByPercentiles', () => {
           },
         },
       },
-    },)
+    })
   })
 })
