@@ -15,6 +15,7 @@
   * `groupedByDateInterval` - replaces `dateHistogram`
   * `groupedByNumberInterval` - replaces `smartIntervalHistogram`
   * `groupedByNumberRanges` - replaces `rangeStats`
+  * `groupedByPercentiles` - replaces `percentileRange`
   * `groupedByValuePartition` - replaces `matchStats` and `matchCardinality`
 * 🚨BREAKING Changes:
   * [Provider Setup / Top Level]
@@ -32,6 +33,7 @@
     * `twoLevelMatch` (never intended to be exposed)
     * `esTwoLevelAggregation` (never intended to be exposed)
     * `termsDelta` (replaced with `valuesDelta`)
+    * `perentileRange` (replaced with `groupedByPercentiles`)
   * [Results]
     * Kill `forceExclude`
     * Kill `verbose`

@@ -21,14 +21,15 @@ module.exports = {
   cardinality: require('./cardinality'),
   percentiles: require('./percentiles'),
   statistical: require('./statistical'),
+  valuesDelta: require('./metricGroups/valuesDelta'),
 
-  // MetricGroups
+  // Metric Groups
   groupedByFieldValue: require('./metricGroups/groupedByFieldValue'),
   groupedByDateInterval: require('./metricGroups/groupedByDateInterval'),
   groupedByNumberRanges: require('./metricGroups/groupedByNumberRanges'),
   groupedByNumberInterval: require('./metricGroups/groupedByNumberInterval'),
+  groupedByPercentiles: require('./metricGroups/groupedByPercentiles'),
   groupedByValuePartition: require('./metricGroups/groupedByValuePartition'),
-  valuesDelta: require('./metricGroups/valuesDelta'),
 
   // Legacy (covered by metric groups)
   terms_stats: require('./terms_stats'),
@@ -39,7 +40,6 @@ module.exports = {
   matchCardinality: require('./matchCardinality'),
   // Legacy (wip)
   groupedMetric: require('./groupedMetric'),
-  percentilesRange: require('./percentilesRange'),
   numberRangeHistogram: require('./numberRangeHistogram'),
   termsStatsHits: require('./termsStatsHits'),
 }
