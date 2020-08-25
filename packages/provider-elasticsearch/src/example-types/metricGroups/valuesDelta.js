@@ -22,9 +22,7 @@ module.exports = {
   buildQuery,
   validContext: () => true,
   async result(node, search, schema) {
-    console.log('goo"')
     let response = await search(buildQuery(node, schema))
-    
     let { foreground, background } = _.mapValues(
       ground => _.map('key', ground.field.buckets),
       response.aggregations.results.buckets
