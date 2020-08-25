@@ -22,12 +22,12 @@ module.exports = {
   percentiles: require('./percentiles'),
   statistical: require('./statistical'),
 
-  // // MetricGroups
-  // groupedByFieldValue: require('./metricGroups/groupedByFieldValue'),
-  // groupedByDateInterval: require('./metricGroups/groupedByDateInterval'),
-  // groupedByNumberRanges: require('./metricGroups/groupedByNumberRanges'),
-  // groupedByNumberInterval: require('./metricGroups/groupedByNumberInterval'),
-  // groupedByValuePartition: require('./metricGroups/groupedByValuePartition'),
+  // MetricGroups
+  groupedByFieldValue: require('./metricGroups/groupedByFieldValue'),
+  groupedByDateInterval: require('./metricGroups/groupedByDateInterval'),
+  groupedByNumberRanges: require('./metricGroups/groupedByNumberRanges'),
+  groupedByNumberInterval: require('./metricGroups/groupedByNumberInterval'),
+  groupedByValuePartition: require('./metricGroups/groupedByValuePartition'),
   valuesDelta: require('./metricGroups/valuesDelta'),
 
   // Legacy (covered by metric groups)
