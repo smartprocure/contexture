@@ -15,6 +15,7 @@
   * `groupedByDateInterval` - replaces `dateHistogram`
   * `groupedByNumberInterval` - replaces `smartIntervalHistogram`
   * `groupedByNumberRanges` - replaces `rangeStats`
+  * `groupedByValuePartition` - replaces `matchStats` and `matchCardinality`
 * 🚨BREAKING Changes:
   * [Provider Setup / Top Level]
     * Assumes the elasticsearch client is the new @elastic/elasticsearch npm package. Will not work with the old `elasticsearch` package
