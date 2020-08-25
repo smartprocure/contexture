@@ -30,10 +30,10 @@ describe('All Example Types', function() {
       'statistical',
       'tagsQuery',
       'tagsText',
-      'termsDelta',
       'termsStatsHits',
       'terms_stats',
       'text',
+      'valuesDelta',
     ])
   })
 })

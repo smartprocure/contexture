@@ -8,6 +8,8 @@
 * Remove `bluebird` dependency
 * Remove last bit of non fp lodash
 * Removed directory-metagen dependency
+* New Nodes!
+  * `valuesDelta` - replaces `termsDelta`, standardized input/output names
 * 🚨BREAKING Changes:
   * [Provider Setup / Top Level]
     * Assumes the elasticsearch client is the new @elastic/elasticsearch npm package. Will not work with the old `elasticsearch` package
@@ -23,6 +25,7 @@
     * `terms` (just a `facet` without a filter, or a new `groupedByFieldValue` without stats)
     * `twoLevelMatch` (never intended to be exposed)
     * `esTwoLevelAggregation` (never intended to be exposed)
+    * `termsDelta` (replaced with `valuesDelta`)
   * [Results]
     * Kill `forceExclude`
     * Kill `verbose`
@@ -37,8 +40,6 @@
     * Killed useless `caseSensitive` flag
   * [Text]
     * Killed useless `caseSensitive` flag
-  * [TermsDelta]
-    * No more `modeMap`, `fieldmode`, etc  
   * [DateHistogram]
     * Killed unused `minDate` and `maxDate` on response
     * Killed unused extendedBounds support
