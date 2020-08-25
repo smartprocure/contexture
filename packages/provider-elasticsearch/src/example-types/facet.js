@@ -2,10 +2,7 @@ let _ = require('lodash/fp')
 let F = require('futil')
 let { buildRegexQueryForWords } = require('../regex')
 let { getField } = require('../fields')
-let { negate } = require('../elasticDSL')
-
-// https://www.elastic.co/guide/en/elasticsearch/reference/current/number.html#number
-const elasticsearchIntegerMax = 2 ** 31 - 1
+let { negate, elasticsearchIntegerMax } = require('../elasticDSL')
 
 module.exports = {
   hasValue: _.get('values.length'),
