@@ -8,8 +8,10 @@
 * Remove `bluebird` dependency
 * Remove last bit of non fp lodash
 * Removed directory-metagen dependency
+* New node types now focus on exporting a buildQuery function to make them more easily testable
 * New Nodes!
   * `valuesDelta` - replaces `termsDelta`, standardized input/output names
+  * `groupedByFieldValue` - repalces `terms_stats`
 * 🚨BREAKING Changes:
   * [Provider Setup / Top Level]
     * Assumes the elasticsearch client is the new @elastic/elasticsearch npm package. Will not work with the old `elasticsearch` package
