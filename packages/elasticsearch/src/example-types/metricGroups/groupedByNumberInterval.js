@@ -1,5 +1,6 @@
 let { statsAggs, simplifyBuckets } = require('./utils')
 let { calcSmartInterval } = require('../../smartInterval')
+let statistical = require('../statistical')
 
 let buildQuery = async (
   { statsField, stats, groupField: field, interval = 'smart' },
@@ -24,7 +25,7 @@ module.exports = {
   buildQuery,
   validContext: node => node.groupField && node.statsField,
   async result(node, search) {
-    let response = await search(buildQuery(node))
+    let response = await search(buildQuery(node, field => statistical.result({ field }, search)))
     return { results: simplifyBuckets(response.aggregations.groups.buckets) }
   },
 }
