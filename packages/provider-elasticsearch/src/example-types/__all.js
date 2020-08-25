@@ -28,6 +28,7 @@ module.exports = {
   // groupedByNumberRanges: require('./metricGroups/groupedByNumberRanges'),
   // groupedByNumberInterval: require('./metricGroups/groupedByNumberInterval'),
   // groupedByValuePartition: require('./metricGroups/groupedByValuePartition'),
+  valuesDelta: require('./metricGroups/valuesDelta'),
 
   // Legacy (covered by metric groups)
   terms_stats: require('./terms_stats'),
@@ -40,6 +41,5 @@ module.exports = {
   groupedMetric: require('./groupedMetric'),
   percentilesRange: require('./percentilesRange'),
   numberRangeHistogram: require('./numberRangeHistogram'),
-  termsDelta: require('./termsDelta'),
   termsStatsHits: require('./termsStatsHits'),
 }
