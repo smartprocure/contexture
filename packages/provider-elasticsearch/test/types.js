@@ -20,6 +20,7 @@ describe('All Example Types', function() {
       'groupedByFieldValue',
       'groupedByNumberInterval',
       'groupedByNumberRanges',
+      'groupedByPercentiles',
       'groupedByValuePartition',
       'groupedMetric',
       'matchCardinality',
