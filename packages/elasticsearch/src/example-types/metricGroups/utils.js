@@ -21,5 +21,5 @@ let simplifyBuckets = _.flow(
 module.exports = {
   statsAggs,
   buildMetrics,
-  simplifyBuckets
+  simplifyBuckets,
 }

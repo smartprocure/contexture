@@ -8,32 +8,35 @@ let getSortField = field => {
   return `${field}.value`
 }
 
-let buildQuery = ({
-  statsField,
-  stats,
-  groupField,
-  size = 10,
-  filter, 
-  // sortField can be key, count, or stat name - min, max, avg, sum as long as its in stats
-  sort: { field: sortField = 'sum', order = 'desc' } = {} // todo: support array sort for multi-level
-}, schema) => {
+let buildQuery = (
+  {
+    statsField,
+    stats,
+    groupField,
+    size = 10,
+    filter,
+    // sortField can be key, count, or stat name - min, max, avg, sum as long as its in stats
+    sort: { field: sortField = 'sum', order = 'desc' } = {}, // todo: support array sort for multi-level
+  },
+  schema
+) => {
   let field = getField(schema, groupField)
-  let query =  {
+  let query = {
     aggs: {
       groups: {
         terms: { field, size, order: { [getSortField(sortField)]: order } },
-        ...statsAggs(statsField, stats)
-      }
-    }
+        ...statsAggs(statsField, stats),
+      },
+    },
   }
   if (filter)
     query = {
       aggs: {
         valueFilter: {
           filter: buildRegexQueryForWords(field)(filter),
-          ...query
-        }
-      }
+          ...query,
+        },
+      },
     }
   return query
 }
@@ -41,12 +44,13 @@ let buildQuery = ({
 module.exports = {
   buildQuery,
   validContext: node => node.groupField && node.statsField,
-  result: async (node, search, schema) => {
+  async result(node, search, schema) {
     let response = await search(buildQuery(node, schema))
     return {
       results: simplifyBuckets(
-        (response.aggregations.valueFilter || response.aggregations).groups.buckets
-      )
+        (response.aggregations.valueFilter || response.aggregations).groups
+          .buckets
+      ),
     }
   },
 }

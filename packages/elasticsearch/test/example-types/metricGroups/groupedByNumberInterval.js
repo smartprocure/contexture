@@ -1,4 +1,6 @@
-let { buildQuery } = require('../../../src/example-types/metricGroups/groupedByNumberInterval')
+let {
+  buildQuery,
+} = require('../../../src/example-types/metricGroups/groupedByNumberInterval')
 let { expect } = require('chai')
 
 describe('groupedByNumberInterval', () => {
@@ -9,7 +11,7 @@ describe('groupedByNumberInterval', () => {
         type: 'groupedByNumberInterval',
         groupField: 'LineItem.UnitPrice',
         statsField: 'LineItem.TotalPrice',
-        interval: 100
+        interval: 100,
       })
     ).to.eql({
       aggs: {
@@ -31,13 +33,16 @@ describe('groupedByNumberInterval', () => {
   })
   it('should buildQuery with smartInterval', async () => {
     expect(
-      await buildQuery({
-        key: 'test',
-        type: 'groupedByNumberInterval',
-        groupField: 'LineItem.UnitPrice',
-        statsField: 'LineItem.TotalPrice',
-        interval: 'smart'
-      }, field => ({ min:10, max: 5000 }))
+      await buildQuery(
+        {
+          key: 'test',
+          type: 'groupedByNumberInterval',
+          groupField: 'LineItem.UnitPrice',
+          statsField: 'LineItem.TotalPrice',
+          interval: 'smart',
+        },
+        field => ({ min: 10, max: 5000 })
+      )
     ).to.eql({
       aggs: {
         groups: {

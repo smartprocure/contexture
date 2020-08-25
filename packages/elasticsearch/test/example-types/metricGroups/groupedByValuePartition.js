@@ -1,4 +1,6 @@
-let { buildQuery } = require('../../../src/example-types/metricGroups/groupedByValuePartition')
+let {
+  buildQuery,
+} = require('../../../src/example-types/metricGroups/groupedByValuePartition')
 let { expect } = require('chai')
 
 describe('groupedByValuePartition', () => {
@@ -9,14 +11,16 @@ describe('groupedByValuePartition', () => {
         type: 'groupedByValuePartition',
         groupField: 'Vendor.City.untouched',
         statsField: 'LineItem.TotalPrice',
-        matchValue: 'Washington'
-      },)
+        matchValue: 'Washington',
+      })
     ).to.eql({
       aggs: {
         groups: {
           filters: {
             other_bucket_key: 'fail',
-            filters: { pass: { term: { 'Vendor.City.untouched': 'Washington' } } },
+            filters: {
+              pass: { term: { 'Vendor.City.untouched': 'Washington' } },
+            },
           },
           aggs: {
             min: { min: { field: 'LineItem.TotalPrice' } },
@@ -36,14 +40,16 @@ describe('groupedByValuePartition', () => {
         groupField: 'Vendor.City.untouched',
         statsField: 'LineItem.TotalPrice',
         matchValue: 'Washington',
-        stats: ['cardinality']
-      },)
+        stats: ['cardinality'],
+      })
     ).to.eql({
       aggs: {
         groups: {
           filters: {
             other_bucket_key: 'fail',
-            filters: { pass: { term: { 'Vendor.City.untouched': 'Washington' } } },
+            filters: {
+              pass: { term: { 'Vendor.City.untouched': 'Washington' } },
+            },
           },
           aggs: {
             cardinality: { cardinality: { field: 'LineItem.TotalPrice' } },

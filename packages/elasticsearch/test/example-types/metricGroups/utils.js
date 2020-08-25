@@ -31,16 +31,16 @@ describe('metricGroups utils', () => {
           max: { max: { field: 'price' } },
           avg: { avg: { field: 'price' } },
           sum: { sum: { field: 'price' } },
-        }
+        },
       })
     })
     it('should work with explicit stats', () => {
       expect(statsAggs('price', ['max', 'sum', 'cardinality'])).to.eql({
-        aggs:{
+        aggs: {
           max: { max: { field: 'price' } },
           sum: { sum: { field: 'price' } },
           cardinality: { cardinality: { field: 'price' } },
-        }
+        },
       })
     })
     it('should add no stats without field', () => {
@@ -81,11 +81,10 @@ describe('metricGroups utils', () => {
             to: 500,
             to_as_string: '500.0',
             doc_count: 476899106,
-              min: {value: -500000000 },
-              max: {value: 937998784 },
-              avg: {value: 973.7296742278231 },
-              sum: {value: 464370811124.9201 },
-            
+            min: { value: -500000000 },
+            max: { value: 937998784 },
+            avg: { value: 973.7296742278231 },
+            sum: { value: 464370811124.9201 },
           },
           {
             key: '500.0-10000.0',
@@ -94,14 +93,12 @@ describe('metricGroups utils', () => {
             to: 10000,
             to_as_string: '10000.0',
             doc_count: 110489302,
-              min: {value: -999299968 },
-              max: {value: 2100000000 },
-              avg: {value: 3038.799582495458 },
-              sum: {value: 335754844787.8146 },
-            
+            min: { value: -999299968 },
+            max: { value: 2100000000 },
+            avg: { value: 3038.799582495458 },
+            sum: { value: 335754844787.8146 },
           },
-        ]
-        )
+        ])
       ).to.eql([
         {
           key: '0.0-500.0',
@@ -110,10 +107,10 @@ describe('metricGroups utils', () => {
           to: 500,
           to_as_string: '500.0',
           count: 476899106,
-          min:  -500000000,
-          max:  937998784,
-          avg:  973.7296742278231,
-          sum:  464370811124.9201,
+          min: -500000000,
+          max: 937998784,
+          avg: 973.7296742278231,
+          sum: 464370811124.9201,
         },
         {
           key: '500.0-10000.0',
@@ -122,10 +119,10 @@ describe('metricGroups utils', () => {
           to: 10000,
           to_as_string: '10000.0',
           count: 110489302,
-          min:  -999299968,
-          max:  2100000000,
-          avg:  3038.799582495458,
-          sum:  335754844787.8146,
+          min: -999299968,
+          max: 2100000000,
+          avg: 3038.799582495458,
+          sum: 335754844787.8146,
         },
       ])
     })

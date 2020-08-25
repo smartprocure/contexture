@@ -10,12 +10,12 @@ module.exports = {
   exists: require('./exists'),
   tagsText: require('./tagsText'),
   tagsQuery: require('./tagsQuery'),
-  
+
   // Combo Filter + Results
   facet: require('./facet'),
   number: require('./number'),
   dateRangeFacet: require('./dateRangeFacet'),
-  
+
   // Single Metrics
   results: require('./results'),
   cardinality: require('./cardinality'),

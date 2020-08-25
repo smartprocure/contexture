@@ -12,7 +12,7 @@ let buildQuery = ({ groupField, statsField, stats, interval = 'year' }) => ({
 module.exports = {
   buildQuery,
   validContext: node => node.groupField && node.statsField,
-  result: async (node, search) => {
+  async result(node, search) {
     let response = await search(buildQuery(node))
     return { results: simplifyBuckets(response.aggregations.groups.buckets) }
   },
