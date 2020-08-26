@@ -148,9 +148,9 @@ describe('metricGroups utils', () => {
         {
           key: '0.0-500.0',
           from: 0,
-          from_as_string: '0.0',
+          fromAsString: '0.0',
           to: 500,
-          to_as_string: '500.0',
+          toAsString: '500.0',
           count: 476899106,
           min: -500000000,
           max: 937998784,
@@ -160,9 +160,9 @@ describe('metricGroups utils', () => {
         {
           key: '500.0-10000.0',
           from: 500,
-          from_as_string: '500.0',
+          fromAsString: '500.0',
           to: 10000,
-          to_as_string: '10000.0',
+          toAsString: '10000.0',
           count: 110489302,
           min: -999299968,
           max: 2100000000,
