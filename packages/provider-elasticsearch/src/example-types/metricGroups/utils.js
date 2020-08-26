@@ -18,6 +18,8 @@ let simplifyAggregations = _.mapValues(x => {
   if (x.value) return x.value
   // Multi value metrics can return values
   if (x.values) return x.values
+  // top_hits has hits
+  if (x.hits) return x.hits
   // Bucketing metrics generally have buckets - and we can recurse inside
   // This is a bit crazy, but was trivial to add :)
   if (x.buckets) return simplifyBuckets(x.buckets)

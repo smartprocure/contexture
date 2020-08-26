@@ -33,6 +33,7 @@ describe('All Example Types', function() {
       'results',
       'smartIntervalHistogram',
       'statistical',
+      'stats',
       'tagsQuery',
       'tagsText',
       'termsStatsHits',
