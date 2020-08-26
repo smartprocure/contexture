@@ -2,7 +2,7 @@ let {
   statsAggs,
   buildMetrics,
   simplifyBuckets,
-  simplifyAggregation,
+  simplifyAggregations,
 } = require('../../../src/example-types/metricGroups/utils')
 let { expect } = require('chai')
 
@@ -172,25 +172,31 @@ describe('metricGroups utils', () => {
       ])
     })
   })
-  describe('simplifyAggregation', () => {
+  describe('simplifyAggregations', () => {
     it('should work on value (cardinality example)', () => {
-      expect(simplifyAggregation({ value: 471 })).to.eql(471)
+      expect(simplifyAggregations({ cardinality: { value: 471 } })).to.eql({
+        cardinality: 471,
+      })
     })
     it('should work on values (percentiles example)', () => {
       expect(
-        simplifyAggregation({
-          keyed: true,
-          values: [
-            { key: 10.0, value: 44 },
-            { key: 30.0, value: 63 },
-            { key: 70.0, value: 80.5 },
-          ],
+        simplifyAggregations({
+          percentiles: {
+            keyed: true,
+            values: [
+              { key: 10.0, value: 44 },
+              { key: 30.0, value: 63 },
+              { key: 70.0, value: 80.5 },
+            ],
+          },
         })
-      ).to.eql([
-        { key: 10.0, value: 44 },
-        { key: 30.0, value: 63 },
-        { key: 70.0, value: 80.5 },
-      ])
+      ).to.eql({
+        percentiles: [
+          { key: 10.0, value: 44 },
+          { key: 30.0, value: 63 },
+          { key: 70.0, value: 80.5 },
+        ]
+      })
     })
   })  
 })
