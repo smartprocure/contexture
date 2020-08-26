@@ -1,3 +1,4 @@
+let F = require('futil')
 let { statsAggs, simplifyBuckets } = require('./utils')
 
 let buildQuery = ({ statsField, stats, groupField, matchValue }) => ({
