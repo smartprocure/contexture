@@ -7,7 +7,7 @@ let buildQuery = async (
   { statsField, stats, groupField: field, interval = 'smart' },
   getStats
 ) => {
-  if (interval == 'smart') {
+  if (interval === 'smart') {
     let { min, max } = await getStats(field)
     interval = calcSmartInterval(min, max)
   }
