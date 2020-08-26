@@ -41,7 +41,7 @@ describe('groupedByNumberInterval', () => {
           statsField: 'LineItem.TotalPrice',
           interval: 'smart',
         },
-        field => ({ min: 10, max: 5000 })
+        () => ({ min: 10, max: 5000 })
       )
     ).to.eql({
       aggs: {
