@@ -42,5 +42,4 @@ module.exports = {
   // Legacy (wip)
   groupedMetric: require('./groupedMetric'),
   numberRangeHistogram: require('./numberRangeHistogram'),
-  termsStatsHits: require('./termsStatsHits'),
 }

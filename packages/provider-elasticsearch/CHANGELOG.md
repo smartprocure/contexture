@@ -11,7 +11,7 @@
 * New node types now focus on exporting a buildQuery function to make them more easily testable
 * New Nodes!
   * `valuesDelta` - replaces `termsDelta`, standardized input/output names
-  * `groupedByFieldValue` - replaces `terms_stats`
+  * `groupedByFieldValue` - replaces `terms_stats` and `termsStatsHits`
   * `groupedByDateInterval` - replaces `dateHistogram`
   * `groupedByNumberInterval` - replaces `smartIntervalHistogram`
   * `groupedByNumberRanges` - replaces `rangeStats`
@@ -40,6 +40,7 @@
     * `esTwoLevelAggregation` (never intended to be exposed)
     * `termsDelta` (replaced with `valuesDelta`)
     * `perentileRange` (replaced with `groupedByPercentiles`)
+    * `termsStatsHits` (replaced with `groupedByFieldValue`)
   * [Results]
     * Kill `forceExclude`
     * Kill `verbose`
