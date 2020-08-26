@@ -13,12 +13,24 @@ let buildMetrics = (field, metrics = ['min', 'max', 'avg', 'sum']) =>
 let statsAggs = (field, stats) =>
   field ? { aggs: buildMetrics(field, stats) } : {}
 
+let simplifyAggregation = x => {
+  // Single value metrics always return value
+  if (x.value) return x.value
+  // Multi value metrics can return values
+  if (x.values) return x.values
+  // Bucketing metrics generally have buckets - and we can recurse inside
+  // This is a bit crazy, but was trivial to add :)
+  if (x.buckets) return simplifyBuckets(x.buckets)
+  // Multi value metrics can also return objects (like stats, extended_stats, etc):
+  return x
+}
 let simplifyBuckets = _.flow(
   F.when(_.isPlainObject, F.unkeyBy('key')),
   _.map(
     _.flow(
       F.renameProperty('doc_count', 'count'),
-      _.mapValues(F.getOrReturn('value'))
+      _.mapValues(simplifyAggregation),
+      _.mapKeys(_.camelCase)
     )
   )
 )
@@ -27,4 +39,5 @@ module.exports = {
   statsAggs,
   buildMetrics,
   simplifyBuckets,
+  simplifyAggregation,
 }
