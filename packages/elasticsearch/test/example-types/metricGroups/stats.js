@@ -31,12 +31,14 @@ describe('stats', () => {
           max: true,
           percentiles: { percents: [20, 50] },
           topHits: true,
+          cardinality: true,
         },
       })
     ).to.eql({
       aggs: {
         min: { min: { field: 'PO.IssuedAmount' } },
         max: { max: { field: 'PO.IssuedAmount' } },
+        cardinality: { cardinality: { field: 'PO.IssuedAmount' } },
         percentiles: {
           percentiles: { field: 'PO.IssuedAmount', percents: [20, 50] },
         },
@@ -58,6 +60,9 @@ describe('stats', () => {
         },
         max: {
           value: 1.00395288e8,
+        },
+        cardinality: {
+          value: 471,
         },
         topHits: {
           hits: {
@@ -118,6 +123,7 @@ describe('stats', () => {
       },
       min: -2669666.5,
       max: 1.00395288e8,
+      cardinality: 471,
       topHits: {
         total: 1260294,
         max_score: 1.0,
