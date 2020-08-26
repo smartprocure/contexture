@@ -340,9 +340,6 @@ A filters bucket which puts results into a pass and fail bucket, along with a st
 #### `percentiles`
 An ES percentiles aggregation.
 
-#### `percentilesRange`
-Does a range aggregation based on the result of a percentiles aggregation.
-
 #### `rangeStats`
 A stats aggregation in a range aggregation.
 
@@ -354,61 +351,6 @@ A stats aggregation inside a histogram aggreation - divided into intelligent chu
 
 #### `statistical`
 A stats aggregation.
-
-#### `termsDelta`
-Shows the difference in terms between a foreground filter and a background filter. Very useful e.g. for showing things like new term values for time series (e.g. what new values are new in the past 90 days).
-
-#### `termsStatsHits`
-This result type combines multiple ES aggregations (terms/stats/top_hits) to create a result set.
-On top of this the result set also allows for `details` configuration where a summary/details type of results can be achived.
-
-**Configuration:**
-
-```js
-config: {
-    key_field: '<keyField>',
-    value_field: '<valueField>',
-    details_key_field: '<detailsKeyField>',       // Optional
-    details_value_field: '<detailsValueField>',   // Optional
-    size: 500,          // The total result size
-    hitSize: 50,        // The hit result size
-    details_size: 500,  // The details result size
-    order: 'sum',
-    sortDir: 'desc',
-    include: ['<field1>', '<field2>'],  // // Optional. Which fields to include in the summary.
-    details_include: ['<fieldToIncludeInDetails>']  // Optional. Which detail fields to include in the details section
-}
-```
-  **Example:**
-
-```js
-{
-  key: 'City of Deerfield',
-  doc_count: 50,
-  count: 6,
-  min: 60,
-  max: 98,
-  avg: 78.5,
-  sum: 471,
-  hits: [
-    {
-      Organization: {
-        LatLong: '34.056237,-118.257362',
-      },
-    },
-  ],
-  details: [
-    {
-      Organization: {
-        ID: '80229',
-      },
-      doc_count: 1,
-      key: 'University Of Michigan at Ann Arbor, MI',
-    },
-  ],
-}
-```
-}
 
 #### `terms_stats`
 
