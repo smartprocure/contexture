@@ -22,6 +22,7 @@ module.exports = {
   percentiles: require('./percentiles'),
   statistical: require('./statistical'),
   valuesDelta: require('./metricGroups/valuesDelta'),
+  stats: require('./metricGroups/stats'),
 
   // Metric Groups
   groupedByFieldValue: require('./metricGroups/groupedByFieldValue'),
