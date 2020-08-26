@@ -18,6 +18,11 @@
   * `groupedByPercentiles` - replaces `percentileRange`
   * `groupedByValuePartition` - replaces `matchStats` and `matchCardinality`
 * 🚨BREAKING Changes:
+  * IE Support requires a polyfill for Math.log10
+    * Browser usage of `contexture-elasticsearch` is an odd use case anyway, but you can use core-js to polyfill if needed, or do it yourself:
+      ```js
+      Math.log10 = Math.log10 = x => Math.log(x) / Math.LOG10E
+      ```
   * [Provider Setup / Top Level]
     * Assumes the elasticsearch client is the new @elastic/elasticsearch npm package. Will not work with the old `elasticsearch` package
     * Removed unused `getMappingProperties` API
