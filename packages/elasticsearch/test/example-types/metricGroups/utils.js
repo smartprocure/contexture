@@ -49,17 +49,17 @@ describe('metricGroups utils', () => {
       expect(statsAggs()).to.eql({})
     })
     it('should work with top hits in array', () => {
-      expect(
-        statsAggs('price', ['min', 'topHits'])
-      ).to.eql({
+      expect(statsAggs('price', ['min', 'topHits'])).to.eql({
         aggs: {
           min: { min: { field: 'price' } },
           topHits: { top_hits: {} },
         },
-      })      
+      })
     })
     it('should work with objects', () => {
-      expect(statsAggs('price', {min: true, percentiles: {percents: [20, 50]}})).to.eql({
+      expect(
+        statsAggs('price', { min: true, percentiles: { percents: [20, 50] } })
+      ).to.eql({
         aggs: {
           min: { min: { field: 'price' } },
           percentiles: { percentiles: { field: 'price', percents: [20, 50] } },
@@ -77,7 +77,7 @@ describe('metricGroups utils', () => {
           min: { min: { field: 'price' } },
           topHits: { top_hits: { order: {}, _source: { include: ['city'] } } },
         },
-      })      
+      })
     })
     it('might even work with buckets', () => {
       expect(
@@ -88,9 +88,9 @@ describe('metricGroups utils', () => {
       ).to.eql({
         aggs: {
           min: { min: { field: 'price' } },
-          histogram: { histogram: {  field: 'price', interval: 10000 } },
+          histogram: { histogram: { field: 'price', interval: 10000 } },
         },
-      })      
+      })
     })
   })
   describe('simplifyBuckets', () => {
@@ -195,8 +195,8 @@ describe('metricGroups utils', () => {
           { key: 10.0, value: 44 },
           { key: 30.0, value: 63 },
           { key: 70.0, value: 80.5 },
-        ]
+        ],
       })
     })
-  })  
+  })
 })
