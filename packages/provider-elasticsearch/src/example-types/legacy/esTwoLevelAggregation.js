@@ -1,6 +1,16 @@
 let _ = require('lodash/fp')
 let F = require('futil')
-let { metrics, hasValidMetrics } = require('../../aggUtils')
+let metrics = [
+  'avg',
+  'max',
+  'min',
+  'sum',
+  'value_count',
+  'weighted_avg',
+  'cardinality',
+  'median_absolute_deviation',
+]
+let hasValidMetrics = node => !_.difference(node.include, metrics).length
 
 // let example = {
 //   key_type: 'range',
