@@ -17,7 +17,7 @@
   * `groupedByNumberRanges` - replaces `rangeStats`
   * `groupedByPercentiles` - replaces `percentileRange`
   * `groupedByValuePartition` - replaces `matchStats` and `matchCardinality`
-  * `stats` - replaces `statistical`, `cardinality` and `percentiles`, plus supports other stats
+  * `stats` - can replace `statistical`, `cardinality` and `percentiles`, plus supports other stats
 * 🚨BREAKING Changes:
   * IE Support requires a polyfill for Math.log10
     * Browser usage of `contexture-elasticsearch` is an odd use case anyway, but you can use core-js to polyfill if needed, or do it yourself:
