@@ -1,4 +1,4 @@
-let twoLevelMatch = require('./twoLevelMatch')
+let twoLevelMatch = require('../twoLevelMatch')
 
 module.exports = {
   validContext: twoLevelMatch.validContext,

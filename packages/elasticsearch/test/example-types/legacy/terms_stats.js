@@ -1,4 +1,4 @@
-let sequentialResultTest = require('./testUtils').sequentialResultTest
+let sequentialResultTest = require('../testUtils').sequentialResultTest
 
 describe('term_stats', () => {
   let test = (...x) =>

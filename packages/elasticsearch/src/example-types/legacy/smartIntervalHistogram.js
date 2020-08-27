@@ -1,6 +1,6 @@
 let _ = require('lodash/fp')
-let statsResults = require('./statistical').result
-let calcSmartInterval = require('../smartInterval').calcSmartInterval
+let statsResults = require('../statistical').result
+let calcSmartInterval = require('../../smartInterval').calcSmartInterval
 
 module.exports = {
   validContext: node => node.field,

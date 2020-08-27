@@ -1,7 +1,7 @@
-const sequentialResultTest = require('./testUtils').sequentialResultTest
+const sequentialResultTest = require('../testUtils').sequentialResultTest
 
-describe('matchStats', () => {
-  let test = (...x) =>
+describe('matchCardinality', () => {
+  const test = (...x) =>
     sequentialResultTest(
       [
         {
@@ -10,22 +10,26 @@ describe('matchStats', () => {
               buckets: {
                 pass: {
                   doc_count: 50,
-                  twoLevelAgg: {
-                    count: 6,
-                    min: 60,
-                    max: 98,
-                    avg: 78.5,
-                    sum: 471,
+                  cardinality: {
+                    value: 471,
                   },
                 },
                 fail: {
                   doc_count: 50,
-                  twoLevelAgg: {
-                    count: 6,
-                    min: 60,
-                    max: 98,
-                    avg: 78.5,
-                    sum: 471,
+                  cardinality: {
+                    value: 471,
+                  },
+                },
+                succeed: {
+                  doc_count: 50,
+                  cardinality: {
+                    value: 0,
+                  },
+                },
+                retry: {
+                  doc_count: 50,
+                  cardinality: {
+                    value: null,
                   },
                 },
               },
@@ -39,7 +43,7 @@ describe('matchStats', () => {
     test(
       {
         key: 'test',
-        type: 'matchStats',
+        type: 'matchCardinality',
         key_field: 'Vendor.City.untouched',
         key_value: 'Washington',
         value_field: 'LineItem.TotalPrice',
@@ -49,20 +53,22 @@ describe('matchStats', () => {
           {
             key: 'pass',
             doc_count: 50,
-            count: 6,
-            min: 60,
-            max: 98,
-            avg: 78.5,
-            sum: 471,
+            cardinality: 471,
           },
           {
             key: 'fail',
             doc_count: 50,
-            count: 6,
-            min: 60,
-            max: 98,
-            avg: 78.5,
-            sum: 471,
+            cardinality: 471,
+          },
+          {
+            key: 'succeed',
+            doc_count: 50,
+            cardinality: 0,
+          },
+          {
+            key: 'retry',
+            doc_count: 50,
+            value: null,
           },
         ],
       },
@@ -89,8 +95,8 @@ describe('matchStats', () => {
                 },
               },
               aggs: {
-                stats: {
-                  stats: {
+                cardinality: {
+                  cardinality: {
                     field: 'LineItem.TotalPrice',
                   },
                 },

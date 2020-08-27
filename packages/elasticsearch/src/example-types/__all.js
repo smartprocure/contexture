@@ -33,12 +33,12 @@ module.exports = {
   groupedByValuePartition: require('./metricGroups/groupedByValuePartition'),
 
   // Legacy (covered by metric groups)
-  terms_stats: require('./terms_stats'),
-  dateHistogram: require('./dateHistogram'),
-  rangeStats: require('./rangeStats'),
-  smartIntervalHistogram: require('./smartIntervalHistogram'),
-  matchStats: require('./matchStats'),
-  matchCardinality: require('./matchCardinality'),
+  terms_stats: require('./legacy/terms_stats'),
+  dateHistogram: require('./legacy/dateHistogram'),
+  rangeStats: require('./legacy/rangeStats'),
+  smartIntervalHistogram: require('./legacy/smartIntervalHistogram'),
+  matchStats: require('./legacy/matchStats'),
+  matchCardinality: require('./legacy/matchCardinality'),
   // Legacy (wip)
   groupedMetric: require('./groupedMetric'),
   numberRangeHistogram: require('./numberRangeHistogram'),
