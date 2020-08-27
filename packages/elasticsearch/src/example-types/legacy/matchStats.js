@@ -21,7 +21,7 @@ module.exports = {
             },
             field: null,
           },
-          value_type: 'stats'
+          value_type: 'stats',
         },
         node
       ),
