@@ -1,6 +1,6 @@
-const rangeStats = require('../../src/example-types/rangeStats')
+const rangeStats = require('../../../src/example-types/legacy/rangeStats')
 const _ = require('lodash/fp')
-const utils = require('./testUtils')
+const utils = require('../testUtils')
 
 describe('rangeStats', () => {
   describe('validContext', () => {
