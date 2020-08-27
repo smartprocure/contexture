@@ -41,6 +41,7 @@
     * `termsDelta` (replaced with `valuesDelta`)
     * `perentileRange` (replaced with `groupedByPercentiles`)
     * `termsStatsHits` (replaced with `groupedByFieldValue`)
+    * `matchCardinality` (replaced with `groupedByValuePartition`)
   * [Results]
     * Kill `forceExclude`
     * Kill `verbose`
@@ -51,15 +52,13 @@
     * Kill `caseSensitive`, `anyOrder`, `maxWords` which weren't relevant anyway
     * Kill `fieldMode` - facet will now always use the notAnalyzed field if available
     * Kill `cardinality`, which was a proxy for precision_threshold
-  * [TermsStats]
+  * [Terms_Stats]
     * Killed useless `caseSensitive` flag
   * [Text]
     * Killed useless `caseSensitive` flag
   * [DateHistogram]
     * Killed unused `minDate` and `maxDate` on response
     * Killed unused extendedBounds support
-  * [esTwoLevelAggregation]
-    * Killed `extraAggs`
   * [Schema]
     * No longer adds `order: 0` by default (which was a pure UI concern which isn't used by the latest contexture-react usage examples anyway)
 

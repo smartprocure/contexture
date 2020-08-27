@@ -23,7 +23,6 @@ describe('All Example Types', function() {
       'groupedByPercentiles',
       'groupedByValuePartition',
       'groupedMetric',
-      'matchCardinality',
       'matchStats',
       'number',
       'numberRangeHistogram',

@@ -38,7 +38,6 @@ module.exports = {
   rangeStats: require('./legacy/rangeStats'),
   smartIntervalHistogram: require('./legacy/smartIntervalHistogram'),
   matchStats: require('./legacy/matchStats'),
-  matchCardinality: require('./legacy/matchCardinality'),
   // Legacy (wip)
   groupedMetric: require('./groupedMetric'),
   numberRangeHistogram: require('./numberRangeHistogram'),
