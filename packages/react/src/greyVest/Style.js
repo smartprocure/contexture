@@ -256,6 +256,7 @@ export default () => (
       .gv-text-button {
         border-radius: 100px;
         padding: 5px;
+        margin: -4px 0 -6px;
         cursor: pointer;
         color: #9b9b9b;
         display: inline-block;

@@ -177,36 +177,42 @@ let FilterList = _.flow(
               <Label tree={tree} node={child} fields={fields}>
                 {mapNodeToLabel(child, fields)}
               </Label>
-              {!child.paused && (
-                <div className="filter-list-item-contents">
-                  <Dynamic
-                    {...{
-                      component: UnmappedNodeComponent,
-                      tree,
-                      node: child,
-                      path: _.toArray(child.path),
-                      ...mapNodeToProps(child, fields),
-                    }}
-                  />
-                  {!child.updating &&
-                    tree.disableAutoUpdate &&
-                    // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
-                    _.some(
-                      treeNode => treeNode !== node && treeNode.markedForUpdate,
-                      F.treeToArray(_.get('children'))(tree.tree)
-                    ) && (
-                      <div
-                        className="apply-filter-button"
-                        onClick={e => {
-                          e.stopPropagation()
-                          tree.triggerUpdate()
-                        }}
-                      >
-                        <Button primary>Apply Filter</Button>
-                      </div>
-                    )}
-                </div>
-              )}
+              <div
+                className="filter-list-item-contents"
+                style={{
+                  maxHeight: child.paused ? 0 : '90vh',
+                  overflowY: child.paused ? 'hidden': 'auto' ,
+                  willChange: 'max-height',
+                  transition: `max-height .4s ease-${child.paused ? 'out' : 'in'}`,
+                }}
+              >
+                <Dynamic
+                  {...{
+                    component: UnmappedNodeComponent,
+                    tree,
+                    node: child,
+                    path: _.toArray(child.path),
+                    ...mapNodeToProps(child, fields),
+                  }}
+                />
+                {!child.updating &&
+                  tree.disableAutoUpdate &&
+                  // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
+                  _.some(
+                    treeNode => treeNode !== node && treeNode.markedForUpdate,
+                    F.treeToArray(_.get('children'))(tree.tree)
+                  ) && (
+                    <div
+                      className="apply-filter-button"
+                      onClick={e => {
+                        e.stopPropagation()
+                        tree.triggerUpdate()
+                      }}
+                    >
+                      <Button primary>Apply Filter</Button>
+                    </div>
+                  )}
+          </div>
             </div>
           ),
         _.get('children', node)
