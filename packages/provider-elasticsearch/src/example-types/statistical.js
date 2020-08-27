@@ -1,4 +1,5 @@
 module.exports = {
+  validContext: node => node.field,
   result: ({ field }, search) =>
     search({
       aggs: {

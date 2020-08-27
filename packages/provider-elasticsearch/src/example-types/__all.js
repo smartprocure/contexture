@@ -1,6 +1,4 @@
 module.exports = {
-  default: require('./default'),
-
   // Filtering Only Types
   geo: require('./geo'),
   bool: require('./bool'),

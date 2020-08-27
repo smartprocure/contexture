@@ -38,6 +38,7 @@
     * `terms` (just a `facet` without a filter, or a new `groupedByFieldValue` without stats)
     * `twoLevelMatch` (never intended to be exposed)
     * `esTwoLevelAggregation` (never intended to be exposed)
+    * `default` (never intended to be exposed)
     * `termsDelta` (replaced with `valuesDelta`)
     * `perentileRange` (replaced with `groupedByPercentiles`)
     * `termsStatsHits` (replaced with `groupedByFieldValue`)

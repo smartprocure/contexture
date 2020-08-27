@@ -4,6 +4,7 @@ let { highlightResults, arrayToHighlightsFieldMap } = require('../highlighting')
 let { getField } = require('../fields')
 
 module.exports = {
+  validContext: () => true,
   result(node, search, schema) {
     let page = (node.page || 1) - 1
     let pageSize = node.pageSize || 10
