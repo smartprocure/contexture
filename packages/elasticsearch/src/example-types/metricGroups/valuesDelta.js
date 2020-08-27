@@ -20,7 +20,7 @@ let buildQuery = (
 
 module.exports = {
   buildQuery,
-  validContext: () => true,
+  validContext: node => node.groupField && node.foreground && node.background,
   async result(node, search, schema) {
     let response = await search(buildQuery(node, schema))
     let { foreground, background } = _.mapValues(
