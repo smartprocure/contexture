@@ -331,9 +331,6 @@ A nested stats aggregation inside a dateHistogram aggregation.
 #### `groupedMetric`
 A more general version of esTwoLevelAggregation, used in analysis builders/pivot tables. It takes config for an array of buckets and a metric agg. The buckets are nested with the metric on the inside.
 
-#### `matchCardinality`
-A filters bucket which puts results into a pass and fail bucket, along with a cardinality metric nested inside.
-
 #### `matchStats`
 A filters bucket which puts results into a pass and fail bucket, along with a stats metric nested inside.
 
