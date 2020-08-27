@@ -1,6 +1,6 @@
 let _ = require('lodash/fp')
 let F = require('futil')
-let { metrics, hasValidMetrics } = require('../aggUtils')
+let { metrics, hasValidMetrics } = require('../../aggUtils')
 
 // let example = {
 //   key_type: 'range',

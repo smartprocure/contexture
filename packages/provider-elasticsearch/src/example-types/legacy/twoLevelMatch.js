@@ -1,6 +1,6 @@
 let _ = require('lodash/fp')
 let esTwoLevel = require('./esTwoLevelAggregation').result
-let { negate } = require('../elasticDSL')
+let { negate } = require('../../elasticDSL')
 
 module.exports = {
   validContext: node =>
