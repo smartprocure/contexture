@@ -15,7 +15,6 @@ let buildMetrics = (field, metrics = ['min', 'max', 'avg', 'sum']) =>
     F.when(_.isArray, emptyObjectify, metrics)
   )
 
-
 let statsAggs = (field, stats) =>
   field ? { aggs: buildMetrics(field, stats) } : {}
 
