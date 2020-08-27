@@ -1,4 +1,4 @@
-let esTwoLevel = require('../esTwoLevelAggregation').result
+let esTwoLevel = require('./esTwoLevelAggregation').result
 
 module.exports = {
   validContext: node => node.key_field && node.value_field,
