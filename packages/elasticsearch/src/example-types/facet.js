@@ -19,6 +19,7 @@ module.exports = {
 
     return result
   },
+  validContext: node => node.field,
   async result(node, search, schema) {
     let { values, size } = node
     let field = getField(schema, node.field)

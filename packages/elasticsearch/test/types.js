@@ -12,7 +12,6 @@ describe('All Example Types', function() {
       'date',
       'dateHistogram',
       'dateRangeFacet',
-      'default',
       'exists',
       'facet',
       'geo',

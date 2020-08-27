@@ -4,6 +4,7 @@ const util = require('./numberUtil')
 module.exports = {
   hasValue: node => !_.isNil(node.min) || !_.isNil(node.max),
   filter: ({ field, min, max }) => util.rangeFilter(field, min, max),
+  validContext: () => true,
   async result({ field, min, max, percentileInterval = 1 }, search) {
     let {
       statistical = { min, max },
