@@ -182,10 +182,9 @@ let FilterList = _.flow(
                   child.paused ? 'in' : 'out'
                 }`,
                 boxShadow:
-                  child !== _.last(_.get('children', node)) &&
-                  !child.paused ?
-                    'rgba(0, 0, 0, 0.1) 0 -16px 20px -20px inset' :
-                    'rgba(0, 0, 0, 0.1) 0 0 20px -20px inset',
+                  child !== _.last(_.get('children', node)) && !child.paused
+                    ? 'rgba(0, 0, 0, 0.1) 0 -16px 20px -20px inset'
+                    : 'rgba(0, 0, 0, 0.1) 0 0 20px -20px inset',
               }}
             >
               <Label tree={tree} node={child} fields={fields}>
