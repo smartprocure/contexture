@@ -35,9 +35,15 @@ let formatAddress = ({ address, matchLevel }) => {
 }
 export let loadHereOptions = async (
   inputValue,
+  countryCode = 'USA',
   hereConfig = defaultHereConfig
 ) => {
   if (inputValue.length <= 2) return []
+  if (typeof countryCode === 'object') {
+    hereConfig = countryCode
+    countryCode = 'USA'
+  }
+  hereConfig.country = countryCode
   let { autocomplete: url, app_id, app_code, country } = hereConfig
   let apiUrl = `${url}?app_id=${app_id}&app_code=${app_code}&country=${country}&query=${inputValue}`
 
