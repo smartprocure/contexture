@@ -99,7 +99,6 @@ export default () => (
       }
       .filter-list-item {
         border-bottom: solid 1px rgba(216, 216, 216, 0.3);
-        padding-bottom: ${filterListMargin}px;
         margin-bottom: ${filterListMargin}px;
         margin-left: -${filterListMargin}px;
         margin-right: -${filterListMargin}px;
@@ -126,6 +125,7 @@ export default () => (
       .filter-field-label {
         font-size: 16px;
         font-weight: bold;
+        padding-bottom: ${filterListMargin}px;
       }
       .filter-field-label-icon {
         color: #9b9b9b;
@@ -134,7 +134,7 @@ export default () => (
         color: #0076de;
       }
       .filter-list-item-contents {
-        margin-top: 15px;
+        margin-bottom: 15px;
       }
       .filter-list-group {
         border-left: solid 2px;
