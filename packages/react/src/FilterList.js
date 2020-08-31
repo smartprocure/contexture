@@ -175,17 +175,16 @@ let FilterList = _.flow(
           ) : (
             <div
               key={child.path}
-              className={`filter-list-item ${
-                child.paused ? '' : 'expanded'
-              }`}
+              className={`filter-list-item ${child.paused ? '' : 'expanded'}`}
             >
               <Label tree={tree} node={child} fields={fields}>
                 {mapNodeToLabel(child, fields)}
               </Label>
-              <div className="filter-list-contents-wrap"
+              <div
+                className="filter-list-contents-wrap"
                 style={{
                   maxHeight: child.paused ? 0 : '80vh',
-                  overflowY: child.paused ? 'hidden' : 'auto'
+                  overflowY: child.paused ? 'hidden' : 'auto',
                 }}
               >
                 <div className="filter-list-item-contents">
