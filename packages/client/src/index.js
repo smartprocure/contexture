@@ -136,9 +136,10 @@ export let ContextTree = _.curry(
 
     let triggerDelayedUpdate = F.debounceAsync(debounce, triggerImmediateUpdate)
 
-    let triggerUpdate = () => TreeInstance.disableAutoUpdate ?
-        triggerImmediateUpdate() :
-          triggerDelayedUpdate()
+    let triggerUpdate = () =>
+      TreeInstance.disableAutoUpdate
+        ? triggerImmediateUpdate()
+        : triggerDelayedUpdate()
 
     let processResponse = async data => {
       // TODO: Remove these 3 deprecated lines in 3.0. Errors will just be on the tree so no need to wrap in `data` to allow `error`
