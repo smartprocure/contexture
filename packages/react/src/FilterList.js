@@ -137,10 +137,13 @@ export let Label = _.flow(
             <div style={{ flexGrow: 1 }} />
           }
 
-          <div className="filter-field-label-icon">
-            <Icon
-              icon={node.paused ? 'FilterListExpand' : 'FilterListCollapse'}
-            />
+          <div
+            className="filter-field-label-icon"
+            style={{
+              transform: `rotate(${ node.paused ? 0 : '180deg' })`,
+            }}
+          >
+            <Icon icon="FilterListExpand" />
           </div>
         </React.Fragment>
       )}
@@ -185,13 +188,7 @@ let FilterList = _.flow(
               <Label tree={tree} node={child} fields={fields}>
                 {mapNodeToLabel(child, fields)}
               </Label>
-              <div
-                className="filter-list-contents-wrap"
-                style={{
-                  maxHeight: child.paused ? 0 : '80vh',
-                  overflowY: child.paused ? 'hidden' : 'auto',
-                }}
-              >
+              <div className="filter-list-contents-wrap">
                 <div className="filter-list-item-contents">
                   <Dynamic
                     {...{

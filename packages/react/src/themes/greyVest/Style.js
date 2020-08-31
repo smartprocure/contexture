@@ -113,6 +113,8 @@ export default () => (
       .filter-list-contents-wrap {
         will-change: max-height;
         transition: max-height .3s ease-out;
+        max-height: 0;
+        overflow-y: hidden;
       }
       .filter-list-item.expanded {
         transition: box-shadow .3s ease-out;
@@ -120,6 +122,8 @@ export default () => (
       }
       .filter-list-item.expanded .filter-list-contents-wrap {
         transition: max-height .3s ease-in;
+        max-height: 80vh;
+        overflow-y: auto;
       }
       .filter-list-item.expanded:last-child {
         box-shadow: none;
@@ -130,11 +134,11 @@ export default () => (
         padding-bottom: ${filterListMargin - 5}px;
       }
       .filter-field-label-icon {
-        will-change: opacity;
-        transition: opacity .3s ease-in;
+        will-change: opacity, transform;
+        transition: opacity .2s ease-in, transform .2s ease-in;
       }
       .filter-list-item.expanded .filter-field-label-icon {
-        transition: opacity .3s ease-out;
+        transition: opacity .2s ease-out, transform .2s ease-out;
       }
       .filter-field-label-icon {
         color: #9b9b9b;
