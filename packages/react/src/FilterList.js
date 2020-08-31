@@ -112,17 +112,23 @@ export let Label = _.flow(
       </span>
       {tree && node && (
         <React.Fragment>
-          <span onClick={node.paused ? null : e => {
-            e.stopPropagation()
-            F.flip(popover)()
-          }}>
+          <span
+            onClick={
+              node.paused
+                ? null
+                : e => {
+                    e.stopPropagation()
+                    F.flip(popover)()
+                  }
+            }
+          >
             <span
               className="filter-field-label-icon"
               style={{
                 opacity: node.paused ? 0 : 1,
               }}
             >
-              <Icon icon="TableColumnMenu"/>
+              <Icon icon="TableColumnMenu" />
             </span>
             <FilterActions
               node={node}
@@ -140,7 +146,7 @@ export let Label = _.flow(
           <div
             className="filter-field-label-icon"
             style={{
-              transform: `rotate(${ node.paused ? 0 : '180deg' })`,
+              transform: `rotate(${node.paused ? 0 : '180deg'})`,
             }}
           >
             <Icon icon="FilterListExpand" />
