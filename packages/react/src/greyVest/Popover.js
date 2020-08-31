@@ -6,10 +6,10 @@ import { openBinding } from './utils'
 import { expandProp } from '../utils/react'
 
 // Simple popover
-let Popover = ({ isOpen, onClose, children, style }) =>
+let Popover = ({ isOpen, onClose, children, style, contained }) =>
   isOpen && (
     <OutsideClickHandler onOutsideClick={_.debounce(0, onClose)}>
-      <div style={{ position: 'relative' }}>
+      <div style={{ position: contained ? '' : 'relative' }}>
         <div
           className="popover"
           style={{

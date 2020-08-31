@@ -99,6 +99,7 @@ export default () => (
         padding-top: ${filterListMargin - 4}px;
       }
       .filter-list-item {
+        position: relative;
         border-bottom: solid 1px rgba(216, 216, 216, 0.3);
         margin-bottom: ${filterListMargin - 5}px;
         margin-left: -${filterListMargin}px;
