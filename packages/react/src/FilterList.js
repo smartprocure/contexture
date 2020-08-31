@@ -112,13 +112,18 @@ export let Label = _.flow(
       </span>
       {tree && node && (
         <React.Fragment>
-          <span
-            onClick={e => {
-              e.stopPropagation()
-              F.flip(popover)()
-            }}
-          >
-            {!node.paused && <Icon icon="TableColumnMenu" />}
+          <span onClick={node.paused ? null : e => {
+            e.stopPropagation()
+            F.flip(popover)()
+          }}>
+            <span
+              className="filter-field-label-icon"
+              style={{
+                opacity: node.paused ? 0 : 1,
+              }}
+            >
+              <Icon icon="TableColumnMenu"/>
+            </span>
             <FilterActions
               node={node}
               tree={tree}
