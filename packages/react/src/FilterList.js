@@ -175,29 +175,17 @@ let FilterList = _.flow(
           ) : (
             <div
               key={child.path}
-              className="filter-list-item"
-              style={{
-                willChange: 'box-shadow',
-                transition: `box-shadow .4s ease-${
-                  child.paused ? 'in' : 'out'
-                }`,
-                boxShadow:
-                  child !== _.last(_.get('children', node)) && !child.paused
-                    ? 'rgba(0, 0, 0, 0.1) 0 -16px 20px -20px inset'
-                    : 'rgba(0, 0, 0, 0.1) 0 0 20px -20px inset',
-              }}
+              className={`filter-list-item ${
+                child.paused ? '' : 'expanded'
+              }`}
             >
               <Label tree={tree} node={child} fields={fields}>
                 {mapNodeToLabel(child, fields)}
               </Label>
-              <div
+              <div className="filter-list-contents-wrap"
                 style={{
                   maxHeight: child.paused ? 0 : '80vh',
-                  overflowY: child.paused ? 'hidden' : 'auto',
-                  willChange: 'max-height',
-                  transition: `max-height .3s ease-${
-                    child.paused ? 'out' : 'in'
-                  }`,
+                  overflowY: child.paused ? 'hidden' : 'auto'
                 }}
               >
                 <div className="filter-list-item-contents">
