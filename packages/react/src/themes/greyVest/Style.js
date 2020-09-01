@@ -121,6 +121,9 @@ export default () => (
         opacity: 1;
         transition: opacity .2s ease-out;
       }
+      .filter-list-item .gv-accordion-icon {
+        margin-bottom: 7px;
+      }
       .filter-field-label-icon {
         color: #9b9b9b;
       }

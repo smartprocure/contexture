@@ -36,7 +36,6 @@ export default () => (
         will-change: transform;
         transition: transform .2s ease-in;
         cursor: pointer;
-        margin-bottom: 7px;
       }
       
       .gv-accordion-icon.expanded {
