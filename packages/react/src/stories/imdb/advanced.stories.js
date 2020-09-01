@@ -1,5 +1,6 @@
 import _ from 'lodash/fp'
 import React from 'react'
+import { storiesOf } from '@storybook/react'
 import { fromPromise } from 'mobx-utils'
 import { QueryBuilder, Awaiter, componentForType } from '../..'
 import Contexture, { updateSchemas } from './utils/contexture'
@@ -49,12 +50,7 @@ let schemas = fromPromise(
   )
 )
 
-export default {
-  title: 'Live Demos|Advanced Search',
-  parameters: { docs: { page: null } },
-}
-
-export let advanced = () => (
+let advanced = () => (
   <Awaiter promise={schemas}>
     {schemas => (
       <div>
@@ -77,3 +73,5 @@ export let advanced = () => (
     )}
   </Awaiter>
 )
+
+storiesOf('Live Demos|Advanced Search', module).add('Advanced', advanced)
