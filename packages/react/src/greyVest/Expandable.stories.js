@@ -8,12 +8,8 @@ import Expandable from './Expandable'
 let ExpandableDemo = ({ style, ...props }) => {
   let [expanded, setExpanded] = useState(false)
   return (
-    <Flex
-      justifyContent="center"
-      style={style}
-      {...props}
-    >
-      <Box style={{width: 300, margin: 16}}>
+    <Flex justifyContent="center" style={style} {...props}>
+      <Box style={{ width: 300, margin: 16 }}>
         <Expandable
           isOpen={expanded}
           onClick={() => setExpanded(!expanded)}
@@ -33,6 +29,4 @@ let ExpandableDemo = ({ style, ...props }) => {
 
 storiesOf('GreyVest Library|Expandable', module)
   .addDecorator(ThemePicker('greyVest'))
-  .add('Expandable', () => (
-    <ExpandableDemo/>
-  ))
+  .add('Expandable', () => <ExpandableDemo />)
