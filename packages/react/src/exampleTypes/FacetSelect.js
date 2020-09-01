@@ -5,7 +5,7 @@ import Async from 'react-select/lib/Async'
 import { components } from 'react-select'
 import { Flex } from '../greyVest'
 import { contexturify } from '../utils/hoc'
-import { Cardinality } from './Facet'
+import { Cardinality } from '../utils/facet'
 
 let getOptions = node =>
   _.map(
