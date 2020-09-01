@@ -16,9 +16,11 @@ let Grid = ({
   placeItems,
   inline = false,
   style,
+  className,
   ...props
 }) => (
   <Component
+    className={F.compactJoin(['gv-grid', className])}
     style={{
       display: `${inline ? 'inline-' : ''}grid`,
       gridTemplateColumns: repeatNumber(columns),

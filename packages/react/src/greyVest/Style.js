@@ -403,6 +403,9 @@ export default () => (
         padding: 12px;
         border-radius: 5px;
       }
+      .gv-grid > * {
+        min-width: 0;
+      }
 
       .labeled-checkbox {
         display: flex;
