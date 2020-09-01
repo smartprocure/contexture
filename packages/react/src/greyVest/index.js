@@ -28,6 +28,7 @@ export TextInput from './TextInput'
 
 // former layout components
 // ------------------------
+export Accordion from './Accordion'
 export Awaiter from './Awaiter'
 export BarChart from './BarChart'
 export Dynamic from './Dynamic'

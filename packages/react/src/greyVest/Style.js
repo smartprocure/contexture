@@ -30,6 +30,34 @@ export default () => (
         margin: 30px 0;
       }
 
+      /* Accordion */
+      .gv-accordion-icon {
+        color: #9b9b9b;
+        will-change: transform;
+        transition: transform .2s ease-in;
+        cursor: pointer;
+        margin-bottom: 7px;
+      }
+      
+      .gv-accordion-icon.expanded {
+        transition: transform .2s ease-out;
+        transform: rotate(180deg);
+      }
+      
+      /* Accordion */
+      .gv-accordion-body {
+        overflow: hidden;
+        max-height: 0;
+        will-change: max-height;
+        transition: max-height .3s ease-out;
+      }
+
+      .gv-accordion-body.expanded {
+        overflow-y: auto;
+        max-height: 80vh;
+        transition: max-height .3s ease-in;
+      }
+
       /* Button */
       .gv-button {
         padding: 11px 22px 12px 22px;

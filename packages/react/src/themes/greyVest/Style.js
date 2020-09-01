@@ -106,27 +106,6 @@ export default () => (
         margin-right: -${filterListMargin}px;
         padding-left: ${filterListMargin}px;
         padding-right: ${filterListMargin}px;
-        will-change: box-shadow;
-        transition: box-shadow .3s ease-in;
-        box-shadow: rgba(0, 0, 0, 0.1) 0 0 20px -20px inset;
-      }
-      .filter-list-contents-wrap {
-        will-change: max-height;
-        transition: max-height .3s ease-out;
-        max-height: 0;
-        overflow-y: hidden;
-      }
-      .filter-list-item.expanded {
-        transition: box-shadow .3s ease-out;
-        box-shadow: rgba(0, 0, 0, 0.1) 0 -16px 20px -20px inset;
-      }
-      .filter-list-item.expanded .filter-list-contents-wrap {
-        transition: max-height .3s ease-in;
-        max-height: 80vh;
-        overflow-y: auto;
-      }
-      .filter-list-item.expanded:last-child {
-        box-shadow: none;
       }
       .filter-field-label {
         font-size: 16px;
@@ -134,11 +113,11 @@ export default () => (
         padding-bottom: ${filterListMargin - 5}px;
       }
       .filter-field-label-icon {
-        will-change: opacity, transform;
-        transition: opacity .2s ease-in, transform .2s ease-in;
+        will-change: opacity;
+        transition: opacity .2s ease-in;
       }
       .filter-list-item.expanded .filter-field-label-icon {
-        transition: opacity .2s ease-out, transform .2s ease-out;
+        transition: opacity .2s ease-out;
       }
       .filter-field-label-icon {
         color: #9b9b9b;

@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 import F from 'futil'
 import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
-import { Flex, Dynamic } from './greyVest'
+import { Accordion, Flex, Dynamic } from './greyVest'
 import { fieldsToOptions } from './FilterAdder'
 import { contexturifyWithoutLoader } from './utils/hoc'
 import { bdJoin } from './styles/generic'
@@ -103,9 +103,6 @@ export let Label = _.flow(
         alignItems: 'center',
         justifyContent: 'space-between',
       }}
-      onClick={() =>
-        tree && node && tree.mutate(node.path, { paused: !node.paused })
-      }
     >
       <span {...props}>
         {children || _.get([field, 'label'], fields) || field || ''}
@@ -142,15 +139,6 @@ export let Label = _.flow(
             // Whitespace separator
             <div style={{ flexGrow: 1 }} />
           }
-
-          <div
-            className="filter-field-label-icon"
-            style={{
-              transform: `rotate(${node.paused ? 0 : '180deg'})`,
-            }}
-          >
-            <Icon icon="FilterListExpand" />
-          </div>
         </React.Fragment>
       )}
     </Flex>
@@ -187,44 +175,48 @@ let FilterList = _.flow(
               style={bdJoin(child)}
             />
           ) : (
-            <div
+            <Accordion
               key={child.path}
-              className={`filter-list-item ${child.paused ? '' : 'expanded'}`}
+              className="filter-list-item"
+              isOpen={!child.paused}
+              Label={
+                <Label tree={tree} node={child} fields={fields}>
+                  {mapNodeToLabel(child, fields)}
+                </Label>
+              }
+              onClick={() =>
+                tree && node && tree.mutate(child.path, { paused: !child.paused })
+              }
             >
-              <Label tree={tree} node={child} fields={fields}>
-                {mapNodeToLabel(child, fields)}
-              </Label>
-              <div className="filter-list-contents-wrap">
-                <div className="filter-list-item-contents">
-                  <Dynamic
-                    {...{
-                      component: UnmappedNodeComponent,
-                      tree,
-                      node: child,
-                      path: _.toArray(child.path),
-                      ...mapNodeToProps(child, fields),
-                    }}
-                  />
-                  {!child.updating &&
-                    tree.disableAutoUpdate &&
-                    // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
-                    _.some(
-                      treeNode => treeNode !== node && treeNode.markedForUpdate,
-                      F.treeToArray(_.get('children'))(tree.tree)
-                    ) && (
-                      <div
-                        className="apply-filter-button"
-                        onClick={e => {
-                          e.stopPropagation()
-                          tree.triggerUpdate()
-                        }}
-                      >
-                        <Button primary>Apply Filter</Button>
-                      </div>
-                    )}
-                </div>
+              <div className="filter-list-item-contents">
+                <Dynamic
+                  {...{
+                    component: UnmappedNodeComponent,
+                    tree,
+                    node: child,
+                    path: _.toArray(child.path),
+                    ...mapNodeToProps(child, fields),
+                  }}
+                />
+                {!child.updating &&
+                  tree.disableAutoUpdate &&
+                  // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
+                  _.some(
+                    treeNode => treeNode !== node && treeNode.markedForUpdate,
+                    F.treeToArray(_.get('children'))(tree.tree)
+                  ) && (
+                    <div
+                      className="apply-filter-button"
+                      onClick={e => {
+                        e.stopPropagation()
+                        tree.triggerUpdate()
+                      }}
+                    >
+                      <Button primary>Apply Filter</Button>
+                    </div>
+                  )}
               </div>
-            </div>
+            </Accordion>
           ),
         _.get('children', node)
       )}
