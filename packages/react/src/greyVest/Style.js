@@ -31,27 +31,27 @@ export default () => (
       }
 
       /* Accordion */
-      .gv-accordion-icon {
+      .gv-expandable-icon {
         color: #9b9b9b;
         will-change: transform;
         transition: transform .2s ease-in;
         cursor: pointer;
       }
       
-      .gv-accordion-icon.expanded {
+      .gv-expandable-icon.expanded {
         transition: transform .2s ease-out;
         transform: rotate(180deg);
       }
       
       /* Accordion */
-      .gv-accordion-body {
+      .gv-expandable-body {
         overflow: hidden;
         max-height: 0;
         will-change: max-height;
         transition: max-height .3s ease-out;
       }
 
-      .gv-accordion-body.expanded {
+      .gv-expandable-body.expanded {
         overflow-y: auto;
         max-height: 80vh;
         transition: max-height .3s ease-in;

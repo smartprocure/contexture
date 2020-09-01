@@ -4,16 +4,20 @@ import Icon from './Icon'
 
 let Expandable = ({ isOpen, className, style, Label, children, onClick }) => (
   <div
-    className={`gv-accordion ${isOpen ? 'expanded' : ''} ${className}`}
+    className={`gv-expandable ${isOpen ? 'expanded' : ''} ${className}`}
     style={style}
   >
-    <Flex className="gv-accordion-header" alignItems="center" onClick={onClick}>
+    <Flex
+      className="gv-expandable-header"
+      alignItems="center"
+      onClick={onClick}
+    >
       <div style={{ flexGrow: 1 }}>{Label}</div>
-      <div className={`gv-accordion-icon ${isOpen ? 'expanded' : ''}`}>
+      <div className={`gv-expandable-icon ${isOpen ? 'expanded' : ''}`}>
         <Icon icon="FilterListExpand" />
       </div>
     </Flex>
-    <div className={`gv-accordion-body ${isOpen ? 'expanded' : ''}`}>
+    <div className={`gv-expandable-body ${isOpen ? 'expanded' : ''}`}>
       {children}
     </div>
   </div>
