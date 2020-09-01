@@ -67,7 +67,7 @@ The following config options are available:
 | extend            | function                       | F.extendOn   | Used to mutate nodes internally |
 | initObject        | function                       | _.identity   | Called on the tree (and the "TreeInstance" return value of the client) at initialization and on payloads before add. With `mobx`, this would be `observable` |
 | snapshot          | function                       | _.cloneDeep  | Used to take snapshots |
-| disableAutoUpdate | boolean                        | false        | Will disable automatically triggering updates at the end of dispatches, except for events that affect their target node. This is useful for a search button use case, similar to pausing the entire tree but always allowing through specific changes. This is typically used with the `triggerUpdate` action to kick off a dispatch that will update everything `markedForUpdate`. Can be changed at run time. | 
+| disableAutoUpdate | boolean                        | false        | When it is `true` will trigger target node updates immediately and will disable triggering automatic debounced updates at the end of dispatches. This is useful for a search button use case, similar to pausing the entire tree but always allowing through specific changes. This is typically used with the `triggerUpdate` action to kick off a dispatch that will update everything `markedForUpdate`. Can be changed at run time. | 
 
 #### Client Types
 Available types are passed in as config.
