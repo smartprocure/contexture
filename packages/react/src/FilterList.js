@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 import F from 'futil'
 import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
-import { Accordion, Flex, Dynamic } from './greyVest'
+import { Expandable, Flex, Dynamic } from './greyVest'
 import { fieldsToOptions } from './FilterAdder'
 import { contexturifyWithoutLoader } from './utils/hoc'
 import { bdJoin } from './styles/generic'
@@ -170,7 +170,7 @@ let FilterList = _.flow(
               style={bdJoin(child)}
             />
           ) : (
-            <Accordion
+            <Expandable
               key={child.path}
               className="filter-list-item"
               isOpen={!child.paused}
@@ -213,7 +213,7 @@ let FilterList = _.flow(
                     </div>
                   )}
               </div>
-            </Accordion>
+            </Expandable>
           ),
         _.get('children', node)
       )}

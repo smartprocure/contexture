@@ -28,10 +28,10 @@ export TextInput from './TextInput'
 
 // former layout components
 // ------------------------
-export Accordion from './Accordion'
 export Awaiter from './Awaiter'
 export BarChart from './BarChart'
 export Dynamic from './Dynamic'
+export Expandable from './Expandable'
 export ExpandableTable, { Column } from './ExpandableTable'
 export Flex from './Flex'
 export Grid from './Grid'

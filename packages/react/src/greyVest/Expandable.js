@@ -2,7 +2,7 @@ import React from 'react'
 import Flex from './Flex'
 import Icon from './Icon'
 
-let Accordion = ({ isOpen, className, style, Label, children, onClick }) => (
+let Expandable = ({ isOpen, className, style, Label, children, onClick }) => (
   <div
     className={`gv-accordion ${isOpen ? 'expanded' : ''} ${className}`}
     style={style}
@@ -19,4 +19,4 @@ let Accordion = ({ isOpen, className, style, Label, children, onClick }) => (
   </div>
 )
 
-export default Accordion
+export default Expandable
