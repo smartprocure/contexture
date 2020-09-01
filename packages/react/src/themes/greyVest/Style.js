@@ -96,11 +96,12 @@ export default () => (
 
       .filter-list.gv-box {
         padding: ${filterListMargin}px;
+        padding-top: ${filterListMargin - 4}px;
       }
       .filter-list-item {
+        position: relative;
         border-bottom: solid 1px rgba(216, 216, 216, 0.3);
-        padding-bottom: ${filterListMargin}px;
-        margin-bottom: ${filterListMargin}px;
+        margin-bottom: ${filterListMargin - 5}px;
         margin-left: -${filterListMargin}px;
         margin-right: -${filterListMargin}px;
         padding-left: ${filterListMargin}px;
@@ -109,6 +110,19 @@ export default () => (
       .filter-field-label {
         font-size: 16px;
         font-weight: bold;
+        padding-bottom: ${filterListMargin - 5}px;
+      }
+      .filter-field-label-icon {
+        opacity: 0;
+        will-change: opacity;
+        transition: opacity .2s ease-in;
+      }
+      .filter-list-item.expanded .filter-field-label-icon {
+        opacity: 1;
+        transition: opacity .2s ease-out;
+      }
+      .filter-list-item .gv-expandable-icon {
+        margin-bottom: ${filterListMargin - 5}px;
       }
       .filter-field-label-icon {
         color: #9b9b9b;
@@ -117,7 +131,7 @@ export default () => (
         color: #0076de;
       }
       .filter-list-item-contents {
-        margin-top: 15px;
+        margin-bottom: 15px;
       }
       .filter-list-group {
         border-left: solid 2px;

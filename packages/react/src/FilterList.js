@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 import F from 'futil'
 import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
-import { Flex, Dynamic } from './greyVest'
+import { Expandable, Flex, Dynamic } from './greyVest'
 import { fieldsToOptions } from './FilterAdder'
 import { contexturifyWithoutLoader } from './utils/hoc'
 import { bdJoin } from './styles/generic'
@@ -103,9 +103,6 @@ export let Label = _.flow(
         alignItems: 'center',
         justifyContent: 'space-between',
       }}
-      onClick={() =>
-        tree && node && tree.mutate(node.path, { paused: !node.paused })
-      }
     >
       <span {...props}>
         {children || _.get([field, 'label'], fields) || field || ''}
@@ -113,12 +110,18 @@ export let Label = _.flow(
       {tree && node && (
         <React.Fragment>
           <span
-            onClick={e => {
-              e.stopPropagation()
-              F.flip(popover)()
-            }}
+            onClick={
+              node.paused
+                ? null
+                : e => {
+                    e.stopPropagation()
+                    F.flip(popover)()
+                  }
+            }
           >
-            {!node.paused && <Icon icon="TableColumnMenu" />}
+            <span className="filter-field-label-icon">
+              <Icon icon="TableColumnMenu" />
+            </span>
             <FilterActions
               node={node}
               tree={tree}
@@ -131,12 +134,6 @@ export let Label = _.flow(
             // Whitespace separator
             <div style={{ flexGrow: 1 }} />
           }
-
-          <div className="filter-field-label-icon">
-            <Icon
-              icon={node.paused ? 'FilterListExpand' : 'FilterListCollapse'}
-            />
-          </div>
         </React.Fragment>
       )}
     </Flex>
@@ -173,41 +170,48 @@ let FilterList = _.flow(
               style={bdJoin(child)}
             />
           ) : (
-            <div key={child.path} className="filter-list-item">
-              <Label tree={tree} node={child} fields={fields}>
-                {mapNodeToLabel(child, fields)}
-              </Label>
-              {!child.paused && (
-                <div className="filter-list-item-contents">
-                  <Dynamic
-                    {...{
-                      component: UnmappedNodeComponent,
-                      tree,
-                      node: child,
-                      path: _.toArray(child.path),
-                      ...mapNodeToProps(child, fields),
-                    }}
-                  />
-                  {!child.updating &&
-                    tree.disableAutoUpdate &&
-                    // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
-                    _.some(
-                      treeNode => treeNode !== node && treeNode.markedForUpdate,
-                      F.treeToArray(_.get('children'))(tree.tree)
-                    ) && (
-                      <div
-                        className="apply-filter-button"
-                        onClick={e => {
-                          e.stopPropagation()
-                          tree.triggerUpdate()
-                        }}
-                      >
-                        <Button primary>Apply Filter</Button>
-                      </div>
-                    )}
-                </div>
-              )}
-            </div>
+            <Expandable
+              key={child.path}
+              className="filter-list-item"
+              isOpen={!child.paused}
+              Label={
+                <Label tree={tree} node={child} fields={fields}>
+                  {mapNodeToLabel(child, fields)}
+                </Label>
+              }
+              onClick={() =>
+                tree && tree.mutate(child.path, { paused: !child.paused })
+              }
+            >
+              <div className="filter-list-item-contents">
+                <Dynamic
+                  {...{
+                    component: UnmappedNodeComponent,
+                    tree,
+                    node: child,
+                    path: _.toArray(child.path),
+                    ...mapNodeToProps(child, fields),
+                  }}
+                />
+                {!child.updating &&
+                  tree.disableAutoUpdate &&
+                  // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
+                  _.some(
+                    treeNode => treeNode !== node && treeNode.markedForUpdate,
+                    F.treeToArray(_.get('children'))(tree.tree)
+                  ) && (
+                    <div
+                      className="apply-filter-button"
+                      onClick={e => {
+                        e.stopPropagation()
+                        tree.triggerUpdate()
+                      }}
+                    >
+                      <Button primary>Apply Filter</Button>
+                    </div>
+                  )}
+              </div>
+            </Expandable>
           ),
         _.get('children', node)
       )}

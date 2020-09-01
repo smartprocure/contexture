@@ -80,6 +80,32 @@ export default () => (
       .gv-link-button:focus {
         text-decoration: none;
       }
+      
+      /* Expandable */
+      .gv-expandable-icon {
+        color: #9b9b9b;
+        will-change: transform;
+        transition: transform .2s ease-in;
+        cursor: pointer;
+      }
+      
+      .gv-expandable-icon.expanded {
+        transition: transform .2s ease-out;
+        transform: rotate(180deg);
+      }
+      
+      .gv-expandable-body {
+        overflow: hidden;
+        max-height: 0;
+        will-change: max-height;
+        transition: max-height .3s ease-out;
+      }
+
+      .gv-expandable-body.expanded {
+        overflow-y: auto;
+        max-height: 80vh;
+        transition: max-height .3s ease-in;
+      }
 
       /* Table */
       .gv-table {
