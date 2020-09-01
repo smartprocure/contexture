@@ -60,7 +60,7 @@ The following config options are available:
 | ----              | ----                           | -------      | ----------- |
 | service           | function                       | n/a          | **Required** Async function to actually get service results (from the contexture core). An exception will be thrown if this is not passed in. |
 | types             | ClientTypeSpec                 | exampleTypes | Configuration of available types (documented below) |
-| debounce          | number                         | 1            | How many milliseconds to globally debounce search |
+| debounce          | number                         | 1            | How many milliseconds to globally debounce search. Does not apply when `disableAutoUpdates` is true. |
 | onChange          | (node, changes) => {}          |  _.noop      | A hook to capture when the client changes any property on a node. Can be modified at run time by reassigning the property on a tree instance. |
 | onResult          | (path, response, target) => {} |  _.noop      | A hook to capture when the client updates a node with results from the server. Can be modified at run time by reassigning the property on a tree instance. |
 | debug             | boolean                        | false        | Debug mode will log all dispatched events and generally help debugging |
