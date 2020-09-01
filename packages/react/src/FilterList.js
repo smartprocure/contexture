@@ -180,7 +180,9 @@ let FilterList = _.flow(
                 </Label>
               }
               onClick={() =>
-                tree && node && tree.mutate(child.path, { paused: !child.paused })
+                tree &&
+                node &&
+                tree.mutate(child.path, { paused: !child.paused })
               }
             >
               <div className="filter-list-item-contents">
