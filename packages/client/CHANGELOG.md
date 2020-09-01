@@ -1,3 +1,6 @@
+# 2.30.0
+* When `disableAutoUpdate` is `true` triggering updates immediately instead of debouncing them
+
 # 2.29.1
 * Add the dateRangeFacet type.
 
