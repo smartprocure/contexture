@@ -119,12 +119,7 @@ export let Label = _.flow(
                   }
             }
           >
-            <span
-              className="filter-field-label-icon"
-              style={{
-                opacity: node.paused ? 0 : 1,
-              }}
-            >
+            <span className="filter-field-label-icon">
               <Icon icon="TableColumnMenu" />
             </span>
             <FilterActions

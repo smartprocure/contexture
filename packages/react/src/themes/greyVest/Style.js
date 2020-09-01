@@ -113,10 +113,12 @@ export default () => (
         padding-bottom: ${filterListMargin - 5}px;
       }
       .filter-field-label-icon {
+        opacity: 0;
         will-change: opacity;
         transition: opacity .2s ease-in;
       }
       .filter-list-item.expanded .filter-field-label-icon {
+        opacity: 1;
         transition: opacity .2s ease-out;
       }
       .filter-field-label-icon {
