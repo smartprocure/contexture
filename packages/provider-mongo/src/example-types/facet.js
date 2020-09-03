@@ -139,7 +139,7 @@ module.exports = {
 
     let missedValues = _.difference(
       values,
-      _.map(x => _.toString(x.name), results.options)
+      _.map(({name}) => _.toString(name), results.options)
     )
 
     let getSelectValues = node =>
@@ -149,7 +149,7 @@ module.exports = {
       $match: { _id: { $in: getSelectValues(node) } },
     })
 
-    if (!_.isEmpty(values) && !_.isEmpty(missedValues)) {
+    if (!_.isEmpty(missedValues)) {
       //create a values hash map for filter noValuesOptions
       let getValuesIndex = _.reduce(
         (acc, value) => {
@@ -202,7 +202,7 @@ module.exports = {
           }),
         searchValues
       )
-      results.options = noValuesOptions.concat(valuesOptions)
+      results.options = _.concat(valuesOptions,noValuesOptions)
     }
 
     return results
