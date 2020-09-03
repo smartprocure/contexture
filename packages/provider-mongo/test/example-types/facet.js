@@ -435,7 +435,7 @@ describe('facet', () => {
         ],
       })
     })
-    it.only('should return correct search result when checked value missing', async () => {
+    it('should return correct search result when checked value missing', async () => {
 
       let data = [
         { _id: '5e9dbd76e991760021124966', name: 'Automation' },
@@ -458,16 +458,17 @@ describe('facet', () => {
         { _id: '5d1ca49436e1d20038f8c84f', name: 'Customer Experience' },
         { _id: '5ce30b403aa154002d01b9ed', name: 'Government Division' },
       ]
+      // eslint-disable-next-line
       let collection = _.map(x=>{return {_id:ObjectID(x['_id']),name:x.name}},data)
 
       //5d1ca49436e1d20038f8c84f and 5ce30b403aa154002d01b9ed are the values from buttom of the records they are missing values
-      node ={
+      let  node ={
         key: 'id',
         field: '_id',
         type: 'facet',
         isMongoId: true,
         label: {
-          collection: collection,
+          collection,
           foreignField: '_id',
           fields: [ 'name' ]
         },
