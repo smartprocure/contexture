@@ -137,8 +137,9 @@ module.exports = {
       ),
     }))
     // results.options.name is ObjectId which need to stringify to get the correct missedValues
+    // stringify values to avoid the bug when values are numeric values
     let missedValues = _.difference(
-      values,
+      _.map(_.toString,values),
       _.map(({ name }) => _.toString(name), results.options)
     )
 
