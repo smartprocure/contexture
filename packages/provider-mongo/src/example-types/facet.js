@@ -136,7 +136,7 @@ module.exports = {
         options
       ),
     }))
-
+    // results.options.name is ObjectId which need to stringify to get the correct missedValues
     let missedValues = _.difference(
       values,
       _.map(({name}) => _.toString(name), results.options)
