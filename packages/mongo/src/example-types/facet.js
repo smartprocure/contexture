@@ -47,14 +47,18 @@ let setMatchOperators = (list, node) =>
   list.length > 1
     ? getMatchesForMultipleKeywords(list, node.optionsFilter)
     : {
-        [_.first(list)]: {
-          $regex: F.wordsToRegexp(node.optionsFilter),
-          $options: 'i',
-        },
-      }
+      [_.first(list)]: {
+        $regex: F.wordsToRegexp(node.optionsFilter),
+        $options: 'i',
+      },
+    }
 
 let mapKeywordFilters = node =>
   node.optionsFilter &&
+  _.flow(getSearchableKeysList, list => ({
+    $match: setMatchOperators(list, node),
+  }))(node)
+let mapKeywordFilters2 = node =>
   _.flow(getSearchableKeysList, list => ({
     $match: setMatchOperators(list, node),
   }))(node)
@@ -86,8 +90,9 @@ module.exports = {
         : node.values,
     },
   }),
-  result: (node, search) =>
-    Promise.all([
+  result: async (node, search) => {
+    let values = _.get('values', node)
+    let results = await Promise.all([
       search(
         _.compact([
           // Unwind allows supporting array and non array fields - for non arrays, it will treat as an array with 1 value
@@ -97,21 +102,21 @@ module.exports = {
           ...sortAndLimitIfNotSearching(node.optionsFilter, node.size),
           ...(_.get('label', node)
             ? [
-                {
-                  $lookup: {
-                    from: _.get('label.collection', node),
-                    as: 'label',
-                    localField: '_id',
-                    foreignField: _.get('label.foreignField', node),
-                  },
+              {
+                $lookup: {
+                  from: _.get('label.collection', node),
+                  as: 'label',
+                  localField: '_id',
+                  foreignField: _.get('label.foreignField', node),
                 },
-                {
-                  $unwind: {
-                    path: '$label',
-                    preserveNullAndEmptyArrays: true,
-                  },
+              },
+              {
+                $unwind: {
+                  path: '$label',
+                  preserveNullAndEmptyArrays: true,
                 },
-              ]
+              },
+            ]
             : []),
           _.get('label.fields', node) && projectStageFromLabelFields(node),
           mapKeywordFilters(node),
@@ -134,5 +139,78 @@ module.exports = {
           }),
         options
       ),
-    })),
+    }))
+
+    let missedValues = _.difference(
+      values,
+      _.map(x => _.toString(x.name), results.options)
+    )
+    let getSelectValues = node =>
+      node.isMongoId ? _.map(ObjectID, values) : values
+
+
+    let matchSelectedValues = (node) => {
+      return { $match: { _id: { $in: getSelectValues(node) } } }
+    }
+
+    if (!_.isEmpty(values) && !_.isEmpty(missedValues)) {
+
+      let getValuesIndex = _.reduce(
+        (acc, value) => {
+          acc[value] = true
+          return acc
+        },
+        {},
+        values
+      )
+
+      let noValuesOptions = _.reject(
+        record => getValuesIndex[record.name],
+        results.options
+      )
+      let dropSize = noValuesOptions.length + values.length - node.size
+      if (dropSize > 0) _.drop(dropSize, noValuesOptions)
+
+      let searchValues = await search(
+        _.compact([
+          matchSelectedValues(node),
+          { $group: { _id: `$${node.field}`, count: { $sum: 1 } } },
+          ...(_.get('label', node)
+            ? [
+              {
+                $lookup: {
+                  from: _.get('label.collection', node),
+                  as: 'label',
+                  localField: '_id',
+                  foreignField: _.get('label.foreignField', node),
+                },
+              },
+              {
+                $unwind: {
+                  path: '$label',
+                  preserveNullAndEmptyArrays: true,
+                },
+              },
+            ]
+            : []),
+          _.get('label.fields', node) && projectStageFromLabelFields(node),
+        ])
+      )
+
+      let valuesOptions =
+        _.map(
+          ({ _id, label, count }) =>
+            F.compactObject({
+              name: _id,
+              count,
+              ...facetValueLabel(node, label),
+            }),
+          searchValues
+        )
+      results.options = noValuesOptions.concat(valuesOptions)
+
+    }
+
+    return results
+  },
 }
