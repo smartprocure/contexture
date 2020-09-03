@@ -59,7 +59,6 @@ let mapKeywordFilters = node =>
     $match: setMatchOperators(list, node),
   }))(node)
 
-
 let facetValueLabel = (node, label) => {
   if (!node.label) {
     return {}
