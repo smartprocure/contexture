@@ -435,30 +435,14 @@ describe('facet', () => {
         ],
       })
     })
-    it('should return correct search result when checked value missing', async () => {
+    it('should sort options by whether their values are selected', async () => {
       let data = [
         { _id: '5e9dbd76e991760021124966', name: 'Automation' },
         { _id: '5cde2658dc766b0030c67dae', name: 'Fowlkes (MO)' },
-        { _id: '5ebef03a06acda0021797bfd', name: 'Automation' },
-        { _id: '5cde259edc766b0030c67d9e', name: 'Lombardi (AR)' },
-        { _id: '5ea6e54479a8c60021156015', name: 'Automation' },
-        { _id: '5cde25bedc766b0030c67da1', name: 'Whipple' },
-        { _id: '5ee1378770824e00213ffe07', name: 'Katalon Test' },
-        { _id: '5ea1e2ccc2ce7b0022c2655a', name: 'Automation' },
-        { _id: '5ebabd429a42630021a86a35', name: 'Finance' },
-        { _id: '5e5e9b2bdda1c5002bdb9e9f', name: 'Silver Cooper' },
-        { _id: '5d52fea84e01ee003782da3e', name: 'Andrea Restrepo ' },
-        { _id: '5f0f2bc8c66f260021280d37', name: 'Automation' },
-        { _id: '5ce3f7a1c5b085002cb2a330', name: 'Stephen Mailloux' },
-        { _id: '5f208018ddcb610021a43d82', name: 'Automation' },
-        { _id: '5ea86df23aab7500215be93a', name: 'Automation' },
-        { _id: '5cde208b87eff60030d9c0b1', name: 'Morris (RJ)' },
-        { _id: '5f032194fefab4002119ce92', name: 'Katalon Test' },
         { _id: '5d1ca49436e1d20038f8c84f', name: 'Customer Experience' },
         { _id: '5ce30b403aa154002d01b9ed', name: 'Government Division' },
       ]
-      // eslint-disable-next-line
-      let collection = _.map(x=>{return {_id:ObjectID(x['_id']),name:x.name}},data)
+      let collection = _.map( ({ _id, name })=>({ _id: ObjectID(_id), name }),data)
 
       //5d1ca49436e1d20038f8c84f and 5ce30b403aa154002d01b9ed are the values from buttom of the records they are missing values
       let  node ={
@@ -472,26 +456,21 @@ describe('facet', () => {
           fields: ['name'],
         },
         values: [
-          '5d1ca49436e1d20038f8c84f',
           '5ce30b403aa154002d01b9ed',
-          '5e9dbd76e991760021124966',
-          '5cde2658dc766b0030c67dae',
         ],
         mode: 'include',
         optionsFilter: '',
-        size: 10,
+        size: 2,
       }
 
       let result = await facet.result(node, agg =>
         mingo.aggregate(collection, agg)
       )
-      let ids = _.map(x => _.toString(x.name), result.options)
+      let ids = _.map(({name}) => _.toString(name), result.options)
 
-      expect(result.options.length).to.equal(10)
-      expect(_.includes('5d1ca49436e1d20038f8c84f', ids)).to.be.true
+      expect(result.options.length).to.equal(2)
       expect(_.includes('5ce30b403aa154002d01b9ed', ids)).to.be.true
-      expect(_.includes('5e9dbd76e991760021124966', ids)).to.be.true
-      expect(_.includes('5cde2658dc766b0030c67dae', ids)).to.be.true
+
     })
   })
 })
