@@ -139,7 +139,7 @@ module.exports = {
     // results.options.name is ObjectId which need to stringify to get the correct missedValues
     let missedValues = _.difference(
       values,
-      _.map(({name}) => _.toString(name), results.options)
+      _.map(({ name }) => _.toString(name), results.options)
     )
 
     let getSelectValues = node =>
@@ -202,7 +202,7 @@ module.exports = {
           }),
         searchValues
       )
-      results.options = _.concat(valuesOptions,noValuesOptions)
+      results.options = _.concat(valuesOptions, noValuesOptions)
     }
 
     return results
