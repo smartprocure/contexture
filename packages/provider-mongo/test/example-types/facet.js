@@ -458,10 +458,12 @@ describe('facet', () => {
         { _id: '5ce30b403aa154002d01b9ed', name: 'Government Division' },
       ]
       // eslint-disable-next-line
-      let collection = _.map(x=>{return {_id:ObjectID(x['_id']),name:x.name}},data)
+      let collection = _.map(x => {
+        return { _id: ObjectID(x['_id']), name: x.name }
+      }, data)
 
       //5d1ca49436e1d20038f8c84f and 5ce30b403aa154002d01b9ed are the values from buttom of the records they are missing values
-      let  node ={
+      let node = {
         key: 'id',
         field: '_id',
         type: 'facet',
