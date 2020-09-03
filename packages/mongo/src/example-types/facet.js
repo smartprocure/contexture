@@ -47,11 +47,11 @@ let setMatchOperators = (list, node) =>
   list.length > 1
     ? getMatchesForMultipleKeywords(list, node.optionsFilter)
     : {
-      [_.first(list)]: {
-        $regex: F.wordsToRegexp(node.optionsFilter),
-        $options: 'i',
-      },
-    }
+        [_.first(list)]: {
+          $regex: F.wordsToRegexp(node.optionsFilter),
+          $options: 'i',
+        },
+      }
 
 let mapKeywordFilters = node =>
   node.optionsFilter &&
@@ -87,7 +87,7 @@ module.exports = {
         : node.values,
     },
   }),
-  result: async (node, search) => {
+  async result(node, search) {
     let values = _.get('values', node)
     let results = await Promise.all([
       search(
@@ -99,21 +99,21 @@ module.exports = {
           ...sortAndLimitIfNotSearching(node.optionsFilter, node.size),
           ...(_.get('label', node)
             ? [
-              {
-                $lookup: {
-                  from: _.get('label.collection', node),
-                  as: 'label',
-                  localField: '_id',
-                  foreignField: _.get('label.foreignField', node),
+                {
+                  $lookup: {
+                    from: _.get('label.collection', node),
+                    as: 'label',
+                    localField: '_id',
+                    foreignField: _.get('label.foreignField', node),
+                  },
                 },
-              },
-              {
-                $unwind: {
-                  path: '$label',
-                  preserveNullAndEmptyArrays: true,
+                {
+                  $unwind: {
+                    path: '$label',
+                    preserveNullAndEmptyArrays: true,
+                  },
                 },
-              },
-            ]
+              ]
             : []),
           _.get('label.fields', node) && projectStageFromLabelFields(node),
           mapKeywordFilters(node),
@@ -145,13 +145,11 @@ module.exports = {
     let getSelectValues = node =>
       node.isMongoId ? _.map(ObjectID, values) : values
 
-
-    let matchSelectedValues = (node) => {
-      return { $match: { _id: { $in: getSelectValues(node) } } }
-    }
+    let matchSelectedValues = node => ({
+      $match: { _id: { $in: getSelectValues(node) } },
+    })
 
     if (!_.isEmpty(values) && !_.isEmpty(missedValues)) {
-
       let getValuesIndex = _.reduce(
         (acc, value) => {
           acc[value] = true
@@ -174,38 +172,36 @@ module.exports = {
           { $group: { _id: `$${node.field}`, count: { $sum: 1 } } },
           ...(_.get('label', node)
             ? [
-              {
-                $lookup: {
-                  from: _.get('label.collection', node),
-                  as: 'label',
-                  localField: '_id',
-                  foreignField: _.get('label.foreignField', node),
+                {
+                  $lookup: {
+                    from: _.get('label.collection', node),
+                    as: 'label',
+                    localField: '_id',
+                    foreignField: _.get('label.foreignField', node),
+                  },
                 },
-              },
-              {
-                $unwind: {
-                  path: '$label',
-                  preserveNullAndEmptyArrays: true,
+                {
+                  $unwind: {
+                    path: '$label',
+                    preserveNullAndEmptyArrays: true,
+                  },
                 },
-              },
-            ]
+              ]
             : []),
           _.get('label.fields', node) && projectStageFromLabelFields(node),
         ])
       )
 
-      let valuesOptions =
-        _.map(
-          ({ _id, label, count }) =>
-            F.compactObject({
-              name: _id,
-              count,
-              ...facetValueLabel(node, label),
-            }),
-          searchValues
-        )
+      let valuesOptions = _.map(
+        ({ _id, label, count }) =>
+          F.compactObject({
+            name: _id,
+            count,
+            ...facetValueLabel(node, label),
+          }),
+        searchValues
+      )
       results.options = noValuesOptions.concat(valuesOptions)
-
     }
 
     return results
