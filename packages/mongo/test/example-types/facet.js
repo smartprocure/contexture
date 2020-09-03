@@ -442,7 +442,10 @@ describe('facet', () => {
         { _id: '5d1ca49436e1d20038f8c84f', name: 'Customer Experience' },
         { _id: '5ce30b403aa154002d01b9ed', name: 'Government Division' },
       ]
-      let collection = _.map( ({ _id, name })=>({ _id: ObjectID(_id), name }),data)
+      let collection = _.map(
+        ({ _id, name }) => ({ _id: ObjectID(_id), name }),
+        data
+      )
 
       //5ce30b403aa154002d01b9ed is the missing value
       let node = {
@@ -455,9 +458,7 @@ describe('facet', () => {
           foreignField: '_id',
           fields: ['name'],
         },
-        values: [
-          '5ce30b403aa154002d01b9ed',
-        ],
+        values: ['5ce30b403aa154002d01b9ed'],
         mode: 'include',
         optionsFilter: '',
         size: 2,
@@ -466,11 +467,10 @@ describe('facet', () => {
       let result = await facet.result(node, agg =>
         mingo.aggregate(collection, agg)
       )
-      let ids = _.map(({name}) => _.toString(name), result.options)
+      let ids = _.map(({ name }) => _.toString(name), result.options)
 
       expect(result.options.length).to.equal(2)
       expect(_.includes('5ce30b403aa154002d01b9ed', ids)).to.be.true
-
     })
   })
 })
