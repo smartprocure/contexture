@@ -58,10 +58,7 @@ let mapKeywordFilters = node =>
   _.flow(getSearchableKeysList, list => ({
     $match: setMatchOperators(list, node),
   }))(node)
-let mapKeywordFilters2 = node =>
-  _.flow(getSearchableKeysList, list => ({
-    $match: setMatchOperators(list, node),
-  }))(node)
+
 
 let facetValueLabel = (node, label) => {
   if (!node.label) {
