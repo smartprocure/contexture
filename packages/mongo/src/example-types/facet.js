@@ -137,7 +137,6 @@ module.exports = {
       ),
     }))
 
-
     let missedValues = _.difference(
       values,
       _.map(x => _.toString(x.name), results.options)
@@ -166,7 +165,7 @@ module.exports = {
         results.options
       )
       let dropSize = noValuesOptions.length + values.length - node.size
-      if (dropSize > 0) noValuesOptions=_.drop(dropSize, noValuesOptions)
+      if (dropSize > 0) noValuesOptions = _.drop(dropSize, noValuesOptions)
 
       let searchValues = await search(
         _.compact([
