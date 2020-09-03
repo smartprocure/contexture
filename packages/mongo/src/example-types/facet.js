@@ -137,10 +137,12 @@ module.exports = {
       ),
     }))
 
+
     let missedValues = _.difference(
       values,
       _.map(x => _.toString(x.name), results.options)
     )
+
     let getSelectValues = node =>
       node.isMongoId ? _.map(ObjectID, values) : values
 
@@ -164,7 +166,7 @@ module.exports = {
         results.options
       )
       let dropSize = noValuesOptions.length + values.length - node.size
-      if (dropSize > 0) _.drop(dropSize, noValuesOptions)
+      if (dropSize > 0) noValuesOptions=_.drop(dropSize, noValuesOptions)
 
       let searchValues = await search(
         _.compact([
