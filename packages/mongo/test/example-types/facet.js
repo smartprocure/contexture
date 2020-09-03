@@ -444,8 +444,8 @@ describe('facet', () => {
       ]
       let collection = _.map( ({ _id, name })=>({ _id: ObjectID(_id), name }),data)
 
-      //5d1ca49436e1d20038f8c84f and 5ce30b403aa154002d01b9ed are the values from buttom of the records they are missing values
-      let  node ={
+      //5ce30b403aa154002d01b9ed is the missing value
+      let node = {
         key: 'id',
         field: '_id',
         type: 'facet',
