@@ -438,6 +438,8 @@ describe('facet', () => {
 
 
     describe('should always include checked values', () => {
+
+
       let Data = [
         { _id: 1, name: '1' },
         { _id: 2, name: '2' },
@@ -450,23 +452,23 @@ describe('facet', () => {
         { _id: '5d1ca49436e1d20038f8c84f', name: 'Customer Experience' },
         { _id: '5ce30b403aa154002d01b9ed', name: 'Government Division' },
       ]
-
+     let node = {
+        key: 'id',
+        field: '_id',
+        type: 'facet',
+        mode: 'include',
+        optionsFilter: '',
+        size: 2,
+      }
       it('when there are missed values', async() => {
         let collection= Data
-        let node = {
-          key: 'id',
-          field: '_id',
-          type: 'facet',
-          label: {
-            collection,
+        node.label={
+          collection,
             foreignField: '_id',
             fields: ['name'],
-          },
-          values: [4],
-          mode: 'include',
-          optionsFilter: '',
-          size: 2,
         }
+        node.values = [4]
+
         let result = await facet.result(node, agg =>
           mingo.aggregate(collection, agg)
         )
@@ -476,20 +478,12 @@ describe('facet', () => {
       })
       it('when there is no missed value', async() => {
         let collection= Data
-        let node = {
-          key: 'id',
-          field: '_id',
-          type: 'facet',
-          label: {
-            collection,
-            foreignField: '_id',
-            fields: ['name'],
-          },
-          values: [1],
-          mode: 'include',
-          optionsFilter: '',
-          size: 2,
+        node.label={
+          collection,
+          foreignField: '_id',
+          fields: ['name'],
         }
+        node.values = [1]
         let result = await facet.result(node, agg =>
           mingo.aggregate(collection, agg)
         )
@@ -502,21 +496,13 @@ describe('facet', () => {
           ({ _id, name }) => ({ _id: ObjectID(_id), name }),
           mongoIdData
         )
-        let node = {
-          key: 'id',
-          field: '_id',
-          type: 'facet',
-          isMongoId: true,
-          label: {
-            collection,
-            foreignField: '_id',
-            fields: ['name'],
-          },
-          values: ['5ce30b403aa154002d01b9ed'],
-          mode: 'include',
-          optionsFilter: '',
-          size: 2,
+        node.isMongoId= true
+        node.label={
+          collection,
+          foreignField: '_id',
+          fields: ['name'],
         }
+        node.values = ['5ce30b403aa154002d01b9ed']
 
         let result = await facet.result(node, agg =>
           mingo.aggregate(collection, agg)
@@ -531,21 +517,13 @@ describe('facet', () => {
           ({ _id, name }) => ({ _id: ObjectID(_id), name }),
           mongoIdData
         )
-        let node = {
-          key: 'id',
-          field: '_id',
-          type: 'facet',
-          isMongoId: true,
-          label: {
-            collection,
-            foreignField: '_id',
-            fields: ['name'],
-          },
-          values: ['5e9dbd76e991760021124966'],
-          mode: 'include',
-          optionsFilter: '',
-          size: 2,
+        node.isMongoId= true
+        node.label={
+          collection,
+          foreignField: '_id',
+          fields: ['name'],
         }
+        node.values = ['5e9dbd76e991760021124966']
 
         let result = await facet.result(node, agg =>
           mingo.aggregate(collection, agg)
