@@ -465,7 +465,7 @@ describe('facet', () => {
       it('when missing checked values are expected', async () => {
         node.label.collection = Data
         // node.values is selected values
-        // when we use [4], we could expect missing values because the first search will pick up the top 2 ids instead of 4 (the last item in the array)
+        // when we use [4], we could expect missing values because the first search will pick up the top 2 ids instead of value 4 (the last item from the array)
         node.values = [4]
         let result = await facet.result(node, agg => mingo.aggregate(Data, agg))
         let ids = _.map(({ name }) => _.toString(name), result.options)
