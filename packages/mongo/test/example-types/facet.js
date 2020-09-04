@@ -436,7 +436,6 @@ describe('facet', () => {
       })
     })
 
-
     describe('should always include checked values', () => {
 
 
