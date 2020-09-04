@@ -464,9 +464,8 @@ describe('facet', () => {
       }
       it('when missing checked values are expected', async () => {
         node.label.collection = Data
-
+        // node.values is selected values
         node.values = [4]
-
         let result = await facet.result(node, agg => mingo.aggregate(Data, agg))
         let ids = _.map(({ name }) => _.toString(name), result.options)
         expect(result.options.length).to.equal(2)
