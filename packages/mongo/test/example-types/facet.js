@@ -436,7 +436,7 @@ describe('facet', () => {
       })
     })
 
-    describe('should always include checked values', () => {
+    describe('should always include checked values in result', () => {
 
 
       let Data = [
@@ -464,9 +464,9 @@ describe('facet', () => {
         optionsFilter: '',
         size: 2,
       }
-      it('when there are missed values', async() => {
+      it('when missing checked values are expected', async() => {
 
-        node.label.collection= Data,
+        node.label.collection= Data
 
         node.values = [4]
 
@@ -477,8 +477,8 @@ describe('facet', () => {
         expect(result.options.length).to.equal(2)
         expect(_.includes('4', ids)).to.be.true
       })
-      it('when there is no missed value', async() => {
-        node.label.collection= Data,
+      it('when missing checked values are not expected', async() => {
+        node.label.collection= Data
         node.values = [1]
         let result = await facet.result(node, agg =>
           mingo.aggregate(Data, agg)
@@ -487,13 +487,13 @@ describe('facet', () => {
         expect(result.options.length).to.equal(2)
         expect(_.includes('1', ids)).to.be.true
       })
-      it('when there are missed values and isMongoId: true', async() => {
+      it('when missing checked values are expected and isMongoId is true', async() => {
         let collection = _.map(
           ({ _id, name }) => ({ _id: ObjectID(_id), name }),
           mongoIdData
         )
         node.isMongoId= true
-        node.label.collection= collection,
+        node.label.collection= collection
         node.values = ['5ce30b403aa154002d01b9ed']
 
         let result = await facet.result(node, agg =>
@@ -504,13 +504,13 @@ describe('facet', () => {
         expect(result.options.length).to.equal(2)
         expect(_.includes('5ce30b403aa154002d01b9ed', ids)).to.be.true
       })
-      it('when there is no missed value and isMongoId: true', async() => {
+      it('when missing checked values are not expected and  isMongoId is true', async() => {
         let collection = _.map(
           ({ _id, name }) => ({ _id: ObjectID(_id), name }),
           mongoIdData
         )
         node.isMongoId= true
-        node.label.collection= collection,
+        node.label.collection= collection
         node.values = ['5e9dbd76e991760021124966']
 
         let result = await facet.result(node, agg =>
