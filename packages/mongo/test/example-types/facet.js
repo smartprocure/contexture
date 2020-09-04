@@ -436,7 +436,6 @@ describe('facet', () => {
       })
     })
 
-
     describe('should always include checked values', () => {
       let Data = [
         { _id: 1, name: '1' },
@@ -451,8 +450,8 @@ describe('facet', () => {
         { _id: '5ce30b403aa154002d01b9ed', name: 'Government Division' },
       ]
 
-      it('when there are missed values', async() => {
-        let collection= Data
+      it('when there are missed values', async () => {
+        let collection = Data
         let node = {
           key: 'id',
           field: '_id',
@@ -474,8 +473,8 @@ describe('facet', () => {
         expect(result.options.length).to.equal(2)
         expect(_.includes('4', ids)).to.be.true
       })
-      it('when there is no missed value', async() => {
-        let collection= Data
+      it('when there is no missed value', async () => {
+        let collection = Data
         let node = {
           key: 'id',
           field: '_id',
@@ -497,7 +496,7 @@ describe('facet', () => {
         expect(result.options.length).to.equal(2)
         expect(_.includes('1', ids)).to.be.true
       })
-      it('when there are missed values and isMongoId: true', async() => {
+      it('when there are missed values and isMongoId: true', async () => {
         let collection = _.map(
           ({ _id, name }) => ({ _id: ObjectID(_id), name }),
           mongoIdData
@@ -526,7 +525,7 @@ describe('facet', () => {
         expect(result.options.length).to.equal(2)
         expect(_.includes('5ce30b403aa154002d01b9ed', ids)).to.be.true
       })
-      it('when there is no missed value and isMongoId: true', async() => {
+      it('when there is no missed value and isMongoId: true', async () => {
         let collection = _.map(
           ({ _id, name }) => ({ _id: ObjectID(_id), name }),
           mongoIdData
@@ -555,9 +554,6 @@ describe('facet', () => {
         expect(result.options.length).to.equal(2)
         expect(_.includes('5e9dbd76e991760021124966', ids)).to.be.true
       })
-
-
     })
-
   })
 })
