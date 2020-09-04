@@ -465,11 +465,8 @@ describe('facet', () => {
         size: 2,
       }
       it('when missing checked values are expected', async() => {
-
         node.label.collection= Data
-
         node.values = [4]
-
         let result = await facet.result(node, agg =>
           mingo.aggregate(Data, agg)
         )
@@ -495,12 +492,10 @@ describe('facet', () => {
         node.isMongoId= true
         node.label.collection= collection
         node.values = ['5ce30b403aa154002d01b9ed']
-
         let result = await facet.result(node, agg =>
           mingo.aggregate(collection, agg)
         )
         let ids = _.map(({ name }) => _.toString(name), result.options)
-
         expect(result.options.length).to.equal(2)
         expect(_.includes('5ce30b403aa154002d01b9ed', ids)).to.be.true
       })
@@ -512,17 +507,13 @@ describe('facet', () => {
         node.isMongoId= true
         node.label.collection= collection
         node.values = ['5e9dbd76e991760021124966']
-
         let result = await facet.result(node, agg =>
           mingo.aggregate(collection, agg)
         )
         let ids = _.map(({ name }) => _.toString(name), result.options)
-
         expect(result.options.length).to.equal(2)
         expect(_.includes('5e9dbd76e991760021124966', ids)).to.be.true
       })
-
-
     })
 
   })
