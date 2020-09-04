@@ -435,42 +435,129 @@ describe('facet', () => {
         ],
       })
     })
-    it('should sort options by whether their values are selected', async () => {
-      let data = [
+
+
+    describe('should always include checked values', () => {
+      let Data = [
+        { _id: 1, name: '1' },
+        { _id: 2, name: '2' },
+        { _id: 3, name: '3' },
+        { _id: 4, name: '4' },
+      ]
+      let mongoIdData = [
         { _id: '5e9dbd76e991760021124966', name: 'Automation' },
         { _id: '5cde2658dc766b0030c67dae', name: 'Fowlkes (MO)' },
         { _id: '5d1ca49436e1d20038f8c84f', name: 'Customer Experience' },
         { _id: '5ce30b403aa154002d01b9ed', name: 'Government Division' },
       ]
-      let collection = _.map(
-        ({ _id, name }) => ({ _id: ObjectID(_id), name }),
-        data
-      )
 
-      //5ce30b403aa154002d01b9ed is the missing value
-      let node = {
-        key: 'id',
-        field: '_id',
-        type: 'facet',
-        isMongoId: true,
-        label: {
-          collection,
-          foreignField: '_id',
-          fields: ['name'],
-        },
-        values: ['5ce30b403aa154002d01b9ed'],
-        mode: 'include',
-        optionsFilter: '',
-        size: 2,
-      }
+      it('when there are missed values', async() => {
+        let collection= Data
+        let node = {
+          key: 'id',
+          field: '_id',
+          type: 'facet',
+          label: {
+            collection,
+            foreignField: '_id',
+            fields: ['name'],
+          },
+          values: [4],
+          mode: 'include',
+          optionsFilter: '',
+          size: 2,
+        }
+        let result = await facet.result(node, agg =>
+          mingo.aggregate(collection, agg)
+        )
+        let ids = _.map(({ name }) => _.toString(name), result.options)
+        expect(result.options.length).to.equal(2)
+        expect(_.includes('4', ids)).to.be.true
+      })
+      it('when there is no missed value', async() => {
+        let collection= Data
+        let node = {
+          key: 'id',
+          field: '_id',
+          type: 'facet',
+          label: {
+            collection,
+            foreignField: '_id',
+            fields: ['name'],
+          },
+          values: [1],
+          mode: 'include',
+          optionsFilter: '',
+          size: 2,
+        }
+        let result = await facet.result(node, agg =>
+          mingo.aggregate(collection, agg)
+        )
+        let ids = _.map(({ name }) => _.toString(name), result.options)
+        expect(result.options.length).to.equal(2)
+        expect(_.includes('1', ids)).to.be.true
+      })
+      it('when there are missed values and isMongoId: true', async() => {
+        let collection = _.map(
+          ({ _id, name }) => ({ _id: ObjectID(_id), name }),
+          mongoIdData
+        )
+        let node = {
+          key: 'id',
+          field: '_id',
+          type: 'facet',
+          isMongoId: true,
+          label: {
+            collection,
+            foreignField: '_id',
+            fields: ['name'],
+          },
+          values: ['5ce30b403aa154002d01b9ed'],
+          mode: 'include',
+          optionsFilter: '',
+          size: 2,
+        }
 
-      let result = await facet.result(node, agg =>
-        mingo.aggregate(collection, agg)
-      )
-      let ids = _.map(({ name }) => _.toString(name), result.options)
+        let result = await facet.result(node, agg =>
+          mingo.aggregate(collection, agg)
+        )
+        let ids = _.map(({ name }) => _.toString(name), result.options)
 
-      expect(result.options.length).to.equal(2)
-      expect(_.includes('5ce30b403aa154002d01b9ed', ids)).to.be.true
+        expect(result.options.length).to.equal(2)
+        expect(_.includes('5ce30b403aa154002d01b9ed', ids)).to.be.true
+      })
+      it('when there is no missed value and isMongoId: true', async() => {
+        let collection = _.map(
+          ({ _id, name }) => ({ _id: ObjectID(_id), name }),
+          mongoIdData
+        )
+        let node = {
+          key: 'id',
+          field: '_id',
+          type: 'facet',
+          isMongoId: true,
+          label: {
+            collection,
+            foreignField: '_id',
+            fields: ['name'],
+          },
+          values: ['5e9dbd76e991760021124966'],
+          mode: 'include',
+          optionsFilter: '',
+          size: 2,
+        }
+
+        let result = await facet.result(node, agg =>
+          mingo.aggregate(collection, agg)
+        )
+        let ids = _.map(({ name }) => _.toString(name), result.options)
+
+        expect(result.options.length).to.equal(2)
+        expect(_.includes('5e9dbd76e991760021124966', ids)).to.be.true
+      })
+
+
     })
+
   })
 })
