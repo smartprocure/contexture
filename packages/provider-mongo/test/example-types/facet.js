@@ -455,36 +455,33 @@ describe('facet', () => {
         key: 'id',
         field: '_id',
         type: 'facet',
+       label:{
+         collection:null,
+         foreignField: '_id',
+         fields: ['name'],
+       },
         mode: 'include',
         optionsFilter: '',
         size: 2,
       }
       it('when there are missed values', async() => {
-        let collection= Data
-        node.label={
-          collection,
-            foreignField: '_id',
-            fields: ['name'],
-        }
+
+        node.label.collection= Data,
+
         node.values = [4]
 
         let result = await facet.result(node, agg =>
-          mingo.aggregate(collection, agg)
+          mingo.aggregate(Data, agg)
         )
         let ids = _.map(({ name }) => _.toString(name), result.options)
         expect(result.options.length).to.equal(2)
         expect(_.includes('4', ids)).to.be.true
       })
       it('when there is no missed value', async() => {
-        let collection= Data
-        node.label={
-          collection,
-          foreignField: '_id',
-          fields: ['name'],
-        }
+        node.label.collection= Data,
         node.values = [1]
         let result = await facet.result(node, agg =>
-          mingo.aggregate(collection, agg)
+          mingo.aggregate(Data, agg)
         )
         let ids = _.map(({ name }) => _.toString(name), result.options)
         expect(result.options.length).to.equal(2)
@@ -496,11 +493,7 @@ describe('facet', () => {
           mongoIdData
         )
         node.isMongoId= true
-        node.label={
-          collection,
-          foreignField: '_id',
-          fields: ['name'],
-        }
+        node.label.collection= collection,
         node.values = ['5ce30b403aa154002d01b9ed']
 
         let result = await facet.result(node, agg =>
@@ -517,11 +510,7 @@ describe('facet', () => {
           mongoIdData
         )
         node.isMongoId= true
-        node.label={
-          collection,
-          foreignField: '_id',
-          fields: ['name'],
-        }
+        node.label.collection= collection,
         node.values = ['5e9dbd76e991760021124966']
 
         let result = await facet.result(node, agg =>
