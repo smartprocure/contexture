@@ -3,7 +3,6 @@ let _ = require('lodash/fp')
 let facet = require('../../src/example-types/facet')
 let { ObjectID } = require('mongodb')
 let mingo = require('mingo')
-let getSchema = collection => ({ mongo: { collection } })
 describe('facet', () => {
   describe('facet.hasValue', () => {
     it('Should allow nodes with values', () => {
