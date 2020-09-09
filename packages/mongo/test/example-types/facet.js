@@ -3,7 +3,7 @@ let _ = require('lodash/fp')
 let facet = require('../../src/example-types/facet')
 let { ObjectID } = require('mongodb')
 let mingo = require('mingo')
-
+let getSchema = collection => ({ mongo: { collection } })
 describe('facet', () => {
   describe('facet.hasValue', () => {
     it('Should allow nodes with values', () => {
@@ -462,16 +462,7 @@ describe('facet', () => {
         optionsFilter: '',
         size: 2,
       }
-      it('when missing checked values in first search are expected', async () => {
-        node.label.collection = Data
-        // node.values is selected values
-        // when we use [4], we could expect missing values in first search because the first search will pick up the top 2 ids instead of value 4 (the last item from the array)
-        node.values = [4]
-        let result = await facet.result(node, agg => mingo.aggregate(Data, agg))
-        let ids = _.map(({ name }) => _.toString(name), result.options)
-        expect(result.options.length).to.equal(2)
-        expect(_.includes('4', ids)).to.be.true
-      })
+
       it('when missing checked values in first search are not expected', async () => {
         node.label.collection = Data
         node.values = [1]
@@ -480,22 +471,7 @@ describe('facet', () => {
         expect(result.options.length).to.equal(2)
         expect(_.includes('1', ids)).to.be.true
       })
-      it('when missing checked values in first search are expected and isMongoId is true', async () => {
-        let collection = _.map(
-          ({ _id, name }) => ({ _id: ObjectID(_id), name }),
-          mongoIdData
-        )
-        node.isMongoId = true
-        node.label.collection = collection
-        node.values = ['5ce30b403aa154002d01b9ed']
 
-        let result = await facet.result(node, agg =>
-          mingo.aggregate(collection, agg)
-        )
-        let ids = _.map(({ name }) => _.toString(name), result.options)
-        expect(result.options.length).to.equal(2)
-        expect(_.includes('5ce30b403aa154002d01b9ed', ids)).to.be.true
-      })
       it('when missing checked values in first search are not expected and  isMongoId is true', async () => {
         let collection = _.map(
           ({ _id, name }) => ({ _id: ObjectID(_id), name }),
@@ -509,7 +485,6 @@ describe('facet', () => {
           mingo.aggregate(collection, agg)
         )
         let ids = _.map(({ name }) => _.toString(name), result.options)
-
         expect(result.options.length).to.equal(2)
         expect(_.includes('5e9dbd76e991760021124966', ids)).to.be.true
       })
