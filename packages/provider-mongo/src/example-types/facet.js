@@ -172,7 +172,7 @@ module.exports = {
       let stillMissingQueryFilter =  {[node.field]: { $in: getMissedValues(node,stillMissingValues) } }
       let stillMissingArgs =  [ { $group: { _id: `$${node.field}`} },...lookupLabel(node), _.get('label.fields', node) && projectStageFromLabelFields(node),]
       let stillmissingResult = []
-      if(stillMissingValues){
+      if(!_.isEmpty(stillMissingValues)){
         //use config to run runSearch(options, node, schema, filters, aggs)  function
         stillmissingResult = await config.getProvider(node).runSearch(config.options, node, config.getSchema(node.schema), stillMissingQueryFilter, stillMissingArgs)
       }
