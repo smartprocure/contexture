@@ -177,7 +177,7 @@ module.exports = {
         _.get('label.fields', node) && projectStageFromLabelFields(node),
       ]
       let stillmissingResult = []
-      if(!_.isEmpty(stillMissingValues)){
+      if (!_.isEmpty(stillMissingValues)) {
         //use config to run runSearch(options, node, schema, filters, aggs)  function
         stillmissingResult = await config
           .getProvider(node)
