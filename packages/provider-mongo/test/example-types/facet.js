@@ -437,10 +437,10 @@ describe('facet', () => {
 
     describe('should always include checked values in result', () => {
       let Data = [
-        { _id: '1', name: '1' },
-        { _id: '2', name: '2' },
-        { _id: '3', name: '3' },
-        { _id: '4', name: '4' },
+        { _id: 1, name: '1' },
+        { _id: 2, name: '2' },
+        { _id: 3, name: '3' },
+        { _id: 4, name: '4' },
       ]
       let mongoIdData = [
         { _id: '5e9dbd76e991760021124966', name: 'Automation' },
