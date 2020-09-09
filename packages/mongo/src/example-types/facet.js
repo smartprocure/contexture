@@ -142,8 +142,11 @@ module.exports = {
 
     // results.options.name is ObjectId which need to stringify to get the correct missedValues
     let missedValues = _.difference(
-       values,
-      _.map(({ name }) => node.isMongoId ?_.toString(name):name, results.options)
+      values,
+      _.map(
+        ({ name }) => (node.isMongoId ? _.toString(name) : name),
+        results.options
+      )
     )
 
     let getMissedValues = (node, missedValues) =>
