@@ -162,6 +162,7 @@ module.exports = {
           ...sortAndLimitIfNotSearching(node.optionsFilter, node.size),
           ...lookupLabel(node),
           _.get('label.fields', node) && projectStageFromLabelFields(node),
+          mapKeywordFilters(node),
         ])
       )
       let stillMissingValues = _.difference(
