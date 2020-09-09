@@ -47,12 +47,11 @@ let setMatchOperators = (list, node) =>
   list.length > 1
     ? getMatchesForMultipleKeywords(list, node.optionsFilter)
     : {
-      [_.first(list)]: {
-        $regex: F.wordsToRegexp(node.optionsFilter),
-        $options: 'i',
-      },
-    }
-
+        [_.first(list)]: {
+          $regex: F.wordsToRegexp(node.optionsFilter),
+          $options: 'i',
+        },
+      }
 
 let mapKeywordFilters = node =>
   node.optionsFilter &&
@@ -60,24 +59,25 @@ let mapKeywordFilters = node =>
     $match: setMatchOperators(list, node),
   }))(node)
 
-let lookupLabel = node => _.get('label', node)
-  ? [
-    {
-      $lookup: {
-        from: _.get('label.collection', node),
-        as: 'label',
-        localField: '_id',
-        foreignField: _.get('label.foreignField', node),
-      },
-    },
-    {
-      $unwind: {
-        path: '$label',
-        preserveNullAndEmptyArrays: true,
-      },
-    },
-  ]
-  : []
+let lookupLabel = node =>
+  _.get('label', node)
+    ? [
+        {
+          $lookup: {
+            from: _.get('label.collection', node),
+            as: 'label',
+            localField: '_id',
+            foreignField: _.get('label.foreignField', node),
+          },
+        },
+        {
+          $unwind: {
+            path: '$label',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+      ]
+    : []
 
 let facetValueLabel = (node, label) => {
   if (!node.label) {
@@ -106,7 +106,7 @@ module.exports = {
         : node.values,
     },
   }),
-  async result(node, search,schema,config) {
+  async result(node, search, schema, config) {
     let values = _.get('values', node)
     let results = await Promise.all([
       search(
@@ -140,7 +140,6 @@ module.exports = {
       ),
     }))
 
-
     // results.options.name is ObjectId which need to stringify to get the correct missedValues
     // stringify values to avoid the bug when values are numeric values
     let missedValues = _.difference(
@@ -148,46 +147,62 @@ module.exports = {
       _.map(({ name }) => _.toString(name), results.options)
     )
 
-    let getMissedValues = (node,missedValues) =>
+    let getMissedValues = (node, missedValues) =>
       node.isMongoId ? _.map(ObjectID, missedValues) : missedValues
 
-    let matchMissedValues = (node,missedValues) => ({
-      $match: { [node.field]: { $in: getMissedValues(node,missedValues) } },
+    let matchMissedValues = (node, missedValues) => ({
+      $match: { [node.field]: { $in: getMissedValues(node, missedValues) } },
     })
 
     if (!_.isEmpty(missedValues)) {
       let searchMissedResult = await search(
         _.compact([
-            matchMissedValues(node,missedValues),
-            { $group: { _id: `$${node.field}`, count: { $sum: 1 } } },
-            ...sortAndLimitIfNotSearching(node.optionsFilter, node.size),
-            ...lookupLabel(node),
-            _.get('label.fields', node) && projectStageFromLabelFields(node),
-          ]
-        ))
+          matchMissedValues(node, missedValues),
+          { $group: { _id: `$${node.field}`, count: { $sum: 1 } } },
+          ...sortAndLimitIfNotSearching(node.optionsFilter, node.size),
+          ...lookupLabel(node),
+          _.get('label.fields', node) && projectStageFromLabelFields(node),
+        ])
+      )
       let stillMissingValues = _.difference(
         missedValues,
-        _.map((x) => _.toString(x[`${node.field}`]), searchMissedResult)
+        _.map(x => _.toString(x[`${node.field}`]), searchMissedResult)
       )
-      let stillMissingQueryFilter =  {[node.field]: { $in: getMissedValues(node,stillMissingValues) } }
-      let stillMissingArgs =  [ { $group: { _id: `$${node.field}`} },...lookupLabel(node), _.get('label.fields', node) && projectStageFromLabelFields(node),]
+      let stillMissingQueryFilter = {
+        [node.field]: { $in: getMissedValues(node, stillMissingValues) },
+      }
+      let stillMissingArgs = [
+        { $group: { _id: `$${node.field}` } },
+        ...lookupLabel(node),
+        _.get('label.fields', node) && projectStageFromLabelFields(node),
+      ]
       let stillmissingResult = []
       if(!_.isEmpty(stillMissingValues)){
         //use config to run runSearch(options, node, schema, filters, aggs)  function
-        stillmissingResult = await config.getProvider(node).runSearch(config.options, node, config.getSchema(node.schema), stillMissingQueryFilter, stillMissingArgs)
+        stillmissingResult = await config
+          .getProvider(node)
+          .runSearch(
+            config.options,
+            node,
+            config.getSchema(node.schema),
+            stillMissingQueryFilter,
+            stillMissingArgs
+          )
       }
-      let finalMissedReult = _.flow(_.map(({_id,label})=>({ _id,label,count:0})),_.concat(searchMissedResult))(stillmissingResult)
+      let finalMissedReult = _.flow(
+        _.map(({ _id, label }) => ({ _id, label, count: 0 })),
+        _.concat(searchMissedResult)
+      )(stillmissingResult)
 
       let missedValuesOptions = _.map(
-        ({ _id, label, count }) =>(
-          {
-            name: _id,
-            count,
-            ...facetValueLabel(node, label),
-          }),
+        ({ _id, label, count }) => ({
+          name: _id,
+          count,
+          ...facetValueLabel(node, label),
+        }),
         finalMissedReult
       )
-      results.options = _.concat(missedValuesOptions,  results.options)
+      results.options = _.concat(missedValuesOptions, results.options)
     }
 
     return results
