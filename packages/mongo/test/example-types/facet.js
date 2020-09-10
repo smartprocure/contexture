@@ -3,6 +3,7 @@ let _ = require('lodash/fp')
 let facet = require('../../src/example-types/facet')
 let { ObjectID } = require('mongodb')
 let mingo = require('mingo')
+let mongoProvider = require('../../src/index')
 describe('facet', () => {
   describe('facet.hasValue', () => {
     it('Should allow nodes with values', () => {
@@ -506,6 +507,42 @@ describe('facet', () => {
         )
         let ids = _.map(({ name }) => _.toString(name), result.options)
         expect(_.includes('5e9dbd76e991760021124966', ids)).to.be.true
+      })
+      it('when the first and second search result does not  contain the checked value',async()=>{
+        let config ={
+          getProvider:()=>({runSearch:()=>[ {  label: { name: '5' }, _id: 5 } ],
+          }),
+          getSchema:()=>null
+        }
+
+        node.label.collection = Data
+        node.isMongoId = null
+        node.values = [5]
+        let result = await facet.result(node, agg =>
+          mingo.aggregate(Data, agg),null,config
+        )
+        let ids = _.map(({ name }) => _.toString(name), result.options)
+        expect(_.includes('5', ids)).to.be.true
+      })
+      it('when the first and second search result does not  contain the checked value  and  isMongoId is true',async()=>{
+        let config ={
+          getProvider:()=>({runSearch:()=>[ {  label: { name: 'test' }, _id: '5ce30b403aa154002d01b9dd' } ],
+          }),
+          getSchema:()=>null
+        }
+
+        let collection = _.map(
+          ({ _id, name }) => ({ _id: ObjectID(_id), name }),
+          mongoIdData
+        )
+        node.isMongoId = true
+        node.label.collection = collection
+        node.values = ['5ce30b403aa154002d01b9dd']
+        let result = await facet.result(node, agg =>
+          mingo.aggregate(collection, agg),null,config
+        )
+        let ids = _.map(({ name }) => _.toString(name), result.options)
+        expect(_.includes('5ce30b403aa154002d01b9dd', ids)).to.be.true
       })
     })
   })
