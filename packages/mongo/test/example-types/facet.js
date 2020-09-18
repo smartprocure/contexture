@@ -3,7 +3,6 @@ let _ = require('lodash/fp')
 let facet = require('../../src/example-types/facet')
 let { ObjectID } = require('mongodb')
 let mingo = require('mingo')
-let mongoProvider = require('../../src/index')
 describe('facet', () => {
   describe('facet.hasValue', () => {
     it('Should allow nodes with values', () => {
@@ -512,7 +511,7 @@ describe('facet', () => {
         let mockConfig ={
           getProvider:()=>({runSearch:()=>[ {  label: { name: '5' }, _id: 5 } ],
           }),
-          getSchema:()=>{}
+          getSchema(){}
         }
 
         node.label.collection = Data
@@ -528,7 +527,7 @@ describe('facet', () => {
         let mockConfig ={
           getProvider:()=>({runSearch:()=>[ {  label: { name: 'test' }, _id: '5ce30b403aa154002d01b9dd' } ],
           }),
-          getSchema:()=>{}
+          getSchema(){}
         }
 
         let collection = _.map(
