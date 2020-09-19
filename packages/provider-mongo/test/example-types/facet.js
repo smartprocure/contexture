@@ -507,27 +507,34 @@ describe('facet', () => {
         let ids = _.map(({ name }) => _.toString(name), result.options)
         expect(_.includes('5e9dbd76e991760021124966', ids)).to.be.true
       })
-      it('when the first and second search result does not  contain the checked value',async()=>{
-        let mockConfig ={
-          getProvider:()=>({runSearch:()=>[ {  label: { name: '5' }, _id: 5 } ],
+      it('when the first and second search result does not  contain the checked value', async () => {
+        let mockConfig = {
+          getProvider: () => ({
+            runSearch: () => [{ label: { name: '5' }, _id: 5 }],
           }),
-          getSchema(){}
+          getSchema() {},
         }
 
         node.label.collection = Data
         node.isMongoId = null
         node.values = [5]
-        let result = await facet.result(node, agg =>
-          mingo.aggregate(Data, agg), { },mockConfig
+        let result = await facet.result(
+          node,
+          agg => mingo.aggregate(Data, agg),
+          {},
+          mockConfig
         )
         let ids = _.map(({ name }) => _.toString(name), result.options)
         expect(_.includes('5', ids)).to.be.true
       })
-      it('when the first and second search result does not  contain the checked value  and  isMongoId is true',async()=>{
-        let mockConfig ={
-          getProvider:()=>({runSearch:()=>[ {  label: { name: 'test' }, _id: '5ce30b403aa154002d01b9dd' } ],
+      it('when the first and second search result does not  contain the checked value  and  isMongoId is true', async () => {
+        let mockConfig = {
+          getProvider: () => ({
+            runSearch: () => [
+              { label: { name: 'test' }, _id: '5ce30b403aa154002d01b9dd' },
+            ],
           }),
-          getSchema(){}
+          getSchema() {},
         }
 
         let collection = _.map(
@@ -537,8 +544,11 @@ describe('facet', () => {
         node.isMongoId = true
         node.label.collection = collection
         node.values = ['5ce30b403aa154002d01b9dd']
-        let result = await facet.result(node, agg =>
-          mingo.aggregate(collection, agg),{},mockConfig
+        let result = await facet.result(
+          node,
+          agg => mingo.aggregate(collection, agg),
+          {},
+          mockConfig
         )
         let ids = _.map(({ name }) => _.toString(name), result.options)
         expect(_.includes('5ce30b403aa154002d01b9dd', ids)).to.be.true
