@@ -3,7 +3,6 @@ import F from 'futil'
 import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 import OutsideClickHandler from 'react-outside-click-handler'
-import { useLensObject } from '../utils/react'
 import { withNode } from '../utils/hoc'
 import { Box, ButtonGroup, Button } from '../greyVest'
 import ExpandableTagsInput, { Tags } from '../greyVest/ExpandableTagsInput'
@@ -63,19 +62,16 @@ let SearchBar = ({
   searchButtonProps,
 }) => {
   let collapse = React.useState(true)
-  let popoverState = useLensObject({ open: false, tagOpen: '' })
   return (
     <OutsideClickHandler
       onOutsideClick={() => {
         F.on(collapse)()
-        F.off(popoverState.open)()
-        F.set('', popoverState.tagOpen)
       }}
     >
       <ButtonGroup style={searchBarStyle}>
         <Box style={searchBarBoxStyle} onClick={F.off(collapse)}>
           <ExpandableTagsQuery
-            {...{ tree, node, collapse, popoverState, actionWrapper }}
+            {...{ tree, node, collapse, actionWrapper }}
             onAddTag={F.off(collapse)}
             Loader={({ children }) => <div>{children}</div>}
             style={inputStyle}

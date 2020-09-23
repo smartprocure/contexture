@@ -1,9 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import F from 'futil'
 import { Grid, GridItem } from '../../greyVest'
 import { contexturifyWithoutLoader } from '../../utils/hoc'
-import { useLensObject } from '../../utils/react'
 import { getTagStyle, tagValueField } from './utils'
 import TagActionsMenu from './TagActionsMenu'
 import ActionsMenu from './ActionsMenu'
@@ -14,26 +12,21 @@ let TagsQuery = ({
   tree,
   node,
   style,
-  popoverState,
   actionWrapper,
   onAddTag = _.noop,
   theme: { Icon, TagsInput, Tag, Popover },
   ...props
 }) => {
-  let newPopoverState = useLensObject({ open: false, tagOpen: '' })
-  popoverState = popoverState || newPopoverState
-
   let TagWithPopover = props => (
-    <>
-      <Tag {...props} />
-      <Popover
-        isOpen={F.view(popoverState.tagOpen) === props.value}
-        onClose={F.sets('', popoverState.tagOpen)}
-        contained
-      >
-        <TagActionsMenu tag={props.value} {...{ node, tree }} />
-      </Popover>
-    </>
+    <Popover
+      position="right top"
+      closeOnPopoverClick={false}
+      trigger={
+        <Tag {...props} />
+      }
+    >
+      <TagActionsMenu tag={props.value} {...{ node, tree }} />
+    </Popover>
   )
 
   return (
@@ -53,7 +46,6 @@ let TagsQuery = ({
             })
             onAddTag(tag)
           }}
-          onTagClick={tag => F.set(tag, popoverState.tagOpen)}
           removeTag={tag => {
             tree.mutate(node.path, {
               tags: _.reject({ [tagValueField]: tag }, node.tags),
@@ -67,16 +59,21 @@ let TagsQuery = ({
         />
       </GridItem>
       <GridItem place="center">
-        <div onClick={F.on(popoverState.open)}>
-          <Icon icon="TableColumnMenu" />
-        </div>
-        <Popover contained open={popoverState.open} style={{ right: 0 }}>
+        <Popover
+          style={{width: 'auto'}}
+          position={'bottom right'}
+          closeOnPopoverClick={false}
+          trigger={
+            <div>
+              <Icon icon="TableColumnMenu" />
+            </div>
+          }
+        >
           <ActionsMenu
             {...{
               node,
               tree,
               actionWrapper,
-              open: popoverState.open,
             }}
           />
         </Popover>

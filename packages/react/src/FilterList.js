@@ -44,7 +44,7 @@ export let FilterActions = _.flow(
             }}
           />
         </Modal>
-        <Popover open={popover} className="filter-actions-popover">
+        <Popover open={popover} arrow={false}>
           {!_.isEmpty(typeOptions) && (
             <>
               <DropdownItem className="filter-actions-selected-type">
@@ -108,7 +108,7 @@ export let Label = _.flow(
         {children || _.get([field, 'label'], fields) || field || ''}
       </span>
       {tree && node && (
-        <React.Fragment>
+        <>
           <span
             onClick={
               node.paused
@@ -134,7 +134,7 @@ export let Label = _.flow(
             // Whitespace separator
             <div style={{ flexGrow: 1 }} />
           }
-        </React.Fragment>
+        </>
       )}
     </Flex>
   )
