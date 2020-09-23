@@ -21,9 +21,7 @@ let TagsQuery = ({
     <Popover
       position="right top"
       closeOnPopoverClick={false}
-      trigger={
-        <Tag {...props} />
-      }
+      trigger={<Tag {...props} />}
     >
       <TagActionsMenu tag={props.value} {...{ node, tree }} />
     </Popover>
@@ -60,7 +58,7 @@ let TagsQuery = ({
       </GridItem>
       <GridItem place="center">
         <Popover
-          style={{width: 'auto'}}
+          style={{ width: 'auto' }}
           position={'bottom right'}
           closeOnPopoverClick={false}
           trigger={

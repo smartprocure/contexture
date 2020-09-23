@@ -29,7 +29,7 @@ const moveColumn = (
 
 let popoverStyle = {
   userSelect: 'none',
-  width: 'auto'
+  width: 'auto',
 }
 
 let HeaderCellDefault = _.flow(
@@ -100,9 +100,7 @@ let Header = ({
           />
         )}
         <Popover
-          trigger={
-            hideMenu ? null : <Icon icon="TableColumnMenu" />
-          }
+          trigger={hideMenu ? null : <Icon icon="TableColumnMenu" />}
           position="bottom right"
           style={popoverStyle}
         >
@@ -116,21 +114,21 @@ let Header = ({
               Sort Ascending
             </DropdownItem>
           )}
-            {!disableSort && (
-              <DropdownItem
-                onClick={() => {
-                  mutate({ sortField, sortDir: 'desc' })
-                }}
-              >
-                <Icon icon="SortDescending" />
-                Sort Descending
-              </DropdownItem>
-            )}
+          {!disableSort && (
             <DropdownItem
-              onClick={() =>
-                moveColumn(mutate, i => i - 1, field, visibleFields, includes)
-              }
+              onClick={() => {
+                mutate({ sortField, sortDir: 'desc' })
+              }}
             >
+              <Icon icon="SortDescending" />
+              Sort Descending
+            </DropdownItem>
+          )}
+          <DropdownItem
+            onClick={() =>
+              moveColumn(mutate, i => i - 1, field, visibleFields, includes)
+            }
+          >
             <Icon icon="MoveLeft" />
             Move Left
           </DropdownItem>
@@ -142,47 +140,47 @@ let Header = ({
             <Icon icon="MoveRight" />
             Move Right
           </DropdownItem>
-            {!hideRemoveColumn && (
-              <DropdownItem
-                onClick={() => mutate({ include: _.without([field], includes) })}
-              >
-                <Icon icon="RemoveColumn" />
-                Remove Column
-              </DropdownItem>
-            )}
-            {!!addOptions.length && (
-              <DropdownItem onClick={F.on(adding)}>
-                <Icon icon="AddColumn" />
-                Add Column
-              </DropdownItem>
-            )}
-            {criteria && (typeDefault || filterNode) && !disableFilter && (
-              <div>
-                <DropdownItem onClick={filter}>
-                  <Icon
-                    icon={
-                      filterNode
-                        ? F.view(filtering)
+          {!hideRemoveColumn && (
+            <DropdownItem
+              onClick={() => mutate({ include: _.without([field], includes) })}
+            >
+              <Icon icon="RemoveColumn" />
+              Remove Column
+            </DropdownItem>
+          )}
+          {!!addOptions.length && (
+            <DropdownItem onClick={F.on(adding)}>
+              <Icon icon="AddColumn" />
+              Add Column
+            </DropdownItem>
+          )}
+          {criteria && (typeDefault || filterNode) && !disableFilter && (
+            <div>
+              <DropdownItem onClick={filter}>
+                <Icon
+                  icon={
+                    filterNode
+                      ? F.view(filtering)
                         ? 'FilterCollapse'
                         : 'FilterExpand'
-                        : 'FilterAdd'
-                    }
-                  />
-                  Filter
-                </DropdownItem>
-                {F.view(filtering) && filterNode && !filterNode.paused && (
-                  <Dynamic
-                    {...{
-                      component: UnmappedNodeComponent,
-                      tree,
-                      path: _.toArray(filterNode.path),
-                      ...mapNodeToProps(filterNode, fields),
-                    }}
-                  />
-                )}
-              </div>
-            )}
-            <Modal open={adding}>
+                      : 'FilterAdd'
+                  }
+                />
+                Filter
+              </DropdownItem>
+              {F.view(filtering) && filterNode && !filterNode.paused && (
+                <Dynamic
+                  {...{
+                    component: UnmappedNodeComponent,
+                    tree,
+                    path: _.toArray(filterNode.path),
+                    ...mapNodeToProps(filterNode, fields),
+                  }}
+                />
+              )}
+            </div>
+          )}
+          <Modal open={adding}>
             <NestedPicker
               options={addOptions}
               onChange={triggerField => {

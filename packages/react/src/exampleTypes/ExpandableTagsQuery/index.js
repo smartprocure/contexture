@@ -12,7 +12,13 @@ let collapsedStyle = {
 }
 
 // eslint-disable-next-line no-unused-vars
-let ExpandableTagsQuery = ({ measure, measureRef, contentRect, collapse, ...props }) => (
+let ExpandableTagsQuery = ({
+  measure,
+  measureRef,
+  contentRect,
+  collapse,
+  ...props
+}) => (
   <>
     <div style={F.view(collapse) ? collapsedStyle : {}}>
       <div ref={measureRef}>
