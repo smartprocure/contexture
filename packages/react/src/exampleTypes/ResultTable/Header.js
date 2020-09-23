@@ -62,7 +62,6 @@ let Header = ({
     UnmappedNodeComponent,
   },
 }) => {
-  let popover = React.useState(false)
   let adding = React.useState(false)
   let filtering = React.useState(false)
   let {
