@@ -11,8 +11,8 @@ let collapsedStyle = {
   overflowY: 'auto',
 }
 
-// eslint-disable-next-line no-unused-vars
 let ExpandableTagsQuery = ({
+  // eslint-disable-next-line no-unused-vars
   measure,
   measureRef,
   contentRect,
