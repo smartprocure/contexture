@@ -13,7 +13,6 @@ export default (tree, { search } = {}) =>
         x => {
           if (search && isFilterOnly(x)) {
             x.filterOnly = true
-            if (!x.hasValue) x.markedForDeletion = true
           }
           _.each(unsetOn(_, x), [
             ..._.keys(
@@ -24,10 +23,10 @@ export default (tree, { search } = {}) =>
         },
         x => {
           if (x.children) {
-            x.children = _.flow(
-              _.reject('markedForDeletion'),
-              _.reject(x => x.children && !x.children.length)
-            )(x.children)
+            x.children = _.reject(
+              x => x.children && !x.children.length,
+              x.children
+            )
           }
         }
       )
