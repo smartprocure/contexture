@@ -99,31 +99,6 @@ let AllTests = ContextureClient => {
         ],
       })
     })
-    it('should remove filterOnly nodes with no value', async () => {
-      service.resetHistory()
-      await Tree.mutate(['root', 'filter'], {
-        size: 10,
-      })
-      expect(service).to.have.callCount(1)
-      let [dto, now] = service.getCall(0).args
-      // Should omit `results`
-      expect(dto).to.deep.equal({
-        key: 'root',
-        join: 'and',
-        lastUpdateTime: now,
-        children: [
-          {
-            key: 'filter',
-            type: 'facet',
-            values: ['a'],
-            size: 10,
-            mode: 'include',
-            lastUpdateTime: now,
-            optionsFilter: '',
-          },
-        ],
-      })
-    })
     it('should not block blank searches', async () => {
       service.resetHistory()
       await Tree.mutate(['root', 'filter'], {
