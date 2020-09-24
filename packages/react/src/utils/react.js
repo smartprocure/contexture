@@ -13,8 +13,14 @@ export let wrapDisplayName = (name, Component) => Wrapped => {
   return Wrapped
 }
 
-// (k, a -> {b}) -> Component<{k: a}> -> Component<{b}>
+// (k, a -> {b}) -> Component<{k: a}> -> Component<{k: a, ...b}>
 export let expandProp = _.flow(
   (key, fn) => F.expandObjectBy(key, F.whenExists(fn)),
+  mapProps
+)
+
+// (k, a -> {b}) -> Component<{k: a}> -> Component<{...b}>
+export let explodeProp = _.flow(
+  (key, fn) => _.flow(F.expandObjectBy(key, F.whenExists(fn)), _.omit(key)),
   mapProps
 )

@@ -1,32 +1,53 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import OutsideClickHandler from 'react-outside-click-handler'
-import { observer } from 'mobx-react'
+import F from 'futil'
+import Popup from 'reactjs-popup'
 import { openBinding } from './utils'
-import { expandProp } from '../utils/react'
+import { explodeProp } from '../utils/react'
 
-// Simple popover
-let Popover = ({ isOpen, onClose, children, style, contained }) =>
-  isOpen && (
-    <OutsideClickHandler onOutsideClick={_.debounce(0, onClose)}>
-      <div style={{ position: contained ? '' : 'relative' }}>
-        <div
-          className="popover"
-          style={{
-            position: 'absolute',
-            Index: 100,
-            fontWeight: 'normal',
-            textAlign: 'left',
-            background: 'white',
-            border: '1px solid #ebebeb',
-            zIndex: 20,
-            ...style,
-          }}
-        >
-          {children}
-        </div>
+/**
+ * Self-contained state management:
+ * <Popover trigger={<Button/>} />
+ *
+ * External state management:
+ * <Popover isOpen={bool} onClose={fn} />
+ *
+ * Also with openBinding for a state lens
+ * <Popover open={lens} />
+ **/
+let Popover = ({
+  trigger,
+  isOpen,
+  onClose,
+  arrow,
+  position,
+  closeOnPopoverClick = true,
+  style,
+  children,
+  ...props
+}) => (
+  <Popup
+    // always passing trigger, otherwise it opens as fullscreen modal
+    trigger={open => <span>{F.callOrReturn(trigger, open)}</span>}
+    open={isOpen}
+    onClose={onClose}
+    arrow={arrow}
+    position={position || 'bottom left'}
+    closeOnDocumentClick
+    contentStyle={{
+      borderRadius: 3,
+      boxShadow: '0 2px 10px 0 rgba(39, 44, 65, 0.1)',
+      border: '1px solid rgb(235, 235, 235)',
+      ...style,
+    }}
+    {...props}
+  >
+    {close => (
+      <div onClick={closeOnPopoverClick ? close : null}>
+        {_.isFunction(children) ? children(close) : children}
       </div>
-    </OutsideClickHandler>
-  )
+    )}
+  </Popup>
+)
 
-export default _.flow(expandProp('open', openBinding), observer)(Popover)
+export default explodeProp('open', openBinding)(Popover)

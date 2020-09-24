@@ -15,7 +15,7 @@ let ExpandableTagsQuery = ({ measureRef, contentRect, collapse, ...props }) => (
   <>
     <div style={F.view(collapse) ? collapsedStyle : {}}>
       <div ref={measureRef}>
-        <TagsQuery {...props} />
+        <TagsQuery {..._.omit('measure', props)} />
       </div>
     </div>
     {F.view(collapse) && contentRect.entry.height > innerHeight && (

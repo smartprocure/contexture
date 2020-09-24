@@ -86,12 +86,13 @@ export default () => (
         color: #9b9b9b;
         will-change: transform;
         transition: transform .2s ease-in;
+        transform: rotate(-90deg);
         cursor: pointer;
       }
       
       .gv-expandable-icon.expanded {
         transition: transform .2s ease-out;
-        transform: rotate(180deg);
+        transform: rotate(0);
       }
       
       .gv-expandable-body {
