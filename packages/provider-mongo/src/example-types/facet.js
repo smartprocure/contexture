@@ -152,7 +152,7 @@ module.exports = {
       node.isMongoId ? _.map(ObjectID, missedValues) : missedValues
 
     if (!_.isEmpty(missedValues)) {
-      let searchMissedResult = await search(
+      let MissedResult = await search(
         _.compact([
           {
             $match: { [node.field]: { $in: getMissedValues(node, missedValues)  } },
@@ -164,24 +164,24 @@ module.exports = {
           mapKeywordFilters(node),
         ])
       )
-      // the value will be missing. when the value has been checked but not in the search result we return it with count 0
-      let checkedButNotInSearchValues = _.difference(
+      // when the value has been selected but filtered by query,the search result will still not contain the checked value. we return it with count 0
+      let missedByFilterValues = _.difference(
         //when values are numeric values, stringify missedValues to avoid the bug.
         _.map(_.toString, missedValues),
-        _.map(x => _.toString(x[`${node.field}`]), searchMissedResult)
+        _.map(x => _.toString(x[`${node.field}`]), MissedResult)
       )
-      let checkedButNotInSearchResult = []
+      let   missedByFilterResult = []
 
-      if (!_.isEmpty(checkedButNotInSearchValues)) {
+      if (!_.isEmpty(missedByFilterValues)) {
         //use config to run runSearch(options, node, schema, filters, aggs)  function
-        checkedButNotInSearchResult = await config
+        missedByFilterResult = await config
           .getProvider(node)
           .runSearch(
             config.options,
             node,
             config.getSchema(node.schema),
             {
-              [node.field]: { $in: getMissedValues(node, checkedButNotInSearchValues) },
+              [node.field]: { $in: getMissedValues(node, missedByFilterValues) },
             },
             [
               { $group: { _id: `$${node.field}` } },
@@ -199,8 +199,8 @@ module.exports = {
         }),
         _.flow(
           _.map(({ _id, label }) => ({ _id, label, count: 0 })),
-          _.concat(searchMissedResult)
-        )(checkedButNotInSearchResult)
+          _.concat(MissedResult)
+        )(missedByFilterResult)
       )
       results.options = _.concat(missedValuesOptions, results.options)
     }
