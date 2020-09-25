@@ -102,6 +102,8 @@ let Header = ({
         <Popover
           trigger={hideMenu ? null : <Icon icon="TableColumnMenu" />}
           position="bottom right"
+          closeOnPopoverClick={false}
+          closeOnDocumentClick={!F.view(adding)}
           style={popoverStyle}
         >
           {!disableSort && (
