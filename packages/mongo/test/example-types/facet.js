@@ -1,7 +1,7 @@
 let { expect } = require('chai')
 let _ = require('lodash/fp')
 let facet = require('../../src/example-types/facet')
-let { ObjectID } = require('mongodb')
+let { ObjectId } = require('mongodb')
 let mingo = require('mingo')
 describe('facet', () => {
   describe('facet.hasValue', () => {
@@ -479,7 +479,7 @@ describe('facet', () => {
       })
       it('when missing checked values in first search are expected and isMongoId is true', async () => {
         let collection = _.map(
-          ({ _id, name }) => ({ _id: ObjectID(_id), name }),
+          ({ _id, name }) => ({ _id: ObjectId(_id), name }),
           mongoIdData
         )
         node.isMongoId = true
@@ -494,7 +494,7 @@ describe('facet', () => {
       })
       it('when missing checked values in first search are not expected and  isMongoId is true', async () => {
         let collection = _.map(
-          ({ _id, name }) => ({ _id: ObjectID(_id), name }),
+          ({ _id, name }) => ({ _id: ObjectId(_id), name }),
           mongoIdData
         )
         node.isMongoId = true
@@ -538,7 +538,7 @@ describe('facet', () => {
         }
 
         let collection = _.map(
-          ({ _id, name }) => ({ _id: ObjectID(_id), name }),
+          ({ _id, name }) => ({ _id: ObjectId(_id), name }),
           mongoIdData
         )
         node.isMongoId = true

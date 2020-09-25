@@ -1,6 +1,6 @@
 let F = require('futil')
 let _ = require('lodash/fp')
-let { ObjectID } = require('mongodb')
+let {ObjectId } = require('mongodb')
 
 let projectStageFromLabelFields = node => ({
   $project: {
@@ -97,16 +97,19 @@ let unwindPropOrField = node =>
     _.castArray(node.unwind || node.field)
   )
 
+let runSearch = ({ options, getSchema, getProvider }, node) => (filters, aggs) =>
+  getProvider(node).runSearch(options, node, getSchema(node.schema), filters, aggs)
+
 module.exports = {
   hasValue: _.get('values.length'),
   filter: node => ({
     [node.field]: {
       [node.mode === 'exclude' ? '$nin' : '$in']: node.isMongoId
-        ? _.map(ObjectID, node.values)
+        ? _.map(ObjectId, node.values)
         : node.values,
     },
   }),
-  async result(node, search, schema, config) {
+  async result(node, search, schema, config={}) {
     let valueIds = _.get('values', node)
     let results = await Promise.all([
       search(
@@ -148,14 +151,14 @@ module.exports = {
       )
     )
 
-    let getMissedIds = (node, missedIds) =>
-      node.isMongoId ? _.map(ObjectID, missedIds) : missedIds
+    let maybeMapObjectId = ( missedIds) =>
+      node.isMongoId ? _.map(ObjectId, missedIds) : missedIds
 
     if (!_.isEmpty(lostIds)) {
       let lostOptions = await search(
         _.compact([
           {
-            $match: { [node.field]: { $in: getMissedIds(node, lostIds) } },
+            $match: { [node.field]: { $in: maybeMapObjectId(lostIds) } },
           },
           { $group: { _id: `$${node.field}`, count: { $sum: 1 } } },
           ...sortAndLimitIfNotSearching(node.optionsFilter, node.size),
@@ -173,33 +176,27 @@ module.exports = {
 
       if (!_.isEmpty(zeroCountIds)) {
         //use config to run runSearch(options, node, schema, filters, aggs)  function
-        zeroCountOptions = await config.getProvider(node).runSearch(
-          config.options,
-          node,
-          config.getSchema(node.schema),
-          {
-            [node.field]: { $in: getMissedIds(node, zeroCountIds) },
+        zeroCountOptions = _.map(({ _id, label }) => ({ _id, label, count: 0 }),await runSearch(config,node)({
+            [node.field]: { $in: maybeMapObjectId(zeroCountIds) },
           },
           [
             { $group: { _id: `$${node.field}` } },
             ...lookupLabel(node),
             _.get('label.fields', node) && projectStageFromLabelFields(node),
-          ]
-        )
+          ]))
       }
 
-      let missedOptions = _.map(
+      let totalMissedOptions =_.map(
         ({ _id, label, count }) => ({
           name: _id,
           count,
           ...facetValueLabel(node, label),
-        }),
-        _.flow(
-          _.map(({ _id, label }) => ({ _id, label, count: 0 })),
-          _.concat(lostOptions)
-        )(zeroCountOptions)
-      )
-      results.options = _.concat(missedOptions, results.options)
+        }))
+        (
+          _.concat(lostOptions,zeroCountOptions)
+        )
+
+      results.options = _.concat(totalMissedOptions, results.options)
     }
 
     return results
