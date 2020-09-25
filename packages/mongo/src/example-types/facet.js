@@ -140,22 +140,21 @@ module.exports = {
       ),
     }))
 
-    let missedIds = _.difference(
+    let lostIds = _.difference(
       valueIds,
       _.map(
-        ({ name }) => (node.isMongoId ? _.toString(name) : name),
-        results.options
+        ({ name }) => F.when(node.isMongoId, _.toString, name), results.options
       )
     )
 
     let getMissedIds = (node, missedIds) =>
       node.isMongoId ? _.map(ObjectID, missedIds) : missedIds
 
-    if (!_.isEmpty(missedIds)) {
-      let missedValues = await search(
+    if (!_.isEmpty(lostIds)) {
+      let lostOptions = await search(
         _.compact([
           {
-            $match: { [node.field]: { $in: getMissedIds(node, missedIds) } },
+            $match: { [node.field]: { $in: getMissedIds(node, lostIds) } },
           },
           { $group: { _id: `$${node.field}`, count: { $sum: 1 } } },
           ...sortAndLimitIfNotSearching(node.optionsFilter, node.size),
@@ -166,8 +165,8 @@ module.exports = {
       )
       let zeroCountIds = _.difference(
         //when values are numeric values, stringify missedValues to avoid the bug.
-        _.map(_.toString, missedIds),
-        _.map(x => _.toString(x[`${node.field}`]), missedValues)
+        _.map(_.toString, lostIds),
+        _.map(x => _.toString(x[`${node.field}`]), lostOptions)
       )
       let zeroCountValues = []
 
@@ -196,7 +195,7 @@ module.exports = {
         }),
         _.flow(
           _.map(({ _id, label }) => ({ _id, label, count: 0 })),
-          _.concat(missedValues)
+          _.concat(lostOptions)
         )(zeroCountValues)
       )
       results.options = _.concat(missedOptions, results.options)
