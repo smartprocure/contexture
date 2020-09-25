@@ -143,7 +143,8 @@ module.exports = {
     let lostIds = _.difference(
       valueIds,
       _.map(
-        ({ name }) => F.when(node.isMongoId, _.toString, name), results.options
+        ({ name }) => F.when(node.isMongoId, _.toString, name),
+        results.options
       )
     )
 
