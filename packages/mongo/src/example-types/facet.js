@@ -155,7 +155,9 @@ module.exports = {
       let searchMissedResult = await search(
         _.compact([
           {
-            $match: { [node.field]: { $in: getMissedValues(node, missedValues)  } },
+            $match: {
+              [node.field]: { $in: getMissedValues(node, missedValues) },
+            },
           },
           { $group: { _id: `$${node.field}`, count: { $sum: 1 } } },
           ...sortAndLimitIfNotSearching(node.optionsFilter, node.size),
@@ -174,21 +176,21 @@ module.exports = {
 
       if (!_.isEmpty(checkedButNotInSearchValues)) {
         //use config to run runSearch(options, node, schema, filters, aggs)  function
-        checkedButNotInSearchResult = await config
-          .getProvider(node)
-          .runSearch(
-            config.options,
-            node,
-            config.getSchema(node.schema),
-            {
-              [node.field]: { $in: getMissedValues(node, checkedButNotInSearchValues) },
+        checkedButNotInSearchResult = await config.getProvider(node).runSearch(
+          config.options,
+          node,
+          config.getSchema(node.schema),
+          {
+            [node.field]: {
+              $in: getMissedValues(node, checkedButNotInSearchValues),
             },
-            [
-              { $group: { _id: `$${node.field}` } },
-              ...lookupLabel(node),
-              _.get('label.fields', node) && projectStageFromLabelFields(node),
-            ]
-          )
+          },
+          [
+            { $group: { _id: `$${node.field}` } },
+            ...lookupLabel(node),
+            _.get('label.fields', node) && projectStageFromLabelFields(node),
+          ]
+        )
       }
 
       let missedValuesOptions = _.map(
