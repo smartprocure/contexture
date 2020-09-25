@@ -168,11 +168,11 @@ module.exports = {
         _.map(_.toString, lostIds),
         _.map(x => _.toString(x[`${node.field}`]), lostOptions)
       )
-      let zeroCountValues = []
+      let zeroCountOptions = []
 
       if (!_.isEmpty(zeroCountIds)) {
         //use config to run runSearch(options, node, schema, filters, aggs)  function
-        zeroCountValues = await config.getProvider(node).runSearch(
+        zeroCountOptions = await config.getProvider(node).runSearch(
           config.options,
           node,
           config.getSchema(node.schema),
@@ -196,7 +196,7 @@ module.exports = {
         _.flow(
           _.map(({ _id, label }) => ({ _id, label, count: 0 })),
           _.concat(lostOptions)
-        )(zeroCountValues)
+        )(zeroCountOptions)
       )
       results.options = _.concat(missedOptions, results.options)
     }
