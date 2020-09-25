@@ -21,6 +21,7 @@ let Popover = ({
   onClose,
   arrow,
   position,
+  closeOnDocumentClick = true,
   closeOnPopoverClick = true,
   arrowStyle,
   contentStyle,
@@ -35,7 +36,7 @@ let Popover = ({
     onClose={onClose}
     arrow={arrow}
     position={position || 'bottom left'}
-    closeOnDocumentClick
+    closeOnDocumentClick={closeOnDocumentClick}
     arrowStyle={{
       filter: 'drop-shadow(0 -3px 3px rgba(39, 44, 65, 0.1)',
       ...arrowStyle,
