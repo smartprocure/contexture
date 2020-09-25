@@ -38,7 +38,7 @@ let Popover = ({
     closeOnDocumentClick
     arrowStyle={{
       filter: 'drop-shadow(0 -3px 3px rgba(39, 44, 65, 0.1)',
-      ...arrowStyle
+      ...arrowStyle,
     }}
     contentStyle={{
       background: '#FFF',

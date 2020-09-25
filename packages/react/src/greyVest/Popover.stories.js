@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import F from 'futil'
 import { Button, Popover } from '.'
 import decorator from './stories/decorator'
@@ -15,9 +15,7 @@ export let withOpenProp = () => {
     <>
       <Popover
         open={open}
-        trigger={
-          <Button onClick={F.on(open)}>Open Popover</Button>
-        }
+        trigger={<Button onClick={F.on(open)}>Open Popover</Button>}
       >
         Some Popover Content
       </Popover>
@@ -33,9 +31,7 @@ export let withIsOpenOnCloseProps = () => {
       <Popover
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        trigger={
-          <Button onClick={() => setIsOpen(true)}>Open Popover</Button>
-        }
+        trigger={<Button onClick={() => setIsOpen(true)}>Open Popover</Button>}
       >
         Some Popover Content
       </Popover>
@@ -44,17 +40,11 @@ export let withIsOpenOnCloseProps = () => {
 }
 withIsOpenOnCloseProps.story = { name: "With 'isOpen'/'onClose' props" }
 
-export let withTriggerProp = () => {
-  return (
-    <>
-      <Popover
-        trigger={
-          <Button>Open Popover</Button>
-        }
-      >
-        Some Popover Content
-      </Popover>
-    </>
-  )
-}
-withTriggerProp.story = { name: "With trigger Component" }
+export let withTriggerProp = () => (
+  <>
+    <Popover trigger={<Button>Open Popover</Button>}>
+      Some Popover Content
+    </Popover>
+  </>
+)
+withTriggerProp.story = { name: 'With trigger Component' }
