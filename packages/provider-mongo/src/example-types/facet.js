@@ -175,7 +175,6 @@ module.exports = {
       let zeroCountOptions = []
 
       if (!_.isEmpty(zeroCountIds)) {
-        //use config to run runSearch(options, node, schema, filters, aggs)  function
         zeroCountOptions = _.map(({ _id, label }) => ({ _id, label, count: 0 }),await runSearch(config,node)({
             [node.field]: { $in: maybeMapObjectId(zeroCountIds) },
           },
