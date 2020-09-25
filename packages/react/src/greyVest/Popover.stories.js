@@ -1,6 +1,5 @@
-import React from 'react'
+import React, {useState} from 'react'
 import F from 'futil'
-import { observable } from 'mobx'
 import { Button, Popover } from '.'
 import decorator from './stories/decorator'
 
@@ -11,11 +10,17 @@ export default {
 }
 
 export let withOpenProp = () => {
-  let open = observable.box(false)
+  let open = useState(false)
   return (
     <>
-      <Button onClick={F.on(open)}>Open Popover</Button>
-      <Popover open={open}>Some Popover Content</Popover>
+      <Popover
+        open={open}
+        trigger={
+          <Button onClick={F.on(open)}>Open Popover</Button>
+        }
+      >
+        Some Popover Content
+      </Popover>
     </>
   )
 }
@@ -25,11 +30,31 @@ export let withIsOpenOnCloseProps = () => {
   let [isOpen, setIsOpen] = React.useState(false)
   return (
     <>
-      <Button onClick={() => setIsOpen(true)}>Open Popover</Button>
-      <Popover isOpen={isOpen} onClose={() => setIsOpen(false)}>
+      <Popover
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        trigger={
+          <Button onClick={() => setIsOpen(true)}>Open Popover</Button>
+        }
+      >
         Some Popover Content
       </Popover>
     </>
   )
 }
 withIsOpenOnCloseProps.story = { name: "With 'isOpen'/'onClose' props" }
+
+export let withTriggerProp = () => {
+  return (
+    <>
+      <Popover
+        trigger={
+          <Button>Open Popover</Button>
+        }
+      >
+        Some Popover Content
+      </Popover>
+    </>
+  )
+}
+withTriggerProp.story = { name: "With trigger Component" }
