@@ -151,14 +151,12 @@ module.exports = {
     let getMissedValues = (node, missedValues) =>
       node.isMongoId ? _.map(ObjectID, missedValues) : missedValues
 
-    let matchMissedValues = (node, missedValues) => ({
-      $match: { [node.field]: { $in: getMissedValues(node, missedValues) } },
-    })
-
     if (!_.isEmpty(missedValues)) {
       let searchMissedResult = await search(
         _.compact([
-          matchMissedValues(node, missedValues),
+          {
+            $match: { [node.field]: { $in: getMissedValues(node, missedValues)  } },
+          },
           { $group: { _id: `$${node.field}`, count: { $sum: 1 } } },
           ...sortAndLimitIfNotSearching(node.optionsFilter, node.size),
           ...lookupLabel(node),
@@ -166,36 +164,32 @@ module.exports = {
           mapKeywordFilters(node),
         ])
       )
-      //stringify missedValues to avoid the bug when values are numeric values
-      let stillMissingValues = _.difference(
+      // the value will be missing. when the value has been checked but not in the search result we return it with count 0
+      let checkedButNotInSearchValues = _.difference(
+        //when values are numeric values, stringify missedValues to avoid the bug.
         _.map(_.toString, missedValues),
         _.map(x => _.toString(x[`${node.field}`]), searchMissedResult)
       )
-      let stillMissingQueryFilter = {
-        [node.field]: { $in: getMissedValues(node, stillMissingValues) },
-      }
-      let stillMissingArgs = [
-        { $group: { _id: `$${node.field}` } },
-        ...lookupLabel(node),
-        _.get('label.fields', node) && projectStageFromLabelFields(node),
-      ]
-      let stillmissingResult = []
-      if (!_.isEmpty(stillMissingValues)) {
+      let checkedButNotInSearchResult = []
+
+      if (!_.isEmpty(checkedButNotInSearchValues)) {
         //use config to run runSearch(options, node, schema, filters, aggs)  function
-        stillmissingResult = await config
+        checkedButNotInSearchResult = await config
           .getProvider(node)
           .runSearch(
             config.options,
             node,
             config.getSchema(node.schema),
-            stillMissingQueryFilter,
-            stillMissingArgs
+            {
+              [node.field]: { $in: getMissedValues(node, checkedButNotInSearchValues) },
+            },
+            [
+              { $group: { _id: `$${node.field}` } },
+              ...lookupLabel(node),
+              _.get('label.fields', node) && projectStageFromLabelFields(node),
+            ]
           )
       }
-      let finalMissedReult = _.flow(
-        _.map(({ _id, label }) => ({ _id, label, count: 0 })),
-        _.concat(searchMissedResult)
-      )(stillmissingResult)
 
       let missedValuesOptions = _.map(
         ({ _id, label, count }) => ({
@@ -203,7 +197,10 @@ module.exports = {
           count,
           ...facetValueLabel(node, label),
         }),
-        finalMissedReult
+        _.flow(
+          _.map(({ _id, label }) => ({ _id, label, count: 0 })),
+          _.concat(searchMissedResult)
+        )(checkedButNotInSearchResult)
       )
       results.options = _.concat(missedValuesOptions, results.options)
     }
