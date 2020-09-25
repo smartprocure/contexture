@@ -107,7 +107,7 @@ module.exports = {
     },
   }),
   async result(node, search, schema, config) {
-    let values = _.get('values', node)
+    let valueIds = _.get('values', node)
     let results = await Promise.all([
       search(
         _.compact([
@@ -140,22 +140,22 @@ module.exports = {
       ),
     }))
 
-    let missedValues = _.difference(
-      values,
+    let missedIds = _.difference(
+      valueIds,
       _.map(
         ({ name }) => (node.isMongoId ? _.toString(name) : name),
         results.options
       )
     )
 
-    let getMissedValues = (node, missedValues) =>
-      node.isMongoId ? _.map(ObjectID, missedValues) : missedValues
+    let getMissedIds = (node, missedIds) =>
+      node.isMongoId ? _.map(ObjectID, missedIds) : missedIds
 
-    if (!_.isEmpty(missedValues)) {
-      let MissedResult = await search(
+    if (!_.isEmpty(missedIds)) {
+      let missedValues = await search(
         _.compact([
           {
-            $match: { [node.field]: { $in: getMissedValues(node, missedValues)  } },
+            $match: { [node.field]: { $in: getMissedIds(node, missedIds)  } },
           },
           { $group: { _id: `$${node.field}`, count: { $sum: 1 } } },
           ...sortAndLimitIfNotSearching(node.optionsFilter, node.size),
@@ -164,24 +164,23 @@ module.exports = {
           mapKeywordFilters(node),
         ])
       )
-      // when the value has been selected but filtered by query,the search result will still not contain the checked value. we return it with count 0
-      let missedByFilterValues = _.difference(
+      let zeroCountIds = _.difference(
         //when values are numeric values, stringify missedValues to avoid the bug.
-        _.map(_.toString, missedValues),
-        _.map(x => _.toString(x[`${node.field}`]), MissedResult)
+        _.map(_.toString, missedIds),
+        _.map(x => _.toString(x[`${node.field}`]), missedValues)
       )
-      let   missedByFilterResult = []
+      let   zeroCountValues = []
 
-      if (!_.isEmpty(missedByFilterValues)) {
+      if (!_.isEmpty(zeroCountIds)) {
         //use config to run runSearch(options, node, schema, filters, aggs)  function
-        missedByFilterResult = await config
+        zeroCountValues = await config
           .getProvider(node)
           .runSearch(
             config.options,
             node,
             config.getSchema(node.schema),
             {
-              [node.field]: { $in: getMissedValues(node, missedByFilterValues) },
+              [node.field]: { $in: getMissedIds(node, zeroCountIds) },
             },
             [
               { $group: { _id: `$${node.field}` } },
@@ -199,8 +198,8 @@ module.exports = {
         }),
         _.flow(
           _.map(({ _id, label }) => ({ _id, label, count: 0 })),
-          _.concat(MissedResult)
-        )(missedByFilterResult)
+          _.concat(missedValues)
+        )(zeroCountValues)
       )
       results.options = _.concat(missedValuesOptions, results.options)
     }
