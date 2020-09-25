@@ -190,7 +190,7 @@ module.exports = {
           )
       }
 
-      let missedValuesOptions = _.map(
+      let missedOptions = _.map(
         ({ _id, label, count }) => ({
           name: _id,
           count,
@@ -201,7 +201,7 @@ module.exports = {
           _.concat(missedValues)
         )(zeroCountValues)
       )
-      results.options = _.concat(missedValuesOptions, results.options)
+      results.options = _.concat(missedOptions, results.options)
     }
 
     return results
