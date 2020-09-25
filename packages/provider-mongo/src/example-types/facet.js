@@ -155,7 +155,7 @@ module.exports = {
       let missedValues = await search(
         _.compact([
           {
-            $match: { [node.field]: { $in: getMissedIds(node, missedIds)  } },
+            $match: { [node.field]: { $in: getMissedIds(node, missedIds) } },
           },
           { $group: { _id: `$${node.field}`, count: { $sum: 1 } } },
           ...sortAndLimitIfNotSearching(node.optionsFilter, node.size),
@@ -169,25 +169,23 @@ module.exports = {
         _.map(_.toString, missedIds),
         _.map(x => _.toString(x[`${node.field}`]), missedValues)
       )
-      let   zeroCountValues = []
+      let zeroCountValues = []
 
       if (!_.isEmpty(zeroCountIds)) {
         //use config to run runSearch(options, node, schema, filters, aggs)  function
-        zeroCountValues = await config
-          .getProvider(node)
-          .runSearch(
-            config.options,
-            node,
-            config.getSchema(node.schema),
-            {
-              [node.field]: { $in: getMissedIds(node, zeroCountIds) },
-            },
-            [
-              { $group: { _id: `$${node.field}` } },
-              ...lookupLabel(node),
-              _.get('label.fields', node) && projectStageFromLabelFields(node),
-            ]
-          )
+        zeroCountValues = await config.getProvider(node).runSearch(
+          config.options,
+          node,
+          config.getSchema(node.schema),
+          {
+            [node.field]: { $in: getMissedIds(node, zeroCountIds) },
+          },
+          [
+            { $group: { _id: `$${node.field}` } },
+            ...lookupLabel(node),
+            _.get('label.fields', node) && projectStageFromLabelFields(node),
+          ]
+        )
       }
 
       let missedValuesOptions = _.map(
