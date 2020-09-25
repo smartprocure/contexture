@@ -160,8 +160,7 @@ module.exports = {
       )
     )
 
-    let maybeMapObjectId =F.when(node.isMongoId, _.map(ObjectId))
-
+    let maybeMapObjectId = F.when(node.isMongoId, _.map(ObjectId))
 
     if (!_.isEmpty(lostIds)) {
       let lostOptions = await search(
