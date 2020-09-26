@@ -1,6 +1,6 @@
 let F = require('futil')
 let _ = require('lodash/fp')
-let { ObjectID } = require('mongodb')
+let { ObjectId } = require('mongodb')
 
 let projectStageFromLabelFields = node => ({
   $project: {
@@ -59,6 +59,26 @@ let mapKeywordFilters = node =>
     $match: setMatchOperators(list, node),
   }))(node)
 
+let lookupLabel = node =>
+  _.get('label', node)
+    ? [
+        {
+          $lookup: {
+            from: _.get('label.collection', node),
+            as: 'label',
+            localField: '_id',
+            foreignField: _.get('label.foreignField', node),
+          },
+        },
+        {
+          $unwind: {
+            path: '$label',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+      ]
+    : []
+
 let facetValueLabel = (node, label) => {
   if (!node.label) {
     return {}
@@ -77,17 +97,30 @@ let unwindPropOrField = node =>
     _.castArray(node.unwind || node.field)
   )
 
+let runSearch = ({ options, getSchema, getProvider }, node) => (
+  filters,
+  aggs
+) =>
+  getProvider(node).runSearch(
+    options,
+    node,
+    getSchema(node.schema),
+    filters,
+    aggs
+  )
+
 module.exports = {
   hasValue: _.get('values.length'),
   filter: node => ({
     [node.field]: {
       [node.mode === 'exclude' ? '$nin' : '$in']: node.isMongoId
-        ? _.map(ObjectID, node.values)
+        ? _.map(ObjectId, node.values)
         : node.values,
     },
   }),
-  result: (node, search) =>
-    Promise.all([
+  async result(node, search, schema, config = {}) {
+    let valueIds = _.get('values', node)
+    let results = await Promise.all([
       search(
         _.compact([
           // Unwind allows supporting array and non array fields - for non arrays, it will treat as an array with 1 value
@@ -95,24 +128,7 @@ module.exports = {
           ...unwindPropOrField(node),
           { $group: { _id: `$${node.field}`, count: { $sum: 1 } } },
           ...sortAndLimitIfNotSearching(node.optionsFilter, node.size),
-          ...(_.get('label', node)
-            ? [
-                {
-                  $lookup: {
-                    from: _.get('label.collection', node),
-                    as: 'label',
-                    localField: '_id',
-                    foreignField: _.get('label.foreignField', node),
-                  },
-                },
-                {
-                  $unwind: {
-                    path: '$label',
-                    preserveNullAndEmptyArrays: true,
-                  },
-                },
-              ]
-            : []),
+          ...lookupLabel(node),
           _.get('label.fields', node) && projectStageFromLabelFields(node),
           mapKeywordFilters(node),
           ...sortAndLimitIfSearching(node.optionsFilter, node.size),
@@ -134,5 +150,63 @@ module.exports = {
           }),
         options
       ),
-    })),
+    }))
+
+    let lostIds = _.difference(
+      valueIds,
+      _.map(
+        ({ name }) => F.when(node.isMongoId, _.toString, name),
+        results.options
+      )
+    )
+
+    let maybeMapObjectId = F.when(node.isMongoId, _.map(ObjectId))
+
+    if (!_.isEmpty(lostIds)) {
+      let lostOptions = await search(
+        _.compact([
+          {
+            $match: { [node.field]: { $in: maybeMapObjectId(lostIds) } },
+          },
+          { $group: { _id: `$${node.field}`, count: { $sum: 1 } } },
+          ...sortAndLimitIfNotSearching(node.optionsFilter, node.size),
+          ...lookupLabel(node),
+          _.get('label.fields', node) && projectStageFromLabelFields(node),
+          mapKeywordFilters(node),
+        ])
+      )
+      let zeroCountIds = _.difference(
+        //when values are numeric values, stringify missedValues to avoid the bug.
+        _.map(_.toString, lostIds),
+        _.map(x => _.toString(x[`${node.field}`]), lostOptions)
+      )
+      let zeroCountOptions = []
+
+      if (!_.isEmpty(zeroCountIds)) {
+        zeroCountOptions = _.map(
+          ({ _id, label }) => ({ _id, label, count: 0 }),
+          await runSearch(config, node)(
+            {
+              [node.field]: { $in: maybeMapObjectId(zeroCountIds) },
+            },
+            [
+              { $group: { _id: `$${node.field}` } },
+              ...lookupLabel(node),
+              _.get('label.fields', node) && projectStageFromLabelFields(node),
+            ]
+          )
+        )
+      }
+
+      let totalMissedOptions = _.map(({ _id, label, count }) => ({
+        name: _id,
+        count,
+        ...facetValueLabel(node, label),
+      }))(_.concat(lostOptions, zeroCountOptions))
+
+      results.options = _.concat(totalMissedOptions, results.options)
+    }
+
+    return results
+  },
 }

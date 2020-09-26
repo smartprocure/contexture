@@ -1,3 +1,6 @@
+# 0.17.1
+* Fix the missing select values bug for facet type
+
 # 0.17.0
 * Add more rolling date types.
 
