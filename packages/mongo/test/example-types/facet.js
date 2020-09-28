@@ -557,6 +557,25 @@ describe('facet', () => {
         let ids = _.map(({ name }) => _.toString(name), result.options)
         expect(_.includes('5', ids)).to.be.true
       })
+      it('when the field label.fields is undefined', async () => {
+        let mockConfig = {
+          getProvider: () => ({
+            runSearch: () => [{ label: { bool: true }, _id: 5 }],
+          }),
+          getSchema() {},
+        }
+        node.size=1
+        node.field = 'bool'
+        node.label= {
+          collection: mongoIdData,
+          foreignField: '_id',
+        },
+          node.values = [true]
+        let result =  await facet.result(node, () => [],{},
+          mockConfig)
+        let ids = _.map(({ name }) => _.toString(name), result.options)
+        expect(_.includes('5', ids)).to.be.true
+      })
       it('when the first and second search results do not  contain the checked value  and  isMongoId is true', async () => {
         let mockConfig = {
           getProvider: () => ({
@@ -583,15 +602,7 @@ describe('facet', () => {
         let ids = _.map(({ name }) => _.toString(name), result.options)
         expect(_.includes('5ce30b403aa154002d01b9dd', ids)).to.be.true
       })
-      it('except mode exclude', async () => {
-        node.size=1
-        node.label.collection = mongoIdData
-        node.field = 'bool'
-        node.mode = 'exclude'
-        node.values = [true]
-        let result =  await facet.result(node, () => [])
-        expect(_.isEmpty(result.options)).to.be.true
-      })
+
     })
   })
 })
