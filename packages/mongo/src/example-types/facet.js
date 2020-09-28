@@ -152,7 +152,6 @@ module.exports = {
       ),
     }))
 
-
     let lostIds = _.difference(
       valueIds,
       _.map(
