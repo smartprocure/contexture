@@ -165,6 +165,7 @@ module.exports = {
     if (!_.isEmpty(lostIds)) {
       let lostOptions = await search(
         _.compact([
+          ...unwindPropOrField(node),
           {
             $match: { [node.field]: { $in: maybeMapObjectId(lostIds) } },
           },
@@ -175,11 +176,13 @@ module.exports = {
           mapKeywordFilters(node),
         ])
       )
+
       let zeroCountIds = _.difference(
         //when values are numeric values, stringify missedValues to avoid the bug.
-        _.map(_.toString, lostIds),
-        _.map(x => _.toString(x[`${node.field}`]), lostOptions)
+        _.map(F.unless(_.isBoolean, _.toString), lostIds),
+        _.map(({ _id }) => _.toString(_id), lostOptions)
       )
+
       let zeroCountOptions = []
 
       if (!_.isEmpty(zeroCountIds)) {
@@ -189,11 +192,11 @@ module.exports = {
             {
               [node.field]: { $in: maybeMapObjectId(zeroCountIds) },
             },
-            [
+            _.compact([
               { $group: { _id: `$${node.field}` } },
               ...lookupLabel(node),
               _.get('label.fields', node) && projectStageFromLabelFields(node),
-            ]
+            ])
           )
         )
       }
