@@ -459,7 +459,7 @@ describe('facet', () => {
 
 
       it('when missing checked values is bool', async () => {
-        node.size=1
+        node.size = 1
         node.label.collection = mongoIdData
         node.field = 'bool'
         node.values = [true]
