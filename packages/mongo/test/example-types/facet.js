@@ -549,7 +549,7 @@ describe('facet', () => {
         node.values = [true]
         let result = await facet.result(
           node,
-          agg => [],
+          () => [],
           {},
           mockConfig
         )
