@@ -1,5 +1,5 @@
 # 0.17.2
-* Fix  searching bug when label.fields is undefined for facet type
+* Fix searching bug when label.fields is undefined for facet type
 * Fix boolean values zero count search bug for facet type
 
 # 0.17.1
