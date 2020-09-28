@@ -569,8 +569,8 @@ describe('facet', () => {
         node.label= {
           collection: mongoIdData,
           foreignField: '_id',
-        },
-          node.values = [true]
+        }
+        node.values = [true]
         let result =  await facet.result(node, () => [],{},
           mockConfig)
         let ids = _.map(({ name }) => _.toString(name), result.options)
