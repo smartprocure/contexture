@@ -436,17 +436,12 @@ describe('facet', () => {
     })
 
     describe('should always include checked values in result', () => {
-      let Data = [
-        { _id: 1, name: '1' },
-        { _id: 2, name: '2' },
-        { _id: 3, name: '3' },
-        { _id: 4, name: '4' },
-      ]
+
       let mongoIdData = [
-        { _id: '5e9dbd76e991760021124966', name: 'Automation' },
-        { _id: '5cde2658dc766b0030c67dae', name: 'Fowlkes (MO)' },
-        { _id: '5d1ca49436e1d20038f8c84f', name: 'Customer Experience' },
-        { _id: '5ce30b403aa154002d01b9ed', name: 'Government Division' },
+        { _id: '5e9dbd76e991760021124966', name: 'a',num:1 ,bool:true},
+        { _id: '5cde2658dc766b0030c67dae', name: 'b',num:2, bool:true },
+        { _id: '5d1ca49436e1d20038f8c84f', name: 'c', num:3,bool:false},
+        { _id: '5ce30b403aa154002d01b9ed', name: 'd',num:4, bool:false },
       ]
       let node = {
         key: 'id',
@@ -461,19 +456,31 @@ describe('facet', () => {
         optionsFilter: '',
         size: 2,
       }
+
+
+      it('when missing checked values is bool', async () => {
+        node.size=1
+        node.label.collection = mongoIdData
+        node.field = 'bool'
+        node.values = [true]
+        let result = await facet.result(node, agg => mingo.aggregate(mongoIdData, agg))
+        expect(result.options[0].name).to.be.true
+      })
       it('when missing checked values in first search are expected', async () => {
-        node.label.collection = Data
+        node.label.collection = mongoIdData
+        node.field = 'num'
         // node.values is selected values
         // when we use [4], we could expect missing values in first search because the first search will pick up the top 2 ids instead of value 4 (the last item from the array)
         node.values = [4]
-        let result = await facet.result(node, agg => mingo.aggregate(Data, agg))
+        let result = await facet.result(node, agg => mingo.aggregate(mongoIdData, agg))
         let ids = _.map(({ name }) => _.toString(name), result.options)
         expect(_.includes('4', ids)).to.be.true
       })
       it('when missing checked values in first search are not expected', async () => {
-        node.label.collection = Data
+        node.label.collection = mongoIdData
+        node.field = 'num'
         node.values = [1]
-        let result = await facet.result(node, agg => mingo.aggregate(Data, agg))
+        let result = await facet.result(node, agg => mingo.aggregate(mongoIdData, agg))
         let ids = _.map(({ name }) => _.toString(name), result.options)
         expect(_.includes('1', ids)).to.be.true
       })
@@ -483,6 +490,7 @@ describe('facet', () => {
           mongoIdData
         )
         node.isMongoId = true
+        node.field = '_id'
         node.label.collection = collection
         node.values = ['5ce30b403aa154002d01b9ed']
 
@@ -497,6 +505,7 @@ describe('facet', () => {
           ({ _id, name }) => ({ _id: ObjectId(_id), name }),
           mongoIdData
         )
+        node.field = '_id'
         node.isMongoId = true
         node.label.collection = collection
         node.values = ['5e9dbd76e991760021124966']
@@ -507,27 +516,48 @@ describe('facet', () => {
         let ids = _.map(({ name }) => _.toString(name), result.options)
         expect(_.includes('5e9dbd76e991760021124966', ids)).to.be.true
       })
-      it('when the first and second search result does not  contain the checked value', async () => {
+      it('when the first and second search results do not  contain the checked value', async () => {
         let mockConfig = {
           getProvider: () => ({
             runSearch: () => [{ label: { name: '5' }, _id: 5 }],
           }),
           getSchema() {},
         }
-
-        node.label.collection = Data
+        node.field = '_id'
+        node.label.collection = mongoIdData
         node.isMongoId = null
         node.values = [5]
         let result = await facet.result(
           node,
-          agg => mingo.aggregate(Data, agg),
+          agg => mingo.aggregate(mongoIdData, agg),
           {},
           mockConfig
         )
         let ids = _.map(({ name }) => _.toString(name), result.options)
         expect(_.includes('5', ids)).to.be.true
       })
-      it('when the first and second search result does not  contain the checked value  and  isMongoId is true', async () => {
+      it('when the first and second search results do not contain the checked value and values are boolean', async () => {
+        let mockConfig = {
+          getProvider: () => ({
+            runSearch: () => [{ label: { bool: true }, _id: 5 }],
+          }),
+          getSchema() {},
+        }
+        node.field = 'bool'
+        node.label.collection = mongoIdData
+        node.isMongoId = null
+        node.values = [true]
+        let result = await facet.result(
+          node,
+          agg => [],
+          {},
+          mockConfig
+        )
+
+        let ids = _.map(({ name }) => _.toString(name), result.options)
+        expect(_.includes('5', ids)).to.be.true
+      })
+      it('when the first and second search results do not  contain the checked value  and  isMongoId is true', async () => {
         let mockConfig = {
           getProvider: () => ({
             runSearch: () => [
@@ -536,7 +566,7 @@ describe('facet', () => {
           }),
           getSchema() {},
         }
-
+        node.field = '_id'
         let collection = _.map(
           ({ _id, name }) => ({ _id: ObjectId(_id), name }),
           mongoIdData
@@ -552,6 +582,15 @@ describe('facet', () => {
         )
         let ids = _.map(({ name }) => _.toString(name), result.options)
         expect(_.includes('5ce30b403aa154002d01b9dd', ids)).to.be.true
+      })
+      it('except mode exclude', async () => {
+        node.size=1
+        node.label.collection = mongoIdData
+        node.field = 'bool'
+        node.mode = 'exclude'
+        node.values = [true]
+        let result =  await facet.result(node, () => [])
+        expect(_.isEmpty(result.options)).to.be.true
       })
     })
   })
