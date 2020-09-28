@@ -152,7 +152,7 @@ module.exports = {
       ),
     }))
 
-    if(node.mode==='exclude') return results
+    if (node.mode === 'exclude') return results
 
     let lostIds = _.difference(
       valueIds,
@@ -181,8 +181,8 @@ module.exports = {
 
       let zeroCountIds = _.difference(
         //when values are numeric values, stringify missedValues to avoid the bug.
-        _.map(F.unless(_.isBoolean,_.toString), lostIds),
-        _.map(({_id}) => _.toString(_id), lostOptions)
+        _.map(F.unless(_.isBoolean, _.toString), lostIds),
+        _.map(({ _id }) => _.toString(_id), lostOptions)
       )
 
       let zeroCountOptions = []
