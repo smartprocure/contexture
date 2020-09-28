@@ -1,3 +1,7 @@
+# 0.17.2
+* Fix 'exclude mode' bug for facet type
+* Fix boolean values zero count search bug for facet type
+
 # 0.17.1
 * Fix the missing select values bug for facet type
 
