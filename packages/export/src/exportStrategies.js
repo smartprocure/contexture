@@ -48,8 +48,8 @@ export const formatValues = (rules = {}, includeKeys = []) => {
   return _.map(
     _.flow(
       F.flattenObject,
-      F.mapValuesIndexed((value, key) =>
-        _.getOr(_.identity, [key, 'display'], rules)(value)
+      F.mapValuesIndexed((value, key, record) =>
+        _.getOr(_.identity, [key, 'display'], rules)(value, record)
       ),
       _.defaults(defaults)
     )

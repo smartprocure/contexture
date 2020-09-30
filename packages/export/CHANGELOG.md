@@ -1,4 +1,7 @@
-﻿# 0.2.3
+﻿# 0.2.4
+* Pass record as second argument to field display function in `formatValues` 
+
+# 0.2.3
 * Support arbitrary props (like `populate`) to the `result` data strategy
 
 # 0.2.2
