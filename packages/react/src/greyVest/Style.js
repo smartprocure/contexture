@@ -116,6 +116,14 @@ export default () => (
       .gv-table tbody tr {
         border-bottom: solid 2px rgba(237, 237, 237, 0.43);
       }
+      
+      .gv-table th {
+        background: #fff;
+        position: sticky;
+        top: -${tableCellPadding / 2}px;
+        z-index: 10;
+      }
+      
       .gv-table td, .gv-table th {
         padding: ${tableCellPadding}px;
         text-align: left;
@@ -367,6 +375,11 @@ export default () => (
       }
 
       /* Tabs */
+      .gv-tab-container {
+        position: sticky;
+        left: 0;
+      }
+      
       .gv-tab-container .gv-tab {
         display: inline-block;
         padding: 15px 20px;

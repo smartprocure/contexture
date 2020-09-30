@@ -97,7 +97,16 @@ let ResultTable = ({
           />
         </Table>
         {node.pageSize > 0 && (
-          <ResultTableFooter {...{ tree, node, path, pageSizeOptions }} />
+          <div
+            style={{
+              background: '#fff',
+              maxWidth: '50vw',
+              position: 'sticky',
+              bottom: 0,
+              left: '15px',
+            }}>
+            <ResultTableFooter {...{ tree, node, path, pageSizeOptions }} />
+          </div>
         )}
       </>
     )
