@@ -266,11 +266,18 @@ describe('exportStrategies', () => {
         })(chunk)
       ).toEqual([
         {
-          'Person.age': '36',
-          'Person.name': 'bob "bobby" brown',
-          'Person.weight': 160,
+          Person: {
+            age: '36',
+            name: 'bob "bobby" brown',
+            weight: 160,
+          },
         },
-        { 'Person.age': '40', 'Person.name': 'joe blow' },
+        {
+          Person: {
+            age: '40',
+            name: 'joe blow',
+          },
+        },
       ])
     })
     it('formatValues with no rules and empty props', () => {
@@ -387,7 +394,11 @@ describe('exportStrategies', () => {
       ).toEqual(['A', 'B'])
     })
     it('rowsToCSV', () => {
-      let rows = [['Name', 'Age'], ['Bob "Bobby" Brown', 36], ['Joe Blow', 40]]
+      let rows = [
+        ['Name', 'Age'],
+        ['Bob "Bobby" Brown', 36],
+        ['Joe Blow', 40],
+      ]
       expect(rowsToCSV(rows)).toEqual(`"Name","Age"
 "Bob ""Bobby"" Brown","36"
 "Joe Blow","40"
