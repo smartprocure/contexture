@@ -1,4 +1,7 @@
-﻿# 0.2.4
+﻿# 0.2.5
+* Do not flatten record during display formatting in `formatValues`
+
+# 0.2.4
 * Pass record as second argument to field display function in `formatValues` 
 
 # 0.2.3

@@ -39,20 +39,22 @@ export const stream = _.curry(async ({ strategy, stream }) => {
 
 // Format object values based on passed formatter or _.identity
 // Also fill in any keys which are present in the included keys but not in the passed in object
-export const formatValues = (rules = {}, includeKeys = []) => {
+export let formatValues = (rules = {}, includeKeys = []) => {
   let defaults = _.flow(
     _.map(x => [x, '']),
     _.fromPairs
   )(includeKeys)
+  let displayRules = _.flow(_.mapValues('display'), F.compactObject)(rules)
+
+  let formattedRecordValues = record => {
+    F.eachIndexed((display, field) =>
+      F.setOn(field, display(_.get(field, record), record), record)
+    )(displayRules)
+    return record
+  }
 
   return _.map(
-    _.flow(
-      F.flattenObject,
-      F.mapValuesIndexed((value, key, record) =>
-        _.getOr(_.identity, [key, 'display'], rules)(value, record)
-      ),
-      _.defaults(defaults)
-    )
+    _.flow(formattedRecordValues, _.defaults(F.unflattenObject(defaults)))
   )
 }
 
@@ -61,21 +63,12 @@ export const formatHeaders = (rules, defaultLabel = _.startCase) =>
   _.map(key => _.get([key, 'label'], rules) || defaultLabel(key))
 
 // Extract keys from first row
-export let extractHeadersFromFirstRow = _.flow(
-  _.first,
-  _.keys
-)
+export let extractHeadersFromFirstRow = _.flow(_.first, _.keys)
 
 // Escape quotes and quote cell
-let transformCell = _.flow(
-  _.replace(/"/g, '""'),
-  x => `"${x}"`
-)
+let transformCell = _.flow(_.replace(/"/g, '""'), x => `"${x}"`)
 
-let transformRow = _.flow(
-  _.map(transformCell),
-  _.join(',')
-)
+let transformRow = _.flow(_.map(transformCell), _.join(','))
 
 // Convert array of objects to array of arrays
 export let extractValues = (data, keys) => {
@@ -84,11 +77,7 @@ export let extractValues = (data, keys) => {
   return _.map(transformRow, data)
 }
 
-export let rowsToCSV = _.flow(
-  _.map(transformRow),
-  _.join('\n'),
-  x => `${x}\n`
-)
+export let rowsToCSV = _.flow(_.map(transformRow), _.join('\n'), x => `${x}\n`)
 
 // CSVStream is an export strategy that uses the stream strategy,
 // but customizes each of the data chunks using the provided formatRules through the format function above.
