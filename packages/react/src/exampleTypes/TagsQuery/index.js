@@ -67,13 +67,16 @@ let TagsQuery = ({
             </div>
           }
         >
-          <ActionsMenu
-            {...{
-              node,
-              tree,
-              actionWrapper,
-            }}
-          />
+          {close => (
+            <ActionsMenu
+              {...{
+                node,
+                tree,
+                close,
+                actionWrapper,
+              }}
+            />
+          )}
         </Popover>
       </GridItem>
     </Grid>

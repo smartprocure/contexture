@@ -54,12 +54,11 @@ let GeoComponent = ({
           defaultInputValue={node.location}
           placeholder={placeholder}
           noOptionsMessage={() => ''}
+          menuPortalTarget={document.body}
+          menuShouldScrollIntoView={true}
           styles={customStyles}
           loadOptions={loadOptions}
-          onInputChange={newValue => {
-            const inputValue = newValue.replace(/[^a-zA-Z0-9\s]+/g, '')
-            return inputValue
-          }}
+          onInputChange={newValue => newValue.replace(/[^a-zA-Z0-9\s]+/g, '')}
           onChange={async ({ label, value }) => {
             let data = await GeoCodeLocation(value)
             if (data && data.latitude && data.longitude) {

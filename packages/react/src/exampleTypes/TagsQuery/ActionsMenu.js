@@ -1,6 +1,5 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import F from 'futil'
 import { observer } from 'mobx-react'
 import TagsJoinPicker from '../TagsJoinPicker'
 import { withTheme } from '../../utils/theme'
@@ -10,7 +9,7 @@ import { copyTags, tagTerm } from './utils'
 let ActionsMenu = ({
   node,
   tree,
-  open,
+  close,
   theme: { Button, Checkbox },
   actionWrapper = _.identity,
 }) => (
@@ -23,13 +22,13 @@ let ActionsMenu = ({
   >
     {!!_.get('tags.length', node) && (
       <>
-        <Button onClick={actionWrapper(() => F.off(open)() || copyTags(node))}>
+        <Button onClick={actionWrapper(() => close() || copyTags(node))}>
           Copy {_.startCase(tagTerm)}s
         </Button>
         <Button
           style={{ margin: '10px 0' }}
           onClick={actionWrapper(
-            () => F.off(open)() || tree.mutate(node.path, { tags: [] })
+            () => close() || tree.mutate(node.path, { tags: [] })
           )}
         >
           Clear {_.startCase(tagTerm)}s
