@@ -67,7 +67,7 @@ let TagsQuery = ({
             </div>
           }
         >
-          { close => (
+          {close => (
             <ActionsMenu
               {...{
                 node,

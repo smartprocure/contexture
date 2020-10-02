@@ -58,9 +58,7 @@ let GeoComponent = ({
           menuShouldScrollIntoView={true}
           styles={customStyles}
           loadOptions={loadOptions}
-          onInputChange={newValue =>
-            newValue.replace(/[^a-zA-Z0-9\s]+/g, '')
-          }
+          onInputChange={newValue => newValue.replace(/[^a-zA-Z0-9\s]+/g, '')}
           onChange={async ({ label, value }) => {
             let data = await GeoCodeLocation(value)
             if (data && data.latitude && data.longitude) {
