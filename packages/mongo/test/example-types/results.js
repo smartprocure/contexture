@@ -172,7 +172,7 @@ describe('results', () => {
           $unwind: {
             path: '$user',
             preserveNullAndEmptyArrays: true,
-          }
+          },
         },
         { $sort: { 'metrics.sessionsCount': 1 } },
         { $skip: 0 },
