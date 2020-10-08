@@ -1,3 +1,6 @@
+# 0.17.4
+* Fix for count query when has many is present on a "populate" field
+
 # 0.17.3
 * Add populate field option to indicate that the join field has many records and adjust sort, skip, limit order in aggregation pipeline
 
