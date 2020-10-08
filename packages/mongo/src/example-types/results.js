@@ -81,7 +81,7 @@ let getResultsQuery = (node, getSchema, startRecord) => {
     x => _.startsWith(`${x}.`, sortField) || sortField === x,
     _.keys(populate)
   )
-  // if unwinding any of the "populate" fields, check if any of them are indicating they can have more than one records
+  // if unwinding any of the "populate" fields, check if any of them are indicating they can have more than one record
   let populateHasMany = _.some(_.get('hasMany'), populate)
   // $project
   let $project = _.isEmpty(include)
