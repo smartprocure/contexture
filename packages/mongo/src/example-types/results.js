@@ -81,17 +81,17 @@ let getResultsQuery = (node, getSchema, startRecord) => {
     x => _.startsWith(`${x}.`, sortField) || sortField === x,
     _.keys(populate)
   )
-  // if unwinding any of the "populate" fields, check if any of them are indicating they can have more than one record
-  let populateHasMany = _.some(_.get('hasMany'), populate)
+  // check if any of the "populate" fields are indicating they can have more than one record
+  let hasMany = _.some(_.get('hasMany'), populate)
   // $project
   let $project = _.isEmpty(include)
     ? []
     : [{ $project: projectFromInclude(include) }]
 
   return [
-    ...(!sortOnJoinField && !populateHasMany ? sortSkipLimit : []),
+    ...(!sortOnJoinField && !hasMany ? sortSkipLimit : []),
     ...convertPopulate(getSchema)(populate),
-    ...(sortOnJoinField || populateHasMany ? sortSkipLimit : []),
+    ...(sortOnJoinField || hasMany ? sortSkipLimit : []),
     ...$project,
   ]
 }
@@ -117,8 +117,12 @@ let getResponse = (node, results, count) => {
 
 let result = async (node, search, schema, { getSchema }) => {
   node = defaults(node)
+  let hasMany = _.some(_.get('hasMany'), node.populate)
   let resultsQuery = getResultsQuery(node, getSchema, getStartRecord(node))
-  let countQuery = [{ $group: { _id: null, count: { $sum: 1 } } }]
+  let countQuery = [
+    ...(hasMany ? convertPopulate(getSchema)(node.populate) : []),
+    { $group: { _id: null, count: { $sum: 1 } } },
+  ]
 
   let [results, count] = await Promise.all([
     search(resultsQuery),
