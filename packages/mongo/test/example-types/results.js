@@ -142,6 +142,44 @@ describe('results', () => {
         { $project: { name: 1, user: 1, type: 1, updatedAt: 1 } },
       ])
     })
+    it('should put $sort, $skip, $limit last in pipeline when join field indicated it has many records', () => {
+      let node = defaults({
+        key: 'results',
+        type: 'results',
+        sortField: 'metrics.sessionsCount',
+        include: ['name', 'user', 'type', 'updatedAt'],
+        sortDir: 'asc',
+        populate: {
+          user: {
+            schema: 'user',
+            localField: 'user',
+            foreignField: '_id',
+            unwind: true,
+            hasMany: true,
+          },
+        },
+      })
+      expect(getResultsQuery(node, getSchema, 0)).to.deep.equal([
+        {
+          $lookup: {
+            as: 'user',
+            from: 'user',
+            localField: 'user',
+            foreignField: '_id',
+          },
+        },
+        {
+          $unwind: {
+            path: '$user',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        { $sort: { 'metrics.sessionsCount': 1 } },
+        { $skip: 0 },
+        { $limit: 10 },
+        { $project: { name: 1, user: 1, type: 1, updatedAt: 1 } },
+      ])
+    })
     it('should put $sort, $skip, $limit first after $lookup', () => {
       let node = defaults({
         key: 'results',

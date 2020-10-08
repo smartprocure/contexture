@@ -1,3 +1,6 @@
+# 0.17.3
+* Add populate field option to indicate that the join field has many records and adjust sort, skip, limit order in aggregation pipeline
+
 # 0.17.2
 * Fix searching bug when label.fields is undefined for facet type
 * Fix boolean values zero count search bug for facet type
