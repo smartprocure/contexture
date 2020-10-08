@@ -81,15 +81,17 @@ let getResultsQuery = (node, getSchema, startRecord) => {
     x => _.startsWith(`${x}.`, sortField) || sortField === x,
     _.keys(populate)
   )
+  // if unwinding any of the "populate" fields, check if any of them are indicating they can have more than one record
+  let populateHasMany = _.some(_.get('hasMany'), populate)
   // $project
   let $project = _.isEmpty(include)
     ? []
     : [{ $project: projectFromInclude(include) }]
 
   return [
-    ...(!sortOnJoinField ? sortSkipLimit : []),
+    ...(!sortOnJoinField && !populateHasMany ? sortSkipLimit : []),
     ...convertPopulate(getSchema)(populate),
-    ...(sortOnJoinField ? sortSkipLimit : []),
+    ...(sortOnJoinField || populateHasMany ? sortSkipLimit : []),
     ...$project,
   ]
 }
