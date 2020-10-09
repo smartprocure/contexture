@@ -142,7 +142,7 @@ describe('results', () => {
         { $project: { name: 1, user: 1, type: 1, updatedAt: 1 } },
       ])
     })
-    it('should put $sort, $skip, $limit last in pipeline when join field indicated it has many records', () => {
+    it('should put $skip, $limit last in pipeline when join field indicated it has many records', () => {
       let node = defaults({
         key: 'results',
         type: 'results',
@@ -160,6 +160,7 @@ describe('results', () => {
         },
       })
       expect(getResultsQuery(node, getSchema, 0)).to.deep.equal([
+        { $sort: { 'metrics.sessionsCount': 1 } },
         {
           $lookup: {
             as: 'user',
@@ -174,7 +175,6 @@ describe('results', () => {
             preserveNullAndEmptyArrays: true,
           },
         },
-        { $sort: { 'metrics.sessionsCount': 1 } },
         { $skip: 0 },
         { $limit: 10 },
         { $project: { name: 1, user: 1, type: 1, updatedAt: 1 } },
