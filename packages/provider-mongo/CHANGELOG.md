@@ -1,3 +1,6 @@
+# 0.17.5
+* Sort early when "hasMany" is set on a "populate" field, but we are not sorting on a joined field
+
 # 0.17.4
 * Fix for count query when has many is present on a "populate" field
 
