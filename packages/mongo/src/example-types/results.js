@@ -70,11 +70,9 @@ let getResultsQuery = (node, getSchema, startRecord) => {
   }
 
   let $limit = { $limit: F.when(skipCount, _.add(1), pageSize) }
-  let sortSkipLimit = _.compact([
-    sortField && $sort,
-    { $skip: startRecord },
-    pageSize > 0 && $limit,
-  ])
+  let sort = _.compact([sortField && $sort])
+  let skipLimit = _.compact([{ $skip: startRecord }, pageSize > 0 && $limit])
+  let sortSkipLimit = _.compact([...sort, ...skipLimit])
   // If sort field is a join field move $sort, $skip, and $limit to after $lookup.
   // Otherwise, place those stages first to take advantage of any indexes on that field.
   let sortOnJoinField = _.some(
@@ -90,8 +88,11 @@ let getResultsQuery = (node, getSchema, startRecord) => {
 
   return [
     ...(!sortOnJoinField && !hasMany ? sortSkipLimit : []),
+    // if "hasMany" is set on a "populate" field but we are not sorting on a "populate" field, sort as early as possible
+    ...(hasMany && !sortOnJoinField ? sort : []),
     ...convertPopulate(getSchema)(populate),
-    ...(sortOnJoinField || hasMany ? sortSkipLimit : []),
+    ...(sortOnJoinField ? sortSkipLimit : []),
+    ...(hasMany && !sortOnJoinField ? skipLimit : []),
     ...$project,
   ]
 }
