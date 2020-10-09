@@ -24,7 +24,7 @@ export const results = ({
   scroll,
   ...rest
 }) => {
-  let formatTree = ({ pageSize, page, scrollId }) => {
+  let formatTree = ({ pageSize, page, scrollId, skipCount = false }) => {
     let resultsConfig = {
       key: 'results',
       type: 'results',
@@ -34,6 +34,7 @@ export const results = ({
       sortField,
       sortDir,
       highlight,
+      skipCount,
       ...rest,
     }
 
@@ -53,7 +54,7 @@ export const results = ({
   let scrollId = null
   let getNext = async () => {
     let result = getTreeResults(
-      await service(formatTree({ page, pageSize, scrollId }))
+      await service(formatTree({ page, pageSize, scrollId, skipCount: true }))
     )
     scrollId = result.context.scrollId
     page++

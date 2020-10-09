@@ -1,4 +1,7 @@
-﻿# 0.2.5
+﻿# 0.2.6
+* Pass `skipCount` to resultConfig in results data strategy so that search provider can skip `count query` if supported
+
+# 0.2.5
 * Do not flatten record during display formatting in `formatValues`
 
 # 0.2.4
