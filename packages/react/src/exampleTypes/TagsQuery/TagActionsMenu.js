@@ -15,7 +15,7 @@ let TagActionsMenu = ({
   return (
     <div
       className="tags-query-tag-actions-menu"
-      style={{ minWidth: 200, padding: 10 }}
+      style={{ minWidth: 100, padding: 10 }}
     >
       <div>
         {_.startCase(tagTerm)}:{' '}
