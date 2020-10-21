@@ -9,7 +9,9 @@ let ResultCount = ({ node, display = toNumber }) => {
     ['context.response.results.length', 'context.results.length'],
     node
   )
-  let totalRecords =  count ? F.cascade(['context.response.totalRecords', 'context.totalRecords'], node) : 0
+  let totalRecords = count
+    ? F.cascade(['context.response.totalRecords', 'context.totalRecords'], node)
+    : 0
   return count ? display(totalRecords) : 'No Results'
 }
 
