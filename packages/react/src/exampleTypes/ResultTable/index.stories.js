@@ -83,6 +83,7 @@ export let customizations = () => (
           Cell: x => <td style={{ color: 'red' }} {...x} />,
         },
       }}
+      getRowKey= {_.flow(_.get('_id'), x => `key-${x}`)}
     />
   </div>
 )
