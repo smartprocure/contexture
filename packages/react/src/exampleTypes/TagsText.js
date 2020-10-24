@@ -25,7 +25,6 @@ let Text = ({
   placeholder,
   theme: { Select, TagsInput, Popover },
 }) => {
-  let open = React.useState(false)
   let [selectedTag, setSelectedTag] = React.useState(null)
   return (
     <div className="contexture-text">
@@ -34,26 +33,32 @@ let Text = ({
         onChange={e => tree.mutate(node.path, { operator: e.target.value })}
         options={operatorOptions}
       />
-      <TagsInput
-        splitCommas
-        tags={node.values}
-        onTagClick={tag => {
-          F.on(open)()
-          setSelectedTag(tag)
-        }}
-        addTag={tag => {
-          tree.mutate(node.path, { values: [...node.values, tag] })
-        }}
-        removeTag={tag => {
-          tree.mutate(node.path, {
-            values: _.without([tag], node.values),
-          })
-        }}
-        tagStyle={bgJoin(tagToGroupJoin(node.join))}
-        submit={tree.triggerUpdate}
-        placeholder={placeholder}
-      />
-      <Popover open={open}>
+
+      <Popover
+        trigger={
+          <TagsInput
+            splitCommas
+            tags={node.values}
+            onTagClick={tag => {
+              setSelectedTag(tag)
+            }}
+            addTag={tag => {
+              tree.mutate(node.path, { values: [...node.values, tag] })
+            }}
+            removeTag={tag => {
+              tree.mutate(node.path, {
+                values: _.without([tag], node.values),
+              })
+            }}
+            tagStyle={bgJoin(tagToGroupJoin(node.join))}
+            submit={tree.triggerUpdate}
+            placeholder={placeholder}
+          />
+        }
+        position="bottom center"
+        closeOnPopoverClick={false}
+        style={{ width: 284 }}
+      >
         <TagsJoinPicker tag={selectedTag} node={node} tree={tree} />
       </Popover>
     </div>
