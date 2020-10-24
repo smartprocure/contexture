@@ -1,5 +1,4 @@
 import React from 'react'
-import _ from 'lodash/fp'
 import { storiesOf } from '@storybook/react'
 import TestTree from './stories/testTree'
 import ThemePicker from '../stories/themePicker'
