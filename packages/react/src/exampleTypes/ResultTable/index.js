@@ -29,6 +29,7 @@ let ResultTable = ({
   NoResultsComponent = 'No Results Found',
   IntroComponent = null, // Initial component to be shown instead of the grid when no data has been loaded
   Row = Tr, // accept a custom Row component so we can do fancy expansion things
+  getRowKey, // allow passing a custom function to generate unique row key
   mapNodeToProps = () => ({}),
   pageSizeOptions, // an array of options to set the # of rows per page (default [20, 50, 100, 250])
   theme: { Table },
@@ -93,6 +94,7 @@ let ResultTable = ({
               hiddenFields,
               schema,
               Row,
+              getRowKey,
             }}
           />
         </Table>

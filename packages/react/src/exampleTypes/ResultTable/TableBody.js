@@ -12,13 +12,14 @@ let TableBody = ({
   hiddenFields,
   schema,
   Row = 'tr',
+  getRowKey = _.get('_id'),
 }) => (
   <tbody>
     {!!getResults(node).length &&
       _.map(
         x => (
           <Row
-            key={x._id}
+            key={getRowKey(x)}
             record={getRecord(x)}
             {...{ fields, visibleFields, hiddenFields }}
           >
