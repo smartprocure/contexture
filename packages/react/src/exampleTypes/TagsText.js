@@ -22,11 +22,11 @@ let operatorOptions = F.autoLabelOptions([
 ])
 
 let Text = ({
-  tree,
-  node,
-  placeholder,
-  theme: { Select, Tag, TagsInput, Popover, Icon },
-}) => (
+              tree,
+              node,
+              placeholder,
+              theme: { Select, Tag, TagsInput, Popover, Icon },
+            }) => (
   <div className="contexture-text">
     <Select
       value={node.operator}
@@ -68,6 +68,5 @@ let Text = ({
 
   </div>
 )
-
 
 export default contexturify(Text)
