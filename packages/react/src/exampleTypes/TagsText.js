@@ -23,46 +23,42 @@ let Text = ({
   tree,
   node,
   placeholder,
-  theme: { Select, TagsInput, Popover },
-}) => {
-  let [selectedTag, setSelectedTag] = React.useState(null)
-  return (
-    <div className="contexture-text">
-      <Select
-        value={node.operator}
-        onChange={e => tree.mutate(node.path, { operator: e.target.value })}
-        options={operatorOptions}
-      />
+  theme: { Select, Tag, TagsInput, Popover },
+}) => (
+  <div className="contexture-text">
+    <Select
+      value={node.operator}
+      onChange={e => tree.mutate(node.path, { operator: e.target.value })}
+      options={operatorOptions}
+    />
 
-      <Popover
-        trigger={
-          <TagsInput
-            splitCommas
-            tags={node.values}
-            onTagClick={tag => {
-              setSelectedTag(tag)
-            }}
-            addTag={tag => {
-              tree.mutate(node.path, { values: [...node.values, tag] })
-            }}
-            removeTag={tag => {
-              tree.mutate(node.path, {
-                values: _.without([tag], node.values),
-              })
-            }}
-            tagStyle={bgJoin(tagToGroupJoin(node.join))}
-            submit={tree.triggerUpdate}
-            placeholder={placeholder}
-          />
-        }
-        position="bottom center"
-        closeOnPopoverClick={false}
-        style={{ width: 284 }}
-      >
-        <TagsJoinPicker tag={selectedTag} node={node} tree={tree} />
-      </Popover>
-    </div>
-  )
-}
+    <TagsInput
+      splitCommas
+      tags={node.values}
+      addTag={tag => {
+        tree.mutate(node.path, { values: [...node.values, tag] })
+      }}
+      removeTag={tag => {
+        tree.mutate(node.path, {
+          values: _.without([tag], node.values),
+        })
+      }}
+      Tag={props =>
+        <Popover
+          trigger={<Tag {..._.omit('onClick', props)} />}
+          position="bottom left"
+          closeOnPopoverClick={false}
+          style={{ width: 284 }}
+        >
+          <TagsJoinPicker node={node} tree={tree} />
+        </Popover>
+      }
+      tagStyle={bgJoin(tagToGroupJoin(node.join))}
+      submit={tree.triggerUpdate}
+      placeholder={placeholder}
+    />
+  </div>
+)
+
 
 export default contexturify(Text)
