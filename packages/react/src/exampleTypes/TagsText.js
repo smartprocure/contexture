@@ -43,7 +43,7 @@ let Text = ({
           values: _.without([tag], node.values),
         })
       }}
-      Tag={props =>
+      Tag={props => (
         <Popover
           trigger={<Tag {..._.omit('onClick', props)} />}
           position="bottom left"
@@ -52,13 +52,12 @@ let Text = ({
         >
           <TagsJoinPicker node={node} tree={tree} />
         </Popover>
-      }
+      )}
       tagStyle={bgJoin(tagToGroupJoin(node.join))}
       submit={tree.triggerUpdate}
       placeholder={placeholder}
     />
   </div>
 )
-
 
 export default contexturify(Text)
