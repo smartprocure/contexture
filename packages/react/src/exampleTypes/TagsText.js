@@ -51,9 +51,13 @@ let Text = ({
         style={{ flex: 1, border: 0 }}
       />
 
-      <div>
+      <div style={{paddingTop: 3}}>
         <Popover
-          trigger={<Icon icon="TableColumnMenu" />}
+          trigger={
+            <div>
+              <Icon icon="TableColumnMenu" />
+            </div>
+          }
           position="bottom right"
           closeOnPopoverClick={false}
           style={{ width: 'auto' }}
