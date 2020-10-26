@@ -6,7 +6,6 @@ import { bgJoin } from '../styles/generic'
 
 import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
 import Flex from '../greyVest/Flex'
-import { Grid } from '../greyVest'
 
 let operatorOptions = F.autoLabelOptions([
   { value: 'containsWord', label: 'Field Contains' },
@@ -22,11 +21,11 @@ let operatorOptions = F.autoLabelOptions([
 ])
 
 let Text = ({
-              tree,
-              node,
-              placeholder,
-              theme: { Select, Tag, TagsInput, Popover, Icon },
-            }) => (
+  tree,
+  node,
+  placeholder,
+  theme: { Select, TagsInput, Popover, Icon },
+}) => (
   <div className="contexture-text">
     <Select
       value={node.operator}
@@ -65,7 +64,6 @@ let Text = ({
         </Popover>
       </div>
     </Flex>
-
   </div>
 )
 
