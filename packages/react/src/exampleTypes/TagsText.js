@@ -51,7 +51,7 @@ let Text = ({
         style={{ flex: 1, border: 0 }}
       />
 
-      <div style={{paddingTop: 3}}>
+      <div style={{ paddingTop: 3 }}>
         <Popover
           trigger={
             <div>
