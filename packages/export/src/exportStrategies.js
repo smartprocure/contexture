@@ -47,8 +47,9 @@ export let formatValues = (rules = {}, includeKeys = []) => {
   let displayRules = _.flow(_.mapValues('display'), F.compactObject)(rules)
 
   let formattedRecordValues = record => {
+    let clone = _.cloneDeep(record)
     F.eachIndexed((display, field) =>
-      F.setOn(field, display(_.get(field, record), record), record)
+      F.setOn(field, display(_.get(field, clone), clone), record)
     )(displayRules)
     return record
   }
