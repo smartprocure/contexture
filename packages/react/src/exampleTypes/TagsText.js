@@ -5,6 +5,8 @@ import { contexturify } from '../utils/hoc'
 import { bgJoin } from '../styles/generic'
 
 import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
+import Flex from '../greyVest/Flex'
+import { Grid } from '../greyVest'
 
 let operatorOptions = F.autoLabelOptions([
   { value: 'containsWord', label: 'Field Contains' },
@@ -23,7 +25,7 @@ let Text = ({
   tree,
   node,
   placeholder,
-  theme: { Select, Tag, TagsInput, Popover },
+  theme: { Select, Tag, TagsInput, Popover, Icon },
 }) => (
   <div className="contexture-text">
     <Select
@@ -32,31 +34,38 @@ let Text = ({
       options={operatorOptions}
     />
 
-    <TagsInput
-      splitCommas
-      tags={node.values}
-      addTag={tag => {
-        tree.mutate(node.path, { values: [...node.values, tag] })
-      }}
-      removeTag={tag => {
-        tree.mutate(node.path, {
-          values: _.without([tag], node.values),
-        })
-      }}
-      Tag={props =>
+    <Flex className="tags-query">
+      <TagsInput
+        splitCommas
+        tags={node.values}
+        addTag={tag => {
+          tree.mutate(node.path, { values: [...node.values, tag] })
+        }}
+        removeTag={tag => {
+          tree.mutate(node.path, {
+            values: _.without([tag], node.values),
+          })
+        }}
+        tagStyle={bgJoin(tagToGroupJoin(node.join))}
+        submit={tree.triggerUpdate}
+        placeholder={placeholder}
+        style={{ flex: 1, border: 0 }}
+      />
+
+      <div>
         <Popover
-          trigger={<Tag {..._.omit('onClick', props)} />}
-          position="bottom left"
+          trigger={
+            <Icon icon="TableColumnMenu" />
+          }
+          position="bottom right"
           closeOnPopoverClick={false}
-          style={{ width: 284 }}
+          style={{ width: 'auto' }}
         >
           <TagsJoinPicker node={node} tree={tree} />
         </Popover>
-      }
-      tagStyle={bgJoin(tagToGroupJoin(node.join))}
-      submit={tree.triggerUpdate}
-      placeholder={placeholder}
-    />
+      </div>
+    </Flex>
+
   </div>
 )
 
