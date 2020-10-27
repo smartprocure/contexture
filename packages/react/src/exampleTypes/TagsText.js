@@ -51,7 +51,7 @@ let Text = ({
         style={{ flex: 1, border: 0 }}
       />
 
-      <div style={{paddingTop: 3}}>
+      <div style={{paddingTop: 4}}>
         <Popover
           trigger={
             <div>
@@ -60,7 +60,7 @@ let Text = ({
           }
           position="bottom right"
           closeOnPopoverClick={false}
-          style={{ width: 'auto' }}
+          style={{ width: 240 }}
         >
           <TagsJoinPicker node={node} tree={tree} />
         </Popover>
