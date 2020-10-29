@@ -106,7 +106,8 @@ let ResultTable = ({
               position: 'sticky',
               bottom: 0,
               left: '15px',
-            }}>
+            }}
+          >
             <ResultTableFooter {...{ tree, node, path, pageSizeOptions }} />
           </div>
         )}

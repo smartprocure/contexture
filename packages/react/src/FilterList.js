@@ -153,7 +153,7 @@ let FilterList = _.flow(
     mapNodeToLabel = _.noop,
     className,
     style,
-    theme: { UnmappedNodeComponent, Button },
+    theme: { UnmappedNodeComponent, Button, Icon },
   }) => (
     <div style={style} className={className}>
       {_.map(
@@ -193,28 +193,40 @@ let FilterList = _.flow(
                     ...mapNodeToProps(child, fields),
                   }}
                 />
-                {!child.updating &&
-                  tree.disableAutoUpdate &&
-                  // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
-                  _.some(
-                    treeNode => treeNode !== node && treeNode.markedForUpdate,
-                    F.treeToArray(_.get('children'))(tree.tree)
-                  ) && (
-                    <div
-                      className="apply-filter-button"
-                      onClick={e => {
-                        e.stopPropagation()
-                        tree.triggerUpdate()
-                      }}
-                    >
-                      <Button primary>Apply Filter</Button>
-                    </div>
-                  )}
               </div>
             </Expandable>
           ),
         _.get('children', node)
       )}
+      {tree.disableAutoUpdate &&
+        // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
+        _.some(
+          treeNode => treeNode !== node && treeNode.markedForUpdate,
+          F.treeToArray(_.get('children'))(tree.tree)
+        ) && (
+          <div
+            className="apply-filter-button"
+            style={{
+              position: 'sticky',
+              bottom: 0,
+              paddingBottom: '.5em',
+              marginBottom: '.5em',
+              background: 'white',
+              boxShadow: 'white 0 -6px 6px',
+            }}
+            onClick={e => {
+              e.stopPropagation()
+              tree.triggerUpdate()
+            }}
+          >
+            <Button primary>
+              <Flex justifyContent="center" alignItems="center">
+                Apply Filters
+                <Icon style={{ paddingLeft: 5 }} icon="FilterApply" />
+              </Flex>
+            </Button>
+          </div>
+        )}
     </div>
   )
 )

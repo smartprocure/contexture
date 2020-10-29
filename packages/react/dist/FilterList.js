@@ -157,7 +157,8 @@ var FilterList = _fp["default"].flow((0, _recompose.setDisplayName)('FilterList'
       style = _ref3.style,
       _ref3$theme = _ref3.theme,
       UnmappedNodeComponent = _ref3$theme.UnmappedNodeComponent,
-      Button = _ref3$theme.Button;
+      Button = _ref3$theme.Button,
+      Icon = _ref3$theme.Icon;
   return /*#__PURE__*/_react["default"].createElement("div", {
     style: style,
     className: className
@@ -192,19 +193,35 @@ var FilterList = _fp["default"].flow((0, _recompose.setDisplayName)('FilterList'
       tree: tree,
       node: child,
       path: _fp["default"].toArray(child.path)
-    }, mapNodeToProps(child, fields))), !child.updating && tree.disableAutoUpdate && // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
-    _fp["default"].some(function (treeNode) {
-      return treeNode !== node && treeNode.markedForUpdate;
-    }, _futil["default"].treeToArray(_fp["default"].get('children'))(tree.tree)) && /*#__PURE__*/_react["default"].createElement("div", {
-      className: "apply-filter-button",
-      onClick: function onClick(e) {
-        e.stopPropagation();
-        tree.triggerUpdate();
-      }
-    }, /*#__PURE__*/_react["default"].createElement(Button, {
-      primary: true
-    }, "Apply Filter"))));
-  }, _fp["default"].get('children', node)));
+    }, mapNodeToProps(child, fields)))));
+  }, _fp["default"].get('children', node)), tree.disableAutoUpdate && // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
+  _fp["default"].some(function (treeNode) {
+    return treeNode !== node && treeNode.markedForUpdate;
+  }, _futil["default"].treeToArray(_fp["default"].get('children'))(tree.tree)) && /*#__PURE__*/_react["default"].createElement("div", {
+    className: "apply-filter-button",
+    style: {
+      position: 'sticky',
+      bottom: 0,
+      paddingBottom: '.5em',
+      marginBottom: '.5em',
+      background: 'white',
+      boxShadow: 'white 0 -6px 6px'
+    },
+    onClick: function onClick(e) {
+      e.stopPropagation();
+      tree.triggerUpdate();
+    }
+  }, /*#__PURE__*/_react["default"].createElement(Button, {
+    primary: true
+  }, /*#__PURE__*/_react["default"].createElement(_greyVest.Flex, {
+    justifyContent: "center",
+    alignItems: "center"
+  }, "Apply Filters", /*#__PURE__*/_react["default"].createElement(Icon, {
+    style: {
+      paddingLeft: 5
+    },
+    icon: "FilterApply"
+  })))));
 });
 
 var _default = FilterList;

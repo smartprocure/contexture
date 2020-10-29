@@ -22,6 +22,8 @@ var ModalPicker = function ModalPicker(_ref) {
       options = _ref$options === void 0 ? [] : _ref$options,
       _onChange = _ref.onChange,
       label = _ref.label,
+      _ref$blockButton = _ref.blockButton,
+      blockButton = _ref$blockButton === void 0 ? false : _ref$blockButton,
       _ref$theme = _ref.theme,
       Button = _ref$theme.Button,
       NestedPicker = _ref$theme.NestedPicker,
@@ -29,7 +31,7 @@ var ModalPicker = function ModalPicker(_ref) {
 
   var open = _react["default"].useState(false);
 
-  return /*#__PURE__*/_react["default"].createElement("div", null, /*#__PURE__*/_react["default"].createElement(Modal, {
+  return /*#__PURE__*/_react["default"].createElement(_react["default"].Fragment, null, /*#__PURE__*/_react["default"].createElement(Modal, {
     open: open
   }, /*#__PURE__*/_react["default"].createElement(NestedPicker, {
     options: options,
@@ -39,7 +41,11 @@ var ModalPicker = function ModalPicker(_ref) {
       _futil["default"].off(open)();
     }
   })), !!options.length && /*#__PURE__*/_react["default"].createElement(Button, {
-    onClick: _futil["default"].on(open)
+    onClick: _futil["default"].on(open),
+    style: blockButton ? {
+      display: 'block',
+      width: '100%'
+    } : null
   }, label));
 };
 

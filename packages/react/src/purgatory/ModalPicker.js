@@ -9,11 +9,12 @@ let ModalPicker = ({
   options = [],
   onChange,
   label,
+  blockButton = false,
   theme: { Button, NestedPicker, Modal },
 }) => {
   let open = React.useState(false)
   return (
-    <div>
+    <>
       <Modal open={open}>
         <NestedPicker
           options={options}
@@ -23,8 +24,22 @@ let ModalPicker = ({
           }}
         />
       </Modal>
-      {!!options.length && <Button onClick={F.on(open)}>{label}</Button>}
-    </div>
+      {!!options.length && (
+        <Button
+          onClick={F.on(open)}
+          style={
+            blockButton
+              ? {
+                  display: 'block',
+                  width: '100%',
+                }
+              : null
+          }
+        >
+          {label}
+        </Button>
+      )}
+    </>
   )
 }
 
