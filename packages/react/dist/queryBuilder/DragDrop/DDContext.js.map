@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../src/queryBuilder/DragDrop/DDContext.js"],"names":["HTML5Backend"],"mappings":";;;;;;;AAAA;;AACA;;;;eAEe,+BAAgBA,gCAAhB,C","sourcesContent":["import { DragDropContext } from 'react-dnd'\nimport HTML5Backend from 'react-dnd-html5-backend'\n\nexport default DragDropContext(HTML5Backend)\n"],"file":"DDContext.js"}

@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/exampleTypes/Bool.js"],"names":["props"],"mappings":";;;;;;;AAAA;;AACA;;;;;;eAEe;AAAA,MAAMA,KAAN;;AAAA,sBAAkB,gCAAC,uBAAD,EAAiBA,KAAjB,CAAlB;AAAA,C","sourcesContent":["import React from 'react'\nimport BooleanType from '../purgatory/BooleanType'\n\nexport default ({ ...props }) => <BooleanType {...props} />\n"],"file":"Bool.js"}
