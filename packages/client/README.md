@@ -29,7 +29,6 @@ You can think of the client as a pub/sub system with prebuilt subscribers that c
   - Keeps track of if it missed updates, allowing it to know if it needs to update on resume or not
 - Per node async validation
   - Node types can implement a function to have a node instance pass (return true), be ignored for the search (return false), or block the search (throw)
-- Eliminating blank nodes (nodes without values)
 - Per Node Loading Indicators
 - Intelligent Search Debouncing (global debounce and optional per node pausing until results come back)
 - Dropping intermediate (stale) responses
@@ -268,7 +267,7 @@ For those familiar with the previous client implementation (`DataContext`/`Conte
   - Prepare for update - on each node that's markedForUpdate:
     - Set the lastUpdateTime to now (to enable dropping stale results later in this process)
     - Set `updating` to true
-  - Serialize the search, omitting all temporary state except lastUpdateTime (which the sever will effectively echo back) and deleting nodes that are filter only with no value
+  - Serialize the search and omit all temporary state except lastUpdateTime (which the sever will effectively echo back).
   - Execute an actual contexture search
   - For each node in the response:
     - If the path isn't found in the current tree, ignore it
@@ -281,7 +280,7 @@ For those familiar with the previous client implementation (`DataContext`/`Conte
 
 The client maintains a flat tree in addition to the actual tree, which is an object mapped using `flattenTree` from `futil-js`.
 The keys are the array paths encoded as a string, currently using a slashEncoder.
-This allows path lookups to perform in constant time at `O(1)`, drastically speeds up some of the internal tree operations.
+This allows path lookups to perform in constant time at `O(1)`, which drastically speeds up some of the internal tree operations.
 The paths are also stamped on individual nodes for convenience as performing an action on a node requires knowing its path.
 
 ### Initialization
