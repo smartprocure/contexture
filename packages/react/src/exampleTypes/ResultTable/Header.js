@@ -105,7 +105,7 @@ let Header = ({
         )}
         <Popover
           trigger={hideMenu ? null : <Icon icon="TableColumnMenu" />}
-          position="bottom right"
+          position="bottom center"
           closeOnPopoverClick={false}
           style={popoverStyle}
         >

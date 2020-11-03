@@ -110,11 +110,13 @@ let ResultTable = ({
             style={{
               background: '#fff',
               width: 'calc(100vw - 540px)',
-              position: 'sticky',
-              bottom: 0,
-              left: '15px',
               zIndex: 10,
-              boxShadow: 'white 0px -6px 6px',
+              position: 'sticky',
+              bottom: -1,
+              left: '15px',
+              borderRadius: 4,
+              marginTop: 16,
+              boxShadow: 'rgba(0, 0, 0, 0.15) 0px -1px 5px',
             }}
           >
             <ResultTableFooter {...{ tree, node, path, pageSizeOptions }} />

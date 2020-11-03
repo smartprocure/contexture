@@ -125,7 +125,7 @@ var Header = function Header(_ref2) {
     trigger: hideMenu ? null : /*#__PURE__*/_react["default"].createElement(Icon, {
       icon: "TableColumnMenu"
     }),
-    position: "bottom right",
+    position: "bottom center",
     closeOnPopoverClick: false,
     style: popoverStyle
   }, !disableSort && /*#__PURE__*/_react["default"].createElement(DropdownItem, {
