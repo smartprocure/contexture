@@ -134,9 +134,6 @@ export default () => (
         height: 45px;
       }
       
-      .gv-table thead tr {
-        padding: ${tableCellPadding / 2}px 0;
-      }
       .gv-table th > span {
         display: flex;
         align-items: center;
