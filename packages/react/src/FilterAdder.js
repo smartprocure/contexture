@@ -29,14 +29,12 @@ let FilterAdder = ({
     </Flex>
   )
   return (
-    <Flex justifyContent="center" alignItems="center">
-      <Picker
-        options={options}
-        onChange={field => tree.add(path, newNodeFromField({ field, fields }))}
-        label={Label}
-        blockButton={true}
-      />
-    </Flex>
+    <Picker
+      options={options}
+      onChange={field => tree.add(path, newNodeFromField({ field, fields }))}
+      label={Label}
+      blockButton={true}
+    />
   )
 }
 

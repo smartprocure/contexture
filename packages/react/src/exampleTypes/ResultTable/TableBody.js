@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 import { getRecord, getResults } from '../../utils/schema'
@@ -13,6 +14,7 @@ let TableBody = ({
   schema,
   Row = 'tr',
   getRowKey = _.get('_id'),
+  stickyFields,
 }) => (
   <tbody>
     {!!getResults(node).length &&
@@ -25,7 +27,15 @@ let TableBody = ({
           >
             {_.map(
               ({ field, display = x => x, Cell = 'td' }) => (
-                <Cell key={field}>
+                <Cell
+                  key={field}
+                  style={_.contains(stickyFields, field) ? {
+                    position: 'sticky',
+                    left: 0,
+                    zIndex: 1,
+                    boxShadow: 'rgba(0, 0, 0, 0.1) 6px 0px 5px -5px',
+                  } : null}
+                >
                   {display(_.get(field, getRecord(x)), getRecord(x))}
                 </Cell>
               ),

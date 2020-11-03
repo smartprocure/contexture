@@ -32,6 +32,7 @@ let ResultTable = ({
   getRowKey, // allow passing a custom function to generate unique row key
   mapNodeToProps = () => ({}),
   pageSizeOptions, // an array of options to set the # of rows per page (default [20, 50, 100, 250])
+  stickyFields,
   theme: { Table },
 }) => {
   // If there are no fields, we won't render anything. This is most definitely a
@@ -79,7 +80,12 @@ let ResultTable = ({
             <tr>
               {F.mapIndexed(
                 x => (
-                  <Header key={x.field} field={x} {...headerProps} />
+                  <Header
+                    key={x.field}
+                    field={x}
+                    sticky={_.contains(stickyFields, x.field)}
+                    {...headerProps}
+                  />
                 ),
                 visibleFields
               )}
@@ -95,6 +101,7 @@ let ResultTable = ({
               schema,
               Row,
               getRowKey,
+              stickyFields,
             }}
           />
         </Table>
@@ -102,10 +109,12 @@ let ResultTable = ({
           <div
             style={{
               background: '#fff',
-              maxWidth: '50vw',
+              width: 'calc(100vw - 540px)',
               position: 'sticky',
               bottom: 0,
               left: '15px',
+              zIndex: 10,
+              boxShadow: 'white 0px -6px 6px',
             }}
           >
             <ResultTableFooter {...{ tree, node, path, pageSizeOptions }} />

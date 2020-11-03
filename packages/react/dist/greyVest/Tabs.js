@@ -125,7 +125,12 @@ var Tabs = function Tabs(_ref) {
     value: value,
     onChange: handleChange,
     options: options
-  }), /*#__PURE__*/_react["default"].createElement(TabPanel, null, content));
+  }), /*#__PURE__*/_react["default"].createElement("div", {
+    style: {
+      display: 'inline-block',
+      minWidth: '100%'
+    }
+  }, /*#__PURE__*/_react["default"].createElement(TabPanel, null, content)));
 };
 
 exports.Tabs = Tabs;

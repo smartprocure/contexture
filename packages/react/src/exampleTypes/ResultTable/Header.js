@@ -53,6 +53,7 @@ let Header = ({
   mapNodeToProps,
   fields,
   visibleFields,
+  sticky,
   theme: {
     DropdownItem,
     Icon,
@@ -89,8 +90,11 @@ let Header = ({
   let Label = label
   return (
     <HeaderCell
-      style={{ cursor: hideMenu ? 'default' : 'pointer' }}
-      activeFilter={_.get('hasValue', filterNode)}
+      style={{
+        cursor: hideMenu ? 'default' : 'pointer',
+        left: sticky ? 0 : '',
+        zIndex: sticky ? 11 : '',
+      }}
     >
       <span>
         {_.isFunction(label) ? <Label /> : label}{' '}

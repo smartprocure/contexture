@@ -73,6 +73,7 @@ var Header = function Header(_ref2) {
       mapNodeToProps = _ref2.mapNodeToProps,
       fields = _ref2.fields,
       visibleFields = _ref2.visibleFields,
+      sticky = _ref2.sticky,
       _ref2$theme = _ref2.theme,
       DropdownItem = _ref2$theme.DropdownItem,
       Icon = _ref2$theme.Icon,
@@ -114,9 +115,10 @@ var Header = function Header(_ref2) {
   var Label = label;
   return /*#__PURE__*/_react["default"].createElement(HeaderCell, {
     style: {
-      cursor: hideMenu ? 'default' : 'pointer'
-    },
-    activeFilter: _fp["default"].get('hasValue', filterNode)
+      cursor: hideMenu ? 'default' : 'pointer',
+      left: sticky ? 0 : '',
+      zIndex: sticky ? 11 : ''
+    }
   }, /*#__PURE__*/_react["default"].createElement("span", null, _fp["default"].isFunction(label) ? /*#__PURE__*/_react["default"].createElement(Label, null) : label, ' ', field === node.sortField && /*#__PURE__*/_react["default"].createElement(Icon, {
     icon: node.sortDir === 'asc' ? 'SortAscending' : 'SortDescending'
   }), /*#__PURE__*/_react["default"].createElement(Popover, {

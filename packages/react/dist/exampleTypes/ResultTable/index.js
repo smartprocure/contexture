@@ -65,6 +65,7 @@ var ResultTable = function ResultTable(_ref) {
     return {};
   } : _ref$mapNodeToProps,
       pageSizeOptions = _ref.pageSizeOptions,
+      stickyFields = _ref.stickyFields,
       Table = _ref.theme.Table;
   // If there are no fields, we won't render anything. This is most definitely a
   // user error when it happens
@@ -113,7 +114,8 @@ var ResultTable = function ResultTable(_ref) {
     return /*#__PURE__*/_react["default"].createElement(_react["default"].Fragment, null, /*#__PURE__*/_react["default"].createElement(Table, null, /*#__PURE__*/_react["default"].createElement("thead", null, /*#__PURE__*/_react["default"].createElement("tr", null, F.mapIndexed(function (x) {
       return /*#__PURE__*/_react["default"].createElement(_Header["default"], _extends({
         key: x.field,
-        field: x
+        field: x,
+        sticky: _fp["default"].contains(stickyFields, x.field)
       }, headerProps));
     }, visibleFields), /*#__PURE__*/_react["default"].createElement(_HighlightedColumnHeader["default"], {
       node: node
@@ -124,14 +126,17 @@ var ResultTable = function ResultTable(_ref) {
       hiddenFields: hiddenFields,
       schema: schema,
       Row: Row,
-      getRowKey: getRowKey
+      getRowKey: getRowKey,
+      stickyFields: stickyFields
     })), node.pageSize > 0 && /*#__PURE__*/_react["default"].createElement("div", {
       style: {
         background: '#fff',
-        maxWidth: '50vw',
+        width: 'calc(100vw - 540px)',
         position: 'sticky',
         bottom: 0,
-        left: '15px'
+        left: '15px',
+        zIndex: 10,
+        boxShadow: 'white 0px -6px 6px'
       }
     }, /*#__PURE__*/_react["default"].createElement(_ResultTableFooter["default"], {
       tree: tree,

@@ -72,7 +72,7 @@ var TableFooter = function TableFooter(_ref2) {
     justifyContent: "space-between",
     alignItems: "center",
     style: {
-      padding: 8
+      padding: '3px 8px'
     }
   }, props), /*#__PURE__*/_react["default"].createElement(_PageSize["default"], {
     sizeOptions: pageSizeOptions,

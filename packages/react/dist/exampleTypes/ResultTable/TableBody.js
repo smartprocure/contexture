@@ -7,6 +7,8 @@ exports["default"] = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
+var _reactDom = _interopRequireDefault(require("react-dom"));
+
 var _fp = _interopRequireDefault(require("lodash/fp"));
 
 var _mobxReact = require("mobx-react");
@@ -29,7 +31,8 @@ var TableBody = function TableBody(_ref) {
       _ref$Row = _ref.Row,
       Row = _ref$Row === void 0 ? 'tr' : _ref$Row,
       _ref$getRowKey = _ref.getRowKey,
-      getRowKey = _ref$getRowKey === void 0 ? _fp["default"].get('_id') : _ref$getRowKey;
+      getRowKey = _ref$getRowKey === void 0 ? _fp["default"].get('_id') : _ref$getRowKey,
+      stickyFields = _ref.stickyFields;
   return /*#__PURE__*/_react["default"].createElement("tbody", null, !!(0, _schema.getResults)(node).length && _fp["default"].map(function (x) {
     return /*#__PURE__*/_react["default"].createElement(Row, _extends({
       key: getRowKey(x),
@@ -47,7 +50,13 @@ var TableBody = function TableBody(_ref) {
           _ref2$Cell = _ref2.Cell,
           Cell = _ref2$Cell === void 0 ? 'td' : _ref2$Cell;
       return /*#__PURE__*/_react["default"].createElement(Cell, {
-        key: field
+        key: field,
+        style: _fp["default"].contains(stickyFields, field) ? {
+          position: 'sticky',
+          left: 0,
+          zIndex: 1,
+          boxShadow: 'rgba(0, 0, 0, 0.1) 6px 0px 5px -5px'
+        } : null
       }, display(_fp["default"].get(field, (0, _schema.getRecord)(x)), (0, _schema.getRecord)(x)));
     }, visibleFields), node.showOtherMatches && /*#__PURE__*/_react["default"].createElement(_HighlightedColumn["default"], {
       node: node,

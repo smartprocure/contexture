@@ -120,13 +120,22 @@ export default () => (
       .gv-table th {
         background: #fff;
         position: sticky;
-        top: -${tableCellPadding / 2}px;
+        top: 0;
         z-index: 10;
       }
       
       .gv-table td, .gv-table th {
         padding: ${tableCellPadding}px;
         text-align: left;
+      }
+      .gv-table th {
+        padding: 0 ${tableCellPadding}px;
+        line-height: 1.05;
+        height: 45px;
+      }
+      
+      .gv-table thead tr {
+        padding: ${tableCellPadding / 2}px 0;
       }
       .gv-table th > span {
         display: flex;

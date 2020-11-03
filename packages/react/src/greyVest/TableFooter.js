@@ -44,7 +44,7 @@ let TableFooter = ({
     <Flex
       justifyContent="space-between"
       alignItems="center"
-      style={{ padding: 8 }}
+      style={{ padding: '3px 8px' }}
       {...props}
     >
       <PageSize

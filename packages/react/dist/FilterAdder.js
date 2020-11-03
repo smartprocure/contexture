@@ -64,10 +64,7 @@ var FilterAdder = function FilterAdder(_ref) {
     icon: "FilterAdd"
   }));
 
-  return /*#__PURE__*/_react["default"].createElement(_greyVest.Flex, {
-    justifyContent: "center",
-    alignItems: "center"
-  }, /*#__PURE__*/_react["default"].createElement(Picker, {
+  return /*#__PURE__*/_react["default"].createElement(Picker, {
     options: options,
     onChange: function onChange(field) {
       return tree.add(path, (0, _search.newNodeFromField)({
@@ -77,7 +74,7 @@ var FilterAdder = function FilterAdder(_ref) {
     },
     label: Label,
     blockButton: true
-  }));
+  });
 };
 
 var _default = (0, _hoc.contexturifyWithoutLoader)(FilterAdder);
