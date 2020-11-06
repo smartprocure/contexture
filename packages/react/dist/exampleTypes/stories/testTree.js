@@ -113,6 +113,13 @@ var _default = function _default() {
       field: 'title',
       tags: []
     },
+    tagsText: {
+      key: 'tagsText',
+      path: ['tagsText'],
+      type: 'tagsText',
+      field: 'title',
+      values: []
+    },
     number: {
       key: 'searchNumber',
       path: ['number'],

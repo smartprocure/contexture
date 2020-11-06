@@ -19,6 +19,8 @@ var _generic = require("../styles/generic");
 
 var _TagsJoinPicker = _interopRequireWildcard(require("./TagsJoinPicker"));
 
+var _Flex = _interopRequireDefault(require("../greyVest/Flex"));
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -29,21 +31,13 @@ function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableTo
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var operatorOptions = _futil["default"].autoLabelOptions([{
   value: 'containsWord',
@@ -78,15 +72,8 @@ var Text = function Text(_ref) {
       _ref$theme = _ref.theme,
       Select = _ref$theme.Select,
       TagsInput = _ref$theme.TagsInput,
-      Popover = _ref$theme.Popover;
-
-  var open = _react["default"].useState(false);
-
-  var _React$useState = _react["default"].useState(null),
-      _React$useState2 = _slicedToArray(_React$useState, 2),
-      selectedTag = _React$useState2[0],
-      setSelectedTag = _React$useState2[1];
-
+      Popover = _ref$theme.Popover,
+      Icon = _ref$theme.Icon;
   return /*#__PURE__*/_react["default"].createElement("div", {
     className: "contexture-text"
   }, /*#__PURE__*/_react["default"].createElement(Select, {
@@ -97,14 +84,11 @@ var Text = function Text(_ref) {
       });
     },
     options: operatorOptions
-  }), /*#__PURE__*/_react["default"].createElement(TagsInput, {
+  }), /*#__PURE__*/_react["default"].createElement(_Flex["default"], {
+    className: "tags-query"
+  }, /*#__PURE__*/_react["default"].createElement(TagsInput, {
     splitCommas: true,
     tags: node.values,
-    onTagClick: function onTagClick(tag) {
-      _futil["default"].on(open)();
-
-      setSelectedTag(tag);
-    },
     addTag: function addTag(tag) {
       tree.mutate(node.path, {
         values: [].concat(_toConsumableArray(node.values), [tag])
@@ -117,14 +101,28 @@ var Text = function Text(_ref) {
     },
     tagStyle: (0, _generic.bgJoin)((0, _TagsJoinPicker.tagToGroupJoin)(node.join)),
     submit: tree.triggerUpdate,
-    placeholder: placeholder
-  }), /*#__PURE__*/_react["default"].createElement(Popover, {
-    open: open
+    placeholder: placeholder,
+    style: {
+      flex: 1,
+      border: 0
+    }
+  }), /*#__PURE__*/_react["default"].createElement("div", {
+    style: {
+      paddingTop: 4
+    }
+  }, /*#__PURE__*/_react["default"].createElement(Popover, {
+    trigger: /*#__PURE__*/_react["default"].createElement("div", null, /*#__PURE__*/_react["default"].createElement(Icon, {
+      icon: "TableColumnMenu"
+    })),
+    position: "bottom right",
+    closeOnPopoverClick: false,
+    style: {
+      width: 240
+    }
   }, /*#__PURE__*/_react["default"].createElement(_TagsJoinPicker["default"], {
-    tag: selectedTag,
     node: node,
     tree: tree
-  })));
+  })))));
 };
 
 var _default = (0, _hoc.contexturify)(Text);
