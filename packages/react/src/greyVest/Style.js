@@ -152,11 +152,6 @@ export default () => (
         box-shadow: rgba(69, 69, 69, 0.1) 0 -4px 10px -2px;
       }
 
-      /* Nested Table */
-      .gv-table .expanded, .gv-table .expanded + tr {
-        background: rgba(237, 237, 237, 0.5)
-      }
-
       .gv-box {
         border-radius: 4px;
         background-color: #fff;

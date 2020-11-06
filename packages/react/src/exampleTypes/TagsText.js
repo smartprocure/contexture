@@ -5,6 +5,7 @@ import { contexturify } from '../utils/hoc'
 import { bgJoin } from '../styles/generic'
 
 import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
+import Flex from '../greyVest/Flex'
 
 let operatorOptions = F.autoLabelOptions([
   { value: 'containsWord', label: 'Field Contains' },
@@ -23,24 +24,19 @@ let Text = ({
   tree,
   node,
   placeholder,
-  theme: { Select, TagsInput, Popover },
-}) => {
-  let open = React.useState(false)
-  let [selectedTag, setSelectedTag] = React.useState(null)
-  return (
-    <div className="contexture-text">
-      <Select
-        value={node.operator}
-        onChange={e => tree.mutate(node.path, { operator: e.target.value })}
-        options={operatorOptions}
-      />
+  theme: { Select, TagsInput, Popover, Icon },
+}) => (
+  <div className="contexture-text">
+    <Select
+      value={node.operator}
+      onChange={e => tree.mutate(node.path, { operator: e.target.value })}
+      options={operatorOptions}
+    />
+
+    <Flex className="tags-query">
       <TagsInput
         splitCommas
         tags={node.values}
-        onTagClick={tag => {
-          F.on(open)()
-          setSelectedTag(tag)
-        }}
         addTag={tag => {
           tree.mutate(node.path, { values: [...node.values, tag] })
         }}
@@ -52,12 +48,25 @@ let Text = ({
         tagStyle={bgJoin(tagToGroupJoin(node.join))}
         submit={tree.triggerUpdate}
         placeholder={placeholder}
+        style={{ flex: 1, border: 0 }}
       />
-      <Popover open={open}>
-        <TagsJoinPicker tag={selectedTag} node={node} tree={tree} />
-      </Popover>
-    </div>
-  )
-}
+
+      <div style={{ paddingTop: 4 }}>
+        <Popover
+          trigger={
+            <div>
+              <Icon icon="TableColumnMenu" />
+            </div>
+          }
+          position="bottom right"
+          closeOnPopoverClick={false}
+          style={{ width: 240 }}
+        >
+          <TagsJoinPicker node={node} tree={tree} />
+        </Popover>
+      </div>
+    </Flex>
+  </div>
+)
 
 export default contexturify(Text)

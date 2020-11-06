@@ -90,6 +90,13 @@ export default (f = _.identity) => {
       field: 'title',
       tags: [],
     },
+    tagsText: {
+      key: 'tagsText',
+      path: ['tagsText'],
+      type: 'tagsText',
+      field: 'title',
+      values: [],
+    },
     number: {
       key: 'searchNumber',
       path: ['number'],
