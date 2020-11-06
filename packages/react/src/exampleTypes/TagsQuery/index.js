@@ -14,6 +14,7 @@ let TagsQuery = ({
   style,
   actionWrapper,
   onAddTag = _.noop,
+  popoverPosition = 'bottom right',
   theme: { Icon, TagsInput, Tag, Popover },
   ...props
 }) => {
@@ -59,7 +60,7 @@ let TagsQuery = ({
       <GridItem place="center">
         <Popover
           style={{ width: 'auto' }}
-          position={'bottom right'}
+          position={popoverPosition}
           closeOnPopoverClick={false}
           trigger={
             <div>

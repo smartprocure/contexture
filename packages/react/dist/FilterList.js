@@ -159,6 +159,12 @@ var FilterList = _fp["default"].flow((0, _recompose.setDisplayName)('FilterList'
       UnmappedNodeComponent = _ref3$theme.UnmappedNodeComponent,
       Button = _ref3$theme.Button,
       Icon = _ref3$theme.Icon;
+
+  var updateRequired = tree.disableAutoUpdate && // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
+  _fp["default"].some(function (treeNode) {
+    return treeNode !== node && treeNode.markedForUpdate;
+  }, _futil["default"].treeToArray(_fp["default"].get('children'))(tree.tree));
+
   return /*#__PURE__*/_react["default"].createElement("div", {
     style: style,
     className: className
@@ -194,18 +200,17 @@ var FilterList = _fp["default"].flow((0, _recompose.setDisplayName)('FilterList'
       node: child,
       path: _fp["default"].toArray(child.path)
     }, mapNodeToProps(child, fields)))));
-  }, _fp["default"].get('children', node)), tree.disableAutoUpdate && // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
-  _fp["default"].some(function (treeNode) {
-    return treeNode !== node && treeNode.markedForUpdate;
-  }, _futil["default"].treeToArray(_fp["default"].get('children'))(tree.tree)) && /*#__PURE__*/_react["default"].createElement("div", {
+  }, _fp["default"].get('children', node)), /*#__PURE__*/_react["default"].createElement("div", {
     className: "apply-filter-button",
     style: {
       position: 'sticky',
       bottom: 0,
-      paddingBottom: '.5em',
-      marginBottom: '.5em',
       background: 'white',
-      boxShadow: 'white 0 -6px 6px'
+      boxShadow: 'white 0 -6px 6px',
+      overflow: 'hidden',
+      willChange: 'max-height',
+      transition: 'max-height .25s ease-out .2s',
+      maxHeight: updateRequired ? 70 : 0
     },
     onClick: function onClick(e) {
       e.stopPropagation();

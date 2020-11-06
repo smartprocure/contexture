@@ -90,7 +90,7 @@ export default () => (
       /* Filter List */
 
       .apply-filter-button button {
-        margin-top: 10px;
+        margin: 8px 0 6px;
         width: 100%;
       }
 

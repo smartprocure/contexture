@@ -58,7 +58,9 @@ var HeaderCellDefault = _fp["default"].flow((0, _recompose.setDisplayName)('Head
     style: _objectSpread(_objectSpread({}, activeFilter ? {
       fontWeight: 900
     } : {}), style)
-  }, children);
+  }, /*#__PURE__*/_react["default"].createElement("div", {
+    className: "shadow"
+  }), children);
 });
 
 var Header = function Header(_ref2) {
@@ -74,6 +76,7 @@ var Header = function Header(_ref2) {
       fields = _ref2.fields,
       visibleFields = _ref2.visibleFields,
       sticky = _ref2.sticky,
+      lastOne = _ref2.lastOne,
       _ref2$theme = _ref2.theme,
       DropdownItem = _ref2$theme.DropdownItem,
       Icon = _ref2$theme.Icon,
@@ -125,7 +128,7 @@ var Header = function Header(_ref2) {
     trigger: hideMenu ? null : /*#__PURE__*/_react["default"].createElement(Icon, {
       icon: "TableColumnMenu"
     }),
-    position: "bottom center",
+    position: "bottom ".concat(lastOne ? 'right' : 'center'),
     closeOnPopoverClick: false,
     style: popoverStyle
   }, !disableSort && /*#__PURE__*/_react["default"].createElement(DropdownItem, {

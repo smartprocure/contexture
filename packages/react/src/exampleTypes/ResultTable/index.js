@@ -33,6 +33,7 @@ let ResultTable = ({
   mapNodeToProps = () => ({}),
   pageSizeOptions, // an array of options to set the # of rows per page (default [20, 50, 100, 250])
   stickyFields,
+  footerStyle,
   theme: { Table },
 }) => {
   // If there are no fields, we won't render anything. This is most definitely a
@@ -79,11 +80,12 @@ let ResultTable = ({
           <thead>
             <tr>
               {F.mapIndexed(
-                x => (
+                (x, i) => (
                   <Header
                     key={x.field}
                     field={x}
                     sticky={_.contains(stickyFields, x.field)}
+                    lastOne={i === visibleFields.length - 1}
                     {...headerProps}
                   />
                 ),
@@ -107,17 +109,8 @@ let ResultTable = ({
         </Table>
         {node.pageSize > 0 && (
           <div
-            style={{
-              background: '#fff',
-              width: 'calc(100vw - 540px)',
-              zIndex: 10,
-              position: 'sticky',
-              bottom: -1,
-              left: '15px',
-              borderRadius: 4,
-              marginTop: 16,
-              boxShadow: 'rgba(0, 0, 0, 0.15) 0px -1px 5px',
-            }}
+            className="gv-table-footer"
+            style={footerStyle}
           >
             <ResultTableFooter {...{ tree, node, path, pageSizeOptions }} />
           </div>

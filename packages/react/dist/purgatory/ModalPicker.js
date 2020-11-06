@@ -44,7 +44,8 @@ var ModalPicker = function ModalPicker(_ref) {
     onClick: _futil["default"].on(open),
     style: blockButton ? {
       display: 'block',
-      width: '100%'
+      width: '100%',
+      marginTop: 6
     } : null
   }, label));
 };

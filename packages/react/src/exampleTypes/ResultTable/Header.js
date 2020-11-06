@@ -37,6 +37,7 @@ let HeaderCellDefault = _.flow(
   observer
 )(({ activeFilter, style, children }) => (
   <th style={{ ...(activeFilter ? { fontWeight: 900 } : {}), ...style }}>
+    <div className="shadow" />
     {children}
   </th>
 ))
@@ -54,6 +55,7 @@ let Header = ({
   fields,
   visibleFields,
   sticky,
+  lastOne,
   theme: {
     DropdownItem,
     Icon,
@@ -105,7 +107,7 @@ let Header = ({
         )}
         <Popover
           trigger={hideMenu ? null : <Icon icon="TableColumnMenu" />}
-          position="bottom center"
+          position={`bottom ${lastOne ? 'right' : 'center'}`}
           closeOnPopoverClick={false}
           style={popoverStyle}
         >

@@ -32,6 +32,7 @@ let ModalPicker = ({
               ? {
                   display: 'block',
                   width: '100%',
+                  marginTop: 6,
                 }
               : null
           }

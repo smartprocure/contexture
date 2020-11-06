@@ -117,26 +117,39 @@ export default () => (
         border-bottom: solid 2px rgba(237, 237, 237, 0.43);
       }
       
-      .gv-table th {
-        background: #fff;
-        position: sticky;
-        top: 0;
-        z-index: 10;
-      }
       
       .gv-table td, .gv-table th {
         padding: ${tableCellPadding}px;
         text-align: left;
       }
+      
       .gv-table th {
-        padding: 0 ${tableCellPadding}px;
+        background: #fff;
         line-height: 1.05;
-        height: 45px;
+        padding: 0;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+      }
+
+      .gv-table th > .shadow {
+        box-shadow: rgba(69, 69, 69, 0.1) 0 2px 10px;
+        width: 100%;
+        height: 5px;
+        margin-bottom: -45px; /* placing shadow under span */
+        margin-top: 45px; /* compensating */
       }
       
       .gv-table th > span {
         display: flex;
         align-items: center;
+        padding: 0 ${tableCellPadding}px; 
+        min-height: 45px;
+        background: #fff;
+      }
+
+      .gv-table-footer {
+        box-shadow: rgba(69, 69, 69, 0.1) 0 -4px 10px -2px;
       }
 
       /* Nested Table */
@@ -301,6 +314,7 @@ export default () => (
         color: #9b9b9b;
         display: inline-block;
         transition: background-color .1s linear, color .1s linear;
+        user-select: none;
       }
       .gv-text-button > * {
         vertical-align: middle;

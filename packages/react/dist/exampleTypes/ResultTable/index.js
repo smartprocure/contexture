@@ -66,6 +66,7 @@ var ResultTable = function ResultTable(_ref) {
   } : _ref$mapNodeToProps,
       pageSizeOptions = _ref.pageSizeOptions,
       stickyFields = _ref.stickyFields,
+      footerStyle = _ref.footerStyle,
       Table = _ref.theme.Table;
   // If there are no fields, we won't render anything. This is most definitely a
   // user error when it happens
@@ -111,11 +112,12 @@ var ResultTable = function ResultTable(_ref) {
   };
 
   if (!node.updating && hasResults) {
-    return /*#__PURE__*/_react["default"].createElement(_react["default"].Fragment, null, /*#__PURE__*/_react["default"].createElement(Table, null, /*#__PURE__*/_react["default"].createElement("thead", null, /*#__PURE__*/_react["default"].createElement("tr", null, F.mapIndexed(function (x) {
+    return /*#__PURE__*/_react["default"].createElement(_react["default"].Fragment, null, /*#__PURE__*/_react["default"].createElement(Table, null, /*#__PURE__*/_react["default"].createElement("thead", null, /*#__PURE__*/_react["default"].createElement("tr", null, F.mapIndexed(function (x, i) {
       return /*#__PURE__*/_react["default"].createElement(_Header["default"], _extends({
         key: x.field,
         field: x,
-        sticky: _fp["default"].contains(stickyFields, x.field)
+        sticky: _fp["default"].contains(stickyFields, x.field),
+        lastOne: i === visibleFields.length - 1
       }, headerProps));
     }, visibleFields), /*#__PURE__*/_react["default"].createElement(_HighlightedColumnHeader["default"], {
       node: node
@@ -129,17 +131,8 @@ var ResultTable = function ResultTable(_ref) {
       getRowKey: getRowKey,
       stickyFields: stickyFields
     })), node.pageSize > 0 && /*#__PURE__*/_react["default"].createElement("div", {
-      style: {
-        background: '#fff',
-        width: 'calc(100vw - 540px)',
-        zIndex: 10,
-        position: 'sticky',
-        bottom: -1,
-        left: '15px',
-        borderRadius: 4,
-        marginTop: 16,
-        boxShadow: 'rgba(0, 0, 0, 0.15) 0px -1px 5px'
-      }
+      className: "gv-table-footer",
+      style: footerStyle
     }, /*#__PURE__*/_react["default"].createElement(_ResultTableFooter["default"], {
       tree: tree,
       node: node,
