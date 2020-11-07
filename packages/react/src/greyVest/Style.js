@@ -148,6 +148,16 @@ export default () => (
         background: #fff;
       }
 
+      .gv-table th:first-child > span ,
+      .gv-table td:first-child {
+        padding-left: ${2 * tableCellPadding}px; 
+      }
+      
+      .gv-table th:last-child > span ,
+      .gv-table td:last-child {
+        padding-right: ${2 * tableCellPadding}px; 
+      }
+
       .gv-table-footer {
         box-shadow: rgba(69, 69, 69, 0.1) 0 -4px 10px -2px;
       }
