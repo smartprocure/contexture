@@ -213,7 +213,7 @@ let FilterList = _.flow(
         )}
 
         <div
-          className="apply-filter"
+          className={`apply-filter ${updateRequired ? 'active' : ''}`}
           style={{
             maxHeight: updateRequired ? 70 : 0,
           }}

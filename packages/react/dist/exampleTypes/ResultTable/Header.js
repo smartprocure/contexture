@@ -58,9 +58,9 @@ var HeaderCellDefault = _fp["default"].flow((0, _recompose.setDisplayName)('Head
     style: _objectSpread(_objectSpread({}, activeFilter ? {
       fontWeight: 900
     } : {}), style)
-  }, /*#__PURE__*/_react["default"].createElement("div", {
+  }, children, /*#__PURE__*/_react["default"].createElement("div", {
     className: "shadow"
-  }), children);
+  }));
 });
 
 var Header = function Header(_ref2) {

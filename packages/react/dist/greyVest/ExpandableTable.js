@@ -143,8 +143,6 @@ var ExpandableTable = (0, _mobxReact.inject)(TableState)((0, _mobxReact.observer
       style: {
         cursor: 'pointer'
       }
-    }), /*#__PURE__*/_react["default"].createElement("div", {
-      className: "shadow"
     }), /*#__PURE__*/_react["default"].createElement("span", null, F.callOrReturn(_fp["default"].getOr(F.autoLabel(c.field), 'label', c)), c.enableSort && /*#__PURE__*/_react["default"].createElement(_Popover["default"], {
       trigger: /*#__PURE__*/_react["default"].createElement(_Icon["default"], {
         icon: "TableColumnMenu"
@@ -168,7 +166,9 @@ var ExpandableTable = (0, _mobxReact.inject)(TableState)((0, _mobxReact.observer
       }
     }, /*#__PURE__*/_react["default"].createElement(_Icon["default"], {
       icon: "SortDescending"
-    }), "Sort Descending"))));
+    }), "Sort Descending"))), /*#__PURE__*/_react["default"].createElement("div", {
+      className: "shadow"
+    }));
   }, columns))), /*#__PURE__*/_react["default"].createElement(TableBody, {
     columns: columns,
     data: data,

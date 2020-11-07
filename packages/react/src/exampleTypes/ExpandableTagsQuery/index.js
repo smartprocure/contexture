@@ -16,7 +16,9 @@ let ExpandableTagsQuery = ({ measureRef, contentRect, collapse, ...props }) => (
     <div style={F.view(collapse) ? collapsedStyle : {}}>
       <div ref={measureRef}>
         <TagsQuery
-          popoverPosition="left top"
+          popoverPosition="left center"
+          popoverArrow={false}
+          popoverOffsetY={32}
           {..._.omit('measure', props)}
         />
       </div>

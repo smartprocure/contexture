@@ -49,7 +49,9 @@ var ExpandableTagsQuery = function ExpandableTagsQuery(_ref) {
   }, /*#__PURE__*/_react["default"].createElement("div", {
     ref: measureRef
   }, /*#__PURE__*/_react["default"].createElement(_TagsQuery["default"], _extends({
-    popoverPosition: "left top"
+    popoverPosition: "left center",
+    popoverArrow: false,
+    popoverOffsetY: 32
   }, _fp["default"].omit('measure', props))))), _futil["default"].view(collapse) && contentRect.entry.height > _TagsQuery.innerHeight && /*#__PURE__*/_react["default"].createElement(_ExpandArrow["default"], {
     collapse: collapse,
     tagsLength: props.node.tags.length

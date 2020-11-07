@@ -132,22 +132,27 @@ export default () => (
         z-index: 2;
       }
 
-      .gv-table th > .shadow {
-        box-shadow: rgba(69, 69, 69, 0.1) 0 2px 10px;
-        width: 100%;
-        height: 6px;
-        margin-bottom: -45px; /* placing shadow under span */
-        margin-top: 39px; /* compensating by 45 - 6 */
-      }
-      
       .gv-table th > span {
         display: flex;
         align-items: center;
-        padding: 0 ${tableCellPadding}px; 
+        box-sizing: border-box;
+        padding: ${tableCellPadding}px; 
         min-height: 45px;
         background: #fff;
+        position: relative;
+        z-index: 2;
       }
 
+      .gv-table th > .shadow {
+        box-shadow: rgba(69, 69, 69, 0.1) 0 2px 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 0;
+        width: 100%;
+        height: 6px;
+        margin-top: -6px;
+      }
+      
       .gv-table th:first-child > span ,
       .gv-table td:first-child {
         padding-left: ${2 * tableCellPadding}px; 

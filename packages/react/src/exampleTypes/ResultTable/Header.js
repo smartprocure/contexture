@@ -37,8 +37,8 @@ let HeaderCellDefault = _.flow(
   observer
 )(({ activeFilter, style, children }) => (
   <th style={{ ...(activeFilter ? { fontWeight: 900 } : {}), ...style }}>
-    <div className="shadow" />
     {children}
+    <div className="shadow" />
   </th>
 ))
 

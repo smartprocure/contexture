@@ -15,6 +15,8 @@ let TagsQuery = ({
   actionWrapper,
   onAddTag = _.noop,
   popoverPosition = 'bottom right',
+  popoverArrow,
+  popoverOffsetY,
   theme: { Icon, TagsInput, Tag, Popover },
   ...props
 }) => {
@@ -61,6 +63,8 @@ let TagsQuery = ({
         <Popover
           style={{ width: 'auto' }}
           position={popoverPosition}
+          arrow={popoverArrow}
+          offsetY={popoverOffsetY}
           closeOnPopoverClick={false}
           trigger={
             <div>

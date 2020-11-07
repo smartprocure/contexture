@@ -53,12 +53,14 @@ var TagsQuery = function TagsQuery(_ref) {
       onAddTag = _ref$onAddTag === void 0 ? _fp["default"].noop : _ref$onAddTag,
       _ref$popoverPosition = _ref.popoverPosition,
       popoverPosition = _ref$popoverPosition === void 0 ? 'bottom right' : _ref$popoverPosition,
+      popoverArrow = _ref.popoverArrow,
+      popoverOffsetY = _ref.popoverOffsetY,
       _ref$theme = _ref.theme,
       Icon = _ref$theme.Icon,
       TagsInput = _ref$theme.TagsInput,
       Tag = _ref$theme.Tag,
       Popover = _ref$theme.Popover,
-      props = _objectWithoutProperties(_ref, ["tree", "node", "style", "actionWrapper", "onAddTag", "popoverPosition", "theme"]);
+      props = _objectWithoutProperties(_ref, ["tree", "node", "style", "actionWrapper", "onAddTag", "popoverPosition", "popoverArrow", "popoverOffsetY", "theme"]);
 
   var TagWithPopover = function TagWithPopover(props) {
     return /*#__PURE__*/_react["default"].createElement(Popover, {
@@ -111,6 +113,8 @@ var TagsQuery = function TagsQuery(_ref) {
       width: 'auto'
     },
     position: popoverPosition,
+    arrow: popoverArrow,
+    offsetY: popoverOffsetY,
     closeOnPopoverClick: false,
     trigger: /*#__PURE__*/_react["default"].createElement("div", null, /*#__PURE__*/_react["default"].createElement(Icon, {
       icon: "TableColumnMenu"

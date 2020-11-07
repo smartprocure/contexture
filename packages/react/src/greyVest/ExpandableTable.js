@@ -139,7 +139,6 @@ let ExpandableTable = inject(TableState)(
                     style: { cursor: 'pointer' },
                   })}
                 >
-                  <div className="shadow" />
                   <span>
                     {F.callOrReturn(_.getOr(F.autoLabel(c.field), 'label', c))}
                     {c.enableSort && (
@@ -172,6 +171,7 @@ let ExpandableTable = inject(TableState)(
                       </Popover>
                     )}
                   </span>
+                  <div className="shadow" />
                 </th>
               ),
               columns

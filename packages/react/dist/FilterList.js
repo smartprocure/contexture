@@ -204,7 +204,7 @@ var FilterList = _fp["default"].flow((0, _recompose.setDisplayName)('FilterList'
       path: _fp["default"].toArray(child.path)
     }, mapNodeToProps(child, fields)))));
   }, _fp["default"].get('children', node)), /*#__PURE__*/_react["default"].createElement("div", {
-    className: "apply-filter",
+    className: "apply-filter ".concat(updateRequired ? 'active' : ''),
     style: {
       maxHeight: updateRequired ? 70 : 0
     },
