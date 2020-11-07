@@ -88,8 +88,18 @@ export default () => (
 
 
       /* Filter List */
+      
+      .apply-filter {
+        position: sticky;
+        bottom: 0;
+        background: white;
+        box-shadow: white 0 -6px 6px;
+        overflow: hidden;
+        will-change: max-height;
+        transition: max-height .25s ease-out .2s;
+      }
 
-      .apply-filter-button button {
+      .apply-filter button {
         margin: 8px 0 6px;
         width: 100%;
       }

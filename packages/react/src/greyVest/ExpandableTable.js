@@ -139,12 +139,15 @@ let ExpandableTable = inject(TableState)(
                     style: { cursor: 'pointer', textDecoration: 'underline' },
                   })}
                 >
-                  {F.callOrReturn(_.getOr(F.autoLabel(c.field), 'label', c))}
-                  {c.enableSort && c.field === sortField && sortDir
-                    ? sortDir === 'asc'
-                      ? '▲'
-                      : '▼'
-                    : ''}
+                  <div className="shadow" />
+                  <span>
+                    {F.callOrReturn(_.getOr(F.autoLabel(c.field), 'label', c))}
+                    {c.enableSort && c.field === sortField && sortDir
+                      ? sortDir === 'asc'
+                        ? '▲'
+                        : '▼'
+                      : ''}
+                  </span>
                 </th>
               ),
               columns

@@ -44,7 +44,12 @@ export let FilterActions = _.flow(
             }}
           />
         </Modal>
-        <Popover open={popover} arrow={false}>
+        <Popover
+          open={popover}
+          arrow={false}
+          position="bottom center"
+          style={{ width: 'auto' }}
+        >
           {!_.isEmpty(typeOptions) && (
             <>
               <DropdownItem className="filter-actions-selected-type">
@@ -153,7 +158,7 @@ let FilterList = _.flow(
     mapNodeToLabel = _.noop,
     className,
     style,
-    theme: { UnmappedNodeComponent, Button, Icon },
+    theme: { UnmappedNodeComponent, Button },
   }) => {
     let updateRequired = tree.disableAutoUpdate &&
       // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
@@ -208,15 +213,8 @@ let FilterList = _.flow(
         )}
 
         <div
-          className="apply-filter-button"
+          className="apply-filter"
           style={{
-            position: 'sticky',
-            bottom: 0,
-            background: 'white',
-            boxShadow: 'white 0 -6px 6px',
-            overflow: 'hidden',
-            willChange: 'max-height',
-            transition: 'max-height .25s ease-out .2s',
             maxHeight: updateRequired ? 70 : 0,
           }}
           onClick={e => {
@@ -226,8 +224,7 @@ let FilterList = _.flow(
         >
           <Button primary>
             <Flex justifyContent="center" alignItems="center">
-              Apply Filters
-              <Icon style={{ paddingLeft: 5 }} icon="FilterApply" />
+              Search
             </Flex>
           </Button>
         </div>

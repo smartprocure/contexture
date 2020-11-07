@@ -78,7 +78,7 @@ var Popover = function Popover(_ref) {
       borderRadius: 3,
       border: '1px solid rgb(235, 235, 235)',
       boxShadow: '0 2px 10px 0 rgba(39, 44, 65, 0.1)'
-    }, contentStyle), style)
+    }, style), contentStyle)
   }, props), function (close) {
     return /*#__PURE__*/_react["default"].createElement("div", {
       onClick: closeOnPopoverClick ? close : null

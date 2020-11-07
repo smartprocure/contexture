@@ -143,7 +143,9 @@ var ExpandableTable = (0, _mobxReact.inject)(TableState)((0, _mobxReact.observer
         cursor: 'pointer',
         textDecoration: 'underline'
       }
-    }), F.callOrReturn(_fp["default"].getOr(F.autoLabel(c.field), 'label', c)), c.enableSort && c.field === sortField && sortDir ? sortDir === 'asc' ? '▲' : '▼' : '');
+    }), /*#__PURE__*/_react["default"].createElement("div", {
+      className: "shadow"
+    }), /*#__PURE__*/_react["default"].createElement("span", null, F.callOrReturn(_fp["default"].getOr(F.autoLabel(c.field), 'label', c)), c.enableSort && c.field === sortField && sortDir ? sortDir === 'asc' ? '▲' : '▼' : ''));
   }, columns))), /*#__PURE__*/_react["default"].createElement(TableBody, {
     columns: columns,
     data: data,
