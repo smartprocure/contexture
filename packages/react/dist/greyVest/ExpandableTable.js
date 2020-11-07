@@ -17,6 +17,12 @@ var _mobx = require("mobx");
 
 var _mobxReact = require("mobx-react");
 
+var _DropdownItem = require("./DropdownItem");
+
+var _Popover = _interopRequireDefault(require("./Popover"));
+
+var _Icon = _interopRequireDefault(require("./Icon"));
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -126,26 +132,43 @@ var ExpandableTable = (0, _mobxReact.inject)(TableState)((0, _mobxReact.observer
       columns = _ref5.columns,
       _ref5$recordKey = _ref5.recordKey,
       recordKey = _ref5$recordKey === void 0 ? 'key' : _ref5$recordKey,
-      sortField = _ref5.sortField,
-      sortDir = _ref5.sortDir,
       _ref5$columnSort = _ref5.columnSort,
       columnSort = _ref5$columnSort === void 0 ? _fp["default"].identity : _ref5$columnSort,
-      props = _objectWithoutProperties(_ref5, ["data", "columns", "recordKey", "sortField", "sortDir", "columnSort"]);
+      props = _objectWithoutProperties(_ref5, ["data", "columns", "recordKey", "columnSort"]);
 
   return /*#__PURE__*/_react["default"].createElement("table", props.tableAttrs, /*#__PURE__*/_react["default"].createElement("thead", null, /*#__PURE__*/_react["default"].createElement("tr", null, F.mapIndexed(function (c, i) {
     return /*#__PURE__*/_react["default"].createElement("th", _extends({
       key: "".concat(c.field).concat(i)
     }, c.enableSort && {
-      onClick: function onClick() {
-        return columnSort(c);
-      },
       style: {
-        cursor: 'pointer',
-        textDecoration: 'underline'
+        cursor: 'pointer'
       }
     }), /*#__PURE__*/_react["default"].createElement("div", {
       className: "shadow"
-    }), /*#__PURE__*/_react["default"].createElement("span", null, F.callOrReturn(_fp["default"].getOr(F.autoLabel(c.field), 'label', c)), c.enableSort && c.field === sortField && sortDir ? sortDir === 'asc' ? '▲' : '▼' : ''));
+    }), /*#__PURE__*/_react["default"].createElement("span", null, F.callOrReturn(_fp["default"].getOr(F.autoLabel(c.field), 'label', c)), c.enableSort && /*#__PURE__*/_react["default"].createElement(_Popover["default"], {
+      trigger: /*#__PURE__*/_react["default"].createElement(_Icon["default"], {
+        icon: "TableColumnMenu"
+      }),
+      position: "bottom ".concat(i === columns.length - 1 ? 'right' : 'center'),
+      style: {
+        userSelect: 'none',
+        width: 'auto'
+      }
+    }, /*#__PURE__*/_react["default"].createElement(_DropdownItem.DropdownItem, {
+      onClick: function onClick() {
+        c.sortDir = 'asc';
+        columnSort(c);
+      }
+    }, /*#__PURE__*/_react["default"].createElement(_Icon["default"], {
+      icon: "SortAscending"
+    }), "Sort Ascending"), /*#__PURE__*/_react["default"].createElement(_DropdownItem.DropdownItem, {
+      onClick: function onClick() {
+        c.sortDir = 'desc';
+        columnSort(c);
+      }
+    }, /*#__PURE__*/_react["default"].createElement(_Icon["default"], {
+      icon: "SortDescending"
+    }), "Sort Descending"))));
   }, columns))), /*#__PURE__*/_react["default"].createElement(TableBody, {
     columns: columns,
     data: data,

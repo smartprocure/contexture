@@ -3,6 +3,9 @@ import * as F from 'futil'
 import React from 'react'
 import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
+import { DropdownItem } from './DropdownItem'
+import Popover from './Popover'
+import Icon from './Icon'
 
 export let Column = _.identity
 Column.displayName = 'Column'
@@ -122,8 +125,6 @@ let ExpandableTable = inject(TableState)(
       data,
       columns,
       recordKey = 'key',
-      sortField,
-      sortDir,
       columnSort = _.identity,
       ...props
     }) => (
@@ -135,18 +136,41 @@ let ExpandableTable = inject(TableState)(
                 <th
                   key={`${c.field}${i}`}
                   {...(c.enableSort && {
-                    onClick: () => columnSort(c),
-                    style: { cursor: 'pointer', textDecoration: 'underline' },
+                    style: { cursor: 'pointer' },
                   })}
                 >
                   <div className="shadow" />
                   <span>
                     {F.callOrReturn(_.getOr(F.autoLabel(c.field), 'label', c))}
-                    {c.enableSort && c.field === sortField && sortDir
-                      ? sortDir === 'asc'
-                        ? '▲'
-                        : '▼'
-                      : ''}
+                    {c.enableSort && (
+                      <Popover
+                        trigger={<Icon icon="TableColumnMenu" />}
+                        position={`bottom ${i === columns.length - 1 ? 'right' : 'center'}`}
+                        style={{
+                          userSelect: 'none',
+                          width: 'auto',
+                        }}
+                      >
+                        <DropdownItem
+                          onClick={() => {
+                            c.sortDir = 'asc'
+                            columnSort(c)
+                          }}
+                        >
+                          <Icon icon="SortAscending" />
+                          Sort Ascending
+                        </DropdownItem>
+                        <DropdownItem
+                          onClick={() => {
+                            c.sortDir = 'desc'
+                            columnSort(c)
+                          }}
+                        >
+                          <Icon icon="SortDescending" />
+                          Sort Descending
+                        </DropdownItem>
+                      </Popover>
+                    )}
                   </span>
                 </th>
               ),

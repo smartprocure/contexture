@@ -85,7 +85,9 @@ var SelectSize = _fp["default"].flow((0, _recompose.setDisplayName)('SelectSize'
       options = _ref3$options === void 0 ? [10, 25, 50, 100, 500, 1000] : _ref3$options,
       Select = _ref3.theme.Select;
   return /*#__PURE__*/_react["default"].createElement(_greyVest.Flex, {
-    style: toolBarStyle
+    style: _objectSpread({
+      marginLeft: 12
+    }, toolBarStyle)
   }, /*#__PURE__*/_react["default"].createElement(SimpleLabel, {
     text: "Size:"
   }), /*#__PURE__*/_react["default"].createElement(Select, {
@@ -124,8 +126,7 @@ var TermsStatsTable = function TermsStatsTable(_ref4) {
 
   return /*#__PURE__*/_react["default"].createElement("div", null, /*#__PURE__*/_react["default"].createElement(_greyVest.Flex, {
     style: _objectSpread(_objectSpread({}, toolBarStyle), {}, {
-      margin: 40,
-      marginBottom: 0
+      margin: '0 8px'
     })
   }, /*#__PURE__*/_react["default"].createElement(SimpleFilter, _futil["default"].domLens.value(tree.lens(node.path, 'filter'))), /*#__PURE__*/_react["default"].createElement(SelectSize, {
     node: node,
@@ -190,7 +191,7 @@ var TermsStatsTable = function TermsStatsTable(_ref4) {
       if (column.field !== 'key' && column.enableSort) {
         tree.mutate(node.path, {
           order: column.field,
-          sortDir: node.order === column.field && node.sortDir === 'desc' ? 'asc' : 'desc'
+          sortDir: column.sortDir
         });
       }
     }
