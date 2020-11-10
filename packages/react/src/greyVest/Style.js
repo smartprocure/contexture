@@ -142,6 +142,15 @@ export default () => (
         z-index: 2;
       }
       
+      .gv-table th:before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 6px;
+        box-shadow: rgba(69,69,69,.1) 0 3px 10px -1px;
+      }
+      
       .gv-table th:after {
         content: '';
         position: absolute;
@@ -149,8 +158,7 @@ export default () => (
         top: 0;
         width: 100%;
         height: 100%;
-        border-bottom: 10px solid transparent;
-        border-image: linear-gradient(rgba(69, 69, 69, 0.1), rgba(0,0,0,0)) 30;
+        background: fff;
       }
       
       .gv-table th:first-child > span ,
