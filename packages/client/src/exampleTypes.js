@@ -396,10 +396,10 @@ export default F.stampKey('type', {
     validate: node =>
       node.localField && node.foreignField && (node.search || node.searchId),
     reactors: {
-      localField: 'others',
-      foreignField: 'others',
-      search: 'others',
-      searchId: 'others',
+      localField: 'all',
+      foreignField: 'all',
+      search: 'all',
+      searchId: 'all',
     },
     defaults: {
       searchId: null,
