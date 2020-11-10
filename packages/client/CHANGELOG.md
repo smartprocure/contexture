@@ -1,5 +1,9 @@
+# 2.31.1
+* Update subquery node reactors to `all`
+
 # 2.31.0
 * Remove logic that marks and deletes a `filterOnly` node with no value 
+
 # 2.30.0
 * When `disableAutoUpdate` is `true` triggering updates immediately instead of debouncing them
 
