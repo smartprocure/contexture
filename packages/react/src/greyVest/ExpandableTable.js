@@ -144,7 +144,9 @@ let ExpandableTable = inject(TableState)(
                     {c.enableSort && (
                       <Popover
                         trigger={<Icon icon="TableColumnMenu" />}
-                        position={`bottom ${i === columns.length - 1 ? 'right' : 'center'}`}
+                        position={`bottom ${
+                          i === columns.length - 1 ? 'right' : 'center'
+                        }`}
                         style={{
                           userSelect: 'none',
                           width: 'auto',

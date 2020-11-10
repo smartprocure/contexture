@@ -108,10 +108,7 @@ let ResultTable = ({
           />
         </Table>
         {node.pageSize > 0 && (
-          <div
-            className="gv-table-footer"
-            style={footerStyle}
-          >
+          <div className="gv-table-footer" style={footerStyle}>
             <ResultTableFooter {...{ tree, node, path, pageSizeOptions }} />
           </div>
         )}

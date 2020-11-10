@@ -33,7 +33,7 @@ let SelectSize = _.flow(
     options = [10, 25, 50, 100, 500, 1000],
     theme: { Select },
   }) => (
-    <Flex style={{marginLeft: 12, ...toolBarStyle}}>
+    <Flex style={{ marginLeft: 12, ...toolBarStyle }}>
       <SimpleLabel text="Size:" />
       <Select
         onChange={e => {

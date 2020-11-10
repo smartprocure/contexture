@@ -28,9 +28,7 @@ let TableBody = ({
               ({ field, display = x => x, Cell = 'td' }) => (
                 <Cell
                   key={field}
-                  className={_.contains(stickyFields, field) ?
-                    'sticky' : null
-                  }
+                  className={_.contains(stickyFields, field) ? 'sticky' : null}
                 >
                   {display(_.get(field, getRecord(x)), getRecord(x))}
                 </Cell>
