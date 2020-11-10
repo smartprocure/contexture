@@ -95,8 +95,13 @@ export default () => (
         background: white;
         box-shadow: white 0 -6px 6px;
         overflow: hidden;
+        max-height: 0;
         will-change: max-height;
         transition: max-height .25s ease-out .2s;
+      }
+      
+      .apply-filter.active {
+        max-height: 70px;
       }
 
       .apply-filter button {

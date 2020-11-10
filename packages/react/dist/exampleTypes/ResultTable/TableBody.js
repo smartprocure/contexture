@@ -51,12 +51,7 @@ var TableBody = function TableBody(_ref) {
           Cell = _ref2$Cell === void 0 ? 'td' : _ref2$Cell;
       return /*#__PURE__*/_react["default"].createElement(Cell, {
         key: field,
-        style: _fp["default"].contains(stickyFields, field) ? {
-          position: 'sticky',
-          left: 0,
-          zIndex: 1,
-          boxShadow: 'rgba(0, 0, 0, 0.1) 6px 0px 5px -5px'
-        } : null
+        className: _fp["default"].contains(stickyFields, field) ? 'sticky' : null
       }, display(_fp["default"].get(field, (0, _schema.getRecord)(x)), (0, _schema.getRecord)(x)));
     }, visibleFields), node.showOtherMatches && /*#__PURE__*/_react["default"].createElement(_HighlightedColumn["default"], {
       node: node,

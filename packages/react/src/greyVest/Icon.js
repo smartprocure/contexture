@@ -20,7 +20,6 @@ let iconMap = {
   FilterExpand: toIcon('filter_alt'),
   FilterCollapse: toIcon('filter_list'),
   FilterAdd: toIcon('filter_list'),
-  FilterApply: toIcon('fact_check'),
   TableColumnMenu: () => (
     <TextButton>
       <SmallIcon icon="more_vert" />

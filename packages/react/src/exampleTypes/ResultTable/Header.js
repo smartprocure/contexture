@@ -38,7 +38,6 @@ let HeaderCellDefault = _.flow(
 )(({ activeFilter, style, children }) => (
   <th style={{ ...(activeFilter ? { fontWeight: 900 } : {}), ...style }}>
     {children}
-    <div className="shadow" />
   </th>
 ))
 
@@ -97,6 +96,7 @@ let Header = ({
         left: sticky ? 0 : '',
         zIndex: sticky ? 11 : '',
       }}
+      activeFilter={_.get('hasValue', filterNode)}
     >
       <span>
         {_.isFunction(label) ? <Label /> : label}{' '}

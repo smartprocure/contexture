@@ -116,8 +116,7 @@ export default () => (
       .gv-table tbody tr {
         border-bottom: solid 2px rgba(237, 237, 237, 0.43);
       }
-      
-      
+
       .gv-table td, .gv-table th {
         padding: ${tableCellPadding}px;
         text-align: left;
@@ -142,15 +141,16 @@ export default () => (
         position: relative;
         z-index: 2;
       }
-
-      .gv-table th > .shadow {
-        box-shadow: rgba(69, 69, 69, 0.1) 0 2px 10px;
+      
+      .gv-table th:after {
+        content: '';
         position: absolute;
-        z-index: 1;
-        bottom: 0;
+        left: 0;
+        top: 0;
         width: 100%;
-        height: 6px;
-        margin-top: -6px;
+        height: 100%;
+        border-bottom: 10px solid transparent;
+        border-image: linear-gradient(rgba(69, 69, 69, 0.1), rgba(0,0,0,0)) 30;
       }
       
       .gv-table th:first-child > span ,
@@ -405,11 +405,6 @@ export default () => (
       }
 
       /* Tabs */
-      .gv-tab-container {
-        position: sticky;
-        left: 0;
-      }
-      
       .gv-tab-container .gv-tab {
         display: inline-block;
         padding: 15px 20px;

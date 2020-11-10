@@ -68,12 +68,7 @@ export let Tabs = ({
   return (
     <>
       <TabsList value={value} onChange={handleChange} options={options} />
-      <div style={{
-        display: 'inline-block',
-        minWidth: '100%',
-      }}>
-        <TabPanel>{content}</TabPanel>
-      </div>
+      <TabPanel>{content}</TabPanel>
     </>
   )
 }

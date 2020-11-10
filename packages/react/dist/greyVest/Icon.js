@@ -56,7 +56,6 @@ var iconMap = {
   FilterExpand: toIcon('filter_alt'),
   FilterCollapse: toIcon('filter_list'),
   FilterAdd: toIcon('filter_list'),
-  FilterApply: toIcon('fact_check'),
   TableColumnMenu: function TableColumnMenu() {
     return /*#__PURE__*/_react["default"].createElement(_TextButton["default"], null, /*#__PURE__*/_react["default"].createElement(SmallIcon, {
       icon: "more_vert"

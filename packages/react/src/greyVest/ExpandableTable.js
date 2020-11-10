@@ -171,7 +171,6 @@ let ExpandableTable = inject(TableState)(
                       </Popover>
                     )}
                   </span>
-                  <div className="shadow" />
                 </th>
               ),
               columns

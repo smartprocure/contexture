@@ -166,9 +166,7 @@ var ExpandableTable = (0, _mobxReact.inject)(TableState)((0, _mobxReact.observer
       }
     }, /*#__PURE__*/_react["default"].createElement(_Icon["default"], {
       icon: "SortDescending"
-    }), "Sort Descending"))), /*#__PURE__*/_react["default"].createElement("div", {
-      className: "shadow"
-    }));
+    }), "Sort Descending"))));
   }, columns))), /*#__PURE__*/_react["default"].createElement(TableBody, {
     columns: columns,
     data: data,

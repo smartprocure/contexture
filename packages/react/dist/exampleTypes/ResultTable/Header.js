@@ -58,9 +58,7 @@ var HeaderCellDefault = _fp["default"].flow((0, _recompose.setDisplayName)('Head
     style: _objectSpread(_objectSpread({}, activeFilter ? {
       fontWeight: 900
     } : {}), style)
-  }, children, /*#__PURE__*/_react["default"].createElement("div", {
-    className: "shadow"
-  }));
+  }, children);
 });
 
 var Header = function Header(_ref2) {
@@ -121,7 +119,8 @@ var Header = function Header(_ref2) {
       cursor: hideMenu ? 'default' : 'pointer',
       left: sticky ? 0 : '',
       zIndex: sticky ? 11 : ''
-    }
+    },
+    activeFilter: _fp["default"].get('hasValue', filterNode)
   }, /*#__PURE__*/_react["default"].createElement("span", null, _fp["default"].isFunction(label) ? /*#__PURE__*/_react["default"].createElement(Label, null) : label, ' ', field === node.sortField && /*#__PURE__*/_react["default"].createElement(Icon, {
     icon: node.sortDir === 'asc' ? 'SortAscending' : 'SortDescending'
   }), /*#__PURE__*/_react["default"].createElement(Popover, {

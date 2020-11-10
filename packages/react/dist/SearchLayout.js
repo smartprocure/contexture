@@ -32,6 +32,7 @@ var styles = function styles(mode) {
     display: 'grid',
     gridGap: margin,
     margin: "0 ".concat(margin, "px"),
+    marginBottom: margin,
     gridTemplateColumns: mode === 'basic' ? '320px minmax(0, 1fr)' : 'minmax(0, 1fr)'
   };
 };
