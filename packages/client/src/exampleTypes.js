@@ -411,8 +411,8 @@ export default F.stampKey('type', {
   savedSearch: {
     validate: node => node.search || node.searchId,
     reactors: {
-      search: 'others',
-      searchId: 'others',
+      search: 'all',
+      searchId: 'all',
     },
     defaults: {
       searchId: null,
