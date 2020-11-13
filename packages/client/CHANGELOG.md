@@ -1,5 +1,8 @@
-# 2.31.1
+# 2.31.2
 * Update subquery node reactors to `all`
+
+# 2.31.1
+* Update savedSearch node reactors to `all`
 
 # 2.31.0
 * Remove logic that marks and deletes a `filterOnly` node with no value 
