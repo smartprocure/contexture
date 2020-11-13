@@ -25,12 +25,8 @@ let ModalPicker = ({
       </Modal>
       {!!options.length && (
         <Button
+          className="modal-picker-button"
           onClick={F.on(open)}
-          style={{
-            display: 'block',
-            width: '100%',
-            marginTop: 6,
-          }}
         >
           {label}
         </Button>
