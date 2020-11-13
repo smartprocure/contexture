@@ -165,7 +165,7 @@ let FilterList = _.flow(
       // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
       _.some(
         treeNode => treeNode !== node && treeNode.markedForUpdate,
-        F.treeToArray(_.get('children'))(tree.tree)
+        F.treeToArray(_.get('children'))(node)
       )
 
     return (
@@ -215,9 +215,6 @@ let FilterList = _.flow(
 
         <div
           className={`apply-filter ${updateRequired ? 'active' : ''}`}
-          style={{
-            maxHeight: updateRequired ? 70 : 0,
-          }}
           onClick={e => {
             e.stopPropagation()
             tree.triggerUpdate()

@@ -4,7 +4,7 @@ import _ from 'lodash/fp'
 import TableFooter from '../../greyVest/TableFooter'
 import { contexturifyWithoutLoader } from '../../utils/hoc'
 
-let ResultTableFooter = ({ tree, node, pageSizeOptions }) => {
+let ResultTableFooter = ({ tree, node, pageSizeOptions, style }) => {
   let getFromContext = key =>
     F.cascade([`context.response.${key}`, `context.${key}`], node)
   return (
@@ -19,6 +19,7 @@ let ResultTableFooter = ({ tree, node, pageSizeOptions }) => {
         })
       }}
       pageSizeOptions={pageSizeOptions}
+      style={style}
       {...F.arrayToObject(x => x, getFromContext, [
         'hasMore',
         'totalRecords',

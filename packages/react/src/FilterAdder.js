@@ -33,7 +33,6 @@ let FilterAdder = ({
       options={options}
       onChange={field => tree.add(path, newNodeFromField({ field, fields }))}
       label={Label}
-      blockButton={true}
     />
   )
 }

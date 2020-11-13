@@ -124,11 +124,13 @@ export default () => (
       
       .gv-table th {
         background: #fff;
-        line-height: 1.05;
+        line-height: 1;
         padding: 0;
-        position: sticky;
+        /* Sticky headers */
+        position: sticky; 
         top: 0;
-        z-index: 2;
+        /* Go on top of table content */
+        z-index: 2; 
       }
 
       .gv-table th > span {
@@ -138,10 +140,12 @@ export default () => (
         padding: ${tableCellPadding}px; 
         min-height: 45px;
         background: #fff;
+        /* Go on top of shadow element */
         position: relative;
         z-index: 2;
       }
       
+      /* Virtual element that drops shadow */
       .gv-table th:before {
         content: '';
         position: absolute;
@@ -151,6 +155,7 @@ export default () => (
         box-shadow: rgba(69,69,69,.1) 0 3px 10px -1px;
       }
       
+      /* To cover unwanted shadow from :before */
       .gv-table th:after {
         content: '';
         position: absolute;
@@ -173,6 +178,7 @@ export default () => (
 
       .gv-table-footer {
         box-shadow: rgba(69, 69, 69, 0.1) 0 -4px 10px -2px;
+        padding: 3px ${2 * tableCellPadding}px;
       }
 
       .gv-box {

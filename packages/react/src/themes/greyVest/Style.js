@@ -101,7 +101,7 @@ export default () => (
       }
       
       .apply-filter.active {
-        max-height: 70px;
+        max-height: 70px; /* Button height + padding */
       }
 
       .apply-filter button {

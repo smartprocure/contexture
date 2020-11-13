@@ -13,7 +13,6 @@ let TableBody = ({
   schema,
   Row = 'tr',
   getRowKey = _.get('_id'),
-  stickyFields,
 }) => (
   <tbody>
     {!!getResults(node).length &&
@@ -26,10 +25,7 @@ let TableBody = ({
           >
             {_.map(
               ({ field, display = x => x, Cell = 'td' }) => (
-                <Cell
-                  key={field}
-                  className={_.contains(stickyFields, field) ? 'sticky' : null}
-                >
+                <Cell key={field}>
                   {display(_.get(field, getRecord(x)), getRecord(x))}
                 </Cell>
               ),

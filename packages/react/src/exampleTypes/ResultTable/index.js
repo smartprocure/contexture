@@ -32,7 +32,6 @@ let ResultTable = ({
   getRowKey, // allow passing a custom function to generate unique row key
   mapNodeToProps = () => ({}),
   pageSizeOptions, // an array of options to set the # of rows per page (default [20, 50, 100, 250])
-  stickyFields,
   footerStyle,
   theme: { Table },
 }) => {
@@ -84,8 +83,7 @@ let ResultTable = ({
                   <Header
                     key={x.field}
                     field={x}
-                    sticky={_.contains(stickyFields, x.field)}
-                    lastOne={i === visibleFields.length - 1}
+                    isLastColumn={i === visibleFields.length - 1}
                     {...headerProps}
                   />
                 ),
@@ -103,14 +101,11 @@ let ResultTable = ({
               schema,
               Row,
               getRowKey,
-              stickyFields,
             }}
           />
         </Table>
         {node.pageSize > 0 && (
-          <div className="gv-table-footer" style={footerStyle}>
-            <ResultTableFooter {...{ tree, node, path, pageSizeOptions }} />
-          </div>
+          <ResultTableFooter {...{ tree, node, path, pageSizeOptions, style: footerStyle }} />
         )}
       </>
     )

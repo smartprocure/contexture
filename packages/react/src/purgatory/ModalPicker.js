@@ -9,7 +9,6 @@ let ModalPicker = ({
   options = [],
   onChange,
   label,
-  blockButton = false,
   theme: { Button, NestedPicker, Modal },
 }) => {
   let open = React.useState(false)
@@ -27,15 +26,11 @@ let ModalPicker = ({
       {!!options.length && (
         <Button
           onClick={F.on(open)}
-          style={
-            blockButton
-              ? {
-                  display: 'block',
-                  width: '100%',
-                  marginTop: 6,
-                }
-              : null
-          }
+          style={{
+            display: 'block',
+            width: '100%',
+            marginTop: 6,
+          }}
         >
           {label}
         </Button>

@@ -53,8 +53,7 @@ let Header = ({
   mapNodeToProps,
   fields,
   visibleFields,
-  sticky,
-  lastOne,
+  isLastColumn,
   theme: {
     DropdownItem,
     Icon,
@@ -93,8 +92,6 @@ let Header = ({
     <HeaderCell
       style={{
         cursor: hideMenu ? 'default' : 'pointer',
-        left: sticky ? 0 : '',
-        zIndex: sticky ? 11 : '',
       }}
       activeFilter={_.get('hasValue', filterNode)}
     >
@@ -107,7 +104,7 @@ let Header = ({
         )}
         <Popover
           trigger={hideMenu ? null : <Icon icon="TableColumnMenu" />}
-          position={`bottom ${lastOne ? 'right' : 'center'}`}
+          position={`bottom ${isLastColumn ? 'right' : 'center'}`}
           closeOnPopoverClick={false}
           style={popoverStyle}
         >
