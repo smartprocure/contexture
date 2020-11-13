@@ -88,9 +88,24 @@ export default () => (
 
 
       /* Filter List */
+      
+      .apply-filter {
+        position: sticky;
+        bottom: 0;
+        background: white;
+        box-shadow: white 0 -6px 6px;
+        overflow: hidden;
+        max-height: 0;
+        will-change: max-height;
+        transition: max-height .25s ease-out .2s;
+      }
+      
+      .apply-filter.active {
+        max-height: 70px; /* Button height + padding */
+      }
 
-      .apply-filter-button button {
-        margin-top: 10px;
+      .apply-filter button {
+        margin: 8px 0 6px;
         width: 100%;
       }
 
@@ -160,6 +175,11 @@ export default () => (
         margin: 4px -5px;
       }
 
+      .modal-picker-button {
+        display: block;
+        width: 100%;
+        margin-top: 8px;
+      }
 
       /* Filter Button List */
 

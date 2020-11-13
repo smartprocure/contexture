@@ -53,6 +53,7 @@ let Header = ({
   mapNodeToProps,
   fields,
   visibleFields,
+  isLastColumn,
   theme: {
     DropdownItem,
     Icon,
@@ -89,7 +90,9 @@ let Header = ({
   let Label = label
   return (
     <HeaderCell
-      style={{ cursor: hideMenu ? 'default' : 'pointer' }}
+      style={{
+        cursor: hideMenu ? 'default' : 'pointer',
+      }}
       activeFilter={_.get('hasValue', filterNode)}
     >
       <span>
@@ -101,7 +104,7 @@ let Header = ({
         )}
         <Popover
           trigger={hideMenu ? null : <Icon icon="TableColumnMenu" />}
-          position="bottom right"
+          position={`bottom ${isLastColumn ? 'right' : 'center'}`}
           closeOnPopoverClick={false}
           style={popoverStyle}
         >

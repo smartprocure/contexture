@@ -116,13 +116,69 @@ export default () => (
       .gv-table tbody tr {
         border-bottom: solid 2px rgba(237, 237, 237, 0.43);
       }
+
       .gv-table td, .gv-table th {
         padding: ${tableCellPadding}px;
         text-align: left;
       }
+      
+      .gv-table th {
+        background: #fff;
+        line-height: 1;
+        padding: 0;
+        /* Sticky headers */
+        position: sticky; 
+        top: 0;
+        /* Go on top of table content */
+        z-index: 2; 
+      }
+
       .gv-table th > span {
         display: flex;
         align-items: center;
+        box-sizing: border-box;
+        padding: ${tableCellPadding}px; 
+        min-height: 45px;
+        background: #fff;
+        /* Go on top of shadow element */
+        position: relative;
+        z-index: 2;
+      }
+      
+      /* Virtual element that drops shadow */
+      .gv-table th:before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 6px;
+        box-shadow: rgba(69,69,69,.1) 0 3px 10px -1px;
+      }
+      
+      /* To cover unwanted shadow from :before */
+      .gv-table th:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: #fff;
+      }
+      
+      .gv-table th:first-child > span ,
+      .gv-table td:first-child {
+        padding-left: ${2 * tableCellPadding}px; 
+      }
+      
+      .gv-table th:last-child > span ,
+      .gv-table td:last-child {
+        padding-right: ${2 * tableCellPadding}px; 
+      }
+
+      .gv-table-footer {
+        box-shadow: rgba(69, 69, 69, 0.1) 0 -4px 10px -2px;
+        padding: 3px ${2 * tableCellPadding}px;
       }
 
       .gv-box {
@@ -282,6 +338,7 @@ export default () => (
         color: #9b9b9b;
         display: inline-block;
         transition: background-color .1s linear, color .1s linear;
+        user-select: none;
       }
       .gv-text-button > * {
         vertical-align: middle;

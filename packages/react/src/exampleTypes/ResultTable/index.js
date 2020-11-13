@@ -32,6 +32,7 @@ let ResultTable = ({
   getRowKey, // allow passing a custom function to generate unique row key
   mapNodeToProps = () => ({}),
   pageSizeOptions, // an array of options to set the # of rows per page (default [20, 50, 100, 250])
+  footerStyle,
   theme: { Table },
 }) => {
   // If there are no fields, we won't render anything. This is most definitely a
@@ -78,8 +79,13 @@ let ResultTable = ({
           <thead>
             <tr>
               {F.mapIndexed(
-                x => (
-                  <Header key={x.field} field={x} {...headerProps} />
+                (x, i) => (
+                  <Header
+                    key={x.field}
+                    field={x}
+                    isLastColumn={i === visibleFields.length - 1}
+                    {...headerProps}
+                  />
                 ),
                 visibleFields
               )}
@@ -99,7 +105,9 @@ let ResultTable = ({
           />
         </Table>
         {node.pageSize > 0 && (
-          <ResultTableFooter {...{ tree, node, path, pageSizeOptions }} />
+          <ResultTableFooter
+            {...{ tree, node, path, pageSizeOptions, style: footerStyle }}
+          />
         )}
       </>
     )

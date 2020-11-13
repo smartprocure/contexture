@@ -42,9 +42,9 @@ let TableFooter = ({
   let pageCount = _.ceil((totalRecords || endRecord) / pageSize)
   return (
     <Flex
+      className="gv-table-footer"
       justifyContent="space-between"
       alignItems="center"
-      style={{ padding: 8 }}
       {...props}
     >
       <PageSize

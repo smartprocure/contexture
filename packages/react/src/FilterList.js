@@ -44,7 +44,12 @@ export let FilterActions = _.flow(
             }}
           />
         </Modal>
-        <Popover open={popover} arrow={false}>
+        <Popover
+          open={popover}
+          arrow={false}
+          position="bottom center"
+          style={{ width: 'auto' }}
+        >
           {!_.isEmpty(typeOptions) && (
             <>
               <DropdownItem className="filter-actions-selected-type">
@@ -154,69 +159,76 @@ let FilterList = _.flow(
     className,
     style,
     theme: { UnmappedNodeComponent, Button },
-  }) => (
-    <div style={style} className={className}>
-      {_.map(
-        child =>
-          child.children ? (
-            <FilterList
-              key={child.path}
-              tree={tree}
-              node={child}
-              fields={fields}
-              mapNodeToProps={mapNodeToProps}
-              mapNodeToLabel={mapNodeToLabel}
-              className={'filter-list-group'}
-              style={bdJoin(child)}
-            />
-          ) : (
-            <Expandable
-              key={child.path}
-              className="filter-list-item"
-              isOpen={!child.paused}
-              Label={
-                <Label tree={tree} node={child} fields={fields}>
-                  {mapNodeToLabel(child, fields)}
-                </Label>
-              }
-              onClick={() =>
-                tree && tree.mutate(child.path, { paused: !child.paused })
-              }
-            >
-              <div className="filter-list-item-contents">
-                <Dynamic
-                  {...{
-                    component: UnmappedNodeComponent,
-                    tree,
-                    node: child,
-                    path: _.toArray(child.path),
-                    ...mapNodeToProps(child, fields),
-                  }}
-                />
-                {!child.updating &&
-                  tree.disableAutoUpdate &&
-                  // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
-                  _.some(
-                    treeNode => treeNode !== node && treeNode.markedForUpdate,
-                    F.treeToArray(_.get('children'))(tree.tree)
-                  ) && (
-                    <div
-                      className="apply-filter-button"
-                      onClick={e => {
-                        e.stopPropagation()
-                        tree.triggerUpdate()
-                      }}
-                    >
-                      <Button primary>Apply Filter</Button>
-                    </div>
-                  )}
-              </div>
-            </Expandable>
-          ),
-        _.get('children', node)
-      )}
-    </div>
-  )
+  }) => {
+    let updateRequired =
+      tree.disableAutoUpdate &&
+      // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
+      _.some(
+        treeNode => treeNode !== node && treeNode.markedForUpdate,
+        F.treeToArray(_.get('children'))(node)
+      )
+
+    return (
+      <div style={style} className={className}>
+        {_.map(
+          child =>
+            child.children ? (
+              <FilterList
+                key={child.path}
+                tree={tree}
+                node={child}
+                fields={fields}
+                mapNodeToProps={mapNodeToProps}
+                mapNodeToLabel={mapNodeToLabel}
+                className={'filter-list-group'}
+                style={bdJoin(child)}
+              />
+            ) : (
+              <Expandable
+                key={child.path}
+                className="filter-list-item"
+                isOpen={!child.paused}
+                Label={
+                  <Label tree={tree} node={child} fields={fields}>
+                    {mapNodeToLabel(child, fields)}
+                  </Label>
+                }
+                onClick={() =>
+                  tree && tree.mutate(child.path, { paused: !child.paused })
+                }
+              >
+                <div className="filter-list-item-contents">
+                  <Dynamic
+                    {...{
+                      component: UnmappedNodeComponent,
+                      tree,
+                      node: child,
+                      path: _.toArray(child.path),
+                      ...mapNodeToProps(child, fields),
+                    }}
+                  />
+                </div>
+              </Expandable>
+            ),
+          _.get('children', node)
+        )}
+
+        <div
+          className={`apply-filter ${updateRequired ? 'active' : ''}`}
+          onClick={e => {
+            e.stopPropagation()
+            tree.triggerUpdate()
+          }}
+        >
+          <Button primary>
+            <Flex justifyContent="center" alignItems="center">
+              Search
+            </Flex>
+          </Button>
+        </div>
+      </div>
+    )
+  }
 )
 
 export default FilterList

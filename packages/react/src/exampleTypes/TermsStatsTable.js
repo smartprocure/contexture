@@ -33,7 +33,7 @@ let SelectSize = _.flow(
     options = [10, 25, 50, 100, 500, 1000],
     theme: { Select },
   }) => (
-    <Flex style={toolBarStyle}>
+    <Flex style={{ marginLeft: 12, ...toolBarStyle }}>
       <SimpleLabel text="Size:" />
       <Select
         onChange={e => {
@@ -61,7 +61,7 @@ let TermsStatsTable = ({
   ...props
 }) => (
   <div>
-    <Flex style={{ ...toolBarStyle, margin: 40, marginBottom: 0 }}>
+    <Flex style={{ ...toolBarStyle, margin: '0 8px' }}>
       <SimpleFilter {...F.domLens.value(tree.lens(node.path, 'filter'))} />
       <SelectSize node={node} tree={tree} options={sizeOptions} />
     </Flex>
@@ -117,10 +117,7 @@ let TermsStatsTable = ({
         if (column.field !== 'key' && column.enableSort) {
           tree.mutate(node.path, {
             order: column.field,
-            sortDir:
-              node.order === column.field && node.sortDir === 'desc'
-                ? 'asc'
-                : 'desc',
+            sortDir: column.sortDir,
           })
         }
       }}

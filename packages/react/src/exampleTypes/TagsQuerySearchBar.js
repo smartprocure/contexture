@@ -60,6 +60,7 @@ let SearchBar = ({
   resultsPath,
   actionWrapper,
   searchButtonProps,
+  tagsQueryProps,
 }) => {
   let collapse = React.useState(true)
   return (
@@ -82,6 +83,7 @@ let SearchBar = ({
                   : ExpandableTagsInput,
             }}
             autoFocus
+            {...tagsQueryProps}
           />
         </Box>
         {tree.disableAutoUpdate && (
