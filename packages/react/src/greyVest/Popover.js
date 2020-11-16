@@ -41,7 +41,7 @@ let Popover = ({
     keepTooltipInside
     arrowStyle={{
       filter: 'drop-shadow(0 -4px 3px rgba(39, 44, 65, 0.1)',
-      ...arrowStyle
+      ...arrowStyle,
     }}
     contentStyle={{
       background: '#FFF',
