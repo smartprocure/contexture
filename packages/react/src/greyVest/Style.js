@@ -151,8 +151,16 @@ export default () => (
         position: absolute;
         bottom: 0;
         width: 100%;
-        height: 6px;
-        box-shadow: rgba(69,69,69,.1) 0 3px 10px -1px;
+        height: 20px;
+        box-shadow: rgba(69,69,69,.1) 10px 4px 10px -1px;
+      }
+      
+      .gv-table th:first-child:before {
+        box-shadow: rgba(69,69,69,.1) 5px -2px 10px 4px;
+      }
+      
+      .gv-table th:last-child:before {
+        box-shadow: rgba(69,69,69,.1) 10px 8px 10px -6px;
       }
       
       /* To cover unwanted shadow from :before */
