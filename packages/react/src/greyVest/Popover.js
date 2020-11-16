@@ -37,18 +37,18 @@ let Popover = ({
     arrow={arrow}
     position={position || 'bottom left'}
     closeOnDocumentClick={closeOnDocumentClick}
+    nested
+    keepTooltipInside
     arrowStyle={{
-      // matching arrow style with the popover body
-      margin: '-6px',
-      borderRight: '1px solid rgb(235, 235, 235)',
-      borderBottom: '1px solid rgb(235, 235, 235)',
-      boxShadow: 'rgba(39, 44, 65, 0.05) 2px 2px 3px',
-      ...arrowStyle,
+      filter: 'drop-shadow(0 -4px 3px rgba(39, 44, 65, 0.1)',
+      ...arrowStyle
     }}
     contentStyle={{
+      background: '#FFF',
       borderRadius: 3,
       border: '1px solid rgb(235, 235, 235)',
       boxShadow: '0 2px 10px 0 rgba(39, 44, 65, 0.1)',
+      padding: 5,
       ...contentStyle,
       ...style,
     }}
