@@ -165,7 +165,7 @@ let FilterList = _.flow(
       // find if any nodes in the tree are marked for update
       // i.e. usually nodes are marked for update because they react to "others" reactor
       _.some(
-        ({markedForUpdate}) => markedForUpdate,
+        'markedForUpdate',
         F.treeToArray(_.get('children'))(tree.tree)
       )
 
