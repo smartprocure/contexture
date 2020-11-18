@@ -17,7 +17,7 @@ describe('dataStrategies', () => {
   }
 
   describe('results', () => {
-    let simpleRecords = ['record1', 'record2', 'record3']
+    let simpleRecords = [{ name: 'record1' }, { name: 'record2' }, { name: 'record3' }]
 
     let getSimpleService = wrap =>
       jest.fn(tree => {

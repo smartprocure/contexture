@@ -1,4 +1,7 @@
-﻿# 0.2.7
+﻿# 0.2.8
+* `results` dataStrategy: spread `_source` onto results items.
+
+# 0.2.7
 * Use original record for each field's display function in `formatValues`
 
 # 0.2.6
