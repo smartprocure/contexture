@@ -1,4 +1,7 @@
-﻿# 0.2.8
+﻿# 0.2.9
+* `CSVStream` exportStreategy: allow modifying search results before writing rows
+
+# 0.2.8
 * `results` dataStrategy: spread `_source` onto results items.
 
 # 0.2.7
