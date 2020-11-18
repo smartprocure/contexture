@@ -164,7 +164,7 @@ let FilterList = _.flow(
       tree.disableAutoUpdate &&
       // find if any nodes in the tree are marked for update
       // i.e. usually nodes are marked for update because they react to "others" reactor
-      _.some('markedForUpdate', F.treeToArray(_.get('children'))(tree.tree))
+      _.some('markedForUpdate', tree.flat)
 
     return (
       <div style={style} className={className}>
