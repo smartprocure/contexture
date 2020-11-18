@@ -59,7 +59,7 @@ export const results = ({
     scrollId = result.context.scrollId
     page++
     return _.map(
-      F.getOrReturn('_source'),
+      r => ({ ..._.omit(['_source'], r), ..._.getOr({}, '_source', r) }),
       F.cascade(['response.results', 'results'], result.context)
     )
   }
