@@ -1,6 +1,7 @@
 import F from 'futil'
 import _ from 'lodash/fp'
 import { setFilterOnly } from './utils'
+import { flattenProp } from './futil'
 
 let getTreeResults = _.flow(
   _.get('children'),
@@ -62,7 +63,7 @@ export const results = ({
     // interested in the _source properties but may occasionally want other props like _id.
     // This will be removed with #28 when a contexture-elasticsearch upgrade is complete
     return _.map(
-      F.when('_source', r => ({ ..._.omit('_source', r), ...r._source })),
+      flattenProp('_source'),
       F.cascade(['response.results', 'results'], result.context)
     )
   }
