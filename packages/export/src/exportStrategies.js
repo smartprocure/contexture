@@ -114,7 +114,7 @@ export const CSVStream = async ({
       }
 
       // allow the calling code to modify the results rows (e.g. to remove unwanted fields)
-      chunk = transformResults(chunk)
+      chunk = await transformResults(chunk)
 
       // Format the values in the current chunk with the passed in formatRules and fill any blank props
       let formattedData = formatValues(formatRules, includeKeys)(chunk)
