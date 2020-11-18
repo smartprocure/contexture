@@ -86,6 +86,7 @@ export const CSVStream = async ({
   strategy,
   stream: targetStream,
   onWrite,
+  transformResults = _.identity,
   formatRules = {},
   logger = console.info,
 }) => {
@@ -111,6 +112,9 @@ export const CSVStream = async ({
         // Format column headers
         columnHeaders = formatHeaders(formatRules)(includeKeys)
       }
+
+      // allow the calling code to modify the results rows (e.g. to remove unwanted fields)
+      chunk = transformResults(chunk)
 
       // Format the values in the current chunk with the passed in formatRules and fill any blank props
       let formattedData = formatValues(formatRules, includeKeys)(chunk)
