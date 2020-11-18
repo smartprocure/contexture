@@ -62,7 +62,7 @@ export const results = ({
     // interested in the _source properties but may occasionally want other props like _id.
     // This will be removed with #28 when a contexture-elasticsearch upgrade is complete
     return _.map(
-      r => ({ ..._.omit(['_source'], r), ..._.getOr({}, '_source', r) }),
+      r => !_.isString(r._source) ? ({ ..._.omit(['_source'], r), ..._.getOr({}, '_source', r) }): r._source ? r._source : r,
       F.cascade(['response.results', 'results'], result.context)
     )
   }
