@@ -58,6 +58,9 @@ export const results = ({
     )
     scrollId = result.context.scrollId
     page++
+    // We return _source flattened onto the root result items because we're mostly
+    // interested in the _source properties but may occasionally want other props like _id.
+    // This will be removed with #28 when a contexture-elasticsearch upgrade is complete
     return _.map(
       r => ({ ..._.omit(['_source'], r), ..._.getOr({}, '_source', r) }),
       F.cascade(['response.results', 'results'], result.context)
