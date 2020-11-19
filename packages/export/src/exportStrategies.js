@@ -103,7 +103,7 @@ export const CSVStream = async ({
   let records = 0
   let totalRecords = await strategy.getTotalRecords()
   let includeKeys = _.getOr([], 'include', strategy)
-  let columnHeaders = formatHeaders(formatRules)(includeKeys)
+  let columnHeaders = formatHeaders(formatRules)(_.difference(includeKeys, omitFieldsFromResult))
 
   await onWrite({
     chunk: [],
