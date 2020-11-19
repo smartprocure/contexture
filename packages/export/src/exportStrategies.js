@@ -96,7 +96,7 @@ export const CSVStream = async ({
   strategy,
   stream: targetStream,
   onWrite,
-  omitFieldsFromResult,
+  omitFieldsFromResult = [],
   formatRules = {},
   logger = console.info,
 }) => {
@@ -127,7 +127,7 @@ export const CSVStream = async ({
       let [formattedData, fullFormattedData] = formatValuesWithOmits(formatRules, includeKeys, omitFieldsFromResult)(chunk)
 
       // Convert data to CSV rows
-      let rows = extractValues(formattedData, includeKeys)
+      let rows = extractValues(formattedData, _.difference(includeKeys, omitFieldsFromResult))
 
       // Prepend column headers on first pass
       if (!records) {
