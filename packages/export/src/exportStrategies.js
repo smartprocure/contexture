@@ -39,7 +39,7 @@ export const stream = _.curry(async ({ strategy, stream }) => {
 
 // Format object values based on passed formatter or _.identity
 // Also fill in any keys which are present in the included keys but not in the passed in object
-export let formatValues = (rules = {}, includeKeys = []) => {
+export let formatValues = (rules = {}, includeKeys = [], omitFieldsFromResult) => {
   let defaults = _.flow(
     _.map(x => [x, '']),
     _.fromPairs
@@ -54,9 +54,11 @@ export let formatValues = (rules = {}, includeKeys = []) => {
     return record
   }
 
-  return _.map(
+  let result = _.map(
     _.flow(formattedRecordValues, _.defaults(F.unflattenObject(defaults)))
   )
+
+  return omitFieldsFromResult ? _.omit(omitFieldsFromResult, result) : result
 }
 
 // Format the column headers with passed rules or _.startCase
@@ -86,7 +88,7 @@ export const CSVStream = async ({
   strategy,
   stream: targetStream,
   onWrite,
-  transformResult,
+  omitFieldsFromResult,
   formatRules = {},
   logger = console.info,
 }) => {
@@ -113,13 +115,8 @@ export const CSVStream = async ({
         columnHeaders = formatHeaders(formatRules)(includeKeys)
       }
 
-      // allow the calling code to modify the results rows (e.g. to remove unwanted fields)
-      if (transformResult) {
-        chunk = await Promise.all(_.map(transformResult, chunk))
-      }
-
       // Format the values in the current chunk with the passed in formatRules and fill any blank props
-      let formattedData = formatValues(formatRules, includeKeys)(chunk)
+      let formattedData = formatValues(formatRules, includeKeys, omitFieldsFromResult)(chunk)
 
       // Convert data to CSV rows
       let rows = extractValues(formattedData, includeKeys)
