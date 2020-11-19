@@ -214,7 +214,6 @@ describe('exportStrategies', () => {
       extractValues,
       formatHeaders,
       formatValues,
-      formatValuesWithOmits,
       rowsToCSV,
       extractHeadersFromFirstRow,
     } = exportStrategies
