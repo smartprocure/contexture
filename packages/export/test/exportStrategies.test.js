@@ -214,6 +214,7 @@ describe('exportStrategies', () => {
       extractValues,
       formatHeaders,
       formatValues,
+      formatValuesWithOmits,
       rowsToCSV,
       extractHeadersFromFirstRow,
     } = exportStrategies
@@ -378,6 +379,62 @@ describe('exportStrategies', () => {
           AgencyType: '',
           AddressState: 'fl',
           Title: '',
+          FullName: '',
+        },
+      ])
+    })
+    it('formatValuesWithOmits should omit omitted fields', () => {
+      let columnKeys = [
+        'AgencyName',
+        'FullName',
+        'Title',
+        'AgencyType',
+        'AddressState',
+      ]
+      let data = [
+        {
+          AgencyName: 'ABC',
+          AgencyType: 'Private Schools',
+          AddressState: 'IL',
+        },
+        {
+          AgencyName: 'DEF',
+          FullName: 'D P',
+          Title: 'Auditor',
+          AgencyType: 'State',
+          AddressState: 'CA',
+        },
+        { AddressState: 'FL' },
+      ]
+      let rules = {
+        AgencyType: {
+          display: _.toUpper,
+        },
+        AddressState: {
+          display: _.toLower,
+        },
+      }
+      let results = formatValuesWithOmits(rules, columnKeys, ['Title'])(data)
+      // first element of results array has the record with omits applied
+      let result = _.first(results)
+
+      expect(result).toEqual([
+        {
+          AgencyName: 'ABC',
+          AgencyType: 'PRIVATE SCHOOLS',
+          AddressState: 'il',
+          FullName: '',
+        },
+        {
+          AgencyName: 'DEF',
+          AgencyType: 'STATE',
+          AddressState: 'ca',
+          FullName: 'D P',
+        },
+        {
+          AgencyName: '',
+          AgencyType: '',
+          AddressState: 'fl',
           FullName: '',
         },
       ])
