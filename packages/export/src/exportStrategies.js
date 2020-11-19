@@ -59,16 +59,6 @@ export let formatValues = (rules = {}, includeKeys = []) => {
   )
 }
 
-export let formatValuesWithOmits = (rules, includeKeys, omitFieldsFromResult = []) => {
-  let formatter = formatValues(rules, includeKeys)
-
-  return chunk => {
-    let result = formatter(chunk)
-    return [_.map(_.omit(omitFieldsFromResult), result), result]
-  }
-}
-  
-
 // Format the column headers with passed rules or _.startCase
 export const formatHeaders = (rules, defaultLabel = _.startCase) =>
   _.map(key => _.get([key, 'label'], rules) || defaultLabel(key))
@@ -124,7 +114,7 @@ export const CSVStream = async ({
       }
 
       // Format the values in the current chunk with the passed in formatRules and fill any blank props
-      let [formattedData, fullFormattedData] = formatValuesWithOmits(formatRules, includeKeys, omitFieldsFromResult)(chunk)
+      let formattedData = formatValues(formatRules, includeKeys)(chunk)
 
       // Convert data to CSV rows
       let rows = extractValues(formattedData, _.difference(includeKeys, omitFieldsFromResult))
@@ -140,7 +130,7 @@ export const CSVStream = async ({
       records += chunk.length
       await targetStream.write(csv)
       await onWrite({
-        chunk: fullFormattedData,
+        chunk: formattedData,
         records,
         totalRecords,
       })
