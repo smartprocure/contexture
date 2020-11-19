@@ -61,9 +61,6 @@ export let formatValues = (rules = {}, includeKeys = [], omitFieldsFromResult = 
   return [_.omit(omitFieldsFromResult, result), result]
 }
 
-console.log('~typeof~')
-console.log(typeof formatValues)
-
 // Format the column headers with passed rules or _.startCase
 export const formatHeaders = (rules, defaultLabel = _.startCase) =>
   _.map(key => _.get([key, 'label'], rules) || defaultLabel(key))
