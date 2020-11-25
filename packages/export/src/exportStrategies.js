@@ -86,13 +86,14 @@ export const CSVStream = async ({
   strategy,
   stream: targetStream,
   onWrite,
+  omitFieldsFromResult = [],
   formatRules = {},
   logger = console.info,
 }) => {
   let records = 0
   let totalRecords = await strategy.getTotalRecords()
   let includeKeys = _.getOr([], 'include', strategy)
-  let columnHeaders = formatHeaders(formatRules)(includeKeys)
+  let columnHeaders = formatHeaders(formatRules)(_.difference(includeKeys, omitFieldsFromResult))
 
   await onWrite({
     chunk: [],
@@ -116,7 +117,7 @@ export const CSVStream = async ({
       let formattedData = formatValues(formatRules, includeKeys)(chunk)
 
       // Convert data to CSV rows
-      let rows = extractValues(formattedData, includeKeys)
+      let rows = extractValues(formattedData, _.difference(includeKeys, omitFieldsFromResult))
 
       // Prepend column headers on first pass
       if (!records) {
