@@ -35,6 +35,7 @@ let allRollingOpts = [
   { type: 'future', range: 'next90Days' },
   { type: 'future', range: 'next6Months' },
   { type: 'future', range: 'next12Months' },
+  { type: 'future', range: 'next18Months' },
   { type: 'future', range: 'next24Months' },
   { type: 'future', range: 'next36Months' },
 ]
