@@ -1,3 +1,5 @@
+# 0.25.0
+* add next18Months rolling date type options
 
 # 0.24.1
 * Added _score field to the results type
