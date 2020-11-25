@@ -1,3 +1,9 @@
+# 0.26.0
+* fix the npm version issue
+
+# 0.25.0
+* add next18Months rolling date type option
+
 # 0.24.1
 * Added _score field to the results type
 
