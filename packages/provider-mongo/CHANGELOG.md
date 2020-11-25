@@ -1,3 +1,6 @@
+# 0.18.0
+* add next18Months rolling date type options
+
 # 0.17.5
 * Sort early when "hasMany" is set on a "populate" field, but we are not sorting on a joined field
 
