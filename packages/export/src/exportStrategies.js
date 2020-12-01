@@ -112,6 +112,8 @@ export const CSVStream = async ({
         includeKeys = extractHeadersFromFirstRow(chunk)
         // Format column headers
         columnHeaders = formatHeaders(formatRules)(includeKeys)
+        // recalculate csvIncludeKeys now that we've discovered headers
+        csvIncludeKeys = _.difference(includeKeys, omitFieldsFromResult)
       }
 
       // Format the values in the current chunk with the passed in formatRules and fill any blank props
