@@ -1,4 +1,7 @@
-﻿# 0.2.9
+﻿# 0.2.10
+* `CSVStream` exportStrategy: document `omitFieldsFromResult`, refactoring.
+
+# 0.2.9
 * `CSVStream` exportStreategy: allow omitting fields from CSV rows
 
 # 0.2.8

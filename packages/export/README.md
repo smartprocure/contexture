@@ -120,14 +120,17 @@ several possible outputs. Here are the available functions:
   `write` for each `getNext`, then close the stream.
 - `CSVStream`: Receives the `strategy` and a `stream`. It will write a
   CSV header, then each record (also as a string CSV) into the stream.
-  It also receives some customization properties: `onWrite`, which is
-  called each time the `stream` is written. `formatRules`, which
-  contains an object that optionally contains each property of the
+  It also receives some customization properties: 
+  - `onWrite`: called on result chunks each time the `stream` is written. 
+  - `formatRules`: contains an object that optionally contains each property of the
   resulting records, which will contain (individually), an object with
   a `label` property (which will determine the name of the column),
   and `display` (which will be used to format each value on the given
-  property, for each record). Finally, it receives a `logger`
-  function, to allow some visibility of what's happening.
+  property, for each record). 
+  - `omitFieldsFromResult`: specifies fields to be retrieved with result rows but
+  not written to the CSV. Use case: you want to track your export by
+  some internal _id field on the rows but don't want that field in the CSV.
+  - `logger`: allows logging during the CSV construction and write.
 
 You can think of the _Export Strategies_ as simple functions that pipe
 each page of results onto anything. They begin being building blocks

@@ -93,7 +93,8 @@ export const CSVStream = async ({
   let records = 0
   let totalRecords = await strategy.getTotalRecords()
   let includeKeys = _.getOr([], 'include', strategy)
-  let columnHeaders = formatHeaders(formatRules)(_.difference(includeKeys, omitFieldsFromResult))
+  let csvIncludeKeys = _.difference(includeKeys, omitFieldsFromResult)
+  let columnHeaders = formatHeaders(formatRules)(csvIncludeKeys)
 
   await onWrite({
     chunk: [],
@@ -111,13 +112,15 @@ export const CSVStream = async ({
         includeKeys = extractHeadersFromFirstRow(chunk)
         // Format column headers
         columnHeaders = formatHeaders(formatRules)(includeKeys)
+        // recalculate csvIncludeKeys now that we've discovered headers
+        csvIncludeKeys = _.difference(includeKeys, omitFieldsFromResult)
       }
 
       // Format the values in the current chunk with the passed in formatRules and fill any blank props
       let formattedData = formatValues(formatRules, includeKeys)(chunk)
 
       // Convert data to CSV rows
-      let rows = extractValues(formattedData, _.difference(includeKeys, omitFieldsFromResult))
+      let rows = extractValues(formattedData, csvIncludeKeys)
 
       // Prepend column headers on first pass
       if (!records) {
