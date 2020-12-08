@@ -106,13 +106,7 @@ describe('results', () => {
             let: { localField: '$createdBy' },
             pipeline: [
               { $match: { $expr: { $eq: ['$_id', '$$localField'] } } },
-              {
-                $project: {
-                  _id: 1,
-                  firstName: 1,
-                  lastName: 1,
-                },
-              },
+              { $project: { _id: 1, firstName: 1, lastName: 1 } },
             ],
           },
         },
@@ -123,12 +117,7 @@ describe('results', () => {
             let: { localField: '$organization' },
             pipeline: [
               { $match: { $expr: { $eq: ['$_id', '$$localField'] } } },
-              {
-                $project: {
-                  _id: 1,
-                  name: 1,
-                },
-              },
+              { $project: { _id: 1, name: 1 } },
             ],
           },
         },
