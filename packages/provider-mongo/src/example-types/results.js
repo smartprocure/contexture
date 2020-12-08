@@ -4,41 +4,47 @@ let _ = require('lodash/fp')
 let convertPopulate = getSchema =>
   _.flow(
     F.mapIndexed((x, as) => {
-      let { unwind, schema } = x
+      let { unwind, schema, include, localField, foreignField } = x
       let targetSchema = getSchema(schema) //|| toSingular(as), //<-- needs compromise-fp
       if (!targetSchema)
         throw Error(`Couldn't find schema configuration for ${schema}`)
       if (!targetSchema.mongo)
-        throw Error(
-          'Populating a non mongo provider schema on a mongo provider schema is not supported'
-        )
+        throw Error('Populating from a non-mongo schema is not supported')
       let targetCollection = _.get('mongo.collection', targetSchema)
       if (!targetCollection)
         throw Error(
-          `The ${targetCollection} schema has a mongo configuration, but doesn't have a 'collection' property`
+          `The ${schema} schema has a mongo configuration without a 'collection' property`
         )
 
-      let $unwind = unwind
-        ? [
-            {
-              $unwind: {
-                path: `$${as}`,
-                preserveNullAndEmptyArrays: true,
-              },
-            },
-          ]
-        : []
-      let $lookup = [
-        {
-          $lookup: {
+      let $lookup = {
+        $lookup: include
+          ? {
             as,
             from: targetCollection,
-            localField: x.localField, // || '_id',
-            foreignField: x.foreignField, // || node.schema, <-- needs schema lookup
+            let: { localField },
+            pipeline: [
+              { 
+                $match: {
+                  $expr: { $eq: [`$${foreignField}`, '$$localField'] }
+                }
+              },
+              { $project: projectFromInclude(include) }
+            ]
+          }
+          : {
+            as,
+            from: targetCollection,
+            localField,
+            foreignField, // || node.schema, <-- needs schema lookup
           },
+      }
+      let $unwind = unwind && {
+        $unwind: {
+          path: `$${as}`,
+          preserveNullAndEmptyArrays: true,
         },
-      ]
-      return [...$lookup, ...$unwind]
+      }
+      return _.compact([$lookup, $unwind])
     }),
     _.flatten
   )
