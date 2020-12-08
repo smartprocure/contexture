@@ -103,7 +103,7 @@ describe('results', () => {
           $lookup: {
             as: 'author',
             from: 'user',
-            let: { localField: 'createdBy' },
+            let: { localField: '$createdBy' },
             pipeline: [
               { $match : {$expr: {$eq:['$_id', '$$localField']}}},
               {$project: {
@@ -118,7 +118,7 @@ describe('results', () => {
           $lookup: {
             as: 'org',
             from: 'organization',
-            let: { localField: 'organization' },
+            let: { localField: '$organization' },
             pipeline: [
               { $match : {$expr: {$eq:['$_id', '$$localField']}}},
               {$project: {

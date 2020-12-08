@@ -21,7 +21,7 @@ let convertPopulate = getSchema =>
           ? {
             as,
             from: targetCollection,
-            let: { localField },
+            let: { localField: `$${localField}` },
             pipeline: [
               { 
                 $match: {
