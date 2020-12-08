@@ -1,3 +1,7 @@
+# 0.19.0
+* [Results] add `include` support on populate config
+* [Results] default `foreignField` to `_id` if not provided
+
 # 0.18.0
 * add next18Months rolling date type options
 
