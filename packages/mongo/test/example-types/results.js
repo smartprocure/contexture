@@ -66,6 +66,52 @@ describe('results', () => {
         { $unwind: { path: '$author', preserveNullAndEmptyArrays: true } },
       ])
     })
+    it('should use a pipeline and project for $lookup objects with include', () => {
+      let populate = {
+        author: {
+          schema: 'user',
+          localField: 'createdBy',
+          foreignField: '_id',
+          include: ['_id', 'firstName', 'lastName']
+        },
+        org: {
+          schema: 'organization',
+          localField: 'organization',
+          include: ['_id', 'name']
+        },
+      }
+      expect(convertPopulate(getSchema)(populate)).to.deep.equal([
+        {
+          $lookup: {
+            as: 'author',
+            from: 'user',
+            let: { localField: 'createdBy' },
+            pipeline: [
+              { $match : {$expr: {$eq:['$_id', '$$localField']}}},
+              {$project: {
+                _id: 1,
+                firstName: 1,
+                lastName:1
+              }}
+            ]
+          },
+        },
+        {
+          $lookup: {
+            as: 'org',
+            from: 'organization',
+            let: { localField: 'organization' },
+            pipeline: [
+              { $match : {$expr: {$eq:['$_id', '$$localField']}}},
+              {$project: {
+                _id: 1,
+                name: 1,
+              }}
+            ]
+          },
+        },
+      ])
+    })
   })
   describe('getStartRecord', () => {
     it('should return 0 if page is 1', () => {
