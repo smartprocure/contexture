@@ -90,12 +90,12 @@ describe('results', () => {
           schema: 'user',
           localField: 'createdBy',
           foreignField: '_id',
-          include: ['_id', 'firstName', 'lastName']
+          include: ['_id', 'firstName', 'lastName'],
         },
         org: {
           schema: 'organization',
           localField: 'organization',
-          include: ['_id', 'name']
+          include: ['_id', 'name'],
         },
       }
       expect(convertPopulate(getSchema)(populate)).to.deep.equal([
@@ -103,29 +103,22 @@ describe('results', () => {
           $lookup: {
             as: 'author',
             from: 'user',
-            let: { localField: 'createdBy' },
+            let: { localField: '$createdBy' },
             pipeline: [
-              { $match : {$expr: {$eq:['$_id', '$$localField']}}},
-              {$project: {
-                _id: 1,
-                firstName: 1,
-                lastName:1
-              }}
-            ]
+              { $match: { $expr: { $eq: ['$_id', '$$localField'] } } },
+              { $project: { _id: 1, firstName: 1, lastName: 1 } },
+            ],
           },
         },
         {
           $lookup: {
             as: 'org',
             from: 'organization',
-            let: { localField: 'organization' },
+            let: { localField: '$organization' },
             pipeline: [
-              { $match : {$expr: {$eq:['$_id', '$$localField']}}},
-              {$project: {
-                _id: 1,
-                name: 1,
-              }}
-            ]
+              { $match: { $expr: { $eq: ['$_id', '$$localField'] } } },
+              { $project: { _id: 1, name: 1 } },
+            ],
           },
         },
       ])

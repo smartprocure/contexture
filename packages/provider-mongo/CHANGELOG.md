@@ -1,3 +1,6 @@
+# 0.19.1
+* [Results] fix populate include bug (missing $ prefix on localField)
+
 # 0.19.0
 * [Results] add `include` support on populate config
 * [Results] default `foreignField` to `_id` if not provided
