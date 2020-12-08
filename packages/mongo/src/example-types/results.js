@@ -19,24 +19,24 @@ let convertPopulate = getSchema =>
       let $lookup = {
         $lookup: include
           ? {
-            as,
-            from: targetCollection,
-            let: { localField: `$${localField}` },
-            pipeline: [
-              { 
-                $match: {
-                  $expr: { $eq: [`$${foreignField}`, '$$localField'] }
-                }
-              },
-              { $project: projectFromInclude(include) }
-            ]
-          }
+              as,
+              from: targetCollection,
+              let: { localField: `$${localField}` },
+              pipeline: [
+                {
+                  $match: {
+                    $expr: { $eq: [`$${foreignField}`, '$$localField'] },
+                  },
+                },
+                { $project: projectFromInclude(include) },
+              ],
+            }
           : {
-            as,
-            from: targetCollection,
-            localField,
-            foreignField, // || node.schema, <-- needs schema lookup
-          },
+              as,
+              from: targetCollection,
+              localField,
+              foreignField, // || node.schema, <-- needs schema lookup
+            },
       }
       let $unwind = unwind && {
         $unwind: {
