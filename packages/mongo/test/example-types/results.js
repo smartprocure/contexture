@@ -66,6 +66,24 @@ describe('results', () => {
         { $unwind: { path: '$author', preserveNullAndEmptyArrays: true } },
       ])
     })
+    it('should default to _id if foreignField is missing', () => {
+      let populate = {
+        author: {
+          schema: 'user',
+          localField: 'createdBy',
+        },
+      }
+      expect(convertPopulate(getSchema)(populate)).to.deep.equal([
+        {
+          $lookup: {
+            as: 'author',
+            from: 'user',
+            localField: 'createdBy',
+            foreignField: '_id',
+          },
+        },
+      ])
+    })
     it('should use a pipeline and project for $lookup objects with include', () => {
       let populate = {
         author: {

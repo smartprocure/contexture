@@ -4,7 +4,7 @@ let _ = require('lodash/fp')
 let convertPopulate = getSchema =>
   _.flow(
     F.mapIndexed((x, as) => {
-      let { unwind, schema, include, localField, foreignField } = x
+      let { unwind, schema, include, localField, foreignField = '_id' } = x
       let targetSchema = getSchema(schema) //|| toSingular(as), //<-- needs compromise-fp
       if (!targetSchema)
         throw Error(`Couldn't find schema configuration for ${schema}`)
