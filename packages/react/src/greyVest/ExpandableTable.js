@@ -6,6 +6,7 @@ import { observer, inject } from 'mobx-react'
 import { DropdownItem } from './DropdownItem'
 import Popover from './Popover'
 import Icon from './Icon'
+import Table from './Table'
 
 export let Column = _.identity
 Column.displayName = 'Column'
@@ -128,7 +129,7 @@ let ExpandableTable = inject(TableState)(
       columnSort = _.identity,
       ...props
     }) => (
-      <table {...props.tableAttrs}>
+      <Table {...props.tableAttrs}>
         <thead>
           <tr>
             {F.mapIndexed(
@@ -174,7 +175,7 @@ let ExpandableTable = inject(TableState)(
           </tr>
         </thead>
         <TableBody columns={columns} data={data} recordKey={recordKey} />
-      </table>
+      </Table>
     )
   )
 )
