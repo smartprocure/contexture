@@ -11,7 +11,7 @@ export const setFilterOnly = x =>
 export let andGroup = (...args) => {
   let children = _.flatten(args)
   let [{ schema, key }] = children
-  return { key: `${key}-parent`, join: 'and', schema, children }
+  return { key: `${key}-parent`, type: 'group', join: 'and', schema, children }
 }
 
 let lastChild = _.flow(_.get('children'), _.last)
