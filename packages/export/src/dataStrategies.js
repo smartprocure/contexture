@@ -52,7 +52,8 @@ export let results = ({ service, tree, totalPages = 100, ...node }) => {
 // it will wrap the given search tree with a simple layer that uses all of the given search tree
 // as filters and finally outputs the term statistics on a new node.
 // Data will be obtained in one shot.
-export let terms_stats = ({ service, tree, key_field, size = 100, ...node }) => {
+export let terms_stats = ({ service, tree, ...node }) => {
+  let { key_field, size = 100 } = node
   let run = node => runWith(service, tree, node)
 
   let getTotalRecords = async () => {
