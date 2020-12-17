@@ -1,5 +1,5 @@
-import F from 'futil'
 import _ from 'lodash/fp'
+import { transformat, ensureKeys } from './futil'
 
 // Paged export strategy,
 // it will continuously call getNext until hasNext returns false.
@@ -39,25 +39,13 @@ export const stream = _.curry(async ({ strategy, stream }) => {
 
 // Format object values based on passed formatter or _.identity
 // Also fill in any keys which are present in the included keys but not in the passed in object
-export let formatValues = (rules = {}, includeKeys = []) => {
-  let defaults = _.flow(
-    _.map(x => [x, '']),
-    _.fromPairs
-  )(includeKeys)
-  let displayRules = _.flow(_.mapValues('display'), F.compactObject)(rules)
-
-  let formattedRecordValues = record => {
-    let clone = _.cloneDeep(record)
-    F.eachIndexed((display, field) =>
-      F.setOn(field, display(_.get(field, clone), clone), record)
-    )(displayRules)
-    return record
-  }
-
-  return _.map(
-    _.flow(formattedRecordValues, _.defaults(F.unflattenObject(defaults)))
+export let formatValues = (rules = {}, includeKeys = []) =>
+  _.map(
+    _.flow(
+      transformat(_.mapValues('display', rules)),
+      ensureKeys(includeKeys)
+    )
   )
-}
 
 // Format the column headers with passed rules or _.startCase
 export const formatHeaders = (rules, defaultLabel = _.startCase) =>
