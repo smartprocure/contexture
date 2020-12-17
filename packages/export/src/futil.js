@@ -24,3 +24,8 @@ export let ensureKeys = _.curry(
   (keys, data, defaultValue = '') =>
     _.defaults(objectify(() => defaultValue, keys), data)
 )
+
+// _.get for an array of keys (in order)
+export let getAll = _.curry(
+  (keys, data) => _.map(key => _.get(key, data), keys)
+)

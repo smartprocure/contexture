@@ -81,12 +81,10 @@ describe('exportStrategies', () => {
       expect(stream.write.mock.calls).toEqual([
         [
           `"First Prop","Second Property"
-"FIRST","SECOND"
-`,
+"FIRST","SECOND"`,
         ],
         [
-          `"FIRST","SECOND"
-`,
+          `"FIRST","SECOND"`,
         ],
       ])
       expect(onWrite.mock.calls).toEqual([
@@ -159,12 +157,10 @@ describe('exportStrategies', () => {
       expect(stream.write.mock.calls).toEqual([
         [
           `"Title","Agency Name"
-"","Agency A"
-`,
+"","Agency A"`,
         ],
         [
-          `"","Agency A"
-`,
+          `"","Agency A"`,
         ],
       ])
       expect(onWrite.mock.calls).toEqual([
@@ -215,7 +211,6 @@ describe('exportStrategies', () => {
       formatHeaders,
       formatValues,
       rowsToCSV,
-      extractHeadersFromFirstRow,
     } = exportStrategies
     let columnKeys = ['name', 'age']
     let chunk = [
@@ -226,13 +221,6 @@ describe('exportStrategies', () => {
       expect(extractValues(chunk, columnKeys)).toEqual([
         ['Bob "Bobby" Brown', 36],
         ['Joe Blow', 40],
-      ])
-    })
-    it('extractHeadersFromFirstRow', () => {
-      expect(extractHeadersFromFirstRow(chunk)).toEqual([
-        'name',
-        'age',
-        'weight',
       ])
     })
     it('formatValues with no rules', () => {
@@ -392,17 +380,6 @@ describe('exportStrategies', () => {
           age: { label: 'B' },
         })(columnKeys)
       ).toEqual(['A', 'B'])
-    })
-    it('rowsToCSV', () => {
-      let rows = [
-        ['Name', 'Age'],
-        ['Bob "Bobby" Brown', 36],
-        ['Joe Blow', 40],
-      ]
-      expect(rowsToCSV(rows)).toEqual(`"Name","Age"
-"Bob ""Bobby"" Brown","36"
-"Joe Blow","40"
-`)
     })
   })
 })

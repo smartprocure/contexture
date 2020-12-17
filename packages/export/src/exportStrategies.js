@@ -1,5 +1,6 @@
 import _ from 'lodash/fp'
-import { transformat, ensureKeys } from './futil'
+import { transformat, ensureKeys, getAll } from './futil'
+import { writeToString } from '@fast-csv/format';
 
 // Paged export strategy,
 // it will continuously call getNext until hasNext returns false.
@@ -51,22 +52,12 @@ export let formatValues = (rules = {}, includeKeys = []) =>
 export const formatHeaders = (rules, defaultLabel = _.startCase) =>
   _.map(key => _.get([key, 'label'], rules) || defaultLabel(key))
 
-// Extract keys from first row
-export let extractHeadersFromFirstRow = _.flow(_.first, _.keys)
-
-// Escape quotes and quote cell
-let transformCell = _.flow(_.replace(/"/g, '""'), x => `"${x}"`)
-
-let transformRow = _.flow(_.map(transformCell), _.join(','))
+  // Extract keys from first row
+let extractKeysFromFirstRow = _.flow(_.first, _.keys)
 
 // Convert array of objects to array of arrays
-export let extractValues = (data, keys) => {
-  // Extract data from object
-  let transformRow = row => _.map(key => _.get(key, row), keys)
-  return _.map(transformRow, data)
-}
+export let extractValues = (data, keys) => _.map(getAll(keys), data)
 
-export let rowsToCSV = _.flow(_.map(transformRow), _.join('\n'), x => `${x}\n`)
 
 // CSVStream is an export strategy that uses the stream strategy,
 // but customizes each of the data chunks using the provided formatRules through the format function above.
@@ -74,15 +65,13 @@ export const CSVStream = async ({
   strategy,
   stream: targetStream,
   onWrite,
-  omitFieldsFromResult = [],
   formatRules = {},
   logger = console.info,
 }) => {
   let records = 0
   let totalRecords = await strategy.getTotalRecords()
   let includeKeys = _.getOr([], 'include', strategy)
-  let csvIncludeKeys = _.difference(includeKeys, omitFieldsFromResult)
-  let columnHeaders = formatHeaders(formatRules)(csvIncludeKeys)
+  let columnHeaders = formatHeaders(formatRules)(includeKeys)
 
   await onWrite({
     chunk: [],
@@ -97,18 +86,16 @@ export const CSVStream = async ({
       // This only works in the case where the first row has all the data for all columns
       if (_.isEmpty(includeKeys)) {
         // Extract column names from first object
-        includeKeys = extractHeadersFromFirstRow(chunk)
+        includeKeys = extractKeysFromFirstRow(chunk)
         // Format column headers
         columnHeaders = formatHeaders(formatRules)(includeKeys)
-        // recalculate csvIncludeKeys now that we've discovered headers
-        csvIncludeKeys = _.difference(includeKeys, omitFieldsFromResult)
       }
 
       // Format the values in the current chunk with the passed in formatRules and fill any blank props
       let formattedData = formatValues(formatRules, includeKeys)(chunk)
 
       // Convert data to CSV rows
-      let rows = extractValues(formattedData, csvIncludeKeys)
+      let rows = extractValues(formattedData, includeKeys)
 
       // Prepend column headers on first pass
       if (!records) {
@@ -116,7 +103,7 @@ export const CSVStream = async ({
       }
 
       // Convert rows to a single CSV string
-      let csv = rowsToCSV(rows)
+      let csv = await writeToString(rows, {quoteColumns: true})
 
       records += chunk.length
       await targetStream.write(csv)
