@@ -3,6 +3,7 @@ let { expect } = require('chai')
 let {
   defaults,
   convertPopulate,
+  checkPopulate,
   getResultsQuery,
   getStartRecord,
   getResponse,
@@ -344,6 +345,45 @@ describe('results', () => {
     it('should set totalRecords based on the count (if it exists)', () => {
       expect(getResponse(node, results, 9001).totalRecords).to.equal(9001)
       expect(getResponse(node, results).totalRecords).to.equal(undefined)
+    })
+  })
+  describe('checkPopulate', () => {
+    it('should throw on an unincluded local field', () => {
+      let node = {
+        include: [
+          'createdBy',
+          '_createdByOrganization',
+        ],
+        populate: {
+          createdBy: {
+            localField: 'createdBy',
+            include: ['_id', 'firstName', 'lastName'],
+          },
+          _createdByOrganization: {
+            localField: 'createdBy.organization',
+          },
+        },
+      }
+      expect(() => checkPopulate(node)).to.throw()
+
+    })
+    it('should not throw when includes check out', () => {
+      let node = {
+        include: [
+          'createdBy',
+          '_createdByOrganization',
+        ],
+        populate: {
+          createdBy: {
+            localField: 'createdBy',
+            include: ['_id', 'firstName', 'lastName', 'organization'],
+          },
+          _createdByOrganization: {
+            localField: 'createdBy.organization',
+          },
+        },
+      }
+      expect(() => checkPopulate(node)).not.to.throw()
     })
   })
 })
