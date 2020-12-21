@@ -1,7 +1,7 @@
 let F = require('futil')
 let _ = require('lodash/fp')
 
-let checkPopulate = ({ include: nodeIncludes, populate }) =>
+let checkPopulate = ({ include: nodeIncludes, populate }, { fields } = {}) =>
   _.reduce(
     (incs, { localFieldName, localField, include }) => {
       if (!_.includes(localField, incs)) {
@@ -12,7 +12,7 @@ let checkPopulate = ({ include: nodeIncludes, populate }) =>
         _.map(inc => `${localFieldName}.${inc}`, include)
       )
     },
-    nodeIncludes,
+    nodeIncludes || _.keys(fields),
     F.unkeyBy('localFieldName', populate)
   )
 
@@ -139,7 +139,7 @@ let getResponse = (node, results, count) => {
 
 let result = async (node, search, schema, { getSchema }) => {
   node = defaults(node)
-  checkPopulate(node)
+  checkPopulate(node, schema)
   let hasMany = _.some(_.get('hasMany'), node.populate)
   let resultsQuery = getResultsQuery(node, getSchema, getStartRecord(node))
   let countQuery = [
