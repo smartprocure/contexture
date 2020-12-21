@@ -1,3 +1,6 @@
+# 0.20.0
+* [Results] check populate localField props for coherence with node includes
+
 # 0.19.1
 * [Results] fix populate include bug (missing $ prefix on localField)
 
