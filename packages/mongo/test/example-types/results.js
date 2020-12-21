@@ -363,7 +363,7 @@ describe('results', () => {
       }
       expect(() => checkPopulate(node)).to.throw()
     })
-    it('should not throw when includes check out', () => {
+    it('should not throw when include checks out', () => {
       let node = {
         include: ['createdBy', '_createdByOrganization'],
         populate: {
@@ -377,6 +377,36 @@ describe('results', () => {
         },
       }
       expect(() => checkPopulate(node)).not.to.throw()
+    })
+    it('should throw for omitted node.include when schema does not the lookup either', () => {
+      let node = {
+        populate: {
+          createdBy: {
+            localField: 'createdBy',
+            include: ['_id', 'firstName', 'lastName', 'organization'],
+          },
+          _createdByOrganization: {
+            localField: 'createdBy.organization',
+          },
+        },
+      }
+      let schema = { fields: { firstName: {}, lastName: {} } }
+      expect(() => checkPopulate(node, schema)).to.throw()
+    })
+    it('should not throw for omitted node.include when schema supports the lookup', () => {
+      let node = {
+        populate: {
+          createdBy: {
+            localField: 'createdBy',
+            include: ['_id', 'firstName', 'lastName', 'organization'],
+          },
+          _createdByOrganization: {
+            localField: 'createdBy.organization',
+          },
+        },
+      }
+      let schema = { fields: { createdBy: {} } }
+      expect(() => checkPopulate(node, schema)).not.to.throw()
     })
   })
 })
