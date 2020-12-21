@@ -350,10 +350,7 @@ describe('results', () => {
   describe('checkPopulate', () => {
     it('should throw on an unincluded local field', () => {
       let node = {
-        include: [
-          'createdBy',
-          '_createdByOrganization',
-        ],
+        include: ['createdBy', '_createdByOrganization'],
         populate: {
           createdBy: {
             localField: 'createdBy',
@@ -365,14 +362,10 @@ describe('results', () => {
         },
       }
       expect(() => checkPopulate(node)).to.throw()
-
     })
     it('should not throw when includes check out', () => {
       let node = {
-        include: [
-          'createdBy',
-          '_createdByOrganization',
-        ],
+        include: ['createdBy', '_createdByOrganization'],
         populate: {
           createdBy: {
             localField: 'createdBy',
