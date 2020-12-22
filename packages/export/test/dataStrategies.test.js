@@ -52,7 +52,7 @@ describe('dataStrategies', () => {
         strategy = prepareSimpleStrategy({ totalPages: Infinity })
         expect(await strategy.getTotalRecords()).toBe(1337)
       })
-      it('shows wether or not there are more obtainable records', async () => {
+      it('shows if there are more obtainable records', async () => {
         let strategy = prepareSimpleStrategy({ page: 1 })
         expect(await strategy.hasNext()).toBe(true)
         strategy = prepareSimpleStrategy({ page: 2 })
