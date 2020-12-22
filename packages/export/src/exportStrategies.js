@@ -6,11 +6,8 @@ import { writeToString } from '@fast-csv/format';
 // it will continuously call getNext until hasNext returns false.
 // Each time it calls getNext, it will send each one of the results to the onChange function.
 export const paged = _.curry(async ({ strategy, onChange }) => {
-  while (strategy.hasNext()) {
-    let result = await strategy.getNext()
-    if (_.isEmpty(result)) return
-    await onChange(result)
-  }
+  for await (let page of strategy)
+    onChange(page)
 })
 
 // Bulk export strategy,
@@ -18,12 +15,8 @@ export const paged = _.curry(async ({ strategy, onChange }) => {
 // into an array in memory, which will be returned once it finishes.
 export const bulk = _.curry(async ({ strategy }) => {
   let result = []
-  await paged({
-    strategy,
-    onChange(data) {
-      result = result.concat(data)
-    },
-  })
+  for await (let page of strategy)
+    result = result.concat(page)
   return result
 })
 
@@ -31,10 +24,8 @@ export const bulk = _.curry(async ({ strategy }) => {
 // it will call the paged export strategy with stream.write as the onChange function.
 // When it finishes, it will close the stream with stream.end().
 export const stream = _.curry(async ({ strategy, stream }) => {
-  await paged({
-    strategy,
-    onChange: stream.write,
-  })
+  for await (let page of strategy)
+    stream.write(page)
   stream.end()
 })
 
@@ -78,44 +69,38 @@ export const CSVStream = async ({
     totalRecords,
   })
 
-  let streamWrapper = {
-    async write(chunk) {
-      logger('CSVStream', `${records + chunk.length} of ${totalRecords}`)
+  for await (let chunk of strategy) {
+    logger('CSVStream', `${records + chunk.length} of ${totalRecords}`)
 
-      // If no includeKeys ware passed get them from the first row.
-      // This only works in the case where the first row has all the data for all columns
-      if (_.isEmpty(includeKeys)) {
-        // Extract column names from first object
-        includeKeys = extractKeysFromFirstRow(chunk)
-        // Format column headers
-        columnHeaders = formatHeaders(formatRules)(includeKeys)
-      }
+    // If no includeKeys ware passed get them from the first row.
+    // This only works in the case where the first row has all the data for all columns
+    if (_.isEmpty(includeKeys)) {
+      // Extract column names from first object
+      includeKeys = extractKeysFromFirstRow(chunk)
+      // Format column headers
+      columnHeaders = formatHeaders(formatRules)(includeKeys)
+    }
 
-      // Format the values in the current chunk with the passed in formatRules and fill any blank props
-      let formattedData = formatValues(formatRules, includeKeys)(chunk)
+    // Format the values in the current chunk with the passed in formatRules and fill any blank props
+    let formattedData = formatValues(formatRules, includeKeys)(chunk)
 
-      // Convert data to CSV rows
-      let rows = extractValues(formattedData, includeKeys)
+    // Convert data to CSV rows
+    let rows = extractValues(formattedData, includeKeys)
 
-      // Prepend column headers on first pass
-      if (!records) {
-        rows = [columnHeaders, ...rows]
-      }
-
-      // Convert rows to a single CSV string
-      let csv = await writeToString(rows, {quoteColumns: true})
-
-      records += chunk.length
-      await targetStream.write(csv)
-      await onWrite({
-        chunk: formattedData,
-        records,
-        totalRecords,
-      })
-    },
-    end() {
-      targetStream.end()
-    },
+    // Prepend column headers on first pass
+    if (!records) {
+      rows = [columnHeaders, ...rows]
+    }
+    // Convert rows to a single CSV string
+    let csv = await writeToString(rows, {quoteColumns: true})
+    
+    records += chunk.length
+    await targetStream.write(csv)
+    await onWrite({
+      chunk: formattedData,
+      records,
+      totalRecords,
+    })
   }
-  await stream({ strategy, stream: streamWrapper })
+  targetStream.end()
 }

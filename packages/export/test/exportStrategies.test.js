@@ -2,18 +2,20 @@ import _ from 'lodash/fp'
 import * as exportStrategies from '../src/exportStrategies'
 
 describe('exportStrategies', () => {
-  let getSimpleStrategy = getNext => {
+  let getSimpleStrategy = getPage => {
     let page = 1
     let totalPages = 3
+    let defaultGetPage = () => [page]
+    getPage = getPage || defaultGetPage
     return {
       getTotalRecords: () => 4,
-      hasNext: () => page < totalPages,
-      getNext() {
-        let result = [page]
-        page++
-        if (getNext) return getNext()
-        return result
-      },
+      async *[Symbol.asyncIterator]() {
+        while (page < totalPages) {
+          let result = getPage()
+          page++
+          yield result
+        }
+      }
     }
   }
 
@@ -49,13 +51,13 @@ describe('exportStrategies', () => {
 
   describe('CSVStream', () => {
     it('should work without include', async () => {
-      let getNext = () => [
+      let getPage = () => [
         {
           firstProperty: 'first',
           secondProperty: 'second',
         },
       ]
-      let strategy = getSimpleStrategy(getNext)
+      let strategy = getSimpleStrategy(getPage)
       let stream = {
         write: jest.fn(),
         end: jest.fn(),
@@ -119,7 +121,7 @@ describe('exportStrategies', () => {
           },
         ],
       ])
-      // 1 per page because of our getNext function,
+      // 1 per page because of our getPage function,
       // Contexture is responsible for making sure the query is consistent with
       // the database results.
       expect(logger.mock.calls).toEqual([
@@ -129,17 +131,15 @@ describe('exportStrategies', () => {
       expect(stream.end).toHaveBeenCalled()
     })
     it('should work with inlcude and empty value in column', async () => {
-      let getNext = () => [
+      let getPage = () => [
         {
           Title: undefined,
           AgencyName: 'Agency A',
         },
       ]
       // Simulate the results data strategy where the `include` is exposed
-      let strategy = _.extend(
-        { include: ['Title', 'AgencyName'] },
-        getSimpleStrategy(getNext)
-      )
+      let strategy = getSimpleStrategy(getPage)
+      strategy.include = ['Title', 'AgencyName']
       let stream = {
         write: jest.fn(),
         end: jest.fn(),
@@ -195,7 +195,7 @@ describe('exportStrategies', () => {
           },
         ],
       ])
-      // 1 per page because of our getNext function,
+      // 1 per page because of our getPage function,
       // Contexture is responsible for making sure the query is consistent with
       // the database results.
       expect(logger.mock.calls).toEqual([
