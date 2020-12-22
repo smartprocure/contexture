@@ -42,6 +42,19 @@ export let results = ({ service, tree, totalPages = 100, ...node }) => {
     getTotalRecords,
     hasNext: () => page <= totalPages,
     getNext,
+    async *[Symbol.asyncIterator]() {
+      let scrollId = null
+      while (page <= totalPages) {
+        // cache current node so it can be inspected later for easy debugging
+        let node = await run({ page, scrollId, skipCount: true })
+        scrollId = node.context.scrollId
+        page++
+        // We return _source flattened onto the root result items because we're mostly
+        // interested in the _source properties but may occasionally want other props like _id.
+        // This will be removed with #28 when a contexture-elasticsearch upgrade is complete
+        yield _.map(flattenProp('_source'), resultField('results', node))
+      }
+    }
   }
 }
 
@@ -81,5 +94,8 @@ export let terms_stats = ({ service, tree, ...node }) => {
     getTotalRecords,
     hasNext: () => !done,
     getNext,
+    async *[Symbol.asyncIterator]() {
+      yield getNext()
+    }
   }
 }
