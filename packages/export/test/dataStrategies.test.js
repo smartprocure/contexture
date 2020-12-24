@@ -1,5 +1,6 @@
 import _ from 'lodash/fp'
-import * as dataStrategies from '../src/dataStrategies'
+import results from '../src/results'
+import terms_stats from '../src/terms_stats'
 
 describe('dataStrategies', () => {
   let defaultTree = {
@@ -32,7 +33,7 @@ describe('dataStrategies', () => {
     let prepareSimpleStrategy = service => (strategyParams = {}) => {
       let tree = _.cloneDeep(defaultTree)
       let include = ['a', 'b', 'c']
-      let strategy = dataStrategies.results({
+      let strategy = results({
         service,
         tree,
         pageSize: 3,
@@ -86,7 +87,7 @@ describe('dataStrategies', () => {
     let prepareSimpleStrategy = (strategyParams = {}) => {
       let service = getSimpleService()
       let tree = _.cloneDeep(defaultTree)
-      let strategy = dataStrategies.terms_stats({
+      let strategy = terms_stats({
         service,
         tree,
         ...strategyParams,

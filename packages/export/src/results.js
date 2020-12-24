@@ -1,7 +1,7 @@
 import F from 'futil'
 import _ from 'lodash/fp'
-import { runWith } from '../utils'
-import { flattenProp } from '../futil'
+import { runWith, addIterator } from './utils'
+import { flattenProp } from './futil'
 
 // Will go away once results no longer wraps context in `response`
 let resultField = (field, node) =>
@@ -15,6 +15,7 @@ export default ({ service, tree, totalPages = 100, ...node }) => {
       tree,
       F.compactObject({ key: 'results', type: 'results', ...node, ...props })
     )
+  let scrollId
 
   let result = {
     getTotalRecords: async () => {
@@ -23,9 +24,8 @@ export default ({ service, tree, totalPages = 100, ...node }) => {
       let expectedRecords = totalPages * pageSize
       return totalRecords < expectedRecords ? totalRecords : expectedRecords
     },
-    async *[Symbol.asyncIterator]() {
-      let scrollId = null
-      while (page <= totalPages) {
+    hasNext: () => page <= totalPages,
+    getNext: async () => {
         // cache current node so it can be inspected later for easy debugging
         let node = result.node = await run({ page, scrollId, skipCount: true })
         scrollId = node.context.scrollId
@@ -33,9 +33,8 @@ export default ({ service, tree, totalPages = 100, ...node }) => {
         // We return _source flattened onto the root result items because we're mostly
         // interested in the _source properties but may occasionally want other props like _id.
         // This will be removed with #28 when a contexture-elasticsearch upgrade is complete
-        yield _.map(flattenProp('_source'), resultField('results', node))
-      }
-    }
+        return _.map(flattenProp('_source'), resultField('results', node))
+    },
   }
-  return result
+  return addIterator(result)
 }

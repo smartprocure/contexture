@@ -1,9 +1,10 @@
 import _ from 'lodash/fp'
-import { runWith } from '../utils'
+import { runWith, addIterator} from './utils'
 
 export default ({ service, tree, ...node }) => {
   let { key_field, size = 100 } = node
   let run = node => runWith(service, tree, node)
+  let done
 
   let result = {
     getTotalRecords: async () => {
@@ -15,7 +16,8 @@ export default ({ service, tree, ...node }) => {
       })
       return _.get('context.value', result)
     },
-    async *[Symbol.asyncIterator]() {
+    hasNext: () => !done,
+    async getNext() {
       let node = result.node = await run({
         key: 'stats',
         type: 'terms_stats',
@@ -23,8 +25,9 @@ export default ({ service, tree, ...node }) => {
         size: size || (await getTotalRecords()),
         ...node
       })
-      yield node.context.terms
+      done = true
+      return node.context.terms
     }
   }
-  return result
+  return addIterator(result)
 }
