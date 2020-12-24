@@ -14,15 +14,16 @@ export let transformat = _.curry((rules, data) => {
   return clone
 })
 
+// TODO: Rename keysToObject!!!
 // F.ArrayToObject with keys as array values
 // (['a', 'b'], x => x + 'c') => { a: 'ac', b: 'bc' }
-export let objectify = _.curry(
+export let keysToObject = _.curry(
   (toValue, data) => F.arrayToObject(x => x, toValue, data)
 )
 // Fills in missing keys on an object with a default value
 export let ensureKeys = _.curry(
   (keys, data, defaultValue = '') =>
-    _.defaults(objectify(() => defaultValue, keys), data)
+    _.defaults(keysToObject(() => defaultValue, keys), data)
 )
 
 // _.get for an array of keys (in order)
