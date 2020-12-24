@@ -13,21 +13,25 @@ import { results } from 'contexture-export'
 let service = Contexture({/*...*/})
 let tree = { schema: 'someCollection', children: [/*...*/] }
 
-let export = results({ tree, service, pageSize: 10 })
+let report = results({ tree, service, pageSize: 10 })
 
 // Count results
-let totalCount = await export.getTotalRecords()
+let totalCount = await report.getTotalRecords()
 
 // Stream
 let stream = createWriteStream('someFile.txt');
-for await (page of export)
+for await (page of report)
   stream.write(page)
 stream.end()
 
 // To Array
 let array = []
-for await (let page of export)
+for await (let page of report)
   array = array.concat(page)
+
+// To array with it-all
+import all from 'it-all'
+let array = await all(report)
 ```
 
 ### CSV Usage
