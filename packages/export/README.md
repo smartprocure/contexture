@@ -5,6 +5,8 @@ Contexture Export is a set of [contexture](https://github.com/smartprocure/conte
 This is accomplished by inserting a node in the tree that gets the data for you over one or more iterations. To do this correctly and efficiently, the tree is wrapped in an `AND` group (in case the root was an `OR`) and recursively marked `filterOnly` (to prevent getting results for any other nodes on the tree).
 
 ## Usage
+
+### Simple usage
 ```js
 import { results } from 'contexture-export'
 
@@ -27,6 +29,27 @@ let array = []
 for await (let page of export)
   array = array.concat(page)
 ```
+
+### CSV Usage
+Using our fast-csv wrapper, you can pass it a write stream, async iterable, and transforms based on contexture schemas
+
+```js
+import { createWriteStream } from 'fs'
+import { schemaToCSVTransforms, results, csv } from 'contexture-export'
+
+let service = Contexture({/*...*/})
+let tree = { schema: 'someCollection', children: [/*...*/] }
+let schema = { field1: {/*...*/} }
+
+await csv.writeToStream(
+  createWriteStream('./test/actualFile.csv'),
+  results({ service, tree }),
+  schemaToCSVTransforms(schema)
+)
+```
+
+# Legacy
+Everything below this line is legacy and will be updated once this PR is finished
 
 ## API
 

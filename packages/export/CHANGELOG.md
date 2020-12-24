@@ -4,7 +4,9 @@
   * Most `exportStrategies` are removed - `bulk`, `page`, `stream`
     * `bulk` can be replicated with `it-all`
     * `stream` and `page` are handled by native `for await` loops
-* Cleanup: `CSVStream` overhauled by outsourcing as much as possible to @fast-csv  
+  * `CSVStream` removed by outsourcing as much as possible to @fast-csv
+* Added `schemaToCSVTransforms` to make `fast-csv` schema aware
+* Added `andGroup` util
 
 
 # 0.2.10
