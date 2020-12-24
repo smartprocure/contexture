@@ -45,7 +45,6 @@ export let results = ({ service, tree, totalPages = 100, ...node }) => {
     async *[Symbol.asyncIterator]() {
       let scrollId = null
       while (page <= totalPages) {
-        // cache current node so it can be inspected later for easy debugging
         let node = await run({ page, scrollId, skipCount: true })
         scrollId = node.context.scrollId
         page++
