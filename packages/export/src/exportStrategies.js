@@ -1,5 +1,5 @@
 import _ from 'lodash/fp'
-import { transformat, ensureKeys, getAll } from './futil'
+import { transformat, ensureKeys, pickValues } from './futil'
 import { writeToString } from '@fast-csv/format';
 
 // Paged export strategy,
@@ -47,7 +47,7 @@ export const formatHeaders = (rules, defaultLabel = _.startCase) =>
 let extractKeysFromFirstRow = _.flow(_.first, _.keys)
 
 // Convert array of objects to array of arrays
-export let extractValues = (data, keys) => _.map(getAll(keys), data)
+export let extractValues = (data, keys) => _.map(pickValues(keys), data)
 
 
 // CSVStream is an export strategy that uses the stream strategy,
