@@ -6,6 +6,7 @@ export let flattenProp = _.curry((prop, target) =>
 )
 
 // See R.evolve
+// When using `_.curry`, fast-csv's transform doesn't work
 export let transformat = rules => data => {
   let clone = _.cloneDeep(data)
   F.eachIndexed((display, field) =>
