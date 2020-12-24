@@ -1,0 +1,56 @@
+import _ from 'lodash/fp'
+import { createWriteStream } from 'fs'
+import results from '../src/modern/results'
+// import terms_stats from '../src/modern/terms_stats'
+import { writeToStream } from '../src/modern/fast-csv-wrapper'
+import {
+  schemaToCSVTransforms,
+  schemaToCSVTransformsWithLogging,
+} from '../src/modern/schemaToCSVTransforms'
+
+let testTree = {
+  key: 'root',
+  children: [
+    { key: 'filter', type: 'facet', field: 'a', values: ['a'] },
+    { key: 'results', type: 'results' },
+  ],
+}
+let testSchema = { name: { display: _.startCase, label: 'THE,NAME' } }
+
+let mockResultsService = () =>
+  jest.fn(tree => {
+    _.last(tree.children).context = {
+      totalRecords: 1337,
+      results: [
+        { name: 'record1', value: 1 },
+        { name: 'record2', value: 2 },
+        { name: 'record3', value: 3 },
+      ],
+    }
+    return tree
+  })
+
+describe('full CSV test', () => {
+  it.skip('export to an actual csv file', async () => {
+    await writeToStream(
+      createWriteStream('./test/actualFile.csv'),
+      results({
+        service: mockResultsService(),
+        tree: _.cloneDeep(testTree),
+      }),
+      await schemaToCSVTransforms(testSchema)
+    )
+  })
+  it.skip('should work with logging', async () => {
+    let strategy = results({
+      service: mockResultsService(),
+      tree: _.cloneDeep(testTree),
+    })
+    let total = await strategy.getTotalRecords()
+    await writeToStream(
+      createWriteStream('./test/actualFile.csv'),
+      strategy,
+      await schemaToCSVTransformsWithLogging(testSchema, total)
+    )
+  })
+})
