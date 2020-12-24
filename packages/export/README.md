@@ -1,43 +1,38 @@
-﻿# contexture-exports
+﻿# contexture-export
 
-Contexture Exports is a library that extends [contexture](https://github.com/smartprocure/contexture) by
-allowing developers to export searches into files or any other target.
+Contexture Export is a set of [contexture](https://github.com/smartprocure/contexture) utilities to get all of the records from a given tree.
 
-## Index
+This is accomplished by inserting a node in the tree that gets the data for you over one or more iterations. To do this correctly and efficiently, the tree is wrapped in an `AND` group (in case the root was an `OR`) and recursively marked `filterOnly` (to prevent getting results for any other nodes on the tree).
 
-- [Index](#index)
-- [Core Concepts](#core-concepts)
-  - [Data Strategies](#data-strategies)
-  - [Export Strategies](#export-strategies)
-  - [Export Types](#export-types)
-- [Example Types](#example-types)
+## Usage
+```js
+import { results } from 'contexture-export'
 
-## Core Concepts
+let service = Contexture({/*...*/})
+let tree = { schema: 'someCollection', children: [/*...*/] }
 
-This library (Contexture Exports) is intended to be used as a
-framework for building export strategies for Contexture searches.
+let export = results({ tree, service, pageSize: 10 })
 
-Contexture searches are at their core a consistent JSON DSL with both
-query parameters and results. These queries are intended to represent
-search interfaces of any complexity, which goes far beyond what an
-export file can be.
+// Count results
+let totalCount = await export.getTotalRecords()
 
-For that reason, Contexture Exports provides two key APIs, one for
-easily slicing up the DSL to extract the queries that are relevant for
-the intended output (which we call _"Data Strategies"_), and another
-one for running the searches up to their possible end, or limited if
-necessary (which we call _"Export Strategies"_). Both of them work
-together, and are intended to be used to build your own set of export
-functions. (We call these resulting functions "Export Types".)
+// Stream
+let stream = createWriteStream('someFile.txt');
+for await (page of export)
+  stream.write(page)
+stream.end()
 
-### Data Strategies
+// To Array
+let array = []
+for await (let page of export)
+  array = array.concat(page)
+```
 
-Our Data Strategies are a set of functions that work as wrappers for
-the DSL. They are divided by Contexture Types that are commonly used
-to retrieve list of records. Internally, they slice the searches to
-make sure their output only contains the actual records. Once given
-some key properties, they all return an object with the same three
-methods, `getTotalRecords`, `hasNext` and `getNext`. Let's see them
+## API
+
+Methods generally take a tree, service, and node, and return an object that is async iterable with the following methods:
+
+ `getTotalRecords`, `hasNext` and `getNext`. Let's see them
 before we examine the input properties:
 
 - `getTotalRecords` is an `async` function that, as the name suggests,

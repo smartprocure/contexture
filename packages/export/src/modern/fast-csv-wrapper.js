@@ -1,14 +1,6 @@
 import _ from 'lodash/fp'
 import { format as formatCSV } from '@fast-csv/format'
-// import { keysToObject } from '../futil'
-
-// from futil-js
-let keysToObject = (f, data) =>
-  data.reduce((result, value) => {
-    result[value] = f(value)
-    return result
-  }, {})
-
+import { keysToObject } from '../futil'
 
 export let format = ({ transformHeaders = x => x, ...props }) => {
   let csv = formatCSV(props)

@@ -14,12 +14,18 @@ export let transformat = _.curry((rules, data) => {
   return clone
 })
 
-// TODO: Rename keysToObject!!!
 // F.ArrayToObject with keys as array values
 // (['a', 'b'], x => x + 'c') => { a: 'ac', b: 'bc' }
 export let keysToObject = _.curry(
   (toValue, data) => F.arrayToObject(x => x, toValue, data)
 )
+// Native JS implementation reference if fast-csv authors are curious
+// let keysToObject = (f, data) =>
+//   data.reduce((result, value) => {
+//     result[value] = f(value)
+//     return result
+//   }, {})
+
 // Fills in missing keys on an object with a default value
 export let ensureKeys = _.curry(
   (keys, data, defaultValue = '') =>

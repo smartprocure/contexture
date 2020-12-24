@@ -1,4 +1,13 @@
-﻿# 0.2.10
+﻿# 1.0.0
+* Strategies are now native JS async iterables (using async generators)
+* BREAKING:
+  * Most `exportStrategies` are removed - `bulk`, `page`, `stream`
+    * `bulk` can be replicated with `it-all`
+    * `stream` and `page` are handled by native `for await` loops
+* Cleanup: `CSVStream` overhauled by outsourcing as much as possible to @fast-csv  
+
+
+# 0.2.10
 * `CSVStream` exportStrategy: document `omitFieldsFromResult`, refactoring.
 
 # 0.2.9
