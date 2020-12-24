@@ -1,11 +1,8 @@
 import F from 'futil'
 import _ from 'lodash/fp'
 
-export const setFilterOnly = x =>
-  F.deepMap(
-    F.when(_.isPlainObject, F.setOn('filterOnly', true)),
-    _.cloneDeep(x)
-  )
+let Tree = F.tree(x => x.children)
+export let setFilterOnly = Tree.transform(x => { x.filterOnly = true })
 
 // Wraps provided node in a new `and` group, using the first node/tree's schema and key
 export let andGroup = (...args) => {
