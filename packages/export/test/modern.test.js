@@ -2,11 +2,11 @@ import _ from 'lodash/fp'
 import { createWriteStream } from 'fs'
 import results from '../src/results'
 // import terms_stats from '../src/modern/terms_stats'
-import { writeToStream } from '../src/modern/fast-csv-wrapper'
+import { writeToStream } from '../src/fast-csv-wrapper'
 import {
   schemaToCSVTransforms,
   schemaToCSVTransformsWithLogging,
-} from '../src/modern/schemaToCSVTransforms'
+} from '../src/schemaToCSVTransforms'
 
 let testTree = {
   key: 'root',

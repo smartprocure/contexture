@@ -1,5 +1,5 @@
 import _ from 'lodash/fp'
-import { transformat } from '../futil'
+import { transformat } from './futil'
 
 // Maps contexture schemas to tranforms for fast-csv
 export let schemaToCSVTransforms = schema => {

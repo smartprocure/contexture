@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 import { format as formatCSV } from '@fast-csv/format'
-import { keysToObject } from '../futil'
+import { keysToObject } from './futil'
 
 export let format = ({ transformHeaders = x => x, ...props }) => {
   let csv = formatCSV(props)
