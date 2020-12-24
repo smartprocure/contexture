@@ -30,8 +30,9 @@ let mockResultsService = () =>
     return tree
   })
 
-describe('full CSV test', () => {
-  it.skip('export to an actual csv file', async () => {
+// These are skipped on purpose as they actual write CSVs
+describe.skip('full CSV test', () => {
+  it('export to an actual csv file', async () => {
     await writeToStream(
       createWriteStream('./test/actualFile.csv'),
       results({
@@ -41,7 +42,7 @@ describe('full CSV test', () => {
       await schemaToCSVTransforms(testSchema)
     )
   })
-  it.skip('should work with logging', async () => {
+  it('should work with logging', async () => {
     let strategy = results({
       service: mockResultsService(),
       tree: _.cloneDeep(testTree),
