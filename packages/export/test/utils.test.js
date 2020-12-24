@@ -1,5 +1,6 @@
 import _ from 'lodash/fp'
 import { setFilterOnly } from '../src/utils'
+import { schemaToCSVTransforms } from '../src/modern/schemaToCSVTransforms'
 
 describe('utils', () => {
   it('setFilterOnly', async () => {
@@ -21,5 +22,11 @@ describe('utils', () => {
         { filterOnly: true, key: 'results', type: 'results' },
       ],
     })
+  })
+  it('schema Transforms', () => {
+    let { transform } = schemaToCSVTransforms({
+      a: { display: () => 'b' },
+    })
+    expect(transform({ a: 2 })).toEqual({ a: 'b' })
   })
 })

@@ -6,9 +6,7 @@ export let schemaToCSVTransforms = schema => {
   let headers = _.mapValues('label', schema)
   return {
     transformHeaders: key => headers[key] || _.startCase(key),
-    // Not sure why currying doesn't work :think:
-    // transform: transformat(_.mapValues('display', schema))
-    transform: x => transformat(_.mapValues('display', schema), x),
+    transform: transformat(_.mapValues('display', schema))
   }
 }
 
@@ -23,11 +21,9 @@ export let schemaToCSVTransformsWithLogging = async (
   return {
     transformHeaders: key => headers[key] || _.startCase(key),
     // Not sure why currying doesn't work :think:
-    // transform: transformat(_.mapValues('display', schema))
-    transform: x =>
-      _.flow(
-        _.tap(() => logger(`Records ${++count} of ${total}`)),
-        x => transformat(_.mapValues('display', schema), x)
-      )(x),
+    transform: _.flow(
+      _.tap(() => logger(`Records ${++count} of ${total}`)),
+      transformat(_.mapValues('display', schema))
+    ),
   }
 }
