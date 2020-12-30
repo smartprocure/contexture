@@ -1,6 +1,16 @@
 let F = require('futil')
 let _ = require('lodash/fp')
 
+let omitFromInclude  = (schema, include, as) => {
+  let allTargetFields = _.keys(F.flattenObject(_.get('mongo.fields', schema)))
+  let omittedFields = _.difference(allTargetFields, include)
+
+  return F.arrayToObject(
+    field => `${as}.${field}`,
+    _.constant(0)
+  )(omittedFields)
+}
+
 let convertPopulate = getSchema =>
   _.flow(
     F.mapIndexed((x, as) => {
@@ -16,35 +26,25 @@ let convertPopulate = getSchema =>
           `The ${schema} schema has a mongo configuration without a 'collection' property`
         )
 
-      let $lookup = {
-        $lookup: include
-          ? {
-              as,
-              from: targetCollection,
-              let: { localField: `$${localField}` },
-              pipeline: [
-                {
-                  $match: {
-                    $expr: { $eq: [`$${foreignField}`, '$$localField'] },
-                  },
-                },
-                { $project: projectFromInclude(include) },
-              ],
-            }
-          : {
-              as,
-              from: targetCollection,
-              localField,
-              foreignField, // || node.schema, <-- needs schema lookup
-            },
-      }
-      let $unwind = unwind && {
-        $unwind: {
-          path: `$${as}`,
-          preserveNullAndEmptyArrays: true,
-        },
-      }
-      return _.compact([$lookup, $unwind])
+        let $lookup = {
+          $lookup: {
+            as,
+            from: targetCollection,
+            localField,
+            foreignField, // || node.schema, <-- needs schema lookup
+          }
+        }
+
+        let $project = include ? { $project: omitFromInclude(targetSchema, include, as) } : null
+
+        let $unwind = unwind && {
+          $unwind: {
+            path: `$${as}`,
+            preserveNullAndEmptyArrays: true,
+          },
+        }
+
+        return _.compact([$lookup, $unwind, $project])
     }),
     _.flatten
   )
