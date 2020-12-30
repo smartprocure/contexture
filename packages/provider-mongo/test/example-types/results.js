@@ -84,7 +84,7 @@ describe('results', () => {
         },
       ])
     })
-    it('should use a pipeline and project for $lookup objects with include', () => {
+    it('should do populate includes by omitting from the base record', () => {
       let populate = {
         author: {
           schema: 'user',
@@ -93,13 +93,13 @@ describe('results', () => {
           include: ['_id', 'firstName', 'lastName'],
         },
       }
-      let getTestSchema = () => ({ mongo: { collection: 'user',
+      let getTestSchema = () => ({ mongo: { collection: 'user' },
       fields: {
         _id: {},
         firstName: 'John',
         lastName: 'Smith',
         password: 'doNotLetMeThrough'
-      } }})
+      } })
       expect(convertPopulate(getTestSchema)(populate)).to.deep.equal([
         {
           "$lookup": {

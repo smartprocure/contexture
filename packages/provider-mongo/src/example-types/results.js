@@ -2,7 +2,7 @@ let F = require('futil')
 let _ = require('lodash/fp')
 
 let omitFromInclude  = (schema, include, as) => {
-  let allTargetFields = _.keys(F.flattenObject(_.get('mongo.fields', schema)))
+  let allTargetFields = _.keys(F.flattenObject(_.get('fields', schema)))
   let omittedFields = _.difference(allTargetFields, include)
 
   return F.arrayToObject(
