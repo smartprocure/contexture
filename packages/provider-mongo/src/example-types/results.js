@@ -1,7 +1,7 @@
 let F = require('futil')
 let _ = require('lodash/fp')
 
-let omitFromInclude  = (schema, include, as) => {
+let omitFromInclude = (schema, include, as) => {
   let allTargetFields = _.keys(_.get('fields', schema))
   let omittedFields = _.difference(allTargetFields, include)
 
@@ -26,25 +26,27 @@ let convertPopulate = getSchema =>
           `The ${schema} schema has a mongo configuration without a 'collection' property`
         )
 
-        let $lookup = {
-          $lookup: {
-            as,
-            from: targetCollection,
-            localField,
-            foreignField, // || node.schema, <-- needs schema lookup
-          }
-        }
+      let $lookup = {
+        $lookup: {
+          as,
+          from: targetCollection,
+          localField,
+          foreignField, // || node.schema, <-- needs schema lookup
+        },
+      }
 
-        let $project = include ? { $project: omitFromInclude(targetSchema, include, as) } : null
+      let $project = include
+        ? { $project: omitFromInclude(targetSchema, include, as) }
+        : null
 
-        let $unwind = unwind && {
-          $unwind: {
-            path: `$${as}`,
-            preserveNullAndEmptyArrays: true,
-          },
-        }
+      let $unwind = unwind && {
+        $unwind: {
+          path: `$${as}`,
+          preserveNullAndEmptyArrays: true,
+        },
+      }
 
-        return _.compact([$lookup, $unwind, $project])
+      return _.compact([$lookup, $unwind, $project])
     }),
     _.flatten
   )

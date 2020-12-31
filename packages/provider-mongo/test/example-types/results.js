@@ -93,27 +93,29 @@ describe('results', () => {
           include: ['_id', 'firstName', 'lastName'],
         },
       }
-      let getTestSchema = () => ({ mongo: { collection: 'user' },
-      fields: {
-        _id: {},
-        firstName: 'John',
-        lastName: 'Smith',
-        password: 'doNotLetMeThrough'
-      } })
+      let getTestSchema = () => ({
+        mongo: { collection: 'user' },
+        fields: {
+          _id: {},
+          firstName: 'John',
+          lastName: 'Smith',
+          password: 'doNotLetMeThrough',
+        },
+      })
       expect(convertPopulate(getTestSchema)(populate)).to.deep.equal([
         {
-          "$lookup": {
-            "as": "author",
-            "from": "user",
-            "localField": "createdBy",
-            "foreignField": "_id"
-          }
+          $lookup: {
+            as: 'author',
+            from: 'user',
+            localField: 'createdBy',
+            foreignField: '_id',
+          },
         },
         {
-          "$project": {
-            "author.password": 0
-          }
-        }
+          $project: {
+            'author.password': 0,
+          },
+        },
       ])
     })
   })
