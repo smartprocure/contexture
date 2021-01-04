@@ -378,7 +378,7 @@ describe('results', () => {
       }
       expect(() => checkPopulate(node)).not.to.throw()
     })
-    it('should throw for omitted node.include when schema does not the lookup either', () => {
+    it('should throw for omitted node.include when schema does not support the lookup either', () => {
       let node = {
         populate: {
           createdBy: {
@@ -390,6 +390,8 @@ describe('results', () => {
           },
         },
       }
+      // either node.include or the schema itself should include the field we're
+      // trying to populate. If not the code should be expected to throw an error
       let schema = { fields: { firstName: {}, lastName: {} } }
       expect(() => checkPopulate(node, schema)).to.throw()
     })
