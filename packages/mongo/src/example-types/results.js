@@ -1,6 +1,11 @@
 let F = require('futil')
 let _ = require('lodash/fp')
 
+/*
+ * Takes `({ fields: { firstName: '', lastName: ''} }, ['firstName'], 'nickname')`
+ * and returns `{ nickname.lastName: 0 }`. Used to filter the props of $lookup-ed records
+ * for populates down to the includes specified in those populates
+ */
 let omitFromInclude = (schema, include, as) => {
   let allTargetFields = _.keys(_.get('fields', schema))
   let omittedFields = _.difference(allTargetFields, include)
@@ -35,6 +40,12 @@ let convertPopulate = getSchema =>
         },
       }
 
+      // at this point we know we want to place the foreign collection record on the
+      // local record at the `as` prop, narrowing the foreign record's props down to those
+      // specified by the populate's includes. In order not to lose the other props on the 
+      // local record aside from the `as` prop, we need to omit the fields of the `as` prop
+      // object we don't want by diffing the populate's includes with the foreign schema
+      // specified by the populate. THis is what the `omitFromInclude` util does
       let $project = include
         ? { $project: omitFromInclude(targetSchema, include, as) }
         : null
