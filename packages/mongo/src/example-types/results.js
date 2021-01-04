@@ -42,7 +42,7 @@ let convertPopulate = getSchema =>
 
       // at this point we know we want to place the foreign collection record on the
       // local record at the `as` prop, narrowing the foreign record's props down to those
-      // specified by the populate's includes. In order not to lose the other props on the 
+      // specified by the populate's includes. In order not to lose the other props on the
       // local record aside from the `as` prop, we need to omit the fields of the `as` prop
       // object we don't want by diffing the populate's includes with the foreign schema
       // specified by the populate. THis is what the `omitFromInclude` util does
