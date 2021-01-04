@@ -2,8 +2,8 @@ let F = require('futil')
 let _ = require('lodash/fp')
 
 /*
- * Takes `({ fields: { firstName: '', lastName: ''} }, ['firstName'], 'nickname')`
- * and returns `{ nickname.lastName: 0 }`. Used to filter the props of $lookup-ed records
+ * Takes `({ fields: { firstName: '', lastName: '' } }, ['firstName'], 'createdBy')`
+ * and returns `{ createdBy.lastName: 0 }`. Used to filter the props of $lookup-ed records
  * for populates down to the includes specified in those populates
  */
 let omitFromInclude = (schema, include, as) => {
