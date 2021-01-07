@@ -1,3 +1,6 @@
+# 0.19.2
+* [Results] imporove performance when includes are present on a results node populate
+
 # 0.19.1
 * [Results] fix populate include bug (missing $ prefix on localField)
 
