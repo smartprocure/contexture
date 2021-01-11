@@ -1,3 +1,6 @@
+# 0.20.0
+* [Results] check populate localField props for coherence with node includes
+
 # 0.19.2
 * [Results] imporove performance when includes are present on a results node populate
 
