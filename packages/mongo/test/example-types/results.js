@@ -85,7 +85,7 @@ describe('results', () => {
         },
       ])
     })
-    it('should use a pipeline and project for $lookup objects with include', () => {
+    it('should do populate includes by omitting from the base record', () => {
       let populate = {
         author: {
           schema: 'user',
@@ -93,33 +93,28 @@ describe('results', () => {
           foreignField: '_id',
           include: ['_id', 'firstName', 'lastName'],
         },
-        org: {
-          schema: 'organization',
-          localField: 'organization',
-          include: ['_id', 'name'],
-        },
       }
-      expect(convertPopulate(getSchema)(populate)).to.deep.equal([
+      let getTestSchema = () => ({
+        mongo: { collection: 'user' },
+        fields: {
+          _id: {},
+          firstName: 'John',
+          lastName: 'Smith',
+          password: 'doNotLetMeThrough',
+        },
+      })
+      expect(convertPopulate(getTestSchema)(populate)).to.deep.equal([
         {
           $lookup: {
             as: 'author',
             from: 'user',
-            let: { localField: '$createdBy' },
-            pipeline: [
-              { $match: { $expr: { $eq: ['$_id', '$$localField'] } } },
-              { $project: { _id: 1, firstName: 1, lastName: 1 } },
-            ],
+            localField: 'createdBy',
+            foreignField: '_id',
           },
         },
         {
-          $lookup: {
-            as: 'org',
-            from: 'organization',
-            let: { localField: '$organization' },
-            pipeline: [
-              { $match: { $expr: { $eq: ['$_id', '$$localField'] } } },
-              { $project: { _id: 1, name: 1 } },
-            ],
+          $project: {
+            'author.password': 0,
           },
         },
       ])
