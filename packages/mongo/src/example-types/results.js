@@ -33,7 +33,7 @@ let convertPopulate = getSchema =>
 
       let $lookup = {
         $lookup: {
-          as,
+          as: x.as || as,
           from: targetCollection,
           localField,
           foreignField, // || node.schema, <-- needs schema lookup

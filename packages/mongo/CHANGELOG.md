@@ -1,3 +1,7 @@
+# 0.20.0
+* support converting the 'as' attribute to the $lookup 'as' prop
+
+
 # 0.19.2
 * [Results] imporove performance when includes are present on a results node populate
 
