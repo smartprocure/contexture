@@ -3,6 +3,7 @@ let { expect } = require('chai')
 let {
   defaults,
   convertPopulate,
+  checkPopulate,
   getResultsQuery,
   getStartRecord,
   getResponse,
@@ -375,6 +376,70 @@ describe('results', () => {
     it('should set totalRecords based on the count (if it exists)', () => {
       expect(getResponse(node, results, 9001).totalRecords).to.equal(9001)
       expect(getResponse(node, results).totalRecords).to.equal(undefined)
+    })
+  })
+  describe('checkPopulate', () => {
+    it('should throw on an unincluded local field', () => {
+      let node = {
+        include: ['createdBy', '_createdByOrganization'],
+        populate: {
+          createdBy: {
+            localField: 'createdBy',
+            include: ['_id', 'firstName', 'lastName'],
+          },
+          _createdByOrganization: {
+            localField: 'createdBy.organization',
+          },
+        },
+      }
+      expect(() => checkPopulate(node)).to.throw()
+    })
+    it('should not throw when include checks out', () => {
+      let node = {
+        include: ['createdBy', '_createdByOrganization'],
+        populate: {
+          createdBy: {
+            localField: 'createdBy',
+            include: ['_id', 'firstName', 'lastName', 'organization'],
+          },
+          _createdByOrganization: {
+            localField: 'createdBy.organization',
+          },
+        },
+      }
+      expect(() => checkPopulate(node)).not.to.throw()
+    })
+    it('should throw for omitted node.include when schema does not support the lookup either', () => {
+      let node = {
+        populate: {
+          createdBy: {
+            localField: 'createdBy',
+            include: ['_id', 'firstName', 'lastName', 'organization'],
+          },
+          _createdByOrganization: {
+            localField: 'createdBy.organization',
+          },
+        },
+      }
+      // either node.include or the schema itself should include the field we're
+      // trying to populate. If not the code should be expected to throw an error
+      let schema = { fields: { firstName: {}, lastName: {} } }
+      expect(() => checkPopulate(node, schema)).to.throw()
+    })
+    it('should not throw for omitted node.include when schema supports the lookup', () => {
+      let node = {
+        populate: {
+          createdBy: {
+            localField: 'createdBy',
+            include: ['_id', 'firstName', 'lastName', 'organization'],
+          },
+          _createdByOrganization: {
+            localField: 'createdBy.organization',
+          },
+        },
+      }
+      let schema = { fields: { createdBy: {} } }
+      expect(() => checkPopulate(node, schema)).not.to.throw()
     })
   })
 })

@@ -1,6 +1,21 @@
 let F = require('futil')
 let _ = require('lodash/fp')
 
+let checkPopulate = ({ include: nodeIncludes, populate }, { fields } = {}) =>
+  _.reduce(
+    (incs, { localFieldName, localField, include }) => {
+      if (!_.includes(localField, incs)) {
+        throw Error(`Cannot populate an unincluded field: ${localField}`)
+      }
+      return _.concat(
+        incs,
+        _.map(inc => `${localFieldName}.${inc}`, include)
+      )
+    },
+    nodeIncludes || _.keys(fields),
+    F.unkeyBy('localFieldName', populate)
+  )
+
 /*
  * Takes `({ fields: { firstName: '', lastName: '' } }, ['firstName'], 'createdBy')`
  * and returns `{ createdBy.lastName: 0 }`. Used to filter the props of $lookup-ed records
@@ -137,6 +152,7 @@ let getResponse = (node, results, count) => {
 
 let result = async (node, search, schema, { getSchema }) => {
   node = defaults(node)
+  checkPopulate(node, schema)
   let hasMany = _.some(_.get('hasMany'), node.populate)
   let resultsQuery = getResultsQuery(node, getSchema, getStartRecord(node))
   let countQuery = [
@@ -160,6 +176,7 @@ module.exports = {
   defaults,
   projectFromInclude,
   convertPopulate,
+  checkPopulate,
   // API
   result,
 }
