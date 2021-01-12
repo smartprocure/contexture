@@ -10,14 +10,15 @@ let Pager = ({
   pageCount,
   PagerItem = GVPagerItem,
   Icon = GVIcon,
+  disabled = false,
 }) =>
   pageCount > 1 && (
     <Flex justifyContent="center" alignItems="center">
-      <PagerItem disabled={!(value > 1)} onClick={() => onChange(value - 1)}>
+      <PagerItem disabled={disabled || !(value > 1)} onClick={() => onChange(value - 1)}>
         <Icon icon="PreviousPage" />
       </PagerItem>
       {value > 3 && (
-        <PagerItem onClick={() => onChange(_.max([0, value - 5]))}>
+        <PagerItem disabled={disabled} onClick={() => onChange(_.max([0, value - 5]))}>
           <Icon icon="Previous5Pages" />
         </PagerItem>
       )}
@@ -26,6 +27,7 @@ let Pager = ({
           n =>
             value > n + 1 && (
               <PagerItem
+                disabled={disabled}
                 key={`prev${n}`}
                 onClick={() => onChange(value - (n + 1))}
               >
@@ -35,11 +37,12 @@ let Pager = ({
           2
         )
       )}
-      <PagerItem active>{value}</PagerItem>
+      <PagerItem disabled={disabled} active>{value}</PagerItem>
       {_.times(
         n =>
           value + (n + 1) <= pageCount && (
             <PagerItem
+              disabled={disabled}
               key={`next${n}`}
               onClick={() => onChange(value + (n + 1))}
             >
@@ -49,12 +52,17 @@ let Pager = ({
         2
       )}
       {value + 2 < pageCount && (
-        <PagerItem onClick={() => onChange(_.min([pageCount, value + 5]))}>
+        <PagerItem
+          disabled={disabled}
+          onClick={() =>
+            onChange(_.min([pageCount, value + 5]))
+          }
+        >
           <Icon icon="Next5Pages" />
         </PagerItem>
       )}
       <PagerItem
-        disabled={!(value < pageCount)}
+        disabled={disabled || !(value < pageCount)}
         onClick={() => onChange(value + 1)}
       >
         <Icon icon="NextPage" />

@@ -41,9 +41,21 @@ let ResultTable = ({
   // From Theme/Components
   let mutate = tree.mutate(path)
   // Account for all providers here (memory provider has results with no response parent)
-  let hasResults =
-    !!_.get('context.response.results.length', node) ||
-    !!_.get('context.results.length', node)
+  let resultsLength =
+    F.cascade(
+      ['context.response.results.length', 'context.results.length'],
+      node,
+    )
+  let totalRecords =
+    F.cascade(
+      ['context.response.totalRecords', 'context.totalRecords'],
+      node,
+    )
+
+  let hasResults = resultsLength > 0
+  let limitedResults =
+    resultsLength < node.pageSize && totalRecords >= node.pageSize
+
   // NOTE infer + add columns does not work together (except for anything explicitly passed in)
   //   When removing a field, it's not longer on the record, so infer can't pick it up since it runs per render
   let schema = _.flow(
@@ -101,12 +113,16 @@ let ResultTable = ({
               schema,
               Row,
               getRowKey,
+              limitedResults,
+              pageSize: node.pageSize,
             }}
           />
         </Table>
         {node.pageSize > 0 && (
           <ResultTableFooter
-            {...{ tree, node, path, pageSizeOptions, style: footerStyle }}
+            {...{ tree, node, path, pageSizeOptions,
+              disabled: limitedResults,
+              style: footerStyle }}
           />
         )}
       </>
