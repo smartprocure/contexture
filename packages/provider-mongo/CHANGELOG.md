@@ -1,4 +1,4 @@
-# 0.20.0
+# 0.21.0
 * support converting the 'as' attribute to the $lookup 'as' prop
 
 
