@@ -41,16 +41,14 @@ let ResultTable = ({
   // From Theme/Components
   let mutate = tree.mutate(path)
   // Account for all providers here (memory provider has results with no response parent)
-  let resultsLength =
-    F.cascade(
-      ['context.response.results.length', 'context.results.length'],
-      node,
-    )
-  let totalRecords =
-    F.cascade(
-      ['context.response.totalRecords', 'context.totalRecords'],
-      node,
-    )
+  let resultsLength = F.cascade(
+    ['context.response.results.length', 'context.results.length'],
+    node
+  )
+  let totalRecords = F.cascade(
+    ['context.response.totalRecords', 'context.totalRecords'],
+    node
+  )
 
   let hasResults = resultsLength > 0
   let limitedResults =
@@ -120,9 +118,14 @@ let ResultTable = ({
         </Table>
         {node.pageSize > 0 && (
           <ResultTableFooter
-            {...{ tree, node, path, pageSizeOptions,
+            {...{
+              tree,
+              node,
+              path,
+              pageSizeOptions,
               disabled: limitedResults,
-              style: footerStyle }}
+              style: footerStyle,
+            }}
           />
         )}
       </>

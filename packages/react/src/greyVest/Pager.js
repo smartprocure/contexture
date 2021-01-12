@@ -14,11 +14,17 @@ let Pager = ({
 }) =>
   pageCount > 1 && (
     <Flex justifyContent="center" alignItems="center">
-      <PagerItem disabled={disabled || !(value > 1)} onClick={() => onChange(value - 1)}>
+      <PagerItem
+        disabled={disabled || !(value > 1)}
+        onClick={() => onChange(value - 1)}
+      >
         <Icon icon="PreviousPage" />
       </PagerItem>
       {value > 3 && (
-        <PagerItem disabled={disabled} onClick={() => onChange(_.max([0, value - 5]))}>
+        <PagerItem
+          disabled={disabled}
+          onClick={() => onChange(_.max([0, value - 5]))}
+        >
           <Icon icon="Previous5Pages" />
         </PagerItem>
       )}
@@ -37,7 +43,9 @@ let Pager = ({
           2
         )
       )}
-      <PagerItem disabled={disabled} active>{value}</PagerItem>
+      <PagerItem disabled={disabled} active>
+        {value}
+      </PagerItem>
       {_.times(
         n =>
           value + (n + 1) <= pageCount && (
@@ -54,9 +62,7 @@ let Pager = ({
       {value + 2 < pageCount && (
         <PagerItem
           disabled={disabled}
-          onClick={() =>
-            onChange(_.min([pageCount, value + 5]))
-          }
+          onClick={() => onChange(_.min([pageCount, value + 5]))}
         >
           <Icon icon="Next5Pages" />
         </PagerItem>
