@@ -6,14 +6,9 @@ export let flattenProp = _.curry((prop, target) =>
 )
 
 // See R.evolve, but supports lodash nested paths
-// Bike shedding names:
-// updateAll/updateObject -> like _.update, but with a whole object 
-// evolve -> like ramda
-// overObject -> like _.over but object based?
-// transformat -> fun portmantaeu of transform - format
 // NOTE: does not run on objects where path is missing. flow with defaults/ensureKeys if desired
 // CAVEAT: When using `_.curry`, fast-csv's transform doesn't work
-export let transformat = rules => data => {
+export let updateMany = rules => data => {
   let clone = _.cloneDeep(data)
   F.eachIndexed((display, field) => {
     if (_.has(field, clone))
@@ -22,7 +17,7 @@ export let transformat = rules => data => {
   return clone
 }
 
-// F.ArrayToObject with keys as array values
+// F.arrayToObject with keys as array values
 // (['a', 'b'], x => x + 'c') => { a: 'ac', b: 'bc' }
 export let keysToObject = _.curry(
   (toValue, data) => F.arrayToObject(x => x, toValue, data)
@@ -41,7 +36,6 @@ export let ensureKeys = _.curry(
 )
 
 // _.get for an array of keys (in order)
-// BIKESHED: pickValues or getAll?
-export let pickValues = _.curry(
+export let getAll = _.curry(
   (keys, data) => _.map(key => _.get(key, data), keys)
 )
