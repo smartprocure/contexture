@@ -7,6 +7,7 @@ import { DropdownItem } from './DropdownItem'
 import Popover from './Popover'
 import Icon from './Icon'
 import Table from './Table'
+import { blankResult } from '../utils/format'
 
 export let Column = _.identity
 Column.displayName = 'Column'
@@ -32,7 +33,10 @@ let TableBodyState = () => {
       let key = record[keyField]
       let indexedField = `${field}${index}`
 
-      if (_.get('indexedField', state.expanded.get(key)) !== indexedField) {
+      if (
+        _.get('indexedField', state.expanded.get(key)) !== indexedField &&
+        !record.isBlank
+      ) {
         state.expanded.set(key, {
           key,
           record,
@@ -50,61 +54,87 @@ let TableBodyState = () => {
 }
 
 let TableBody = inject(TableBodyState)(
-  observer(({ data, columns, recordKey, expanded, onClick }) => (
-    <tbody>
-      {_.map(
-        x => (
-          <React.Fragment key={x[recordKey]}>
-            <tr
-              {...x.rowAttrs}
-              key={x[recordKey]}
-              className={
-                _.getOr('', 'rowAttrs.className', x) +
-                (expanded.has(x[recordKey]) ? 'expanded' : '')
-              }
-            >
-              {F.mapIndexed(
-                ({ field, display = x => x, details = {} }, i) => (
-                  <td
-                    key={`${field}${i}`}
-                    {...(!_.isEmpty(details) && {
-                      style: {
-                        cursor: !_.isEmpty(details) ? 'pointer' : 'auto',
-                      },
-                      onClick: () =>
-                        onClick(field, recordKey, x, i, details, expanded),
-                    })}
-                  >
-                    {_.getOr(
-                      display,
-                      `${
-                        _.isEqual(
-                          _.get('indexedField', expanded.get(x[recordKey])),
-                          `${field}${i}`
-                        )
-                          ? 'collapse'
-                          : 'expand'
-                      }.display`,
-                      details
-                    )(_.get(field, x), x)}
-                  </td>
-                ),
-                columns
-              )}
-            </tr>
-            {/* See if there is a details component to render for the column value when row expanded */}
-            {expanded.has(x[recordKey]) && (
-              <ExpandedSection
-                expandedRow={expanded.get(x[recordKey])}
-                columnCount={columns.length}
-              />
-            )}
-          </React.Fragment>
-        ),
-        data
-      )}
-    </tbody>
-  ))
+  observer(
+    ({
+      data,
+      columns,
+      recordKey,
+      expanded,
+      onClick,
+      limitedResults,
+      pageSize,
+    }) => {
+      let rows = data
+      if (limitedResults && rows.length > 0) {
+        let blankRows = [...Array(pageSize - rows.length)].map((_, i) => ({
+          ...rows[i % rows.length],
+          isBlank: true,
+        }))
+        rows = [...rows, ...blankRows]
+      }
+      return (
+        <tbody>
+          {F.mapIndexed(
+            (x, i) => (
+              <React.Fragment key={x[recordKey] + i}>
+                <tr
+                  {...x.rowAttrs}
+                  className={
+                    _.getOr('', 'rowAttrs.className', x) +
+                    (expanded.has(x[recordKey]) ? 'expanded' : '')
+                  }
+                >
+                  {F.mapIndexed(
+                    ({ field, display = x => x, details = {} }, i) => (
+                      <td
+                        key={`${field}${i}`}
+                        {...(!_.isEmpty(details) && {
+                          style: {
+                            cursor: !_.isEmpty(details) ? 'pointer' : 'auto',
+                          },
+                          onClick: () =>
+                            onClick(field, recordKey, x, i, details, expanded),
+                        })}
+                      >
+                        {F.when(
+                          () => x.isBlank,
+                          blankResult,
+                          _.getOr(
+                            display,
+                            `${
+                              _.isEqual(
+                                _.get(
+                                  'indexedField',
+                                  expanded.get(x[recordKey])
+                                ),
+                                `${field}${i}`
+                              )
+                                ? 'collapse'
+                                : 'expand'
+                            }.display`,
+                            details
+                          )
+                        )(_.get(field, x), x)}
+                      </td>
+                    ),
+                    columns
+                  )}
+                </tr>
+                {/* See if there is a details component to render for the column value when row expanded */}
+                {expanded.has(x[recordKey]) && (
+                  <ExpandedSection
+                    expandedRow={expanded.get(x[recordKey])}
+                    columnCount={columns.length}
+                  />
+                )}
+              </React.Fragment>
+            ),
+            rows
+          )}
+        </tbody>
+      )
+    }
+  )
 )
 
 let TableState = (stores, props) => ({
@@ -174,7 +204,12 @@ let ExpandableTable = inject(TableState)(
             )}
           </tr>
         </thead>
-        <TableBody columns={columns} data={data} recordKey={recordKey} />
+        <TableBody
+          columns={columns}
+          data={data}
+          recordKey={recordKey}
+          {...props}
+        />
       </Table>
     )
   )

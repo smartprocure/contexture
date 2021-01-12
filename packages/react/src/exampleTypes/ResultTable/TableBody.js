@@ -1,24 +1,10 @@
 import React from 'react'
 import _ from 'lodash/fp'
+import F from 'futil'
 import { observer } from 'mobx-react'
 import { getRecord, getResults } from '../../utils/schema'
 import HighlightedColumn from './HighlightedColumn'
-
-let blankText = _.flow(
-  _.toString,
-  _.map(x => (x === ' ' ? x : '\u2588')),
-  _.join('')
-)
-
-let blankResult = (display, data, record) => {
-  let formatted = display(data, record)
-  if (typeof formatted === 'object') {
-    if (_.isArray(_.get('props.children', formatted))) return null
-    else return display(blankText(data), record)
-  } else {
-    return blankText(formatted)
-  }
-}
+import { blankResult } from '../../utils/format'
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
 let TableBody = ({
@@ -33,10 +19,10 @@ let TableBody = ({
   pageSize,
 }) => {
   let results = getResults(node)
-  if (limitedResults) {
+  if (limitedResults && results.length > 0) {
     let blankResults = [...Array(pageSize - results.length)].map((_, i) => ({
       ...results[i % results.length],
-      _id: Math.random(),
+      _id: results[i % results.length]._id + i,
       isBlank: true,
     }))
     results = [...results, ...blankResults]
@@ -54,17 +40,11 @@ let TableBody = ({
               {_.map(
                 ({ field, display = x => x, Cell = 'td' }) => (
                   <Cell key={field}>
-                    {x.isBlank ? (
-                      <span style={{ opacity: 0.2, fontFamily: 'monospace' }}>
-                        {blankResult(
-                          display,
-                          _.get(field, getRecord(x)),
-                          getRecord(x)
-                        )}
-                      </span>
-                    ) : (
-                      display(_.get(field, getRecord(x)), getRecord(x))
-                    )}
+                    {F.when(
+                      () => x.isBlank,
+                      blankResult,
+                      display
+                    )(_.get(field, getRecord(x)), getRecord(x))}
                   </Cell>
                 ),
                 visibleFields
