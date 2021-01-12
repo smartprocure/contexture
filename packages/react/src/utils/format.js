@@ -18,12 +18,18 @@ let blank = _.memoize(
 )
 
 let toBlankText = (display, data, record) => {
-  let formatted = display(data, record)
-  if (typeof formatted === 'object') {
-    if (_.isArray(_.get('props.children', formatted))) return null
+  // running display to detect output type
+  let rendered = display(data, record)
+  if (typeof rendered === 'object') {
+    // rendered is React child
+    // skipping if has nested children (buttons, etc)
+    if (_.isArray(_.get('props.children', rendered))) return null
+    // rendering again, but with blank data
     else return display(blank(data), record)
   } else {
-    return blank(formatted)
+    // rendered is string or number
+    // making it blank
+    return blank(rendered)
   }
 }
 
