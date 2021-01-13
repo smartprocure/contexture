@@ -9,13 +9,12 @@ export let toNumber = (number, ...params) => {
   return NaN
 }
 
-let blank = _.memoize(
-  text =>
-    // replacing every character with `█`
-    // preserving spaces and `|` for terms key as `name|id`
-    text &&
-    text.toString().replace(/[^ |]+/g, ({ length }) => '█'.repeat(length))
-)
+// replacing every character with `█`
+// preserving spaces and `|` for terms key as `name|id`
+let blank = _.memoize(_.replace(
+  /[^ |]+/g,
+  ({ length }) => '█'.repeat(length)
+))
 
 let toBlankText = (display, data, record) => {
   // running display to detect output type
