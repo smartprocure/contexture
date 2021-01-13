@@ -22,7 +22,7 @@ let TableBody = ({
   if (limitedResults && results.length > 0) {
     let blankResults = [...Array(pageSize - results.length)].map((_, i) => ({
       ...results[i % results.length],
-      _id: results[i % results.length]._id + i,
+      _id: `${results[i % results.length]._id}${i}`,
       isBlank: true,
     }))
     results = [...results, ...blankResults]

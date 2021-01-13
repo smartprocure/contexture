@@ -68,15 +68,17 @@ let TableBody = inject(TableBodyState)(
       if (limitedResults && rows.length > 0) {
         let blankRows = [...Array(pageSize - rows.length)].map((_, i) => ({
           ...rows[i % rows.length],
+          // unique deterministic IDs
+          [recordKey]: `${rows[i % rows.length][recordKey]}${i}`,
           isBlank: true,
         }))
         rows = [...rows, ...blankRows]
       }
       return (
         <tbody>
-          {F.mapIndexed(
-            (x, i) => (
-              <React.Fragment key={x[recordKey] + i}>
+          {_.map(
+            x => (
+              <React.Fragment key={x[recordKey]}>
                 <tr
                   {...x.rowAttrs}
                   className={
