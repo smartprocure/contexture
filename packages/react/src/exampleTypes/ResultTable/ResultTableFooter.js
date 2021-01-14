@@ -4,11 +4,12 @@ import _ from 'lodash/fp'
 import TableFooter from '../../greyVest/TableFooter'
 import { contexturifyWithoutLoader } from '../../utils/hoc'
 
-let ResultTableFooter = ({ tree, node, pageSizeOptions, style }) => {
+let ResultTableFooter = ({ tree, node, pageSizeOptions, disabled, style }) => {
   let getFromContext = key =>
     F.cascade([`context.response.${key}`, `context.${key}`], node)
   return (
     <TableFooter
+      disabled={disabled}
       page={node.page || 1}
       onChangePage={page => tree.mutate(node.path, { page })}
       pageSize={node.pageSize}

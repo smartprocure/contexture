@@ -121,6 +121,8 @@ let TermsStatsTable = ({
           })
         }
       }}
+      limitedResults={_.get('context.terms.length', node) < node.size}
+      pageSize={node.size}
     />
   </div>
 )

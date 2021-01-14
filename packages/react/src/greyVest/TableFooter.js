@@ -33,6 +33,7 @@ let TableFooter = ({
   totalRecords,
   startRecord = pageSize * (page - 1) + 1,
   endRecord = hasMore ? page * pageSize : 0,
+  disabled = false,
   ...props
 }) => {
   // if endRecord isn't given, approximate it from totalRecords
@@ -54,9 +55,15 @@ let TableFooter = ({
         style={{ flex: '0 1 30%' }}
       />
       <Flex style={{ flex: 1 }} alignItems="center" justifyContent="center">
-        <Pager value={page} onChange={onChangePage} pageCount={pageCount} />
+        <Pager
+          disabled={disabled}
+          value={page}
+          onChange={onChangePage}
+          pageCount={pageCount}
+        />
         {hasMore && page >= pageCount && (
           <PagerItem
+            disabled={disabled}
             style={{ margin: '0 8px', paddingLeft: 12, paddingRight: 12 }}
             onClick={() => onChangePage(page + 1)}
           >
