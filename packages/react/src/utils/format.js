@@ -11,7 +11,7 @@ export let toNumber = (number, ...params) => {
 
 // replacing every character with `█`
 // preserving spaces and `|` for terms key as `name|id`
-let blank = _.memoize(_.replace(/[^ |]+/gi, ({ length }) => '█'.repeat(length)))
+let blank = _.memoize(_.replace(/[^ |]/gi, '█'))
 
 let toBlankText = (display, data, record) => {
   // running display to detect output type
