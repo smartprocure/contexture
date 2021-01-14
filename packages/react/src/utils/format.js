@@ -11,13 +11,12 @@ export let toNumber = (number, ...params) => {
 
 export let addBlankRows = (rows, pageSize, key) => {
   if (rows.length === 0) return rows
-  let blankRows = [...Array(pageSize - rows.length)]
-    .map((_, i) => ({
-      ...rows[i % rows.length],
-      // unique deterministic IDs
-      [key]: `${rows[i % rows.length][key]}${i}`,
-      isBlank: true,
-    }))
+  let blankRows = [...Array(pageSize - rows.length)].map((_, i) => ({
+    ...rows[i % rows.length],
+    // unique deterministic IDs
+    [key]: `${rows[i % rows.length][key]}${i}`,
+    isBlank: true,
+  }))
   return [...rows, ...blankRows]
 }
 
