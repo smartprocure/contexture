@@ -20,7 +20,8 @@ export let addBlankRows = (rows, pageSize, key) => {
   return [...rows, ...blankRows]
 }
 
-// replacing every character with `█` preserving spaces and `|`
+// replacing every character with `█`
+// preserving spaces and `|` for fields with data concatenation
 let blank = _.memoize(_.replace(/[^ |]/gi, '█'))
 
 let toBlankText = (display, data, record) => {
