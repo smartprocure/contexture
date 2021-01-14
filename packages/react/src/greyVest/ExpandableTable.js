@@ -7,7 +7,7 @@ import { DropdownItem } from './DropdownItem'
 import Popover from './Popover'
 import Icon from './Icon'
 import Table from './Table'
-import { blankResult } from '../utils/format'
+import { addBlankRows, blankResult } from '../utils/format'
 
 export let Column = _.identity
 Column.displayName = 'Column'
@@ -64,16 +64,9 @@ let TableBody = inject(TableBodyState)(
       limitedResults,
       pageSize,
     }) => {
-      let rows = data
-      if (limitedResults && rows.length > 0) {
-        let blankRows = [...Array(pageSize - rows.length)].map((_, i) => ({
-          ...rows[i % rows.length],
-          // unique deterministic IDs
-          [recordKey]: `${rows[i % rows.length][recordKey]}${i}`,
-          isBlank: true,
-        }))
-        rows = [...rows, ...blankRows]
-      }
+      let rows = limitedResults
+        ? addBlankRows(data, pageSize, recordKey)
+        : data
       return (
         <tbody>
           {_.map(

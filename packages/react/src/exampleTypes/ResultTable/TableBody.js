@@ -4,7 +4,7 @@ import F from 'futil'
 import { observer } from 'mobx-react'
 import { getRecord, getResults } from '../../utils/schema'
 import HighlightedColumn from './HighlightedColumn'
-import { blankResult } from '../../utils/format'
+import { addBlankRows, blankResult } from '../../utils/format'
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
 let TableBody = ({
@@ -18,15 +18,9 @@ let TableBody = ({
   limitedResults,
   pageSize,
 }) => {
-  let results = getResults(node)
-  if (limitedResults && results.length > 0) {
-    let blankResults = [...Array(pageSize - results.length)].map((_, i) => ({
-      ...results[i % results.length],
-      _id: `${results[i % results.length]._id}${i}`,
-      isBlank: true,
-    }))
-    results = [...results, ...blankResults]
-  }
+  let results = limitedResults
+    ? addBlankRows(getResults(node), pageSize, '_id')
+    : getResults(node)
   return (
     <tbody>
       {!!results.length &&
