@@ -32,6 +32,7 @@ let ResultTable = ({
   getRowKey, // allow passing a custom function to generate unique row key
   mapNodeToProps = () => ({}),
   pageSizeOptions, // an array of options to set the # of rows per page (default [20, 50, 100, 250])
+  limitedResults,
   footerStyle,
   theme: { Table },
 }) => {
@@ -51,8 +52,8 @@ let ResultTable = ({
   )
 
   let hasResults = resultsLength > 0
-  let limitedResults =
-    resultsLength < node.pageSize && totalRecords >= node.pageSize
+  let blankRows = limitedResults &&
+    resultsLength < node.pageSize && totalRecords > resultsLength
 
   // NOTE infer + add columns does not work together (except for anything explicitly passed in)
   //   When removing a field, it's not longer on the record, so infer can't pick it up since it runs per render
@@ -111,7 +112,7 @@ let ResultTable = ({
               schema,
               Row,
               getRowKey,
-              limitedResults,
+              blankRows,
               pageSize: node.pageSize,
             }}
           />
@@ -123,7 +124,7 @@ let ResultTable = ({
               node,
               path,
               pageSizeOptions,
-              disabled: limitedResults,
+              disabled: blankRows,
               style: footerStyle,
             }}
           />

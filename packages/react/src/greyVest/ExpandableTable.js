@@ -61,10 +61,10 @@ let TableBody = inject(TableBodyState)(
       recordKey,
       expanded,
       onClick,
-      limitedResults,
+      blankRows,
       pageSize,
     }) => {
-      let rows = limitedResults ? addBlankRows(data, pageSize, recordKey) : data
+      let rows = blankRows ? addBlankRows(data, pageSize, recordKey) : data
       return (
         <tbody>
           {_.map(

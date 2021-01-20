@@ -29,16 +29,12 @@ let toBlankText = (display, data, record) => {
   let rendered = display(data, record)
   if (typeof rendered === 'object') {
     // rendered is React child
-    // skipping if has nested children (buttons, etc)
-    if (_.isArray(_.get('props.children', rendered))) return null
-    else {
-      try {
-        // rendering again, but with blank data
-        return display(blank(data), record)
-      } catch {
-        // fall back to plain text if blank data broke React component
-        return blank(_.toString(data).slice(40))
-      }
+    try {
+      // rendering again, but with blank data
+      return display(blank(data), record)
+    } catch {
+      // fall back to plain text if blank data broke React component
+      return blank(_.toString(data).slice(40))
     }
   } else {
     // rendered is string or number

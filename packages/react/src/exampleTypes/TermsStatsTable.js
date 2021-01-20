@@ -57,6 +57,7 @@ let TermsStatsTable = ({
   tree,
   children,
   sizeOptions,
+  limitedResults,
   theme: { Button },
   ...props
 }) => (
@@ -121,7 +122,7 @@ let TermsStatsTable = ({
           })
         }
       }}
-      limitedResults={_.get('context.terms.length', node) < node.size}
+      blankRows={limitedResults}
       pageSize={node.size}
     />
   </div>

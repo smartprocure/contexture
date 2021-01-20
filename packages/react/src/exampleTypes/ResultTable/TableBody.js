@@ -15,10 +15,10 @@ let TableBody = ({
   schema,
   Row = 'tr',
   getRowKey = _.get('_id'),
-  limitedResults,
+  blankRows,
   pageSize,
 }) => {
-  let results = limitedResults
+  let results = blankRows
     ? addBlankRows(getResults(node), pageSize, '_id')
     : getResults(node)
   return (
