@@ -115,7 +115,7 @@ let ResultTable = ({
               Row,
               getRowKey,
               blankRows,
-              pageSize: node.pageSize,
+              pageSize: Math.min(node.pageSize, totalRecords),
             }}
           />
         </Table>
