@@ -46,6 +46,42 @@ describe('results', () => {
         },
       ])
     })
+
+    it("support converting the 'as'  attribute to the $lookup 'as' prop", () => {
+      let populate = {
+        author: {
+          schema: 'user',
+          localField: 'createdBy',
+          foreignField: '_id',
+          as: 'keyAuthor',
+        },
+        org: {
+          schema: 'organization',
+          localField: 'organization',
+          foreignField: '_id',
+          as: 'keyOrg',
+        },
+      }
+      expect(convertPopulate(getSchema)(populate)).to.deep.equal([
+        {
+          $lookup: {
+            as: 'keyAuthor',
+            from: 'user',
+            localField: 'createdBy',
+            foreignField: '_id',
+          },
+        },
+        {
+          $lookup: {
+            as: 'keyOrg',
+            from: 'organization',
+            localField: 'organization',
+            foreignField: '_id',
+          },
+        },
+      ])
+    })
+
     it('should add "$unwind" stage if "unwind" is present in the populate config', () => {
       let populate = {
         author: {
