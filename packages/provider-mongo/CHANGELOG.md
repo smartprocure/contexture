@@ -1,3 +1,6 @@
+# 0.21.0
+* support converting the 'as' attribute to the $lookup 'as' prop
+
 # 0.20.0
 * [Results] check populate localField props for coherence with node includes
 
