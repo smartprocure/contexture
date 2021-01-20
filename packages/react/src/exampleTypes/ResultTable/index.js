@@ -52,8 +52,10 @@ let ResultTable = ({
   )
 
   let hasResults = resultsLength > 0
-  let blankRows = limitedResults &&
-    resultsLength < node.pageSize && totalRecords > resultsLength
+  let blankRows =
+    limitedResults &&
+    resultsLength < node.pageSize &&
+    totalRecords > resultsLength
 
   // NOTE infer + add columns does not work together (except for anything explicitly passed in)
   //   When removing a field, it's not longer on the record, so infer can't pick it up since it runs per render
