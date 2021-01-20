@@ -55,16 +55,8 @@ let TableBodyState = () => {
 
 let TableBody = inject(TableBodyState)(
   observer(
-    ({
-      data,
-      columns,
-      recordKey,
-      expanded,
-      onClick,
-      limitedResults,
-      pageSize,
-    }) => {
-      let rows = limitedResults ? addBlankRows(data, pageSize, recordKey) : data
+    ({ data, columns, recordKey, expanded, onClick, blankRows, pageSize }) => {
+      let rows = blankRows ? addBlankRows(data, pageSize, recordKey) : data
       return (
         <tbody>
           {_.map(
