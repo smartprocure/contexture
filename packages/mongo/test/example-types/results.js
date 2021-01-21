@@ -423,8 +423,8 @@ describe('results', () => {
           },
         },
       }
-      let schema = {fields:{createdBy:true,_createdByOrganization:true}}
-      expect(() => checkPopulate(node,schema)).not.to.throw()
+      let schema = { fields: { createdBy: true, _createdByOrganization: true } }
+      expect(() => checkPopulate(node, schema)).not.to.throw()
     })
     it('should throw for omitted node.include when schema does not support the lookup either', () => {
       let node = {
