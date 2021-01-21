@@ -280,7 +280,7 @@ describe('results', () => {
         populate: {
           user: {
             schema: 'user',
-            as:'auther.test',
+            as: 'auther.test',
             localField: 'auther.test',
             foreignField: '_id',
             unwind: true,
