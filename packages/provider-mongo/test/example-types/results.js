@@ -394,6 +394,7 @@ describe('results', () => {
       }
       expect(() => checkPopulate(node)).to.throw()
     })
+
     it('should not throw when include checks out', () => {
       let node = {
         include: ['createdBy', '_createdByOrganization'],
@@ -408,6 +409,21 @@ describe('results', () => {
         },
       }
       expect(() => checkPopulate(node)).not.to.throw()
+    })
+    it('should not throw when include is an empty', () => {
+      let node = {
+        include: [],
+        populate: {
+          createdBy: {
+            localField: 'createdBy',
+            include: ['_id', 'firstName', 'lastName', 'organization'],
+          },
+          _createdByOrganization: {
+            localField: 'createdBy.organization',
+          },
+        },
+      }
+      expect(() => checkPopulate(node,{fields:{createdBy:true,_createdByOrganization:true}})).not.to.throw()
     })
     it('should throw for omitted node.include when schema does not support the lookup either', () => {
       let node = {

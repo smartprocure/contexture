@@ -12,7 +12,7 @@ let checkPopulate = ({ include: nodeIncludes, populate }, { fields } = {}) =>
         _.map(inc => `${localFieldName}.${inc}`, include)
       )
     },
-    nodeIncludes || _.keys(fields),
+    _.isEmpty(nodeIncludes) ?_.keys(fields): nodeIncludes,
     F.unkeyBy('localFieldName', populate)
   )
 
