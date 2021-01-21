@@ -410,7 +410,7 @@ describe('results', () => {
       }
       expect(() => checkPopulate(node)).not.to.throw()
     })
-    it('should not throw when include is an empty', () => {
+    it('should not throw when include is an empty and the schema contains the fields', () => {
       let node = {
         include: [],
         populate: {
@@ -423,7 +423,8 @@ describe('results', () => {
           },
         },
       }
-      expect(() => checkPopulate(node,{fields:{createdBy:true,_createdByOrganization:true}})).not.to.throw()
+      let schema = {fields:{createdBy:true,_createdByOrganization:true}}
+      expect(() => checkPopulate(node,schema)).not.to.throw()
     })
     it('should throw for omitted node.include when schema does not support the lookup either', () => {
       let node = {
