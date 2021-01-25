@@ -270,7 +270,7 @@ describe('results', () => {
       ])
     })
 
-    it.only('should put $skip, $limit last in pipeline when join field indicated it has many records when use "as" in populate', () => {
+    it('should put $skip, $limit last in pipeline when join field indicated it has many records when use "as" in populate', () => {
       let node = defaults({
         key: 'results',
         type: 'results',
