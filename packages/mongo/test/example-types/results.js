@@ -450,7 +450,7 @@ describe('results', () => {
       }
       expect(() => checkPopulate(node)).not.to.throw()
     })
-    it('should not throw when include is an empty and the schema contains the fields', () => {
+    it('should not throw when include is an empty array and the schema contains the fields', () => {
       let node = {
         include: [],
         populate: {
