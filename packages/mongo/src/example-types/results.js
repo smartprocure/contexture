@@ -12,7 +12,7 @@ let checkPopulate = ({ include: nodeIncludes, populate }, { fields } = {}) =>
         _.map(inc => `${localFieldName}.${inc}`, include)
       )
     },
-    nodeIncludes || _.keys(fields),
+    _.isEmpty(nodeIncludes) ? _.keys(fields) : nodeIncludes,
     F.unkeyBy('localFieldName', populate)
   )
 
@@ -34,6 +34,7 @@ let omitFromInclude = (schema, include, as) => {
 let convertPopulate = getSchema =>
   _.flow(
     F.mapIndexed((x, as) => {
+      as = x.as || as
       let { unwind, schema, include, localField, foreignField = '_id' } = x
       let targetSchema = getSchema(schema) //|| toSingular(as), //<-- needs compromise-fp
       if (!targetSchema)
@@ -48,7 +49,7 @@ let convertPopulate = getSchema =>
 
       let $lookup = {
         $lookup: {
-          as: x.as || as,
+          as,
           from: targetCollection,
           localField,
           foreignField, // || node.schema, <-- needs schema lookup
@@ -109,10 +110,12 @@ let getResultsQuery = (node, getSchema, startRecord) => {
   let sortSkipLimit = _.compact([...sort, ...skipLimit])
   // If sort field is a join field move $sort, $skip, and $limit to after $lookup.
   // Otherwise, place those stages first to take advantage of any indexes on that field.
-  let sortOnJoinField = _.some(
-    x => _.startsWith(`${x}.`, sortField) || sortField === x,
-    _.keys(populate)
-  )
+  let sortOnJoinField = _.some(x => {
+    let lookupField = _.getOr(x, `${x}.as`, populate)
+    return (
+      _.startsWith(`${lookupField}.`, sortField) || sortField === lookupField
+    )
+  }, _.keys(populate))
   // check if any of the "populate" fields are indicating they can have more than one record
   let hasMany = _.some(_.get('hasMany'), populate)
   // $project
