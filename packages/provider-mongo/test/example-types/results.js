@@ -269,6 +269,46 @@ describe('results', () => {
         { $project: { name: 1, user: 1, type: 1, updatedAt: 1 } },
       ])
     })
+
+    it('should put $skip, $limit last in pipeline when join field indicated it has many records when use "as" in populate', () => {
+      let node = defaults({
+        key: 'results',
+        type: 'results',
+        sortField: 'metrics.sessionsCount',
+        include: ['name', 'auther.test', 'type', 'updatedAt'],
+        sortDir: 'asc',
+        populate: {
+          user: {
+            schema: 'user',
+            as: 'auther.test',
+            localField: 'auther.test',
+            foreignField: '_id',
+            unwind: true,
+            hasMany: true,
+          },
+        },
+      })
+      expect(getResultsQuery(node, getSchema, 0)).to.deep.equal([
+        { $sort: { 'metrics.sessionsCount': 1 } },
+        {
+          $lookup: {
+            as: 'auther.test',
+            from: 'user',
+            localField: 'auther.test',
+            foreignField: '_id',
+          },
+        },
+        {
+          $unwind: {
+            path: '$auther.test',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        { $skip: 0 },
+        { $limit: 10 },
+        { $project: { name: 1, 'auther.test': 1, type: 1, updatedAt: 1 } },
+      ])
+    })
     it('should put $sort, $skip, $limit first after $lookup', () => {
       let node = defaults({
         key: 'results',
@@ -394,6 +434,7 @@ describe('results', () => {
       }
       expect(() => checkPopulate(node)).to.throw()
     })
+
     it('should not throw when include checks out', () => {
       let node = {
         include: ['createdBy', '_createdByOrganization'],
@@ -408,6 +449,22 @@ describe('results', () => {
         },
       }
       expect(() => checkPopulate(node)).not.to.throw()
+    })
+    it('should not throw when include is an empty array and the schema contains the fields', () => {
+      let node = {
+        include: [],
+        populate: {
+          createdBy: {
+            localField: 'createdBy',
+            include: ['_id', 'firstName', 'lastName', 'organization'],
+          },
+          _createdByOrganization: {
+            localField: 'createdBy.organization',
+          },
+        },
+      }
+      let schema = { fields: { createdBy: true, _createdByOrganization: true } }
+      expect(() => checkPopulate(node, schema)).not.to.throw()
     })
     it('should throw for omitted node.include when schema does not support the lookup either', () => {
       let node = {
