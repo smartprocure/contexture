@@ -23,3 +23,9 @@ export let addIterator = obj => F.extendOn(obj, {
       yield obj.getNext()
   }
 })
+
+export let isIterable = object =>
+  object != null && typeof object[Symbol.iterator] === 'function'
+
+export let isAsyncIterable = object =>
+  object != null && typeof object[Symbol.asyncIterator] === 'function'

@@ -1,6 +1,7 @@
 import _ from 'lodash/fp'
 import results from '../src/results'
 import terms_stats from '../src/terms_stats'
+import { isAsyncIterable } from '../src/utils'
 
 describe('results', () => {
   let defaultTree = {
@@ -46,6 +47,10 @@ describe('results', () => {
     return strategy
   }
   let resultsTests = prepareSimpleStrategy => {
+    it('is an async iterable', async () => {
+      let strategy = prepareSimpleStrategy({ totalPages: 1 })
+      expect(isAsyncIterable(strategy)).toBe(true)
+    })
     it('retrieves the total records', async () => {
       let strategy = prepareSimpleStrategy({ totalPages: 1 })
       expect(await strategy.getTotalRecords()).toBe(3)
