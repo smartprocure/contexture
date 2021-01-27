@@ -2,8 +2,9 @@ import _ from 'lodash/fp'
 import { format as formatCSV } from '@fast-csv/format'
 import { keysToObject } from './futil'
 
-export let format = ({ transformHeaders = x => x, ...props }) => {
+export let format = ({ transformHeaders = x => x, onWrite = _.noop, ...props }) => {
   let csv = formatCSV(props)
+  let records = 0
 
   // Write headers as data since fast-csv doesn't support transformHeaders natively yet
   // If headers are ['a', 'b'], write a record like this: `{ a : transformHeaders('a'), b: transformHeaders('b') }`
@@ -35,6 +36,11 @@ export let format = ({ transformHeaders = x => x, ...props }) => {
 
       // default
       else writeRecordOrRecords(data)
+
+      // TODO double check data.length works as expected for
+      // both iterator types
+      records = records + data.length
+      await onWrite({ records })
     },
   }
 }
