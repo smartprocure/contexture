@@ -17,7 +17,8 @@ let lastChild = _.flow(_.get('children'), _.last)
 export let runWith = async (service, tree, node) =>
   lastChild(await service(andGroup(setFilterOnly(tree), node)))
 
-export let addIterator = obj => F.extendOn(obj, {
+export let addIterator = obj => ({
+  ...obj,
   async *[Symbol.asyncIterator]() {
     while (obj.hasNext())
       yield obj.getNext()
