@@ -7,10 +7,20 @@ export let schemaToCSVTransforms = (schema, logger = _.noop) => {
   let headers = _.mapValues('label', schema)
   return {
     transformHeaders: key => headers[key] || _.startCase(key),
-    transform: _.flow(
-      _.tap(record => logger(++count, record)),
-      updateMany(_.mapValues('display', schema))
-    ),
+    // NOTE: for whatever reason you can't use a function declared
+    // by _.flow as transaform not sure what fast-csv is doing under
+    // the hood with it
+    transform: row => _.flow(
+      _.cond([
+        [() => count === 0, x => x],
+        [_.stubTrue, _.flow(
+          _.tap(console.log),
+          updateMany(_.mapValues('display', schema)),
+        )],
+      ]),
+      _.tap(record => logger(++count, record))
+    )(row),
+    writeHeaders: false
   }
 }
 

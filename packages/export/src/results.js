@@ -24,7 +24,7 @@ export default ({ service, tree, totalPages = 100, ...node }) => {
       let expectedRecords = totalPages * pageSize
       return totalRecords < expectedRecords ? totalRecords : expectedRecords
     },
-    hasNext: () => page <= totalPages,
+    hasNext: async () => page <= totalPages && _.tap(x => console.log('page', x), page) <= _.tap(x => console.log('records/pagesize', x), Math.ceil((await result.getTotalRecords()) / pageSize)),
     getNext: async () => {
       // cache current node so it can be inspected later for easy debugging
       let node = result.node = await run({ page, scrollId, skipCount: true })

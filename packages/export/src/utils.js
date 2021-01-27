@@ -20,7 +20,7 @@ export let runWith = async (service, tree, node) =>
 export let addIterator = obj => ({
   ...obj,
   async *[Symbol.asyncIterator]() {
-    while (obj.hasNext())
+    while (await obj.hasNext())
       yield obj.getNext()
   }
 })

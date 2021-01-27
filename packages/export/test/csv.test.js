@@ -1,6 +1,7 @@
 import _ from 'lodash/fp'
 import { createWriteStream } from 'fs'
 import results from '../src/results'
+import { isAsyncIterable } from '../src/utils'
 // import terms_stats from '../src/modern/terms_stats'
 import { writeToStream } from '../src/fast-csv-wrapper'
 import {
@@ -20,7 +21,7 @@ let testSchema = { name: { display: _.startCase, label: 'THE,NAME' } }
 let mockResultsService = () =>
   jest.fn(tree => {
     _.last(tree.children).context = {
-      totalRecords: 1337,
+      totalRecords: 3,
       results: [
         { name: 'record1', value: 1 },
         { name: 'record2', value: 2 },
