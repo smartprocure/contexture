@@ -14,7 +14,6 @@ export let schemaToCSVTransforms = (schema, logger = _.noop) => {
       _.cond([
         [() => count === 0, x => x],
         [_.stubTrue, _.flow(
-          _.tap(console.log),
           updateMany(_.mapValues('display', schema)),
         )],
       ]),
