@@ -20,6 +20,6 @@ export let schemaToCSVTransformsWithLogging = (
   total,
   logger = console.info
 ) =>
-  schemaToCSVTransforms2(schema, count =>
+  schemaToCSVTransforms(schema, count =>
     logger(`Records ${count} of ${total}`)
   )
