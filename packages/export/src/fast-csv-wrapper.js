@@ -15,11 +15,16 @@ export let format = ({ transformHeaders = x => x, onWrite = _.noop, includeEndRo
   })
   
   // object array support
+  // return the number of records written
   let writeRecordOrRecords = data => {
     writeHeaders(data)
-    if (_.isArray(data) && _.isPlainObject(data[0]))
+    if (_.isArray(data) && _.isPlainObject(data[0])) {
       _.each(record => csv.write(record), data)
-    else csv.write(data)
+      return data.length
+    } else {
+      csv.write(data)
+      return 1
+    }
   }
   return {
     pipe: x => csv.pipe(x),
@@ -28,19 +33,16 @@ export let format = ({ transformHeaders = x => x, onWrite = _.noop, includeEndRo
       // asyncIterator support
       if (isAsyncIterable(data))
         for await (let item of data)
-          writeRecordOrRecords(item)
+          records = records + writeRecordOrRecords(item)
 
       // iterator support
       else if (isIterable(data))
         for (let item of data)
-          writeRecordOrRecords(item)
+          records = records + writeRecordOrRecords(item)
 
       // default
-      else writeRecordOrRecords(data)
+      else records = records + writeRecordOrRecords(data)
 
-      // TODO double check data.length works as expected for
-      // both iterator types
-      records = records + data.length
       await onWrite({ records })
     },
   }
