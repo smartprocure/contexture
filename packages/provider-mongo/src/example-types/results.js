@@ -1,20 +1,22 @@
 let F = require('futil')
 let _ = require('lodash/fp')
 
-let checkPopulate = ({ include: nodeIncludes, populate }) => _.isEmpty(nodeIncludes) ? true :
-  _.reduce(
-    (incs, { localFieldName, localField, include }) => {
-      if (!_.includes(localField, incs)) {
-        throw Error(`Cannot populate an unincluded field: ${localField}`)
-      }
-      return _.concat(
-        incs,
-        _.map(inc => `${localFieldName}.${inc}`, include)
+let checkPopulate = ({ include: nodeIncludes, populate }) =>
+  _.isEmpty(nodeIncludes)
+    ? true
+    : _.reduce(
+        (incs, { localFieldName, localField, include }) => {
+          if (!_.includes(localField, incs)) {
+            throw Error(`Cannot populate an unincluded field: ${localField}`)
+          }
+          return _.concat(
+            incs,
+            _.map(inc => `${localFieldName}.${inc}`, include)
+          )
+        },
+        nodeIncludes,
+        F.unkeyBy('localFieldName', populate)
       )
-    },
-    nodeIncludes,
-    F.unkeyBy('localFieldName', populate)
-  )
 
 /*
  * Takes `({ fields: { firstName: '', lastName: '' } }, ['firstName'], 'createdBy')`
