@@ -3,8 +3,8 @@ import { format as formatCSV } from '@fast-csv/format'
 import { keysToObject } from './futil'
 import { isIterable, isAsyncIterable } from './utils'
 
-export let format = ({ transformHeaders = x => x, onWrite = _.noop, ...props }) => {
-  let csv = formatCSV({...props, headers: true})
+export let format = ({ transformHeaders = x => x, onWrite = _.noop, includeEndRowDelimiter = true, ...props }) => {
+  let csv = formatCSV({...props, headers: true, includeEndRowDelimiter})
   let records = 0
 
   // Write headers as data since fast-csv doesn't support transformHeaders natively yet
