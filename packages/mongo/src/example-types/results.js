@@ -3,8 +3,7 @@ let _ = require('lodash/fp')
 
 let checkPopulate = ({ include: nodeIncludes, populate }) =>
   _.isEmpty(nodeIncludes)
-    ? true
-    : _.reduce(
+    || _.reduce(
         (incs, { localFieldName, localField, include }) => {
           if (!_.includes(localField, incs)) {
             throw Error(`Cannot populate an unincluded field: ${localField}`)
