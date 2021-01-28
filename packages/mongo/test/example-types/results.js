@@ -466,37 +466,5 @@ describe('results', () => {
       let schema = { fields: { createdBy: true, _createdByOrganization: true } }
       expect(() => checkPopulate(node, schema)).not.to.throw()
     })
-    it('should throw for omitted node.include when schema does not support the lookup either', () => {
-      let node = {
-        populate: {
-          createdBy: {
-            localField: 'createdBy',
-            include: ['_id', 'firstName', 'lastName', 'organization'],
-          },
-          _createdByOrganization: {
-            localField: 'createdBy.organization',
-          },
-        },
-      }
-      // either node.include or the schema itself should include the field we're
-      // trying to populate. If not the code should be expected to throw an error
-      let schema = { fields: { firstName: {}, lastName: {} } }
-      expect(() => checkPopulate(node, schema)).to.throw()
-    })
-    it('should not throw for omitted node.include when schema supports the lookup', () => {
-      let node = {
-        populate: {
-          createdBy: {
-            localField: 'createdBy',
-            include: ['_id', 'firstName', 'lastName', 'organization'],
-          },
-          _createdByOrganization: {
-            localField: 'createdBy.organization',
-          },
-        },
-      }
-      let schema = { fields: { createdBy: {} } }
-      expect(() => checkPopulate(node, schema)).not.to.throw()
-    })
   })
 })
