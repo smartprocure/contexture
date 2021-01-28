@@ -1,5 +1,5 @@
 import _ from 'lodash/fp'
-import { createWriteStream } from 'fs'
+import { PassThrough } from 'stream'
 import results from '../src/results'
 import { isAsyncIterable } from '../src/utils'
 // import terms_stats from '../src/modern/terms_stats'
@@ -30,29 +30,55 @@ let mockResultsService = () =>
     }
     return tree
   })
+let expectedFileContents = `\
+"THE,NAME",Value
+Record 1,1
+Record 2,2
+Record 3,3
+`
+
+let mockFileStream = () => {
+  let writeStream = new PassThrough()
+  let fileData = new Promise((res,rej) => {
+    let data = []
+    writeStream.on('data', d => data.push(d.toString()))
+    writeStream.on('end', () => res(_.join('', data)))
+    writeStream.on('error', rej)
+  })
+  return { writeStream, fileData }
+}
+
+
 
 // These are skipped on purpose as they actual write CSVs
-describe.skip('full CSV test', () => {
+describe('full CSV test', () => {
   it('export to an actual csv file', async () => {
+    let { writeStream, fileData } = mockFileStream()
+
     await writeToStream(
-      createWriteStream('./test/actualFile.csv'),
+      writeStream,
       results({
         service: mockResultsService(),
         tree: _.cloneDeep(testTree),
       }),
       await schemaToCSVTransforms(testSchema)
     )
+    expect(await fileData).toBe(expectedFileContents)
   })
+
   it('should work with logging', async () => {
+    let { writeStream, fileData } = mockFileStream()
+
     let strategy = results({
       service: mockResultsService(),
       tree: _.cloneDeep(testTree),
     })
     let total = await strategy.getTotalRecords()
     await writeToStream(
-      createWriteStream('./test/actualFile.csv'),
+      writeStream,
       strategy,
       await schemaToCSVTransformsWithLogging(testSchema, total)
     )
+    expect(await fileData).toBe(expectedFileContents)
   })
 })
