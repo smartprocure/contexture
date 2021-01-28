@@ -8,8 +8,9 @@ export let schemaToCSVTransforms = (schema, logger = _.noop) => {
   return {
     transformHeaders: key => headers[key] || _.startCase(key),
     // NOTE: for whatever reason you can't use a function declared
-    // by _.flow as transaform not sure what fast-csv is doing under
-    // the hood with it
+    // by _.flow as transaform, just `transform: _.identity` works as expected
+    // but `transform: _.flow(_.identity)` does write a csv and doesn't throw any errors :(
+    // _.flow might be hitting the fast-csv callback api for transform but not really sure
     transform: row => _.flow(
       _.cond([
         [() => count === 0, x => x],
