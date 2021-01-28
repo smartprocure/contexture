@@ -1,5 +1,6 @@
 #0.22.0
 * [Results] Don't run checkPopulate function on results nodes when `include` is missing or empty
+
 # 0.21.1
 * Fix the bug when converting the 'as' attribute to the $lookup 'as' prop
 * Fix the wrong throw when includes an empty array and  schema contains the valid fields
