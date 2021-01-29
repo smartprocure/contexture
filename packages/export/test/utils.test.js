@@ -27,13 +27,13 @@ describe('utils', () => {
     let { transform, transformHeaders } = schemaToCSVTransforms({
       a: { display: () => 2 },
       b: { label: 'Field B' },
-    }, { header: false })
+    }, { header: false, include: ['a', 'b'] })
     // Display
-    expect(transform({ a: 1 })).toEqual({ a: 2 })
+    expect(transform({ a: 1})).toEqual({ a: 2 })
     // No display but label
     expect(transform({ a: 1, b: 1 })).toEqual({ a: 2, b: 1 })
     // Field not in config
-    expect(transform({ a: 1, c: 1 })).toEqual({ a: 2, c: 1 })
+    expect(transform({ a: 1, c: 1 })).toEqual({ a: 2})
     // Empty object
     expect(transform({})).toEqual({})
     // Default header transformation (_.startCase)
