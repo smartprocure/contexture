@@ -6,7 +6,10 @@ let checkPopulate = ({ include: nodeIncludes, populate }) =>
   _.reduce(
     (incs, { as, localFieldName, localField, include }) => {
       localFieldName = as || localFieldName
-      if (!_.includes(localFieldName, incs) && !_.find(_.startsWith(`${localFieldName}.`), incs)) {
+      if (
+        !_.includes(localFieldName, incs) &&
+        !_.find(_.startsWith(`${localFieldName}.`), incs)
+      ) {
         throw Error(`Cannot populate an unincluded field: ${localField}`)
       }
       return _.concat(
