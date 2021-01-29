@@ -1,11 +1,16 @@
 import _ from 'lodash/fp'
 import { updateMany } from './futil'
+import F from 'futil'
 
 // Maps contexture schemas to tranforms for fast-csv
 export let schemaToCSVTransforms = (schema, {logger = _.noop, header = true, include } = {}) => {
   let count = 0
+  let transformedHeaders = include && _.reduce((acc, k) => console.log({k, acc}) || ({...acc, [k]: _.get(`${k}.label`, schema) || _.startCase(k) }), {}, include)
+  console.log(transformedHeaders)
+
   let headers = _.mapValues('label', schema)
   return {
+    transformedHeaders,
     transformHeaders: key => headers[key] || _.startCase(key),
     // NOTE: for whatever reason you can't use a function declared
     // by _.flow as transaform, just `transform: _.identity` works as expected

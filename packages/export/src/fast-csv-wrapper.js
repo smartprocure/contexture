@@ -3,17 +3,21 @@ import { format as formatCSV } from '@fast-csv/format'
 import { keysToObject } from './futil'
 import { isIterable, isAsyncIterable } from './utils'
 
-export let format = ({ transformHeaders = x => x, onWrite = _.noop, includeEndRowDelimiter = true, ...props }) => {
+export let format = ({ transformHeaders = x => x, transformedHeaders = null, onWrite = _.noop, includeEndRowDelimiter = true, ...props }) => {
   let csv = formatCSV({...props, headers: true, includeEndRowDelimiter})
   let records = 0
 
   // Write headers as data since fast-csv doesn't support transformHeaders natively yet
   // If headers are ['a', 'b'], write a record like this: `{ a : transformHeaders('a'), b: transformHeaders('b') }`
   let writeHeaders = _.once(data => {
+    if (!_.isNull(transformedHeaders)) {
+      csv.write(transformedHeaders)
+      return
+    }
     let headers = props.headers || _.keys(data[0] || data)
     csv.write(keysToObject(transformHeaders, headers))
   })
-  
+
   // object array support
   // return the number of records written
   let writeRecordOrRecords = data => {
