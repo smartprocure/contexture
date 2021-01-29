@@ -1,3 +1,6 @@
+#0.22.1
+* [Results] further improved `as`-aware `checkPopulate`
+
 #0.22.0
 * [Results] Don't run checkPopulate function on results nodes when `include` is missing or empty
 
