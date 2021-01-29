@@ -421,6 +421,18 @@ describe('results', () => {
   describe('checkPopulate', () => {
     it('should throw on an unincluded local field', () => {
       let node = {
+        include: ['a'],
+        populate: {
+          b: {
+            localField: 'b',
+            include: ['x', 'y'],
+          },
+        },
+      }
+      expect(() => checkPopulate(node)).to.throw()
+    })
+    it('should not throw on an unincluded child path if a parent is included', () => {
+      let node = {
         include: ['createdBy', '_createdByOrganization'],
         populate: {
           createdBy: {
@@ -432,7 +444,7 @@ describe('results', () => {
           },
         },
       }
-      expect(() => checkPopulate(node)).to.throw()
+      expect(() => checkPopulate(node)).not.to.throw()
     })
 
     it('should not throw when include checks out', () => {
