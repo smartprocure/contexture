@@ -2,7 +2,7 @@ import _ from 'lodash/fp'
 import { updateMany } from './futil'
 
 // Maps contexture schemas to tranforms for fast-csv
-export let schemaToCSVTransforms = (schema, logger = _.noop) => {
+export let schemaToCSVTransforms = (schema, {logger = _.noop, header = true } = {}) => {
   let count = 0
   let headers = _.mapValues('label', schema)
   return {
@@ -13,12 +13,13 @@ export let schemaToCSVTransforms = (schema, logger = _.noop) => {
     // _.flow might be hitting the fast-csv callback api for transform but not really sure
     transform: row => _.flow(
       _.cond([
-        [() => count === 0, x => x],
+        [() => header && count === 0, x => x],
         [_.stubTrue, _.flow(
           updateMany(_.mapValues('display', schema)),
         )],
       ]),
-      _.tap(record => logger(++count, record))
+      _.tap(record => logger(count, record)),
+      _.tap(() => count++),
     )(row),
     writeHeaders: false
   }
@@ -30,6 +31,6 @@ export let schemaToCSVTransformsWithLogging = (
   total,
   logger = console.info
 ) =>
-  schemaToCSVTransforms(schema, count =>
-    logger(`Records ${count} of ${total}`)
-  )
+  schemaToCSVTransforms(schema, {
+    logger: count => logger(`Records ${count} of ${total}`)
+  })

@@ -27,7 +27,7 @@ describe('utils', () => {
     let { transform, transformHeaders } = schemaToCSVTransforms({
       a: { display: () => 2 },
       b: { label: 'Field B' },
-    })
+    }, { header: false })
     // Display
     expect(transform({ a: 1 })).toEqual({ a: 2 })
     // No display but label
@@ -44,7 +44,7 @@ describe('utils', () => {
   it('schemaTransforms nested fields', () => {
     let { transform } = schemaToCSVTransforms({
       'person.age': { display: x => `${x} years` },
-    })
+    }, { header: false })
     expect(transform({ person: { age: 10 } })).toEqual({
       person: { age: '10 years' },
     })

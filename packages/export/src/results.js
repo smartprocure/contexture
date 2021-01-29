@@ -18,6 +18,7 @@ export default ({ service, tree, totalPages = 100, ...node }) => {
   let scrollId
 
   let result = {
+    include: node.include,
     getTotalRecords: async () => {
       let data = await run({ pageSize: 1, page: 1 })
       let totalRecords = resultField('totalRecords', data)
