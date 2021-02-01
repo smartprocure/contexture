@@ -7,7 +7,7 @@ export default ({ service, tree, ...node }) => {
   let done
 
   let result = {
-    getTotalRecords: async () => {
+    async getTotalRecords() {
       let result = await run({
         key: 'cardinality',
         type: 'cardinality',
@@ -22,7 +22,7 @@ export default ({ service, tree, ...node }) => {
         key: 'stats',
         type: 'terms_stats',
         key_field,
-        size: size || (await getTotalRecords()),
+        size: size || (await result.getTotalRecords()),
         ...node
       })
       done = true

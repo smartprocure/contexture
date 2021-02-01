@@ -1,4 +1,3 @@
-import _ from 'lodash/fp'
 import { setFilterOnly } from '../src/utils'
 import { schemaToCSVTransforms } from '../src/schemaToCSVTransforms'
 

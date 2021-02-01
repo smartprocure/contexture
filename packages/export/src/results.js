@@ -19,14 +19,14 @@ export default ({ service, tree, totalPages = 100, ...node }) => {
 
   let result = {
     include: node.include,
-    getTotalRecords: async () => {
+    async getTotalRecords() {
       let data = await run({ pageSize: 1, page: 1 })
       let totalRecords = resultField('totalRecords', data)
       let expectedRecords = totalPages * pageSize
       return totalRecords < expectedRecords ? totalRecords : expectedRecords
     },
     hasNext: async () => page <= totalPages && page <= Math.ceil((await result.getTotalRecords()) / pageSize),
-    getNext: async () => {
+    async getNext() {
       // cache current node so it can be inspected later for easy debugging
       let node = result.node = await run({ page, scrollId, skipCount: true })
       scrollId = node.context.scrollId

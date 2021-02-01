@@ -1,5 +1,4 @@
 import _ from 'lodash/fp'
-import results from '../src/results'
 import terms_stats from '../src/terms_stats'
 
 describe('terms_stats', () => {

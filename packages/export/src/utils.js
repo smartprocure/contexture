@@ -26,7 +26,7 @@ export let addIterator = obj => ({
 })
 
 export let isIterable = object =>
-  object != null && typeof object[Symbol.iterator] === 'function'
+  object !== null && typeof object[Symbol.iterator] === 'function'
 
 export let isAsyncIterable = object =>
-  object != null && typeof object[Symbol.asyncIterator] === 'function'
+  object !== null && typeof object[Symbol.asyncIterator] === 'function'

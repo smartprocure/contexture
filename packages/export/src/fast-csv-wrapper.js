@@ -33,7 +33,7 @@ export let format = ({ transformHeaders = x => x, transformedHeaders = null, onW
   return {
     pipe: x => csv.pipe(x),
     end: () => csv.end(),
-    write: async data => {
+    async write(data) {
       // asyncIterator support
       if (isAsyncIterable(data))
         for await (let item of data)
