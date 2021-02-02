@@ -37,7 +37,7 @@ FiltersBox.displayName = 'FiltersBox'
 
 let BasicSearchFilters = ({
   setMode,
-  disableAdvanced,
+  disableAdvancedMode,
   trees,
   children,
   BasicFilters,
@@ -58,7 +58,7 @@ let BasicSearchFilters = ({
             Hide Filters
           </DropdownItem>
           <TreePauseButton children={children} Component={DropdownItem} />
-          {!disableAdvanced && (
+          {!disableAdvancedMode && (
             <DropdownItem onClick={() => setMode('builder')}>
               Advanced Search Builder
             </DropdownItem>
@@ -85,7 +85,7 @@ let BuilderSearchFilters = ({ setMode, trees, BuilderFilters }) => (
 let SearchFilters = ({
   mode,
   setMode,
-  disableAdvanced,
+  disableAdvancedMode,
   children, // pass allowDuplicateFields in children to override uniqueFields
   BasicFilters = FiltersBox,
   BuilderFilters = QueryBuilder,
@@ -93,7 +93,7 @@ let SearchFilters = ({
   let trees = _.flow(React.Children.toArray, _.map('props'))(children)
   return mode === 'basic' ? (
     <BasicSearchFilters
-      {...{ trees, setMode, disableAdvanced, children, BasicFilters }}
+      {...{ trees, setMode, disableAdvancedMode, children, BasicFilters }}
     />
   ) : mode === 'builder' ? (
     <BuilderSearchFilters {...{ trees, setMode, BuilderFilters }} />
