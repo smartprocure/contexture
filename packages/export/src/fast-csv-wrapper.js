@@ -1,5 +1,6 @@
 import _ from 'lodash/fp'
 import { format as formatCSV } from '@fast-csv/format'
+import F from 'futil'
 import { keysToObject } from './futil'
 import { isIterable, isAsyncIterable } from './utils'
 
@@ -30,24 +31,37 @@ export let format = ({ transformHeaders = x => x, transformedHeaders = null, onW
       return 1
     }
   }
+
+  let callOnWrite = _.throttle(
+    1000, // update at most once a second
+    () => onWrite({ records })
+  )
+
   return {
     pipe: x => csv.pipe(x),
     end: () => csv.end(),
     async write(data) {
       // asyncIterator support
       if (isAsyncIterable(data))
-        for await (let item of data)
+        for await (let item of data) {
           records = records + writeRecordOrRecords(item)
+          await callOnWrite()
+        }
 
       // iterator support
       else if (isIterable(data))
-        for (let item of data)
+        for (let item of data) {
           records = records + writeRecordOrRecords(item)
+          await callOnWrite()
+        }
 
       // default
-      else records = records + writeRecordOrRecords(data)
+      else {
+        records = records + writeRecordOrRecords(data)
+        await callOnWrite()
+      }
 
-      await onWrite({ records })
+      await callOnWrite.flush()
     },
   }
 }
