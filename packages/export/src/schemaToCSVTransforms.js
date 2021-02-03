@@ -1,9 +1,9 @@
 import _ from 'lodash/fp'
-import { updateMany } from './futil'
+import { updateMany, ensureKeys } from './futil'
 import F from 'futil'
 
 // Maps contexture schemas to tranforms for fast-csv
-export let schemaToCSVTransforms = (schema, {logger = _.noop, header = true, include } = {}) => {
+export let schemaToCSVTransforms = (schema, {logger = _.noop, header = true, include, displayDefault=_.identity} = {}) => {
   let count = 0
   let transformedHeaders =  include && F.arrayToObject(_.identity,v=>_.getOr(_.startCase(v),`${v}.label`,schema),include)
 
@@ -19,7 +19,7 @@ export let schemaToCSVTransforms = (schema, {logger = _.noop, header = true, inc
       include ? _.pick(include) : _.identity,
       _.cond([
         [() => header && count === 0, _.identity], // don't format the header
-        [_.stubTrue, updateMany(_.mapValues('display', schema))],
+        [_.stubTrue, updateMany(_.mapValues(o => o.display || displayDefault, schema))],
       ]),
       _.tap(record => logger(count, record)),
       _.tap(() => count++),
