@@ -6,6 +6,7 @@ import F from 'futil'
 export let schemaToCSVTransforms = (schema, {logger = _.noop, header = true, include, displayDefault=_.identity} = {}) => {
   let count = 0
   let transformedHeaders =  include && F.arrayToObject(_.identity,v=>_.getOr(_.startCase(v),`${v}.label`,schema),include)
+  if (include) schema = ensureKeys(include, schema, {})
 
   let headers = _.mapValues('label', schema)
   return {

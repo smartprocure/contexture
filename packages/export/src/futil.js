@@ -28,3 +28,9 @@ export let keysToObject = _.curry(
 //     result[value] = f(value)
 //     return result
 //   }, {})
+
+// Fills in missing keys on an object with a default value
+export let ensureKeys = _.curry(
+  (keys, data, defaultValue = '') =>
+    _.defaults(keysToObject(() => defaultValue, keys), data)
+)

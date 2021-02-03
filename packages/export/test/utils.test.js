@@ -48,6 +48,16 @@ describe('utils', () => {
       person: { age: '10 years' },
     })
   })
+  it('schemaTransforms displayDefault', () => {
+    let { transform } = schemaToCSVTransforms({}, {
+      include: ['person.age'],
+      header: false,
+      displayDefault: x => `${x} years`,
+    })
+    expect(transform({ person: { age: 10 } })).toEqual({
+      person: { age: '10 years'},
+    })
+  })
   it('schemaTransforms no config', () => {
     let { transform } = schemaToCSVTransforms()
     expect(transform({ a: 10 })).toEqual({ a: 10 })
