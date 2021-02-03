@@ -18,10 +18,8 @@ export let schemaToCSVTransforms = (schema, {logger = _.noop, header = true, inc
     transform: row => _.flow(
       include ? _.pick(include) : _.identity,
       _.cond([
-        [() => header && count === 0, x => x], // don't format the header
-        [_.stubTrue, _.flow(
-          updateMany(_.mapValues('display', schema)),
-        )],
+        [() => header && count === 0, _.identity], // don't format the header
+        [_.stubTrue, updateMany(_.mapValues('display', schema))],
       ]),
       _.tap(record => logger(count, record)),
       _.tap(() => count++),
