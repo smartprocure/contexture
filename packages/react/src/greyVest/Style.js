@@ -132,6 +132,12 @@ export default () => (
         /* Go on top of table content */
         z-index: 2; 
       }
+      
+      .gv-table th.sticky-column-header {
+        /* Go on top of table headers */
+        z-index: 3; 
+      }
+      
 
       .gv-table th > span {
         display: flex;
@@ -159,6 +165,8 @@ export default () => (
         box-shadow: rgba(69,69,69,.1) 5px -2px 10px 4px;
       }
       
+      
+      .gv-table th.sticky-column-header:before,
       .gv-table th:last-child:before {
         box-shadow: rgba(69,69,69,.1) 10px 8px 10px -6px;
       }
@@ -174,6 +182,13 @@ export default () => (
         background: #fff;
       }
       
+      .gv-table td.sticky-column {
+        box-shadow: rgba(69,69,69,.1) 7px 7px 10px -3px;
+        z-index: 1; 
+      }
+      
+      .gv-table th.sticky-column-header + th > span,
+      .gv-table td.sticky-column + td,
       .gv-table th:first-child > span ,
       .gv-table td:first-child {
         padding-left: ${2 * tableCellPadding}px; 

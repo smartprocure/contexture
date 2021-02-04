@@ -35,8 +35,11 @@ let popoverStyle = {
 let HeaderCellDefault = _.flow(
   setDisplayName('HeaderCell'),
   observer
-)(({ activeFilter, style, children }) => (
-  <th style={{ ...(activeFilter ? { fontWeight: 900 } : {}), ...style }}>
+)(({ activeFilter, style, children, ...props }) => (
+  <th
+    style={{ ...(activeFilter ? { fontWeight: 900 } : {}), ...style }}
+    {...props}
+  >
     {children}
   </th>
 ))
@@ -53,6 +56,7 @@ let Header = ({
   mapNodeToProps,
   fields,
   visibleFields,
+  isStickyColumn,
   isLastColumn,
   theme: {
     DropdownItem,
@@ -90,8 +94,10 @@ let Header = ({
   let Label = label
   return (
     <HeaderCell
+      className={isStickyColumn ? 'sticky-column-header' : 0}
       style={{
         cursor: hideMenu ? 'default' : 'pointer',
+        left: isStickyColumn ? 0 : '',
       }}
       activeFilter={_.get('hasValue', filterNode)}
     >
