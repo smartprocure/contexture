@@ -17,6 +17,7 @@ let TableBody = ({
   getRowKey = _.get('_id'),
   blankRows,
   pageSize,
+  stickyColumn,
 }) => {
   let results = blankRows
     ? addBlankRows(getResults(node), pageSize, '_id')
@@ -33,7 +34,14 @@ let TableBody = ({
             >
               {_.map(
                 ({ field, display = x => x, Cell = 'td' }) => (
-                  <Cell key={field}>
+                  <Cell
+                    key={field}
+                    className={field === stickyColumn ? 'sticky-column' : ''}
+                    style={{
+                      position: field === stickyColumn ? 'sticky' : '',
+                      left: 0,
+                    }}
+                  >
                     {F.when(
                       () => x.isBlank,
                       blankResult,

@@ -33,6 +33,7 @@ let ResultTable = ({
   mapNodeToProps = () => ({}),
   pageSizeOptions, // an array of options to set the # of rows per page (default [20, 50, 100, 250])
   limitedResults,
+  stickyColumn,
   footerStyle,
   theme: { Table },
 }) => {
@@ -97,6 +98,7 @@ let ResultTable = ({
                     key={x.field}
                     field={x}
                     isLastColumn={i === visibleFields.length - 1}
+                    isStickyColumn={stickyColumn && x.field === stickyColumn}
                     {...headerProps}
                   />
                 ),
@@ -116,6 +118,7 @@ let ResultTable = ({
               getRowKey,
               blankRows,
               pageSize: Math.min(node.pageSize, totalRecords),
+              stickyColumn,
             }}
           />
         </Table>
