@@ -19,7 +19,9 @@ export default ({ service, tree, totalPages = 100, ...node }) => {
 
   let result = {
     include: node.include,
+    totalRecords: undefined, // memoize
     async getTotalRecords() {
+      if (_.isNumber(result.totalRecords)){ return result.totalRecords }
       let data = await run({ pageSize: 1, page: 1 })
       let totalRecords = resultField('totalRecords', data)
       let expectedRecords = totalPages * pageSize
