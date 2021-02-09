@@ -1,6 +1,5 @@
 import _ from 'lodash/fp'
 import { format as formatCSV } from '@fast-csv/format'
-import F from 'futil'
 import { keysToObject } from './futil'
 import { isIterable, isAsyncIterable } from './utils'
 
