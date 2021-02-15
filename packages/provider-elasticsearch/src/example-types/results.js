@@ -1,6 +1,6 @@
 let F = require('futil')
 let _ = require('lodash/fp')
-let { highlightResults, arrayToHighlightsFieldMap } = require('../highlighting')
+let { highlightResults, arrayToHighlightsFieldMap } = require('../utils/highlighting')
 let { getField } = require('../fields')
 
 module.exports = {
