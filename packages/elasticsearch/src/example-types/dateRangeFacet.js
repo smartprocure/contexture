@@ -1,6 +1,6 @@
 let F = require('futil')
 let _ = require('lodash/fp')
-let { getDateIfValid, rollingRangeToDates } = require('../dateUtil')
+let { getDateIfValid, rollingRangeToDates } = require('../utils/dateUtil')
 
 let getDateRange = (range, timezone) => {
   let { from, to } = rollingRangeToDates(range, timezone)
