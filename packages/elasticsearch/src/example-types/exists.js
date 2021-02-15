@@ -1,5 +1,5 @@
 let _ = require('lodash/fp')
-let { negate } = require('../elasticDSL')
+let { negate } = require('../utils/elasticDSL')
 
 module.exports = {
   hasValue: ({ value }) => _.isBoolean(value),

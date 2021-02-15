@@ -1,7 +1,7 @@
 let _ = require('lodash/fp')
 let unidecode = require('unidecode')
 let { toSafeRegex } = require('../utils/regex')
-let { negate } = require('../elasticDSL')
+let { negate } = require('../utils/elasticDSL')
 
 module.exports = {
   hasValue: node => node.value || _.get('values.length', node),
