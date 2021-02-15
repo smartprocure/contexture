@@ -1,7 +1,7 @@
 let {
   highlightResults,
   arrayToHighlightsFieldMap,
-} = require('../src/highlighting')
+} = require('../../src/utils/highlighting')
 let { expect } = require('chai')
 
 describe('highlighting', () => {
