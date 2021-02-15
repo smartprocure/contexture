@@ -1,6 +1,6 @@
 let _ = require('lodash/fp')
 let unidecode = require('unidecode')
-let { toSafeRegex } = require('../regex')
+let { toSafeRegex } = require('../utils/regex')
 let { negate } = require('../elasticDSL')
 
 module.exports = {
