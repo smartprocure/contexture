@@ -1,6 +1,7 @@
 let _ = require('lodash/fp')
 
-let maybeAppend = (suffix, str) => _.endsWith(suffix, str) ? str : str + suffix
+let maybeAppend = (suffix, str) =>
+  _.endsWith(suffix, str) ? str : str + suffix
 
 let dot = x => (x ? `.${x}` : '')
 
