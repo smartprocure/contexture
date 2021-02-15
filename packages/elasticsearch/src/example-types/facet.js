@@ -1,6 +1,6 @@
 let _ = require('lodash/fp')
 let F = require('futil')
-let { buildRegexQueryForWords } = require('../regex')
+let { buildRegexQueryForWords } = require('../utils/regex')
 let { getField } = require('../fields')
 let { negate, elasticsearchIntegerMax } = require('../elasticDSL')
 

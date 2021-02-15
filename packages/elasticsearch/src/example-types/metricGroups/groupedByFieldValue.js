@@ -1,5 +1,5 @@
 let { statsAggs, simplifyBuckets } = require('./utils')
-let { buildRegexQueryForWords } = require('../../regex')
+let { buildRegexQueryForWords } = require('../../utils/regex')
 let { getField } = require('../../fields')
 
 let getSortField = field => {

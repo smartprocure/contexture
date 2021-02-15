@@ -1,4 +1,4 @@
-let regex = require('../src/regex')
+let regex = require('../../src/utils/regex')
 let { expect } = require('chai')
 
 describe('regex', () => {

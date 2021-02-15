@@ -1,6 +1,6 @@
 var _ = require('lodash/fp')
 var esTwoLevel = require('./esTwoLevelAggregation').result
-let { buildRegexQueryForWords } = require('../../regex')
+let { buildRegexQueryForWords } = require('../../utils/regex')
 let { getField } = require('../../fields')
 
 let orderField = ({ include, order = 'sum' }) =>
