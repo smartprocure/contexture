@@ -8,8 +8,8 @@ let getSortField = field => {
   return `${field}.value`
 }
 
-let buildQuery = (
-  {
+let buildQuery = (node, schema) => {
+  let {
     statsField,
     stats,
     groupField,
@@ -17,9 +17,7 @@ let buildQuery = (
     filter,
     // sortField can be key, count, or stat name - min, max, avg, sum as long as its in stats
     sort: { field: sortField = 'sum', order = 'desc' } = {}, // todo: support array sort for multi-level
-  },
-  schema
-) => {
+  } = node
   let field = getField(schema, groupField)
   let query = {
     aggs: {
