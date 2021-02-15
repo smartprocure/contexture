@@ -174,9 +174,9 @@ describe('metricGroups utils', () => {
   })
   describe('simplifyAggregations', () => {
     it('should work on value (cardinality example)', () => {
-      expect(simplifyAggregations({ cardinality: { value: 471 } })).to.eql({
-        cardinality: 471,
-      })
+      let input = { cardinality: { value: 471 } }
+      let expected = { cardinality: 471 }
+      expect(simplifyAggregations(input)).to.eql(expected)
     })
     it('should work on values (percentiles example)', () => {
       expect(

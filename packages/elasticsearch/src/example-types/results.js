@@ -14,9 +14,7 @@ module.exports = {
     let searchObj = {
       from: startRecord,
       size: pageSize,
-      sort: {
-        [sortField]: node.sortDir || 'desc',
-      },
+      sort: { [sortField]: node.sortDir || 'desc' },
       explain: node.explain,
       // Without this, ES7+ stops counting at 10k instead of returning the actual count
       track_total_hits: true,
