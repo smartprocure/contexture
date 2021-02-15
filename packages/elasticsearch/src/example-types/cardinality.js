@@ -1,4 +1,4 @@
-let { getField } = require('../fields')
+let { getField } = require('../utils/fields')
 
 module.exports = {
   validContext: node => node.field,

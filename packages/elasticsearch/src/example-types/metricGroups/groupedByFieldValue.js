@@ -1,6 +1,6 @@
 let { statsAggs, simplifyBuckets } = require('./utils')
 let { buildRegexQueryForWords } = require('../../utils/regex')
-let { getField } = require('../../fields')
+let { getField } = require('../../utils/fields')
 
 let getSortField = field => {
   if (field === 'count') return '_count'
