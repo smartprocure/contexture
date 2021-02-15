@@ -9,6 +9,7 @@
 * Remove last bit of non fp lodash
 * Removed directory-metagen dependency
 * New node types now focus on exporting a buildQuery function to make them more easily testable
+* Internal - rearranged directory structure to clearly separate utils from types and the provider core
 * New Nodes!
   * `valuesDelta` - replaces `termsDelta`, standardized input/output names
   * `groupedByFieldValue` - replaces `terms_stats` and `termsStatsHits`

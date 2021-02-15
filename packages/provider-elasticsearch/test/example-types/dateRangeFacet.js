@@ -1,6 +1,6 @@
 let _ = require('lodash/fp')
 let { expect } = require('chai')
-let { getDateIfValid, rollingRangeToDates } = require('../../src/dateUtil')
+let { getDateIfValid, rollingRangeToDates } = require('../../src/utils/dateUtil')
 let dateRangeFacet = require('../../src/example-types/dateRangeFacet')
 
 let commonFilterParts = {

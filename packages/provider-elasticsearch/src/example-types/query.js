@@ -1,5 +1,5 @@
 let _ = require('lodash/fp')
-let utils = require('../luceneQueryUtils')
+let utils = require('../utils/luceneQueryUtils')
 
 module.exports = {
   hasValue: _.get('query.length'),
