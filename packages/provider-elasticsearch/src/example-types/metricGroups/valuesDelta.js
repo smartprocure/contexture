@@ -1,5 +1,5 @@
 let _ = require('lodash/fp')
-let { getField } = require('../../fields')
+let { getField } = require('../../utils/fields')
 let { buildFilter, elasticsearchIntegerMax } = require('../../utils/elasticDSL')
 
 let buildQuery = (
