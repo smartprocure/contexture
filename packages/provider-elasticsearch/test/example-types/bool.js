@@ -1,44 +1,25 @@
-let bool = require('../../src/example-types/bool')
+let { hasValue, filter } = require('../../src/example-types/bool')
 let { expect } = require('chai')
 
 describe('bool', function() {
   describe('hasValue', () => {
-    let node = {
-      type: 'bool',
-      field: 'test',
-    }
     it('should detect a boolean value only', () => {
-      expect(bool.hasValue({ ...node, value: true })).to.be.true
-      expect(bool.hasValue({ ...node, value: false })).to.be.true
-      expect(bool.hasValue({ ...node, value: null })).to.be.false
-      expect(bool.hasValue({ ...node, value: undefined })).to.be.false
-      expect(bool.hasValue(node)).to.be.false
+      let node = { type: 'bool', field: 'test' }
+      expect(hasValue({ ...node, value: true })).to.be.true
+      expect(hasValue({ ...node, value: false })).to.be.true
+      expect(hasValue({ ...node, value: null })).to.be.false
+      expect(hasValue({ ...node, value: undefined })).to.be.false
+      expect(hasValue(node)).to.be.false
     })
   })
   it('should filter properly', function() {
-    expect(
-      bool.filter({
-        type: 'bool',
-        field: 'test',
-        value: true,
-      })
-    ).to.deep.equal({
-      term: {
-        test: true,
-      },
-    })
+    let input = { type: 'bool', field: 'test', value: true }
+    let expected = { term: { test: true } }
+    expect(filter(input)).to.deep.equal(expected)
   })
   it('should filter properly if false', function() {
-    expect(
-      bool.filter({
-        type: 'bool',
-        field: 'test',
-        value: false,
-      })
-    ).to.deep.equal({
-      term: {
-        test: false,
-      },
-    })
+    let input = { type: 'bool', field: 'test', value: false }
+    let expected = { term: { test: false } }
+    expect(filter(input)).to.deep.equal(expected)
   })
 })
