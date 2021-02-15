@@ -1,5 +1,5 @@
 let { statsAggs, simplifyBuckets } = require('./utils')
-let { calcSmartInterval } = require('../../smartInterval')
+let { calcSmartInterval } = require('../../utils/smartInterval')
 let statistical = require('../statistical')
 let getStats = search => field => statistical.result({ field }, search)
 
