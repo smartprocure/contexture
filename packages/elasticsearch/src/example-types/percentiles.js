@@ -1,15 +1,14 @@
+let F = require('futil')
 let _ = require('lodash/fp')
 
 module.exports = {
   validContext: node => node.field,
-  result: (node, search) =>
+  result: ({ field, percents, keyed }, search) =>
     search({
       aggs: {
         percentiles: {
-          percentiles: _.pick(['field', 'percents', 'keyed'], node),
+          percentiles: F.omitNil({ field, percents, keyed }),
         },
       },
-    }).then(response => ({
-      percentiles: response.aggregations.percentiles,
-    })),
+    }).then(x => x.aggregations)
 }
