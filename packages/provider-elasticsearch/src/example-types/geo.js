@@ -1,5 +1,5 @@
 let _ = require('lodash/fp')
-let { negate } = require('../elasticDSL')
+let { negate } = require('../utils/elasticDSL')
 
 let hasValue = ({ location, latitude, longitude, radius, operator }) =>
   !!((location || (latitude && longitude)) && radius && operator)

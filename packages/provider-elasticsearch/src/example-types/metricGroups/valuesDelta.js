@@ -1,6 +1,6 @@
 let _ = require('lodash/fp')
 let { getField } = require('../../fields')
-let { buildFilter, elasticsearchIntegerMax } = require('../../elasticDSL')
+let { buildFilter, elasticsearchIntegerMax } = require('../../utils/elasticDSL')
 
 let buildQuery = (
   { groupField, background, foreground, size = elasticsearchIntegerMax },
