@@ -1,4 +1,4 @@
-let text = require('../../src/example-types/text')
+let text = require('../../../src/example-types/filters/text')
 let { expect } = require('chai')
 
 describe('text', () => {

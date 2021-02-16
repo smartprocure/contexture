@@ -1,4 +1,4 @@
-var exists = require('../../src/example-types/exists')
+var exists = require('../../../src/example-types/filters/exists')
 let { expect } = require('chai')
 
 describe('exists', () => {
