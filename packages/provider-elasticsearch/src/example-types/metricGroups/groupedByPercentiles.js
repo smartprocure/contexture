@@ -12,9 +12,7 @@ let boundariesToRanges = _.flow(
 
 let buildQuery = async (node, getPercentiles) => {
   let { statsField, stats, groupField: field } = node
-  let {
-    percentiles: { values },
-  } = await getPercentiles({ field, ...node })
+  let { percentiles: { values } } = await getPercentiles({ field, ...node })
   return {
     aggs: {
       groups: {
