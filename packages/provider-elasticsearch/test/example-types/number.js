@@ -1,8 +1,8 @@
-const _ = require('lodash/fp')
+let _ = require('lodash/fp')
 let number = require('../../src/example-types/number')
 let { expect } = require('chai')
 
-const lteExpectedValue = {
+let lteExpectedValue = {
   range: {
     test: {
       lte: 500,
@@ -10,7 +10,7 @@ const lteExpectedValue = {
   },
 }
 
-const gteExpectedValue = {
+let gteExpectedValue = {
   range: {
     test: {
       gte: 500,
@@ -121,13 +121,7 @@ describe('number/filter', () => {
             },
           },
           aggs: {
-            statistical: {
-              extended_stats: {
-                field: 'test',
-                missing: 0,
-              },
-            },
-            all_percentiles: {
+            percentiles: {
               percentiles: {
                 field: 'test',
                 percents: [0, 1, 99, 100],
@@ -137,8 +131,7 @@ describe('number/filter', () => {
         },
       },
     }
-    await number.result(value, esDSL => {
-      expect(esDSL).to.deep.equal(expectedDSL)
-    })
+    let output = number.buildQuery(value.field, value.min, value.max, 1)
+    expect(output).to.deep.equal(expectedDSL)
   })
 })

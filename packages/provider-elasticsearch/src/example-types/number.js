@@ -1,76 +1,69 @@
-const _ = require('lodash/fp')
-const util = require('./numberUtil')
+let _ = require('lodash/fp')
+let F = require('futil')
+
+let pickNumbers = _.pickBy(_.isNumber)
+// toNumber but without casting null and '' to 0
+let safeNumber = (value) => !F.isBlank(value) && _.toNumber(value)
+let pickSafeNumbers = _.flow(_.mapValues(safeNumber), pickNumbers)
+
+let filter = ({ field, min, max }) => ({
+  range: { [field]: pickSafeNumbers({ gte: min, lte: max }) },
+})
+
+let buildQuery = (field, min, max, interval) => ({
+  aggs: {
+    range_filter: {
+      filter: filter({ field, min, max }),
+      aggs: {
+        percentiles: {
+          percentiles: { field, percents: [0, interval, 100 - interval, 100] },
+        },
+      },
+    },
+  },
+})
+
+let hasOutliers = (percentiles, rangeThreshold) => {
+  if (!percentiles) return {}
+  let { min, max, subsetMin, subsetMax } = percentiles
+  let range = max - min
+  return {
+    hasMin: (subsetMin - min) / range > rangeThreshold,
+    hasMax: (max - subsetMax) / range > rangeThreshold,
+  }
+}
+
+// Runs multiple iterations of the query while there are still outliers and remaining iterations
+let result = async (node, search) => {
+  let { field, min, max, percentileInterval = 1, rangeThreshold = 0.1 } = node
+  let iteration = 0
+  let maxIterations = 10
+  let outliers = { hasMin: true, hasMax: true }
+
+  while ((outliers.hasMin || outliers.hasMax) && iteration < maxIterations) {
+    let results = _.get(
+      'aggregations.range_filter.all_percentiles.values',
+      await search(buildQuery(field, min, max, percentileInterval))
+    )
+    let percentiles = {
+      min: results[0],
+      max: results[100],
+      subsetMin: results[percentileInterval],
+      subsetMax: results[100 - percentileInterval],
+    }
+    outliers = hasOutliers(percentiles, rangeThreshold)
+    if (outliers.hasMin) min = percentiles.subsetMin
+    if (outliers.hasMax) max = percentiles.subsetMax
+    iteration++
+  }
+
+  return { bestRange: { min, max } }
+}
 
 module.exports = {
-  hasValue: node => !_.isNil(node.min) || !_.isNil(node.max),
-  filter: ({ field, min, max }) => util.rangeFilter(field, min, max),
-  validContext: () => true,
-  async result(
-    {
-      field,
-      min,
-      max,
-      percentileInterval = 1,
-      rangeThreshold = 0.1,
-      findBestRange,
-    },
-    search
-  ) {
-    let results
-
-    if (findBestRange) {
-      let hasMaxOutlier = true
-      let hasMinOutlier = true
-      let minValue = min
-      let maxValue = max
-      let maxIteration = 10
-      let iterationCount = 1
-
-      while (
-        (hasMinOutlier || hasMaxOutlier) &&
-        iterationCount <= maxIteration
-      ) {
-        results = await util.getStatisticalResults(
-          search,
-          field,
-          minValue,
-          maxValue,
-          percentileInterval
-        )
-
-        let { statistical, percentiles } = results
-        let { min: rangeMin, max: rangeMax } = statistical
-        hasMaxOutlier =
-          percentiles &&
-          (rangeMax - percentiles.intervalMax) / (rangeMax - rangeMin) >
-            rangeThreshold
-        hasMinOutlier =
-          percentiles &&
-          (percentiles.intervalMin - rangeMin) / (rangeMax - rangeMin) >
-            rangeThreshold
-        if (hasMaxOutlier) {
-          maxValue = percentiles.intervalMax
-        }
-
-        if (hasMinOutlier) {
-          minValue = percentiles.intervalMin
-        }
-        iterationCount++
-      }
-
-      results = _.extend(results, {
-        bestRange: { min: minValue, max: maxValue },
-      })
-    } else {
-      results = await util.getStatisticalResults(
-        search,
-        field,
-        min,
-        max,
-        percentileInterval
-      )
-    }
-
-    return results
-  },
+  hasValue: ({ min, max }) => !_.isNil(min) || !_.isNil(max),
+  filter,
+  validContext: node => node.findBestRange,
+  result,
+  buildQuery,
 }
