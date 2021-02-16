@@ -27,7 +27,7 @@ module.exports = {
   buildQuery,
   validContext: node => node.groupField && node.statsField,
   async result(node, search) {
-    let response = await search(buildQuery(node, getPercentiles(search)))
+    let response = await search(await buildQuery(node, getPercentiles(search)))
     return { results: simplifyBuckets(response.aggregations.groups.buckets) }
   },
 }
