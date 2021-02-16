@@ -58,7 +58,6 @@
   * [Number]
     * Don't run stats/percentiles on number unless part of `findBestRange`, improving performance for the most common number filters cases
     * Context no longer includes statistical or percentile info, only bestRange results (and no longer runs an extra extended stats call!)
-    
   * [Terms_Stats]
     * Killed useless `caseSensitive` flag
   * [Text]

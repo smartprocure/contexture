@@ -1,5 +1,4 @@
 let F = require('futil')
-let _ = require('lodash/fp')
 
 module.exports = {
   validContext: node => node.field,
