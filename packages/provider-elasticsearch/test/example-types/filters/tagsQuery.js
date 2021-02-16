@@ -8,7 +8,7 @@ let {
   tagsToQueryString,
   hasValue,
   filter,
-} = require('../../src/example-types/tagsQuery')
+} = require('../../../src/example-types/filters/tagsQuery')
 
 let { expect } = require('chai')
 

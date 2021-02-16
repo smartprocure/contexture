@@ -1,5 +1,5 @@
-const geoType = require('../../src/example-types/geo')
-const utils = require('./testUtils')
+const geoType = require('../../../src/example-types/filters/geo')
+const utils = require('../testUtils')
 let { expect } = require('chai')
 let chai = require('chai')
 let chaiAsPromised = require('chai-as-promised')

@@ -1,4 +1,4 @@
-let query = require('../../src/example-types/query')
+let query = require('../../../src/example-types/filters/query')
 let { expect } = require('chai')
 
 describe('query', () => {

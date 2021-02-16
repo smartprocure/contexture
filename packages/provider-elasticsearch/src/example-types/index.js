@@ -1,17 +1,17 @@
 module.exports = {
   // Filtering Only Types
-  geo: require('./geo'),
+  geo: require('./filters/geo'),
   bool: require('./filters/bool'),
   date: require('./filters/date'),
-  text: require('./text'),
-  query: require('./query'),
-  exists: require('./exists'),
-  tagsText: require('./tagsText'),
-  tagsQuery: require('./tagsQuery'),
+  text: require('./filters/text'),
+  query: require('./filters/query'),
+  exists: require('./filters/exists'),
+  tagsText: require('./filters/tagsText'),
+  tagsQuery: require('./filters/tagsQuery'),
 
   // Combo Filter + Results
   facet: require('./filters/facet'),
-  number: require('./number'),
+  number: require('./filters/number'),
   dateRangeFacet: require('./filters/dateRangeFacet'),
 
   // Single Metrics
