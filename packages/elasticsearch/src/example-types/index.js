@@ -10,7 +10,7 @@ module.exports = {
   tagsQuery: require('./tagsQuery'),
 
   // Combo Filter + Results
-  facet: require('./facet'),
+  facet: require('./filters/facet'),
   number: require('./number'),
   dateRangeFacet: require('./filters/dateRangeFacet'),
 
