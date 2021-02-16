@@ -24,7 +24,6 @@ describe('All Example Types', function() {
       'groupedMetric',
       'matchStats',
       'number',
-      'numberRangeHistogram',
       'percentiles',
       'query',
       'rangeStats',

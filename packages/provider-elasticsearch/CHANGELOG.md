@@ -44,6 +44,7 @@
     * `perentileRange` (replaced with `groupedByPercentiles`)
     * `termsStatsHits` (replaced with `groupedByFieldValue`)
     * `matchCardinality` (replaced with `groupedByValuePartition`)
+    * `numberRangeHistogram` (no longer used, was a proof of concept of a number filter with a histogram of values - we'll recreate if needed in a simpler way)
   * [Results]
     * Kill `forceExclude`
     * Kill `verbose`
