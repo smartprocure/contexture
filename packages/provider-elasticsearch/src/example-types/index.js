@@ -1,8 +1,8 @@
 module.exports = {
   // Filtering Only Types
   geo: require('./geo'),
-  bool: require('./bool'),
-  date: require('./date'),
+  bool: require('./filters/bool'),
+  date: require('./filters/date'),
   text: require('./text'),
   query: require('./query'),
   exists: require('./exists'),
@@ -12,7 +12,7 @@ module.exports = {
   // Combo Filter + Results
   facet: require('./facet'),
   number: require('./number'),
-  dateRangeFacet: require('./dateRangeFacet'),
+  dateRangeFacet: require('./filters/dateRangeFacet'),
 
   // Single Metrics
   results: require('./results'),

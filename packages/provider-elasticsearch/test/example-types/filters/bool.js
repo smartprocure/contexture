@@ -1,4 +1,4 @@
-let { hasValue, filter } = require('../../src/example-types/bool')
+let { hasValue, filter } = require('../../../src/example-types/filters/bool')
 let { expect } = require('chai')
 
 describe('bool', function() {
