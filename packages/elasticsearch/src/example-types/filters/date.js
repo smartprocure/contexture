@@ -1,6 +1,6 @@
 let F = require('futil')
 let _ = require('lodash/fp')
-let { rollingRangeToDates, getDateIfValid } = require('../utils/dateUtil')
+let { rollingRangeToDates, getDateIfValid } = require('../../utils/dateUtil')
 
 let hasValue = ({ from, to, range }) =>
   range &&

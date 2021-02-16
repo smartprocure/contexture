@@ -1,4 +1,4 @@
-let date = require('../../src/example-types/date')
+let date = require('../../../src/example-types/filters/date')
 let { expect } = require('chai')
 
 describe('date/filter', () => {
