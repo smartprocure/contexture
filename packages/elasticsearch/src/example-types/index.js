@@ -38,5 +38,4 @@ module.exports = {
   matchStats: require('./legacy/matchStats'),
   // Legacy (wip)
   groupedMetric: require('./groupedMetric'),
-  numberRangeHistogram: require('./numberRangeHistogram'),
 }
