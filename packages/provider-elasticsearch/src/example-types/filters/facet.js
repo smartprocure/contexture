@@ -1,8 +1,8 @@
 let _ = require('lodash/fp')
 let F = require('futil')
-let { buildRegexQueryForWords } = require('../utils/regex')
-let { getField } = require('../utils/fields')
-let { negate, elasticsearchIntegerMax } = require('../utils/elasticDSL')
+let { buildRegexQueryForWords } = require('../../utils/regex')
+let { getField } = require('../../utils/fields')
+let { negate, elasticsearchIntegerMax } = require('../../utils/elasticDSL')
 
 module.exports = {
   hasValue: _.get('values.length'),
