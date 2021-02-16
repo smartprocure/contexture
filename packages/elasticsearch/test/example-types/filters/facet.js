@@ -1,6 +1,6 @@
 let _ = require('lodash/fp')
-let facet = require('../../src/example-types/facet')
-let { sequentialResultTest, testSchema } = require('./testUtils')
+let facet = require('../../../src/example-types/filters/facet')
+let { sequentialResultTest, testSchema } = require('../testUtils')
 let { expect } = require('chai')
 let facetTest = sequentialResultTest([
   {
