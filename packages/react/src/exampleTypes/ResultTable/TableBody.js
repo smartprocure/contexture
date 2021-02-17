@@ -5,6 +5,7 @@ import { observer } from 'mobx-react'
 import { getRecord, getResults } from '../../utils/schema'
 import HighlightedColumn from './HighlightedColumn'
 import { addBlankRows, blankResult } from '../../utils/format'
+import { withTheme } from '../../utils/theme'
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
 let TableBody = ({
@@ -13,17 +14,18 @@ let TableBody = ({
   fields,
   hiddenFields,
   schema,
-  Row = 'tr',
   getRowKey = _.get('_id'),
   blankRows,
   pageSize,
   stickyColumn,
+  theme: { Tbody = 'tbody', Tr = 'tr', Td = 'td' },
+  Row = Tr,
 }) => {
   let results = blankRows
     ? addBlankRows(getResults(node), pageSize, '_id')
     : getResults(node)
   return (
-    <tbody>
+    <Tbody>
       {!!results.length &&
         _.map(
           x => (
@@ -33,7 +35,7 @@ let TableBody = ({
               {...{ fields, visibleFields, hiddenFields }}
             >
               {_.map(
-                ({ field, display = x => x, Cell = 'td' }) => (
+                ({ field, display = x => x, Cell = Td }) => (
                   <Cell
                     key={field}
                     className={field === stickyColumn ? 'sticky-column' : ''}
@@ -64,8 +66,8 @@ let TableBody = ({
           ),
           results
         )}
-    </tbody>
+    </Tbody>
   )
 }
 
-export default observer(TableBody)
+export default _.flow(observer, withTheme)(TableBody)
