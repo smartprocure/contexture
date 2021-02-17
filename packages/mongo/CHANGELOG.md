@@ -1,5 +1,5 @@
 #0.22.2
-* fix the bug the response of facet remove the 0 value name option ( compactObject consider it  as a falsey value ).
+* fix the bug the response of facet remove the 0 value name option ( compactObject consider it  as a false value ).
 
 #0.22.1
 * [Results] further improved `as`-aware `checkPopulate`
