@@ -1,5 +1,9 @@
 let _ = require('lodash/fp')
-let { hasValue, filter, buildQuery } = require('../../../src/example-types/filters/number')
+let {
+  hasValue,
+  filter,
+  buildQuery,
+} = require('../../../src/example-types/filters/number')
 let { expect } = require('chai')
 
 let lteExpectedValue = { range: { test: { lte: 500 } } }
