@@ -1,5 +1,5 @@
 let _ = require('lodash/fp')
-let statsResults = require('../statistical').result
+let statsResults = require('./statistical').result
 let calcSmartInterval = require('../../utils/smartInterval').calcSmartInterval
 
 module.exports = {
