@@ -2,6 +2,9 @@ let { expect } = require('chai')
 let _ = require('lodash/fp')
 let facet = require('../../src/example-types/facet')
 let { ObjectId } = require('mongodb')
+require('mingo/init/system')
+
+
 let mingo = require('mingo')
 describe('facet', () => {
   describe('facet.hasValue', () => {
@@ -252,6 +255,29 @@ describe('facet', () => {
           { name: 1, count: 3 },
           { name: 2, count: 2 },
           { name: 3, count: 1 },
+        ],
+      })
+    })
+
+    it('should not filter the 0 value', async () => {
+      let activities = [
+        { _id: 1,  number: 0 },
+        { _id: 1, number: 1 }
+
+      ]
+      let node = {
+        field: 'number',
+      }
+
+      let result = await facet.result(node, agg =>
+        mingo.aggregate(activities, agg)
+      )
+
+      expect(result).to.deep.equal({
+        cardinality: 2,
+        options: [
+          { name: 0, count: 1 },
+          { name: 1, count: 1 },
         ],
       })
     })
