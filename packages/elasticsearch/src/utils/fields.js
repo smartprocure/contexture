@@ -9,4 +9,3 @@ let path = (schema, field) =>
 module.exports = {
   getField: (schema, field) => maybeAppend(path(schema, field), field),
 }
-
