@@ -46,6 +46,7 @@
     * `matchCardinality` (replaced with `groupedByValuePartition`)
     * `numberRangeHistogram` (no longer used, was a proof of concept of a number filter with a histogram of values - we'll recreate if needed in a simpler way)
   * [Results]
+    * Context no longer wraps everything in `response` - this was an unfortunate, many year old design artifact that is finally removed!
     * Kill `forceExclude`
     * Kill `verbose`
     * Kill `summaryView`
