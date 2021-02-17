@@ -9,5 +9,5 @@ module.exports = {
           percentiles: F.omitNil({ field, percents, keyed }),
         },
       },
-    }).then(x => x.aggregations)
+    }).then(x => x.aggregations),
 }

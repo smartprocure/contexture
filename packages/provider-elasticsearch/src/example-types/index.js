@@ -18,7 +18,7 @@ module.exports = {
   results: require('./results'),
   stats: require('./metricGroups/stats'),
   valuesDelta: require('./metricGroups/valuesDelta'),
-  
+
   // Metric Groups
   groupedByFieldValue: require('./metricGroups/groupedByFieldValue'),
   groupedByPercentiles: require('./metricGroups/groupedByPercentiles'),
@@ -26,7 +26,7 @@ module.exports = {
   groupedByNumberRanges: require('./metricGroups/groupedByNumberRanges'),
   groupedByNumberInterval: require('./metricGroups/groupedByNumberInterval'),
   groupedByValuePartition: require('./metricGroups/groupedByValuePartition'),
-  
+
   // Legacy (covered by metric groups)
   statistical: require('./legacy/statistical'),
   cardinality: require('./legacy/cardinality'),

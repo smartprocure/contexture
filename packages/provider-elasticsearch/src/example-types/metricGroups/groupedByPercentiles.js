@@ -16,7 +16,10 @@ let buildQuery = async (node, getStats) => {
   return {
     aggs: {
       groups: {
-        range: { field, ranges: boundariesToRanges(_.map('value', percentiles)) },
+        range: {
+          field,
+          ranges: boundariesToRanges(_.map('value', percentiles)),
+        },
         ...statsAggs(statsField, stats),
       },
     },
