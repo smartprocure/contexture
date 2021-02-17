@@ -1,4 +1,4 @@
-let { statsAggs, simplifyBuckets } = require('./utils')
+let { statsAggs, simplifyBuckets } = require('../../utils/elasticDSL')
 let { buildRegexQueryForWords } = require('../../utils/regex')
 let { getField } = require('../../utils/fields')
 

@@ -1,4 +1,4 @@
-let { statsAggs, simplifyBuckets } = require('./utils')
+let { statsAggs, simplifyBuckets } = require('../../utils/elasticDSL')
 
 let buildQuery = ({ groupField: field, statsField, stats, ranges }) => ({
   aggs: {

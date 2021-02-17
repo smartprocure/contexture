@@ -1,4 +1,4 @@
-let { statsAggs, simplifyBuckets } = require('./utils')
+let { statsAggs, simplifyBuckets } = require('../../utils/elasticDSL')
 let { calcSmartInterval } = require('../../utils/smartInterval')
 let { getStats } = require('./stats')
 
