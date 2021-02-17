@@ -95,30 +95,28 @@ module.exports = {
 
     return search(searchObj).then(results => ({
       scrollId: results._scroll_id,
-      response: {
-        // ES 7+ is total.value, ES 6- is hits.total
-        totalRecords: F.getOrReturn('value', results.hits.total),
-        startRecord: startRecord + 1,
-        endRecord: startRecord + results.hits.hits.length,
-        results: _.map(hit => {
-          let additionalFields
-          if (schemaHighlight) {
-            let highlightObject = highlightResults(
-              schemaHighlight, // The highlight configuration
-              hit, // The ES result
-              schema.elasticsearch.nestedPath,
-              resultColumns // The columns to return
-            )
-            additionalFields = highlightObject.additionalFields
-          }
+      // ES 7+ is total.value, ES 6- is hits.total
+      totalRecords: F.getOrReturn('value', results.hits.total),
+      startRecord: startRecord + 1,
+      endRecord: startRecord + results.hits.hits.length,
+      results: _.map(hit => {
+        let additionalFields
+        if (schemaHighlight) {
+          let highlightObject = highlightResults(
+            schemaHighlight, // The highlight configuration
+            hit, // The ES result
+            schema.elasticsearch.nestedPath,
+            resultColumns // The columns to return
+          )
+          additionalFields = highlightObject.additionalFields
+        }
 
-          // TODO - If nested path, iterate properties on nested path, filtering out nested path results unless mainHighlighted or relevant nested fields have "<b></b>" tags in them
-          return {
-            additionalFields: schemaHighlight ? additionalFields : [],
-            ...hit,
-          }
-        }, results.hits.hits),
-      },
+        // TODO - If nested path, iterate properties on nested path, filtering out nested path results unless mainHighlighted or relevant nested fields have "<b></b>" tags in them
+        return {
+          additionalFields: schemaHighlight ? additionalFields : [],
+          ...hit,
+        }
+      }, results.hits.hits),
     }))
   },
 }
