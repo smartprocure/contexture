@@ -4,7 +4,6 @@ let facet = require('../../src/example-types/facet')
 let { ObjectId } = require('mongodb')
 require('mingo/init/system')
 
-
 let mingo = require('mingo')
 describe('facet', () => {
   describe('facet.hasValue', () => {
@@ -261,9 +260,8 @@ describe('facet', () => {
 
     it('should not filter the 0 value', async () => {
       let activities = [
-        { _id: 1,  number: 0 },
-        { _id: 1, number: 1 }
-
+        { _id: 1, number: 0 },
+        { _id: 1, number: 1 },
       ]
       let node = {
         field: 'number',
