@@ -3,10 +3,10 @@ let {
   buildMetrics,
   simplifyBuckets,
   simplifyAggregations,
-} = require('../../../src/example-types/metricGroups/utils')
+} = require('../../src/utils/elasticDSL')
 let { expect } = require('chai')
 
-describe('metricGroups utils', () => {
+describe('elasticDSL utils', () => {
   describe('buildMetrics', () => {
     it('should work', () => {
       expect(buildMetrics('price')).to.eql({

@@ -1,4 +1,4 @@
-let { statsAggs, simplifyAggregations } = require('./utils')
+let { statsAggs, simplifyAggregations } = require('../../utils/elasticDSL')
 
 let buildQuery = ({ statsField, stats }) => statsAggs(statsField, stats)
 

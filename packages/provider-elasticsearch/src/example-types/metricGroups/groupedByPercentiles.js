@@ -1,6 +1,6 @@
 let _ = require('lodash/fp')
 let F = require('futil')
-let { statsAggs, simplifyBuckets } = require('./utils')
+let { statsAggs, simplifyBuckets } = require('../../utils/elasticDSL')
 let { getStats } = require('./stats')
 
 // [1, 2, 3] -> [{to: 1}, {from: 1, to: 2}, {from: 2, to: 3}, {from: 3}]

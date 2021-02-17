@@ -1,5 +1,5 @@
 let F = require('futil')
-let { statsAggs, simplifyBuckets } = require('./utils')
+let { statsAggs, simplifyBuckets } = require('../../utils/elasticDSL')
 
 let buildQuery = ({ statsField, stats, groupField, matchValue }) => ({
   aggs: {
