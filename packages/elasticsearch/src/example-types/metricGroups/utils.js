@@ -1,7 +1,7 @@
 let _ = require('lodash/fp')
 let F = require('futil')
-let objectify = F.arrayToObject(_.identity)
-let emptyObjectify = objectify(() => ({}))
+let keysToObject = F.arrayToObject(x => x) // futil candidate from exports
+let emptyObjectify = keysToObject(() => ({}))
 
 // Rename metricProps keys?   include -> _.source.includes, sort -> order, etc
 let buildMetrics = (field, metrics = ['min', 'max', 'avg', 'sum']) =>
