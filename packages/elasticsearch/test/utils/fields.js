@@ -1,11 +1,7 @@
-let { maybeAppend, getField } = require('../../src/utils/fields')
+let { getField } = require('../../src/utils/fields')
 let { expect } = require('chai')
 
 describe('field utils', () => {
-  it('maybeAppend should work', () => {
-    expect(maybeAppend('.txt', 'file')).to.eql('file.txt')
-    expect(maybeAppend('.txt', 'file.txt')).to.eql('file.txt')
-  })
   it('getField should work', () => {
     let schema = {
       fields: {

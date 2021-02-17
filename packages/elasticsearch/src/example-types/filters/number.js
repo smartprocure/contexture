@@ -1,10 +1,6 @@
 let _ = require('lodash/fp')
 let F = require('futil')
-
-let pickNumbers = _.pickBy(_.isNumber)
-// toNumber but without casting null and '' to 0
-let safeNumber = (value) => !F.isBlank(value) && _.toNumber(value)
-let pickSafeNumbers = _.flow(_.mapValues(safeNumber), pickNumbers)
+let { pickSafeNumbers } = require('../../utils/futil')
 
 let filter = ({ field, min, max }) => ({
   range: { [field]: pickSafeNumbers({ gte: min, lte: max }) },
