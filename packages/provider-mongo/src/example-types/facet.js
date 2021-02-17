@@ -141,7 +141,7 @@ module.exports = {
       ]),
     ]).then(([options, cardinality]) => ({
       cardinality: _.get('0.count', cardinality),
-      options: console.log(options)||_.map(
+      options: _.map(
         ({ _id, label, count }) =>
           F.omitNil({
             name: _id,
