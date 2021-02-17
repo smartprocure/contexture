@@ -143,7 +143,7 @@ module.exports = {
       cardinality: _.get('0.count', cardinality),
       options: _.map(
         ({ _id, label, count }) =>
-          F.compactObject({
+          F.omitNil({
             name: _id,
             count,
             ...facetValueLabel(node, label),
