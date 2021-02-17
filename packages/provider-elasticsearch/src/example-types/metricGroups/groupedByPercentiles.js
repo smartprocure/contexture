@@ -1,8 +1,7 @@
 let _ = require('lodash/fp')
 let F = require('futil')
 let { statsAggs, simplifyBuckets } = require('./utils')
-let percentiles = require('../percentiles')
-let getPercentiles = search => field => percentiles.result({ field }, search)
+let { getStats } = require('./stats')
 
 // [1, 2, 3] -> [{to: 1}, {from: 1, to: 2}, {from: 2, to: 3}, {from: 3}]
 let boundariesToRanges = _.flow(
@@ -10,13 +9,14 @@ let boundariesToRanges = _.flow(
   arr => F.push({ from: _.last(arr).to }, arr)
 )
 
-let buildQuery = async (node, getPercentiles) => {
-  let { statsField, stats, groupField: field } = node
-  let { percentiles: { values } } = await getPercentiles({ field, ...node })
+let buildQuery = async (node, getStats) => {
+  let { statsField, stats, groupField: field, percents } = node
+  // todo: Support keyed?
+  let { percentiles } = await getStats(field, { percentiles: { percents } })
   return {
     aggs: {
       groups: {
-        range: { field, ranges: boundariesToRanges(_.map('value', values)) },
+        range: { field, ranges: boundariesToRanges(_.map('value', percentiles)) },
         ...statsAggs(statsField, stats),
       },
     },
@@ -27,7 +27,7 @@ module.exports = {
   buildQuery,
   validContext: node => node.groupField && node.statsField,
   async result(node, search) {
-    let response = await search(await buildQuery(node, getPercentiles(search)))
+    let response = await search(await buildQuery(node, getStats(search)))
     return { results: simplifyBuckets(response.aggregations.groups.buckets) }
   },
 }
