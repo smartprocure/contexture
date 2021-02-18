@@ -14,7 +14,7 @@ import { withTheme } from '../../utils/theme'
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
 
-let DefaultRow = withTheme(({theme: {Tr = 'tr'}, ...props}) => (
+let DefaultRow = withTheme(({ theme: { Tr = 'tr' }, ...props }) => (
   <Tr
     {..._.omit(['record', 'fields', 'visibleFields', 'hiddenFields'], props)}
   />
