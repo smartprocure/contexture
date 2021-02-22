@@ -18,7 +18,7 @@ let TableBody = ({
   blankRows,
   pageSize,
   stickyColumn,
-  theme: { Tbody = 'tbody', Tr = 'tr', Td = 'td' },
+  theme: { Tbody, Tr, Td },
   Row = Tr,
 }) => {
   let results = blankRows

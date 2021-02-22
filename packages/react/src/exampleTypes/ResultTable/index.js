@@ -36,7 +36,7 @@ let ResultTable = ({
   limitedResults,
   stickyColumn,
   footerStyle,
-  theme: { Table, Thead = 'thead', Tr = 'tr' },
+  theme: { Table, Thead, Tr },
 }) => {
   // If there are no fields, we won't render anything. This is most definitely a
   // user error when it happens

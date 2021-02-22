@@ -7,7 +7,7 @@ import { withTheme } from '../../utils/theme'
 let HighlightedColumnHeader = ({
   node,
   results = _.result('slice', getResults(node)),
-  theme: { Th = 'th' },
+  theme: { Th },
   Cell = Th,
   hasAdditionalFields = !_.flow(
     _.map('additionalFields'),
