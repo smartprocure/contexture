@@ -34,14 +34,15 @@ let popoverStyle = {
 
 let HeaderCellDefault = _.flow(
   setDisplayName('HeaderCell'),
-  observer
-)(({ activeFilter, style, children, ...props }) => (
-  <th
+  observer,
+  withTheme
+)(({ activeFilter, style, children, theme: { Th }, ...props }) => (
+  <Th
     style={{ ...(activeFilter ? { fontWeight: 900 } : {}), ...style }}
     {...props}
   >
     {children}
-  </th>
+  </Th>
 ))
 
 let Header = ({

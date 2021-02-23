@@ -13,8 +13,8 @@ let HighlightedColumn = ({
   results = _.result('slice', getResults(node)),
   additionalFields = _.result('0.additionalFields.slice', results),
   schema,
-  Cell = 'td',
-  theme: { Modal, Table },
+  theme: { Modal, Table, Td },
+  Cell = Td,
 }) => {
   let viewModal = React.useState(false)
   return _.isEmpty(additionalFields) ? (

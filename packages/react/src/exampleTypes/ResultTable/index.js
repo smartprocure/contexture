@@ -9,15 +9,16 @@ import Header from './Header'
 import TableBody from './TableBody'
 import HighlightedColumnHeader from './HighlightedColumnHeader'
 import ResultTableFooter from './ResultTableFooter'
+import { withTheme } from '../../utils/theme'
 
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
 
-let Tr = props => (
-  <tr
+let DefaultRow = withTheme(({ theme: { Tr = 'tr' }, ...props }) => (
+  <Tr
     {..._.omit(['record', 'fields', 'visibleFields', 'hiddenFields'], props)}
   />
-)
+))
 
 let ResultTable = ({
   fields,
@@ -28,14 +29,14 @@ let ResultTable = ({
   tree,
   NoResultsComponent = 'No Results Found',
   IntroComponent = null, // Initial component to be shown instead of the grid when no data has been loaded
-  Row = Tr, // accept a custom Row component so we can do fancy expansion things
+  Row = DefaultRow, // accept a custom Row component so we can do fancy expansion things
   getRowKey, // allow passing a custom function to generate unique row key
   mapNodeToProps = () => ({}),
   pageSizeOptions, // an array of options to set the # of rows per page (default [20, 50, 100, 250])
   limitedResults,
   stickyColumn,
   footerStyle,
-  theme: { Table },
+  theme: { Table, Thead, Tr },
 }) => {
   // If there are no fields, we won't render anything. This is most definitely a
   // user error when it happens
@@ -90,8 +91,8 @@ let ResultTable = ({
     return (
       <>
         <Table>
-          <thead>
-            <tr>
+          <Thead>
+            <Tr>
               {F.mapIndexed(
                 (x, i) => (
                   <Header
@@ -105,8 +106,8 @@ let ResultTable = ({
                 visibleFields
               )}
               <HighlightedColumnHeader node={node} />
-            </tr>
-          </thead>
+            </Tr>
+          </Thead>
           <TableBody
             {...{
               node,
