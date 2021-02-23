@@ -41,7 +41,7 @@ let TableBody = ({
                     className={field === stickyColumn ? 'sticky-column' : ''}
                     style={{
                       position: field === stickyColumn ? 'sticky' : '',
-                      left: 0,
+                      left: field === stickyColumn ? 0 : '',
                     }}
                   >
                     {F.when(
