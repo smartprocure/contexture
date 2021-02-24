@@ -103,6 +103,6 @@ await csv.writeToStream(
       - `config`: config that gets passed to `format` see below
   - `format`: our wrapper method around fast-csv with some extra options, see the following
       - `transformHeaders`: function to convert the formatting of the headers
-      - `transformaedHeaders`: an object mapping the expected keys to the desired value of the header. `transformHeaders` will be ignored if this is defined.
+      - `transformedHeaders`: an object mapping the expected keys to the desired value of the header. `transformHeaders` will be ignored if this is defined.
       - `onWrite`: a callback that gets called incrementally and passed an object with `records` that is the number of records written
       - `includeEndRowDelimiter`: overrides the default `false` in fast-csv to `true` but can be set to false again if no newline at the end of the file is desired.
