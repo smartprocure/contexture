@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
-import results from '../src/results'
-import { isAsyncIterable } from '../src/utils'
+import results from './results'
+import { isAsyncIterable } from './utils'
 
 describe('results', () => {
   let defaultTree = {

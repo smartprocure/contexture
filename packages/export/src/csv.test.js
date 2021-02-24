@@ -1,11 +1,11 @@
 import _ from 'lodash/fp'
 import { PassThrough } from 'stream'
-import results from '../src/results'
-import { writeToStream } from '../src/fast-csv-wrapper'
+import results from './results'
+import { writeToStream } from './fast-csv-wrapper'
 import {
   schemaToCSVTransforms,
   schemaToCSVTransformsWithLogging,
-} from '../src/schemaToCSVTransforms'
+} from './schemaToCSVTransforms'
 
 let testTree = {
   key: 'root',

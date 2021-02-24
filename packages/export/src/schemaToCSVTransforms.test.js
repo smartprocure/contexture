@@ -1,4 +1,4 @@
-import { schemaToCSVTransforms } from '../src/schemaToCSVTransforms'
+import { schemaToCSVTransforms } from './schemaToCSVTransforms'
 
 describe('schemaToCSVTransforms', () => {
   it('schemaTransforms', () => {

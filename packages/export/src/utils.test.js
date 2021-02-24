@@ -1,5 +1,4 @@
-import { setFilterOnly } from '../src/utils'
-import { schemaToCSVTransforms } from '../src/schemaToCSVTransforms'
+import { setFilterOnly } from './utils'
 
 describe('utils', () => {
   it('setFilterOnly', async () => {

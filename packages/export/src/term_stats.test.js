@@ -1,5 +1,5 @@
 import _ from 'lodash/fp'
-import terms_stats from '../src/terms_stats'
+import terms_stats from './terms_stats'
 
 describe('terms_stats', () => {
   let defaultTree = {
