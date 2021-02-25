@@ -43,10 +43,10 @@ let mockFileStream = () => {
 }
 
 
-let transformAndHeaders = [
-  {key: 'record1', label: 'Record 1'},
-  'record2',
-  {key: 'record3', display: x => `${x} transformed` }
+let transform = [
+  {key: 'record1', label: 'Record 1', display: _.identity},
+  {key: 'record2', label: 'Record 2', display: _.identity},
+  {key: 'record3', label: 'Record 3', display: x => `${x} transformed` },
 ];
 
 
@@ -61,21 +61,31 @@ describe('full CSV test', () => {
 
     await csv.writeCSV({
       stream: writeStream,
-      terableData: strategy,
-      transformAndHeaders
+      iterableData: strategy,
+      transform,
     })
     expect(await fileData).toBe(expectedFileContents)
   })
 })
 
-describe('headerKeys', () => {
+describe('transformKeys', () => {
   it('should return the keys', () => {
-    expect(csv.headerKeys(transformAndHeaders)).toEqual(['record1', 'record2', 'record3'])
+    expect(csv.transformKeys(transform)).toEqual(['record1', 'record2', 'record3'])
   })
 })
 
-describe('headerLabels', () => {
-  it('should return the keys', () => {
-    expect(csv.headerLabels(transformAndHeaders)).toEqual(['Record 1', 'record2', 'record3'])
+describe('transformLabels', () => {
+  it('should return the lebels', () => {
+    expect(csv.transformLabels(transform)).toEqual(['Record 1', 'Record 2', 'Record 3'])
+  })
+})
+
+describe('transformObj', () => {
+  it('should return an obj mapping the values by key', () => {
+    expect(csv.transformObj(transform)).toEqual({
+      record1: transform[0],
+      record2: transform[1],
+      record3: transform[2],
+    })
   })
 })
