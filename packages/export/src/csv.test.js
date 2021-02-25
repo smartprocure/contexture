@@ -44,9 +44,9 @@ let mockFileStream = () => {
 
 
 let transformAndHeaders = [
-  { record1: {label: 'Record 1'} },
+  {key: 'record1', label: 'Record 1'},
   'record2',
-  { record3: { display: x => `${x} transformed` } }
+  {key: 'record3', display: x => `${x} transformed` }
 ];
 
 
