@@ -15,5 +15,5 @@ export let writeCSV = ({
   onWrite = _.noop, // function to intercept writing a page of records
 }) => {
   stream.write(csv(headerLabels(transformAndHeaders)))
-  stream.close()
+  stream.end()
 }

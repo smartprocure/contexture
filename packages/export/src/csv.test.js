@@ -51,7 +51,7 @@ let transformAndHeaders = [
 
 
 // These are skipped on purpose as they actual write CSVs
-xdescribe('full CSV test', () => {
+describe('full CSV test', () => {
   it('export to an actual csv file', async () => {
     let { writeStream, fileData } = mockFileStream()
     let strategy = results({
@@ -59,9 +59,9 @@ xdescribe('full CSV test', () => {
       tree: _.cloneDeep(testTree),
     })
 
-    await writeCSV({
-      writeStream,
-      strategy,
+    await csv.writeCSV({
+      stream: writeStream,
+      terableData: strategy,
       transformAndHeaders
     })
     expect(await fileData).toBe(expectedFileContents)
