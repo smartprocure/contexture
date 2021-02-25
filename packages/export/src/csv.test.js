@@ -1,11 +1,7 @@
 import _ from 'lodash/fp'
 import { PassThrough } from 'stream'
 import results from './results'
-import { writeToStream } from './fast-csv-wrapper'
-import {
-  schemaToCSVTransforms,
-  schemaToCSVTransformsWithLogging,
-} from './schemaToCSVTransforms'
+import * as csv from './csv'
 
 let testTree = {
   key: 'root',
@@ -49,34 +45,37 @@ let mockFileStream = () => {
 
 
 // These are skipped on purpose as they actual write CSVs
-describe('full CSV test', () => {
+xdescribe('full CSV test', () => {
   it('export to an actual csv file', async () => {
     let { writeStream, fileData } = mockFileStream()
-
-    await writeToStream(
-      writeStream,
-      results({
-        service: mockResultsService(),
-        tree: _.cloneDeep(testTree),
-      }),
-      await schemaToCSVTransforms(testSchema)
-    )
-    expect(await fileData).toBe(expectedFileContents)
-  })
-
-  it('should work with logging', async () => {
-    let { writeStream, fileData } = mockFileStream()
-
     let strategy = results({
       service: mockResultsService(),
       tree: _.cloneDeep(testTree),
     })
-    let total = await strategy.getTotalRecords()
-    await writeToStream(
-      writeStream,
-      strategy,
-      await schemaToCSVTransformsWithLogging(testSchema, total)
-    )
+
+    await writeCSV({
+      writeStream, // target stream
+      strategy, // iterator for each page of an array of objects
+      headers: [{ field1: 'Label' }, 'fieldA', { field2: 'Label 1' }], // ordered list of fields and/or field:label pairs
+      transformRecord, // function to transform each record 
+      onWrite // function to intercept writing a page of records
+    })
     expect(await fileData).toBe(expectedFileContents)
+  })
+
+})
+
+
+describe('headerKeys', () => {
+  it('should return the keys', () => {
+    let headers = [{ field1: 'Label' }, 'fieldA', { field2: 'Label 1' }]
+    expect(csv.headerKeys(headers)).toEqual(['field1', 'fieldA', 'field2'])
+  })
+})
+
+describe('headerLabels', () => {
+  it('should return the keys', () => {
+    let headers = [{ field1: 'Label' }, 'fieldA', { field2: 'Label 1' }]
+    expect(csv.headerLabels(headers)).toEqual(['Label', 'fieldA', 'Label 1'])
   })
 })
