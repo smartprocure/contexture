@@ -44,7 +44,11 @@ let toBlankText = (display, data, record) => {
 }
 
 export let blankResult = display => (data, record) => (
-  <span style={{ opacity: 0.2, fontFamily: 'monospace' }}>
+  <span style={{
+    fontFamily: 'monospace',
+    display: 'inline-block',
+    opacity: 0.2,
+  }}>
     {toBlankText(display, data, record)}
   </span>
 )
