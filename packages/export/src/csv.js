@@ -8,15 +8,12 @@ export let headerLabels = _.map(d => {
   return d
 })
 
-//export writeCSV = ({
-//  stream, // target stream
-//  iterableData, // iterator for each page of an array of objects
-//  headers, // [{ field1: 'Label' }, 'fieldA', { field2: 'Label 1' }], // ordered list of fields and/or field:label pairs
-//  transformRecord, // function to transform each record
-//  onWrite = _.noop // function to intercept writing a page of records
-//}) => {
-//    stream.write(csv(headerLabels(headers)))
-//    let keys = headerKeys(headers)
-//
-//  })
-//}
+export let writeCSV = ({
+  stream, // target stream
+  iterableData, // iterator for each page of an array of objects
+  transformAndHeaders, // [{ field1: 'Label' }, 'fieldA', { field2: 'Label 1' }], // ordered list of fields and/or field:label pairs
+  onWrite = _.noop, // function to intercept writing a page of records
+}) => {
+  stream.write(csv(headerLabels(transformAndHeaders)))
+  stream.close()
+}

@@ -43,6 +43,12 @@ let mockFileStream = () => {
 }
 
 
+let transformAndHeaders = [
+  { record1: {label: 'Record 1'} },
+  'record2',
+  { record3: { display: x => `${x} transformed` } }
+];
+
 
 // These are skipped on purpose as they actual write CSVs
 xdescribe('full CSV test', () => {
@@ -56,19 +62,11 @@ xdescribe('full CSV test', () => {
     await writeCSV({
       writeStream,
       strategy,
-      headers: [{ field1: 'Label' }, 'fieldA', { field2: 'Label 1' }],
-      transformRecord: _.identity,
+      transformAndHeaders
     })
     expect(await fileData).toBe(expectedFileContents)
   })
-
 })
-
-let transformAndHeaders = [
-  { record1: {label: 'Record 1'} },
-  'record2',
-  { record3: { display: x => `${x} transformed` } }
-];
 
 describe('headerKeys', () => {
   it('should return the keys', () => {
