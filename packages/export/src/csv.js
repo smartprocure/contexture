@@ -1,8 +1,12 @@
 import csv from 'minimal-csv-formatter'
 import _ from 'lodash/fp'
 
-export let headerKeys = _.map(d => _.isString(d) ? d : _.keys(d)[0])
-export let headerLabels = _.map(d => _.isString(d) ? d : _.values(d)[0])
+export let headerKeys = _.map(d => _.isObject(d) ? _.keys(d)[0] : d)
+export let headerLabels = _.map(d => {
+  if (_.isObject(d))
+    return _.values(d)[0].label || _.keys(d)[0]
+  return d
+})
 
 //export writeCSV = ({
 //  stream, // target stream
@@ -11,13 +15,8 @@ export let headerLabels = _.map(d => _.isString(d) ? d : _.values(d)[0])
 //  transformRecord, // function to transform each record
 //  onWrite = _.noop // function to intercept writing a page of records
 //}) => {
-//    headers
-//  let writeHeaders = _.once(data => {
-//    if (!_.isNull(transformedHeaders)) {
-//      csv.write(transformedHeaders)
-//      return
-//    }
-//    let headers = props.headers || _.keys(data[0] || data)
-//    csv.write(keysToObject(transformHeaders, headers))
+//    stream.write(csv(headerLabels(headers)))
+//    let keys = headerKeys(headers)
+//
 //  })
 //}

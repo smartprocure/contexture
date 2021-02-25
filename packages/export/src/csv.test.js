@@ -54,28 +54,30 @@ xdescribe('full CSV test', () => {
     })
 
     await writeCSV({
-      writeStream, // target stream
-      strategy, // iterator for each page of an array of objects
-      headers: [{ field1: 'Label' }, 'fieldA', { field2: 'Label 1' }], // ordered list of fields and/or field:label pairs
-      transformRecord, // function to transform each record 
-      onWrite // function to intercept writing a page of records
+      writeStream,
+      strategy,
+      headers: [{ field1: 'Label' }, 'fieldA', { field2: 'Label 1' }],
+      transformRecord: _.identity,
     })
     expect(await fileData).toBe(expectedFileContents)
   })
 
 })
 
+let transformAndHeaders = [
+  { record1: {label: 'Record 1'} },
+  'record2',
+  { record3: { display: x => `${x} transformed` } }
+];
 
 describe('headerKeys', () => {
   it('should return the keys', () => {
-    let headers = [{ field1: 'Label' }, 'fieldA', { field2: 'Label 1' }]
-    expect(csv.headerKeys(headers)).toEqual(['field1', 'fieldA', 'field2'])
+    expect(csv.headerKeys(transformAndHeaders)).toEqual(['record1', 'record2', 'record3'])
   })
 })
 
 describe('headerLabels', () => {
   it('should return the keys', () => {
-    let headers = [{ field1: 'Label' }, 'fieldA', { field2: 'Label 1' }]
-    expect(csv.headerLabels(headers)).toEqual(['Label', 'fieldA', 'Label 1'])
+    expect(csv.headerLabels(transformAndHeaders)).toEqual(['Record 1', 'record2', 'record3'])
   })
 })
