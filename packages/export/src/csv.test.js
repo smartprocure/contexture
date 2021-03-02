@@ -3,34 +3,6 @@ import { PassThrough } from 'stream'
 import results from './results'
 import * as csv from './csv'
 
-let testTree = {
-  key: 'root',
-  children: [
-    { key: 'filter', type: 'facet', field: 'a', values: ['a'] },
-    { key: 'results', type: 'results' },
-  ],
-}
-let testSchema = { name: { display: _.startCase, label: 'THE,NAME' } }
-
-let mockResultsService = () =>
-  jest.fn(tree => {
-    _.last(tree.children).context = {
-      totalRecords: 3,
-      results: [
-        { name: 'record1', value: 1 },
-        { name: 'record2', value: 2 },
-        { name: 'record3', value: 3 },
-      ],
-    }
-    return tree
-  })
-let expectedFileContents = `\
-"THE,NAME",Value
-Record 1,1
-Record 2,2
-Record 3,3
-`
-
 let mockFileStream = () => {
   let writeStream = new PassThrough()
   let fileData = new Promise((res,rej) => {
@@ -42,11 +14,22 @@ let mockFileStream = () => {
   return { writeStream, fileData }
 }
 
+let iterableData = [
+  { name: 'record1', value: 1 },
+  { name: 'record2', value: 2 },
+  { name: 'record3', value: 3 },
+]
+
+let expectedFileContents = `\
+"THE,NAME",Value
+Record1,1
+Record2,2
+Record3,3
+`
 
 let transform = [
-  {key: 'record1', label: 'Record 1', display: _.identity},
-  {key: 'record2', label: 'Record 2', display: _.identity},
-  {key: 'record3', label: 'Record 3', display: x => `${x} transformed` },
+  {key: 'name', label: 'THE,NAME', display: _.capitalize},
+  {key: 'value', label: 'Value', display: _.identity},
 ];
 
 
@@ -54,38 +37,17 @@ let transform = [
 describe('full CSV test', () => {
   it('export to an actual csv file', async () => {
     let { writeStream, fileData } = mockFileStream()
-    let strategy = results({
-      service: mockResultsService(),
-      tree: _.cloneDeep(testTree),
-    })
-
     await csv.writeCSV({
       stream: writeStream,
-      iterableData: strategy,
+      iterableData,
       transform,
     })
     expect(await fileData).toBe(expectedFileContents)
   })
 })
 
-describe('transformKeys', () => {
-  it('should return the keys', () => {
-    expect(csv.transformKeys(transform)).toEqual(['record1', 'record2', 'record3'])
-  })
-})
-
 describe('transformLabels', () => {
   it('should return the lebels', () => {
-    expect(csv.transformLabels(transform)).toEqual(['Record 1', 'Record 2', 'Record 3'])
-  })
-})
-
-describe('transformObj', () => {
-  it('should return an obj mapping the values by key', () => {
-    expect(csv.transformObj(transform)).toEqual({
-      record1: transform[0],
-      record2: transform[1],
-      record3: transform[2],
-    })
+    expect(csv.transformLabels(transform)).toEqual(['THE,NAME', 'Value'])
   })
 })

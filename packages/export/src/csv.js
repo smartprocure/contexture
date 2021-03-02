@@ -2,13 +2,7 @@ import csv from 'minimal-csv-formatter'
 import _ from 'lodash/fp'
 import F from 'futil'
 
-export let transformKeys = _.map(_.get('key'))
 export let transformLabels = _.map(_.get('label'))
-export let transformObj = F.arrayToObject(
-  _.get('key'),
-  _.identity
-)
-
 
 export let writeCSV = ({
   stream, // writable stream target stream
