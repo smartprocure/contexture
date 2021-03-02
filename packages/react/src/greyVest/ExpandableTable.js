@@ -5,9 +5,9 @@ import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import { DropdownItem } from './DropdownItem'
 import Popover from './Popover'
-import Icon from './Icon'
 import Table from './Table'
 import { addBlankRows, blankResult } from '../utils/format'
+import { withTheme } from '../utils/theme'
 
 export let Column = _.identity
 Column.displayName = 'Column'
@@ -142,6 +142,7 @@ let ExpandableTable = inject(TableState)(
       columns,
       recordKey = 'key',
       columnSort = _.identity,
+      theme: { Icon },
       ...props
     }) => (
       <Table {...props.tableAttrs}>
@@ -202,4 +203,4 @@ let ExpandableTable = inject(TableState)(
 
 ExpandableTable.displayName = 'ExpandableTable'
 
-export default ExpandableTable
+export default withTheme(ExpandableTable)

@@ -5,7 +5,7 @@ import F from 'futil'
 import { observer } from 'mobx-react'
 import { Flex, QueryBuilder, FilterAdder, FilterList } from '.'
 import { TreePauseButton } from './purgatory'
-import { LinkButton, Icon, Popover, DropdownItem } from './greyVest'
+import { LinkButton, Popover, DropdownItem } from './greyVest'
 import { withTheme } from './utils/theme'
 
 export let SearchTree = () => {}
@@ -35,12 +35,13 @@ export let FiltersBox = withTheme(({ theme: { Box }, ...props }) => (
 ))
 FiltersBox.displayName = 'FiltersBox'
 
-let BasicSearchFilters = ({
+let BasicSearchFilters = withTheme(({
   setMode,
   disableAdvancedMode,
   trees,
   children,
   BasicFilters,
+  theme: { Icon }
 }) => (
   <div>
     <Flex alignItems="center" justifyContent="space-between">
@@ -50,7 +51,7 @@ let BasicSearchFilters = ({
           position="bottom right"
           trigger={
             <DropdownItem>
-              <Icon icon="more_vert" />
+              <Icon icon="TableColumnMenu" />
             </DropdownItem>
           }
         >
@@ -68,7 +69,7 @@ let BasicSearchFilters = ({
     </Flex>
     <LabelledList list={trees} Component={BasicFilters} />
   </div>
-)
+))
 
 let BuilderSearchFilters = ({ setMode, trees, BuilderFilters }) => (
   <div>
