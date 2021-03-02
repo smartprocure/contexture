@@ -35,41 +35,43 @@ export let FiltersBox = withTheme(({ theme: { Box }, ...props }) => (
 ))
 FiltersBox.displayName = 'FiltersBox'
 
-let BasicSearchFilters = withTheme(({
-  setMode,
-  disableAdvancedMode,
-  trees,
-  children,
-  BasicFilters,
-  theme: { Icon }
-}) => (
-  <div>
-    <Flex alignItems="center" justifyContent="space-between">
-      <h1>Filters</h1>
-      <div>
-        <Popover
-          position="bottom right"
-          trigger={
-            <DropdownItem>
-              <Icon icon="TableColumnMenu" />
+let BasicSearchFilters = withTheme(
+  ({
+    setMode,
+    disableAdvancedMode,
+    trees,
+    children,
+    BasicFilters,
+    theme: { Icon },
+  }) => (
+    <div>
+      <Flex alignItems="center" justifyContent="space-between">
+        <h1>Filters</h1>
+        <div>
+          <Popover
+            position="bottom right"
+            trigger={
+              <DropdownItem>
+                <Icon icon="TableColumnMenu" />
+              </DropdownItem>
+            }
+          >
+            <DropdownItem onClick={() => setMode('resultsOnly')}>
+              Hide Filters
             </DropdownItem>
-          }
-        >
-          <DropdownItem onClick={() => setMode('resultsOnly')}>
-            Hide Filters
-          </DropdownItem>
-          <TreePauseButton children={children} Component={DropdownItem} />
-          {!disableAdvancedMode && (
-            <DropdownItem onClick={() => setMode('builder')}>
-              Advanced Search Builder
-            </DropdownItem>
-          )}
-        </Popover>
-      </div>
-    </Flex>
-    <LabelledList list={trees} Component={BasicFilters} />
-  </div>
-))
+            <TreePauseButton children={children} Component={DropdownItem} />
+            {!disableAdvancedMode && (
+              <DropdownItem onClick={() => setMode('builder')}>
+                Advanced Search Builder
+              </DropdownItem>
+            )}
+          </Popover>
+        </div>
+      </Flex>
+      <LabelledList list={trees} Component={BasicFilters} />
+    </div>
+  )
+)
 
 let BuilderSearchFilters = ({ setMode, trees, BuilderFilters }) => (
   <div>

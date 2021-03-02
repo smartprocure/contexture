@@ -10,7 +10,7 @@ let Pager = ({
   pageCount,
   PagerItem = GVPagerItem,
   disabled = false,
-  theme: { Icon }
+  theme: { Icon },
 }) =>
   pageCount > 1 && (
     <Flex justifyContent="center" alignItems="center">
