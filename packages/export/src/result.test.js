@@ -22,7 +22,7 @@ describe('results', () => {
   let getSimpleService = wrap =>
     jest.fn(tree => {
       let response = {
-        totalRecords: 1337,
+        totalRecords: 3,
         results: simpleRecords.map(_source => ({ _source })),
       }
       _.last(tree.children).context = wrap ? { response } : response
@@ -53,8 +53,6 @@ describe('results', () => {
     it('retrieves the total records', async () => {
       let strategy = await prepareSimpleStrategy({ totalPages: 1 })
       expect(await strategy.getTotalRecords()).toBe(3)
-      strategy = await prepareSimpleStrategy({ totalPages: Infinity })
-      expect(await strategy.getTotalRecords()).toBe(1337)
     })
     it('shows if there are more obtainable records', async () => {
       let strategy = await prepareSimpleStrategy({ page: 1 })
@@ -62,9 +60,11 @@ describe('results', () => {
       strategy = await prepareSimpleStrategy({ page: 2 })
       expect(await strategy.hasNext()).toBe(false)
     })
-    xit('retrieves records consistently with getNext', async () => {
+    it('retrieves records consistently with getNext', async () => {
       let strategy = await prepareSimpleStrategy({ page: 1 })
-      expect(await strategy.getNext()).toEqual(simpleRecords)
+      let arr=[];
+      for await(const i of strategy) arr.push(i);
+      expect(arr).toEqual(simpleRecords)
     })
   }
   describe(' with contexts wrapped in `response`', () => {
