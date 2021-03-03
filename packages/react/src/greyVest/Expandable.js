@@ -1,8 +1,16 @@
 import React from 'react'
 import Flex from './Flex'
-import Icon from './Icon'
+import { withTheme } from '../utils/theme'
 
-let Expandable = ({ isOpen, className, style, Label, children, onClick }) => (
+let Expandable = ({
+  isOpen,
+  className,
+  style,
+  Label,
+  children,
+  onClick,
+  theme: { Icon },
+}) => (
   <div
     className={`gv-expandable ${isOpen ? 'expanded' : ''} ${className}`}
     style={style}
@@ -23,4 +31,4 @@ let Expandable = ({ isOpen, className, style, Label, children, onClick }) => (
   </div>
 )
 
-export default Expandable
+export default withTheme(Expandable)

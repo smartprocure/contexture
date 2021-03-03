@@ -1,16 +1,16 @@
 import _ from 'lodash/fp'
 import React from 'react'
 import GVPagerItem from './PagerItem'
-import GVIcon from './Icon'
 import Flex from './Flex'
+import { withTheme } from '../utils/theme'
 
 let Pager = ({
   value,
   onChange = () => {},
   pageCount,
   PagerItem = GVPagerItem,
-  Icon = GVIcon,
   disabled = false,
+  theme: { Icon },
 }) =>
   pageCount > 1 && (
     <Flex justifyContent="center" alignItems="center">
@@ -76,4 +76,4 @@ let Pager = ({
     </Flex>
   )
 
-export default Pager
+export default withTheme(Pager)
