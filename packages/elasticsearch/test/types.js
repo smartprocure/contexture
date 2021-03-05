@@ -18,7 +18,7 @@ describe('All Example Types', function() {
       'dateIntervalGroupStats',
       'fieldValueGroupStats',
       'numberIntervalGroupStats',
-      'groupedByNumberRanges',
+      'numberRangesGroupStats',
       'groupedByPercentiles',
       'groupedByValuePartition',
       'groupedMetric',
