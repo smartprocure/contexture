@@ -23,7 +23,7 @@ module.exports = {
   fieldValueGroupStats: require('./metricGroups/fieldValueGroupStats'),
   groupedByPercentiles: require('./metricGroups/groupedByPercentiles'),
   dateIntervalGroupStats: require('./metricGroups/dateIntervalGroupStats'),
-  groupedByNumberRanges: require('./metricGroups/groupedByNumberRanges'),
+  numberRangesGroupStats: require('./metricGroups/numberRangesGroupStats'),
   numberIntervalGroupStats: require('./metricGroups/numberIntervalGroupStats'),
   groupedByValuePartition: require('./metricGroups/groupedByValuePartition'),
 

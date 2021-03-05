@@ -1,14 +1,14 @@
 let {
   buildQuery,
-} = require('../../../src/example-types/metricGroups/groupedByNumberRanges')
+} = require('../../../src/example-types/metricGroups/numberRangesGroupStats')
 let { expect } = require('chai')
 
-describe('groupedByNumberRanges', () => {
+describe('numberRangesGroupStats', () => {
   it('should buildQuery', () => {
     expect(
       buildQuery({
         key: 'test',
-        type: 'groupedByNumberRanges',
+        type: 'numberRangesGroupStats',
         groupField: 'LineItem.UnitPrice',
         statsField: 'LineItem.TotalPrice',
         ranges: [
