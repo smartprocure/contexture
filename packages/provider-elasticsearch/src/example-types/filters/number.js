@@ -1,5 +1,4 @@
 let _ = require('lodash/fp')
-let F = require('futil')
 let { pickSafeNumbers } = require('../../utils/futil')
 
 let filter = ({ field, min, max }) => ({
