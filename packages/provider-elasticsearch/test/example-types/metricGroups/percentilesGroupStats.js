@@ -1,15 +1,15 @@
 let {
   buildQuery,
-} = require('../../../src/example-types/metricGroups/groupedByPercentiles')
+} = require('../../../src/example-types/metricGroups/percentilesGroupStats')
 let { expect } = require('chai')
 
-describe('groupedByPercentiles', () => {
+describe('percentilesGroupStats', () => {
   it('should buildQuery', async () => {
     expect(
       await buildQuery(
         {
           key: 'test',
-          type: 'groupedByPercentiles',
+          type: 'percentilesGroupStats',
           groupField: 'LineItem.UnitPrice',
           percents: [20, 95],
         },

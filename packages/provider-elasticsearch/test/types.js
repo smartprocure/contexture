@@ -19,7 +19,7 @@ describe('All Example Types', function() {
       'fieldValueGroupStats',
       'numberIntervalGroupStats',
       'numberRangesGroupStats',
-      'groupedByPercentiles',
+      'percentilesGroupStats',
       'groupedByValuePartition',
       'groupedMetric',
       'matchStats',
