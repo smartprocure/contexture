@@ -11,13 +11,13 @@
 * New node types now focus on exporting a buildQuery function to make them more easily testable
 * Internal - rearranged directory structure to clearly separate utils from types and the provider core
 * New Nodes!
-  * `fieldValuesDelta` - replaces `termsDelta`, standardized input/output names
-  * `fieldValueGroupStats` - replaces `terms_stats` and `termsStatsHits`
   * `dateIntervalGroupStats` - replaces `dateHistogram`
+  * `fieldValuesDelta` - replaces `termsDelta`, standardized input/output names
+  * `fieldValuesGroupStats` - replaces `terms_stats` and `termsStatsHits`
+  * `fieldValuePartitionGroupStats` - replaces `matchStats` and `matchCardinality`
   * `numberIntervalGroupStats` - replaces `smartIntervalHistogram`
   * `numberRangesGroupStats` - replaces `rangeStats`
   * `percentilesGroupStats` - replaces `percentileRange`
-  * `valuePartitionGroupStats` - replaces `matchStats` and `matchCardinality`
   * `stats` - can replace `statistical`, `cardinality` and `percentiles`, plus supports other stats
 * 🚨BREAKING Changes:
   * IE Support requires a polyfill for Math.log10
@@ -36,14 +36,14 @@
     * `nLevelAggregation` (irrelevant now that ES supports pipeline aggs)
     * `percentileRanks` (no known usage)
     * `smartPercentileRanks` (no known usage)
-    * `terms` (just a `facet` without a filter, or a new `fieldValueGroupStats` without stats)
+    * `terms` (just a `facet` without a filter, or a new `fieldValuesGroupStats` without stats)
     * `twoLevelMatch` (never intended to be exposed)
     * `esTwoLevelAggregation` (never intended to be exposed)
     * `default` (never intended to be exposed)
     * `termsDelta` (replaced with `valuesDelta`)
     * `perentileRange` (replaced with `percentilesGroupStats`)
-    * `termsStatsHits` (replaced with `fieldValueGroupStats`)
-    * `matchCardinality` (replaced with `valuePartitionGroupStats`)
+    * `termsStatsHits` (replaced with `fieldValuesGroupStats`)
+    * `matchCardinality` (replaced with `fieldValuePartitionGroupStats`)
     * `numberRangeHistogram` (no longer used, was a proof of concept of a number filter with a histogram of values - we'll recreate if needed in a simpler way)
   * [Results]
     * Context no longer wraps everything in `response` - this was an unfortunate, many year old design artifact that is finally removed!
