@@ -1,14 +1,14 @@
 let {
   buildQuery,
-} = require('../../../src/example-types/metricGroups/groupedByValuePartition')
+} = require('../../../src/example-types/metricGroups/valuePartitionGroupStats')
 let { expect } = require('chai')
 
-describe('groupedByValuePartition', () => {
+describe('valuePartitionGroupStats', () => {
   it('should buildQuery', () => {
     expect(
       buildQuery({
         key: 'test',
-        type: 'groupedByValuePartition',
+        type: 'valuePartitionGroupStats',
         groupField: 'Vendor.City.untouched',
         statsField: 'LineItem.TotalPrice',
         matchValue: 'Washington',
@@ -36,7 +36,7 @@ describe('groupedByValuePartition', () => {
     expect(
       buildQuery({
         key: 'test',
-        type: 'groupedByValuePartition',
+        type: 'valuePartitionGroupStats',
         groupField: 'Vendor.City.untouched',
         statsField: 'LineItem.TotalPrice',
         matchValue: 'Washington',
