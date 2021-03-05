@@ -1,15 +1,15 @@
 let {
   buildQuery,
-} = require('../../../src/example-types/metricGroups/groupedByFieldValue')
+} = require('../../../src/example-types/metricGroups/fieldValueGroupStats')
 let { expect } = require('chai')
 
-describe('groupedByFieldValue', () => {
+describe('fieldValueGroupStats', () => {
   it('should buildQuery', () => {
     expect(
       buildQuery(
         {
           key: 'test',
-          type: 'groupedByFieldValue',
+          type: 'fieldValueGroupStats',
           groupField: 'Organization.Name',
           statsField: 'LineItem.TotalPrice',
         },
@@ -43,7 +43,7 @@ describe('groupedByFieldValue', () => {
     expect(
       buildQuery({
         key: 'test',
-        type: 'groupedByFieldValue',
+        type: 'fieldValueGroupStats',
         groupField: 'Organization.Name',
         statsField: 'LineItem.TotalPrice',
         sort: { field: 'max', order: 'asc' },
@@ -70,7 +70,7 @@ describe('groupedByFieldValue', () => {
     expect(
       buildQuery({
         key: 'test',
-        type: 'groupedByFieldValue',
+        type: 'fieldValueGroupStats',
         groupField: 'Organization.Name',
         sort: { field: 'count' },
       })
@@ -90,7 +90,7 @@ describe('groupedByFieldValue', () => {
     expect(
       buildQuery({
         key: 'test',
-        type: 'groupedByFieldValue',
+        type: 'fieldValueGroupStats',
         groupField: 'Organization.Name',
         sort: { field: 'key' },
       })
@@ -110,7 +110,7 @@ describe('groupedByFieldValue', () => {
     expect(
       buildQuery({
         key: 'test',
-        type: 'groupedByFieldValue',
+        type: 'fieldValueGroupStats',
         groupField: 'Organization.Name',
         statsField: 'LineItem.TotalPrice',
         filter: 'city',
@@ -145,7 +145,7 @@ describe('groupedByFieldValue', () => {
     expect(
       buildQuery({
         key: 'test',
-        type: 'groupedByFieldValue',
+        type: 'fieldValueGroupStats',
         groupField: 'Organization.Name',
         statsField: 'LineItem.TotalPrice',
         filter: 'city   of    ',
