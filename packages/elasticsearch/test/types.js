@@ -20,7 +20,7 @@ describe('All Example Types', function() {
       'numberIntervalGroupStats',
       'numberRangesGroupStats',
       'percentilesGroupStats',
-      'valuePartitionGroupStats',
+      'fieldValuePartitionGroupStats',
       'groupedMetric',
       'matchStats',
       'number',
