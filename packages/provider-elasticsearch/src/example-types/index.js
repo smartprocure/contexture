@@ -17,7 +17,7 @@ module.exports = {
   // Single Metrics
   results: require('./results'),
   stats: require('./metricGroups/stats'),
-  valuesDelta: require('./metricGroups/valuesDelta'),
+  fieldValuesDelta: require('./metricGroups/fieldValuesDelta'),
 
   // Metric Groups
   fieldValueGroupStats: require('./metricGroups/fieldValueGroupStats'),
