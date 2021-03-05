@@ -1,14 +1,14 @@
 let {
   buildQuery,
-} = require('../../../src/example-types/metricGroups/groupedByDateInterval')
+} = require('../../../src/example-types/metricGroups/dateIntervalGroupStats')
 let { expect } = require('chai')
 
-describe('groupedByDateInterval', () => {
+describe('dateIntervalGroupStats', () => {
   it('should buildQuery', () => {
     expect(
       buildQuery({
         key: 'test',
-        type: 'groupedByDateInterval',
+        type: 'dateIntervalGroupStats',
         groupField: 'PO.IssuedDate',
         statsField: 'LineItem.TotalPrice',
       })
@@ -34,7 +34,7 @@ describe('groupedByDateInterval', () => {
     expect(
       buildQuery({
         key: 'test',
-        type: 'groupedByDateInterval',
+        type: 'dateIntervalGroupStats',
         groupField: 'PO.IssuedDate',
         statsField: 'LineItem.TotalPrice',
         interval: 'month',
@@ -61,7 +61,7 @@ describe('groupedByDateInterval', () => {
     expect(
       buildQuery({
         key: 'test',
-        type: 'groupedByDateInterval',
+        type: 'dateIntervalGroupStats',
         groupField: 'PO.IssuedDate',
         interval: 'month',
       })

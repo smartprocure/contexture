@@ -15,7 +15,7 @@ describe('All Example Types', function() {
       'exists',
       'facet',
       'geo',
-      'groupedByDateInterval',
+      'dateIntervalGroupStats',
       'groupedByFieldValue',
       'groupedByNumberInterval',
       'groupedByNumberRanges',
