@@ -16,7 +16,7 @@ describe('All Example Types', function() {
       'facet',
       'geo',
       'dateIntervalGroupStats',
-      'fieldValueGroupStats',
+      'fieldValuesGroupStats',
       'numberIntervalGroupStats',
       'numberRangesGroupStats',
       'percentilesGroupStats',
