@@ -1,14 +1,14 @@
 let {
   buildQuery,
-} = require('../../../src/example-types/metricGroups/groupedByNumberInterval')
+} = require('../../../src/example-types/metricGroups/numberIntervalGroupStats')
 let { expect } = require('chai')
 
-describe('groupedByNumberInterval', () => {
+describe('numberIntervalGroupStats', () => {
   it('should buildQuery', async () => {
     expect(
       await buildQuery({
         key: 'test',
-        type: 'groupedByNumberInterval',
+        type: 'numberIntervalGroupStats',
         groupField: 'LineItem.UnitPrice',
         statsField: 'LineItem.TotalPrice',
         interval: 100,
@@ -36,7 +36,7 @@ describe('groupedByNumberInterval', () => {
       await buildQuery(
         {
           key: 'test',
-          type: 'groupedByNumberInterval',
+          type: 'numberIntervalGroupStats',
           groupField: 'LineItem.UnitPrice',
           statsField: 'LineItem.TotalPrice',
           interval: 'smart',
