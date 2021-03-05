@@ -30,7 +30,6 @@ module.exports = {
   // Legacy (covered by metric groups)
   statistical: require('./legacy/statistical'),
   cardinality: require('./legacy/cardinality'),
-  percentiles: require('./legacy/percentiles'),
   terms_stats: require('./legacy/terms_stats'),
   dateHistogram: require('./legacy/dateHistogram'),
   rangeStats: require('./legacy/rangeStats'),
