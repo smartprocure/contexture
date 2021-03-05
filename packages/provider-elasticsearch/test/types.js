@@ -6,38 +6,36 @@ describe('All Example Types', function() {
   this.timeout(5000)
   it('should load', () => {
     let types = Types()
-    expect(_.keys(types)).to.have.members([
+    expect(_.sortBy(x => x, _.keys(types))).to.have.members([
       'bool',
       'cardinality',
       'date',
       'dateHistogram',
       'dateRangeFacet',
-      'default',
-      'esTwoLevelAggregation',
       'exists',
       'facet',
       'geo',
+      'dateIntervalGroupStats',
+      'fieldValuesGroupStats',
+      'numberIntervalGroupStats',
+      'numberRangesGroupStats',
+      'percentilesGroupStats',
+      'fieldValuePartitionGroupStats',
       'groupedMetric',
-      'matchCardinality',
       'matchStats',
       'number',
-      'numberRangeHistogram',
-      'numberUtil',
       'percentiles',
-      'percentilesRange',
       'query',
       'rangeStats',
       'results',
       'smartIntervalHistogram',
       'statistical',
+      'stats',
       'tagsQuery',
       'tagsText',
-      'terms',
-      'termsDelta',
-      'termsStatsHits',
       'terms_stats',
       'text',
-      'twoLevelMatch',
+      'fieldValuesDelta',
     ])
   })
 })

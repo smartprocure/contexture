@@ -1,9 +1,13 @@
 let F = require('futil')
 let _ = require('lodash/fp')
-let { highlightResults, arrayToHighlightsFieldMap } = require('../highlighting')
-let { getField } = require('../fields')
+let {
+  highlightResults,
+  arrayToHighlightsFieldMap,
+} = require('../utils/highlighting')
+let { getField } = require('../utils/fields')
 
 module.exports = {
+  validContext: () => true,
   result(node, search, schema) {
     let page = (node.page || 1) - 1
     let pageSize = node.pageSize || 10
@@ -13,9 +17,7 @@ module.exports = {
     let searchObj = {
       from: startRecord,
       size: pageSize,
-      sort: {
-        [sortField]: node.sortDir || 'desc',
-      },
+      sort: { [sortField]: node.sortDir || 'desc' },
       explain: node.explain,
       // Without this, ES7+ stops counting at 10k instead of returning the actual count
       track_total_hits: true,
@@ -68,19 +70,17 @@ module.exports = {
 
       // Setup the DEFAULT highlight config object with the calculated fields above
       // and merge with the search specific config
-      F.extendOn(searchObj, {
-        highlight: _.merge(
-          {
-            // The default schema highlighting settings w/o the fields
-            pre_tags: ['<b class="search-highlight">'],
-            post_tags: ['</b>'],
-            require_field_match: false,
-            number_of_fragments: 0,
-            fields,
-          },
-          searchHighlight
-        ),
-      })
+      searchObj.highlight = _.merge(
+        {
+          // The default schema highlighting settings w/o the fields
+          pre_tags: ['<b class="search-highlight">'],
+          post_tags: ['</b>'],
+          require_field_match: false,
+          number_of_fragments: 0,
+          fields,
+        },
+        searchHighlight
+      )
 
       // Make sure the search specific overrides are part of the node include.
       // This way they do not have to be added manually. All that is needed is the highlight config
@@ -96,30 +96,28 @@ module.exports = {
 
     return search(searchObj).then(results => ({
       scrollId: results._scroll_id,
-      response: {
-        // ES 7+ is total.value, ES 6- is hits.total
-        totalRecords: F.getOrReturn('value', results.hits.total),
-        startRecord: startRecord + 1,
-        endRecord: startRecord + results.hits.hits.length,
-        results: _.map(hit => {
-          let additionalFields
-          if (schemaHighlight) {
-            let highlightObject = highlightResults(
-              schemaHighlight, // The highlight configuration
-              hit, // The ES result
-              schema.elasticsearch.nestedPath,
-              resultColumns // The columns to return
-            )
-            additionalFields = highlightObject.additionalFields
-          }
+      // ES 7+ is total.value, ES 6- is hits.total
+      totalRecords: F.getOrReturn('value', results.hits.total),
+      startRecord: startRecord + 1,
+      endRecord: startRecord + results.hits.hits.length,
+      results: _.map(hit => {
+        let additionalFields
+        if (schemaHighlight) {
+          let highlightObject = highlightResults(
+            schemaHighlight, // The highlight configuration
+            hit, // The ES result
+            schema.elasticsearch.nestedPath,
+            resultColumns // The columns to return
+          )
+          additionalFields = highlightObject.additionalFields
+        }
 
-          // TODO - If nested path, iterate properties on nested path, filtering out nested path results unless mainHighlighted or relevant nested fields have "<b></b>" tags in them
-          return {
-            additionalFields: schemaHighlight ? additionalFields : [],
-            ...hit,
-          }
-        }, results.hits.hits),
-      },
+        // TODO - If nested path, iterate properties on nested path, filtering out nested path results unless mainHighlighted or relevant nested fields have "<b></b>" tags in them
+        return {
+          additionalFields: schemaHighlight ? additionalFields : [],
+          ...hit,
+        }
+      }, results.hits.hits),
     }))
   },
 }
