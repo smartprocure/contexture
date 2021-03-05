@@ -17,7 +17,7 @@ describe('All Example Types', function() {
       'geo',
       'dateIntervalGroupStats',
       'fieldValueGroupStats',
-      'groupedByNumberInterval',
+      'numberIntervalGroupStats',
       'groupedByNumberRanges',
       'groupedByPercentiles',
       'groupedByValuePartition',

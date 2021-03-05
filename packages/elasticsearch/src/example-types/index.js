@@ -24,7 +24,7 @@ module.exports = {
   groupedByPercentiles: require('./metricGroups/groupedByPercentiles'),
   dateIntervalGroupStats: require('./metricGroups/dateIntervalGroupStats'),
   groupedByNumberRanges: require('./metricGroups/groupedByNumberRanges'),
-  groupedByNumberInterval: require('./metricGroups/groupedByNumberInterval'),
+  numberIntervalGroupStats: require('./metricGroups/numberIntervalGroupStats'),
   groupedByValuePartition: require('./metricGroups/groupedByValuePartition'),
 
   // Legacy (covered by metric groups)
