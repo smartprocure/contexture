@@ -11,13 +11,13 @@
 * New node types now focus on exporting a buildQuery function to make them more easily testable
 * Internal - rearranged directory structure to clearly separate utils from types and the provider core
 * New Nodes!
-  * `valuesDelta` - replaces `termsDelta`, standardized input/output names
-  * `groupedByFieldValue` - replaces `terms_stats` and `termsStatsHits`
-  * `groupedByDateInterval` - replaces `dateHistogram`
-  * `groupedByNumberInterval` - replaces `smartIntervalHistogram`
-  * `groupedByNumberRanges` - replaces `rangeStats`
-  * `groupedByPercentiles` - replaces `percentileRange`
-  * `groupedByValuePartition` - replaces `matchStats` and `matchCardinality`
+  * `fieldValuesDelta` - replaces `termsDelta`, standardized input/output names
+  * `fieldValueGroupStats` - replaces `terms_stats` and `termsStatsHits`
+  * `dateIntervalGroupStats` - replaces `dateHistogram`
+  * `numberIntervalGroupStats` - replaces `smartIntervalHistogram`
+  * `numberRangesGroupStats` - replaces `rangeStats`
+  * `percentilesGroupStats` - replaces `percentileRange`
+  * `valuePartitionGroupStats` - replaces `matchStats` and `matchCardinality`
   * `stats` - can replace `statistical`, `cardinality` and `percentiles`, plus supports other stats
 * 🚨BREAKING Changes:
   * IE Support requires a polyfill for Math.log10
@@ -36,14 +36,14 @@
     * `nLevelAggregation` (irrelevant now that ES supports pipeline aggs)
     * `percentileRanks` (no known usage)
     * `smartPercentileRanks` (no known usage)
-    * `terms` (just a `facet` without a filter, or a new `groupedByFieldValue` without stats)
+    * `terms` (just a `facet` without a filter, or a new `fieldValueGroupStats` without stats)
     * `twoLevelMatch` (never intended to be exposed)
     * `esTwoLevelAggregation` (never intended to be exposed)
     * `default` (never intended to be exposed)
     * `termsDelta` (replaced with `valuesDelta`)
-    * `perentileRange` (replaced with `groupedByPercentiles`)
-    * `termsStatsHits` (replaced with `groupedByFieldValue`)
-    * `matchCardinality` (replaced with `groupedByValuePartition`)
+    * `perentileRange` (replaced with `percentilesGroupStats`)
+    * `termsStatsHits` (replaced with `fieldValueGroupStats`)
+    * `matchCardinality` (replaced with `valuePartitionGroupStats`)
     * `numberRangeHistogram` (no longer used, was a proof of concept of a number filter with a histogram of values - we'll recreate if needed in a simpler way)
   * [Results]
     * Context no longer wraps everything in `response` - this was an unfortunate, many year old design artifact that is finally removed!
