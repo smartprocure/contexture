@@ -1,14 +1,14 @@
 let {
   buildQuery,
   result,
-} = require('../../../src/example-types/metricGroups/valuesDelta')
+} = require('../../../src/example-types/metricGroups/fieldValuesDelta')
 let { expect } = require('chai')
 let { testSchema } = require('../testUtils')
 
-describe('valuesDelta', () => {
+describe('fieldValuesDelta', () => {
   let exampleNode = {
     key: 'test',
-    type: 'valuesDelta',
+    type: 'fieldValuesDelta',
     groupField: 'Organization.State',
     size: 50000,
     background: {

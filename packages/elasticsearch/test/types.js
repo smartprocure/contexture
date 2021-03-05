@@ -35,7 +35,7 @@ describe('All Example Types', function() {
       'tagsText',
       'terms_stats',
       'text',
-      'valuesDelta',
+      'fieldValuesDelta',
     ])
   })
 })
