@@ -328,27 +328,14 @@ Output
 #### `dateHistogram`
 A nested stats aggregation inside a dateHistogram aggregation.
 
-#### `esTwoLevelAggregation`
-An attempt at a generic version of many of these types, which nests two aggregations - generally a metric inside a bucket. 
-Supports include to specify specific aggregation types if include is empty it returns all aggregations under stats aggregation.
-
 #### `groupedMetric`
 A more general version of esTwoLevelAggregation, used in analysis builders/pivot tables. It takes config for an array of buckets and a metric agg. The buckets are nested with the metric on the inside.
-
-#### `matchCardinality`
-A filters bucket which puts results into a pass and fail bucket, along with a cardinality metric nested inside.
 
 #### `matchStats`
 A filters bucket which puts results into a pass and fail bucket, along with a stats metric nested inside.
 
-#### `percentileRanks`
-An ES percentile_ranks aggregation.
-
 #### `percentiles`
 An ES percentiles aggregation.
-
-#### `percentilesRange`
-Does a range aggregation based on the result of a percentiles aggregation.
 
 #### `rangeStats`
 A stats aggregation in a range aggregation.
@@ -359,70 +346,8 @@ Search result "hits", with support for highlighting, paging, sorting, etc.
 #### `smartIntervalHistogram`
 A stats aggregation inside a histogram aggreation - divided into intelligent chunks based on the min and max and snapping to clean "smart" business friendly intervals (roughly 25% of powers of 10).
 
-#### `smartPercentileRanks`
-¯\_(ツ)_/¯ 
-
 #### `statistical`
 A stats aggregation.
 
-#### `terms`
-A terms aggregation.
-
-#### `termsDelta`
-Shows the difference in terms between a foreground filter and a background filter. Very useful e.g. for showing things like new term values for time series (e.g. what new values are new in the past 90 days).
-
-#### `termsStatsHits`
-This result type combines multiple ES aggregations (terms/stats/top_hits) to create a result set.
-On top of this the result set also allows for `details` configuration where a summary/details type of results can be achived.
-
-**Configuration:**
-
-```js
-config: {
-    key_field: '<keyField>',
-    value_field: '<valueField>',
-    details_key_field: '<detailsKeyField>',       // Optional
-    details_value_field: '<detailsValueField>',   // Optional
-    size: 500,          // The total result size
-    hitSize: 50,        // The hit result size
-    details_size: 500,  // The details result size
-    order: 'sum',
-    sortDir: 'desc',
-    include: ['<field1>', '<field2>'],  // // Optional. Which fields to include in the summary.
-    details_include: ['<fieldToIncludeInDetails>']  // Optional. Which detail fields to include in the details section
-}
-```
-  **Example:**
-
-```js
-{
-  key: 'City of Deerfield',
-  doc_count: 50,
-  count: 6,
-  min: 60,
-  max: 98,
-  avg: 78.5,
-  sum: 471,
-  hits: [
-    {
-      Organization: {
-        LatLong: '34.056237,-118.257362',
-      },
-    },
-  ],
-  details: [
-    {
-      Organization: {
-        ID: '80229',
-      },
-      doc_count: 1,
-      key: 'University Of Michigan at Ann Arbor, MI',
-    },
-  ],
-}
-```
-}
-
 #### `terms_stats`
-#### `twoLevelMatch`
 

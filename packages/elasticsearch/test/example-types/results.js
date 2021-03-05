@@ -32,19 +32,17 @@ describe('results', () => {
     }
     expectedResult = {
       scrollId: 1,
-      response: {
-        totalRecords: 1,
-        startRecord: 1,
-        endRecord: 1,
-        results: [
-          {
-            _id: 'test-id',
-            _score: 'test-score',
-            additionalFields: [],
-            field: 'test field',
-          },
-        ],
-      },
+      totalRecords: 1,
+      startRecord: 1,
+      endRecord: 1,
+      results: [
+        {
+          _id: 'test-id',
+          _score: 'test-score',
+          additionalFields: [],
+          field: 'test field',
+        },
+      ],
     }
     node = {
       key: 'test',
@@ -173,7 +171,7 @@ describe('results', () => {
       include: 'anotherField',
       highlight: true,
     })
-    expectedResult.response.results[0].anotherField = 'test another field'
+    expectedResult.results[0].anotherField = 'test another field'
     await resultsTest(node, [
       _.extend(expectedCalls[0], {
         _source: {
@@ -196,7 +194,7 @@ describe('results', () => {
     schema.elasticsearch.highlight = { test: ['field'] }
     service[0].hits.hits[0].anotherField = 'test another field'
     F.extendOn(node, { include: 'anotherField', highlight: true })
-    expectedResult.response.results[0].anotherField = 'test another field'
+    expectedResult.results[0].anotherField = 'test another field'
     await resultsTest(node, [
       _.extend(expectedCalls[0], {
         _source: {

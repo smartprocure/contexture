@@ -7,7 +7,24 @@
 * [Results] track_total_hits and handle total.hits being an object for ES 7 support
 * Remove `bluebird` dependency
 * Remove last bit of non fp lodash
+* Removed directory-metagen dependency
+* New node types now focus on exporting a buildQuery function to make them more easily testable
+* Internal - rearranged directory structure to clearly separate utils from types and the provider core
+* New Nodes!
+  * `dateIntervalGroupStats` - replaces `dateHistogram`
+  * `fieldValuesDelta` - replaces `termsDelta`, standardized input/output names
+  * `fieldValuesGroupStats` - replaces `terms_stats` and `termsStatsHits`
+  * `fieldValuePartitionGroupStats` - replaces `matchStats` and `matchCardinality`
+  * `numberIntervalGroupStats` - replaces `smartIntervalHistogram`
+  * `numberRangesGroupStats` - replaces `rangeStats`
+  * `percentilesGroupStats` - replaces `percentileRange`
+  * `stats` - can replace `statistical`, `cardinality` and `percentiles`, plus supports other stats
 * 🚨BREAKING Changes:
+  * IE Support requires a polyfill for Math.log10
+    * Browser usage of `contexture-elasticsearch` is an odd use case anyway, but you can use core-js to polyfill if needed, or do it yourself:
+      ```js
+      Math.log10 = Math.log10 = x => Math.log(x) / Math.LOG10E
+      ```
   * [Provider Setup / Top Level]
     * Assumes the elasticsearch client is the new @elastic/elasticsearch npm package. Will not work with the old `elasticsearch` package
     * Removed unused `getMappingProperties` API
@@ -19,7 +36,17 @@
     * `nLevelAggregation` (irrelevant now that ES supports pipeline aggs)
     * `percentileRanks` (no known usage)
     * `smartPercentileRanks` (no known usage)
+    * `terms` (just a `facet` without a filter, or a new `fieldValuesGroupStats` without stats)
+    * `twoLevelMatch` (never intended to be exposed)
+    * `esTwoLevelAggregation` (never intended to be exposed)
+    * `default` (never intended to be exposed)
+    * `termsDelta` (replaced with `valuesDelta`)
+    * `perentileRange` (replaced with `percentilesGroupStats`)
+    * `termsStatsHits` (replaced with `fieldValuesGroupStats`)
+    * `matchCardinality` (replaced with `fieldValuePartitionGroupStats`)
+    * `numberRangeHistogram` (no longer used, was a proof of concept of a number filter with a histogram of values - we'll recreate if needed in a simpler way)
   * [Results]
+    * Context no longer wraps everything in `response` - this was an unfortunate, many year old design artifact that is finally removed!
     * Kill `forceExclude`
     * Kill `verbose`
     * Kill `summaryView`
@@ -29,17 +56,16 @@
     * Kill `caseSensitive`, `anyOrder`, `maxWords` which weren't relevant anyway
     * Kill `fieldMode` - facet will now always use the notAnalyzed field if available
     * Kill `cardinality`, which was a proxy for precision_threshold
-  * [TermsStats]
+  * [Number]
+    * Don't run stats/percentiles on number unless part of `findBestRange`, improving performance for the most common number filters cases
+    * Context no longer includes statistical or percentile info, only bestRange results (and no longer runs an extra extended stats call!)
+  * [Terms_Stats]
     * Killed useless `caseSensitive` flag
   * [Text]
     * Killed useless `caseSensitive` flag
-  * [TermsDelta]
-    * No more `modeMap`, `fieldmode`, etc  
   * [DateHistogram]
     * Killed unused `minDate` and `maxDate` on response
     * Killed unused extendedBounds support
-  * [esTwoLevelAggregation]
-    * Killed `extraAggs`
   * [Schema]
     * No longer adds `order: 0` by default (which was a pure UI concern which isn't used by the latest contexture-react usage examples anyway)
 

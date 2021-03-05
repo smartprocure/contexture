@@ -3,7 +3,7 @@ const sinon = require('sinon')
 const F = require('futil')
 const _ = require('lodash/fp')
 const sinonChai = require('sinon-chai')
-const types = require('../../src/example-types/__all')
+const types = require('../../src/example-types')
 
 let { expect } = require('chai')
 
