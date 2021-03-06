@@ -4,10 +4,6 @@ module.exports = {
       index: 'movies',
       type: 'movie',
     },
-    modeMap: {
-      word: '',
-      autocomplete: '.keyword',
-    },
     fields: {
       actors: {
         typeDefault: 'facet',
@@ -18,7 +14,6 @@ module.exports = {
         },
         field: 'actors',
         label: 'Actors',
-        order: 0,
       },
       awards: {
         typeDefault: 'facet',
@@ -29,7 +24,6 @@ module.exports = {
         },
         field: 'awards',
         label: 'Awards',
-        order: 0,
       },
       countries: {
         typeDefault: 'facet',
@@ -40,7 +34,6 @@ module.exports = {
         },
         field: 'countries',
         label: 'Countries',
-        order: 0,
       },
       directors: {
         typeDefault: 'facet',
@@ -51,7 +44,6 @@ module.exports = {
         },
         field: 'directors',
         label: 'Directors',
-        order: 0,
       },
       genres: {
         typeDefault: 'facet',
@@ -62,7 +54,6 @@ module.exports = {
         },
         field: 'genres',
         label: 'Genres',
-        order: 0,
       },
       imdbId: {
         typeDefault: 'facet',
@@ -73,7 +64,6 @@ module.exports = {
         },
         field: 'imdbId',
         label: 'Imdb Id',
-        order: 0,
       },
       imdbRating: {
         typeDefault: 'number',
@@ -83,7 +73,6 @@ module.exports = {
         },
         field: 'imdbRating',
         label: 'Imdb Rating',
-        order: 0,
       },
       imdbVotes: {
         typeDefault: 'number',
@@ -93,7 +82,6 @@ module.exports = {
         },
         field: 'imdbVotes',
         label: 'Imdb Votes',
-        order: 0,
       },
       languages: {
         typeDefault: 'facet',
@@ -104,7 +92,6 @@ module.exports = {
         },
         field: 'languages',
         label: 'Languages',
-        order: 0,
       },
       metaScore: {
         typeDefault: 'number',
@@ -114,7 +101,6 @@ module.exports = {
         },
         field: 'metaScore',
         label: 'Meta Score',
-        order: 0,
       },
       plot: {
         typeDefault: 'facet',
@@ -125,7 +111,6 @@ module.exports = {
         },
         field: 'plot',
         label: 'Plot',
-        order: 0,
       },
       poster: {
         typeDefault: 'facet',
@@ -136,7 +121,6 @@ module.exports = {
         },
         field: 'poster',
         label: 'Poster',
-        order: 0,
       },
       rated: {
         typeDefault: 'facet',
@@ -147,7 +131,6 @@ module.exports = {
         },
         field: 'rated',
         label: 'Rated',
-        order: 0,
       },
       released: {
         typeDefault: 'date',
@@ -157,7 +140,6 @@ module.exports = {
         },
         field: 'released',
         label: 'Released',
-        order: 0,
       },
       runtimeMinutes: {
         typeDefault: 'number',
@@ -167,7 +149,6 @@ module.exports = {
         },
         field: 'runtimeMinutes',
         label: 'Runtime Minutes',
-        order: 0,
       },
       title: {
         typeDefault: 'facet',
@@ -178,7 +159,6 @@ module.exports = {
         },
         field: 'title',
         label: 'Title',
-        order: 0,
       },
       type: {
         typeDefault: 'facet',
@@ -189,7 +169,6 @@ module.exports = {
         },
         field: 'type',
         label: 'Type',
-        order: 0,
       },
       writers: {
         typeDefault: 'facet',
@@ -200,7 +179,6 @@ module.exports = {
         },
         field: 'writers',
         label: 'Writers',
-        order: 0,
       },
       year: {
         typeDefault: 'number',
@@ -210,7 +188,6 @@ module.exports = {
         },
         field: 'year',
         label: 'Year',
-        order: 0,
       },
       yearEnded: {
         typeDefault: 'number',
@@ -220,7 +197,6 @@ module.exports = {
         },
         field: 'yearEnded',
         label: 'Year Ended',
-        order: 0,
       },
     },
   },
@@ -229,10 +205,6 @@ module.exports = {
       index: 'imdb',
       type: 'movie',
     },
-    modeMap: {
-      word: '',
-      autocomplete: '.keyword',
-    },
     fields: {
       actors: {
         typeDefault: 'facet',
@@ -243,7 +215,6 @@ module.exports = {
         },
         field: 'actors',
         label: 'Actors',
-        order: 0,
       },
       awards: {
         typeDefault: 'facet',
@@ -254,7 +225,6 @@ module.exports = {
         },
         field: 'awards',
         label: 'Awards',
-        order: 0,
       },
       countries: {
         typeDefault: 'facet',
@@ -265,7 +235,6 @@ module.exports = {
         },
         field: 'countries',
         label: 'Countries',
-        order: 0,
       },
       directors: {
         typeDefault: 'facet',
@@ -276,7 +245,6 @@ module.exports = {
         },
         field: 'directors',
         label: 'Directors',
-        order: 0,
       },
       genres: {
         typeDefault: 'facet',
@@ -287,7 +255,6 @@ module.exports = {
         },
         field: 'genres',
         label: 'Genres',
-        order: 0,
       },
       imdbId: {
         typeDefault: 'facet',
@@ -298,7 +265,6 @@ module.exports = {
         },
         field: 'imdbId',
         label: 'Imdb Id',
-        order: 0,
       },
       imdbRating: {
         typeDefault: 'number',
@@ -308,7 +274,6 @@ module.exports = {
         },
         field: 'imdbRating',
         label: 'Imdb Rating',
-        order: 0,
       },
       imdbVotes: {
         typeDefault: 'number',
@@ -318,7 +283,6 @@ module.exports = {
         },
         field: 'imdbVotes',
         label: 'Imdb Votes',
-        order: 0,
       },
       languages: {
         typeDefault: 'facet',
@@ -329,7 +293,6 @@ module.exports = {
         },
         field: 'languages',
         label: 'Languages',
-        order: 0,
       },
       metaScore: {
         typeDefault: 'number',
@@ -339,7 +302,6 @@ module.exports = {
         },
         field: 'metaScore',
         label: 'Meta Score',
-        order: 0,
       },
       plot: {
         typeDefault: 'facet',
@@ -350,7 +312,6 @@ module.exports = {
         },
         field: 'plot',
         label: 'Plot',
-        order: 0,
       },
       poster: {
         typeDefault: 'facet',
@@ -361,7 +322,6 @@ module.exports = {
         },
         field: 'poster',
         label: 'Poster',
-        order: 0,
       },
       rated: {
         typeDefault: 'facet',
@@ -372,7 +332,6 @@ module.exports = {
         },
         field: 'rated',
         label: 'Rated',
-        order: 0,
       },
       released: {
         typeDefault: 'date',
@@ -382,7 +341,6 @@ module.exports = {
         },
         field: 'released',
         label: 'Released',
-        order: 0,
       },
       runtimeMinutes: {
         typeDefault: 'number',
@@ -392,7 +350,6 @@ module.exports = {
         },
         field: 'runtimeMinutes',
         label: 'Runtime Minutes',
-        order: 0,
       },
       title: {
         typeDefault: 'facet',
@@ -403,7 +360,6 @@ module.exports = {
         },
         field: 'title',
         label: 'Title',
-        order: 0,
       },
       type: {
         typeDefault: 'facet',
@@ -414,7 +370,6 @@ module.exports = {
         },
         field: 'type',
         label: 'Type',
-        order: 0,
       },
       writers: {
         typeDefault: 'facet',
@@ -425,7 +380,6 @@ module.exports = {
         },
         field: 'writers',
         label: 'Writers',
-        order: 0,
       },
       year: {
         typeDefault: 'number',
@@ -435,7 +389,6 @@ module.exports = {
         },
         field: 'year',
         label: 'Year',
-        order: 0,
       },
       yearEnded: {
         typeDefault: 'number',
@@ -445,7 +398,6 @@ module.exports = {
         },
         field: 'yearEnded',
         label: 'Year Ended',
-        order: 0,
       },
     },
   },
