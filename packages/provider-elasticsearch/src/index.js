@@ -49,7 +49,8 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
 
     let client = config.getClient()
     // If we have a scrollId, use a different client API method
-    let search = scrollId ? client.scroll : client.search
+    // The new elasticsearch client uses `this`, so we can just pass aroud `client.search` :(
+    let search = scrollId ? (...args) => client.scroll(...args) : (...args) => client.search(...args)
     let response
     try {
       let { body } = await search(request, requestOptions)
