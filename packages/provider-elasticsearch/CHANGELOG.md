@@ -1,3 +1,6 @@
+# 1.0.1
+* [number] Fix bug with `findBestRange`
+
 # 1.0.0
 * Errors are now gracefully caught on a per node basis and properly set on node.error. This means that a node can throw an error, but the rest of the search will continue properly and also not log an uncaught exception to the console. This means the contexture dev tools can now be used to see raw ES errors.
 * Simplified runSearch with modern JS syntax
