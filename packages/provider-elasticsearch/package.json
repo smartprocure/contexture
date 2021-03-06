@@ -44,10 +44,12 @@
     "unidecode": "^0.1.8"
   },
   "devDependencies": {
+    "@elastic/elasticsearch": "^7.11.0",
     "babel-eslint": "^8.0.1",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "chokidar-cli": "^1.2.0",
+    "contexture": "^0.11.1",
     "duti": "^0.7.1",
     "eslint": "^4.8.0",
     "eslint-config-smartprocure": "^1.0.2",
