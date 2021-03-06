@@ -7,7 +7,7 @@ let filter = ({ field, min, max }) => ({
 
 let buildQuery = (field, min, max, interval) => ({
   aggs: {
-    range_filter: {
+    rangeFilter: {
       filter: filter({ field, min, max }),
       aggs: {
         percentiles: {
@@ -37,7 +37,7 @@ let result = async (node, search) => {
 
   while ((outliers.hasMin || outliers.hasMax) && iteration < maxIterations) {
     let results = _.get(
-      'aggregations.range_filter.all_percentiles.values',
+      'aggregations.rangeFilter.percentiles.values',
       await search(buildQuery(field, min, max, percentileInterval))
     )
     let percentiles = {
