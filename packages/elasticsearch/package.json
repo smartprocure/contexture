@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@elastic/elasticsearch": "^7.11.0",
+    "agentkeepalive": "^4.1.4",
     "babel-eslint": "^8.0.1",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
