@@ -28,7 +28,7 @@ describe('Integration Tests', () => {
           })
       ),
       types: types({
-        geo: { geocodeLocation: query => googleplaces.textSearch({ query }) },
+        // geo: { geocodeLocation: query => googleplaces.textSearch({ query }) },
       }),
     })
 
