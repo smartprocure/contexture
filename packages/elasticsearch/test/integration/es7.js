@@ -33,7 +33,6 @@ describe('Integration Tests', () => {
     })
 
     let schemas = await provider.getSchemas()
-    console.log('got schemas')
     let process = Contexture({
       schemas,
       providers: { elasticsearch: provider },
@@ -70,7 +69,7 @@ describe('Integration Tests', () => {
       ],
     }
     let result = await process(tree)
-    console.log(result.children[1].context)
-    console.log(result.children[2].context)
+    console.info(result.children[1].context)
+    console.info(result.children[2].context)
   })
 })
