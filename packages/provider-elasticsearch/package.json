@@ -1,10 +1,9 @@
 {
   "name": "contexture-elasticsearch",
-  "version": "0.26.0",
+  "version": "1.0.0",
   "description": "ElasticSearch Provider for Contexture",
   "main": "src/index.js",
   "scripts": {
-    "prepublish": "./node_modules/.bin/metagen src/example-types commonJS ./__all.js --exclusions=__all.js,schemaMapping.js",
     "test": "./node_modules/mocha/bin/_mocha --recursive",
     "test-watch": "chokidar 'src/**/*.js' 'test/**/*.js' -c 'npm t'",
     "test-ci": "./node_modules/mocha/bin/_mocha --recursive --reporter json > test-results.json",
@@ -36,7 +35,6 @@
   },
   "dependencies": {
     "@elastic/datemath": "^2.3.0",
-    "bluebird": "^3.5.0",
     "futil": "^1.67.0",
     "js-combinatorics": "^0.5.3",
     "json-stable-stringify": "^1.0.1",
@@ -46,11 +44,13 @@
     "unidecode": "^0.1.8"
   },
   "devDependencies": {
+    "@elastic/elasticsearch": "^7.11.0",
+    "agentkeepalive": "^4.1.4",
     "babel-eslint": "^8.0.1",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "chokidar-cli": "^1.2.0",
-    "directory-metagen": "^1.6.0",
+    "contexture": "^0.11.1",
     "duti": "^0.7.1",
     "eslint": "^4.8.0",
     "eslint-config-smartprocure": "^1.0.2",

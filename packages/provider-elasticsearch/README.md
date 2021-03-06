@@ -10,7 +10,6 @@ This provider takes a config object as a parameter:
 | Option      | Type       | Description                                      | Required |
 | ------      | ----       | -----------                                      | -------- |
 | `getClient` | `function` | Returns an instantiated elasticsearch client     | x        |
-| `request`   | `object`   | Merged in the json body of every request to elasticsearch (e.g. to add custom headers) |          |
 | `types`     | `object`   | Contexture node types, like all other providers  |          |
 
 ### Schemas
@@ -19,32 +18,29 @@ Schemas with with an elasticsearch provider can specify any or all of the follow
 | Option         | Type       | Description                          | Required |
 | ------         | ----       | -----------                          | -------- |
 | `index`        | `string`   | Which ES index to use when querying  | x        |
-| `type`         | `string`   | Which ES type to use when querying   |          |
-| `summaryView`  | `function` | Used by `results` to return a summary view instead of the whole document, (e.g. for indexes with many fields). Defaults to returning the `hit` property. | |
 | `highlight`    | `object`   | Used by `results` to determine what fields to highlight, and whether or not they are `inline` (copied over inline on to the source) or `additional` (in a list of additional fields that matched) | |
-| `forceExclude` | `array`    | Used by `results` to extend the exclude fields provided on the search tree. The extension happens only if the results node has a `forceExclude` flag set to true.
 
 ### Example Schema for SomeType in SomeIndex
 
 ```js
 module.exports = {
   elasticsearch: {
-    index: 'SomeIndex',
-    type: 'SomeType'
+    index: 'SomeIndex'
   }
 }
 ```
 
 ### Seting up contexture
 ```js
-let _ = require('lodash')
+let _ = require('lodash/fp')
 let Contexture = require('contexture')
 let provider = require('contexture-elasticsearch')
 let types = require('contexture-elasticsearch/types')
 let schemas = require('./path/to/schemas')
 let elasticsearch = require('elasticsearch')
-let AgentKeepAlive  = require('agentkeepalive'),
+let AgentKeepAlive  = require('agentkeepalive')
 
+// Setup
 let process = Contexture({
   schemas,
   providers: {
@@ -59,11 +55,6 @@ let process = Contexture({
             new AgentKeepAlive(connection.makeAgentConfig(config))
         })
       ),
-      request: {
-        headers: {
-          'custom-header-app-name': 'my-app-sent-this'
-        }
-      },
       types: types({
         geo: {
           geocodeLocation: query =>
@@ -74,6 +65,18 @@ let process = Contexture({
       })
     })
   }
+})
+
+// Simple usage (tree would come from the client)
+process(tree)
+
+// Usage with custom headers applied to every elasticsearch request (tree would come from the client)
+process(tree, {
+  requestOptions: {
+    headers: {
+      'custom-header-app-name': 'my-app-sent-this'
+    }
+  },  
 })
 ```
 
@@ -97,12 +100,9 @@ Input
 | `field`         | string                          | None, *required*  | The field it's operating on |
 | `mode`          | `include`/`exclude`             | include           | Should this filter act as inclusion or exclusion of the values |
 | `values`        | array[string]                   | []                | What is checked |
-| `fieldMode`     | `autocomplete`/`word`/`suggest` | autocomplete      | Whether to look at the entire field (autocomplete), the analyzed words in the field, or magic suggestions. This generally means switching field/analyzers but abstracts that lower level es/index knowledge away from the client. |
 | `size`          | number                          | 12                | How many options to return |
-| `cardinality`   | number                          | 5000              | Precision threshold override |
 | `includeZeroes` | boolean                         | false             | If true, it will include options with 0 matching documents (aka `min_doc_count: 0`) |
 | `optionsFilter` | string                          | ''                | Filters the options further, e.g. a find box above a checkbox list |
-| `caseSensitive` | boolean                         | false             | Whether options filter is case sensitive. *no known usages* |
 | `sort`          | `term`/`count`                  | count             | Sort results alphabetically or by count of matching records |
 
 
@@ -141,6 +141,30 @@ Output
 
 The result can be used to show what location the server on a map, though in practice it's usually better to geocode on the client. This type is planned to be extended to support passing along raw lat/lng.
 
+#### `dateRangeFacet`
+dateRangeFacet is like a `facet` but the options correspond to named date range buckets
+
+Input
+
+| Name            | Type                            | Default           | Description |
+| ----            | ----                            | -------           | ----------- |
+| `field`         | string                          | None, *required*  | The field it's operating on |
+| `ranges`        | array[{ range: NamedDateRange, key: string}]                   | None, *required*                | Ranges should have 'range' prop containing the range phrase (eg. 'allFutureDates') and a key to represent the value |
+| `values`        | array[string]                   | []                | What is checked |
+| `timezone`        | string                   | 'UTC'                | What timezone to use |
+
+
+Output
+
+```js
+{
+  options: [{
+    name: String,
+    count: Number
+  }]
+}
+```
+
 
 ### Filter Only Types
 Filter only types just filter and nothing more. They don't have contextual results of their own.
@@ -162,9 +186,10 @@ Date represents a data range filter, with support datemath
 ```js
 {
   field: String,
-  from: DateString|'thisQuarter|lastQuarter|nextQuarter', // Date string or one of three custom date math options
+  range: String, // Choice of an explicit hard coded date range option:
+    // allDates | exact | last3Days | last7Days | last30Days | last90Days | last180Days | last12Months | last15Months | last18Months | last24Months | last36Months | last48Months | last60Months | lastCalendarMonth | lastCalendarYear | thisCalendarMonth | thisCalendarYear | nextCalendarMonth | nextCalendarYear | next30Days | next60Days | next90Days | next6Months | next12Months | next24Months | next36Months | allPastDates | allFutureDates
+  from: DateString, // Date string - *No longer supports date math*, requires range to be `exact`
   to: DateString,
-  useDateMath: Boolean, // If true, it will parse dates as dateMath using @elastic/datemath
   isDateTime: Boolean // If true, it will pass the from and to values as is, without formatting assuming it is valid date & time ES string
 }
 ```
@@ -224,22 +249,6 @@ Response:
   }
 }
 ```
-#### `numberRangeHistogram`
-Number represents a number range with inclusive bounds. This type returns feedback in the form of histogram and statistical data.
-
-Some Notes:
-1. An empty value as the upper boundary represents infinity.
-2. An empty value as the lower boundary represents negative infinity.
-3. Zero has to be respected as a boundary value.
-
-```js
-{
-  field: String,
-  min: Number,
-  max: Number,
-  percentileInterval: Number
-}
-```
 
 #### `query`
 Query represents a raw elasticsearch query_string.
@@ -278,7 +287,84 @@ Text implements raw text analysis like starts with, ends with, etc. These are ge
 ### Result-Only Types
 These types don't do any filtering of their own and only have results. These often power charts or analytics pages.
 
+#### `results`
+Search result "hits", with support for highlighting, paging, sorting, etc.
+
+#### `xGroupStats`
+We have a few new nodes of the form xGroupStats, where `x` is a grouping (bucketing) type. They all share a similar API:
+
+**Documentation here is still deeply WIP.**
+
+| Name            | Type                            | Default           | Description |
+| ----            | ----                            | -------           | ----------- |
+| `groupField`         | string                          | None, *required*  | The field to group by |
+| `statField`         | string                          | None  | The field to calculate stats for |
+| `stats`        | [string]                   | ['sum', 'min', 'max', 'sum']                | Which stats to include, can be avg, min, max, sum, or any of the other metrics supported by elasticsearch. |
+
+Here's a kitchen example, with sections for the various types along with explanations for the more mongo focused developer:
+```js
+let example = { 
+  // terms_stats
+  type: 'fieldValuesGroupStats', //terms -> { $group: {_id: groupField}}
+  size: 10,
+  filter: 'asdf',
+  sort: {
+    field: 'sum|min|max|avg|count|term',
+    order: 'asc|desc',
+  },
+  // When multilevel sorting is supported:
+  // sort: [{
+  //   field: 'sum|min|max|avg|count|term',
+  //   dir: 'asc|desc',
+  // }],
+
+  
+  // smartIntervalHistogram
+  type: 'numberIntervalGroupStats', // {$bucket }
+  groupField: 'price',
+  interval: 500,// 'smart'|Number,
+  
+  
+  // dateHistogram
+  type: 'dateIntervalGroupStats', /// {$group based on date propeties} interval: month {}
+  interval: 'year', // auto uses autoDateHistogram
+  
+
+  // rangeStats
+  type: 'numberRangesGroupStats', ///{$cond + $group}
+  groupField: 'price',
+  ranges: [{from: 0, to: 500}, {from: 501, to:1000}],
+  
+
+  // missing? date range facet?
+  type: 'dateRangesGroupStats', // {$cond + group} from ranges [from: 1980 to 1992, from1992 to 2000]
+  ranges: [{ from, to }],
+  
+
+  // matchStats/matchCardinality
+  // local v national quote awards
+  type: 'fieldValuePartitionGroupStats', /// {$cond + group} OR $facet
+  groupField: 'CompanyState',
+  matches: 'FL',
+  
+  
+  // percentileRange
+  type: 'percentilesGroupStats',
+
+
+  statsField: 'awardAmount',
+  stats: ['count|min|max|sum|avg|cardinality'],// |percentiles|percentileRanks|hits??????
+  /// hits: size+include? maybe hitsSize+hitsInclude or hits:{size,include}
+
+}
+```
+
+All of these types share a similar output structure. Results are on a context property called `results` with stat aggs flattened on as properties of each result (bucket)
+
+### Deprecated
+
 #### `cardinality`
+**Use `stats` with `stats: ['cardinality']` instead**
 A cardinality aggregation. Returns the cardinality of a field.
 
 Input
@@ -286,7 +372,6 @@ Input
 | Name            | Type                            | Default           | Description |
 | ----            | ----                            | -------           | ----------- |
 | `field`         | string                          | None, *required*  | The field it's operating on |
-| `fieldMode`     | `autocomplete`/`word`/`suggest` | word              | Whether to look at the entire field (autocomplete), the analyzed words in the field, or magic suggestions. This generally means switching field/analyzers but abstracts that lower level es/index knowledge away from the client. |
 
 Output
 
@@ -299,112 +384,31 @@ Output
   },
 }
 ```
- 
 
 #### `dateHistogram`
-A nested stats aggregation inside a dateHistogram aggregation, with support for tweaking min/max bounds.
-
-#### `esTwoLevelAggregation`
-An attempt at a generic version of many of these types, which nests two aggregations - generally a metric inside a bucket. 
-Supports include to specify specific aggregation types if include is empty it returns all aggregations under stats aggregation.
+**Use `dateIntervalGroupStats` instead**
+A nested stats aggregation inside a dateHistogram aggregation.
 
 #### `groupedMetric`
+**Use `??????` instead**
 A more general version of esTwoLevelAggregation, used in analysis builders/pivot tables. It takes config for an array of buckets and a metric agg. The buckets are nested with the metric on the inside.
 
-#### `matchCardinality`
-A filters bucket which puts results into a pass and fail bucket, along with a cardinality metric nested inside.
-
 #### `matchStats`
+**Use `fieldValuePartitionGroupStats` instead**
 A filters bucket which puts results into a pass and fail bucket, along with a stats metric nested inside.
 
-#### `nLevelAggregation`
-An infinitely nestable tree of aggs along with some support for a pipeline of specific reducers.
-
-#### `nonzeroClusters`
-Starts with a smart interval histogram merges buckets with nonzero counts.
-
-#### `percentileRanks`
-An ES percentile_ranks aggregation.
-
-#### `percentiles`
-An ES percentiles aggregation.
-
-#### `percentilesRange`
-Does a range aggregation based on the result of a percentiles aggregation.
-
 #### `rangeStats`
+**Use `numberRangesGroupStats` instead**
 A stats aggregation in a range aggregation.
 
-#### `results`
-Search result "hits", with support for highlighting, paging, sorting, etc.
-
 #### `smartIntervalHistogram`
+**Use `numberIntervalGroupStats` instead**
 A stats aggregation inside a histogram aggreation - divided into intelligent chunks based on the min and max and snapping to clean "smart" business friendly intervals (roughly 25% of powers of 10).
 
-#### `smartPercentileRanks`
-¯\_(ツ)_/¯ 
-
 #### `statistical`
+**Use `stats` instead**
 A stats aggregation.
 
-#### `terms`
-A terms aggregation.
-
-#### `termsDelta`
-Shows the difference in terms between a foreground filter and a background filter. Very useful e.g. for showing things like new term values for time series (e.g. what new values are new in the past 90 days).
-
-#### `termsStatsHits`
-This result type combines multiple ES aggregations (terms/stats/top_hits) to create a result set.
-On top of this the result set also allows for `details` configuration where a summary/details type of results can be achived.
-
-**Configuration:**
-
-```js
-config: {
-    key_field: '<keyField>',
-    value_field: '<valueField>',
-    details_key_field: '<detailsKeyField>',       // Optional
-    details_value_field: '<detailsValueField>',   // Optional
-    size: 500,          // The total result size
-    hitSize: 50,        // The hit result size
-    details_size: 500,  // The details result size
-    order: 'sum',
-    sortDir: 'desc',
-    include: ['<field1>', '<field2>'],  // // Optional. Which fields to include in the summary.
-    details_include: ['<fieldToIncludeInDetails>']  // Optional. Which detail fields to include in the details section
-}
-```
-  **Example:**
-
-```js
-{
-  key: 'City of Deerfield',
-  doc_count: 50,
-  count: 6,
-  min: 60,
-  max: 98,
-  avg: 78.5,
-  sum: 471,
-  hits: [
-    {
-      Organization: {
-        LatLong: '34.056237,-118.257362',
-      },
-    },
-  ],
-  details: [
-    {
-      Organization: {
-        ID: '80229',
-      },
-      doc_count: 1,
-      key: 'University Of Michigan at Ann Arbor, MI',
-    },
-  ],
-}
-```
-}
-
 #### `terms_stats`
-#### `twoLevelMatch`
+**Use `fieldValuesGroupStats` instead**
 
