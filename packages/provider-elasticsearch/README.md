@@ -38,7 +38,7 @@ let provider = require('contexture-elasticsearch')
 let types = require('contexture-elasticsearch/types')
 let schemas = require('./path/to/schemas')
 let elasticsearch = require('elasticsearch')
-let AgentKeepAlive  = require('agentkeepalive'),
+let AgentKeepAlive  = require('agentkeepalive')
 
 // Setup
 let process = Contexture({
@@ -249,22 +249,6 @@ Response:
   }
 }
 ```
-#### `numberRangeHistogram`
-Number represents a number range with inclusive bounds. This type returns feedback in the form of histogram and statistical data.
-
-Some Notes:
-1. An empty value as the upper boundary represents infinity.
-2. An empty value as the lower boundary represents negative infinity.
-3. Zero has to be respected as a boundary value.
-
-```js
-{
-  field: String,
-  min: Number,
-  max: Number,
-  percentileInterval: Number
-}
-```
 
 #### `query`
 Query represents a raw elasticsearch query_string.
@@ -303,7 +287,84 @@ Text implements raw text analysis like starts with, ends with, etc. These are ge
 ### Result-Only Types
 These types don't do any filtering of their own and only have results. These often power charts or analytics pages.
 
+#### `results`
+Search result "hits", with support for highlighting, paging, sorting, etc.
+
+#### `xGroupStats`
+We have a few new nodes of the form xGroupStats, where `x` is a grouping (bucketing) type. They all share a similar API:
+
+**Documentation here is still deeply WIP.**
+
+| Name            | Type                            | Default           | Description |
+| ----            | ----                            | -------           | ----------- |
+| `groupField`         | string                          | None, *required*  | The field to group by |
+| `statField`         | string                          | None  | The field to calculate stats for |
+| `stats`        | [string]                   | ['sum', 'min', 'max', 'sum']                | Which stats to include, can be avg, min, max, sum, or any of the other metrics supported by elasticsearch. |
+
+Here's a kitchen example, with sections for the various types along with explanations for the more mongo focused developer:
+```js
+let example = { 
+  // terms_stats
+  type: 'fieldValuesGroupStats', //terms -> { $group: {_id: groupField}}
+  size: 10,
+  filter: 'asdf',
+  sort: {
+    field: 'sum|min|max|avg|count|term',
+    order: 'asc|desc',
+  },
+  // When multilevel sorting is supported:
+  // sort: [{
+  //   field: 'sum|min|max|avg|count|term',
+  //   dir: 'asc|desc',
+  // }],
+
+  
+  // smartIntervalHistogram
+  type: 'numberIntervalGroupStats', // {$bucket }
+  groupField: 'price',
+  interval: 500,// 'smart'|Number,
+  
+  
+  // dateHistogram
+  type: 'dateIntervalGroupStats', /// {$group based on date propeties} interval: month {}
+  interval: 'year', // auto uses autoDateHistogram
+  
+
+  // rangeStats
+  type: 'numberRangesGroupStats', ///{$cond + $group}
+  groupField: 'price',
+  ranges: [{from: 0, to: 500}, {from: 501, to:1000}],
+  
+
+  // missing? date range facet?
+  type: 'dateRangesGroupStats', // {$cond + group} from ranges [from: 1980 to 1992, from1992 to 2000]
+  ranges: [{ from, to }],
+  
+
+  // matchStats/matchCardinality
+  // local v national quote awards
+  type: 'fieldValuePartitionGroupStats', /// {$cond + group} OR $facet
+  groupField: 'CompanyState',
+  matches: 'FL',
+  
+  
+  // percentileRange
+  type: 'percentilesGroupStats',
+
+
+  statsField: 'awardAmount',
+  stats: ['count|min|max|sum|avg|cardinality'],// |percentiles|percentileRanks|hits??????
+  /// hits: size+include? maybe hitsSize+hitsInclude or hits:{size,include}
+
+}
+```
+
+All of these types share a similar output structure. Results are on a context property called `results` with stat aggs flattened on as properties of each result (bucket)
+
+### Deprecated
+
 #### `cardinality`
+**Use `stats` with `stats: ['cardinality']` instead**
 A cardinality aggregation. Returns the cardinality of a field.
 
 Input
@@ -323,31 +384,31 @@ Output
   },
 }
 ```
- 
 
 #### `dateHistogram`
+**Use `dateIntervalGroupStats` instead**
 A nested stats aggregation inside a dateHistogram aggregation.
 
 #### `groupedMetric`
+**Use `??????` instead**
 A more general version of esTwoLevelAggregation, used in analysis builders/pivot tables. It takes config for an array of buckets and a metric agg. The buckets are nested with the metric on the inside.
 
 #### `matchStats`
+**Use `fieldValuePartitionGroupStats` instead**
 A filters bucket which puts results into a pass and fail bucket, along with a stats metric nested inside.
 
-#### `percentiles`
-An ES percentiles aggregation.
-
 #### `rangeStats`
+**Use `numberRangesGroupStats` instead**
 A stats aggregation in a range aggregation.
 
-#### `results`
-Search result "hits", with support for highlighting, paging, sorting, etc.
-
 #### `smartIntervalHistogram`
+**Use `numberIntervalGroupStats` instead**
 A stats aggregation inside a histogram aggreation - divided into intelligent chunks based on the min and max and snapping to clean "smart" business friendly intervals (roughly 25% of powers of 10).
 
 #### `statistical`
+**Use `stats` instead**
 A stats aggregation.
 
 #### `terms_stats`
+**Use `fieldValuesGroupStats` instead**
 
