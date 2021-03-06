@@ -49,7 +49,7 @@ describe('number/filter', () => {
     let value = { type: 'number', field: 'test', min: 500, max: 1000 }
     let expectedDSL = {
       aggs: {
-        range_filter: {
+        rangeFilter: {
           filter: { range: { test: { gte: 500, lte: 1000 } } },
           aggs: {
             percentiles: {
