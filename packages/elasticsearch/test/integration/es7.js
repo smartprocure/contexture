@@ -35,8 +35,6 @@ describe('Integration Tests', () => {
     let esClient = getClient()
     await esClient.ping()
 
-
-
     let schemas = await provider.getSchemas()
     let process = Contexture({
       schemas,
