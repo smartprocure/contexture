@@ -59,7 +59,7 @@ describe('Integration Tests', () => {
               field: 'LineItem.UnitPrice',
               type: 'number',
               findBestRange: true,
-            }
+            },
           ],
         },
         { key: 'results', type: 'results' },
