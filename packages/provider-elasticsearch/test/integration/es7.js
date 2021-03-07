@@ -8,7 +8,7 @@ let elasticsearch = require('@elastic/elasticsearch')
 let AgentKeepAlive = require('agentkeepalive')
 
 describe('Integration Tests', () => {
-  it.only('should work?', async function() {
+  it.skip('should work?', async function() {
     this.timeout(10000)
     // Setup
     let getClient = _.memoize(
