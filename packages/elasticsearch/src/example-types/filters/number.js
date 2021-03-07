@@ -36,10 +36,10 @@ let result = async (node, search) => {
   let outliers = { hasMin: true, hasMax: true }
 
   while ((outliers.hasMin || outliers.hasMax) && iteration < maxIterations) {
-    let results = _.get(
-      'aggregations.rangeFilter.percentiles.values',
-      await search(buildQuery(field, min, max, percentileInterval))
-    )
+    let results = _.flow(
+      _.get('aggregations.rangeFilter.percentiles.values'),
+      _.mapKeys(_.toNumber)
+    )(await search(buildQuery(field, min, max, percentileInterval)))
     let percentiles = {
       min: results[0],
       max: results[100],
