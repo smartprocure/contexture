@@ -1,3 +1,6 @@
+# 1.0.2
+* [number] Fix additional bug with `findBestRange` (map result keys to number)
+
 # 1.0.1
 * [number] Fix bug with `findBestRange`
 
