@@ -16,17 +16,3 @@ let lastChild = _.flow(_.get('children'), _.last)
 // Wraps a tree in an AND group with the provided node, runs the search, then returns the added node with results
 export let runWith = async (service, tree, node) =>
   lastChild(await service(andGroup(setFilterOnly(tree), node)))
-
-export let addIterator = obj => ({
-  ...obj,
-  async *[Symbol.asyncIterator]() {
-    while (await obj.hasNext())
-      yield obj.getNext()
-  }
-})
-
-export let isIterable = object =>
-  object !== null && typeof object[Symbol.iterator] === 'function'
-
-export let isAsyncIterable = object =>
-  object !== null && typeof object[Symbol.asyncIterator] === 'function'
