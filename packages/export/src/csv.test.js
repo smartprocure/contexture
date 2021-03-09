@@ -1,7 +1,7 @@
 import _ from 'lodash/fp'
 import { PassThrough } from 'stream'
 import results from './results'
-import * as csv from './csv'
+import csv from './csv'
 
 let mockFileStream = () => {
   let writeStream = new PassThrough()
@@ -37,17 +37,11 @@ let transform = [
 describe('full CSV test', () => {
   it('export to an actual csv file', async () => {
     let { writeStream, fileData } = mockFileStream()
-    await csv.writeCSV({
+    await csv({
       stream: writeStream,
       iterableData,
       transform,
     })
     expect(await fileData).toBe(expectedFileContents)
-  })
-})
-
-describe('transformLabels', () => {
-  it('should return the lebels', () => {
-    expect(csv.transformLabels(transform)).toEqual(['THE,NAME', 'Value'])
   })
 })

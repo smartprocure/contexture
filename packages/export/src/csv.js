@@ -2,9 +2,9 @@ import csv from 'minimal-csv-formatter'
 import _ from 'lodash/fp'
 import F from 'futil'
 
-export let transformLabels = _.map(_.get('label'))
+let transformLabels = _.map(_.get('label'))
 
-export let writeCSV = ({
+export default ({
   stream, // writable stream target stream
   iterableData, // iterator for each page of an array of objects
   // order list of which indicates the header label,
