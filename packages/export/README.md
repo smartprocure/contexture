@@ -20,14 +20,14 @@ let totalCount = await report.getTotalRecords()
 
 // Stream
 let stream = createWriteStream('someFile.txt');
-for await (page of report)
-  stream.write(page)
+for await (let record of report)
+  stream.write(record)
 stream.end()
 
 // To Array
 let array = []
-for await (let page of report)
-  array = array.concat(page)
+for await (let record of report)
+  array = array.concat(record)
 
 // To array with it-all
 import all from 'it-all'
@@ -38,17 +38,21 @@ let array = await all(report)
 Using our fast-csv wrapper, you can pass it a write stream, async iterable, and transforms based on contexture schemas
 
 ```js
+import _ from 'lodash/fp'
 import { createWriteStream } from 'fs'
-import { schemaToCSVTransforms, results, csv } from 'contexture-export'
+import { results, csv } from 'contexture-export'
 
 let service = Contexture({/*...*/})
 let tree = { schema: 'someCollection', children: [/*...*/] }
 let schema = { field1: {/*...*/} }
 
-await csv.writeToStream(
-  createWriteStream('./test/actualFile.csv'),
-  results({ service, tree }),
-  schemaToCSVTransforms(schema)
+await csv(
+  stream: createWriteStream('./test/actualFile.csv'),
+  iterableData: results({ service, tree }),
+  transform: [
+    {key: 'name', label: 'THE,NAME', display: _.capitalize},
+    {key: 'value', label: 'Value', display: _.identity},
+  ],
 )
 ```
 
@@ -75,34 +79,10 @@ await csv.writeToStream(
     (per call of `getNext`) are returned. It defaults to 100.
   - `page`: Indicates the starting page of the specified search.
     Defaults to 1.
-  - `totalPages`: Indicates the maximum number of pages that will be
-    obtained. Defaults to 100, but can be set to `Infinite`.
 
-- `terms_stats`: This strategy extracts the records out of a node with
-  the `terms_stats` type.
-  - `service`: (REQUIRED) An async function that will receive a single parameter:
-    the Contexture DSL with the changes required to retrieve only the
-    necessary data for the _results_ strategy.
-  - `tree`: (REQUIRED) The Contexture DSL! It must contain a node with the
-    `results` type. It doesn't matter where!
-  - `key_field`: Related to the ES aggregations
-    (terms/stats/top_hits).
-  - `value_field`: Related to the ES aggregations
-    (terms/stats/top_hits).
-  - `size`: Indicates the maximum number of records that will be
-    obtained. Defaults to 100, but can be set to `0` to get all the
-    possible results.
-  - `sortDir`: Specifies in which direction the data will be sorted
-    (`asc` or `desc`).  This is relevant to the `results` type. It's
-    undefined by default (which is valid).
-
-- `csv`
-  - `writeToStream`: function for writing csv data to a stream
-      - `stream`: a writable stream
-      - `data`: an iterable set of records, usually the return value of `results`
-      - `config`: config that gets passed to `format` see below
-  - `format`: our wrapper method around fast-csv with some extra options, see the following
-      - `transformHeaders`: function to convert the formatting of the headers
-      - `transformedHeaders`: an object mapping the expected keys to the desired value of the header. `transformHeaders` will be ignored if this is defined.
-      - `onWrite`: a callback that gets called incrementally and passed an object with `records` that is the number of records written
-      - `includeEndRowDelimiter`: overrides the default `false` in fast-csv to `true` but can be set to false again if no newline at the end of the file is desired.
+- `csv`: writes csv data to a stream. The parameter it receives are:
+  - stream, // writable stream target stream
+  - `iterableData`: an iterable data object where each iteraction yields an object
+  - `transform`: order list of which indicates the header label,
+    display function for the field,and key of the record. `[{ key: string, label: string, dispaly: funciton}...]`
+  - `onWrite`: function to intercept writing a records
