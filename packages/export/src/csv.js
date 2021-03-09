@@ -7,7 +7,11 @@ export let transformLabels = _.map(_.get('label'))
 export let writeCSV = ({
   stream, // writable stream target stream
   iterableData, // iterator for each page of an array of objects
-  transform, // [{ field1: 'Label' }, 'fieldA', { field2: 'Label 1' }], // ordered list of fields and/or field:label pairs
+  // order list of which indicates the header label,
+  // display function for the field,
+  // and key of the record.
+  // [{ key: string, label: string, dispaly: funciton}...]
+  transform,
   onWrite = _.noop, // function to intercept writing a page of records
 }) => {
   stream.write(csv(transformLabels(transform)))
