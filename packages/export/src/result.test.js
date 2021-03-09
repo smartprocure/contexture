@@ -46,7 +46,17 @@ describe('results', () => {
     return strategy
   }
   let resultsTests = prepareSimpleStrategy => {
-    it('retrieves records', async () => {
+    it('retrieves the total records', async () => {
+      let strategy = await prepareSimpleStrategy({ totalPages: 1 })
+      expect(await strategy.getTotalRecords()).toBe(3)
+    })
+    it('shows if there are more obtainable records', async () => {
+      let strategy = await prepareSimpleStrategy({ page: 1 })
+      expect(await strategy.hasNext()).toBe(true)
+      strategy = await prepareSimpleStrategy({ page: 2 })
+      expect(await strategy.hasNext()).toBe(false)
+    })
+    it('retrieves records consistently with getNext', async () => {
       let strategy = await prepareSimpleStrategy({ page: 1 })
       let arr=[];
       for await(const i of strategy) arr.push(i);
