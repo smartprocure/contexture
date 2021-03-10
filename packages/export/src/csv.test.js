@@ -1,6 +1,5 @@
 import _ from 'lodash/fp'
 import { PassThrough } from 'stream'
-import results from './results'
 import csv from './csv'
 
 let mockFileStream = () => {
