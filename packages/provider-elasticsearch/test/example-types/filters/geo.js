@@ -1,203 +1,62 @@
-const geoType = require('../../../src/example-types/filters/geo')
+const geo = require('../../../src/example-types/filters/geo')
 const utils = require('../testUtils')
 let { expect } = require('chai')
-let chai = require('chai')
-let chaiAsPromised = require('chai-as-promised')
-chai.use(chaiAsPromised)
 
 describe('geo', () => {
-  let geo = geoType({
-    geocodeLocation: () => ({
-      Latitude: 26.3170479,
-      Longitude: -80.1131784,
-    }),
-  })
-
   it('hasValue should work', () => {
     utils.hasValueContexts(geo)([
-      {
-        location: true,
-        radius: true,
-        operator: true,
-      },
-      {
-        location: true,
-        radius: -1,
-        operator: true,
-      },
-      {
-        location: 'SmartProcure',
-        radius: 10,
-        operator: 'within',
-      },
+      { latitude: 26, longitude: -80, radius: true, operator: true },
+      { latitude: 26, longitude: -80, radius: -1, operator: true },
+      { latitude: 26, longitude: -80, radius: 10, operator: 'within' },
     ])
     utils.noValueContexts(geo)([
       {},
-      {
-        location: false,
-        radius: 10,
-        operator: 'within',
-      },
-      {
-        location: '',
-        radius: 10,
-        operator: 'within',
-      },
-      {
-        radius: 10,
-        operator: 'within',
-      },
-      {
-        location: true,
-        radius: 0,
-        operator: 'within',
-      },
-      {
-        location: true,
-        radius: false,
-        operator: 'within',
-      },
-      {
-        location: true,
-        operator: 'within',
-      },
-      {
-        location: true,
-        radius: 10,
-        operator: false,
-      },
-      {
-        location: true,
-        radius: 10,
-        operator: '',
-      },
-      {
-        location: true,
-        radius: 10,
-      },
+      { location: false, radius: 10, operator: 'within' },
+      { latitude: 26.3170479, radius: 10, operator: 'within' },
+      { radius: 10, operator: 'within' },
+      { latitude: 26, longitude: -80, radius: 0, operator: 'within' },
+      { latitude: 26, longitude: -80, radius: false, operator: 'within' },
+      { latitude: 26, longitude: -80, operator: 'within' },
+      { latitude: 26, longitude: -80, radius: 10, operator: false },
+      { latitude: 26, longitude: -80, radius: 10, operator: '' },
+      { latitude: 26, longitude: -80, radius: 10 },
     ])
   })
 
   describe('filter', () => {
-    it('should filter properly', () => {
+    it('should filter properly', async () => {
       expect(
-        geo.filter({
+        await geo.filter({
           type: 'geo',
           field: 'test',
-          location: 'SmartProcure',
+          latitude: 26.3170479,
+          longitude: -80.1131784,
           radius: 10,
           operator: 'within',
           _meta: {},
         })
-      ).to.become({
-        geo_distance: {
-          test: '26.3170479,-80.1131784',
-          distance: '10mi',
-        },
+      ).to.deep.equal({
+        geo_distance: { test: [-80.1131784, 26.3170479], distance: '10mi' },
       })
     })
-    it('should filter properly outside', () => {
+    it('should filter properly outside', async () => {
       expect(
-        geo.filter({
+        await geo.filter({
           type: 'geo',
           field: 'test',
-          location: 'SmartProcure',
+          latitude: 26.3170479,
+          longitude: -80.1131784,
           radius: 15,
           operator: 'outside',
           _meta: {},
         })
-      ).to.eventually.deep.equal({
+      ).to.deep.equal({
         bool: {
           must_not: {
-            geo_distance: {
-              test: '26.3170479,-80.1131784',
-              distance: '15mi',
-            },
+            geo_distance: { test: [-80.1131784, 26.3170479], distance: '15mi' },
           },
         },
       })
     })
-  })
-
-  it('validContext should work', () => {
-    utils.validContexts(geo)([
-      {
-        location: true,
-        radius: 1,
-        operator: true,
-      },
-      {
-        location: 'SmartProcure',
-        radius: 10,
-        operator: 'within',
-      },
-    ])
-    utils.noValidContexts(geo)([
-      {},
-      {
-        location: false,
-        radius: 10,
-        operator: 'within',
-      },
-      {
-        location: '',
-        radius: 10,
-        operator: 'within',
-      },
-      {
-        radius: 10,
-        operator: 'within',
-      },
-      {
-        location: true,
-        radius: 0,
-        operator: 'within',
-      },
-      {
-        location: true,
-        operator: 'within',
-      },
-      {
-        location: true,
-        radius: 10,
-        operator: false,
-      },
-      {
-        location: true,
-        radius: 10,
-        operator: '',
-      },
-      {
-        location: true,
-        radius: 10,
-      },
-    ])
-  })
-
-  it('result should work', () => {
-    let node = {
-      type: 'geo',
-      field: 'test',
-      location: 'SmartProcure',
-      radius: 10,
-      operator: 'within',
-      _meta: {},
-    }
-    return expect(geo.filter(node).then(() => geo.result(node))).to.become({
-      Latitude: 26.3170479,
-      Longitude: -80.1131784,
-    })
-  })
-  it('Should faild is no geoCodeLocation service is passed', () => {
-    let _geo = geoType()
-    let node = {
-      type: 'geo',
-      field: 'test',
-      location: 'SmartProcure',
-      radius: 10,
-      operator: 'within',
-      _meta: {},
-    }
-    return expect(Promise.resolve(_geo.filter(node))).to.throw
   })
 })

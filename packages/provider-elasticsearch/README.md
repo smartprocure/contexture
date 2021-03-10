@@ -119,27 +119,17 @@ Output
 ```
 
 #### `geo`
-Represents a geographic radius search. Needs a geocodeLocation service passed in to it. Currently assumes it is a HERE maps geocoder search.
+Represents a geographic radius search. Requires geocoding on the client before passing up.
 
 Input
 
 | Name            | Type                            | Default           | Description |
 | ----            | ----                            | -------           | ----------- |
 | `field`         | string                          | None, *required*  | The field it's operating on |
-| `location`      | string                          | None, *required*  | Location to geocode (e.g. an address, businessname, anything the google geocode can take) |
+| `latitude`      | number/string                   | None, *required*  | Latitude |
+| `longitude`     | number/string                   | None, *required*  | Longitude |
 | `radius`        | number                          | None, *required*  | Radius in miles |
 | `operator`      | `within`/`not within`           | within            | Whether the filter forces inclusion or exclusion |
-
-Output
-
-```js
-{
-  Latitude: Number
-  Longitude: Number
-}
-```
-
-The result can be used to show what location the server on a map, though in practice it's usually better to geocode on the client. This type is planned to be extended to support passing along raw lat/lng.
 
 #### `dateRangeFacet`
 dateRangeFacet is like a `facet` but the options correspond to named date range buckets
