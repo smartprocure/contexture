@@ -1,6 +1,5 @@
 import csv from 'minimal-csv-formatter'
 import _ from 'lodash/fp'
-import F from 'futil'
 
 let transformLabels = _.map(_.get('label'))
 
@@ -28,6 +27,6 @@ export default ({
       }
       await stream.end()
     })(),
-    cancel: () => { cancel = true }
+    cancel() { cancel = true }
   }
 }
