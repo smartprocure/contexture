@@ -17,7 +17,11 @@ describe('results', () => {
     ],
   }
 
-  let simpleRecords = [{ name: 'record1' }, { name: 'record2' }, { name: 'record3' }]
+  let simpleRecords = [
+    { name: 'record1' },
+    { name: 'record2' },
+    { name: 'record3' },
+  ]
 
   let getSimpleService = wrap =>
     jest.fn(tree => {
@@ -58,8 +62,8 @@ describe('results', () => {
     })
     it('retrieves records consistently with getNext', async () => {
       let strategy = await prepareSimpleStrategy({ page: 1 })
-      let arr=[];
-      for await(const i of strategy) arr.push(i);
+      let arr = []
+      for await (const i of strategy) arr.push(i)
       expect(arr).toEqual(simpleRecords)
     })
   }

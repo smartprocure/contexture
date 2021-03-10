@@ -5,7 +5,7 @@ import csv from './csv'
 
 let mockFileStream = () => {
   let writeStream = new PassThrough()
-  let fileData = new Promise((res,rej) => {
+  let fileData = new Promise((res, rej) => {
     let data = []
     writeStream.on('data', d => data.push(d.toString()))
     writeStream.on('end', () => res(_.join('', data)))
@@ -28,10 +28,9 @@ Record3,3
 `
 
 let transform = [
-  {key: 'name', label: 'THE,NAME', display: _.capitalize},
-  {key: 'value', label: 'Value', display: _.identity},
-];
-
+  { key: 'name', label: 'THE,NAME', display: _.capitalize },
+  { key: 'value', label: 'Value', display: _.identity },
+]
 
 // These are skipped on purpose as they actual write CSVs
 describe('full CSV test', () => {

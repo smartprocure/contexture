@@ -20,13 +20,15 @@ export default ({
   return {
     promise: (async () => {
       for await (let r of iterableData) {
-        if( cancel ) break
+        if (cancel) break
         stream.write(csv(_.map(t => t.display(r[t.key]), transform)))
         recordsWritten = recordsWritten + 1
-        onWrite({recordsWritten, record: r})
+        onWrite({ recordsWritten, record: r })
       }
       await stream.end()
     })(),
-    cancel() { cancel = true }
+    cancel() {
+      cancel = true
+    },
   }
 }

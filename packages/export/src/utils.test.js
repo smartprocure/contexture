@@ -22,6 +22,9 @@ describe('utils', () => {
     })
   })
   it('flattenProp', () => {
-    expect(flattenProp('_source', { _source: { a: 1 }, b: 2})).toEqual({ a: 1, b: 2})
+    expect(flattenProp('_source', { _source: { a: 1 }, b: 2 })).toEqual({
+      a: 1,
+      b: 2,
+    })
   })
 })

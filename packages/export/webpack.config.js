@@ -25,6 +25,6 @@ module.exports = {
     futil: 'futil',
   },
   node: {
-    fs: 'empty'
-  }
+    fs: 'empty',
+  },
 }
