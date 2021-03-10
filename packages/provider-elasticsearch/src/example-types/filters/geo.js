@@ -3,7 +3,7 @@ let { negate } = require('../../utils/elasticDSL')
 module.exports = {
   hasValue: ({ latitude, longitude, radius, operator }) =>
     !!(latitude && longitude && radius && operator),
-  filter: ({ field, latitude, longitude, radius, operator }) => {
+  filter({ field, latitude, longitude, radius, operator }) {
     let filter = {
       geo_distance: {
         [field]: [longitude, latitude],
