@@ -1,3 +1,6 @@
+# 1.0.3
+* [geo] Fixed bug with client passed latitude/longitude
+
 # 1.0.2
 * [number] Fix additional bug with `findBestRange` (map result keys to number)
 
@@ -70,6 +73,8 @@
     * Killed useless `caseSensitive` flag
   * [Text]
     * Killed useless `caseSensitive` flag
+  * [Geo]
+    * Killed deprecated server-side `geocodeLocation` function
   * [DateHistogram]
     * Killed unused `minDate` and `maxDate` on response
     * Killed unused extendedBounds support
