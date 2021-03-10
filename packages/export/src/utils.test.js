@@ -1,7 +1,7 @@
 import { setFilterOnly } from './utils'
 
 describe('utils', () => {
-  it('setFilterOnly', async () => {
+  it('setFilterOnly', () => {
     let tree = {
       key: 'root',
       children: [
