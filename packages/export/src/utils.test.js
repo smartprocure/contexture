@@ -1,4 +1,4 @@
-import { setFilterOnly } from './utils'
+import { setFilterOnly, flattenProp } from './utils'
 
 describe('utils', () => {
   it('setFilterOnly', () => {
@@ -20,5 +20,8 @@ describe('utils', () => {
         { filterOnly: true, key: 'results', type: 'results' },
       ],
     })
+  })
+  it('flattenProp', () => {
+    expect(flattenProp('_source', { _source: { a: 1 }, b: 2})).toEqual({ a: 1, b: 2})
   })
 })
