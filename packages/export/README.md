@@ -85,4 +85,4 @@ await csv(
   - `iterableData`: an iterable data object where each iteraction yields an object
   - `transform`: order list of which indicates the header label,
     display function for the field,and key of the record. `[{ key: string, label: string, dispaly: funciton}...]`
-  - `onWrite`: function to intercept writing a records
+  - `onWrite`: function to intercept writing a records, recieves `{recordsWriten: int, record: object}`

@@ -24,6 +24,7 @@ export default ({
         if( cancel ) break
         stream.write(csv(_.map(t => t.display(r[t.key]), transform)))
         recordsWritten = recordsWritten + 1
+        onWrite({recordsWritten, record: r})
       }
       await stream.end()
     })(),
