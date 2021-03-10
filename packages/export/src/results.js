@@ -1,6 +1,6 @@
 import F from 'futil'
 import _ from 'lodash/fp'
-import { runWith, addIterator, flattenProp } from './utils'
+import { runWith, flattenProp } from './utils'
 
 // Will go away once results no longer wraps context in `response`
 let resultField = (field, node) =>
