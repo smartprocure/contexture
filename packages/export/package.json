@@ -44,7 +44,7 @@
     "babel-eslint": "^9.0.0",
     "babel-jest": "^23.4.2",
     "babel-loader": "^8.0.0",
-    "duti": "^0.14.0",
+    "duti": "^0.15.2",
     "eslint": "^5.6.1",
     "eslint-config-smartprocure": "^1.2.0",
     "futil": "^1.55.0",
