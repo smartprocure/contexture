@@ -1,5 +1,5 @@
-import results from './results'
 import csv from './csv'
 import * as utils from './utils'
+import * as strategies from './strategies'
 
-export { results, csv, utils }
+export { strategies, csv, utils }
