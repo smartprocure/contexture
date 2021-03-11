@@ -53,12 +53,6 @@ describe('results', () => {
       let strategy = await prepareSimpleStrategy({ totalPages: 1 })
       expect(await strategy.getTotalRecords()).toBe(3)
     })
-    it('shows if there are more obtainable records', async () => {
-      let strategy = await prepareSimpleStrategy({ page: 1 })
-      expect(await strategy.hasNext()).toBe(true)
-      strategy = await prepareSimpleStrategy({ page: 2 })
-      expect(await strategy.hasNext()).toBe(false)
-    })
     it('retrieves records consistently with getNext', async () => {
       let strategy = await prepareSimpleStrategy({ page: 1 })
       let arr = []

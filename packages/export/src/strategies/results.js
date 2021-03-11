@@ -24,11 +24,8 @@ export default async ({ service, tree, ...node }) => {
     getTotalRecords() {
       return totalRecords
     },
-    hasNext() {
-      return page <= Math.ceil(totalRecords / pageSize)
-    },
     async *[Symbol.asyncIterator]() {
-      while (result.hasNext()) {
+      while (page <= Math.ceil(totalRecords / pageSize)) {
         let node = await run({ page, scrollId, skipCount: true })
         scrollId = node.context.scrollId
         page++
