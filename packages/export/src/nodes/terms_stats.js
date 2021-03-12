@@ -20,7 +20,7 @@ export default async ({ service, tree, ...node }) => {
       return totalRecords
     },
     async *[Symbol.asyncIterator]() {
-      let node = await run({
+      let node = terms_stats.node = await run({
         key: 'stats',
         type: 'terms_stats',
         key_field,
