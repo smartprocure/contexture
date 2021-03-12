@@ -7,26 +7,30 @@ import ContextureMobx from './utils/contexture-mobx'
 import { componentForType } from './utils/schema'
 import { ResultTable, TypeMap } from './exampleTypes'
 
-export let memoryService = (records, { schema, debug } = {}) => {
-  let storage = { records }
-  return {
-    updateMemory(records) {
-      storage.records = records
-    },
-    service: Contexture({
-      debug,
-      // Hack to effectively set a default schema: if our tree root doesn't have
-      // a `schema` property, it will get the schema at key `undefined`.
-      schemas: { [schema]: { memory: storage } },
-      providers: { memory: { ...memory, types: types() } },
-    }),
+export let memoryService = (records, { schema, debug } = {}) =>
+  Contexture({
+    debug,
+    // Hack to effectively set a default schema: if our tree root doesn't have
+    // a `schema` property, it will get the schema at key `undefined`.
+    schemas: { [schema]: { memory: { records } } },
+    providers: { memory: { ...memory, types: types() } },
+  })
+
+export let useMemory = ({ schema, debug } = {}) => {
+  let [storage] = React.useState({})
+  let [service] = React.useState(Contexture({
+    debug,
+    schemas: { [schema]: { memory: storage } },
+    providers: { memory: { ...memory, types: types() } },
+  }))
+  let updateMemory = records => {
+    storage.records = records
   }
+  return [service, updateMemory]
 }
 
 let MemoryTable = ({ data, fields, debug, include, ...props }) => {
-  let [{ service, updateMemory }] = React.useState(
-    memoryService(data, { schema: 'data', debug })
-  )
+  let [service, updateMemory] = useMemory({ schema: 'data', debug })
   let [tree] = React.useState(
     ContextureMobx({ service })({
       key: 'root',
