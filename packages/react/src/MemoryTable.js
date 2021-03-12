@@ -18,11 +18,13 @@ export let memoryService = (records, { schema, debug } = {}) =>
 
 export let useMemory = ({ schema, debug } = {}) => {
   let [storage] = React.useState({})
-  let [service] = React.useState(Contexture({
-    debug,
-    schemas: { [schema]: { memory: storage } },
-    providers: { memory: { ...memory, types: types() } },
-  }))
+  let [service] = React.useState(
+    Contexture({
+      debug,
+      schemas: { [schema]: { memory: storage } },
+      providers: { memory: { ...memory, types: types() } },
+    })
+  )
   let updateMemory = records => {
     storage.records = records
   }
