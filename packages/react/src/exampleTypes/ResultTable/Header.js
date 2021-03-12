@@ -79,6 +79,7 @@ let Header = ({
     hideRemoveColumn,
     hideMenu,
     typeDefault,
+    headerCellProps,
   } = fieldSchema
   let HeaderCell = fieldSchema.HeaderCell || HeaderCellDefault
   let filterNode =
@@ -101,6 +102,7 @@ let Header = ({
         left: isStickyColumn ? 0 : '',
       }}
       activeFilter={_.get('hasValue', filterNode)}
+      {...headerCellProps}
     >
       <span>
         {_.isFunction(label) ? <Label /> : label}{' '}

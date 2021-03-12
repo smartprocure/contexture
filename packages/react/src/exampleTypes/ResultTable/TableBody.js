@@ -35,7 +35,7 @@ let TableBody = ({
               {...{ fields, visibleFields, hiddenFields }}
             >
               {_.map(
-                ({ field, display = x => x, Cell = Td }) => (
+                ({ field, display = x => x, Cell = Td, cellProps }) => (
                   <Cell
                     key={field}
                     className={field === stickyColumn ? 'sticky-column' : ''}
@@ -43,6 +43,7 @@ let TableBody = ({
                       position: field === stickyColumn ? 'sticky' : '',
                       left: field === stickyColumn ? 0 : '',
                     }}
+                    {...cellProps}
                   >
                     {F.when(
                       () => x.isBlank,
