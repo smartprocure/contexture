@@ -1,5 +1,5 @@
 import csv from './csv'
-import * as utils from './utils'
-import * as nodes from './strategies'
+import * as nodes from './nodes'
 
-export { nodes, csv, utils }
+export { nodes, csv }
+export * from './utils'
