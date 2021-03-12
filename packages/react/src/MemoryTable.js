@@ -10,7 +10,9 @@ import { ResultTable, TypeMap } from './exampleTypes'
 export let memoryService = (records, { schema, debug } = {}) => {
   let storage = { records }
   return {
-    updateMemory(records) { storage.records = records },
+    updateMemory(records) {
+      storage.records = records
+    },
     service: Contexture({
       debug,
       // Hack to effectively set a default schema: if our tree root doesn't have
@@ -22,10 +24,9 @@ export let memoryService = (records, { schema, debug } = {}) => {
 }
 
 let MemoryTable = ({ data, fields, debug, include, ...props }) => {
-  let [{service, updateMemory}] = React.useState(memoryService(
-    data,
-    { schema: 'data', debug }
-    ))
+  let [{ service, updateMemory }] = React.useState(
+    memoryService(data, { schema: 'data', debug })
+  )
   let [tree] = React.useState(
     ContextureMobx({ service })({
       key: 'root',
