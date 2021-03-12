@@ -1,87 +1,51 @@
 import _ from 'lodash/fp'
 
-const defaultHereConfig = {
-  app_id: 'KzmI0fMwTyOG10rqZacS', // TEMP EMAIL USED - USE/GET YOUR APP_ID
-  app_code: 'PykXtnTUeH7DDM-RLlpwyA', // TEMP EMAIL USED - USE/GET YOUR APP_CODE
+// HERE maps Sample config. Requires API Key
+const defaultConfig = {
+  apiKey: 'YOUR_API_KEY_GOES_HERE',
   country: 'USA',
-  autocomplete: 'https://autocomplete.geocoder.api.here.com/6.2/suggest.json',
-  geoCoding: 'https://geocoder.api.here.com/6.2/geocode.json?gen=9',
+  minCharacters: 3,
+  lookup: 'https://lookup.search.hereapi.com/v1/lookup',
+  geoCoding: 'https://geocode.search.hereapi.com/v1/geocode',
+  autoComplete: 'https://autocomplete.search.hereapi.com/v1/autocomplete',
 }
-
-let formatAddress = ({ address, matchLevel }) => {
-  let {
-    country,
-    district,
-    city,
-    state,
-    street,
-    county,
-    postalCode,
-    houseNumber,
-  } = address
-  street = `${street} ${city}, ${county}, ${state}`
-  let geoLevel = {
-    country,
-    district: `${district} ${city} ${state}`,
-    city: `${city} ${county} ${state}`,
-    houseNumber: `${houseNumber} ${street}`,
-    county: `${county}, ${state}`,
-    state: `${state}, ${country}`,
-    postalCode: `${city} ${county}, ${state}, ${postalCode}`,
-    street,
-    intersection: street,
-  }
-  return geoLevel[matchLevel]
-}
-export let loadHereOptions = async (
+// Autocomplete
+export let loadOptions = async (
   inputValue,
-  countryCode = 'USA',
-  hereConfig = defaultHereConfig
+  config = defaultConfig
 ) => {
-  if (inputValue.length <= 2) return []
-  if (typeof countryCode === 'object') {
-    hereConfig = countryCode
-    countryCode = 'USA'
-  }
-  hereConfig.country = countryCode
-  let { autocomplete: url, app_id, app_code, country } = hereConfig
-  let apiUrl = `${url}?app_id=${app_id}&app_code=${app_code}&country=${country}&query=${inputValue}`
-
+  let { autoComplete: url, apiKey, country, minCharacters } = config
+  // Do nothing until we have more characters than the minimum allowed
+  if (inputValue.length < minCharacters) return []
+  // Compose the actual HERE API url
+  let apiUrl = `${url}?apiKey=${apiKey}&in=countryCode:${country}&q=${inputValue}`
   let data = await (await fetch(apiUrl)).json()
 
   if (data.error) {
     console.error('loadHereOptions', data.error)
     throw new Error(data.error)
   } else {
-    return _.getOr([], 'suggestions', data).map(d => ({
-      label: formatAddress(d),
-      value: d.locationId,
+    return _.getOr([], 'items', data).map(suggestion => ({
+      label: _.get('address.label', suggestion),
+      value: _.get('id', suggestion),
     }))
   }
 }
-
+// Lookup by location Id
 export let getLocationInfo = async (
   locationId,
-  hereConfig = defaultHereConfig
+  config = defaultConfig
 ) => {
-  let { geoCoding: url, app_id, app_code } = hereConfig
-  let apiUrl = `${url}&app_id=${app_id}&app_code=${app_code}&locationid=${locationId}`
-
-  let data = await (await fetch(apiUrl)).json()
-
-  if (data.error) {
-    console.error('geoCodeLocation', data.error)
-    throw new Error(data.error)
-  } else {
-    return _.get('Response.View.0.Result.0', data)
-  }
+  let { lookup: url, apiKey } = config
+  // Compose the actual HERE API url
+  let apiUrl = `${url}?apiKey=${apiKey}&id=${locationId}`
+  return (await fetch(apiUrl)).json()
 }
-
+// Lat/Lng conversion from and Id
 export let geoCodeLocation = async (
   locationId,
-  hereConfig = defaultHereConfig
-) =>
-  _.flow(
-    _.get('Location.DisplayPosition'),
-    _.mapKeys(_.toLower)
-  )(await getLocationInfo(locationId, hereConfig))
+  config = defaultConfig
+) => {
+  let { lat: latitude, lng: longitude } = _.get('position', await getLocationInfo(locationId, config))
+  return { latitude, longitude }
+}

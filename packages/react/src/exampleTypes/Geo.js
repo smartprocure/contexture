@@ -60,11 +60,11 @@ let GeoComponent = ({
           loadOptions={loadOptions}
           onInputChange={newValue => newValue.replace(/[^a-zA-Z0-9\s]+/g, '')}
           onChange={async ({ label, value }) => {
-            let data = await GeoCodeLocation(value)
-            if (data && data.latitude && data.longitude) {
+            let { latitude, longitude } = await GeoCodeLocation(value) || {}
+            if (latitude && longitude) {
               tree.mutate(node.path, {
-                latitude: data.latitude,
-                longitude: data.longitude,
+                latitude,
+                longitude,
                 location: label,
               })
             }

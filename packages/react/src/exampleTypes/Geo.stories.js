@@ -1,7 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import AsyncSelect from 'react-select/lib/Async'
-import { loadHereOptions, geoCodeLocation } from '../utils/geo'
 import ThemePicker from '../stories/themePicker'
 import { Flex } from '../greyVest'
 import TestTree from './stories/testTree'
@@ -23,10 +22,22 @@ storiesOf('ExampleTypes|Geo filter & HERE maps', module)
           <Geo
             tree={TestTree()}
             placeholder="Enter address, city, state, zip or business name ..."
-            loadOptions={loadHereOptions}
+            loadOptions={async () => [
+              {
+                label: 'Result A',
+                value: 'foo'
+              },
+              {
+                label: 'Result B',
+                value: 'boo'
+              }
+            ]}
             path={['geo']}
             AutoComplete={AsyncSelect}
-            GeoCodeLocation={geoCodeLocation}
+            GeoCodeLocation={async () => ({
+              latitude: 42.697708,
+              longitude: 23.321867
+            })}
           />
         </div>
       </Flex>
