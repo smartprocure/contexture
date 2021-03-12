@@ -9,7 +9,7 @@ export default ({
   // order list of which indicates the header label,
   // display function for the field,
   // and key of the record.
-  // [{ key: string, label: string, dispaly: funciton}...]
+  // [{ key: string, label: string, display: funciton}...]
   transform,
   onWrite = _.noop, // function to intercept writing a page of records
 }) => {

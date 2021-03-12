@@ -83,16 +83,14 @@ await csv(
               Defaults to 1.
     - return:
         - iterableObject
-            - `hasNext`: function, returns true if there are more records
             - `getTotalRecords`: function, returns the number of total records
-
 - `csv`: writes csv data to a stream. The parameter it receives are:
     - args:
         - `options`: object
             - stream, // writable stream target stream
             - `iterableData`: an iterable data object where each iteraction yields an object
             - `transform`: order list of which indicates the header label,
-              display function for the field,and key of the record. `[{ key: string, label: string, dispaly: funciton}...]`
+              display function for the field,and key of the record. `[{ key: string, label: string, display: funciton}...]`
             - `onWrite`: function to intercept writing a records, recieves `{recordsWriten: int, record: object}`
     - return:
         - object
