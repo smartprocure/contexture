@@ -25,18 +25,18 @@ storiesOf('ExampleTypes|Geo filter & HERE maps', module)
             loadOptions={async () => [
               {
                 label: 'Result A',
-                value: 'foo'
+                value: 'foo',
               },
               {
                 label: 'Result B',
-                value: 'boo'
-              }
+                value: 'boo',
+              },
             ]}
             path={['geo']}
             AutoComplete={AsyncSelect}
             GeoCodeLocation={async () => ({
               latitude: 42.697708,
-              longitude: 23.321867
+              longitude: 23.321867,
             })}
           />
         </div>

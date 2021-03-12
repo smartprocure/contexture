@@ -10,10 +10,7 @@ const defaultConfig = {
   autoComplete: 'https://autocomplete.search.hereapi.com/v1/autocomplete',
 }
 // Autocomplete
-export let loadOptions = async (
-  inputValue,
-  config = defaultConfig
-) => {
+export let loadOptions = async (inputValue, config = defaultConfig) => {
   let { autoComplete: url, apiKey, country, minCharacters } = config
   // Do nothing until we have more characters than the minimum allowed
   if (inputValue.length < minCharacters) return []
@@ -32,20 +29,17 @@ export let loadOptions = async (
   }
 }
 // Lookup by location Id
-export let getLocationInfo = async (
-  locationId,
-  config = defaultConfig
-) => {
+export let getLocationInfo = async (locationId, config = defaultConfig) => {
   let { lookup: url, apiKey } = config
   // Compose the actual HERE API url
   let apiUrl = `${url}?apiKey=${apiKey}&id=${locationId}`
   return (await fetch(apiUrl)).json()
 }
 // Lat/Lng conversion from and Id
-export let geoCodeLocation = async (
-  locationId,
-  config = defaultConfig
-) => {
-  let { lat: latitude, lng: longitude } = _.get('position', await getLocationInfo(locationId, config))
+export let geoCodeLocation = async (locationId, config = defaultConfig) => {
+  let { lat: latitude, lng: longitude } = _.get(
+    'position',
+    await getLocationInfo(locationId, config)
+  )
   return { latitude, longitude }
 }
