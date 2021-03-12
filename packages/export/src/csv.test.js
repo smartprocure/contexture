@@ -14,21 +14,22 @@ let mockFileStream = () => {
 }
 
 let iterableData = [
-  { name: 'record1', value: 1 },
-  { name: 'record2', value: 2 },
-  { name: 'record3', value: 3 },
+  { name: 'record1', value: 1, nestedValue: { value: 'a' } },
+  { name: 'record2', value: 2, nestedValue: { value: 'b' } },
+  { name: 'record3', value: 3, nestedValue: { value: 'c' } },
 ]
 
 let expectedFileContents = `\
-"THE,NAME",Value
-Record1,1
-Record2,2
-Record3,3
+"THE,NAME",Value,Nested Value
+Record1,1,a
+Record2,2,b
+Record3,3,c
 `
 
 let transform = [
   { key: 'name', label: 'THE,NAME', display: _.capitalize },
   { key: 'value', label: 'Value', display: _.identity },
+  { key: 'nestedValue.value', label: 'Nested Value', display: _.identity },
 ]
 
 // These are skipped on purpose as they actual write CSVs

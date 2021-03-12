@@ -21,7 +21,7 @@ export default ({
     promise: (async () => {
       for await (let r of iterableData) {
         if (cancel) break
-        stream.write(csv(_.map(t => t.display(r[t.key]), transform)))
+        stream.write(csv(_.map(t => t.display(_.get(t.key, r)), transform)))
         recordsWritten = recordsWritten + 1
         onWrite({ recordsWritten, record: r })
       }
