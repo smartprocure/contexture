@@ -9,16 +9,18 @@ const defaultConfig = {
   geoCoding: 'https://geocode.search.hereapi.com/v1/geocode',
   autoComplete: 'https://autocomplete.search.hereapi.com/v1/autocomplete',
 }
+
 // Autocomplete
 export let loadOptions = async (
-  inputValue,
-  config = defaultConfig
+  input,
+  config = {}
 ) => {
-  let { autoComplete: url, apiKey, country, minCharacters } = config
+  let finalConfig = _.defaults(defaultConfig, config)
+  let { autoComplete: url, apiKey, country, minCharacters } = finalConfig
   // Do nothing until we have more characters than the minimum allowed
-  if (inputValue.length < minCharacters) return []
-  // Compose the actual HERE API url
-  let apiUrl = `${url}?apiKey=${apiKey}&in=countryCode:${country}&q=${inputValue}`
+  if (input.length < minCharacters) return []
+
+  let apiUrl = `${url}?apiKey=${apiKey}&in=countryCode:${country}&q=${encodeURIComponent(input)}`
   let data = await (await fetch(apiUrl)).json()
 
   if (data.error) {
@@ -31,21 +33,23 @@ export let loadOptions = async (
     }))
   }
 }
+
 // Lookup by location Id
-export let getLocationInfo = async (
+export let lookupByLocationId = async (
   locationId,
-  config = defaultConfig
+  config
 ) => {
   let { lookup: url, apiKey } = config
-  // Compose the actual HERE API url
   let apiUrl = `${url}?apiKey=${apiKey}&id=${locationId}`
   return (await fetch(apiUrl)).json()
 }
-// Lat/Lng conversion from and Id
+
+// Geocode by provided string input
 export let geoCodeLocation = async (
-  locationId,
-  config = defaultConfig
+  string,
+  config = {}
 ) => {
-  let { lat: latitude, lng: longitude } = _.get('position', await getLocationInfo(locationId, config))
-  return { latitude, longitude }
+  let { geoCoding: url, apiKey } = _.defaults(defaultConfig, config)
+  let apiUrl = `${url}?apiKey=${apiKey}&q=${encodeURIComponent(string)}`
+  return (await fetch(apiUrl)).json()
 }
