@@ -11,16 +11,15 @@ const defaultConfig = {
 }
 
 // Autocomplete
-export let loadOptions = async (
-  input,
-  config = {}
-) => {
+export let loadOptions = async (input, config = {}) => {
   let finalConfig = _.defaults(defaultConfig, config)
   let { autoComplete: url, apiKey, country, minCharacters } = finalConfig
   // Do nothing until we have more characters than the minimum allowed
   if (input.length < minCharacters) return []
 
-  let apiUrl = `${url}?apiKey=${apiKey}&in=countryCode:${country}&q=${encodeURIComponent(input)}`
+  let apiUrl = `${url}?apiKey=${apiKey}&in=countryCode:${country}&q=${encodeURIComponent(
+    input
+  )}`
   let data = await (await fetch(apiUrl)).json()
 
   if (data.error) {
@@ -35,20 +34,14 @@ export let loadOptions = async (
 }
 
 // Lookup by location Id
-export let lookupByLocationId = async (
-  locationId,
-  config
-) => {
+export let lookupByLocationId = async (locationId, config) => {
   let { lookup: url, apiKey } = config
   let apiUrl = `${url}?apiKey=${apiKey}&id=${locationId}`
   return (await fetch(apiUrl)).json()
 }
 
 // Geocode by provided string input
-export let geoCodeLocation = async (
-  string,
-  config = {}
-) => {
+export let geoCodeLocation = async (string, config = {}) => {
   let { geoCoding: url, apiKey } = _.defaults(defaultConfig, config)
   let apiUrl = `${url}?apiKey=${apiKey}&q=${encodeURIComponent(string)}`
   return (await fetch(apiUrl)).json()
