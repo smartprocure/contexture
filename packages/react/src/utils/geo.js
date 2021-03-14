@@ -23,7 +23,7 @@ export let loadOptions = async (input, config = {}) => {
   let data = await (await fetch(apiUrl)).json()
 
   if (data.error) {
-    console.error('loadHereOptions', data.error)
+    console.error('geo > loadOptions error:', data.error)
     throw new Error(data.error)
   } else {
     return _.getOr([], 'items', data).map(suggestion => ({
