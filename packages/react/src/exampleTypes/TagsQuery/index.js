@@ -79,6 +79,7 @@ let TagsQuery = ({
                 tree,
                 close,
                 actionWrapper,
+                joinOptions: props.joinOptions,
               }}
             />
           )}
