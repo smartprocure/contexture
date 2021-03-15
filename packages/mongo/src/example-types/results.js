@@ -28,7 +28,14 @@ let checkPopulate = ({ include: nodeIncludes, populate }) =>
  */
 let omitFromInclude = (schema, include, as) => {
   let allTargetFields = _.keys(_.get('fields', schema))
-  let omittedFields = _.difference(allTargetFields, include)
+  let omittedFields = _.reject(
+    field =>
+      _.some(
+        includeField => _.startsWith(`${includeField}.`, `${field}.`),
+        include
+      ),
+    allTargetFields
+  )
 
   return F.arrayToObject(
     field => `${as}.${field}`,
