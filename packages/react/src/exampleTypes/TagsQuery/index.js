@@ -18,6 +18,7 @@ let TagsQuery = ({
   popoverArrow,
   popoverOffsetY,
   theme: { Icon, TagsInput, Tag, Popover },
+  joinOptions,
   ...props
 }) => {
   let TagWithPopover = props => (
@@ -79,7 +80,7 @@ let TagsQuery = ({
                 tree,
                 close,
                 actionWrapper,
-                joinOptions: props.joinOptions,
+                joinOptions,
               }}
             />
           )}
