@@ -1,3 +1,4 @@
+import _ from 'lodash/fp'
 import Contexture from 'contexture'
 import memory from 'contexture/src/provider-memory'
 import types from 'contexture/src/provider-memory/exampleTypes'
@@ -7,45 +8,56 @@ import ContextureMobx from './utils/contexture-mobx'
 import { componentForType } from './utils/schema'
 import { ResultTable, TypeMap } from './exampleTypes'
 
-export let memoryService = (records, { schema, debug } = {}) =>
-  Contexture({
-    debug,
-    // Hack to effectively set a default schema: if our tree root doesn't have
-    // a `schema` property, it will get the schema at key `undefined`.
-    schemas: { [schema]: { memory: { records } } },
-    providers: { memory: { ...memory, types: types() } },
-  })
-
-export let useMemory = ({ schema, debug } = {}) => {
-  let [storage] = React.useState({})
-  let [service] = React.useState(
-    Contexture({
-      debug,
-      schemas: { [schema]: { memory: storage } },
-      providers: { memory: { ...memory, types: types() } },
-    })
-  )
-  let updateMemory = records => {
-    storage.records = records
-  }
-  return [service, updateMemory]
-}
-
-let MemoryTable = ({ data, fields, debug, include, ...props }) => {
-  let [service, updateMemory] = useMemory({ schema: 'data', debug })
+export let useMemoryTree = ({
+  records = [],
+  schema = 'data',
+  fields,
+  debug,
+  resultNode = {
+    pageSize: 50,
+  },
+  criteriaNodes = [],
+  childrenNodes = [],
+} = {}) => {
+  let include = _.map('field', fields)
+  let [storage] = React.useState({records})
   let [tree] = React.useState(
-    ContextureMobx({ service })({
+    ContextureMobx({
+      disableAutoUpdate: true,
+      service: Contexture({
+        debug,
+        schemas: { [schema]: { memory: storage } },
+        providers: { memory: { ...memory, types: types() } },
+      })
+    })({
       key: 'root',
       schema: 'data',
       children: [
-        { key: 'results', type: 'results', include },
-        { key: 'criteria', type: 'group', children: [] },
+        { key: 'results', type: 'results', include, ...resultNode },
+        { key: 'criteria', type: 'group', children: criteriaNodes },
+        ...childrenNodes,
       ],
     })
   )
 
+  let updateMemory = async records => {
+    storage.records = await records
+    tree.refresh(['root'])
+  }
+
+  return [tree, updateMemory]
+}
+
+let MemoryTable = ({ data, fields, debug, resultNode, criteriaNodes, childrenNodes, ...props }) => {
+  let [tree, updateMemory] = useMemoryTree({
+    fields,
+    debug,
+    resultNode,
+    criteriaNodes,
+    childrenNodes,
+  })
+
   updateMemory(data)
-  tree.refresh(['root'])
 
   return (
     <ResultTable

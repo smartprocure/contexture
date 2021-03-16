@@ -1,8 +1,7 @@
 import React from 'react'
 import TestTree from './stories/testTree'
 import ThemePicker from '../stories/themePicker'
-import { memoryService } from '../MemoryTable'
-import ContextureMobx from '../utils/contexture-mobx'
+import { useMemoryTree } from '../MemoryTable'
 import { Grid, Box } from '../greyVest'
 import { Facet, FacetSelect, ResultTable } from '.'
 
@@ -20,12 +19,10 @@ export let facetSelect = () => (
 
 export let emojiDataset = () => {
   let data = require('emoji-datasource')
-  let service = memoryService(data)
-  let tree = ContextureMobx({ service })({
-    key: 'root',
-    children: [{ type: 'facet', field: 'category' }, { type: 'results' }],
+  let [tree, update] = useMemoryTree({
+    childrenNodes: [{ type: 'facet', field: 'category' }]
   })
-  tree.refresh(['root'])
+  update(data)
   return (
     <Grid columns="1fr 3fr" gap={8}>
       <Box>
