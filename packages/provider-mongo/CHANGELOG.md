@@ -1,3 +1,6 @@
+#0.22.4
+* fix bug when populate is restricting what fields (specifically when the `include` has dotted object fields when the schema only has the parent object) to return from the looked up record based on the `include` provided
+
 #0.22.3
 * fix bug when populate is restricting what fields (specifically when the `include` has nested object fields) to return from the looked up record based on the `include` provided  
 
