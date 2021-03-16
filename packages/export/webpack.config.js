@@ -24,4 +24,7 @@ module.exports = {
     'lodash/fp': 'lodash/fp',
     futil: 'futil',
   },
+  node: {
+    fs: 'empty',
+  },
 }
