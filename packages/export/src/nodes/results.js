@@ -25,9 +25,11 @@ export default async ({ service, tree, ...node }) => {
       return totalRecords
     },
     async *[Symbol.asyncIterator]() {
+      let next = run({ page, scrollId, skipCount: true })
       while (page <= Math.ceil(totalRecords / pageSize)) {
-        let node = results.node = await run({ page, scrollId, skipCount: true })
+        let node = results.node = await next
         scrollId = node.context.scrollId
+        next = run({ page: page + 1, scrollId, skipCount: true })
         page++
         // We return _source flattened onto the root results items because we're mostly
         // interested in the _source properties but may occasionally want other props like _id.
