@@ -1,3 +1,6 @@
+#0.22.3
+* fix bug when populate is restricting what fields (specifically when the `include` has nested object fields) to return from the looked up record based on the `include` provided  
+
 #0.22.2
 * fix the bug the response of facet remove the 0 value name option ( compactObject consider it  as a false value ).
 
