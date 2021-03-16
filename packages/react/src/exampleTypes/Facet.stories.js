@@ -20,7 +20,7 @@ export let facetSelect = () => (
 export let emojiDataset = () => {
   let data = require('emoji-datasource')
   let [tree, update] = useMemoryTree({
-    childrenNodes: [{ type: 'facet', field: 'category' }]
+    childrenNodes: [{ type: 'facet', field: 'category' }],
   })
   update(data)
   return (

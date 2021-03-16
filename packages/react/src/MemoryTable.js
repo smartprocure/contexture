@@ -20,7 +20,7 @@ export let useMemoryTree = ({
   childrenNodes = [],
 } = {}) => {
   let include = _.map('field', fields)
-  let [storage] = React.useState({records})
+  let [storage] = React.useState({ records })
   let [tree] = React.useState(
     ContextureMobx({
       disableAutoUpdate: true,
@@ -28,7 +28,7 @@ export let useMemoryTree = ({
         debug,
         schemas: { [schema]: { memory: storage } },
         providers: { memory: { ...memory, types: types() } },
-      })
+      }),
     })({
       key: 'root',
       schema: 'data',
@@ -48,7 +48,15 @@ export let useMemoryTree = ({
   return [tree, updateMemory]
 }
 
-let MemoryTable = ({ data, fields, debug, resultNode, criteriaNodes, childrenNodes, ...props }) => {
+let MemoryTable = ({
+  data,
+  fields,
+  debug,
+  resultNode,
+  criteriaNodes,
+  childrenNodes,
+  ...props
+}) => {
   let [tree, updateMemory] = useMemoryTree({
     fields,
     debug,
