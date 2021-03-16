@@ -31,7 +31,13 @@ let omitFromInclude = (schema, include, as) => {
   let omittedFields = _.reject(
     field =>
       _.some(
-        includeField => _.startsWith(`${includeField}.`, `${field}.`),
+        // do NOT omit if:
+        // - include field is an exact match of schema field
+        // - schema field is part of an object field specified by the include field (schemaField = 'topLevel.nestedField' and includeField = 'topLevel')
+        // - include field is a dotted field that is part of a schema object field (schemaField = 'topLevel' and includeField = 'topLevel.nestedField')
+        includeField =>
+          _.startsWith(`${includeField}.`, `${field}.`) ||
+          _.startsWith(`${field}.`, `${includeField}.`),
         include
       ),
     allTargetFields
