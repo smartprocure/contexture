@@ -155,6 +155,73 @@ describe('results', () => {
         },
       ])
     })
+    it('should do populate without omitting from the base record when include field is a parent of nested field object in the schema', () => {
+      let populate = {
+        author: {
+          schema: 'user',
+          localField: 'createdBy',
+          foreignField: '_id',
+          include: ['_id', 'preferences'],
+        },
+      }
+      let getTestSchema = () => ({
+        mongo: { collection: 'user' },
+        fields: {
+          _id: {},
+          password: 'doNotLetMeThrough',
+          'preferences.option1': true,
+          'preferences.option2': false,
+        },
+      })
+      expect(convertPopulate(getTestSchema)(populate)).to.deep.equal([
+        {
+          $lookup: {
+            as: 'author',
+            from: 'user',
+            localField: 'createdBy',
+            foreignField: '_id',
+          },
+        },
+        {
+          $project: {
+            'author.password': 0,
+          },
+        },
+      ])
+    })
+    it('should do populate without omitting from the base record when include field is nested field from an object in the schema', () => {
+      let populate = {
+        author: {
+          schema: 'user',
+          localField: 'createdBy',
+          foreignField: '_id',
+          include: ['_id', 'preferences.option1'],
+        },
+      }
+      let getTestSchema = () => ({
+        mongo: { collection: 'user' },
+        fields: {
+          _id: {},
+          password: 'doNotLetMeThrough',
+          preferences: {},
+        },
+      })
+      expect(convertPopulate(getTestSchema)(populate)).to.deep.equal([
+        {
+          $lookup: {
+            as: 'author',
+            from: 'user',
+            localField: 'createdBy',
+            foreignField: '_id',
+          },
+        },
+        {
+          $project: {
+            'author.password': 0,
+          },
+        },
+      ])
+    })
   })
   describe('getStartRecord', () => {
     it('should return 0 if page is 1', () => {
