@@ -9,7 +9,7 @@ import { componentForType } from './utils/schema'
 import { ResultTable, TypeMap } from './exampleTypes'
 
 export let useMemoryTree = ({
-  records = [],
+  records,
   schema = 'data',
   fields,
   debug,
@@ -20,13 +20,13 @@ export let useMemoryTree = ({
   childrenNodes = [],
 } = {}) => {
   let include = _.map('field', fields)
-  let [storage] = React.useState({ records })
+  let [memoryStorage] = React.useState({ records: [] })
   let [tree] = React.useState(
     ContextureMobx({
       disableAutoUpdate: true,
       service: Contexture({
         debug,
-        schemas: { [schema]: { memory: storage } },
+        schemas: { [schema]: { memory: memoryStorage } },
         providers: { memory: { ...memory, types: types() } },
       }),
     })({
@@ -40,12 +40,15 @@ export let useMemoryTree = ({
     })
   )
 
-  let updateMemory = async records => {
-    storage.records = await records
-    tree.refresh(['root'])
+  if (records !== memoryStorage.records) {
+    let updateMemory = async records => {
+      memoryStorage.records = await records
+      tree.refresh(['root'])
+    }
+    updateMemory(records)
   }
 
-  return [tree, updateMemory]
+  return tree
 }
 
 let MemoryTable = ({
@@ -57,15 +60,14 @@ let MemoryTable = ({
   childrenNodes,
   ...props
 }) => {
-  let [tree, updateMemory] = useMemoryTree({
+  let tree = useMemoryTree({
+    records: data,
     fields,
     debug,
     resultNode,
     criteriaNodes,
     childrenNodes,
   })
-
-  updateMemory(data)
 
   return (
     <ResultTable

@@ -18,11 +18,11 @@ export let facetSelect = () => (
 )
 
 export let emojiDataset = () => {
-  let data = require('emoji-datasource')
-  let [tree, update] = useMemoryTree({
+  let tree = useMemoryTree({
+    records: require('emoji-datasource'),
     childrenNodes: [{ type: 'facet', field: 'category' }],
   })
-  update(data)
+
   return (
     <Grid columns="1fr 3fr" gap={8}>
       <Box>
