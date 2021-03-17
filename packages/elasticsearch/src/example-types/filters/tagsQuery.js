@@ -85,20 +85,32 @@ let result = async ({ tags, join, field, exact, maxToCount = 20 }, search) => {
     return null
   }
 
-  let results = await Promise.all(_.map(async tag => ({ tag, result: await search({
-    query: {
-      query_string: {
-        query: tagsToQueryString([tag], join),
-        default_operator: 'AND',
-        default_field: field.replace('.untouched', '') + (exact ? '.exact' : ''),
-        ...(exact && { analyzer: 'exact' }),
-      },
-    },
-    size: 0,
-    track_total_hits: true
-  }) }), tags))
+  let results = await Promise.all(
+    _.map(
+      async tag => ({
+        tag,
+        result: await search({
+          query: {
+            query_string: {
+              query: tagsToQueryString([tag], join),
+              default_operator: 'AND',
+              default_field:
+                field.replace('.untouched', '') + (exact ? '.exact' : ''),
+              ...(exact && { analyzer: 'exact' }),
+            },
+          },
+          size: 0,
+          track_total_hits: true,
+        }),
+      }),
+      tags
+    )
+  )
 
-  return _.map(({ tag, result }) => ({ ...tag, count: _.get('hits.total.value', result) }), results)
+  return _.map(
+    ({ tag, result }) => ({ ...tag, count: _.get('hits.total.value', result) }),
+    results
+  )
 }
 
 module.exports = {
@@ -112,5 +124,5 @@ module.exports = {
   hasValue,
   filter,
   validContext: node => node.tags.length,
-  result
+  result,
 }
