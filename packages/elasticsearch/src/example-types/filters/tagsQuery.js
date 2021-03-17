@@ -80,26 +80,28 @@ let filter = ({ tags, join, field, exact }) => ({
   },
 })
 
-let result = async ({ tags, join, field, exact, _meta, maxToCount = 20 }, search) => {
+let result = async (node, search, schema, { options, getProvider }) => {
+  let { tags, join, field, exact, _meta, maxToCount = 20 } = node
   if (_.size(tags) > maxToCount) {
     return null
   }
+
+  let provider = getPriovider(node)
 
   let results = await Promise.all(
     _.map(
       async tag => ({
         tag,
-        result: await search({
-          query: {
-            query_string: {
-              query: tagsToQueryString([tag], join),
-              default_operator: 'AND',
-              default_field:
-                field.replace('.untouched', '') + (exact ? '.exact' : ''),
-              ...(exact && { analyzer: 'exact' }),
-            },
-            ...(_meta.relevantFilters ? _meta.relevantFilters : {}),
-          },
+        result: await provider.runSearch(options, node, schema, provider.groupCombinator({ join: 'and' }, [
+          _meta.relevantFilters,
+          {query_string: {
+            query: tagsToQueryString([tag], join),
+            default_operator: 'AND',
+            default_field:
+              field.replace('.untouched', '') + (exact ? '.exact' : ''),
+            ...(exact && { analyzer: 'exact' }),
+          }},
+        ]), {
           size: 0,
           track_total_hits: true,
         }),
