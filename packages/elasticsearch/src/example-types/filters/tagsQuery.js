@@ -80,6 +80,28 @@ let filter = ({ tags, join, field, exact }) => ({
   },
 })
 
+let result = async ({ tags, join, field, exact, maxToCount = 10 }, search) => {
+  if (_.size(tags) > maxToCount) {
+    return null
+  }
+
+  let results = await Promise.all(_.map(async tag => ({ tag, result: search({
+    query_string: {
+      query: tagsToQueryString([tag], join),
+      default_operator: 'AND',
+      default_field: field.replace('.untouched', '') + (exact ? '.exact' : ''),
+      ...(exact && { analyzer: 'exact' }),
+    },
+    size: 0,
+    track_total_hits: true
+  }) }), tags))
+
+  return F.arrayToObject(
+    _.get(tag),
+    _.get('result.hits.total.value')
+  )(results)
+}
+
 module.exports = {
   wordPermutations,
   limitResultsToCertainTags,
@@ -90,4 +112,5 @@ module.exports = {
   tagsToQueryString,
   hasValue,
   filter,
+  result
 }
