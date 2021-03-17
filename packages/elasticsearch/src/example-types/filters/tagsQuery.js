@@ -80,7 +80,7 @@ let filter = ({ tags, join, field, exact }) => ({
   },
 })
 
-let result = async ({ tags, join, field, exact, maxToCount = 20 }, search) => {
+let result = async ({ tags, join, field, exact, _meta, maxToCount = 20 }, search) => {
   if (_.size(tags) > maxToCount) {
     return null
   }
@@ -98,6 +98,7 @@ let result = async ({ tags, join, field, exact, maxToCount = 20 }, search) => {
                 field.replace('.untouched', '') + (exact ? '.exact' : ''),
               ...(exact && { analyzer: 'exact' }),
             },
+            ...(_meta.relevantFilters ? _meta.relevantFilters : {}),
           },
           size: 0,
           track_total_hits: true,
