@@ -86,7 +86,7 @@ let result = async (node, search, schema, { options, getProvider }) => {
     return null
   }
 
-  let provider = getPriovider(node)
+  let provider = getProvider(node)
 
   let results = await Promise.all(
     _.map(
