@@ -85,7 +85,7 @@ let result = async ({ tags, join, field, exact, maxToCount = 10 }, search) => {
     return null
   }
 
-  let results = await Promise.all(_.map(async tag => ({ tag, result: search({
+  let results = await Promise.all(_.map(async tag => ({ tag, result: await search({
     query_string: {
       query: tagsToQueryString([tag], join),
       default_operator: 'AND',
