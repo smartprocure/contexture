@@ -256,6 +256,6 @@ describe('filter', () => {
           },
         })
       )
-    ).to.deep.equal({ foo: 2, bar: 5 })
+    ).to.deep.equal({ results: { foo: 2, bar: 5 } })
   })
 })
