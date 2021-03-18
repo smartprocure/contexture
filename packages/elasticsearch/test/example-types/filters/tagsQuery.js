@@ -8,6 +8,7 @@ let {
   tagsToQueryString,
   hasValue,
   filter,
+  result
 } = require('../../../src/example-types/filters/tagsQuery')
 
 let { expect } = require('chai')
@@ -202,6 +203,19 @@ describe('filter', () => {
         default_field: 'titleAndDescription.exact',
         analyzer: 'exact',
       },
+    })
+  })
+  it('result should query tag counts', () => {
+    console.log(result({
+      tags: [{ word: 'foo' }, { word: 'bar' }],
+    }))
+
+    expect (
+      result({
+        tags: [{ word: 'foo' }, { word: 'bar' }],
+      })
+    ).to.deep.equal({
+
     })
   })
 })
