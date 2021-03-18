@@ -46,7 +46,6 @@ export let useMemoryTree = ({
 
 let MemoryTable = ({
   data,
-  fields,
   debug,
   resultNode,
   criteriaNodes,
@@ -61,10 +60,11 @@ let MemoryTable = ({
 
   return (
     <ResultTable
+      tree={tree}
       path={['root', 'results']}
       criteria={['root', 'criteria']}
       mapNodeToProps={componentForType(TypeMap)}
-      {...{ fields, tree, ...props }}
+      {...props}
     />
   )
 }
