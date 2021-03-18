@@ -20,13 +20,13 @@ export let facetSelect = () => (
 export let emojiDataset = () => {
   let tree = useMemoryTree({
     records: require('emoji-datasource'),
-    childrenNodes: [{ type: 'facet', field: 'category' }],
+    criteriaNodes: [{ type: 'facet', field: 'category' }],
   })
 
   return (
     <Grid columns="1fr 3fr" gap={8}>
       <Box>
-        <Facet tree={tree} path={['root', 'category-facet']} />
+        <Facet tree={tree} path={['root', 'criteria', 'category-facet']} />
       </Box>
       <Box style={{ overflow: 'auto' }}>
         <ResultTable
