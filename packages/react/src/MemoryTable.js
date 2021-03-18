@@ -15,7 +15,7 @@ export let useMemoryTree = ({
   criteriaNodes = [],
 } = {}) => {
   let [memoryStorage] = React.useState({ records: [] })
-  let [tree] = React.useState( () =>
+  let [tree] = React.useState(() =>
     ContextureMobx({
       disableAutoUpdate: true,
       service: Contexture({
