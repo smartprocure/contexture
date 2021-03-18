@@ -10,7 +10,7 @@ let {
   filter,
   result
 } = require('../../../src/example-types/filters/tagsQuery')
-let _ = require('lodash')
+let _ = require('lodash/fp')
 
 let { expect } = require('chai')
 
