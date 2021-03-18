@@ -10,6 +10,7 @@ let {
   filter,
   result
 } = require('../../../src/example-types/filters/tagsQuery')
+let _ = require('lodash')
 
 let { expect } = require('chai')
 
@@ -205,17 +206,12 @@ describe('filter', () => {
       },
     })
   })
-  it('result should query tag counts', () => {
-    console.log(result({
+  it('result should query tag counts', async () => {
+    expect(await result({
       tags: [{ word: 'foo' }, { word: 'bar' }],
-    }))
-
-    expect (
-      result({
-        tags: [{ word: 'foo' }, { word: 'bar' }],
-      })
-    ).to.deep.equal({
-
-    })
+    }, _.constant({ aggregations: { tags: { buckets: {
+      foo: { doc_count: 2 },
+      bar: { doc_count: 5}
+    }}} }))).to.deep.equal({ foo: 2, bar: 5 })
   })
 })
