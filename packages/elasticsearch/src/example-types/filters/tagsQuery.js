@@ -80,40 +80,26 @@ let filter = ({ tags, join, field, exact }) => ({
   },
 })
 
-let result = async (node, search, schema, { options, getProvider }) => {
-  let { tags, join, field, exact, _meta, maxToCount = 20 } = node
-  if (_.size(tags) > maxToCount) {
-    return null
+let result = async (node, search) => {
+  let { tags, field } = node
+
+  let aggs = {
+    aggs: {
+      tags: {
+        filters: {
+          filters: F.arrayToObject(
+            _.get('word'),
+            tag => ({ match: { [field]: tag.word } })
+          )(tags)
+        }
+      }
+    }
   }
 
-  let provider = getProvider(node)
-
-  let results = await Promise.all(
-    _.map(
-      async tag => ({
-        tag,
-        result: await provider.runSearch(options, node, schema, provider.groupCombinator({ join: 'and' }, [
-          _meta.relevantFilters,
-          {query_string: {
-            query: tagsToQueryString([tag], join),
-            default_operator: 'AND',
-            default_field:
-              field.replace('.untouched', '') + (exact ? '.exact' : ''),
-            ...(exact && { analyzer: 'exact' }),
-          }},
-        ]), {
-          size: 0,
-          track_total_hits: true,
-        }),
-      }),
-      tags
-    )
-  )
-
-  return _.map(
-    ({ tag, result }) => ({ ...tag, count: _.get('hits.total.value', result) }),
-    results
-  )
+  return _.flow(
+    _.get('aggregations.tags.buckets'),
+    _.mapValues(_.get('doc_count'))
+  )(await search(aggs))
 }
 
 module.exports = {
@@ -126,6 +112,6 @@ module.exports = {
   tagsToQueryString,
   hasValue,
   filter,
-  validContext: node => node.tags.length,
+  validContext: _.flow(_.get('tags'), _.size),
   result,
 }
