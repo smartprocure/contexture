@@ -33,13 +33,14 @@ export let useMemoryTree = ({
     })
   )
 
-  if (records !== memoryStorage.records) {
-    let updateMemory = async records => {
-      memoryStorage.records = await records
+  let updateMemory = async data => {
+    let records = await data
+    if (records !== memoryStorage.records) {
+      memoryStorage.records = records
       tree.refresh(['root'])
     }
-    updateMemory(records)
   }
+  updateMemory(records)
 
   return tree
 }
