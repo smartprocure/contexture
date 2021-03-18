@@ -210,6 +210,7 @@ describe('filter', () => {
     expect(
       await result(
         {
+          field: 'baz',
           tags: [{ word: 'foo' }, { word: 'bar' }],
         },
         _.constant({
