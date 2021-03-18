@@ -209,36 +209,33 @@ describe('filter', () => {
   })
   it('buildResultQuery should construct correct agg', () => {
     let node = {
-      tags: [
-        { word: 'foo' },
-        { word: 'bar' }
-      ],
+      tags: [{ word: 'foo' }, { word: 'bar' }],
       field: 'baz',
-      join: 'and'
+      join: 'and',
     }
     expect(buildResultQuery(node)).to.deep.equal({
-      "aggs": {
-        "tags": {
-          "filters": {
-            "filters": {
-              "foo": {
-                "query_string": {
-                  "query": "foo",
-                  "default_operator": "AND",
-                  "default_field": "baz"
-                }
+      aggs: {
+        tags: {
+          filters: {
+            filters: {
+              foo: {
+                query_string: {
+                  query: 'foo',
+                  default_operator: 'AND',
+                  default_field: 'baz',
+                },
               },
-              "bar": {
-                "query_string": {
-                  "query": "bar",
-                  "default_operator": "AND",
-                  "default_field": "baz"
-                }
-              }
-            }
-          }
-        }
-      }
+              bar: {
+                query_string: {
+                  query: 'bar',
+                  default_operator: 'AND',
+                  default_field: 'baz',
+                },
+              },
+            },
+          },
+        },
+      },
     })
   })
   it('result should query tag counts', async () => {
