@@ -99,7 +99,8 @@ let result = async (node, search) => {
 
   return _.flow(
     _.get('aggregations.tags.buckets'),
-    _.mapValues(_.get('doc_count'))
+    _.mapValues(_.get('doc_count')),
+    results => ({ results })
   )(await search(aggs))
 }
 
