@@ -8,7 +8,7 @@ let {
   tagsToQueryString,
   hasValue,
   filter,
-  result
+  result,
 } = require('../../../src/example-types/filters/tagsQuery')
 let _ = require('lodash/fp')
 
@@ -207,11 +207,22 @@ describe('filter', () => {
     })
   })
   it('result should query tag counts', async () => {
-    expect(await result({
-      tags: [{ word: 'foo' }, { word: 'bar' }],
-    }, _.constant({ aggregations: { tags: { buckets: {
-      foo: { doc_count: 2 },
-      bar: { doc_count: 5}
-    }}} }))).to.deep.equal({ foo: 2, bar: 5 })
+    expect(
+      await result(
+        {
+          tags: [{ word: 'foo' }, { word: 'bar' }],
+        },
+        _.constant({
+          aggregations: {
+            tags: {
+              buckets: {
+                foo: { doc_count: 2 },
+                bar: { doc_count: 5 },
+              },
+            },
+          },
+        })
+      )
+    ).to.deep.equal({ foo: 2, bar: 5 })
   })
 })

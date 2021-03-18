@@ -87,13 +87,12 @@ let result = async (node, search) => {
     aggs: {
       tags: {
         filters: {
-          filters: F.arrayToObject(
-            _.get('word'),
-            tag => ({ match: { [field]: tag.word } })
-          )(tags)
-        }
-      }
-    }
+          filters: F.arrayToObject(_.get('word'), tag => ({
+            match: { [field]: tag.word },
+          }))(tags),
+        },
+      },
+    },
   }
 
   return _.flow(
