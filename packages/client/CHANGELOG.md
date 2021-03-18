@@ -1,3 +1,6 @@
+2.32.0
+* Update `tagsQuery` reactors to `all` to support showing counts on tags
+
 # 2.31.2
 * Update subquery node reactors to `all`
 

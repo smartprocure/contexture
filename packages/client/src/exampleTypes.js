@@ -101,8 +101,8 @@ export default F.stampKey('type', {
     validate: _.get('tags.length'),
     reactors: {
       join: 'others',
-      tags: 'others',
-      exact: 'others',
+      tags: 'all',
+      exact: 'all',
     },
     defaults: {
       field: null,
