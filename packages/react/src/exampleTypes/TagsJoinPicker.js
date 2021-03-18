@@ -19,7 +19,12 @@ let getJoinOptions = _.intersectionWith(
   ]
 )
 
-let TagsJoinPicker = ({ node, tree, theme: { Select }, joinOptions = [] }) => (
+let TagsJoinPicker = ({
+  node,
+  tree,
+  theme: { Select },
+  joinOptions = ['any', 'all', 'none'],
+}) => (
   <Select
     value={node.join}
     onChange={e => tree.mutate(node.path, { join: e.target.value })}
