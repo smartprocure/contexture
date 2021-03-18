@@ -44,13 +44,7 @@ export let useMemoryTree = ({
   return tree
 }
 
-let MemoryTable = ({
-  data,
-  debug,
-  resultNode,
-  criteriaNodes,
-  ...props
-}) => {
+let MemoryTable = ({ data, debug, resultNode, criteriaNodes, ...props }) => {
   let tree = useMemoryTree({
     records: data,
     debug,
