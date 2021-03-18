@@ -8,6 +8,7 @@ let {
   tagsToQueryString,
   hasValue,
   filter,
+  buildResultQuery,
   result,
 } = require('../../../src/example-types/filters/tagsQuery')
 let _ = require('lodash/fp')
@@ -204,6 +205,40 @@ describe('filter', () => {
         default_field: 'titleAndDescription.exact',
         analyzer: 'exact',
       },
+    })
+  })
+  it('buildResultQuery should construct correct agg', () => {
+    let node = {
+      tags: [
+        { word: 'foo' },
+        { word: 'bar' }
+      ],
+      field: 'baz',
+      join: 'and'
+    }
+    expect(buildResultQuery(node)).to.deep.equal({
+      "aggs": {
+        "tags": {
+          "filters": {
+            "filters": {
+              "foo": {
+                "query_string": {
+                  "query": "foo",
+                  "default_operator": "AND",
+                  "default_field": "baz"
+                }
+              },
+              "bar": {
+                "query_string": {
+                  "query": "bar",
+                  "default_operator": "AND",
+                  "default_field": "baz"
+                }
+              }
+            }
+          }
+        }
+      }
     })
   })
   it('result should query tag counts', async () => {
