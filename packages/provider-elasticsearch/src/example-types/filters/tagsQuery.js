@@ -80,22 +80,22 @@ let filter = ({ tags, join, field, exact }) => ({
   },
 })
 
-let result = async (node, search) => {
-  let { tags, field } = node
-
-  let aggs = {
-    aggs: {
-      tags: {
-        filters: {
-          filters: F.arrayToObject(
-            _.get('word'),
-            tag => filter({ ...node, tags: [tag] }),
-            tags
-          ),
-        },
+let buildResultQuery = node => ({
+  aggs: {
+    tags: {
+      filters: {
+        filters: F.arrayToObject(
+          _.get('word'),
+          tag => filter({ ...node, tags: [tag] }),
+          node.tags
+        ),
       },
     },
-  }
+  },
+})
+
+let result = async (node, search) => {
+  let aggs = buildResultQuery(node)
 
   return _.flow(
     _.get('aggregations.tags.buckets'),
@@ -114,5 +114,6 @@ module.exports = {
   hasValue,
   filter,
   validContext: _.flow(_.get('tags'), _.size),
+  buildResultQuery,
   result,
 }
