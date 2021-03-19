@@ -1,3 +1,6 @@
+# 1.1.0
+* [tagsQuery] Return counts for each tag
+
 # 1.0.3
 * [geo] Fixed bug with client passed latitude/longitude
 
