@@ -12,11 +12,11 @@ let RemoveTagIcon = props => (
 
 let Tag = ({
   value,
+  label,
   removeTag,
   RemoveIcon = RemoveTagIcon,
   tagStyle,
-  onClick,
-  count
+  onClick
 }) => (
   <span
     className="tags-input-tag"
@@ -40,7 +40,7 @@ let Tag = ({
           paddingRight: RemoveTagIcon ? '0em' : '0.45em',
         }}
       >
-        {value}{_.isNumber(count) ? ` (${count})` : ''}
+        {label || value}
       </span>
       <RemoveIcon
         onClick={e => {

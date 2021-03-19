@@ -5,7 +5,7 @@ import { contexturifyWithoutLoader } from '../../utils/hoc'
 import { getTagStyle, tagValueField } from './utils'
 import TagActionsMenu from './TagActionsMenu'
 import ActionsMenu from './ActionsMenu'
-import { toJS } from 'mobx'
+import { observer } from 'mobx-react'
 
 export let innerHeight = 40
 
@@ -22,15 +22,15 @@ let TagsQuery = ({
   joinOptions,
   ...props
 }) => {
-  let TagWithPopover = props => (
+  let TagWithPopover = observer(props => console.log({ props }) || (
     <Popover
       position="right top"
       closeOnPopoverClick={false}
-      trigger={<Tag {...{ ...props, count: _.get(['context', 'results', _.get(tagValueField, props.value)], node)}} />}
+      trigger={<Tag {...{ ...props, ...(node.context.results[props.value] ? { label: `${props.value} (${node.context.results[props.value]})` } : {}) } } />}
     >
       <TagActionsMenu tag={props.value} {...{ node, tree }} />
     </Popover>
-  )
+  ))
 
   return (
     <Grid
