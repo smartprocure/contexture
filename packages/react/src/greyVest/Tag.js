@@ -40,7 +40,7 @@ let Tag = ({
           paddingRight: RemoveTagIcon ? '0em' : '0.45em',
         }}
       >
-        {value} {_.isNumber(count) ? `(${count})` : ''}
+        {value}{_.isNumber(count) ? ` (${count})` : ''}
       </span>
       <RemoveIcon
         onClick={e => {
