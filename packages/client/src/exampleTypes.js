@@ -109,6 +109,9 @@ export default F.stampKey('type', {
       tags: [],
       join: 'any',
       exact: false,
+      context: {
+        results: []
+      }
     },
   },
   mongoId: {

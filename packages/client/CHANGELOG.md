@@ -1,4 +1,6 @@
-2.32.0
+# 2.32.1
+* set default context.results to [] for `tagsQuery`
+# 2.32.0
 * Update `tagsQuery` reactors to `all` to support showing counts on tags
 
 # 2.31.2
