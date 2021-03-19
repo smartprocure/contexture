@@ -110,7 +110,7 @@ export default F.stampKey('type', {
       join: 'any',
       exact: false,
       context: {
-        results: []
+        results: {}
       }
     },
   },
