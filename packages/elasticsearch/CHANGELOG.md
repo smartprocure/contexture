@@ -1,3 +1,6 @@
+# 1.1.1
+* [results] Respect `highlight: false` to opt out highlighting (regression from 1.0)
+
 # 1.1.0
 * [tagsQuery] Return counts for each tag
 
