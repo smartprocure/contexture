@@ -30,7 +30,8 @@ module.exports = {
       })
 
     // Global schema highlight configuration
-    let schemaHighlight = node.highlight !== false && schema.elasticsearch.highlight
+    let schemaHighlight =
+      node.highlight !== false && schema.elasticsearch.highlight
     // Specific search highlight override
     let searchHighlight = _.isPlainObject(node.highlight) ? node.highlight : {}
     let resultColumns = node.include
