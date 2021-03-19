@@ -25,7 +25,7 @@ let TagsQuery = ({
     <Popover
       position="right top"
       closeOnPopoverClick={false}
-      trigger={<Tag {...props} />}
+      trigger={<Tag {...{ ...props, count: _.get(['context', 'results', _.get(tagValueField, props.value)])}} />}
     >
       <TagActionsMenu tag={props.value} {...{ node, tree }} />
     </Popover>
