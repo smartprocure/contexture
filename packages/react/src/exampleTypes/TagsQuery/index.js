@@ -22,15 +22,16 @@ let TagsQuery = ({
   joinOptions,
   ...props
 }) => {
-  let TagWithPopover = observer(props => console.log({ props }) || (
-    <Popover
+  let TagWithPopover = observer(props => {
+    let result = _.get(['context', 'results', props.value], node)
+    return <Popover
       position="right top"
       closeOnPopoverClick={false}
-      trigger={<Tag {...{ ...props, ...(node.context.results[props.value] ? { label: `${props.value} (${node.context.results[props.value]})` } : {}) } } />}
+      trigger={<Tag {...{ ...props, ...result ? { label: `${props.value} (${result})` } : {} } } />}
     >
       <TagActionsMenu tag={props.value} {...{ node, tree }} />
     </Popover>
-  ))
+  })
 
   return (
     <Grid

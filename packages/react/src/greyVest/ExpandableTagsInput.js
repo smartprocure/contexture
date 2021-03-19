@@ -9,8 +9,7 @@ export let Tags = ({
   removeTag,
   tagStyle,
   onTagClick = _.noop,
-  Tag = DefaultTag,
-  context
+  Tag = DefaultTag
 }) => (
   <Flex
     wrap
@@ -26,7 +25,6 @@ export let Tags = ({
         <Tag
           key={t}
           value={t}
-          count={_.get(['results', t], context)}
           {...{ removeTag, tagStyle }}
           onClick={() => onTagClick(t)}
         />
