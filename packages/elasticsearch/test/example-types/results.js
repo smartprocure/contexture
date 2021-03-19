@@ -125,6 +125,13 @@ describe('results', () => {
       }),
     ])
   })
+  it('should skip highlight when node highlight is false', async () => {
+    schema.elasticsearch.highlight = {}
+    F.extendOn(node, { highlight: false })
+    await resultsTest(node, [
+      _.extend(expectedCalls[0], { sort: { _score: 'desc' } }),
+    ])
+  })
   it('should override schema highlight via node highlight', async () => {
     schema.elasticsearch.highlight = {}
     F.extendOn(node, {
