@@ -32,8 +32,6 @@ let TagsQuery = ({
     </Popover>
   )
 
-  console.log(toJS(node))
-
   return (
     <Grid
       className="tags-query"

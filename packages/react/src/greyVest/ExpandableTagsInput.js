@@ -102,7 +102,7 @@ let ExpandableTagsInput = ({
           placeholder={placeholder}
           {...props}
         />
-        <Tags reverse {...{ tags, removeTag, tagStyle, onTagClick, Tag }} />
+        <Tags reverse {...{ tags, removeTag, tagStyle, onTagClick, Tag, context }} />
       </span>
     </div>
   )
