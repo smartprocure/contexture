@@ -22,6 +22,7 @@ let TagsInput = forwardRef(
       onInputChange = _.noop,
       onTagClick = _.noop,
       Tag = DefaultTag,
+      context,
       ...props
     },
     inputRef
@@ -54,6 +55,7 @@ let TagsInput = forwardRef(
               <Tag
                 key={t}
                 value={t}
+                count={_.get(['results', t], context)}
                 {...{ removeTag, tagStyle }}
                 onClick={() => onTagClick(t)}
               />

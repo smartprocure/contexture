@@ -5,6 +5,7 @@ import { contexturifyWithoutLoader } from '../../utils/hoc'
 import { getTagStyle, tagValueField } from './utils'
 import TagActionsMenu from './TagActionsMenu'
 import ActionsMenu from './ActionsMenu'
+import { toJS } from 'mobx'
 
 export let innerHeight = 40
 
@@ -30,6 +31,8 @@ let TagsQuery = ({
       <TagActionsMenu tag={props.value} {...{ node, tree }} />
     </Popover>
   )
+
+  console.log(toJS(node))
 
   return (
     <Grid
@@ -58,6 +61,7 @@ let TagsQuery = ({
           Tag={TagWithPopover}
           style={{ flex: 1, border: 0 }}
           {...props}
+          context={node.context}
         />
       </GridItem>
       <GridItem place="center">
