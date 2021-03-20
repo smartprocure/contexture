@@ -23,11 +23,15 @@ let TagsQuery = ({
   ...props
 }) => {
   let TagWithPopover = observer(props => {
-    let hasResult = _.has(['context', 'results', props.value], node)
+    let result = _.get(['context', 'results', props.value], node)
+    let tagProps = {
+      ...props,
+      ...(!_.isNil(result) ? { label: `${props.value} (${result})` } : {})
+    }
     return <Popover
       position="right top"
       closeOnPopoverClick={false}
-      trigger={<Tag {...{ ...props, ...(hasResult ? { label: `${props.value} (${_.get(['context', 'results', props.value], node)})` } : {}) } } />}
+      trigger={<Tag {...tagProps } />}
     >
       <TagActionsMenu tag={props.value} {...{ node, tree }} />
     </Popover>

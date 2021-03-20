@@ -22,7 +22,6 @@ let TagsInput = forwardRef(
       onInputChange = _.noop,
       onTagClick = _.noop,
       Tag = DefaultTag,
-      context,
       ...props
     },
     inputRef
