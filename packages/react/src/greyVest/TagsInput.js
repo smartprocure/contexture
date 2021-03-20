@@ -55,7 +55,6 @@ let TagsInput = forwardRef(
               <Tag
                 key={t}
                 value={t}
-                count={_.get(['results', t], context)}
                 {...{ removeTag, tagStyle }}
                 onClick={() => onTagClick(t)}
               />

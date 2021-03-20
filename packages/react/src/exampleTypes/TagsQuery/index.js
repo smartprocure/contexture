@@ -60,7 +60,6 @@ let TagsQuery = ({
           Tag={TagWithPopover}
           style={{ flex: 1, border: 0 }}
           {...props}
-          context={node.context}
         />
       </GridItem>
       <GridItem place="center">

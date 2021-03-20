@@ -48,7 +48,6 @@ let ExpandableTagsInput = ({
   onInputChange = _.noop,
   onTagClick = _.noop,
   Tag = DefaultTag,
-  context,
   ...props
 }) => {
   addTag = splitCommas
@@ -100,7 +99,7 @@ let ExpandableTagsInput = ({
           placeholder={placeholder}
           {...props}
         />
-        <Tags reverse {...{ tags, removeTag, tagStyle, onTagClick, Tag, context }} />
+        <Tags reverse {...{ tags, removeTag, tagStyle, onTagClick, Tag }} />
       </span>
     </div>
   )
