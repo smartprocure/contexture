@@ -62,7 +62,7 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
       node.error = e.meta.body.error
       throw {
         message: `${e}`,
-        ...(e.meta.body.error)
+        ...e.meta.body.error,
       }
     }
 
