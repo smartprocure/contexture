@@ -1,6 +1,5 @@
 import React from 'react'
 import F from 'futil'
-import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 import Flex from './Flex'
 
