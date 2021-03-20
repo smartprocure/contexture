@@ -9,7 +9,7 @@ export let Tags = ({
   removeTag,
   tagStyle,
   onTagClick = _.noop,
-  Tag = DefaultTag
+  Tag = DefaultTag,
 }) => (
   <Flex
     wrap

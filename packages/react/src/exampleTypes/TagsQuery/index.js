@@ -26,15 +26,17 @@ let TagsQuery = ({
     let result = _.get(['context', 'results', props.value], node)
     let tagProps = {
       ...props,
-      ...(!_.isNil(result) ? { label: `${props.value} (${result})` } : {})
+      ...(!_.isNil(result) ? { label: `${props.value} (${result})` } : {}),
     }
-    return <Popover
-      position="right top"
-      closeOnPopoverClick={false}
-      trigger={<Tag {...tagProps } />}
-    >
-      <TagActionsMenu tag={props.value} {...{ node, tree }} />
-    </Popover>
+    return (
+      <Popover
+        position="right top"
+        closeOnPopoverClick={false}
+        trigger={<Tag {...tagProps} />}
+      >
+        <TagActionsMenu tag={props.value} {...{ node, tree }} />
+      </Popover>
+    )
   })
 
   return (

@@ -15,7 +15,7 @@ let Tag = ({
   removeTag,
   RemoveIcon = RemoveTagIcon,
   tagStyle,
-  onClick
+  onClick,
 }) => (
   <span
     className="tags-input-tag"
