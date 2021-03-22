@@ -17,7 +17,7 @@ export let useMemoryTree = ({
   let [memoryStorage] = React.useState({ records: [] })
   let [tree] = React.useState(() =>
     ContextureMobx({
-      disableAutoUpdate: true,
+      debounce: 0,
       service: Contexture({
         debug,
         schemas: { data: { memory: memoryStorage } },
