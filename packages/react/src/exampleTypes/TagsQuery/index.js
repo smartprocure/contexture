@@ -27,7 +27,9 @@ let TagsQuery = ({
     let result = _.get(['context', 'results', props.value], node)
     let tagProps = {
       ...props,
-      ...(!_.isNil(result) ? { label: `${props.value} (${toNumber(result)})` } : {}),
+      ...(!_.isNil(result)
+        ? { label: `${props.value} (${toNumber(result)})` }
+        : {}),
     }
     return (
       <Popover
