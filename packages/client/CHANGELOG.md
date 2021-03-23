@@ -1,3 +1,5 @@
+# 2.32.2
+* set default date.range to 'exact'
 # 2.32.1
 * set default context.results to [] for `tagsQuery`
 # 2.32.0

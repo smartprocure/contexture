@@ -194,7 +194,7 @@ export default F.stampKey('type', {
       field: null,
       from: null,
       to: null,
-      range: null,
+      range: 'exact',
       timezone: null,
     },
   },
