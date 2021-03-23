@@ -68,40 +68,41 @@ let DateComponent = ({
           )
         }}
       />
-      {node.range === 'exact'
-        ? <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-            <DateInput
-              value={node.from}
-              onChange={date =>
-                tree.mutate(node.path, { range: 'exact', from: date })
-              }
-            />
-            <div>-</div>
-            <DateInput
-              value={node.to}
-              onChange={date =>
-                tree.mutate(node.path, { range: 'exact', to: endOfDay(date) })
-              }
-            />
-          </Flex>
-        : <Select
-            value={node.range}
-            onChange={e =>
-              tree.mutate(node.path, {
-                range: e.target.value,
-                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-              })
+      {node.range === 'exact' ? (
+        <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+          <DateInput
+            value={node.from}
+            onChange={date =>
+              tree.mutate(node.path, { range: 'exact', from: date })
             }
-            options={F.map(
-              ({ range }) => ({
-                label: _.startCase(range),
-                value: range,
-                selected: node.range === range,
-              }),
-              rollingOpts
-            )}
           />
-      }
+          <div>-</div>
+          <DateInput
+            value={node.to}
+            onChange={date =>
+              tree.mutate(node.path, { range: 'exact', to: endOfDay(date) })
+            }
+          />
+        </Flex>
+      ) : (
+        <Select
+          value={node.range}
+          onChange={e =>
+            tree.mutate(node.path, {
+              range: e.target.value,
+              timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            })
+          }
+          options={F.map(
+            ({ range }) => ({
+              label: _.startCase(range),
+              value: range,
+              selected: node.range === range,
+            }),
+            rollingOpts
+          )}
+        />
+      )}
     </div>
   )
 }
