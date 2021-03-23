@@ -48,10 +48,6 @@ let DateComponent = ({
   excludeRollingRanges = [],
   theme: { DateInput, RadioList, Select },
 }) => {
-  let [dateType, setDateType] = React.useState(
-    node.range === 'exact' || !node.range ? 'exact' : 'rolling'
-  )
-
   let rollingOpts = _.reject(
     opt => _.includes(opt.type, excludeRollingRanges),
     allRollingOpts
@@ -61,7 +57,7 @@ let DateComponent = ({
     <div>
       <RadioList
         options={F.autoLabelOptions(['exact', 'rolling'])}
-        value={dateType}
+        value={node.range !== 'exact' ? 'rolling' : 'exact'}
         style={{ marginBottom: 10 }}
         onChange={value => {
           tree.mutate(
@@ -70,45 +66,42 @@ let DateComponent = ({
               ? { range: 'exact', from: null, to: null }
               : { range: '', from: null, to: null }
           )
-          setDateType(value)
         }}
       />
-      {dateType === 'exact' && (
-        <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-          <DateInput
-            value={node.from}
-            onChange={date =>
-              tree.mutate(node.path, { range: 'exact', from: date })
+      {node.range === 'exact'
+        ? <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+            <DateInput
+              value={node.from}
+              onChange={date =>
+                tree.mutate(node.path, { range: 'exact', from: date })
+              }
+            />
+            <div>-</div>
+            <DateInput
+              value={node.to}
+              onChange={date =>
+                tree.mutate(node.path, { range: 'exact', to: endOfDay(date) })
+              }
+            />
+          </Flex>
+        : <Select
+            value={node.range}
+            onChange={e =>
+              tree.mutate(node.path, {
+                range: e.target.value,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+              })
             }
+            options={F.map(
+              ({ range }) => ({
+                label: _.startCase(range),
+                value: range,
+                selected: node.range === range,
+              }),
+              rollingOpts
+            )}
           />
-          <div>-</div>
-          <DateInput
-            value={node.to}
-            onChange={date =>
-              tree.mutate(node.path, { range: 'exact', to: endOfDay(date) })
-            }
-          />
-        </Flex>
-      )}
-      {dateType === 'rolling' && (
-        <Select
-          value={node.range}
-          onChange={e =>
-            tree.mutate(node.path, {
-              range: e.target.value,
-              timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-            })
-          }
-          options={F.map(
-            ({ range }) => ({
-              label: _.startCase(range),
-              value: range,
-              selected: node.range === range,
-            }),
-            rollingOpts
-          )}
-        />
-      )}
+      }
     </div>
   )
 }
