@@ -11,6 +11,7 @@ let RemoveTagIcon = props => (
 
 let Tag = ({
   value,
+  label,
   removeTag,
   RemoveIcon = RemoveTagIcon,
   tagStyle,
@@ -38,7 +39,7 @@ let Tag = ({
           paddingRight: RemoveTagIcon ? '0em' : '0.45em',
         }}
       >
-        {value}
+        {label || value}
       </span>
       <RemoveIcon
         onClick={e => {

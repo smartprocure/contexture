@@ -10,17 +10,25 @@ export let tagToGroupJoin = (x = 'any') =>
     none: 'not',
   }[x])
 
-let joinOptions = [
-  { value: 'any', label: 'Match any of these keywords' },
-  { value: 'all', label: 'Match all of these keywords' },
-  { value: 'none', label: 'Match none of these keywords' },
-]
+let getJoinOptions = _.intersectionWith(
+  (defaultOption, option) => defaultOption.value === option,
+  [
+    { value: 'any', label: 'Match any of these keywords' },
+    { value: 'all', label: 'Match all of these keywords' },
+    { value: 'none', label: 'Match none of these keywords' },
+  ]
+)
 
-let TagsJoinPicker = ({ node, tree, theme: { Select } }) => (
+let TagsJoinPicker = ({
+  node,
+  tree,
+  theme: { Select },
+  joinOptions = ['any', 'all', 'none'],
+}) => (
   <Select
     value={node.join}
     onChange={e => tree.mutate(node.path, { join: e.target.value })}
-    options={joinOptions}
+    options={getJoinOptions(joinOptions)}
     placeholder={false}
   />
 )

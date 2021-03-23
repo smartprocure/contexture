@@ -12,6 +12,7 @@ let ActionsMenu = ({
   close,
   theme: { Button, Checkbox },
   actionWrapper = _.identity,
+  joinOptions,
 }) => (
   <Flex
     style={{ minWidth: 240, padding: 10 }}
@@ -45,7 +46,7 @@ let ActionsMenu = ({
       <span>Include word variations</span>
     </label>
     <div>
-      <TagsJoinPicker node={node} tree={tree} />
+      <TagsJoinPicker {...{ node, tree, joinOptions }} />
     </div>
   </Flex>
 )
