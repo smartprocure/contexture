@@ -6,6 +6,7 @@ import { getTagStyle, tagValueField } from './utils'
 import TagActionsMenu from './TagActionsMenu'
 import ActionsMenu from './ActionsMenu'
 import { observer } from 'mobx-react'
+import { toNumber } from '../../utils/format'
 
 export let innerHeight = 40
 
@@ -26,7 +27,9 @@ let TagsQuery = ({
     let result = _.get(['context', 'results', props.value], node)
     let tagProps = {
       ...props,
-      ...(!_.isNil(result) ? { label: `${props.value} (${result})` } : {}),
+      ...(!_.isNil(result)
+        ? { label: `${props.value} (${toNumber(result)})` }
+        : {}),
     }
     return (
       <Popover
