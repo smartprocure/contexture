@@ -9,16 +9,15 @@ let ResultCount = ({
   display = toNumber,
   noResults = 'No Results',
 }) => {
-  let count =
-    F.cascade(
-      [
-        'context.response.results.length',
-        'context.results.length',
-        'context.result',
-        'context.value',
-      ],
-      node
-    )
+  let count = F.cascade(
+    [
+      'context.response.results.length',
+      'context.results.length',
+      'context.result',
+      'context.value',
+    ],
+    node
+  )
   let totalRecords = count
     ? F.cascade(
         [
