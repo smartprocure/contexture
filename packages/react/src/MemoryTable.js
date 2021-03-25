@@ -1,7 +1,8 @@
+import _ from 'lodash/fp'
 import Contexture from 'contexture'
 import memory from 'contexture/src/provider-memory'
 import types from 'contexture/src/provider-memory/exampleTypes'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import ContextureMobx from './utils/contexture-mobx'
 import { componentForType } from './utils/schema'
 import { ResultTable, TypeMap } from './exampleTypes'
@@ -9,14 +10,17 @@ import { ResultTable, TypeMap } from './exampleTypes'
 export let useMemoryTree = ({
   records,
   debug,
-  resultNode = {
+  resultsNode = {
     pageSize: 50,
   },
   criteriaNodes = [],
 } = {}) => {
-  let [memoryStorage] = React.useState({ records: [] })
-  let [tree] = React.useState(() =>
-    ContextureMobx({
+  let [memoryStorage] = useState({ records: [] })
+  let [tree, setTree] = useState({})
+
+  // creating new tree when resultsNode or criteriaNodes is changed
+  useEffect(() => {
+    tree = ContextureMobx({
       debounce: 0,
       service: Contexture({
         debug,
@@ -27,11 +31,12 @@ export let useMemoryTree = ({
       key: 'root',
       schema: 'data',
       children: [
-        { key: 'results', type: 'results', ...resultNode },
-        { key: 'criteria', type: 'group', children: criteriaNodes },
+        { key: 'results', type: 'results', ...resultsNode },
+        { key: 'criteria', type: 'group', children: _.castArray(criteriaNodes) },
       ],
     })
-  )
+    setTree(tree)
+  }, [resultsNode, criteriaNodes])
 
   let updateMemory = async data => {
     let records = await data
@@ -45,11 +50,11 @@ export let useMemoryTree = ({
   return tree
 }
 
-let MemoryTable = ({ data, debug, resultNode, criteriaNodes, ...props }) => {
+let MemoryTable = ({ data, debug, resultsNode, criteriaNodes, ...props }) => {
   let tree = useMemoryTree({
     records: data,
     debug,
-    resultNode,
+    resultsNode,
     criteriaNodes,
   })
 
