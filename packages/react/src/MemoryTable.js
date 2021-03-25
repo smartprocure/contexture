@@ -32,7 +32,11 @@ export let useMemoryTree = ({
       schema: 'data',
       children: [
         { key: 'results', type: 'results', ...resultsNode },
-        { key: 'criteria', type: 'group', children: _.castArray(criteriaNodes) },
+        {
+          key: 'criteria',
+          type: 'group',
+          children: _.castArray(criteriaNodes),
+        },
       ],
     })
     setTree(tree)
