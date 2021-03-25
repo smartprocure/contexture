@@ -17,7 +17,9 @@ let ResultCount = ({
         'context.result',
         'context.value',
       ],
+      node
     )
+
   let totalRecords = count
     ? F.cascade(
         [
