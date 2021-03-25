@@ -14,17 +14,17 @@ let ResultCount = ({
       [
         'context.response.results.length',
         'context.results.length',
+        'context.result',
         'context.value',
       ],
-      node
-    ) || _.isNumber(node.context)
+    )
   let totalRecords = count
     ? F.cascade(
         [
           'context.response.totalRecords',
           'context.totalRecords',
+          'context.result',
           'context.value',
-          'context',
         ],
         node
       )
