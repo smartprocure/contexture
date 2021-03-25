@@ -19,7 +19,6 @@ let ResultCount = ({
       ],
       node
     )
-
   let totalRecords = count
     ? F.cascade(
         [
