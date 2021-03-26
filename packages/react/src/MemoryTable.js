@@ -47,14 +47,12 @@ export let useMemoryTree = ({
     setTree(makeTree())
   }
 
-  let updateMemory = async data => {
-    let records = await data
+  Promise.resolve(records).then(records => {
     if (records !== memoryStorage.records) {
       memoryStorage.records = records
       tree.refresh(['root'])
     }
-  }
-  updateMemory(records)
+  })
 
   return tree
 }
