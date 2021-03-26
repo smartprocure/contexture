@@ -35,6 +35,7 @@ let ResultTable = ({
   pageSizeOptions, // an array of options to set the # of rows per page (default [20, 50, 100, 250])
   limitedResults,
   stickyColumn,
+  hideFooter,
   footerStyle,
   theme: { Table, Thead, Tr },
 }) => {
@@ -123,7 +124,7 @@ let ResultTable = ({
             }}
           />
         </Table>
-        {node.pageSize > 0 && (
+        {!hideFooter && node.pageSize > 0 && (
           <ResultTableFooter
             {...{
               tree,
