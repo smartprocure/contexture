@@ -10,10 +10,8 @@ import { ResultTable, TypeMap } from './exampleTypes'
 export let useMemoryTree = ({
   records,
   debug,
-  resultsNode = {
-    pageSize: 50,
-  },
-  criteriaNodes = [],
+  resultsNode,
+  criteriaNodes,
 } = {}) => {
   let makeTree = () =>
     ContextureMobx({
@@ -27,7 +25,12 @@ export let useMemoryTree = ({
       key: 'root',
       schema: 'data',
       children: [
-        { key: 'results', type: 'results', ...resultsNode },
+        {
+          key: 'results',
+          type: 'results',
+          pageSize: 50,
+          ...resultsNode,
+        },
         {
           key: 'criteria',
           type: 'group',
