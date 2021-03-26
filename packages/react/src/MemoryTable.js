@@ -44,7 +44,8 @@ export let useMemoryTree = ({
   // useEffect is not working due to shallow equality check
   if (!_.isEqual(dependency, [resultsNode, criteriaNodes])) {
     setDependency([resultsNode, criteriaNodes])
-    setTree(makeTree())
+    tree = makeTree()
+    setTree(tree)
   }
 
   Promise.resolve(records).then(records => {
