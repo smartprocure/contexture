@@ -29,7 +29,7 @@ export let useMemoryTree = ({
           key: 'results',
           type: 'results',
           pageSize: 50,
-          ...resultsNode
+          ...resultsNode,
         },
         {
           key: 'criteria',
