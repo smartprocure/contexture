@@ -11,7 +11,7 @@ export let useMemoryTree = ({
   records,
   debug,
   resultsNode,
-  criteriaNodes,
+  criteriaNodes = [],
 } = {}) => {
   let makeTree = () =>
     ContextureMobx({
