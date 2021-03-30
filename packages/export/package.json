@@ -1,11 +1,12 @@
 {
   "name": "contexture-export",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Contexture Exports",
   "main": "lib/contexture-export.js",
   "scripts": {
     "build": "webpack",
-    "danger": "duti",
+    "duti": "duti",
+    "danger": "danger ci",
     "lint": "eslint src/*.js test/*.js",
     "lint:ci": "npm run lint -- -o lint-results.json -f json",
     "lint-fix": "eslint src/*.js test/*.js --fix",
@@ -14,7 +15,6 @@
     "test": "jest --",
     "test:watch": "jest --watch --",
     "test:ci": "jest --coverage --json --outputFile=test-results.json",
-    "coverage": "jest --coverage --",
     "prepublish": "webpack"
   },
   "repository": {
@@ -44,6 +44,7 @@
     "babel-eslint": "^9.0.0",
     "babel-jest": "^23.4.2",
     "babel-loader": "^8.0.0",
+    "danger": "^10.5.4",
     "duti": "^0.15.2",
     "eslint": "^5.6.1",
     "eslint-config-smartprocure": "^1.2.0",
