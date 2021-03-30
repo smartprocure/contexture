@@ -1,5 +1,6 @@
 # 2.32.3
 * Refactoring to simplify code (preparing for larger updates)
+* Also fixes a bug when the `standardChange` reactor should return `all`, but wouldn't have
 
 # 2.32.2
 * set default date.range to 'exact'
