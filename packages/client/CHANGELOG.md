@@ -1,7 +1,12 @@
+# 2.32.3
+* Refactoring to simplify code (preparing for larger updates)
+
 # 2.32.2
 * set default date.range to 'exact'
+
 # 2.32.1
 * set default context.results to [] for `tagsQuery`
+
 # 2.32.0
 * Update `tagsQuery` reactors to `all` to support showing counts on tags
 
