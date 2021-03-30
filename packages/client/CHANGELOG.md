@@ -1,7 +1,13 @@
+# 2.32.3
+* Refactoring to simplify code (preparing for larger updates)
+* Also fixes a bug when the `standardChange` reactor should return `all`, but wouldn't have
+
 # 2.32.2
 * set default date.range to 'exact'
+
 # 2.32.1
 * set default context.results to [] for `tagsQuery`
+
 # 2.32.0
 * Update `tagsQuery` reactors to `all` to support showing counts on tags
 
