@@ -5,7 +5,7 @@ import { hasContext, hasValue } from './node'
 let all = parent => _.toArray(parent.children)
 let self = (parent, node) => [node]
 let others = (parent, node) =>
-    parent.join === 'or' ? [] : _.without([node], _.toArray(parent.children))
+  parent.join === 'or' ? [] : _.without([node], _.toArray(parent.children))
 let standardChange = (parent, node, { previous }) => {
   let needUpdate = hasContext(node)
   let affectsOthers = hasValue(node) || hasValue(previous)
