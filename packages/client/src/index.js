@@ -2,7 +2,7 @@ import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { flatten, bubbleUp, Tree, encode, decode, isParent } from './util/tree'
 import { validate } from './validation'
-import { getAffectedNodes } from './reactors'
+import { getAffectedNodes, reactors } from './reactors'
 import actions from './actions'
 import serialize from './serialize'
 import traversals from './traversals'
@@ -62,10 +62,8 @@ export let ContextTree = _.curry(
     tree
   ) => {
     tree = initObject(tree)
-    let debugInfo = initObject({
-      dispatchHistory: [],
-    })
-    let customReactors = {}
+    let debugInfo = initObject({ dispatchHistory: [] })
+    let customReactors = reactors
 
     // initNode now generates node keys, so it must be run before flattening the tree
     dedupeWalk(initNode(extend, types), tree)
@@ -133,9 +131,7 @@ export let ContextTree = _.curry(
         onError(error) // Raise the onError event
       }
     }
-
     let triggerDelayedUpdate = F.debounceAsync(debounce, triggerImmediateUpdate)
-
     let triggerUpdate = () =>
       TreeInstance.disableAutoUpdate
         ? triggerImmediateUpdate()

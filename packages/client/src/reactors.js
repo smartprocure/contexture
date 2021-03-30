@@ -2,31 +2,25 @@ import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { hasContext, hasValue } from './node'
 
-let reactors = {
-  others: (parent, node) =>
-    parent.join === 'or'
-      ? []
-      : _.difference(_.toArray(parent.children), [node]),
-  self: (parent, node) => [node],
-  all: parent => _.toArray(parent.children),
-  none: () => [],
-  standardChange(parent, node, { previous }, reactors) {
-    let needUpdate = hasContext(node)
-    let affectsOthers = hasValue(node) || hasValue(previous)
-    let reactor
-    if (needUpdate) {
-      reactor = 'self'
-    } else if (affectsOthers) {
-      reactor = 'others'
-    } else if (affectsOthers && needUpdate) {
-      reactor = 'all'
-    }
-    return reactors(reactor)
-  },
+let all = parent => _.toArray(parent.children)
+let self = (parent, node) => [node]
+let others = (parent, node) =>
+    parent.join === 'or' ? [] : _.without([node], _.toArray(parent.children))
+let standardChange = (parent, node, { previous }) => {
+  let needUpdate = hasContext(node)
+  let affectsOthers = hasValue(node) || hasValue(previous)
+  if (affectsOthers && needUpdate) return all(parent, node)
+  if (affectsOthers) return others(parent, node)
+  if (needUpdate) return self(parent, node)
 }
 
-export let StandardReactors = {
-  refresh: reactors.all,
+export let reactors = {
+  others,
+  self,
+  all,
+  standardChange,
+  none: () => [],
+  refresh: all,
   join(parent, node, { previous }, reactor) {
     let childrenWithValues = _.flow(
       _.toArray,
@@ -35,7 +29,7 @@ export let StandardReactors = {
     let joinInverted = node.join === 'not' || previous.join === 'not'
     if (childrenWithValues.length > 1 || joinInverted) return reactor('all')
   },
-  add: reactors.standardChange,
+  add: standardChange,
   remove(parent, node, { previous }, reactor) {
     // BUG: Remove reactor should consider if anything else had a value because it makes it optional if it doesn't have one
     // If it's in an OR group and now there's only 1 rule left that rule becomes required
@@ -49,32 +43,24 @@ export let StandardReactors = {
     }
   },
   // ported from main app ¯\_(ツ)_/¯
-  field: reactors.standardChange,
-  type: reactors.standardChange,
+  field: standardChange,
+  type: standardChange,
   mutate: (parent, node, event, reactor, types, lookup) =>
     _.flow(
       _.keys,
       // assumes reactors are { field: reactor, ...}
-      _.map(
-        F.aliasIn(_.getOr({}, `${lookup(event.path).type}.reactors`, types))
-      ),
+      _.map(F.aliasIn(_.get(`${lookup(event.path).type}.reactors`, types))),
       _.uniq,
       _.flatMap(reactor),
       _.compact,
       _.uniq
     )(event.value),
 }
-let Reactor = (x, customReactors = {}) =>
-  customReactors[x] || StandardReactors[x] || reactors[x] || _.noop
-
-export let getAffectedNodes = (customReactors, lookup, types) => (
-  { type, ...event },
-  path
-) => {
+export let getAffectedNodes = (reactors, lookup, types) => (event, path) => {
   let node = lookup(path)
   // Parent defaults to a fake root since reactors don't handle null parents
   let parent = lookup(_.dropRight(1, path)) || { children: [node] }
   let reactor = x =>
-    Reactor(x, customReactors)(parent, node, event, reactor, types, lookup)
-  return reactor(type)
+    F.maybeCall(reactors[x], parent, node, event, reactor, types, lookup)
+  return reactor(event.type)
 }
