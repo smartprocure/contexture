@@ -109,21 +109,37 @@ export let ContextTree = _.curry(
           )
         )
 
-      // Skip triggerUpdate if disableAutoUpdate or it this dispatch affects the target node (to allow things like paging changes to always go through)
+      // If disableAutoUpdate but this dispatch affects the target node, update *just* that node (to allow things like paging changes to always go through)
       // The assumption here is that any event that affects the target node would likely be assumed to take effect immediately by end users
-      // Also allow events to specify `autoUpdate:true` to let it through (e.g. search button event)
-      // This approach is simpler than marking missedUpdate but not paused, but will trigger _all_ pending updates when an update goes through
-      if (!TreeInstance.disableAutoUpdate || affectsSelf || event.autoUpdate) {
+      if (TreeInstance.disableAutoUpdate && affectsSelf)
+        await triggerUpdate(event.path) // dont tree walk for markLastUpdate or prepForUpdate, set all nodes filterOnly except path
+
+      // Otherwise, skip triggerUpdate if disableAutoUpdate but allow events to specify `autoUpdate:true` to let it through (e.g. search button event)
+      else if (!TreeInstance.disableAutoUpdate || event.autoUpdate)
         await triggerUpdate()
-      }
     }
 
-    let triggerImmediateUpdate = async () => {
+    // If specifying path, *only* update that path
+    let triggerImmediateUpdate = async path => {
       if (shouldBlockUpdate(flat)) return log('Blocked Search')
       let now = new Date().getTime()
-      markLastUpdate(now)(tree)
+      let node = getNode(path)
+
+      if (!path) Tree.walk(markLastUpdate(now))(tree)
+      else markLastUpdate(now)(node)
+
       let dto = serialize(snapshot(tree), { search: true })
-      prepForUpdate(tree)
+
+      if (!path) Tree.walk(prepForUpdate)(tree)
+      else prepForUpdate(node)
+      
+      // make all other nodes filter only
+      if (path) {
+        Tree.walk(node => { node.filterOnly = true })(dto)
+        // `tail` is because raw futil trees don't want `root`
+        Tree.lookup(_.tail(path), dto).filterOnly = false
+      }
+
       try {
         await processResponse(await service(dto, now))
       } catch (error) {
@@ -132,10 +148,10 @@ export let ContextTree = _.curry(
       }
     }
     let triggerDelayedUpdate = F.debounceAsync(debounce, triggerImmediateUpdate)
-    let triggerUpdate = () =>
+    let triggerUpdate = path =>
       TreeInstance.disableAutoUpdate
-        ? triggerImmediateUpdate()
-        : triggerDelayedUpdate()
+        ? triggerImmediateUpdate(path)
+        : triggerDelayedUpdate(path)
 
     let processResponse = async data => {
       // TODO: Remove these 3 deprecated lines in 3.0. Errors will just be on the tree so no need to wrap in `data` to allow `error`
