@@ -134,9 +134,7 @@ export let ContextTree = _.curry(
 
       // make all other nodes filter only
       if (path) {
-        Tree.walk(node => {
-          node.filterOnly = true
-        })(dto)
+        Tree.walk(_.set(true, 'filterOnly'))(dto)
         // `tail` is because raw futil trees don't want `root`
         Tree.lookup(_.tail(path), dto).filterOnly = false
       }
