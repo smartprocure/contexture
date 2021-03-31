@@ -112,8 +112,8 @@ export let ContextTree = _.curry(
       // If disableAutoUpdate but this dispatch affects the target node, update *just* that node (to allow things like paging changes to always go through)
       // The assumption here is that any event that affects the target node would likely be assumed to take effect immediately by end users
       if (TreeInstance.disableAutoUpdate && affectsSelf)
-        await triggerUpdate(event.path) // dont tree walk for markLastUpdate or prepForUpdate, set all nodes filterOnly except path
-
+        await triggerUpdate(event.path)
+      // dont tree walk for markLastUpdate or prepForUpdate, set all nodes filterOnly except path
       // Otherwise, skip triggerUpdate if disableAutoUpdate but allow events to specify `autoUpdate:true` to let it through (e.g. search button event)
       else if (!TreeInstance.disableAutoUpdate || event.autoUpdate)
         await triggerUpdate()
@@ -132,10 +132,12 @@ export let ContextTree = _.curry(
 
       if (!path) Tree.walk(prepForUpdate)(tree)
       else prepForUpdate(node)
-      
+
       // make all other nodes filter only
       if (path) {
-        Tree.walk(node => { node.filterOnly = true })(dto)
+        Tree.walk(node => {
+          node.filterOnly = true
+        })(dto)
         // `tail` is because raw futil trees don't want `root`
         Tree.lookup(_.tail(path), dto).filterOnly = false
       }

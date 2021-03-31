@@ -13,11 +13,10 @@ export default extend => ({
     }
     return x
   },
-  markLastUpdate: time =>
-    child => {
-      if (child.markedForUpdate) extend(child, { lastUpdateTime: time })
-    },
-  prepForUpdate: child => {
+  markLastUpdate: time => child => {
+    if (child.markedForUpdate) extend(child, { lastUpdateTime: time })
+  },
+  prepForUpdate(child) {
     if (child.markedForUpdate) {
       extend(child, {
         updating: true,
