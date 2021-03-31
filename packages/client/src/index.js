@@ -113,7 +113,6 @@ export let ContextTree = _.curry(
       // The assumption here is that any event that affects the target node would likely be assumed to take effect immediately by end users
       if (TreeInstance.disableAutoUpdate && affectsSelf)
         await triggerUpdate(event.path)
-      // dont tree walk for markLastUpdate or prepForUpdate, set all nodes filterOnly except path
       // Otherwise, skip triggerUpdate if disableAutoUpdate but allow events to specify `autoUpdate:true` to let it through (e.g. search button event)
       else if (!TreeInstance.disableAutoUpdate || event.autoUpdate)
         await triggerUpdate()
