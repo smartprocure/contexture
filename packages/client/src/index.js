@@ -124,11 +124,9 @@ export let ContextTree = _.curry(
       let now = new Date().getTime()
       let node = getNode(path)
 
-      // Walk tree or run on node
-      let walkOrRun = fn => Tree.walk(fn)(path ? node : tree)
-      walkOrRun(markLastUpdate(now))
+      markLastUpdate(now)(node || tree)
       let body = serialize(snapshot(tree), { search: true })
-      walkOrRun(prepForUpdate)
+      prepForUpdate(node || tree)
 
       // make all other nodes filter only
       if (path) {

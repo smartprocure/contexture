@@ -1,4 +1,5 @@
 import * as F from 'futil-js'
+import { Tree } from './util/tree'
 
 export default extend => ({
   markForUpdate(x) {
@@ -13,15 +14,16 @@ export default extend => ({
     }
     return x
   },
-  markLastUpdate: time => child => {
-    if (child.markedForUpdate) extend(child, { lastUpdateTime: time })
-  },
-  prepForUpdate(child) {
+  markLastUpdate: time =>
+    Tree.walk(child => {
+      if (child.markedForUpdate) extend(child, { lastUpdateTime: time })
+    }),
+  prepForUpdate: Tree.walk(child => {
     if (child.markedForUpdate) {
       extend(child, {
         updating: true,
         markedForUpdate: false,
       })
     }
-  },
+  }),
 })
