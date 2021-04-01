@@ -1,3 +1,10 @@
+# 2.33.0
+* Self affecting dispatches updating only themselves when disabling auto update
+    * This is achieved by making `triggerUpdate` optionally take a `path`
+    * Provides a significant performance improvement as large tree no longer
+    need to be updated entirely when small parts of them change in isolation.
+* This has no breaking api changes
+
 # 2.32.3
 * Refactoring to simplify code (preparing for larger updates)
 * Also fixes a bug when the `standardChange` reactor should return `all`, but wouldn't have
