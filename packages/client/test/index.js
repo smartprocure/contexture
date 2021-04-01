@@ -1167,6 +1167,63 @@ let AllTests = ContextureClient => {
     await tree.triggerUpdate()
     expect(service).to.have.callCount(2)
   })
+  it('should allow indifidual nodes to be updated', async () => {
+    // working here
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({
+      service,
+      debounce: 1,
+      disableAutoUpdate: true,
+    })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        { key: 'results', type: 'results' },
+        { key: 'agencies', field: 'Organization.Name', type: 'facet' },
+        { key: 'vendors', field: 'Vendor.Name', type: 'facet' },
+      ],
+    })
+
+    // Trigger Update should also let searches through
+    await tree.mutate(['root', 'agencies'], { size: 12 })
+    expect(service).to.have.callCount(1)
+    let [dto, now] = service.getCall(0).args
+    expect(dto).to.deep.equal({
+      children: [
+        {
+          filterOnly: true,
+          key: 'results',
+          page: 1,
+          pageSize: 10,
+          type: 'results',
+        },
+        {
+          field: 'Organization.Name',
+          filterOnly: false,
+          key: 'agencies',
+          lastUpdateTime: now,
+          mode: 'include',
+          optionsFilter: '',
+          size: 12,
+          type: 'facet',
+          values: [],
+        },
+        {
+          field: 'Vendor.Name',
+          filterOnly: true,
+          key: 'vendors',
+          mode: 'include',
+          optionsFilter: '',
+          type: 'facet',
+          values: [],
+        },
+      ],
+      filterOnly: true,
+      join: 'and',
+      key: 'root',
+    })
+  })
   it('should call onUpdateByOthers', async () => {
     let service = sinon.spy(mockService())
     let types = {
