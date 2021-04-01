@@ -1179,20 +1179,9 @@ let AllTests = ContextureClient => {
       key: 'root',
       join: 'and',
       children: [
-        {
-          key: 'results',
-          type: 'results',
-        },
-        {
-          key: 'agencies',
-          field: 'Organization.Name',
-          type: 'facet',
-        },
-        {
-          key: 'vendors',
-          field: 'Vendor.Name',
-          type: 'facet',
-        },
+        { key: 'results', type: 'results' },
+        { key: 'agencies', field: 'Organization.Name', type: 'facet' },
+        { key: 'vendors', field: 'Vendor.Name', type: 'facet' },
       ],
     })
 
