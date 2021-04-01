@@ -1188,31 +1188,41 @@ let AllTests = ContextureClient => {
     // Trigger Update should also let searches through
     await tree.mutate(['root', 'agencies'], { size: 12 })
     expect(service).to.have.callCount(1)
-    expect(service).to.have.been.calledWith(
-      sinon.match({ key: 'root', filterOnly: true })
-    )
-    expect(service).to.have.been.calledWith(
-      sinon.match.hasNested(
-        'children[0]',
-        sinon.match({ key: 'results', filterOnly: true })
-      )
-    )
-    expect(service).to.have.been.calledWith(
-      sinon.match.hasNested(
-        'children[1]',
-        sinon.match({
-          key: 'agencies',
+    let [dto, now] = service.getCall(0).args
+    expect(dto).to.deep.equal({
+      children: [
+        {
+          filterOnly: true,
+          key: 'results',
+          page: 1,
+          pageSize: 10,
+          type: 'results',
+        },
+        {
+          field: 'Organization.Name',
           filterOnly: false,
-          lastUpdateTime: sinon.match.number,
-        })
-      )
-    )
-    expect(service).to.have.been.calledWith(
-      sinon.match.hasNested(
-        'children[2]',
-        sinon.match({ key: 'vendors', filterOnly: true })
-      )
-    )
+          key: 'agencies',
+          lastUpdateTime: now,
+          mode: 'include',
+          optionsFilter: '',
+          size: 12,
+          type: 'facet',
+          values: [],
+        },
+        {
+          field: 'Vendor.Name',
+          filterOnly: true,
+          key: 'vendors',
+          mode: 'include',
+          optionsFilter: '',
+          type: 'facet',
+          values: [],
+        },
+      ],
+      filterOnly: true,
+      join: 'and',
+      key: 'root',
+    })
   })
   it('should call onUpdateByOthers', async () => {
     let service = sinon.spy(mockService())
