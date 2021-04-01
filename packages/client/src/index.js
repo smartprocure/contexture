@@ -125,16 +125,20 @@ export let ContextTree = _.curry(
       let node = getNode(path)
 
       // Walk tree or run on node
-      let walkOrRun = fn => (path ? fn(node) : Tree.walk(fn)(tree))
+      let walkOrRun = fn => (path ? Tree.walk(fn)(node) : Tree.walk(fn)(tree))
       walkOrRun(markLastUpdate(now))
       let dto = serialize(snapshot(tree), { search: true })
       walkOrRun(prepForUpdate)
 
       // make all other nodes filter only
       if (path) {
-        Tree.walk(_.set(true, 'filterOnly'))(dto)
+        Tree.walk(node => {
+          node.filterOnly = true
+        })(dto)
         // `tail` is because raw futil trees don't want `root`
-        Tree.lookup(_.tail(path), dto).filterOnly = false
+        Tree.walk(node => {
+          node.filterOnly = false
+        })(Tree.lookup(_.tail(path), dto))
       }
 
       try {
