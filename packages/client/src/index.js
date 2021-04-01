@@ -125,7 +125,7 @@ export let ContextTree = _.curry(
       let node = getNode(path)
 
       // Walk tree or run on node
-      let walkOrRun = fn => (path ? Tree.walk(fn)(node) : Tree.walk(fn)(tree))
+      let walkOrRun = fn => Tree.walk(fn)(path ? node : tree)
       walkOrRun(markLastUpdate(now))
       let dto = serialize(snapshot(tree), { search: true })
       walkOrRun(prepForUpdate)
