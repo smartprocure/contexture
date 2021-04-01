@@ -1167,6 +1167,79 @@ let AllTests = ContextureClient => {
     await tree.triggerUpdate()
     expect(service).to.have.callCount(2)
   })
+  it('should allow indifidual nodes to be updated', async () => {
+    // working here
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({
+      service,
+      debounce: 1,
+      disableAutoUpdate: true,
+    })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        {
+          key: 'results',
+          type: 'results',
+        },
+        {
+          key: 'agencies',
+          field: 'Organization.Name',
+          type: 'facet',
+        },
+        {
+          key: 'vendors',
+          field: 'Vendor.Name',
+          type: 'facet',
+        },
+      ],
+    })
+
+    // Trigger Update should also let searches through
+    await tree.mutate(['root', 'agencies'], { size: 12 })
+    expect(service).to.have.callCount(1)
+    expect(service).to.have.been.calledWith(
+      sinon.match({
+        key: 'root',
+        join: 'and',
+        filterOnly: true,
+      })
+    )
+    expect(service).to.have.been.calledWith(
+      sinon.match.hasNested(
+        'children[0]',
+        sinon.match({
+          key: 'results',
+          type: 'results',
+          filterOnly: true,
+        })
+      )
+    )
+    expect(service).to.have.been.calledWith(
+      sinon.match.hasNested(
+        'children[1]',
+        sinon.match({
+          key: 'agencies',
+          field: 'Organization.Name',
+          type: 'facet',
+          filterOnly: false,
+          lastUpdateTime: sinon.match.number,
+        })
+      )
+    )
+    expect(service).to.have.been.calledWith(
+      sinon.match.hasNested(
+        'children[2]',
+        sinon.match({
+          key: 'vendors',
+          field: 'Vendor.Name',
+          type: 'facet',
+          filterOnly: true,
+        })
+      )
+    )
+  })
   it('should call onUpdateByOthers', async () => {
     let service = sinon.spy(mockService())
     let types = {
