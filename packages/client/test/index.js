@@ -1200,20 +1200,12 @@ let AllTests = ContextureClient => {
     await tree.mutate(['root', 'agencies'], { size: 12 })
     expect(service).to.have.callCount(1)
     expect(service).to.have.been.calledWith(
-      sinon.match({
-        key: 'root',
-        join: 'and',
-        filterOnly: true,
-      })
+      sinon.match({ key: 'root', filterOnly: true })
     )
     expect(service).to.have.been.calledWith(
       sinon.match.hasNested(
         'children[0]',
-        sinon.match({
-          key: 'results',
-          type: 'results',
-          filterOnly: true,
-        })
+        sinon.match({ key: 'results', filterOnly: true })
       )
     )
     expect(service).to.have.been.calledWith(
@@ -1221,8 +1213,6 @@ let AllTests = ContextureClient => {
         'children[1]',
         sinon.match({
           key: 'agencies',
-          field: 'Organization.Name',
-          type: 'facet',
           filterOnly: false,
           lastUpdateTime: sinon.match.number,
         })
@@ -1231,12 +1221,7 @@ let AllTests = ContextureClient => {
     expect(service).to.have.been.calledWith(
       sinon.match.hasNested(
         'children[2]',
-        sinon.match({
-          key: 'vendors',
-          field: 'Vendor.Name',
-          type: 'facet',
-          filterOnly: true,
-        })
+        sinon.match({ key: 'vendors', filterOnly: true })
       )
     )
   })
