@@ -20,12 +20,13 @@ let TableBody = ({
   stickyColumn,
   theme: { Tbody, Tr, Td },
   Row = Tr,
+  ...props
 }) => {
   let results = blankRows
     ? addBlankRows(getResults(node), pageSize, '_id')
     : getResults(node)
   return (
-    <Tbody>
+    <Tbody {...props}>
       {!!results.length &&
         _.map(
           x => (

@@ -1,7 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import * as F from 'futil'
-import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
 import { Dynamic } from '../../greyVest'
 import { withTheme } from '../../utils/theme'
@@ -32,19 +31,6 @@ let popoverStyle = {
   width: 'auto',
 }
 
-let HeaderCellDefault = _.flow(
-  setDisplayName('HeaderCell'),
-  observer,
-  withTheme
-)(({ activeFilter, style, children, theme: { Th }, ...props }) => (
-  <Th
-    style={{ ...(activeFilter ? { fontWeight: 900 } : {}), ...style }}
-    {...props}
-  >
-    {children}
-  </Th>
-))
-
 let Header = ({
   field: fieldSchema,
   includes,
@@ -60,6 +46,7 @@ let Header = ({
   isStickyColumn,
   isLastColumn,
   theme: {
+    Th,
     DropdownItem,
     Icon,
     Popover,
@@ -69,7 +56,6 @@ let Header = ({
   },
 }) => {
   let adding = React.useState(false)
-  let filtering = React.useState(false)
   let {
     disableFilter,
     disableSort,
@@ -80,10 +66,11 @@ let Header = ({
     hideMenu,
     typeDefault,
   } = fieldSchema
-  let HeaderCell = fieldSchema.HeaderCell || HeaderCellDefault
+  let HeaderCell = fieldSchema.HeaderCell || Th
   let filterNode =
     criteria &&
     _.find({ field }, _.getOr([], 'children', tree.getNode(criteria)))
+  let filtering = React.useState(!!_.get('hasValue', filterNode))
   let filter = () => {
     if (!filterNode) addFilter(field)
     filterNode =
@@ -95,12 +82,14 @@ let Header = ({
   let Label = label
   return (
     <HeaderCell
-      className={isStickyColumn ? 'sticky-column-header' : 0}
+      className={
+        `${isStickyColumn ? 'sticky-column-header' : ''}
+        ${_.get('hasValue', filterNode) ? 'active-filter' : ''}`
+      }
       style={{
         cursor: hideMenu ? 'default' : 'pointer',
         left: isStickyColumn ? 0 : '',
       }}
-      activeFilter={_.get('hasValue', filterNode)}
     >
       <span>
         {_.isFunction(label) ? <Label /> : label}{' '}

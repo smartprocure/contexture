@@ -7,6 +7,7 @@ import { toNumber } from '../utils/format'
 let ResultCount = ({
   node = {},
   display = toNumber,
+  loading = '...',
   noResults = 'No Results',
 }) => {
   let count = F.cascade(
@@ -29,7 +30,11 @@ let ResultCount = ({
         node
       )
     : 0
-  return count ? display(totalRecords) : noResults
+  return count
+    ? display(totalRecords)
+    : node.updating || node.markedForUpdate
+      ? loading
+      : noResults
 }
 
 export default _.flow(observer, withNode, withInlineLoader)(ResultCount)

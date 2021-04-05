@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import _ from 'lodash/fp'
 import * as F from 'futil'
 import { fieldsToOptions } from '../../FilterAdder'
-import { contexturify } from '../../utils/hoc'
+import { contexturifyWithoutLoader } from '../../utils/hoc'
 import { applyDefaults, inferSchema } from '../../utils/schema'
 import { newNodeFromField } from '../../utils/search'
 import Header from './Header'
@@ -10,6 +10,7 @@ import TableBody from './TableBody'
 import HighlightedColumnHeader from './HighlightedColumnHeader'
 import ResultTableFooter from './ResultTableFooter'
 import { withTheme } from '../../utils/theme'
+import { StripedLoader } from '../../greyVest'
 
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
@@ -37,7 +38,7 @@ let ResultTable = ({
   stickyColumn,
   hideFooter,
   footerStyle,
-  theme: { Table, Thead, Tr },
+  theme: { Loader = StripedLoader, Table, Thead, Tbody, Tr, Td },
 }) => {
   // If there are no fields, we won't render anything. This is most definitely a
   // user error when it happens
@@ -88,62 +89,78 @@ let ResultTable = ({
     mutate,
     criteria,
   }
-  if (!node.updating && hasResults) {
-    return (
-      <>
-        <Table>
-          <Thead>
+
+  let showLoader = node.updating
+  let showNoResults = !showLoader && !hasResults
+  let showFooter = !hideFooter && node.pageSize > 0
+
+  return (
+    <>
+      <Table>
+        <Thead>
+          <Tr>
+            {F.mapIndexed(
+              (x, i) => (
+                <Header
+                  key={x.field}
+                  field={x}
+                  isLastColumn={i === visibleFields.length - 1}
+                  isStickyColumn={stickyColumn && x.field === stickyColumn}
+                  {...headerProps}
+                />
+              ),
+              visibleFields
+            )}
+            <HighlightedColumnHeader node={node} />
+          </Tr>
+        </Thead>
+        <TableBody
+          style={{ display: showLoader || showNoResults ? 'none' : '' }}
+          {...{
+            node,
+            fields,
+            visibleFields,
+            hiddenFields,
+            schema,
+            Row,
+            getRowKey,
+            blankRows,
+            pageSize: Math.min(node.pageSize, totalRecords),
+            stickyColumn,
+          }}
+        />
+
+        {(showLoader || showNoResults) && (
+          <Tbody>
             <Tr>
-              {F.mapIndexed(
-                (x, i) => (
-                  <Header
-                    key={x.field}
-                    field={x}
-                    isLastColumn={i === visibleFields.length - 1}
-                    isStickyColumn={stickyColumn && x.field === stickyColumn}
-                    {...headerProps}
-                  />
-                ),
-                visibleFields
-              )}
-              <HighlightedColumnHeader node={node} />
+              <Td colSpan={visibleFields.length} style={{ padding: 0 }}>
+                {showLoader && (
+                  <Loader loading>
+                    {IntroComponent}
+                  </Loader>
+                )}
+                {showNoResults && NoResultsComponent}
+              </Td>
             </Tr>
-          </Thead>
-          <TableBody
-            {...{
-              node,
-              fields,
-              visibleFields,
-              hiddenFields,
-              schema,
-              Row,
-              getRowKey,
-              blankRows,
-              pageSize: Math.min(node.pageSize, totalRecords),
-              stickyColumn,
-            }}
-          />
-        </Table>
-        {!hideFooter && node.pageSize > 0 && (
-          <ResultTableFooter
-            {...{
-              tree,
-              node,
-              path,
-              pageSizeOptions,
-              disabled: blankRows,
-              style: footerStyle,
-            }}
-          />
+          </Tbody>
         )}
-      </>
-    )
-  }
-  if (!node.markedForUpdate && !node.updating && !hasResults) {
-    return NoResultsComponent
-  }
-  return IntroComponent
+      </Table>
+
+      {showFooter && (
+        <ResultTableFooter
+          {...{
+            tree,
+            node,
+            path,
+            pageSizeOptions,
+            disabled: blankRows,
+            style: footerStyle,
+          }}
+        />
+      )}
+    </>
+  )
 }
 
-export let PagedResultTable = contexturify(ResultTable)
+export let PagedResultTable = contexturifyWithoutLoader(ResultTable)
 export default PagedResultTable
