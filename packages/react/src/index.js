@@ -8,7 +8,6 @@ export {
   ThemeProvider,
   useTheme,
   ThemeConsumer,
-  withNamedTheme,
   withTheme,
 } from './utils/theme'
 export { contexturify, contexturifyWithoutLoader } from './utils/hoc'

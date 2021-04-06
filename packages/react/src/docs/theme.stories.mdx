@@ -214,30 +214,6 @@ export default props => (
 
 The `IconButton` component should now render your `BeautifulButton` and `ImpressiveIcon` components, rather than the default button and icon.
 
-## Nested themes
-
-A **nested theme** is a special case of **theme component**: one whose **theme key** is a _path_ rather than a _string_. Nested themes allow a single **theme key** -- like, say, `Icon` -- to have an alternate value for some specific parent or chain of parents, in addition to its normal value.
-
-To illustrate nested themes, we'll be modifying our `totallyTubularTheme` from the previous section to use a **nested key** for `IconButton`'s `Icon`, in addition to the standard `Icon`:
-
-```jsx
-// totallyTubularTheme.js
-
-import BeautifulButton from './components/BeautifulButton'
-import ImpressiveIcon from './components/ImpressiveIcon'
-import InvisibleIcon from './components/InvisibleIcon'
-
-export default {
-  Button: BeautifulButton,
-  Icon: ImpressiveIcon,
-  'IconButton.Icon': InvisibleIcon,
-}
-```
-
-This theme object tells contexture-react to use `InvisibleIcon` as the `Icon` component for `IconButton` and its children, while still using `ImpressiveIcon` as the `Icon` component throughout the rest of our app.
-
-Now that our theme is configured to use a nested theme for `IconButton`, we need to assign a name to our component in order to use it.
-
 ### Naming components
 
 > ⚠️ **IMPORTANT:** _Only named components support nested themes._ A component **_must_** be given a `name` in order to support nested themes.
