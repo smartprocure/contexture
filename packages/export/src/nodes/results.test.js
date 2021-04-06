@@ -53,7 +53,7 @@ describe('results', () => {
       let strategy = await prepareSimpleStrategy(getSimpleService())({ totalPages: 1 })
       expect(await strategy.getTotalRecords()).toBe(3)
     })
-    it('retrieves records consistently with getNext', async () => {
+    it('retrieves records', async () => {
       let strategy = await prepareSimpleStrategy(getSimpleService())({ page: 1 })
       let arr = []
       for await (const i of strategy) arr.push(i)
