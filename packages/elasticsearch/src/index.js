@@ -27,7 +27,7 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
     let { scroll, scrollId } = node
     let request = scrollId
       ? // If we have scrollId then keep scrolling, no query needed
-        { scroll: scroll === true ? '2m' : scroll, scrollId }
+        { scroll: scroll === true ? '60m' : scroll, scrollId }
       : // Deterministic ordering of JSON keys for request cache optimization
         stableKeys({
           index: schema.elasticsearch.index,
