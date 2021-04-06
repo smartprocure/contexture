@@ -12,7 +12,12 @@ export default async ({ service, tree, ...node }) => {
     runWith(
       service,
       tree,
-      F.compactObject({ key: 'results', type: 'results', ...node, ...props })
+      _.pickBy(_.negate(_.isNil), {
+        key: 'results',
+        type: 'results',
+        ...node,
+        ...props,
+      })
     )
   let scrollId
   let totalRecords = resultField(
