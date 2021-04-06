@@ -29,7 +29,11 @@ Record3,3,c record3
 let transform = [
   { key: 'name', label: 'THE,NAME', display: _.capitalize },
   { key: 'value', label: 'Value', display: _.identity },
-  { key: 'nestedValue.value', label: 'Nested Value', display: (value, { key, record, transform }) => `${value} ${record.name}`},
+  {
+    key: 'nestedValue.value',
+    label: 'Nested Value',
+    display: (value, { key, record, transform }) => `${value} ${record.name}`,
+  },
 ]
 
 // These are skipped on purpose as they actual write CSVs
