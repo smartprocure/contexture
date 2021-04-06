@@ -1,11 +1,7 @@
 import React from 'react'
 import F from 'futil'
 import { storiesOf } from '@storybook/react'
-import {
-  ThemeProvider,
-  ThemeConsumer,
-  withTheme,
-} from '../utils/theme'
+import { ThemeProvider, ThemeConsumer, withTheme } from '../utils/theme'
 import { wrapDisplayName } from '../utils/react'
 
 let withStyle = (style, Component) =>

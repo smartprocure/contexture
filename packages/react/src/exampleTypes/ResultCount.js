@@ -33,22 +33,24 @@ let ResultCount = ({
         node
       )
     : 0
-  return count
-    ? display(totalRecords)
-    : node.updating
-      ? (
-        <div style={{
-          display: 'inline-block',
-          verticalAlign: 'middle',
-          margin: '0 .1rem'
-        }}>
-          <Loader
-            loading
-            style={{ height: '1rem', width: '1.5rem', minHeight: 'auto' }}
-          />
-        </div>
-      )
-      : noResults
+  return count ? (
+    display(totalRecords)
+  ) : node.updating ? (
+    <div
+      style={{
+        display: 'inline-block',
+        verticalAlign: 'middle',
+        margin: '0 .1rem',
+      }}
+    >
+      <Loader
+        loading
+        style={{ height: '1rem', width: '1.5rem', minHeight: 'auto' }}
+      />
+    </div>
+  ) : (
+    noResults
+  )
 }
 
 export default _.flow(observer, withNode, withTheme)(ResultCount)

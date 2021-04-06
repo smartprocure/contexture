@@ -83,10 +83,8 @@ let Header = ({
   let Label = label
   return (
     <HeaderCell
-      className={
-        `${isStickyColumn ? 'sticky-column-header' : ''}
-        ${_.get('hasValue', filterNode) ? 'active-filter' : ''}`
-      }
+      className={`${isStickyColumn ? 'sticky-column-header' : ''}
+        ${_.get('hasValue', filterNode) ? 'active-filter' : ''}`}
       style={{
         cursor: hideMenu ? 'default' : 'pointer',
         left: isStickyColumn ? 0 : '',
