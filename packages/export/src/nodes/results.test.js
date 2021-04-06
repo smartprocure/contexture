@@ -43,6 +43,7 @@ describe('results', () => {
         page: 1,
         totalPages: 1,
         include,
+        highlight: false,
         sortField: 'a',
         sortDir: 'desc',
         ...strategyParams,
@@ -50,20 +51,24 @@ describe('results', () => {
       return strategy
     }
     it('retrieves the total records', async () => {
-      let strategy = await prepareSimpleStrategy(getSimpleService())({ totalPages: 1 })
+      let strategy = await prepareSimpleStrategy(getSimpleService())({
+        totalPages: 1,
+      })
       expect(await strategy.getTotalRecords()).toBe(3)
     })
     it('retrieves records', async () => {
-      let strategy = await prepareSimpleStrategy(getSimpleService())({ page: 1 })
+      let service = getSimpleService()
+      let strategy = await prepareSimpleStrategy(service)({ page: 1 })
       let arr = []
       for await (const i of strategy) arr.push(i)
       expect(arr).toEqual(simpleRecords)
+      expect(service).toMatchSnapshot()
     })
   }
   describe(' with contexts wrapped in `response`', () => {
-    resultsTests({wrap: false})
+    resultsTests({ wrap: false })
   })
   describe(' with contexts not wrapped in `response`', () => {
-    resultsTests({wrap: true})
+    resultsTests({ wrap: true })
   })
 })
