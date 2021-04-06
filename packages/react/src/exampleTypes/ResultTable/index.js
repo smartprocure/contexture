@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import _ from 'lodash/fp'
 import * as F from 'futil'
 import { fieldsToOptions } from '../../FilterAdder'
-import { contexturifyWithoutLoader } from '../../utils/hoc'
+import { withNode } from '../../utils/hoc'
 import { applyDefaults, inferSchema } from '../../utils/schema'
 import { newNodeFromField } from '../../utils/search'
 import Header from './Header'
@@ -10,7 +10,6 @@ import TableBody from './TableBody'
 import HighlightedColumnHeader from './HighlightedColumnHeader'
 import ResultTableFooter from './ResultTableFooter'
 import { withTheme } from '../../utils/theme'
-import { StripedLoader } from '../../greyVest'
 
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
@@ -38,7 +37,7 @@ let ResultTable = ({
   stickyColumn,
   hideFooter,
   footerStyle,
-  theme: { Loader = StripedLoader, Table, Thead, Tbody, Tr, Td },
+  theme: { Table, Thead, Tr },
 }) => {
   // If there are no fields, we won't render anything. This is most definitely a
   // user error when it happens
@@ -55,7 +54,6 @@ let ResultTable = ({
     node
   )
 
-  let hasResults = resultsLength > 0
   let blankRows =
     limitedResults &&
     resultsLength < node.pageSize &&
@@ -90,10 +88,6 @@ let ResultTable = ({
     criteria,
   }
 
-  let showLoader = node.updating
-  let showNoResults = !showLoader && !hasResults
-  let showFooter = !hideFooter && node.pageSize > 0
-
   return (
     <>
       <Table>
@@ -115,7 +109,6 @@ let ResultTable = ({
           </Tr>
         </Thead>
         <TableBody
-          style={{ display: showLoader || showNoResults ? 'none' : '' }}
           {...{
             node,
             fields,
@@ -127,26 +120,13 @@ let ResultTable = ({
             blankRows,
             pageSize: Math.min(node.pageSize, totalRecords),
             stickyColumn,
+            NoResultsComponent,
+            IntroComponent,
           }}
         />
-
-        {(showLoader || showNoResults) && (
-          <Tbody>
-            <Tr>
-              <Td colSpan={visibleFields.length} style={{ padding: 0 }}>
-                {showLoader && (
-                  <Loader loading>
-                    {IntroComponent}
-                  </Loader>
-                )}
-                {showNoResults && NoResultsComponent}
-              </Td>
-            </Tr>
-          </Tbody>
-        )}
       </Table>
 
-      {showFooter && (
+      {!hideFooter && node.pageSize > 0 && (
         <ResultTableFooter
           {...{
             tree,
@@ -162,5 +142,4 @@ let ResultTable = ({
   )
 }
 
-export let PagedResultTable = contexturifyWithoutLoader(ResultTable)
-export default PagedResultTable
+export default _.flow(withNode, withTheme)(ResultTable)

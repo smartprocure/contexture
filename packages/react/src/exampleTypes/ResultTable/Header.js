@@ -47,6 +47,7 @@ let Header = ({
   isLastColumn,
   theme: {
     Th,
+    Button,
     DropdownItem,
     Icon,
     Popover,
@@ -169,14 +170,28 @@ let Header = ({
                 Filter
               </DropdownItem>
               {F.view(filtering) && filterNode && !filterNode.paused && (
-                <Dynamic
-                  {...{
-                    component: UnmappedNodeComponent,
-                    tree,
-                    path: _.toArray(filterNode.path),
-                    ...mapNodeToProps(filterNode, fields),
-                  }}
-                />
+                <>
+                  <Dynamic
+                    {...{
+                      component: UnmappedNodeComponent,
+                      tree,
+                      path: _.toArray(filterNode.path),
+                      ...mapNodeToProps(filterNode, fields),
+                    }}
+                  />
+                  {tree.disableAutoUpdate && node.markedForUpdate && (
+                    <Button
+                      primary
+                      style={{ width: '100%' }}
+                      onClick={e => {
+                        e.stopPropagation()
+                        tree.triggerUpdate()
+                      }}
+                    >
+                      Search
+                    </Button>
+                  )}
+                </>
               )}
             </div>
           )}
