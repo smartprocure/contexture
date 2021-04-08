@@ -12,7 +12,7 @@ export default async ({ service, tree, ...node }) => {
     runWith(
       service,
       tree,
-      _.pickBy(_.negate(_.isNil), {
+      F.omitNil({
         key: 'results',
         type: 'results',
         ...node,
