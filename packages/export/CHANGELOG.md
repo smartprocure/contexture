@@ -1,4 +1,7 @@
-﻿# 1.0.1
+﻿# 1.0.2
+* Fixed bug preventing `highlight: false` from being passed to the service.
+
+# 1.0.1
 * Changed from CircleCI to github actions
 
 # 1.0.0

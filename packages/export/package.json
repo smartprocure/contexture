@@ -1,6 +1,6 @@
 {
   "name": "contexture-export",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Contexture Exports",
   "main": "lib/contexture-export.js",
   "scripts": {
@@ -12,6 +12,7 @@
     "fmt": "prettier --ignore-path .gitignore --write './**/*.js'",
     "duti:fix": "npm run lint:fix; npm run fmt",
     "test": "jest --",
+    "test:updateSnapshot": "jest -u --",
     "test:watch": "jest --watch --",
     "test:ci": "jest --coverage --json --outputFile=test-results.json",
     "prepublish": "webpack"

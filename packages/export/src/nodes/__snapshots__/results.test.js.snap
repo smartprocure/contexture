@@ -1,0 +1,777 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`results  with contexts not wrapped in \`response\` retrieves records 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "filterOnly": true,
+                "key": "terms",
+                "type": "terms_stats",
+              },
+              Object {
+                "filterOnly": true,
+                "key": "results",
+                "type": "results",
+              },
+            ],
+            "filterOnly": true,
+            "key": "root",
+          },
+          Object {
+            "context": Object {
+              "response": Object {
+                "results": Array [
+                  Object {
+                    "_source": Object {
+                      "name": "record1",
+                    },
+                  },
+                  Object {
+                    "_source": Object {
+                      "name": "record2",
+                    },
+                  },
+                  Object {
+                    "_source": Object {
+                      "name": "record3",
+                    },
+                  },
+                ],
+                "totalRecords": 3,
+              },
+            },
+            "highlight": false,
+            "include": Array [
+              "a",
+              "b",
+              "c",
+            ],
+            "key": "results",
+            "page": 1,
+            "pageSize": 1,
+            "sortDir": "desc",
+            "sortField": "a",
+            "totalPages": 1,
+            "type": "results",
+          },
+        ],
+        "join": "and",
+        "key": "root-parent",
+        "schema": undefined,
+        "type": "group",
+      },
+    ],
+    Array [
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "filterOnly": true,
+                "key": "terms",
+                "type": "terms_stats",
+              },
+              Object {
+                "filterOnly": true,
+                "key": "results",
+                "type": "results",
+              },
+            ],
+            "filterOnly": true,
+            "key": "root",
+          },
+          Object {
+            "context": Object {
+              "response": Object {
+                "results": Array [
+                  Object {
+                    "_source": Object {
+                      "name": "record1",
+                    },
+                  },
+                  Object {
+                    "_source": Object {
+                      "name": "record2",
+                    },
+                  },
+                  Object {
+                    "_source": Object {
+                      "name": "record3",
+                    },
+                  },
+                ],
+                "totalRecords": 3,
+              },
+            },
+            "highlight": false,
+            "include": Array [
+              "a",
+              "b",
+              "c",
+            ],
+            "key": "results",
+            "page": 1,
+            "pageSize": 3,
+            "skipCount": true,
+            "sortDir": "desc",
+            "sortField": "a",
+            "totalPages": 1,
+            "type": "results",
+          },
+        ],
+        "join": "and",
+        "key": "root-parent",
+        "schema": undefined,
+        "type": "group",
+      },
+    ],
+    Array [
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "filterOnly": true,
+                "key": "terms",
+                "type": "terms_stats",
+              },
+              Object {
+                "filterOnly": true,
+                "key": "results",
+                "type": "results",
+              },
+            ],
+            "filterOnly": true,
+            "key": "root",
+          },
+          Object {
+            "context": Object {
+              "response": Object {
+                "results": Array [
+                  Object {
+                    "_source": Object {
+                      "name": "record1",
+                    },
+                  },
+                  Object {
+                    "_source": Object {
+                      "name": "record2",
+                    },
+                  },
+                  Object {
+                    "_source": Object {
+                      "name": "record3",
+                    },
+                  },
+                ],
+                "totalRecords": 3,
+              },
+            },
+            "highlight": false,
+            "include": Array [
+              "a",
+              "b",
+              "c",
+            ],
+            "key": "results",
+            "page": 2,
+            "pageSize": 3,
+            "skipCount": true,
+            "sortDir": "desc",
+            "sortField": "a",
+            "totalPages": 1,
+            "type": "results",
+          },
+        ],
+        "join": "and",
+        "key": "root-parent",
+        "schema": undefined,
+        "type": "group",
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "filterOnly": true,
+                "key": "terms",
+                "type": "terms_stats",
+              },
+              Object {
+                "filterOnly": true,
+                "key": "results",
+                "type": "results",
+              },
+            ],
+            "filterOnly": true,
+            "key": "root",
+          },
+          Object {
+            "context": Object {
+              "response": Object {
+                "results": Array [
+                  Object {
+                    "_source": Object {
+                      "name": "record1",
+                    },
+                  },
+                  Object {
+                    "_source": Object {
+                      "name": "record2",
+                    },
+                  },
+                  Object {
+                    "_source": Object {
+                      "name": "record3",
+                    },
+                  },
+                ],
+                "totalRecords": 3,
+              },
+            },
+            "highlight": false,
+            "include": Array [
+              "a",
+              "b",
+              "c",
+            ],
+            "key": "results",
+            "page": 1,
+            "pageSize": 1,
+            "sortDir": "desc",
+            "sortField": "a",
+            "totalPages": 1,
+            "type": "results",
+          },
+        ],
+        "join": "and",
+        "key": "root-parent",
+        "schema": undefined,
+        "type": "group",
+      },
+    },
+    Object {
+      "isThrow": false,
+      "value": Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "filterOnly": true,
+                "key": "terms",
+                "type": "terms_stats",
+              },
+              Object {
+                "filterOnly": true,
+                "key": "results",
+                "type": "results",
+              },
+            ],
+            "filterOnly": true,
+            "key": "root",
+          },
+          Object {
+            "context": Object {
+              "response": Object {
+                "results": Array [
+                  Object {
+                    "_source": Object {
+                      "name": "record1",
+                    },
+                  },
+                  Object {
+                    "_source": Object {
+                      "name": "record2",
+                    },
+                  },
+                  Object {
+                    "_source": Object {
+                      "name": "record3",
+                    },
+                  },
+                ],
+                "totalRecords": 3,
+              },
+            },
+            "highlight": false,
+            "include": Array [
+              "a",
+              "b",
+              "c",
+            ],
+            "key": "results",
+            "page": 1,
+            "pageSize": 3,
+            "skipCount": true,
+            "sortDir": "desc",
+            "sortField": "a",
+            "totalPages": 1,
+            "type": "results",
+          },
+        ],
+        "join": "and",
+        "key": "root-parent",
+        "schema": undefined,
+        "type": "group",
+      },
+    },
+    Object {
+      "isThrow": false,
+      "value": Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "filterOnly": true,
+                "key": "terms",
+                "type": "terms_stats",
+              },
+              Object {
+                "filterOnly": true,
+                "key": "results",
+                "type": "results",
+              },
+            ],
+            "filterOnly": true,
+            "key": "root",
+          },
+          Object {
+            "context": Object {
+              "response": Object {
+                "results": Array [
+                  Object {
+                    "_source": Object {
+                      "name": "record1",
+                    },
+                  },
+                  Object {
+                    "_source": Object {
+                      "name": "record2",
+                    },
+                  },
+                  Object {
+                    "_source": Object {
+                      "name": "record3",
+                    },
+                  },
+                ],
+                "totalRecords": 3,
+              },
+            },
+            "highlight": false,
+            "include": Array [
+              "a",
+              "b",
+              "c",
+            ],
+            "key": "results",
+            "page": 2,
+            "pageSize": 3,
+            "skipCount": true,
+            "sortDir": "desc",
+            "sortField": "a",
+            "totalPages": 1,
+            "type": "results",
+          },
+        ],
+        "join": "and",
+        "key": "root-parent",
+        "schema": undefined,
+        "type": "group",
+      },
+    },
+  ],
+}
+`;
+
+exports[`results  with contexts wrapped in \`response\` retrieves records 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "filterOnly": true,
+                "key": "terms",
+                "type": "terms_stats",
+              },
+              Object {
+                "filterOnly": true,
+                "key": "results",
+                "type": "results",
+              },
+            ],
+            "filterOnly": true,
+            "key": "root",
+          },
+          Object {
+            "context": Object {
+              "results": Array [
+                Object {
+                  "_source": Object {
+                    "name": "record1",
+                  },
+                },
+                Object {
+                  "_source": Object {
+                    "name": "record2",
+                  },
+                },
+                Object {
+                  "_source": Object {
+                    "name": "record3",
+                  },
+                },
+              ],
+              "totalRecords": 3,
+            },
+            "highlight": false,
+            "include": Array [
+              "a",
+              "b",
+              "c",
+            ],
+            "key": "results",
+            "page": 1,
+            "pageSize": 1,
+            "sortDir": "desc",
+            "sortField": "a",
+            "totalPages": 1,
+            "type": "results",
+          },
+        ],
+        "join": "and",
+        "key": "root-parent",
+        "schema": undefined,
+        "type": "group",
+      },
+    ],
+    Array [
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "filterOnly": true,
+                "key": "terms",
+                "type": "terms_stats",
+              },
+              Object {
+                "filterOnly": true,
+                "key": "results",
+                "type": "results",
+              },
+            ],
+            "filterOnly": true,
+            "key": "root",
+          },
+          Object {
+            "context": Object {
+              "results": Array [
+                Object {
+                  "_source": Object {
+                    "name": "record1",
+                  },
+                },
+                Object {
+                  "_source": Object {
+                    "name": "record2",
+                  },
+                },
+                Object {
+                  "_source": Object {
+                    "name": "record3",
+                  },
+                },
+              ],
+              "totalRecords": 3,
+            },
+            "highlight": false,
+            "include": Array [
+              "a",
+              "b",
+              "c",
+            ],
+            "key": "results",
+            "page": 1,
+            "pageSize": 3,
+            "skipCount": true,
+            "sortDir": "desc",
+            "sortField": "a",
+            "totalPages": 1,
+            "type": "results",
+          },
+        ],
+        "join": "and",
+        "key": "root-parent",
+        "schema": undefined,
+        "type": "group",
+      },
+    ],
+    Array [
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "filterOnly": true,
+                "key": "terms",
+                "type": "terms_stats",
+              },
+              Object {
+                "filterOnly": true,
+                "key": "results",
+                "type": "results",
+              },
+            ],
+            "filterOnly": true,
+            "key": "root",
+          },
+          Object {
+            "context": Object {
+              "results": Array [
+                Object {
+                  "_source": Object {
+                    "name": "record1",
+                  },
+                },
+                Object {
+                  "_source": Object {
+                    "name": "record2",
+                  },
+                },
+                Object {
+                  "_source": Object {
+                    "name": "record3",
+                  },
+                },
+              ],
+              "totalRecords": 3,
+            },
+            "highlight": false,
+            "include": Array [
+              "a",
+              "b",
+              "c",
+            ],
+            "key": "results",
+            "page": 2,
+            "pageSize": 3,
+            "skipCount": true,
+            "sortDir": "desc",
+            "sortField": "a",
+            "totalPages": 1,
+            "type": "results",
+          },
+        ],
+        "join": "and",
+        "key": "root-parent",
+        "schema": undefined,
+        "type": "group",
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "filterOnly": true,
+                "key": "terms",
+                "type": "terms_stats",
+              },
+              Object {
+                "filterOnly": true,
+                "key": "results",
+                "type": "results",
+              },
+            ],
+            "filterOnly": true,
+            "key": "root",
+          },
+          Object {
+            "context": Object {
+              "results": Array [
+                Object {
+                  "_source": Object {
+                    "name": "record1",
+                  },
+                },
+                Object {
+                  "_source": Object {
+                    "name": "record2",
+                  },
+                },
+                Object {
+                  "_source": Object {
+                    "name": "record3",
+                  },
+                },
+              ],
+              "totalRecords": 3,
+            },
+            "highlight": false,
+            "include": Array [
+              "a",
+              "b",
+              "c",
+            ],
+            "key": "results",
+            "page": 1,
+            "pageSize": 1,
+            "sortDir": "desc",
+            "sortField": "a",
+            "totalPages": 1,
+            "type": "results",
+          },
+        ],
+        "join": "and",
+        "key": "root-parent",
+        "schema": undefined,
+        "type": "group",
+      },
+    },
+    Object {
+      "isThrow": false,
+      "value": Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "filterOnly": true,
+                "key": "terms",
+                "type": "terms_stats",
+              },
+              Object {
+                "filterOnly": true,
+                "key": "results",
+                "type": "results",
+              },
+            ],
+            "filterOnly": true,
+            "key": "root",
+          },
+          Object {
+            "context": Object {
+              "results": Array [
+                Object {
+                  "_source": Object {
+                    "name": "record1",
+                  },
+                },
+                Object {
+                  "_source": Object {
+                    "name": "record2",
+                  },
+                },
+                Object {
+                  "_source": Object {
+                    "name": "record3",
+                  },
+                },
+              ],
+              "totalRecords": 3,
+            },
+            "highlight": false,
+            "include": Array [
+              "a",
+              "b",
+              "c",
+            ],
+            "key": "results",
+            "page": 1,
+            "pageSize": 3,
+            "skipCount": true,
+            "sortDir": "desc",
+            "sortField": "a",
+            "totalPages": 1,
+            "type": "results",
+          },
+        ],
+        "join": "and",
+        "key": "root-parent",
+        "schema": undefined,
+        "type": "group",
+      },
+    },
+    Object {
+      "isThrow": false,
+      "value": Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "filterOnly": true,
+                "key": "terms",
+                "type": "terms_stats",
+              },
+              Object {
+                "filterOnly": true,
+                "key": "results",
+                "type": "results",
+              },
+            ],
+            "filterOnly": true,
+            "key": "root",
+          },
+          Object {
+            "context": Object {
+              "results": Array [
+                Object {
+                  "_source": Object {
+                    "name": "record1",
+                  },
+                },
+                Object {
+                  "_source": Object {
+                    "name": "record2",
+                  },
+                },
+                Object {
+                  "_source": Object {
+                    "name": "record3",
+                  },
+                },
+              ],
+              "totalRecords": 3,
+            },
+            "highlight": false,
+            "include": Array [
+              "a",
+              "b",
+              "c",
+            ],
+            "key": "results",
+            "page": 2,
+            "pageSize": 3,
+            "skipCount": true,
+            "sortDir": "desc",
+            "sortField": "a",
+            "totalPages": 1,
+            "type": "results",
+          },
+        ],
+        "join": "and",
+        "key": "root-parent",
+        "schema": undefined,
+        "type": "group",
+      },
+    },
+  ],
+}
+`;
