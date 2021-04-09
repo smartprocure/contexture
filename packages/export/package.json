@@ -5,7 +5,7 @@
   "main": "lib/contexture-export.js",
   "scripts": {
     "build": "webpack",
-    "danger": "danger ci",
+    "danger": "duti",
     "lint": "eslint --ignore-path .gitignore 'src/**/*.js'",
     "lint:ci": "npm run lint -- -o lint-results.json -f json",
     "lint:fix": "npm run lint -- --fix",
