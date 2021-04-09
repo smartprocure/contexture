@@ -16,7 +16,7 @@ export default async ({ service, tree, ...node }) => {
   )
 
   let terms_stats = {
-    getTotalRecords: () => {
+    getTotalRecords() {
       return totalRecords
     },
     async *[Symbol.asyncIterator]() {
