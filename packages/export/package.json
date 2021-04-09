@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "danger": "duti",
-    "lint": "eslint --ignore-path .gitignore 'src/**/*.js'",
+    "lint": "eslint --ignore-path .gitignore './**/*.js'",
     "lint:ci": "npm run lint -- -o lint-results.json -f json",
     "lint:fix": "npm run lint -- --fix",
     "fmt": "prettier --write  *.js 'src/**/*.js'",
