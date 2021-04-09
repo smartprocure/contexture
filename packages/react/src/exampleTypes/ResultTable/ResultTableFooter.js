@@ -2,7 +2,7 @@ import React from 'react'
 import F from 'futil'
 import _ from 'lodash/fp'
 import TableFooter from '../../greyVest/TableFooter'
-import { contexturifyWithoutLoader } from '../../utils/hoc'
+import { observer } from 'mobx-react'
 
 let ResultTableFooter = ({ tree, node, pageSizeOptions, disabled, style }) => {
   let getFromContext = key =>
@@ -31,4 +31,4 @@ let ResultTableFooter = ({ tree, node, pageSizeOptions, disabled, style }) => {
   )
 }
 
-export default contexturifyWithoutLoader(ResultTableFooter)
+export default observer(ResultTableFooter)

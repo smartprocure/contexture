@@ -28,12 +28,14 @@ let TableBody = ({
     ? addBlankRows(getResults(node), pageSize, '_id')
     : getResults(node)
 
+  let hasResults = _.get('length', results)
   let showLoader = node.updating
-  let showNoResults = !showLoader && !_.get('length', results)
+  let showIntro = !showLoader && !hasResults && !node.lastUpdateTime
+  let showNoResults = !showLoader && !showIntro && !hasResults
 
   return (
     <>
-      <Tbody style={{ display: showLoader || showNoResults ? 'none' : '' }}>
+      <Tbody style={{ display: (showIntro || showLoader || showNoResults) ? 'none' : '' }}>
         {!!results.length &&
           _.map(
             x => (
@@ -75,11 +77,13 @@ let TableBody = ({
             results
           )}
       </Tbody>
-      <Tbody style={{ display: showLoader || showNoResults ? '' : 'none' }}>
+      <Tbody style={{ display: (showIntro || showLoader || showNoResults) ? '' : 'none' }}>
         <Tr>
           <Td colSpan={visibleFields.length} style={{ padding: 0 }}>
-            <Loader loading={showLoader}>{showLoader && IntroComponent}</Loader>
-            {showNoResults && NoResultsComponent}
+            <Loader loading={showLoader}>
+              {(showLoader || showIntro) && IntroComponent}
+              {showNoResults && NoResultsComponent}
+            </Loader>
           </Td>
         </Tr>
       </Tbody>
