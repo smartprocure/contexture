@@ -46,14 +46,12 @@ export let ThemeProvider = ({ theme, children }) => {
   )
 }
 
-export let useTheme = () => React.useContext(ThemeContext)
+export let useTheme = theme =>
+  ({ ...React.useContext(ThemeContext), ...theme })
 
 export let ThemeConsumer = ({ children, theme }) =>
   children({ ...useTheme(), ...theme })
 
 export let withTheme = Component => ({ theme, ...props }) => (
-  <Component
-    theme={{ ...React.useContext(ThemeContext), ...theme }}
-    {...props}
-  />
+  <Component theme={withTheme(theme)} {...props} />
 )
