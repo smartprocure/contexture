@@ -1,4 +1,7 @@
-﻿# 1.0.0
+﻿# 1.0.1
+* Changed from CircleCI to github actions
+
+# 1.0.0
 * Strategies are now native JS async iterables (using async generators)
 * BREAKING:
   * Most `exportStrategies` are removed - `bulk`, `page`, `stream`

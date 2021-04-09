@@ -20,16 +20,21 @@ let iterableData = [
 ]
 
 let expectedFileContents = `\
-"THE,NAME",Value,Nested Value
-Record1,1,a record1
-Record2,2,b record2
-Record3,3,c record3
+"THE,NAME",Value,Value RecordName Key TransformLength
+Record1,1,a record1 nestedValue.value 3
+Record2,2,b record2 nestedValue.value 3
+Record3,3,c record3 nestedValue.value 3
 `
 
 let transform = [
   { key: 'name', label: 'THE,NAME', display: _.capitalize },
   { key: 'value', label: 'Value', display: _.identity },
-  { key: 'nestedValue.value', label: 'Nested Value', display: (value, { key, record, transform }) => `${value} ${record.name}`},
+  {
+    key: 'nestedValue.value',
+    label: 'Value RecordName Key TransformLength',
+    display: (value, { key, record, transform }) =>
+      `${value} ${record.name} ${key} ${transform.length}`,
+  },
 ]
 
 // These are skipped on purpose as they actual write CSVs

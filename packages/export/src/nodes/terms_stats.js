@@ -16,17 +16,17 @@ export default async ({ service, tree, ...node }) => {
   )
 
   let terms_stats = {
-    getTotalRecords: () => {
+    getTotalRecords() {
       return totalRecords
     },
     async *[Symbol.asyncIterator]() {
-      let node = terms_stats.node = await run({
+      let node = (terms_stats.node = await run({
         key: 'stats',
         type: 'terms_stats',
         key_field,
         size: size || totalRecords,
         ...node,
-      })
+      }))
       yield node.context.terms
     },
   }
