@@ -5,12 +5,11 @@
   "main": "lib/contexture-export.js",
   "scripts": {
     "build": "webpack",
-    "duti": "duti",
     "danger": "danger ci",
-    "lint": "eslint --ignore-path .gitignore '{src,test}/**/*.js'",
+    "lint": "eslint --ignore-path .gitignore 'src/**/*.js'",
     "lint:ci": "npm run lint -- -o lint-results.json -f json",
     "lint:fix": "npm run lint -- --fix",
-    "fmt": "prettier --write  *.js '{src,test}/**/*.js'",
+    "fmt": "prettier --write  *.js 'src/**/*.js'",
     "duti:fix": "npm run lint:fix; npm run fmt",
     "test": "jest --",
     "test:watch": "jest --watch --",
@@ -57,7 +56,7 @@
   },
   "jest": {
     "setupFiles": [
-      "<rootDir>/test/setup.js"
+      "<rootDir>/testSetup.js"
     ],
     "testMatch": [
       "<rootDir>/**/*.test.js"
