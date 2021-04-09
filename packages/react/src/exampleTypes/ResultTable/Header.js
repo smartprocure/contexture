@@ -71,7 +71,7 @@ let Header = ({
   let filterNode =
     criteria &&
     _.find({ field }, _.getOr([], 'children', tree.getNode(criteria)))
-  let filtering = React.useState(!!_.get('hasValue', filterNode))
+  let filtering = React.useState(!!filterNode)
   let filter = () => {
     if (!filterNode) addFilter(field)
     filterNode =
