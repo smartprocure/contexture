@@ -35,7 +35,11 @@ let TableBody = ({
 
   return (
     <>
-      <Tbody style={{ display: (showIntro || showLoader || showNoResults) ? 'none' : '' }}>
+      <Tbody
+        style={{
+          display: showIntro || showLoader || showNoResults ? 'none' : '',
+        }}
+      >
         {!!results.length &&
           _.map(
             x => (
@@ -77,7 +81,11 @@ let TableBody = ({
             results
           )}
       </Tbody>
-      <Tbody style={{ display: (showIntro || showLoader || showNoResults) ? '' : 'none' }}>
+      <Tbody
+        style={{
+          display: showIntro || showLoader || showNoResults ? '' : 'none',
+        }}
+      >
         <Tr>
           <Td colSpan={visibleFields.length} style={{ padding: 0 }}>
             <Loader loading={showLoader}>
