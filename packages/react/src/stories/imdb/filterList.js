@@ -17,7 +17,7 @@ import theme, { DarkBox } from '../DemoControls'
 import {
   Query,
   ResultCount,
-  PagedResultTable,
+  ResultTable,
   DateHistogram,
   CheckableTermsStatsTable,
   TypeMap,
@@ -180,7 +180,7 @@ const Story = inject(() => {
                   >
                     {x => (
                       <div>
-                        <PagedResultTable
+                        <ResultTable
                           tree={termDetailsTree(x)}
                           path={['detailRoot', 'results']}
                           fields={_.pick(
@@ -206,7 +206,7 @@ const Story = inject(() => {
                   </Column>
                 </CheckableTermsStatsTable>
                 <div style={{ overflowX: 'auto' }}>
-                  <PagedResultTable
+                  <ResultTable
                     tree={tree}
                     path={['searchRoot', 'results']}
                     fields={{

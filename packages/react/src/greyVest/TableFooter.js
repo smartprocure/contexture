@@ -71,7 +71,9 @@ let TableFooter = ({
           </PagerItem>
         )}
       </Flex>
-      <PageDetails {...{ totalRecords, startRecord, endRecord, hasMore }} />
+      {totalRecords > 0 && (
+        <PageDetails {...{ totalRecords, startRecord, endRecord, hasMore }} />
+      )}
     </Flex>
   )
 }

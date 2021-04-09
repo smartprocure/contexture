@@ -33,24 +33,6 @@ export let withLoader = Component =>
     )
   })
 
-// I am a band-aid, please rip me off as quickly as possible
-export let withInlineLoader = Component =>
-  _.flow(
-    wrapDisplayName('withInlineLoader', Component),
-    observer
-  )(({ Loader, ...props }) => {
-    let { theme = {}, node } = props
-    Loader = Loader || theme.Loader || StripedLoader
-    return (
-      <Loader
-        loading={node && node.updating}
-        style={{ display: 'inline-block' }}
-      >
-        <Component {...props} />
-      </Loader>
-    )
-  })
-
 export let contexturify = _.flow(observer, withLoader, withNode, withTheme)
 
 export let contexturifyWithoutLoader = _.flow(observer, withNode, withTheme)

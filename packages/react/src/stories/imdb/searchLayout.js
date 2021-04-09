@@ -3,7 +3,7 @@ import F from 'futil'
 import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
-import Contexture, { updateSchemas } from '../utils/contexture'
+import Contexture, { updateSchemas } from './utils/contexture'
 import {
   Awaiter,
   schemaFieldProps,
@@ -20,7 +20,7 @@ import {
   TermsStatsTable,
   TagsQuerySearchBar,
   ResultCount,
-  PagedResultTable,
+  ResultTable,
 } from '../../exampleTypes'
 import { Column } from '../../greyVest/ExpandableTable'
 import { ThemeConsumer } from '../../utils/theme'
@@ -286,7 +286,7 @@ let GreyVestSearchBarStory = theme => (
               <ResultCount tree={tree} path={['root', 'results']} />)
             </TabLabel>
             <TabContent value="results">
-              <PagedResultTable
+              <ResultTable
                 tree={tree}
                 path={['root', 'results']}
                 fields={_.omit(
@@ -317,7 +317,7 @@ let GreyVestSearchBarStory = theme => (
                 >
                   {x => (
                     <div style={{ marginBottom: 25 }}>
-                      <PagedResultTable
+                      <ResultTable
                         tree={termDetailsTree(x)}
                         path={['detailRoot', 'results']}
                         fields={_.pick(

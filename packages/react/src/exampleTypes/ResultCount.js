@@ -1,13 +1,17 @@
+import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil'
 import { observer } from 'mobx-react'
-import { withNode, withInlineLoader } from '../utils/hoc'
+import { withNode } from '../utils/hoc'
 import { toNumber } from '../utils/format'
+import { withTheme } from '../utils/theme'
+import { StripedLoader } from '../greyVest'
 
 let ResultCount = ({
   node = {},
   display = toNumber,
   noResults = 'No Results',
+  theme: { Loader = StripedLoader },
 }) => {
   let count = F.cascade(
     [
@@ -29,7 +33,24 @@ let ResultCount = ({
         node
       )
     : 0
-  return count ? display(totalRecords) : noResults
+  return count ? (
+    display(totalRecords)
+  ) : node.updating ? (
+    <div
+      style={{
+        display: 'inline-block',
+        verticalAlign: 'middle',
+        margin: '0 .1rem',
+      }}
+    >
+      <Loader
+        loading
+        style={{ height: '1rem', width: '1.5rem', minHeight: 'auto' }}
+      />
+    </div>
+  ) : (
+    noResults
+  )
 }
 
-export default _.flow(observer, withNode, withInlineLoader)(ResultCount)
+export default _.flow(observer, withNode, withTheme)(ResultCount)

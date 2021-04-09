@@ -15,7 +15,7 @@ import theme, { Button } from '../DemoControls'
 import {
   Query,
   ResultCount,
-  PagedResultTable,
+  ResultTable,
   DateHistogram,
   TermsStats,
   TypeMap,
@@ -151,7 +151,7 @@ let Story = () => (
               />
               <TermsStats tree={tree} path={['searchRoot', 'genreScores']} />
               <div style={{ overflowX: 'auto' }}>
-                <PagedResultTable
+                <ResultTable
                   tree={tree}
                   path={['searchRoot', 'results']}
                   fields={schemas.movies.fields}

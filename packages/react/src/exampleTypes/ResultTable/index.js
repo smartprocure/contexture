@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp'
 import * as F from 'futil'
 import { fieldsToOptions } from '../../FilterAdder'
-import { contexturify } from '../../utils/hoc'
+import { withNode } from '../../utils/hoc'
 import { applyDefaults, inferSchema } from '../../utils/schema'
 import { newNodeFromField } from '../../utils/search'
 import Header from './Header'
@@ -54,7 +54,6 @@ let ResultTable = ({
     node
   )
 
-  let hasResults = resultsLength > 0
   let blankRows =
     limitedResults &&
     resultsLength < node.pageSize &&
@@ -88,62 +87,59 @@ let ResultTable = ({
     mutate,
     criteria,
   }
-  if (!node.updating && hasResults) {
-    return (
-      <>
-        <Table>
-          <Thead>
-            <Tr>
-              {F.mapIndexed(
-                (x, i) => (
-                  <Header
-                    key={x.field}
-                    field={x}
-                    isLastColumn={i === visibleFields.length - 1}
-                    isStickyColumn={stickyColumn && x.field === stickyColumn}
-                    {...headerProps}
-                  />
-                ),
-                visibleFields
-              )}
-              <HighlightedColumnHeader node={node} />
-            </Tr>
-          </Thead>
-          <TableBody
-            {...{
-              node,
-              fields,
-              visibleFields,
-              hiddenFields,
-              schema,
-              Row,
-              getRowKey,
-              blankRows,
-              pageSize: Math.min(node.pageSize, totalRecords),
-              stickyColumn,
-            }}
-          />
-        </Table>
-        {!hideFooter && node.pageSize > 0 && (
-          <ResultTableFooter
-            {...{
-              tree,
-              node,
-              path,
-              pageSizeOptions,
-              disabled: blankRows,
-              style: footerStyle,
-            }}
-          />
-        )}
-      </>
-    )
-  }
-  if (!node.markedForUpdate && !node.updating && !hasResults) {
-    return NoResultsComponent
-  }
-  return IntroComponent
+
+  return (
+    <>
+      <Table>
+        <Thead>
+          <Tr>
+            {F.mapIndexed(
+              (x, i) => (
+                <Header
+                  key={x.field}
+                  field={x}
+                  isLastColumn={i === visibleFields.length - 1}
+                  isStickyColumn={stickyColumn && x.field === stickyColumn}
+                  {...headerProps}
+                />
+              ),
+              visibleFields
+            )}
+            <HighlightedColumnHeader node={node} />
+          </Tr>
+        </Thead>
+        <TableBody
+          {...{
+            node,
+            fields,
+            visibleFields,
+            hiddenFields,
+            schema,
+            Row,
+            getRowKey,
+            blankRows,
+            pageSize: Math.min(node.pageSize, totalRecords),
+            stickyColumn,
+            NoResultsComponent,
+            IntroComponent,
+          }}
+        />
+      </Table>
+
+      {!hideFooter && node.pageSize > 0 && (
+        <ResultTableFooter
+          {...{
+            tree,
+            node,
+            path,
+            pageSizeOptions,
+            disabled: blankRows,
+            style: footerStyle,
+          }}
+        />
+      )}
+    </>
+  )
 }
 
-export let PagedResultTable = contexturify(ResultTable)
-export default PagedResultTable
+export default _.flow(withNode, withTheme)(ResultTable)

@@ -14,7 +14,7 @@ import {
   FilterAdder,
 } from '../../'
 import { TextInput, ClampedHTML } from '../DemoControls'
-import { ResultCount, PagedResultTable, TypeMap } from '../../exampleTypes'
+import { ResultCount, ResultTable, TypeMap } from '../../exampleTypes'
 
 import Contexture, { updateClient } from './contexture'
 
@@ -173,7 +173,7 @@ let Story = observer(() => {
                     <div style={{ flex: 4, maxWidth: '80%', ...whiteBox }}>
                       <ResultCount tree={tree} path={['root', 'results']} />
                       <div style={{ overflowX: 'auto' }}>
-                        <PagedResultTable
+                        <ResultTable
                           tree={tree}
                           path={['root', 'results']}
                           fields={schemas[tree.tree.schema].fields}

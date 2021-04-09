@@ -1,12 +1,7 @@
 import React from 'react'
 import F from 'futil'
 import { storiesOf } from '@storybook/react'
-import {
-  ThemeProvider,
-  ThemeConsumer,
-  withTheme,
-  withNamedTheme,
-} from '../utils/theme'
+import { ThemeProvider, ThemeConsumer, withTheme } from '../utils/theme'
 import { wrapDisplayName } from '../utils/react'
 
 let withStyle = (style, Component) =>
@@ -60,7 +55,7 @@ let ButtonGroup = ({ theme, buttons = [] }) =>
     buttons
   )
 
-let ThemedButtonGroup = withNamedTheme('ButtonGroup')(ButtonGroup)
+let ThemedButtonGroup = withTheme(ButtonGroup)
 
 storiesOf('Theme API|Examples', module)
   .add('Global defaults', () => (
@@ -105,60 +100,6 @@ storiesOf('Theme API|Examples', module)
       </ThemeProvider>
     )
   })
-  .add('Theme precedence', () => (
-    <ThemeProvider
-      theme={{
-        Button: VanillaButton,
-        'ButtonGroup.Button': StrawberryButton,
-      }}
-    >
-      <ThemedButton>Top-level buttons are Vanilla</ThemedButton>
-      <ThemedButtonGroup
-        buttons={['Nested themes override top-level themes']}
-      />
-      <ThemedButtonGroup
-        theme={{ Button: PearButton }}
-        buttons={['Theme props override theme context']}
-      />
-    </ThemeProvider>
-  ))
-  .add('withNamedTheme', () => {
-    let UnnamedComponent = withTheme(({ theme }) => (
-      <>
-        <div>I am an anonymous component</div>
-        <theme.Button>Top-level buttons are Vanilla</theme.Button>
-      </>
-    ))
-    let ExplicitlyNamedComponent = withNamedTheme('Jerry')(({ theme }) => (
-      <>
-        <div>
-          I am also an anonymous component, but <code>withTheme</code> knows me
-          as "Jerry"
-        </div>
-        <theme.Button>Jerry buttons are Strawberry!</theme.Button>
-      </>
-    ))
-    let ButtonGroupGeorge = withNamedTheme('George')(ButtonGroup)
-    return (
-      <ThemeProvider
-        theme={{
-          Button: VanillaButton,
-          'Jerry.Button': StrawberryButton,
-          'George.Button': PearButton,
-        }}
-      >
-        <UnnamedComponent />
-        <div style={{ height: 20 }} />
-        <ExplicitlyNamedComponent />
-        <div style={{ height: 20 }} />
-        <div>
-          This component is a ButtonGroup, but <code>withTheme</code> knows it
-          as "George":
-        </div>
-        <ButtonGroupGeorge buttons={['George buttons are Pear!']} />
-      </ThemeProvider>
-    )
-  })
 
 storiesOf('Theme API|Examples/ThemeConsumer', module)
   .add('Without name', () => (
@@ -194,7 +135,7 @@ let IconButton = ({ theme: { Button, Icon }, children }) => (
     {children}
   </Button>
 )
-let ThemedIconButton = withNamedTheme('IconButton')(IconButton)
+let ThemedIconButton = withTheme(IconButton)
 
 storiesOf('Theme API|Examples/Multi-level nesting', module)
   .add('With theme context', () => (
