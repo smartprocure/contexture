@@ -46,8 +46,7 @@ export let ThemeProvider = ({ theme, children }) => {
   )
 }
 
-export let useTheme = theme =>
-  ({ ...React.useContext(ThemeContext), ...theme })
+export let useTheme = theme => ({ ...React.useContext(ThemeContext), ...theme })
 
 export let ThemeConsumer = ({ children, theme }) =>
   children({ ...useTheme(), ...theme })
