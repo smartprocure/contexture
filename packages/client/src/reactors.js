@@ -47,7 +47,12 @@ export let reactors = {
   type: standardChange,
   dateRange(parent, node, { previous, value }) {
     // ignore switch from empty exact to empty rolling
-    if (previous.range === 'exact' && !previous.from && !previous.to && !value.range)
+    if (
+      previous.range === 'exact' &&
+      !previous.from &&
+      !previous.to &&
+      !value.range
+    )
       return
     // ignore switch from empty rolling to empty exact
     if (!previous.range && value.range === 'exact' && !value.from && !value.to)
