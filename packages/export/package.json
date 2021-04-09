@@ -10,7 +10,7 @@
     "lint": "eslint --ignore-path .gitignore '{src,test}/**/*.js'",
     "lint:ci": "npm run lint -- -o lint-results.json -f json",
     "lint:fix": "npm run lint -- --fix",
-    "fmt": "prettier --write *.js; prettier --write '{src,test}/**/*.js'",
+    "fmt": "prettier --write  *.js '{src,test}/**/*.js'",
     "duti:fix": "npm run lint:fix; npm run fmt",
     "test": "jest --",
     "test:watch": "jest --watch --",
