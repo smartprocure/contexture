@@ -186,9 +186,9 @@ export default F.stampKey('type', {
       range !== 'allDates' &&
       ((range === 'exact' && (from || to)) || range !== 'exact'),
     reactors: {
-      from: 'others',
-      to: 'others',
-      range: 'others',
+      from: 'dateRange',
+      to: 'dateRange',
+      range: 'dateRange',
     },
     defaults: {
       field: null,

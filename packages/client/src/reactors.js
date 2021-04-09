@@ -45,6 +45,16 @@ export let reactors = {
   // ported from main app ¯\_(ツ)_/¯
   field: standardChange,
   type: standardChange,
+  dateRange(parent, node, { previous, value }) {
+    // ignore switch from empty exact to empty rolling
+    if (previous.range === 'exact' && !previous.from && !previous.to && !value.range)
+      return
+    // ignore switch from empty rolling to empty exact
+    if (!previous.range && value.range === 'exact' && !value.from && !value.to)
+      return
+
+    return others(parent, node)
+  },
   mutate: (parent, node, event, reactor, types, lookup) =>
     _.flow(
       _.keys,
