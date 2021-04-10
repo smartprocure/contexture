@@ -11,7 +11,7 @@
     "lint:ci": "npm run lint -- -o lint-results.json -f json",
     "lint:fix": "npm run lint -- --fix",
     "fmt": "prettier --write '{src,test}/**/*.js'",
-    "duti": "duti",
+    "danger": "duti",
     "duti:fix": "npm run lint:fix; npm run fmt"
   },
   "repository": {
