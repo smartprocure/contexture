@@ -7,10 +7,10 @@
     "test": "./node_modules/mocha/bin/_mocha --recursive",
     "test:watch": "chokidar 'src/**/*.js' 'test/**/*.js' -c 'npm t'",
     "test:ci": "./node_modules/mocha/bin/_mocha --recursive --reporter json > test-results.json",
-    "lint": "eslint --ignore-path .gitignore '{src,test}/**/*.js'",
+    "lint": "eslint --ignore-path .gitignore './**/*.js'",
     "lint:ci": "npm run lint -- -o lint-results.json -f json",
     "lint:fix": "npm run lint -- --fix",
-    "fmt": "prettier --write '{src,test}/**/*.js'",
+    "fmt": "prettier --ignore-path .gitignore --write './**/*.js'",
     "danger": "duti",
     "duti:fix": "npm run lint:fix; npm run fmt"
   },
