@@ -1,3 +1,6 @@
+# 1.1.4
+* Changes the CI from CircleCI to Github Actions
+
 # 1.1.3
 * Increased the value of `scroll` from `'2m'` to `'60m'`, this is to accommodate deeper pagination. Eventually we need to move `search_after` as it is now recommended for es7 but for, but this change accommodates our use cases for now without (hopefully) too much of a performance hit.
 
