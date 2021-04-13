@@ -1,4 +1,7 @@
 #0.22.4
+* Changed over CI from CircleCI to Github Actions
+
+#0.22.4
 * fix bug when populate is restricting what fields (specifically when the `include` has dotted object fields when the schema only has the parent object) to return from the looked up record based on the `include` provided
 
 #0.22.3
