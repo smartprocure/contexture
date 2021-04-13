@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "watch": "npm run build -- --watch",
-    "lint": "eslint src test",
+    "lint": "eslint --ignore-path .gitignore './**/*.js'",
     "lint:ci": "npm run lint -- -o lint-results.json -f json",
     "lint:fix": "npm run lint -- --fix",
     "test": "babel-node ./node_modules/mocha/bin/_mocha",
@@ -14,7 +14,7 @@
     "coverage": "nyc --require babel-core/register node_modules/.bin/mocha test",
     "test:ci": "babel-node ./node_modules/mocha/bin/_mocha --reporter json > test-results.json",
     "cicoverage": "nyc --reporter=lcov --require babel-core/register node_modules/.bin/mocha test --reporter json > test-results.json",
-    "fmt": "prettier --write '{src,test}/**/*.*'",
+    "fmt": "prettier --ignore-path .gitignore --write './**/*.js'",
     "duti": "duti",
     "duti:fix": "npm run lint:fix && npm run fmt",
     "prepublish": "webpack"
