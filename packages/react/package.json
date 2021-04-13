@@ -16,7 +16,7 @@
     "lint:ci": "npm run lint -- -o lint-results.json -f json",
     "test": "jest --passWithNoTests",
     "test:ci": "npm run test -- --json --outputFile=test-results.json",
-    "duti": "duti",
+    "danger": "duti",
     "fmt": "prettier --ignore-path .gitignore --write './**/*.js'",
     "duti:fix": "npm run lint:fix && npm run fmt",
     "update-pkg": "node updatePackage"
