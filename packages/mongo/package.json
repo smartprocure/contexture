@@ -12,7 +12,7 @@
     "lint:fix": "npm run lint -- --fix",
     "lint:ci": "npm run lint -- -o lint-results.json -f json",
     "fmt": "prettier --ignore-path .gitignore --write './**/*.js'",
-    "duti": "duti",
+    "danger": "duti",
     "duti:fix": "npm run lint:fix; npm run fmt"
   },
   "repository": {
