@@ -189,7 +189,7 @@ describe('usage with mobx should generally work', () => {
     await Tree.add(['root'], {
       key: 'newNotEmptyFilter',
       type: 'facet',
-      context: {options: [1]},
+      context: { options: [1] },
     })
     expect(service).to.have.callCount(1)
     expect(reactor).to.satisfy(x => x.callCount > 1)
@@ -227,7 +227,7 @@ describe('usage with mobx should generally work', () => {
       type: 'facet',
       mode: 'include',
       path: ['root', 'newNotEmptyFilter'],
-      context: {options: [1]},
+      context: { options: [1] },
       values: [],
       metaHistory: [],
     })
@@ -240,7 +240,7 @@ describe('usage with mobx should generally work', () => {
       key: 'newNotEmptyFilter',
       type: 'facet',
       mode: 'include',
-      context: {options: [1]},
+      context: { options: [1] },
       path: ['root', 'newNotEmptyFilter'],
       values: [],
       metaHistory: [],
