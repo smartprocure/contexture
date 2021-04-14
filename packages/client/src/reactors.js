@@ -46,7 +46,11 @@ export let reactors = {
   field: standardChange,
   type: standardChange,
   mutate(parent, node, event, reactor, types, lookup) {
-    if (!hasValue(event.node) && !hasValue(event.previous) && !hasContext(event.node))
+    if (
+      !hasValue(event.node) &&
+      !hasValue(event.previous) &&
+      !hasContext(event.node)
+    )
       return []
     return _.flow(
       _.keys,
