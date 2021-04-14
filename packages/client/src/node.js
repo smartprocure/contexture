@@ -55,10 +55,7 @@ export let dedupeWalk = (fn, tree, { target = {}, dedupe } = {}) => {
   })(tree)
 }
 
-let isValue = x => !_.isNil(x) && (_.isNumber(x) || !_.isEmpty(x))
-
-export let hasContext = _.flow(_.get('context'), _.values, _.some(isValue))
-
+export let hasContext = node => node && node.context
 let throwsError = x => {
   throw Error(x)
 } // Throw expressions are stage 3 :(

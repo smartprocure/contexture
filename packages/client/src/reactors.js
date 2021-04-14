@@ -45,23 +45,23 @@ export let reactors = {
   // ported from main app ¯\_(ツ)_/¯
   field: standardChange,
   type: standardChange,
-  mutate(parent, node, event, reactor, types, lookup) {
-    if (
-      !hasValue(event.node) &&
-      !hasValue(event.previous) &&
-      !hasContext(event.node)
-    )
-      return []
-    return _.flow(
+  mutate: (parent, node, event, reactor, types, lookup) =>
+    _.flow(
       _.keys,
       // assumes reactors are { field: reactor, ...}
       _.map(F.aliasIn(_.get(`${lookup(event.path).type}.reactors`, types))),
       _.uniq,
       _.flatMap(reactor),
       _.compact,
-      _.uniq
-    )(event.value)
-  },
+      _.uniq,
+      F.when(
+        // if it doesn't and didn't have a value
+        // don't update other nodes
+        !hasValue(event.node) &&
+        !hasValue(event.previous),
+        _.filter(_.eq(node)),
+      ),
+    )(event.value),
 }
 export let getAffectedNodes = (reactors, lookup, types) => (event, path) => {
   let node = lookup(path)

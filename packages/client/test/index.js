@@ -1202,7 +1202,7 @@ let AllTests = ContextureClient => {
       },
       { index: 1 }
     )
-    expect(service).to.have.callCount(0)
+    expect(service).to.have.callCount(1)
   })
   it('should allow individual nodes to be updated', async () => {
     // working here
