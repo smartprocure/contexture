@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp'
 import * as F from 'futil'
 import { fieldsToOptions } from '../../FilterAdder'
-import { withNode } from '../../utils/hoc'
+import { contexturifyWithoutLoader } from '../../utils/hoc'
 import { applyDefaults, inferSchema } from '../../utils/schema'
 import { newNodeFromField } from '../../utils/search'
 import Header from './Header'
@@ -142,4 +142,4 @@ let ResultTable = ({
   )
 }
 
-export default _.flow(withNode, withTheme)(ResultTable)
+export default contexturifyWithoutLoader(ResultTable)
