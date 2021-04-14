@@ -1,5 +1,5 @@
 # 2.34.0
-* Adding custom dateRange mutation reactor
+* Silencing updates from changes with no value
 * This removes unnecessary tree update when switching from exact to rolling 
 
 # 2.33.0
