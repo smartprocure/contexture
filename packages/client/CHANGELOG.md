@@ -1,3 +1,6 @@
+# 2.33.1
+* Changed over CI from CircleCI to Github Actions
+
 # 2.33.0
 * Self affecting dispatches updating only themselves when disabling auto update
     * This is achieved by making `triggerUpdate` optionally take a `path`
