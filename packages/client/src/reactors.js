@@ -6,9 +6,9 @@ let all = parent => _.toArray(parent.children)
 let self = (parent, node) => [node]
 let others = (parent, node) =>
   parent.join === 'or' ? [] : _.without([node], _.toArray(parent.children))
-let standardChange = (parent, node, { previous }) => {
-  let needUpdate = hasContext(node)
-  let affectsOthers = hasValue(node) || hasValue(previous)
+let standardChange = (parent, node, { node: targetNode, previous }) => {
+  let needUpdate = hasContext(targetNode)
+  let affectsOthers = hasValue(targetNode) || hasValue(previous)
   if (affectsOthers && needUpdate) return all(parent, node)
   if (affectsOthers) return others(parent, node)
   if (needUpdate) return self(parent, node)
@@ -45,23 +45,10 @@ export let reactors = {
   // ported from main app ¯\_(ツ)_/¯
   field: standardChange,
   type: standardChange,
-  dateRange(parent, node, { previous, value }) {
-    // ignore switch from empty exact to empty rolling
-    if (
-      previous.range === 'exact' &&
-      !previous.from &&
-      !previous.to &&
-      !value.range
-    )
-      return
-    // ignore switch from empty rolling to empty exact
-    if (!previous.range && value.range === 'exact' && !value.from && !value.to)
-      return
-
-    return others(parent, node)
-  },
-  mutate: (parent, node, event, reactor, types, lookup) =>
-    _.flow(
+  mutate(parent, node, event, reactor, types, lookup) {
+    // if (!hasValue(event.node) && !hasValue(event.previous) && !hasContext(event.node))
+    //   return []
+    return _.flow(
       _.keys,
       // assumes reactors are { field: reactor, ...}
       _.map(F.aliasIn(_.get(`${lookup(event.path).type}.reactors`, types))),
@@ -69,7 +56,8 @@ export let reactors = {
       _.flatMap(reactor),
       _.compact,
       _.uniq
-    )(event.value),
+    )(event.value)
+  },
 }
 export let getAffectedNodes = (reactors, lookup, types) => (event, path) => {
   let node = lookup(path)
