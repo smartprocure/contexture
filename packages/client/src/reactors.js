@@ -57,10 +57,9 @@ export let reactors = {
       F.when(
         // if it doesn't and didn't have a value
         // don't update other nodes
-        !hasValue(event.node) &&
-        !hasValue(event.previous),
-        _.filter(_.eq(node)),
-      ),
+        !hasValue(event.node) && !hasValue(event.previous),
+        _.filter(_.eq(node))
+      )
     )(event.value),
 }
 export let getAffectedNodes = (reactors, lookup, types) => (event, path) => {
