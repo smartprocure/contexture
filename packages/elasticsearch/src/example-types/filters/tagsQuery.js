@@ -28,7 +28,7 @@ let addQuotesAndDistance = _.curry((tag, text) => {
 let replaceReservedChars = _.flow(
   _.toString,
   // Replace characters with white space (\\u0020)
-  _.replace(/([+\-=&|!(){}[\]^"~*?:\\/<>;,$'])/g, '\\u0020'),
+  _.replace(/([+\-=&|!(){}[\]^"~*?:\\/<>;,$'])/g, '\\u0020')
 )
 
 let tagToQueryString = tag => {
