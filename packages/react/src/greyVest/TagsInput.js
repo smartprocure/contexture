@@ -21,6 +21,7 @@ let TagsInput = forwardRef(
       onBlur = _.noop,
       onInputChange = _.noop,
       onTagClick = _.noop,
+      maxWordsPerTag = 100,
       Tag = DefaultTag,
       ...props
     },
@@ -28,12 +29,21 @@ let TagsInput = forwardRef(
   ) => {
     let containerRef = React.useRef()
     let state = useLocalStore(() => ({ currentInput: '' }))
+
+    // Convert string to words, take the first x words and then convert back to string
+    let takeWords = _.flow(
+      _.words,
+      _.take(maxWordsPerTag),
+      _.join(' ')
+    )
+
     addTag = splitCommas
       ? _.flow(
           _.split(','),
           _.invokeMap('trim'),
           _.compact,
           _.uniq,
+          _.map(takeWords), // Limit the number of words per tag to maxWordsPerTag
           _.difference(_, tags),
           _.map(addTag)
         )
