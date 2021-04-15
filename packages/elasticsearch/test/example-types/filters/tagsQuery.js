@@ -2,7 +2,7 @@ let {
   wordPermutations,
   limitResultsToCertainTags,
   addQuotesAndDistance,
-  escapeReservedChars,
+  replaceReservedChars,
   joinTags,
   tagToQueryString,
   tagsToQueryString,
@@ -61,19 +61,11 @@ describe('addQuotesAndDistance', () => {
   })
 })
 
-describe('escapeReservedChars', () => {
-  it('should escape reserved characters', () => {
-    expect(escapeReservedChars('foo: [bar] (baz) - 1 ^ 2')).to.deep.equal(
-      'foo\\: \\[bar\\] \\(baz\\) \\- 1 \\^ 2'
-    )
-  })
-  it('should remove unescapable reserved characters', () => {
-    expect(escapeReservedChars('1 < 2 > 1')).to.deep.equal('1  2  1')
-  })
-  it('should not escape non-reserved characters', () => {
-    expect(escapeReservedChars(`I'm just a plain old sentence.`)).to.deep.equal(
-      `I'm just a plain old sentence.`
-    )
+describe('replaceReservedChars', () => {
+  it('should replace reserved characters with empty space', () => {
+    expect(
+      replaceReservedChars('foo: [bar] (baz) - 1 ^ 2 <> 3 !$ 4,5')
+    ).to.deep.equal('foo   bar   baz    1   2    3    4 5')
   })
 })
 

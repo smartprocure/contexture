@@ -1,3 +1,6 @@
+# 1.1.5
+* [tagsQuery] Replace special chars with empty space
+
 # 1.1.4
 * Changes the CI from CircleCI to Github Actions
 
