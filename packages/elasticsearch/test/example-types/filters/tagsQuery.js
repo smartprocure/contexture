@@ -62,9 +62,9 @@ describe('addQuotesAndDistance', () => {
 })
 
 describe('replaceReservedChars', () => {
-  it('should escape reserved characters', () => {
+  it('should replace reserved characters with empty space', () => {
     expect(replaceReservedChars('foo: [bar] (baz) - 1 ^ 2 <> 3 !$ 4')).to.deep.equal(
-      'foo\\u0020 \\u0020bar\\u0020 \\u0020baz\\u0020 \\u0020 1 \\u0020 2 \\u0020\\u0020 3 \\u0020\\u0020 4'
+      'foo   bar   baz    1   2    3    4'
     )
   })
 })

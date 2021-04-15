@@ -27,8 +27,8 @@ let addQuotesAndDistance = _.curry((tag, text) => {
 // https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#_reserved_characters
 let replaceReservedChars = _.flow(
   _.toString,
-  // Replace characters with white space (\\u0020)
-  _.replace(/([+\-=&|!(){}[\]^"~*?:\\/<>;,$'])/g, '\\u0020'),
+  // Replace characters with white space ` `
+  _.replace(/([+\-=&|!(){}[\]^"~*?:\\/<>;,$'])/g, ' '),
 )
 
 let tagToQueryString = tag => {
