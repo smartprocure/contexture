@@ -45,7 +45,7 @@ let TagsInput = forwardRef(
           _.invokeMap('trim'),
           _.compact,
           _.uniq,
-          _.map(sanitizeWords), // Limit the number of words per tag to maxWordsPerTag
+          _.map(sanitizeWords),
           _.difference(_, tags),
           _.map(addTag)
         )
