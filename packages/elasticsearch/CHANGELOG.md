@@ -1,7 +1,8 @@
 # 1.1.6
 * [tagsQuery] Limit validContext to 100 tags
+
 # 1.1.5
-* [tagsQuery] Replace special chars with empty string
+* [tagsQuery] Replace special chars with empty space
 
 # 1.1.4
 * Changes the CI from CircleCI to Github Actions
