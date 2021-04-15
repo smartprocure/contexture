@@ -31,11 +31,7 @@ let TagsInput = forwardRef(
     let state = useLocalStore(() => ({ currentInput: '' }))
 
     // Convert string to words, take the first x words and then convert back to string
-    let takeWords = _.flow(
-      _.words,
-      _.take(maxWordsPerTag),
-      _.join(' ')
-    )
+    let takeWords = _.flow(_.words, _.take(maxWordsPerTag), _.join(' '))
 
     addTag = splitCommas
       ? _.flow(
