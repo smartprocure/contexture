@@ -35,7 +35,7 @@ let TagsInput = forwardRef(
     let sanitizeWords = _.flow(
       _.words,
       _.take(maxWordsPerTag),
-      _.map(word => _.truncate({ length: maxCharsPerTagWord, omission: '' }, word)),
+      _.map(word => _.truncate({length: maxCharsPerTagWord, omission: ''}, word)),
       _.join(' ')
     )
 
