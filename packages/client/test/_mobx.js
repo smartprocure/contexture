@@ -187,19 +187,19 @@ describe('usage with mobx should generally work', () => {
     let disposer = reaction(() => toJS(Tree.tree), reactor)
 
     await Tree.add(['root'], {
-      key: 'newEmptyFilter',
+      key: 'newNotEmptyFilter',
       type: 'facet',
-      context: {},
+      context: { options: [1] },
     })
     expect(service).to.have.callCount(1)
     expect(reactor).to.satisfy(x => x.callCount > 1)
-    expect(Tree.getNode(['root', 'newEmptyFilter'])).to.exist
+    expect(Tree.getNode(['root', 'newNotEmptyFilter'])).to.exist
 
     let previousCallCount = reactor.callCount
-    await Tree.remove(['root', 'newEmptyFilter'])
+    await Tree.remove(['root', 'newNotEmptyFilter'])
     expect(service).to.have.callCount(1)
     expect(reactor).to.satisfy(x => x.callCount > previousCallCount)
-    expect(Tree.getNode(['root', 'newEmptyFilter'])).to.not.exist
+    expect(Tree.getNode(['root', 'newNotEmptyFilter'])).to.not.exist
 
     previousCallCount = reactor.callCount
     await Tree.add(['root'], {
@@ -220,14 +220,14 @@ describe('usage with mobx should generally work', () => {
 
     expect(
       F.compactObject(
-        treeUtils.lookup(['newEmptyFilter'], reactor.getCall(0).args[0])
+        treeUtils.lookup(['newNotEmptyFilter'], reactor.getCall(0).args[0])
       )
     ).to.deep.equal({
-      key: 'newEmptyFilter',
+      key: 'newNotEmptyFilter',
       type: 'facet',
       mode: 'include',
-      path: ['root', 'newEmptyFilter'],
-      context: {},
+      path: ['root', 'newNotEmptyFilter'],
+      context: { options: [1] },
       values: [],
       metaHistory: [],
     })
@@ -235,13 +235,13 @@ describe('usage with mobx should generally work', () => {
       _.flow(
         _.omit(['lastUpdateTime']),
         F.compactObject
-      )(treeUtils.lookup(['newEmptyFilter'], reactor.getCall(1).args[0]))
+      )(treeUtils.lookup(['newNotEmptyFilter'], reactor.getCall(1).args[0]))
     ).to.deep.equal({
-      key: 'newEmptyFilter',
+      key: 'newNotEmptyFilter',
       type: 'facet',
       mode: 'include',
-      context: {},
-      path: ['root', 'newEmptyFilter'],
+      context: { options: [1] },
+      path: ['root', 'newNotEmptyFilter'],
       values: [],
       metaHistory: [],
     })

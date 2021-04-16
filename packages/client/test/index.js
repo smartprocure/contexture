@@ -479,7 +479,6 @@ let AllTests = ContextureClient => {
       })
     } catch (e) {
       expect(e).to.equal('service error!')
-      return
     }
   })
   it('should support custom type reactors', async () => {
@@ -1167,7 +1166,45 @@ let AllTests = ContextureClient => {
     await tree.triggerUpdate()
     expect(service).to.have.callCount(2)
   })
-  it('should allow indifidual nodes to be updated', async () => {
+  it('should not update nodes without values', async () => {
+    // working here
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({
+      service,
+      debounce: 1,
+      disableAutoUpdate: true,
+    })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        { key: 'results', type: 'results' },
+        { key: 'agencies', field: 'Organization.Name', type: 'facet' },
+        { key: 'vendors', field: 'Vendor.Name', type: 'facet' },
+        { key: 'dates', field: 'Date', type: 'date' },
+      ],
+    })
+
+    // Don't trigger Update if there is not value
+    await tree.mutate(['root', 'agencies'], { mode: 'exclude' })
+    expect(service).to.have.callCount(0)
+    await tree.mutate(['root', 'dates'], { range: 'allDates' })
+    expect(service).to.have.callCount(0)
+
+    // Don't trigger Update if adding node without value
+    await tree.add(
+      ['root'],
+      {
+        key: 'emptyFilter',
+        type: 'facet',
+        field: 'field1',
+        context: {},
+      },
+      { index: 1 }
+    )
+    expect(service).to.have.callCount(1)
+  })
+  it('should allow individual nodes to be updated', async () => {
     // working here
     let service = sinon.spy(mockService())
     let Tree = ContextureClient({
