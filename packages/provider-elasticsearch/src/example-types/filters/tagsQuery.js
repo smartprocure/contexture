@@ -3,6 +3,8 @@ let F = require('futil')
 let { parens, quote } = F
 let Combinatorics = require('js-combinatorics')
 
+let maxTagCount = 100
+
 // Split text into words and return array of string permutations
 let wordPermutations = _.flow(
   _.split(/\s+/),
@@ -102,6 +104,11 @@ let result = async (node, search) => {
   )(await search(aggs))
 }
 
+let validContext = node => {
+  let tagsCount = _.get('tags.length', node)
+  return tagsCount && tagsCount <= maxTagCount
+}
+
 module.exports = {
   wordPermutations,
   limitResultsToCertainTags,
@@ -112,7 +119,7 @@ module.exports = {
   tagsToQueryString,
   hasValue,
   filter,
-  validContext: _.flow(_.get('tags'), _.size),
+  validContext,
   buildResultQuery,
   result,
 }

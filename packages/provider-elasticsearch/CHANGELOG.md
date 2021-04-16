@@ -1,3 +1,6 @@
+# 1.1.6
+* [tagsQuery] Limit validContext to 100 tags
+
 # 1.1.5
 * [tagsQuery] Replace special chars with empty space
 
