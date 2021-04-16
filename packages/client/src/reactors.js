@@ -6,9 +6,9 @@ let all = parent => _.toArray(parent.children)
 let self = (parent, node) => [node]
 let others = (parent, node) =>
   parent.join === 'or' ? [] : _.without([node], _.toArray(parent.children))
-let standardChange = (parent, node, { previous }) => {
-  let needUpdate = hasContext(node)
-  let affectsOthers = hasValue(node) || hasValue(previous)
+let standardChange = (parent, node, { node: targetNode, previous }) => {
+  let needUpdate = hasContext(targetNode)
+  let affectsOthers = hasValue(targetNode) || hasValue(previous)
   if (affectsOthers && needUpdate) return all(parent, node)
   if (affectsOthers) return others(parent, node)
   if (needUpdate) return self(parent, node)
@@ -53,7 +53,13 @@ export let reactors = {
       _.uniq,
       _.flatMap(reactor),
       _.compact,
-      _.uniq
+      _.uniq,
+      F.when(
+        // if it doesn't and didn't have a value
+        // don't update other nodes
+        !hasValue(event.node) && !hasValue(event.previous),
+        _.filter(_.eq(node))
+      )
     )(event.value),
 }
 export let getAffectedNodes = (reactors, lookup, types) => (event, path) => {
