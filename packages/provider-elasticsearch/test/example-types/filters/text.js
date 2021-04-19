@@ -1,4 +1,5 @@
 let text = require('../../../src/example-types/filters/text')
+let { testSchema } = require('../testUtils')
 let { expect } = require('chai')
 
 describe('text', () => {
@@ -19,15 +20,18 @@ describe('text', () => {
     ).to.be.false
   })
   describe('filter', () => {
-    let anyText = values => operator =>
-      text.filter({
-        key: 'test',
-        type: 'text',
-        field: 'description',
-        join: 'any',
-        operator,
-        values,
-      })
+    let anyText = values => (operator, schema = testSchema('description')) =>
+      text.filter(
+        {
+          key: 'test',
+          type: 'text',
+          field: 'description',
+          join: 'any',
+          operator,
+          values,
+        },
+        schema
+      )
     let laserjetPrinterText = anyText(['laserjet', 'printer'])
     it('contains', () => {
       expect(laserjetPrinterText('contains')).to.deep.equal({
@@ -76,13 +80,45 @@ describe('text', () => {
         bool: {
           should: [
             {
-              regexp: {
-                'description.untouched': '[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt].*',
+              prefix: {
+                'description.untouched': {
+                  value: 'laserjet',
+                  case_insensitive: true,
+                },
               },
             },
             {
-              regexp: {
-                'description.untouched': '[Pp][Rr][Ii][Nn][Tt][Ee][Rr].*',
+              prefix: {
+                'description.untouched': {
+                  value: 'printer',
+                  case_insensitive: true,
+                },
+              },
+            },
+          ],
+        },
+      })
+    })
+    it('startsWith using alternative notAnalyzedField', () => {
+      expect(
+        laserjetPrinterText('startsWith', testSchema('description', 'keyword'))
+      ).to.deep.equal({
+        bool: {
+          should: [
+            {
+              prefix: {
+                'description.keyword': {
+                  value: 'laserjet',
+                  case_insensitive: true,
+                },
+              },
+            },
+            {
+              prefix: {
+                'description.keyword': {
+                  value: 'printer',
+                  case_insensitive: true,
+                },
               },
             },
           ],
@@ -175,13 +211,19 @@ describe('text', () => {
         bool: {
           should: [
             {
-              regexp: {
-                description: '[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt].*',
+              prefix: {
+                description: {
+                  value: 'laserjet',
+                  case_insensitive: true,
+                },
               },
             },
             {
-              regexp: {
-                description: '[Pp][Rr][Ii][Nn][Tt][Ee][Rr].*',
+              prefix: {
+                description: {
+                  value: 'printer',
+                  case_insensitive: true,
+                },
               },
             },
           ],
