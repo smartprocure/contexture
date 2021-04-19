@@ -41,13 +41,23 @@ module.exports = {
     let filter = {
       bool: {
         [join]: _.map(f => {
-          let criteria = f
+          let value = f
             .toLowerCase()
             .replace('*', '')
             .replace('+', '')
             .replace('-', '')
-          if (lookAtUntouched) criteria = (node.value || f).toLowerCase()
-
+          
+          // Special case starts with to use prefix queries
+          if (/startsWith|wordStartsWith/.test(node.operator))
+            return {
+              prefix: {
+                [fieldName]: {
+                  value,
+                  case_insensitive: true
+                }
+              }
+            }
+          
           let prefix = /startsWith|wordStartsWith|is|isNot/.test(node.operator)
             ? ''
             : '.*'
@@ -57,8 +67,8 @@ module.exports = {
 
           let builtCriteria =
             node.operator === 'regexp'
-              ? criteria
-              : unidecode(prefix + toSafeRegex(criteria) + suffix)
+              ? value
+              : unidecode(prefix + toSafeRegex(value) + suffix)
 
           return {
             regexp: {
