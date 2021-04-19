@@ -2,12 +2,12 @@ let _ = require('lodash/fp')
 let unidecode = require('unidecode')
 let { toSafeRegex } = require('../../utils/regex')
 let { negate } = require('../../utils/elasticDSL')
-let { getField } = require('../../utils/fields')
+let { getField, stripLegacySubFields } = require('../../utils/fields')
 
 module.exports = {
   hasValue: node => node.value || _.get('values.length', node),
   filter(node, schema) {
-    let fieldName = node.field.replace('.untouched', '')
+    let fieldName = stripLegacySubFields(node.field)
     let filterParts = node.values || node.value.toLowerCase().split(' ')
 
     let useQueryString =
