@@ -1,3 +1,7 @@
+# 1.1.7
+* [tagsText/text] Use `prefix` queries where possible for startsWith instead of regex
+* [tagsText/text] Support dynamic notAnalyzed field detection (no longer hardcoded to untouched)
+
 # 1.1.6
 * [tagsQuery] Limit validContext to 100 tags
 
