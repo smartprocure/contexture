@@ -46,18 +46,18 @@ module.exports = {
             .replace('*', '')
             .replace('+', '')
             .replace('-', '')
-          
+
           // Special case starts with to use prefix queries
           if (/startsWith|wordStartsWith/.test(node.operator))
             return {
               prefix: {
                 [fieldName]: {
                   value,
-                  case_insensitive: true
-                }
-              }
+                  case_insensitive: true,
+                },
+              },
             }
-          
+
           let prefix = /startsWith|wordStartsWith|is|isNot/.test(node.operator)
             ? ''
             : '.*'
