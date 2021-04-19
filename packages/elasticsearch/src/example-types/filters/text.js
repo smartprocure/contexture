@@ -2,11 +2,12 @@ let _ = require('lodash/fp')
 let unidecode = require('unidecode')
 let { toSafeRegex } = require('../../utils/regex')
 let { negate } = require('../../utils/elasticDSL')
+let { getField, stripLegacySubFields } = require('../../utils/fields')
 
 module.exports = {
   hasValue: node => node.value || _.get('values.length', node),
-  filter(node) {
-    let fieldName = node.field.replace('.untouched', '')
+  filter(node, schema) {
+    let fieldName = stripLegacySubFields(node.field)
     let filterParts = node.values || node.value.toLowerCase().split(' ')
 
     let useQueryString =
@@ -24,10 +25,10 @@ module.exports = {
       return node.join === 'none' ? negate(result) : result
     }
 
-    let lookAtUntouched = /startsWith|endsWith|is|isNot|containsWord/.test(
+    let useNotAnalyzedField = /startsWith|endsWith|is|isNot|containsWord/.test(
       node.operator
     )
-    if (lookAtUntouched) fieldName += '.untouched'
+    if (useNotAnalyzedField) fieldName = getField(schema, fieldName)
 
     if (/endsWith|wordEndsWith/.test(node.operator) && filterParts.length > 2)
       throw new Error("You can't have more than 2 ends with filters")
@@ -41,12 +42,22 @@ module.exports = {
     let filter = {
       bool: {
         [join]: _.map(f => {
-          let criteria = f
+          let value = f
             .toLowerCase()
             .replace('*', '')
             .replace('+', '')
             .replace('-', '')
-          if (lookAtUntouched) criteria = (node.value || f).toLowerCase()
+
+          // Special case starts with to use prefix queries
+          if (/startsWith|wordStartsWith/.test(node.operator))
+            return {
+              prefix: {
+                [fieldName]: {
+                  value,
+                  case_insensitive: true,
+                },
+              },
+            }
 
           let prefix = /startsWith|wordStartsWith|is|isNot/.test(node.operator)
             ? ''
@@ -57,8 +68,8 @@ module.exports = {
 
           let builtCriteria =
             node.operator === 'regexp'
-              ? criteria
-              : unidecode(prefix + toSafeRegex(criteria) + suffix)
+              ? value
+              : unidecode(prefix + toSafeRegex(value) + suffix)
 
           return {
             regexp: {

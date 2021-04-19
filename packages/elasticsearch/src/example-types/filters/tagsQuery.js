@@ -2,6 +2,7 @@ let _ = require('lodash/fp')
 let F = require('futil')
 let { parens, quote } = F
 let Combinatorics = require('js-combinatorics')
+let { stripLegacySubFields } = require('../../utils/fields')
 
 let maxTagCount = 100
 
@@ -75,7 +76,7 @@ let filter = ({ tags, join, field, exact }) => ({
   query_string: {
     query: tagsToQueryString(tags, join),
     default_operator: 'AND',
-    default_field: field.replace('.untouched', '') + (exact ? '.exact' : ''),
+    default_field: stripLegacySubFields(field) + (exact ? '.exact' : ''),
     ...(exact && { analyzer: 'exact' }),
   },
 })
