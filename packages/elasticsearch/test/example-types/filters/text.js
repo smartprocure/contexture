@@ -76,13 +76,19 @@ describe('text', () => {
         bool: {
           should: [
             {
-              regexp: {
-                'description.untouched': '[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt].*',
+              prefix: {
+                'description.untouched': {
+                  value: 'laserjet',
+                  case_insensitive: true,
+                }
               },
             },
             {
-              regexp: {
-                'description.untouched': '[Pp][Rr][Ii][Nn][Tt][Ee][Rr].*',
+              prefix: {
+                'description.untouched': {
+                  value: 'printer',
+                  case_insensitive: true,
+                }
               },
             },
           ],
@@ -175,13 +181,19 @@ describe('text', () => {
         bool: {
           should: [
             {
-              regexp: {
-                description: '[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt].*',
+              prefix: {
+                description: {
+                  value: 'laserjet',
+                  case_insensitive: true,
+                }
               },
             },
             {
-              regexp: {
-                description: '[Pp][Rr][Ii][Nn][Tt][Ee][Rr].*',
+              prefix: {
+                description: {
+                  value: 'printer',
+                  case_insensitive: true,
+                }
               },
             },
           ],
