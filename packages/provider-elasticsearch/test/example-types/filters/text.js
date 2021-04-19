@@ -81,7 +81,7 @@ describe('text', () => {
                 'description.untouched': {
                   value: 'laserjet',
                   case_insensitive: true,
-                }
+                },
               },
             },
             {
@@ -89,7 +89,7 @@ describe('text', () => {
                 'description.untouched': {
                   value: 'printer',
                   case_insensitive: true,
-                }
+                },
               },
             },
           ],
@@ -210,7 +210,7 @@ describe('text', () => {
                 description: {
                   value: 'laserjet',
                   case_insensitive: true,
-                }
+                },
               },
             },
             {
@@ -218,7 +218,7 @@ describe('text', () => {
                 description: {
                   value: 'printer',
                   case_insensitive: true,
-                }
+                },
               },
             },
           ],
