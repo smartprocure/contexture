@@ -21,14 +21,17 @@ describe('text', () => {
   })
   describe('filter', () => {
     let anyText = values => (operator, schema = testSchema('description')) =>
-      text.filter({
-        key: 'test',
-        type: 'text',
-        field: 'description',
-        join: 'any',
-        operator,
-        values,
-      }, schema)
+      text.filter(
+        {
+          key: 'test',
+          type: 'text',
+          field: 'description',
+          join: 'any',
+          operator,
+          values,
+        },
+        schema
+      )
     let laserjetPrinterText = anyText(['laserjet', 'printer'])
     it('contains', () => {
       expect(laserjetPrinterText('contains')).to.deep.equal({
@@ -97,7 +100,9 @@ describe('text', () => {
       })
     })
     it('startsWith using alternative notAnalyzedField', () => {
-      expect(laserjetPrinterText('startsWith', testSchema('description', 'keyword'))).to.deep.equal({
+      expect(
+        laserjetPrinterText('startsWith', testSchema('description', 'keyword'))
+      ).to.deep.equal({
         bool: {
           should: [
             {
@@ -105,7 +110,7 @@ describe('text', () => {
                 'description.keyword': {
                   value: 'laserjet',
                   case_insensitive: true,
-                }
+                },
               },
             },
             {
@@ -113,7 +118,7 @@ describe('text', () => {
                 'description.keyword': {
                   value: 'printer',
                   case_insensitive: true,
-                }
+                },
               },
             },
           ],
