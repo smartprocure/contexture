@@ -2,10 +2,11 @@ let _ = require('lodash/fp')
 let unidecode = require('unidecode')
 let { toSafeRegex } = require('../../utils/regex')
 let { negate } = require('../../utils/elasticDSL')
+let { getField } = require('../../utils/fields')
 
 module.exports = {
   hasValue: node => node.value || _.get('values.length', node),
-  filter(node) {
+  filter(node, schema) {
     let fieldName = node.field.replace('.untouched', '')
     let filterParts = node.values || node.value.toLowerCase().split(' ')
 
@@ -24,10 +25,10 @@ module.exports = {
       return node.join === 'none' ? negate(result) : result
     }
 
-    let lookAtUntouched = /startsWith|endsWith|is|isNot|containsWord/.test(
+    let useNotAnalyzedField = /startsWith|endsWith|is|isNot|containsWord/.test(
       node.operator
     )
-    if (lookAtUntouched) fieldName += '.untouched'
+    if (useNotAnalyzedField) fieldName = getField(schema, fieldName)
 
     if (/endsWith|wordEndsWith/.test(node.operator) && filterParts.length > 2)
       throw new Error("You can't have more than 2 ends with filters")
