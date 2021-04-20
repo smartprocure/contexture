@@ -21,6 +21,8 @@ let TagsQuery = ({
   popoverOffsetY,
   theme: { Icon, TagsInput, Tag, Popover },
   joinOptions,
+  wordsMatchPattern,
+  sanitizeTags = true,
   ...props
 }) => {
   let TagWithPopover = observer(props => {
@@ -52,6 +54,8 @@ let TagsQuery = ({
       <GridItem height={2} place="center stretch">
         <TagsInput
           splitCommas
+          sanitizeTags={sanitizeTags}
+          wordsMatchPattern={wordsMatchPattern}
           tags={_.map(tagValueField, node.tags)}
           addTag={tag => {
             tree.mutate(node.path, {
