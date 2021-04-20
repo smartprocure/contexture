@@ -28,7 +28,7 @@ let buildQuery = async (node, getStats) => {
 
 module.exports = {
   buildQuery,
-  validContext: node => node.groupField && node.statsField,
+  validContext: node => node.groupField,
   async result(node, search) {
     let response = await search(await buildQuery(node, getStats(search)))
     return { results: simplifyBuckets(response.aggregations.groups.buckets) }
