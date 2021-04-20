@@ -2,6 +2,7 @@ let {
   buildQuery,
 } = require('../../../src/example-types/metricGroups/fieldValuesGroupStats')
 let { expect } = require('chai')
+let { testSchema } = require('../testUtils')
 
 describe('fieldValuesGroupStats', () => {
   it('should buildQuery', () => {
@@ -13,13 +14,7 @@ describe('fieldValuesGroupStats', () => {
           groupField: 'Organization.Name',
           statsField: 'LineItem.TotalPrice',
         },
-        {
-          fields: {
-            'Organization.Name': {
-              elasticsearch: { notAnalyzedField: 'untouched' },
-            },
-          },
-        }
+        testSchema('Organization.Name')
       )
     ).to.eql({
       aggs: {

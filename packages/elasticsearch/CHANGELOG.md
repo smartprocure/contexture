@@ -1,3 +1,7 @@
+# 1.1.8
+* Example types' context is now valid even if `statsField` is not passed.
+* [fieldValuePartitionGroupStats] Use `getField` to map field to its un-analyzed value.
+
 # 1.1.7
 * [tagsText/text] Use `prefix` queries where possible for startsWith instead of regex
 * [tagsText/text] Support dynamic notAnalyzed field detection (no longer hardcoded to untouched)

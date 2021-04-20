@@ -2,17 +2,21 @@ let {
   buildQuery,
 } = require('../../../src/example-types/metricGroups/fieldValuePartitionGroupStats')
 let { expect } = require('chai')
+let { testSchema } = require('../testUtils')
 
 describe('fieldValuePartitionGroupStats', () => {
   it('should buildQuery', () => {
     expect(
-      buildQuery({
-        key: 'test',
-        type: 'fieldValuePartitionGroupStats',
-        groupField: 'Vendor.City.untouched',
-        statsField: 'LineItem.TotalPrice',
-        matchValue: 'Washington',
-      })
+      buildQuery(
+        {
+          key: 'test',
+          type: 'fieldValuePartitionGroupStats',
+          groupField: 'Vendor.City',
+          statsField: 'LineItem.TotalPrice',
+          matchValue: 'Washington',
+        },
+        testSchema('Vendor.City')
+      )
     ).to.eql({
       aggs: {
         groups: {
@@ -34,14 +38,17 @@ describe('fieldValuePartitionGroupStats', () => {
   })
   it('should buildQuery for cardinality', () => {
     expect(
-      buildQuery({
-        key: 'test',
-        type: 'fieldValuePartitionGroupStats',
-        groupField: 'Vendor.City.untouched',
-        statsField: 'LineItem.TotalPrice',
-        matchValue: 'Washington',
-        stats: ['cardinality'],
-      })
+      buildQuery(
+        {
+          key: 'test',
+          type: 'fieldValuePartitionGroupStats',
+          groupField: 'Vendor.City',
+          statsField: 'LineItem.TotalPrice',
+          matchValue: 'Washington',
+          stats: ['cardinality'],
+        },
+        testSchema('Vendor.City')
+      )
     ).to.eql({
       aggs: {
         groups: {
