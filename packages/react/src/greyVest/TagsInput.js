@@ -48,7 +48,7 @@ let TagsInput = forwardRef(
           _.invokeMap('trim'),
           _.compact,
           _.uniq,
-          tags => sanitizeTags ? _.map(sanitizeWords, tags) : tags,
+          tags => (sanitizeTags ? _.map(sanitizeWords, tags) : tags),
           _.difference(_, tags),
           _.map(addTag)
         )
