@@ -41,7 +41,7 @@ let buildQuery = (node, schema) => {
 
 module.exports = {
   buildQuery,
-  validContext: node => node.groupField && node.statsField,
+  validContext: node => node.groupField,
   async result(node, search, schema) {
     let response = await search(buildQuery(node, schema))
     return {
