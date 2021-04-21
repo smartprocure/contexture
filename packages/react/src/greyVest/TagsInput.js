@@ -33,7 +33,7 @@ let TagsInput = forwardRef(
     let containerRef = React.useRef()
     let state = useLocalStore(() => ({ currentInput: '' }))
 
-    let words = _.words.convert({ fixed: false, cap: false })
+    let words = _.words.convert({ fixed: false })
     // Convert string to words, take the first maxWordsPerTag, truncate them and convert back to string
     let sanitizeWords = _.flow(
       string => words(string, wordsMatchPattern),
