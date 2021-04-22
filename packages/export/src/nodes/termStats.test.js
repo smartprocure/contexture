@@ -27,8 +27,10 @@ describe('terms_stats', () => {
       return tree
     })
 
-  let prepareSimpleStrategy = async (strategyParams = {}) => {
-    let service = getSimpleService()
+  let prepareSimpleStrategy = async ({
+    strategyParams = {},
+    service = getSimpleService(),
+  } = {}) => {
     let tree = _.cloneDeep(defaultTree)
     let strategy = await terms_stats({
       service,
@@ -39,7 +41,9 @@ describe('terms_stats', () => {
   }
 
   it('retrieves the total records (same as the given size)', async () => {
-    let strategy = await prepareSimpleStrategy({ size: 1337 })
+    let strategy = await prepareSimpleStrategy({
+      strategyParams: { size: 1337 },
+    })
     expect(strategy.getTotalRecords()).toBe(1337)
   })
   it('retrieves records with next', async () => {
@@ -47,5 +51,11 @@ describe('terms_stats', () => {
     let arr = []
     for await (const i of strategy) arr.push(i)
     expect(arr).toEqual([simpleRecords])
+  })
+  it('doesnt throw error when service returns unexpected result', async () => {
+    let strategy = await prepareSimpleStrategy({ service: jest.fn(_.identity) })
+    let arr = []
+    for await (const i of strategy) arr.push(i)
+    expect(arr).toEqual([undefined])
   })
 })

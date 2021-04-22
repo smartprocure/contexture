@@ -27,7 +27,7 @@ export default async ({ service, tree, ...node }) => {
         size: size || totalRecords,
         ...node,
       }))
-      yield node.context.terms
+      yield _.get('context.terms', node)
     },
   }
   return terms_stats

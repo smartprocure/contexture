@@ -1,4 +1,8 @@
-﻿# 1.0.2
+﻿# 1.0.3
+* Adjust how `terms_stats` handles unexpected return from the service, no longer
+throws an error while iterating and returns `undefined`
+
+# 1.0.2
 * Fixed bug preventing `highlight: false` from being passed to the service.
 
 # 1.0.1
