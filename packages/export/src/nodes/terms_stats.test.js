@@ -46,11 +46,19 @@ describe('terms_stats', () => {
     })
     expect(strategy.getTotalRecords()).toBe(1337)
   })
-  it('retrieves records with next', async () => {
-    let strategy = await prepareSimpleStrategy()
+  it('retrieves records', async () => {
+    let service = getSimpleService()
+    let strategy = await prepareSimpleStrategy({
+      service,
+      strategyParams: {
+        size: 0,
+        value_field: 'LineItem.TotalPrice',
+      }
+    })
     let arr = []
     for await (const i of strategy) arr.push(i)
     expect(arr).toEqual([simpleRecords])
+    expect(service).toMatchSnapshot()
   })
   it('doesnt throw error when service returns unexpected result', async () => {
     let strategy = await prepareSimpleStrategy({ service: jest.fn(_.identity) })

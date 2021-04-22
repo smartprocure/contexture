@@ -20,14 +20,14 @@ export default async ({ service, tree, ...node }) => {
       return totalRecords
     },
     async *[Symbol.asyncIterator]() {
-      let node = (terms_stats.node = await run({
+      let cNode = (terms_stats.node = await run({
+        ...node,
         key: 'stats',
         type: 'terms_stats',
         key_field,
         size: size || totalRecords,
-        ...node,
       }))
-      yield _.get('context.terms', node)
+      yield _.get('context.terms', cNode)
     },
   }
   return terms_stats
