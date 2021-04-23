@@ -1,0 +1,174 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`terms_stats retrieves records 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "filterOnly": true,
+                "key": "terms",
+                "type": "terms_stats",
+              },
+              Object {
+                "filterOnly": true,
+                "key": "results",
+                "type": "results",
+              },
+            ],
+            "filterOnly": true,
+            "key": "root",
+          },
+          Object {
+            "context": Object {
+              "terms": Array [
+                "record1",
+                "record2",
+                "record3",
+              ],
+              "value": 1337,
+            },
+            "field": undefined,
+            "fieldMode": "autocomplete",
+            "key": "cardinality",
+            "type": "cardinality",
+          },
+        ],
+        "join": "and",
+        "key": "root-parent",
+        "schema": undefined,
+        "type": "group",
+      },
+    ],
+    Array [
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "filterOnly": true,
+                "key": "terms",
+                "type": "terms_stats",
+              },
+              Object {
+                "filterOnly": true,
+                "key": "results",
+                "type": "results",
+              },
+            ],
+            "filterOnly": true,
+            "key": "root",
+          },
+          Object {
+            "context": Object {
+              "terms": Array [
+                "record1",
+                "record2",
+                "record3",
+              ],
+              "value": 1337,
+            },
+            "key": "stats",
+            "key_field": undefined,
+            "size": 1337,
+            "type": "terms_stats",
+            "value_field": "LineItem.TotalPrice",
+          },
+        ],
+        "join": "and",
+        "key": "root-parent",
+        "schema": undefined,
+        "type": "group",
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "filterOnly": true,
+                "key": "terms",
+                "type": "terms_stats",
+              },
+              Object {
+                "filterOnly": true,
+                "key": "results",
+                "type": "results",
+              },
+            ],
+            "filterOnly": true,
+            "key": "root",
+          },
+          Object {
+            "context": Object {
+              "terms": Array [
+                "record1",
+                "record2",
+                "record3",
+              ],
+              "value": 1337,
+            },
+            "field": undefined,
+            "fieldMode": "autocomplete",
+            "key": "cardinality",
+            "type": "cardinality",
+          },
+        ],
+        "join": "and",
+        "key": "root-parent",
+        "schema": undefined,
+        "type": "group",
+      },
+    },
+    Object {
+      "isThrow": false,
+      "value": Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "filterOnly": true,
+                "key": "terms",
+                "type": "terms_stats",
+              },
+              Object {
+                "filterOnly": true,
+                "key": "results",
+                "type": "results",
+              },
+            ],
+            "filterOnly": true,
+            "key": "root",
+          },
+          Object {
+            "context": Object {
+              "terms": Array [
+                "record1",
+                "record2",
+                "record3",
+              ],
+              "value": 1337,
+            },
+            "key": "stats",
+            "key_field": undefined,
+            "size": 1337,
+            "type": "terms_stats",
+            "value_field": "LineItem.TotalPrice",
+          },
+        ],
+        "join": "and",
+        "key": "root-parent",
+        "schema": undefined,
+        "type": "group",
+      },
+    },
+  ],
+}
+`;
