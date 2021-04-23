@@ -53,7 +53,7 @@ describe('terms_stats', () => {
       strategyParams: {
         size: 0,
         value_field: 'LineItem.TotalPrice',
-      }
+      },
     })
     let arr = []
     for await (const i of strategy) arr.push(i)
