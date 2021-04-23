@@ -1,4 +1,7 @@
-﻿# 1.0.3
+﻿# 1.0.4
+* Fixed bug preventing terms_stats from passing values through correctly
+
+# 1.0.3
 * Adjust how `terms_stats` handles unexpected return from the service, no longer
 throws an error while iterating and returns `undefined`
 
