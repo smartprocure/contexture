@@ -57,12 +57,14 @@ let TagsQuery = ({
           sanitizeTags={sanitizeTags}
           wordsMatchPattern={wordsMatchPattern}
           tags={_.map(tagValueField, node.tags)}
+          // addTag: Called on every tag being added via the input. Use to decorate the tag into object form
           addTag={tag => {
-            tree.mutate(node.path, {
-              tags: [...node.tags, { [tagValueField]: tag, distance: 3 }],
-            })
-            onAddTag(tag)
+            let tagObject = { [tagValueField]: tag, distance: 3 }
+            onAddTag(tagObject)
+            return tagObject
           }}
+          // onTagsAdded: Called when the all the tags are sanitized and converted to objects with their distance etc.
+          onTagsAdded={tags => tree.mutate(node.path, { tags: [ ...node.tags,...tags ] })}
           removeTag={tag => {
             tree.mutate(node.path, {
               tags: _.reject({ [tagValueField]: tag }, node.tags),

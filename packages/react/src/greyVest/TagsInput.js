@@ -21,6 +21,7 @@ let TagsInput = forwardRef(
       onBlur = _.noop,
       onInputChange = _.noop,
       onTagClick = _.noop,
+      onTagsAdded = _.noop,
       maxWordsPerTag = 100,
       maxCharsPerTagWord = 100,
       wordsMatchPattern,
@@ -50,7 +51,8 @@ let TagsInput = forwardRef(
           _.uniq,
           tags => (sanitizeTags ? _.map(sanitizeWords, tags) : tags),
           _.difference(_, tags),
-          _.map(addTag)
+          _.map(addTag),
+          onTagsAdded
         )
       : _.flow(_.trim, addTag)
     return (
