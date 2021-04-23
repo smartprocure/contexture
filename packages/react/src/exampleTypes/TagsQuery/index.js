@@ -64,7 +64,9 @@ let TagsQuery = ({
             return tagObject
           }}
           // onTagsAdded: Called when all the tags are sanitized and converted to objects with their distance etc.
-          onTagsAdded={tags => tree.mutate(node.path, { tags: [ ...node.tags,...tags ] })}
+          onTagsAdded={tags =>
+            tree.mutate(node.path, { tags: [...node.tags, ...tags] })
+          }
           removeTag={tag => {
             tree.mutate(node.path, {
               tags: _.reject({ [tagValueField]: tag }, node.tags),
