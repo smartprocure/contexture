@@ -27,8 +27,7 @@ export default async ({ service, tree, ...node }) => {
         key_field,
         size: size || totalRecords,
       }))
-      for (let t of _.getOr([], 'context.terms', cNode))
-        yield t
+      for (let t of _.getOr([], 'context.terms', cNode)) yield t
     },
   }
   return terms_stats
