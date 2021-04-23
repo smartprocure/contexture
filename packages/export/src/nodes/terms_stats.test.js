@@ -57,13 +57,13 @@ describe('terms_stats', () => {
     })
     let arr = []
     for await (const i of strategy) arr.push(i)
-    expect(arr).toEqual([simpleRecords])
+    expect(arr).toEqual(simpleRecords)
     expect(service).toMatchSnapshot()
   })
   it('doesnt throw error when service returns unexpected result', async () => {
     let strategy = await prepareSimpleStrategy({ service: jest.fn(_.identity) })
     let arr = []
     for await (const i of strategy) arr.push(i)
-    expect(arr).toEqual([undefined])
+    expect(arr).toEqual([])
   })
 })
