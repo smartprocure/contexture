@@ -9,9 +9,7 @@ let getNilKeys = _.flow(_.pickBy(_.isNil), _.keys)
 export default (tree, { search } = {}) =>
   _.tap(
     Tree.walk(x => {
-      if (search && isFilterOnly(x)) {
-        x.filterOnly = true
-      }
+      if (search && isFilterOnly(x)) x.filterOnly = true
       _.each(unsetOn(_, x), [
         ..._.keys(_.omit(search ? 'lastUpdateTime' : '', internalStateKeys)),
         ...getNilKeys(x),

@@ -147,9 +147,11 @@ export let ContextTree = _.curry(
       }
     }
     let triggerDelayedUpdate = F.debounceAsync(debounce, triggerImmediateUpdate)
+    // Even in immediate update mode, debounce by a very small amount to avoid spamming
+    let triggerSafeImmediateUpdate = F.debounceAsync(10, triggerImmediateUpdate)
     let triggerUpdate = path =>
       TreeInstance.disableAutoUpdate
-        ? triggerImmediateUpdate(path)
+        ? triggerSafeImmediateUpdate(path)
         : triggerDelayedUpdate(path)
 
     let processResponse = async data => {
@@ -199,7 +201,7 @@ export let ContextTree = _.curry(
     }
 
     let TreeInstance = initObject({
-      serialize: () => serialize(snapshot(tree), {}),
+      serialize: path => serialize(snapshot(path ? getNode(path) : tree), {}),
       tree,
       debugInfo,
       ...actionProps,
