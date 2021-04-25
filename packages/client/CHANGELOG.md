@@ -1,5 +1,5 @@
 # 2.35.0
-* Immediate u[dates are now debounced 10ms (which happens on self affecting reactors when disableAutoUpdate is true)
+* Immediate updates are now debounced 10ms (which happens on self affecting reactors when disableAutoUpdate is true)
 
 # 2.34.0
 * Silencing updates from changes with no value
