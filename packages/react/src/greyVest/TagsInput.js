@@ -33,12 +33,16 @@ let TagsInput = forwardRef(
   ) => {
     let containerRef = React.useRef()
     let state = useLocalStore(() => ({ currentInput: '' }))
-    let sanitizeTagFn = sanitizeTagWords(wordsMatchPattern, maxWordsPerTag, maxCharsPerTagWord)
+    let sanitizeTagFn = sanitizeTagWords(
+      wordsMatchPattern,
+      maxWordsPerTag,
+      maxCharsPerTagWord
+    )
 
     addTags = _.flow(
       _.trim,
-      tags => splitCommas ? splitTagOnComma(tags) : _.castArray(tags),
-      tags => sanitizeTags ? _.map(sanitizeTagFn, tags) : tags,
+      tags => (splitCommas ? splitTagOnComma(tags) : _.castArray(tags)),
+      tags => (sanitizeTags ? _.map(sanitizeTagFn, tags) : tags),
       _.difference(_, tags),
       addTags
     )
