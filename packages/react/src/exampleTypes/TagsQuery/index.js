@@ -59,7 +59,10 @@ let TagsQuery = ({
           wordsMatchPattern={wordsMatchPattern}
           tags={_.map(tagValueField, node.tags)}
           addTags={tags => {
-            let tagObjects = _.map(tag => ({ [tagValueField]: tag, distance: 3 }), tags)
+            let tagObjects = _.map(
+              tag => ({ [tagValueField]: tag, distance: 3 }),
+              tags
+            )
             tree.mutate(node.path, { tags: [...node.tags, ...tagObjects] })
             onAddTag(tags)
           }}
