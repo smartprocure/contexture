@@ -23,6 +23,7 @@ let TagsQuery = ({
   joinOptions,
   wordsMatchPattern,
   sanitizeTags = true,
+  splitCommas = true,
   ...props
 }) => {
   let TagWithPopover = observer(props => {
@@ -53,15 +54,17 @@ let TagsQuery = ({
     >
       <GridItem height={2} place="center stretch">
         <TagsInput
-          splitCommas
+          splitCommas={splitCommas}
           sanitizeTags={sanitizeTags}
           wordsMatchPattern={wordsMatchPattern}
           tags={_.map(tagValueField, node.tags)}
-          addTag={tag => {
-            tree.mutate(node.path, {
-              tags: [...node.tags, { [tagValueField]: tag, distance: 3 }],
-            })
-            onAddTag(tag)
+          addTags={tags => {
+            let tagObjects = _.map(
+              tag => ({ [tagValueField]: tag, distance: 3 }),
+              tags
+            )
+            tree.mutate(node.path, { tags: [...node.tags, ...tagObjects] })
+            onAddTag(tags)
           }}
           removeTag={tag => {
             tree.mutate(node.path, {

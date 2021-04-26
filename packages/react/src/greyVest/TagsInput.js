@@ -4,6 +4,7 @@ import { observable } from 'mobx'
 import { observer, inject, useLocalStore } from 'mobx-react'
 import Flex from './Flex'
 import DefaultTag from './Tag'
+import { sanitizeTagWords, splitTagOnComma } from './utils'
 
 let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
@@ -11,7 +12,7 @@ let TagsInput = forwardRef(
   (
     {
       tags,
-      addTag,
+      addTags,
       removeTag,
       submit = _.noop,
       tagStyle,
@@ -32,27 +33,20 @@ let TagsInput = forwardRef(
   ) => {
     let containerRef = React.useRef()
     let state = useLocalStore(() => ({ currentInput: '' }))
-
-    let words = _.words.convert({ fixed: false })
-    // Convert string to words, take the first maxWordsPerTag, truncate them and convert back to string
-    let sanitizeWords = _.flow(
-      string => words(string, wordsMatchPattern),
-      _.take(maxWordsPerTag),
-      _.map(_.truncate({ length: maxCharsPerTagWord, omission: '' })),
-      _.join(' ')
+    let sanitizeTagFn = sanitizeTagWords(
+      wordsMatchPattern,
+      maxWordsPerTag,
+      maxCharsPerTagWord
     )
 
-    addTag = splitCommas
-      ? _.flow(
-          _.split(','),
-          _.invokeMap('trim'),
-          _.compact,
-          _.uniq,
-          tags => (sanitizeTags ? _.map(sanitizeWords, tags) : tags),
-          _.difference(_, tags),
-          _.map(addTag)
-        )
-      : _.flow(_.trim, addTag)
+    addTags = _.flow(
+      _.trim,
+      tags => (splitCommas ? splitTagOnComma(tags) : _.castArray(tags)),
+      tags => (sanitizeTags ? _.map(sanitizeTagFn, tags) : tags),
+      _.difference(_, tags),
+      addTags
+    )
+
     return (
       <div className={'tags-input'} ref={containerRef} style={{ ...style }}>
         <Flex
@@ -90,7 +84,7 @@ let TagsInput = forwardRef(
             }}
             onBlur={() => {
               if (isValidInput(state.currentInput, tags)) {
-                addTag(state.currentInput)
+                addTags(state.currentInput)
                 state.currentInput = ''
                 onBlur()
               }
@@ -102,7 +96,7 @@ let TagsInput = forwardRef(
                   (splitCommas && e.key === ',')) &&
                 isValidInput(state.currentInput, tags)
               ) {
-                addTag(state.currentInput)
+                addTags(state.currentInput)
                 state.currentInput = ''
                 e.preventDefault()
               }
@@ -128,7 +122,7 @@ export let MockTagsInput = inject(() => {
   let tags = observable([])
   return {
     tags,
-    addTag(tag) {
+    addTags(tag) {
       tags.push(tag)
     },
     removeTag(tag) {
