@@ -2,6 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 import { Tag as DefaultTag, Flex } from '.'
+import { sanitizeTagWords, splitTagOnComma } from './utils'
 
 export let Tags = ({
   reverse = false,
@@ -37,7 +38,7 @@ let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
 let ExpandableTagsInput = ({
   tags,
-  addTag,
+  addTags,
   removeTag,
   submit = _.noop,
   tagStyle,
@@ -46,21 +47,27 @@ let ExpandableTagsInput = ({
   style,
   onBlur = _.noop,
   onInputChange = _.noop,
+  maxWordsPerTag = 100,
+  maxCharsPerTagWord = 100,
+  wordsMatchPattern,
   onTagClick = _.noop,
+  sanitizeTags = true,
   Tag = DefaultTag,
   ...props
 }) => {
-  addTag = splitCommas
-    ? _.flow(
-        _.split(','),
-        _.invokeMap('trim'),
-        _.compact,
-        _.uniq,
-        _.difference(_, tags),
-        _.map(addTag)
-      )
-    : _.flow(_.trim, addTag)
+
+  let sanitizeTagFn = sanitizeTagWords(wordsMatchPattern, maxWordsPerTag, maxCharsPerTagWord)
+
+  addTags = _.flow(
+    _.trim,
+    tags => splitCommas ? splitTagOnComma(tags) : _.castArray(tags),
+    tags => sanitizeTags ? _.map(sanitizeTagFn, tags) : tags,
+    _.difference(_, tags),
+    addTags
+  )
+
   let [currentInput, setCurrentInput] = React.useState('')
+
   return (
     <div style={style}>
       <span className="tags-input-container" columns="1fr auto" gap="8px 4px">
@@ -72,7 +79,7 @@ let ExpandableTagsInput = ({
           }}
           onBlur={() => {
             if (isValidInput(currentInput, tags)) {
-              addTag(currentInput)
+              addTags(currentInput)
               setCurrentInput('')
               onBlur()
             }
@@ -84,7 +91,7 @@ let ExpandableTagsInput = ({
                 (splitCommas && e.key === ',')) &&
               isValidInput(currentInput, tags)
             ) {
-              addTag(currentInput)
+              addTags(currentInput)
               setCurrentInput('')
               e.preventDefault()
             }
