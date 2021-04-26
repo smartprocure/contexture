@@ -38,7 +38,7 @@ let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
 let ExpandableTagsInput = ({
   tags,
-  addTags,
+  addTags = _.identity,
   removeTag,
   submit = _.noop,
   tagStyle,
