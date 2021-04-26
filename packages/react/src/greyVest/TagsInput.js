@@ -11,7 +11,7 @@ let TagsInput = forwardRef(
   (
     {
       tags,
-      addTag,
+      addTags,
       removeTag,
       submit = _.noop,
       tagStyle,
@@ -21,7 +21,6 @@ let TagsInput = forwardRef(
       onBlur = _.noop,
       onInputChange = _.noop,
       onTagClick = _.noop,
-      onTagsAdded = _.noop,
       maxWordsPerTag = 100,
       maxCharsPerTagWord = 100,
       wordsMatchPattern,
@@ -43,7 +42,7 @@ let TagsInput = forwardRef(
       _.join(' ')
     )
 
-    addTag = splitCommas
+    addTags = splitCommas
       ? _.flow(
           _.split(','),
           _.invokeMap('trim'),
@@ -51,10 +50,9 @@ let TagsInput = forwardRef(
           _.uniq,
           tags => (sanitizeTags ? _.map(sanitizeWords, tags) : tags),
           _.difference(_, tags),
-          _.map(addTag),
-          onTagsAdded
+          addTags
         )
-      : _.flow(_.trim, addTag, _.castArray, onTagsAdded)
+      : _.flow(_.trim, _.castArray, addTags)
     return (
       <div className={'tags-input'} ref={containerRef} style={{ ...style }}>
         <Flex
@@ -92,7 +90,7 @@ let TagsInput = forwardRef(
             }}
             onBlur={() => {
               if (isValidInput(state.currentInput, tags)) {
-                addTag(state.currentInput)
+                addTags(state.currentInput)
                 state.currentInput = ''
                 onBlur()
               }
@@ -104,7 +102,7 @@ let TagsInput = forwardRef(
                   (splitCommas && e.key === ',')) &&
                 isValidInput(state.currentInput, tags)
               ) {
-                addTag(state.currentInput)
+                addTags(state.currentInput)
                 state.currentInput = ''
                 e.preventDefault()
               }
@@ -130,7 +128,7 @@ export let MockTagsInput = inject(() => {
   let tags = observable([])
   return {
     tags,
-    addTag(tag) {
+    addTags(tag) {
       tags.push(tag)
     },
     removeTag(tag) {
