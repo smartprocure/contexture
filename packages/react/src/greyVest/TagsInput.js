@@ -12,7 +12,7 @@ let TagsInput = forwardRef(
   (
     {
       tags,
-      addTags,
+      addTags = _.identity,
       removeTag,
       submit = _.noop,
       tagStyle,
