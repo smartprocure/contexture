@@ -7,7 +7,11 @@ export let openBinding = (...lens) => ({
 })
 
 // Convert string to words, take the first maxWordsPerTag, truncate them and convert back to string
-export let sanitizeTagWords = (wordsMatchPattern, maxWordsPerTag, maxCharsPerTagWord) => {
+export let sanitizeTagWords = (
+  wordsMatchPattern,
+  maxWordsPerTag,
+  maxCharsPerTagWord
+) => {
   let words = _.words.convert({ fixed: false })
   return _.flow(
     string => words(string, wordsMatchPattern),
@@ -23,5 +27,5 @@ export let splitTagOnComma = _.flow(
   _.split(','),
   _.invokeMap('trim'),
   _.compact,
-  _.uniq,
+  _.uniq
 )
