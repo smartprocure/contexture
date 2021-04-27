@@ -37,8 +37,8 @@ let Text = ({
       <TagsInput
         splitCommas
         tags={node.values}
-        addTag={tag => {
-          tree.mutate(node.path, { values: [...node.values, tag] })
+        addTags={tags => {
+          tree.mutate(node.path, { values: [...node.values, ...tags] })
         }}
         removeTag={tag => {
           tree.mutate(node.path, {
