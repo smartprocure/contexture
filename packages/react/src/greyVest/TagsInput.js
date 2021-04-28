@@ -4,7 +4,7 @@ import { observable } from 'mobx'
 import { observer, inject, useLocalStore } from 'mobx-react'
 import Flex from './Flex'
 import DefaultTag from './Tag'
-import { sanitizeTagWords, splitTagOnComma } from './utils'
+import { sanitizeTagWords, splitTagOnComma, takeTags } from './utils'
 
 let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
@@ -22,6 +22,8 @@ let TagsInput = forwardRef(
       onBlur = _.noop,
       onInputChange = _.noop,
       onTagClick = _.noop,
+      onTagsDropped,
+      maxTags = 1000,
       maxWordsPerTag = 100,
       maxCharsPerTagWord = 100,
       wordsMatchPattern,
@@ -33,6 +35,7 @@ let TagsInput = forwardRef(
   ) => {
     let containerRef = React.useRef()
     let state = useLocalStore(() => ({ currentInput: '' }))
+    let dropExtraTags = takeTags(maxTags, onTagsDropped)
     let sanitizeTagFn = sanitizeTagWords(
       wordsMatchPattern,
       maxWordsPerTag,
@@ -44,6 +47,7 @@ let TagsInput = forwardRef(
       tags => (splitCommas ? splitTagOnComma(tags) : _.castArray(tags)),
       tags => (sanitizeTags ? _.map(sanitizeTagFn, tags) : tags),
       _.difference(_, tags),
+      dropExtraTags,
       addTags
     )
 

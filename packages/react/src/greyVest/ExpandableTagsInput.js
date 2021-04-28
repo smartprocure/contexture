@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 import { Tag as DefaultTag, Flex } from '.'
-import { sanitizeTagWords, splitTagOnComma } from './utils'
+import { sanitizeTagWords, splitTagOnComma, takeTags } from './utils'
 
 export let Tags = ({
   reverse = false,
@@ -51,10 +51,13 @@ let ExpandableTagsInput = ({
   maxCharsPerTagWord = 100,
   wordsMatchPattern,
   onTagClick = _.noop,
+  onTagsDropped,
+  maxTags = 1000,
   sanitizeTags = true,
   Tag = DefaultTag,
   ...props
 }) => {
+  let dropExtraTags = takeTags(maxTags, onTagsDropped)
   let sanitizeTagFn = sanitizeTagWords(
     wordsMatchPattern,
     maxWordsPerTag,
@@ -66,6 +69,7 @@ let ExpandableTagsInput = ({
     tags => (splitCommas ? splitTagOnComma(tags) : _.castArray(tags)),
     tags => (sanitizeTags ? _.map(sanitizeTagFn, tags) : tags),
     _.difference(_, tags),
+    dropExtraTags,
     addTags
   )
 
