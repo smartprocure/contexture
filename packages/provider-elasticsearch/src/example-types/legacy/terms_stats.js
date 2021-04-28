@@ -14,6 +14,8 @@ module.exports = {
     let x = await esTwoLevel(
       _.merge(
         {
+          // where is this even used? Does the case really require more than
+          // a normal Elastic string match?
           filter_agg:
             node.filter && buildRegexQueryForWords(field)(node.filter),
           key_type: 'terms',
