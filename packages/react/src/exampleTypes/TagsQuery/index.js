@@ -16,6 +16,7 @@ let TagsQuery = ({
   style,
   actionWrapper,
   onAddTag = _.noop,
+  onTagsDropped,
   popoverPosition = 'bottom right',
   popoverArrow,
   popoverOffsetY,
@@ -24,6 +25,7 @@ let TagsQuery = ({
   wordsMatchPattern,
   sanitizeTags = true,
   splitCommas = true,
+  maxTags = 1000,
   ...props
 }) => {
   let TagWithPopover = observer(props => {
@@ -56,8 +58,10 @@ let TagsQuery = ({
         <TagsInput
           splitCommas={splitCommas}
           sanitizeTags={sanitizeTags}
+          maxTags={maxTags}
           wordsMatchPattern={wordsMatchPattern}
           tags={_.map(tagValueField, node.tags)}
+          onTagsDropped={onTagsDropped}
           addTags={tags => {
             let tagObjects = _.map(
               tag => ({ [tagValueField]: tag, distance: 3 }),
