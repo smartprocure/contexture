@@ -31,6 +31,8 @@ let buildQuery = (node, schema) => {
     query = {
       aggs: {
         valueFilter: {
+          // do we really need to support this? if so, does it really need more
+          // than a string match?
           filter: buildRegexQueryForWords(field)(filter),
           ...query,
         },

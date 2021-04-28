@@ -16,6 +16,8 @@ let regexPartsForWords = _.flow(
 let buildRegexQueryForWords = field =>
   _.flow(
     regexPartsForWords,
+    // do we *really* need to support typing the words out of order?
+    // if not we can just get rid of all regex uses in this module
     _.map(x => ({ regexp: { [field]: `.*(${x}).*` } })),
     x => ({ bool: { must: x } })
   )
