@@ -292,8 +292,8 @@ describe('facet', () => {
                     must: [
                       {
                         regexp: {
-                          'Organization.NameState.untouched':
-                            '.*([Ss][Tt][Aa][Tt][Ee]).*',
+                          'Organization.NameState.untouched': '.*?(state).*?',
+                          case_insensitive: true
                         },
                       },
                     ],
