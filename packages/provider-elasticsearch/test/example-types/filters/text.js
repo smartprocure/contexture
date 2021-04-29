@@ -50,12 +50,12 @@ describe('text', () => {
               {
                 regexp: {
                   'description.untouched':
-                    '.*[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt].*',
+                    '.*laserjet.*',
                 },
               },
               {
                 regexp: {
-                  'description.untouched': '.*[Pp][Rr][Ii][Nn][Tt][Ee][Rr].*',
+                  'description.untouched': '.*printer.*',
                 },
               },
             ],
@@ -131,12 +131,12 @@ describe('text', () => {
           should: [
             {
               regexp: {
-                'description.untouched': '.*[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt]',
+                'description.untouched': '.*laserjet',
               },
             },
             {
               regexp: {
-                'description.untouched': '.*[Pp][Rr][Ii][Nn][Tt][Ee][Rr]',
+                'description.untouched': '.*printer',
               },
             },
           ],
@@ -150,12 +150,12 @@ describe('text', () => {
           should: [
             {
               regexp: {
-                'description.untouched': '[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt]',
+                'description.untouched': 'laserjet',
               },
             },
             {
               regexp: {
-                'description.untouched': '[Pp][Rr][Ii][Nn][Tt][Ee][Rr]',
+                'description.untouched': 'printer',
               },
             },
           ],
@@ -170,12 +170,12 @@ describe('text', () => {
               should: [
                 {
                   regexp: {
-                    'description.untouched': '[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt]',
+                    'description.untouched': 'laserjet',
                   },
                 },
                 {
                   regexp: {
-                    'description.untouched': '[Pp][Rr][Ii][Nn][Tt][Ee][Rr]',
+                    'description.untouched': 'printer',
                   },
                 },
               ],
@@ -192,12 +192,12 @@ describe('text', () => {
               should: [
                 {
                   regexp: {
-                    description: '.*[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt].*',
+                    description: '.*laserjet.*',
                   },
                 },
                 {
                   regexp: {
-                    description: '.*[Pp][Rr][Ii][Nn][Tt][Ee][Rr].*',
+                    description: '.*printer.*',
                   },
                 },
               ],
@@ -236,12 +236,12 @@ describe('text', () => {
           should: [
             {
               regexp: {
-                description: '.*[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt]',
+                description: '.*laserjet',
               },
             },
             {
               regexp: {
-                description: '.*[Pp][Rr][Ii][Nn][Tt][Ee][Rr]',
+                description: '.*printer',
               },
             },
           ],
