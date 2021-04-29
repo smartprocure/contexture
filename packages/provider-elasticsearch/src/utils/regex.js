@@ -1,24 +1,21 @@
 let _ = require('lodash/fp')
 
 let toSafeRegex = _.flow(
-  _.replace(/[.?+*|{}[\]()]/g, '\\$&'),
-  _.map(x => (x.match(/[A-Za-z]/) ? `[${_.toUpper(x)}${_.toLower(x)}]` : x)),
-  _.join('')
+  _.replace(/[.?+*|{}[\]()]/g, ''),
 )
 
 let regexPartsForWords = _.flow(
-  _.replace(/\s\s+/g, ' '),
-  _.trim,
-  _.split(' '),
+  _.split(/\s+/g),
   _.map(toSafeRegex)
 )
 
 let buildRegexQueryForWords = field =>
   _.flow(
     regexPartsForWords,
-    // do we *really* need to support typing the words out of order?
-    // if not we can just get rid of all regex uses in this module
-    _.map(x => ({ regexp: { [field]: `.*(${x}).*` } })),
+    _.map(x => ({ regexp: { 
+      [field]: `.*?(${x}).*?`,
+      case_insensitive: true,
+    } })),
     x => ({ bool: { must: x } })
   )
 
