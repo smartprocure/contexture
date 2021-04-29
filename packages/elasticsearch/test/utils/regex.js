@@ -9,8 +9,8 @@ describe('regex', () => {
     expect(regex.buildRegexQueryForWords('_all')('Nuclear Ord')).to.deep.eql({
       bool: {
         must: [
-          { regexp: { _all: '.*?(Nuclear).*?', case_insensitive: true } },
-          { regexp: { _all: '.*?(Ord).*?', case_insensitive: true } },
+          { regexp: { _all: '.*(Nuclear).*', case_insensitive: true } },
+          { regexp: { _all: '.*(Ord).*', case_insensitive: true } },
         ],
       },
     })

@@ -9,7 +9,7 @@ let buildRegexQueryForWords = field =>
     regexPartsForWords,
     _.map(x => ({
       regexp: {
-        [field]: `.*?(${x}).*?`,
+        [field]: `.*(${x}).*`,
         case_insensitive: true,
       },
     })),
