@@ -293,7 +293,7 @@ describe('facet', () => {
                       {
                         regexp: {
                           'Organization.NameState.untouched': '.*?(state).*?',
-                          case_insensitive: true
+                          case_insensitive: true,
                         },
                       },
                     ],

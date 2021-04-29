@@ -3,9 +3,7 @@ let { expect } = require('chai')
 
 describe('regex', () => {
   it('toSafeRegex', () => {
-    expect(regex.toSafeRegex('Nuclear ord?')).to.eql(
-      'Nuclear ord'
-    )
+    expect(regex.toSafeRegex('Nuclear ord?')).to.eql('Nuclear ord')
   })
   it('buildRegexQueryForWords', () => {
     expect(regex.buildRegexQueryForWords('_all')('Nuclear Ord')).to.deep.eql({
