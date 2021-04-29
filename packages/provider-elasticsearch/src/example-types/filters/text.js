@@ -69,8 +69,8 @@ module.exports = {
           let builtCriteria =
             node.operator === 'regexp'
               ? value
-              // why not just do case_insensitive string match like above?
-              : unidecode(prefix + toSafeRegex(value) + suffix)
+              : // why not just do case_insensitive string match like above?
+                unidecode(prefix + toSafeRegex(value) + suffix)
 
           return {
             regexp: {
