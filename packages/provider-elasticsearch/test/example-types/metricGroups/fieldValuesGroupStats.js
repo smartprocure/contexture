@@ -152,8 +152,18 @@ describe('fieldValuesGroupStats', () => {
           filter: {
             bool: {
               must: [
-                { regexp: { 'Organization.Name': '.*?(city).*?', case_insensitive: true  } },
-                { regexp: { 'Organization.Name': '.*?(of).*?', case_insensitive: true  } },
+                {
+                  regexp: {
+                    'Organization.Name': '.*?(city).*?',
+                    case_insensitive: true,
+                  },
+                },
+                {
+                  regexp: {
+                    'Organization.Name': '.*?(of).*?',
+                    case_insensitive: true,
+                  },
+                },
               ],
             },
           },
