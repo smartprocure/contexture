@@ -45,8 +45,6 @@ module.exports = {
     if (node.optionsFilter) {
       resultRequest.aggs = {
         topLevelFilter: {
-          // this is all a really expensive way of basiclaly doing a case-insensitive
-          // string match. Couldn't we just get away with that?
           filter: buildRegexQueryForWords(field)(node.optionsFilter),
           aggs: resultRequest.aggs,
         },
