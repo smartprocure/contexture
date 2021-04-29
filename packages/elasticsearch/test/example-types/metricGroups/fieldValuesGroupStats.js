@@ -118,7 +118,7 @@ describe('fieldValuesGroupStats', () => {
           filter: {
             bool: {
               must: [
-                { regexp: { 'Organization.Name': '.*([Cc][Ii][Tt][Yy]).*' } },
+                { regexp: { 'Organization.Name': '.*?(city).*?', case_insensitive: true } },
               ],
             },
           },
