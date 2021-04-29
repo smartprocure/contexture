@@ -61,10 +61,10 @@ module.exports = {
 
           let prefix = /startsWith|wordStartsWith|is|isNot/.test(node.operator)
             ? ''
-            : '.*?'
+            : '.*'
           let suffix = /endsWith|wordEndsWith|is|isNot/.test(node.operator)
             ? ''
-            : '.*?'
+            : '.*'
 
           let builtCriteria =
             node.operator === 'regexp'

@@ -49,12 +49,12 @@ describe('text', () => {
             should: [
               {
                 regexp: {
-                  'description.untouched': '.*?laserjet.*?',
+                  'description.untouched': '.*laserjet.*',
                 },
               },
               {
                 regexp: {
-                  'description.untouched': '.*?printer.*?',
+                  'description.untouched': '.*printer.*',
                 },
               },
             ],
@@ -130,12 +130,12 @@ describe('text', () => {
           should: [
             {
               regexp: {
-                'description.untouched': '.*?laserjet',
+                'description.untouched': '.*laserjet',
               },
             },
             {
               regexp: {
-                'description.untouched': '.*?printer',
+                'description.untouched': '.*printer',
               },
             },
           ],
@@ -191,12 +191,12 @@ describe('text', () => {
               should: [
                 {
                   regexp: {
-                    description: '.*?laserjet.*?',
+                    description: '.*laserjet.*',
                   },
                 },
                 {
                   regexp: {
-                    description: '.*?printer.*?',
+                    description: '.*printer.*',
                   },
                 },
               ],
@@ -235,12 +235,12 @@ describe('text', () => {
           should: [
             {
               regexp: {
-                description: '.*?laserjet',
+                description: '.*laserjet',
               },
             },
             {
               regexp: {
-                description: '.*?printer',
+                description: '.*printer',
               },
             },
           ],

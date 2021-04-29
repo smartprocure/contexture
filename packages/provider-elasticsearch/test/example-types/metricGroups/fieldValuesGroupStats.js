@@ -120,7 +120,7 @@ describe('fieldValuesGroupStats', () => {
               must: [
                 {
                   regexp: {
-                    'Organization.Name': '.*?(city).*?',
+                    'Organization.Name': '.*(city).*',
                     case_insensitive: true,
                   },
                 },
@@ -159,13 +159,13 @@ describe('fieldValuesGroupStats', () => {
               must: [
                 {
                   regexp: {
-                    'Organization.Name': '.*?(city).*?',
+                    'Organization.Name': '.*(city).*',
                     case_insensitive: true,
                   },
                 },
                 {
                   regexp: {
-                    'Organization.Name': '.*?(of).*?',
+                    'Organization.Name': '.*(of).*',
                     case_insensitive: true,
                   },
                 },
