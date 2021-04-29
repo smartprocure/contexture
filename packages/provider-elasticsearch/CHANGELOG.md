@@ -1,3 +1,6 @@
+#1.2.0
+* Add last1Day and last1Hour to dateMath util
+
 # 1.1.8
 * Example types' context is now valid even if `statsField` is not passed.
 * [fieldValuePartitionGroupStats] Use `getField` to map field to its un-analyzed value.
