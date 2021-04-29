@@ -4,8 +4,6 @@ let { toSafeRegex } = require('../../utils/regex')
 let { negate } = require('../../utils/elasticDSL')
 let { getField, stripLegacySubFields } = require('../../utils/fields')
 
-// this whole node could use a rewrite
-
 module.exports = {
   hasValue: node => node.value || _.get('values.length', node),
   filter(node, schema) {
