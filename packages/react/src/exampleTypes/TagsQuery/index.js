@@ -73,7 +73,7 @@ let TagsQuery = ({
               allTags = _.take(maxTags, allTags)
               onTagsDropped(maxTags, tags)
             }
-            tree.mutate(node.path, { tags:  allTags })
+            tree.mutate(node.path, { tags: allTags })
             onAddTag(tags)
           }}
           removeTag={tag => {

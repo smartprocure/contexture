@@ -44,7 +44,7 @@ let TagsInput = forwardRef(
       tags => (splitCommas ? splitTagOnComma(tags) : _.castArray(tags)),
       tags => (sanitizeTags ? _.map(sanitizeTagFn, tags) : tags),
       _.difference(_, tags),
-      addTags,
+      addTags
     )
 
     return (
