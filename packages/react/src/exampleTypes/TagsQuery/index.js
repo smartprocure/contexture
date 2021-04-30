@@ -1,5 +1,4 @@
 import React from 'react'
-import F from 'futil'
 import _ from 'lodash/fp'
 import { Grid, GridItem } from '../../greyVest'
 import { contexturifyWithoutLoader } from '../../utils/hoc'
