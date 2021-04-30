@@ -1,4 +1,5 @@
 import React from 'react'
+import F from 'futil'
 import _ from 'lodash/fp'
 import { Grid, GridItem } from '../../greyVest'
 import { contexturifyWithoutLoader } from '../../utils/hoc'
@@ -16,7 +17,7 @@ let TagsQuery = ({
   style,
   actionWrapper,
   onAddTag = _.noop,
-  onTagsDropped,
+  onTagsDropped = _.noop,
   popoverPosition = 'bottom right',
   popoverArrow,
   popoverOffsetY,
@@ -67,7 +68,13 @@ let TagsQuery = ({
               tag => ({ [tagValueField]: tag, distance: 3 }),
               tags
             )
-            tree.mutate(node.path, { tags: [...node.tags, ...tagObjects] })
+            let allTags = [...node.tags, ...tagObjects]
+            // Limit the number of tags to maxTags
+            if (_.size(allTags) > maxTags) {
+              allTags = _.take(maxTags, allTags)
+              onTagsDropped(maxTags, tags)
+            }
+            tree.mutate(node.path, { tags:  allTags })
             onAddTag(tags)
           }}
           removeTag={tag => {
