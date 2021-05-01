@@ -29,11 +29,3 @@ export let splitTagOnComma = _.flow(
   _.compact,
   _.uniq
 )
-
-// Take tags and call fn if we actually took less than the total
-export let takeTags = (maxTags, fn) => tags => {
-  if (maxTags < _.size(tags)) {
-    F.maybeCall(fn, maxTags, tags)
-  }
-  return _.take(maxTags, tags)
-}

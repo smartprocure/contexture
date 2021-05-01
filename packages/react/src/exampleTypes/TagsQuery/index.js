@@ -16,7 +16,7 @@ let TagsQuery = ({
   style,
   actionWrapper,
   onAddTag = _.noop,
-  onTagsDropped,
+  onTagsDropped = _.noop,
   popoverPosition = 'bottom right',
   popoverArrow,
   popoverOffsetY,
@@ -62,12 +62,18 @@ let TagsQuery = ({
           wordsMatchPattern={wordsMatchPattern}
           tags={_.map(tagValueField, node.tags)}
           onTagsDropped={onTagsDropped}
-          addTags={tags => {
-            let tagObjects = _.map(
+          addTags={addedTags => {
+            let addedTagObjects = _.map(
               tag => ({ [tagValueField]: tag, distance: 3 }),
-              tags
+              addedTags
             )
-            tree.mutate(node.path, { tags: [...node.tags, ...tagObjects] })
+            let tags = [...node.tags, ...addedTagObjects]
+            // Limit the number of tags to maxTags
+            if (_.size(tags) > maxTags) {
+              tags = _.take(maxTags, tags)
+              onTagsDropped(maxTags, tags)
+            }
+            tree.mutate(node.path, { tags })
             onAddTag(tags)
           }}
           removeTag={tag => {
