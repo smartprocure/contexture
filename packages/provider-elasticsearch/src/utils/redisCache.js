@@ -1,22 +1,17 @@
 let F = require('futil')
 let deterministic_stringify = require('json-stable-stringify')
 
-let redisCache = (config, {caching: {ttlSecs} = {}}) => {
+let redisCache = (config, { caching: { ttlSecs } = {} }) => {
   let redisClient = F.maybeCall(config.getRedisClient)
-  let {
-    redisCache,
-    redisPrefix = 'es-cache:'
-  } = config
+  let { redisCache, redisPrefix = 'es-cache:' } = config
 
   return search => async (request, options) => {
-    if (!redisCache || !redisClient || !ttlSecs)
-      return search(request, options)
+    if (!redisCache || !redisClient || !ttlSecs) return search(request, options)
 
     let key = `${redisPrefix}:${deterministic_stringify(request)}`
     let cachedData = await redisClient.get(key)
 
-    let setData = data =>
-      redisClient.setex(key, ttlSecs, JSON.stringify(data))
+    let setData = data => redisClient.setex(key, ttlSecs, JSON.stringify(data))
 
     let tryRefresh = async () => {
       let ttl = await redisClient.ttl(key)

@@ -49,12 +49,10 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
     // If we have a scrollId, use a different client API method
     // The new elasticsearch client uses `this`, so we can just pass aroud `client.search` :(
     let search
-    if (scrollId)
-      search = (...args) => client.scroll(...args)
+    if (scrollId) search = (...args) => client.scroll(...args)
     else {
       search = (...args) => client.search(...args)
-      if (!scroll)
-        search = cached(search)
+      if (!scroll) search = cached(search)
     }
 
     let response
