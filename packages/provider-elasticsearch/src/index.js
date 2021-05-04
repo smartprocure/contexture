@@ -1,11 +1,8 @@
 let _ = require('lodash/fp')
-let deterministic_stringify = require('json-stable-stringify')
 let { getESSchemas } = require('./schema')
+let redisCache = require('./utils/redisCache')
 
 let constantScore = filter => ({ constant_score: { filter } })
-
-// Deterministic ordering of JSON keys for request cache optimization
-let stableKeys = x => JSON.parse(deterministic_stringify(x))
 
 let ElasticsearchProvider = (config = { request: {} }) => ({
   types: config.types,
@@ -29,7 +26,7 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
       ? // If we have scrollId then keep scrolling, no query needed
         { scroll: scroll === true ? '60m' : scroll, scrollId }
       : // Deterministic ordering of JSON keys for request cache optimization
-        stableKeys({
+        {
           index: schema.elasticsearch.index,
           // Scroll support (used for bulk export)
           ...(scroll && { scroll: scroll === true ? '2m' : scroll }),
@@ -45,14 +42,21 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
             ...(scroll && { sort: ['_doc'] }),
             ...aggs,
           },
-        })
+        }
 
     let client = config.getClient()
+    let cached = redisCache(config, schema)
     // If we have a scrollId, use a different client API method
     // The new elasticsearch client uses `this`, so we can just pass aroud `client.search` :(
-    let search = scrollId
-      ? (...args) => client.scroll(...args)
-      : (...args) => client.search(...args)
+    let search
+    if (scrollId)
+      search = (...args) => client.scroll(...args)
+    else {
+      search = (...args) => client.search(...args)
+      if (!scroll)
+        search = cached(search)
+    }
+
     let response
     try {
       let { body } = await search(request, requestOptions)
