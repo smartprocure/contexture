@@ -21,7 +21,6 @@ let redisCache = (config, schema) => {
     return promise
   }
 
-
   return search => (request, options) => {
     if (!redisCache || !redisClient || !ttlSecs) return search(request, options)
 
