@@ -7,7 +7,20 @@ let redisCache = (config, schema) => {
   let { redisCache, redisPrefix = 'es-cache:' } = config
   let redisClient = F.maybeCall(config.getRedisClient)
   let { caching: { ttlSecs, ttrSecs } = {} } = schema
+
+  // to resolve duplicate requests with the same promise
   let instaCache = Object.create(null)
+  let instaCached = f => key => {
+    let promise = instaCache[key]
+    if (!promise) {
+      promise = f(key)
+      promise.finally(() => {
+        delete instaCache[key]
+      })
+    }
+    return promise
+  }
+
 
   return search => (request, options) => {
     if (!redisCache || !redisClient || !ttlSecs) return search(request, options)
@@ -50,18 +63,6 @@ let redisCache = (config, schema) => {
           })
         )
       }
-    }
-
-    // to resolve duplicate requests with the same promise
-    let instaCached = f => key => {
-      let promise = instaCache[key]
-      if (!promise) {
-        promise = f(key)
-        promise.finally(() => {
-          delete instaCache[key]
-        })
-      }
-      return promise
     }
 
     return instaCached(fetch)()
