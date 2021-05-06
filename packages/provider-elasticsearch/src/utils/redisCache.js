@@ -31,8 +31,7 @@ let redisCache = (config, schema) => {
       }
     }
 
-    let setData = data =>
-      redisClient.setex(key, ttlSecs, JSON.stringify(data))
+    let setData = data => redisClient.setex(key, ttlSecs, JSON.stringify(data))
 
     let tryRefresh = async () => {
       if (!ttrSecs) return
@@ -43,11 +42,13 @@ let redisCache = (config, schema) => {
         // popular cache is kept alive if ES is down
         redisClient.expire(key, ttlSecs)
         // update cache with actual fresh data in background
-        setData(await search(request, {
-          ...options,
-          // delayed non-blocking search
-          runBefore: Date.now() + ttl * 1000
-        }))
+        setData(
+          await search(request, {
+            ...options,
+            // delayed non-blocking search
+            runBefore: Date.now() + ttl * 1000,
+          })
+        )
       }
     }
 
@@ -68,7 +69,10 @@ let redisCache = (config, schema) => {
 }
 
 let hashString = data =>
-  crypto.createHash('sha1').update(data).digest('base64')
+  crypto
+    .createHash('sha1')
+    .update(data)
+    .digest('base64')
 
 let hash = _.pipe(deterministic_stringify, hashString)
 
