@@ -1,3 +1,6 @@
+#1.3.0
+* Experimental API: storing searches in redis cache
+
 #1.2.0
 * Add last1Day and last1Hour to dateMath util
 
