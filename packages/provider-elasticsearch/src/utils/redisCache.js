@@ -19,7 +19,7 @@ let redisCache = config => {
     return promise
   }
 
-  return (search, schema) => (request, options) => {
+  return (search, schema) => (request, options = {}) => {
     let { caching: { ttlSecs } = {} } = schema
 
     if (options.bypassCache || !redisCache || !redisClient || !ttlSecs)
