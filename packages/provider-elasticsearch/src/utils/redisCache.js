@@ -3,7 +3,7 @@ let _ = require('lodash/fp')
 let F = require('futil')
 let deterministic_stringify = require('json-stable-stringify')
 
-let redisCache = (config) => {
+let redisCache = config => {
   let { redisCache, redisPrefix = 'es-cache:' } = config
   let redisClient = F.maybeCall(config.getRedisClient)
 
