@@ -48,11 +48,15 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
         })
 
     let client = config.getClient()
+    let child = client.child({
+      headers: requestOptions.headers,
+      requestTimeout: requestOptions.requestTimeout
+    })
     // If we have a scrollId, use a different client API method
     // The new elasticsearch client uses `this`, so we can just pass aroud `client.search` :(
     let search = scrollId
-      ? (...args) => client.scroll(...args)
-      : (...args) => client.search(...args)
+      ? (...args) => child.scroll(...args)
+      : (...args) => child.search(...args)
     let response
     try {
       let { body } = await search(request, requestOptions)
