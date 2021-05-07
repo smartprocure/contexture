@@ -46,8 +46,7 @@ let ElasticsearchProvider = (config = { request: {} }) => {
             },
           }
 
-      let client = config.getClient()
-      let child = client.child({
+      let child = config.getClient().child({
         headers: requestOptions.headers,
         requestTimeout: requestOptions.requestTimeout,
       })
