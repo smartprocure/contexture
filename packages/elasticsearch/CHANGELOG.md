@@ -1,5 +1,5 @@
 #1.3.0
-* Redis Cache: storing searches in redis with smart refresh
+* Experimental API: storing searches in redis cache
 
 #1.2.0
 * Add last1Day and last1Hour to dateMath util

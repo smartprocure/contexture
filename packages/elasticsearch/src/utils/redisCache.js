@@ -3,42 +3,42 @@ let _ = require('lodash/fp')
 let F = require('futil')
 let deterministic_stringify = require('json-stable-stringify')
 
-let redisCache = (config, schema) => {
+let redisCache = (config) => {
   let { redisCache, redisPrefix = 'es-cache:' } = config
   let redisClient = F.maybeCall(config.getRedisClient)
-  let { caching: { ttlSecs } = {} } = schema
 
-  // to resolve duplicate requests with the same promise
-  let instaCache = new Map()
-  let instaCached = f => key => {
-    let promise = instaCache.get(key)
+  // to resolve racing condition with the same promise
+  let pending = new Map()
+  let dedupedAsync = f => key => {
+    let promise = pending.get(key)
     if (!promise) {
       promise = f(key)
-      instaCache.set(key, promise)
-      promise.finally(() => instaCache.delete(key))
+      pending.set(key, promise)
+      promise.finally(() => pending.delete(key))
     }
     return promise
   }
 
-  return search => (request, options) => {
-    if (!redisCache || !redisClient || !ttlSecs) return search(request, options)
+  return (search, schema) => (request, options) => {
+    let { caching: { ttlSecs } = {} } = schema
 
-    let key = `${redisPrefix}:${hash(request)}`
+    if (options.bypassCache || !redisCache || !redisClient || !ttlSecs)
+      return search(request, options)
 
-    let fetch = async () => {
+    let key = `${redisPrefix}${hash(request)}`
+
+    let fetch = async key => {
       let cachedData = await redisClient.get(key)
       if (cachedData) return JSON.parse(cachedData)
 
       let data = await search(request, options)
       // not awaiting, so we respond to the user faster
-      setData(data)
+      redisClient.setex(key, ttlSecs, JSON.stringify(data))
 
       return data
     }
 
-    let setData = data => redisClient.setex(key, ttlSecs, JSON.stringify(data))
-
-    return instaCached(fetch)()
+    return dedupedAsync(fetch)(key)
   }
 }
 
@@ -48,6 +48,6 @@ let hashString = data =>
     .update(data)
     .digest('base64')
 
-let hash = _.pipe(deterministic_stringify, hashString)
+let hash = _.flow(deterministic_stringify, hashString)
 
 module.exports = redisCache
