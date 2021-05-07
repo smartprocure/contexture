@@ -6,17 +6,16 @@ let deterministic_stringify = require('json-stable-stringify')
 let redisCache = (config, schema) => {
   let { redisCache, redisPrefix = 'es-cache:' } = config
   let redisClient = F.maybeCall(config.getRedisClient)
-  let { caching: { ttlSecs, ttrSecs } = {} } = schema
+  let { caching: { ttlSecs } = {} } = schema
 
   // to resolve duplicate requests with the same promise
-  let instaCache = Object.create(null)
+  let instaCache = new Map()
   let instaCached = f => key => {
-    let promise = instaCache[key]
+    let promise = instaCache.get(key)
     if (!promise) {
       promise = f(key)
-      promise.finally(() => {
-        delete instaCache[key]
-      })
+      instaCache.set(key, promise)
+      promise.finally(() => instaCache.delete(key))
     }
     return promise
   }
@@ -28,41 +27,17 @@ let redisCache = (config, schema) => {
 
     let fetch = async () => {
       let cachedData = await redisClient.get(key)
-
-      if (cachedData) {
-        // not awaiting for refresh, so no response delay
-        tryRefresh()
+      if (cachedData)
         return JSON.parse(cachedData)
-      } else {
-        let data = await search(request, options)
 
-        // not awaiting, so we respond to the user faster
-        setData(data)
+      let data = await search(request, options)
+      // not awaiting, so we respond to the user faster
+      setData(data)
 
-        return data
-      }
+      return data
     }
 
     let setData = data => redisClient.setex(key, ttlSecs, JSON.stringify(data))
-
-    let tryRefresh = async () => {
-      if (!ttrSecs) return
-      let ttl = await redisClient.ttl(key)
-      // if past specified refresh time
-      if (ttlSecs - ttl >= ttrSecs) {
-        // bumping expiration protects from concurrent refreshes
-        // popular cache is kept alive if ES is down
-        redisClient.expire(key, ttlSecs)
-        // update cache with actual fresh data in background
-        setData(
-          await search(request, {
-            ...options,
-            // delayed non-blocking search
-            runBefore: Date.now() + ttl * 1000,
-          })
-        )
-      }
-    }
 
     return instaCached(fetch)()
   }
