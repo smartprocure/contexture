@@ -1,6 +1,6 @@
 let _ = require('lodash/fp')
 
-let toSafeRegex = _.flow(_.replace(/[.?+*|{}[\]()]/g, ' '))
+let toSafeRegex = _.flow(_.replace(/[.?+*|{}[\]()]/g, ' '), _.trim)
 
 let regexPartsForWords = _.flow(_.trim, _.split(/\s+/g), _.map(toSafeRegex))
 
