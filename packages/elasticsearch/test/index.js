@@ -18,9 +18,11 @@ describe('Core Provider', () => {
       },
     })
   })
-  it('runSearch should wrap queries in constant_score if sort._score is not present', () => {
+  it('runSearch should wrap queries in constant_score if sort._score is not present', async () => {
     const client = {
-      search: sinon.stub().returns(Promise.resolve({})),
+      child: sinon
+        .stub()
+        .returns({ search: sinon.stub().returns(Promise.resolve({})) }),
     }
 
     const node = { config: {}, _meta: { requests: [] } }
@@ -32,17 +34,22 @@ describe('Core Provider', () => {
       query: 'something',
     }
 
-    provider({
+    await provider({
       getClient: () => client,
     }).runSearch({}, node, schema, { query_string }, {})
 
+    let firstSearchCall = client.child.firstCall.returnValue.search.firstCall
+
     expect(
-      client.search.getCalls(0)[0].args[0].body.query.constant_score.filter
+      firstSearchCall.args[0].body.query.constant_score
+        .filter
     ).to.eql({ query_string })
   })
   it('runSearch should not wrap queries in constant_score if no query is given', () => {
     const client = {
-      search: sinon.stub().returns(Promise.resolve({})),
+      child: sinon
+        .stub()
+        .returns({ search: sinon.stub().returns(Promise.resolve({})) }),
     }
 
     const node = { config: {}, _meta: { requests: [] } }
@@ -52,11 +59,15 @@ describe('Core Provider', () => {
       getClient: () => client,
     }).runSearch({}, node, schema, null, {})
 
-    expect(client.search.getCalls(0)[0].args[0].body).to.eql({ query: null })
+    let firstSearchCall = client.child.firstCall.returnValue.search.firstCall
+
+    expect(firstSearchCall.args[0].body).to.eql({ query: null })
   })
   it('runSearch should not wrap queries in constant_score if sort._score is present', () => {
     const client = {
-      search: sinon.stub().returns(Promise.resolve({})),
+      child: sinon
+        .stub()
+        .returns({ search: sinon.stub().returns(Promise.resolve({})) }),
     }
 
     const node = { config: {}, _meta: { requests: [] } }
@@ -78,7 +89,9 @@ describe('Core Provider', () => {
       { sort: { _score: 'desc' } }
     )
 
-    expect(client.search.getCalls(0)[0].args[0].body.query).to.eql({
+    let firstSearchCall = client.child.firstCall.returnValue.search.firstCall
+
+    expect(firstSearchCall.args[0].body.query).to.eql({
       query_string,
     })
   })
