@@ -1,3 +1,6 @@
+#0.24.0
+* Change facet type optionsFilter to $and all words by doing a $regex match for each word as opposed to all words at once 
+
 #0.23.0
 * Add last 1 Day and last 1 hour to date math calculations
 
