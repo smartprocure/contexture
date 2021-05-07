@@ -27,8 +27,7 @@ let redisCache = (config, schema) => {
 
     let fetch = async () => {
       let cachedData = await redisClient.get(key)
-      if (cachedData)
-        return JSON.parse(cachedData)
+      if (cachedData) return JSON.parse(cachedData)
 
       let data = await search(request, options)
       // not awaiting, so we respond to the user faster
