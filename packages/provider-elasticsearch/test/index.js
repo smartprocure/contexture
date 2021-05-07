@@ -15,6 +15,8 @@ const query_string = {
   default_operator: 'AND',
   query: 'something',
 }
+const initialNode = { config: {}, _meta: { requests: [] } }
+const initialSchema = { elasticsearch: {} }
 
 describe.only('Core Provider', () => {
   it('groupCombinator should return a query joining filters by group.join', () => {
@@ -32,19 +34,16 @@ describe.only('Core Provider', () => {
       },
     })
   })
-  it('runSearch should wrap queries in constant_score if sort._score is not present', async () => {
+  it('runSearch should wrap queries in constant_score if sort._score is not present', () => {
     const client = {
       child: sinon
         .stub()
         .returns({ search: sinon.stub().returns(Promise.resolve({})) }),
     }
 
-    const node = { config: {}, _meta: { requests: [] } }
-    const schema = { elasticsearch: {} }
-
     provider({
       getClient: () => client,
-    }).runSearch({}, node, schema, { query_string }, {})
+    }).runSearch({}, initialNode, initialSchema, { query_string }, {})
 
     let firstSearchCall = client.child.firstCall.returnValue.search.firstCall
 
@@ -59,12 +58,9 @@ describe.only('Core Provider', () => {
         .returns({ search: sinon.stub().returns(Promise.resolve({})) }),
     }
 
-    const node = { config: {}, _meta: { requests: [] } }
-    const schema = { elasticsearch: {} }
-
     provider({
       getClient: () => client,
-    }).runSearch({}, node, schema, null, {})
+    }).runSearch({}, initialNode, initialSchema, null, {})
 
     let firstSearchCall = client.child.firstCall.returnValue.search.firstCall
 
@@ -77,15 +73,12 @@ describe.only('Core Provider', () => {
         .returns({ search: sinon.stub().returns(Promise.resolve({})) }),
     }
 
-    const node = { config: {}, _meta: { requests: [] } }
-    const schema = { elasticsearch: {} }
-
     provider({
       getClient: () => client,
     }).runSearch(
       {},
-      node,
-      schema,
+      initialNode,
+      initialSchema,
       { query_string },
       { sort: { _score: 'desc' } }
     )
@@ -96,24 +89,26 @@ describe.only('Core Provider', () => {
       query_string,
     })
   })
-  it('should pass any request options to the child client upon initialization', async () => {
+  it('should pass any request options to the child client upon initialization', () => {
     const client = {
       child: sinon
         .stub()
         .returns({ search: sinon.stub().returns(Promise.resolve({})) }),
     }
 
-    const node = { config: {}, _meta: { requests: [] } }
-    const schema = { elasticsearch: {} }
-
     provider({
       getClient: () => client,
-    }).runSearch({ requestOptions }, node, schema, { query_string }, {})
+    }).runSearch(
+      { requestOptions },
+      initialNode,
+      initialSchema,
+      { query_string },
+      {}
+    )
 
-    let firstSearchCall = client.child.firstCall
-    console.log({ firstSearchCall })
+    let childClientStub = client.child.firstCall
 
-    expect(firstSearchCall.args[0]).to.eql({
+    expect(childClientStub.args[0]).to.eql({
       headers: requestOptions.headers,
       requestTimeout: requestOptions.requestTimeout,
     })
