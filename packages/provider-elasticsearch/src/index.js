@@ -22,7 +22,7 @@ let ElasticsearchProvider = (config = { request: {} }) => {
         },
       }
     },
-    async runSearch({ requestOptions } = {}, node, schema, filters, aggs) {
+    async runSearch({ requestOptions = {} } = {}, node, schema, filters, aggs) {
       let { scroll, scrollId } = node
       let request = scrollId
         ? // If we have scrollId then keep scrolling, no query needed
@@ -46,13 +46,16 @@ let ElasticsearchProvider = (config = { request: {} }) => {
             },
           }
 
-      let client = config.getClient()
+      let child = config.getClient().child({
+        headers: requestOptions.headers,
+        requestTimeout: requestOptions.requestTimeout,
+      })
       // If we have a scrollId, use a different client API method
       // The new elasticsearch client uses `this`, so we can just pass aroud `client.search` :(
       let search
-      if (scrollId) search = (...args) => client.scroll(...args)
+      if (scrollId) search = (...args) => child.scroll(...args)
       else {
-        search = (...args) => client.search(...args)
+        search = (...args) => child.search(...args)
         if (!scroll) search = cached(search, schema)
       }
 
