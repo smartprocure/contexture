@@ -18,7 +18,7 @@ const query_string = {
 const initialNode = { config: {}, _meta: { requests: [] } }
 const initialSchema = { elasticsearch: {} }
 
-describe.only('Core Provider', () => {
+describe('Core Provider', () => {
   it('groupCombinator should return a query joining filters by group.join', () => {
     expect(
       provider().groupCombinator({ join: 'or' }, ['Anything works'])
