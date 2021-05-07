@@ -66,10 +66,14 @@ describe('facet', () => {
       let filterAgg = _.find('$match', queries[0])
       expect(filterAgg).to.deep.equal({
         $match: {
-          _id: {
-            $regex: '.*(?=.*cable.*).*',
-            $options: 'i',
-          },
+          $and: [
+            {
+              _id: {
+                $options: 'i',
+                $regex: 'cable',
+              },
+            },
+          ],
         },
       })
       // Also make sure that options filtering happens _before_ limiting
@@ -87,10 +91,20 @@ describe('facet', () => {
       let filterAgg = _.find('$match', queries[0])
       expect(filterAgg).to.deep.equal({
         $match: {
-          _id: {
-            $regex: '.*(?=.*dis.*)(?=.*comp.*).*',
-            $options: 'i',
-          },
+          $and: [
+            {
+              _id: {
+                $options: 'i',
+                $regex: 'dis',
+              },
+            },
+            {
+              _id: {
+                $options: 'i',
+                $regex: 'comp',
+              },
+            },
+          ],
         },
       })
       // Also make sure that options filtering happens _before_ limiting
@@ -311,10 +325,14 @@ describe('facet', () => {
       let filterAgg = _.find('$match', queries[0])
       expect(filterAgg).to.deep.equal({
         $match: {
-          'label.firstName': {
-            $regex: '.*(?=.*jane.*).*',
-            $options: 'i',
-          },
+          $and: [
+            {
+              'label.firstName': {
+                $options: 'i',
+                $regex: 'jane',
+              },
+            },
+          ],
         },
       })
 
@@ -369,13 +387,13 @@ describe('facet', () => {
               $or: [
                 {
                   'label.firstName': {
-                    $regex: '.*(?=.*fred.*).*',
+                    $regex: 'fred',
                     $options: 'i',
                   },
                 },
                 {
                   'label.lastName': {
-                    $regex: '.*(?=.*fred.*).*',
+                    $regex: 'fred',
                     $options: 'i',
                   },
                 },
@@ -385,13 +403,13 @@ describe('facet', () => {
               $or: [
                 {
                   'label.firstName': {
-                    $regex: '.*(?=.*smith.*).*',
+                    $regex: 'smith',
                     $options: 'i',
                   },
                 },
                 {
                   'label.lastName': {
-                    $regex: '.*(?=.*smith.*).*',
+                    $regex: 'smith',
                     $options: 'i',
                   },
                 },
