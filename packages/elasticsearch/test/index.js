@@ -40,10 +40,9 @@ describe('Core Provider', () => {
 
     let firstSearchCall = client.child.firstCall.returnValue.search.firstCall
 
-    expect(
-      firstSearchCall.args[0].body.query.constant_score
-        .filter
-    ).to.eql({ query_string })
+    expect(firstSearchCall.args[0].body.query.constant_score.filter).to.eql({
+      query_string,
+    })
   })
   it('runSearch should not wrap queries in constant_score if no query is given', () => {
     const client = {
