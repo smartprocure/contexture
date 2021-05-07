@@ -32,7 +32,7 @@ let getMatchesForMultipleKeywords = (list, optionsFilter) => ({
       $or: _.map(
         key => ({
           [key]: {
-            $regex: F.wordsToRegexp(option),
+            $regex: option,
             $options: 'i',
           },
         }),
@@ -47,10 +47,15 @@ let setMatchOperators = (list, node) =>
   list.length > 1
     ? getMatchesForMultipleKeywords(list, node.optionsFilter)
     : {
-        [_.first(list)]: {
-          $regex: F.wordsToRegexp(node.optionsFilter),
-          $options: 'i',
-        },
+        $and: _.flow(
+          _.words,
+          _.map(option => ({
+            [_.first(list)]: {
+              $options: 'i',
+              $regex: option,
+            },
+          }))
+        )(node.optionsFilter),
       }
 
 let mapKeywordFilters = node =>
