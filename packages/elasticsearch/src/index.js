@@ -22,7 +22,7 @@ let ElasticsearchProvider = (config = { request: {} }) => {
         },
       }
     },
-    async runSearch({ requestOptions } = {}, node, schema, filters, aggs) {
+    async runSearch({ requestOptions = {} } = {}, node, schema, filters, aggs) {
       let { scroll, scrollId } = node
       let request = scrollId
         ? // If we have scrollId then keep scrolling, no query needed
