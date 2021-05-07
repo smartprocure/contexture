@@ -2,7 +2,21 @@ let sinon = require('sinon')
 let provider = require('../src/index')
 let { expect } = require('chai')
 
-describe('Core Provider', () => {
+const requestOptions = {
+  headers: {
+    email: 'my@email.com',
+    name: 'user1',
+  },
+  requestTimeout: 1000,
+}
+
+const query_string = {
+  default_field: 'FieldGroup.POLineItem',
+  default_operator: 'AND',
+  query: 'something',
+}
+
+describe.only('Core Provider', () => {
   it('groupCombinator should return a query joining filters by group.join', () => {
     expect(
       provider().groupCombinator({ join: 'or' }, ['Anything works'])
@@ -28,22 +42,15 @@ describe('Core Provider', () => {
     const node = { config: {}, _meta: { requests: [] } }
     const schema = { elasticsearch: {} }
 
-    const query_string = {
-      default_field: 'FieldGroup.POLineItem',
-      default_operator: 'AND',
-      query: 'something',
-    }
-
-    await provider({
+    provider({
       getClient: () => client,
     }).runSearch({}, node, schema, { query_string }, {})
 
     let firstSearchCall = client.child.firstCall.returnValue.search.firstCall
 
-    expect(
-      firstSearchCall.args[0].body.query.constant_score
-        .filter
-    ).to.eql({ query_string })
+    expect(firstSearchCall.args[0].body.query.constant_score.filter).to.eql({
+      query_string,
+    })
   })
   it('runSearch should not wrap queries in constant_score if no query is given', () => {
     const client = {
@@ -73,12 +80,6 @@ describe('Core Provider', () => {
     const node = { config: {}, _meta: { requests: [] } }
     const schema = { elasticsearch: {} }
 
-    const query_string = {
-      default_field: 'FieldGroup.POLineItem',
-      default_operator: 'AND',
-      query: 'something',
-    }
-
     provider({
       getClient: () => client,
     }).runSearch(
@@ -93,6 +94,28 @@ describe('Core Provider', () => {
 
     expect(firstSearchCall.args[0].body.query).to.eql({
       query_string,
+    })
+  })
+  it('should pass any request options to the child client upon initialization', async () => {
+    const client = {
+      child: sinon
+        .stub()
+        .returns({ search: sinon.stub().returns(Promise.resolve({})) }),
+    }
+
+    const node = { config: {}, _meta: { requests: [] } }
+    const schema = { elasticsearch: {} }
+
+    provider({
+      getClient: () => client,
+    }).runSearch({ requestOptions }, node, schema, { query_string }, {})
+
+    let firstSearchCall = client.child.firstCall
+    console.log({ firstSearchCall })
+
+    expect(firstSearchCall.args[0]).to.eql({
+      headers: requestOptions.headers,
+      requestTimeout: requestOptions.requestTimeout,
     })
   })
 })
