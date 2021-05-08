@@ -49,13 +49,18 @@ describe('text', () => {
             should: [
               {
                 regexp: {
-                  'description.untouched':
-                    '.*[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt].*',
+                  'description.untouched': {
+                    case_insensitive: true,
+                    value: '.*laserjet.*',
+                  },
                 },
               },
               {
                 regexp: {
-                  'description.untouched': '.*[Pp][Rr][Ii][Nn][Tt][Ee][Rr].*',
+                  'description.untouched': {
+                    case_insensitive: true,
+                    value: '.*printer.*',
+                  },
                 },
               },
             ],
@@ -131,12 +136,18 @@ describe('text', () => {
           should: [
             {
               regexp: {
-                'description.untouched': '.*[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt]',
+                'description.untouched': {
+                  case_insensitive: true,
+                  value: '.*laserjet',
+                },
               },
             },
             {
               regexp: {
-                'description.untouched': '.*[Pp][Rr][Ii][Nn][Tt][Ee][Rr]',
+                'description.untouched': {
+                  case_insensitive: true,
+                  value: '.*printer',
+                },
               },
             },
           ],
@@ -150,12 +161,18 @@ describe('text', () => {
           should: [
             {
               regexp: {
-                'description.untouched': '[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt]',
+                'description.untouched': {
+                  case_insensitive: true,
+                  value: 'laserjet',
+                },
               },
             },
             {
               regexp: {
-                'description.untouched': '[Pp][Rr][Ii][Nn][Tt][Ee][Rr]',
+                'description.untouched': {
+                  case_insensitive: true,
+                  value: 'printer',
+                },
               },
             },
           ],
@@ -170,12 +187,18 @@ describe('text', () => {
               should: [
                 {
                   regexp: {
-                    'description.untouched': '[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt]',
+                    'description.untouched': {
+                      case_insensitive: true,
+                      value: 'laserjet',
+                    },
                   },
                 },
                 {
                   regexp: {
-                    'description.untouched': '[Pp][Rr][Ii][Nn][Tt][Ee][Rr]',
+                    'description.untouched': {
+                      case_insensitive: true,
+                      value: 'printer',
+                    },
                   },
                 },
               ],
@@ -192,12 +215,18 @@ describe('text', () => {
               should: [
                 {
                   regexp: {
-                    description: '.*[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt].*',
+                    description: {
+                      case_insensitive: true,
+                      value: '.*laserjet.*',
+                    },
                   },
                 },
                 {
                   regexp: {
-                    description: '.*[Pp][Rr][Ii][Nn][Tt][Ee][Rr].*',
+                    description: {
+                      case_insensitive: true,
+                      value: '.*printer.*',
+                    },
                   },
                 },
               ],
@@ -236,12 +265,18 @@ describe('text', () => {
           should: [
             {
               regexp: {
-                description: '.*[Ll][Aa][Ss][Ee][Rr][Jj][Ee][Tt]',
+                description: {
+                  case_insensitive: true,
+                  value: '.*laserjet',
+                },
               },
             },
             {
               regexp: {
-                description: '.*[Pp][Rr][Ii][Nn][Tt][Ee][Rr]',
+                description: {
+                  case_insensitive: true,
+                  value: '.*printer',
+                },
               },
             },
           ],

@@ -1,22 +1,18 @@
 let _ = require('lodash/fp')
 
-let toSafeRegex = _.flow(
-  _.replace(/[.?+*|{}[\]()]/g, '\\$&'),
-  _.map(x => (x.match(/[A-Za-z]/) ? `[${_.toUpper(x)}${_.toLower(x)}]` : x)),
-  _.join('')
-)
+let toSafeRegex = _.flow(_.replace(/[.?+*|{}[\]()]/g, ' '), _.trim)
 
-let regexPartsForWords = _.flow(
-  _.replace(/\s\s+/g, ' '),
-  _.trim,
-  _.split(' '),
-  _.map(toSafeRegex)
-)
+let regexPartsForWords = _.flow(_.trim, _.split(/\s+/g), _.map(toSafeRegex))
 
 let buildRegexQueryForWords = field =>
   _.flow(
     regexPartsForWords,
-    _.map(x => ({ regexp: { [field]: `.*(${x}).*` } })),
+    _.map(x => ({
+      regexp: {
+        [field]: `.*(${x}).*`,
+        case_insensitive: true,
+      },
+    })),
     x => ({ bool: { must: x } })
   )
 

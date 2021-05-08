@@ -1,3 +1,6 @@
+#1.4.1
+* Use native ES support for case insensitive regex matching
+
 #1.4.0
 * Create a new child client on every search to allow passing headers and other options on a per search basis
 
