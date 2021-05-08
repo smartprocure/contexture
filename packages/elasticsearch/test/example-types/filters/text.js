@@ -49,12 +49,18 @@ describe('text', () => {
             should: [
               {
                 regexp: {
-                  'description.untouched': '.*laserjet.*',
+                  'description.untouched': {
+                    "case_insensitive": true,
+                    "value": ".*laserjet.*"
+                  },
                 },
               },
               {
                 regexp: {
-                  'description.untouched': '.*printer.*',
+                  'description.untouched': {
+                    "case_insensitive": true,
+                    "value": ".*printer.*"
+                  },
                 },
               },
             ],
@@ -130,12 +136,18 @@ describe('text', () => {
           should: [
             {
               regexp: {
-                'description.untouched': '.*laserjet',
+                'description.untouched':  {
+                  "case_insensitive": true,
+                  "value": ".*laserjet"
+                },
               },
             },
             {
               regexp: {
-                'description.untouched': '.*printer',
+                'description.untouched':  {
+                  "case_insensitive": true,
+                  "value": ".*printer"
+                },
               },
             },
           ],
@@ -149,12 +161,18 @@ describe('text', () => {
           should: [
             {
               regexp: {
-                'description.untouched': 'laserjet',
+                'description.untouched': {
+                  "case_insensitive": true,
+                  "value": "laserjet"
+                },
               },
             },
             {
               regexp: {
-                'description.untouched': 'printer',
+                'description.untouched': {
+                  "case_insensitive": true,
+                  "value": "printer"
+                },
               },
             },
           ],
@@ -169,12 +187,18 @@ describe('text', () => {
               should: [
                 {
                   regexp: {
-                    'description.untouched': 'laserjet',
+                    'description.untouched': {
+                      "case_insensitive": true,
+                      "value": "laserjet"
+                    },
                   },
                 },
                 {
                   regexp: {
-                    'description.untouched': 'printer',
+                    'description.untouched': {
+                      "case_insensitive": true,
+                      "value": "printer"
+                    },
                   },
                 },
               ],
@@ -191,12 +215,18 @@ describe('text', () => {
               should: [
                 {
                   regexp: {
-                    description: '.*laserjet.*',
+                    description: {
+                      "case_insensitive": true,
+                      "value": ".*laserjet.*"
+                    },
                   },
                 },
                 {
                   regexp: {
-                    description: '.*printer.*',
+                    description: {
+                      "case_insensitive": true,
+                      "value": ".*printer.*"
+                    },
                   },
                 },
               ],
@@ -235,12 +265,18 @@ describe('text', () => {
           should: [
             {
               regexp: {
-                description: '.*laserjet',
+                description: {
+                  "case_insensitive": true,
+                  "value": ".*laserjet"
+                },
               },
             },
             {
               regexp: {
-                description: '.*printer',
+                description: {
+                  "case_insensitive": true,
+                  "value": ".*printer"
+                },
               },
             },
           ],
