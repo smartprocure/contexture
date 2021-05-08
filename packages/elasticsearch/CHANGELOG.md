@@ -1,3 +1,12 @@
+#1.4.0
+* Create a new child client on every search to allow passing headers and other options on a per search basis
+
+#1.3.0
+* Experimental API: storing searches in redis cache
+
+#1.2.0
+* Add last1Day and last1Hour to dateMath util
+
 # 1.1.8
 * Example types' context is now valid even if `statsField` is not passed.
 * [fieldValuePartitionGroupStats] Use `getField` to map field to its un-analyzed value.
