@@ -50,16 +50,16 @@ describe('text', () => {
               {
                 regexp: {
                   'description.untouched': {
-                    "case_insensitive": true,
-                    "value": ".*laserjet.*"
+                    case_insensitive: true,
+                    value: '.*laserjet.*',
                   },
                 },
               },
               {
                 regexp: {
                   'description.untouched': {
-                    "case_insensitive": true,
-                    "value": ".*printer.*"
+                    case_insensitive: true,
+                    value: '.*printer.*',
                   },
                 },
               },
@@ -136,17 +136,17 @@ describe('text', () => {
           should: [
             {
               regexp: {
-                'description.untouched':  {
-                  "case_insensitive": true,
-                  "value": ".*laserjet"
+                'description.untouched': {
+                  case_insensitive: true,
+                  value: '.*laserjet',
                 },
               },
             },
             {
               regexp: {
-                'description.untouched':  {
-                  "case_insensitive": true,
-                  "value": ".*printer"
+                'description.untouched': {
+                  case_insensitive: true,
+                  value: '.*printer',
                 },
               },
             },
@@ -162,16 +162,16 @@ describe('text', () => {
             {
               regexp: {
                 'description.untouched': {
-                  "case_insensitive": true,
-                  "value": "laserjet"
+                  case_insensitive: true,
+                  value: 'laserjet',
                 },
               },
             },
             {
               regexp: {
                 'description.untouched': {
-                  "case_insensitive": true,
-                  "value": "printer"
+                  case_insensitive: true,
+                  value: 'printer',
                 },
               },
             },
@@ -188,16 +188,16 @@ describe('text', () => {
                 {
                   regexp: {
                     'description.untouched': {
-                      "case_insensitive": true,
-                      "value": "laserjet"
+                      case_insensitive: true,
+                      value: 'laserjet',
                     },
                   },
                 },
                 {
                   regexp: {
                     'description.untouched': {
-                      "case_insensitive": true,
-                      "value": "printer"
+                      case_insensitive: true,
+                      value: 'printer',
                     },
                   },
                 },
@@ -216,16 +216,16 @@ describe('text', () => {
                 {
                   regexp: {
                     description: {
-                      "case_insensitive": true,
-                      "value": ".*laserjet.*"
+                      case_insensitive: true,
+                      value: '.*laserjet.*',
                     },
                   },
                 },
                 {
                   regexp: {
                     description: {
-                      "case_insensitive": true,
-                      "value": ".*printer.*"
+                      case_insensitive: true,
+                      value: '.*printer.*',
                     },
                   },
                 },
@@ -266,16 +266,16 @@ describe('text', () => {
             {
               regexp: {
                 description: {
-                  "case_insensitive": true,
-                  "value": ".*laserjet"
+                  case_insensitive: true,
+                  value: '.*laserjet',
                 },
               },
             },
             {
               regexp: {
                 description: {
-                  "case_insensitive": true,
-                  "value": ".*printer"
+                  case_insensitive: true,
+                  value: '.*printer',
                 },
               },
             },
