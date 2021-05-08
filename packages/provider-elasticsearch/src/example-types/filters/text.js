@@ -73,7 +73,7 @@ module.exports = {
 
           return {
             regexp: {
-              [fieldName]: builtCriteria,
+              [fieldName]: { value: builtCriteria, case_insensitive: true },
             },
           }
         }, filterParts),

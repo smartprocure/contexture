@@ -118,7 +118,12 @@ describe('fieldValuesGroupStats', () => {
           filter: {
             bool: {
               must: [
-                { regexp: { 'Organization.Name': '.*([Cc][Ii][Tt][Yy]).*' } },
+                {
+                  regexp: {
+                    'Organization.Name': '.*(city).*',
+                    case_insensitive: true,
+                  },
+                },
               ],
             },
           },
@@ -152,8 +157,18 @@ describe('fieldValuesGroupStats', () => {
           filter: {
             bool: {
               must: [
-                { regexp: { 'Organization.Name': '.*([Cc][Ii][Tt][Yy]).*' } },
-                { regexp: { 'Organization.Name': '.*([Oo][Ff]).*' } },
+                {
+                  regexp: {
+                    'Organization.Name': '.*(city).*',
+                    case_insensitive: true,
+                  },
+                },
+                {
+                  regexp: {
+                    'Organization.Name': '.*(of).*',
+                    case_insensitive: true,
+                  },
+                },
               ],
             },
           },

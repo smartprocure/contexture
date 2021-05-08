@@ -292,8 +292,8 @@ describe('facet', () => {
                     must: [
                       {
                         regexp: {
-                          'Organization.NameState.untouched':
-                            '.*([Ss][Tt][Aa][Tt][Ee]).*',
+                          'Organization.NameState.untouched': '.*(state).*',
+                          case_insensitive: true,
                         },
                       },
                     ],
@@ -382,23 +382,26 @@ describe('facet', () => {
                     must: [
                       {
                         regexp: {
-                          'Organization.NameState.untouched':
-                            '.*([Ss][Tt][Aa][Tt][Ee]).*',
+                          'Organization.NameState.untouched': '.*(state).*',
+                          case_insensitive: true,
                         },
                       },
                       {
                         regexp: {
                           'Organization.NameState.untouched': '.*(1).*',
+                          case_insensitive: true,
                         },
                       },
                       {
                         regexp: {
                           'Organization.NameState.untouched': '.*(2).*',
+                          case_insensitive: true,
                         },
                       },
                       {
                         regexp: {
                           'Organization.NameState.untouched': '.*(3).*',
+                          case_insensitive: true,
                         },
                       },
                     ],
