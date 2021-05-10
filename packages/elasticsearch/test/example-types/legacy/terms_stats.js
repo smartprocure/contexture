@@ -164,8 +164,10 @@ describe('term_stats', () => {
                   must: [
                     {
                       regexp: {
-                        'Organization.Name.untouched': '.*(city).*',
-                        case_insensitive: true,
+                        'Organization.Name.untouched': {
+                          value: '.*(city).*',
+                          case_insensitive: true,
+                        },
                       },
                     },
                   ],
@@ -234,14 +236,18 @@ describe('term_stats', () => {
                   must: [
                     {
                       regexp: {
-                        'Organization.Name.untouched': '.*(city).*',
-                        case_insensitive: true,
+                        'Organization.Name.untouched': {
+                          value: '.*(city).*',
+                          case_insensitive: true,
+                        },
                       },
                     },
                     {
                       regexp: {
-                        'Organization.Name.untouched': '.*(of).*',
-                        case_insensitive: true,
+                        'Organization.Name.untouched': {
+                          value: '.*(of).*',
+                          case_insensitive: true,
+                        },
                       },
                     },
                   ],
