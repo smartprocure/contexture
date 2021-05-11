@@ -14,7 +14,7 @@ describe('date/filter', () => {
       range: {
         test: {
           gte: '2016-04-25T00:00:00.000Z',
-          format: 'dateOptionalTime',
+          format: 'date_optional_time',
         },
       },
     })
@@ -31,7 +31,7 @@ describe('date/filter', () => {
       range: {
         test: {
           lte: '2016-04-25T00:00:00.000Z',
-          format: 'dateOptionalTime',
+          format: 'date_optional_time',
         },
       },
     })
@@ -50,7 +50,7 @@ describe('date/filter', () => {
         test: {
           lte: '2016-04-25T00:00:00.000Z',
           gte: '2015-04-25T00:00:00.000Z',
-          format: 'dateOptionalTime',
+          format: 'date_optional_time',
         },
       },
     })
@@ -70,7 +70,7 @@ describe('date/filter', () => {
         test: {
           gte: 'a very specific date',
           lte: 'another very specific date',
-          format: 'dateOptionalTime',
+          format: 'date_optional_time',
         },
       },
     })

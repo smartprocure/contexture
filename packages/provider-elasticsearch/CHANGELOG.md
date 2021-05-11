@@ -1,3 +1,6 @@
+#1.4.3
+* Switch from the deprecated `dateOptionalTime` to the `date_optional_time`
+
 #1.4.2
 * Fix issue with regex util to comply with https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-regexp-query.html#regexp-query-ex-request
 
