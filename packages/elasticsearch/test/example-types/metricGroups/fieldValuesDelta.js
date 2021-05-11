@@ -16,14 +16,14 @@ describe('fieldValuesDelta', () => {
       field: 'PO.IssuedDate',
       gte: 'now-2y-180d',
       lte: 'now-180d',
-      format: 'dateOptionalTime',
+      format: 'date_optional_time',
     },
     foreground: {
       type: 'range',
       field: 'PO.IssuedDate',
       gte: 'now-180d',
       lte: 'now',
-      format: 'dateOptionalTime',
+      format: 'date_optional_time',
     },
   }
   it('should buildQuery', () => {
@@ -37,7 +37,7 @@ describe('fieldValuesDelta', () => {
                   'PO.IssuedDate': {
                     gte: 'now-2y-180d',
                     lte: 'now-180d',
-                    format: 'dateOptionalTime',
+                    format: 'date_optional_time',
                   },
                 },
               },
@@ -46,7 +46,7 @@ describe('fieldValuesDelta', () => {
                   'PO.IssuedDate': {
                     gte: 'now-180d',
                     lte: 'now',
-                    format: 'dateOptionalTime',
+                    format: 'date_optional_time',
                   },
                 },
               },
