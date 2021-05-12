@@ -26,7 +26,7 @@ module.exports = {
         [field]: F.compactObject({
           gte: from,
           lte: to,
-          format: 'dateOptionalTime',
+          format: 'date_optional_time',
         }),
       },
     }

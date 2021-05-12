@@ -57,7 +57,7 @@ describe('dateRangeFacet/filter', () => {
           {
             range: {
               test: {
-                format: 'dateOptionalTime',
+                format: 'date_optional_time',
                 from: getDatePart('allFutureDates', 'from'),
               },
             },
