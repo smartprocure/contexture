@@ -1,3 +1,6 @@
+#1.4.4
+* Fix `must not` text filter option
+
 #1.4.3
 * Switch from the deprecated `dateOptionalTime` to the `date_optional_time`
 
