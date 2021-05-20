@@ -29,3 +29,9 @@ export let splitTagOnComma = _.flow(
   _.compact,
   _.uniq
 )
+
+// RegEx to match words composed of alphanumeric characters.
+// Uses ASCI ranges https://donsnotes.com/tech/charsets/ascii.html
+// From: https://github.com/lodash/lodash/blob/ddfd9b11a0126db2302cb70ec9973b66baec0975/lodash.js#L166
+// eslint-disable-next-line no-control-regex
+export let alphaNumericRegEx = /[^\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]+/g

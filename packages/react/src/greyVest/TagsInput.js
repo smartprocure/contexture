@@ -4,7 +4,7 @@ import { observable } from 'mobx'
 import { observer, inject, useLocalStore } from 'mobx-react'
 import Flex from './Flex'
 import DefaultTag from './Tag'
-import { sanitizeTagWords, splitTagOnComma } from './utils'
+import { sanitizeTagWords, splitTagOnComma, alphaNumericRegEx } from './utils'
 
 let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
@@ -24,10 +24,7 @@ let TagsInput = forwardRef(
       onTagClick = _.noop,
       maxWordsPerTag = 100,
       maxCharsPerTagWord = 100,
-      // Used to match words composed of alphanumeric characters.
-      // https://github.com/lodash/lodash/blob/ddfd9b11a0126db2302cb70ec9973b66baec0975/lodash.js#L166
-      // eslint-disable-next-line no-control-regex
-      wordsMatchPattern = /[^\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]+/g,
+      wordsMatchPattern = alphaNumericRegEx,
       sanitizeTags = true,
       Tag = DefaultTag,
       ...props
