@@ -20,20 +20,29 @@ describe('text', () => {
     ).to.be.false
   })
   describe('filter', () => {
-    let anyText = values => (operator, schema = testSchema('description')) =>
+    let anyText = values => (operator, schema = testSchema('description'), join='any') =>
       text.filter(
         {
           key: 'test',
           type: 'text',
           field: 'description',
-          join: 'any',
+          join,
           operator,
           values,
         },
         schema
       )
     let laserjetPrinterText = anyText(['laserjet', 'printer'])
-    it('contains', () => {
+    it('contains (match ALL)', () => {
+      expect(laserjetPrinterText('contains', testSchema('description'), 'all')).to.deep.equal({
+        query_string: {
+          default_field: 'description',
+          default_operator: 'AND',
+          query: '"laserjet" "printer"',
+        },
+      })
+    })
+    it('contains (match ANY)', () => {
       expect(laserjetPrinterText('contains')).to.deep.equal({
         query_string: {
           default_field: 'description',
@@ -41,6 +50,19 @@ describe('text', () => {
           query: '"laserjet" "printer"',
         },
       })
+    })
+    it('contains (match NONE)', () => {
+        expect(laserjetPrinterText('contains', testSchema('description'), 'none')).to.deep.equal({
+          bool: {
+            must_not: {
+              query_string: {
+                default_field: 'description',
+                default_operator: 'OR',
+                query: '"laserjet" "printer"',
+              },
+            }
+          }
+        })
     })
     describe('containsWord', () => {
       it('should use regexp for < 3 words', () => {
