@@ -18,7 +18,7 @@ module.exports = {
         query_string: {
           query: _.map(x => `"${x}"`, filterParts).join(' '),
           default_field: fieldName,
-          default_operator: node.join === 'any' ? 'OR' : 'AND',
+          default_operator: node.join === 'all' ? 'AND' : 'OR',
           ...(node.operator === 'containsExact' && { analyzer: 'exact' }),
         },
       }
