@@ -1,8 +1,10 @@
 let _ = require('lodash/fp')
 let { getESSchemas } = require('./schema')
 let redisCache = require('./utils/redisCache')
+let debugRequest = require('debug')('contexture:elasticsearch:request')
+let debugResponse = require('debug')('contexture:elasticsearch:response')
 
-let constantScore = filter => ({ constant_score: { filter } })
+let constantScore = (filter) => ({ constant_score: { filter } })
 
 let ElasticsearchProvider = (config = { request: {} }) => {
   let cached = redisCache(config)
@@ -61,8 +63,10 @@ let ElasticsearchProvider = (config = { request: {} }) => {
 
       let response
       try {
+        debugRequest('%O\nOptions: %O', request, requestOptions)
         let { body } = await search(request, requestOptions)
         response = body
+        debugResponse('%O', response)
       } catch (e) {
         console.error({ e })
         response = e
