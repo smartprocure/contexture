@@ -3,7 +3,7 @@ let { getESSchemas } = require('./schema')
 let redisCache = require('./utils/redisCache')
 let debug = require('debug')('contexture:elasticsearch')
 
-let revolvingCounter = (max) => {
+let revolvingCounter = max => {
   let counter = 0
   return {
     inc() {
@@ -18,7 +18,7 @@ let revolvingCounter = (max) => {
 }
 let counter = revolvingCounter(500)
 
-let constantScore = (filter) => ({ constant_score: { filter } })
+let constantScore = filter => ({ constant_score: { filter } })
 
 let ElasticsearchProvider = (config = { request: {} }) => {
   let cached = redisCache(config)
