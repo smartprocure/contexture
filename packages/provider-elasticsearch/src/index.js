@@ -1,8 +1,22 @@
 let _ = require('lodash/fp')
 let { getESSchemas } = require('./schema')
 let redisCache = require('./utils/redisCache')
-let debugRequest = require('debug')('contexture:elasticsearch:request')
-let debugResponse = require('debug')('contexture:elasticsearch:response')
+let debug = require('debug')('contexture:elasticsearch')
+
+let revolvingCounter = (max) => {
+  let counter = 0
+  return {
+    inc() {
+      if (counter === max) {
+        counter = 1
+      } else {
+        counter++
+      }
+      return counter
+    },
+  }
+}
+let counter = revolvingCounter(500)
 
 let constantScore = (filter) => ({ constant_score: { filter } })
 
@@ -63,10 +77,11 @@ let ElasticsearchProvider = (config = { request: {} }) => {
 
       let response
       try {
-        debugRequest('%O\nOptions: %O', request, requestOptions)
+        let count = counter.inc()
+        debug('(%s) Request: %O\nOptions: %O', count, request, requestOptions)
         let { body } = await search(request, requestOptions)
         response = body
-        debugResponse('%O', response)
+        debug('(%s) Response: %O', count, response)
       } catch (e) {
         console.error({ e })
         response = e
