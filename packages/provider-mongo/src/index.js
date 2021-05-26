@@ -1,6 +1,6 @@
 let debug = require('debug')('contexture:mongo')
 
-let revolvingCounter = (max) => {
+let revolvingCounter = max => {
   let counter = 0
   return {
     inc() {
@@ -26,7 +26,7 @@ let mongoDSL = async (client, { collection, aggs }, count) => {
   }
 }
 
-let MongoProvider = (config) => ({
+let MongoProvider = config => ({
   groupCombinator: (group, filters) => ({
     [`$${group.join === 'not' ? 'nor' : group.join}`]: filters,
   }),
