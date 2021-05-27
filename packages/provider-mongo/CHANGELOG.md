@@ -1,3 +1,6 @@
+#0.25.0
+* Add `debug` calls to track request/response queries via the `contexture:mongo` namespace.
+
 #0.24.0
 * Change facet type optionsFilter to $and all words by doing a $regex match for each word as opposed to all words at once 
 
