@@ -1,3 +1,6 @@
+#1.5.0
+* Add `debug` calls to track request/response queries via the `contexture:elasticsearch` namespace.
+
 #1.4.4
 * Fix `must not` text filter option
 

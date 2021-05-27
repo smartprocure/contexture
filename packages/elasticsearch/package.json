@@ -1,6 +1,6 @@
 {
   "name": "contexture-elasticsearch",
-  "version": "1.4.4",
+  "version": "1.5.0",
   "description": "ElasticSearch Provider for Contexture",
   "main": "src/index.js",
   "scripts": {
@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "@elastic/datemath": "^2.3.0",
+    "debug": "^4.3.1",
     "futil": "^1.67.0",
     "js-combinatorics": "^0.5.3",
     "json-stable-stringify": "^1.0.1",

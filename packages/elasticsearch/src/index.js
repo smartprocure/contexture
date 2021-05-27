@@ -1,6 +1,22 @@
 let _ = require('lodash/fp')
 let { getESSchemas } = require('./schema')
 let redisCache = require('./utils/redisCache')
+let debug = require('debug')('contexture:elasticsearch')
+
+let revolvingCounter = max => {
+  let counter = 0
+  return {
+    inc() {
+      if (counter === max) {
+        counter = 1
+      } else {
+        counter++
+      }
+      return counter
+    },
+  }
+}
+let counter = revolvingCounter(500)
 
 let constantScore = filter => ({ constant_score: { filter } })
 
@@ -59,13 +75,19 @@ let ElasticsearchProvider = (config = { request: {} }) => {
         if (!scroll) search = cached(search, schema)
       }
 
-      let response
+      let metaObj = { request, requestOptions }
+
       try {
+        // Log Request
+        node._meta.requests.push(metaObj)
+        let count = counter.inc()
+        debug('(%s) Request: %O\nOptions: %O', count, request, requestOptions)
         let { body } = await search(request, requestOptions)
-        response = body
+        metaObj.response = body
+        debug('(%s) Response: %O', count, body)
       } catch (e) {
         console.error({ e })
-        response = e
+        metaObj.response = e
         node.error = e.meta.body.error
         throw {
           message: `${e}`,
@@ -73,10 +95,7 @@ let ElasticsearchProvider = (config = { request: {} }) => {
         }
       }
 
-      // Log Request
-      node._meta.requests.push({ request, requestOptions, response })
-
-      return response
+      return metaObj.response
     },
     getSchemas: () => getESSchemas(config.getClient()),
   }
