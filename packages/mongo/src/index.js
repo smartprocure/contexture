@@ -1,9 +1,29 @@
-let Promise = require('bluebird')
+let debug = require('debug')('contexture:mongo')
+
+let revolvingCounter = max => {
+  let counter = 0
+  return {
+    inc() {
+      if (counter === max) {
+        counter = 1
+      } else {
+        counter++
+      }
+      return counter
+    },
+  }
+}
+let counter = revolvingCounter(500)
 
 // Basic function to encapsulate everything needed to run a request - tiny wrapper over raw mongo syntax
-let mongoDSL = (client, dsl) => {
-  let Collection = client.collection(dsl.collection)
-  if (dsl.aggs) return Collection.aggregate(dsl.aggs).toArray()
+let mongoDSL = async (client, { collection, aggs }, count) => {
+  let Collection = client.collection(collection)
+  if (aggs) {
+    debug('(%s) Collection: %s. Pipeline: %O', count, collection, aggs)
+    let results = await Collection.aggregate(aggs).toArray()
+    debug('(%s) Response: %O', count, results)
+    return results
+  }
 }
 
 let MongoProvider = config => ({
@@ -11,7 +31,7 @@ let MongoProvider = config => ({
     [`$${group.join === 'not' ? 'nor' : group.join}`]: filters,
   }),
   types: config.types,
-  runSearch(options, node, schema, filters, aggs) {
+  async runSearch(options, node, schema, filters, aggs) {
     let client = config.getClient()
 
     let request = {
@@ -30,11 +50,10 @@ let MongoProvider = config => ({
     // Log Request
     node._meta.requests.push(request)
 
-    let result = Promise.resolve(mongoDSL(client, request.request))
-    return result.tap(results => {
-      // Log response
-      request.response = results
-    })
+    let results = await mongoDSL(client, request.request, counter.inc())
+    // Log response
+    request.response = results
+    return results
   },
 })
 

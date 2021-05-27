@@ -1,6 +1,6 @@
 {
   "name": "contexture-mongo",
-  "version": "0.24.0",
+  "version": "0.25.0",
   "description": "Mongo Provider for Contexture",
   "main": "src/index.js",
   "scripts": {
@@ -37,6 +37,7 @@
   "dependencies": {
     "@elastic/datemath": "^2.3.0",
     "bluebird": "^3.5.0",
+    "debug": "^4.3.1",
     "futil": "^1.67.2",
     "include-all": "^4.0.3",
     "lodash": "^4.17.4",
