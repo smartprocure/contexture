@@ -1,3 +1,7 @@
+#1.6.0
+* Experimental API: remove redis cache support
+* Provider: add `searchWrapper` config option
+
 #1.5.0
 * Add `debug` calls to track request/response queries via the `contexture:elasticsearch` namespace.
 
