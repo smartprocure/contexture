@@ -7,10 +7,11 @@ This provider takes a config object as a parameter, and expects a `getClient` me
 ### Provider
 This provider takes a config object as a parameter:
 
-| Option      | Type       | Description                                      | Required |
-| ------      | ----       | -----------                                      | -------- |
-| `getClient` | `function` | Returns an instantiated elasticsearch client     | x        |
-| `types`     | `object`   | Contexture node types, like all other providers  |          |
+| Option          | Type       | Description                                      | Required |
+| --------------- | ---------- | -----------                                      | -------- |
+| `getClient`     | `function` | Returns an instantiated elasticsearch client     | x        |
+| `searchWrapper` | `function` | Higher order function for search caching         |          |
+| `types`         | `object`   | Contexture node types, like all other providers  |          |
 
 ### Schemas
 Schemas with with an elasticsearch provider can specify any or all of the following properties:
