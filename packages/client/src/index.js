@@ -132,7 +132,7 @@ export let ContextTree = _.curry(
       if (path) {
         Tree.walk((node, index, parents) => {
           let nodePath = [..._.map('key', _.reverse(parents)), node.key]
-          if (!_.isEqual(path, nodePath) && !isParent(path, nodePath)){
+          if (!_.isEqual(path, nodePath) && !isParent(path, nodePath)) {
             node.filterOnly = true
           }
         })(body)
