@@ -96,7 +96,7 @@ export let ContextTree = _.curry(
       await validate(runTypeFunction(types, 'validate'), extend, tree)
       let updatedNodes = _.flatten(bubbleUp(processEvent(event), event.path))
       await Promise.all(_.invokeMap('onMarkForUpdate', updatedNodes))
-      // Snapshot is for mobx 4 support because path being an obserable array means that `_.find({path: event.path})` throws an error
+      // Snapshot is for mobx 4 support because path being an observable array means that `_.find({path: event.path})` throws an error
       let affectsSelf = !!_.flow(
         _.map(snapshot),
         _.find({ path: snapshot(event.path) })
@@ -130,13 +130,12 @@ export let ContextTree = _.curry(
 
       // make all other nodes filter only
       if (path) {
-        Tree.walk(node => {
-          node.filterOnly = true
+        Tree.walk((node, index, parents) => {
+          let nodePath = [..._.map('key', _.reverse(parents)), node.key]
+          if (!_.isEqual(path, nodePath) && !isParent(path, nodePath)){
+            node.filterOnly = true
+          }
         })(body)
-        // `tail` is because raw futil trees don't want `root`
-        Tree.walk(node => {
-          node.filterOnly = false
-        })(Tree.lookup(_.tail(path), body))
       }
 
       try {
@@ -147,11 +146,9 @@ export let ContextTree = _.curry(
       }
     }
     let triggerDelayedUpdate = F.debounceAsync(debounce, triggerImmediateUpdate)
-    // Even in immediate update mode, debounce by a very small amount to avoid spamming
-    let triggerSafeImmediateUpdate = F.debounceAsync(10, triggerImmediateUpdate)
     let triggerUpdate = path =>
       TreeInstance.disableAutoUpdate
-        ? triggerSafeImmediateUpdate(path)
+        ? triggerImmediateUpdate(path)
         : triggerDelayedUpdate(path)
 
     let processResponse = async data => {
@@ -174,18 +171,18 @@ export let ContextTree = _.curry(
           TreeInstance.onResult(path, node, target)
           mergeWith((oldValue, newValue) => newValue, target, responseNode)
           if (debug && node._meta) target.metaHistory.push(node._meta)
-        }
-        extend(target, { updating: false })
-        try {
-          target.updatingDeferred.resolve()
-        } catch (e) {
-          log(
-            'Tried to resolve a node that had no updatingDeferred. This usually means there was unsolicited results from the server for a node that has never been updated.'
-          )
-        }
-        if (!_.isEmpty(responseNode)) {
+
+          try {
+            target.updatingDeferred.resolve()
+          } catch (e) {
+            log(
+              'Tried to resolve a node that had no updatingDeferred. This usually means there was unsolicited results from the server for a node that has never been updated.'
+            )
+          }
+
           await F.maybeCall(target.afterSearch)
         }
+        extend(target, { updating: false })
       }
     }
 
