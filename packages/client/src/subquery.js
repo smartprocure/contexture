@@ -1,5 +1,4 @@
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
 import { getTypePropOrError } from './types'
 
 // This is factored out to make it easy to eventually support custom mapSubqueryValues functions
@@ -46,12 +45,12 @@ export default _.curry(
     // targetNode.onMarkForUpdate = () => sourceNode.updatingPromise
 
     // This version would not mark targetNode for update until sourceNode is done:
-    // Using debounceAsync because updatingPromise is initialized after validation stage
-    // and we can resolve several validate calls with the latest updatingPromise
-    targetNode.validate = F.debounceAsync(0, async () => {
+    // Using setTimeout because updatingPromise is initialized after validation stage
+    targetNode.validate = async () => {
+      await new Promise(resolve => setTimeout(resolve))
       await sourceNode.updatingPromise
       return true
-    })
+    }
 
     // Could also use onResult, but this is more direct and avoids having to cache
     // the promise for this mutate action somewhere

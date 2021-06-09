@@ -171,7 +171,11 @@ export let ContextTree = _.curry(
           TreeInstance.onResult(path, node, target)
           mergeWith((oldValue, newValue) => newValue, target, responseNode)
           if (debug && node._meta) target.metaHistory.push(node._meta)
+        }
 
+        extend(target, { updating: false })
+
+        if (!_.isEmpty(responseNode)) {
           try {
             target.updatingDeferred.resolve()
           } catch (e) {
@@ -179,10 +183,8 @@ export let ContextTree = _.curry(
               'Tried to resolve a node that had no updatingDeferred. This usually means there was unsolicited results from the server for a node that has never been updated.'
             )
           }
-
           await F.maybeCall(target.afterSearch)
         }
-        extend(target, { updating: false })
       }
     }
 
