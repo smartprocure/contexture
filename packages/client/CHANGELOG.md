@@ -1,3 +1,8 @@
+# 2.36.0
+* Debounce for immediate updates is removed
+* Fixing logic filterOnly flag for serialized tree
+* Subquery: making whole targetTree to await for sourceNode
+
 # 2.35.0
 * Immediate updates are now debounced 10ms (which happens on self affecting reactors when disableAutoUpdate is true)
 
