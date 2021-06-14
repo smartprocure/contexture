@@ -132,6 +132,7 @@ export let ContextTree = _.curry(
       if (path) {
         Tree.walk((node, index, parents) => {
           let nodePath = [..._.map('key', _.reverse(parents)), node.key]
+          // marking everything that isn’t the node or it’s children
           if (!_.isEqual(path, nodePath) && !isParent(path, nodePath)) {
             node.filterOnly = true
           }
