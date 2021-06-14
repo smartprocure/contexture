@@ -1215,10 +1215,18 @@ let AllTests = ContextureClient => {
       join: 'and',
       children: [
         { key: 'results', type: 'results' },
-        { key: 'criteria', children: [
-          { key: 'agencies', field: 'Organization.Name', type: 'facet' },
-          { key: 'vendors', field: 'Vendor.Name', type: 'facet', forceFilterOnly: true },
-        ]},
+        {
+          key: 'criteria',
+          children: [
+            { key: 'agencies', field: 'Organization.Name', type: 'facet' },
+            {
+              key: 'vendors',
+              field: 'Vendor.Name',
+              type: 'facet',
+              forceFilterOnly: true,
+            },
+          ],
+        },
       ],
     })
 
@@ -1267,7 +1275,7 @@ let AllTests = ContextureClient => {
       key: 'root',
     })
     // Refreshing whole tree shouldn't block searches
-    await tree.dispatch({ type: 'refresh' , path: ['root'] })
+    await tree.dispatch({ type: 'refresh', path: ['root'] })
     expect(service).to.have.callCount(2)
     let [body, ts] = service.getCall(1).args
 
