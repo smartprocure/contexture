@@ -1,5 +1,5 @@
 # 2.36.0
-* Debounce for immediate updates is removed
+* Debounce for immediate updates is set to 1 ms
 * Fixing logic filterOnly flag for serialized tree
 * Subquery: making whole targetTree to await for sourceNode
 
