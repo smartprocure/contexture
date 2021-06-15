@@ -119,7 +119,7 @@ export let ContextTree = _.curry(
     }
 
     // If specifying path, *only* update that path
-    let triggerImmediateUpdate = async path => {
+    let runUpdate = async path => {
       if (shouldBlockUpdate(flat)) return log('Blocked Search')
       let now = new Date().getTime()
       let node = getNode(path)
@@ -146,7 +146,8 @@ export let ContextTree = _.curry(
         onError(error) // Raise the onError event
       }
     }
-    let triggerDelayedUpdate = F.debounceAsync(debounce, triggerImmediateUpdate)
+    let triggerImmediateUpdate = F.debounceAsync(1, runUpdate)
+    let triggerDelayedUpdate = F.debounceAsync(debounce, runUpdate)
     let triggerUpdate = path =>
       TreeInstance.disableAutoUpdate
         ? triggerImmediateUpdate(path)
