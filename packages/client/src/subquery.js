@@ -1,6 +1,8 @@
 import _ from 'lodash/fp'
 import { getTypePropOrError } from './types'
 
+let delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+
 // This is factored out to make it easy to eventually support custom mapSubqueryValues functions
 let mapSubqueryValuesByType = (sourceNode, targetNode, types) =>
   _.flow(
@@ -41,9 +43,16 @@ export default _.curry(
     // Set validation dependency to block search, but uses onMarkForUpdate instead
     // so the targetNode can be marked for update before sourceNode resolves.
     // Validate blocks markedForUpdate but onMarkForUpdate does not.
-    targetNode.onMarkForUpdate = () => sourceNode.updatingPromise
+
+    // targetNode.onMarkForUpdate = () => sourceNode.updatingPromise
+
     // This version would not mark targetNode for update until sourceNode is done:
-    // targetNode.validate = () => sourceNode.updatingPromise.then(() => true)
+    // Using setTimeout because updatingPromise is initialized after validation stage
+    targetNode.validate = async () => {
+      await delay()
+      await sourceNode.updatingPromise
+      return true
+    }
 
     // Could also use onResult, but this is more direct and avoids having to cache
     // the promise for this mutate action somewhere
