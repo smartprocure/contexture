@@ -1,3 +1,6 @@
+# 2.36.1
+* Fix: running immediate updates with path without debounce
+
 # 2.36.0
 * Debounce for immediate updates is set to 1 ms
 * Fixing logic filterOnly flag for serialized tree
