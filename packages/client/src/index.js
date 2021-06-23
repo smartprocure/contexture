@@ -146,12 +146,20 @@ export let ContextTree = _.curry(
         onError(error) // Raise the onError event
       }
     }
-    let triggerDelayedUpdate = F.debounceAsync(debounce, runUpdate)
-    let triggerPathUpdate = _.memoize(() => F.debounceAsync(0, runUpdate))
+
+    let triggerImmediatePathUpdate = _.memoize(() =>
+      F.debounceAsync(0, runUpdate))
+    let triggerDelayedPathUpdate = _.memoize(() =>
+      F.debounceAsync(debounce, runUpdate))
+
     let triggerUpdate = path =>
-      TreeInstance.disableAutoUpdate
-        ? triggerPathUpdate(String(path))(path)
-        : triggerDelayedUpdate(path)
+      (TreeInstance.disableAutoUpdate
+        ? triggerImmediatePathUpdate
+        : triggerDelayedPathUpdate
+      )(
+        String(path)
+      )(path)
+
 
     let processResponse = async data => {
       // TODO: Remove these 3 deprecated lines in 3.0. Errors will just be on the tree so no need to wrap in `data` to allow `error`
