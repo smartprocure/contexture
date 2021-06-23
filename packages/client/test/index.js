@@ -1321,6 +1321,37 @@ let AllTests = ContextureClient => {
       lastUpdateTime: ts,
     })
   })
+  it('should still debounce disableAutoUpdate even with self affecting reactors that triggerImmediate', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient({
+      service,
+      debounce: 1,
+      disableAutoUpdate: true,
+    })
+    let tree = Tree({
+      key: 'root',
+      join: 'and',
+      children: [
+        { key: 'filter1', type: 'tagsQuery', field: 'facetfield' },
+        { key: 'results', type: 'results' },
+      ],
+    })
+    expect(service).to.have.callCount(0)
+
+    // Tags mutate has a self affecting reactor (`all`), which will triggerImmediate and bypass disableAutoUpdate
+    let toTags = _.map(word => ({ word }))
+    let calls = [
+      tree.mutate(['root', 'filter1'], { tags: toTags(['1']) }),
+      tree.mutate(['root', 'filter1'], { tags: toTags(['1', '2']) }),
+      tree.mutate(['root', 'filter1'], { tags: toTags(['1', '2', '3']) }),
+      tree.mutate(['root', 'filter1'], { tags: toTags(['1', '2', '3', '4']) }),
+    ]
+    expect(service).to.have.callCount(0)
+
+    // Even though 4 mutate calls were made, only 1 search should have actually triggered
+    await Promise.all(calls)
+    expect(service).to.have.callCount(1)
+  })
   it('should call onUpdateByOthers', async () => {
     let service = sinon.spy(mockService())
     let types = {
