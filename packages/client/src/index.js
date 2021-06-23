@@ -146,13 +146,11 @@ export let ContextTree = _.curry(
         onError(error) // Raise the onError event
       }
     }
-    let triggerImmediateUpdate = F.debounceAsync(1, runUpdate)
     let triggerDelayedUpdate = F.debounceAsync(debounce, runUpdate)
+    let triggerPathUpdate = _.memoize(() => F.debounceAsync(0, runUpdate))
     let triggerUpdate = path =>
       TreeInstance.disableAutoUpdate
-        ? path
-          ? runUpdate(path)
-          : triggerImmediateUpdate(path)
+        ? triggerPathUpdate(String(path))(path)
         : triggerDelayedUpdate(path)
 
     let processResponse = async data => {

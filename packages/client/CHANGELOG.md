@@ -1,5 +1,5 @@
 # 2.36.1
-* Fix: running immediate updates with path without debounce
+* Fix: debouncing updates with path independently
 
 # 2.36.0
 * Debounce for immediate updates is set to 1 ms
