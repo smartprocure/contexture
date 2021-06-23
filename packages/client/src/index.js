@@ -146,12 +146,22 @@ export let ContextTree = _.curry(
         onError(error) // Raise the onError event
       }
     }
-    let triggerImmediateUpdate = F.debounceAsync(1, runUpdate)
-    let triggerDelayedUpdate = F.debounceAsync(debounce, runUpdate)
+
+    // We need to isolate debouncing for different paths.
+    // If you refresh root and then unpause a facet,
+    // second update will bounce out the root refresh.
+    // So using memo for separate de-bouncers.
+    let triggerImmediatePathUpdate = _.memoize(() =>
+      F.debounceAsync(0, runUpdate)
+    )
+    let triggerDelayedPathUpdate = _.memoize(() =>
+      F.debounceAsync(debounce, runUpdate)
+    )
+
     let triggerUpdate = path =>
-      TreeInstance.disableAutoUpdate
-        ? triggerImmediateUpdate(path)
-        : triggerDelayedUpdate(path)
+      (TreeInstance.disableAutoUpdate
+        ? triggerImmediatePathUpdate
+        : triggerDelayedPathUpdate)(encode(path))(path)
 
     let processResponse = async data => {
       // TODO: Remove these 3 deprecated lines in 3.0. Errors will just be on the tree so no need to wrap in `data` to allow `error`
