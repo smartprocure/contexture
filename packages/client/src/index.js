@@ -150,7 +150,9 @@ export let ContextTree = _.curry(
     let triggerDelayedUpdate = F.debounceAsync(debounce, runUpdate)
     let triggerUpdate = path =>
       TreeInstance.disableAutoUpdate
-        ? triggerImmediateUpdate(path)
+        ? path
+          ? runUpdate(path)
+          : triggerImmediateUpdate(path)
         : triggerDelayedUpdate(path)
 
     let processResponse = async data => {
