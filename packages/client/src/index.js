@@ -147,6 +147,10 @@ export let ContextTree = _.curry(
       }
     }
 
+    // We need to isolate debouncing for different paths.
+    // If you refresh root and then unpause a facet,
+    // second update will bounce out the root refresh.
+    // So using memo for separate de-bouncers.
     let triggerImmediatePathUpdate = _.memoize(() =>
       F.debounceAsync(0, runUpdate)
     )
