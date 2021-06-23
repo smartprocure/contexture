@@ -1333,7 +1333,7 @@ let AllTests = ContextureClient => {
       join: 'and',
       children: [
         { key: 'filter1', type: 'tagsQuery', field: 'facetfield' },
-        { key: 'results', type: 'results' }
+        { key: 'results', type: 'results' },
       ],
     })
     expect(service).to.have.callCount(0)
