@@ -32,7 +32,7 @@ let FilterButtonItem = _.flow(
       node.key
     let description = _.get('description', mappedProps)
     return (
-      <>
+      <div>
         <CheckButton
           primary={node.markedForUpdate}
           checked={node.hasValue}
@@ -78,7 +78,7 @@ let FilterButtonItem = _.flow(
             </Flex>
           </Flex>
         </Modal>
-      </>
+      </div>
     )
   }
 )
