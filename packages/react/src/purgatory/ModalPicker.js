@@ -25,7 +25,10 @@ let ModalPicker = ({
         />
       </Modal>
       {!!options.length && (
-        <Button className={`modal-picker-button ${className}`} onClick={F.on(open)}>
+        <Button
+          className={`modal-picker-button ${className}`}
+          onClick={F.on(open)}
+        >
           {label}
         </Button>
       )}

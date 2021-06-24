@@ -40,7 +40,7 @@ let FilterButtonItem = _.flow(
             F.on(modal)()
             tree.mutate(node.path, { paused: false })
           }}
-          theme={{Button: FilterButton}}
+          theme={{ Button: FilterButton }}
         >
           {title}
         </CheckButton>
@@ -61,7 +61,7 @@ let FilterButtonItem = _.flow(
                 }}
               />
             </div>
-            <Flex style={{justifyContent: "flex-end"}}>
+            <Flex style={{ justifyContent: 'flex-end' }}>
               <Button onClick={() => tree.clear(node.path)}>
                 Clear Filter
               </Button>
@@ -71,7 +71,7 @@ let FilterButtonItem = _.flow(
                   F.off(modal)()
                   tree.mutate(node.path, { paused: true })
                 }}
-                style={{marginLeft: '10px'}}
+                style={{ marginLeft: '10px' }}
               >
                 Done
               </Button>
@@ -94,61 +94,66 @@ let GroupBox = ({ nodeJoinColor, children, nested, className, style }) => (
   </Flex>
 )
 
-let FilterButtonList = observer(({
-  node,
-  tree,
-  fields = {},
-  mapNodeToProps = _.noop,
-  allowDuplicateFields = false,
-  className = '',
-  nested = false,
-  style,
-  children,
-  theme: { Icon, Button, FilterButton = Button },
-}) => {
-  let options = fieldsToOptions(fields)
-  if (!allowDuplicateFields) {
-    options = _.reject(x => _.includes(x.field, getGroupFields(node)), options)
-  }
-  return (
-    <GroupBox
-      className={`filter-button-list ${className}`}
-      {...{ nested, style }}
-      nodeJoinColor={node && styles.joinColor(node)}
-    >
-      {children}
-      {_.map(child => {
-        let Component = child.children ? FilterButtonList : FilterButtonItem
-        return (
-          <Component
-            key={child.path}
-            nested
-            {...{
-              tree,
-              node: child,
-              fields,
-              mapNodeToProps,
-              className,
-            }}
-          />
-        )
-      }, _.get('children', node))}
+let FilterButtonList = observer(
+  ({
+    node,
+    tree,
+    fields = {},
+    mapNodeToProps = _.noop,
+    allowDuplicateFields = false,
+    className = '',
+    nested = false,
+    style,
+    children,
+    theme: { Icon, Button, FilterButton = Button },
+  }) => {
+    let options = fieldsToOptions(fields)
+    if (!allowDuplicateFields) {
+      options = _.reject(
+        x => _.includes(x.field, getGroupFields(node)),
+        options
+      )
+    }
+    return (
+      <GroupBox
+        className={`filter-button-list ${className}`}
+        {...{ nested, style }}
+        nodeJoinColor={node && styles.joinColor(node)}
+      >
+        {children}
+        {_.map(child => {
+          let Component = child.children ? FilterButtonList : FilterButtonItem
+          return (
+            <Component
+              key={child.path}
+              nested
+              {...{
+                tree,
+                node: child,
+                fields,
+                mapNodeToProps,
+                className,
+              }}
+            />
+          )
+        }, _.get('children', node))}
 
-      {!nested && (
-        <div>
-          <ModalPicker
-            options={options}
-            className="check-button"
-            onChange={field =>
-              tree.add(node.path, newNodeFromField({ field, fields }))
-            }
-            label={<Icon icon="AddColumn" />}
-            theme={{Button: FilterButton}}
-          />
-        </div>
-      )}
-    </GroupBox>
-  )
-})
+        {!nested && (
+          <div>
+            <ModalPicker
+              options={options}
+              className="check-button"
+              onChange={field =>
+                tree.add(node.path, newNodeFromField({ field, fields }))
+              }
+              label={<Icon icon="AddColumn" />}
+              theme={{ Button: FilterButton }}
+            />
+          </div>
+        )}
+      </GroupBox>
+    )
+  }
+)
 
 export default _.flow(withNode, withTheme)(FilterButtonList)
