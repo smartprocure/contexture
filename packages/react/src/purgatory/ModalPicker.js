@@ -7,6 +7,7 @@ import { withTheme } from '../utils/theme'
 
 let ModalPicker = ({
   options = [],
+  className = '',
   onChange,
   label,
   theme: { Button, NestedPicker, Modal },
@@ -24,7 +25,7 @@ let ModalPicker = ({
         />
       </Modal>
       {!!options.length && (
-        <Button className="modal-picker-button" onClick={F.on(open)}>
+        <Button className={`modal-picker-button ${className}`} onClick={F.on(open)}>
           {label}
         </Button>
       )}

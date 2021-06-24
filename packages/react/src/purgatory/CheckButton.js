@@ -22,7 +22,7 @@ let CheckButton = ({
         onChange={_.noop} // prevent another react warning when `checked` is passed but `onChange` isn't
         disabled
       />
-      {children}
+        &nbsp; {children}
     </Flex>
   </theme.Button>
 )
