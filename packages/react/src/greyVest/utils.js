@@ -16,7 +16,13 @@ export let sanitizeTagWords = (
   return _.flow(
     string => words(string, wordsMatchPattern),
     _.take(maxWordsPerTag),
-    _.map(_.truncate({ length: maxCharsPerTagWord, omission: '' })),
+    _.map(word => _.flow(
+        _.truncate({ length: maxCharsPerTagWord, omission: '' }),
+        // Remove beginning of line dash and space dash
+        _.replace(/^-| -/g, ' '),
+        _.trim
+      )(word)
+    ),
     _.join(' ')
   )
 }
@@ -31,7 +37,7 @@ export let splitTagOnComma = _.flow(
 )
 
 // RegEx to match words composed of alphanumeric characters.
-// Uses ASCI ranges https://donsnotes.com/tech/charsets/ascii.html
 // From: https://github.com/lodash/lodash/blob/ddfd9b11a0126db2302cb70ec9973b66baec0975/lodash.js#L166
+// Uses ASCI ranges https://donsnotes.com/tech/charsets/ascii.html with the exception that it allows '-' which is \x2D
 // eslint-disable-next-line no-control-regex
-export let alphaNumericRegEx = /[^\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]+/g
+export let alphaNumericRegEx = /[^\x00-\x2C\x2E-\x2F\x3a-\x40\x5b-\x60\x7b-\x7f]+/g
