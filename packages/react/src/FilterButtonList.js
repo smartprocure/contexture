@@ -34,7 +34,7 @@ let FilterButtonItem = _.flow(
     return (
       <div>
         <CheckButton
-          primary={node.markedForUpdate}
+          primary={node.hasValue}
           checked={node.hasValue}
           onClick={() => {
             F.on(modal)()
