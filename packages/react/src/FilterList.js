@@ -97,7 +97,6 @@ export let Label = _.flow(
 )(({ tree, node, fields, children, theme: { Icon }, ...props }) => {
   let popover = React.useState(false)
   let modal = React.useState(false)
-  let key = _.get('key', node)
   let field = _.get('field', node)
   return (
     <Flex
