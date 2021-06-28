@@ -111,11 +111,7 @@ export let Label = _.flow(
       }}
     >
       <span {...props}>
-        {children ||
-          _.get([key, 'label'], fields) ||
-          _.get([field, 'label'], fields) ||
-          field ||
-          ''}
+        {children || _.get([field, 'label'], fields) || field || ''}
       </span>
       {tree && node && (
         <>

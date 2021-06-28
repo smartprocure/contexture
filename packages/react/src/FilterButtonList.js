@@ -1,15 +1,14 @@
 import F from 'futil'
 import _ from 'lodash/fp'
 import React from 'react'
-import { observer } from 'mobx-react'
 import { setDisplayName } from 'recompose'
 import { Dynamic, Flex } from './greyVest'
 import { CheckButton, ModalPicker } from './purgatory'
-import { withNode } from './utils/hoc'
+import { contexturifyWithoutLoader } from './utils/hoc'
 import { withTheme } from './utils/theme'
 import styles from './styles'
 import { newNodeFromField } from './utils/search'
-import { fieldsToOptions, getGroupFields } from './FilterAdder'
+import { fieldsToOptions, unusedOptions } from './FilterAdder'
 
 let FilterButtonItem = _.flow(
   setDisplayName('FilterButtonItem'),
@@ -20,13 +19,14 @@ let FilterButtonItem = _.flow(
     tree,
     fields,
     mapNodeToProps,
+    mapNodeToLabel,
     theme: { Button, FilterButton = Button, UnmappedNodeComponent, Modal },
   }) => {
     let mappedProps = mapNodeToProps(node, fields)
     let modal = React.useState(false)
     let title = // we really need a title, so here's every possible fallback
+      mapNodeToLabel(node, fields) ||
       _.get('label', mappedProps) ||
-      _.get([node.key, 'label'], fields) ||
       _.get([node.field, 'label'], fields) ||
       node.field ||
       node.key
@@ -94,26 +94,24 @@ let GroupBox = ({ nodeJoinColor, children, nested, className, style }) => (
   </Flex>
 )
 
-let FilterButtonList = observer(
+let FilterButtonList = contexturifyWithoutLoader(
   ({
     node,
     tree,
     fields = {},
     mapNodeToProps = _.noop,
+    mapNodeToLabel = _.noop,
     allowDuplicateFields = false,
     className = '',
+    addFilters = false,
     nested = false,
     style,
     children,
     theme: { Icon, Button, FilterButton = Button },
   }) => {
-    let options = fieldsToOptions(fields)
-    if (!allowDuplicateFields) {
-      options = _.reject(
-        x => _.includes(x.field, getGroupFields(node)),
-        options
-      )
-    }
+    let options = allowDuplicateFields
+      ? fieldsToOptions(fields)
+      : unusedOptions(fields)
     return (
       <GroupBox
         className={`filter-button-list ${className}`}
@@ -132,13 +130,14 @@ let FilterButtonList = observer(
                 node: child,
                 fields,
                 mapNodeToProps,
+                mapNodeToLabel,
                 className,
               }}
             />
           )
         }, _.get('children', node))}
 
-        {!nested && (
+        {addFilters && !nested && (
           <div>
             <ModalPicker
               options={options}
@@ -156,4 +155,4 @@ let FilterButtonList = observer(
   }
 )
 
-export default _.flow(withNode, withTheme)(FilterButtonList)
+export default FilterButtonList
