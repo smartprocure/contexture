@@ -7,28 +7,32 @@ import { withTheme } from '../utils/theme'
 
 let ModalPicker = ({
   options = [],
+  className = '',
   onChange,
   label,
   theme: { Button, NestedPicker, Modal },
 }) => {
   let open = React.useState(false)
   return (
-    <>
-      <Modal open={open}>
-        <NestedPicker
-          options={options}
-          onChange={x => {
-            onChange(x)
-            F.off(open)()
-          }}
-        />
-      </Modal>
-      {!!options.length && (
-        <Button className="modal-picker-button" onClick={F.on(open)}>
+    !!options.length && (
+      <>
+        <Modal open={open}>
+          <NestedPicker
+            options={options}
+            onChange={x => {
+              onChange(x)
+              F.off(open)()
+            }}
+          />
+        </Modal>
+        <Button
+          className={`modal-picker-button ${className}`}
+          onClick={F.on(open)}
+        >
           {label}
         </Button>
-      )}
-    </>
+      </>
+    )
   )
 }
 

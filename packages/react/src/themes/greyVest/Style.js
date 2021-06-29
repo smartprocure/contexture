@@ -201,6 +201,7 @@ export default () => (
       }
       .filter-button-modal {
         min-width: 300px;
+        max-height: calc(100vh - 160px);
       }
       .filter-button-modal * {
         max-width: 480px;
@@ -215,6 +216,8 @@ export default () => (
       }
       .filter-button-modal .filter-component {
         margin: 30px 0;
+        flex: 1;
+        overflow-y: auto;
       }
       .filter-button-modal .gv-button {
         margin-right: 10px;

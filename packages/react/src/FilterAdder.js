@@ -9,6 +9,12 @@ export let fieldsToOptions = _.map(x => ({ value: x.field, ...x }))
 
 let getGroupFields = node => _.map('field', _.getOr([], 'children', node))
 
+export let unusedOptions = (fields, node) =>
+  _.reject(
+    x => _.includes(x.field, getGroupFields(node)),
+    fieldsToOptions(fields)
+  )
+
 let FilterAdder = ({
   tree,
   node,
@@ -18,10 +24,9 @@ let FilterAdder = ({
   Picker = ModalPicker,
   theme: { Icon },
 }) => {
-  let options = fieldsToOptions(fields)
-  if (uniqueFields) {
-    options = _.reject(x => _.includes(x.field, getGroupFields(node)), options)
-  }
+  let options = uniqueFields
+    ? unusedOptions(fields, node)
+    : fieldsToOptions(fields)
   let Label = (
     <Flex justifyContent="center" alignItems="center">
       Add Custom Filter
