@@ -7,8 +7,7 @@ import { Flex } from './greyVest'
 
 export let fieldsToOptions = _.map(x => ({ value: x.field, ...x }))
 
-let getGroupFields = node =>
-  _.map('field', _.getOr([], 'children', node))
+let getGroupFields = node => _.map('field', _.getOr([], 'children', node))
 
 export let unusedOptions = (fields, node) =>
   _.reject(

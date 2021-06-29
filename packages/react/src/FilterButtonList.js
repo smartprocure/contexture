@@ -145,12 +145,12 @@ let FilterButtonList = contexturifyWithoutLoader(
               onChange={field =>
                 tree.add(node.path, newNodeFromField({ field, fields }))
               }
-              label={(
-                <Flex alignItems='center' justifyContent='center'>
-                  <Icon icon='AddColumn' />
+              label={
+                <Flex alignItems="center" justifyContent="center">
+                  <Icon icon="AddColumn" />
                   {addFilters !== true && <>&nbsp;{addFilters}</>}
                 </Flex>
-              )}
+              }
               theme={{ Button: FilterButton }}
             />
           </div>
