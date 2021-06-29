@@ -18,8 +18,10 @@ let typeDescriptions = {
 export let types = _.merge(exampleTypes, typeDescriptions)
 
 export let fields = {
-  foo: { label: 'Foo', description: 'Enter a foo.' },
-  bar: { label: 'Bar', description: "Type in the bar's name." },
+  foo: { label: 'Foo', description: 'Enter the number of foo.', typeDefault: 'number' },
+  bar: { label: 'Bar', description: "Type in the bar's name.", typeDefault: 'facet' },
+  query: { label: 'Query', description: 'Enter a query.', typeDefault: 'query' },
+  tags: { label: 'Tags', description: 'Enter the tags.', typeDefault: 'facet' },
 }
 
 let Client = ContextureMobx({
