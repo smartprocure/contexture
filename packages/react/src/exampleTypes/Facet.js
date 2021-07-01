@@ -36,22 +36,23 @@ let Facet = ({
   let [expanded, setExpanded] = useState(false)
   return (
     <div className="contexture-facet">
-      {valuesChecked > warningCheck &&
+      {valuesChecked > warningCheck && (
         <Expandable
           isOpen={expanded}
           onClick={() => setExpanded(!expanded)}
           Label={
-            <a style={{cursor: 'pointer', color: 'red'}}>
+            <a style={{ cursor: 'pointer', color: 'red' }}>
               <b>* Too many items selected</b>
             </a>
           }
         >
           <Box>
-            You have selected a large number of items for this filter.
-            Please consider using a different <b>filter type</b> or contact support for more search options.
+            You have selected a large number of items for this filter. Please
+            consider using a different <b>filter type</b> or contact support for
+            more search options.
           </Box>
         </Expandable>
-      }
+      )}
       {!hide.radioList && (
         <RadioList
           value={node.mode || 'include'} // Fix by changing defaults in client example type
@@ -60,7 +61,9 @@ let Facet = ({
         />
       )}
       {!hide.facetFilter && <FacetOptionsFilter tree={tree} node={node} />}
-      {!hide.selectAll && <SelectAll node={node} tree={tree} maxChecked={maxChecked} />}
+      {!hide.selectAll && (
+        <SelectAll node={node} tree={tree} maxChecked={maxChecked} />
+      )}
       <FacetCheckboxList
         tree={tree}
         node={node}
