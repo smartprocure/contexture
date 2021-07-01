@@ -31,16 +31,13 @@ export let Cardinality = _.flow(
         justifyContent="space-between"
       >
         <div>
-          Showing{' '}
-          {toNumber(_.min([size, _.size(node.context.options)]))} of{' '}
+          Showing {toNumber(_.min([size, _.size(node.context.options)]))} of{' '}
           {toNumber(count)}
         </div>
         {count > size && (
           <div>
             <a
-              onClick={() =>
-                tree.mutate(node.path, { size: size + 10 })
-              }
+              onClick={() => tree.mutate(node.path, { size: size + 10 })}
               style={{ cursor: 'pointer' }}
             >
               View More
@@ -56,13 +53,8 @@ export let Cardinality = _.flow(
 export let SelectAll = _.flow(
   setDisplayName('SelectAll'),
   observer,
-  withTheme,
-)(({
-  node,
-  tree,
-  theme: { Checkbox },
-  maxChecked = 500,
-}) => {
+  withTheme
+)(({ node, tree, theme: { Checkbox }, maxChecked = 500 }) => {
   let notChecked = _.difference(
     _.map('name', _.get('context.options', node)),
     node.values
@@ -73,25 +65,23 @@ export let SelectAll = _.flow(
 
   // If the items are all already selected and we are not going to be over the max if we select all
   // then show the "Select All". This way we still allow the user to be able to "Unselect all"
-  return !isOverTheLimit || isAllChecked
-    ? (
-        <label style={commonStyle}>
-          <Checkbox
-            checked={isAllChecked}
-            onChange={() => {
-              if (isAllChecked)
-                tree.mutate(node.path, {
-                  values: [],
-                })
-              else {
-                tree.mutate(node.path, { values: allChecked })
-              }
-            }}
-          />
-          <div style={{ flex: 2, padding: '0 5px' }}>Select All Visible</div>
-        </label>
-      )
-    : null
+  return !isOverTheLimit || isAllChecked ? (
+    <label style={commonStyle}>
+      <Checkbox
+        checked={isAllChecked}
+        onChange={() => {
+          if (isAllChecked)
+            tree.mutate(node.path, {
+              values: [],
+            })
+          else {
+            tree.mutate(node.path, { values: allChecked })
+          }
+        }}
+      />
+      <div style={{ flex: 2, padding: '0 5px' }}>Select All Visible</div>
+    </label>
+  ) : null
 })
 
 export let FacetOptionsFilter = _.flow(
