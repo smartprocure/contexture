@@ -22,7 +22,7 @@ export let Cardinality = _.flow(
   setDisplayName('Cardinality'),
   observer
 )(({ node, tree }) => {
-  let size = _.getOr(10, 'size', node)
+  let size = node.size || 10
   let count = _.get('context.cardinality', node)
   if (count) {
     return (
