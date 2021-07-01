@@ -21,61 +21,77 @@ export let displayBlankFn = () => <i>Not Specified</i>
 export let Cardinality = _.flow(
   setDisplayName('Cardinality'),
   observer
-)(({ node, tree }) =>
-  _.get('context.cardinality', node) ? (
-    <Flex
-      className="contexture-facet-cardinality"
-      justifyContent="space-between"
-    >
-      <div>
-        Showing{' '}
-        {toNumber(_.min([node.size || 10, _.size(node.context.options)]))} of{' '}
-        {toNumber(node.context.cardinality)}
-      </div>
-      {node.context.cardinality > (node.size || 10) && (
+)(({ node, tree }) => {
+  let size = _.getOr(10, 'size', node)
+  let count = _.get('context.cardinality', node)
+  if (count) {
+    return (
+      <Flex
+        className="contexture-facet-cardinality"
+        justifyContent="space-between"
+      >
         <div>
-          <a
-            onClick={() =>
-              tree.mutate(node.path, { size: (node.size || 10) + 10 })
-            }
-            style={{ cursor: 'pointer' }}
-          >
-            View More
-          </a>
+          Showing{' '}
+          {toNumber(_.min([size, _.size(node.context.options)]))} of{' '}
+          {toNumber(count)}
         </div>
-      )}
-    </Flex>
-  ) : null
-)
+        {count > size && (
+          <div>
+            <a
+              onClick={() =>
+                tree.mutate(node.path, { size: size + 10 })
+              }
+              style={{ cursor: 'pointer' }}
+            >
+              View More
+            </a>
+          </div>
+        )}
+      </Flex>
+    )
+  }
+  return null
+})
 
 export let SelectAll = _.flow(
   setDisplayName('SelectAll'),
   observer,
-  withTheme
-)(({ node, tree, theme: { Checkbox } }) => {
-  let missingOptions = _.difference(
+  withTheme,
+)(({
+  node,
+  tree,
+  theme: { Checkbox },
+  maxChecked = 500,
+}) => {
+  let notChecked = _.difference(
     _.map('name', _.get('context.options', node)),
     node.values
   )
-  let allSelected = _.isEmpty(missingOptions)
-  return (
-    <label style={commonStyle}>
-      <Checkbox
-        checked={allSelected}
-        onChange={() => {
-          if (allSelected)
-            tree.mutate(node.path, {
-              values: [],
-            })
-          else
-            tree.mutate(node.path, {
-              values: node.values.concat(missingOptions),
-            })
-        }}
-      />
-      <div style={{ flex: 2, padding: '0 5px' }}>Select All Visible</div>
-    </label>
-  )
+  let isAllChecked = _.isEmpty(notChecked)
+  let allChecked = [...node.values, ...notChecked]
+  let isOverTheLimit = _.size(allChecked) > maxChecked
+
+  // If the items are all already selected and we are not going to be over the max if we select all
+  // then show the "Select All". This way we still allow the user to be able to "Unselect all"
+  return !isOverTheLimit || isAllChecked
+    ? (
+        <label style={commonStyle}>
+          <Checkbox
+            checked={isAllChecked}
+            onChange={() => {
+              if (isAllChecked)
+                tree.mutate(node.path, {
+                  values: [],
+                })
+              else {
+                tree.mutate(node.path, { values: allChecked })
+              }
+            }}
+          />
+          <div style={{ flex: 2, padding: '0 5px' }}>Select All Visible</div>
+        </label>
+      )
+    : null
 })
 
 export let FacetOptionsFilter = _.flow(

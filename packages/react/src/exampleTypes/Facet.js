@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import F from 'futil'
+import _ from 'lodash/fp'
 import { contexturify } from '../utils/hoc'
 import { toNumber } from '../utils/format'
+import { Box, Expandable } from '../greyVest'
 import {
   displayFn,
   displayBlankFn,
@@ -10,6 +12,11 @@ import {
   FacetCheckboxList,
   FacetOptionsFilter,
 } from '../utils/facet'
+
+// The hard limit to how many checked values we can allow in a facet
+let maxChecked = 500
+// The number of items selected after which we will show the warning message
+let warningCheck = 250
 
 let Facet = ({
   tree,
@@ -24,27 +31,47 @@ let Facet = ({
   displayBlank = displayBlankFn,
   formatCount = toNumber,
   theme: { RadioList },
-}) => (
-  <div className="contexture-facet">
-    {!hide.radioList && (
-      <RadioList
-        value={node.mode || 'include'} // Fix by changing defaults in client example type
-        onChange={mode => tree.mutate(node.path, { mode })}
-        options={F.autoLabelOptions(['include', 'exclude'])}
+}) => {
+  let valuesChecked = _.size(node.values)
+  let [expanded, setExpanded] = useState(false)
+  return (
+    <div className="contexture-facet">
+      {valuesChecked > warningCheck &&
+        <Expandable
+          isOpen={expanded}
+          onClick={() => setExpanded(!expanded)}
+          Label={
+            <a style={{cursor: 'pointer', color: 'red'}}>
+              <b>* Too many items selected</b>
+            </a>
+          }
+        >
+          <Box>
+            You have selected a large number of items for this filter.
+            Please consider using a different <b>filter type</b> or contact support for more search options.
+          </Box>
+        </Expandable>
+      }
+      {!hide.radioList && (
+        <RadioList
+          value={node.mode || 'include'} // Fix by changing defaults in client example type
+          onChange={mode => tree.mutate(node.path, { mode })}
+          options={F.autoLabelOptions(['include', 'exclude'])}
+        />
+      )}
+      {!hide.facetFilter && <FacetOptionsFilter tree={tree} node={node} />}
+      {!hide.selectAll && <SelectAll node={node} tree={tree} maxChecked={maxChecked} />}
+      <FacetCheckboxList
+        tree={tree}
+        node={node}
+        hide={hide}
+        display={display}
+        displayBlank={displayBlank}
+        formatCount={formatCount}
       />
-    )}
-    {!hide.facetFilter && <FacetOptionsFilter tree={tree} node={node} />}
-    {!hide.selectAll && <SelectAll node={node} tree={tree} />}
-    <FacetCheckboxList
-      tree={tree}
-      node={node}
-      hide={hide}
-      display={display}
-      displayBlank={displayBlank}
-      formatCount={formatCount}
-    />
-    <Cardinality {...{ node, tree }} />
-  </div>
-)
+      <Cardinality {...{ node, tree }} />
+    </div>
+  )
+}
 
 export default contexturify(Facet)
