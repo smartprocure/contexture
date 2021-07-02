@@ -36,9 +36,10 @@ let Facet = ({
     <div className="contexture-facet">
       {valuesChecked > warningCheck && (
         <span>
-          You have selected more than 250 items for this filter.
-          Please consider using a different <b>filter type</b> or contact support for more search options.
-          You will not be able to select more than 500 items maximum.
+          You have selected more than 250 items for this filter. Please consider
+          using a different <b>filter type</b> or contact support for more
+          search options. You will not be able to select more than 500 items
+          maximum.
         </span>
       )}
       {!hide.radioList && (
