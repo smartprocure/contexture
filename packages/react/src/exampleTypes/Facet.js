@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import F from 'futil'
 import _ from 'lodash/fp'
 import { contexturify } from '../utils/hoc'
 import { toNumber } from '../utils/format'
-import { Box, Expandable } from '../greyVest'
 import {
   displayFn,
   displayBlankFn,
@@ -33,25 +32,14 @@ let Facet = ({
   theme: { RadioList },
 }) => {
   let valuesChecked = _.size(node.values)
-  let [expanded, setExpanded] = useState(false)
   return (
     <div className="contexture-facet">
       {valuesChecked > warningCheck && (
-        <Expandable
-          isOpen={expanded}
-          onClick={() => setExpanded(!expanded)}
-          Label={
-            <a style={{ cursor: 'pointer', color: 'red' }}>
-              <b>* Too many items selected</b>
-            </a>
-          }
-        >
-          <Box>
-            You have selected a large number of items for this filter. Please
-            consider using a different <b>filter type</b> or contact support for
-            more search options.
-          </Box>
-        </Expandable>
+        <span>
+          You have selected more than 250 items for this filter.
+          Please consider using a different <b>filter type</b> or contact support for more search options.
+          You will not be able to select more than 500 items maximum.
+        </span>
       )}
       {!hide.radioList && (
         <RadioList
