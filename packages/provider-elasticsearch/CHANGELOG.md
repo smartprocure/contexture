@@ -1,29 +1,29 @@
-#1.6.0
+# 1.6.0
 * Experimental API: remove redis cache support
 * Provider: add `searchWrapper` config option
 
-#1.5.0
+# 1.5.0
 * Add `debug` calls to track request/response queries via the `contexture:elasticsearch` namespace.
 
-#1.4.4
+# 1.4.4
 * Fix `must not` text filter option
 
-#1.4.3
+# 1.4.3
 * Switch from the deprecated `dateOptionalTime` to the `date_optional_time`
 
-#1.4.2
+# 1.4.2
 * Fix issue with regex util to comply with https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-regexp-query.html#regexp-query-ex-request
 
-#1.4.1
+# 1.4.1
 * Use native ES support for case insensitive regex matching
 
-#1.4.0
+# 1.4.0
 * Create a new child client on every search to allow passing headers and other options on a per search basis
 
-#1.3.0
+# 1.3.0
 * Experimental API: storing searches in redis cache
 
-#1.2.0
+# 1.2.0
 * Add last1Day and last1Hour to dateMath util
 
 # 1.1.8
