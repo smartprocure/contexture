@@ -1,3 +1,7 @@
+# 1.6.1
+* Updated CI to use node16 and npm7
+* Updated package-lock.json to version 2
+
 # 1.6.0
 * Experimental API: remove redis cache support
 * Provider: add `searchWrapper` config option
