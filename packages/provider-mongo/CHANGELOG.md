@@ -1,3 +1,7 @@
+# 0.25.1
+* Updated CI to use node16 and npm7
+* Updated package-lock.json to version 2
+
 # 0.25.0
 * Add `debug` calls to track request/response queries via the `contexture:mongo` namespace.
 
