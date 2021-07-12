@@ -1,28 +1,28 @@
-#0.25.0
+# 0.25.0
 * Add `debug` calls to track request/response queries via the `contexture:mongo` namespace.
 
-#0.24.0
+# 0.24.0
 * Change facet type optionsFilter to $and all words by doing a $regex match for each word as opposed to all words at once 
 
-#0.23.0
+# 0.23.0
 * Add last 1 Day and last 1 hour to date math calculations
 
-#0.22.4
+# 0.22.4
 * Changed over CI from CircleCI to Github Actions
 
-#0.22.4
+# 0.22.4
 * fix bug when populate is restricting what fields (specifically when the `include` has dotted object fields when the schema only has the parent object) to return from the looked up record based on the `include` provided
 
-#0.22.3
+# 0.22.3
 * fix bug when populate is restricting what fields (specifically when the `include` has nested object fields) to return from the looked up record based on the `include` provided  
 
-#0.22.2
+# 0.22.2
 * fix the bug the response of facet remove the 0 value name option ( compactObject consider it  as a false value ).
 
-#0.22.1
+# 0.22.1
 * [Results] further improved `as`-aware `checkPopulate`
 
-#0.22.0
+# 0.22.0
 * [Results] Don't run checkPopulate function on results nodes when `include` is missing or empty
 
 # 0.21.1
