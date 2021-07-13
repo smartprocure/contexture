@@ -1,4 +1,8 @@
-﻿# 1.0.4
+﻿# 1.0.5
+* Updated CI to use node16 and npm7
+* Updated package-lock.json to version 2
+
+# 1.0.4
 * Fixed bug preventing terms_stats from passing values through correctly
 
 # 1.0.3
