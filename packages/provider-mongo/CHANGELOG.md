@@ -1,3 +1,6 @@
+# 0.25.2
+* Updated peerDependency to reflect current requirement
+
 # 0.25.1
 * Updated CI to use node16 and npm7
 * Updated package-lock.json to version 2
