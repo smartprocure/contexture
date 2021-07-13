@@ -123,7 +123,7 @@ export let FacetCheckboxList = contexturifyWithoutLoader(
         return (
           <label
             // not using unique keys for smart DOM reordering
-            // this causes whole filter section to scroll up
+            // this causes the whole filter section to scroll up
             // when clicking something at the bottom of a long list
             key={i}
             style={commonStyle}
