@@ -1,6 +1,6 @@
 {
   "name": "contexture-mongo",
-  "version": "0.25.1",
+  "version": "0.25.2",
   "description": "Mongo Provider for Contexture",
   "main": "src/index.js",
   "scripts": {
@@ -59,6 +59,6 @@
     "prettier": "^1.8.2"
   },
   "peerDependencies": {
-    "mongodb": "^2.2.36"
+    "mongodb": "^3.5.6"
   }
 }
