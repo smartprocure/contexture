@@ -1,4 +1,8 @@
 # 2.36.1
+* Updated CI to use node16 and npm7
+* Updated package-lock.json to version 2
+
+# 2.36.1
 * Fix: debouncing updates with path independently
 
 # 2.36.0
