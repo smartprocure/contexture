@@ -124,11 +124,14 @@ export let FacetCheckboxList = contexturifyWithoutLoader(
     _.flow(
       _.partition(x => _.includes(x.name, node.values)),
       _.flatten,
-      _.map(({ name, label, count }) => {
+      F.mapIndexed(({ name, label, count }, i) => {
         let lens = tree.lens(node.path, 'values')
         return (
           <label
-            key={name}
+            // not using unique keys for smart DOM reordering
+            // this causes the whole filter section to scroll up
+            // when clicking something at the bottom of a long list
+            key={i}
             style={commonStyle}
             title={`${display(name, label)} : ${formatCount(count)}`}
           >
