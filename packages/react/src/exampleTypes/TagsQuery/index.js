@@ -6,12 +6,7 @@ import F from 'futil'
 import _ from 'lodash/fp'
 import ExpandableTagsInput, { Tags } from '../../greyVest/ExpandableTagsInput'
 
-let TagsQuery = ({
-  tree,
-  node,
-  actionWrapper,
-  ...props
-}) => {
+let TagsQuery = ({ tree, node, actionWrapper, ...props }) => {
   let collapse = React.useState(true)
   return (
     <OutsideClickHandler
@@ -20,10 +15,13 @@ let TagsQuery = ({
       }}
       useCapture={false}
     >
-      <div onClick={F.off(collapse)} style={{
-        padding: 5,
-        marginBottom: 20,
-      }}>
+      <div
+        onClick={F.off(collapse)}
+        style={{
+          padding: 5,
+          marginBottom: 20,
+        }}
+      >
         <ExpandableTagsQuery
           {...{ tree, node, collapse, actionWrapper, ...props }}
           onAddTag={F.off(collapse)}

@@ -25,13 +25,16 @@ let ExpandableTagsQuery = ({ measureRef, contentRect, collapse, ...props }) => (
         <Tags {..._.omit('measure', props)} />
       </div>
     </div>
-    {F.view(collapse)
-    && contentRect.entry.height > innerHeight
-    && !!props.node.tags.length && (
-      <div style={{ minHeight: 20 }}>
-        <ExpandArrow collapse={collapse} tagsLength={props.node.tags.length} />
-      </div>
-    )}
+    {F.view(collapse) &&
+      contentRect.entry.height > innerHeight &&
+      !!props.node.tags.length && (
+        <div style={{ minHeight: 20 }}>
+          <ExpandArrow
+            collapse={collapse}
+            tagsLength={props.node.tags.length}
+          />
+        </div>
+      )}
   </>
 )
 
