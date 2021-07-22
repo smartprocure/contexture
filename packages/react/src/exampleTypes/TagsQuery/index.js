@@ -6,12 +6,7 @@ import F from 'futil'
 import _ from 'lodash/fp'
 import ExpandableTagsInput, { Tags } from '../../greyVest/ExpandableTagsInput'
 
-let TagsQuery = ({
-  tree,
-  node,
-  actionWrapper,
-  ...props
-}) => {
+let TagsQuery = ({ tree, node, actionWrapper, ...props }) => {
   let collapse = React.useState(true)
   return (
     <OutsideClickHandler
