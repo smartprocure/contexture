@@ -11,30 +11,32 @@ import { Grid, GridItem } from '../../greyVest'
 import { getTagStyle, tagValueField } from '../TagsQuery/utils'
 import ActionsMenu from '../TagsQuery/ActionsMenu'
 
-let collapsedStyle = {
-  maxHeight: innerHeight,
-  overflowY: 'auto',
-}
+let innerHeightLimit = 40
 
-export let innerHeight = 40
-
-let ExpandableTagsQuery = ({ measureRef, contentRect, collapse, ...props }) => (
+let ExpandableTagsQuery = ({
+  measureRef,
+  contentRect,
+  collapse,
+  ...props
+}) => (
   <>
-    <div style={F.view(collapse) ? collapsedStyle : {}}>
+    <div style={{
+      overflow: 'hidden',
+      maxHeight: F.view(collapse) ? innerHeightLimit : '',
+    }}>
       <div ref={measureRef}>
-        <Tags {..._.omit('measure', props)} />
+        <Tags
+          {..._.omit('measure', props)}
+        />
       </div>
     </div>
-    {F.view(collapse) &&
-      contentRect.entry.height > innerHeight &&
-      !!props.node.tags.length && (
-        <div style={{ minHeight: 20 }}>
-          <ExpandArrow
-            collapse={collapse}
-            tagsLength={props.node.tags.length}
-          />
-        </div>
-      )}
+    {F.view(collapse)
+    && contentRect.entry.height > innerHeightLimit
+    && !!props.node.tags.length && (
+      <div style={{ minHeight: 20 }}>
+        <ExpandArrow collapse={collapse} tagsLength={props.node.tags.length} />
+      </div>
+    )}
   </>
 )
 
@@ -77,8 +79,7 @@ let Tags = ({
 
   return (
     <Grid
-      className="tags-query"
-      rows={`${innerHeight}px minmax(0, auto)`}
+      rows={`${innerHeightLimit}px minmax(0, auto)`}
       columns="1fr auto"
       style={style}
     >
