@@ -5,7 +5,7 @@ let { Tree, getRelevantFilters, attachFilters } = utils
 
 let process = _.curry(async ({ providers, schemas }, group, options = {}) => {
   let getProvider = utils.getProvider(providers, schemas)
-  let getSchema = schema => schemas[schema]
+  let getSchema = F.when(_.isString, _.get(_, schemas))
   let runTypeFunction = utils.runTypeFunction({
     options,
     getSchema,
