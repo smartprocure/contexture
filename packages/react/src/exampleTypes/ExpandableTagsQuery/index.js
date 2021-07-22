@@ -13,30 +13,28 @@ import ActionsMenu from '../TagsQuery/ActionsMenu'
 
 let innerHeightLimit = 40
 
-let ExpandableTagsQuery = ({
-  measureRef,
-  contentRect,
-  collapse,
-  ...props
-}) => (
+let ExpandableTagsQuery = ({ measureRef, contentRect, collapse, ...props }) => (
   <>
-    <div style={{
-      overflow: 'hidden',
-      maxHeight: F.view(collapse) ? innerHeightLimit : '',
-    }}>
+    <div
+      style={{
+        overflow: 'hidden',
+        maxHeight: F.view(collapse) ? innerHeightLimit : '',
+      }}
+    >
       <div ref={measureRef}>
-        <Tags
-          {..._.omit('measure', props)}
-        />
+        <Tags {..._.omit('measure', props)} />
       </div>
     </div>
-    {F.view(collapse)
-    && contentRect.entry.height > innerHeightLimit
-    && !!props.node.tags.length && (
-      <div style={{ minHeight: 10 }}>
-        <ExpandArrow collapse={collapse} tagsLength={props.node.tags.length} />
-      </div>
-    )}
+    {F.view(collapse) &&
+      contentRect.entry.height > innerHeightLimit &&
+      !!props.node.tags.length && (
+        <div style={{ minHeight: 10 }}>
+          <ExpandArrow
+            collapse={collapse}
+            tagsLength={props.node.tags.length}
+          />
+        </div>
+      )}
   </>
 )
 
