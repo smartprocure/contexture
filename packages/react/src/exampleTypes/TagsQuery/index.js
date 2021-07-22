@@ -8,6 +8,7 @@ import ExpandableTagsInput, { Tags } from '../../greyVest/ExpandableTagsInput'
 
 let TagsQuery = ({ tree, node, actionWrapper, ...props }) => {
   let collapse = React.useState(true)
+  let isCollapsed = F.view(collapse) && !_.isEmpty(node.tags)
   return (
     <OutsideClickHandler
       onOutsideClick={() => {
@@ -18,7 +19,7 @@ let TagsQuery = ({ tree, node, actionWrapper, ...props }) => {
       <div
         className="tags-query"
         onClick={F.off(collapse)}
-        style={{ marginBottom: 10 }}
+        style={{ marginBottom: isCollapsed ? 28 : 10 }}
       >
         <ExpandableTagsQuery
           {...{ tree, node, collapse, actionWrapper, ...props }}
@@ -27,10 +28,7 @@ let TagsQuery = ({ tree, node, actionWrapper, ...props }) => {
           Loader={({ children }) => <div>{children}</div>}
           style={{ padding: '0 5px' }}
           theme={{
-            TagsInput:
-              F.view(collapse) && !_.isEmpty(node.tags)
-                ? Tags
-                : ExpandableTagsInput,
+            TagsInput: isCollapsed ? Tags : ExpandableTagsInput,
           }}
         />
       </div>
