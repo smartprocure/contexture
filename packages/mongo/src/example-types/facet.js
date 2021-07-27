@@ -125,6 +125,12 @@ module.exports = {
   }),
   async result(node, search, schema, config = {}) {
     let valueIds = _.get('values', node)
+    let optionsFilterAggs = _.compact([
+      ...lookupLabel(node),
+      _.get('label.fields', node) && projectStageFromLabelFields(node),
+      mapKeywordFilters(node),
+    ])
+
     let results = await Promise.all([
       search(
         _.compact([
@@ -133,15 +139,14 @@ module.exports = {
           ...unwindPropOrField(node),
           { $group: { _id: `$${node.field}`, count: { $sum: 1 } } },
           ...sortAndLimitIfNotSearching(node.optionsFilter, node.size),
-          ...lookupLabel(node),
-          _.get('label.fields', node) && projectStageFromLabelFields(node),
-          mapKeywordFilters(node),
+          ...optionsFilterAggs,
           ...sortAndLimitIfSearching(node.optionsFilter, node.size),
         ])
       ),
       search([
         ...unwindPropOrField(node),
         { $group: { _id: `$${node.field}` } },
+        ...optionsFilterAggs,
         { $group: { _id: 1, count: { $sum: 1 } } },
       ]),
     ]).then(([options, cardinality]) => ({
@@ -176,9 +181,7 @@ module.exports = {
           },
           { $group: { _id: `$${node.field}`, count: { $sum: 1 } } },
           ...sortAndLimitIfNotSearching(node.optionsFilter, node.size),
-          ...lookupLabel(node),
-          _.get('label.fields', node) && projectStageFromLabelFields(node),
-          mapKeywordFilters(node),
+          ...optionsFilterAggs,
         ])
       )
 
