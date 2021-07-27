@@ -86,5 +86,4 @@ let SearchBar = ({
   </ButtonGroup>
 )
 
-
 export default _.flow(observer, withNode)(SearchBar)
