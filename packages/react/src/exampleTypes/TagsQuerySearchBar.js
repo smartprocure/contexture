@@ -1,11 +1,8 @@
 import React from 'react'
-import F from 'futil'
 import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
-import OutsideClickHandler from 'react-outside-click-handler'
 import { withNode } from '../utils/hoc'
 import { Box, ButtonGroup, Button } from '../greyVest'
-import ExpandableTagsInput, { Tags } from '../greyVest/ExpandableTagsInput'
 import ExpandableTagsQuery from './ExpandableTagsQuery'
 
 let searchBarStyle = {
@@ -61,49 +58,33 @@ let SearchBar = ({
   actionWrapper,
   searchButtonProps,
   tagsQueryProps,
-}) => {
-  let collapse = React.useState(true)
-  return (
-    <OutsideClickHandler
-      onOutsideClick={() => {
-        F.on(collapse)()
-      }}
-      useCapture={false}
-    >
-      <ButtonGroup
-        style={searchBarStyle}
-        // The outside click handler listens for the onMouseUp event which takes priority over any onClick handlers in the children
-        // So we need to add this handler to ensure that the child events are triggered appropriately
-        onMouseUp={e => {
-          e.stopPropagation()
-        }}
-      >
-        <Box style={searchBarBoxStyle} onClick={F.off(collapse)}>
-          <ExpandableTagsQuery
-            {...{ tree, node, collapse, actionWrapper }}
-            onAddTag={F.off(collapse)}
-            Loader={({ children }) => <div>{children}</div>}
-            style={inputStyle}
-            theme={{
-              TagsInput:
-                F.view(collapse) && !_.isEmpty(node.tags)
-                  ? Tags
-                  : ExpandableTagsInput,
-            }}
-            autoFocus
-            {...tagsQueryProps}
-          />
-        </Box>
-        {tree.disableAutoUpdate && (
-          <SearchButton
-            tree={tree}
-            resultsPath={resultsPath}
-            searchButtonProps={searchButtonProps}
-          />
-        )}
-      </ButtonGroup>
-    </OutsideClickHandler>
-  )
-}
+}) => (
+  <ButtonGroup
+    style={searchBarStyle}
+    // The outside click handler listens for the onMouseUp event which takes priority over any onClick handlers in the children
+    // So we need to add this handler to ensure that the child events are triggered appropriately
+    onMouseUp={e => {
+      e.stopPropagation()
+    }}
+  >
+    <Box style={searchBarBoxStyle}>
+      <ExpandableTagsQuery
+        {...{ tree, node, actionWrapper }}
+        Loader={({ children }) => <div>{children}</div>}
+        style={inputStyle}
+        autoFocus
+        {...tagsQueryProps}
+      />
+    </Box>
+    {tree.disableAutoUpdate && (
+      <SearchButton
+        tree={tree}
+        resultsPath={resultsPath}
+        searchButtonProps={searchButtonProps}
+      />
+    )}
+  </ButtonGroup>
+)
+
 
 export default _.flow(observer, withNode)(SearchBar)

@@ -2,30 +2,46 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil'
 import { withContentRect } from 'react-measure'
-import { contexturify } from '../../utils/hoc'
-import ExpandArrow from './ExpandArrow'
 import { observer } from 'mobx-react'
+import OutsideClickHandler from 'react-outside-click-handler'
+import { contexturify } from '../../utils/hoc'
 import { toNumber } from '../../utils/format'
+import ExpandArrow from './ExpandArrow'
 import TagActionsMenu from '../TagsQuery/TagActionsMenu'
 import { Grid, GridItem } from '../../greyVest'
 import { getTagStyle, tagValueField } from '../TagsQuery/utils'
 import ActionsMenu from '../TagsQuery/ActionsMenu'
+import ExpandableTagsInput, { Tags } from '../../greyVest/ExpandableTagsInput'
+import { withTheme } from '../../utils/theme'
 
 let innerHeightLimit = 40
 
-let ExpandableTagsQuery = ({ measureRef, contentRect, collapse, ...props }) => (
-  <>
-    <div
-      style={{
-        overflow: 'hidden',
-        maxHeight: F.view(collapse) ? innerHeightLimit : '',
+let ExpandableTagsQuery = ({ measureRef, contentRect, ...props }) => {
+  let collapse = React.useState(true)
+  let isCollapsed = F.view(collapse) && !_.isEmpty(props.node.tags)
+  return (
+    <OutsideClickHandler
+      onOutsideClick={() => {
+        F.on(collapse)()
       }}
+      useCapture={false}
     >
-      <div ref={measureRef}>
-        <Tags {..._.omit('measure', props)} />
+      <div
+        onClick={F.off(collapse)}
+        style={{
+          overflow: 'hidden',
+          maxHeight: F.view(collapse) ? innerHeightLimit : '',
+        }}
+      >
+        <div ref={measureRef}>
+          <TagsWrapper
+            {..._.omit('measure', props)}
+            onAddTag={F.off(collapse)}
+            theme={{TagsInput: isCollapsed ? Tags : ExpandableTagsInput}}
+          />
+        </div>
       </div>
-    </div>
-    {F.view(collapse) &&
+      {F.view(collapse) &&
       contentRect.entry.height > innerHeightLimit &&
       !!props.node.tags.length && (
         <div style={{ minHeight: 10 }}>
@@ -35,10 +51,11 @@ let ExpandableTagsQuery = ({ measureRef, contentRect, collapse, ...props }) => (
           />
         </div>
       )}
-  </>
-)
+    </OutsideClickHandler>
+  )
+}
 
-let Tags = ({
+let TagsWrapper = withTheme(({
   tree,
   node,
   style,
@@ -143,6 +160,6 @@ let Tags = ({
       </GridItem>
     </Grid>
   )
-}
+})
 
 export default _.flow(contexturify, withContentRect())(ExpandableTagsQuery)
