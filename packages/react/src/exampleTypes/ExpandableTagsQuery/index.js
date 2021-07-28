@@ -22,7 +22,7 @@ let ExpandableTagsQuery = ({ measureRef, contentRect, collapse, ...props }) => (
       }}
     >
       <div ref={measureRef}>
-        <Tags {..._.omit('measure', props)} />
+        <TagsWrapper {..._.omit('measure', props)} />
       </div>
     </div>
     {F.view(collapse) &&
@@ -38,7 +38,7 @@ let ExpandableTagsQuery = ({ measureRef, contentRect, collapse, ...props }) => (
   </>
 )
 
-let Tags = ({
+let TagsWrapper = ({
   tree,
   node,
   style,
