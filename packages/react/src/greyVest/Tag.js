@@ -22,7 +22,7 @@ let Tag = ({
     style={{
       display: 'inline-block',
       cursor: 'pointer',
-      margin: 3,
+      margin: '4px 3px',
       borderRadius: '3px',
       wordBreak: 'break-all',
       ...F.callOrReturn(tagStyle, value),
