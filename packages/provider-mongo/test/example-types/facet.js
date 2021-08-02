@@ -341,7 +341,7 @@ describe('facet', () => {
       )
 
       expect(result).to.deep.equal({
-        cardinality: 3,
+        cardinality: 1,
         options: [
           {
             name: 2,
@@ -424,7 +424,7 @@ describe('facet', () => {
       )
 
       expect(result).to.deep.equal({
-        cardinality: 3,
+        cardinality: 1,
         options: [
           {
             name: 1,

@@ -1,3 +1,6 @@
+# 0.26.0
+* Make sure `facet` type uses options filter(s) (if any) for cardinality query
+
 # 0.25.2
 * Updated peerDependency to reflect current requirement
 
