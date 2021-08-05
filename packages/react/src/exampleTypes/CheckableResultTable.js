@@ -4,7 +4,7 @@ import F from 'futil'
 import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
 import { getResults, getRecord } from '../utils/schema'
-import { contexturify } from '../utils/hoc'
+import { contexturifyWithoutLoader } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
 import ResultTable from './ResultTable'
 import { selectedBinding } from './utils'
@@ -62,5 +62,5 @@ let CheckableResultTable = ({
 
 export default _.flow(
   expandProp('selected', selectedBinding),
-  contexturify
+  contexturifyWithoutLoader
 )(CheckableResultTable)
