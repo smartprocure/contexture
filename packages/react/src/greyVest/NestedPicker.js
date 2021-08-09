@@ -7,6 +7,7 @@ import { observable } from 'mobx'
 import { withTheme } from '../utils/theme'
 import pluralize from 'pluralize'
 import Box from './Box'
+import Flex from './Flex'
 import GVTextInput from './TextInput'
 import GVTextHighlight from './TextHighlight'
 
@@ -30,10 +31,14 @@ let toNested = _.flow(
 let FilteredSection = _.flow(
   setDisplayName('FilteredSection'),
   observer
-)(({ options, highlight, checked }) => {
+)(({
+  options,
+  highlight,
+  style = { maxHeight: 340, overflowY: 'scroll' },
+  checked }) => {
   let { PickerItem, TextHighlight } = React.useContext(PickerContext)
   return (
-    <div>
+    <div style={style}>
       {F.mapIndexed(
         (option, field) => (
           <PickerItem
@@ -42,7 +47,7 @@ let FilteredSection = _.flow(
             onClick={() => {
               checked.has(option.value)
               ? checked.delete(option.value)
-              : checked.set(option.value, option.value)
+              : checked.set(option.value, option)
             }}
           >
             <TextHighlight text={option.label} pattern={highlight} />
@@ -57,10 +62,15 @@ let FilteredSection = _.flow(
 let Section = _.flow(
   setDisplayName('Section'),
   observer
-)(({ options, onClick, selected, checked }) => {
+)(({
+  options,
+  onClick,
+  selected,
+  checked,
+  style = { overflow: 'auto', width: '100%', maxHeight: 300 } }) => {
   let { PickerItem } = React.useContext(PickerContext)
   return (
-    <div style={{ overflow: 'auto', width: '100%' }}>
+    <div style={style}>
       {_.map(
         item => (
           <PickerItem
@@ -88,7 +98,7 @@ let PanelTreePicker = inject((store, { options, checked }) => {
       if (isField(field)) {
         checked.has(field.value)
           ? checked.delete(field.value)
-          : checked.set(field.value, field.value)
+          : checked.set(field.value, field)
       }
       else {
         x.state.selected.splice(level, x.state.selected.length - level, key)
@@ -134,6 +144,13 @@ let NestedPicker = ({
   TextInput = GVTextInput,
   TextHighlight = GVTextHighlight,
   filterLabel = 'filter',
+  style = {
+    margin: 0,
+    padding: 0,
+    minWidth: 500,
+    maxHeight: 400,
+    paddingBottom: 10,
+  },
   theme: { Button }
 }) => {
   let state = observable({
@@ -142,21 +159,11 @@ let NestedPicker = ({
   })
   return (
     <PickerContext.Provider value={{ PickerItem, TextHighlight }}>
-    <Observer>
-    {() => !!state.checked.size &&
-      <Button
-        primary
-        onClick={() => onChange(Array.from(state.checked.keys()))}
-        style={{ width: '100%', marginBottom: 20 }}
-      >
-        Add {`${state.checked.size} ${pluralize(filterLabel, state.checked.size)}`}
-      </Button>}
-    </Observer>
-    <Box style={{margin: 0, padding: 0}}>
+    <Box style={style}>
       <Observer>
       {() =>
         <>
-          <TextInput style={{marginBottom: 15}}
+          <TextInput style={{ marginBottom: 10 }}
             value={state.filter}
             onChange={e => (state.filter = e.target.value)}
             placeholder="Enter filter keyword..."
@@ -174,6 +181,24 @@ let NestedPicker = ({
       }
       </Observer>
     </Box>
+      <Flex justifyContent="space-between" style={{ marginTop: 20 }}>
+        <Button onClick={() => {
+            state.checked = new Map()
+            onChange()
+          }
+        }>
+          Cancel
+        </Button>
+        <Observer>
+        {() => !!state.checked.size &&
+          <Button
+            primary
+            onClick={() => onChange(Array.from(state.checked.values()))}
+          >
+            Add {`${state.checked.size} ${pluralize(filterLabel, state.checked.size)}`}
+          </Button>}
+        </Observer>
+      </Flex>
     </PickerContext.Provider>
   )
 }

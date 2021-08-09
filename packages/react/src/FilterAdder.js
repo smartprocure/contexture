@@ -36,7 +36,11 @@ let FilterAdder = ({
   return (
     <Picker
       options={options}
-      onChange={field => tree.add(path, newNodeFromField({ field, fields }))}
+      onChange={changes => {
+        if (!_.isEmpty(changes)) {
+          _.each(({ field }) => tree.add(path, newNodeFromField({ field, fields })), changes)
+        }
+      }}
       label={Label}
     />
   )
