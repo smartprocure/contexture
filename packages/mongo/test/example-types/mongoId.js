@@ -1,4 +1,3 @@
-let { expect } = require('chai')
 let mongoId = require('../../src/example-types/mongoId')
 let ObjectID = require('mongodb').ObjectID
 
@@ -11,13 +10,13 @@ describe('mongoId', () => {
           field: 'test',
           value: '53b46feb938d89315aae1477',
         })
-      ).to.be.true
+      ).toBe(true)
       expect(
         !!mongoId.hasValue({
           type: 'mongoId',
           field: 'test',
         })
-      ).to.be.false
+      ).toBe(false)
     })
   })
   describe('mongoId.filter', () => {
@@ -27,7 +26,7 @@ describe('mongoId', () => {
           field: '_id',
           value: '53b46feb938d89315aae1477',
         })
-      ).to.deep.equal({
+      ).toEqual({
         _id: {
           $in: [new ObjectID('53b46feb938d89315aae1477')],
         },
@@ -39,7 +38,7 @@ describe('mongoId', () => {
           field: '_id',
           values: ['53b46feb938d89315aae1477'],
         })
-      ).to.deep.equal({
+      ).toEqual({
         _id: {
           $in: [new ObjectID('53b46feb938d89315aae1477')],
         },
@@ -52,7 +51,7 @@ describe('mongoId', () => {
           mode: 'exclude',
           values: ['53b46feb938d89315aae1477'],
         })
-      ).to.deep.equal({
+      ).toEqual({
         _id: {
           $nin: [new ObjectID('53b46feb938d89315aae1477')],
         },

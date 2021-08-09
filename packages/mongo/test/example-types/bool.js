@@ -1,4 +1,3 @@
-let { expect } = require('chai')
 let bool = require('../../src/example-types/bool')
 
 let node = {
@@ -9,14 +8,14 @@ let node = {
 describe('bool', () => {
   describe('bool.hasValue', () => {
     it('Should detect a boolean value, null or undefined only', () => {
-      expect(bool.hasValue({ ...node, value: true })).to.be.true
-      expect(bool.hasValue({ ...node, value: false })).to.be.true
-      expect(bool.hasValue(node)).to.be.false
-      expect(bool.hasValue({ ...node, value: null })).to.be.false
-      expect(bool.hasValue({ ...node, value: undefined })).to.be.false
-      expect(bool.hasValue({ ...node, value: 0 })).to.be.false
-      expect(bool.hasValue({ ...node, value: '' })).to.be.false
-      expect(bool.hasValue({ ...node, value: [] })).to.be.false
+      expect(bool.hasValue({ ...node, value: true })).toBe(true)
+      expect(bool.hasValue({ ...node, value: false })).toBe(true)
+      expect(bool.hasValue(node)).toBe(false)
+      expect(bool.hasValue({ ...node, value: null })).toBe(false)
+      expect(bool.hasValue({ ...node, value: undefined })).toBe(false)
+      expect(bool.hasValue({ ...node, value: 0 })).toBe(false)
+      expect(bool.hasValue({ ...node, value: '' })).toBe(false)
+      expect(bool.hasValue({ ...node, value: [] })).toBe(false)
     })
   })
   describe('bool.filter', () => {
@@ -27,24 +26,24 @@ describe('bool', () => {
           field: 'myField',
           value: true,
         })
-      ).to.deep.equal({ myField: true })
+      ).toEqual({ myField: true })
       expect(
         bool.filter({
           field: 'myField',
           value: false,
         })
-      ).to.deep.equal(neResult)
+      ).toEqual(neResult)
       expect(
         bool.filter({
           field: 'myField',
         })
-      ).to.deep.equal(neResult)
+      ).toEqual(neResult)
       expect(
         bool.filter({
           field: 'myField',
           value: null,
         })
-      ).to.deep.equal(neResult)
+      ).toEqual(neResult)
     })
   })
 })
