@@ -5,11 +5,10 @@ import { setDisplayName } from 'recompose'
 import { inject, observer, Observer } from 'mobx-react'
 import { observable } from 'mobx'
 import { withTheme } from '../utils/theme'
-import Box from './Box'
 import pluralize from 'pluralize'
-
-import GVTextHighlight from './TextHighlight'
+import Box from './Box'
 import GVTextInput from './TextInput'
+import GVTextHighlight from './TextHighlight'
 
 let PickerContext = React.createContext()
 
@@ -31,7 +30,7 @@ let toNested = _.flow(
 let FilteredSection = _.flow(
   setDisplayName('FilteredSection'),
   observer
-)(({ options, onClick, highlight, checked }) => {
+)(({ options, highlight, checked }) => {
   let { PickerItem, TextHighlight } = React.useContext(PickerContext)
   return (
     <div>
@@ -44,7 +43,6 @@ let FilteredSection = _.flow(
               checked.has(option.value)
               ? checked.delete(option.value)
               : checked.set(option.value, option.value)
-              onClick(Array.from(checked.keys()))
             }}
           >
             <TextHighlight text={option.label} pattern={highlight} />
@@ -81,7 +79,7 @@ let Section = _.flow(
   )
 })
 
-let PanelTreePicker = inject((store, { onChange, options, checked }) => {
+let PanelTreePicker = inject((store, { options, checked }) => {
   let x = {
     checked,
     state: observable({ selected: [] }),
@@ -91,7 +89,6 @@ let PanelTreePicker = inject((store, { onChange, options, checked }) => {
         checked.has(field.value)
           ? checked.delete(field.value)
           : checked.set(field.value, field.value)
-        onChange(Array.from(checked.keys()))
       }
       else {
         x.state.selected.splice(level, x.state.selected.length - level, key)
@@ -136,38 +133,47 @@ let NestedPicker = ({
   PickerItem = 'div',
   TextInput = GVTextInput,
   TextHighlight = GVTextHighlight,
-  filterLabel = 'column',
+  filterLabel = 'filter',
   theme: { Button }
 }) => {
-  let filter = React.useState('')
-  let checked = observable(new Map())
+  let state = observable({
+    filter: '',
+    checked: new Map()
+  })
   return (
     <PickerContext.Provider value={{ PickerItem, TextHighlight }}>
+    <Observer>
+    {() => !!state.checked.size &&
+      <Button
+        primary
+        onClick={() => onChange(Array.from(state.checked.keys()))}
+        style={{ width: '100%', marginBottom: 20 }}
+      >
+        Add {`${state.checked.size} ${pluralize(filterLabel, state.checked.size)}`}
+      </Button>}
+    </Observer>
     <Box style={{margin: 0, padding: 0}}>
-      <TextInput style={{marginBottom: 15}}
-        {...F.domLens.value(filter)}
-        placeholder="Enter filter keyword..."
-      />
-      {F.view(filter) ? (
-        <FilteredSection
-          checked={checked}
-          highlight={F.view(filter)}
-          options={matchLabel(F.view(filter))(options)}
-        />
-      ) : (
-        <PanelTreePicker options={options} checked={checked} />
-      )}
       <Observer>
-      {() => !!checked.size &&
-        <Button
-          primary
-          style={{ marginTop: 20, width: '100%'}}
-          onClick={() => onChange(Array.from(checked.keys()))}
-        >
-          Add {`${checked.size} ${pluralize(filterLabel, checked.size)}`}
-        </Button>}
+      {() =>
+        <>
+          <TextInput style={{marginBottom: 15}}
+            value={state.filter}
+            onChange={e => (state.filter = e.target.value)}
+            placeholder="Enter filter keyword..."
+          />
+          {state.filter ? (
+            <FilteredSection
+              checked={state.checked}
+              highlight={state.filter}
+              options={matchLabel(state.filter)(options)}
+            />
+          ) : (
+            <PanelTreePicker options={options} checked={state.checked} />
+          )}
+        </>
+      }
       </Observer>
-      </Box>
+    </Box>
     </PickerContext.Provider>
   )
 }
