@@ -1,5 +1,6 @@
 let _ = require('lodash/fp')
 let { expect } = require('chai')
+require('mingo/init/system')
 let mingo = require('mingo')
 let termsStats = require('../../src/example-types/termsStats')
 
