@@ -1,4 +1,3 @@
-let { expect } = require('chai')
 let statistical = require('../../src/example-types/statistical')
 
 describe('statistical', () => {
@@ -14,7 +13,7 @@ describe('statistical', () => {
           },
           x => x
         )
-      ).eql({
+      ).toEqual({
         $group: {
           _id: {},
           count: { $sum: 1 },
@@ -44,7 +43,7 @@ describe('statistical', () => {
           },
           () => []
         )
-      ).eql({
+      ).toEqual({
         count: 0,
         avg: 0,
         max: 0,

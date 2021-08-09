@@ -1,4 +1,3 @@
-let { expect } = require('chai')
 let _ = require('lodash/fp')
 let exists = require('../../src/example-types/exists')
 
@@ -10,11 +9,11 @@ let node = {
 describe('exists', () => {
   describe('exists.hasValue', () => {
     it('Should detect a boolean value only', () => {
-      expect(exists.hasValue({ ...node, value: true })).to.be.true
-      expect(exists.hasValue({ ...node, value: false })).to.be.true
-      expect(exists.hasValue(node)).to.be.false
-      expect(exists.hasValue({ ...node, value: null })).to.be.false
-      expect(exists.hasValue({ ...node, value: undefined })).to.be.false
+      expect(exists.hasValue({ ...node, value: true })).toBe(true)
+      expect(exists.hasValue({ ...node, value: false })).toBe(true)
+      expect(exists.hasValue(node)).toBe(false)
+      expect(exists.hasValue({ ...node, value: null })).toBe(false)
+      expect(exists.hasValue({ ...node, value: undefined })).toBe(false)
     })
   })
   describe('exists.filter', () => {
@@ -27,7 +26,7 @@ describe('exists', () => {
             field: 'myField',
           })
         )
-      ).to.equal('myValue')
+      ).toBe('myValue')
     })
     it('If no value is provided, use $or', () => {
       expect(
@@ -37,7 +36,7 @@ describe('exists', () => {
             field: 'myField',
           })
         )
-      ).to.equal(false)
+      ).toBe(false)
     })
   })
 })

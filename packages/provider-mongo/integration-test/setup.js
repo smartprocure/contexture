@@ -26,7 +26,7 @@ module.exports = async ({ collection: collectionName }) => {
   await collection.remove({})
   await collection.insertMany(docs)
 
-  after(() => collection.remove({}))
+  afterAll(() => collection.remove({}))
 
   return {
     db,
