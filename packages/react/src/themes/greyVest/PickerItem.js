@@ -31,7 +31,11 @@ let PickerItem = ({
       </Flex>
     ) : (
       <Flex>
-        <Checkbox checked={isChecked} onChange={onClick} style={{marginRight: 10}}/>
+        <Checkbox
+          checked={isChecked}
+          onChange={onClick}
+          style={{ marginRight: 10 }}
+        />
         {children}
       </Flex>
     )}

@@ -39,7 +39,10 @@ let FilterAdder = ({
       options={options}
       onChange={changes => {
         if (!_.isEmpty(changes)) {
-          _.each(({ field }) => tree.add(path, newNodeFromField({ field, fields })), changes)
+          _.each(
+            ({ field }) => tree.add(path, newNodeFromField({ field, fields })),
+            changes
+          )
         }
       }}
       label={Label}
