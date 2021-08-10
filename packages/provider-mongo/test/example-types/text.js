@@ -52,7 +52,7 @@ describe('text', () => {
     })
   }),
     describe('text.filter', () => {
-      it('should check for values', () => {
+      describe('should check for values', () => {
         var laserjetPrinterText = operator =>
           text.filter({
             key: 'test',
