@@ -143,7 +143,7 @@ let NestedPicker = ({
   PickerItem = 'div',
   TextInput = GVTextInput,
   TextHighlight = GVTextHighlight,
-  filterLabel = 'filter',
+  itemType = 'filter',
   style = {
     margin: 0,
     padding: 0,
@@ -195,7 +195,7 @@ let NestedPicker = ({
             primary
             onClick={() => onChange(Array.from(state.checked.values()))}
           >
-            Add {`${state.checked.size} ${pluralize(filterLabel, state.checked.size)}`}
+            Add {`${state.checked.size} ${pluralize(itemType, state.checked.size)}`}
           </Button>}
         </Observer>
       </Flex>

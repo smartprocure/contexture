@@ -11,6 +11,7 @@ let ModalPicker = ({
   onChange,
   label,
   theme: { Button, NestedPicker, Modal },
+  ...props
 }) => {
   let open = React.useState(false)
   return (
@@ -23,6 +24,7 @@ let ModalPicker = ({
               onChange(x)
               F.off(open)()
             }}
+            {...props}
           />
         </Modal>
         <Button

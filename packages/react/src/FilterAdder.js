@@ -23,6 +23,7 @@ let FilterAdder = ({
   uniqueFields,
   Picker = ModalPicker,
   theme: { Icon },
+  ...props
 }) => {
   let options = uniqueFields
     ? unusedOptions(fields, node)
@@ -42,6 +43,7 @@ let FilterAdder = ({
         }
       }}
       label={Label}
+      {...props}
     />
   )
 }

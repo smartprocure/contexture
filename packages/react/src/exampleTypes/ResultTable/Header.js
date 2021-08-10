@@ -195,6 +195,7 @@ let Header = ({
           )}
           <Modal open={adding}>
             <NestedPicker
+              itemType="column"
               options={addOptions}
               onChange={selectedFields => {
                 _.each(addedField => {
