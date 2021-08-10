@@ -4,11 +4,13 @@ let { MongoMemoryServer } = require('mongodb-memory-server')
 let dateHistogram = require('../../src/example-types/dateHistogram')
 
 let aggregate
+let conn
+let mongoServer
 
 beforeAll(async () => {
-  let mongoServer = new MongoMemoryServer()
+  mongoServer = new MongoMemoryServer()
   let mongoUri = await mongoServer.getConnectionString()
-  let conn = await MongoClient.connect(mongoUri, {
+  conn = await MongoClient.connect(mongoUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -25,6 +27,11 @@ beforeAll(async () => {
   )
   col.insertMany(sampleData)
   aggregate = aggs => col.aggregate(aggs).toArray()
+})
+
+afterAll(async () => {
+  await conn.close()
+  await mongoServer.stop()
 })
 
 describe('dateHistogram', () => {
