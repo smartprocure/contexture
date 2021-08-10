@@ -1,3 +1,6 @@
+# 0.26.1
+* Converted the tests to jest
+
 # 0.26.0
 * Make sure `facet` type uses options filter(s) (if any) for cardinality query
 
