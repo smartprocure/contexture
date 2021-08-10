@@ -36,18 +36,15 @@ describe('facet', () => {
       expect(result.options.length).toBe(3)
       expect(_.every(x => _.isNumber(x.count), result.options)).toBe(true)
     })
-    it(
-      'should default the limit query to 10 if size is not provided',
-      async () => {
-        queries = []
-        let node = {
-          field: 'myField',
-        }
-        await facet.result(node, search)
-        let limitAgg = _.find('$limit', queries[0])
-        expect(limitAgg.$limit).toBe(10)
+    it('should default the limit query to 10 if size is not provided', async () => {
+      queries = []
+      let node = {
+        field: 'myField',
       }
-    )
+      await facet.result(node, search)
+      let limitAgg = _.find('$limit', queries[0])
+      expect(limitAgg.$limit).toBe(10)
+    })
     it('should allow unlimited queries', async () => {
       queries = []
       let node = {
@@ -83,85 +80,76 @@ describe('facet', () => {
       let limitIndex = _.findIndex('$limit', queries[0])
       expect(limitIndex > filterIndex).toBe(true)
     })
-    it(
-      'should support optionsFilter with multiple words and spaces',
-      async () => {
-        queries = []
-        let node = {
-          field: 'categoriesInfo',
-          optionsFilter: '  dis  comp    ',
-        }
-        await facet.result(node, search)
-        let filterAgg = _.find('$match', queries[0])
-        expect(filterAgg).toEqual({
-          $match: {
-            $and: [
-              {
-                _id: {
-                  $options: 'i',
-                  $regex: 'dis',
-                },
+    it('should support optionsFilter with multiple words and spaces', async () => {
+      queries = []
+      let node = {
+        field: 'categoriesInfo',
+        optionsFilter: '  dis  comp    ',
+      }
+      await facet.result(node, search)
+      let filterAgg = _.find('$match', queries[0])
+      expect(filterAgg).toEqual({
+        $match: {
+          $and: [
+            {
+              _id: {
+                $options: 'i',
+                $regex: 'dis',
               },
-              {
-                _id: {
-                  $options: 'i',
-                  $regex: 'comp',
-                },
+            },
+            {
+              _id: {
+                $options: 'i',
+                $regex: 'comp',
               },
-            ],
-          },
-        })
-        // Also make sure that options filtering happens _before_ limiting
-        let filterIndex = _.findIndex('$match', queries[0])
-        let limitIndex = _.findIndex('$limit', queries[0])
-        expect(limitIndex > filterIndex).toBe(true)
+            },
+          ],
+        },
+      })
+      // Also make sure that options filtering happens _before_ limiting
+      let filterIndex = _.findIndex('$match', queries[0])
+      let limitIndex = _.findIndex('$limit', queries[0])
+      expect(limitIndex > filterIndex).toBe(true)
+    })
+    it('should sort and limit results as early as possible if there is no search, for performance benefits', async () => {
+      queries = []
+      let node = {
+        field: 'myField',
+        label: 'myField',
       }
-    )
-    it(
-      'should sort and limit results as early as possible if there is no search, for performance benefits',
-      async () => {
-        queries = []
-        let node = {
-          field: 'myField',
-          label: 'myField',
-        }
 
-        await facet.result(node, search)
+      await facet.result(node, search)
 
-        let sortIndex = _.findIndex('$sort', queries[0])
-        let limitIndex = _.findIndex('$limit', queries[0])
+      let sortIndex = _.findIndex('$sort', queries[0])
+      let limitIndex = _.findIndex('$limit', queries[0])
 
-        let lastIndex = queries[0].length - 1
-        let secondToLastIndex = lastIndex - 1
+      let lastIndex = queries[0].length - 1
+      let secondToLastIndex = lastIndex - 1
 
-        expect(limitIndex > sortIndex).toBe(true)
-        expect(sortIndex < secondToLastIndex).toBe(true)
-        expect(limitIndex < lastIndex).toBe(true)
+      expect(limitIndex > sortIndex).toBe(true)
+      expect(sortIndex < secondToLastIndex).toBe(true)
+      expect(limitIndex < lastIndex).toBe(true)
+    })
+    it('should sort and limit results later in the pipeline if there is a facet search', async () => {
+      queries = []
+      let node = {
+        field: 'myField',
+        label: 'myField',
+        optionsFilter: 'keyword',
       }
-    )
-    it(
-      'should sort and limit results later in the pipeline if there is a facet search',
-      async () => {
-        queries = []
-        let node = {
-          field: 'myField',
-          label: 'myField',
-          optionsFilter: 'keyword',
-        }
 
-        await facet.result(node, search)
+      await facet.result(node, search)
 
-        let sortIndex = _.findIndex('$sort', queries[0])
-        let limitIndex = _.findIndex('$limit', queries[0])
+      let sortIndex = _.findIndex('$sort', queries[0])
+      let limitIndex = _.findIndex('$limit', queries[0])
 
-        let lastIndex = queries[0].length - 1
-        let secondToLastIndex = lastIndex - 1
+      let lastIndex = queries[0].length - 1
+      let secondToLastIndex = lastIndex - 1
 
-        expect(limitIndex > sortIndex).toBe(true)
-        expect(sortIndex === secondToLastIndex).toBe(true)
-        expect(limitIndex === lastIndex).toBe(true)
-      }
-    )
+      expect(limitIndex > sortIndex).toBe(true)
+      expect(sortIndex === secondToLastIndex).toBe(true)
+      expect(limitIndex === lastIndex).toBe(true)
+    })
     it('should support isMongoId', async () => {
       let node = {
         field: 'field',
@@ -305,198 +293,189 @@ describe('facet', () => {
       })
     })
 
-    it(
-      'should support optionsFilter with a lookup that returns a single field',
-      async () => {
-        queries = []
+    it('should support optionsFilter with a lookup that returns a single field', async () => {
+      queries = []
 
-        let activities = [
-          { _id: 1, type: 'create', user: 2 },
-          { _id: 1, type: 'update', user: 1 },
-          { _id: 1, type: 'create', user: 1 },
-          { _id: 1, type: 'delete', user: 3 },
-          { _id: 1, type: 'delete', user: 2 },
-          { _id: 1, type: 'read', user: 1 },
-        ]
+      let activities = [
+        { _id: 1, type: 'create', user: 2 },
+        { _id: 1, type: 'update', user: 1 },
+        { _id: 1, type: 'create', user: 1 },
+        { _id: 1, type: 'delete', user: 3 },
+        { _id: 1, type: 'delete', user: 2 },
+        { _id: 1, type: 'read', user: 1 },
+      ]
 
-        let users = [
-          { _id: 1, firstName: 'Fred', type: 'basic' },
-          { _id: 2, firstName: 'Jane', type: 'admin' },
-        ]
+      let users = [
+        { _id: 1, firstName: 'Fred', type: 'basic' },
+        { _id: 2, firstName: 'Jane', type: 'admin' },
+      ]
 
-        let node = {
-          field: 'user',
-          optionsFilter: 'jane',
-          label: {
-            collection: users,
-            foreignField: '_id',
-            fields: 'firstName',
+      let node = {
+        field: 'user',
+        optionsFilter: 'jane',
+        label: {
+          collection: users,
+          foreignField: '_id',
+          fields: 'firstName',
+        },
+      }
+
+      await facet.result(node, search)
+      let filterAgg = _.find('$match', queries[0])
+      expect(filterAgg).toEqual({
+        $match: {
+          $and: [
+            {
+              'label.firstName': {
+                $options: 'i',
+                $regex: 'jane',
+              },
+            },
+          ],
+        },
+      })
+
+      let result = await facet.result(node, agg =>
+        mingo.aggregate(activities, agg)
+      )
+
+      expect(result).toEqual({
+        cardinality: 1,
+        options: [
+          {
+            name: 2,
+            label: 'Jane',
+            count: 2,
           },
-        }
+        ],
+      })
+    })
+    it('should support a lookup with an optionsFilter with multiple keywords that span multiple fields', async () => {
+      queries = []
 
-        await facet.result(node, search)
-        let filterAgg = _.find('$match', queries[0])
-        expect(filterAgg).toEqual({
-          $match: {
-            $and: [
-              {
-                'label.firstName': {
-                  $options: 'i',
-                  $regex: 'jane',
+      let activities = [
+        { _id: 1, type: 'create', user: 2 },
+        { _id: 1, type: 'update', user: 1 },
+        { _id: 1, type: 'create', user: 1 },
+        { _id: 1, type: 'delete', user: 3 },
+        { _id: 1, type: 'delete', user: 2 },
+        { _id: 1, type: 'read', user: 1 },
+      ]
+
+      let users = [
+        { _id: 1, firstName: 'Fred', lastName: 'Smith', type: 'basic' },
+        { _id: 2, firstName: 'Jane', lastName: 'Williams', type: 'admin' },
+      ]
+
+      let node = {
+        field: 'user',
+        optionsFilter: 'fred smith',
+        label: {
+          collection: users,
+          foreignField: '_id',
+          fields: ['firstName', 'lastName'],
+        },
+      }
+
+      await facet.result(node, search)
+      let filterAgg = _.find('$match', queries[0])
+      expect(filterAgg).toEqual({
+        $match: {
+          $and: [
+            {
+              $or: [
+                {
+                  'label.firstName': {
+                    $regex: 'fred',
+                    $options: 'i',
+                  },
                 },
-              },
-            ],
-          },
-        })
-
-        let result = await facet.result(node, agg =>
-          mingo.aggregate(activities, agg)
-        )
-
-        expect(result).toEqual({
-          cardinality: 1,
-          options: [
+                {
+                  'label.lastName': {
+                    $regex: 'fred',
+                    $options: 'i',
+                  },
+                },
+              ],
+            },
             {
-              name: 2,
-              label: 'Jane',
-              count: 2,
+              $or: [
+                {
+                  'label.firstName': {
+                    $regex: 'smith',
+                    $options: 'i',
+                  },
+                },
+                {
+                  'label.lastName': {
+                    $regex: 'smith',
+                    $options: 'i',
+                  },
+                },
+              ],
             },
           ],
-        })
-      }
-    )
-    it(
-      'should support a lookup with an optionsFilter with multiple keywords that span multiple fields',
-      async () => {
-        queries = []
+        },
+      })
 
-        let activities = [
-          { _id: 1, type: 'create', user: 2 },
-          { _id: 1, type: 'update', user: 1 },
-          { _id: 1, type: 'create', user: 1 },
-          { _id: 1, type: 'delete', user: 3 },
-          { _id: 1, type: 'delete', user: 2 },
-          { _id: 1, type: 'read', user: 1 },
-        ]
+      let result = await facet.result(node, agg =>
+        mingo.aggregate(activities, agg)
+      )
 
-        let users = [
-          { _id: 1, firstName: 'Fred', lastName: 'Smith', type: 'basic' },
-          { _id: 2, firstName: 'Jane', lastName: 'Williams', type: 'admin' },
-        ]
-
-        let node = {
-          field: 'user',
-          optionsFilter: 'fred smith',
-          label: {
-            collection: users,
-            foreignField: '_id',
-            fields: ['firstName', 'lastName'],
+      expect(result).toEqual({
+        cardinality: 1,
+        options: [
+          {
+            name: 1,
+            label: { firstName: 'Fred', lastName: 'Smith' },
+            count: 3,
           },
-        }
-
-        await facet.result(node, search)
-        let filterAgg = _.find('$match', queries[0])
-        expect(filterAgg).toEqual({
-          $match: {
-            $and: [
-              {
-                $or: [
-                  {
-                    'label.firstName': {
-                      $regex: 'fred',
-                      $options: 'i',
-                    },
-                  },
-                  {
-                    'label.lastName': {
-                      $regex: 'fred',
-                      $options: 'i',
-                    },
-                  },
-                ],
-              },
-              {
-                $or: [
-                  {
-                    'label.firstName': {
-                      $regex: 'smith',
-                      $options: 'i',
-                    },
-                  },
-                  {
-                    'label.lastName': {
-                      $regex: 'smith',
-                      $options: 'i',
-                    },
-                  },
-                ],
-              },
-            ],
-          },
-        })
-
-        let result = await facet.result(node, agg =>
-          mingo.aggregate(activities, agg)
-        )
-
-        expect(result).toEqual({
-          cardinality: 1,
-          options: [
+        ],
+      })
+    })
+    it('should allow for an optional node.unwind to distinguish a nested array field being searched', async () => {
+      let collection = [
+        {
+          _id: 1,
+          myFields: [
             {
-              name: 1,
-              label: { firstName: 'Fred', lastName: 'Smith' },
-              count: 3,
+              _id: 5,
+              field: 'firstField',
             },
           ],
-        })
-      }
-    )
-    it(
-      'should allow for an optional node.unwind to distinguish a nested array field being searched',
-      async () => {
-        let collection = [
-          {
-            _id: 1,
-            myFields: [
-              {
-                _id: 5,
-                field: 'firstField',
-              },
-            ],
-          },
-          {
-            _id: 2,
-            myFields: [
-              {
-                _id: 6,
-                field: 'firstField',
-              },
-              {
-                _id: 7,
-                field: 'secondField',
-              },
-            ],
-          },
-        ]
-
-        let node = {
-          field: 'myFields.field',
-          unwind: 'myFields',
-        }
-
-        let result = await facet.result(node, agg =>
-          mingo.aggregate(collection, agg)
-        )
-
-        expect(result).toEqual({
-          cardinality: 2,
-          options: [
-            { name: 'firstField', count: 2 },
-            { name: 'secondField', count: 1 },
+        },
+        {
+          _id: 2,
+          myFields: [
+            {
+              _id: 6,
+              field: 'firstField',
+            },
+            {
+              _id: 7,
+              field: 'secondField',
+            },
           ],
-        })
+        },
+      ]
+
+      let node = {
+        field: 'myFields.field',
+        unwind: 'myFields',
       }
-    )
+
+      let result = await facet.result(node, agg =>
+        mingo.aggregate(collection, agg)
+      )
+
+      expect(result).toEqual({
+        cardinality: 2,
+        options: [
+          { name: 'firstField', count: 2 },
+          { name: 'secondField', count: 1 },
+        ],
+      })
+    })
 
     describe('should always include checked values in result', () => {
       let mongoIdData = [
@@ -541,99 +520,84 @@ describe('facet', () => {
         let ids = _.map(({ name }) => _.toString(name), result.options)
         expect(_.includes('4', ids)).toBe(true)
       })
-      it(
-        'when missing checked values in first search are not expected',
-        async () => {
-          node.label.collection = mongoIdData
-          node.field = 'num'
-          node.values = [1]
-          let result = await facet.result(node, agg =>
-            mingo.aggregate(mongoIdData, agg)
-          )
-          let ids = _.map(({ name }) => _.toString(name), result.options)
-          expect(_.includes('1', ids)).toBe(true)
-        }
-      )
-      it(
-        'when missing checked values in first search are expected and isMongoId is true',
-        async () => {
-          let collection = _.map(
-            ({ _id, name }) => ({ _id: ObjectId(_id), name }),
-            mongoIdData
-          )
-          node.isMongoId = true
-          node.field = '_id'
-          node.label.collection = collection
-          node.values = ['5ce30b403aa154002d01b9ed']
+      it('when missing checked values in first search are not expected', async () => {
+        node.label.collection = mongoIdData
+        node.field = 'num'
+        node.values = [1]
+        let result = await facet.result(node, agg =>
+          mingo.aggregate(mongoIdData, agg)
+        )
+        let ids = _.map(({ name }) => _.toString(name), result.options)
+        expect(_.includes('1', ids)).toBe(true)
+      })
+      it('when missing checked values in first search are expected and isMongoId is true', async () => {
+        let collection = _.map(
+          ({ _id, name }) => ({ _id: ObjectId(_id), name }),
+          mongoIdData
+        )
+        node.isMongoId = true
+        node.field = '_id'
+        node.label.collection = collection
+        node.values = ['5ce30b403aa154002d01b9ed']
 
-          let result = await facet.result(node, agg =>
-            mingo.aggregate(collection, agg)
-          )
-          let ids = _.map(({ name }) => _.toString(name), result.options)
-          expect(_.includes('5ce30b403aa154002d01b9ed', ids)).toBe(true)
-        }
-      )
-      it(
-        'when missing checked values in first search are not expected and  isMongoId is true',
-        async () => {
-          let collection = _.map(
-            ({ _id, name }) => ({ _id: ObjectId(_id), name }),
-            mongoIdData
-          )
-          node.field = '_id'
-          node.isMongoId = true
-          node.label.collection = collection
-          node.values = ['5e9dbd76e991760021124966']
+        let result = await facet.result(node, agg =>
+          mingo.aggregate(collection, agg)
+        )
+        let ids = _.map(({ name }) => _.toString(name), result.options)
+        expect(_.includes('5ce30b403aa154002d01b9ed', ids)).toBe(true)
+      })
+      it('when missing checked values in first search are not expected and  isMongoId is true', async () => {
+        let collection = _.map(
+          ({ _id, name }) => ({ _id: ObjectId(_id), name }),
+          mongoIdData
+        )
+        node.field = '_id'
+        node.isMongoId = true
+        node.label.collection = collection
+        node.values = ['5e9dbd76e991760021124966']
 
-          let result = await facet.result(node, agg =>
-            mingo.aggregate(collection, agg)
-          )
-          let ids = _.map(({ name }) => _.toString(name), result.options)
-          expect(_.includes('5e9dbd76e991760021124966', ids)).toBe(true)
+        let result = await facet.result(node, agg =>
+          mingo.aggregate(collection, agg)
+        )
+        let ids = _.map(({ name }) => _.toString(name), result.options)
+        expect(_.includes('5e9dbd76e991760021124966', ids)).toBe(true)
+      })
+      it('when the first and second search results do not  contain the checked value', async () => {
+        let mockConfig = {
+          getProvider: () => ({
+            runSearch: () => [{ label: { name: '5' }, _id: 5 }],
+          }),
+          getSchema() {},
         }
-      )
-      it(
-        'when the first and second search results do not  contain the checked value',
-        async () => {
-          let mockConfig = {
-            getProvider: () => ({
-              runSearch: () => [{ label: { name: '5' }, _id: 5 }],
-            }),
-            getSchema() {},
-          }
-          node.field = '_id'
-          node.label.collection = mongoIdData
-          node.isMongoId = null
-          node.values = [5]
-          let result = await facet.result(
-            node,
-            agg => mingo.aggregate(mongoIdData, agg),
-            {},
-            mockConfig
-          )
-          let ids = _.map(({ name }) => _.toString(name), result.options)
-          expect(_.includes('5', ids)).toBe(true)
+        node.field = '_id'
+        node.label.collection = mongoIdData
+        node.isMongoId = null
+        node.values = [5]
+        let result = await facet.result(
+          node,
+          agg => mingo.aggregate(mongoIdData, agg),
+          {},
+          mockConfig
+        )
+        let ids = _.map(({ name }) => _.toString(name), result.options)
+        expect(_.includes('5', ids)).toBe(true)
+      })
+      it('when the first and second search results do not contain the checked value and values are boolean', async () => {
+        let mockConfig = {
+          getProvider: () => ({
+            runSearch: () => [{ label: { bool: true }, _id: 5 }],
+          }),
+          getSchema() {},
         }
-      )
-      it(
-        'when the first and second search results do not contain the checked value and values are boolean',
-        async () => {
-          let mockConfig = {
-            getProvider: () => ({
-              runSearch: () => [{ label: { bool: true }, _id: 5 }],
-            }),
-            getSchema() {},
-          }
-          node.field = 'bool'
-          node.label.collection = mongoIdData
-          node.isMongoId = null
-          node.values = [true]
-          let result = await facet.result(node, () => [], {}, mockConfig)
+        node.field = 'bool'
+        node.label.collection = mongoIdData
+        node.isMongoId = null
+        node.values = [true]
+        let result = await facet.result(node, () => [], {}, mockConfig)
 
-          let ids = _.map(({ name }) => _.toString(name), result.options)
-          expect(_.includes('5', ids)).toBe(true)
-        }
-      )
+        let ids = _.map(({ name }) => _.toString(name), result.options)
+        expect(_.includes('5', ids)).toBe(true)
+      })
       it('when the field label.fields is undefined', async () => {
         let mockConfig = {
           getProvider: () => ({
@@ -652,35 +616,32 @@ describe('facet', () => {
         let ids = _.map(({ name }) => _.toString(name), result.options)
         expect(_.includes('5', ids)).toBe(true)
       })
-      it(
-        'when the first and second search results do not  contain the checked value  and  isMongoId is true',
-        async () => {
-          let mockConfig = {
-            getProvider: () => ({
-              runSearch: () => [
-                { label: { name: 'test' }, _id: '5ce30b403aa154002d01b9dd' },
-              ],
-            }),
-            getSchema() {},
-          }
-          node.field = '_id'
-          let collection = _.map(
-            ({ _id, name }) => ({ _id: ObjectId(_id), name }),
-            mongoIdData
-          )
-          node.isMongoId = true
-          node.label.collection = collection
-          node.values = ['5ce30b403aa154002d01b9dd']
-          let result = await facet.result(
-            node,
-            agg => mingo.aggregate(collection, agg),
-            {},
-            mockConfig
-          )
-          let ids = _.map(({ name }) => _.toString(name), result.options)
-          expect(_.includes('5ce30b403aa154002d01b9dd', ids)).toBe(true)
+      it('when the first and second search results do not  contain the checked value  and  isMongoId is true', async () => {
+        let mockConfig = {
+          getProvider: () => ({
+            runSearch: () => [
+              { label: { name: 'test' }, _id: '5ce30b403aa154002d01b9dd' },
+            ],
+          }),
+          getSchema() {},
         }
-      )
+        node.field = '_id'
+        let collection = _.map(
+          ({ _id, name }) => ({ _id: ObjectId(_id), name }),
+          mongoIdData
+        )
+        node.isMongoId = true
+        node.label.collection = collection
+        node.values = ['5ce30b403aa154002d01b9dd']
+        let result = await facet.result(
+          node,
+          agg => mingo.aggregate(collection, agg),
+          {},
+          mockConfig
+        )
+        let ids = _.map(({ name }) => _.toString(name), result.options)
+        expect(_.includes('5ce30b403aa154002d01b9dd', ids)).toBe(true)
+      })
     })
   })
 })

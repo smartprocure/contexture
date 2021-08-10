@@ -13,41 +13,38 @@ let getSchema = collection => ({ mongo: { collection } })
 
 describe('results', () => {
   describe('convertPopulate', () => {
-    it(
-      'should translate populate object into an array of $lookup objects',
-      () => {
-        let populate = {
-          author: {
-            schema: 'user',
+    it('should translate populate object into an array of $lookup objects', () => {
+      let populate = {
+        author: {
+          schema: 'user',
+          localField: 'createdBy',
+          foreignField: '_id',
+        },
+        org: {
+          schema: 'organization',
+          localField: 'organization',
+          foreignField: '_id',
+        },
+      }
+      expect(convertPopulate(getSchema)(populate)).toEqual([
+        {
+          $lookup: {
+            as: 'author',
+            from: 'user',
             localField: 'createdBy',
             foreignField: '_id',
           },
-          org: {
-            schema: 'organization',
+        },
+        {
+          $lookup: {
+            as: 'org',
+            from: 'organization',
             localField: 'organization',
             foreignField: '_id',
           },
-        }
-        expect(convertPopulate(getSchema)(populate)).toEqual([
-          {
-            $lookup: {
-              as: 'author',
-              from: 'user',
-              localField: 'createdBy',
-              foreignField: '_id',
-            },
-          },
-          {
-            $lookup: {
-              as: 'org',
-              from: 'organization',
-              localField: 'organization',
-              foreignField: '_id',
-            },
-          },
-        ])
-      }
-    )
+        },
+      ])
+    })
 
     it("support converting the 'as'  attribute to the $lookup 'as' prop", () => {
       let populate = {
@@ -84,30 +81,27 @@ describe('results', () => {
       ])
     })
 
-    it(
-      'should add "$unwind" stage if "unwind" is present in the populate config',
-      () => {
-        let populate = {
-          author: {
-            schema: 'user',
+    it('should add "$unwind" stage if "unwind" is present in the populate config', () => {
+      let populate = {
+        author: {
+          schema: 'user',
+          localField: 'createdBy',
+          foreignField: '_id',
+          unwind: true,
+        },
+      }
+      expect(convertPopulate(getSchema)(populate)).toEqual([
+        {
+          $lookup: {
+            as: 'author',
+            from: 'user',
             localField: 'createdBy',
             foreignField: '_id',
-            unwind: true,
           },
-        }
-        expect(convertPopulate(getSchema)(populate)).toEqual([
-          {
-            $lookup: {
-              as: 'author',
-              from: 'user',
-              localField: 'createdBy',
-              foreignField: '_id',
-            },
-          },
-          { $unwind: { path: '$author', preserveNullAndEmptyArrays: true } },
-        ])
-      }
-    )
+        },
+        { $unwind: { path: '$author', preserveNullAndEmptyArrays: true } },
+      ])
+    })
     it('should default to _id if foreignField is missing', () => {
       let populate = {
         author: {
@@ -160,79 +154,73 @@ describe('results', () => {
         },
       ])
     })
-    it(
-      'should do populate without omitting from the base record when include field is a parent of nested field object in the schema',
-      () => {
-        let populate = {
-          author: {
-            schema: 'user',
+    it('should do populate without omitting from the base record when include field is a parent of nested field object in the schema', () => {
+      let populate = {
+        author: {
+          schema: 'user',
+          localField: 'createdBy',
+          foreignField: '_id',
+          include: ['_id', 'preferences'],
+        },
+      }
+      let getTestSchema = () => ({
+        mongo: { collection: 'user' },
+        fields: {
+          _id: {},
+          password: 'doNotLetMeThrough',
+          'preferences.option1': true,
+          'preferences.option2': false,
+        },
+      })
+      expect(convertPopulate(getTestSchema)(populate)).toEqual([
+        {
+          $lookup: {
+            as: 'author',
+            from: 'user',
             localField: 'createdBy',
             foreignField: '_id',
-            include: ['_id', 'preferences'],
           },
-        }
-        let getTestSchema = () => ({
-          mongo: { collection: 'user' },
-          fields: {
-            _id: {},
-            password: 'doNotLetMeThrough',
-            'preferences.option1': true,
-            'preferences.option2': false,
+        },
+        {
+          $project: {
+            'author.password': 0,
           },
-        })
-        expect(convertPopulate(getTestSchema)(populate)).toEqual([
-          {
-            $lookup: {
-              as: 'author',
-              from: 'user',
-              localField: 'createdBy',
-              foreignField: '_id',
-            },
-          },
-          {
-            $project: {
-              'author.password': 0,
-            },
-          },
-        ])
+        },
+      ])
+    })
+    it('should do populate without omitting from the base record when include field is nested field from an object in the schema', () => {
+      let populate = {
+        author: {
+          schema: 'user',
+          localField: 'createdBy',
+          foreignField: '_id',
+          include: ['_id', 'preferences.option1'],
+        },
       }
-    )
-    it(
-      'should do populate without omitting from the base record when include field is nested field from an object in the schema',
-      () => {
-        let populate = {
-          author: {
-            schema: 'user',
+      let getTestSchema = () => ({
+        mongo: { collection: 'user' },
+        fields: {
+          _id: {},
+          password: 'doNotLetMeThrough',
+          preferences: {},
+        },
+      })
+      expect(convertPopulate(getTestSchema)(populate)).toEqual([
+        {
+          $lookup: {
+            as: 'author',
+            from: 'user',
             localField: 'createdBy',
             foreignField: '_id',
-            include: ['_id', 'preferences.option1'],
           },
-        }
-        let getTestSchema = () => ({
-          mongo: { collection: 'user' },
-          fields: {
-            _id: {},
-            password: 'doNotLetMeThrough',
-            preferences: {},
+        },
+        {
+          $project: {
+            'author.password': 0,
           },
-        })
-        expect(convertPopulate(getTestSchema)(populate)).toEqual([
-          {
-            $lookup: {
-              as: 'author',
-              from: 'user',
-              localField: 'createdBy',
-              foreignField: '_id',
-            },
-          },
-          {
-            $project: {
-              'author.password': 0,
-            },
-          },
-        ])
-      }
-    )
+        },
+      ])
+    })
   })
   describe('getStartRecord', () => {
     it('should return 0 if page is 1', () => {
@@ -279,123 +267,114 @@ describe('results', () => {
         { $project: { name: 1, user: 1, type: 1, updatedAt: 1 } },
       ])
     })
-    it(
-      'should put $sort, $skip, $limit first in pipeline where sort field is not part of a join',
-      () => {
-        let node = defaults({
-          key: 'results',
-          type: 'results',
-          sortField: 'metrics.sessionsCount',
-          include: ['name', 'user', 'type', 'updatedAt'],
-          sortDir: 'asc',
-          populate: {
-            user: {
-              schema: 'user',
-              localField: 'user',
-              foreignField: '_id',
-            },
+    it('should put $sort, $skip, $limit first in pipeline where sort field is not part of a join', () => {
+      let node = defaults({
+        key: 'results',
+        type: 'results',
+        sortField: 'metrics.sessionsCount',
+        include: ['name', 'user', 'type', 'updatedAt'],
+        sortDir: 'asc',
+        populate: {
+          user: {
+            schema: 'user',
+            localField: 'user',
+            foreignField: '_id',
           },
-        })
-        expect(getResultsQuery(node, getSchema, 0)).toEqual([
-          { $sort: { 'metrics.sessionsCount': 1 } },
-          { $skip: 0 },
-          { $limit: 10 },
-          {
-            $lookup: {
-              as: 'user',
-              from: 'user',
-              localField: 'user',
-              foreignField: '_id',
-            },
+        },
+      })
+      expect(getResultsQuery(node, getSchema, 0)).toEqual([
+        { $sort: { 'metrics.sessionsCount': 1 } },
+        { $skip: 0 },
+        { $limit: 10 },
+        {
+          $lookup: {
+            as: 'user',
+            from: 'user',
+            localField: 'user',
+            foreignField: '_id',
           },
-          { $project: { name: 1, user: 1, type: 1, updatedAt: 1 } },
-        ])
-      }
-    )
-    it(
-      'should put $skip, $limit last in pipeline when join field indicated it has many records',
-      () => {
-        let node = defaults({
-          key: 'results',
-          type: 'results',
-          sortField: 'metrics.sessionsCount',
-          include: ['name', 'user', 'type', 'updatedAt'],
-          sortDir: 'asc',
-          populate: {
-            user: {
-              schema: 'user',
-              localField: 'user',
-              foreignField: '_id',
-              unwind: true,
-              hasMany: true,
-            },
+        },
+        { $project: { name: 1, user: 1, type: 1, updatedAt: 1 } },
+      ])
+    })
+    it('should put $skip, $limit last in pipeline when join field indicated it has many records', () => {
+      let node = defaults({
+        key: 'results',
+        type: 'results',
+        sortField: 'metrics.sessionsCount',
+        include: ['name', 'user', 'type', 'updatedAt'],
+        sortDir: 'asc',
+        populate: {
+          user: {
+            schema: 'user',
+            localField: 'user',
+            foreignField: '_id',
+            unwind: true,
+            hasMany: true,
           },
-        })
-        expect(getResultsQuery(node, getSchema, 0)).toEqual([
-          { $sort: { 'metrics.sessionsCount': 1 } },
-          {
-            $lookup: {
-              as: 'user',
-              from: 'user',
-              localField: 'user',
-              foreignField: '_id',
-            },
+        },
+      })
+      expect(getResultsQuery(node, getSchema, 0)).toEqual([
+        { $sort: { 'metrics.sessionsCount': 1 } },
+        {
+          $lookup: {
+            as: 'user',
+            from: 'user',
+            localField: 'user',
+            foreignField: '_id',
           },
-          {
-            $unwind: {
-              path: '$user',
-              preserveNullAndEmptyArrays: true,
-            },
+        },
+        {
+          $unwind: {
+            path: '$user',
+            preserveNullAndEmptyArrays: true,
           },
-          { $skip: 0 },
-          { $limit: 10 },
-          { $project: { name: 1, user: 1, type: 1, updatedAt: 1 } },
-        ])
-      }
-    )
+        },
+        { $skip: 0 },
+        { $limit: 10 },
+        { $project: { name: 1, user: 1, type: 1, updatedAt: 1 } },
+      ])
+    })
 
-    it(
-      'should put $skip, $limit last in pipeline when join field indicated it has many records when use "as" in populate',
-      () => {
-        let node = defaults({
-          key: 'results',
-          type: 'results',
-          sortField: 'metrics.sessionsCount',
-          include: ['name', 'auther.test', 'type', 'updatedAt'],
-          sortDir: 'asc',
-          populate: {
-            user: {
-              schema: 'user',
-              as: 'auther.test',
-              localField: 'auther.test',
-              foreignField: '_id',
-              unwind: true,
-              hasMany: true,
-            },
+    it('should put $skip, $limit last in pipeline when join field indicated it has many records when use "as" in populate', () => {
+      let node = defaults({
+        key: 'results',
+        type: 'results',
+        sortField: 'metrics.sessionsCount',
+        include: ['name', 'auther.test', 'type', 'updatedAt'],
+        sortDir: 'asc',
+        populate: {
+          user: {
+            schema: 'user',
+            as: 'auther.test',
+            localField: 'auther.test',
+            foreignField: '_id',
+            unwind: true,
+            hasMany: true,
           },
-        })
-        expect(getResultsQuery(node, getSchema, 0)).toEqual([
-          { $sort: { 'metrics.sessionsCount': 1 } },
-          {
-            $lookup: {
-              as: 'auther.test',
-              from: 'user',
-              localField: 'auther.test',
-              foreignField: '_id',
-            },
+        },
+      })
+      expect(getResultsQuery(node, getSchema, 0)).toEqual([
+        { $sort: { 'metrics.sessionsCount': 1 } },
+        {
+          $lookup: {
+            as: 'auther.test',
+            from: 'user',
+            localField: 'auther.test',
+            foreignField: '_id',
           },
-          {
-            $unwind: {
-              path: '$auther.test',
-              preserveNullAndEmptyArrays: true,
-            },
+        },
+        {
+          $unwind: {
+            path: '$auther.test',
+            preserveNullAndEmptyArrays: true,
           },
-          { $skip: 0 },
-          { $limit: 10 },
-          { $project: { name: 1, 'auther.test': 1, type: 1, updatedAt: 1 } },
-        ])
-      }
-    )
+        },
+        { $skip: 0 },
+        { $limit: 10 },
+        { $project: { name: 1, 'auther.test': 1, type: 1, updatedAt: 1 } },
+      ])
+    })
     it('should put $sort, $skip, $limit first after $lookup', () => {
       let node = defaults({
         key: 'results',
@@ -483,9 +462,9 @@ describe('results', () => {
       expect(getResponse(node, results).hasMore).toBeUndefined()
     })
     it('should set hasMore if there are extra results', async () => {
-      expect(
-        getResponse({ ...node, skipCount: true }, results).hasMore
-      ).toBe(true)
+      expect(getResponse({ ...node, skipCount: true }, results).hasMore).toBe(
+        true
+      )
     })
     it('should not set hasMore if there are no extra results', async () => {
       expect(
@@ -518,24 +497,21 @@ describe('results', () => {
       }
       expect(() => checkPopulate(node)).toThrowError()
     })
-    it(
-      'should not throw on an unincluded child path if a parent is included',
-      () => {
-        let node = {
-          include: ['createdBy', '_createdByOrganization'],
-          populate: {
-            createdBy: {
-              localField: 'createdBy',
-              include: ['_id', 'firstName', 'lastName'],
-            },
-            _createdByOrganization: {
-              localField: 'createdBy.organization',
-            },
+    it('should not throw on an unincluded child path if a parent is included', () => {
+      let node = {
+        include: ['createdBy', '_createdByOrganization'],
+        populate: {
+          createdBy: {
+            localField: 'createdBy',
+            include: ['_id', 'firstName', 'lastName'],
           },
-        }
-        expect(() => checkPopulate(node)).not.toThrowError()
+          _createdByOrganization: {
+            localField: 'createdBy.organization',
+          },
+        },
       }
-    )
+      expect(() => checkPopulate(node)).not.toThrowError()
+    })
 
     it('should not throw when include checks out', () => {
       let node = {
@@ -552,24 +528,21 @@ describe('results', () => {
       }
       expect(() => checkPopulate(node)).not.toThrowError()
     })
-    it(
-      'should not throw when include is an empty array and the schema contains the fields',
-      () => {
-        let node = {
-          include: [],
-          populate: {
-            createdBy: {
-              localField: 'createdBy',
-              include: ['_id', 'firstName', 'lastName', 'organization'],
-            },
-            _createdByOrganization: {
-              localField: 'createdBy.organization',
-            },
+    it('should not throw when include is an empty array and the schema contains the fields', () => {
+      let node = {
+        include: [],
+        populate: {
+          createdBy: {
+            localField: 'createdBy',
+            include: ['_id', 'firstName', 'lastName', 'organization'],
           },
-        }
-        let schema = { fields: { createdBy: true, _createdByOrganization: true } }
-        expect(() => checkPopulate(node, schema)).not.toThrowError()
+          _createdByOrganization: {
+            localField: 'createdBy.organization',
+          },
+        },
       }
-    )
+      let schema = { fields: { createdBy: true, _createdByOrganization: true } }
+      expect(() => checkPopulate(node, schema)).not.toThrowError()
+    })
   })
 })
