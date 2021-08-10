@@ -31,63 +31,69 @@ let toNested = _.flow(
 let FilteredSection = _.flow(
   setDisplayName('FilteredSection'),
   observer
-)(({
-  options,
-  highlight,
-  style = { maxHeight: 340, overflowY: 'scroll' },
-  checked }) => {
-  let { PickerItem, TextHighlight } = React.useContext(PickerContext)
-  return (
-    <div style={style}>
-      {F.mapIndexed(
-        (option, field) => (
-          <PickerItem
-            key={field}
-            isChecked={checked.has(option.value)}
-            onClick={() => {
-              checked.has(option.value)
-              ? checked.delete(option.value)
-              : checked.set(option.value, option)
-            }}
-          >
-            <TextHighlight text={option.label} pattern={highlight} />
-          </PickerItem>
-        ),
-        options
-      )}
-    </div>
-  )
-})
+)(
+  ({
+    options,
+    highlight,
+    style = { maxHeight: 340, overflowY: 'scroll' },
+    checked,
+  }) => {
+    let { PickerItem, TextHighlight } = React.useContext(PickerContext)
+    return (
+      <div style={style}>
+        {F.mapIndexed(
+          (option, field) => (
+            <PickerItem
+              key={field}
+              isChecked={checked.has(option.value)}
+              onClick={() => {
+                checked.has(option.value)
+                  ? checked.delete(option.value)
+                  : checked.set(option.value, option)
+              }}
+            >
+              <TextHighlight text={option.label} pattern={highlight} />
+            </PickerItem>
+          ),
+          options
+        )}
+      </div>
+    )
+  }
+)
 
 let Section = _.flow(
   setDisplayName('Section'),
   observer
-)(({
-  options,
-  onClick,
-  selected,
-  checked,
-  style = { overflow: 'auto', width: '100%', maxHeight: 300 } }) => {
-  let { PickerItem } = React.useContext(PickerContext)
-  return (
-    <div style={style}>
-      {_.map(
-        item => (
-          <PickerItem
-            key={item._key}
-            onClick={() => onClick(item.value || item._key, item)}
-            active={selected === item._key}
-            hasChildren={!isField(item)}
-            isChecked={checked.has(item.value)}
-          >
-            {getItemLabel(item)}
-          </PickerItem>
-        ),
-        _.flow(F.unkeyBy('_key'), _.sortBy(getItemLabel))(options)
-      )}
-    </div>
-  )
-})
+)(
+  ({
+    options,
+    onClick,
+    selected,
+    checked,
+    style = { overflow: 'auto', width: '100%', maxHeight: 300 },
+  }) => {
+    let { PickerItem } = React.useContext(PickerContext)
+    return (
+      <div style={style}>
+        {_.map(
+          item => (
+            <PickerItem
+              key={item._key}
+              onClick={() => onClick(item.value || item._key, item)}
+              active={selected === item._key}
+              hasChildren={!isField(item)}
+              isChecked={checked.has(item.value)}
+            >
+              {getItemLabel(item)}
+            </PickerItem>
+          ),
+          _.flow(F.unkeyBy('_key'), _.sortBy(getItemLabel))(options)
+        )}
+      </div>
+    )
+  }
+)
 
 let PanelTreePicker = inject((store, { options, checked }) => {
   let x = {
@@ -99,8 +105,7 @@ let PanelTreePicker = inject((store, { options, checked }) => {
         checked.has(field.value)
           ? checked.delete(field.value)
           : checked.set(field.value, field)
-      }
-      else {
+      } else {
         x.state.selected.splice(level, x.state.selected.length - level, key)
       }
     }),
@@ -151,52 +156,61 @@ let NestedPicker = ({
     maxHeight: 400,
     paddingBottom: 10,
   },
-  theme: { Button }
+  theme: { Button },
 }) => {
   let state = observable({
     filter: '',
-    checked: new Map()
+    checked: new Map(),
   })
   return (
     <PickerContext.Provider value={{ PickerItem, TextHighlight }}>
-    <Box style={style}>
-      <Observer>
-      {() =>
-        <>
-          <TextInput style={{ marginBottom: 10 }}
-            value={state.filter}
-            onChange={e => (state.filter = e.target.value)}
-            placeholder="Enter filter keyword..."
-          />
-          {state.filter ? (
-            <FilteredSection
-              checked={state.checked}
-              highlight={state.filter}
-              options={matchLabel(state.filter)(options)}
-            />
-          ) : (
-            <PanelTreePicker options={options} checked={state.checked} />
+      <Box style={style}>
+        <Observer>
+          {() => (
+            <>
+              <TextInput
+                style={{ marginBottom: 10 }}
+                value={state.filter}
+                onChange={e => (state.filter = e.target.value)}
+                placeholder="Enter filter keyword..."
+              />
+              {state.filter ? (
+                <FilteredSection
+                  checked={state.checked}
+                  highlight={state.filter}
+                  options={matchLabel(state.filter)(options)}
+                />
+              ) : (
+                <PanelTreePicker options={options} checked={state.checked} />
+              )}
+            </>
           )}
-        </>
-      }
-      </Observer>
-    </Box>
+        </Observer>
+      </Box>
       <Flex justifyContent="space-between" style={{ marginTop: 20 }}>
-        <Button onClick={() => {
+        <Button
+          onClick={() => {
             state.checked = new Map()
             onChange()
-          }
-        }>
+          }}
+        >
           Cancel
         </Button>
         <Observer>
-        {() => !!state.checked.size &&
-          <Button
-            primary
-            onClick={() => onChange(Array.from(state.checked.values()))}
-          >
-            Add {`${state.checked.size} ${pluralize(itemType, state.checked.size)}`}
-          </Button>}
+          {() =>
+            !!state.checked.size && (
+              <Button
+                primary
+                onClick={() => onChange(Array.from(state.checked.values()))}
+              >
+                Add{' '}
+                {`${state.checked.size} ${pluralize(
+                  itemType,
+                  state.checked.size
+                )}`}
+              </Button>
+            )
+          }
         </Observer>
       </Flex>
     </PickerContext.Provider>

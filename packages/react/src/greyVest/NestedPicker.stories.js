@@ -8,8 +8,5 @@ import { options } from '../utils/stories'
 storiesOf('GreyVest Library|NestedPicker', module)
   .addDecorator(decorator)
   .add('story', () => (
-    <NestedPicker
-      options={options}
-      onChange={(x) => action(`picked`)(x)}
-    />
+    <NestedPicker options={options} onChange={x => action(`picked`)(x)} />
   ))

@@ -15,11 +15,7 @@ let mockTree = {
 storiesOf('Search Components|FilterAdder', module)
   .addDecorator(ThemePicker('greyVest'))
   .add('With ModalPicker', () => (
-    <FilterAdder
-      tree={mockTree}
-      path={['path']}
-      fields={options}
-    />
+    <FilterAdder tree={mockTree} path={['path']} fields={options} />
   ))
   .add('With Select', () => {
     let theme = useTheme()
@@ -31,7 +27,9 @@ storiesOf('Search Components|FilterAdder', module)
           path={['path']}
           fields={options}
         />
-        <div style={{marginTop: 20}}>Check action log to see <b>onChange</b> being dispatched</div>
+        <div style={{ marginTop: 20 }}>
+          Check action log to see <b>onChange</b> being dispatched
+        </div>
       </div>
     )
   })
@@ -45,7 +43,9 @@ storiesOf('Search Components|FilterAdder', module)
           path={['path']}
           fields={options}
         />
-        <div style={{marginTop: 20}}>Check action log to see <b>onChange</b> being dispatched</div>
+        <div style={{ marginTop: 20 }}>
+          Check action log to see <b>onChange</b> being dispatched
+        </div>
       </div>
     )
   })
