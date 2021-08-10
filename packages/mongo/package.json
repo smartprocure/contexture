@@ -4,10 +4,10 @@
   "description": "Mongo Provider for Contexture",
   "main": "src/index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/_mocha --recursive",
-    "test:integration": "./node_modules/mocha/bin/_mocha --recursive integration-test/example-types",
-    "test:ci": "./node_modules/mocha/bin/_mocha --recursive --reporter json > test-results.json",
-    "test-watch": "chokidar 'src/**/*.js' 'test/**/*.js' -c 'npm t'",
+    "test": "jest --selectProjects unit",
+    "test:integration": "jest --selectProjects integration",
+    "test:ci": "npm run test -- --coverage --json --outputFile=test-results.json",
+    "test:watch": "npm run test -- --watch",
     "lint": "eslint --ignore-path .gitignore './**/*.js'",
     "lint:fix": "npm run lint -- --fix",
     "lint:ci": "npm run lint -- -o lint-results.json -f json",
@@ -45,18 +45,48 @@
     "moment-timezone": "^0.5.28"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
     "chokidar-cli": "^1.2.0",
     "contexture": "^0.0.4",
     "danger": "^10.5.4",
     "duti": "^0.15.2",
     "eslint": "^4.12.1",
     "eslint-config-smartprocure": "^1.1.0",
+    "jest": "^26.6.3",
     "mingo": "^4.1.2",
-    "mocha": "^3.5.3",
     "mongodb": "^3.5.6",
     "mongodb-memory-server": "^6.5.2",
     "prettier": "^1.8.2"
+  },
+  "jest": {
+    "projects": [
+      {
+        "displayName": "unit",
+        "testMatch": [
+          "<rootDir>/test/**/*.js"
+        ],
+        "collectCoverageFrom": [
+          "<rootDir>/src/**/*.{js,jsx}",
+          "!**/node_modules/**"
+        ],
+        "collectCoverage": true,
+        "coverageThreshold": {
+          "global": {
+            "branches": 0,
+            "functions": 0,
+            "lines": 0,
+            "statements": 0
+          }
+        }
+      },
+      {
+        "displayName": "integration",
+        "testMatch": [
+          "<rootDir>/integration-test/example-types/**/*.js"
+        ],
+        "maxConcurrency": 1,
+        "maxWorkers": 1
+      }
+    ]
   },
   "peerDependencies": {
     "mongodb": "^3.5.6"
