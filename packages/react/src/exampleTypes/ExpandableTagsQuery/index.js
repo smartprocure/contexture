@@ -38,7 +38,7 @@ let ExpandableTagsQuery = ({ measureRef, contentRect, collapse, ...props }) => (
   </>
 )
 
-let TagsWrapper = ({
+let TagsWrapper = observer(({
   tree,
   node,
   style,
@@ -143,6 +143,6 @@ let TagsWrapper = ({
       </GridItem>
     </Grid>
   )
-}
+})
 
 export default _.flow(contexturify, withContentRect())(ExpandableTagsQuery)
