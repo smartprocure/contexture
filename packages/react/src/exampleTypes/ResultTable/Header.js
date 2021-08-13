@@ -198,9 +198,9 @@ let Header = ({
               itemType="column"
               options={addOptions}
               onChange={selectedFields => {
-                _.each(addedField => {
+                _.each(({ field: addedField }) => {
                   let index = includes.indexOf(field)
-                  if (index >= 0) {
+                  if (index >= 0 && addedField) {
                     includes.splice(index + 1, 0, addedField)
                     mutate({ include: includes })
                   }
