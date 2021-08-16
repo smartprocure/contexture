@@ -1,10 +1,10 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import { applyDefaults } from './utils/schema'
 import { useTheme } from './utils/theme'
 import ThemePicker from './stories/themePicker'
 import { FilterAdder } from '.'
+import { options } from './utils/stories'
 
 let mockTree = {
   add: action('add'),
@@ -15,18 +15,7 @@ let mockTree = {
 storiesOf('Search Components|FilterAdder', module)
   .addDecorator(ThemePicker('greyVest'))
   .add('With ModalPicker', () => (
-    <FilterAdder
-      tree={mockTree}
-      path={['path']}
-      fields={applyDefaults({
-        directors: {
-          typeDefault: 'facet',
-        },
-        runtimeMinutes: {
-          typeDefault: 'number',
-        },
-      })}
-    />
+    <FilterAdder tree={mockTree} path={['path']} fields={options} />
   ))
   .add('With Select', () => {
     let theme = useTheme()
@@ -36,16 +25,11 @@ storiesOf('Search Components|FilterAdder', module)
           Picker={theme.Select}
           tree={mockTree}
           path={['path']}
-          fields={applyDefaults({
-            directors: {
-              typeDefault: 'facet',
-            },
-            runtimeMinutes: {
-              typeDefault: 'number',
-            },
-          })}
+          fields={options}
         />
-        <div>Check action log to see adding being dispatched</div>
+        <div style={{ marginTop: 20 }}>
+          Check action log to see <b>onChange</b> being dispatched
+        </div>
       </div>
     )
   })
@@ -57,16 +41,11 @@ storiesOf('Search Components|FilterAdder', module)
           Picker={theme.NestedPicker}
           tree={mockTree}
           path={['path']}
-          fields={applyDefaults({
-            directors: {
-              typeDefault: 'facet',
-            },
-            runtimeMinutes: {
-              typeDefault: 'number',
-            },
-          })}
+          fields={options}
         />
-        <div>Check action log to see adding being dispatched</div>
+        <div style={{ marginTop: 20 }}>
+          Check action log to see <b>onChange</b> being dispatched
+        </div>
       </div>
     )
   })

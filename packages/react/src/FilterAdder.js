@@ -23,6 +23,7 @@ let FilterAdder = ({
   uniqueFields,
   Picker = ModalPicker,
   theme: { Icon },
+  ...props
 }) => {
   let options = uniqueFields
     ? unusedOptions(fields, node)
@@ -36,8 +37,16 @@ let FilterAdder = ({
   return (
     <Picker
       options={options}
-      onChange={field => tree.add(path, newNodeFromField({ field, fields }))}
+      onChange={changes => {
+        if (!_.isEmpty(changes)) {
+          _.each(
+            ({ field }) => tree.add(path, newNodeFromField({ field, fields })),
+            changes
+          )
+        }
+      }}
       label={Label}
+      {...props}
     />
   )
 }
