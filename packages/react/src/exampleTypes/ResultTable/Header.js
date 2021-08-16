@@ -195,13 +195,16 @@ let Header = ({
           )}
           <Modal open={adding}>
             <NestedPicker
+              itemType="column"
               options={addOptions}
-              onChange={triggerField => {
-                let index = includes.indexOf(field)
-                if (index >= 0) {
-                  includes.splice(index + 1, 0, triggerField)
-                  mutate({ include: includes })
-                }
+              onChange={selectedFields => {
+                _.each(({ field: addedField }) => {
+                  let index = includes.indexOf(field)
+                  if (index >= 0 && addedField) {
+                    includes.splice(index + 1, 0, addedField)
+                    mutate({ include: includes })
+                  }
+                }, selectedFields)
                 F.off(adding)()
               }}
             />

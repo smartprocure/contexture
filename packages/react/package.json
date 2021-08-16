@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "2.47.2",
+  "version": "2.48.1",
   "description": "React components for building contexture interfaces",
   "main": "dist/index.js",
   "scripts": {
@@ -107,7 +107,7 @@
     "jest": "^24.7.1",
     "material-ui-chip-input": "^1.0.0",
     "mobx": "^4.3.1",
-    "mobx-react": "^6.1.1",
+    "mobx-react": "^6.3.0",
     "mobx-utils": "^5.0.0",
     "moment": "^2.24.0",
     "prettier": "^2.0.5",
