@@ -23,7 +23,6 @@ let TagsQuery = ({ tree, node, actionWrapper, ...props }) => {
       >
         <ExpandableTagsQuery
           {...{ tree, node, collapse, actionWrapper, ...props }}
-          autoFocus
           onAddTag={F.off(collapse)}
           Loader={({ children }) => <div>{children}</div>}
           style={{ padding: '0 5px' }}
