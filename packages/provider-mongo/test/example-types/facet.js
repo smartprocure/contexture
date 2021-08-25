@@ -1,7 +1,7 @@
 let _ = require('lodash/fp')
 let facet = require('../../src/example-types/facet')
 let { ObjectId } = require('mongodb')
-require('mingo/init/system')
+require('mingo/init/system') // needed on each test that initializes mingo
 
 let mingo = require('mingo')
 describe('facet', () => {
