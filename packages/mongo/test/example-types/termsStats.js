@@ -1,5 +1,5 @@
 let _ = require('lodash/fp')
-require('mingo/init/system')
+require('mingo/init/system') // needed on each test that initializes mingo
 let mingo = require('mingo')
 let termsStats = require('../../src/example-types/termsStats')
 
