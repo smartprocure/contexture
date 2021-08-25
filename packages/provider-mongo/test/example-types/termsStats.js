@@ -1,5 +1,5 @@
 let _ = require('lodash/fp')
-let { expect } = require('chai')
+require('mingo/init/system') // needed on each test that initializes mingo
 let mingo = require('mingo')
 let termsStats = require('../../src/example-types/termsStats')
 
@@ -27,7 +27,7 @@ describe('termsStats', () => {
         },
         search
       )
-      expect(query).eql([
+      expect(query).toEqual([
         {
           $group: {
             _id: `$name`,
@@ -39,7 +39,7 @@ describe('termsStats', () => {
           },
         },
       ])
-      expect(result).eql({
+      expect(result).toEqual({
         terms: [
           { key: '#0', count: 10, max: 4500, min: 0, avg: 2250, sum: 22500 },
           { key: '#1', count: 10, max: 4600, min: 100, avg: 2350, sum: 23500 },

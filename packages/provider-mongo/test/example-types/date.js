@@ -1,4 +1,3 @@
-let { expect } = require('chai')
 let _ = require('lodash')
 let date = require('../../src/example-types/date')
 
@@ -22,7 +21,7 @@ describe('date', () => {
             from: '2017-09-28',
           })
         )
-      ).to.be.true
+      ).toBe(true)
       expect(
         !!date.hasValue(
           dateBuilder({
@@ -30,7 +29,7 @@ describe('date', () => {
             from: null,
           })
         )
-      ).to.be.false
+      ).toBe(false)
     })
   })
   describe('date.filter', () => {
@@ -42,7 +41,7 @@ describe('date', () => {
             from: '2017-09-28',
           })
         )
-      ).to.deep.equal({
+      ).toEqual({
         test: {
           $gte: new Date('2017-09-28'),
         },
@@ -58,7 +57,7 @@ describe('date', () => {
             from: '2018-07-10',
           })
         )
-      ).to.deep.equal({
+      ).toEqual({
         test: {
           $gte: new Date('2018-07-10').getTime(),
         },
@@ -73,7 +72,7 @@ describe('date', () => {
             from: '2018-07-10',
           })
         )
-      ).to.deep.equal({
+      ).toEqual({
         test: {
           $gte: new Date('2018-07-10').getTime() / 1000,
         },

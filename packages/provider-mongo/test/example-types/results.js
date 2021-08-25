@@ -1,5 +1,4 @@
 let F = require('futil')
-let { expect } = require('chai')
 let {
   defaults,
   convertPopulate,
@@ -27,7 +26,7 @@ describe('results', () => {
           foreignField: '_id',
         },
       }
-      expect(convertPopulate(getSchema)(populate)).to.deep.equal([
+      expect(convertPopulate(getSchema)(populate)).toEqual([
         {
           $lookup: {
             as: 'author',
@@ -62,7 +61,7 @@ describe('results', () => {
           as: 'keyOrg',
         },
       }
-      expect(convertPopulate(getSchema)(populate)).to.deep.equal([
+      expect(convertPopulate(getSchema)(populate)).toEqual([
         {
           $lookup: {
             as: 'keyAuthor',
@@ -91,7 +90,7 @@ describe('results', () => {
           unwind: true,
         },
       }
-      expect(convertPopulate(getSchema)(populate)).to.deep.equal([
+      expect(convertPopulate(getSchema)(populate)).toEqual([
         {
           $lookup: {
             as: 'author',
@@ -110,7 +109,7 @@ describe('results', () => {
           localField: 'createdBy',
         },
       }
-      expect(convertPopulate(getSchema)(populate)).to.deep.equal([
+      expect(convertPopulate(getSchema)(populate)).toEqual([
         {
           $lookup: {
             as: 'author',
@@ -139,7 +138,7 @@ describe('results', () => {
           password: 'doNotLetMeThrough',
         },
       })
-      expect(convertPopulate(getTestSchema)(populate)).to.deep.equal([
+      expect(convertPopulate(getTestSchema)(populate)).toEqual([
         {
           $lookup: {
             as: 'author',
@@ -173,7 +172,7 @@ describe('results', () => {
           'preferences.option2': false,
         },
       })
-      expect(convertPopulate(getTestSchema)(populate)).to.deep.equal([
+      expect(convertPopulate(getTestSchema)(populate)).toEqual([
         {
           $lookup: {
             as: 'author',
@@ -206,7 +205,7 @@ describe('results', () => {
           preferences: {},
         },
       })
-      expect(convertPopulate(getTestSchema)(populate)).to.deep.equal([
+      expect(convertPopulate(getTestSchema)(populate)).toEqual([
         {
           $lookup: {
             as: 'author',
@@ -226,15 +225,15 @@ describe('results', () => {
   describe('getStartRecord', () => {
     it('should return 0 if page is 1', () => {
       let node = { page: 1, pageSize: 10 }
-      expect(getStartRecord(node)).to.equal(0)
+      expect(getStartRecord(node)).toBe(0)
     })
     it('should return 0 if page is < 1', () => {
       let node = { page: 0, pageSize: 10 }
-      expect(getStartRecord(node)).to.equal(0)
+      expect(getStartRecord(node)).toBe(0)
     })
     it('should return 10 if page is 2', () => {
       let node = { page: 2, pageSize: 10 }
-      expect(getStartRecord(node)).to.equal(10)
+      expect(getStartRecord(node)).toBe(10)
     })
   })
   describe('getResultsQuery', () => {
@@ -253,7 +252,7 @@ describe('results', () => {
           },
         },
       })
-      expect(getResultsQuery(node, getSchema, 0)).to.deep.equal([
+      expect(getResultsQuery(node, getSchema, 0)).toEqual([
         { $sort: { createdAt: 1 } },
         { $skip: 0 },
         { $limit: 10 },
@@ -283,7 +282,7 @@ describe('results', () => {
           },
         },
       })
-      expect(getResultsQuery(node, getSchema, 0)).to.deep.equal([
+      expect(getResultsQuery(node, getSchema, 0)).toEqual([
         { $sort: { 'metrics.sessionsCount': 1 } },
         { $skip: 0 },
         { $limit: 10 },
@@ -315,7 +314,7 @@ describe('results', () => {
           },
         },
       })
-      expect(getResultsQuery(node, getSchema, 0)).to.deep.equal([
+      expect(getResultsQuery(node, getSchema, 0)).toEqual([
         { $sort: { 'metrics.sessionsCount': 1 } },
         {
           $lookup: {
@@ -355,7 +354,7 @@ describe('results', () => {
           },
         },
       })
-      expect(getResultsQuery(node, getSchema, 0)).to.deep.equal([
+      expect(getResultsQuery(node, getSchema, 0)).toEqual([
         { $sort: { 'metrics.sessionsCount': 1 } },
         {
           $lookup: {
@@ -391,7 +390,7 @@ describe('results', () => {
           },
         },
       })
-      expect(getResultsQuery(node, getSchema, 0)).to.deep.equal([
+      expect(getResultsQuery(node, getSchema, 0)).toEqual([
         {
           $lookup: {
             as: 'user',
@@ -413,7 +412,7 @@ describe('results', () => {
         sortField: 'createdAt',
         sortDir: 'desc',
       })
-      expect(getResultsQuery(node, getSchema, 0)).to.deep.equal([
+      expect(getResultsQuery(node, getSchema, 0)).toEqual([
         { $sort: { createdAt: -1 } },
         { $skip: 0 },
         { $limit: 10 },
@@ -426,14 +425,14 @@ describe('results', () => {
         sortField: 'createdAt',
         pageSize: 0,
       })
-      expect(getResultsQuery(node, getSchema, 0)).to.deep.equal([
+      expect(getResultsQuery(node, getSchema, 0)).toEqual([
         { $sort: { createdAt: -1 } },
         { $skip: 0 },
       ])
     })
     it('should not have $sort stage if sortField is missing', () => {
       let node = defaults({ key: 'results', type: 'results' })
-      expect(getResultsQuery(node, getSchema, 0)).to.deep.equal([
+      expect(getResultsQuery(node, getSchema, 0)).toEqual([
         { $skip: 0 },
         { $limit: 10 },
       ])
@@ -441,16 +440,16 @@ describe('results', () => {
     it('should fetch an extra item if skipCount is true', () => {
       let node = defaults({ key: 'results', type: 'results', pageSize: 10 })
       let query = getResultsQuery(node, getSchema, 0)
-      expect(F.findApply('$limit', query)).to.equal(10)
+      expect(F.findApply('$limit', query)).toBe(10)
       let skipCountNode = { ...node, skipCount: true }
       let skipCountQuery = getResultsQuery(skipCountNode, getSchema, 0)
-      expect(F.findApply('$limit', skipCountQuery)).to.equal(11)
+      expect(F.findApply('$limit', skipCountQuery)).toBe(11)
     })
   })
   describe('projectFromInclude', () => {
     it('should remove redundant child paths', () => {
       let include = ['foo', 'foo.bar', 'foo.bar.baz', 'bar.baz.qux', 'bar.baz']
-      expect(projectFromInclude(include)).to.deep.equal({
+      expect(projectFromInclude(include)).toEqual({
         'bar.baz': 1,
         foo: 1,
       })
@@ -460,29 +459,29 @@ describe('results', () => {
     let node = defaults({ key: 'results', type: 'results', pageSize: 4 })
     let results = [1, 2, 3, 4, 5]
     it('should only set hasMore if count is skipped', async () => {
-      expect(getResponse(node, results).hasMore).to.equal(undefined)
+      expect(getResponse(node, results).hasMore).toBeUndefined()
     })
     it('should set hasMore if there are extra results', async () => {
-      expect(
-        getResponse({ ...node, skipCount: true }, results).hasMore
-      ).to.equal(true)
+      expect(getResponse({ ...node, skipCount: true }, results).hasMore).toBe(
+        true
+      )
     })
     it('should not set hasMore if there are no extra results', async () => {
       expect(
         getResponse({ ...node, skipCount: true }, [1, 2, 3, 4]).hasMore
-      ).to.equal(false)
+      ).toBe(false)
     })
     it('should set startRecord and endRecord based on the page', () => {
       let { startRecord, endRecord } = getResponse(
         { ...node, page: 2 },
         results
       )
-      expect(startRecord).to.equal(5)
-      expect(endRecord).to.equal(8)
+      expect(startRecord).toBe(5)
+      expect(endRecord).toBe(8)
     })
     it('should set totalRecords based on the count (if it exists)', () => {
-      expect(getResponse(node, results, 9001).totalRecords).to.equal(9001)
-      expect(getResponse(node, results).totalRecords).to.equal(undefined)
+      expect(getResponse(node, results, 9001).totalRecords).toBe(9001)
+      expect(getResponse(node, results).totalRecords).toBeUndefined()
     })
   })
   describe('checkPopulate', () => {
@@ -496,7 +495,7 @@ describe('results', () => {
           },
         },
       }
-      expect(() => checkPopulate(node)).to.throw()
+      expect(() => checkPopulate(node)).toThrowError()
     })
     it('should not throw on an unincluded child path if a parent is included', () => {
       let node = {
@@ -511,7 +510,7 @@ describe('results', () => {
           },
         },
       }
-      expect(() => checkPopulate(node)).not.to.throw()
+      expect(() => checkPopulate(node)).not.toThrowError()
     })
 
     it('should not throw when include checks out', () => {
@@ -527,7 +526,7 @@ describe('results', () => {
           },
         },
       }
-      expect(() => checkPopulate(node)).not.to.throw()
+      expect(() => checkPopulate(node)).not.toThrowError()
     })
     it('should not throw when include is an empty array and the schema contains the fields', () => {
       let node = {
@@ -543,7 +542,7 @@ describe('results', () => {
         },
       }
       let schema = { fields: { createdBy: true, _createdByOrganization: true } }
-      expect(() => checkPopulate(node, schema)).not.to.throw()
+      expect(() => checkPopulate(node, schema)).not.toThrowError()
     })
   })
 })
