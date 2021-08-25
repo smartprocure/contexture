@@ -1,15 +1,16 @@
 let _ = require('lodash/fp')
-let { expect } = require('chai')
 let { MongoClient } = require('mongodb')
 let { MongoMemoryServer } = require('mongodb-memory-server')
 let dateHistogram = require('../../src/example-types/dateHistogram')
 
 let aggregate
+let conn
+let mongoServer
 
-before(async () => {
-  let mongoServer = new MongoMemoryServer()
+beforeAll(async () => {
+  mongoServer = new MongoMemoryServer()
   let mongoUri = await mongoServer.getConnectionString()
-  let conn = await MongoClient.connect(mongoUri, {
+  conn = await MongoClient.connect(mongoUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -26,6 +27,11 @@ before(async () => {
   )
   col.insertMany(sampleData)
   aggregate = aggs => col.aggregate(aggs).toArray()
+})
+
+afterAll(async () => {
+  await conn.close()
+  await mongoServer.stop()
 })
 
 describe('dateHistogram', () => {
@@ -49,7 +55,7 @@ describe('dateHistogram', () => {
         search
       )
 
-      expect(query).eql([
+      expect(query).toEqual([
         {
           $group: {
             _id: {
@@ -81,7 +87,7 @@ describe('dateHistogram', () => {
         },
         { $sort: { year: 1, month: 1, day: 1 } },
       ])
-      expect(result).eql({
+      expect(result).toEqual({
         entries: [
           {
             key: 1580515200000,

@@ -1,4 +1,3 @@
-let { expect } = require('chai')
 let text = require('../../src/example-types/text')
 
 describe('text', () => {
@@ -13,7 +12,7 @@ describe('text', () => {
           },
           {}
         )
-      ).to.be.true
+      ).toBe(true)
     })
     it('should detect if values is empty', () => {
       expect(
@@ -25,7 +24,7 @@ describe('text', () => {
           },
           {}
         )
-      ).to.be.false
+      ).toBe(false)
     })
     it('should detect if values only contains an empty string', () => {
       expect(
@@ -37,7 +36,7 @@ describe('text', () => {
           },
           {}
         )
-      ).to.be.false
+      ).toBe(false)
     })
     it('should detect if value is the empty string', () => {
       expect(
@@ -49,11 +48,11 @@ describe('text', () => {
           },
           {}
         )
-      ).to.be.false
+      ).toBe(false)
     })
   }),
     describe('text.filter', () => {
-      it('should check for values', () => {
+      describe('should check for values', () => {
         var laserjetPrinterText = operator =>
           text.filter({
             key: 'test',
@@ -64,7 +63,7 @@ describe('text', () => {
             values: ['laserjet', 'printer'],
           })
         it('containsWord', () => {
-          expect(laserjetPrinterText('containsWord')).to.deep.equal({
+          expect(laserjetPrinterText('containsWord')).toEqual({
             $or: [
               {
                 description: {
@@ -82,7 +81,7 @@ describe('text', () => {
           })
         })
         it('containsExact', () => {
-          expect(laserjetPrinterText('containsExact')).to.deep.equal({
+          expect(laserjetPrinterText('containsExact')).toEqual({
             $or: [
               {
                 description: {
@@ -100,7 +99,7 @@ describe('text', () => {
           })
         })
         it('startsWith', () => {
-          expect(laserjetPrinterText('startsWith')).to.deep.equal({
+          expect(laserjetPrinterText('startsWith')).toEqual({
             $or: [
               {
                 description: {
@@ -118,7 +117,7 @@ describe('text', () => {
           })
         })
         it('endsWith', () => {
-          expect(laserjetPrinterText('endsWith')).to.deep.equal({
+          expect(laserjetPrinterText('endsWith')).toEqual({
             $or: [
               {
                 description: {
@@ -136,7 +135,7 @@ describe('text', () => {
           })
         })
         it('is', () => {
-          expect(laserjetPrinterText('is')).to.deep.equal({
+          expect(laserjetPrinterText('is')).toEqual({
             $or: [
               {
                 description: {
@@ -154,7 +153,7 @@ describe('text', () => {
           })
         })
         it('wordStartsWith', () => {
-          expect(laserjetPrinterText('wordStartsWith')).to.deep.equal({
+          expect(laserjetPrinterText('wordStartsWith')).toEqual({
             $or: [
               {
                 description: {
@@ -172,7 +171,7 @@ describe('text', () => {
           })
         })
         it('wordEndsWith', () => {
-          expect(laserjetPrinterText('wordEndsWith')).to.deep.equal({
+          expect(laserjetPrinterText('wordEndsWith')).toEqual({
             $or: [
               {
                 description: {

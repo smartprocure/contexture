@@ -1,36 +1,35 @@
-let { expect } = require('chai')
 let number = require('../../src/example-types/number')
 
 describe('number', () => {
   describe('number.hasValue', () => {
     it('Allows optionally either min or max', () => {
-      expect(number.hasValue({ min: 1 })).to.equal(true)
-      expect(number.hasValue({ max: 2 })).to.equal(true)
+      expect(number.hasValue({ min: 1 })).toBe(true)
+      expect(number.hasValue({ max: 2 })).toBe(true)
     })
     it('Allows 0 on min and max', () => {
-      expect(number.hasValue({ min: 0 })).to.equal(true)
-      expect(number.hasValue({ max: 0 })).to.equal(true)
+      expect(number.hasValue({ min: 0 })).toBe(true)
+      expect(number.hasValue({ max: 0 })).toBe(true)
     })
     it('Should reject empty string, null, undefined, Infinity, and NaN', () => {
-      expect(number.hasValue({ min: '' })).to.equal(false)
-      expect(number.hasValue({ max: '' })).to.equal(false)
-      expect(number.hasValue({ min: null })).to.equal(false)
-      expect(number.hasValue({ max: null })).to.equal(false)
-      expect(number.hasValue({ min: undefined })).to.equal(false)
-      expect(number.hasValue({ max: undefined })).to.equal(false)
-      expect(number.hasValue({ min: Infinity })).to.equal(false)
-      expect(number.hasValue({ max: Infinity })).to.equal(false)
-      expect(number.hasValue({ min: NaN })).to.equal(false)
-      expect(number.hasValue({ max: NaN })).to.equal(false)
+      expect(number.hasValue({ min: '' })).toBe(false)
+      expect(number.hasValue({ max: '' })).toBe(false)
+      expect(number.hasValue({ min: null })).toBe(false)
+      expect(number.hasValue({ max: null })).toBe(false)
+      expect(number.hasValue({ min: undefined })).toBe(false)
+      expect(number.hasValue({ max: undefined })).toBe(false)
+      expect(number.hasValue({ min: Infinity })).toBe(false)
+      expect(number.hasValue({ max: Infinity })).toBe(false)
+      expect(number.hasValue({ min: NaN })).toBe(false)
+      expect(number.hasValue({ max: NaN })).toBe(false)
     })
     it('Should handle numbers as strings', () => {
-      expect(number.hasValue({ min: '10001' })).to.equal(true)
-      expect(number.hasValue({ min: 'asda' })).to.equal(false)
-      expect(number.hasValue({})).to.equal(false)
-      expect(number.hasValue({ max: '10001' })).to.equal(true)
-      expect(number.hasValue({ max: 'asda' })).to.equal(false)
-      expect(number.hasValue({ min: '10001', max: 'asdfa' })).to.equal(true)
-      expect(number.hasValue({ min: '10asd001', max: '1001' })).to.equal(true)
+      expect(number.hasValue({ min: '10001' })).toBe(true)
+      expect(number.hasValue({ min: 'asda' })).toBe(false)
+      expect(number.hasValue({})).toBe(false)
+      expect(number.hasValue({ max: '10001' })).toBe(true)
+      expect(number.hasValue({ max: 'asda' })).toBe(false)
+      expect(number.hasValue({ min: '10001', max: 'asdfa' })).toBe(true)
+      expect(number.hasValue({ min: '10asd001', max: '1001' })).toBe(true)
     })
   })
   describe('number.filter', () => {
@@ -41,7 +40,7 @@ describe('number', () => {
           max: '321',
           field: 'myField',
         })
-      ).to.deep.equal({
+      ).toEqual({
         myField: {
           $gte: 123,
           $lte: 321,
@@ -54,7 +53,7 @@ describe('number', () => {
           min: '123',
           field: 'myField',
         })
-      ).to.deep.equal({
+      ).toEqual({
         myField: {
           $gte: 123,
         },
@@ -64,7 +63,7 @@ describe('number', () => {
           max: '321',
           field: 'myField',
         })
-      ).to.deep.equal({
+      ).toEqual({
         myField: {
           $lte: 321,
         },
@@ -77,7 +76,7 @@ describe('number', () => {
           min: '',
           max: null,
         })
-      ).to.deep.equal({
+      ).toEqual({
         myField: {},
       })
       expect(
@@ -86,7 +85,7 @@ describe('number', () => {
           min: undefined,
           max: 'foo',
         })
-      ).to.deep.equal({
+      ).toEqual({
         myField: {},
       })
     })
