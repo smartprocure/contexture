@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "2.49.0",
+  "version": "2.49.1",
   "description": "React components for building contexture interfaces",
   "main": "dist/index.js",
   "scripts": {
@@ -37,7 +37,7 @@
     "mobx": "^4.3.1",
     "mobx-react": "^6.1.1",
     "mobx-utils": "^5.0.0",
-    "react": "^16.8.0"
+    "react": "^16.8.0 || ^17.0.0"
   },
   "prettier": {
     "singleQuote": true,
