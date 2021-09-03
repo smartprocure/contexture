@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil'
 import { withContentRect } from 'react-measure'
-import { contexturify } from '../../utils/hoc'
+import { contexturifyWithoutLoader } from '../../utils/hoc'
 import ExpandArrow from './ExpandArrow'
 import { observer } from 'mobx-react'
 import { toNumber } from '../../utils/format'
@@ -57,7 +57,7 @@ let TagsWrapper = observer(
     maxTags = 1000,
     ...props
   }) => {
-    let TagWithPopover = observer(props => {
+    let TagWithPopover = React.memo(observer(props => {
       let result = _.get(['context', 'results', props.value], node)
       let tagProps = {
         ...props,
@@ -74,7 +74,7 @@ let TagsWrapper = observer(
           <TagActionsMenu tag={props.value} {...{ node, tree }} />
         </Popover>
       )
-    })
+    }))
 
     return (
       <Grid
@@ -147,4 +147,4 @@ let TagsWrapper = observer(
   }
 )
 
-export default _.flow(contexturify, withContentRect())(ExpandableTagsQuery)
+export default _.flow(contexturifyWithoutLoader, withContentRect())(ExpandableTagsQuery)
