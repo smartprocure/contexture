@@ -57,24 +57,26 @@ let TagsWrapper = observer(
     maxTags = 1000,
     ...props
   }) => {
-    let TagWithPopover = React.memo(observer(props => {
-      let result = _.get(['context', 'results', props.value], node)
-      let tagProps = {
-        ...props,
-        ...(!_.isNil(result)
-          ? { label: `${props.value} (${toNumber(result)})` }
-          : {}),
-      }
-      return (
-        <Popover
-          position="right top"
-          closeOnPopoverClick={false}
-          trigger={<Tag {...tagProps} />}
-        >
-          <TagActionsMenu tag={props.value} {...{ node, tree }} />
-        </Popover>
-      )
-    }))
+    let TagWithPopover = React.memo(
+      observer(props => {
+        let result = _.get(['context', 'results', props.value], node)
+        let tagProps = {
+          ...props,
+          ...(!_.isNil(result)
+            ? { label: `${props.value} (${toNumber(result)})` }
+            : {}),
+        }
+        return (
+          <Popover
+            position="right top"
+            closeOnPopoverClick={false}
+            trigger={<Tag {...tagProps} />}
+          >
+            <TagActionsMenu tag={props.value} {...{ node, tree }} />
+          </Popover>
+        )
+      })
+    )
 
     return (
       <Grid
@@ -147,4 +149,7 @@ let TagsWrapper = observer(
   }
 )
 
-export default _.flow(contexturifyWithoutLoader, withContentRect())(ExpandableTagsQuery)
+export default _.flow(
+  contexturifyWithoutLoader,
+  withContentRect()
+)(ExpandableTagsQuery)
