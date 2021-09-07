@@ -45,6 +45,7 @@ let ExpandableTagsInput = ({
   placeholder = 'Search...',
   splitCommas,
   style,
+  autoFocus,
   onBlur = _.noop,
   onInputChange = _.noop,
   maxWordsPerTag = 100,
@@ -76,6 +77,7 @@ let ExpandableTagsInput = ({
       <span className="tags-input-container" columns="1fr auto" gap="8px 4px">
         <input
           style={{ flex: 1, border: 0 }}
+          ref={autoFocus && (input => input && input.focus())}
           onChange={e => {
             setCurrentInput(e.target.value)
             onInputChange()
