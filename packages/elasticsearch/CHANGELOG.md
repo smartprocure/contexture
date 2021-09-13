@@ -1,3 +1,6 @@
+# 1.6.2
+* Added `date` type to `schemaMapping.js`
+
 # 1.6.1
 * Updated CI to use node16 and npm7
 * Updated package-lock.json to version 2
