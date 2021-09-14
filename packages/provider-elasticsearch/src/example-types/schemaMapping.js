@@ -17,6 +17,7 @@ let addNodeType = x => {
     integer: 'number',
     geo_point: 'geo',
     boolean: 'bool',
+    date: 'date',
   })
   return _.extend(
     {
