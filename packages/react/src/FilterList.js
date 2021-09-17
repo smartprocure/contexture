@@ -38,8 +38,13 @@ export let FilterActions = _.flow(
         <Modal open={modal}>
           <NestedPicker
             options={fieldsToOptions(fields)}
-            onChange={field => {
-              tree.replace(node.path, transformNodeFromField({ field, fields }))
+            onChange={pickedFields => {
+              // If several fields picked, using the last one user clicked on
+              if (pickedFields.length > 0)
+                tree.replace(
+                  node.path,
+                  transformNodeFromField({ field: _.last(pickedFields).field, fields })
+                )
               F.off(modal)()
             }}
           />

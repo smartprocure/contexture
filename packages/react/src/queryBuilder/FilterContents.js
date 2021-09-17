@@ -8,6 +8,7 @@ import { fieldsToOptions } from '../FilterAdder'
 import { get } from '../utils/mobx-utils'
 import {
   newNodeFromType,
+  newNodeFromField,
   transformNodeFromField,
   getTypeLabelOptions,
 } from '../utils/search'
@@ -33,9 +34,23 @@ let FilterContents = ({
       <ModalPicker
         label={nodeField ? nodeLabel : 'Pick a Field'}
         options={fieldsToOptions(fields)}
-        onChange={field =>
-          tree.replace(node.path, transformNodeFromField({ field, fields }))
-        }
+        onChange={addedFields => {
+          // Replacing current node with the first added field
+          if (addedFields[0])
+            tree.replace(
+              node.path,
+              transformNodeFromField({ field: addedFields[0].field, fields })
+            )
+          // Adding more nodes if several fields added
+          _.each(
+            ({ field }) =>
+              tree.add(
+                node.path.slice(0, -1),
+                newNodeFromField({ field, fields })
+              ),
+            addedFields.slice(1)
+          )
+        }}
       />
       {nodeField && (
         <div style={{ margin: '0 5px' }}>
