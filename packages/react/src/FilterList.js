@@ -43,7 +43,10 @@ export let FilterActions = _.flow(
               if (pickedFields.length > 0)
                 tree.replace(
                   node.path,
-                  transformNodeFromField({ field: _.last(pickedFields).field, fields })
+                  transformNodeFromField({
+                    field: _.last(pickedFields).field,
+                    fields,
+                  })
                 )
               F.off(modal)()
             }}

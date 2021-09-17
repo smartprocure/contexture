@@ -141,15 +141,12 @@ let FilterButtonList = contexturifyWithoutLoader(
           <div>
             <ModalPicker
               options={options}
-              className='check-button'
+              className="check-button"
               onChange={addedFields =>
                 _.each(
                   ({ field }) =>
-                    tree.add(
-                      node.path,
-                      newNodeFromField({ field, fields }),
-                    ),
-                  addedFields,
+                    tree.add(node.path, newNodeFromField({ field, fields })),
+                  addedFields
                 )
               }
               label={

@@ -39,13 +39,12 @@ export let indent = (Tree, parent, node, skipDefaultNode) => {
   let key = node.key
   let path = _.toArray(node.path)
 
-  Tree.mutate(path, {key: `${key}-${join}-group`})
+  Tree.mutate(path, { key: `${key}-${join}-group` })
   Tree.wrapInGroup(path, {
     key,
-    join: oppositeJoin(join)
+    join: oppositeJoin(join),
   })
-  if (!skipDefaultNode)
-    Tree.add(path, blankNode())
+  if (!skipDefaultNode) Tree.add(path, blankNode())
   return Tree.getNode(path)
 }
 
