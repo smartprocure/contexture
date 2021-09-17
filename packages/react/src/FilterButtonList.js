@@ -142,8 +142,12 @@ let FilterButtonList = contexturifyWithoutLoader(
             <ModalPicker
               options={options}
               className="check-button"
-              onChange={field =>
-                tree.add(node.path, newNodeFromField({ field, fields }))
+              onChange={addedFields =>
+                _.each(
+                  ({ field }) =>
+                    tree.add(node.path, newNodeFromField({ field, fields })),
+                  addedFields
+                )
               }
               label={
                 <Flex alignItems="center" justifyContent="center">

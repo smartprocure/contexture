@@ -26,7 +26,7 @@ let OperatorMenu = ({ node, hover, tree, parent }) => (
       <div
         style={{
           ...btn,
-          color: joinColor(oppositeJoin(parent)),
+          color: joinColor(oppositeJoin((parent || node).join)),
           marginTop: 5,
         }}
         {...F.domLens.hover(hover.wrap)}
@@ -35,7 +35,7 @@ let OperatorMenu = ({ node, hover, tree, parent }) => (
           F.off(hover.wrap)()
         }}
       >
-        Wrap in {oppositeJoin(parent).toUpperCase()}
+        Wrap in {oppositeJoin((parent || node).join).toUpperCase()}
       </div>
     </div>
     <div>
