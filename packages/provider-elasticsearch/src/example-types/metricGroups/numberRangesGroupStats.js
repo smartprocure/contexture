@@ -1,19 +1,15 @@
-let { statsAggs, simplifyBuckets } = require('../../utils/elasticDSL')
+let { groupStats } = require('./groupStatUtils')
 
-let buildQuery = ({ groupField: field, statsField, stats, ranges }) => ({
+let buildGroupQuery = ({ field, ranges }, children) => ({
   aggs: {
     groups: {
       range: { field, ranges },
-      ...statsAggs(statsField, stats),
+      ...children,
     },
   },
 })
 
 module.exports = {
-  buildQuery,
+  ...groupStats(buildGroupQuery),
   validContext: node => node.groupField && node.ranges,
-  async result(node, search) {
-    let response = await search(buildQuery(node))
-    return { results: simplifyBuckets(response.aggregations.groups.buckets) }
-  },
 }
