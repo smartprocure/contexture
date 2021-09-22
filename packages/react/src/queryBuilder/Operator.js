@@ -84,7 +84,7 @@ let Operator = ({ hover, node, child, parent, tree, index }) => {
           ...(F.view(hover.wrap) && { marginLeft: 0 }),
         }}
       >
-        <OperatorMenu {...{ node, hover, tree, parent }} />
+        <OperatorMenu {...{ node, hover, tree, parent, child }} />
       </Popover>
     </div>
   )
