@@ -203,5 +203,10 @@ describe('elasticDSL utils', () => {
         simplifyAggregations({ min: { value: 0 }, max: { value: 0 } })
       ).to.eql({ min: 0, max: 0 })
     })
+    it('should work on cases where value is null', () => {
+      expect(
+        simplifyAggregations({ min: { value: null }, max: { value: null } })
+      ).to.eql({ min: null, max: null })
+    })
   })
 })

@@ -1,5 +1,5 @@
 # 1.7.0
-* Fix bug where 0 value metrics wouldn't be flattened by dsl utils
+* Fix bug where 0 and null value metrics wouldn't be flattened by dsl utils
 * Factor out groupStats util
 
 # 1.6.2
