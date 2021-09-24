@@ -30,7 +30,7 @@ export let transformNodeFromField = args => node => ({
   ...newNodeFromField(args),
 })
 
-export let indent = async (Tree, parent, node, skipDefaultNode) => {
+export let indent = (Tree, parent, node, skipDefaultNode) => {
   // Reactors:
   //   OR -> And, nothing
   //   AND -> OR, others if has value
@@ -42,8 +42,8 @@ export let indent = async (Tree, parent, node, skipDefaultNode) => {
     join: oppositeJoin(join),
   }
   let wrapperPath = [..._.dropRight(1, path), wrapperNode.key]
-  await Tree.wrapInGroup(path, wrapperNode)
-  if (!skipDefaultNode) await Tree.add(wrapperPath, blankNode())
+  Tree.wrapInGroup(path, wrapperNode)
+  if (!skipDefaultNode) Tree.add(wrapperPath, blankNode())
   return Tree.getNode(wrapperPath)
 }
 

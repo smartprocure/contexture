@@ -30,8 +30,8 @@ let OperatorMenu = ({ node, hover, tree, parent, child }) => (
           marginTop: 5,
         }}
         {...F.domLens.hover(hover.wrap)}
-        onClick={async () => {
-          await indent(tree, node, child)
+        onClick={() => {
+          indent(tree, node, child)
           F.off(hover.wrap)()
         }}
       >
