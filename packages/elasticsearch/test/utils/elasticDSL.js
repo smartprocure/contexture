@@ -1,6 +1,7 @@
 let {
   statsAggs,
   buildMetrics,
+  simplifyBucket,
   simplifyBuckets,
   simplifyAggregations,
 } = require('../../src/utils/elasticDSL')
@@ -207,6 +208,13 @@ describe('elasticDSL utils', () => {
       expect(
         simplifyAggregations({ min: { value: null }, max: { value: null } })
       ).to.eql({ min: null, max: null })
+    })
+  })
+  describe('simplifyBucket', () => {
+    it('should avoid camelCasing pivotMetrics', () => {
+      expect(
+        simplifyBucket({ 'pivotMetric-min-PO.IssuedDate': { value: 12 } })
+      ).to.eql({ 'min-PO.IssuedDate': 12 })
     })
   })
 })

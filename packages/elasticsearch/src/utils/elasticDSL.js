@@ -30,20 +30,25 @@ let simplifyAggregations = _.mapValues(x => {
   // Multi value metrics can also return objects (like stats, extended_stats, etc):
   return x
 })
+let simplifyBucket = _.flow(
+  F.renameProperty('doc_count', 'count'),
+  simplifyAggregations,
+  _.mapKeys(
+    // special case pivotMetric so we don't rename the auto keys
+    x => _.startsWith('pivotMetric-', x)
+    ? _.replace('pivotMetric-', '', x)
+    : _.camelCase(x)
+  )
+)
 let simplifyBuckets = _.flow(
   F.when(_.isPlainObject, F.unkeyBy('key')),
-  _.map(
-    _.flow(
-      F.renameProperty('doc_count', 'count'),
-      simplifyAggregations,
-      _.mapKeys(_.camelCase)
-    )
-  )
+  _.map(simplifyBucket)
 )
 
 module.exports = {
   statsAggs,
   buildMetrics,
+  simplifyBucket,
   simplifyBuckets,
   simplifyAggregations,
   // https://www.elastic.co/guide/en/elasticsearch/reference/current/number.html#number
