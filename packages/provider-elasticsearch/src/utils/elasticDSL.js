@@ -19,14 +19,14 @@ let statsAggs = (field, stats) =>
 
 let simplifyAggregations = _.mapValues(x => {
   // Single value metrics always return value
-  if (_.has(x.value)) return x.value
+  if (_.has('value', x)) return x.value
   // Multi value metrics can return values
-  if (_.has(x.values)) return x.values
+  if (_.has('values', x)) return x.values
   // top_hits has hits
-  if (_.has(x.hits)) return x.hits
+  if (_.has('hits', x)) return x.hits
   // Bucketing metrics generally have buckets - and we can recurse inside
   // This is a bit crazy, but was trivial to add :)
-  if (_.has(x.buckets)) return simplifyBuckets(x.buckets)
+  if (_.has('buckets', x)) return simplifyBuckets(x.buckets)
   // Multi value metrics can also return objects (like stats, extended_stats, etc):
   return x
 })
