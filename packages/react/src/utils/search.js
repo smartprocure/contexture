@@ -36,16 +36,15 @@ export let indent = (Tree, parent, node, skipDefaultNode) => {
   //   AND -> OR, others if has value
   //   to/from NOT, others if has value
   let join = (parent || node).join
-  let key = node.key
   let path = _.toArray(node.path)
-
-  Tree.mutate(path, { key: `${key}-${join}-group` })
-  Tree.wrapInGroup(path, {
-    key,
+  let wrapperNode = {
+    key: `${node.key}-${join}-group`,
     join: oppositeJoin(join),
-  })
-  if (!skipDefaultNode) Tree.add(path, blankNode())
-  return Tree.getNode(path)
+  }
+  let wrapperPath = [..._.dropRight(1, path), wrapperNode.key]
+  Tree.wrapInGroup(path, wrapperNode)
+  if (!skipDefaultNode) Tree.add(wrapperPath, blankNode())
+  return Tree.getNode(wrapperPath)
 }
 
 export let getTypeLabel = (tree, type) =>

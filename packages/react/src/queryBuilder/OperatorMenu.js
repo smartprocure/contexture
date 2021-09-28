@@ -6,7 +6,7 @@ import styles from '../styles'
 import { oppositeJoin, indent } from '../utils/search'
 let { btn, joinColor, bgJoin } = styles
 
-let OperatorMenu = ({ node, hover, tree, parent }) => (
+let OperatorMenu = ({ node, hover, tree, parent, child }) => (
   <div>
     {_.map(
       join =>
@@ -31,7 +31,7 @@ let OperatorMenu = ({ node, hover, tree, parent }) => (
         }}
         {...F.domLens.hover(hover.wrap)}
         onClick={() => {
-          indent(tree, parent, node)
+          indent(tree, node, child)
           F.off(hover.wrap)()
         }}
       >
