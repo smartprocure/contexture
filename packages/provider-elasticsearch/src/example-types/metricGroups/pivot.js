@@ -18,7 +18,6 @@ let lookupTypeMethod = (method, type) =>
 
 // TODO:
 // - fieldValuesDelta?
-// - fieldValuePartition
 // tests including other types - numberInterval and percentiles, using smart etc to use getStats
 
 let aggsForValues = _.flow(
