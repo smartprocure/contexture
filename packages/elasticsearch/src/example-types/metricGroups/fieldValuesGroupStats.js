@@ -1,4 +1,4 @@
-let { statsAggs } = require('../../utils/elasticDSL')
+let _ = require('lodash/fp')
 let { buildRegexQueryForWords } = require('../../utils/regex')
 let { getField } = require('../../utils/fields')
 let { groupStats } = require('./groupStatUtils')
@@ -42,15 +42,11 @@ let buildGroupQuery = (node, children, schema) => {
   return query
 }
 
-// can't use util out of the box due to default sort field here only  
-let buildQuery = ({ statsField, stats, groupField: field, ...node }, schema) =>
-  buildGroupQuery(
-    { field, sort: { field: 'sum', ...node.sort }, ...node },
-    statsAggs(statsField, stats),
-    schema
-  )
+let buildGroupQueryWithDefaultSortField = (node, ...args) =>
+  buildGroupQuery(_.defaultsDeep({ sort: { field: 'sum' } }, node), ...args)
 
+// We don't want the default sort field for pivot, but we do for this node type
 module.exports = {
-  ...groupStats(buildGroupQuery),
-  buildQuery
+  ...groupStats(buildGroupQueryWithDefaultSortField),
+  buildGroupQuery
 }
