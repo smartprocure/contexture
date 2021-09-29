@@ -199,6 +199,43 @@ describe('pivot', () => {
     )
     expect(result).to.eql(expected)
   })
+  it('should buildQuery for smart numberInterval to show getStats works', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      groups: [
+        {
+          type: 'numberInterval',
+          field: 'LineItem.UnitPrice',
+          interval: 'smart',
+        },
+      ],
+    }
+    let expected = {
+      aggs: {
+        groups: {
+          histogram: {
+            field: 'LineItem.UnitPrice',
+            interval: 25,
+            min_doc_count: 0,
+          },
+          aggs: {
+            'pivotMetric-sum-LineItem.TotalPrice': {
+              sum: { field: 'LineItem.TotalPrice' }
+            },
+          },
+        },
+      },
+    }
+    let result = await buildQuery(
+      input,
+      testSchemas(['Vendor.City']),
+      // get stats hard coded here
+      () => ({ min: 10, max: 500 })
+    )
+    expect(result).to.eql(expected)
+  })
   it('should buildQuery with subtotals', async () => {
     // ES -> PVT
     // buckets -> groups (rows/columns)

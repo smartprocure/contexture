@@ -17,10 +17,6 @@ let lookupTypeMethod = (method, type) =>
 //  (same) values for ALL group levels
 // Rows/Columns are buckets, values are metrics
 
-// TODO:
-// - fieldValuesDelta?
-// tests including other types - numberInterval and percentiles, using smart etc to use getStats
-
 let aggsForValues = (node, schema) =>
   _.flow(
     // Add `pivotMetric-` to auto keys so we can skip camelCasing it in the response
@@ -34,6 +30,7 @@ let aggsForValues = (node, schema) =>
     } }))
   )(node)
 // Either pivot table style `values`, or classic groupStat stats/statsField
+// TODO: drop stats/statsField support? Likely doesn't ever make sense in a pivot UI
 let buildStatsAgg = (node, schema) =>
   node.values
     ? { aggs: aggsForValues(node.values, schema) }
