@@ -25,6 +25,14 @@ describe('pivot', () => {
       'pivotMetric-sum-LineItem.TotalPrice': { sum: { field: 'LineItem.TotalPrice' } },
     })
   })
+  it('aggsForValues with not analyzed field form schemas', () => {
+    let values = [{ type: 'cardinality', field: 'Vendor.Name' }]
+    expect(aggsForValues(values, testSchema('Vendor.Name'))).to.deep.equal({
+      'pivotMetric-cardinality-Vendor.Name': {
+        cardinality: { field: 'Vendor.Name.untouched' },
+      },
+    })
+  })
   it('should buildQuery', async () => {
     // ES -> PVT
     // buckets -> groups (rows/columns)
