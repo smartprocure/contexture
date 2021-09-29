@@ -35,6 +35,7 @@ describe('All Example Types', function() {
       'terms_stats',
       'text',
       'fieldValuesDelta',
+      'pivot',
     ])
   })
 })
