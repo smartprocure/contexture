@@ -5,6 +5,7 @@ let {
   simplifyBuckets,
   simplifyBucket,
 } = require('../../utils/elasticDSL')
+let { getField } = require('../../utils/fields')
 let types = require('../../../src/example-types')
 let { getStats } = require('./stats')
 
@@ -20,22 +21,26 @@ let lookupTypeMethod = (method, type) =>
 // - fieldValuesDelta?
 // tests including other types - numberInterval and percentiles, using smart etc to use getStats
 
-let aggsForValues = _.flow(
-  // Add `pivotMetric-` to auto keys so we can skip camelCasing it in the response
-  _.keyBy(
-    ({ key, type, field }) =>
-      key || F.compactJoin('-', ['pivotMetric', type, field])
-  ),
-  _.mapValues(({ key, type, ...props }) => ({ [_.snakeCase(type)]: props }))
-)
+let aggsForValues = (node, schema) =>
+  _.flow(
+    // Add `pivotMetric-` to auto keys so we can skip camelCasing it in the response
+    _.keyBy(
+      ({ key, type, field }) =>
+        key || F.compactJoin('-', ['pivotMetric', type, field])
+    ),
+    _.mapValues(({ key, type, field, ...props }) => ({ [_.snakeCase(type)]: {
+      ...props,
+      ...field && {field: getField(schema, field)}
+    } }))
+  )(node)
 // Either pivot table style `values`, or classic groupStat stats/statsField
-let buildStatsAgg = (node) =>
+let buildStatsAgg = (node, schema) =>
   node.values
-    ? { aggs: aggsForValues(node.values) }
+    ? { aggs: aggsForValues(node.values, schema) }
     : statsAggs(node.statsField, node.stats)
     
 let buildQuery = async (node, schema, getStats) => {
-  let statsAggBlob = buildStatsAgg(node)
+  let statsAggBlob = buildStatsAgg(node, schema)
   let query = await _.reduce(
     async (children, group) => {
       // Subtotals calculates metrics at each group level, not needed if flattening or in chart
