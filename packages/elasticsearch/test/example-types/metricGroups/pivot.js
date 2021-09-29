@@ -276,8 +276,12 @@ describe('pivot', () => {
     let input = {
       key: 'test',
       type: 'pivot',
-      statsField: 'LineItem.TotalPrice',
-      stats: ['min', 'max', 'avg', 'sum'],
+      values: [
+        { type: 'min', field: 'LineItem.TotalPrice' },
+        { type: 'max', field: 'LineItem.TotalPrice' },
+        { type: 'avg', field: 'LineItem.TotalPrice' },
+        { type: 'sum', field: 'LineItem.TotalPrice' },
+      ],
       groups: [
         { type: 'fieldValues', field: 'Organization.State' },
         { type: 'fieldValues', field: 'Organization.NameState' },
@@ -316,10 +320,18 @@ describe('pivot', () => {
                     ],
                   },
                   aggs: {
-                    min: { min: { field: 'LineItem.TotalPrice' } },
-                    max: { max: { field: 'LineItem.TotalPrice' } },
-                    avg: { avg: { field: 'LineItem.TotalPrice' } },
-                    sum: { sum: { field: 'LineItem.TotalPrice' } },
+                    'pivotMetric-min-LineItem.TotalPrice': {
+                      min: { field: 'LineItem.TotalPrice' }
+                    },
+                    'pivotMetric-max-LineItem.TotalPrice': {
+                      max: { field: 'LineItem.TotalPrice' }
+                    },
+                    'pivotMetric-avg-LineItem.TotalPrice': {
+                      avg: { field: 'LineItem.TotalPrice' }
+                    },
+                    'pivotMetric-sum-LineItem.TotalPrice': {
+                      sum: { field: 'LineItem.TotalPrice' }
+                    },
                   },
                 }
               },
