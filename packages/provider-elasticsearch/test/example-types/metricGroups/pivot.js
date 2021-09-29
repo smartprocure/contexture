@@ -97,7 +97,7 @@ describe('pivot', () => {
     }
     let result = await buildQuery(
       input,
-      testSchema('Organization.NameState'),
+      testSchemas(['Organization.NameState', 'Vendor.Name']),
       () => { }, // getStats(search) -> stats(field, statsArray)
     )
     expect(result).to.eql(expected)
@@ -151,6 +151,43 @@ describe('pivot', () => {
       input,
       testSchema('Organization.NameState'),
       () => {}, // getStats(search) -> stats(field, statsArray)
+    )
+    expect(result).to.eql(expected)
+  })
+  it('should buildQuery for fieldValuePartition', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      groups: [
+        {
+          type: 'fieldValuePartition',
+          field: 'Vendor.City',
+          matchValue: 'Washington',
+        },
+      ],
+    }
+    let expected = {
+      aggs: {
+        groups: {
+          filters: {
+            other_bucket_key: 'fail',
+            filters: {
+              pass: { term: { 'Vendor.City.untouched': 'Washington' } },
+            },
+          },
+          aggs: {
+            'pivotMetric-sum-LineItem.TotalPrice': {
+              sum: { field: 'LineItem.TotalPrice' }
+            },
+          },
+        },
+      },
+    }
+    let result = await buildQuery(
+      input,
+      testSchemas(['Vendor.City']),
+      () => { }, // getStats(search) -> stats(field, statsArray)
     )
     expect(result).to.eql(expected)
   })
