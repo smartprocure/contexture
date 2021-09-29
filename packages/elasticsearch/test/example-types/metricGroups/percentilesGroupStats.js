@@ -13,6 +13,7 @@ describe('percentilesGroupStats', () => {
           groupField: 'LineItem.UnitPrice',
           percents: [20, 95],
         },
+        null,
         () => ({
           percentiles: [
             { key: 20, value: 30.549999237060547 },
