@@ -79,9 +79,11 @@ let BuilderSearchFilters = ({ setMode, trees, BuilderFilters }) => (
   <div>
     <Flex alignItems="center" justifyContent="space-between">
       <h1>Filters</h1>
-  {setMode && <LinkButton onClick={() => setMode('basic')}>
-        Back to Regular Search
-      </LinkButton>}
+      {setMode && (
+        <LinkButton onClick={() => setMode('basic')}>
+          Back to Regular Search
+        </LinkButton>
+      )}
     </Flex>
     <LabelledList list={trees} Component={BuilderFilters} />
   </div>
