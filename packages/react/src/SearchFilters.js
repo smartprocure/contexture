@@ -56,11 +56,13 @@ let BasicSearchFilters = withTheme(
               </DropdownItem>
             }
           >
-            <DropdownItem onClick={() => setMode('resultsOnly')}>
-              Hide Filters
-            </DropdownItem>
+            {setMode && (
+              <DropdownItem onClick={() => setMode('resultsOnly')}>
+                Hide Filters
+              </DropdownItem>
+            )}
             <TreePauseButton children={children} Component={DropdownItem} />
-            {!disableAdvancedMode && (
+            {setMode && !disableAdvancedMode && (
               <DropdownItem onClick={() => setMode('builder')}>
                 Advanced Search Builder
               </DropdownItem>
@@ -77,9 +79,9 @@ let BuilderSearchFilters = ({ setMode, trees, BuilderFilters }) => (
   <div>
     <Flex alignItems="center" justifyContent="space-between">
       <h1>Filters</h1>
-      <LinkButton onClick={() => setMode('basic')}>
+  {setMode && <LinkButton onClick={() => setMode('basic')}>
         Back to Regular Search
-      </LinkButton>
+      </LinkButton>}
     </Flex>
     <LabelledList list={trees} Component={BuilderFilters} />
   </div>

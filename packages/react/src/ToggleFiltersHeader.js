@@ -4,7 +4,7 @@ import { Flex } from './greyVest'
 
 let ToggleFiltersHeader = ({ mode, setMode, children }) => (
   <Flex style={{ alignItems: 'center' }}>
-    {mode === 'resultsOnly' && (
+    {setMode && mode === 'resultsOnly' && (
       <span style={{ marginRight: 5 }}>
         <ShowFiltersButton onClick={() => setMode('basic')} />
       </span>
