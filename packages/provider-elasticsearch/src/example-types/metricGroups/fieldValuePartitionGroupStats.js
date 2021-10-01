@@ -12,7 +12,7 @@ let buildGroupQuery = ({ field, matchValue }, children, schema) => ({
           pass: { term: { [getField(schema, field)]: matchValue } },
         },
       },
-      ...children
+      ...children,
     },
   },
 })

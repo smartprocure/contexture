@@ -23,8 +23,8 @@ let buildGroupQuery = (node, children, schema) => {
       groups: {
         terms: {
           field,
-          size, 
-          ...sortField && { order: { [getSortField(sortField)]: order } },
+          size,
+          ...(sortField && { order: { [getSortField(sortField)]: order } }),
         },
         ...children,
       },
@@ -48,5 +48,5 @@ let buildGroupQueryWithDefaultSortField = (node, ...args) =>
 // We don't want the default sort field for pivot, but we do for this node type
 module.exports = {
   ...groupStats(buildGroupQueryWithDefaultSortField),
-  buildGroupQuery
+  buildGroupQuery,
 }

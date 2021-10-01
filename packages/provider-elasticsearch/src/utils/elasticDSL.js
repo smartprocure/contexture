@@ -35,9 +35,10 @@ let simplifyBucket = _.flow(
   simplifyAggregations,
   _.mapKeys(
     // special case pivotMetric so we don't rename the auto keys
-    x => _.startsWith('pivotMetric-', x)
-    ? _.replace('pivotMetric-', '', x)
-    : _.camelCase(x)
+    x =>
+      _.startsWith('pivotMetric-', x)
+        ? _.replace('pivotMetric-', '', x)
+        : _.camelCase(x)
   )
 )
 let simplifyBuckets = _.flow(
