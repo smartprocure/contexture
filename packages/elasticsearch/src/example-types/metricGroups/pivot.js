@@ -24,10 +24,12 @@ let aggsForValues = (node, schema) =>
       ({ key, type, field }) =>
         key || F.compactJoin('-', ['pivotMetric', type, field])
     ),
-    _.mapValues(({ key, type, field, ...props }) => ({ [_.snakeCase(type)]: {
-      ...props,
-      ...field && {field: getField(schema, field)}
-    } }))
+    _.mapValues(({ key, type, field, ...props }) => ({
+      [_.snakeCase(type)]: {
+        ...props,
+        ...(field && { field: getField(schema, field) }),
+      },
+    }))
   )(node)
 // Either pivot table style `values`, or classic groupStat stats/statsField
 // TODO: drop stats/statsField support? Likely doesn't ever make sense in a pivot UI
@@ -35,7 +37,7 @@ let buildStatsAgg = (node, schema) =>
   node.values
     ? { aggs: aggsForValues(node.values, schema) }
     : statsAggs(node.statsField, node.stats)
-    
+
 let buildQuery = async (node, schema, getStats) => {
   let statsAggBlob = buildStatsAgg(node, schema)
   let query = await _.reduce(
@@ -89,7 +91,7 @@ let pivot = {
   aggsForValues,
   buildQuery,
   processResponse,
-  validContext: (node) => node.groups.length && node.values.length,
+  validContext: node => node.groups.length && node.values.length,
   // TODO: unify this with groupStatsUtil - the general pipeline is the same conceptually
   async result(node, search, schema) {
     let query = await buildQuery(node, schema, getStats(search))

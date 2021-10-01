@@ -57,12 +57,12 @@ module.exports = {
   }),
   testSchemas: (fields, notAnalyzedField = 'untouched') => ({
     fields: _.reduce(
-      (result, field)=> ({
+      (result, field) => ({
         [field]: { elasticsearch: { notAnalyzedField } },
-        ...result
+        ...result,
       }),
       {},
       fields
-    )
+    ),
   }),
 }

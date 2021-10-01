@@ -19,10 +19,18 @@ describe('pivot', () => {
       { type: 'sum', field: 'LineItem.TotalPrice' },
     ]
     expect(aggsForValues(values)).to.deep.equal({
-      'pivotMetric-min-LineItem.TotalPrice': { min: { field: 'LineItem.TotalPrice' } },
-      'pivotMetric-max-LineItem.TotalPrice': { max: { field: 'LineItem.TotalPrice' } },
-      'pivotMetric-avg-LineItem.TotalPrice': { avg: { field: 'LineItem.TotalPrice' } },
-      'pivotMetric-sum-LineItem.TotalPrice': { sum: { field: 'LineItem.TotalPrice' } },
+      'pivotMetric-min-LineItem.TotalPrice': {
+        min: { field: 'LineItem.TotalPrice' },
+      },
+      'pivotMetric-max-LineItem.TotalPrice': {
+        max: { field: 'LineItem.TotalPrice' },
+      },
+      'pivotMetric-avg-LineItem.TotalPrice': {
+        avg: { field: 'LineItem.TotalPrice' },
+      },
+      'pivotMetric-sum-LineItem.TotalPrice': {
+        sum: { field: 'LineItem.TotalPrice' },
+      },
     })
   })
   it('aggsForValues with not analyzed field form schemas', () => {
@@ -48,7 +56,11 @@ describe('pivot', () => {
         { type: 'max', field: 'LineItem.TotalPrice' },
         { type: 'avg', field: 'LineItem.TotalPrice' },
         { type: 'sum', field: 'LineItem.TotalPrice' },
-        { type: 'percentiles', field: 'LineItem.TotalPrice', percents: [20, 50] },
+        {
+          type: 'percentiles',
+          field: 'LineItem.TotalPrice',
+          percents: [20, 50],
+        },
         { type: 'cardinality', field: 'Vendor.Name' },
         { type: 'topHits' },
       ],
@@ -74,39 +86,38 @@ describe('pivot', () => {
               },
               aggs: {
                 'pivotMetric-min-LineItem.TotalPrice': {
-                  min: { field: 'LineItem.TotalPrice' }
+                  min: { field: 'LineItem.TotalPrice' },
                 },
                 'pivotMetric-max-LineItem.TotalPrice': {
-                  max: { field: 'LineItem.TotalPrice' }
+                  max: { field: 'LineItem.TotalPrice' },
                 },
                 'pivotMetric-avg-LineItem.TotalPrice': {
-                  avg: { field: 'LineItem.TotalPrice' }
+                  avg: { field: 'LineItem.TotalPrice' },
                 },
                 'pivotMetric-sum-LineItem.TotalPrice': {
-                  sum: { field: 'LineItem.TotalPrice' }
+                  sum: { field: 'LineItem.TotalPrice' },
                 },
                 'pivotMetric-percentiles-LineItem.TotalPrice': {
                   percentiles: {
                     field: 'LineItem.TotalPrice',
-                    percents: [20, 50]
-                  }
+                    percents: [20, 50],
+                  },
                 },
                 'pivotMetric-cardinality-Vendor.Name': {
                   // shoul be untouched??
-                  cardinality: { field: 'Vendor.Name.untouched' }
+                  cardinality: { field: 'Vendor.Name.untouched' },
                 },
                 'pivotMetric-topHits': { top_hits: {} },
               },
-            }
+            },
           },
-
         },
       },
     }
     let result = await buildQuery(
       input,
       testSchemas(['Organization.NameState', 'Vendor.Name']),
-      () => { }, // getStats(search) -> stats(field, statsArray)
+      () => {} // getStats(search) -> stats(field, statsArray)
     )
     expect(result).to.eql(expected)
   })
@@ -149,16 +160,15 @@ describe('pivot', () => {
                 avg: { avg: { field: 'LineItem.TotalPrice' } },
                 sum: { sum: { field: 'LineItem.TotalPrice' } },
               },
-            }
+            },
           },
-          
         },
       },
     }
     let result = await buildQuery(
       input,
       testSchema('Organization.NameState'),
-      () => {}, // getStats(search) -> stats(field, statsArray)
+      () => {} // getStats(search) -> stats(field, statsArray)
     )
     expect(result).to.eql(expected)
   })
@@ -186,7 +196,7 @@ describe('pivot', () => {
           },
           aggs: {
             'pivotMetric-sum-LineItem.TotalPrice': {
-              sum: { field: 'LineItem.TotalPrice' }
+              sum: { field: 'LineItem.TotalPrice' },
             },
           },
         },
@@ -195,7 +205,7 @@ describe('pivot', () => {
     let result = await buildQuery(
       input,
       testSchemas(['Vendor.City']),
-      () => { }, // getStats(search) -> stats(field, statsArray)
+      () => {} // getStats(search) -> stats(field, statsArray)
     )
     expect(result).to.eql(expected)
   })
@@ -222,7 +232,7 @@ describe('pivot', () => {
           },
           aggs: {
             'pivotMetric-sum-LineItem.TotalPrice': {
-              sum: { field: 'LineItem.TotalPrice' }
+              sum: { field: 'LineItem.TotalPrice' },
             },
           },
         },
@@ -265,16 +275,16 @@ describe('pivot', () => {
           },
           aggs: {
             'pivotMetric-min-LineItem.TotalPrice': {
-              min: { field: 'LineItem.TotalPrice' }
+              min: { field: 'LineItem.TotalPrice' },
             },
             'pivotMetric-max-LineItem.TotalPrice': {
-              max: { field: 'LineItem.TotalPrice' }
+              max: { field: 'LineItem.TotalPrice' },
             },
             'pivotMetric-avg-LineItem.TotalPrice': {
-              avg: { field: 'LineItem.TotalPrice' }
+              avg: { field: 'LineItem.TotalPrice' },
             },
             'pivotMetric-sum-LineItem.TotalPrice': {
-              sum: { field: 'LineItem.TotalPrice' }
+              sum: { field: 'LineItem.TotalPrice' },
             },
             groups: {
               date_histogram: {
@@ -284,28 +294,27 @@ describe('pivot', () => {
               },
               aggs: {
                 'pivotMetric-min-LineItem.TotalPrice': {
-                  min: { field: 'LineItem.TotalPrice' }
+                  min: { field: 'LineItem.TotalPrice' },
                 },
                 'pivotMetric-max-LineItem.TotalPrice': {
-                  max: { field: 'LineItem.TotalPrice' }
+                  max: { field: 'LineItem.TotalPrice' },
                 },
                 'pivotMetric-avg-LineItem.TotalPrice': {
-                  avg: { field: 'LineItem.TotalPrice' }
+                  avg: { field: 'LineItem.TotalPrice' },
                 },
                 'pivotMetric-sum-LineItem.TotalPrice': {
-                  sum: { field: 'LineItem.TotalPrice' }
+                  sum: { field: 'LineItem.TotalPrice' },
                 },
               },
-            }
+            },
           },
-
         },
       },
     }
     let result = await buildQuery(
       input,
       testSchema('Organization.NameState'),
-      () => { }, // getStats(search) -> stats(field, statsArray)
+      () => {} // getStats(search) -> stats(field, statsArray)
     )
     expect(result).to.eql(expected)
   })
@@ -328,7 +337,7 @@ describe('pivot', () => {
           ranges: [
             { from: '0', to: '500' },
             { from: '500', to: '10000' },
-          ]
+          ],
         },
       ],
     }
@@ -358,29 +367,29 @@ describe('pivot', () => {
                   },
                   aggs: {
                     'pivotMetric-min-LineItem.TotalPrice': {
-                      min: { field: 'LineItem.TotalPrice' }
+                      min: { field: 'LineItem.TotalPrice' },
                     },
                     'pivotMetric-max-LineItem.TotalPrice': {
-                      max: { field: 'LineItem.TotalPrice' }
+                      max: { field: 'LineItem.TotalPrice' },
                     },
                     'pivotMetric-avg-LineItem.TotalPrice': {
-                      avg: { field: 'LineItem.TotalPrice' }
+                      avg: { field: 'LineItem.TotalPrice' },
                     },
                     'pivotMetric-sum-LineItem.TotalPrice': {
-                      sum: { field: 'LineItem.TotalPrice' }
+                      sum: { field: 'LineItem.TotalPrice' },
                     },
                   },
-                }
+                },
               },
             },
-          }
-        }
+          },
+        },
       },
     }
     let result = await buildQuery(
       input,
       testSchemas(['Organization.NameState', 'Organization.State']),
-      () => { }, // getStats(search) -> stats(field, statsArray)
+      () => {} // getStats(search) -> stats(field, statsArray)
     )
     expect(result).to.eql(expected)
   })
@@ -389,15 +398,12 @@ describe('pivot', () => {
 
     // make tiny
     aggs.groups.buckets = aggs.groups.buckets.slice(0, 2)
-    aggs.groups.buckets = _.map(
-      buck => {
-        buck.groups.buckets = buck.groups.buckets.slice(0, 2)
-        return buck
-      },
-      aggs.groups.buckets
-    )
+    aggs.groups.buckets = _.map(buck => {
+      buck.groups.buckets = buck.groups.buckets.slice(0, 2)
+      return buck
+    }, aggs.groups.buckets)
 
-    let flatResult = processResponse(pivotResponse, {flatten: true})
+    let flatResult = processResponse(pivotResponse, { flatten: true })
     expect(flatResult.results).to.eql([
       {
         key: '0.0-500.0',
@@ -410,7 +416,7 @@ describe('pivot', () => {
         sum: 219405401.60811937,
         group0: 'Texas',
         group1: 'UT Southwestern Medical Center, Texas',
-        group2: '0.0-500.0'
+        group2: '0.0-500.0',
       },
       {
         key: '500.0-10000.0',
@@ -423,7 +429,7 @@ describe('pivot', () => {
         sum: 894222984.4179382,
         group0: 'Texas',
         group1: 'UT Southwestern Medical Center, Texas',
-        group2: '500.0-10000.0'
+        group2: '500.0-10000.0',
       },
       {
         key: '0.0-500.0',
@@ -436,7 +442,7 @@ describe('pivot', () => {
         sum: 93114418.01862116,
         group0: 'Texas',
         group1: 'University of Texas MD Anderson Cancer Center, Texas',
-        group2: '0.0-500.0'
+        group2: '0.0-500.0',
       },
       {
         key: '500.0-10000.0',
@@ -449,7 +455,7 @@ describe('pivot', () => {
         sum: 364042912.9053345,
         group0: 'Texas',
         group1: 'University of Texas MD Anderson Cancer Center, Texas',
-        group2: '500.0-10000.0'
+        group2: '500.0-10000.0',
       },
       {
         key: '0.0-500.0',
@@ -462,7 +468,7 @@ describe('pivot', () => {
         sum: 386852567.13375384,
         group0: 'Ohio',
         group1: 'Ohio State University, Ohio',
-        group2: '0.0-500.0'
+        group2: '0.0-500.0',
       },
       {
         key: '500.0-10000.0',
@@ -475,7 +481,7 @@ describe('pivot', () => {
         sum: 1161215369.618744,
         group0: 'Ohio',
         group1: 'Ohio State University, Ohio',
-        group2: '500.0-10000.0'
+        group2: '500.0-10000.0',
       },
       {
         key: '0.0-500.0',
@@ -488,7 +494,7 @@ describe('pivot', () => {
         sum: 87544071.83658338,
         group0: 'Ohio',
         group1: 'Greene County Court of Commons Pleas, Ohio',
-        group2: '0.0-500.0'
+        group2: '0.0-500.0',
       },
       {
         key: '500.0-10000.0',
@@ -501,8 +507,8 @@ describe('pivot', () => {
         sum: 256274578.45263672,
         group0: 'Ohio',
         group1: 'Greene County Court of Commons Pleas, Ohio',
-        group2: '500.0-10000.0'
-      }
+        group2: '500.0-10000.0',
+      },
     ])
 
     let nestedResult = processResponse(pivotResponse)

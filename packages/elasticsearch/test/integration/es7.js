@@ -54,7 +54,7 @@ describe('Integration Tests', () => {
               field: 'Organization.State',
               type: 'facet',
               values: ['Florida'],
-              filterOnly: true
+              filterOnly: true,
             },
             // {
             //   key: 'prices',
@@ -81,13 +81,13 @@ describe('Integration Tests', () => {
           key: 'pivot!',
           type: 'pivot',
           flatten: true,
-          values: [{ field: 'PO.IssuedAmount', type: 'avg'}],
+          values: [{ field: 'PO.IssuedAmount', type: 'avg' }],
           groups: [
             { field: 'Organization.NameState', type: 'fieldValues' },
             // { field: 'PO.IssuedDate', type: 'dateInterval', interval: 'year' },
             // { type:'numberInterval', field: 'PO.IssuedAmount' }
-          ]
-        }
+          ],
+        },
       ],
     }
     let result = await process(tree)
