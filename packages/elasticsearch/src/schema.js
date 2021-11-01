@@ -5,21 +5,27 @@ let Tree = F.tree(x => x.properties)
 // flatLeaves should auto detect reject vs omit (or just more general obj vs arr method)
 let flatten = _.flow(Tree.flatten(), _.omitBy(Tree.traverse))
 
+// A top-level 'properties' prop is es7 default, no types _mapping behavior.
+//
+// A missing top-level 'properties' prop is es5 and es6 with types
+// or es7 using 'GET INDEX/_mapping?include_type_name'.
+let extractFieldsAndEsType = obj =>
+  _.has('properties', obj)
+    ? { fields: obj, elasticsearch: {} }
+    : _.flow(
+        _.toPairs,
+        // Capture esType
+        ([[type, fields]]) => ({ fields, elasticsearch: { type } })
+      )(obj)
+
 let fromEsIndexMapping = _.mapValues(
   _.flow(
     _.get('mappings'),
     // Always 1 type per index but sometimes there's a `_default_` type thing
     _.omit(['_default_']),
-    x =>
-      _.size(_.keys(x)) === 1
-        ? // 1 key implies es6 and below with types
-          _.flow(
-            _.toPairs,
-            // Capture esType
-            ([[type, fields]]) => ({ fields, elasticsearch: { type } })
-          )(x)
-        : // More than one key seems like no types (es7+)
-          { fields: x, elasticsearch: {} },
+    // filters out 'dynamic_templates' (an array), 'dynamic: true', etc.
+    _.pickBy(_.isPlainObject),
+    extractFieldsAndEsType,
     _.update(
       'fields',
       _.flow(
