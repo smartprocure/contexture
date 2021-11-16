@@ -269,9 +269,9 @@ export default F.stampKey('type', {
       flatten: false,
       subtotals: false,
       context: {
-        results: []
-      }
-    }
+        results: [],
+      },
+    },
   },
   esTwoLevelAggregation: {
     validate: context =>
