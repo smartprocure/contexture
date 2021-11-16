@@ -1,3 +1,6 @@
+# 2.37.0
+* Add `pivot` type
+
 # 2.36.1
 * Updated CI to use node16 and npm7
 * Updated package-lock.json to version 2
