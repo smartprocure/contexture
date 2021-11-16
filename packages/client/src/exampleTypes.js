@@ -256,6 +256,23 @@ export default F.stampKey('type', {
       field: null,
     },
   },
+  pivot: {
+    reactors: {
+      groups: 'self',
+      values: 'self',
+      flatten: 'self',
+      subtotals: 'self',
+    },
+    defaults: {
+      groups: [],
+      values: [],
+      flatten: false,
+      subtotals: false,
+      context: {
+        results: [],
+      },
+    },
+  },
   esTwoLevelAggregation: {
     validate: context =>
       context.key_field &&
