@@ -35,6 +35,5 @@ module.exports = {
   rangeStats: require('./legacy/rangeStats'),
   smartIntervalHistogram: require('./legacy/smartIntervalHistogram'),
   matchStats: require('./legacy/matchStats'),
-  // Legacy (wip)
-  groupedMetric: require('./groupedMetric'),
+  groupedMetric: require('./legacy/groupedMetric'),
 }

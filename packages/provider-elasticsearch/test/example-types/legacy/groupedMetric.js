@@ -1,5 +1,5 @@
-const groupedMetric = require('../../src/example-types/groupedMetric')
-const utils = require('./testUtils')
+const groupedMetric = require('../../../src/example-types/legacy/groupedMetric')
+const utils = require('../testUtils')
 
 describe('groupedMetric', () => {
   describe('validContext', () => {
