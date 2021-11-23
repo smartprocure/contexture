@@ -3,6 +3,9 @@
 * Factor out groupStats util
 * Add pivot type
 
+# 1.6.3
+* Fixes a bug extracting es types from mappings across different elasticsearch versions.
+
 # 1.6.2
 * Added `date` type to `schemaMapping.js`
 
@@ -188,7 +191,7 @@
 * [Facet] Move from `_term` to `_key`
 
 # 0.19.5
-* TwoLevelAggregation: Fix bug where zero values were being treated as missing 
+* TwoLevelAggregation: Fix bug where zero values were being treated as missing
 
 # 0.19.4
 * Include variations fix for highlighting
