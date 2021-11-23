@@ -52,7 +52,7 @@ let transmuteTree = (
     })
   )
 
-let logJSON = result => console.log(JSON.stringify(result, null, 2))
+let logJSON = result => console.info(JSON.stringify(result, null, 2))
 
 module.exports = {
   maybeAppend,
