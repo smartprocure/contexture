@@ -21,7 +21,6 @@ describe('All Example Types', function() {
       'numberRangesGroupStats',
       'percentilesGroupStats',
       'fieldValuePartitionGroupStats',
-      'groupedMetric',
       'matchStats',
       'number',
       'query',
