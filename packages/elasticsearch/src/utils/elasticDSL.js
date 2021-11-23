@@ -31,16 +31,27 @@ let simplifyAggregations = _.mapValues(x => {
   return x
 })
 let simplifyBucket = _.flow(
-  F.renameProperty('doc_count', 'count'),
-  simplifyAggregations,
-  _.mapKeys(
+  _.mapValues(
+    // x => F.cascade(['value', 'values', 'hits'], x, x)
+    x => {
+    // Single value metrics always return value
+    if (_.has('value', x)) return x.value
+    // Multi value metrics can return values
+    if (_.has('values', x)) return x.values
+    // top_hits has hits
+    if (_.has('hits', x)) return x.hits
+    // Multi value metrics can also return objects (like stats, extended_stats, etc):
+    return x
+  }),
+  _.mapKeys(x => {
+    if (x === 'doc_count') return 'count'
     // special case pivotMetric so we don't rename the auto keys
-    x =>
-      _.startsWith('pivotMetric-', x)
-        ? _.replace('pivotMetric-', '', x)
-        : _.camelCase(x)
-  )
+    if (_.startsWith('pivotMetric-', x))
+      return _.replace('pivotMetric-', '', x)
+    return _.camelCase(x)
+  })
 )
+
 let simplifyBuckets = _.flow(
   F.when(_.isPlainObject, F.unkeyBy('key')),
   _.map(simplifyBucket)
