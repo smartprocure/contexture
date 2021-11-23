@@ -581,18 +581,21 @@ describe('pivot', () => {
       },
     ])
   })
-  it('should handle pivotResponse with filtered fieldValueGroup', () =>{
-    let nestedResult = processResponse(pivotRepsonseWithFilteredFieldValueGroup, {
-      values: [{ field: 'PO.IssuedAmount', type: 'avg' }],
-      groups: [
-        {
-          field: 'Organization.NameState',
-          type: 'fieldValues',
-          filter: 'Okeechobee'
-        },
-        { field: 'PO.IssuedDate', type: 'dateInterval', interval: 'year' },
-      ],
-    })
+  it('should handle pivotResponse with filtered fieldValueGroup', () => {
+    let nestedResult = processResponse(
+      pivotRepsonseWithFilteredFieldValueGroup,
+      {
+        values: [{ field: 'PO.IssuedAmount', type: 'avg' }],
+        groups: [
+          {
+            field: 'Organization.NameState',
+            type: 'fieldValues',
+            filter: 'Okeechobee',
+          },
+          { field: 'PO.IssuedDate', type: 'dateInterval', interval: 'year' },
+        ],
+      }
+    )
     expect(nestedResult.results).to.eql([
       {
         key: 'Okeechobee County Schools, Florida',
@@ -816,6 +819,6 @@ describe('pivot', () => {
           },
         ],
       },
-    ])    
+    ])
   })
 })

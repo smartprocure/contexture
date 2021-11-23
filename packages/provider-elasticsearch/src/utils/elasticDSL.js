@@ -21,20 +21,20 @@ let simplifyBucket = _.flow(
   _.mapValues(
     // x => F.cascade(['value', 'values', 'hits'], x, x)
     x => {
-    // Single value metrics always return value
-    if (_.has('value', x)) return x.value
-    // Multi value metrics can return values
-    if (_.has('values', x)) return x.values
-    // top_hits has hits
-    if (_.has('hits', x)) return x.hits
-    // Multi value metrics can also return objects (like stats, extended_stats, etc):
-    return x
-  }),
+      // Single value metrics always return value
+      if (_.has('value', x)) return x.value
+      // Multi value metrics can return values
+      if (_.has('values', x)) return x.values
+      // top_hits has hits
+      if (_.has('hits', x)) return x.hits
+      // Multi value metrics can also return objects (like stats, extended_stats, etc):
+      return x
+    }
+  ),
   _.mapKeys(x => {
     if (x === 'doc_count') return 'count'
     // special case pivotMetric so we don't rename the auto keys
-    if (_.startsWith('pivotMetric-', x))
-      return _.replace('pivotMetric-', '', x)
+    if (_.startsWith('pivotMetric-', x)) return _.replace('pivotMetric-', '', x)
     return _.camelCase(x)
   })
 )

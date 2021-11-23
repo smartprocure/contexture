@@ -12,9 +12,12 @@ let pickNumbers = _.pickBy(_.isNumber)
 let safeNumber = value => !F.isBlank(value) && _.toNumber(value)
 let pickSafeNumbers = _.flow(_.mapValues(safeNumber), pickNumbers)
 
-let writeTreeNode = (next = traverse) =>
-  (node, index, [parent, ...parents], [parentIndex, ...indexes]) =>
-    next(parent, parentIndex, parents, indexes)[index] = node
+let writeTreeNode = (next = traverse) => (
+  node,
+  index,
+  [parent, ...parents],
+  [parentIndex, ...indexes]
+) => (next(parent, parentIndex, parents, indexes)[index] = node)
 
 // POST ORDER MAP
 //  Post order traversal is important if you're replacing the tree structure
@@ -36,7 +39,11 @@ let mapTreePostOrder = (next = traverse, writeNode = writeTreeNode(next)) =>
       })(mapper(tree)) // run mapper on root, and skip root in traversal
   )
 // Convert tree from one structure to another
-let transmuteTree = (traverseSource, traverseTarget, cleanupSourceTraversalPaths = _.noop) =>
+let transmuteTree = (
+  traverseSource,
+  traverseTarget,
+  cleanupSourceTraversalPaths = _.noop
+) =>
   mapTreePostOrder(
     traverseSource,
     writeTreeNode((...args) => {
@@ -57,5 +64,5 @@ module.exports = {
   writeTreeNode,
   mapTreePostOrder,
   transmuteTree,
-  logJSON
+  logJSON,
 }
