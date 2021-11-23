@@ -18,17 +18,15 @@ let buildGroupQuery = ({ field, matchValue }, children, schema) => ({
 })
 let buildQuery = buildGroupStatsQuery(buildGroupQuery)
 
+let getGroups = aggs => F.unkeyBy('key', aggs.groups.buckets)
 module.exports = {
+  getGroups,
   buildQuery,
   buildGroupQuery,
   validContext: node => node.groupField,
   async result(node, search, schema) {
     let query = buildQuery(node, schema)
     let response = await search(query)
-    return {
-      results: simplifyBuckets(
-        F.unkeyBy('key', response.aggregations.groups.buckets)
-      ),
-    }
+    return { results: simplifyBuckets(getGroups(response.aggregations)) }
   },
 }

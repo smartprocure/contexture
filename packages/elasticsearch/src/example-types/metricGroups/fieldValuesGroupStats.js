@@ -1,4 +1,5 @@
 let _ = require('lodash/fp')
+let F = require('futil')
 let { buildRegexQueryForWords } = require('../../utils/regex')
 let { getField } = require('../../utils/fields')
 let { groupStats } = require('./groupStatUtils')
@@ -45,8 +46,11 @@ let buildGroupQuery = (node, children, schema) => {
 let buildGroupQueryWithDefaultSortField = (node, ...args) =>
   buildGroupQuery(_.defaultsDeep({ sort: { field: 'sum' } }, node), ...args)
 
+let getGroups = aggs => (aggs.valueFilter || aggs).groups.buckets
+
 // We don't want the default sort field for pivot, but we do for this node type
 module.exports = {
   ...groupStats(buildGroupQueryWithDefaultSortField),
   buildGroupQuery,
+  getGroups
 }
