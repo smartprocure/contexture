@@ -20,6 +20,9 @@ let aggsForValues = (node, schema) =>
       ({ key, type, field }) =>
         key || F.compactJoin('-', ['pivotMetric', type, field])
     ),
+    // This is a very interesting lint error - while key is not used in the function body, it is important.
+    // Omitting key here would include it in the props spread and then pass it along as part of the body of the ES aggregation.
+    // eslint-disable-next-line
     _.mapValues(({ key, type, field, ...props }) => ({
       [_.snakeCase(type)]: {
         ...props,
