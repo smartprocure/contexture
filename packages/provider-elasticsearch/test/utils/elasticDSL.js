@@ -3,7 +3,6 @@ let {
   buildMetrics,
   simplifyBucket,
   simplifyBuckets,
-  simplifyAggregations,
 } = require('../../src/utils/elasticDSL')
 let { expect } = require('chai')
 
