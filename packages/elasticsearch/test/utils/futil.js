@@ -18,19 +18,23 @@ describe('futil canidiates', () => {
       key: 'root',
       aggregations: {
         groups: {
-          buckets: [{
-            key: 'filteredTerms',
-            valueFilter: {
-              groups: {
-                buckets: [{
-                  key: 'nonFiltered',
-                  groups: { buckets: [{ key:'innermost' }] }
-                }]
-              }
-            }
-          }]
-        }
-      }
+          buckets: [
+            {
+              key: 'filteredTerms',
+              valueFilter: {
+                groups: {
+                  buckets: [
+                    {
+                      key: 'nonFiltered',
+                      groups: { buckets: [{ key: 'innermost' }] },
+                    },
+                  ],
+                },
+              },
+            },
+          ],
+        },
+      },
     }
     let traverse = (node, index, parents) => {
       let depth = parents.length
@@ -42,12 +46,12 @@ describe('futil canidiates', () => {
     let expected = ['root', 'filteredTerms', 'nonFiltered', 'innermost']
     let result = Tree.toArrayBy(node => node.key, tree)
     expect(result).to.eql(expected)
-    
+
     // Mapping works with new write property!
     let modifiedTree = Tree.map(
       node => ({
         ...node,
-        key: node.key + 'Modified',
+        key: `${node.key}Modified`,
       }),
       tree
     )
@@ -55,7 +59,7 @@ describe('futil canidiates', () => {
       'rootModified',
       'filteredTermsModified',
       'nonFilteredModified',
-      'innermostModified'
+      'innermostModified',
     ]
     let modifiedResult = Tree.toArrayBy(node => node.key, modifiedTree)
     expect(modifiedResult).to.eql(modifiedExpected)
@@ -65,40 +69,44 @@ describe('futil canidiates', () => {
       key: 'root',
       aggregations: {
         groups: {
-          buckets: [{
-            key: 'filteredTerms',
-            valueFilter: {
-              groups: {
-                buckets: [{
-                  key: 'nonFiltered',
-                  groups: { 
-                    buckets: [
-                      { key: 'innermost' },
-                      { key: 'inner2', min: { value: 12 }, some_value: 3 },
-                      { 
-                        key: 'objectpart',
-                        groups: {
-                          buckets: {
-                            pass: { skey: 'passinner' },
-                            fail: { skey: 'failinner' },
-                          }
-                        }
-                      }
-                    ] 
-                  }
-                }]
-              }
-            }
-          }]
-        }
-      }
+          buckets: [
+            {
+              key: 'filteredTerms',
+              valueFilter: {
+                groups: {
+                  buckets: [
+                    {
+                      key: 'nonFiltered',
+                      groups: {
+                        buckets: [
+                          { key: 'innermost' },
+                          { key: 'inner2', min: { value: 12 }, some_value: 3 },
+                          {
+                            key: 'objectpart',
+                            groups: {
+                              buckets: {
+                                pass: { skey: 'passinner' },
+                                fail: { skey: 'failinner' },
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          ],
+        },
+      },
     }
     let traverseSource = (node, index, parents) => {
       let depth = parents.length
       if (depth === 0) return node.aggregations.groups.buckets
       if (depth === 1) return node.valueFilter.groups.buckets
       if (depth === 2) return node.groups.buckets
-      if (depth === 3 && _.has('groups.buckets', node)) 
+      if (depth === 3 && _.has('groups.buckets', node))
         return F.unkeyBy('key', node.groups.buckets)
     }
     let traverseTarget = node => {
@@ -176,14 +184,14 @@ describe('futil canidiates', () => {
                   key: 'objectpart',
                   groups: [
                     { skey: 'passinner', key: 'pass' },
-                    { skey: 'failinner', key: 'fail' }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
+                    { skey: 'failinner', key: 'fail' },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
     })
   })
 })

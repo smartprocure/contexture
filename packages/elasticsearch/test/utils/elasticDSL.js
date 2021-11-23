@@ -200,9 +200,10 @@ describe('elasticDSL utils', () => {
       })
     })
     it('should work on cases where value is 0', () => {
-      expect(
-        simplifyBucket({ min: { value: 0 }, max: { value: 0 } })
-      ).to.eql({ min: 0, max: 0 })
+      expect(simplifyBucket({ min: { value: 0 }, max: { value: 0 } })).to.eql({
+        min: 0,
+        max: 0,
+      })
     })
     it('should work on cases where value is null', () => {
       expect(

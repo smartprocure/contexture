@@ -35,7 +35,8 @@ let buildQuery = async (node, schema, getStats) => {
       // Subtotals calculates metrics at each group level, not needed if flattening or in chart
       // Support for per group stats could also be added here - merge on another stats agg blob to children based on group.stats/statsField or group.values
       if (node.subtotals) children = _.merge(await children, statsAggBlob)
-      let buildGroupQuery = lookupTypeProp('buildGroupQuery', group.type) || _.identity
+      let buildGroupQuery =
+        lookupTypeProp('buildGroupQuery', group.type) || _.identity
       return buildGroupQuery(group, await children, schema, getStats)
     },
     statsAggBlob,
@@ -70,7 +71,7 @@ let flattenGroups = Tree.leavesBy((node, index, parents) => ({
 
 let defaultGetGroups = _.get('groups.buckets')
 // This captures everything but encodes types specific knowledge:
-// let defaultGetGroups = aggs => 
+// let defaultGetGroups = aggs =>
 //   F.when(
 //     _.isPlainObject,
 //     F.unkeyBy('key'),
@@ -87,7 +88,7 @@ let processResponse = (response, { groups = [], flatten } = {}) => {
     let traverse = lookupTypeProp('getGroups', type) || defaultGetGroups
     return traverse(x)
   }
-  
+
   // Goal here is to map the tree from one structure to another
   // goal is to keep _nodes_ the same, but write back with different (dynamic) traversal
   //   e.g. valuefilter.groups.buckets -> groups, groups.buckets -> groups

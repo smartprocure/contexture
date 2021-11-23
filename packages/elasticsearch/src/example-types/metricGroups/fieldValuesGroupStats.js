@@ -52,5 +52,5 @@ let getGroups = aggs => (aggs.valueFilter || aggs).groups.buckets
 module.exports = {
   ...groupStats(buildGroupQueryWithDefaultSortField),
   buildGroupQuery,
-  getGroups
+  getGroups,
 }
