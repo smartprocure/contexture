@@ -1,16 +1,12 @@
 let _ = require('lodash/fp')
 let F = require('futil')
-let {
-  statsAggs,
-  simplifyBuckets,
-  simplifyBucket,
-} = require('../../utils/elasticDSL')
+let { statsAggs, simplifyBucket } = require('../../utils/elasticDSL')
 let { getField } = require('../../utils/fields')
 let types = require('../../../src/example-types')
 let { getStats } = require('./stats')
+let { transmuteTree } = require('../../../src/utils/futil')
 
-let lookupTypeMethod = (method, type) =>
-  _.getOr(_.identity, `${type}GroupStats.${method}`, types)
+let lookupTypeProp = (prop, type) => _.get(`${type}GroupStats.${prop}`, types)
 
 // PivotTable -> Query:
 //  rows -> columns -> values
@@ -45,12 +41,13 @@ let buildQuery = async (node, schema, getStats) => {
       // Subtotals calculates metrics at each group level, not needed if flattening or in chart
       // Support for per group stats could also be added here - merge on another stats agg blob to children based on group.stats/statsField or group.values
       if (node.subtotals) children = _.merge(await children, statsAggBlob)
-      let buildGroupQuery = lookupTypeMethod('buildGroupQuery', group.type)
+      let buildGroupQuery = lookupTypeProp('buildGroupQuery', group.type) || _.identity
       return buildGroupQuery(group, await children, schema, getStats)
     },
     statsAggBlob,
     // TODO: Also consider rows + columns -> groups:
     // _.reverse([...(node.rows || []), ...(node.columns || []), ...(node.groups || [])])
+    // _.reverse(_.concat(node.rows, node.columns, node.groups)))
     _.reverse(node.groups)
   )
   return query
@@ -63,9 +60,9 @@ let buildQuery = async (node, schema, getStats) => {
 let bucketToGroupN = (bucket, n) => ({
   [`group${n}`]: bucket.keyAsString || bucket.key,
 })
-let Tree = F.tree(_.get('groups.buckets'))
+let Tree = F.tree(_.get('groups'))
 let flattenGroups = Tree.leavesBy((node, index, parents) => ({
-  ...simplifyBucket(node),
+  ...node,
   // Add groupN keys
   ..._.mergeAll(
     F.mapIndexed(
@@ -76,15 +73,32 @@ let flattenGroups = Tree.leavesBy((node, index, parents) => ({
     )
   ),
 }))
-let processResponse = (response, node = {}) => {
-  // TODO: Support for valueFilter (for fieldValue group with valueFilter)?
-  // groupStats util handles this with response.aggregations.valueFilter || response.aggregations
-  let aggs = response.aggregations
-  return {
-    results: node.flatten
-      ? flattenGroups(aggs)
-      : simplifyBuckets(aggs.groups.buckets),
+let defaultGetGroups = _.get('groups.buckets')
+// This captures everything but encodes types specific knowledge:
+// let defaultGetGroups = aggs => 
+//   F.when(
+//     _.isPlainObject,
+//     F.unkeyBy('key'),
+//     (aggs.valueFilter || aggs).groups.buckets
+//   )
+let ensureGroups = node => {
+  if (!_.isArray(node.groups)) node.groups = []
+}
+let processResponse = (response, { groups = [], flatten } = {}) => {
+  // Traversing the ES response utilizes type specific methods looked up by matching the depth with node.groups
+  let traverseSource = (x, i, parents = []) => {
+    let depth = parents.length
+    let { type } = groups[depth] || {}
+    let traverse = lookupTypeProp('getGroups', type) || defaultGetGroups
+    return traverse(x)
   }
+  
+  // Goal here is to map the tree from one structure to another
+  // goal is to keep _nodes_ the same, but write back with different (dynamic) traversal
+  //   e.g. valuefilter.groups.buckets -> groups, groups.buckets -> groups
+  let simplifyTree = transmuteTree(traverseSource, Tree.traverse, ensureGroups)
+  let results = simplifyTree(simplifyBucket, response.aggregations)
+  return { results: flatten ? flattenGroups(results) : results.groups }
 }
 
 let pivot = {
