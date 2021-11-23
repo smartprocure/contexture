@@ -1,10 +1,10 @@
-let _ = require('lodash/fp')
 let F = require('futil')
-let { statsAggs, simplifyBucket } = require('../../utils/elasticDSL')
+let _ = require('lodash/fp')
+let { getStats } = require('./stats')
 let { getField } = require('../../utils/fields')
 let types = require('../../../src/example-types')
-let { getStats } = require('./stats')
-let { transmuteTree } = require('../../../src/utils/futil')
+let { transmuteTree } = require('../../utils/futil')
+let { simplifyBucket } = require('../../utils/elasticDSL')
 
 let lookupTypeProp = (prop, type) => _.get(`${type}GroupStats.${prop}`, types)
 
@@ -67,6 +67,7 @@ let flattenGroups = Tree.leavesBy((node, index, parents) => ({
     )
   ),
 }))
+
 let defaultGetGroups = _.get('groups.buckets')
 // This captures everything but encodes types specific knowledge:
 // let defaultGetGroups = aggs => 
