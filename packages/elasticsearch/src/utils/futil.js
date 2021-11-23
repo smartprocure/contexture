@@ -12,7 +12,7 @@ let pickNumbers = _.pickBy(_.isNumber)
 let safeNumber = value => !F.isBlank(value) && _.toNumber(value)
 let pickSafeNumbers = _.flow(_.mapValues(safeNumber), pickNumbers)
 
-let writeTreeNode = (next = traverse) => (
+let writeTreeNode = (next = F.traverse) => (
   node,
   index,
   [parent, ...parents],
@@ -23,14 +23,14 @@ let writeTreeNode = (next = traverse) => (
 //  Post order traversal is important if you're replacing the tree structure
 //  If you replace/modify the parent before you do the children, things get weird and don't work
 //  You can work around this with pre-order by mutating in place and returning the original node for the map, but that defeats the purpose of map over traversal + mutation
-let transformTreePostOrder = (next = traverse) =>
+let transformTreePostOrder = (next = F.traverse) =>
   _.curry((f, x) => {
     let result = _.cloneDeep(x)
     F.walk(next)(_.noop, f)(result)
     return result
   })
 // same as map tree, just transforms post order instead of pre order
-let mapTreePostOrder = (next = traverse, writeNode = writeTreeNode(next)) =>
+let mapTreePostOrder = (next = F.traverse, writeNode = writeTreeNode(next)) =>
   _.curry(
     (mapper, tree) =>
       transformTreePostOrder(next)((node, i, parents, ...args) => {

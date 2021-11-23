@@ -1,3 +1,4 @@
+let _ = require('lodash/fp')
 let {
   buildQuery,
   aggsForValues,
@@ -7,8 +8,6 @@ let { expect } = require('chai')
 let { testSchema, testSchemas } = require('../testUtils')
 let pivotResponse = require('./pivotResponse')
 let pivotRepsonseWithFilteredFieldValueGroup = require('./pivotRepsonseWithFilteredFieldValueGroup')
-let _ = require('lodash/fp')
-let F = require('futil')
 
 // pass aggsForValues in each stage
 describe('pivot', () => {
