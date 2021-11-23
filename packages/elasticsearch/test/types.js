@@ -21,7 +21,6 @@ describe('All Example Types', function() {
       'numberRangesGroupStats',
       'percentilesGroupStats',
       'fieldValuePartitionGroupStats',
-      'groupedMetric',
       'matchStats',
       'number',
       'query',
@@ -35,6 +34,7 @@ describe('All Example Types', function() {
       'terms_stats',
       'text',
       'fieldValuesDelta',
+      'pivot',
     ])
   })
 })

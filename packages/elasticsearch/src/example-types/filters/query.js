@@ -1,5 +1,6 @@
 let _ = require('lodash/fp')
 let utils = require('../../utils/luceneQueryUtils')
+let { stripLegacySubFields } = require('../../utils/fields')
 
 module.exports = {
   hasValue: _.get('query.length'),
@@ -7,7 +8,7 @@ module.exports = {
     query_string: {
       query: utils.luceneQueryProcessor(query),
       default_operator: 'AND',
-      default_field: field.replace('.untouched', '') + (exact ? '.exact' : ''),
+      default_field: stripLegacySubFields(field) + (exact ? '.exact' : ''),
       ...(exact && { analyzer: 'exact' }),
     },
   }),

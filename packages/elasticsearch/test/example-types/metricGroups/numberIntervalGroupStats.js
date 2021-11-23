@@ -41,6 +41,7 @@ describe('numberIntervalGroupStats', () => {
           statsField: 'LineItem.TotalPrice',
           interval: 'smart',
         },
+        null,
         () => ({ min: 10, max: 5000 })
       )
     ).to.eql({

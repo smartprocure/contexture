@@ -1,6 +1,7 @@
-let { statsAggs, simplifyBuckets } = require('../../utils/elasticDSL')
+let _ = require('lodash/fp')
 let { buildRegexQueryForWords } = require('../../utils/regex')
 let { getField } = require('../../utils/fields')
+let { groupStats } = require('./groupStatUtils')
 
 let getSortField = field => {
   if (field === 'count') return '_count'
@@ -8,22 +9,24 @@ let getSortField = field => {
   return `${field}.value`
 }
 
-let buildQuery = (node, schema) => {
+let buildGroupQuery = (node, children, schema) => {
   let {
-    statsField,
-    stats,
-    groupField,
+    field: groupField,
     size = 10,
     filter,
     // sortField can be key, count, or stat name - min, max, avg, sum as long as its in stats
-    sort: { field: sortField = 'sum', order = 'desc' } = {}, // todo: support array sort for multi-level
+    sort: { field: sortField, order = 'desc' } = {}, // todo: support array sort for multi-level
   } = node
   let field = getField(schema, groupField)
   let query = {
     aggs: {
       groups: {
-        terms: { field, size, order: { [getSortField(sortField)]: order } },
-        ...statsAggs(statsField, stats),
+        terms: {
+          field,
+          size,
+          ...(sortField && { order: { [getSortField(sortField)]: order } }),
+        },
+        ...children,
       },
     },
   }
@@ -39,16 +42,14 @@ let buildQuery = (node, schema) => {
   return query
 }
 
+let buildGroupQueryWithDefaultSortField = (node, ...args) =>
+  buildGroupQuery(_.defaultsDeep({ sort: { field: 'sum' } }, node), ...args)
+
+let getGroups = aggs => (aggs.valueFilter || aggs).groups.buckets
+
+// We don't want the default sort field for pivot, but we do for this node type
 module.exports = {
-  buildQuery,
-  validContext: node => node.groupField,
-  async result(node, search, schema) {
-    let response = await search(buildQuery(node, schema))
-    return {
-      results: simplifyBuckets(
-        (response.aggregations.valueFilter || response.aggregations).groups
-          .buckets
-      ),
-    }
-  },
+  ...groupStats(buildGroupQueryWithDefaultSortField),
+  buildGroupQuery,
+  getGroups,
 }
