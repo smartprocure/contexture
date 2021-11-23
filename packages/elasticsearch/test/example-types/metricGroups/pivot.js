@@ -122,57 +122,6 @@ describe('pivot', () => {
     )
     expect(result).to.eql(expected)
   })
-  it('should buildQuery with stats/statsField', async () => {
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      statsField: 'LineItem.TotalPrice',
-      stats: ['min', 'max', 'avg', 'sum'],
-      groups: [
-        {
-          type: 'fieldValues',
-          field: 'Organization.NameState',
-        },
-        {
-          type: 'dateInterval',
-          field: 'PO.IssuedDate',
-          interval: 'month',
-        },
-      ],
-    }
-    let expected = {
-      aggs: {
-        groups: {
-          terms: {
-            field: 'Organization.NameState.untouched',
-            size: 10,
-            // order: {}
-          },
-          aggs: {
-            groups: {
-              date_histogram: {
-                field: 'PO.IssuedDate',
-                interval: 'month',
-                min_doc_count: 0,
-              },
-              aggs: {
-                min: { min: { field: 'LineItem.TotalPrice' } },
-                max: { max: { field: 'LineItem.TotalPrice' } },
-                avg: { avg: { field: 'LineItem.TotalPrice' } },
-                sum: { sum: { field: 'LineItem.TotalPrice' } },
-              },
-            },
-          },
-        },
-      },
-    }
-    let result = await buildQuery(
-      input,
-      testSchema('Organization.NameState'),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
-    expect(result).to.eql(expected)
-  })
   it('should buildQuery for fieldValuePartition', async () => {
     let input = {
       key: 'test',
