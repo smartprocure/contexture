@@ -27,15 +27,9 @@ let aggsForValues = (node, schema) =>
       },
     }))
   )(node)
-// Either pivot table style `values`, or classic groupStat stats/statsField
-// TODO: drop stats/statsField support? Likely doesn't ever make sense in a pivot UI
-let buildStatsAgg = (node, schema) =>
-  node.values
-    ? { aggs: aggsForValues(node.values, schema) }
-    : statsAggs(node.statsField, node.stats)
 
 let buildQuery = async (node, schema, getStats) => {
-  let statsAggBlob = buildStatsAgg(node, schema)
+  let statsAggBlob = { aggs: aggsForValues(node.values, schema) }
   let query = await _.reduce(
     async (children, group) => {
       // Subtotals calculates metrics at each group level, not needed if flattening or in chart
