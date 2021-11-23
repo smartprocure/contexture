@@ -6,6 +6,7 @@ let {
 let { expect } = require('chai')
 let { testSchema, testSchemas } = require('../testUtils')
 let pivotResponse = require('./pivotResponse')
+let pivotRepsonseWithFilteredFieldValueGroup = require('./pivotRepsonseWithFilteredFieldValueGroup')
 let _ = require('lodash/fp')
 let F = require('futil')
 
@@ -630,5 +631,242 @@ describe('pivot', () => {
         count: 69508750,
       },
     ])
+  })
+  it('should handle pivotResponse with filtered fieldValueGroup', () =>{
+    let nestedResult = processResponse(pivotRepsonseWithFilteredFieldValueGroup, {
+      values: [{ field: 'PO.IssuedAmount', type: 'avg' }],
+      groups: [
+        {
+          field: 'Organization.NameState',
+          type: 'fieldValues',
+          filter: 'Okeechobee'
+        },
+        { field: 'PO.IssuedDate', type: 'dateInterval', interval: 'year' },
+      ],
+    })
+    expect(nestedResult.results).to.eql([
+      {
+        key: 'Okeechobee County Schools, Florida',
+        count: 552831,
+        groups: [
+          {
+            keyAsString: '2015-01-01T00:00:00.000Z',
+            key: 1420070400000,
+            count: 149661,
+            'avg-PO.IssuedAmount': 20844.647948233425,
+          },
+          {
+            keyAsString: '2016-01-01T00:00:00.000Z',
+            key: 1451606400000,
+            count: 161271,
+            'avg-PO.IssuedAmount': 21172.11132216827,
+          },
+          {
+            keyAsString: '2017-01-01T00:00:00.000Z',
+            key: 1483228800000,
+            count: 195607,
+            'avg-PO.IssuedAmount': 21265.707126306814,
+          },
+          {
+            keyAsString: '2018-01-01T00:00:00.000Z',
+            key: 1514764800000,
+            count: 26707,
+            'avg-PO.IssuedAmount': 23561.699367492976,
+          },
+          {
+            keyAsString: '2019-01-01T00:00:00.000Z',
+            key: 1546300800000,
+            count: 7118,
+            'avg-PO.IssuedAmount': 6285.349479416158,
+          },
+          {
+            keyAsString: '2020-01-01T00:00:00.000Z',
+            key: 1577836800000,
+            count: 6901,
+            'avg-PO.IssuedAmount': 9253.239317711703,
+          },
+          {
+            keyAsString: '2021-01-01T00:00:00.000Z',
+            key: 1609459200000,
+            count: 5566,
+            'avg-PO.IssuedAmount': 8548.494813621837,
+          },
+        ],
+      },
+      {
+        key: "Okeechobee County Sheriff's Office, Florida",
+        count: 11984,
+        groups: [
+          {
+            keyAsString: '2015-01-01T00:00:00.000Z',
+            key: 1420070400000,
+            count: 1719,
+            'avg-PO.IssuedAmount': 2244.3115442241606,
+          },
+          {
+            keyAsString: '2016-01-01T00:00:00.000Z',
+            key: 1451606400000,
+            count: 1648,
+            'avg-PO.IssuedAmount': 2572.4247905976563,
+          },
+          {
+            keyAsString: '2017-01-01T00:00:00.000Z',
+            key: 1483228800000,
+            count: 1772,
+            'avg-PO.IssuedAmount': 1848.8124668818834,
+          },
+          {
+            keyAsString: '2018-01-01T00:00:00.000Z',
+            key: 1514764800000,
+            count: 1668,
+            'avg-PO.IssuedAmount': 2929.421505508663,
+          },
+          {
+            keyAsString: '2019-01-01T00:00:00.000Z',
+            key: 1546300800000,
+            count: 1765,
+            'avg-PO.IssuedAmount': 2365.297106342478,
+          },
+          {
+            keyAsString: '2020-01-01T00:00:00.000Z',
+            key: 1577836800000,
+            count: 2270,
+            'avg-PO.IssuedAmount': 2458.5539745973597,
+          },
+          {
+            keyAsString: '2021-01-01T00:00:00.000Z',
+            key: 1609459200000,
+            count: 1142,
+            'avg-PO.IssuedAmount': 2940.05088930915,
+          },
+        ],
+      },
+      {
+        key: 'Okeechobee County Board of County Commissioners, Florida',
+        count: 5100,
+        groups: [
+          {
+            keyAsString: '2018-01-01T00:00:00.000Z',
+            key: 1514764800000,
+            count: 1673,
+            'avg-PO.IssuedAmount': 102648.52495089962,
+          },
+          {
+            keyAsString: '2019-01-01T00:00:00.000Z',
+            key: 1546300800000,
+            count: 1531,
+            'avg-PO.IssuedAmount': 107292.1159183937,
+          },
+          {
+            keyAsString: '2020-01-01T00:00:00.000Z',
+            key: 1577836800000,
+            count: 1406,
+            'avg-PO.IssuedAmount': 141619.58640305314,
+          },
+          {
+            keyAsString: '2021-01-01T00:00:00.000Z',
+            key: 1609459200000,
+            count: 490,
+            'avg-PO.IssuedAmount': 19925.228112987596,
+          },
+        ],
+      },
+      {
+        key: 'Okeechobee Soil And Water Conservation District, Florida',
+        count: 2983,
+        groups: [
+          {
+            keyAsString: '2015-01-01T00:00:00.000Z',
+            key: 1420070400000,
+            count: 193,
+            'avg-PO.IssuedAmount': 849.2400590403605,
+          },
+          {
+            keyAsString: '2016-01-01T00:00:00.000Z',
+            key: 1451606400000,
+            count: 370,
+            'avg-PO.IssuedAmount': 792.2180872080756,
+          },
+          {
+            keyAsString: '2017-01-01T00:00:00.000Z',
+            key: 1483228800000,
+            count: 229,
+            'avg-PO.IssuedAmount': 546.3209660218058,
+          },
+          {
+            keyAsString: '2018-01-01T00:00:00.000Z',
+            key: 1514764800000,
+            count: 225,
+            'avg-PO.IssuedAmount': 688.5280880631341,
+          },
+          {
+            keyAsString: '2019-01-01T00:00:00.000Z',
+            key: 1546300800000,
+            count: 580,
+            'avg-PO.IssuedAmount': 1278.2532585058361,
+          },
+          {
+            keyAsString: '2020-01-01T00:00:00.000Z',
+            key: 1577836800000,
+            count: 618,
+            'avg-PO.IssuedAmount': 1016.9871758723656,
+          },
+          {
+            keyAsString: '2021-01-01T00:00:00.000Z',
+            key: 1609459200000,
+            count: 768,
+            'avg-PO.IssuedAmount': 1594.242624501135,
+          },
+        ],
+      },
+      {
+        key: 'Okeechobee County Clerk of the Circuit Court, Florida',
+        count: 1349,
+        groups: [
+          {
+            keyAsString: '2015-01-01T00:00:00.000Z',
+            key: 1420070400000,
+            count: 161,
+            'avg-PO.IssuedAmount': 1252.3234916582498,
+          },
+          {
+            keyAsString: '2016-01-01T00:00:00.000Z',
+            key: 1451606400000,
+            count: 239,
+            'avg-PO.IssuedAmount': 2217.290081339297,
+          },
+          {
+            keyAsString: '2017-01-01T00:00:00.000Z',
+            key: 1483228800000,
+            count: 276,
+            'avg-PO.IssuedAmount': 2114.950146716574,
+          },
+          {
+            keyAsString: '2018-01-01T00:00:00.000Z',
+            key: 1514764800000,
+            count: 247,
+            'avg-PO.IssuedAmount': 2059.0517405768637,
+          },
+          {
+            keyAsString: '2019-01-01T00:00:00.000Z',
+            key: 1546300800000,
+            count: 217,
+            'avg-PO.IssuedAmount': 2070.5967847586776,
+          },
+          {
+            keyAsString: '2020-01-01T00:00:00.000Z',
+            key: 1577836800000,
+            count: 113,
+            'avg-PO.IssuedAmount': 1614.6408893956548,
+          },
+          {
+            keyAsString: '2021-01-01T00:00:00.000Z',
+            key: 1609459200000,
+            count: 96,
+            'avg-PO.IssuedAmount': 981.880828499794,
+          },
+        ],
+      },
+    ])    
   })
 })
