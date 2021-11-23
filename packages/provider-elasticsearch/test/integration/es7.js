@@ -15,7 +15,8 @@ describe('Integration Tests', () => {
       () =>
         new elasticsearch.Client({
           node:
-            'http://test-elasticsearch-master.default.svc.cluster.local:9200',
+            //'http://test-elasticsearch-master.default.svc.cluster.local:9200',
+            'http://elasticsearch-prod-client.default.svc.cluster.local:9200',
           // apiVersion: '6.3',
 
           // This is an example config, see the elasticsearch js docs for more
@@ -52,34 +53,48 @@ describe('Integration Tests', () => {
               key: 'states',
               field: 'Organization.State',
               type: 'facet',
-              values: ['FL'],
+              values: ['Florida'],
+              filterOnly: true,
             },
-            {
-              key: 'prices',
-              field: 'LineItem.UnitPrice',
-              type: 'number',
-              findBestRange: true,
-            },
+            // {
+            //   key: 'prices',
+            //   field: 'LineItem.UnitPrice',
+            //   type: 'number',
+            //   findBestRange: true,
+            // },
           ],
         },
-        { key: 'results', type: 'results' },
+        // { key: 'results', type: 'results' },
+        // {
+        //   key: 'spendingOverTime',
+        //   type: 'dateIntervalGroupStats',
+        //   groupField: 'PO.IssuedDate',
+        //   statsField: 'PO.IssuedAmount',
+        // },
+        // {
+        //   key: 'toptypes',
+        //   type: 'fieldValuesGroupStats',
+        //   groupField: 'PO.IssuedDate',
+        //   statsField: 'PO.IssuedAmount',
+        // },
         {
-          key: 'spendingOverTime',
-          type: 'dateIntervalGroupStats',
-          groupField: 'PO.IssuedDate',
-          statsField: 'PO.IssuedAmount',
-        },
-        {
-          key: 'toptypes',
-          type: 'fieldValuesGroupStats',
-          groupField: 'PO.IssuedDate',
-          statsField: 'PO.IssuedAmount',
+          key: 'pivot!',
+          type: 'pivot',
+          flatten: true,
+          values: [{ field: 'PO.IssuedAmount', type: 'avg' }],
+          groups: [
+            { field: 'Organization.NameState', type: 'fieldValues' },
+            // { field: 'PO.IssuedDate', type: 'dateInterval', interval: 'year' },
+            // { type:'numberInterval', field: 'PO.IssuedAmount' }
+          ],
         },
       ],
     }
     let result = await process(tree)
-    console.info(result.children[1].context)
-    console.info(result.children[2].context)
-    console.info(result.children[0].children[1].context)
+    console.info(JSON.stringify(result, 0, 2))
+
+    // console.info(result.children[1].context)
+    // console.info(result.children[2].context)
+    // console.info(result.children[0].children[1].context)
   })
 })

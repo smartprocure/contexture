@@ -1,8 +1,8 @@
 let {
   statsAggs,
   buildMetrics,
+  simplifyBucket,
   simplifyBuckets,
-  simplifyAggregations,
 } = require('../../src/utils/elasticDSL')
 let { expect } = require('chai')
 
@@ -172,15 +172,15 @@ describe('elasticDSL utils', () => {
       ])
     })
   })
-  describe('simplifyAggregations', () => {
+  describe('simplifyBucket', () => {
     it('should work on value (cardinality example)', () => {
       let input = { cardinality: { value: 471 } }
       let expected = { cardinality: 471 }
-      expect(simplifyAggregations(input)).to.eql(expected)
+      expect(simplifyBucket(input)).to.eql(expected)
     })
     it('should work on values (percentiles example)', () => {
       expect(
-        simplifyAggregations({
+        simplifyBucket({
           percentiles: {
             keyed: true,
             values: [
@@ -197,6 +197,22 @@ describe('elasticDSL utils', () => {
           { key: 70.0, value: 80.5 },
         ],
       })
+    })
+    it('should work on cases where value is 0', () => {
+      expect(simplifyBucket({ min: { value: 0 }, max: { value: 0 } })).to.eql({
+        min: 0,
+        max: 0,
+      })
+    })
+    it('should work on cases where value is null', () => {
+      expect(
+        simplifyBucket({ min: { value: null }, max: { value: null } })
+      ).to.eql({ min: null, max: null })
+    })
+    it('should avoid camelCasing pivotMetrics', () => {
+      expect(
+        simplifyBucket({ 'pivotMetric-min-PO.IssuedDate': { value: 12 } })
+      ).to.eql({ 'min-PO.IssuedDate': 12 })
     })
   })
 })

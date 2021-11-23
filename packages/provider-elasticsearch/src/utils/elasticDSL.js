@@ -17,35 +17,38 @@ let buildMetrics = (field, metrics = ['min', 'max', 'avg', 'sum']) =>
 let statsAggs = (field, stats) =>
   field ? { aggs: buildMetrics(field, stats) } : {}
 
-let simplifyAggregations = _.mapValues(x => {
-  // Single value metrics always return value
-  if (x.value) return x.value
-  // Multi value metrics can return values
-  if (x.values) return x.values
-  // top_hits has hits
-  if (x.hits) return x.hits
-  // Bucketing metrics generally have buckets - and we can recurse inside
-  // This is a bit crazy, but was trivial to add :)
-  if (x.buckets) return simplifyBuckets(x.buckets)
-  // Multi value metrics can also return objects (like stats, extended_stats, etc):
-  return x
-})
+let simplifyBucket = _.flow(
+  _.mapValues(
+    // x => F.cascade(['value', 'values', 'hits'], x, x)
+    x => {
+      // Single value metrics always return value
+      if (_.has('value', x)) return x.value
+      // Multi value metrics can return values
+      if (_.has('values', x)) return x.values
+      // top_hits has hits
+      if (_.has('hits', x)) return x.hits
+      // Multi value metrics can also return objects (like stats, extended_stats, etc):
+      return x
+    }
+  ),
+  _.mapKeys(x => {
+    if (x === 'doc_count') return 'count'
+    // special case pivotMetric so we don't rename the auto keys
+    if (_.startsWith('pivotMetric-', x)) return _.replace('pivotMetric-', '', x)
+    return _.camelCase(x)
+  })
+)
+
 let simplifyBuckets = _.flow(
   F.when(_.isPlainObject, F.unkeyBy('key')),
-  _.map(
-    _.flow(
-      F.renameProperty('doc_count', 'count'),
-      simplifyAggregations,
-      _.mapKeys(_.camelCase)
-    )
-  )
+  _.map(simplifyBucket)
 )
 
 module.exports = {
   statsAggs,
   buildMetrics,
+  simplifyBucket,
   simplifyBuckets,
-  simplifyAggregations,
   // https://www.elastic.co/guide/en/elasticsearch/reference/current/number.html#number
   elasticsearchIntegerMax: 2 ** 31 - 1,
   negate: filter => ({ bool: { must_not: filter } }),

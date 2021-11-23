@@ -18,6 +18,7 @@ let buildQuery = (
   },
 })
 
+// NOTE: does not export buildGroupQuery because it doesn't make sense with pivot
 module.exports = {
   buildQuery,
   validContext: node => node.groupField && node.foreground && node.background,

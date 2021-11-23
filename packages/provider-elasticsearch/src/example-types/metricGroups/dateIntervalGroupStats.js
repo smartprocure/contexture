@@ -1,19 +1,12 @@
-let { statsAggs, simplifyBuckets } = require('../../utils/elasticDSL')
+let { groupStats } = require('./groupStatUtils')
 
-let buildQuery = ({ groupField, statsField, stats, interval = 'year' }) => ({
+let buildGroupQuery = ({ field, interval = 'year' }, children) => ({
   aggs: {
     groups: {
-      date_histogram: { field: groupField, interval, min_doc_count: 0 },
-      ...statsAggs(statsField, stats),
+      date_histogram: { field, interval, min_doc_count: 0 },
+      ...children,
     },
   },
 })
 
-module.exports = {
-  buildQuery,
-  validContext: node => node.groupField,
-  async result(node, search) {
-    let response = await search(buildQuery(node))
-    return { results: simplifyBuckets(response.aggregations.groups.buckets) }
-  },
-}
+module.exports = groupStats(buildGroupQuery)
