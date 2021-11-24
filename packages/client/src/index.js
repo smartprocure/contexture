@@ -13,8 +13,6 @@ import lens from './lens'
 import mockService from './mockService'
 import subquery from './subquery'
 
-let mergeWith = _.mergeWith.convert({ immutable: false })
-
 let shouldBlockUpdate = flat => {
   let leaves = Tree.flatLeaves(flat)
   let noUpdates = !_.some('markedForUpdate', leaves)
@@ -193,7 +191,7 @@ export let ContextTree = _.curry(
             typeProp('mergeResponse', target)(target, responseNode, extend)
           else {
             target.forceReplaceResponse = false
-            mergeWith((oldValue, newValue) => newValue, target, responseNode)
+            extend(target, responseNode)
           }
           if (debug && node._meta) target.metaHistory.push(node._meta)
         }
