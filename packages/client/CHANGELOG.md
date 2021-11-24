@@ -1,5 +1,7 @@
 # 2.38.0
+* Fix: Always `_.deepClone` defaults on node init to prevent accidentally mutating type defaults
 * Cleanup: remove references to results.context.response (since we no longer wrap results in response)
+
 # 2.37.0
 * Add `pivot` type
 
