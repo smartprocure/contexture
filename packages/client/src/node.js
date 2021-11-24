@@ -35,7 +35,7 @@ export let initNode = _.curry((extend, types, dedupe, parentPath, node) => {
   )
   extend(node, {
     ..._.omit(_.keys(node), defaults),
-    ..._.omit(_.keys(node), getTypeProp(types, 'defaults', node)),
+    ..._.omit(_.keys(node), _.cloneDeep(getTypeProp(types, 'defaults', node))),
     key,
     path: [...parentPath, key],
   })
