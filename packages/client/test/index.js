@@ -1024,18 +1024,12 @@ let AllTests = ContextureClient => {
     let sourceTree = Tree({
       key: 'innerRoot',
       join: 'and',
-      children: [
-        { key: 'c', type: 'facet' },
-        { key: 'd', type: 'facet' },
-      ],
+      children: [{ key: 'c', type: 'facet' }, { key: 'd', type: 'facet' }],
     })
     let targetTree = Tree({
       key: 'root',
       join: 'and',
-      children: [
-        { key: 'a', type: 'facet' },
-        { key: 'b', type: 'results' },
-      ],
+      children: [{ key: 'a', type: 'facet' }, { key: 'b', type: 'results' }],
     })
 
     // subquery(types, targetTree, ['root', 'a'], sourceTree, ['innerRoot', 'c'])
@@ -1096,10 +1090,7 @@ let AllTests = ContextureClient => {
     let sourceTree = Tree({
       key: 'innerRoot',
       join: 'and',
-      children: [
-        { key: 'c', type: 'facet' },
-        { key: 'd', type: 'facet' },
-      ],
+      children: [{ key: 'c', type: 'facet' }, { key: 'd', type: 'facet' }],
     })
     let targetTree = Tree({
       key: 'root',
