@@ -137,10 +137,8 @@ export default F.stampKey('type', {
       page: 1,
       pageSize: 10,
       context: {
-        response: {
-          results: [],
-          totalRecords: null,
-        },
+        results: [],
+        totalRecords: null,
       },
     },
     onUpdateByOthers(node, extend) {

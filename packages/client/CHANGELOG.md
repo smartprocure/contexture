@@ -1,3 +1,5 @@
+# 2.38.0
+* Cleanup: remove references to results.context.response (since we no longer wrap results in response)
 # 2.37.0
 * Add `pivot` type
 

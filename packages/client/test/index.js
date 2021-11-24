@@ -2028,10 +2028,10 @@ let AllTests = ContextureClient => {
       }
     )
     Tree.processResponseNode(['root', 'analysis', 'results'], {
-      context: { response: { totalRecords: 1337 } },
+      context: { totalRecords: 1337 },
     })
     expect(
-      Tree.tree.children[0].children[0].context.response.totalRecords
+      Tree.tree.children[0].children[0].context.totalRecords
     ).to.equal(1337)
     expect(service).to.have.callCount(0)
   })
