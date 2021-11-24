@@ -23,6 +23,7 @@ export let internalStateKeys = {
   validate: null,
   onMarkForUpdate: null,
   afterSearch: null,
+  forceReplaceResponse: false,
 }
 
 export let autoKey = x => F.compactJoin('-', [x.field, x.type]) || 'node'
