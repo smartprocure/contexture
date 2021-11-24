@@ -144,6 +144,20 @@ export default F.stampKey('type', {
     onUpdateByOthers(node, extend) {
       extend(node, { page: 1 })
     },
+    shouldMergeResponse: node => node.infiniteScroll,
+    mergeResponse: (node, response, extend) => {
+      // extend but merge results arrays
+      extend(
+        node.context,
+        {
+          ...response.context,
+          results: [
+            ...node.context.results,
+            ...response.context.results
+          ]
+        }
+      )
+    }
   },
   number: {
     validate: x => !_.isNil(x.min) || !_.isNil(x.max),
@@ -266,10 +280,33 @@ export default F.stampKey('type', {
       values: [],
       flatten: false,
       subtotals: false,
+      drilldown: [],
       context: {
         results: [],
       },
     },
+    shouldMergeResponse: node => !_.isEmpty(node.drilldown),
+    mergeResponse: (node, response) => {
+      // node.drilldown = [
+      //   {index: 0, value: 'City A', }
+      //   {index: 0, value: {from: 0, to: 500} }
+      // ]
+      
+      // alternatively:
+      //   node.drilldown = [
+      //     'City A',
+      //     {from: 0, to: 500}
+      //   ]
+      // and then:
+      //   _.find where `key` is value on each drilldown level e.g. via Tree lookup
+
+      // node.results[drilldown[0].index]
+      let groups = _.reduce((res, drill) => {
+         return (res.groups || res)[drill.index]
+      }, node.results, node.drilldown)
+      // concat on??
+      groups.concat(response.context.results)
+    }
   },
   esTwoLevelAggregation: {
     validate: context =>
