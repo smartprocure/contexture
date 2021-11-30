@@ -19,9 +19,10 @@ let unflattenObjectBy = _.curry((iteratee, x) =>
 )
 
 let isField = x => x.typeDefault
+let isDisplayableField = field => isField(field) || _.has('_key', field)
 
-let getItemLabel = item =>
-  isField(item) ? item.shortLabel || item.label : _.startCase(item._key)
+let getItemLabel = item => console.log(isField(item), item) ||
+  isField(item) ? F.cascade(['shortLabel', 'label'], item) : _.startCase(item._key)
 
 let toNested = _.flow(
   _.map(x => _.defaults({ path: x.value }, x)),
@@ -162,6 +163,7 @@ let NestedPicker = ({
     filter: '',
     checked: new Map(),
   }))
+  let displayableOptions = _.filter(isDisplayableField, options)
   return (
     <PickerContext.Provider value={{ PickerItem, TextHighlight }}>
       <Box style={style}>
@@ -178,10 +180,10 @@ let NestedPicker = ({
                 <FilteredSection
                   checked={state.checked}
                   highlight={state.filter}
-                  options={matchLabel(state.filter)(options)}
+                  options={matchLabel(state.filter)(displayableOptions)}
                 />
               ) : (
-                <PanelTreePicker options={options} checked={state.checked} />
+                <PanelTreePicker options={displayableOptions} checked={state.checked} />
               )}
             </>
           )}
