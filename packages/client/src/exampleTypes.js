@@ -137,14 +137,20 @@ export default F.stampKey('type', {
       page: 1,
       pageSize: 10,
       context: {
-        response: {
-          results: [],
-          totalRecords: null,
-        },
+        results: [],
+        totalRecords: null,
       },
     },
     onUpdateByOthers(node, extend) {
       extend(node, { page: 1 })
+    },
+    shouldMergeResponse: node => node.infiniteScroll,
+    mergeResponse(node, response, extend) {
+      // extend but merge results arrays
+      extend(node.context, {
+        ...response.context,
+        results: [...node.context.results, ...response.context.results],
+      })
     },
   },
   number: {

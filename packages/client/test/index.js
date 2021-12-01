@@ -2035,6 +2035,34 @@ let AllTests = ContextureClient => {
     ).to.equal(1337)
     expect(service).to.have.callCount(0)
   })
+  it('should support response merges', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient(
+      { service, debounce: 1 },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          { key: 'results', type: 'results', infiniteScroll: true },
+          { key: 'test', type: 'facet', values: [] },
+        ],
+      }
+    )
+
+    // Simulating infinite scroll, page 1 and 2 are combined
+    await Tree.mutate(['root', 'results'], { page: 1 }) // returns 1 record
+    await Tree.mutate(['root', 'results'], { page: 2 }) // returns 1 record
+    expect(toJS(Tree.tree.children[0].context.results)).to.deep.equal([
+      { title: 'some result' },
+      { title: 'some result' },
+    ])
+
+    // update by others forces response replace instead of merge
+    await Tree.mutate(['root', 'test'], { values: ['asdf'] })
+    expect(toJS(Tree.tree.children[0].context.results)).to.deep.equal([
+      { title: 'some result' },
+    ])
+  })
 }
 
 describe('lib', () => AllTests(ContextureClient))
