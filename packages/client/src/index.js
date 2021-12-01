@@ -6,14 +6,12 @@ import { getAffectedNodes, reactors } from './reactors'
 import actions from './actions'
 import serialize from './serialize'
 import traversals from './traversals'
-import { runTypeFunction } from './types'
+import { runTypeFunction, getTypeProp } from './types'
 import { initNode, hasContext, hasValue, dedupeWalk } from './node'
 import exampleTypes from './exampleTypes'
 import lens from './lens'
 import mockService from './mockService'
 import subquery from './subquery'
-
-let mergeWith = _.mergeWith.convert({ immutable: false })
 
 let shouldBlockUpdate = flat => {
   let leaves = Tree.flatLeaves(flat)
@@ -75,6 +73,7 @@ export let ContextTree = _.curry(
 
     // Getting the Traversals
     let { markForUpdate, markLastUpdate, prepForUpdate } = traversals(extend)
+    let typeProp = getTypeProp(types)
 
     let processEvent = event => path =>
       _.flow(
@@ -103,10 +102,11 @@ export let ContextTree = _.curry(
       )(updatedNodes)
       if (!affectsSelf)
         await Promise.all(
-          _.map(
-            n => runTypeFunction(types, 'onUpdateByOthers', n, extend),
-            updatedNodes
-          )
+          _.map(n => {
+            // When updated by others, force replace instead of merge response
+            extend(n, { forceReplaceResponse: true })
+            runTypeFunction(types, 'onUpdateByOthers', n, extend)
+          }, updatedNodes)
         )
 
       // If disableAutoUpdate but this dispatch affects the target node, update *just* that node (to allow things like paging changes to always go through)
@@ -181,7 +181,15 @@ export let ContextTree = _.curry(
       if (target && !isStale(node, target)) {
         if (!_.isEmpty(responseNode)) {
           TreeInstance.onResult(path, node, target)
-          mergeWith((oldValue, newValue) => newValue, target, responseNode)
+          if (
+            !target.forceReplaceResponse &&
+            F.maybeCall(typeProp('shouldMergeResponse', target), target)
+          )
+            typeProp('mergeResponse', target)(target, responseNode, extend)
+          else {
+            target.forceReplaceResponse = false
+            extend(target, responseNode)
+          }
           if (debug && node._meta) target.metaHistory.push(node._meta)
         }
 

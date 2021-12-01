@@ -23,6 +23,7 @@ export let internalStateKeys = {
   validate: null,
   onMarkForUpdate: null,
   afterSearch: null,
+  forceReplaceResponse: false,
 }
 
 export let autoKey = x => F.compactJoin('-', [x.field, x.type]) || 'node'
@@ -35,7 +36,7 @@ export let initNode = _.curry((extend, types, dedupe, parentPath, node) => {
   )
   extend(node, {
     ..._.omit(_.keys(node), defaults),
-    ..._.omit(_.keys(node), getTypeProp(types, 'defaults', node)),
+    ..._.omit(_.keys(node), _.cloneDeep(getTypeProp(types, 'defaults', node))),
     key,
     path: [...parentPath, key],
   })
