@@ -145,19 +145,13 @@ export default F.stampKey('type', {
       extend(node, { page: 1 })
     },
     shouldMergeResponse: node => node.infiniteScroll,
-    mergeResponse: (node, response, extend) => {
+    mergeResponse(node, response, extend) {
       // extend but merge results arrays
-      extend(
-        node.context,
-        {
-          ...response.context,
-          results: [
-            ...node.context.results,
-            ...response.context.results
-          ]
-        }
-      )
-    }
+      extend(node.context, {
+        ...response.context,
+        results: [...node.context.results, ...response.context.results],
+      })
+    },
   },
   number: {
     validate: x => !_.isNil(x.min) || !_.isNil(x.max),
