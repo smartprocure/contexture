@@ -23,7 +23,7 @@ jobs:
       env:
         NPM_TOKEN: '${{ secrets.NPM_TOKEN }}'
     - name: Update package to grey-vest
-      run: update-pkg
+      run: npm run update-pkg
     - name: Publish to npm
       run: |
         echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
