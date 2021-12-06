@@ -12,7 +12,7 @@ let buildGroupQuery = ({ field, ranges }, children) => ({
 
 let drilldown = ({ field, drilldown }) => {
   let [gte, lte] = _.split('-', drilldown)
-  return ({ range: { [field]: { gte, lte } } })
+  return { range: { [field]: { gte, lte } } }
 }
 
 module.exports = {
