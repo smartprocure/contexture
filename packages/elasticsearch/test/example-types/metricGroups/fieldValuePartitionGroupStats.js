@@ -5,7 +5,7 @@ let {
 let { expect } = require('chai')
 let { testSchema } = require('../testUtils')
 
-describe.only('fieldValuePartitionGroupStats', () => {
+describe('fieldValuePartitionGroupStats', () => {
   it('should buildQuery', () => {
     expect(
       buildQuery(
