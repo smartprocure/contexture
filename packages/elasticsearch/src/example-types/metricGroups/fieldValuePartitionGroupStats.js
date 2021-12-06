@@ -3,6 +3,12 @@ let { simplifyBuckets } = require('../../utils/elasticDSL')
 let { getField } = require('../../utils/fields')
 let { buildGroupStatsQuery } = require('./groupStatUtils')
 
+let drilldown = ({ field, matchValue, drilldown }, schema) => {
+  let filter = { term: { [getField(schema, field)]: matchValue } }
+  if (drilldown === 'pass') return filter
+  if (drilldown === 'fail') return { bool: { must_not: [filter] } }
+}
+
 let buildGroupQuery = ({ field, matchValue }, children, schema) => ({
   aggs: {
     groups: {
@@ -29,4 +35,5 @@ module.exports = {
     let response = await search(query)
     return { results: simplifyBuckets(getGroups(response.aggregations)) }
   },
+  drilldown,
 }
