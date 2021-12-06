@@ -46,6 +46,21 @@ let buildQuery = async (node, schema, getStats) => {
     // _.reverse(_.concat(node.rows, node.columns, node.groups)))
     _.reverse(node.groups)
   )
+
+  let filters = F.compactMap(group => {
+    let filter = lookupTypeProp(_.stubFalse, 'drilldown', group.type)
+    return group.drilldown && filter(group, schema)
+  }, node.groups)
+  if (!_.isEmpty(filters))
+    query = {
+      aggs: {
+        pivotFilter: {
+          filter: { bool: { must: filters } },
+          ...query,
+        },
+      },
+    }
+
   return query
 }
 
