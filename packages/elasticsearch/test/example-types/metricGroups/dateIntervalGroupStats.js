@@ -83,43 +83,43 @@ describe('dateIntervalGroupStats', () => {
       drilldown({
         field: 'PO.IssuedDate',
         interval: 'month',
-        drilldown: '2015-01-01T00:00:00.000Z'
+        drilldown: '2015-01-01T00:00:00.000Z',
       })
     ).to.eql({
       range: {
         'PO.IssuedDate': {
           gte: '2015-01-01T00:00:00.000Z',
-          lte: '2015-01-31T23:59:59Z'
-        }    
-      }
+          lte: '2015-01-31T23:59:59Z',
+        },
+      },
     })
     expect(
       drilldown({
         field: 'PO.IssuedDate',
         interval: 'quarter',
-        drilldown: '2015-01-01T00:00:00.000Z'
+        drilldown: '2015-01-01T00:00:00.000Z',
       })
     ).to.eql({
       range: {
         'PO.IssuedDate': {
           gte: '2015-01-01T00:00:00.000Z',
-          lte: '2015-03-31T23:59:59Z'
-        }    
-      }
+          lte: '2015-03-31T23:59:59Z',
+        },
+      },
     })
     expect(
       drilldown({
         field: 'PO.IssuedDate',
         interval: 'year',
-        drilldown: '2015-01-01T00:00:00.000Z'
+        drilldown: '2015-01-01T00:00:00.000Z',
       })
     ).to.eql({
       range: {
         'PO.IssuedDate': {
           gte: '2015-01-01T00:00:00.000Z',
-          lte: '2015-12-31T23:59:59Z'
-        }    
-      }
+          lte: '2015-12-31T23:59:59Z',
+        },
+      },
     })
   })
 })
