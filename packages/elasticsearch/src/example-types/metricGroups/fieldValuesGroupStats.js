@@ -9,6 +9,12 @@ let getSortField = field => {
   return `${field}.value`
 }
 
+let drilldown = ({ field, drilldown }, schema) => ({
+  term: {
+    [getField(schema, field)]: drilldown,
+  },
+})
+
 let buildGroupQuery = (node, children, schema) => {
   let {
     field: groupField,
@@ -52,4 +58,5 @@ module.exports = {
   ...groupStats(buildGroupQueryWithDefaultSortField),
   buildGroupQuery,
   getGroups,
+  drilldown,
 }
