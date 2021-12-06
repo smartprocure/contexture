@@ -6,7 +6,8 @@ let types = require('../../../src/example-types')
 let { transmuteTree } = require('../../utils/futil')
 let { simplifyBucket } = require('../../utils/elasticDSL')
 
-let lookupTypeProp = (prop, type) => _.get(`${type}GroupStats.${prop}`, types)
+let lookupTypeProp = (def, prop, type) =>
+  _.getOr(def, `${type}GroupStats.${prop}`, types)
 
 // PivotTable -> Query:
 //  rows -> columns -> values
@@ -35,8 +36,8 @@ let buildQuery = async (node, schema, getStats) => {
       // Subtotals calculates metrics at each group level, not needed if flattening or in chart
       // Support for per group stats could also be added here - merge on another stats agg blob to children based on group.stats/statsField or group.values
       if (node.subtotals) children = _.merge(await children, statsAggBlob)
-      let buildGroupQuery =
-        lookupTypeProp('buildGroupQuery', group.type) || _.identity
+      let { type } = group
+      let buildGroupQuery = lookupTypeProp(_.identity, 'buildGroupQuery', type)
       return buildGroupQuery(group, await children, schema, getStats)
     },
     statsAggBlob,
@@ -85,7 +86,7 @@ let processResponse = (response, { groups = [], flatten } = {}) => {
   let traverseSource = (x, i, parents = []) => {
     let depth = parents.length
     let { type } = groups[depth] || {}
-    let traverse = lookupTypeProp('getGroups', type) || defaultGetGroups
+    let traverse = lookupTypeProp(defaultGetGroups, 'getGroups', type)
     return traverse(x)
   }
 
