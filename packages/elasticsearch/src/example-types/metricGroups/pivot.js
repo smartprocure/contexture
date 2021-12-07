@@ -47,10 +47,14 @@ let buildQuery = async (node, schema, getStats) => {
     _.reverse(node.groups)
   )
 
-  let filters = _.compact(await Promise.all(_.map(group => {
-    let filter = lookupTypeProp(_.stubFalse, 'drilldown', group.type)
-    return group.drilldown && filter(group, schema, getStats)
-  }, node.groups)))
+  let filters = _.compact(
+    await Promise.all(
+      _.map(group => {
+        let filter = lookupTypeProp(_.stubFalse, 'drilldown', group.type)
+        return group.drilldown && filter(group, schema, getStats)
+      }, node.groups)
+    )
+  )
   if (!_.isEmpty(filters))
     query = {
       aggs: {

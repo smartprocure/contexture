@@ -20,9 +20,8 @@ let buildGroupQuery = async (node, children, schema, getStats) => {
   // omit ranges with drilldown otherwise we get null/0s......
   if (drilldown) {
     let { gte, lt } = drilldownToRange(drilldown)
-    ranges = [{from: gte, to: lt}]
-  }
-  else {
+    ranges = [{ from: gte, to: lt }]
+  } else {
     let { percentiles } = await getStats(field, { percentiles: { percents } })
     ranges = boundariesToRanges(_.values(percentiles))
   }
