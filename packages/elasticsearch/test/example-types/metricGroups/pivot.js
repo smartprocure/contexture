@@ -234,7 +234,7 @@ describe('pivot', () => {
         {
           type: 'fieldValues',
           field: 'Organization.Name',
-          drilldown: 'Reno'
+          drilldown: 'Reno',
         },
         {
           type: 'numberRanges',
@@ -243,7 +243,7 @@ describe('pivot', () => {
             { from: '0', to: '500' },
             { from: '500', to: '10000' },
           ],
-          drilldown: '0.0-500.0'
+          drilldown: '0.0-500.0',
         },
       ],
     }
@@ -256,9 +256,9 @@ describe('pivot', () => {
                 { term: { 'Organization.Name': 'Reno' } },
                 {
                   range: {
-                    'LineItem.TotalPrice': { gte: '0.0', lte: '500.0' }
-                  }
-                }
+                    'LineItem.TotalPrice': { gte: '0.0', lte: '500.0' },
+                  },
+                },
               ],
             },
           },
@@ -278,8 +278,8 @@ describe('pivot', () => {
                     'pivotMetric-sum-LineItem.TotalPrice': {
                       sum: { field: 'LineItem.TotalPrice' },
                     },
-                  }
-                }
+                  },
+                },
               },
             },
           },
