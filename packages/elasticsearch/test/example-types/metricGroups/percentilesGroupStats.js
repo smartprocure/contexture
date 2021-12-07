@@ -15,10 +15,10 @@ describe('percentilesGroupStats', () => {
         },
         null,
         () => ({
-          percentiles: [
-            { key: 20, value: 30.549999237060547 },
-            { key: 95, value: 39.20000076293945 },
-          ],
+          percentiles: {
+            '20.0': 30.549999237060547,
+            '95.0': 39.20000076293945,
+          },
         })
       )
     ).to.eql({
