@@ -158,6 +158,71 @@ describe('pivot', () => {
     )
     expect(result).to.eql(expected)
   })
+  it('should buildQuery for fieldValues', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      groups: [
+        {
+          type: 'fieldValues',
+          field: 'Organization.Name',
+          filter: 'city',
+        },
+      ],
+    }
+    let expected = {
+      aggs: {
+        valueFilter: {
+          filter: {
+            bool: {
+              must: [
+                {
+                  regexp: {
+                    'Organization.Name': {
+                      value: '.*(city).*',
+                      case_insensitive: true,
+                    },
+                  },
+                },
+              ],
+            },
+          },
+          aggs: {
+            groups: {
+              terms: {
+                field: 'Organization.Name',
+                size: 10,
+
+                // *********
+                // NOTE: Order is complicated and might not work with terms aggs
+                // https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html#search-aggregations-bucket-terms-aggregation-order
+                // *********
+
+                // TODO; for order, consider passing ing
+                //  pivotMetric-sum-LineItem.TotalPrice
+                // OR, some kind of field building thing that's aware of field and tpye
+                    // eg/ sort: {field, metric, order}
+                    // sort: {total price, sum, desc}
+                // order: { 'sum.value': 'desc' },
+              },
+              aggs: {
+                'pivotMetric-sum-LineItem.TotalPrice': {
+                  sum: { field: 'LineItem.TotalPrice' },
+                },
+              },
+            },
+          },
+        },
+      },
+    }
+    let result = await buildQuery(
+      input,
+      testSchemas(['Vendor.City']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    expect(result).to.eql(expected)
+  })
   it('should buildQuery for fieldValues with drilldown', async () => {
     // TODO: add tests for dateInterval, numberInterval, fieldValuePartition
     // TODO: test keyForGroup (e.g. month for date interval)
@@ -422,7 +487,21 @@ describe('pivot', () => {
       return buck
     }, aggs.groups.buckets)
 
-    let flatResult = processResponse(pivotResponse, { flatten: true })
+    let flatResult = processResponse(pivotResponse, { 
+      groups: [
+        { type: 'fieldValues', field: 'Organization.State' },
+        { type: 'fieldValues', field: 'Organization.NameState' },
+        {
+          type: 'numberRanges',
+          field: 'LineItem.TotalPrice',
+          ranges: [
+            { from: '0', to: '500' },
+            { from: '500', to: '10000' },
+          ],
+        },
+      ],  
+      flatten: true
+    })
     expect(flatResult.results).to.eql([
       {
         key: '0.0-500.0',
