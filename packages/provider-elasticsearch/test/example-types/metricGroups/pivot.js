@@ -202,8 +202,8 @@ describe('pivot', () => {
                 // TODO; for order, consider passing ing
                 //  pivotMetric-sum-LineItem.TotalPrice
                 // OR, some kind of field building thing that's aware of field and tpye
-                    // eg/ sort: {field, metric, order}
-                    // sort: {total price, sum, desc}
+                // eg/ sort: {field, metric, order}
+                // sort: {total price, sum, desc}
                 // order: { 'sum.value': 'desc' },
               },
               aggs: {
@@ -487,7 +487,7 @@ describe('pivot', () => {
       return buck
     }, aggs.groups.buckets)
 
-    let flatResult = processResponse(pivotResponse, { 
+    let flatResult = processResponse(pivotResponse, {
       groups: [
         { type: 'fieldValues', field: 'Organization.State' },
         { type: 'fieldValues', field: 'Organization.NameState' },
@@ -499,8 +499,8 @@ describe('pivot', () => {
             { from: '500', to: '10000' },
           ],
         },
-      ],  
-      flatten: true
+      ],
+      flatten: true,
     })
     expect(flatResult.results).to.eql([
       {
