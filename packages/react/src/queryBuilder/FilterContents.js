@@ -4,7 +4,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { Dynamic, Grid } from '../greyVest/'
 import { ModalPicker } from '../purgatory'
-import { fieldsToOptions } from '../FilterAdder'
+import { fieldsToOptions } from '../utils/fields'
 import { get } from '../utils/mobx-utils'
 import {
   newNodeFromType,
