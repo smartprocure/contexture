@@ -182,10 +182,7 @@ let NestedPicker = ({
                   options={matchLabel(state.filter)(options)}
                 />
               ) : (
-                <PanelTreePicker
-                  options={options}
-                  checked={state.checked}
-                />
+                <PanelTreePicker options={options} checked={state.checked} />
               )}
             </>
           )}
