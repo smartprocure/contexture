@@ -4,7 +4,7 @@ import F from 'futil'
 import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
 import { Expandable, Flex, Dynamic } from './greyVest'
-import { fieldsToOptions } from './FilterAdder'
+import { fieldsToOptions } from './utils/fields'
 import { contexturifyWithoutLoader } from './utils/hoc'
 import { bdJoin } from './styles/generic'
 import {

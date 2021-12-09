@@ -10,6 +10,7 @@ import Box from './Box'
 import Flex from './Flex'
 import GVTextInput from './TextInput'
 import GVTextHighlight from './TextHighlight'
+import { isField } from '../utils/fields'
 
 let PickerContext = React.createContext()
 
@@ -17,9 +18,6 @@ let PickerContext = React.createContext()
 let unflattenObjectBy = _.curry((iteratee, x) =>
   _.zipObjectDeep(F.mapIndexed(iteratee, x), _.values(x))
 )
-
-let isField = x => x.typeDefault
-let isDisplayableField = field => isField(field) || _.has('_key', field)
 
 let getItemLabel = item =>
   isField(item)
@@ -165,7 +163,6 @@ let NestedPicker = ({
     filter: '',
     checked: new Map(),
   }))
-  let displayableOptions = _.filter(isDisplayableField, options)
   return (
     <PickerContext.Provider value={{ PickerItem, TextHighlight }}>
       <Box style={style}>
@@ -182,13 +179,10 @@ let NestedPicker = ({
                 <FilteredSection
                   checked={state.checked}
                   highlight={state.filter}
-                  options={matchLabel(state.filter)(displayableOptions)}
+                  options={matchLabel(state.filter)(options)}
                 />
               ) : (
-                <PanelTreePicker
-                  options={displayableOptions}
-                  checked={state.checked}
-                />
+                <PanelTreePicker options={options} checked={state.checked} />
               )}
             </>
           )}
