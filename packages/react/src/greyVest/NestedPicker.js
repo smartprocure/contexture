@@ -10,7 +10,7 @@ import Box from './Box'
 import Flex from './Flex'
 import GVTextInput from './TextInput'
 import GVTextHighlight from './TextHighlight'
-import { isField, isDisplayableField } from '../utils/fields'
+import { isField } from '../utils/fields'
 
 let PickerContext = React.createContext()
 
