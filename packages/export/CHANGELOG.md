@@ -1,4 +1,6 @@
-﻿# 1.0.5
+﻿# 1.0.6
+* Update the pull-request workflow to better catch test failures
+# 1.0.5
 * Updated CI to use node16 and npm7
 * Updated package-lock.json to version 2
 
