@@ -1,3 +1,6 @@
+# 0.26.2
+* Update pull-request workflow to better catch test failures
+
 # 0.26.1
 * Converted the tests to jest
 
