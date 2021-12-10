@@ -30,6 +30,14 @@ let aggsForValues = (node, schema) =>
   )(node)
 
 let buildQuery = async (node, schema, getStats) => {
+  let drilldowns = node.drilldown || []
+  // Don't consider deeper levels than +1 the current drilldown
+  // This allows avoiding expansion until ready
+  // Opt out with falsey drilldown
+  let groups = node.drilldown
+    ? _.take(_.size(node.drilldown) + 1, node.groups)
+    : node.groups
+  
   let statsAggBlob = { aggs: aggsForValues(node.values, schema) }
   let query = await _.reduce(
     async (children, group) => {
@@ -44,13 +52,15 @@ let buildQuery = async (node, schema, getStats) => {
     // TODO: Also consider rows + columns -> groups:
     // _.reverse([...(node.rows || []), ...(node.columns || []), ...(node.groups || [])])
     // _.reverse(_.concat(node.rows, node.columns, node.groups)))
-    _.reverse(node.groups)
+    _.reverse(groups)
   )
 
-  let filters = _.compact(await Promise.all(_.map(group => {
+  let filters = _.compact(await Promise.all(F.mapIndexed((group, i) => {
     let filter = lookupTypeProp(_.stubFalse, 'drilldown', group.type)
-    return group.drilldown && filter(group, schema, getStats)
-  }, node.groups)))
+    // stamp on drilldown from root if applicable
+    let drilldown = drilldowns[i] || group.drilldown
+    return drilldown && filter({drilldown, ...group}, schema, getStats)
+  }, groups)))
   if (!_.isEmpty(filters))
     query = {
       aggs: {
