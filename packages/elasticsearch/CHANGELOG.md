@@ -1,5 +1,5 @@
 # 1.8.0
-* Add `pivot` type, with infinite grouping and drilldown support
+* Add `pivot` drilldown support
 
 # 1.7.0
 * Fix bug where 0 and null value metrics wouldn't be flattened by dsl utils
