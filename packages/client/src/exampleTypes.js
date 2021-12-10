@@ -272,11 +272,17 @@ export default F.stampKey('type', {
     defaults: {
       groups: [],
       values: [],
+      drilldown: null,
       flatten: false,
       subtotals: false,
       context: {
         results: [],
       },
+    },
+    shouldMergeResponse: node => !_.isEmpty(node.drilldown),
+    mergeResponse(node, response, extend) {
+      let context = F.mergeAllArrays([node.context, response.context])
+      extend(node, { context })
     },
   },
   esTwoLevelAggregation: {

@@ -1,3 +1,6 @@
+# 2.39.0
+* Pivot response merge - calls `F.mergeAllArrays` on context, which may be a generic answer to response merges.
+
 # 2.38.0
 * Per type response merges via `shouldMergeResponse` and `mergeResponse`- allows types to retain the response state between search calls to cleanly support things like inifinite scrolling and drilldowns. Will automatically always force response replacement when updated by others (since the query has likely changed, invalidating prior responses). This is tracked by a new `forceReplaceResponse` internal state flag per node.
 * Leverages response merge feature to implement `infiniteScroll` for `results` (just set `infiniteScroll` to true and `mutate` increments to `page`!)
