@@ -319,7 +319,7 @@ describe('pivot', () => {
     )
     expect(resultTopLevel).to.eql(expected)
   })
-  it.only('should buildQuery for fieldValues with drilldown and limited depth', async () => {
+  it('should buildQuery for fieldValues with drilldown and limited depth', async () => {
     let input = {
       key: 'test',
       type: 'pivot',
@@ -359,7 +359,7 @@ describe('pivot', () => {
     )
     expect(result).to.eql(expected)
   })
-  it.only('should buildQuery for fieldValues with drilldown and limited depth (deeper)', async () => {
+  it('should buildQuery for fieldValues with drilldown and limited depth (deeper)', async () => {
     let input = {
       key: 'test',
       type: 'pivot',
