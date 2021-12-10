@@ -9,7 +9,7 @@ let drilldown = async ({ field, drilldown, interval }, schema, getStats) => {
     interval = calcSmartInterval(min, max)
   }
   let lt = gte + _.toNumber(interval)
-  return ({ range: { [field]: { gte, lt } } })
+  return { range: { [field]: { gte, lt } } }
 }
 
 let buildGroupQuery = async (node, children, schema, getStats) => {
