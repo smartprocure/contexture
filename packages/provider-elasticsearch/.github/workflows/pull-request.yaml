@@ -34,3 +34,4 @@ jobs:
         DANGER_GITHUB_API_TOKEN: '${{ secrets.PAT_DECRAPIFIER }}'
     - name: check-if-lint-or-test-runs-failed
       run: 'if test -f "FAIL_JOB"; then exit 1; fi'
+      
