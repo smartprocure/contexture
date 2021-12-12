@@ -279,6 +279,22 @@ export default F.stampKey('type', {
         results: [],
       },
     },
+    onDispatch: (event, extend) => {
+      // If mutating any group type specific "resetting" keys, set `forceReplaceResponse`
+      let { type, node, previous } = event
+      if (type === 'mutate') {
+        F.mapIndexed((group, i) => {
+          let previousGroup = previous.groups[i]
+          let type = group.type
+          let mutatedKeys = _.keys(F.simpleDiff(previousGroup, group))
+          let resettingKeys = {
+            fieldValuesPartition: ['matchValue']
+          }
+          if(!_.isEmpty(_.intersection(mutatedKeys, resettingKeys[type])))
+            extend(node, { forceReplaceResponse: true })
+        }, node.groups)
+      }
+    },
     shouldMergeResponse: node => !_.isEmpty(node.drilldown),
     mergeResponse(node, response, extend) {
       let context = F.mergeAllArrays([node.context, response.context])
