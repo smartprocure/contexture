@@ -1024,18 +1024,12 @@ let AllTests = ContextureClient => {
     let sourceTree = Tree({
       key: 'innerRoot',
       join: 'and',
-      children: [
-        { key: 'c', type: 'facet' },
-        { key: 'd', type: 'facet' },
-      ],
+      children: [{ key: 'c', type: 'facet' }, { key: 'd', type: 'facet' }],
     })
     let targetTree = Tree({
       key: 'root',
       join: 'and',
-      children: [
-        { key: 'a', type: 'facet' },
-        { key: 'b', type: 'results' },
-      ],
+      children: [{ key: 'a', type: 'facet' }, { key: 'b', type: 'results' }],
     })
 
     // subquery(types, targetTree, ['root', 'a'], sourceTree, ['innerRoot', 'c'])
@@ -1096,10 +1090,7 @@ let AllTests = ContextureClient => {
     let sourceTree = Tree({
       key: 'innerRoot',
       join: 'and',
-      children: [
-        { key: 'c', type: 'facet' },
-        { key: 'd', type: 'facet' },
-      ],
+      children: [{ key: 'c', type: 'facet' }, { key: 'd', type: 'facet' }],
     })
     let targetTree = Tree({
       key: 'root',
@@ -2062,6 +2053,35 @@ let AllTests = ContextureClient => {
     expect(toJS(Tree.tree.children[0].context.results)).to.deep.equal([
       { title: 'some result' },
     ])
+  })
+  it('should support onDispatch (and pivot overriding response merges)', async () => {
+    let service = sinon.spy(mockService())
+    let groups = [
+      { type: 'fieldValuesPartition', field: 'State', matchValue: 'Florida' },
+      { type: 'fieldValues', field: 'City', size: 10 },
+    ]
+    let Tree = ContextureClient(
+      { service, debounce: 1 },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          { key: 'pivot', type: 'pivot', groups },
+          { key: 'test', type: 'facet', values: [] },
+        ],
+      }
+    )
+
+    // These tests set `forceReplaceResponse` conditionally during mutate based on the pivot's onDispatch
+    // Changing fieldValues Size doesn't force replace
+    Tree.mutate(['root', 'pivot'], { groups: _.set('1.size', 20, groups) })
+    expect(!!Tree.getNode(['root', 'pivot']).forceReplaceResponse).be.false
+
+    // Changing fieldValuesPartition matchValue does force replace
+    Tree.mutate(['root', 'pivot'], {
+      groups: _.set('0.matchValue', 'Nevada', groups),
+    })
+    expect(Tree.getNode(['root', 'pivot']).forceReplaceResponse).to.equal(true)
   })
 }
 
