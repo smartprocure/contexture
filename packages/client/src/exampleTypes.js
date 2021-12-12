@@ -279,7 +279,7 @@ export default F.stampKey('type', {
         results: [],
       },
     },
-    onDispatch: (event, extend) => {
+    onDispatch(event, extend) {
       // If mutating any group type specific "resetting" keys, set `forceReplaceResponse`
       let { type, node, previous } = event
       if (type === 'mutate') {
@@ -288,9 +288,9 @@ export default F.stampKey('type', {
           let type = group.type
           let mutatedKeys = _.keys(F.simpleDiff(previousGroup, group))
           let resettingKeys = {
-            fieldValuesPartition: ['matchValue']
+            fieldValuesPartition: ['matchValue'],
           }
-          if(!_.isEmpty(_.intersection(mutatedKeys, resettingKeys[type])))
+          if (!_.isEmpty(_.intersection(mutatedKeys, resettingKeys[type])))
             extend(node, { forceReplaceResponse: true })
         }, node.groups)
       }
