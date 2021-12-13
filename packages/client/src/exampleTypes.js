@@ -268,9 +268,8 @@ export default F.stampKey('type', {
         ({ type, ranges, percents }) =>
           (type !== 'numberRanges' && type !== 'percentiles') ||
           (type === 'numberRanges' && ranges.length > 0) ||
-          (type === 'percentiles' && percents.length > 0)
-        ,
-        context.groups,
+          (type === 'percentiles' && percents.length > 0),
+        context.groups
       ),
     reactors: {
       groups: 'self',
