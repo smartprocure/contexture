@@ -5,7 +5,7 @@ import { observer } from 'mobx-react'
 import { contexturify } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
 import { ExpandableTable, Column, Flex } from '../greyVest/'
-import { setDisplayName } from 'recompose'
+import { setDisplayName } from 'react-recompose'
 
 let toolBarStyle = { justifyContent: 'space-between', alignItems: 'center' }
 let SimpleLabel = ({ text }) => (

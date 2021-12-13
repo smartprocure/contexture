@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "2.50.4",
+  "version": "2.50.5",
   "description": "React components for building contexture interfaces",
   "main": "dist/index.js",
   "scripts": {
@@ -130,8 +130,8 @@
     "react-dnd-html5-backend": "^2.5.4",
     "react-measure": "^2.3.0",
     "react-outside-click-handler": "^1.2.3",
-    "reactjs-popup": "^2.0.4",
-    "recompose": "^0.30.0"
+    "react-recompose": "^0.31.2",
+    "reactjs-popup": "^2.0.4"
   },
   "readme": "README.mdx"
 }

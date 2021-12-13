@@ -1,7 +1,7 @@
 import F from 'futil'
 import _ from 'lodash/fp'
 import React from 'react'
-import { setDisplayName } from 'recompose'
+import { setDisplayName } from 'react-recompose'
 import { Dynamic, Flex } from './greyVest'
 import { CheckButton, ModalPicker } from './purgatory'
 import { contexturifyWithoutLoader } from './utils/hoc'
