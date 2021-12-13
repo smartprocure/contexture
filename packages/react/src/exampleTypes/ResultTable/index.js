@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import * as F from 'futil'
-import { fieldsToOptions } from '../../FilterAdder'
+import { fieldsToOptions } from '../../utils/fields'
 import { contexturifyWithoutLoader } from '../../utils/hoc'
 import { applyDefaults, inferSchema } from '../../utils/schema'
 import { newNodeFromField } from '../../utils/search'

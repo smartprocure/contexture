@@ -4,8 +4,7 @@ import { contexturifyWithoutLoader } from './utils/hoc'
 import { newNodeFromField } from './utils/search'
 import { ModalPicker } from './purgatory'
 import { Flex } from './greyVest'
-
-export let fieldsToOptions = _.map(x => ({ value: x.field, ...x }))
+import { fieldsToOptions } from './utils/fields'
 
 let getGroupFields = node => _.map('field', _.getOr([], 'children', node))
 
