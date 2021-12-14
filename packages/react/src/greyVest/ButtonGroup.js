@@ -1,4 +1,4 @@
-import { defaultProps } from 'recompose'
+import { defaultProps } from 'react-recompose'
 import Flex from './Flex'
 
 let ButtonGroup = defaultProps({ className: 'gv-button-group' })(Flex)

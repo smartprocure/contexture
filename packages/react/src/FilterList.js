@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil'
-import { setDisplayName } from 'recompose'
+import { setDisplayName } from 'react-recompose'
 import { observer } from 'mobx-react'
 import { Expandable, Flex, Dynamic } from './greyVest'
 import { fieldsToOptions } from './utils/fields'

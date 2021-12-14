@@ -1,6 +1,6 @@
 import F from 'futil'
 import React from 'react'
-import { defaultProps } from 'recompose'
+import { defaultProps } from 'react-recompose'
 
 // components exported from base component library
 import {

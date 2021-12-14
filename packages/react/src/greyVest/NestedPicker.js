@@ -1,7 +1,7 @@
 import React from 'react'
 import F from 'futil'
 import _ from 'lodash/fp'
-import { setDisplayName } from 'recompose'
+import { setDisplayName } from 'react-recompose'
 import { inject, observer, Observer, useLocalStore } from 'mobx-react'
 import { observable } from 'mobx'
 import { withTheme } from '../utils/theme'

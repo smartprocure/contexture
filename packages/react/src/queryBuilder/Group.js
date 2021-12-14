@@ -13,7 +13,7 @@ import { FilterMoveTarget } from './DragDrop/MoveTargets'
 let { background } = styles
 import { blankNode } from '../utils/search'
 import { useLensObject } from '../utils/react'
-import { setDisplayName } from 'recompose'
+import { setDisplayName } from 'react-recompose'
 
 let GroupItem = FilterDragSource(props => {
   let {

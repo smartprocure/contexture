@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import { storiesOf } from '@storybook/react'
-import { defaultProps } from 'recompose'
+import { defaultProps } from 'react-recompose'
 import { Grid, GridItem as BaseGridItem } from '.'
 import decorator from './stories/decorator'
 

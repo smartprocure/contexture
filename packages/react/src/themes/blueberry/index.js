@@ -1,4 +1,4 @@
-import { defaultProps } from 'recompose'
+import { defaultProps } from 'react-recompose'
 import React from 'react'
 
 import Button from './Button'

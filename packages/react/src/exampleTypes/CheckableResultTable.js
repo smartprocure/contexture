@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil'
-import { setDisplayName } from 'recompose'
+import { setDisplayName } from 'react-recompose'
 import { observer } from 'mobx-react'
 import { getResults, getRecord } from '../utils/schema'
 import { contexturifyWithoutLoader } from '../utils/hoc'

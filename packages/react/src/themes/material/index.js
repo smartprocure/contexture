@@ -1,5 +1,5 @@
 import { KeyboardDatePicker } from '@material-ui/pickers'
-import { defaultProps } from 'recompose'
+import { defaultProps } from 'react-recompose'
 import { observer } from 'mobx-react'
 import { openBinding } from './utils'
 import { expandProp } from '../../utils/react'

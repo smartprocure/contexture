@@ -1,4 +1,4 @@
-import { defaultProps } from 'recompose'
+import { defaultProps } from 'react-recompose'
 
 // components exported from component library
 import {

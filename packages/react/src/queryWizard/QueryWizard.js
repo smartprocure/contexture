@@ -1,7 +1,7 @@
 import _ from 'lodash/fp'
 import F from 'futil'
 import React from 'react'
-import { setDisplayName } from 'recompose'
+import { setDisplayName } from 'react-recompose'
 import FilterButtonList from '../FilterButtonList'
 import { StepsAccordion, AccordionStep } from '../purgatory'
 import { withNode } from '../utils/hoc'

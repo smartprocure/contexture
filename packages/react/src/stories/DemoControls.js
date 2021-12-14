@@ -1,7 +1,7 @@
 import F from 'futil'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { defaultProps } from 'recompose'
+import { defaultProps } from 'react-recompose'
 
 import { TextHighlight } from '..'
 
