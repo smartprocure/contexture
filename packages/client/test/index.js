@@ -2063,6 +2063,35 @@ let AllTests = ContextureClient => {
       { title: 'some result' },
     ])
   })
+  it('should support onDispatch (and pivot overriding response merges)', async () => {
+    let service = sinon.spy(mockService())
+    let groups = [
+      { type: 'fieldValuesPartition', field: 'State', matchValue: 'Florida' },
+      { type: 'fieldValues', field: 'City', size: 10 },
+    ]
+    let Tree = ContextureClient(
+      { service, debounce: 1 },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          { key: 'pivot', type: 'pivot', groups },
+          { key: 'test', type: 'facet', values: [] },
+        ],
+      }
+    )
+
+    // These tests set `forceReplaceResponse` conditionally during mutate based on the pivot's onDispatch
+    // Changing fieldValues Size doesn't force replace
+    Tree.mutate(['root', 'pivot'], { groups: _.set('1.size', 20, groups) })
+    expect(!!Tree.getNode(['root', 'pivot']).forceReplaceResponse).be.false
+
+    // Changing fieldValuesPartition matchValue does force replace
+    Tree.mutate(['root', 'pivot'], {
+      groups: _.set('0.matchValue', 'Nevada', groups),
+    })
+    expect(Tree.getNode(['root', 'pivot']).forceReplaceResponse).to.equal(true)
+  })
 }
 
 describe('lib', () => AllTests(ContextureClient))
