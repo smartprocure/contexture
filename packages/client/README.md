@@ -140,6 +140,7 @@ The following methods are exposed on an instantiated client:
 | subquery | `(targetPath, sourceTree, sourcePath, mapSubqueryValues?) => {}` | Sets up a subquery, using the types passed in to the client and assuming this tree instance is the target tree. For more info, see the [subquery](#Subquery) section below. |
 | isPausedNested | `path -> bool` | Returns a bool for whether the node at the path and all of its children are paused. |
 | processResponseNode | `(path, node) => {}` | Used to process intermediate partial results from the server |
+| watchNode | `(path, watcherFn, [keys]) => {}` | Runs `watcherFn` any time the node at `path` is updated, optionally restricted to the array of keys passed in. `watcherFn` is called with `(node, delta)` which is a reference to the target node and the payload to update it with. Useful for implementing observability, e.g. a react hook. |
 
 #### Actions
 
