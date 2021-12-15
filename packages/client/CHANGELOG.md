@@ -1,3 +1,6 @@
+# 2.40.0
+* Add `watchNode`
+
 # 2.39.0
 * Add support for type specifc `onDispatch`, called when an event is dispatched with a target node with the corresponding type
 * Add `pivot` `onDispatch` which sets `forceReplaceResponse` when certain keys are mutated.
