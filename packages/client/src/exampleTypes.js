@@ -151,7 +151,7 @@ export default F.stampKey('type', {
         context: {
           ...response.context,
           results: [...node.context.results, ...response.context.results],
-        }
+        },
       })
     },
   },
