@@ -12,6 +12,7 @@ import exampleTypes from './exampleTypes'
 import lens from './lens'
 import mockService from './mockService'
 import subquery from './subquery'
+import { setupListeners } from './listeners'
 
 let shouldBlockUpdate = flat => {
   let leaves = Tree.flatLeaves(flat)
@@ -238,6 +239,9 @@ export let ContextTree = _.curry(
     TreeInstance.addActions(actions)
     TreeInstance.lens = lens(TreeInstance)
     TreeInstance.subquery = subquery(types, TreeInstance)
+    
+    setupListeners(TreeInstance)
+    
     return TreeInstance
   }
 )
