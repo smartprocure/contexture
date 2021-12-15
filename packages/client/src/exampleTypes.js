@@ -147,9 +147,11 @@ export default F.stampKey('type', {
     shouldMergeResponse: node => node.infiniteScroll,
     mergeResponse(node, response, extend) {
       // extend but merge results arrays
-      extend(node.context, {
-        ...response.context,
-        results: [...node.context.results, ...response.context.results],
+      extend(node, {
+        context: {
+          ...response.context,
+          results: [...node.context.results, ...response.context.results],
+        }
       })
     },
   },
