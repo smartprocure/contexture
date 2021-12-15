@@ -1,3 +1,8 @@
+# 2.39.0
+* Add support for type specifc `onDispatch`, called when an event is dispatched with a target node with the corresponding type
+* Add `pivot` `onDispatch` which sets `forceReplaceResponse` when certain keys are mutated.
+* Pivot response merge - calls `F.mergeAllArrays` on context, which may be a generic answer to response merges.
+
 # 2.38.1
 * Update pull-request workflow to better catch test failures
 
