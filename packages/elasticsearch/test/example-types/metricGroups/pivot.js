@@ -381,7 +381,7 @@ describe('pivot', () => {
         {
           type: 'fieldValues',
           field: 'Organization.Type',
-        }
+        },
       ],
     }
     let expected = {
