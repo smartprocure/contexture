@@ -1,6 +1,9 @@
 # 1.8.0
 * Add `pivot` drilldown support
 
+# 1.7.1
+* Update pull-request workflow to better catch test failures
+
 # 1.7.0
 * Fix bug where 0 and null value metrics wouldn't be flattened by dsl utils
 * Factor out groupStats util
