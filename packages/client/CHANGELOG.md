@@ -1,3 +1,7 @@
+# 2.39.1
+* Add node validation for `pivot` groups 
+* Add self reactor for a `pivot` node `drilldown` property
+
 # 2.39.0
 * Add support for type specifc `onDispatch`, called when an event is dispatched with a target node with the corresponding type
 * Add `pivot` `onDispatch` which sets `forceReplaceResponse` when certain keys are mutated.
