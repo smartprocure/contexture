@@ -274,6 +274,7 @@ export default F.stampKey('type', {
     reactors: {
       groups: 'self',
       values: 'self',
+      drilldown: 'self',
       flatten: 'self',
       subtotals: 'self',
     },
