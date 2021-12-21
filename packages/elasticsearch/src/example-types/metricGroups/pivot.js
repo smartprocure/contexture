@@ -6,7 +6,8 @@ let types = require('../../../src/example-types')
 let { transmuteTree } = require('../../utils/futil')
 let { simplifyBucket } = require('../../utils/elasticDSL')
 
-let lookupTypeProp = (prop, type) => _.get(`${type}GroupStats.${prop}`, types)
+let lookupTypeProp = (def, prop, type) =>
+  _.getOr(def, `${type}GroupStats.${prop}`, types)
 
 // PivotTable -> Query:
 //  rows -> columns -> values
@@ -32,22 +33,51 @@ let aggsForValues = (node, schema) =>
   )(node)
 
 let buildQuery = async (node, schema, getStats) => {
+  let drilldowns = node.drilldown || []
+  // Don't consider deeper levels than +1 the current drilldown
+  // This allows avoiding expansion until ready
+  // Opt out with falsey drilldown
+  let groups = node.drilldown
+    ? _.take(_.size(node.drilldown) + 1, node.groups)
+    : node.groups
+
   let statsAggBlob = { aggs: aggsForValues(node.values, schema) }
   let query = await _.reduce(
     async (children, group) => {
       // Subtotals calculates metrics at each group level, not needed if flattening or in chart
       // Support for per group stats could also be added here - merge on another stats agg blob to children based on group.stats/statsField or group.values
       if (node.subtotals) children = _.merge(await children, statsAggBlob)
-      let buildGroupQuery =
-        lookupTypeProp('buildGroupQuery', group.type) || _.identity
+      let { type } = group
+      let buildGroupQuery = lookupTypeProp(_.identity, 'buildGroupQuery', type)
       return buildGroupQuery(group, await children, schema, getStats)
     },
     statsAggBlob,
     // TODO: Also consider rows + columns -> groups:
     // _.reverse([...(node.rows || []), ...(node.columns || []), ...(node.groups || [])])
     // _.reverse(_.concat(node.rows, node.columns, node.groups)))
-    _.reverse(node.groups)
+    _.reverse(groups)
   )
+
+  let filters = _.compact(
+    await Promise.all(
+      F.mapIndexed((group, i) => {
+        let filter = lookupTypeProp(_.stubFalse, 'drilldown', group.type)
+        // stamp on drilldown from root if applicable
+        let drilldown = drilldowns[i] || group.drilldown
+        return drilldown && filter({ drilldown, ...group }, schema, getStats)
+      }, groups)
+    )
+  )
+  if (!_.isEmpty(filters))
+    query = {
+      aggs: {
+        pivotFilter: {
+          filter: { bool: { must: filters } },
+          ...query,
+        },
+      },
+    }
+
   return query
 }
 
@@ -88,7 +118,7 @@ let processResponse = (response, { groups = [], flatten } = {}) => {
   let traverseSource = (x, i, parents = []) => {
     let depth = parents.length
     let { type } = groups[depth] || {}
-    let traverse = lookupTypeProp('getGroups', type) || defaultGetGroups
+    let traverse = lookupTypeProp(defaultGetGroups, 'getGroups', type)
     return traverse(x)
   }
 

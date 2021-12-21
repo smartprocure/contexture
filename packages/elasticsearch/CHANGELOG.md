@@ -1,3 +1,6 @@
+# 1.8.0
+* Add `pivot` drilldown support
+
 # 1.7.1
 * Update pull-request workflow to better catch test failures
 

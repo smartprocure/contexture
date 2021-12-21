@@ -1,5 +1,6 @@
 let _ = require('lodash/fp')
 let F = require('futil')
+let { pickSafeNumbers } = require('../../utils/futil')
 let { groupStats } = require('./groupStatUtils')
 
 // [1, 2, 3] -> [{to: 1}, {from: 1, to: 2}, {from: 2, to: 3}, {from: 3}]
@@ -8,21 +9,38 @@ let boundariesToRanges = _.flow(
   arr => F.push({ from: _.last(arr).to }, arr)
 )
 
+let drilldownToRange = drilldown => {
+  let [gte, lt] = _.split('-', drilldown)
+  return pickSafeNumbers({ gte, lt })
+}
+
 let buildGroupQuery = async (node, children, schema, getStats) => {
-  let { field, percents } = node
-  // todo: Support keyed?
-  let { percentiles } = await getStats(field, { percentiles: { percents } })
-  return {
+  let { field, percents, drilldown } = node
+  let ranges
+  // omit ranges with drilldown otherwise we get null/0s......
+  if (drilldown) {
+    let { gte, lt } = drilldownToRange(drilldown)
+    ranges = [{ from: gte, to: lt }]
+  } else {
+    let { percentiles } = await getStats(field, { percentiles: { percents } })
+    ranges = boundariesToRanges(_.values(percentiles))
+  }
+  let result = {
     aggs: {
       groups: {
-        range: {
-          field,
-          ranges: boundariesToRanges(_.map('value', percentiles)),
-        },
+        range: { field, ranges },
         ...children,
       },
     },
   }
+  return result
 }
 
-module.exports = module.exports = groupStats(buildGroupQuery)
+let drilldown = ({ field, drilldown }) => ({
+  range: { [field]: drilldownToRange(drilldown) },
+})
+
+module.exports = {
+  ...groupStats(buildGroupQuery),
+  drilldown,
+}
