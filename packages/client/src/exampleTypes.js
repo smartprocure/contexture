@@ -263,9 +263,18 @@ export default F.stampKey('type', {
     },
   },
   pivot: {
+    validate: context =>
+      _.every(
+        ({ type, ranges, percents }) =>
+          (type !== 'numberRanges' && type !== 'percentiles') ||
+          (type === 'numberRanges' && ranges.length > 0) ||
+          (type === 'percentiles' && percents.length > 0),
+        context.groups
+      ),
     reactors: {
       groups: 'self',
       values: 'self',
+      drilldown: 'self',
       flatten: 'self',
       subtotals: 'self',
     },
