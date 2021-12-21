@@ -1,5 +1,14 @@
+let moment = require('moment-timezone')
 let { groupStats } = require('./groupStatUtils')
 
+let drilldown = ({ field, interval, drilldown }) => {
+  let gte = drilldown
+  let lte = moment
+    .parseZone(drilldown)
+    .endOf(interval)
+    .format()
+  return { range: { [field]: { gte, lte } } }
+}
 let buildGroupQuery = ({ field, interval = 'year' }, children) => ({
   aggs: {
     groups: {
@@ -9,4 +18,7 @@ let buildGroupQuery = ({ field, interval = 'year' }, children) => ({
   },
 })
 
-module.exports = groupStats(buildGroupQuery)
+module.exports = {
+  ...groupStats(buildGroupQuery),
+  drilldown,
+}

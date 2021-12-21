@@ -1,5 +1,6 @@
 let {
   buildQuery,
+  drilldown,
 } = require('../../../src/example-types/metricGroups/fieldValuePartitionGroupStats')
 let { expect } = require('chai')
 let { testSchema } = require('../testUtils')
@@ -64,5 +65,47 @@ describe('fieldValuePartitionGroupStats', () => {
         },
       },
     })
+  })
+  it('should drilldown', () => {
+    expect(
+      drilldown(
+        {
+          key: 'test',
+          type: 'fieldValuePartitionGroupStats',
+          field: 'Vendor.City',
+          matchValue: 'Washington',
+          drilldown: 'pass',
+        },
+        testSchema('Vendor.City')
+      )
+    ).to.eql({
+      term: { 'Vendor.City.untouched': 'Washington' },
+    })
+    expect(
+      drilldown(
+        {
+          key: 'test',
+          type: 'fieldValuePartitionGroupStats',
+          field: 'Vendor.City',
+          matchValue: 'Washington',
+          drilldown: 'fail',
+        },
+        testSchema('Vendor.City')
+      )
+    ).to.eql({
+      bool: { must_not: [{ term: { 'Vendor.City.untouched': 'Washington' } }] },
+    })
+    expect(
+      drilldown(
+        {
+          key: 'test',
+          type: 'fieldValuePartitionGroupStats',
+          field: 'Vendor.City',
+          matchValue: 'Washington',
+          // drilldown: 'pass', <-- should be required?
+        },
+        testSchema('Vendor.City')
+      )
+    ).to.eql(undefined)
   })
 })

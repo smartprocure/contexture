@@ -1,5 +1,6 @@
 let {
   buildQuery,
+  drilldown,
 } = require('../../../src/example-types/metricGroups/numberIntervalGroupStats')
 let { expect } = require('chai')
 
@@ -60,6 +61,33 @@ describe('numberIntervalGroupStats', () => {
           },
         },
       },
+    })
+  })
+  it('should drilldown', async () => {
+    expect(
+      await drilldown({
+        field: 'LineItem.TotalPrice',
+        interval: 5000,
+        drilldown: 0,
+      })
+    ).to.eql({
+      range: { 'LineItem.TotalPrice': { gte: 0, lt: 5000 } },
+    })
+  })
+  it('should drilldown with smartInterval', async () => {
+    expect(
+      await drilldown(
+        {
+          field: 'LineItem.TotalPrice',
+          interval: 'smart',
+          drilldown: 0,
+        },
+        null,
+        // This result makes interval 250, see above test
+        () => ({ min: 10, max: 5000 })
+      )
+    ).to.eql({
+      range: { 'LineItem.TotalPrice': { gte: 0, lt: 250 } },
     })
   })
 })
