@@ -1,3 +1,6 @@
+# 1.8.1
+* Fix bug with pivot drilldown wrapping tree and processResponse not handling it
+
 # 1.8.0
 * Add `pivot` drilldown support
 
