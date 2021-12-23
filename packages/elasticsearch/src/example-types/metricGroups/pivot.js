@@ -126,7 +126,10 @@ let processResponse = (response, { groups = [], flatten } = {}) => {
   // goal is to keep _nodes_ the same, but write back with different (dynamic) traversal
   //   e.g. valuefilter.groups.buckets -> groups, groups.buckets -> groups
   let simplifyTree = transmuteTree(traverseSource, Tree.traverse, ensureGroups)
-  let results = simplifyTree(simplifyBucket, F.getOrReturn('pivotFilter', response.aggregations))
+  let results = simplifyTree(
+    simplifyBucket,
+    F.getOrReturn('pivotFilter', response.aggregations)
+  )
   return { results: flatten ? flattenGroups(results) : results.groups }
 }
 
