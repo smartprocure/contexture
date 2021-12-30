@@ -113,7 +113,14 @@ let defaultGetGroups = _.get('groups.buckets')
 let ensureGroups = node => {
   if (!_.isArray(node.groups)) node.groups = []
 }
-let processResponse = (response, { groups = [], flatten } = {}) => {
+let processResponse = (response, node = {}) => {
+  // Don't consider deeper levels than +1 the current drilldown
+  // This allows avoiding expansion until ready
+  // Opt out with falsey drilldown
+  let groups = node.drilldown
+    ? _.take(_.size(node.drilldown) + 1, node.groups || [])
+    : (node.groups || [])
+
   // Traversing the ES response utilizes type specific methods looked up by matching the depth with node.groups
   let traverseSource = (x, i, parents = []) => {
     let depth = parents.length
@@ -130,7 +137,7 @@ let processResponse = (response, { groups = [], flatten } = {}) => {
     simplifyBucket,
     F.getOrReturn('pivotFilter', response.aggregations)
   )
-  return { results: flatten ? flattenGroups(results) : results.groups }
+  return { results: node.flatten ? flattenGroups(results) : results.groups }
 }
 
 let pivot = {
