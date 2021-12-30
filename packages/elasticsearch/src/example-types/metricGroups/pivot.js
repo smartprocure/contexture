@@ -119,7 +119,7 @@ let processResponse = (response, node = {}) => {
   // Opt out with falsey drilldown
   let groups = node.drilldown
     ? _.take(_.size(node.drilldown) + 1, node.groups || [])
-    : (node.groups || [])
+    : node.groups || []
 
   // Traversing the ES response utilizes type specific methods looked up by matching the depth with node.groups
   let traverseSource = (x, i, parents = []) => {
