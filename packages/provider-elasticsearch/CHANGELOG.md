@@ -1,3 +1,6 @@
+# 1.8.2
+* Fix bug with pivot processReponse including groups that weren't in the query when setting a drilldown
+
 # 1.8.1
 * Fix bug with pivot drilldown wrapping tree and processResponse not handling it
 
