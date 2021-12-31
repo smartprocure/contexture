@@ -2,7 +2,7 @@ import _ from 'lodash/fp'
 import chai from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
-import ContextureClient, { encode } from '../src'
+import ContextureClient, { encode, exampleTypes } from '../src'
 import Promise from 'bluebird'
 import mockService from '../src/mockService'
 import wrap from '../src/actions/wrap'
@@ -2061,6 +2061,47 @@ let AllTests = ContextureClient => {
     await Tree.mutate(['root', 'test'], { values: ['asdf'] })
     expect(toJS(Tree.tree.children[0].context.results)).to.deep.equal([
       { title: 'some result' },
+    ])
+  })
+  it('should support key based pivot response merges', async () => {
+    let service = sinon.spy(mockService())
+    let groups = [
+      { type: 'fieldValuesPartition', field: 'State', matchValue: 'Florida' },
+      { type: 'fieldValues', field: 'City', size: 10 },
+    ]
+    let Tree = ContextureClient(
+      { service, debounce: 1 },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          { key: 'pivot', type: 'pivot', groups },
+          { key: 'test', type: 'facet', values: [] },
+        ],
+      }
+    )
+    let node = Tree.getNode(['root', 'pivot'])
+
+    let merge = exampleTypes.pivot.mergeResponse
+    merge(node, {
+      context: {
+        results: [
+          { key: 'FL', groups: [{ key: 'fl1', a: 1 }]},
+          { key: 'NV', groups: [{ key: 'nv1', a: 1 }]}
+        ]
+      }
+    }, Tree.extend, Tree.snapshot)
+    merge(node, {
+      context: {
+        results: [
+          { key: 'NV', groups: [{ key: 'nv2', b: 1 }, { key: 'nv1', a: 2 }]}
+        ]
+      }
+    }, Tree.extend, Tree.snapshot)
+
+    expect(node.context.results).to.deep.equal([
+      { key: 'FL', groups: [{ key: 'fl1', a: 1 }] },
+      { key: 'NV', groups: [{ key: 'nv1', a: 2 }, { key: 'nv2', b: 1 }] }
     ])
   })
   it('should support onDispatch (and pivot overriding response merges)', async () => {
