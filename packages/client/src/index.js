@@ -64,7 +64,7 @@ export let ContextTree = _.curry(
     let customReactors = reactors
 
     // initNode now generates node keys, so it must be run before flattening the tree
-    dedupeWalk(initNode(extend, types), tree)
+    dedupeWalk(initNode({ extend, types, snapshot }), tree)
     let flat = flatten(tree)
     let getNode = path => flat[encode(path)]
 

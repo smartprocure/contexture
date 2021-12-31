@@ -34,7 +34,7 @@ export default config => {
 
     dedupeWalk(
       (dedupe, parentPath, node) => {
-        initNode(extend, types, dedupe, parentPath, node)
+        initNode({ extend, types, snapshot }, dedupe, parentPath, node)
         flat[encode(node.path)] = node
       },
       node,

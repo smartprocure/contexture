@@ -28,7 +28,7 @@ export let internalStateKeys = {
 
 export let autoKey = x => F.compactJoin('-', [x.field, x.type]) || 'node'
 
-export let initNode = _.curry((extend, types, dedupe, parentPath, node) => {
+export let initNode = _.curry(({ extend, types, snapshot }, dedupe, parentPath, node) => {
   runTypeFunction(types, 'init', node, extend)
   let key = dedupe(
     node.key ||
@@ -36,7 +36,8 @@ export let initNode = _.curry((extend, types, dedupe, parentPath, node) => {
   )
   extend(node, {
     ..._.omit(_.keys(node), defaults),
-    ..._.omit(_.keys(node), _.cloneDeep(getTypeProp(types, 'defaults', node))),
+    // For some reason, type defaults can end up observable in real world apps, so we `snapshot` instead of `_.deepClone`
+    ..._.omit(_.keys(node), snapshot(getTypeProp(types, 'defaults', node))),
     key,
     path: [...parentPath, key],
   })
