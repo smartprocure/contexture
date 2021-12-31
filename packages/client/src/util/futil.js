@@ -1,5 +1,5 @@
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
+import F from 'futil'
 
 export let transformTreePostOrder = (next = F.traverse) =>
   _.curry((f, x) => {
