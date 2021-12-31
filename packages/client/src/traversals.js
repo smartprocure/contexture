@@ -1,4 +1,4 @@
-import * as F from 'futil-js'
+import F from 'futil'
 import { Tree } from './util/tree'
 
 export default extend => ({

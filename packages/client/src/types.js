@@ -1,5 +1,5 @@
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
+import F from 'futil'
 
 // Gets type a specific property from any of the places it might be - on the type in `types`, on default in `types`, or already on the node itself
 export let getTypeProp = _.curry(

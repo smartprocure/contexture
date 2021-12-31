@@ -30,8 +30,8 @@
   },
   "homepage": "https://github.com/smartprocure/contexture-client#readme",
   "dependencies": {
-    "futil-js": "^1.58.0",
-    "lodash": "^4.17.4"
+    "futil": "^1.69.0",
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

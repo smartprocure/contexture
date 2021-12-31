@@ -1,5 +1,5 @@
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
+import F from 'futil'
 import { transformTreePostOrder, maybeUpdateOn } from './util/futil'
 
 let validateValues = ({ value, values = [] }) => value || values.length
