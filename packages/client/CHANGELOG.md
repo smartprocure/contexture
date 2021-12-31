@@ -1,3 +1,6 @@
+# 2.39.3
+* Fix: Use `snapshot` on `typeDefaults` instead of `_.deepClone` to fix regression from `2.38.0` for real world apps that end up with observable `typeDefaults`
+
 # 2.39.2
 * Better `pivot` `mergeResponse` implementation that merges groups by key
 * Move from `futil-js` to `futil`
