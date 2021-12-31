@@ -2082,48 +2082,16 @@ let AllTests = ContextureClient => {
     )
     let node = Tree.getNode(['root', 'pivot'])
 
-    let merge = exampleTypes.pivot.mergeResponse
-    merge(
-      node,
-      {
-        context: {
-          results: [
-            { key: 'FL', groups: [{ key: 'fl1', a: 1 }] },
-            { key: 'NV', groups: [{ key: 'nv1', a: 1 }] },
-          ],
-        },
-      },
-      Tree.extend,
-      Tree.snapshot
-    )
-    merge(
-      node,
-      {
-        context: {
-          results: [
-            {
-              key: 'NV',
-              groups: [
-                { key: 'nv2', b: 1 },
-                { key: 'nv1', a: 2 },
-              ],
-            },
-          ],
-        },
-      },
-      Tree.extend,
-      Tree.snapshot
-    )
+    let merge = results => exampleTypes.pivot.mergeResponse(node, {context: {results}}, Tree.extend, Tree.snapshot)
+    merge([
+      { key: 'FL', groups: [{ key: 'fl1', a: 1 }] },
+      { key: 'NV', groups: [{ key: 'nv1', a: 1 }] },
+    ])
+    merge([{ key: 'NV', groups: [{ key: 'nv2', b: 1 }, { key: 'nv1', a: 2 }]}])
 
     expect(node.context.results).to.deep.equal([
       { key: 'FL', groups: [{ key: 'fl1', a: 1 }] },
-      {
-        key: 'NV',
-        groups: [
-          { key: 'nv1', a: 2 },
-          { key: 'nv2', b: 1 },
-        ],
-      },
+      { key: 'NV', groups: [{ key: 'nv1', a: 2 }, { key: 'nv2', b: 1 }] },
     ])
   })
   it('should support onDispatch (and pivot overriding response merges)', async () => {
