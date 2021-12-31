@@ -2094,24 +2094,12 @@ let AllTests = ContextureClient => {
       { key: 'NV', groups: [{ key: 'nv1', a: 1 }] },
     ])
     merge([
-      {
-        key: 'NV',
-        groups: [
-          { key: 'nv2', b: 1 },
-          { key: 'nv1', a: 2 },
-        ],
-      },
+      { key: 'NV', groups: [{ key: 'nv2', b: 1 }, { key: 'nv1', a: 2 }] },
     ])
 
     expect(node.context.results).to.deep.equal([
       { key: 'FL', groups: [{ key: 'fl1', a: 1 }] },
-      {
-        key: 'NV',
-        groups: [
-          { key: 'nv1', a: 2 },
-          { key: 'nv2', b: 1 },
-        ],
-      },
+      { key: 'NV', groups: [{ key: 'nv1', a: 2 }, { key: 'nv2', b: 1 }] },
     ])
   })
   it('should support onDispatch (and pivot overriding response merges)', async () => {
