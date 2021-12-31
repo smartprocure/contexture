@@ -1,5 +1,5 @@
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
+import F from 'futil'
 import { flatten, bubbleUp, Tree, encode, decode, isParent } from './util/tree'
 import { validate } from './validation'
 import { getAffectedNodes, reactors } from './reactors'
@@ -188,7 +188,12 @@ export let ContextTree = _.curry(
             !target.forceReplaceResponse &&
             F.maybeCall(typeProp('shouldMergeResponse', target), target)
           )
-            typeProp('mergeResponse', target)(target, responseNode, extend)
+            typeProp('mergeResponse', target)(
+              target,
+              responseNode,
+              extend,
+              snapshot
+            )
           else {
             target.forceReplaceResponse = false
             extend(target, responseNode)

@@ -1,4 +1,4 @@
-import * as F from 'futil-js'
+import F from 'futil'
 import _ from 'lodash/fp'
 
 export let promisedProps =
