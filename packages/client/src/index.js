@@ -188,7 +188,12 @@ export let ContextTree = _.curry(
             !target.forceReplaceResponse &&
             F.maybeCall(typeProp('shouldMergeResponse', target), target)
           )
-            typeProp('mergeResponse', target)(target, responseNode, extend, snapshot)
+            typeProp('mergeResponse', target)(
+              target,
+              responseNode,
+              extend,
+              snapshot
+            )
           else {
             target.forceReplaceResponse = false
             extend(target, responseNode)
