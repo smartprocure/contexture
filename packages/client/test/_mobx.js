@@ -2,7 +2,7 @@
 // No, we don't know why. We're sorry. #hackathon
 
 import { Tree } from '../src/util/tree'
-import * as F from 'futil-js'
+import F from 'futil'
 import _ from 'lodash/fp'
 import chai from 'chai'
 import sinon from 'sinon'

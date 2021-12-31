@@ -1,3 +1,8 @@
+# 2.39.2
+* Better `pivot` `mergeResponse` implementation that merges groups by key
+* Move from `futil-js` to `futil`
+* Pass `snapshot` into `mergeResponse` to avoid a mobx bug
+
 # 2.39.1
 * Add node validation for `pivot` groups 
 * Add self reactor for a `pivot` node `drilldown` property
