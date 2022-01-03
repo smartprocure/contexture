@@ -51,7 +51,7 @@ let copySchemasToAliases = schemas =>
     // only select field values which are arrays
     _.pickBy(_.isArray),
     // Just takes the first index that matched the alias
-    _.mapValues(([x]) => _.merge({ elasticsearch: { aliasOf: x} }, schemas[x]))
+    _.mapValues(([x]) => _.merge({ elasticsearch: { aliasOf: x } }, schemas[x]))
   )
 
 let fromMappingsWithAliases = (mappings, aliases) => {
