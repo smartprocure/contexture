@@ -1,3 +1,6 @@
+# 1.9.0
+* Add `aliasOf` to elastic schemas (for better alias handling)
+
 # 1.8.2
 * Fix bug with pivot processReponse including groups that weren't in the query when setting a drilldown
 
