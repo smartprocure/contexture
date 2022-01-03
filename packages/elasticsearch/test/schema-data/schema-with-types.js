@@ -204,6 +204,7 @@ module.exports = {
     elasticsearch: {
       index: 'imdb',
       type: 'movie',
+      aliasOf: 'movies',
     },
     fields: {
       actors: {
