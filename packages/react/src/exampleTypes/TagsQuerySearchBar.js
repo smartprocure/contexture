@@ -29,6 +29,7 @@ let buttonStyle = {
 
 let AnimatedButton = ({ disabled, style, className, ...props }) => (
   <Button
+    data-testid="button-main-search"
     className={`${disabled ? 'disabled' : 'animated pulse infinite'} ${
       className || ''
     }`}
