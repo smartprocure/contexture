@@ -56,7 +56,7 @@ let DateComponent = ({
   )
 
   return (
-    <div>
+    <div data-path={node.path}>
       <RadioList
         options={F.autoLabelOptions(['exact', 'rolling'])}
         value={node.range !== 'exact' ? 'rolling' : 'exact'}

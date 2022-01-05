@@ -79,7 +79,11 @@ let SearchBar = ({
           e.stopPropagation()
         }}
       >
-        <Box style={searchBarBoxStyle} onClick={F.off(collapse)}>
+        <Box
+          data-testid="main-search-bar"
+          style={searchBarBoxStyle}
+          onClick={F.off(collapse)}
+        >
           <ExpandableTagsQuery
             {...{ tree, node, collapse, actionWrapper }}
             onAddTag={F.off(collapse)}

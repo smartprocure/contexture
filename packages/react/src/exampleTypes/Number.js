@@ -12,7 +12,7 @@ let NumberComponent = ({
   significantDigits,
   theme: { NumberInput, Button },
 }) => (
-  <div className="contexture-number">
+  <div className="contexture-number" data-path={node.path}>
     <Flex style={{ alignItems: 'center' }}>
       <NumberInput
         value={formatter(node.min) || ''}
