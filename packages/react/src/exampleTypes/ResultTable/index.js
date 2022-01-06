@@ -89,8 +89,8 @@ let ResultTable = ({
   }
 
   return (
-    <div data-path={node.path}>
-      <Table>
+    <>
+      <Table data-path={node.path}>
         <Thead>
           <Tr>
             {F.mapIndexed(
@@ -138,7 +138,7 @@ let ResultTable = ({
           }}
         />
       )}
-    </div>
+    </>
   )
 }
 
