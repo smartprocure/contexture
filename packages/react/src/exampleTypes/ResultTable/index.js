@@ -89,7 +89,7 @@ let ResultTable = ({
   }
 
   return (
-    <>
+    <div data-path={node.path}>
       <Table>
         <Thead>
           <Tr>
@@ -138,7 +138,7 @@ let ResultTable = ({
           }}
         />
       )}
-    </>
+    </div>
   )
 }
 

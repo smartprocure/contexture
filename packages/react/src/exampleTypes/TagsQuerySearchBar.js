@@ -29,7 +29,6 @@ let buttonStyle = {
 
 let AnimatedButton = ({ disabled, style, className, ...props }) => (
   <Button
-    data-testid="button-main-search"
     className={`${disabled ? 'disabled' : 'animated pulse infinite'} ${
       className || ''
     }`}
@@ -72,6 +71,7 @@ let SearchBar = ({
       useCapture={false}
     >
       <ButtonGroup
+        data-path={node.path}
         style={searchBarStyle}
         // The outside click handler listens for the onMouseUp event which takes priority over any onClick handlers in the children
         // So we need to add this handler to ensure that the child events are triggered appropriately
@@ -79,11 +79,7 @@ let SearchBar = ({
           e.stopPropagation()
         }}
       >
-        <Box
-          data-testid="main-search-bar"
-          style={searchBarBoxStyle}
-          onClick={F.off(collapse)}
-        >
+        <Box style={searchBarBoxStyle} onClick={F.off(collapse)}>
           <ExpandableTagsQuery
             {...{ tree, node, collapse, actionWrapper }}
             onAddTag={F.off(collapse)}

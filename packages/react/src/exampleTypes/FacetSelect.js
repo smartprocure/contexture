@@ -45,7 +45,7 @@ let FacetSelect = ({
   )
 
   return (
-    <div className="contexture-facet-select">
+    <div className="contexture-facet-select" data-path={node.path}>
       <RadioList
         value={node.mode || 'include'}
         onChange={mode => tree.mutate(node.path, { mode })}
