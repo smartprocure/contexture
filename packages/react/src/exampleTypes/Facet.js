@@ -33,7 +33,7 @@ let Facet = ({
 }) => {
   let valuesChecked = _.size(node.values)
   return (
-    <div className="contexture-facet">
+    <div className="contexture-facet" data-path={node.path}>
       {valuesChecked > warningCheck && (
         <span>
           You have selected more than 250 items for this filter. Please consider

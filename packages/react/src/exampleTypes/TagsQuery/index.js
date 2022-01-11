@@ -10,6 +10,7 @@ let TagsQuery = ({ tree, node, actionWrapper, ...props }) => {
   let isCollapsed = F.view(collapse) && !_.isEmpty(node.tags)
   return (
     <div
+      data-path={node.path}
       className="tags-query"
       onClick={F.off(collapse)}
       style={{ marginBottom: isCollapsed ? 28 : 10 }}

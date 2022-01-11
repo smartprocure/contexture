@@ -90,7 +90,7 @@ let ResultTable = ({
 
   return (
     <>
-      <Table>
+      <Table data-path={node.path}>
         <Thead>
           <Tr>
             {F.mapIndexed(

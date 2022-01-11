@@ -80,6 +80,7 @@ let TagsWrapper = observer(
 
     return (
       <Grid
+        data-path={node.path}
         rows={`${innerHeightLimit}px minmax(0, auto)`}
         columns="1fr auto"
         style={style}
