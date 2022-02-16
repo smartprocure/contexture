@@ -6,8 +6,8 @@ let {
 } = require('../../../src/example-types/metricGroups/pivot')
 let { expect } = require('chai')
 let { testSchema, testSchemas } = require('../testUtils')
-let pivotResponse = require('./pivotResponse')
-let pivotRepsonseWithFilteredFieldValueGroup = require('./pivotRepsonseWithFilteredFieldValueGroup')
+let pivotResponse = require('./pivotData/pivotResponse')
+let pivotRepsonseWithFilteredFieldValueGroup = require('./pivotData/pivotRepsonseWithFilteredFieldValueGroup')
 
 // pass aggsForValues in each stage
 describe('pivot', () => {
