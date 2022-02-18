@@ -57,20 +57,19 @@ let logJSON = result => console.info(JSON.stringify(result, null, 2))
 // Returns a proxy array that represents a virtual concatenation of two arrays
 // Reading/writing this virtual array reads/writes the underlying arrays (and doesn't clone)
 // Should be very memory/CPU efficient when you'd otherwise concat arrays just for traversal
-let virtualConcat = (arr1 = [], arr2 = []) =>
+let virtualConcat = (a1 = [], a2 = []) =>
   new Proxy([], {
     get(obj, key) {
-      let size = arr1.length
-      if (key == 'length') return arr1.length + arr2.length
-      if (key == Symbol.toStringTag)
-        return arr1.toString() + ',' + arr2.toString()
+      let size = a1.length
+      if (key == 'length') return size + a2.length
+      if (key == Symbol.toStringTag) return a1.toString() + ',' + a2.toString()
       // i is a string, so cast and check it's a number
-      if (_.isNumber(+key)) return key < size ? arr1[key] : arr2[key - size]
+      if (_.isFinite(+key)) return key < size ? a1[key] : a2[key - size]
     },
     set(obj, key, value) {
-      let size = arr1.length
-      if (key < size) arr1[key] = value
-      else arr2[key - size] = value
+      let size = a1.length
+      if (key < size) a1[key] = value
+      else a2[key - size] = value
     },
   })
 
