@@ -270,9 +270,10 @@ export default F.stampKey('type', {
           (type !== 'numberRanges' && type !== 'percentiles') ||
           (type === 'numberRanges' && ranges.length > 0) ||
           (type === 'percentiles' && percents.length > 0),
-        context.groups
+        _.concat(context.columns, context.groups)
       ),
     reactors: {
+      columns: 'self',
       groups: 'self',
       values: 'self',
       drilldown: 'self',
@@ -280,6 +281,7 @@ export default F.stampKey('type', {
       subtotals: 'self',
     },
     defaults: {
+      columns: [],
       groups: [],
       values: [],
       drilldown: null,
