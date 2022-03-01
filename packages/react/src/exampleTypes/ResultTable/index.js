@@ -97,27 +97,28 @@ let ResultTable = ({
     (columnGroups, { fieldGroup, HeaderCell }) => {
       for (let i = 0; i < columnGroupsHeight; i++) {
         let groupRow = columnGroups[i] || (columnGroups[i] = [])
-        let groupName = _.getOr('', i ,fieldGroup)
+        let groupName = _.getOr('', i, fieldGroup)
         let lastGroup = _.last(groupRow)
         if (_.get('groupName', lastGroup) === groupName) {
           lastGroup.colspan++
           lastGroup.HeaderCell = HeaderCell
-        } else
-          groupRow.push({ groupName, colspan: 1, HeaderCell })
+        } else groupRow.push({ groupName, colspan: 1, HeaderCell })
       }
       return columnGroups
     },
     [],
-    visibleFields,
+    visibleFields
   )
 
   return (
     <>
       <Table data-path={node.path}>
         <Thead>
-          {F.mapIndexed((columnGroupRow, i) => (
+          {F.mapIndexed(
+            (columnGroupRow, i) => (
               <Tr key={i}>
-                {F.mapIndexed(({ groupName, colspan, HeaderCell = Th}, j) => (
+                {F.mapIndexed(
+                  ({ groupName, colspan, HeaderCell = Th }, j) => (
                     <HeaderCell key={j} colSpan={colspan}>
                       <span>{F.autoLabel(groupName)}</span>
                     </HeaderCell>
