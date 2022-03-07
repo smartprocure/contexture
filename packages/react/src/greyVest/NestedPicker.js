@@ -81,7 +81,12 @@ let Section = _.flow(
           item => (
             <PickerItem
               key={item._key}
-              onClick={() => onClick(item.value || item._key, item)}
+              onClick={() =>
+                onClick(
+                  (_.isString(item.value) && item.value) || item._key,
+                  item
+                )
+              }
               active={selected === item._key}
               hasChildren={!isField(item)}
               isChecked={checked.has(item.value)}
