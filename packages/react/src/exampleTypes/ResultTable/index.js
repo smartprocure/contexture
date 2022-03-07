@@ -37,7 +37,7 @@ let ResultTable = ({
   stickyColumn,
   hideFooter,
   footerStyle,
-  theme: { Table, Thead, Tr },
+  theme: { Table, Thead, Tr, Th },
 }) => {
   // If there are no fields, we won't render anything. This is most definitely a
   // user error when it happens
@@ -88,10 +88,47 @@ let ResultTable = ({
     criteria,
   }
 
+  let columnGroupsHeight = _.flow(
+    _.map('fieldGroup.length'),
+    _.max
+  )(visibleFields)
+
+  let columnGroups = _.reduce(
+    (columnGroups, { fieldGroup, HeaderCell }) => {
+      for (let i = 0; i < columnGroupsHeight; i++) {
+        let groupRow = columnGroups[i] || (columnGroups[i] = [])
+        let groupName = _.getOr('', i, fieldGroup)
+        let lastGroup = _.last(groupRow)
+        if (_.get('groupName', lastGroup) === groupName) {
+          lastGroup.colspan++
+          lastGroup.HeaderCell = HeaderCell
+        } else groupRow.push({ groupName, colspan: 1, HeaderCell })
+      }
+      return columnGroups
+    },
+    [],
+    visibleFields
+  )
+
   return (
     <>
       <Table data-path={node.path}>
         <Thead>
+          {F.mapIndexed(
+            (columnGroupRow, i) => (
+              <Tr key={i}>
+                {F.mapIndexed(
+                  ({ groupName, colspan, HeaderCell = Th }, j) => (
+                    <HeaderCell key={j} colSpan={colspan}>
+                      <span>{F.autoLabel(groupName)}</span>
+                    </HeaderCell>
+                  ),
+                  columnGroupRow
+                )}
+              </Tr>
+            ),
+            columnGroups
+          )}
           <Tr>
             {F.mapIndexed(
               (x, i) => (
