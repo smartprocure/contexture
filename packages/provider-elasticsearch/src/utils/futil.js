@@ -62,9 +62,9 @@ let virtualConcat = (a1 = [], a2 = []) =>
     get(obj, key) {
       let size = a1.length
       if (key == 'length') return size + a2.length
-      if (key == Symbol.toStringTag) return a1.toString() + ',' + a2.toString()
+      if (key == Symbol.toStringTag) return `${a1.toString()},${a2.toString()}`
       // i is a string, so cast and check it's a number
-      if (_.isFinite(+key)) return key < size ? a1[key] : a2[key - size]
+      if (_.isFinite(Number(key))) return key < size ? a1[key] : a2[key - size]
     },
     set(obj, key, value) {
       let size = a1.length
