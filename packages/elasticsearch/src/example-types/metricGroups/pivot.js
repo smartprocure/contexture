@@ -4,7 +4,7 @@ let { getStats } = require('./stats')
 let { getField } = require('../../utils/fields')
 let types = require('../../../src/example-types')
 let { transmuteTree } = require('../../utils/futil')
-let { simplifyBucket } = require('../../utils/elasticDSL')
+let { simplifyBucket, basicSimplifyTree } = require('../../utils/elasticDSL')
 
 let lookupTypeProp = (def, prop, type) =>
   _.getOr(def, `${type}GroupStats.${prop}`, types)
@@ -133,11 +133,15 @@ let processResponse = (response, node = {}) => {
   // Goal here is to map the tree from one structure to another
   // goal is to keep _nodes_ the same, but write back with different (dynamic) traversal
   //   e.g. valuefilter.groups.buckets -> groups, groups.buckets -> groups
-  let simplifyTree = transmuteTree(traverseSource, Tree.traverse, ensureGroups)
-  let results = simplifyTree(
-    simplifyBucket,
-    F.getOrReturn('pivotFilter', response.aggregations)
-  )
+  // let simplifyTree = transmuteTree(traverseSource, Tree.traverse, ensureGroups)
+  // let results = simplifyTree(
+  //   simplifyBucket,
+  //   F.getOrReturn('pivotFilter', response.aggregations)
+  // )
+
+  let input = F.getOrReturn('pivotFilter', response.aggregations)
+  // SUPER HACKY TEMPORARY METHOD
+  let results = basicSimplifyTree(input)
   return { results: node.flatten ? flattenGroups(results) : results.groups }
 }
 
