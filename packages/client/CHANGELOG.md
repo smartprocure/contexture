@@ -1,3 +1,6 @@
+# 2.40.1
+* Fix: Pivot node: merging columns on drilldown response
+
 # 2.40.0
 * Pivot node: support for columns field
 
