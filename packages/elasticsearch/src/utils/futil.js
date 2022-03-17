@@ -85,7 +85,7 @@ let renameOn = (from, to, obj) => {
   obj[to] = obj[from]
   delete obj[from]
   return obj
-}  
+}
 
 module.exports = {
   maybeAppend,
