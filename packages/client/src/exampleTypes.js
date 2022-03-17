@@ -314,7 +314,9 @@ export default F.stampKey('type', {
 
       // Convert response groups to objects for easy merges
       let groupsToObjects = transform(maybeUpdateOn('groups', _.keyBy('key')))
-      let columnsToObjects = transformColumns(maybeUpdateOn('columns', _.keyBy('key')))
+      let columnsToObjects = transformColumns(
+        maybeUpdateOn('columns', _.keyBy('key'))
+      )
       groupsToObjects = _.flow(groupsToObjects, columnsToObjects)
 
       // `snapshot` here is to solve a mobx issue
@@ -328,7 +330,9 @@ export default F.stampKey('type', {
 
       // Convert groups back to arrays
       let groupsToArrays = transform(maybeUpdateOn('groups', F.unkeyBy('key')))
-      let columnsToArrays = transform(maybeUpdateOn('columns', F.unkeyBy('key')))
+      let columnsToArrays = transform(
+        maybeUpdateOn('columns', F.unkeyBy('key'))
+      )
       groupsToArrays = _.flow(groupsToArrays, columnsToArrays)
       // Grab `groups` property we artifically added above for easy traversals
       let context = { results: groupsToArrays(results).groups }
