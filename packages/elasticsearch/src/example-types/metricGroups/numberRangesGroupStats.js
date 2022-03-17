@@ -1,9 +1,9 @@
 let _ = require('lodash/fp')
 let { groupStats } = require('./groupStatUtils')
 
-let buildGroupQuery = ({ field, ranges }, children) => ({
+let buildGroupQuery = ({ field, ranges }, children, groupingType) => ({
   aggs: {
-    groups: {
+    [groupingType]: {
       range: { field, ranges },
       ...children,
     },
