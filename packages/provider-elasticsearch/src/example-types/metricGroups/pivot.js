@@ -43,20 +43,35 @@ let buildQuery = async (node, schema, getStats) => {
 
   let statsAggBlob = { aggs: aggsForValues(node.values, schema) }
   // buildGroupQuery applied to a list of groups
-  let buildNestedGroupQuery = (statsAggBlob, groups, groupingType) => _.reduce(
-    async (children, group) => {
-      // Subtotals calculates metrics at each group level, not needed if flattening or in chart
-      // Support for per group stats could also be added here - merge on another stats agg blob to children based on group.stats/statsField or group.values
-      if (node.subtotals) children = _.merge(await children, statsAggBlob)
-      let { type } = group
-      let buildGroupQuery = lookupTypeProp(_.identity, 'buildGroupQuery', type)
-      return buildGroupQuery(group, await children, groupingType, schema, getStats)
-    },
-    statsAggBlob,
-    _.reverse(groups)
-  )
+  let buildNestedGroupQuery = (statsAggBlob, groups, groupingType) =>
+    _.reduce(
+      async (children, group) => {
+        // Subtotals calculates metrics at each group level, not needed if flattening or in chart
+        // Support for per group stats could also be added here - merge on another stats agg blob to children based on group.stats/statsField or group.values
+        if (node.subtotals) children = _.merge(await children, statsAggBlob)
+        let { type } = group
+        let buildGroupQuery = lookupTypeProp(
+          _.identity,
+          'buildGroupQuery',
+          type
+        )
+        return buildGroupQuery(
+          group,
+          await children,
+          groupingType,
+          schema,
+          getStats
+        )
+      },
+      statsAggBlob,
+      _.reverse(groups)
+    )
   if (node.columns)
-    statsAggBlob = await buildNestedGroupQuery(statsAggBlob, node.columns, 'columns')
+    statsAggBlob = await buildNestedGroupQuery(
+      statsAggBlob,
+      node.columns,
+      'columns'
+    )
   let query = await buildNestedGroupQuery(statsAggBlob, groups, 'groups')
 
   let filters = _.compact(
