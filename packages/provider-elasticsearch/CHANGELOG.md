@@ -1,3 +1,6 @@
+# WIP 1.10.0
+* Add `columns` to pivot type. `buildGroupQuery` now takes a `groupingType` prop to behave differently as a group vs a column
+
 # 1.9.0
 * Add `aliasOf` to elastic schemas (for better alias handling)
 
