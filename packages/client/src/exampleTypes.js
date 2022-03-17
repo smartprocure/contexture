@@ -321,7 +321,7 @@ export default F.stampKey('type', {
       // wrap in `groups` so it traverses the root level
       let nodeGroups = groupsToObjects({
         groups: snapshot(node.context.results),
-      }))
+      })
       let responseGroups = groupsToObjects({ groups: response.context.results })
       // Easy merge now that we can merge by group key
       let results = F.mergeAllArrays([nodeGroups, responseGroups])
