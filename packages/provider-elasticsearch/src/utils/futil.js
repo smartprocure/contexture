@@ -81,6 +81,12 @@ let mapFlatKeys = fn =>
 let mapStringParts = (fn, delimiter = '.') =>
   _.flow(_.split(delimiter), _.map(fn), _.join(delimiter))
 
+let renameOn = (from, to, obj) => {
+  obj[to] = obj[from]
+  delete obj[from]
+  return obj
+}  
+
 module.exports = {
   maybeAppend,
   keysToObject,
@@ -95,4 +101,5 @@ module.exports = {
   virtualConcat,
   mapFlatKeys,
   mapStringParts,
+  renameOn,
 }
