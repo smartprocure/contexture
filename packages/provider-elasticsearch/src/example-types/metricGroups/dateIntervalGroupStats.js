@@ -9,13 +9,9 @@ let drilldown = ({ field, interval, drilldown }) => {
     .format()
   return { range: { [field]: { gte, lte } } }
 }
-let buildGroupQuery = (
-  { field, interval = 'year' },
-  children,
-  groupingType
-) => ({
+let buildGroupQuery = ({ field, interval = 'year' }, children, groupsKey) => ({
   aggs: {
-    [groupingType]: {
+    [groupsKey]: {
       date_histogram: { field, interval, min_doc_count: 0 },
       ...children,
     },
