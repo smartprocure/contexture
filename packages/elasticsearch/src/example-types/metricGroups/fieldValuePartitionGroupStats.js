@@ -9,7 +9,12 @@ let drilldown = ({ field, matchValue, drilldown }, schema) => {
   if (drilldown === 'fail') return { bool: { must_not: [filter] } }
 }
 
-let buildGroupQuery = ({ field, matchValue }, children, groupingType, schema) => ({
+let buildGroupQuery = (
+  { field, matchValue },
+  children,
+  groupingType,
+  schema
+) => ({
   aggs: {
     [groupingType]: {
       filters: {
