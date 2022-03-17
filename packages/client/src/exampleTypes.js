@@ -315,7 +315,7 @@ export default F.stampKey('type', {
       // Convert response groups to objects for easy merges
       let groupsToObjects = _.flow(
         transformGroups(maybeUpdateOn('groups', _.keyBy('key'))),
-        transformColumns(maybeUpdateOn('columns', _.keyBy('key'))),
+        transformColumns(maybeUpdateOn('columns', _.keyBy('key')))
       )
 
       // `snapshot` here is to solve a mobx issue
@@ -335,7 +335,7 @@ export default F.stampKey('type', {
       // Convert groups back to arrays
       let groupsToArrays = _.flow(
         transformGroups(maybeUpdateOn('groups', F.unkeyBy('key'))),
-        transformColumns(maybeUpdateOn('columns', F.unkeyBy('key'))),
+        transformColumns(maybeUpdateOn('columns', F.unkeyBy('key')))
       )
       // Grab `groups` property we artifically added above for easy traversals
       let context = { results: groupsToArrays(results).groups }
