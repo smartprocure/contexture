@@ -3,6 +3,7 @@ let {
   buildMetrics,
   simplifyBucket,
   simplifyBuckets,
+  basicSimplifyTree,
 } = require('../../src/utils/elasticDSL')
 let { expect } = require('chai')
 
@@ -213,6 +214,82 @@ describe('elasticDSL utils', () => {
       expect(
         simplifyBucket({ 'pivotMetric-min-PO.IssuedDate': { value: 12 } })
       ).to.eql({ 'min-PO.IssuedDate': 12 })
+    })
+  })
+  describe('basicSimplifyTree', () => {
+    it('Extremely simple tree simplification', () => {
+      let tree = {
+        key: 'root',
+        groups: {
+          buckets: [
+            {
+              key: 'row1',
+              groups: { buckets: [{ key: 'thing' }, { key: 'thing2' }] },
+              columns: {
+                buckets: [
+                  {
+                    key: 'innermost',
+                    columns: {
+                      buckets: [
+                        {
+                          key: 'colbucket',
+                          valueFilter: {
+                            columns: { buckets: [{ key: 'specialInner' }] },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                  { key: 'inner2', min: { value: 12 }, some_value: 3 },
+                ],
+              },
+            },
+          ],
+        },
+        columns: {
+          buckets: [
+            {
+              key: 'innermostC',
+              columns: {
+                buckets: [
+                  {
+                    key: 'colbucket',
+                    valueFilter: {
+                      columns: { buckets: [{ key: 'specialInner' }] },
+                    },
+                  },
+                ],
+              },
+            },
+            { key: 'inner2C', min: { value: 12 }, some_value: 3 },
+          ],
+        },
+      }
+      expect(basicSimplifyTree(tree)).to.deep.equal({
+        key: 'root',
+        groups: [
+          {
+            key: 'row1',
+            groups: [{ key: 'thing' }, { key: 'thing2' }],
+            columns: [
+              {
+                key: 'innermost',
+                columns: [
+                  { key: 'colbucket', columns: [{ key: 'specialInner' }] },
+                ],
+              },
+              { key: 'inner2', min: 12, someValue: 3 },
+            ],
+          },
+        ],
+        columns: [
+          {
+            key: 'innermostC',
+            columns: [{ key: 'colbucket', columns: [{ key: 'specialInner' }] }],
+          },
+          { key: 'inner2C', min: 12, someValue: 3 },
+        ],
+      })
     })
   })
 })
