@@ -50,18 +50,8 @@ let buildQuery = async (node, schema, getStats) => {
         // Support for per group stats could also be added here - merge on another stats agg blob to children based on group.stats/statsField or group.values
         if (node.subtotals) children = _.merge(await children, statsAggBlob)
         let { type } = group
-        let buildGroupQuery = lookupTypeProp(
-          _.identity,
-          'buildGroupQuery',
-          type
-        )
-        return buildGroupQuery(
-          group,
-          await children,
-          groupingType,
-          schema,
-          getStats
-        )
+        let build = lookupTypeProp(_.identity, 'buildGroupQuery', type)
+        return build(group, await children, groupingType, schema, getStats)
       },
       statsAggBlob,
       _.reverse(groups)
