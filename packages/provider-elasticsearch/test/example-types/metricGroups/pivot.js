@@ -8,6 +8,8 @@ let { expect } = require('chai')
 let { testSchema, testSchemas } = require('../testUtils')
 let pivotResponse = require('./pivotData/pivotResponse')
 let pivotRepsonseWithFilteredFieldValueGroup = require('./pivotData/pivotRepsonseWithFilteredFieldValueGroup')
+let columnResponse = require('./pivotData/columnResponse')
+let columnResult = require('./pivotData/columnResult')
 
 // pass aggsForValues in each stage
 describe('pivot', () => {
@@ -1346,5 +1348,21 @@ describe('pivot', () => {
         ],
       },
     ])
+  })
+  it('should processResponse correctly for pivots with columns', () => {
+    let nestedResult = processResponse(columnResponse, {
+      key: 'test',
+      type: 'pivot',
+      subtotals: true,
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      groups: [
+        { type: 'fieldValues', field: 'Organization.State' },
+        { type: 'fieldValues', field: 'Organization.NameState' },
+      ],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+    })
+    expect(nestedResult.results).to.eql(columnResult)
   })
 })
