@@ -73,6 +73,14 @@ let virtualConcat = (a1 = [], a2 = []) =>
     },
   })
 
+// Flattens an object, runs mapKeys, then unflattens
+let mapFlatKeys = fn =>
+  _.flow(F.flattenObject, _.mapKeys(fn), F.unflattenObject)
+
+// Splits and joins a string on a delimiter, running a mapper over the parts
+let mapStringParts = (fn, delimiter = '.') =>
+  _.flow(_.split(delimiter), _.map(fn), _.join(delimiter))
+
 module.exports = {
   maybeAppend,
   keysToObject,
@@ -85,4 +93,6 @@ module.exports = {
   transmuteTree,
   logJSON,
   virtualConcat,
+  mapFlatKeys,
+  mapStringParts,
 }
