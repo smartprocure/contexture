@@ -1,6 +1,11 @@
 let _ = require('lodash/fp')
 let F = require('futil')
-let { keysToEmptyObjects, mapFlatKeys, mapStringParts } = require('./futil')
+let {
+  keysToEmptyObjects,
+  mapFlatKeys,
+  mapStringParts,
+  renameOn,
+} = require('./futil')
 
 // Rename metricProps keys?   include -> _.source.includes, sort -> order, etc
 let buildMetrics = (field, metrics = ['min', 'max', 'avg', 'sum']) =>
@@ -46,18 +51,40 @@ let simplifyBuckets = _.flow(
 
 // VERY simple and inefficient tree simpification
 // inefficient due to copying the entire tree to flatten, again to unflatten, and running regex replaces on EVERY key
-let basicSimplifyTree = mapFlatKeys(
-  _.flow(
-    // flatten out buckets
-    _.replace(/\.buckets\./g, '.'),
-    // Needs to handle custom traversals, e.g. value filter
-    // TODO: this isn't scalable nor type specific!!
-    _.replace(/\.valueFilter\./g, '.'),
-    // needs to rename keys on leaf nodes
-    _.replace(/\.(values|value|hits)$/g, ''),
-    // camelCase all field names, but needs to preserve pivot field names
-    mapStringParts(renameMetrics)
-  )
+// This will be superseeded by a transmuteTree version later :)
+let basicSimplifyTree = _.flow(
+  mapFlatKeys(
+    _.flow(
+      // flatten out buckets
+      _.replace(/\.buckets\./g, '.'),
+      // Needs to handle custom traversals, e.g. value filter
+      // TODO: this isn't scalable nor type specific!!
+      _.replace(/(valueFilter)\./g, ''),
+      // needs to rename keys on leaf nodes
+      _.replace(/\.(values|value|hits)$/g, ''),
+      // rip out stupid things that are type specific, these are all terms agg
+      _.replace(/\.(doc_count_error_upper_bound|sum_other_doc_count)$/g, ''),
+
+      // camelCase all field names, but needs to preserve pivot field names
+      // mapStringParts(renameMetrics),
+      // Would be the above, but we need to special case pivotMetrics since they have field names in the keys with dots
+      // This insanity is to avoid unflattening es fields...
+      _.flow(_.split('.pivotMetric-'), ([before, metric]) =>
+        F.compactJoin('.', [
+          mapStringParts(renameMetrics)(before),
+          _.replace(/\./g, '__DOT__', metric),
+        ])
+      )
+    )
+  ),
+  // Rename __DOT__ to '.'
+  tree => {
+    F.walk()(x => {
+      let dots = _.filter(_.includes('__DOT__'), _.keys(x))
+      _.each(dot => renameOn(dot, _.replace(/__DOT__/g, '.', dot), x), dots)
+    })(tree)
+    return tree
+  }
 )
 
 module.exports = {
