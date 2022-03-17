@@ -61,8 +61,8 @@ let virtualConcat = (a1 = [], a2 = []) =>
   new Proxy([], {
     get(obj, key) {
       let size = a1.length
-      if (key == 'length') return size + a2.length
-      if (key == Symbol.toStringTag) return `${a1.toString()},${a2.toString()}`
+      if (key === 'length') return size + a2.length
+      if (key === Symbol.toStringTag) return `${a1.toString()},${a2.toString()}`
       // i is a string, so cast and check it's a number
       if (_.isFinite(Number(key))) return key < size ? a1[key] : a2[key - size]
     },
