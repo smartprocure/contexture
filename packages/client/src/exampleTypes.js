@@ -310,20 +310,26 @@ export default F.stampKey('type', {
     shouldMergeResponse: node => !_.isEmpty(node.drilldown),
     mergeResponse(node, response, extend, snapshot) {
       let transform = transformTreePostOrder(_.get('groups'))
+      let transformColumns = transformTreePostOrder(_.get('columns'))
 
       // Convert response groups to objects for easy merges
       let groupsToObjects = transform(maybeUpdateOn('groups', _.keyBy('key')))
+      let columnsToObjects = transformColumns(maybeUpdateOn('columns', _.keyBy('key')))
+      groupsToObjects = _.flow(groupsToObjects, columnsToObjects)
+
       // `snapshot` here is to solve a mobx issue
       // wrap in `groups` so it traverses the root level
       let nodeGroups = groupsToObjects({
         groups: snapshot(node.context.results),
-      })
+      }))
       let responseGroups = groupsToObjects({ groups: response.context.results })
       // Easy merge now that we can merge by group key
       let results = F.mergeAllArrays([nodeGroups, responseGroups])
 
       // Convert groups back to arrays
       let groupsToArrays = transform(maybeUpdateOn('groups', F.unkeyBy('key')))
+      let columnsToArrays = transform(maybeUpdateOn('columns', F.unkeyBy('key')))
+      groupsToArrays = _.flow(groupsToArrays, columnsToArrays)
       // Grab `groups` property we artifically added above for easy traversals
       let context = { results: groupsToArrays(results).groups }
 
