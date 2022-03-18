@@ -3,8 +3,7 @@ let _ = require('lodash/fp')
 let { getStats } = require('./stats')
 let { getField } = require('../../utils/fields')
 let types = require('../../../src/example-types')
-let { transmuteTree } = require('../../utils/futil')
-let { simplifyBucket, basicSimplifyTree } = require('../../utils/elasticDSL')
+let { basicSimplifyTree } = require('../../utils/elasticDSL')
 
 let lookupTypeProp = (def, prop, type) =>
   _.getOr(def, `${type}GroupStats.${prop}`, types)
@@ -104,17 +103,6 @@ let flattenGroups = Tree.leavesBy((node, index, parents) => ({
   ),
 }))
 
-let defaultGetGroups = _.get('groups.buckets')
-// This captures everything but encodes types specific knowledge:
-// let defaultGetGroups = aggs =>
-//   F.when(
-//     _.isPlainObject,
-//     F.unkeyBy('key'),
-//     (aggs.valueFilter || aggs).groups.buckets
-//   )
-let ensureGroups = node => {
-  if (!_.isArray(node.groups)) node.groups = []
-}
 let processResponse = (response, node = {}) => {
   // Don't consider deeper levels than +1 the current drilldown
   // This allows avoiding expansion until ready
@@ -122,23 +110,6 @@ let processResponse = (response, node = {}) => {
   let groups = node.drilldown
     ? _.take(_.size(node.drilldown) + 1, node.groups || [])
     : node.groups || []
-
-  // Traversing the ES response utilizes type specific methods looked up by matching the depth with node.groups
-  let traverseSource = (x, i, parents = []) => {
-    let depth = parents.length
-    let { type } = groups[depth] || {}
-    let traverse = lookupTypeProp(defaultGetGroups, 'getGroups', type)
-    return traverse(x)
-  }
-
-  // Goal here is to map the tree from one structure to another
-  // goal is to keep _nodes_ the same, but write back with different (dynamic) traversal
-  //   e.g. valuefilter.groups.buckets -> groups, groups.buckets -> groups
-  // let simplifyTree = transmuteTree(traverseSource, Tree.traverse, ensureGroups)
-  // let results = simplifyTree(
-  //   simplifyBucket,
-  //   F.getOrReturn('pivotFilter', response.aggregations)
-  // )
 
   let input = F.getOrReturn('pivotFilter', response.aggregations)
   // SUPER HACKY TEMPORARY METHOD
