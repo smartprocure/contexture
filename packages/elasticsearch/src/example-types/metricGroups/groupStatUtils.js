@@ -10,6 +10,7 @@ let buildGroupStatsQuery = buildGroupQuery => (
   buildGroupQuery(
     { field, ...node },
     statsAggs(statsField, stats),
+    'groups',
     schema,
     getStats
   )

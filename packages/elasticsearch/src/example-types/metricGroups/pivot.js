@@ -3,8 +3,7 @@ let _ = require('lodash/fp')
 let { getStats } = require('./stats')
 let { getField } = require('../../utils/fields')
 let types = require('../../../src/example-types')
-let { transmuteTree } = require('../../utils/futil')
-let { simplifyBucket } = require('../../utils/elasticDSL')
+let { basicSimplifyTree } = require('../../utils/elasticDSL')
 
 let lookupTypeProp = (def, prop, type) =>
   _.getOr(def, `${type}GroupStats.${prop}`, types)
@@ -41,22 +40,24 @@ let buildQuery = async (node, schema, getStats) => {
     ? _.take(_.size(node.drilldown) + 1, node.groups)
     : node.groups
 
-  let statsAggBlob = { aggs: aggsForValues(node.values, schema) }
-  let query = await _.reduce(
-    async (children, group) => {
-      // Subtotals calculates metrics at each group level, not needed if flattening or in chart
-      // Support for per group stats could also be added here - merge on another stats agg blob to children based on group.stats/statsField or group.values
-      if (node.subtotals) children = _.merge(await children, statsAggBlob)
-      let { type } = group
-      let buildGroupQuery = lookupTypeProp(_.identity, 'buildGroupQuery', type)
-      return buildGroupQuery(group, await children, schema, getStats)
-    },
-    statsAggBlob,
-    // TODO: Also consider rows + columns -> groups:
-    // _.reverse([...(node.rows || []), ...(node.columns || []), ...(node.groups || [])])
-    // _.reverse(_.concat(node.rows, node.columns, node.groups)))
-    _.reverse(groups)
-  )
+  let statsAggs = { aggs: aggsForValues(node.values, schema) }
+  // buildGroupQuery applied to a list of groups
+  let buildNestedGroupQuery = (statsAggs, groups, groupingType) =>
+    _.reduce(
+      async (children, group) => {
+        // Subtotals calculates metrics at each group level, not needed if flattening or in chart
+        // Support for per group stats could also be added here - merge on another stats agg blob to children based on group.stats/statsField or group.values
+        if (node.subtotals) children = _.merge(await children, statsAggs)
+        let { type } = group
+        let build = lookupTypeProp(_.identity, 'buildGroupQuery', type)
+        return build(group, await children, groupingType, schema, getStats)
+      },
+      statsAggs,
+      _.reverse(groups)
+    )
+  if (node.columns)
+    statsAggs = await buildNestedGroupQuery(statsAggs, node.columns, 'columns')
+  let query = await buildNestedGroupQuery(statsAggs, groups, 'groups')
 
   let filters = _.compact(
     await Promise.all(
@@ -102,41 +103,10 @@ let flattenGroups = Tree.leavesBy((node, index, parents) => ({
   ),
 }))
 
-let defaultGetGroups = _.get('groups.buckets')
-// This captures everything but encodes types specific knowledge:
-// let defaultGetGroups = aggs =>
-//   F.when(
-//     _.isPlainObject,
-//     F.unkeyBy('key'),
-//     (aggs.valueFilter || aggs).groups.buckets
-//   )
-let ensureGroups = node => {
-  if (!_.isArray(node.groups)) node.groups = []
-}
 let processResponse = (response, node = {}) => {
-  // Don't consider deeper levels than +1 the current drilldown
-  // This allows avoiding expansion until ready
-  // Opt out with falsey drilldown
-  let groups = node.drilldown
-    ? _.take(_.size(node.drilldown) + 1, node.groups || [])
-    : node.groups || []
-
-  // Traversing the ES response utilizes type specific methods looked up by matching the depth with node.groups
-  let traverseSource = (x, i, parents = []) => {
-    let depth = parents.length
-    let { type } = groups[depth] || {}
-    let traverse = lookupTypeProp(defaultGetGroups, 'getGroups', type)
-    return traverse(x)
-  }
-
-  // Goal here is to map the tree from one structure to another
-  // goal is to keep _nodes_ the same, but write back with different (dynamic) traversal
-  //   e.g. valuefilter.groups.buckets -> groups, groups.buckets -> groups
-  let simplifyTree = transmuteTree(traverseSource, Tree.traverse, ensureGroups)
-  let results = simplifyTree(
-    simplifyBucket,
-    F.getOrReturn('pivotFilter', response.aggregations)
-  )
+  let input = F.getOrReturn('pivotFilter', response.aggregations)
+  // SUPER HACKY TEMPORARY METHOD
+  let results = basicSimplifyTree(input)
   return { results: node.flatten ? flattenGroups(results) : results.groups }
 }
 

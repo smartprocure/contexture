@@ -14,7 +14,7 @@ let drilldownToRange = drilldown => {
   return pickSafeNumbers({ gte, lt })
 }
 
-let buildGroupQuery = async (node, children, schema, getStats) => {
+let buildGroupQuery = async (node, children, groupsKey, schema, getStats) => {
   let { field, percents, drilldown } = node
   let ranges
   // omit ranges with drilldown otherwise we get null/0s......
@@ -27,7 +27,7 @@ let buildGroupQuery = async (node, children, schema, getStats) => {
   }
   let result = {
     aggs: {
-      groups: {
+      [groupsKey]: {
         range: { field, ranges },
         ...children,
       },
