@@ -49,7 +49,7 @@ let simplifyBuckets = _.flow(
   _.map(simplifyBucket)
 )
 
-// VERY simple and inefficient tree simpification
+// VERY hacky and inefficient tree simpification
 // inefficient due to copying the entire tree to flatten, again to unflatten, and running regex replaces on EVERY key
 // This will be superseeded by a transmuteTree version later :)
 let basicSimplifyTree = _.flow(
