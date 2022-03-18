@@ -1,5 +1,6 @@
-# WIP 1.10.0
+# 1.10.0
 * Add `columns` to pivot type. `buildGroupQuery` now takes a `groupingType` prop to behave differently as a group vs a column
+* Added a hacky implementation of tree simplification (flattening `buckets`, etc) which will be replaced by a transmute tree version in a future release
 
 # 1.9.0
 * Add `aliasOf` to elastic schemas (for better alias handling)
