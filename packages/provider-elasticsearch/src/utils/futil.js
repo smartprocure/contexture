@@ -54,6 +54,39 @@ let transmuteTree = (
 
 let logJSON = result => console.info(JSON.stringify(result, null, 2))
 
+// Returns a proxy array that represents a virtual concatenation of two arrays
+// Reading/writing this virtual array reads/writes the underlying arrays (and doesn't clone)
+// Should be very memory/CPU efficient when you'd otherwise concat arrays just for traversal
+let virtualConcat = (a1 = [], a2 = []) =>
+  new Proxy([], {
+    get(obj, key) {
+      let size = a1.length
+      if (key === 'length') return size + a2.length
+      if (key === Symbol.toStringTag) return `${a1.toString()},${a2.toString()}`
+      // i is a string, so cast and check it's a number
+      if (_.isFinite(Number(key))) return key < size ? a1[key] : a2[key - size]
+    },
+    set(obj, key, value) {
+      let size = a1.length
+      if (key < size) a1[key] = value
+      else a2[key - size] = value
+    },
+  })
+
+// Flattens an object, runs mapKeys, then unflattens
+let mapFlatKeys = fn =>
+  _.flow(F.flattenObject, _.mapKeys(fn), F.unflattenObject)
+
+// Splits and joins a string on a delimiter, running a mapper over the parts
+let mapStringParts = (fn, delimiter = '.') =>
+  _.flow(_.split(delimiter), _.map(fn), _.join(delimiter))
+
+let renameOn = (from, to, obj) => {
+  obj[to] = obj[from]
+  delete obj[from]
+  return obj
+}
+
 module.exports = {
   maybeAppend,
   keysToObject,
@@ -65,4 +98,8 @@ module.exports = {
   mapTreePostOrder,
   transmuteTree,
   logJSON,
+  virtualConcat,
+  mapFlatKeys,
+  mapStringParts,
+  renameOn,
 }

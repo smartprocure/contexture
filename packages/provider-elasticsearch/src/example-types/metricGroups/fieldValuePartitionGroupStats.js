@@ -9,9 +9,9 @@ let drilldown = ({ field, matchValue, drilldown }, schema) => {
   if (drilldown === 'fail') return { bool: { must_not: [filter] } }
 }
 
-let buildGroupQuery = ({ field, matchValue }, children, schema) => ({
+let buildGroupQuery = ({ field, matchValue }, children, groupKey, schema) => ({
   aggs: {
-    groups: {
+    [groupKey]: {
       filters: {
         other_bucket_key: 'fail',
         filters: {

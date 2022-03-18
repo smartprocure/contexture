@@ -15,7 +15,7 @@ let drilldown = ({ field, drilldown }, schema) => ({
   },
 })
 
-let buildGroupQuery = (node, children, schema) => {
+let buildGroupQuery = (node, children, groupingType, schema) => {
   let {
     field: groupField,
     size = 10,
@@ -26,7 +26,7 @@ let buildGroupQuery = (node, children, schema) => {
   let field = getField(schema, groupField)
   let query = {
     aggs: {
-      groups: {
+      [groupingType]: {
         terms: {
           field,
           size,

@@ -5,10 +5,11 @@ let {
   maybeAppend,
   writeTreeNode,
   transmuteTree,
+  virtualConcat,
 } = require('../../src/utils/futil')
 let { simplifyBucket } = require('../../src/utils/elasticDSL')
 
-describe('futil canidiates', () => {
+describe('futil candidates', () => {
   it('maybeAppend should work', () => {
     expect(maybeAppend('.txt', 'file')).to.eql('file.txt')
     expect(maybeAppend('.txt', 'file.txt')).to.eql('file.txt')
@@ -189,6 +190,87 @@ describe('futil canidiates', () => {
                 },
               ],
             },
+          ],
+        },
+      ],
+    })
+  })
+  it('virtualConcat', () => {
+    let arr1 = [0, 1, 2, 3]
+    let arr2 = [4, 5, 6, 7]
+    let arr = virtualConcat(arr1, arr2)
+
+    expect(arr[5]).to.equal(5)
+    expect(arr.length).to.equal(8)
+    arr[5] = 'a'
+    expect(arr2[1]).to.equal('a') // underlying array is mutated
+    expect(_.toPairs(arr)).to.deep.equal([
+      ['0', 0],
+      ['1', 1],
+      ['2', 2],
+      ['3', 3],
+      ['4', 4],
+      ['5', 'a'],
+      ['6', 6],
+      ['7', 7],
+    ])
+    expect(JSON.stringify(arr)).to.equal('[0,1,2,3,4,"a",6,7]')
+    // F.eachIndexed((x, i) => {
+    //   console.log(x, i) // iterates over all values
+    // }, arr)
+  })
+  it('transmuteTree should simplify groups.buckets in tree with rows and columns', () => {
+    let tree = {
+      key: 'root',
+      groups: {
+        buckets: [
+          {
+            key: 'row1',
+            groups: {
+              buckets: [{ key: 'thing' }, { key: 'thing2' }],
+            },
+            columns: {
+              buckets: [
+                { key: 'innermost' },
+                { key: 'inner2', min: { value: 12 }, some_value: 3 },
+              ],
+            },
+          },
+        ],
+      },
+    }
+
+    let traverseSource = node =>
+      virtualConcat(
+        _.getOr([], 'groups.buckets', node),
+        _.getOr([], 'columns.buckets', node)
+      )
+
+    let traverseTarget = node => virtualConcat(node.groups, node.columns)
+
+    let cleanup = node => {
+      // groups needs to be the right length or virtualConcat will put everything in columns since the cut off for determining when to go to arr2 would be 0 if arr1 is size 0
+      if (node.groups && !_.isArray(node.groups))
+        node.groups = Array(_.get('groups.buckets.length', node))
+      if (node.columns && !_.isArray(node.columns)) node.columns = []
+    }
+    // Goal here is to map the tree from one structure to another
+    // goal is to keep _nodes_ the same, but write back with different (dynamic) traversal
+    //   e.g. valuefilter.groups.buckets -> groups, groups.buckets -> groups
+    let simplifyGroups = transmuteTree(traverseSource, traverseTarget, cleanup)
+
+    // More realistic test that also maps min.value -> min
+    let bucketSimplified = simplifyGroups(simplifyBucket, tree)
+
+    expect(bucketSimplified).to.deep.equal({
+      key: 'root',
+      groups: [
+        {
+          key: 'row1',
+          groups: [{ key: 'thing' }, { key: 'thing2' }],
+          columns: [
+            { key: 'innermost' },
+            { key: 'inner2', min: 12, someValue: 3 },
           ],
         },
       ],

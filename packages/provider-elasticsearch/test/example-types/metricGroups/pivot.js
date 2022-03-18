@@ -6,8 +6,10 @@ let {
 } = require('../../../src/example-types/metricGroups/pivot')
 let { expect } = require('chai')
 let { testSchema, testSchemas } = require('../testUtils')
-let pivotResponse = require('./pivotResponse')
-let pivotRepsonseWithFilteredFieldValueGroup = require('./pivotRepsonseWithFilteredFieldValueGroup')
+let pivotResponse = require('./pivotData/pivotResponse')
+let pivotRepsonseWithFilteredFieldValueGroup = require('./pivotData/pivotRepsonseWithFilteredFieldValueGroup')
+let columnResponse = require('./pivotData/columnResponse')
+let columnResult = require('./pivotData/columnResult')
 
 // pass aggsForValues in each stage
 describe('pivot', () => {
@@ -605,6 +607,256 @@ describe('pivot', () => {
     )
     expect(result).to.eql(expected)
   })
+  it('should build query with pivot columns', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [
+        { type: 'min', field: 'LineItem.TotalPrice' },
+        { type: 'max', field: 'LineItem.TotalPrice' },
+        { type: 'avg', field: 'LineItem.TotalPrice' },
+        { type: 'sum', field: 'LineItem.TotalPrice' },
+      ],
+      groups: [
+        { type: 'fieldValues', field: 'Organization.State' },
+        { type: 'fieldValues', field: 'Organization.NameState' },
+        {
+          type: 'numberRanges',
+          field: 'LineItem.TotalPrice',
+          ranges: [
+            { from: '0', to: '500' },
+            { from: '500', to: '10000' },
+          ],
+        },
+      ],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+    }
+    let expected = {
+      aggs: {
+        groups: {
+          terms: {
+            field: 'Organization.State.untouched',
+            size: 10,
+            // order: {}
+          },
+          aggs: {
+            groups: {
+              terms: {
+                field: 'Organization.NameState.untouched',
+                size: 10,
+                // order: {}
+              },
+              aggs: {
+                groups: {
+                  range: {
+                    field: 'LineItem.TotalPrice',
+                    ranges: [
+                      { from: '0', to: '500' },
+                      { from: '500', to: '10000' },
+                    ],
+                  },
+                  aggs: {
+                    columns: {
+                      date_histogram: {
+                        field: 'PO.IssuedDate',
+                        interval: 'year',
+                        min_doc_count: 0,
+                      },
+                      aggs: {
+                        'pivotMetric-min-LineItem.TotalPrice': {
+                          min: { field: 'LineItem.TotalPrice' },
+                        },
+                        'pivotMetric-max-LineItem.TotalPrice': {
+                          max: { field: 'LineItem.TotalPrice' },
+                        },
+                        'pivotMetric-avg-LineItem.TotalPrice': {
+                          avg: { field: 'LineItem.TotalPrice' },
+                        },
+                        'pivotMetric-sum-LineItem.TotalPrice': {
+                          sum: { field: 'LineItem.TotalPrice' },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    }
+    let result = await buildQuery(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    expect(result).to.eql(expected)
+  })
+  it('should build query with pivot columns and subtotals', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      subtotals: true,
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      groups: [
+        { type: 'fieldValues', field: 'Organization.State' },
+        { type: 'fieldValues', field: 'Organization.NameState' },
+      ],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+    }
+    let expected = {
+      aggs: {
+        groups: {
+          terms: {
+            field: 'Organization.State.untouched',
+            size: 10,
+            // order: {}
+          },
+          aggs: {
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                interval: 'year',
+                min_doc_count: 0,
+              },
+              aggs: {
+                'pivotMetric-sum-LineItem.TotalPrice': {
+                  sum: { field: 'LineItem.TotalPrice' },
+                },
+              },
+            },
+            groups: {
+              terms: {
+                field: 'Organization.NameState.untouched',
+                size: 10,
+                // order: {}
+              },
+              aggs: {
+                columns: {
+                  date_histogram: {
+                    field: 'PO.IssuedDate',
+                    interval: 'year',
+                    min_doc_count: 0,
+                  },
+                  aggs: {
+                    'pivotMetric-sum-LineItem.TotalPrice': {
+                      sum: { field: 'LineItem.TotalPrice' },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    }
+    let result = await buildQuery(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    // console.log(JSON.stringify(result))
+    expect(result).to.eql(expected)
+  })
+  it('should build query with nested pivot columns and subtotals', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      subtotals: true,
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      groups: [
+        { type: 'fieldValues', field: 'Organization.State' },
+        { type: 'fieldValues', field: 'Organization.NameState' },
+      ],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
+      ],
+    }
+    let expected = {
+      aggs: {
+        groups: {
+          terms: {
+            field: 'Organization.State.untouched',
+            size: 10,
+            // order: {}
+          },
+          aggs: {
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                interval: 'year',
+                min_doc_count: 0,
+              },
+              aggs: {
+                // TODO: this subtotal might not be needed - maybe allow opting out with a `columnSubtotals` flag?
+                'pivotMetric-sum-LineItem.TotalPrice': {
+                  sum: { field: 'LineItem.TotalPrice' },
+                },
+                columns: {
+                  date_histogram: {
+                    field: 'PO.IssuedDate',
+                    interval: 'month',
+                    min_doc_count: 0,
+                  },
+                  aggs: {
+                    'pivotMetric-sum-LineItem.TotalPrice': {
+                      sum: { field: 'LineItem.TotalPrice' },
+                    },
+                  },
+                },
+              },
+            },
+            groups: {
+              terms: {
+                field: 'Organization.NameState.untouched',
+                size: 10,
+                // order: {}
+              },
+              aggs: {
+                columns: {
+                  date_histogram: {
+                    field: 'PO.IssuedDate',
+                    interval: 'year',
+                    min_doc_count: 0,
+                  },
+                  aggs: {
+                    // Same as above, should we add `columnSubtotals`?
+                    'pivotMetric-sum-LineItem.TotalPrice': {
+                      sum: { field: 'LineItem.TotalPrice' },
+                    },
+                    columns: {
+                      date_histogram: {
+                        field: 'PO.IssuedDate',
+                        interval: 'month',
+                        min_doc_count: 0,
+                      },
+                      aggs: {
+                        'pivotMetric-sum-LineItem.TotalPrice': {
+                          sum: { field: 'LineItem.TotalPrice' },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    }
+    let result = await buildQuery(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    // console.log(JSON.stringify(result))
+    expect(result).to.eql(expected)
+  })
   it('should handle pivotResponse', () => {
     let aggs = pivotResponse.aggregations
 
@@ -1096,5 +1348,21 @@ describe('pivot', () => {
         ],
       },
     ])
+  })
+  it('should processResponse correctly for pivots with columns', () => {
+    let nestedResult = processResponse(columnResponse, {
+      key: 'test',
+      type: 'pivot',
+      subtotals: true,
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      groups: [
+        { type: 'fieldValues', field: 'Organization.State' },
+        { type: 'fieldValues', field: 'Organization.NameState' },
+      ],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+    })
+    expect(nestedResult.results).to.eql(columnResult)
   })
 })
