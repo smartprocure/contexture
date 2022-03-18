@@ -104,13 +104,6 @@ let flattenGroups = Tree.leavesBy((node, index, parents) => ({
 }))
 
 let processResponse = (response, node = {}) => {
-  // Don't consider deeper levels than +1 the current drilldown
-  // This allows avoiding expansion until ready
-  // Opt out with falsey drilldown
-  let groups = node.drilldown
-    ? _.take(_.size(node.drilldown) + 1, node.groups || [])
-    : node.groups || []
-
   let input = F.getOrReturn('pivotFilter', response.aggregations)
   // SUPER HACKY TEMPORARY METHOD
   let results = basicSimplifyTree(input)
