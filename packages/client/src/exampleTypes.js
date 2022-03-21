@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 import F from 'futil'
-import { transformTreePostOrder, maybeUpdateOn } from './util/futil'
+import { maybeUpdateOn } from './util/futil'
 
 let validateValues = ({ value, values = [] }) => value || values.length
 let validateValueExistence = _.flow(_.get('value'), _.negate(_.isNil))
@@ -309,34 +309,49 @@ export default F.stampKey('type', {
     },
     shouldMergeResponse: node => !_.isEmpty(node.drilldown),
     mergeResponse(node, response, extend, snapshot) {
-      let transformGroups = transformTreePostOrder(_.get('groups'))
-      let transformColumns = transformTreePostOrder(_.get('columns'))
-
-      // Convert response groups to objects for easy merges
+      // Convert response groups and columns to objects for easy merges
       let groupsToObjects = _.flow(
-        transformGroups(maybeUpdateOn('groups', _.keyBy('key'))),
-        transformColumns(maybeUpdateOn('columns', _.keyBy('key')))
+        maybeUpdateOn('groups',
+          _.flow(
+            _.map(x => groupsToObjects(x)),
+            _.keyBy('key'),
+          ),
+        ),
+        maybeUpdateOn('columns',
+          _.flow(
+            _.map(x => groupsToObjects(x)),
+            _.keyBy('key'),
+          ),
+        ),
+      )
+      // Convert groups and columns back to arrays
+      let groupsToArrays = _.flow(
+        maybeUpdateOn('groups',
+          _.flow(
+            F.unkeyBy('key'),
+            _.map(x => groupsToArrays(x)),
+          ),
+        ),
+        maybeUpdateOn('columns',
+          _.flow(
+            F.unkeyBy('key'),
+            _.map(x => groupsToArrays(x)),
+          ),
+        ),
       )
 
       // `snapshot` here is to solve a mobx issue
       // wrap in `groups` so it traverses the root level
-      let resultsSnap = snapshot(node.context.results)
       let nodeGroups = groupsToObjects({
-        groups: resultsSnap,
-        columns: resultsSnap,
+        groups: snapshot(node.context.results),
       })
       let responseGroups = groupsToObjects({
         groups: response.context.results,
-        columns: response.context.results,
       })
+
       // Easy merge now that we can merge by group key
       let results = F.mergeAllArrays([nodeGroups, responseGroups])
 
-      // Convert groups back to arrays
-      let groupsToArrays = _.flow(
-        transformGroups(maybeUpdateOn('groups', F.unkeyBy('key'))),
-        transformColumns(maybeUpdateOn('columns', F.unkeyBy('key')))
-      )
       // Grab `groups` property we artifically added above for easy traversals
       let context = { results: groupsToArrays(results).groups }
 

@@ -8,6 +8,8 @@ export let transformTreePostOrder = (next = F.traverse) =>
     return result
   })
 
-export let maybeUpdateOn = _.curry((key, fn, data) => {
-  if (_.get(key, data)) F.updateOn(key, fn, data)
-})
+export let maybeUpdateOn = _.curry((key, fn, data) =>
+  _.get(key, data)
+    ? F.updateOn(key, fn, data)
+    : data
+)
