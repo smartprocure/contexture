@@ -9,7 +9,5 @@ export let transformTreePostOrder = (next = F.traverse) =>
   })
 
 export let maybeUpdateOn = _.curry((key, fn, data) =>
-  _.get(key, data)
-    ? F.updateOn(key, fn, data)
-    : data
+  _.get(key, data) ? F.updateOn(key, fn, data) : data
 )

@@ -311,33 +311,37 @@ export default F.stampKey('type', {
     mergeResponse(node, response, extend, snapshot) {
       // Convert response groups and columns to objects for easy merges
       let groupsToObjects = _.flow(
-        maybeUpdateOn('groups',
+        maybeUpdateOn(
+          'groups',
           _.flow(
             _.map(x => groupsToObjects(x)),
-            _.keyBy('key'),
-          ),
+            _.keyBy('key')
+          )
         ),
-        maybeUpdateOn('columns',
+        maybeUpdateOn(
+          'columns',
           _.flow(
             _.map(x => groupsToObjects(x)),
-            _.keyBy('key'),
-          ),
-        ),
+            _.keyBy('key')
+          )
+        )
       )
       // Convert groups and columns back to arrays
       let groupsToArrays = _.flow(
-        maybeUpdateOn('groups',
+        maybeUpdateOn(
+          'groups',
           _.flow(
             F.unkeyBy('key'),
-            _.map(x => groupsToArrays(x)),
-          ),
+            _.map(x => groupsToArrays(x))
+          )
         ),
-        maybeUpdateOn('columns',
+        maybeUpdateOn(
+          'columns',
           _.flow(
             F.unkeyBy('key'),
-            _.map(x => groupsToArrays(x)),
-          ),
-        ),
+            _.map(x => groupsToArrays(x))
+          )
+        )
       )
 
       // `snapshot` here is to solve a mobx issue
