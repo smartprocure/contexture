@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 import F from 'futil'
-import { maybeUpdateOn } from './util/futil'
+import { deepMultiTransformOn } from './util/futil'
 
 let validateValues = ({ value, values = [] }) => value || values.length
 let validateValueExistence = _.flow(_.get('value'), _.negate(_.isNil))
@@ -310,38 +310,22 @@ export default F.stampKey('type', {
     shouldMergeResponse: node => !_.isEmpty(node.drilldown),
     mergeResponse(node, response, extend, snapshot) {
       // Convert response groups and columns to objects for easy merges
-      let groupsToObjects = _.flow(
-        maybeUpdateOn(
-          'groups',
+      let groupsToObjects = deepMultiTransformOn(
+        ['groups', 'columns'],
+        groupsToObjects =>
           _.flow(
-            _.map(x => groupsToObjects(x)),
+            _.map(groupsToObjects),
             _.keyBy('key')
           )
-        ),
-        maybeUpdateOn(
-          'columns',
-          _.flow(
-            _.map(x => groupsToObjects(x)),
-            _.keyBy('key')
-          )
-        )
       )
       // Convert groups and columns back to arrays
-      let groupsToArrays = _.flow(
-        maybeUpdateOn(
-          'groups',
+      let groupsToArrays = deepMultiTransformOn(
+        ['groups', 'columns'],
+        groupsToArrays =>
           _.flow(
             F.unkeyBy('key'),
-            _.map(x => groupsToArrays(x))
+            _.map(groupsToArrays),
           )
-        ),
-        maybeUpdateOn(
-          'columns',
-          _.flow(
-            F.unkeyBy('key'),
-            _.map(x => groupsToArrays(x))
-          )
-        )
       )
 
       // `snapshot` here is to solve a mobx issue
@@ -356,7 +340,7 @@ export default F.stampKey('type', {
       // Easy merge now that we can merge by group key
       let results = F.mergeAllArrays([nodeGroups, responseGroups])
 
-      // Grab `groups` property we artifically added above for easy traversals
+      // Grab `groups` property we artificially added above for easy traversals
       let context = { results: groupsToArrays(results).groups }
 
       // Write on the node
