@@ -2114,6 +2114,69 @@ let AllTests = ContextureClient => {
       },
     ])
   })
+  it('should merge pivot response with nested groups and columns', async () => {
+    let service = sinon.spy(mockService())
+    let columns = [
+      { type: 'dateInterval', field: 'Date',  interval: 'year' },
+    ]
+    let groups = [
+      { type: 'fieldValuesPartition', field: 'State', matchValue: 'Florida' },
+      { type: 'fieldValues', field: 'City', size: 10 },
+      { type: 'fieldValues', field: 'Name', size: 10 },
+    ]
+    let Tree = ContextureClient(
+      { service, debounce: 1 },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          { key: 'pivot', type: 'pivot', columns, groups },
+          { key: 'test', type: 'facet', values: [] },
+        ],
+      }
+    )
+    let node = Tree.getNode(['root', 'pivot'])
+
+    let merge = results =>
+      exampleTypes.pivot.mergeResponse(
+        node,
+        { context: { results } },
+        Tree.extend,
+        Tree.snapshot
+      )
+    merge([
+      { key: 'FL', columns: [{key: '2021', a: 3}, {key: '2022', a: 4}], groups: [] },
+      { key: 'NV', columns: [{key: '2021', a: 6}, {key: '2022', a: 8}], groups: [] },
+    ])
+    merge([
+      { key: 'FL', columns: [{ key: '2021', a: 3 }, { key: '2022', a: 4 }], groups: [
+          { key: 'Miami', columns: [{ key: '2021', a: 2 }, { key: '2022', a: 3 }], groups: [] },
+          { key: 'Hollywood', columns: [{ key: '2021', a: 1 }, { key: '2022', a: 1 }], groups: [] },
+        ],
+      },
+    ])
+    merge([
+      { key: 'FL', columns: [{ key: '2021', a: 3 }, { key: '2022', a: 4 }], groups: [
+          { key: 'Miami', columns: [{ key: '2021', a: 2 }, { key: '2022', a: 3 }], groups: [
+              { key: 'NanoSoft', columns: [{ key: '2021', a: 1 }, { key: '2022', a: 2 }] },
+              { key: 'MicroHard', columns: [{ key: '2021', a: 1 }, { key: '2022', a: 1 }] },
+            ] },
+        ],
+      },
+    ])
+
+    expect(node.context.results).to.deep.equal([
+      { key: 'FL', columns: [{ key: '2021', a: 3 }, { key: '2022', a: 4 }], groups: [
+          { key: 'Miami', columns: [{ key: '2021', a: 2 }, { key: '2022', a: 3 }], groups: [
+              { key: 'NanoSoft', columns: [{ key: '2021', a: 1 }, { key: '2022', a: 2 }] },
+              { key: 'MicroHard', columns: [{ key: '2021', a: 1 }, { key: '2022', a: 1 }] },
+            ] },
+          { key: 'Hollywood', columns: [{ key: '2021', a: 1 }, { key: '2022', a: 1 }], groups: [] },
+        ],
+      },
+      { key: 'NV', columns: [{key: '2021', a: 6}, {key: '2022', a: 8}], groups: [] },
+    ])
+  })
   it('should support onDispatch (and pivot overriding response merges)', async () => {
     let service = sinon.spy(mockService())
     let groups = [
