@@ -1,3 +1,6 @@
+# 2.40.2
+* Fix: Pivot node: deep merging for groups and columns
+
 # 2.40.1
 * Fix: Pivot node: merging columns on drilldown response
 
