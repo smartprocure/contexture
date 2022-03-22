@@ -312,20 +312,12 @@ export default F.stampKey('type', {
       // Convert response groups and columns to objects for easy merges
       let groupsToObjects = deepMultiTransformOn(
         ['groups', 'columns'],
-        groupsToObjects =>
-          _.flow(
-            _.map(groupsToObjects),
-            _.keyBy('key')
-          )
+        groupsToObjects => _.flow(_.map(groupsToObjects), _.keyBy('key'))
       )
       // Convert groups and columns back to arrays
       let groupsToArrays = deepMultiTransformOn(
         ['groups', 'columns'],
-        groupsToArrays =>
-          _.flow(
-            F.unkeyBy('key'),
-            _.map(groupsToArrays),
-          )
+        groupsToArrays => _.flow(F.unkeyBy('key'), _.map(groupsToArrays))
       )
 
       // `snapshot` here is to solve a mobx issue

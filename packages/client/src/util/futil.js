@@ -16,7 +16,7 @@ export let maybeUpdateOn = _.curry((fn, key, data) =>
 export let deepMultiTransformOn = (props, transformWith) => {
   let self = _.flow(
     _.map(maybeUpdateOn(transformWith(x => self(x)))),
-    _.flow,
+    _.flow
   )(props)
   return self
 }
