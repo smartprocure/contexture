@@ -58,11 +58,11 @@ let buildQuery = async (node, schema, getStats) => {
   if (node.columns)
     statsAggs = {
       ...statsAggs,
-      ...await buildNestedGroupQuery(statsAggs, node.columns, 'columns')
+      ...(await buildNestedGroupQuery(statsAggs, node.columns, 'columns')),
     }
   let query = {
-    ...await buildNestedGroupQuery(statsAggs, groups, 'groups'),
-    ...statsAggs
+    ...(await buildNestedGroupQuery(statsAggs, groups, 'groups')),
+    ...statsAggs,
   }
 
   let filters = _.compact(
