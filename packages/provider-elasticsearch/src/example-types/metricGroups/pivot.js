@@ -113,7 +113,8 @@ let processResponse = (response, node = {}) => {
   let input = F.getOrReturn('pivotFilter', response.aggregations)
   // SUPER HACKY TEMPORARY METHOD
   let results = basicSimplifyTree(input)
-  return { results: node.flatten ? flattenGroups(results) : results.groups }
+  // this kills flatten support
+  return { results }
 }
 
 let pivot = {
