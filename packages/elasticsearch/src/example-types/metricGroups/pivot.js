@@ -56,8 +56,14 @@ let buildQuery = async (node, schema, getStats) => {
       _.reverse(groups)
     )
   if (node.columns)
-    statsAggs = await buildNestedGroupQuery(statsAggs, node.columns, 'columns')
-  let query = await buildNestedGroupQuery(statsAggs, groups, 'groups')
+    statsAggs = _.merge(
+      await buildNestedGroupQuery(statsAggs, node.columns, 'columns'),
+      statsAggs
+    )
+  let query = _.merge(
+    await buildNestedGroupQuery(statsAggs, groups, 'groups'),
+    statsAggs
+  )
 
   let filters = _.compact(
     await Promise.all(
@@ -107,7 +113,7 @@ let processResponse = (response, node = {}) => {
   let input = F.getOrReturn('pivotFilter', response.aggregations)
   // SUPER HACKY TEMPORARY METHOD
   let results = basicSimplifyTree(input)
-  return { results: node.flatten ? flattenGroups(results) : results.groups }
+  return { results: node.flatten ? flattenGroups(results) : results }
 }
 
 let pivot = {

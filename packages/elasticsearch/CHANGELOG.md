@@ -1,3 +1,6 @@
+# 1.11.0
+* Pivot: add root level columns and calculations
+
 # 1.10.0
 * Add `columns` to pivot type. `buildGroupQuery` now takes a `groupingType` prop to behave differently as a group vs a column
 * Added a hacky implementation of tree simplification (flattening `buckets`, etc) which will be replaced by a transmute tree version in a future release
