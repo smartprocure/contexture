@@ -58,11 +58,11 @@ let buildQuery = async (node, schema, getStats) => {
   if (node.columns)
     statsAggs = _.merge(
       await buildNestedGroupQuery(statsAggs, node.columns, 'columns'),
-      statsAggs,
+      statsAggs
     )
   let query = _.merge(
     await buildNestedGroupQuery(statsAggs, groups, 'groups'),
-    statsAggs,
+    statsAggs
   )
 
   let filters = _.compact(
