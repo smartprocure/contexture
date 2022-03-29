@@ -1,4 +1,4 @@
-# 1.10.1
+# 1.11.0
 * Pivot: add root level columns and calculations
 
 # 1.10.0
