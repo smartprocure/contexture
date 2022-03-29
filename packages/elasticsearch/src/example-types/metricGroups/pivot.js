@@ -56,14 +56,14 @@ let buildQuery = async (node, schema, getStats) => {
       _.reverse(groups)
     )
   if (node.columns)
-    statsAggs = {
-      ...statsAggs,
-      ...(await buildNestedGroupQuery(statsAggs, node.columns, 'columns')),
-    }
-  let query = {
-    ...(await buildNestedGroupQuery(statsAggs, groups, 'groups')),
-    ...statsAggs,
-  }
+    statsAggs = _.merge(
+      await buildNestedGroupQuery(statsAggs, node.columns, 'columns'),
+      statsAggs,
+    )
+  let query = _.merge(
+    await buildNestedGroupQuery(statsAggs, groups, 'groups'),
+    statsAggs,
+  )
 
   let filters = _.compact(
     await Promise.all(
