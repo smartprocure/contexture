@@ -72,6 +72,7 @@ describe('pivot', () => {
       ],
     }
     let expected = {
+      track_total_hits: true,
       aggs: {
         groups: {
           terms: { field: 'Organization.NameState.untouched', size: 10 },
@@ -154,6 +155,7 @@ describe('pivot', () => {
       ],
     }
     let expected = {
+      track_total_hits: true,
       aggs: {
         groups: {
           filters: {
@@ -194,6 +196,7 @@ describe('pivot', () => {
       ],
     }
     let expected = {
+      track_total_hits: true,
       aggs: {
         valueFilter: {
           filter: {
@@ -278,6 +281,7 @@ describe('pivot', () => {
       ],
     }
     let expected = {
+      track_total_hits: true,
       aggs: {
         pivotFilter: {
           filter: {
@@ -357,6 +361,7 @@ describe('pivot', () => {
       ],
     }
     let expected = {
+      track_total_hits: true,
       aggs: {
         groups: {
           terms: { field: 'Organization.Name', size: 10 },
@@ -404,6 +409,7 @@ describe('pivot', () => {
       ],
     }
     let expected = {
+      track_total_hits: true,
       aggs: {
         pivotFilter: {
           filter: {
@@ -457,6 +463,7 @@ describe('pivot', () => {
       ],
     }
     let expected = {
+      track_total_hits: true,
       aggs: {
         groups: {
           histogram: {
@@ -503,6 +510,7 @@ describe('pivot', () => {
       ],
     }
     let expected = {
+      track_total_hits: true,
       aggs: {
         groups: {
           terms: { field: 'Organization.NameState.untouched', size: 10 },
@@ -587,6 +595,7 @@ describe('pivot', () => {
       ],
     }
     let expected = {
+      track_total_hits: true,
       aggs: {
         groups: {
           terms: { field: 'Organization.State.untouched', size: 10 },
@@ -669,6 +678,7 @@ describe('pivot', () => {
       ],
     }
     let expected = {
+      track_total_hits: true,
       aggs: {
         groups: {
           terms: { field: 'Organization.State.untouched', size: 10 },
@@ -781,6 +791,7 @@ describe('pivot', () => {
       ],
     }
     let expected = {
+      track_total_hits: true,
       aggs: {
         groups: {
           terms: { field: 'Organization.State.untouched', size: 10 },
@@ -863,6 +874,7 @@ describe('pivot', () => {
       ],
     }
     let expected = {
+      track_total_hits: true,
       aggs: {
         groups: {
           terms: { field: 'Organization.State.untouched', size: 10 },
@@ -1099,6 +1111,7 @@ describe('pivot', () => {
 
     let nestedResult = processResponse(pivotResponse)
     expect(nestedResult.results).to.eql({
+      count: 442825686,
       groups: [
         {
           key: 'Texas',
