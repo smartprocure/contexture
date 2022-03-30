@@ -2089,11 +2089,11 @@ let AllTests = ContextureClient => {
         Tree.extend,
         Tree.snapshot
       )
-    merge([
+    merge({groups: [
       { key: 'FL', groups: [{ key: 'fl1', a: 1 }] },
       { key: 'NV', groups: [{ key: 'nv1', a: 1 }] },
-    ])
-    merge([
+    ]})
+    merge({groups: [
       {
         key: 'NV',
         groups: [
@@ -2101,9 +2101,9 @@ let AllTests = ContextureClient => {
           { key: 'nv1', a: 2 },
         ],
       },
-    ])
+    ]})
 
-    expect(node.context.results).to.deep.equal([
+    expect(node.context.results).to.deep.equal({groups: [
       { key: 'FL', groups: [{ key: 'fl1', a: 1 }] },
       {
         key: 'NV',
@@ -2112,7 +2112,7 @@ let AllTests = ContextureClient => {
           { key: 'nv2', b: 1 },
         ],
       },
-    ])
+    ]})
   })
   it('should merge pivot response with nested groups and columns', async () => {
     let service = sinon.spy(mockService())
@@ -2142,7 +2142,7 @@ let AllTests = ContextureClient => {
         Tree.extend,
         Tree.snapshot
       )
-    merge([
+    merge({groups: [
       {
         key: 'FL',
         columns: [
@@ -2159,8 +2159,8 @@ let AllTests = ContextureClient => {
         ],
         groups: [],
       },
-    ])
-    merge([
+    ]})
+    merge({groups: [
       {
         key: 'FL',
         columns: [
@@ -2186,8 +2186,8 @@ let AllTests = ContextureClient => {
           },
         ],
       },
-    ])
-    merge([
+    ]})
+    merge({groups: [
       {
         key: 'FL',
         columns: [
@@ -2220,9 +2220,9 @@ let AllTests = ContextureClient => {
           },
         ],
       },
-    ])
+    ]})
 
-    expect(node.context.results).to.deep.equal([
+    expect(node.context.results).to.deep.equal({groups: [
       {
         key: 'FL',
         columns: [
@@ -2271,7 +2271,7 @@ let AllTests = ContextureClient => {
         ],
         groups: [],
       },
-    ])
+    ]})
   })
   it('should support onDispatch (and pivot overriding response merges)', async () => {
     let service = sinon.spy(mockService())
