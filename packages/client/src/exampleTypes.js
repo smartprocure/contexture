@@ -322,18 +322,14 @@ export default F.stampKey('type', {
 
       // `snapshot` here is to solve a mobx issue
       // wrap in `groups` so it traverses the root level
-      let nodeGroups = groupsToObjects({
-        groups: snapshot(node.context.results),
-      })
-      let responseGroups = groupsToObjects({
-        groups: response.context.results,
-      })
+      let nodeGroups = groupsToObjects(snapshot(node.context.results))
+      let responseGroups = groupsToObjects(response.context.results)
 
       // Easy merge now that we can merge by group key
       let results = F.mergeAllArrays([nodeGroups, responseGroups])
 
       // Grab `groups` property we artificially added above for easy traversals
-      let context = { results: groupsToArrays(results).groups }
+      let context = { results: groupsToArrays(results) }
 
       // Write on the node
       extend(node, { context })
