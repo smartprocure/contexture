@@ -115,7 +115,7 @@ let flattenGroups = Tree.leavesBy((node, index, parents) => ({
 let processResponse = (response, node = {}) => {
   let input = F.getOrReturn('pivotFilter', response.aggregations)
   // SUPER HACKY TEMPORARY METHOD
-  let results = basicSimplifyTree({input}).input
+  let results = basicSimplifyTree({ input }).input
   results.count = _.get(['hits', 'total', 'value'], response)
   return { results: node.flatten ? flattenGroups(results) : results }
 }
