@@ -9,7 +9,7 @@ let pivotResponse = {
   },
   hits: {
     total: {
-      value: 10000,
+      value: 442825686,
       relation: 'gte',
     },
     max_score: null,

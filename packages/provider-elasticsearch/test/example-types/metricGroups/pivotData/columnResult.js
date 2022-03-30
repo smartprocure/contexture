@@ -1,4 +1,5 @@
 module.exports = {
+  count: 10000,
   groups: [
     {
       key: 'Texas',

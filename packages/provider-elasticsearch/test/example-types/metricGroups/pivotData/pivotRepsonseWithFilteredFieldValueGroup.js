@@ -9,7 +9,7 @@ let response = {
   },
   hits: {
     total: {
-      value: 10000,
+      value: 574248,
       relation: 'gte',
     },
     max_score: null,
