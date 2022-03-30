@@ -116,7 +116,10 @@ let processResponse = (response, node = {}) => {
   let input = F.getOrReturn('pivotFilter', response.aggregations)
   // SUPER HACKY TEMPORARY METHOD
   let { results } = basicSimplifyTree({ results: input })
-  results.count = _.get(['hits', 'total', 'value'], response)
+
+  if (!results.count)
+    results.count = _.get(['hits', 'total', 'value'], response)
+
   return { results: node.flatten ? flattenGroups(results) : results }
 }
 
