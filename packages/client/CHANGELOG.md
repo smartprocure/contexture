@@ -1,3 +1,6 @@
+# 2.41.0
+* Pivot node: merging new response object format 
+
 # 2.40.2
 * Fix: Pivot node: deep merging for groups and columns
 
