@@ -85,6 +85,9 @@ let buildQuery = async (node, schema, getStats) => {
       },
     }
 
+  // Without this, ES7+ stops counting at 10k instead of returning the actual count
+  query.track_total_hits = true
+
   return query
 }
 
@@ -112,7 +115,11 @@ let flattenGroups = Tree.leavesBy((node, index, parents) => ({
 let processResponse = (response, node = {}) => {
   let input = F.getOrReturn('pivotFilter', response.aggregations)
   // SUPER HACKY TEMPORARY METHOD
-  let results = basicSimplifyTree(input)
+  let { results } = basicSimplifyTree({ results: input })
+
+  if (!results.count)
+    results.count = _.get(['hits', 'total', 'value'], response)
+
   return { results: node.flatten ? flattenGroups(results) : results }
 }
 

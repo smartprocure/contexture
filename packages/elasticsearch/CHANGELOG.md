@@ -1,3 +1,6 @@
+# 1.11.1
+* Pivot: fix for root level aggregations
+
 # 1.11.0
 * Pivot: add root level columns and calculations
 
