@@ -280,52 +280,6 @@ describe('pivot', () => {
         },
       ],
     }
-    let expected = {
-      track_total_hits: true,
-      aggs: {
-        pivotFilter: {
-          filter: {
-            bool: {
-              must: [
-                { term: { 'Organization.Name': 'Reno' } },
-                {
-                  range: {
-                    'LineItem.TotalPrice': {
-                      gte: '0.0',
-                      lte: '500.0',
-                    },
-                  },
-                },
-              ],
-            },
-          },
-          aggs: {
-            groups: {
-              terms: { field: 'Organization.Name', size: 10 },
-              aggs: {
-                groups: {
-                  range: {
-                    field: 'LineItem.TotalPrice',
-                    ranges: [
-                      { from: '0', to: '500' },
-                      { from: '500', to: '10000' },
-                    ],
-                  },
-                  aggs: {
-                    'pivotMetric-sum-LineItem.TotalPrice': {
-                      sum: { field: 'LineItem.TotalPrice' },
-                    },
-                  },
-                },
-              },
-            },
-            'pivotMetric-sum-LineItem.TotalPrice': {
-              sum: { field: 'LineItem.TotalPrice' },
-            },
-          },
-        },
-      },
-    }
     let expectedDrilldown = {
       track_total_hits: true,
       aggs: {
@@ -369,6 +323,13 @@ describe('pivot', () => {
         },
       },
     }
+    let expected = _.set(
+      ['aggs', 'pivotFilter', 'aggs', 'pivotMetric-sum-LineItem.TotalPrice'],
+      {
+        sum: { field: 'LineItem.TotalPrice' },
+      },
+      expectedDrilldown
+    )
     let result = await buildQuery(
       input,
       testSchemas(['Vendor.City']),
