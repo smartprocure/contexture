@@ -116,7 +116,7 @@ let flattenGroups = Tree.leavesBy((node, index, parents) => ({
 let clearDrilldownCounts = (data, depth = 0) => {
   if (!data || !depth) return
 
-  Tree((leaf, index, parents) => {
+  Tree.walk((leaf, index, parents) => {
     if (parents.length < depth) leaf.count = undefined
   })(data)
 }
