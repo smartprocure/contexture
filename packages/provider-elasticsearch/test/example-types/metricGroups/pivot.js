@@ -326,6 +326,49 @@ describe('pivot', () => {
         },
       },
     }
+    let expectedDrilldown = {
+      track_total_hits: true,
+      aggs: {
+        pivotFilter: {
+          filter: {
+            bool: {
+              must: [
+                { term: { 'Organization.Name': 'Reno' } },
+                {
+                  range: {
+                    'LineItem.TotalPrice': {
+                      gte: '0.0',
+                      lte: '500.0',
+                    },
+                  },
+                },
+              ],
+            },
+          },
+          aggs: {
+            groups: {
+              terms: { field: 'Organization.Name', size: 10 },
+              aggs: {
+                groups: {
+                  range: {
+                    field: 'LineItem.TotalPrice',
+                    ranges: [
+                      { from: '0', to: '500' },
+                      { from: '500', to: '10000' },
+                    ],
+                  },
+                  aggs: {
+                    'pivotMetric-sum-LineItem.TotalPrice': {
+                      sum: { field: 'LineItem.TotalPrice' },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    }
     let result = await buildQuery(
       input,
       testSchemas(['Vendor.City']),
@@ -337,7 +380,7 @@ describe('pivot', () => {
       testSchemas(['Vendor.City']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    expect(resultTopLevel).to.eql(expected)
+    expect(resultTopLevel).to.eql(expectedDrilldown)
   })
   it('should buildQuery for fieldValues with drilldown and limited depth', async () => {
     let input = {
@@ -434,9 +477,6 @@ describe('pivot', () => {
                   },
                 },
               },
-            },
-            'pivotMetric-sum-LineItem.TotalPrice': {
-              sum: { field: 'LineItem.TotalPrice' },
             },
           },
         },
