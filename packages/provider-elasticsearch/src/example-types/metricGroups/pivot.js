@@ -62,7 +62,8 @@ let buildQuery = async (node, schema, getStats) => {
     )
   let query = _.merge(
     await buildNestedGroupQuery(statsAggs, groups, 'groups'),
-    statsAggs
+    // Stamping total row metrics if not drilling data
+    _.isEmpty(drilldowns) ? statsAggs : {}
   )
 
   let filters = _.compact(
@@ -112,6 +113,13 @@ let flattenGroups = Tree.leavesBy((node, index, parents) => ({
   ),
 }))
 
+let clearDrilldownCounts = (data, depth = 0) => {
+  if (!data || depth === 0) return
+
+  data.count = undefined
+  clearDrilldownCounts(_.get(['groups', 0], data), depth - 1)
+}
+
 let processResponse = (response, node = {}) => {
   let input = F.getOrReturn('pivotFilter', response.aggregations)
   // SUPER HACKY TEMPORARY METHOD
@@ -119,6 +127,8 @@ let processResponse = (response, node = {}) => {
 
   if (!results.count)
     results.count = _.get(['hits', 'total', 'value'], response)
+
+  clearDrilldownCounts(results, _.get(['drilldown', 'length'], node))
 
   return { results: node.flatten ? flattenGroups(results) : results }
 }
