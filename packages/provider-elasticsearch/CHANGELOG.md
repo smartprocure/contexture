@@ -1,3 +1,6 @@
+# 1.11.2
+* Pivot: removing metrics and counts from parent levels when drilling down
+
 # 1.11.1
 * Pivot: fix for root level aggregations
 
