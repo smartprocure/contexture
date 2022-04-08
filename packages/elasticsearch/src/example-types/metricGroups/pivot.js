@@ -31,6 +31,49 @@ let aggsForValues = (node, schema) =>
     }))
   )(node)
 
+let maybeWrapWithFilterAgg = ({ query, filters, aggName }) =>
+  _.isEmpty(filters)
+    ? query
+    : {
+        aggs: {
+          [aggName]: {
+            filter: { bool: { must: filters } },
+            ...query,
+          },
+        },
+      }
+
+let getSortAgg = async ({ node, sort, schema, getStats }) => {
+  if (!sort) return
+
+  let filters = _.compact(
+    await Promise.all(
+      F.mapIndexed((column, i) => {
+        let filter = lookupTypeProp(_.stubFalse, 'drilldown', column.type)
+        let drilldown = sort?.columnValues[i]
+        return drilldown && filter({ drilldown, ...column }, schema, getStats)
+      }, node.columns)
+    )
+  )
+
+  if (_.size(filters)) {
+    let valueNode = node.values[sort.metricIndex ?? 0]
+
+    return {
+      aggs: {
+        sortFilter: {
+          filter: { bool: { must: filters } },
+          aggs: {
+            metric: {
+              [valueNode.type]: { field: getField(schema, valueNode.field) },
+            },
+          },
+        },
+      },
+    }
+  }
+}
+
 let buildQuery = async (node, schema, getStats) => {
   let drilldowns = node.drilldown || []
   // Don't consider deeper levels than +1 the current drilldown
@@ -42,12 +85,23 @@ let buildQuery = async (node, schema, getStats) => {
 
   let statsAggs = { aggs: aggsForValues(node.values, schema) }
   // buildGroupQuery applied to a list of groups
-  let buildNestedGroupQuery = (statsAggs, groups, groupingType) =>
-    _.reduce(
+  let buildNestedGroupQuery = async (statsAggs, groups, groupingType, sort) => {
+    // Generate filters from sort column values
+    let sortAgg = await getSortAgg({ node, sort, schema, getStats })
+
+    return _.reduce(
       async (children, group) => {
         // Subtotals calculates metrics at each group level, not needed if flattening or in chart
         // Support for per group stats could also be added here - merge on another stats agg blob to children based on group.stats/statsField or group.values
         if (node.subtotals) children = _.merge(await children, statsAggs)
+        if (sortAgg) {
+          let { metricProp } = sort
+          children = _.merge(sortAgg, await children)
+          group.sort = {
+            field: `sortFilter>metric${metricProp ? `.${metricProp}` : ''}`,
+            order: sort.direction,
+          }
+        }
         let { type } = group
         let build = lookupTypeProp(_.identity, 'buildGroupQuery', type)
         return build(group, await children, groupingType, schema, getStats)
@@ -55,13 +109,15 @@ let buildQuery = async (node, schema, getStats) => {
       statsAggs,
       _.reverse(groups)
     )
+  }
+
   if (node.columns)
     statsAggs = _.merge(
       await buildNestedGroupQuery(statsAggs, node.columns, 'columns'),
       statsAggs
     )
   let query = _.merge(
-    await buildNestedGroupQuery(statsAggs, groups, 'groups'),
+    await buildNestedGroupQuery(statsAggs, groups, 'groups', node.sort),
     statsAggs
   )
 
@@ -75,15 +131,7 @@ let buildQuery = async (node, schema, getStats) => {
       }, groups)
     )
   )
-  if (!_.isEmpty(filters))
-    query = {
-      aggs: {
-        pivotFilter: {
-          filter: { bool: { must: filters } },
-          ...query,
-        },
-      },
-    }
+  query = maybeWrapWithFilterAgg({ filters, aggName: 'pivotFilter', query })
 
   // Without this, ES7+ stops counting at 10k instead of returning the actual count
   query.track_total_hits = true
@@ -127,7 +175,7 @@ let pivot = {
   aggsForValues,
   buildQuery,
   processResponse,
-  validContext: node => node.groups.length && node.values.length,
+  validContext: (node) => node.groups.length && node.values.length,
   // TODO: unify this with groupStatsUtil - the general pipeline is the same conceptually
   async result(node, search, schema) {
     let query = await buildQuery(node, schema, getStats(search))

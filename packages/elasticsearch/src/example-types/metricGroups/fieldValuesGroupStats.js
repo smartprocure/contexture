@@ -6,7 +6,8 @@ let { groupStats } = require('./groupStatUtils')
 let getSortField = field => {
   if (field === 'count') return '_count'
   if (field === 'key') return '_key'
-  return `${field}.value`
+  return field
+  // return `${field}.value`
 }
 
 let drilldown = ({ field, drilldown }, schema) => ({

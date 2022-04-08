@@ -858,6 +858,126 @@ describe('pivot', () => {
     // console.log(JSON.stringify(result))
     expect(result).to.eql(expected)
   })
+  it('should build query with nested pivot column and sort', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [{ type: 'sum', field: 'PO.IssuedAmount' }],
+      groups: [{ type: 'fieldValues', field: 'Organization.State' }],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+      sort: {
+        columnValues: ['2022'],
+        metricIndex: 0,
+        // metricProp: min,
+        direction: 'asc',
+      },
+    }
+    let expected = {
+      track_total_hits: true,
+      aggs: {
+        groups: {
+          terms: { field: 'Organization.State.untouched', size: 10 },
+          aggs: {
+            groups: {
+              terms: { field: 'Organization.NameState.untouched', size: 10 },
+              aggs: {
+                columns: {
+                  date_histogram: {
+                    field: 'PO.IssuedDate',
+                    interval: 'year',
+                    min_doc_count: 0,
+                  },
+                  aggs: {
+                    columns: {
+                      date_histogram: {
+                        field: 'PO.IssuedDate',
+                        interval: 'month',
+                        min_doc_count: 0,
+                      },
+                      aggs: {
+                        'pivotMetric-sum-LineItem.TotalPrice': {
+                          sum: { field: 'LineItem.TotalPrice' },
+                        },
+                      },
+                    },
+                    'pivotMetric-sum-LineItem.TotalPrice': {
+                      sum: { field: 'LineItem.TotalPrice' },
+                    },
+                  },
+                },
+                'pivotMetric-sum-LineItem.TotalPrice': {
+                  sum: { field: 'LineItem.TotalPrice' },
+                },
+              },
+            },
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                interval: 'year',
+                min_doc_count: 0,
+              },
+              aggs: {
+                columns: {
+                  date_histogram: {
+                    field: 'PO.IssuedDate',
+                    interval: 'month',
+                    min_doc_count: 0,
+                  },
+                  aggs: {
+                    'pivotMetric-sum-LineItem.TotalPrice': {
+                      sum: { field: 'LineItem.TotalPrice' },
+                    },
+                  },
+                },
+                'pivotMetric-sum-LineItem.TotalPrice': {
+                  sum: { field: 'LineItem.TotalPrice' },
+                },
+              },
+            },
+            'pivotMetric-sum-LineItem.TotalPrice': {
+              sum: { field: 'LineItem.TotalPrice' },
+            },
+          },
+        },
+        columns: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            interval: 'year',
+            min_doc_count: 0,
+          },
+          aggs: {
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                interval: 'month',
+                min_doc_count: 0,
+              },
+              aggs: {
+                'pivotMetric-sum-LineItem.TotalPrice': {
+                  sum: { field: 'LineItem.TotalPrice' },
+                },
+              },
+            },
+            'pivotMetric-sum-LineItem.TotalPrice': {
+              sum: { field: 'LineItem.TotalPrice' },
+            },
+          },
+        },
+        'pivotMetric-sum-LineItem.TotalPrice': {
+          sum: { field: 'LineItem.TotalPrice' },
+        },
+      },
+    }
+    let result = await buildQuery(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    console.log(JSON.stringify(result, null, 2))
+    expect(result).to.eql(expected)
+  })
   it('should build query with nested pivot columns and subtotals', async () => {
     let input = {
       key: 'test',
@@ -982,7 +1102,7 @@ describe('pivot', () => {
 
     // make tiny
     aggs.groups.buckets = aggs.groups.buckets.slice(0, 2)
-    aggs.groups.buckets = _.map(buck => {
+    aggs.groups.buckets = _.map((buck) => {
       buck.groups.buckets = buck.groups.buckets.slice(0, 2)
       return buck
     }, aggs.groups.buckets)
