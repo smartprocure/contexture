@@ -57,7 +57,7 @@ let getSortAgg = async ({ node, sort, schema, getStats }) => {
   )
 
   if (_.size(filters)) {
-    let valueNode = node.values[sort.metricIndex ?? 0]
+    let valueNode = node.values[sort.valueIndex ?? 0]
 
     return {
       aggs: {
@@ -95,10 +95,10 @@ let buildQuery = async (node, schema, getStats) => {
         // Support for per group stats could also be added here - merge on another stats agg blob to children based on group.stats/statsField or group.values
         if (node.subtotals) children = _.merge(await children, statsAggs)
         if (sortAgg) {
-          let { metricProp } = sort
+          let { valueProp } = sort
           children = _.merge(sortAgg, await children)
           group.sort = {
-            field: `sortFilter>metric${metricProp ? `.${metricProp}` : ''}`,
+            field: `sortFilter>metric${valueProp ? `.${valueProp}` : ''}`,
             order: sort.direction,
           }
         }
