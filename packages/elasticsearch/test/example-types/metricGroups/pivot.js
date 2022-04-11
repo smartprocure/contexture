@@ -280,7 +280,7 @@ describe('pivot', () => {
         },
       ],
     }
-    let expected = {
+    let expectedDrilldown = {
       track_total_hits: true,
       aggs: {
         pivotFilter: {
@@ -319,13 +319,17 @@ describe('pivot', () => {
                 },
               },
             },
-            'pivotMetric-sum-LineItem.TotalPrice': {
-              sum: { field: 'LineItem.TotalPrice' },
-            },
           },
         },
       },
     }
+    let expected = _.set(
+      ['aggs', 'pivotFilter', 'aggs', 'pivotMetric-sum-LineItem.TotalPrice'],
+      {
+        sum: { field: 'LineItem.TotalPrice' },
+      },
+      expectedDrilldown
+    )
     let result = await buildQuery(
       input,
       testSchemas(['Vendor.City']),
@@ -337,7 +341,7 @@ describe('pivot', () => {
       testSchemas(['Vendor.City']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    expect(resultTopLevel).to.eql(expected)
+    expect(resultTopLevel).to.eql(expectedDrilldown)
   })
   it('should buildQuery for fieldValues with drilldown and limited depth', async () => {
     let input = {
@@ -434,9 +438,6 @@ describe('pivot', () => {
                   },
                 },
               },
-            },
-            'pivotMetric-sum-LineItem.TotalPrice': {
-              sum: { field: 'LineItem.TotalPrice' },
             },
           },
         },
