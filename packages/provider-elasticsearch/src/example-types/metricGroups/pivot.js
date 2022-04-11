@@ -186,7 +186,7 @@ let pivot = {
   aggsForValues,
   buildQuery,
   processResponse,
-  validContext: (node) => node.groups.length && node.values.length,
+  validContext: node => node.groups.length && node.values.length,
   // TODO: unify this with groupStatsUtil - the general pipeline is the same conceptually
   async result(node, search, schema) {
     let query = await buildQuery(node, schema, getStats(search))
