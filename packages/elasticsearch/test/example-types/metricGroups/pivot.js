@@ -1552,7 +1552,7 @@ describe('pivot', () => {
 
     // make tiny
     aggs.groups.buckets = aggs.groups.buckets.slice(0, 2)
-    aggs.groups.buckets = _.map((buck) => {
+    aggs.groups.buckets = _.map(buck => {
       buck.groups.buckets = buck.groups.buckets.slice(0, 2)
       return buck
     }, aggs.groups.buckets)
