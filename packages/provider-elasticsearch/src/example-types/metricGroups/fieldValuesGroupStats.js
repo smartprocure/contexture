@@ -21,7 +21,7 @@ let buildGroupQuery = (node, children, groupingType, schema) => {
     size = 10,
     filter,
     // sortField can be key, count, or stat name - min, max, avg, sum as long as its in stats
-    sort: { field: sortField, order = 'desc' } = {}, // todo: support array sort for multi-level
+    sort: { field: sortField, direction = 'desc' } = {}, // todo: support array sort for multi-level
   } = node
   let field = getField(schema, groupField)
   let query = {
@@ -30,7 +30,7 @@ let buildGroupQuery = (node, children, groupingType, schema) => {
         terms: {
           field,
           size,
-          ...(sortField && { order: { [getSortField(sortField)]: order } }),
+          ...(sortField && { order: { [getSortField(sortField)]: direction } }),
         },
         ...children,
       },

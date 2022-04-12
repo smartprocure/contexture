@@ -106,7 +106,7 @@ let buildQuery = async (node, schema, getStats) => {
           children = _.merge(sortAgg, await children)
           group.sort = {
             field: F.dotJoin(['sortFilter>metric', sort.valueProp]),
-            order: sort.direction,
+            direction: sort.direction,
           }
         }
         let { type } = group
