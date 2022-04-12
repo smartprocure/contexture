@@ -77,7 +77,7 @@ let getSortAgg = async ({ node, sort, schema, getStats }) => {
     },
   }
 }
-let getSortField = sort => F.dotJoin(['sortFilter>metric', sort.valueProp])
+let getSortField = (sort = {}) => F.dotJoin(['sortFilter>metric', sort.valueProp])
 
 let buildQuery = async (node, schema, getStats) => {
   let drilldowns = node.drilldown || []
