@@ -1428,6 +1428,115 @@ describe('pivot', () => {
     )
     expect(result).to.eql(expected)
   })
+  it('should build query with multiple groups, columns, and sort on _count without valueIndex', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [{ type: 'stats', field: 'PO.IssuedAmount' }],
+      groups: [
+        { type: 'fieldValues', field: 'Organization.State' },
+        { type: 'fieldValues', field: 'Organization.NameState' },
+      ],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+      sort: {
+        columnValues: ['2022'],
+        direction: 'desc',
+      },
+    }
+    let expected = {
+      aggs: {
+        groups: {
+          terms: {
+            field: 'Organization.State.untouched',
+            size: 10,
+            order: { 'sortFilter>_count': 'desc' },
+          },
+          aggs: {
+            sortFilter: {
+              filter: {
+                bool: {
+                  must: [
+                    {
+                      range: {
+                        'PO.IssuedDate': {
+                          gte: '2022',
+                          lte: '2022-12-31T23:59:59Z',
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+            groups: {
+              terms: {
+                field: 'Organization.NameState.untouched',
+                size: 10,
+                order: { 'sortFilter>_count': 'desc' },
+              },
+              aggs: {
+                sortFilter: {
+                  filter: {
+                    bool: {
+                      must: [
+                        {
+                          range: {
+                            'PO.IssuedDate': {
+                              gte: '2022',
+                              lte: '2022-12-31T23:59:59Z',
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                },
+                columns: {
+                  date_histogram: {
+                    field: 'PO.IssuedDate',
+                    interval: 'year',
+                    min_doc_count: 0,
+                  },
+                  aggs: {
+                    'pivotMetric-stats-PO.IssuedAmount': {
+                      stats: { field: 'PO.IssuedAmount' },
+                    },
+                  },
+                },
+                'pivotMetric-stats-PO.IssuedAmount': {
+                  stats: { field: 'PO.IssuedAmount' },
+                },
+              },
+            },
+          },
+        },
+        columns: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            interval: 'year',
+            min_doc_count: 0,
+          },
+          aggs: {
+            'pivotMetric-stats-PO.IssuedAmount': {
+              stats: { field: 'PO.IssuedAmount' },
+            },
+          },
+        },
+        'pivotMetric-stats-PO.IssuedAmount': {
+          stats: { field: 'PO.IssuedAmount' },
+        },
+      },
+      track_total_hits: true,
+    }
+    let result = await buildQuery(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    expect(result).to.eql(expected)
+  })
   it('should build query with nested pivot columns and subtotals', async () => {
     let input = {
       key: 'test',
