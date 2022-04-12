@@ -103,6 +103,8 @@ let buildQuery = async (node, schema, getStats) => {
         // As far as we're aware, there's no way to sort by the nth bucket - but we can simulate that by using filters to create a discrete agg for that bucket
         if (sortAgg) {
           children = _.merge(sortAgg, await children)
+          // Set `sort` on the group, deferring to each grouping type to handle it
+          // The API of `{sort: {field, direction}}` is respected by fieldValues and can be added to others
           group.sort = {
             field: F.dotJoin(['sortFilter>metric', sort.valueProp]),
             direction: sort.direction,
