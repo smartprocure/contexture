@@ -99,11 +99,13 @@ let buildQuery = async (node, schema, getStats) => {
         // Subtotals calculates metrics at each group level, not needed if flattening or in chart
         // Support for per group stats could also be added here - merge on another stats agg blob to children based on group.stats/statsField or group.values
         if (node.subtotals) children = _.merge(await children, statsAggs)
+        // At each level, add a filters bucket agg and nested metric to enable sorting
+        // For example, to sort by Sum of Price for 2022, add a filters agg for 2022 and neseted metric for sum of price so we can target it
+        // As far as we're aware, there's no way to sort by the nth bucket - but we can simulate that by using filters to create a discrete agg for that bucket
         if (sortAgg) {
-          let { valueProp } = sort
           children = _.merge(sortAgg, await children)
           group.sort = {
-            field: F.dotJoin(['sortFilter>metric', valueProp]),
+            field: F.dotJoin(['sortFilter>metric', sort.valueProp]),
             order: sort.direction,
           }
         }
