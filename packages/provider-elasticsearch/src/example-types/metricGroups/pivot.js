@@ -14,13 +14,12 @@ let lookupTypeProp = (def, prop, type) =>
 //  (same) values for ALL group levels
 // Rows/Columns are buckets, values are metrics
 
+// Add `pivotMetric-` to auto keys so we can skip camelCasing it in the response
+let aggKeyForValue = ({ key, type, field }) =>
+  key || F.compactJoin('-', ['pivotMetric', type, field])
 let aggsForValues = (node, schema) =>
   _.flow(
-    // Add `pivotMetric-` to auto keys so we can skip camelCasing it in the response
-    _.keyBy(
-      ({ key, type, field }) =>
-        key || F.compactJoin('-', ['pivotMetric', type, field])
-    ),
+    _.keyBy(aggKeyForValue),
     // This is a very interesting lint error - while key is not used in the function body, it is important.
     // Omitting key here would include it in the props spread and then pass it along as part of the body of the ES aggregation.
     // eslint-disable-next-line
@@ -45,7 +44,7 @@ let maybeWrapWithFilterAgg = ({ query, filters, aggName }) =>
       }
 
 // Builds filters for drilldowns
-let drilldownFilters = ({ drilldowns, groups, schema, getStats }) =>
+let drilldownFilters = ({ drilldowns = [], groups = [], schema, getStats }) =>
   compactMapAsync((group, i) => {
     let filter = lookupTypeProp(_.stubFalse, 'drilldown', group.type)
     // Drilldown can come from root or be inlined on the group definition
@@ -61,13 +60,16 @@ let getSortAgg = async ({ node, sort, schema, getStats }) => {
     schema,
     getStats,
   })
-  if (!_.size(filters)) return
-
+  // Return an empty object so we still add sortField even without columns
+  // No columns means that we are sorting by a metric and so don't need any of this
+  if (!_.size(filters)) return {}
   let valueNode = node.values[sort.valueIndex]
   return {
     aggs: {
       sortFilter: {
-        filter: { bool: { must: filters } },
+        filter: _.size(filters)
+          ? { bool: { must: filters } }
+          : { match_all: {} },
         ...(valueNode && {
           aggs: {
             metric: {
@@ -79,9 +81,15 @@ let getSortAgg = async ({ node, sort, schema, getStats }) => {
     },
   }
 }
-let getSortField = ({ valueProp, valueIndex = '_count' } = {}) =>
+let getSortField = ({
+  values,
+  sort: { columnValues = [], valueProp, valueIndex } = {},
+}) =>
   F.dotJoin([
-    `sortFilter>${valueIndex !== '_count' ? 'metric' : '_count'}`,
+    _.size(columnValues)
+      ? `sortFilter>${_.isNil(valueIndex) ? '_count' : 'metric'}`
+      // If there are no columns, get the generated key for the value or default to _count
+      : aggKeyForValue(values[valueIndex] || { key: '_count' }),
     valueProp,
   ])
 
@@ -99,7 +107,7 @@ let buildQuery = async (node, schema, getStats) => {
   let buildNestedGroupQuery = async (statsAggs, groups, groupingType, sort) => {
     // Generate filters from sort column values
     let sortAgg = await getSortAgg({ node, sort, schema, getStats })
-    let sortField = getSortField(sort)
+    let sortField = getSortField(node)
 
     return _.reduce(
       async (children, group) => {
