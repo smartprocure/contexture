@@ -41,7 +41,7 @@ describe('fieldValuesGroupStats', () => {
         type: 'fieldValuesGroupStats',
         groupField: 'Organization.Name',
         statsField: 'LineItem.TotalPrice',
-        sort: { field: 'max', order: 'asc' },
+        sort: { field: 'max', direction: 'asc' },
       })
     ).to.eql({
       aggs: {

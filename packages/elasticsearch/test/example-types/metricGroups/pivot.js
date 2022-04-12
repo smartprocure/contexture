@@ -974,7 +974,7 @@ describe('pivot', () => {
         {
           type: 'fieldValues',
           field: 'Organization.State',
-          sort: { field: '_key', order: 'asc' },
+          sort: { field: '_key', direction: 'asc' },
         },
       ],
       columns: [
