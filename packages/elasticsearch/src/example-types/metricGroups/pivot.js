@@ -63,21 +63,27 @@ let getSortAgg = async ({ node, sort, schema, getStats }) => {
   })
   if (!_.size(filters)) return
 
-  let valueNode = node.values[sort.valueIndex ?? 0]
+  let valueNode = node.values[sort.valueIndex]
   return {
     aggs: {
       sortFilter: {
         filter: { bool: { must: filters } },
-        aggs: {
-          metric: {
-            [valueNode.type]: { field: getField(schema, valueNode.field) },
+        ...(valueNode && {
+          aggs: {
+            metric: {
+              [valueNode.type]: { field: getField(schema, valueNode.field) },
+            },
           },
-        },
+        }),
       },
     },
   }
 }
-let getSortField = (sort = {}) => F.dotJoin(['sortFilter>metric', sort.valueProp])
+let getSortField = ({ valueProp, valueIndex = '_count' } = {}) =>
+  F.dotJoin([
+    `sortFilter>${valueIndex !== '_count' ? 'metric' : '_count'}`,
+    valueProp,
+  ])
 
 let buildQuery = async (node, schema, getStats) => {
   let drilldowns = node.drilldown || []
