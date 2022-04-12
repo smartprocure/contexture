@@ -77,6 +77,7 @@ let getSortAgg = async ({ node, sort, schema, getStats }) => {
     },
   }
 }
+let getSortField = sort => F.dotJoin(['sortFilter>metric', sort.valueProp])
 
 let buildQuery = async (node, schema, getStats) => {
   let drilldowns = node.drilldown || []
@@ -92,6 +93,7 @@ let buildQuery = async (node, schema, getStats) => {
   let buildNestedGroupQuery = async (statsAggs, groups, groupingType, sort) => {
     // Generate filters from sort column values
     let sortAgg = await getSortAgg({ node, sort, schema, getStats })
+    let sortField = getSortField(sort)
 
     return _.reduce(
       async (children, group) => {
@@ -105,10 +107,7 @@ let buildQuery = async (node, schema, getStats) => {
           children = _.merge(sortAgg, await children)
           // Set `sort` on the group, deferring to each grouping type to handle it
           // The API of `{sort: {field, direction}}` is respected by fieldValues and can be added to others
-          group.sort = {
-            field: F.dotJoin(['sortFilter>metric', sort.valueProp]),
-            direction: sort.direction,
-          }
+          group.sort = { field: sortField, direction: sort.direction }
         }
         let build = lookupTypeProp(_.identity, 'buildGroupQuery', group.type)
         return build(group, await children, groupingType, schema, getStats)
