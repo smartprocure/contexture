@@ -1,7 +1,8 @@
 # 1.12.0
-* Pivot: sorting.
-* `.value` not needed for sorting on `fieldValuesGroupStats`.
-* Fix drilldown logic on `numberRangesGroupStats`.
+* [pivot] Add sort api
+* [fieldValuesGroupStats] `.value` not needed for sorting
+* [fieldValuesGroupStats]: `sort.order` renamed to `sort.direction`
+* [numberRangesGroupStats] Fix drilldown logic to be lt instead of lte
 
 # 1.11.2
 * Pivot: removing metrics and counts from parent levels when drilling down
