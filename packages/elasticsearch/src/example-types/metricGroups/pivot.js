@@ -4,6 +4,7 @@ let { getStats } = require('./stats')
 let { getField } = require('../../utils/fields')
 let types = require('../../../src/example-types')
 let { basicSimplifyTree } = require('../../utils/elasticDSL')
+let { compactMapAsync } = require('../../utils/futil')
 
 let lookupTypeProp = (def, prop, type) =>
   _.getOr(def, `${type}GroupStats.${prop}`, types)
@@ -43,19 +44,23 @@ let maybeWrapWithFilterAgg = ({ query, filters, aggName }) =>
         },
       }
 
+// Builds filters for drilldowns
+let drilldownFilters = ({ drilldowns, groups, schema, getStats }) =>
+  compactMapAsync((group, i) => {
+    let filter = lookupTypeProp(_.stubFalse, 'drilldown', group.type)
+    // Drilldown can come from root or be inlined on the group definition
+    let drilldown = drilldowns[i] || group.drilldown
+    return drilldown && filter({ drilldown, ...group }, schema, getStats)
+  }, groups)
+
 let getSortAgg = async ({ node, sort, schema, getStats }) => {
   if (!sort) return
-
-  let filters = _.compact(
-    await Promise.all(
-      F.mapIndexed((column, i) => {
-        let filter = lookupTypeProp(_.stubFalse, 'drilldown', column.type)
-        let drilldown = sort?.columnValues[i]
-        return drilldown && filter({ drilldown, ...column }, schema, getStats)
-      }, node.columns)
-    )
-  )
-
+  let filters = await drilldownFilters({
+    drilldowns: sort.columnValues,
+    groups: node.columns,
+    schema,
+    getStats,
+  })
   if (_.size(filters)) {
     let valueNode = node.values[sort.valueIndex ?? 0]
 
@@ -122,16 +127,7 @@ let buildQuery = async (node, schema, getStats) => {
     _.isEmpty(drilldowns) ? statsAggs : {}
   )
 
-  let filters = _.compact(
-    await Promise.all(
-      F.mapIndexed((group, i) => {
-        let filter = lookupTypeProp(_.stubFalse, 'drilldown', group.type)
-        // stamp on drilldown from root if applicable
-        let drilldown = drilldowns[i] || group.drilldown
-        return drilldown && filter({ drilldown, ...group }, schema, getStats)
-      }, groups)
-    )
-  )
+  let filters = await drilldownFilters({ drilldowns, groups, schema, getStats })
   query = maybeWrapWithFilterAgg({ filters, aggName: 'pivotFilter', query })
 
   // Without this, ES7+ stops counting at 10k instead of returning the actual count
