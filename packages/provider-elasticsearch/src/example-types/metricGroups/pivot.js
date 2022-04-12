@@ -61,21 +61,20 @@ let getSortAgg = async ({ node, sort, schema, getStats }) => {
     schema,
     getStats,
   })
-  if (_.size(filters)) {
-    let valueNode = node.values[sort.valueIndex ?? 0]
+  if (!_.size(filters)) return
 
-    return {
-      aggs: {
-        sortFilter: {
-          filter: { bool: { must: filters } },
-          aggs: {
-            metric: {
-              [valueNode.type]: { field: getField(schema, valueNode.field) },
-            },
+  let valueNode = node.values[sort.valueIndex ?? 0]
+  return {
+    aggs: {
+      sortFilter: {
+        filter: { bool: { must: filters } },
+        aggs: {
+          metric: {
+            [valueNode.type]: { field: getField(schema, valueNode.field) },
           },
         },
       },
-    }
+    },
   }
 }
 
@@ -109,8 +108,7 @@ let buildQuery = async (node, schema, getStats) => {
             direction: sort.direction,
           }
         }
-        let { type } = group
-        let build = lookupTypeProp(_.identity, 'buildGroupQuery', type)
+        let build = lookupTypeProp(_.identity, 'buildGroupQuery', group.type)
         return build(group, await children, groupingType, schema, getStats)
       },
       statsAggs,
