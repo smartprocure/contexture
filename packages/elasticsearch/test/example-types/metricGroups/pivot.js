@@ -1,5 +1,6 @@
 let _ = require('lodash/fp')
 let {
+  filter,
   buildQuery,
   aggsForValues,
   processResponse,
@@ -2213,5 +2214,63 @@ describe('pivot', () => {
       ],
     })
     expect(nestedResult.results).to.eql(columnResult)
+  })
+  it.only('should filter', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [{ type: 'stats', field: 'PO.IssuedAmount' }],
+      groups: [
+        { type: 'fieldValues', field: 'Organization.State' },
+        { type: 'fieldValues', field: 'Organization.City' },
+      ],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+      sort: {
+        columnValues: ['2022'],
+        direction: 'desc',
+      },
+      filters: [
+        { groups: ['Nevada', 'Reno'], columns: ['2017'] },
+        { groups: ['Florida', 'Hillsboro Beach'] },
+      ],
+    }
+    let expected = {
+      bool: {
+        minimum_should_match: 1,
+        should: [
+          {
+            bool: {
+              must: [
+                { term: { 'Organization.State.untouched': 'Nevada' } },
+                { term: { 'Organization.City.untouched': 'Reno' } },
+                {
+                  range: {
+                    'PO.IssuedDate': {
+                      gte: '2017',
+                      lte: '2017-12-31T23:59:59Z',
+                    },
+                  },
+                },
+              ],
+            },
+          },
+          {
+            bool: {
+              must: [
+                { term: { 'Organization.State.untouched': 'Florida' } },
+                { term: { 'Organization.City.untouched': 'Hillsboro Beach' } },
+              ],
+            },
+          },
+        ],
+      },
+    }
+    let result = await filter(
+      input,
+      testSchemas(['Organization.City', 'Organization.State'])
+    )
+    expect(result).to.eql(expected)
   })
 })
