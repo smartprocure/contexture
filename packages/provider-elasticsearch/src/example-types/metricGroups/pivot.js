@@ -213,18 +213,18 @@ let filter = async ({ filters, groups = [], columns = [] }, schema) => {
         async filter => ({
           bool: {
             must: [
-              ...await drilldownFilters({
+              ...(await drilldownFilters({
                 drilldowns: filter.groups,
-                groups: groups,
+                groups,
                 schema,
                 getStats,
-              }),
-              ...await drilldownFilters({
+              })),
+              ...(await drilldownFilters({
                 drilldowns: filter.columns,
                 groups: columns,
                 schema,
                 getStats,
-              }),
+              })),
             ],
           },
         }),
