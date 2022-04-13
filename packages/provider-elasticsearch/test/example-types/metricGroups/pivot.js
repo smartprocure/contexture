@@ -887,9 +887,7 @@ describe('pivot', () => {
           terms: {
             field: 'Organization.State.untouched',
             size: 10,
-            order: {
-              'sortFilter>metric': 'asc',
-            },
+            order: { 'sortFilter>metric': 'asc' },
           },
           aggs: {
             sortFilter: {
@@ -907,13 +905,7 @@ describe('pivot', () => {
                   ],
                 },
               },
-              aggs: {
-                metric: {
-                  sum: {
-                    field: 'PO.IssuedAmount',
-                  },
-                },
-              },
+              aggs: { metric: { sum: { field: 'PO.IssuedAmount' } } },
             },
             columns: {
               date_histogram: {
@@ -923,16 +915,12 @@ describe('pivot', () => {
               },
               aggs: {
                 'pivotMetric-sum-PO.IssuedAmount': {
-                  sum: {
-                    field: 'PO.IssuedAmount',
-                  },
+                  sum: { field: 'PO.IssuedAmount' },
                 },
               },
             },
             'pivotMetric-sum-PO.IssuedAmount': {
-              sum: {
-                field: 'PO.IssuedAmount',
-              },
+              sum: { field: 'PO.IssuedAmount' },
             },
           },
         },
@@ -944,16 +932,12 @@ describe('pivot', () => {
           },
           aggs: {
             'pivotMetric-sum-PO.IssuedAmount': {
-              sum: {
-                field: 'PO.IssuedAmount',
-              },
+              sum: { field: 'PO.IssuedAmount' },
             },
           },
         },
         'pivotMetric-sum-PO.IssuedAmount': {
-          sum: {
-            field: 'PO.IssuedAmount',
-          },
+          sum: { field: 'PO.IssuedAmount' },
         },
       },
       track_total_hits: true,
@@ -1000,16 +984,12 @@ describe('pivot', () => {
               },
               aggs: {
                 'pivotMetric-sum-PO.IssuedAmount': {
-                  sum: {
-                    field: 'PO.IssuedAmount',
-                  },
+                  sum: { field: 'PO.IssuedAmount' },
                 },
               },
             },
             'pivotMetric-sum-PO.IssuedAmount': {
-              sum: {
-                field: 'PO.IssuedAmount',
-              },
+              sum: { field: 'PO.IssuedAmount' },
             },
           },
         },
@@ -1021,16 +1001,12 @@ describe('pivot', () => {
           },
           aggs: {
             'pivotMetric-sum-PO.IssuedAmount': {
-              sum: {
-                field: 'PO.IssuedAmount',
-              },
+              sum: { field: 'PO.IssuedAmount' },
             },
           },
         },
         'pivotMetric-sum-PO.IssuedAmount': {
-          sum: {
-            field: 'PO.IssuedAmount',
-          },
+          sum: { field: 'PO.IssuedAmount' },
         },
       },
       track_total_hits: true,
@@ -1114,9 +1090,7 @@ describe('pivot', () => {
               },
             },
             'pivotMetric-sum-PO.IssuedAmount': {
-              sum: {
-                field: 'PO.IssuedAmount',
-              },
+              sum: { field: 'PO.IssuedAmount' },
             },
             'pivotMetric-avg-PO.IssuedAmount': {
               avg: {
@@ -1133,9 +1107,7 @@ describe('pivot', () => {
           },
           aggs: {
             'pivotMetric-sum-PO.IssuedAmount': {
-              sum: {
-                field: 'PO.IssuedAmount',
-              },
+              sum: { field: 'PO.IssuedAmount' },
             },
             'pivotMetric-avg-PO.IssuedAmount': {
               avg: {
@@ -1145,9 +1117,7 @@ describe('pivot', () => {
           },
         },
         'pivotMetric-sum-PO.IssuedAmount': {
-          sum: {
-            field: 'PO.IssuedAmount',
-          },
+          sum: { field: 'PO.IssuedAmount' },
         },
         'pivotMetric-avg-PO.IssuedAmount': {
           avg: {
@@ -1325,9 +1295,7 @@ describe('pivot', () => {
               },
             },
             'pivotMetric-sum-PO.IssuedAmount': {
-              sum: {
-                field: 'PO.IssuedAmount',
-              },
+              sum: { field: 'PO.IssuedAmount' },
             },
           },
         },
@@ -1355,9 +1323,7 @@ describe('pivot', () => {
           },
         },
         'pivotMetric-sum-PO.IssuedAmount': {
-          sum: {
-            field: 'PO.IssuedAmount',
-          },
+          sum: { field: 'PO.IssuedAmount' },
         },
       },
       track_total_hits: true,
