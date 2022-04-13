@@ -1496,7 +1496,7 @@ describe('pivot', () => {
           terms: {
             field: 'Organization.State.untouched',
             size: 10,
-            order: { 'sortFilter>_count': 'desc' },
+            order: { 'sortFilter.doc_count': 'desc' },
           },
           aggs: {
             sortFilter: {
@@ -1519,7 +1519,7 @@ describe('pivot', () => {
               terms: {
                 field: 'Organization.NameState.untouched',
                 size: 10,
-                order: { 'sortFilter>_count': 'desc' },
+                order: { 'sortFilter.doc_count': 'desc' },
               },
               aggs: {
                 sortFilter: {
