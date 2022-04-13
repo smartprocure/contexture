@@ -1,3 +1,6 @@
+# 2.42.0
+* Pivot node: add missing reactors and defaults
+
 # 2.41.0
 * Pivot node: merging new response object format 
 
