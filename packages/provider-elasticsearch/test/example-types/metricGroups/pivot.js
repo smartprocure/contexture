@@ -2215,7 +2215,7 @@ describe('pivot', () => {
     })
     expect(nestedResult.results).to.eql(columnResult)
   })
-  it.only('should filter', async () => {
+  it('should filter', async () => {
     let input = {
       key: 'test',
       type: 'pivot',
