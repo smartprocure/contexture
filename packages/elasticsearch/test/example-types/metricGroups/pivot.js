@@ -1156,7 +1156,7 @@ describe('pivot', () => {
           terms: {
             field: 'Organization.State.untouched',
             size: 10,
-            order: { 'pivotMetric-avg-PO.IssuedAmount': 'asc' },
+            order: { metric: 'asc' },
           },
           aggs: {
             columns: {
@@ -1180,6 +1180,7 @@ describe('pivot', () => {
             'pivotMetric-avg-PO.IssuedAmount': {
               avg: { field: 'PO.IssuedAmount' },
             },
+            metric: { avg: { field: 'PO.IssuedAmount' } },
           },
         },
         columns: {
@@ -1496,7 +1497,7 @@ describe('pivot', () => {
           terms: {
             field: 'Organization.State.untouched',
             size: 10,
-            order: { 'sortFilter>_count': 'desc' },
+            order: { 'sortFilter.doc_count': 'desc' },
           },
           aggs: {
             sortFilter: {
@@ -1519,7 +1520,7 @@ describe('pivot', () => {
               terms: {
                 field: 'Organization.NameState.untouched',
                 size: 10,
-                order: { 'sortFilter>_count': 'desc' },
+                order: { 'sortFilter.doc_count': 'desc' },
               },
               aggs: {
                 sortFilter: {

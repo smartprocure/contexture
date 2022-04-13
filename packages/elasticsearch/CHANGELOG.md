@@ -1,3 +1,6 @@
+# 1.12.1
+* [pivot] Fix sorting bugs on `_count` a metrics with dots when there are no columns
+
 # 1.12.0
 * [pivot] Add sort api
 * [pivot] Add filter api
