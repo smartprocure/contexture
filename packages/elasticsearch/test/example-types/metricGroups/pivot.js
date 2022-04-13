@@ -1156,7 +1156,7 @@ describe('pivot', () => {
           terms: {
             field: 'Organization.State.untouched',
             size: 10,
-            order: { 'pivotMetric-avg-PO.IssuedAmount': 'asc' },
+            order: { metric: 'asc' },
           },
           aggs: {
             columns: {
@@ -1180,6 +1180,7 @@ describe('pivot', () => {
             'pivotMetric-avg-PO.IssuedAmount': {
               avg: { field: 'PO.IssuedAmount' },
             },
+            metric: { avg: { field: 'PO.IssuedAmount' } },
           },
         },
         columns: {
