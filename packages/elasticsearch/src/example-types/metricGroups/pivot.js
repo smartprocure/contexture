@@ -89,7 +89,9 @@ let getSortField = ({
     _.size(columnValues)
       ? `sortFilter${_.isNil(valueIndex) ? '.doc_count' : '>metric'}`
       : // If there are no columns, get the generated key for the value or default to _count
-        _.isNil(valueIndex) ? 'doc_count' : 'metric',
+      _.isNil(valueIndex)
+      ? 'doc_count'
+      : 'metric',
     valueProp,
   ])
 
