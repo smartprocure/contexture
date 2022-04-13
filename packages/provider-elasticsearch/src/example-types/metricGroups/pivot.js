@@ -88,8 +88,8 @@ let getSortField = ({
   F.dotJoin([
     _.size(columnValues)
       ? `sortFilter>${_.isNil(valueIndex) ? '_count' : 'metric'}`
-      // If there are no columns, get the generated key for the value or default to _count
-      : aggKeyForValue(values[valueIndex] || { key: '_count' }),
+      : // If there are no columns, get the generated key for the value or default to _count
+        aggKeyForValue(values[valueIndex] || { key: '_count' }),
     valueProp,
   ])
 
@@ -193,7 +193,50 @@ let processResponse = (response, node = {}) => {
   return { results: node.flatten ? flattenGroups(results) : results }
 }
 
+// Example Payload:
+// node.filters = [
+//   { groups: ['Reno', '0-500'], columns: ['2017'] },
+//   { groups: ['Hillsboro Beach', '2500-*'] }
+// ] -> (Reno AND 0-500 AND 2017) OR (Hillsboro AND 2500-*)
+let hasValue = ({ filters }) => !_.isEmpty(filters)
+let filter = async ({ filters, groups = [], columns = [] }, schema) => {
+  // This requires getting `search` passed in to filter
+  // This is a change to contexture server, which is likely a breaking change moving all contexture type methods to named object params
+  //    That will allow everything to get all props inclding `search`
+  let getStats = () => {
+    throw 'Pivot filtering does not support running searches to build filters yet'
+  }
+  return {
+    bool: {
+      minimum_should_match: 1,
+      should: await compactMapAsync(
+        async filter => ({
+          bool: {
+            must: [
+              ...await drilldownFilters({
+                drilldowns: filter.groups,
+                groups: groups,
+                schema,
+                getStats,
+              }),
+              ...await drilldownFilters({
+                drilldowns: filter.columns,
+                groups: columns,
+                schema,
+                getStats,
+              }),
+            ],
+          },
+        }),
+        filters
+      ),
+    },
+  }
+}
+
 let pivot = {
+  hasValue,
+  filter,
   aggsForValues,
   buildQuery,
   processResponse,

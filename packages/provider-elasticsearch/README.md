@@ -365,7 +365,7 @@ Supports nested groupings of `xGroupStats`
 | `sort.valueIndex` | number | None | The index of the value from `node.values` to sort by. If null, the behavior will be to use `_count` |
 | `sort.valueProp` | string | None | For multivalue values like `stats`, pick a subfield to sort by. In most cases, you'd use the relevant single value metric instead. |
 | `sort.direction` | `asc|desc` | `desc` | Sort ascending or descending |
-
+| `filters` | `[{groups: [], columns: []}]` | None | Allows applying values as filters. Groups and columns work similarly to `drilldown` - you pass up the keys in order to filter, e.g. `[{ groups: ['Nevada', 'Reno'], columns: ['2017'] }]` |
 
 ### Deprecated
 
