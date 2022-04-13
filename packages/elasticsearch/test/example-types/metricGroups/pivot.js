@@ -1,5 +1,6 @@
 let _ = require('lodash/fp')
 let {
+  filter,
   buildQuery,
   aggsForValues,
   processResponse,
@@ -292,7 +293,7 @@ describe('pivot', () => {
                   range: {
                     'LineItem.TotalPrice': {
                       gte: '0.0',
-                      lte: '500.0',
+                      lt: '500.0',
                     },
                   },
                 },
@@ -857,6 +858,728 @@ describe('pivot', () => {
       () => {} // getStats(search) -> stats(field, statsArray)
     )
     // console.log(JSON.stringify(result))
+    expect(result).to.eql(expected)
+  })
+  it('should build query with nested pivot column and sort', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [{ type: 'sum', field: 'PO.IssuedAmount' }],
+      groups: [
+        {
+          type: 'fieldValues',
+          field: 'Organization.State',
+          // Should be ignored if sort is set on the top-level
+          sort: { field: '_count' },
+        },
+      ],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+      sort: {
+        columnValues: ['2022'],
+        valueIndex: 0,
+        direction: 'asc',
+      },
+    }
+    let expected = {
+      aggs: {
+        groups: {
+          terms: {
+            field: 'Organization.State.untouched',
+            size: 10,
+            order: { 'sortFilter>metric': 'asc' },
+          },
+          aggs: {
+            sortFilter: {
+              filter: {
+                bool: {
+                  must: [
+                    {
+                      range: {
+                        'PO.IssuedDate': {
+                          gte: '2022',
+                          lte: '2022-12-31T23:59:59Z',
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+              aggs: { metric: { sum: { field: 'PO.IssuedAmount' } } },
+            },
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                interval: 'year',
+                min_doc_count: 0,
+              },
+              aggs: {
+                'pivotMetric-sum-PO.IssuedAmount': {
+                  sum: { field: 'PO.IssuedAmount' },
+                },
+              },
+            },
+            'pivotMetric-sum-PO.IssuedAmount': {
+              sum: { field: 'PO.IssuedAmount' },
+            },
+          },
+        },
+        columns: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            interval: 'year',
+            min_doc_count: 0,
+          },
+          aggs: {
+            'pivotMetric-sum-PO.IssuedAmount': {
+              sum: { field: 'PO.IssuedAmount' },
+            },
+          },
+        },
+        'pivotMetric-sum-PO.IssuedAmount': {
+          sum: { field: 'PO.IssuedAmount' },
+        },
+      },
+      track_total_hits: true,
+    }
+    let result = await buildQuery(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    expect(result).to.eql(expected)
+  })
+  it('should build query and sort on the group if top-level sort is missing', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [{ type: 'sum', field: 'PO.IssuedAmount' }],
+      groups: [
+        {
+          type: 'fieldValues',
+          field: 'Organization.State',
+          sort: { field: '_key', direction: 'asc' },
+        },
+      ],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+    }
+    let expected = {
+      aggs: {
+        groups: {
+          terms: {
+            field: 'Organization.State.untouched',
+            size: 10,
+            order: {
+              _key: 'asc',
+            },
+          },
+          aggs: {
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                interval: 'year',
+                min_doc_count: 0,
+              },
+              aggs: {
+                'pivotMetric-sum-PO.IssuedAmount': {
+                  sum: { field: 'PO.IssuedAmount' },
+                },
+              },
+            },
+            'pivotMetric-sum-PO.IssuedAmount': {
+              sum: { field: 'PO.IssuedAmount' },
+            },
+          },
+        },
+        columns: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            interval: 'year',
+            min_doc_count: 0,
+          },
+          aggs: {
+            'pivotMetric-sum-PO.IssuedAmount': {
+              sum: { field: 'PO.IssuedAmount' },
+            },
+          },
+        },
+        'pivotMetric-sum-PO.IssuedAmount': {
+          sum: { field: 'PO.IssuedAmount' },
+        },
+      },
+      track_total_hits: true,
+    }
+    let result = await buildQuery(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    expect(result).to.eql(expected)
+  })
+  it('should build query and sort on nth value metric', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [
+        { type: 'sum', field: 'PO.IssuedAmount' },
+        { type: 'avg', field: 'PO.IssuedAmount' },
+      ],
+      groups: [{ type: 'fieldValues', field: 'Organization.State' }],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+      sort: {
+        columnValues: ['2022'],
+        valueIndex: 1,
+        direction: 'asc',
+      },
+    }
+    let expected = {
+      aggs: {
+        groups: {
+          terms: {
+            field: 'Organization.State.untouched',
+            size: 10,
+            order: {
+              'sortFilter>metric': 'asc',
+            },
+          },
+          aggs: {
+            sortFilter: {
+              filter: {
+                bool: {
+                  must: [
+                    {
+                      range: {
+                        'PO.IssuedDate': {
+                          gte: '2022',
+                          lte: '2022-12-31T23:59:59Z',
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+              aggs: {
+                metric: {
+                  avg: {
+                    field: 'PO.IssuedAmount',
+                  },
+                },
+              },
+            },
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                interval: 'year',
+                min_doc_count: 0,
+              },
+              aggs: {
+                'pivotMetric-sum-PO.IssuedAmount': {
+                  sum: {
+                    field: 'PO.IssuedAmount',
+                  },
+                },
+                'pivotMetric-avg-PO.IssuedAmount': {
+                  avg: {
+                    field: 'PO.IssuedAmount',
+                  },
+                },
+              },
+            },
+            'pivotMetric-sum-PO.IssuedAmount': {
+              sum: { field: 'PO.IssuedAmount' },
+            },
+            'pivotMetric-avg-PO.IssuedAmount': {
+              avg: {
+                field: 'PO.IssuedAmount',
+              },
+            },
+          },
+        },
+        columns: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            interval: 'year',
+            min_doc_count: 0,
+          },
+          aggs: {
+            'pivotMetric-sum-PO.IssuedAmount': {
+              sum: { field: 'PO.IssuedAmount' },
+            },
+            'pivotMetric-avg-PO.IssuedAmount': {
+              avg: {
+                field: 'PO.IssuedAmount',
+              },
+            },
+          },
+        },
+        'pivotMetric-sum-PO.IssuedAmount': {
+          sum: { field: 'PO.IssuedAmount' },
+        },
+        'pivotMetric-avg-PO.IssuedAmount': {
+          avg: {
+            field: 'PO.IssuedAmount',
+          },
+        },
+      },
+      track_total_hits: true,
+    }
+    let result = await buildQuery(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    // console.log(JSON.stringify(result, null, 2))
+    expect(result).to.eql(expected)
+  })
+  it('should build query and sort with no columns', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [
+        { type: 'sum', field: 'PO.IssuedAmount' },
+        { type: 'avg', field: 'PO.IssuedAmount' },
+      ],
+      groups: [{ type: 'fieldValues', field: 'Organization.State' }],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+      sort: { valueIndex: 1, direction: 'asc' },
+    }
+    let expected = {
+      aggs: {
+        groups: {
+          terms: {
+            field: 'Organization.State.untouched',
+            size: 10,
+            order: { 'pivotMetric-avg-PO.IssuedAmount': 'asc' },
+          },
+          aggs: {
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                interval: 'year',
+                min_doc_count: 0,
+              },
+              aggs: {
+                'pivotMetric-sum-PO.IssuedAmount': {
+                  sum: { field: 'PO.IssuedAmount' },
+                },
+                'pivotMetric-avg-PO.IssuedAmount': {
+                  avg: { field: 'PO.IssuedAmount' },
+                },
+              },
+            },
+            'pivotMetric-sum-PO.IssuedAmount': {
+              sum: { field: 'PO.IssuedAmount' },
+            },
+            'pivotMetric-avg-PO.IssuedAmount': {
+              avg: { field: 'PO.IssuedAmount' },
+            },
+          },
+        },
+        columns: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            interval: 'year',
+            min_doc_count: 0,
+          },
+          aggs: {
+            'pivotMetric-sum-PO.IssuedAmount': {
+              sum: { field: 'PO.IssuedAmount' },
+            },
+            'pivotMetric-avg-PO.IssuedAmount': {
+              avg: { field: 'PO.IssuedAmount' },
+            },
+          },
+        },
+        'pivotMetric-sum-PO.IssuedAmount': {
+          sum: { field: 'PO.IssuedAmount' },
+        },
+        'pivotMetric-avg-PO.IssuedAmount': {
+          avg: { field: 'PO.IssuedAmount' },
+        },
+      },
+      track_total_hits: true,
+    }
+    let result = await buildQuery(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    // console.log(JSON.stringify(result, null, 2))
+    expect(result).to.eql(expected)
+  })
+  it('should build query with multiple columns and sorting on multiple columns', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [{ type: 'sum', field: 'PO.IssuedAmount' }],
+      groups: [{ type: 'fieldValues', field: 'Organization.State' }],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
+      ],
+      sort: {
+        columnValues: ['2022', '2022-02-01'],
+        valueIndex: 0,
+        direction: 'asc',
+      },
+    }
+    let expected = {
+      aggs: {
+        groups: {
+          terms: {
+            field: 'Organization.State.untouched',
+            size: 10,
+            order: {
+              'sortFilter>metric': 'asc',
+            },
+          },
+          aggs: {
+            sortFilter: {
+              filter: {
+                bool: {
+                  must: [
+                    {
+                      range: {
+                        'PO.IssuedDate': {
+                          gte: '2022',
+                          lte: '2022-12-31T23:59:59Z',
+                        },
+                      },
+                    },
+                    {
+                      range: {
+                        'PO.IssuedDate': {
+                          gte: '2022-02-01',
+                          lte: '2022-02-28T23:59:59Z',
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+              aggs: {
+                metric: {
+                  sum: {
+                    field: 'PO.IssuedAmount',
+                  },
+                },
+              },
+            },
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                interval: 'year',
+                min_doc_count: 0,
+              },
+              aggs: {
+                columns: {
+                  date_histogram: {
+                    field: 'PO.IssuedDate',
+                    interval: 'month',
+                    min_doc_count: 0,
+                  },
+                  aggs: {
+                    'pivotMetric-sum-PO.IssuedAmount': {
+                      sum: {
+                        field: 'PO.IssuedAmount',
+                      },
+                    },
+                  },
+                },
+              },
+            },
+            'pivotMetric-sum-PO.IssuedAmount': {
+              sum: { field: 'PO.IssuedAmount' },
+            },
+          },
+        },
+        columns: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            interval: 'year',
+            min_doc_count: 0,
+          },
+          aggs: {
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                interval: 'month',
+                min_doc_count: 0,
+              },
+              aggs: {
+                'pivotMetric-sum-PO.IssuedAmount': {
+                  sum: {
+                    field: 'PO.IssuedAmount',
+                  },
+                },
+              },
+            },
+          },
+        },
+        'pivotMetric-sum-PO.IssuedAmount': {
+          sum: { field: 'PO.IssuedAmount' },
+        },
+      },
+      track_total_hits: true,
+    }
+    let result = await buildQuery(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    expect(result).to.eql(expected)
+  })
+  it('should build query with multiple groups, columns, and sort', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [{ type: 'stats', field: 'PO.IssuedAmount' }],
+      groups: [
+        { type: 'fieldValues', field: 'Organization.State' },
+        { type: 'fieldValues', field: 'Organization.NameState' },
+      ],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+      sort: {
+        columnValues: ['2022'],
+        valueIndex: 0,
+        valueProp: 'max',
+        direction: 'desc',
+      },
+    }
+    let expected = {
+      aggs: {
+        groups: {
+          terms: {
+            field: 'Organization.State.untouched',
+            size: 10,
+            order: {
+              'sortFilter>metric.max': 'desc',
+            },
+          },
+          aggs: {
+            sortFilter: {
+              filter: {
+                bool: {
+                  must: [
+                    {
+                      range: {
+                        'PO.IssuedDate': {
+                          gte: '2022',
+                          lte: '2022-12-31T23:59:59Z',
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+              aggs: {
+                metric: {
+                  stats: {
+                    field: 'PO.IssuedAmount',
+                  },
+                },
+              },
+            },
+            groups: {
+              terms: {
+                field: 'Organization.NameState.untouched',
+                size: 10,
+                order: {
+                  'sortFilter>metric.max': 'desc',
+                },
+              },
+              aggs: {
+                sortFilter: {
+                  filter: {
+                    bool: {
+                      must: [
+                        {
+                          range: {
+                            'PO.IssuedDate': {
+                              gte: '2022',
+                              lte: '2022-12-31T23:59:59Z',
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                  aggs: {
+                    metric: {
+                      stats: {
+                        field: 'PO.IssuedAmount',
+                      },
+                    },
+                  },
+                },
+                columns: {
+                  date_histogram: {
+                    field: 'PO.IssuedDate',
+                    interval: 'year',
+                    min_doc_count: 0,
+                  },
+                  aggs: {
+                    'pivotMetric-stats-PO.IssuedAmount': {
+                      stats: {
+                        field: 'PO.IssuedAmount',
+                      },
+                    },
+                  },
+                },
+                'pivotMetric-stats-PO.IssuedAmount': {
+                  stats: {
+                    field: 'PO.IssuedAmount',
+                  },
+                },
+              },
+            },
+          },
+        },
+        columns: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            interval: 'year',
+            min_doc_count: 0,
+          },
+          aggs: {
+            'pivotMetric-stats-PO.IssuedAmount': {
+              stats: {
+                field: 'PO.IssuedAmount',
+              },
+            },
+          },
+        },
+        'pivotMetric-stats-PO.IssuedAmount': {
+          stats: {
+            field: 'PO.IssuedAmount',
+          },
+        },
+      },
+      track_total_hits: true,
+    }
+    let result = await buildQuery(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    expect(result).to.eql(expected)
+  })
+  it('should build query with multiple groups, columns, and sort on _count without valueIndex', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [{ type: 'stats', field: 'PO.IssuedAmount' }],
+      groups: [
+        { type: 'fieldValues', field: 'Organization.State' },
+        { type: 'fieldValues', field: 'Organization.NameState' },
+      ],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+      sort: {
+        columnValues: ['2022'],
+        direction: 'desc',
+      },
+    }
+    let expected = {
+      aggs: {
+        groups: {
+          terms: {
+            field: 'Organization.State.untouched',
+            size: 10,
+            order: { 'sortFilter>_count': 'desc' },
+          },
+          aggs: {
+            sortFilter: {
+              filter: {
+                bool: {
+                  must: [
+                    {
+                      range: {
+                        'PO.IssuedDate': {
+                          gte: '2022',
+                          lte: '2022-12-31T23:59:59Z',
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+            groups: {
+              terms: {
+                field: 'Organization.NameState.untouched',
+                size: 10,
+                order: { 'sortFilter>_count': 'desc' },
+              },
+              aggs: {
+                sortFilter: {
+                  filter: {
+                    bool: {
+                      must: [
+                        {
+                          range: {
+                            'PO.IssuedDate': {
+                              gte: '2022',
+                              lte: '2022-12-31T23:59:59Z',
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                },
+                columns: {
+                  date_histogram: {
+                    field: 'PO.IssuedDate',
+                    interval: 'year',
+                    min_doc_count: 0,
+                  },
+                  aggs: {
+                    'pivotMetric-stats-PO.IssuedAmount': {
+                      stats: { field: 'PO.IssuedAmount' },
+                    },
+                  },
+                },
+                'pivotMetric-stats-PO.IssuedAmount': {
+                  stats: { field: 'PO.IssuedAmount' },
+                },
+              },
+            },
+          },
+        },
+        columns: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            interval: 'year',
+            min_doc_count: 0,
+          },
+          aggs: {
+            'pivotMetric-stats-PO.IssuedAmount': {
+              stats: { field: 'PO.IssuedAmount' },
+            },
+          },
+        },
+        'pivotMetric-stats-PO.IssuedAmount': {
+          stats: { field: 'PO.IssuedAmount' },
+        },
+      },
+      track_total_hits: true,
+    }
+    let result = await buildQuery(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
     expect(result).to.eql(expected)
   })
   it('should build query with nested pivot columns and subtotals', async () => {
@@ -1491,5 +2214,63 @@ describe('pivot', () => {
       ],
     })
     expect(nestedResult.results).to.eql(columnResult)
+  })
+  it('should filter', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [{ type: 'stats', field: 'PO.IssuedAmount' }],
+      groups: [
+        { type: 'fieldValues', field: 'Organization.State' },
+        { type: 'fieldValues', field: 'Organization.City' },
+      ],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+      sort: {
+        columnValues: ['2022'],
+        direction: 'desc',
+      },
+      filters: [
+        { groups: ['Nevada', 'Reno'], columns: ['2017'] },
+        { groups: ['Florida', 'Hillsboro Beach'] },
+      ],
+    }
+    let expected = {
+      bool: {
+        minimum_should_match: 1,
+        should: [
+          {
+            bool: {
+              must: [
+                { term: { 'Organization.State.untouched': 'Nevada' } },
+                { term: { 'Organization.City.untouched': 'Reno' } },
+                {
+                  range: {
+                    'PO.IssuedDate': {
+                      gte: '2017',
+                      lte: '2017-12-31T23:59:59Z',
+                    },
+                  },
+                },
+              ],
+            },
+          },
+          {
+            bool: {
+              must: [
+                { term: { 'Organization.State.untouched': 'Florida' } },
+                { term: { 'Organization.City.untouched': 'Hillsboro Beach' } },
+              ],
+            },
+          },
+        ],
+      },
+    }
+    let result = await filter(
+      input,
+      testSchemas(['Organization.City', 'Organization.State'])
+    )
+    expect(result).to.eql(expected)
   })
 })

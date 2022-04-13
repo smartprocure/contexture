@@ -4,6 +4,7 @@ let { getStats } = require('./stats')
 let { getField } = require('../../utils/fields')
 let types = require('../../../src/example-types')
 let { basicSimplifyTree } = require('../../utils/elasticDSL')
+let { compactMapAsync } = require('../../utils/futil')
 
 let lookupTypeProp = (def, prop, type) =>
   _.getOr(def, `${type}GroupStats.${prop}`, types)
@@ -13,13 +14,12 @@ let lookupTypeProp = (def, prop, type) =>
 //  (same) values for ALL group levels
 // Rows/Columns are buckets, values are metrics
 
+// Add `pivotMetric-` to auto keys so we can skip camelCasing it in the response
+let aggKeyForValue = ({ key, type, field }) =>
+  key || F.compactJoin('-', ['pivotMetric', type, field])
 let aggsForValues = (node, schema) =>
   _.flow(
-    // Add `pivotMetric-` to auto keys so we can skip camelCasing it in the response
-    _.keyBy(
-      ({ key, type, field }) =>
-        key || F.compactJoin('-', ['pivotMetric', type, field])
-    ),
+    _.keyBy(aggKeyForValue),
     // This is a very interesting lint error - while key is not used in the function body, it is important.
     // Omitting key here would include it in the props spread and then pass it along as part of the body of the ES aggregation.
     // eslint-disable-next-line
@@ -30,6 +30,68 @@ let aggsForValues = (node, schema) =>
       },
     }))
   )(node)
+
+let maybeWrapWithFilterAgg = ({ query, filters, aggName }) =>
+  _.isEmpty(filters)
+    ? query
+    : {
+        aggs: {
+          [aggName]: {
+            filter: { bool: { must: filters } },
+            ...query,
+          },
+        },
+      }
+
+// Builds filters for drilldowns
+let drilldownFilters = ({ drilldowns = [], groups = [], schema, getStats }) =>
+  compactMapAsync((group, i) => {
+    let filter = lookupTypeProp(_.stubFalse, 'drilldown', group.type)
+    // Drilldown can come from root or be inlined on the group definition
+    let drilldown = drilldowns[i] || group.drilldown
+    return drilldown && filter({ drilldown, ...group }, schema, getStats)
+  }, groups)
+
+let getSortAgg = async ({ node, sort, schema, getStats }) => {
+  if (!sort) return
+  let filters = await drilldownFilters({
+    drilldowns: sort.columnValues,
+    groups: node.columns,
+    schema,
+    getStats,
+  })
+  // Return an empty object so we still add sortField even without columns
+  // No columns means that we are sorting by a metric and so don't need any of this
+  if (!_.size(filters)) return {}
+  let valueNode = node.values[sort.valueIndex]
+  return {
+    aggs: {
+      sortFilter: {
+        filter: _.size(filters)
+          ? { bool: { must: filters } }
+          : { match_all: {} },
+        ...(valueNode && {
+          aggs: {
+            metric: {
+              [valueNode.type]: { field: getField(schema, valueNode.field) },
+            },
+          },
+        }),
+      },
+    },
+  }
+}
+let getSortField = ({
+  values,
+  sort: { columnValues = [], valueProp, valueIndex } = {},
+}) =>
+  F.dotJoin([
+    _.size(columnValues)
+      ? `sortFilter>${_.isNil(valueIndex) ? '_count' : 'metric'}`
+      : // If there are no columns, get the generated key for the value or default to _count
+        aggKeyForValue(values[valueIndex] || { key: '_count' }),
+    valueProp,
+  ])
 
 let buildQuery = async (node, schema, getStats) => {
   let drilldowns = node.drilldown || []
@@ -42,49 +104,46 @@ let buildQuery = async (node, schema, getStats) => {
 
   let statsAggs = { aggs: aggsForValues(node.values, schema) }
   // buildGroupQuery applied to a list of groups
-  let buildNestedGroupQuery = (statsAggs, groups, groupingType) =>
-    _.reduce(
+  let buildNestedGroupQuery = async (statsAggs, groups, groupingType, sort) => {
+    // Generate filters from sort column values
+    let sortAgg = await getSortAgg({ node, sort, schema, getStats })
+    let sortField = getSortField(node)
+
+    return _.reduce(
       async (children, group) => {
         // Subtotals calculates metrics at each group level, not needed if flattening or in chart
         // Support for per group stats could also be added here - merge on another stats agg blob to children based on group.stats/statsField or group.values
         if (node.subtotals) children = _.merge(await children, statsAggs)
-        let { type } = group
-        let build = lookupTypeProp(_.identity, 'buildGroupQuery', type)
+        // At each level, add a filters bucket agg and nested metric to enable sorting
+        // For example, to sort by Sum of Price for 2022, add a filters agg for 2022 and neseted metric for sum of price so we can target it
+        // As far as we're aware, there's no way to sort by the nth bucket - but we can simulate that by using filters to create a discrete agg for that bucket
+        if (sortAgg) {
+          children = _.merge(sortAgg, await children)
+          // Set `sort` on the group, deferring to each grouping type to handle it
+          // The API of `{sort: {field, direction}}` is respected by fieldValues and can be added to others
+          group.sort = { field: sortField, direction: sort.direction }
+        }
+        let build = lookupTypeProp(_.identity, 'buildGroupQuery', group.type)
         return build(group, await children, groupingType, schema, getStats)
       },
       statsAggs,
       _.reverse(groups)
     )
+  }
+
   if (node.columns)
     statsAggs = _.merge(
       await buildNestedGroupQuery(statsAggs, node.columns, 'columns'),
       statsAggs
     )
   let query = _.merge(
-    await buildNestedGroupQuery(statsAggs, groups, 'groups'),
+    await buildNestedGroupQuery(statsAggs, groups, 'groups', node.sort),
     // Stamping total row metrics if not drilling data
     _.isEmpty(drilldowns) ? statsAggs : {}
   )
 
-  let filters = _.compact(
-    await Promise.all(
-      F.mapIndexed((group, i) => {
-        let filter = lookupTypeProp(_.stubFalse, 'drilldown', group.type)
-        // stamp on drilldown from root if applicable
-        let drilldown = drilldowns[i] || group.drilldown
-        return drilldown && filter({ drilldown, ...group }, schema, getStats)
-      }, groups)
-    )
-  )
-  if (!_.isEmpty(filters))
-    query = {
-      aggs: {
-        pivotFilter: {
-          filter: { bool: { must: filters } },
-          ...query,
-        },
-      },
-    }
+  let filters = await drilldownFilters({ drilldowns, groups, schema, getStats })
+  query = maybeWrapWithFilterAgg({ filters, aggName: 'pivotFilter', query })
 
   // Without this, ES7+ stops counting at 10k instead of returning the actual count
   query.track_total_hits = true
@@ -134,7 +193,50 @@ let processResponse = (response, node = {}) => {
   return { results: node.flatten ? flattenGroups(results) : results }
 }
 
+// Example Payload:
+// node.filters = [
+//   { groups: ['Reno', '0-500'], columns: ['2017'] },
+//   { groups: ['Hillsboro Beach', '2500-*'] }
+// ] -> (Reno AND 0-500 AND 2017) OR (Hillsboro AND 2500-*)
+let hasValue = ({ filters }) => !_.isEmpty(filters)
+let filter = async ({ filters, groups = [], columns = [] }, schema) => {
+  // This requires getting `search` passed in to filter
+  // This is a change to contexture core, which is likely a breaking change moving all contexture type methods to named object params
+  //    That will allow everything to get all props inclding `search`
+  let getStats = () => {
+    throw 'Pivot filtering does not support running searches to build filters yet'
+  }
+  return {
+    bool: {
+      minimum_should_match: 1,
+      should: await compactMapAsync(
+        async filter => ({
+          bool: {
+            must: [
+              ...(await drilldownFilters({
+                drilldowns: filter.groups,
+                groups,
+                schema,
+                getStats,
+              })),
+              ...(await drilldownFilters({
+                drilldowns: filter.columns,
+                groups: columns,
+                schema,
+                getStats,
+              })),
+            ],
+          },
+        }),
+        filters
+      ),
+    },
+  }
+}
+
 let pivot = {
+  hasValue,
+  filter,
   aggsForValues,
   buildQuery,
   processResponse,
