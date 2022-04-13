@@ -87,7 +87,7 @@ let getSortField = ({
 }) =>
   F.dotJoin([
     _.size(columnValues)
-      ? `sortFilter>${_.isNil(valueIndex) ? '_count' : 'metric'}`
+      ? `sortFilter${_.isNil(valueIndex) ? '.doc_count' : '>metric'}`
       : // If there are no columns, get the generated key for the value or default to _count
         aggKeyForValue(values[valueIndex] || { key: '_count' }),
     valueProp,
