@@ -81,10 +81,7 @@ let getSortAgg = async ({ node, sort, schema, getStats }) => {
     },
   }
 }
-let getSortField = ({
-  values,
-  sort: { columnValues = [], valueProp, valueIndex } = {},
-}) =>
+let getSortField = ({ columnValues = [], valueProp, valueIndex } = {}) =>
   F.dotJoin([
     _.size(columnValues)
       ? `sortFilter${_.isNil(valueIndex) ? '.doc_count' : '>metric'}`
@@ -107,7 +104,7 @@ let buildQuery = async (node, schema, getStats) => {
   let buildNestedGroupQuery = async (statsAggs, groups, groupingType, sort) => {
     // Generate filters from sort column values
     let sortAgg = await getSortAgg({ node, sort, schema, getStats })
-    let sortField = getSortField(node)
+    let sortField = getSortField(sort)
 
     return _.reduce(
       async (children, group) => {
