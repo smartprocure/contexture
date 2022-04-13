@@ -60,36 +60,35 @@ let getSortAgg = async ({ node, sort, schema, getStats }) => {
     schema,
     getStats,
   })
-  // Return an empty object so we still add sortField even without columns
-  // No columns means that we are sorting by a metric and so don't need any of this
-  if (!_.size(filters)) return {}
   let valueNode = node.values[sort.valueIndex]
+  let metric = valueNode && {
+    aggs: {
+      metric: {
+        [valueNode.type]: { field: getField(schema, valueNode.field) },
+      },
+    },
+  }
+  // No columns means that we are sorting by a metric, but we still need to stamp it so we can sort by it since the original metric has dots in the name and can't be sorted
+  // TODO: consider replacing dots in metric agg names which come from fields
+  if (!_.size(filters)) return metric
+
   return {
     aggs: {
       sortFilter: {
-        filter: _.size(filters)
-          ? { bool: { must: filters } }
-          : { match_all: {} },
-        ...(valueNode && {
-          aggs: {
-            metric: {
-              [valueNode.type]: { field: getField(schema, valueNode.field) },
-            },
-          },
-        }),
+        filter: { bool: { must: filters } },
+        ...metric,
       },
     },
   }
 }
-let getSortField = ({
-  values,
-  sort: { columnValues = [], valueProp, valueIndex } = {},
-}) =>
+let getSortField = ({ columnValues = [], valueProp, valueIndex } = {}) =>
   F.dotJoin([
     _.size(columnValues)
-      ? `sortFilter>${_.isNil(valueIndex) ? '_count' : 'metric'}`
+      ? `sortFilter${_.isNil(valueIndex) ? '.doc_count' : '>metric'}`
       : // If there are no columns, get the generated key for the value or default to _count
-        aggKeyForValue(values[valueIndex] || { key: '_count' }),
+      _.isNil(valueIndex)
+      ? 'doc_count'
+      : 'metric',
     valueProp,
   ])
 
@@ -107,7 +106,7 @@ let buildQuery = async (node, schema, getStats) => {
   let buildNestedGroupQuery = async (statsAggs, groups, groupingType, sort) => {
     // Generate filters from sort column values
     let sortAgg = await getSortAgg({ node, sort, schema, getStats })
-    let sortField = getSortField(node)
+    let sortField = getSortField(sort)
 
     return _.reduce(
       async (children, group) => {
