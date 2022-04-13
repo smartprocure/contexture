@@ -22,7 +22,7 @@ describe('fieldValuesGroupStats', () => {
           terms: {
             field: 'Organization.Name.untouched',
             size: 10,
-            order: { 'sum.value': 'desc' },
+            order: { sum: 'desc' },
           },
           aggs: {
             min: { min: { field: 'LineItem.TotalPrice' } },
@@ -41,7 +41,7 @@ describe('fieldValuesGroupStats', () => {
         type: 'fieldValuesGroupStats',
         groupField: 'Organization.Name',
         statsField: 'LineItem.TotalPrice',
-        sort: { field: 'max', order: 'asc' },
+        sort: { field: 'max', direction: 'asc' },
       })
     ).to.eql({
       aggs: {
@@ -49,7 +49,7 @@ describe('fieldValuesGroupStats', () => {
           terms: {
             field: 'Organization.Name',
             size: 10,
-            order: { 'max.value': 'asc' },
+            order: { max: 'asc' },
           },
           aggs: {
             min: { min: { field: 'LineItem.TotalPrice' } },
@@ -134,7 +134,7 @@ describe('fieldValuesGroupStats', () => {
               terms: {
                 field: 'Organization.Name',
                 size: 20,
-                order: { 'sum.value': 'desc' },
+                order: { sum: 'desc' },
               },
               aggs: { sum: { sum: { field: 'LineItem.TotalPrice' } } },
             },
@@ -183,7 +183,7 @@ describe('fieldValuesGroupStats', () => {
               terms: {
                 field: 'Organization.Name',
                 size: 10,
-                order: { 'sum.value': 'desc' },
+                order: { sum: 'desc' },
               },
               aggs: { sum: { sum: { field: 'LineItem.TotalPrice' } } },
             },

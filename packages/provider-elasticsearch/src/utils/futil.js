@@ -87,6 +87,10 @@ let renameOn = (from, to, obj) => {
   return obj
 }
 
+// Async version of compactMap (and indexed)
+let compactMapAsync = async (...args) =>
+  _.compact(await Promise.all(F.mapIndexed(...args)))
+
 module.exports = {
   maybeAppend,
   keysToObject,
@@ -102,4 +106,5 @@ module.exports = {
   mapFlatKeys,
   mapStringParts,
   renameOn,
+  compactMapAsync,
 }
