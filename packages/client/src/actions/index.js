@@ -1,5 +1,5 @@
 import _ from 'lodash/fp'
-import F from 'futil-js'
+import F from 'futil'
 import { encode, Tree } from '../util/tree'
 import { getTypeProp } from '../types'
 import wrap from './wrap'
@@ -34,7 +34,7 @@ export default config => {
 
     dedupeWalk(
       (dedupe, parentPath, node) => {
-        initNode(extend, types, dedupe, parentPath, node)
+        initNode({ extend, types, snapshot }, dedupe, parentPath, node)
         flat[encode(node.path)] = node
       },
       node,

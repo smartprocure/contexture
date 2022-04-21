@@ -1,5 +1,32 @@
-# 2.40.0
+# 2.43.0
 * Add `watchNode`
+
+# 2.42.0
+* Pivot node: add missing reactors and defaults
+
+# 2.41.0
+* Pivot node: merging new response object format 
+
+# 2.40.2
+* Fix: Pivot node: deep merging for groups and columns
+
+# 2.40.1
+* Fix: Pivot node: merging columns on drilldown response
+
+# 2.40.0
+* Pivot node: support for columns field
+
+# 2.39.3
+* Fix: Use `snapshot` on `typeDefaults` instead of `_.deepClone` to fix regression from `2.38.0` for real world apps that end up with observable `typeDefaults`
+
+# 2.39.2
+* Better `pivot` `mergeResponse` implementation that merges groups by key
+* Move from `futil-js` to `futil`
+* Pass `snapshot` into `mergeResponse` to avoid a mobx bug
+
+# 2.39.1
+* Add node validation for `pivot` groups 
+* Add self reactor for a `pivot` node `drilldown` property
 
 # 2.39.0
 * Add support for type specifc `onDispatch`, called when an event is dispatched with a target node with the corresponding type
