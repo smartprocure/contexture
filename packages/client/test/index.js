@@ -2316,6 +2316,36 @@ let AllTests = ContextureClient => {
     })
     expect(Tree.getNode(['root', 'pivot']).forceReplaceResponse).to.equal(true)
   })
+  it('should support watchNode', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient(
+      { service, debounce: 1 },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          { key: 'results', type: 'results', infiniteScroll: true },
+          { key: 'test', type: 'facet', values: [] },
+        ],
+      }
+    )
+    let resultWatcher = sinon.spy()
+    Tree.watchNode(['root', 'results'], resultWatcher, ['page', 'context'])
+    let facetWatcher = sinon.spy()
+    Tree.watchNode(['root', 'test'], facetWatcher, ['values'])
+
+    let promise = Tree.mutate(['root', 'results'], { page: 1 })
+    expect(resultWatcher).to.have.callCount(1)
+    await promise
+    expect(resultWatcher).to.have.callCount(2)
+    await Tree.mutate(['root', 'results'], { page: 2 })
+    expect(resultWatcher).to.have.callCount(4)
+
+    await Tree.mutate(['root', 'test'], { values: ['asdf'] })
+    expect(facetWatcher).to.have.callCount(1)
+    // resultWatcher called twice more because facet change resets page to 0
+    expect(resultWatcher).to.have.callCount(6)
+  })
 }
 
 describe('lib', () => AllTests(ContextureClient))
