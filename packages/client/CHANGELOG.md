@@ -1,3 +1,6 @@
+# 2.43.0
+* Add `watchNode`
+
 # 2.42.0
 * Pivot node: add missing reactors and defaults
 
