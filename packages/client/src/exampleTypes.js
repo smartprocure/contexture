@@ -1,5 +1,6 @@
 import _ from 'lodash/fp'
-import * as F from 'futil-js'
+import F from 'futil'
+import { deepMultiTransformOn } from './util/futil'
 
 let validateValues = ({ value, values = [] }) => value || values.length
 let validateValueExistence = _.flow(_.get('value'), _.negate(_.isNil))
@@ -265,16 +266,32 @@ export default F.stampKey('type', {
     },
   },
   pivot: {
+    validate: context =>
+      _.every(
+        ({ type, ranges, percents }) =>
+          (type !== 'numberRanges' && type !== 'percentiles') ||
+          (type === 'numberRanges' && ranges.length > 0) ||
+          (type === 'percentiles' && percents.length > 0),
+        _.concat(context.columns, context.groups)
+      ),
     reactors: {
+      columns: 'self',
       groups: 'self',
       values: 'self',
+      drilldown: 'self',
+      filters: 'others',
+      sort: 'self',
       flatten: 'self',
       subtotals: 'self',
     },
     defaults: {
+      columns: [],
       groups: [],
       values: [],
+      filters: [],
+      sort: {},
       drilldown: null,
+      showCounts: false,
       flatten: false,
       subtotals: false,
       context: {
@@ -298,8 +315,30 @@ export default F.stampKey('type', {
       }
     },
     shouldMergeResponse: node => !_.isEmpty(node.drilldown),
-    mergeResponse(node, response, extend) {
-      let context = F.mergeAllArrays([node.context, response.context])
+    mergeResponse(node, response, extend, snapshot) {
+      // Convert response groups and columns to objects for easy merges
+      let groupsToObjects = deepMultiTransformOn(
+        ['groups', 'columns'],
+        groupsToObjects => _.flow(_.map(groupsToObjects), _.keyBy('key'))
+      )
+      // Convert groups and columns back to arrays
+      let groupsToArrays = deepMultiTransformOn(
+        ['groups', 'columns'],
+        groupsToArrays => _.flow(F.unkeyBy('key'), _.map(groupsToArrays))
+      )
+
+      // `snapshot` here is to solve a mobx issue
+      // wrap in `groups` so it traverses the root level
+      let nodeGroups = groupsToObjects(snapshot(node.context.results))
+      let responseGroups = groupsToObjects(response.context.results)
+
+      // Easy merge now that we can merge by group key
+      let results = F.mergeAllArrays([nodeGroups, responseGroups])
+
+      // Grab `groups` property we artificially added above for easy traversals
+      let context = { results: groupsToArrays(results) }
+
+      // Write on the node
       extend(node, { context })
     },
   },
