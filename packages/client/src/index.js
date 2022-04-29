@@ -146,7 +146,13 @@ export let ContextTree = _.curry(
       try {
         await processResponse(await service(body, now))
       } catch (error) {
-        await processResponse(tree)
+        // Clear updating
+        Tree.walk(node => {
+          if (node.updating) {
+            extend(node, { updating: false })
+            node.updatingDeferred.resolve()
+          }
+        })(tree)
         onError(error) // Raise the onError event
       }
     }
@@ -172,12 +178,12 @@ export let ContextTree = _.curry(
       data = _.isEmpty(data.data) ? data : data.data
       let { error } = data
       if (error) extend(tree, { error })
-      await Promise.all(
-        F.mapIndexed(
-          (node, path) => processResponseNode(decode(path), node),
-          flatten(data)
-        )
-      )
+      await Tree.walkAsync(
+        async (node, i, parents) => {
+          let path = _.map('key', [..._.reverse(parents), node])
+          return processResponseNode(path, node)
+        }
+      )(data)
     }
     let processResponseNode = async (path, node) => {
       let target = getNode(path)
