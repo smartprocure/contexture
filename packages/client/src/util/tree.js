@@ -16,3 +16,6 @@ export let bubbleUp = (f, path) => _.flow(F.prefixes, _.reverse, _.map(f))(path)
 
 let isNotEqual = _.negate(_.isEqual)
 export let isParent = _.overEvery([isNotEqual, _.startsWith])
+
+export let pathFromParents = (parents, node) =>
+  _.map('key', _.reverse([node, ...parents]))
