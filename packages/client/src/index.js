@@ -14,8 +14,8 @@ import mockService from './mockService'
 import subquery from './subquery'
 import { setupListeners } from './listeners'
 
-let shouldBlockUpdate = flat => {
-  let leaves = Tree.flatLeaves(flat)
+let shouldBlockUpdate = tree => {
+  let leaves = Tree.leaves(tree)
   let noUpdates = !_.some('markedForUpdate', leaves)
   let hasErrors = _.some('error', leaves)
   return hasErrors || noUpdates
@@ -124,7 +124,7 @@ export let ContextTree = _.curry(
 
     // If specifying path, *only* update that path
     let runUpdate = async path => {
-      if (shouldBlockUpdate(flat)) return log('Blocked Search')
+      if (shouldBlockUpdate(tree)) return log('Blocked Search')
       let now = new Date().getTime()
       let node = getNode(path)
 
