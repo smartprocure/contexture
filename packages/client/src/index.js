@@ -67,7 +67,10 @@ export let ContextTree = _.curry(
     // initNode now generates node keys, so it must be run before flattening the tree
     dedupeWalk(initNode({ extend, types, snapshot }), tree)
     let flat = flatten(tree)
-    let getNode = path => flat[encode(path)]
+    let getNode = path =>
+      // empty path returns root with tree lookup, but should be undefined to mimic flat tree
+      !_.isEmpty(path) && Tree.lookup(_.drop(1, path), tree)
+    //  flat[encode(path)]
 
     // Overwrite extend to report changes
     extend = _.over([extend, (a, b) => TreeInstance.onChange(a, b)])
