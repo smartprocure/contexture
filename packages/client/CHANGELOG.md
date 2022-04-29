@@ -1,4 +1,7 @@
 # 2.43.0
+* Remove unused `default` type support
+
+# 2.43.0
 * Add `watchNode`
 
 # 2.42.0
