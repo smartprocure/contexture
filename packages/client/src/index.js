@@ -1,6 +1,14 @@
 import _ from 'lodash/fp'
 import F from 'futil'
-import { flatten, bubbleUp, Tree, encode, decode, isParent } from './util/tree'
+import {
+  flatten,
+  bubbleUp,
+  Tree,
+  encode,
+  decode,
+  isParent,
+  pathFromParents,
+} from './util/tree'
 import { validate } from './validation'
 import { getAffectedNodes, reactors } from './reactors'
 import actions from './actions'
@@ -138,7 +146,7 @@ export let ContextTree = _.curry(
       // make all other nodes filter only
       if (path) {
         Tree.walk((node, index, parents) => {
-          let nodePath = [..._.map('key', _.reverse(parents)), node.key]
+          let nodePath = pathFromParents(parents, node)
           // marking everything that isn’t the node or it’s children
           if (!_.isEqual(path, nodePath) && !isParent(path, nodePath)) {
             node.filterOnly = true
@@ -181,11 +189,8 @@ export let ContextTree = _.curry(
       data = _.isEmpty(data.data) ? data : data.data
       let { error } = data
       if (error) extend(tree, { error })
-      await Tree.walkAsync(
-        async (node, i, parents) => {
-          let path = _.map('key', [..._.reverse(parents), node])
-          return processResponseNode(path, node)
-        }
+      await Tree.walkAsync(async (node, i, parents) =>
+        processResponseNode(pathFromParents(parents, node), node)
       )(data)
     }
     let processResponseNode = async (path, node) => {
