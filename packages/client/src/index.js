@@ -180,7 +180,7 @@ export let ContextTree = _.curry(
       )
     }
     let processResponseNode = async (path, node) => {
-      let target = flat[encode(path)]
+      let target = getNode(path)
       let responseNode = _.pick(['context', 'error'], node)
       if (target && !isStale(node, target)) {
         if (!_.isEmpty(responseNode)) {
