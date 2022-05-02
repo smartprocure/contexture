@@ -4,6 +4,8 @@ import { Tree, encode } from './util/tree'
 import { runTypeFunction, runTypeFunctionOrDefault, getTypeProp } from './types'
 
 export let defaults = {
+  type: null,
+  paused: null,
   path: null,
   updating: null,
   lastUpdateTime: null,
@@ -12,19 +14,17 @@ export let defaults = {
   error: null,
   context: null,
   missedUpdate: null,
-  paused: null,
-  type: null,
   updatingPromise: null,
   updatingDeferred: null,
   metaHistory: [],
 }
-export let internalStateKeys = {
-  ..._.omit(['type', 'paused'], defaults),
-  validate: null,
-  onMarkForUpdate: null,
-  afterSearch: null,
-  forceReplaceResponse: false,
-}
+export let internalStateKeys = [
+  ..._.keys(_.omit(['type', 'paused'], defaults)),
+  'validate',
+  'onMarkForUpdate',
+  'afterSearch',
+  'forceReplaceResponse',
+]
 
 export let autoKey = x => F.compactJoin('-', [x.field, x.type]) || 'node'
 
