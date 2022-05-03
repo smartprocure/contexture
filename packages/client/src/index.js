@@ -89,6 +89,7 @@ export let ContextTree = _.curry(
       markLastUpdate,
       prepForUpdate,
       clearUpdate,
+      syncMarkedForUpdate,
     } = traversals(extend)
     let typeProp = getTypeProp(types)
 
@@ -97,6 +98,7 @@ export let ContextTree = _.curry(
         getAffectedNodes(customReactors, getNode, types),
         // Mark children only if it's not a parent of the target so we don't incorrectly mark siblings
         // flatMap because traversing children can create arrays
+        // groups that aren't properly marked here are taken care of by syncMarkedForUpdate right after
         _.flatMap(n =>
          F.unless(
             isParent(snapshot(n.path), event.path),
@@ -114,7 +116,13 @@ export let ContextTree = _.curry(
         // not all dispatches have event.node, e.g. `refresh` with no path
         F.maybeCall(typeProp('onDispatch', event.node), event, extend)
       await validate(runTypeFunction(types, 'validate'), extend, tree)
-      let updatedNodes = _.flatten(bubbleUp(processEvent(event), event.path))
+      let updatedNodes = [
+        // Get updated nodes
+        ..._.flatten(bubbleUp(processEvent(event), event.path)),
+        // Get nodes updated as a result of the sync
+        ...syncMarkedForUpdate(tree)
+      ]
+
       await Promise.all(_.invokeMap('onMarkForUpdate', updatedNodes))
       // Snapshot is for mobx 4 support because path being an observable array means that `_.find({path: event.path})` throws an error
       let affectsSelf = !!_.flow(
