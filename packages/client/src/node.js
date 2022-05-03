@@ -10,6 +10,7 @@ export let defaults = {
   updating: null,
   lastUpdateTime: null,
   markedForUpdate: null,
+  isStale: null,
   hasValue: null,
   error: null,
   context: null,
