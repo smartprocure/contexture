@@ -8,7 +8,8 @@ import chai from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import ContextureClient from '../src'
-import { observable, reaction, toJS, set } from 'mobx'
+import mockService from '../src/mockService'
+import { observable, reaction, autorun, toJS, set } from 'mobx'
 const expect = chai.expect
 chai.use(sinonChai)
 
@@ -357,5 +358,26 @@ describe('usage with mobx should generally work', () => {
     reaction(() => tree.disableAutoUpdate, reactor)
     tree.disableAutoUpdate = true
     expect(reactor).to.have.callCount(1)
+  })
+  it('should react to group fns', async () => {
+    let service = sinon.spy(mockService({}))
+    let reactor = sinon.spy()
+    let tree = ContextureMobx(
+      { service, debounce: 1 },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          { key: 'filter', field: 'facetField', type: 'facet', values: ['x'] },
+          { key: 'results', type: 'results' },
+        ],
+      }
+    )
+    autorun(() => reactor(tree.getNode(['root']).markedForUpdate))
+    await tree.mutate(['root', 'filter'], { values: ['other Value'] })
+
+    expect(service).to.have.callCount(1)
+    // once on initial run to false, then true, then again back to false
+    expect(reactor).to.have.callCount(3)
   })
 })
