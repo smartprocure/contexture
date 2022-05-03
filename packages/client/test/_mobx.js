@@ -67,6 +67,7 @@ describe('usage with mobx should generally work', () => {
     expect(dto).to.deep.equal({
       key: 'root',
       join: 'and',
+      lastUpdateTime: now,
       children: [
         {
           key: 'filter',

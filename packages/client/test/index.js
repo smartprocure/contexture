@@ -48,6 +48,7 @@ let AllTests = ContextureClient => {
       expect(dto).to.deep.equal({
         key: 'root',
         join: 'and',
+        lastUpdateTime: now,
         children: [
           {
             key: 'filter',
@@ -283,6 +284,7 @@ let AllTests = ContextureClient => {
     expect(dto).to.deep.equal({
       key: 'root',
       join: 'and',
+      lastUpdateTime: now,
       children: [
         {
           key: 'analysis',
@@ -800,6 +802,7 @@ let AllTests = ContextureClient => {
     expect(dto).to.deep.equal({
       key: 'root',
       join: 'and',
+      lastUpdateTime: now,
       children: [
         {
           key: 'a',
