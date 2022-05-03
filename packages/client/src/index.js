@@ -84,7 +84,12 @@ export let ContextTree = _.curry(
     extend = _.over([extend, (a, b) => TreeInstance.onChange(a, b)])
 
     // Getting the Traversals
-    let { markForUpdate, markLastUpdate, prepForUpdate } = traversals(extend)
+    let {
+      markForUpdate,
+      markLastUpdate,
+      prepForUpdate,
+      clearUpdate,
+    } = traversals(extend)
     let typeProp = getTypeProp(types)
 
     let processEvent = event => path =>
@@ -161,7 +166,7 @@ export let ContextTree = _.curry(
         // Clear updating
         Tree.walk(node => {
           if (node.updating) {
-            extend(node, { updating: false })
+            clearUpdate(node)
             node.updatingDeferred.resolve()
           }
         })(tree)
@@ -217,7 +222,7 @@ export let ContextTree = _.curry(
           if (debug && node._meta) target.metaHistory.push(node._meta)
         }
 
-        extend(target, { updating: false })
+        clearUpdate(target)
 
         if (!_.isEmpty(responseNode)) {
           try {

@@ -1,8 +1,8 @@
 import F from 'futil'
 import { Tree } from './util/tree'
 
-export default extend => ({
-  markForUpdate(x) {
+export default extend => {
+  let markForUpdate = x => {
     if (x.paused) extend(x, { missedUpdate: true })
     else if (!x.markedForUpdate) {
       let updatingDeferred = F.defer()
@@ -10,20 +10,25 @@ export default extend => ({
         markedForUpdate: true,
         updatingPromise: updatingDeferred.promise,
         updatingDeferred,
+        isStale: true,
       })
     }
     return x
-  },
-  markLastUpdate: time =>
-    Tree.walk(child => {
-      if (child.markedForUpdate) extend(child, { lastUpdateTime: time })
+  }
+  return {
+    markForUpdate,
+    clearUpdate: node => extend(node, { updating: false, isStale: false }),
+    markLastUpdate: time =>
+      Tree.walk(node => {
+        if (node.markedForUpdate) extend(node, { lastUpdateTime: time })
+      }),
+    prepForUpdate: Tree.walk(node => {
+      if (node.markedForUpdate) {
+        extend(node, {
+          updating: true,
+          markedForUpdate: false,
+        })
+      }
     }),
-  prepForUpdate: Tree.walk(child => {
-    if (child.markedForUpdate) {
-      extend(child, {
-        updating: true,
-        markedForUpdate: false,
-      })
-    }
-  }),
-})
+  }
+}
