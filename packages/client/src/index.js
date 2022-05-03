@@ -29,7 +29,7 @@ let shouldBlockUpdate = tree => {
   return hasErrors || noUpdates
 }
 
-let isStale = (result, target) =>
+let isStaleResult = (result, target) =>
   target.lastUpdateTime &&
   result.lastUpdateTime &&
   target.lastUpdateTime > result.lastUpdateTime
@@ -197,7 +197,7 @@ export let ContextTree = _.curry(
     let processResponseNode = async (path, node) => {
       let target = getNode(path)
       let responseNode = _.pick(['context', 'error'], node)
-      if (target && !isStale(node, target)) {
+      if (target && !isStaleResult(node, target)) {
         if (!_.isEmpty(responseNode)) {
           TreeInstance.onResult(path, node, target)
           if (
