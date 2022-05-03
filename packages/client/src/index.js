@@ -24,7 +24,7 @@ import { setupListeners } from './listeners'
 
 let shouldBlockUpdate = tree => {
   let leaves = Tree.leaves(tree)
-  let noUpdates = !_.some('markedForUpdate', leaves)
+  let noUpdates = !tree.markedForUpdate
   let hasErrors = _.some('error', leaves)
   return hasErrors || noUpdates
 }
