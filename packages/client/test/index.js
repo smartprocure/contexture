@@ -2384,25 +2384,25 @@ let AllTests = ContextureClient => {
       }
     )
     let action = tree.mutate(['root', 'filter'], { values: ['other Value'] })
-    
+
     // Before async validate runs on dispatch ( and thus before marking for update)
     expect(!!tree.getNode(['root', 'results']).isStale).to.be.false
     expect(!!tree.getNode(['root']).isStale).to.be.false
-    
+
     // Preparing to search (0 ms delay because validate is async)
     await Promise.delay()
     expect(tree.getNode(['root', 'results']).isStale).to.be.true
     expect(tree.getNode(['root']).markedForUpdate).to.be.true
     expect(tree.getNode(['root']).isStale).to.be.true
     expect(!!tree.getNode(['root']).updating).to.be.false
-    
+
     // Prepare for search, but run before search finishes
     /// TODOOO HERE:::: unpredicable fail - could be timing issue???
     await Promise.delay(5)
     expect(tree.getNode(['root']).markedForUpdate).to.be.false
     expect(tree.getNode(['root']).isStale).to.be.true
     expect(tree.getNode(['root']).updating).to.be.true
-    
+
     // After search finishes
     await action
     expect(tree.getNode(['root']).markedForUpdate).to.be.false

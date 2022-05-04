@@ -100,7 +100,7 @@ export let ContextTree = _.curry(
         // flatMap because traversing children can create arrays
         // groups that aren't properly marked here are taken care of by syncMarkedForUpdate right after
         _.flatMap(n =>
-         F.unless(
+          F.unless(
             isParent(snapshot(n.path), event.path),
             Tree.toArrayBy,
             markForUpdate
@@ -120,7 +120,7 @@ export let ContextTree = _.curry(
         // Get updated nodes
         ..._.flatten(bubbleUp(processEvent(event), event.path)),
         // Get nodes updated as a result of the sync
-        ...syncMarkedForUpdate(tree)
+        ...syncMarkedForUpdate(tree),
       ]
 
       await Promise.all(_.invokeMap('onMarkForUpdate', updatedNodes))

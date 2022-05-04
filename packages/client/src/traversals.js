@@ -19,7 +19,7 @@ export default extend => {
   return {
     markForUpdate,
     clearUpdate: node => extend(node, { updating: false, isStale: false }),
-    syncMarkedForUpdate: tree => {
+    syncMarkedForUpdate(tree) {
       // This method is to sync markedForUpdate/isStale
       //  in theory this could be a getter/setter or writeableComputed
       //  syncing manually avoids taking on a dependency like mobx in the server
