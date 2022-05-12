@@ -87,7 +87,7 @@ let getSortField = ({ columnValues = [], valueProp, valueIndex } = {}) =>
       ? `sortFilter${_.isNil(valueIndex) ? '.doc_count' : '>metric'}`
       : // If there are no columns, get the generated key for the value or default to _count
       _.isNil(valueIndex)
-      ? 'doc_count'
+      ? '_count'
       : 'metric',
     valueProp,
   ])
@@ -116,7 +116,7 @@ let buildQuery = async (node, schema, getStats) => {
         // At each level, add a filters bucket agg and nested metric to enable sorting
         // For example, to sort by Sum of Price for 2022, add a filters agg for 2022 and neseted metric for sum of price so we can target it
         // As far as we're aware, there's no way to sort by the nth bucket - but we can simulate that by using filters to create a discrete agg for that bucket
-        if (sortAgg) {
+        if (!_.isEmpty(sort)) {
           children = _.merge(sortAgg, await children)
           // Set `sort` on the group, deferring to each grouping type to handle it
           // The API of `{sort: {field, direction}}` is respected by fieldValues and can be added to others
@@ -146,6 +146,8 @@ let buildQuery = async (node, schema, getStats) => {
 
   // Without this, ES7+ stops counting at 10k instead of returning the actual count
   query.track_total_hits = true
+
+  console.log('query', JSON.stringify(query, null, 2))
 
   return query
 }
