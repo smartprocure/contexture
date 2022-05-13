@@ -1215,6 +1215,84 @@ describe('pivot', () => {
     // console.log(JSON.stringify(result, null, 2))
     expect(result).to.eql(expected)
   })
+  it('should build query and sort on document count without valueIndex', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [
+        { type: 'sum', field: 'PO.IssuedAmount' },
+        { type: 'avg', field: 'PO.IssuedAmount' },
+      ],
+      groups: [{ type: 'fieldValues', field: 'Organization.State' }],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+      sort: { valueIndex: null, direction: 'asc' },
+    }
+    let expected = {
+      aggs: {
+        groups: {
+          terms: {
+            field: 'Organization.State.untouched',
+            size: 10,
+            order: { _count: 'asc' },
+          },
+          aggs: {
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                interval: 'year',
+                min_doc_count: 0,
+              },
+              aggs: {
+                'pivotMetric-sum-PO.IssuedAmount': {
+                  sum: { field: 'PO.IssuedAmount' },
+                },
+                'pivotMetric-avg-PO.IssuedAmount': {
+                  avg: { field: 'PO.IssuedAmount' },
+                },
+              },
+            },
+            'pivotMetric-sum-PO.IssuedAmount': {
+              sum: { field: 'PO.IssuedAmount' },
+            },
+            'pivotMetric-avg-PO.IssuedAmount': {
+              avg: { field: 'PO.IssuedAmount' },
+            },
+          },
+        },
+        columns: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            interval: 'year',
+            min_doc_count: 0,
+          },
+          aggs: {
+            'pivotMetric-sum-PO.IssuedAmount': {
+              sum: { field: 'PO.IssuedAmount' },
+            },
+            'pivotMetric-avg-PO.IssuedAmount': {
+              avg: { field: 'PO.IssuedAmount' },
+            },
+          },
+        },
+        'pivotMetric-sum-PO.IssuedAmount': {
+          sum: { field: 'PO.IssuedAmount' },
+        },
+        'pivotMetric-avg-PO.IssuedAmount': {
+          avg: { field: 'PO.IssuedAmount' },
+        },
+      },
+      track_total_hits: true,
+    }
+    let result = await buildQuery(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    // console.log(JSON.stringify(result, null, 2))
+    expect(result).to.eql(expected)
+  })
   it('should build query with multiple columns and sorting on multiple columns', async () => {
     let input = {
       key: 'test',
