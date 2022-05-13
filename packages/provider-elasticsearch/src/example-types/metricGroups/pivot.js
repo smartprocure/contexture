@@ -147,8 +147,6 @@ let buildQuery = async (node, schema, getStats) => {
   // Without this, ES7+ stops counting at 10k instead of returning the actual count
   query.track_total_hits = true
 
-  console.log('query', JSON.stringify(query, null, 2))
-
   return query
 }
 
