@@ -1,3 +1,6 @@
+# 1.12.2
+* [pivot] Fix sorting for a total column document count
+
 # 1.12.1
 * [pivot] Fix sorting bugs on `_count` a metrics with dots when there are no columns
 
