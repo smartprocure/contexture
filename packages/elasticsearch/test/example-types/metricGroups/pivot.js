@@ -348,6 +348,7 @@ describe('pivot', () => {
     let input = {
       key: 'test',
       type: 'pivot',
+      subtotals: true,
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       drilldown: [],
       groups: [
@@ -392,6 +393,7 @@ describe('pivot', () => {
     let input = {
       key: 'test',
       type: 'pivot',
+      subtotals: true,
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       drilldown: ['Reno'],
       groups: [
@@ -443,6 +445,110 @@ describe('pivot', () => {
           },
         },
       },
+    }
+    let result = await buildQuery(
+      input,
+      testSchemas(['Vendor.City']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    expect(result).to.eql(expected)
+  })
+  it('should buildQuery for fieldValues with drilldown (deepest)', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      subtotals: true,
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      drilldown: ['Reno', '0.0-500.0', 'A - U.S. OWNED BUSINESS'],
+      groups: [
+        {
+          type: 'fieldValues',
+          field: 'Organization.Name',
+        },
+        {
+          type: 'numberRanges',
+          field: 'LineItem.TotalPrice',
+          ranges: [
+            { from: '0', to: '500' },
+            { from: '500', to: '10000' },
+          ],
+        },
+        {
+          type: 'fieldValues',
+          field: 'Organization.Type',
+        },
+      ],
+    }
+    let expected = {
+      aggs: {
+        pivotFilter: {
+          filter: {
+            bool: {
+              must: [
+                {
+                  term: {
+                    'Organization.Name': 'Reno',
+                  },
+                },
+                {
+                  range: {
+                    'LineItem.TotalPrice': {
+                      gte: '0.0',
+                      lt: '500.0',
+                    },
+                  },
+                },
+                {
+                  term: {
+                    'Organization.Type': 'A - U.S. OWNED BUSINESS',
+                  },
+                },
+              ],
+            },
+          },
+          aggs: {
+            groups: {
+              terms: {
+                field: 'Organization.Name',
+                size: 10,
+              },
+              aggs: {
+                groups: {
+                  range: {
+                    field: 'LineItem.TotalPrice',
+                    ranges: [
+                      {
+                        from: '0',
+                        to: '500',
+                      },
+                      {
+                        from: '500',
+                        to: '10000',
+                      },
+                    ],
+                  },
+                  aggs: {
+                    groups: {
+                      terms: {
+                        field: 'Organization.Type',
+                        size: 10,
+                      },
+                      aggs: {
+                        'pivotMetric-sum-LineItem.TotalPrice': {
+                          sum: {
+                            field: 'LineItem.TotalPrice',
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      track_total_hits: true,
     }
     let result = await buildQuery(
       input,
