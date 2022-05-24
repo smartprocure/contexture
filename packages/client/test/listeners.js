@@ -123,6 +123,46 @@ let AllTests = ContextureClient => {
       expect(filterWatcher).to.have.callCount(1) // mark for update, updating, results, not updating
       expect(resultWatcher).to.have.callCount(1)
     })
+    it('watchNode on children', async () => {
+      let service = sinon.spy(mockService({ delay: 10 }))
+      let tree = ContextureClient(
+        { service, debounce: 1 },
+        {
+          key: 'root',
+          join: 'and',
+          children: [
+            {
+              key: 'criteria',
+              join: 'and',
+              children: [
+                {
+                  key: 'filter',
+                  type: 'facet',
+                  field: 'facetfield',
+                  values: ['some value'],
+                },
+              ],
+            },
+            { key: 'results', type: 'results' },
+          ],
+        }
+      )
+      let criteriaKeys = []
+      tree.watchNode(
+        ['root', 'criteria'],
+        node => {
+          criteriaKeys = _.map('key', node.children)
+        },
+        ['children']
+      )
+      tree.add(['root', 'criteria'], {
+        key: 'newFilter',
+        type: 'facet',
+        field: 'facetfield2',
+        values: ['otherValues'],
+      })
+      expect(criteriaKeys).to.deep.eq(['filter', 'newFilter'])
+    })
   })
 }
 
