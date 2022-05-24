@@ -42,7 +42,7 @@ let AllTests = ContextureClient => {
   values: ${_.join(', ', node.values)}
 </div>`
       })
-      let resultWatcher = sinon.spy((node, delta) => {
+      let resultWatcher = sinon.spy(node => {
         resultsDom = `<table>${_.map(
           result =>
             `\n<tr>${_.map(val => `<td>${val}</td>`, _.values(result))}</tr>`,
@@ -96,7 +96,7 @@ let AllTests = ContextureClient => {
   values: ${_.join(', ', node.values)}
 </div>`
       })
-      let resultWatcher = sinon.spy((node, delta) => {
+      let resultWatcher = sinon.spy(node => {
         resultsDom = `<table>${_.map(
           result =>
             `\n<tr>${_.map(val => `<td>${val}</td>`, _.values(result))}</tr>`,
