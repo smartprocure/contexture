@@ -8,12 +8,15 @@ import chai from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import ContextureClient from '../src'
-import { observable, reaction, toJS, set } from 'mobx'
+import mockService from '../src/mockService'
+import { observable, reaction, autorun, toJS, set } from 'mobx'
 const expect = chai.expect
 chai.use(sinonChai)
 
 let mobxAdapter = { snapshot: toJS, extend: set, initObject: observable }
-let ContextureMobx = x => ContextureClient({ ...mobxAdapter, ...x })
+let ContextureMobx = _.curry((x, y) =>
+  ContextureClient({ ...mobxAdapter, ...x })(y)
+)
 //,
 // F.updateOn('add', action),
 // F.updateOn('remove', action),
@@ -23,24 +26,16 @@ let ContextureMobx = x => ContextureClient({ ...mobxAdapter, ...x })
 
 let treeUtils = Tree
 
+let simplifyObject = _.flow(F.compactObject, _.omitBy(_.isFunction))
+
 describe('usage with mobx should generally work', () => {
   // TODO: make these generally self contained - some rely on previous test runs
   let tree = {
     key: 'root',
     join: 'and',
     children: [
-      {
-        key: 'filter',
-        type: 'facet',
-        values: [1, 2],
-      },
-      {
-        key: 'results',
-        type: 'results',
-        context: {
-          results: null,
-        },
-      },
+      { key: 'filter', type: 'facet', values: [1, 2] },
+      { key: 'results', type: 'results', context: { results: null } },
     ],
   }
   let responseData = {
@@ -50,21 +45,11 @@ describe('usage with mobx should generally work', () => {
         key: 'results',
         context: {
           count: 1,
-          results: [
-            {
-              title: 'Some result',
-            },
-            {
-              title: 'Some other result',
-            },
-          ],
+          results: [{ title: 'Some result' }, { title: 'Some other result' }],
         },
         size: 20,
       },
-      {
-        key: 'filter',
-        type: 'facet',
-      },
+      { key: 'filter', type: 'facet' },
     ],
   }
   let service = sinon.spy(() => responseData)
@@ -83,6 +68,7 @@ describe('usage with mobx should generally work', () => {
     expect(dto).to.deep.equal({
       key: 'root',
       join: 'and',
+      lastUpdateTime: now,
       children: [
         {
           key: 'filter',
@@ -104,7 +90,7 @@ describe('usage with mobx should generally work', () => {
     expect(reactor).to.satisfy(x => x.callCount > 1)
     disposer()
     expect(
-      F.compactObject(treeUtils.lookup(['filter'], reactor.getCall(1).args[0]))
+      simplifyObject(treeUtils.lookup(['filter'], reactor.getCall(1).args[0]))
     ).to.deep.equal({
       key: 'filter',
       type: 'facet',
@@ -112,37 +98,20 @@ describe('usage with mobx should generally work', () => {
       hasValue: 1,
       mode: 'include',
       path: ['root', 'filter'],
-      context: {
-        options: [],
-        cardinality: null,
-      },
+      context: { options: [], cardinality: null },
       metaHistory: [],
     })
     // should update contexts
     expect(Tree.getNode(['root', 'results']).updating).to.be.false
     expect(toJS(Tree.getNode(['root', 'results']).context)).to.deep.equal({
       count: 1,
-      results: [
-        {
-          title: 'Some result',
-        },
-        {
-          title: 'Some other result',
-        },
-      ],
+      results: [{ title: 'Some result' }, { title: 'Some other result' }],
     })
     expect(
       treeUtils.lookup(['results'], reactor.lastCall.args[0]).context
     ).to.deep.equal({
       count: 1,
-      results: [
-        {
-          title: 'Some result',
-        },
-        {
-          title: 'Some other result',
-        },
-      ],
+      results: [{ title: 'Some result' }, { title: 'Some other result' }],
     })
   })
 
@@ -163,7 +132,7 @@ describe('usage with mobx should generally work', () => {
     expect(service).to.have.callCount(1)
     expect(reactor).to.satisfy(x => x.callCount > 1)
     expect(
-      F.compactObject(
+      simplifyObject(
         treeUtils.lookup(['newFilterWithValue'], reactor.getCall(2).args[0])
       )
     ).to.deep.equal({
@@ -172,10 +141,7 @@ describe('usage with mobx should generally work', () => {
       mode: 'include',
       values: 'asdf',
       path: ['root', 'newFilterWithValue'],
-      context: {
-        options: [],
-        cardinality: null,
-      },
+      context: { options: [], cardinality: null },
       metaHistory: [],
     })
     disposer()
@@ -219,7 +185,7 @@ describe('usage with mobx should generally work', () => {
     expect(reactor).to.satisfy(x => x.callCount > previousCallCount)
 
     expect(
-      F.compactObject(
+      simplifyObject(
         treeUtils.lookup(['newNotEmptyFilter'], reactor.getCall(0).args[0])
       )
     ).to.deep.equal({
@@ -234,7 +200,7 @@ describe('usage with mobx should generally work', () => {
     expect(
       _.flow(
         _.omit(['lastUpdateTime']),
-        F.compactObject
+        simplifyObject
       )(treeUtils.lookup(['newNotEmptyFilter'], reactor.getCall(1).args[0]))
     ).to.deep.equal({
       key: 'newNotEmptyFilter',
@@ -266,42 +232,25 @@ describe('usage with mobx should generally work', () => {
     service.resetHistory()
     let disposer = reaction(() => toJS(Tree.tree), reactor)
 
-    await Tree.mutate(['root', 'filter'], {
-      values: [1, 2, 3],
-    })
+    await Tree.mutate(['root', 'filter'], { values: [1, 2, 3] })
     expect(service).to.have.callCount(1)
     expect(
       _.flow(
         _.get(['context', 'results']),
         _.toArray
       )(Tree.getNode(['root', 'results']))
-    ).to.deep.equal([
-      {
-        title: 'Some result',
-      },
-      {
-        title: 'Some other result',
-      },
-    ])
+    ).to.deep.equal([{ title: 'Some result' }, { title: 'Some other result' }])
     treeUtils.lookup(['results'], responseData).context.results = [
-      {
-        title: 'New values',
-      },
+      { title: 'New values' },
     ]
-    await Tree.mutate(['root', 'filter'], {
-      values: [1, 2, 3, 4],
-    })
+    await Tree.mutate(['root', 'filter'], { values: [1, 2, 3, 4] })
     expect(service).to.have.callCount(2)
     expect(
       _.flow(
         _.get(['context', 'results']),
         _.toArray
       )(Tree.getNode(['root', 'results']))
-    ).to.deep.equal([
-      {
-        title: 'New values',
-      },
-    ])
+    ).to.deep.equal([{ title: 'New values' }])
     disposer()
   })
 
@@ -316,21 +265,9 @@ describe('usage with mobx should generally work', () => {
       key: 'root',
       join: 'and',
       children: [
-        {
-          key: 'results',
-          type: 'results',
-          page: 1,
-        },
-        {
-          key: 'agencies',
-          field: 'Organization.Name',
-          type: 'facet',
-        },
-        {
-          key: 'vendors',
-          field: 'Vendor.Name',
-          type: 'facet',
-        },
+        { key: 'results', type: 'results', page: 1 },
+        { key: 'agencies', field: 'Organization.Name', type: 'facet' },
+        { key: 'vendors', field: 'Vendor.Name', type: 'facet' },
       ],
     })
     // Get the results node instead of passing an array in to test case where dispatched path is an observable array
@@ -350,11 +287,7 @@ describe('usage with mobx should generally work', () => {
       key: 'root',
       join: 'and',
       children: [
-        {
-          key: 'results',
-          type: 'results',
-          page: 1,
-        },
+        { key: 'results', type: 'results', page: 1 },
         {
           key: 'subgroup',
           type: 'group',
@@ -397,23 +330,12 @@ describe('usage with mobx should generally work', () => {
     expect(tree.getNode(['root', 'filter 2'])).to.equal(tree.tree.children[1])
   })
   it('Test that pushing into an observable array converts array items to observables different from what was pushed', () => {
-    let tree = observable({
-      key: 'a',
-      children: [
-        {
-          key: 'b',
-        },
-      ],
-    })
-    let plainNode = {
-      key: 'c',
-    }
+    let tree = observable({ key: 'a', children: [{ key: 'b' }] })
+    let plainNode = { key: 'c' }
     tree.children.push(plainNode)
     expect(tree.children[1]).not.to.equal(plainNode)
 
-    let observableNode = {
-      key: 'd',
-    }
+    let observableNode = { key: 'd' }
     observableNode = observable(observableNode)
     tree.children.push(observableNode)
     expect(tree.children[2]).to.equal(observableNode)
@@ -436,5 +358,26 @@ describe('usage with mobx should generally work', () => {
     reaction(() => tree.disableAutoUpdate, reactor)
     tree.disableAutoUpdate = true
     expect(reactor).to.have.callCount(1)
+  })
+  it('should react to group fns', async () => {
+    let service = sinon.spy(mockService({}))
+    let reactor = sinon.spy()
+    let tree = ContextureMobx(
+      { service, debounce: 1 },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          { key: 'filter', field: 'facetField', type: 'facet', values: ['x'] },
+          { key: 'results', type: 'results' },
+        ],
+      }
+    )
+    autorun(() => reactor(tree.getNode(['root']).markedForUpdate))
+    await tree.mutate(['root', 'filter'], { values: ['other Value'] })
+
+    expect(service).to.have.callCount(1)
+    // once on initial run to false, then true, then again back to false
+    expect(reactor).to.have.callCount(3)
   })
 })

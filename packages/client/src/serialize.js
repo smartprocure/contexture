@@ -11,7 +11,7 @@ export default (tree, { search } = {}) =>
     Tree.walk(x => {
       if (search && isFilterOnly(x)) x.filterOnly = true
       _.each(unsetOn(_, x), [
-        ..._.keys(_.omit(search ? 'lastUpdateTime' : '', internalStateKeys)),
+        ..._.without(search && ['lastUpdateTime'], internalStateKeys),
         ...getNilKeys(x),
       ])
     }),

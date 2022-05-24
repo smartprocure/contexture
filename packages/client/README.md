@@ -60,7 +60,7 @@ The following config options are available:
 | service           | function                       | n/a          | **Required** Async function to actually get service results (from the contexture server). An exception will be thrown if this is not passed in. |
 | types             | ClientTypeSpec                 | exampleTypes | Configuration of available types (documented below) |
 | debounce          | number                         | 1            | How many milliseconds to globally debounce search. Does not apply when `disableAutoUpdates` is true. |
-| onChange          | (node, changes) => {}          |  _.noop      | A hook to capture when the client changes any property on a node. Can be modified at run time by reassigning the property on a tree instance. |
+| onChange          | (node, changes) => {}          |  _.noop      | A hook to capture when the client changes any property on a node. Can be modified at run time by reassigning the property on a tree instance. Generally only for internal use - if you're looking for this, you probably want `watchNode` |
 | onResult          | (path, response, target) => {} |  _.noop      | A hook to capture when the client updates a node with results from the server. Can be modified at run time by reassigning the property on a tree instance. |
 | debug             | boolean                        | false        | Debug mode will log all dispatched events and generally help debugging |
 | extend            | function                       | F.extendOn   | Used to mutate nodes internally |
@@ -140,7 +140,7 @@ The following methods are exposed on an instantiated client:
 | subquery | `(targetPath, sourceTree, sourcePath, mapSubqueryValues?) => {}` | Sets up a subquery, using the types passed in to the client and assuming this tree instance is the target tree. For more info, see the [subquery](#Subquery) section below. |
 | isPausedNested | `path -> bool` | Returns a bool for whether the node at the path and all of its children are paused. |
 | processResponseNode | `(path, node) => {}` | Used to process intermediate partial results from the server |
-| watchNode | `(path, watcherFn, [keys]) => {}` | Runs `watcherFn` any time the node at `path` is updated, optionally restricted to the array of keys passed in. `watcherFn` is called with `(node, delta)` which is a reference to the target node and the payload to update it with. Useful for implementing observability, e.g. a react hook. |
+| watchNode | `(path, watcherFn, [keys]) => {}` | Runs `watcherFn` any time the node at `path` is updated, optionally restricted to the array of keys passed in. `watcherFn` is called with `(node, delta)` which is a reference to the target node and the payload to update it with. Keys may be nested (e.g. `context.something`). Keys are not cloned, so you can retain a reference and mutate the keys array to change what's being observed at runtime. Useful for implementing observability, e.g. a react hook. |
 
 #### Actions
 

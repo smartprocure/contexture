@@ -1,8 +1,9 @@
 import F from 'futil'
+import _ from 'lodash/fp'
 import { Tree } from './util/tree'
 
-export default extend => ({
-  markForUpdate(x) {
+export default extend => {
+  let markForUpdate = x => {
     if (x.paused) extend(x, { missedUpdate: true })
     else if (!x.markedForUpdate) {
       let updatingDeferred = F.defer()
@@ -10,20 +11,46 @@ export default extend => ({
         markedForUpdate: true,
         updatingPromise: updatingDeferred.promise,
         updatingDeferred,
+        isStale: true,
       })
     }
     return x
-  },
-  markLastUpdate: time =>
-    Tree.walk(child => {
-      if (child.markedForUpdate) extend(child, { lastUpdateTime: time })
+  }
+  return {
+    markForUpdate,
+    clearUpdate: node => extend(node, { updating: false, isStale: false }),
+    syncMarkedForUpdate(tree) {
+      // This method is to sync markedForUpdate/isStale
+      //  in theory this could be a getter/setter or writeableComputed
+      //  syncing manually avoids taking on a dependency like mobx in the server
+
+      // This walk/push will be replaced in the future by Tree.toArrayBy({ post: /* ... */})
+      let updatedNodes = []
+      Tree.walk(
+        () => {},
+        node => {
+          if (_.some('markedForUpdate', node.children))
+            updatedNodes.push(markForUpdate(node))
+          else if (node.children)
+            extend(node, {
+              markedForUpdate: false,
+              ...(node.updating || { isStale: false }),
+            })
+        }
+      )(tree)
+      return updatedNodes
+    },
+    markLastUpdate: time =>
+      Tree.walk(node => {
+        if (node.markedForUpdate) extend(node, { lastUpdateTime: time })
+      }),
+    prepForUpdate: Tree.walk(node => {
+      if (node.markedForUpdate) {
+        extend(node, {
+          updating: true,
+          markedForUpdate: false,
+        })
+      }
     }),
-  prepForUpdate: Tree.walk(child => {
-    if (child.markedForUpdate) {
-      extend(child, {
-        updating: true,
-        markedForUpdate: false,
-      })
-    }
-  }),
-})
+  }
+}

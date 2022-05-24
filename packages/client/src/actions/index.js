@@ -23,9 +23,10 @@ export default config => {
     extend,
     initNode,
     initObject,
+    onChange,
   } = config
 
-  let add = async (parentPath, node, { index } = {}) => {
+  let add = (parentPath, node, { index } = {}) => {
     let target = getNode(parentPath)
     // initialize uniqueString cache for the parent of the node to be added here,
     // since it's not visited during the tree walk
@@ -43,17 +44,19 @@ export default config => {
 
     // consider moving this in the tree walk? it could work for al children too but would be exgra work for chilren
     pushOrSpliceOn(target.children, node, index)
+    onChange(target, { children: target.children })
     // Need this nonsense to support the case where push actually mutates, e.g. a mobx observable tree
     // flat[encode(path)] = target.children[index]
 
     return dispatch({ type: 'add', path: _.toArray(node.path), node })
   }
 
-  let remove = async path => {
+  let remove = path => {
     let previous = getNode(path)
     let parentPath = arrayDropLast(path)
     let parent = getNode(parentPath)
     F.pullOn(previous, parent.children)
+    onChange(parent, { children: parent.children })
 
     Tree.walk((node, index, [parent = {}]) => {
       let path = [...(parent.path || parentPath), node.key]
@@ -63,7 +66,7 @@ export default config => {
     return dispatch({ type: 'remove', path, previous })
   }
 
-  let mutate = _.curry(async (path, value) => {
+  let mutate = _.curry((path, value) => {
     let target = getNode(path)
     let previous = snapshot(_.omit('children', target))
     extend(target, value)
@@ -107,6 +110,7 @@ export default config => {
       // Same group, no dispatch or updating of paths needed - just rearrange children
       F.pullOn(node, getNode(parentPath).children)
       pushOrSpliceOn(getNode(targetPath).children, node, targetIndex)
+      onChange(node, { children: node.children })
     } else {
       return Promise.all([
         remove(path),

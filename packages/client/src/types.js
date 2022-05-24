@@ -1,10 +1,9 @@
 import _ from 'lodash/fp'
 import F from 'futil'
 
-// Gets type a specific property from any of the places it might be - on the type in `types`, on default in `types`, or already on the node itself
+// Gets type a specific property from any of the places it might be - on the type in `types` or already on the node itself
 export let getTypeProp = _.curry(
-  (types, prop, node) =>
-    node[prop] || F.cascade([`${node.type}.${prop}`, `default.${prop}`], types)
+  (types, prop, node) => node[prop] || _.get(`${node.type}.${prop}`, types)
 )
 
 // Same as getTypeProp, but throws instead of returning undefined if it's missing
