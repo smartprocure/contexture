@@ -163,6 +163,39 @@ let AllTests = ContextureClient => {
       })
       expect(criteriaKeys).to.deep.eq(['filter', 'newFilter'])
     })
+    it('watchNode with changing keys', async () => {
+      let service = sinon.spy(mockService({ delay: 10 }))
+      let tree = ContextureClient(
+        { service, debounce: 1 },
+        {
+          key: 'root',
+          join: 'and',
+          children: [
+            {
+              key: 'filter',
+              type: 'facet',
+              field: 'facetfield',
+              values: ['some value'],
+            },
+            { key: 'results', type: 'results' },
+          ],
+        }
+      )
+
+      let keys = ['context.results']
+      // Mutating the original keys will change what's watched
+      let resultWatcher = sinon.spy(() => {
+        keys[0] = 'pageSize'
+      })
+      tree.watchNode(['root', 'results'], resultWatcher, keys)
+      await tree.mutate(['root', 'filter'], { values: ['other Value'] })
+      expect(resultWatcher).to.have.callCount(1)
+      await tree.mutate(['root', 'filter'], { values: ['other Value 2'] })
+
+      expect(resultWatcher).to.have.callCount(1)
+      await tree.mutate(['root', 'results'], { pageSize: 2 })
+      expect(resultWatcher).to.have.callCount(2)
+    })
   })
 }
 
