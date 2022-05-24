@@ -4,6 +4,7 @@
 * Deprecated undocumented internal `flat` tree, will remove in next version
 * Remove unused `default` type support
 * `watchNode` now supports nested paths (e.g. `context.something`) and empty keys array
+* Actions now recieve a full `TreeInstance` instead of just action props
 
 # 2.43.0
 * Add `watchNode`

@@ -261,19 +261,18 @@ export let ContextTree = _.curry(
       tree,
       debugInfo,
       ...actionProps,
-      addActions: create => F.extendOn(TreeInstance, create(actionProps)),
       addReactors: create => F.extendOn(customReactors, create()),
       onResult,
       onChange,
       disableAutoUpdate,
       processResponseNode,
     })
-
+    setupListeners(TreeInstance)
+    TreeInstance.addActions = create => F.extendOn(TreeInstance, create(TreeInstance)),
     TreeInstance.addActions(actions)
     TreeInstance.lens = lens(TreeInstance)
     TreeInstance.subquery = subquery(types, TreeInstance)
 
-    setupListeners(TreeInstance)
 
     return TreeInstance
   }
