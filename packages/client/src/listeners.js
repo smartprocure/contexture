@@ -12,5 +12,4 @@ export let setupListeners = tree => {
       // Trigger watcher if keys match or no keys passed
       if (_.isEmpty(keys) || hasSome(keys, delta)) f(node, delta)
     })
-    })
 }
