@@ -29,13 +29,13 @@ export default ({ getNode, flat }, { mutate, replace, remove, add }) => {
     // Add original root as a child of the new root
     await add([newNode.key], node)
   }
-  let wrapInGroupReplace = async (path, newNode) =>
+  let wrapInGroupReplace = (path, newNode) =>
     replace(path, {
       ...newNode,
       children: [getNode(path)],
     })
 
-  let wrapInGroup = async (path, newNode) =>
+  let wrapInGroup = (path, newNode) =>
     _.size(path) > 1
       ? wrapInGroupReplace(path, newNode)
       : wrapInGroupInPlace(path, newNode)
