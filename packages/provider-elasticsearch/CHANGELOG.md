@@ -1,3 +1,6 @@
+# 1.12.3
+* [pivot] Fix query builder by disabling subtotals when drilling down
+
 # 1.12.2
 * [pivot] Fix sorting for a total column document count
 
