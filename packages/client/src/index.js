@@ -268,9 +268,9 @@ export let ContextTree = _.curry(
       processResponseNode,
     })
     setupListeners(TreeInstance)
-    ;(TreeInstance.addActions = create =>
-      F.extendOn(TreeInstance, create(TreeInstance))),
-      TreeInstance.addActions(actions)
+    TreeInstance.addActions = create =>
+      F.extendOn(TreeInstance, create(TreeInstance))
+    TreeInstance.addActions(actions)
     TreeInstance.lens = lens(TreeInstance)
     TreeInstance.subquery = subquery(types, TreeInstance)
 
