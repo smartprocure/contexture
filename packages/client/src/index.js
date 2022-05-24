@@ -1,6 +1,14 @@
 import _ from 'lodash/fp'
 import F from 'futil'
-import { flatten, bubbleUp, Tree, encode, decode, isParent } from './util/tree'
+import {
+  flatten,
+  bubbleUp,
+  Tree,
+  encode,
+  decode,
+  isParent,
+  pathFromParents,
+} from './util/tree'
 import { validate } from './validation'
 import { getAffectedNodes, reactors } from './reactors'
 import actions from './actions'
@@ -14,14 +22,14 @@ import mockService from './mockService'
 import subquery from './subquery'
 import { setupListeners } from './listeners'
 
-let shouldBlockUpdate = flat => {
-  let leaves = Tree.flatLeaves(flat)
-  let noUpdates = !_.some('markedForUpdate', leaves)
+let shouldBlockUpdate = tree => {
+  let leaves = Tree.leaves(tree)
+  let noUpdates = !tree.markedForUpdate
   let hasErrors = _.some('error', leaves)
   return hasErrors || noUpdates
 }
 
-let isStale = (result, target) =>
+let isStaleResult = (result, target) =>
   target.lastUpdateTime &&
   result.lastUpdateTime &&
   target.lastUpdateTime > result.lastUpdateTime
@@ -67,13 +75,22 @@ export let ContextTree = _.curry(
     // initNode now generates node keys, so it must be run before flattening the tree
     dedupeWalk(initNode({ extend, types, snapshot }), tree)
     let flat = flatten(tree)
-    let getNode = path => flat[encode(path)]
+    let getNode = path =>
+      // empty path returns root with tree lookup, but should be undefined to mimic flat tree
+      !_.isEmpty(path) && Tree.lookup(_.drop(1, path), tree)
+    //  flat[encode(path)]
 
     // Overwrite extend to report changes
     extend = _.over([extend, (a, b) => TreeInstance.onChange(a, b)])
 
     // Getting the Traversals
-    let { markForUpdate, markLastUpdate, prepForUpdate } = traversals(extend)
+    let {
+      markForUpdate,
+      markLastUpdate,
+      prepForUpdate,
+      clearUpdate,
+      syncMarkedForUpdate,
+    } = traversals(extend)
     let typeProp = getTypeProp(types)
 
     let processEvent = event => path =>
@@ -81,11 +98,13 @@ export let ContextTree = _.curry(
         getAffectedNodes(customReactors, getNode, types),
         // Mark children only if it's not a parent of the target so we don't incorrectly mark siblings
         // flatMap because traversing children can create arrays
+        // groups that aren't properly marked here are taken care of by syncMarkedForUpdate right after
         _.flatMap(n =>
           F.unless(
             isParent(snapshot(n.path), event.path),
-            Tree.toArrayBy
-          )(markForUpdate)(n)
+            Tree.toArrayBy,
+            markForUpdate
+          )(n)
         )
       )(event, path)
 
@@ -97,7 +116,13 @@ export let ContextTree = _.curry(
         // not all dispatches have event.node, e.g. `refresh` with no path
         F.maybeCall(typeProp('onDispatch', event.node), event, extend)
       await validate(runTypeFunction(types, 'validate'), extend, tree)
-      let updatedNodes = _.flatten(bubbleUp(processEvent(event), event.path))
+      let updatedNodes = [
+        // Get updated nodes
+        ..._.flatten(bubbleUp(processEvent(event), event.path)),
+        // Get nodes updated as a result of the sync
+        ...syncMarkedForUpdate(tree),
+      ]
+
       await Promise.all(_.invokeMap('onMarkForUpdate', updatedNodes))
       // Snapshot is for mobx 4 support because path being an observable array means that `_.find({path: event.path})` throws an error
       let affectsSelf = !!_.flow(
@@ -124,7 +149,7 @@ export let ContextTree = _.curry(
 
     // If specifying path, *only* update that path
     let runUpdate = async path => {
-      if (shouldBlockUpdate(flat)) return log('Blocked Search')
+      if (shouldBlockUpdate(tree)) return log('Blocked Search')
       let now = new Date().getTime()
       let node = getNode(path)
 
@@ -135,7 +160,7 @@ export let ContextTree = _.curry(
       // make all other nodes filter only
       if (path) {
         Tree.walk((node, index, parents) => {
-          let nodePath = [..._.map('key', _.reverse(parents)), node.key]
+          let nodePath = pathFromParents(parents, node)
           // marking everything that isn’t the node or it’s children
           if (!_.isEqual(path, nodePath) && !isParent(path, nodePath)) {
             node.filterOnly = true
@@ -146,7 +171,13 @@ export let ContextTree = _.curry(
       try {
         await processResponse(await service(body, now))
       } catch (error) {
-        await processResponse(tree)
+        // Clear updating
+        Tree.walk(node => {
+          if (node.updating) {
+            clearUpdate(node)
+            node.updatingDeferred.resolve()
+          }
+        })(tree)
         onError(error) // Raise the onError event
       }
     }
@@ -172,17 +203,14 @@ export let ContextTree = _.curry(
       data = _.isEmpty(data.data) ? data : data.data
       let { error } = data
       if (error) extend(tree, { error })
-      await Promise.all(
-        F.mapIndexed(
-          (node, path) => processResponseNode(decode(path), node),
-          flatten(data)
-        )
-      )
+      await Tree.walkAsync(async (node, i, parents) =>
+        processResponseNode(pathFromParents(parents, node), node)
+      )(data)
     }
     let processResponseNode = async (path, node) => {
-      let target = flat[encode(path)]
+      let target = getNode(path)
       let responseNode = _.pick(['context', 'error'], node)
-      if (target && !isStale(node, target)) {
+      if (target && !isStaleResult(node, target)) {
         if (!_.isEmpty(responseNode)) {
           TreeInstance.onResult(path, node, target)
           if (
@@ -202,7 +230,7 @@ export let ContextTree = _.curry(
           if (debug && node._meta) target.metaHistory.push(node._meta)
         }
 
-        extend(target, { updating: false })
+        clearUpdate(target)
 
         if (!_.isEmpty(responseNode)) {
           try {
@@ -233,19 +261,18 @@ export let ContextTree = _.curry(
       tree,
       debugInfo,
       ...actionProps,
-      addActions: create => F.extendOn(TreeInstance, create(actionProps)),
       addReactors: create => F.extendOn(customReactors, create()),
       onResult,
       onChange,
       disableAutoUpdate,
       processResponseNode,
     })
-
+    setupListeners(TreeInstance)
+    TreeInstance.addActions = create =>
+      F.extendOn(TreeInstance, create(TreeInstance))
     TreeInstance.addActions(actions)
     TreeInstance.lens = lens(TreeInstance)
     TreeInstance.subquery = subquery(types, TreeInstance)
-
-    setupListeners(TreeInstance)
 
     return TreeInstance
   }

@@ -3,6 +3,7 @@ import F from 'futil'
 
 // Sugar for checking non empty intersection
 export let intersects = (a, b) => !_.isEmpty(_.intersection(a, b))
+export let hasSome = (keys, obj) => _.some(F.hasIn(obj), keys)
 
 // Sets up basic event emitter/listener registry with an array of listeners per topic
 //  e.g. listeners: { topic1: [fn1, fn2, ...], topic2: [...], ... }

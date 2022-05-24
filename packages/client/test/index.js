@@ -48,6 +48,7 @@ let AllTests = ContextureClient => {
       expect(dto).to.deep.equal({
         key: 'root',
         join: 'and',
+        lastUpdateTime: now,
         children: [
           {
             key: 'filter',
@@ -283,6 +284,7 @@ let AllTests = ContextureClient => {
     expect(dto).to.deep.equal({
       key: 'root',
       join: 'and',
+      lastUpdateTime: now,
       children: [
         {
           key: 'analysis',
@@ -800,6 +802,7 @@ let AllTests = ContextureClient => {
     expect(dto).to.deep.equal({
       key: 'root',
       join: 'and',
+      lastUpdateTime: now,
       children: [
         {
           key: 'a',
@@ -2345,6 +2348,66 @@ let AllTests = ContextureClient => {
     expect(facetWatcher).to.have.callCount(1)
     // resultWatcher called twice more because facet change resets page to 0
     expect(resultWatcher).to.have.callCount(6)
+  })
+  it('should getNode', async () => {
+    let service = sinon.spy(mockService())
+    let Tree = ContextureClient(
+      { service, debounce: 1 },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          { key: 'results', type: 'results', infiniteScroll: true },
+          { key: 'test', type: 'facet', values: [] },
+        ],
+      }
+    )
+    let result = Tree.getNode(['root', 'results'])
+    expect(result.infiniteScroll).to.be.true
+  })
+  it('should support group level markedForUpdate', async () => {
+    let service = sinon.spy(mockService({ delay: 10 }))
+    let tree = ContextureMobx(
+      { service, debounce: 1 },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'filter',
+            type: 'facet',
+            field: 'facetfield',
+            values: ['some value'],
+          },
+          { key: 'results', type: 'results' },
+        ],
+      }
+    )
+    let action = tree.mutate(['root', 'filter'], { values: ['other Value'] })
+
+    // Before async validate runs on dispatch ( and thus before marking for update)
+    expect(!!tree.getNode(['root', 'results']).isStale).to.be.false
+    expect(!!tree.getNode(['root']).isStale).to.be.false
+
+    // Preparing to search (0 ms delay because validate is async)
+    await Promise.delay()
+    expect(tree.getNode(['root', 'results']).isStale).to.be.true
+    expect(tree.getNode(['root']).markedForUpdate).to.be.true
+    expect(tree.getNode(['root']).isStale).to.be.true
+    expect(!!tree.getNode(['root']).updating).to.be.false
+
+    // Prepare for search, but run before search finishes
+    /// TODOOO HERE:::: unpredicable fail - could be timing issue???
+    await Promise.delay(5)
+    expect(tree.getNode(['root']).markedForUpdate).to.be.false
+    expect(tree.getNode(['root']).isStale).to.be.true
+    expect(tree.getNode(['root']).updating).to.be.true
+
+    // After search finishes
+    await action
+    expect(tree.getNode(['root']).markedForUpdate).to.be.false
+    expect(tree.getNode(['root']).isStale).to.be.false
+    expect(tree.getNode(['root']).updating).to.be.false
   })
 }
 
