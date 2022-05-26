@@ -1,5 +1,5 @@
-# 1.12.3
-* [pivot] Fix query builder by disabling subtotals when drilling down
+# 1.13.0
+* [pivot] Removing support for subtotals flag and making it automatic if there is no flatten or drilldown
 
 # 1.12.2
 * [pivot] Fix sorting for a total column document count
