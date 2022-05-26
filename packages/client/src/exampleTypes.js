@@ -282,7 +282,6 @@ export default F.stampKey('type', {
       filters: 'others',
       sort: 'self',
       flatten: 'self',
-      subtotals: 'self',
     },
     defaults: {
       columns: [],
@@ -293,7 +292,6 @@ export default F.stampKey('type', {
       drilldown: null,
       showCounts: false,
       flatten: false,
-      subtotals: false,
       context: {
         results: [],
       },
