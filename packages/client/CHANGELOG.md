@@ -1,3 +1,6 @@
+# 2.45.0
+* Pivot node: removing subtotals flag as it was deprecated in ES
+
 # 2.44.0
 * Add `isStale`, sugar for `markedForUpdate || updating`
 * Node flags `isStale`, `markedForUpdate`, and `updating` are now properly set at the group level as whether any of their children have them set
