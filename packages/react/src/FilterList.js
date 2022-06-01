@@ -168,11 +168,9 @@ let FilterList = _.flow(
     style,
     theme: { UnmappedNodeComponent, Button },
   }) => {
-    let updateRequired =
-      tree.disableAutoUpdate &&
-      // find if any nodes in the tree are marked for update
-      // i.e. usually nodes are marked for update because they react to "others" reactor
-      _.some('markedForUpdate', tree.flat)
+    // find if any nodes in the tree are marked for update
+    // i.e. usually nodes are marked for update because they react to "others" reactor
+    let updateRequired = tree.disableAutoUpdate && node.markedForUpdate
 
     return (
       <div style={style} className={className}>
