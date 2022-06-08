@@ -1,3 +1,6 @@
+# 1.14.0
+* [pivot] Add support for multi-term aggregations in group queries
+
 # 1.13.0
 * [pivot] Removing support for subtotals flag and making it automatic if there is no flatten or drilldown
 
