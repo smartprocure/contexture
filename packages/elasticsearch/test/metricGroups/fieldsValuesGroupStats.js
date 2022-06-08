@@ -26,7 +26,7 @@ describe('buildGroupQuery', () => {
     let result = buildGroupQuery(node, children, groupingType, schema)
     expect(expected).to.eql(result)
   })
-  
+
   it('should return a query with a multi-terms group type if additional fields are passed', () => {
     let node = { field: 'field1', additionalFields: ['field2', 'field3'] }
     let children = {}
