@@ -32,22 +32,23 @@ let buildGroupQuery = (node, children, groupingType, schema) => {
       order: { [getSortField(sortField)]: direction },
     }),
   })
+  let setMultiTermQuery = ({ field, ...rest }) => ({
+    multi_terms: {
+      ...rest,
+      terms: _.map(field => ({ field }), [field, ...additionalFields]),
+    },
+  })
+
   let field = getField(schema, groupField)
+  let keyField = buildFieldTermQuery(groupField, schema)
   let query = {
     aggs: {
       [groupingType]: {
         ...(_.isEmpty(additionalFields)
           ? {
-              terms: buildFieldTermQuery(groupField, schema),
+              terms: keyField,
             }
-          : {
-              multi_terms: {
-                terms: _.map(
-                  groupField => buildFieldTermQuery(groupField, schema),
-                  [groupField, ...additionalFields]
-                ),
-              },
-            }),
+          : setMultiTermQuery(keyField)),
         ...children,
       },
     },
