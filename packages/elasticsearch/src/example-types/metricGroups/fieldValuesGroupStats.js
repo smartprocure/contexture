@@ -35,7 +35,10 @@ let buildGroupQuery = (node, children, groupingType, schema) => {
   let setMultiTermQuery = ({ field, ...rest }) => ({
     multi_terms: {
       ...rest,
-      terms: _.map(field => ({ field }), [field, ...additionalFields]),
+      terms: _.map(field => ({ field }), [
+        field,
+        ..._.map(field => getField(schema, field), additionalFields),
+      ]),
     },
   })
 
