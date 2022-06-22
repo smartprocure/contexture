@@ -242,10 +242,10 @@ describe('fieldValuesGroupStats', () => {
                   field: 'field1.untouched',
                 },
                 {
-                  field: 'field2',
+                  field: 'field2.raw',
                 },
                 {
-                  field: 'field3',
+                  field: 'field3.untouched',
                 },
               ],
             },
