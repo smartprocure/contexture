@@ -10,9 +10,7 @@ let getSortField = field => {
 }
 
 let drilldown = ({ field, drilldown }, schema) => ({
-  term: {
-    [getField(schema, field)]: drilldown,
-  },
+  term: { [getField(schema, field)]: drilldown },
 })
 
 let buildGroupQuery = (node, children, groupingType, schema) => {
@@ -24,34 +22,20 @@ let buildGroupQuery = (node, children, groupingType, schema) => {
     sort: { field: sortField, direction = 'desc' } = {}, // todo: support array sort for multi-level
     additionalFields = [],
   } = node
-
-  let buildFieldTermQuery = (field, schema) => ({
-    field: getField(schema, field),
+  
+  let termsAgg = {
     size,
-    ...(sortField && {
-      order: { [getSortField(sortField)]: direction },
-    }),
-  })
-  let setMultiTermQuery = ({ field, ...rest }) => ({
-    multi_terms: {
-      ...rest,
-      terms: _.map(field => ({ field }), [
-        field,
-        ..._.map(field => getField(schema, field), additionalFields),
-      ]),
-    },
-  })
-
-  let field = getField(schema, groupField)
-  let keyField = buildFieldTermQuery(groupField, schema)
+    ...(sortField && { order: { [getSortField(sortField)]: direction } }),
+  }
+  let fields = _.map(getField(schema), [groupField, ...additionalFields])
+  let field = [fields]
+  
   let query = {
     aggs: {
       [groupingType]: {
         ...(_.isEmpty(additionalFields)
-          ? {
-              terms: keyField,
-            }
-          : setMultiTermQuery(keyField)),
+          ? { terms: { ...termsAgg, field } }
+          : { multi_terms: { ...termsAgg, fields } }),
         ...children,
       },
     },
