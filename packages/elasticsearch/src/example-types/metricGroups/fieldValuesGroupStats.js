@@ -22,20 +22,23 @@ let buildGroupQuery = (node, children, groupingType, schema) => {
     sort: { field: sortField, direction = 'desc' } = {}, // todo: support array sort for multi-level
     additionalFields = [],
   } = node
-  
+
   let termsAgg = {
     size,
     ...(sortField && { order: { [getSortField(sortField)]: direction } }),
   }
-  let fields = _.map(getField(schema), [groupField, ...additionalFields])
-  let field = [fields]
-  
+  let fields = _.map(
+    _.flow(getField(schema), field => ({ field })),
+    [groupField, ...additionalFields]
+  )
+  let field = getField(schema, groupField)
+
   let query = {
     aggs: {
       [groupingType]: {
         ...(_.isEmpty(additionalFields)
           ? { terms: { ...termsAgg, field } }
-          : { multi_terms: { ...termsAgg, fields } }),
+          : { multi_terms: { ...termsAgg, terms: fields } }),
         ...children,
       },
     },
