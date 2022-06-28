@@ -1,3 +1,7 @@
+# 1.14.2
+* Fix CI. Diti has a peer dependency conflict in npm 8.11 wich ships with the latest
+  version of node so lock to node 16.15.0 for now.
+
 # 1.14.1
 * [pivot] Fix multi-term aggregation query logic
 
