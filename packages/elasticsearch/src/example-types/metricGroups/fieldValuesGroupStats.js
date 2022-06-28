@@ -10,9 +10,7 @@ let getSortField = field => {
 }
 
 let drilldown = ({ field, drilldown }, schema) => ({
-  term: {
-    [getField(schema, field)]: drilldown,
-  },
+  term: { [getField(schema, field)]: drilldown },
 })
 
 let buildGroupQuery = (node, children, groupingType, schema) => {
@@ -25,29 +23,22 @@ let buildGroupQuery = (node, children, groupingType, schema) => {
     additionalFields = [],
   } = node
 
-  let buildFieldTermQuery = (field, schema) => ({
-    field: getField(schema, field),
+  let termsAgg = {
     size,
-    ...(sortField && {
-      order: { [getSortField(sortField)]: direction },
-    }),
-  })
+    ...(sortField && { order: { [getSortField(sortField)]: direction } }),
+  }
+  let fields = _.map(
+    _.flow(getField(schema), field => ({ field })),
+    [groupField, ...additionalFields]
+  )
   let field = getField(schema, groupField)
+
   let query = {
     aggs: {
       [groupingType]: {
         ...(_.isEmpty(additionalFields)
-          ? {
-              terms: buildFieldTermQuery(groupField, schema),
-            }
-          : {
-              multi_terms: {
-                terms: _.map(
-                  groupField => buildFieldTermQuery(groupField, schema),
-                  [groupField, ...additionalFields]
-                ),
-              },
-            }),
+          ? { terms: { ...termsAgg, field } }
+          : { multi_terms: { ...termsAgg, terms: fields } }),
         ...children,
       },
     },
