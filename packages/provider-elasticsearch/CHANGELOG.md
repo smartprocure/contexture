@@ -1,3 +1,6 @@
+# 1.14.1
+* [pivot] Fix multi-term aggregation query logic
+
 # 1.14.0
 * [pivot] Add support for multi-term aggregations in group queries
 
