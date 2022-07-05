@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react'
 import _ from 'lodash/fp'
 import { observable } from 'mobx'
-import { observer, inject, useLocalStore } from 'mobx-react'
+import { observer, inject, useLocalObservable } from 'mobx-react'
 import Flex from './Flex'
 import DefaultTag from './Tag'
 import { sanitizeTagWords, splitTagOnComma, alphaNumericRegEx } from './utils'
@@ -32,7 +32,7 @@ let TagsInput = forwardRef(
     inputRef
   ) => {
     let containerRef = React.useRef()
-    let state = useLocalStore(() => ({ currentInput: '' }))
+    let state = useLocalObservable(() => ({ currentInput: '' }))
     let sanitizeTagFn = sanitizeTagWords(
       wordsMatchPattern,
       maxWordsPerTag,

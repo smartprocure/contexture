@@ -2,7 +2,7 @@ import React from 'react'
 import F from 'futil'
 import _ from 'lodash/fp'
 import { setDisplayName } from 'react-recompose'
-import { inject, observer, Observer, useLocalStore } from 'mobx-react'
+import { inject, observer, Observer, useLocalObservable } from 'mobx-react'
 import { observable } from 'mobx'
 import { withTheme } from '../utils/theme'
 import pluralize from 'pluralize'
@@ -164,7 +164,7 @@ let NestedPicker = ({
   },
   theme: { Button },
 }) => {
-  let state = useLocalStore(() => ({
+  let state = useLocalObservable(() => ({
     filter: '',
     checked: new Map(),
   }))
