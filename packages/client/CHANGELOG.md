@@ -1,3 +1,6 @@
+# 2.45.1
+* Pivot node: reset the drilldown on tree mutations
+
 # 2.45.0
 * Pivot node: removing subtotals flag as it was deprecated in ES
 
