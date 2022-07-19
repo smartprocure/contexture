@@ -304,7 +304,7 @@ export default F.stampKey('type', {
         // Resetting the drilldown when the node is changed
         // allows to return expected root results instead of nested drilldown
         // EX: changing the columns or rows config was not returning the new results
-        if (node.drilldown && !value.drilldown) {
+        if (node.drilldown && !_.has('drilldown', value)) {
           extend(node, { drilldown: [] })
         }
         F.mapIndexed((group, i) => {
