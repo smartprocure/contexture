@@ -16,7 +16,7 @@ module.exports = {
     hits: [],
   },
   aggregations: {
-    groups: {
+    rows: {
       doc_count_error_upper_bound: 13746838,
       sum_other_doc_count: 498980578,
       buckets: [
@@ -91,7 +91,7 @@ module.exports = {
               },
             ],
           },
-          groups: {
+          rows: {
             doc_count_error_upper_bound: 620649,
             sum_other_doc_count: 81659479,
             buckets: [
@@ -785,7 +785,7 @@ module.exports = {
               },
             ],
           },
-          groups: {
+          rows: {
             doc_count_error_upper_bound: 283965,
             sum_other_doc_count: 47833322,
             buckets: [
@@ -1512,7 +1512,7 @@ module.exports = {
               },
             ],
           },
-          groups: {
+          rows: {
             doc_count_error_upper_bound: 330634,
             sum_other_doc_count: 62149151,
             buckets: [
@@ -2206,7 +2206,7 @@ module.exports = {
               },
             ],
           },
-          groups: {
+          rows: {
             doc_count_error_upper_bound: 142438,
             sum_other_doc_count: 13090303,
             buckets: [
@@ -2928,7 +2928,7 @@ module.exports = {
               },
             ],
           },
-          groups: {
+          rows: {
             doc_count_error_upper_bound: 284806,
             sum_other_doc_count: 27292910,
             buckets: [
@@ -3646,7 +3646,7 @@ module.exports = {
               },
             ],
           },
-          groups: {
+          rows: {
             doc_count_error_upper_bound: 201368,
             sum_other_doc_count: 32087651,
             buckets: [
@@ -4380,7 +4380,7 @@ module.exports = {
               },
             ],
           },
-          groups: {
+          rows: {
             doc_count_error_upper_bound: 132005,
             sum_other_doc_count: 34696709,
             buckets: [
@@ -5124,7 +5124,7 @@ module.exports = {
               },
             ],
           },
-          groups: {
+          rows: {
             doc_count_error_upper_bound: 94520,
             sum_other_doc_count: 15524922,
             buckets: [
@@ -5843,7 +5843,7 @@ module.exports = {
               },
             ],
           },
-          groups: {
+          rows: {
             doc_count_error_upper_bound: 154974,
             sum_other_doc_count: 23304477,
             buckets: [
@@ -6521,7 +6521,7 @@ module.exports = {
               },
             ],
           },
-          groups: {
+          rows: {
             doc_count_error_upper_bound: 154879,
             sum_other_doc_count: 28723862,
             buckets: [
