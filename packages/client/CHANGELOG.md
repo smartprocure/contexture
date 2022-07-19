@@ -1,3 +1,6 @@
+# 2.46.0
+* Pivot node: renaming groups to rows 
+
 # 2.45.0
 * Pivot node: removing subtotals flag as it was deprecated in ES
 

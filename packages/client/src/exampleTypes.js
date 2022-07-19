@@ -272,11 +272,11 @@ export default F.stampKey('type', {
           (type !== 'numberRanges' && type !== 'percentiles') ||
           (type === 'numberRanges' && ranges.length > 0) ||
           (type === 'percentiles' && percents.length > 0),
-        _.concat(context.columns, context.groups)
+        _.concat(context.columns, context.rows)
       ),
     reactors: {
       columns: 'self',
-      groups: 'self',
+      rows: 'self',
       values: 'self',
       drilldown: 'self',
       filters: 'others',
@@ -285,7 +285,7 @@ export default F.stampKey('type', {
     },
     defaults: {
       columns: [],
-      groups: [],
+      rows: [],
       values: [],
       filters: [],
       sort: {},
@@ -297,43 +297,41 @@ export default F.stampKey('type', {
       },
     },
     onDispatch(event, extend) {
-      // If mutating any group type specific "resetting" keys, set `forceReplaceResponse`
+      // If mutating any row type specific "resetting" keys, set `forceReplaceResponse`
       let { type, node, previous } = event
       if (type === 'mutate') {
-        F.mapIndexed((group, i) => {
-          let previousGroup = previous.groups[i]
-          let type = group.type
-          let mutatedKeys = _.keys(F.simpleDiff(previousGroup, group))
+        F.mapIndexed((row, i) => {
+          let previousRow = previous.rows[i]
+          let type = row.type
+          let mutatedKeys = _.keys(F.simpleDiff(previousRow, row))
           let resettingKeys = {
             fieldValuesPartition: ['matchValue'],
           }
           if (!_.isEmpty(_.intersection(mutatedKeys, resettingKeys[type])))
             extend(node, { forceReplaceResponse: true })
-        }, node.groups)
+        }, node.rows)
       }
     },
     shouldMergeResponse: node => !_.isEmpty(node.drilldown),
     mergeResponse(node, response, extend, snapshot) {
-      // Convert response groups and columns to objects for easy merges
+      // Convert response rows and columns to objects for easy merges
       let groupsToObjects = deepMultiTransformOn(
-        ['groups', 'columns'],
+        ['rows', 'columns'],
         groupsToObjects => _.flow(_.map(groupsToObjects), _.keyBy('key'))
       )
-      // Convert groups and columns back to arrays
+      // Convert rows and columns back to arrays
       let groupsToArrays = deepMultiTransformOn(
-        ['groups', 'columns'],
+        ['rows', 'columns'],
         groupsToArrays => _.flow(F.unkeyBy('key'), _.map(groupsToArrays))
       )
 
       // `snapshot` here is to solve a mobx issue
-      // wrap in `groups` so it traverses the root level
       let nodeGroups = groupsToObjects(snapshot(node.context.results))
       let responseGroups = groupsToObjects(response.context.results)
 
-      // Easy merge now that we can merge by group key
+      // Easy merge now that we can merge by row key
       let results = F.mergeAllArrays([nodeGroups, responseGroups])
 
-      // Grab `groups` property we artificially added above for easy traversals
       let context = { results: groupsToArrays(results) }
 
       // Write on the node
