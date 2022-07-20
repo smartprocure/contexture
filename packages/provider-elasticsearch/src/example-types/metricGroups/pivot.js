@@ -102,17 +102,17 @@ let buildQuery = async (node, schema, getStats) => {
     : node.rows
 
   let statsAggs = { aggs: aggsForValues(node.values, schema) }
-  // buildGroupQuery applied to a list of rows
-  let buildNestedRowQuery = async (statsAggs, rows, groupingType, sort) => {
+  // buildGroupQuery applied to a list of groups
+  let buildNestedGroupQuery = async (statsAggs, groups, groupingType, sort) => {
     // Generate filters from sort column values
     let sortAgg = await getSortAgg({ node, sort, schema, getStats })
     let sortField = getSortField(sort)
 
     return _.reduce(
       async (children, row) => {
-        // Calculating subtotal metrics at each row level if not flattening or drilling down
+        // Calculating subtotal metrics at each row level if not drilling down
         // Support for per row stats could also be added here - merge on another stats agg blob to children based on row.stats/statsField or row.values
-        if (!node.flatten && !node.drilldown)
+        if (!node.drilldown)
           children = _.merge(await children, statsAggs)
         // At each level, add a filters bucket agg and nested metric to enable sorting
         // For example, to sort by Sum of Price for 2022, add a filters agg for 2022 and neseted metric for sum of price so we can target it
@@ -127,17 +127,17 @@ let buildQuery = async (node, schema, getStats) => {
         return build(row, await children, groupingType, schema, getStats)
       },
       statsAggs,
-      _.reverse(rows)
+      _.reverse(groups)
     )
   }
 
   if (node.columns)
     statsAggs = _.merge(
-      await buildNestedRowQuery(statsAggs, node.columns, 'columns'),
+      await buildNestedGroupQuery(statsAggs, node.columns, 'columns'),
       statsAggs
     )
   let query = _.merge(
-    await buildNestedRowQuery(statsAggs, rows, 'rows', node.sort),
+    await buildNestedGroupQuery(statsAggs, rows, 'rows', node.sort),
     // Stamping total row metrics if not drilling data
     _.isEmpty(drilldowns) ? statsAggs : {}
   )
@@ -151,26 +151,7 @@ let buildQuery = async (node, schema, getStats) => {
   return query
 }
 
-// TODO: instead of rowN, maybe look at query to say something more valuable?
-//  e.g. => node.rows[n].field + ' ' + node.rows[n].type (aka 'Organization.NameState fieldValues'), maybe customized per type?
-//      eg. `PO.IssuedDate month dateInterval`
-// maybe client side since it's schema label driven?
-let bucketToRowN = (bucket, n) => ({
-  [`row${n}`]: bucket.keyAsString || bucket.key,
-})
 let Tree = F.tree(_.get('rows'))
-let flattenRows = Tree.leavesBy((node, index, parents) => ({
-  ...node,
-  // Add rowN keys
-  ..._.mergeAll(
-    F.mapIndexed(
-      bucketToRowN,
-      // dropping root parent (since it's just the aggs top level - would change if we add "totals" to flatten result)
-      // might also change based on what we pass in (e.g. pass in aggregations.rows?)
-      _.reverse([node, ..._.dropRight(1, parents)])
-    )
-  ),
-}))
 
 let clearDrilldownCounts = (data, depth = 0) => {
   if (!data || !depth) return
@@ -190,7 +171,7 @@ let processResponse = (response, node = {}) => {
 
   clearDrilldownCounts(results, _.get(['drilldown', 'length'], node))
 
-  return { results: node.flatten ? flattenRows(results) : results }
+  return { results }
 }
 
 // Example Payload:
@@ -241,7 +222,7 @@ let pivot = {
   buildQuery,
   processResponse,
   validContext: node => node.rows.length && node.values.length,
-  // TODO: unify this with rowStatsUtil - the general pipeline is the same conceptually
+  // TODO: unify this with groupStatsUtil - the general pipeline is the same conceptually
   async result(node, search, schema) {
     let query = await buildQuery(node, schema, getStats(search))
     // console.log(JSON.stringify({ query }, 0, 2))
