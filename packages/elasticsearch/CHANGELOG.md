@@ -1,5 +1,5 @@
 # 1.15.0
-* [pivot] Renaming groups to rows
+* [pivot] Renaming groups to rows and deprecating the flatten flag
 
 # 1.14.2
 * Fix CI. Diti has a peer dependency conflict in npm 8.11 wich ships with the latest

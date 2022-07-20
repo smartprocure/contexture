@@ -46,7 +46,7 @@ describe('pivot', () => {
   })
   it('should buildQuery', async () => {
     // ES -> PVT
-    // buckets -> rows (rows/columns)
+    // buckets -> groups (rows/columns)
     // metrics -> values
     let input = {
       key: 'test',
@@ -2034,128 +2034,6 @@ describe('pivot', () => {
       buck.rows.buckets = buck.rows.buckets.slice(0, 2)
       return buck
     }, aggs.rows.buckets)
-
-    let flatResult = processResponse(pivotResponse, {
-      rows: [
-        { type: 'fieldValues', field: 'Organization.State' },
-        { type: 'fieldValues', field: 'Organization.NameState' },
-        {
-          type: 'numberRanges',
-          field: 'LineItem.TotalPrice',
-          ranges: [
-            { from: '0', to: '500' },
-            { from: '500', to: '10000' },
-          ],
-        },
-      ],
-      flatten: true,
-    })
-    expect(flatResult.results).to.eql([
-      {
-        key: '0.0-500.0',
-        from: 0,
-        to: 500,
-        count: 1774855,
-        avg: 123.61877539749409,
-        min: 0,
-        max: 499.989990234375,
-        sum: 219405401.60811937,
-        row0: 'Texas',
-        row1: 'UT Southwestern Medical Center, Texas',
-        row2: '0.0-500.0',
-      },
-      {
-        key: '500.0-10000.0',
-        from: 500,
-        to: 10000,
-        count: 463268,
-        avg: 1930.249843325976,
-        min: 500,
-        max: 9999.98046875,
-        sum: 894222984.4179382,
-        row0: 'Texas',
-        row1: 'UT Southwestern Medical Center, Texas',
-        row2: '500.0-10000.0',
-      },
-      {
-        key: '0.0-500.0',
-        from: 0,
-        to: 500,
-        count: 1072035,
-        avg: 86.85762873285029,
-        min: 0,
-        max: 499.989990234375,
-        sum: 93114418.01862116,
-        row0: 'Texas',
-        row1: 'University of Texas MD Anderson Cancer Center, Texas',
-        row2: '0.0-500.0',
-      },
-      {
-        key: '500.0-10000.0',
-        from: 500,
-        to: 10000,
-        count: 183007,
-        avg: 1989.2294442580583,
-        min: 500,
-        max: 9998.7998046875,
-        sum: 364042912.9053345,
-        row0: 'Texas',
-        row1: 'University of Texas MD Anderson Cancer Center, Texas',
-        row2: '500.0-10000.0',
-      },
-      {
-        key: '0.0-500.0',
-        from: 0,
-        to: 500,
-        count: 4024309,
-        avg: 96.12894216963802,
-        min: 0,
-        max: 499.989990234375,
-        sum: 386852567.13375384,
-        row0: 'Ohio',
-        row1: 'Ohio State University, Ohio',
-        row2: '0.0-500.0',
-      },
-      {
-        key: '500.0-10000.0',
-        from: 500,
-        to: 10000,
-        count: 644351,
-        avg: 1802.1472297222226,
-        min: 500,
-        max: 9999.990234375,
-        sum: 1161215369.618744,
-        row0: 'Ohio',
-        row1: 'Ohio State University, Ohio',
-        row2: '500.0-10000.0',
-      },
-      {
-        key: '0.0-500.0',
-        from: 0,
-        to: 500,
-        count: 864306,
-        avg: 101.28828428425045,
-        min: 0,
-        max: 499.989990234375,
-        sum: 87544071.83658338,
-        row0: 'Ohio',
-        row1: 'Greene County Court of Commons Pleas, Ohio',
-        row2: '0.0-500.0',
-      },
-      {
-        key: '500.0-10000.0',
-        from: 500,
-        to: 10000,
-        count: 179714,
-        avg: 1426.013434972438,
-        min: 500,
-        max: 9998,
-        sum: 256274578.45263672,
-        row0: 'Ohio',
-        row1: 'Greene County Court of Commons Pleas, Ohio',
-        row2: '500.0-10000.0',
-      },
-    ])
 
     let nestedResult = processResponse(pivotResponse)
     expect(nestedResult.results).to.eql({
