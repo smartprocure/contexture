@@ -2290,10 +2290,10 @@ let AllTests = ContextureClient => {
       ],
     })
   })
-  it('should support onDispatch (and pivot overriding response merges)', async () => {
+  it('should support onDispatch (and pivot resetting drilldown)', async () => {
     let service = sinon.spy(mockService())
     let rows = [
-      { type: 'fieldValuesPartition', field: 'State', matchValue: 'Florida' },
+      { type: 'fieldValuesPartition', field: 'State' },
       { type: 'fieldValues', field: 'City', size: 10 },
     ]
     let Tree = ContextureClient(
@@ -2302,7 +2302,7 @@ let AllTests = ContextureClient => {
         key: 'root',
         join: 'and',
         children: [
-          { key: 'pivot', type: 'pivot', rows },
+          { key: 'pivot', type: 'pivot', drilldown: [], rows },
           { key: 'test', type: 'facet', values: [] },
         ],
       }
@@ -2310,14 +2310,13 @@ let AllTests = ContextureClient => {
 
     // These tests set `forceReplaceResponse` conditionally during mutate based on the pivot's onDispatch
     // Changing fieldValues Size doesn't force replace
-    Tree.mutate(['root', 'pivot'], { rows: _.set('1.size', 20, rows) })
-    expect(!!Tree.getNode(['root', 'pivot']).forceReplaceResponse).be.false
+    Tree.mutate(['root', 'pivot'], { drilldown: ['Florida'] })
 
     // Changing fieldValuesPartition matchValue does force replace
     Tree.mutate(['root', 'pivot'], {
       rows: _.set('0.matchValue', 'Nevada', rows),
     })
-    expect(Tree.getNode(['root', 'pivot']).forceReplaceResponse).to.equal(true)
+    expect(Tree.getNode(['root', 'pivot']).drilldown).to.deep.equal([])
   })
   it('should support watchNode', async () => {
     let service = sinon.spy(mockService())
