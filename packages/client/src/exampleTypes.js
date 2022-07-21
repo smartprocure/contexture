@@ -301,7 +301,7 @@ export default F.stampKey('type', {
         let resettingKeys = {
           fieldValuesPartition: ['matchValue'],
         }
-        let checkForResettingMutation = (groups, groupsProp) =>
+        let checkForResettingMutation = (groupsProp) =>
           F.eachIndexed((group, i) => {
             let previousGroup = previous[groupsProp][i]
             let type = group.type
@@ -309,10 +309,10 @@ export default F.stampKey('type', {
 
             if (!_.isEmpty(_.intersection(mutatedKeys, resettingKeys[type])))
               extend(node, { forceReplaceResponse: true })
-          }, groups)
+          }, node[groupsProp])
 
-        checkForResettingMutation(node.rows, 'rows')
-        checkForResettingMutation(node.columns, 'columns')
+        checkForResettingMutation('rows')
+        checkForResettingMutation('columns')
       }
     },
     shouldMergeResponse: node => !_.isEmpty(node.drilldown),
