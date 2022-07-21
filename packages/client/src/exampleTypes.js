@@ -301,7 +301,7 @@ export default F.stampKey('type', {
         let resettingKeys = {
           fieldValuesPartition: ['matchValue'],
         }
-        let checkForResettingMutation = (groupsProp) =>
+        let checkForResettingMutation = groupsProp =>
           F.eachIndexed((group, i) => {
             let previousGroup = previous[groupsProp][i]
             let type = group.type
