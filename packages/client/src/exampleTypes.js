@@ -298,8 +298,15 @@ export default F.stampKey('type', {
     },
     onDispatch(event, extend) {
       // If mutating any group type specific "resetting" keys, set `forceReplaceResponse`
-      let { type, node, previous } = event
+      let { type, node, previous, value } = event
+
       if (type === 'mutate') {
+        // Resetting the drilldown when the node is changed
+        // allows to return expected root results instead of nested drilldown
+        // EX: changing the columns or rows config was not returning the new results
+        if (node.drilldown && !_.has('drilldown', value)) {
+          extend(node, { drilldown: [] })
+        }
         F.mapIndexed((group, i) => {
           let previousGroup = previous.groups[i]
           let type = group.type
@@ -311,6 +318,12 @@ export default F.stampKey('type', {
             extend(node, { forceReplaceResponse: true })
         }, node.groups)
       }
+    },
+    // Resetting the drilldown when the tree is changed
+    // allows to return expected root results instead of nested drilldown
+    // EX: criteria filters didn't work properly when drilldown was applied
+    onUpdateByOthers(node, extend) {
+      if (node.drilldown) extend(node, { drilldown: [] })
     },
     shouldMergeResponse: node => !_.isEmpty(node.drilldown),
     mergeResponse(node, response, extend, snapshot) {
