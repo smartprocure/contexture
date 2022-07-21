@@ -281,7 +281,6 @@ export default F.stampKey('type', {
       drilldown: 'self',
       filters: 'others',
       sort: 'self',
-      flatten: 'self',
     },
     defaults: {
       columns: [],
@@ -291,25 +290,35 @@ export default F.stampKey('type', {
       sort: {},
       drilldown: null,
       showCounts: false,
-      flatten: false,
       context: {
         results: [],
       },
     },
     onDispatch(event, extend) {
-      // If mutating any row type specific "resetting" keys, set `forceReplaceResponse`
+      // If mutating any row/column type specific "resetting" keys, set `forceReplaceResponse`
       let { type, node, previous } = event
       if (type === 'mutate') {
+        let resettingKeys = {
+          fieldValuesPartition: ['matchValue'],
+        }
+
         F.mapIndexed((row, i) => {
           let previousRow = previous.rows[i]
           let type = row.type
           let mutatedKeys = _.keys(F.simpleDiff(previousRow, row))
-          let resettingKeys = {
-            fieldValuesPartition: ['matchValue'],
-          }
+
           if (!_.isEmpty(_.intersection(mutatedKeys, resettingKeys[type])))
             extend(node, { forceReplaceResponse: true })
         }, node.rows)
+
+        F.mapIndexed((column, i) => {
+          let previousColumn = previous.columns[i]
+          let type = column.type
+          let mutatedKeys = _.keys(F.simpleDiff(previousColumn, column))
+
+          if (!_.isEmpty(_.intersection(mutatedKeys, resettingKeys[type])))
+            extend(node, { forceReplaceResponse: true })
+        }, node.columns)
       }
     },
     shouldMergeResponse: node => !_.isEmpty(node.drilldown),
