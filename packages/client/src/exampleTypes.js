@@ -301,24 +301,18 @@ export default F.stampKey('type', {
         let resettingKeys = {
           fieldValuesPartition: ['matchValue'],
         }
+        let checkForResettingMutation = (groups, groupsProp) =>
+          F.eachIndexed((group, i) => {
+            let previousGroup = previous[groupsProp][i]
+            let type = group.type
+            let mutatedKeys = _.keys(F.simpleDiff(previousGroup, group))
 
-        F.mapIndexed((row, i) => {
-          let previousRow = previous.rows[i]
-          let type = row.type
-          let mutatedKeys = _.keys(F.simpleDiff(previousRow, row))
+            if (!_.isEmpty(_.intersection(mutatedKeys, resettingKeys[type])))
+              extend(node, { forceReplaceResponse: true })
+          }, groups)
 
-          if (!_.isEmpty(_.intersection(mutatedKeys, resettingKeys[type])))
-            extend(node, { forceReplaceResponse: true })
-        }, node.rows)
-
-        F.mapIndexed((column, i) => {
-          let previousColumn = previous.columns[i]
-          let type = column.type
-          let mutatedKeys = _.keys(F.simpleDiff(previousColumn, column))
-
-          if (!_.isEmpty(_.intersection(mutatedKeys, resettingKeys[type])))
-            extend(node, { forceReplaceResponse: true })
-        }, node.columns)
+        checkForResettingMutation(node.rows, 'rows')
+        checkForResettingMutation(node.columns, 'columns')
       }
     },
     shouldMergeResponse: node => !_.isEmpty(node.drilldown),
