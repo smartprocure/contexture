@@ -1,6 +1,9 @@
 # 2.46.0
 * Pivot node: renaming groups to rows and deprecating the flatten flag
 
+# 2.45.1
+* Pivot node: reset the drilldown on tree mutations
+
 # 2.45.0
 * Pivot node: removing subtotals flag as it was deprecated in ES
 
