@@ -44,19 +44,19 @@ let maybeWrapWithFilterAgg = ({ query, filters, aggName }) =>
       }
 
 // Builds filters for drilldowns
-let drilldownFilters = ({ drilldowns = [], rows = [], schema, getStats }) =>
-  compactMapAsync((row, i) => {
-    let filter = lookupTypeProp(_.stubFalse, 'drilldown', row.type)
-    // Drilldown can come from root or be inlined on the row definition
-    let drilldown = drilldowns[i] || row.drilldown
-    return drilldown && filter({ drilldown, ...row }, schema, getStats)
-  }, rows)
+let drilldownFilters = ({ drilldowns = [], groups = [], schema, getStats }) =>
+  compactMapAsync((group, i) => {
+    let filter = lookupTypeProp(_.stubFalse, 'drilldown', group.type)
+    // Drilldown can come from root or be inlined on the group definition
+    let drilldown = drilldowns[i] || group.drilldown
+    return drilldown && filter({ drilldown, ...group }, schema, getStats)
+  }, groups)
 
 let getSortAgg = async ({ node, sort, schema, getStats }) => {
   if (!sort) return
   let filters = await drilldownFilters({
     drilldowns: sort.columnValues,
-    rows: node.columns,
+    groups: node.columns,
     schema,
     getStats,
   })
@@ -109,21 +109,21 @@ let buildQuery = async (node, schema, getStats) => {
     let sortField = getSortField(sort)
 
     return _.reduce(
-      async (children, row) => {
-        // Calculating subtotal metrics at each row level if not drilling down
-        // Support for per row stats could also be added here - merge on another stats agg blob to children based on row.stats/statsField or row.values
+      async (children, group) => {
+        // Calculating subtotal metrics at each group level if not drilling down
+        // Support for per group stats could also be added here - merge on another stats agg blob to children based on group.stats/statsField or group.values
         if (!node.drilldown) children = _.merge(await children, statsAggs)
         // At each level, add a filters bucket agg and nested metric to enable sorting
-        // For example, to sort by Sum of Price for 2022, add a filters agg for 2022 and neseted metric for sum of price so we can target it
+        // For example, to sort by Sum of Price for 2022, add a filters agg for 2022 and nested metric for sum of price so we can target it
         // As far as we're aware, there's no way to sort by the nth bucket - but we can simulate that by using filters to create a discrete agg for that bucket
         if (!_.isEmpty(sort)) {
           children = _.merge(sortAgg, await children)
-          // Set `sort` on the row, deferring to each rowing type to handle it
+          // Set `sort` on the group, deferring to each grouping type to handle it
           // The API of `{sort: {field, direction}}` is respected by fieldValues and can be added to others
-          row.sort = { field: sortField, direction: sort.direction }
+          group.sort = { field: sortField, direction: sort.direction }
         }
-        let build = lookupTypeProp(_.identity, 'buildGroupQuery', row.type)
-        return build(row, await children, groupingType, schema, getStats)
+        let build = lookupTypeProp(_.identity, 'buildGroupQuery', group.type)
+        return build(group, await children, groupingType, schema, getStats)
       },
       statsAggs,
       _.reverse(groups)
@@ -141,7 +141,7 @@ let buildQuery = async (node, schema, getStats) => {
     _.isEmpty(drilldowns) ? statsAggs : {}
   )
 
-  let filters = await drilldownFilters({ drilldowns, rows, schema, getStats })
+  let filters = await drilldownFilters({ drilldowns, groups: rows, schema, getStats })
   query = maybeWrapWithFilterAgg({ filters, aggName: 'pivotFilter', query })
 
   // Without this, ES7+ stops counting at 10k instead of returning the actual count
@@ -195,13 +195,13 @@ let filter = async ({ filters, rows = [], columns = [] }, schema) => {
             must: [
               ...(await drilldownFilters({
                 drilldowns: filter.rows,
-                rows,
+                groups: rows,
                 schema,
                 getStats,
               })),
               ...(await drilldownFilters({
                 drilldowns: filter.columns,
-                rows: columns,
+                groups: columns,
                 schema,
                 getStats,
               })),
