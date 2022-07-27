@@ -141,7 +141,12 @@ let buildQuery = async (node, schema, getStats) => {
     _.isEmpty(drilldowns) ? statsAggs : {}
   )
 
-  let filters = await drilldownFilters({ drilldowns, groups: rows, schema, getStats })
+  let filters = await drilldownFilters({
+    drilldowns,
+    groups: rows,
+    schema,
+    getStats,
+  })
   query = maybeWrapWithFilterAgg({ filters, aggName: 'pivotFilter', query })
 
   // Without this, ES7+ stops counting at 10k instead of returning the actual count
