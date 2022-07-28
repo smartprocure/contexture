@@ -18,14 +18,14 @@ let response = {
   aggregations: {
     valueFilter: {
       doc_count: 574247,
-      groups: {
+      rows: {
         doc_count_error_upper_bound: 0,
         sum_other_doc_count: 0,
         buckets: [
           {
             key: 'Okeechobee County Schools, Florida',
             doc_count: 552831,
-            groups: {
+            rows: {
               buckets: [
                 {
                   key_as_string: '2015-01-01T00:00:00.000Z',
@@ -89,7 +89,7 @@ let response = {
           {
             key: "Okeechobee County Sheriff's Office, Florida",
             doc_count: 11984,
-            groups: {
+            rows: {
               buckets: [
                 {
                   key_as_string: '2015-01-01T00:00:00.000Z',
@@ -153,7 +153,7 @@ let response = {
           {
             key: 'Okeechobee County Board of County Commissioners, Florida',
             doc_count: 5100,
-            groups: {
+            rows: {
               buckets: [
                 {
                   key_as_string: '2018-01-01T00:00:00.000Z',
@@ -193,7 +193,7 @@ let response = {
           {
             key: 'Okeechobee Soil And Water Conservation District, Florida',
             doc_count: 2983,
-            groups: {
+            rows: {
               buckets: [
                 {
                   key_as_string: '2015-01-01T00:00:00.000Z',
@@ -257,7 +257,7 @@ let response = {
           {
             key: 'Okeechobee County Clerk of the Circuit Court, Florida',
             doc_count: 1349,
-            groups: {
+            rows: {
               buckets: [
                 {
                   key_as_string: '2015-01-01T00:00:00.000Z',

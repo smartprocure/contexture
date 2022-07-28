@@ -1,6 +1,6 @@
 module.exports = {
   count: 10000,
-  groups: [
+  rows: [
     {
       key: 'Texas',
       count: 93706288,
@@ -54,7 +54,7 @@ module.exports = {
           'sum-LineItem.TotalPrice': 679212887.2353557,
         },
       ],
-      groups: [
+      rows: [
         {
           key: 'UT Southwestern Medical Center, Texas',
           count: 2709459,
@@ -572,7 +572,7 @@ module.exports = {
           'sum-LineItem.TotalPrice': 16351582557.382181,
         },
       ],
-      groups: [
+      rows: [
         {
           key: 'County of Los Angeles, California',
           count: 11749880,
@@ -1115,7 +1115,7 @@ module.exports = {
           'sum-LineItem.TotalPrice': 600081554.0717431,
         },
       ],
-      groups: [
+      rows: [
         {
           key: 'Ohio State University, Ohio',
           count: 5130882,
@@ -1633,7 +1633,7 @@ module.exports = {
           'sum-LineItem.TotalPrice': 81117769.23469706,
         },
       ],
-      groups: [
+      rows: [
         {
           key: 'Department of Defense: Defense Logistics Agency, Virginia',
           count: 22465914,
@@ -2170,7 +2170,7 @@ module.exports = {
           'sum-LineItem.TotalPrice': 301807348.79818183,
         },
       ],
-      groups: [
+      rows: [
         {
           key: 'Jackson Health System, Florida',
           count: 10566550,
@@ -2706,7 +2706,7 @@ module.exports = {
           'sum-LineItem.TotalPrice': 2850050929.4705133,
         },
       ],
-      groups: [
+      rows: [
         {
           key: 'State University of New York SUNY Buffalo, New York',
           count: 1787226,
@@ -3254,7 +3254,7 @@ module.exports = {
           'sum-LineItem.TotalPrice': 409772452.5921867,
         },
       ],
-      groups: [
+      rows: [
         {
           key: 'Chicago Public Schools, Illinois',
           count: 2560815,
@@ -3809,7 +3809,7 @@ module.exports = {
           'sum-LineItem.TotalPrice': 218859204.95522404,
         },
       ],
-      groups: [
+      rows: [
         {
           key: 'University of Michigan at Ann Arbor, Michigan',
           count: 14755861,
@@ -4345,7 +4345,7 @@ module.exports = {
           'sum-LineItem.TotalPrice': 130193241.35138677,
         },
       ],
-      groups: [
+      rows: [
         {
           key: 'University of Washington, Washington',
           count: 4944799,
@@ -4851,7 +4851,7 @@ module.exports = {
           'sum-LineItem.TotalPrice': 493980697.6562287,
         },
       ],
-      groups: [
+      rows: [
         {
           key: 'Newark Public Schools, New Jersey',
           count: 384565,
