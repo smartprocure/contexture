@@ -272,34 +272,31 @@ export default F.stampKey('type', {
           (type !== 'numberRanges' && type !== 'percentiles') ||
           (type === 'numberRanges' && ranges.length > 0) ||
           (type === 'percentiles' && percents.length > 0),
-        _.concat(context.columns, context.groups)
+        _.concat(context.columns, context.rows)
       ),
     reactors: {
       columns: 'self',
-      groups: 'self',
+      rows: 'self',
       values: 'self',
       drilldown: 'self',
       filters: 'others',
       sort: 'self',
-      flatten: 'self',
     },
     defaults: {
       columns: [],
-      groups: [],
+      rows: [],
       values: [],
       filters: [],
       sort: {},
       drilldown: null,
       showCounts: false,
-      flatten: false,
       context: {
         results: [],
       },
     },
     onDispatch(event, extend) {
-      // If mutating any group type specific "resetting" keys, set `forceReplaceResponse`
-      let { type, node, previous, value } = event
-
+      // If mutating any row/column type specific "resetting" keys, set `forceReplaceResponse`
+      let { type, node, value } = event
       if (type === 'mutate') {
         // Resetting the drilldown when the node is changed
         // allows to return expected root results instead of nested drilldown
@@ -307,16 +304,6 @@ export default F.stampKey('type', {
         if (node.drilldown && !_.has('drilldown', value)) {
           extend(node, { drilldown: [] })
         }
-        F.mapIndexed((group, i) => {
-          let previousGroup = previous.groups[i]
-          let type = group.type
-          let mutatedKeys = _.keys(F.simpleDiff(previousGroup, group))
-          let resettingKeys = {
-            fieldValuesPartition: ['matchValue'],
-          }
-          if (!_.isEmpty(_.intersection(mutatedKeys, resettingKeys[type])))
-            extend(node, { forceReplaceResponse: true })
-        }, node.groups)
       }
     },
     // Resetting the drilldown when the tree is changed
@@ -327,26 +314,24 @@ export default F.stampKey('type', {
     },
     shouldMergeResponse: node => !_.isEmpty(node.drilldown),
     mergeResponse(node, response, extend, snapshot) {
-      // Convert response groups and columns to objects for easy merges
+      // Convert response rows and columns to objects for easy merges
       let groupsToObjects = deepMultiTransformOn(
-        ['groups', 'columns'],
+        ['rows', 'columns'],
         groupsToObjects => _.flow(_.map(groupsToObjects), _.keyBy('key'))
       )
-      // Convert groups and columns back to arrays
+      // Convert rows and columns back to arrays
       let groupsToArrays = deepMultiTransformOn(
-        ['groups', 'columns'],
+        ['rows', 'columns'],
         groupsToArrays => _.flow(F.unkeyBy('key'), _.map(groupsToArrays))
       )
 
       // `snapshot` here is to solve a mobx issue
-      // wrap in `groups` so it traverses the root level
       let nodeGroups = groupsToObjects(snapshot(node.context.results))
       let responseGroups = groupsToObjects(response.context.results)
 
-      // Easy merge now that we can merge by group key
+      // Easy merge now that we can merge by row key
       let results = F.mergeAllArrays([nodeGroups, responseGroups])
 
-      // Grab `groups` property we artificially added above for easy traversals
       let context = { results: groupsToArrays(results) }
 
       // Write on the node
