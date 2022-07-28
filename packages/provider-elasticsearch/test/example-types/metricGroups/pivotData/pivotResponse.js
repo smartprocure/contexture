@@ -16,21 +16,21 @@ let pivotResponse = {
     hits: [],
   },
   aggregations: {
-    groups: {
+    rows: {
       doc_count_error_upper_bound: 11609804,
       sum_other_doc_count: 442825686,
       buckets: [
         {
           key: 'Texas',
           doc_count: 85720456,
-          groups: {
+          rows: {
             doc_count_error_upper_bound: 566241,
             sum_other_doc_count: 74749378,
             buckets: [
               {
                 key: 'UT Southwestern Medical Center, Texas',
                 doc_count: 2280465,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -74,7 +74,7 @@ let pivotResponse = {
               {
                 key: 'University of Texas MD Anderson Cancer Center, Texas',
                 doc_count: 1272132,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -118,7 +118,7 @@ let pivotResponse = {
               {
                 key: 'Northside Independent School District, Texas',
                 doc_count: 1209799,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -162,7 +162,7 @@ let pivotResponse = {
               {
                 key: 'Texas Health and Human Services Commission, Texas',
                 doc_count: 1026638,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -206,7 +206,7 @@ let pivotResponse = {
               {
                 key: 'Houston ISD, Texas',
                 doc_count: 1011486,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -250,7 +250,7 @@ let pivotResponse = {
               {
                 key: 'Garland Independent School District, Texas',
                 doc_count: 859890,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -294,7 +294,7 @@ let pivotResponse = {
               {
                 key: 'City of San Antonio, Texas',
                 doc_count: 844879,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -338,7 +338,7 @@ let pivotResponse = {
               {
                 key: 'Katy Independent School District, Texas',
                 doc_count: 835188,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -382,7 +382,7 @@ let pivotResponse = {
               {
                 key: 'Dallas ISD, Texas',
                 doc_count: 831819,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -426,7 +426,7 @@ let pivotResponse = {
               {
                 key: 'McAllen Independent School District (ISD), Texas',
                 doc_count: 798782,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -473,14 +473,14 @@ let pivotResponse = {
         {
           key: 'Ohio',
           doc_count: 69508750,
-          groups: {
+          rows: {
             doc_count_error_upper_bound: 310692,
             sum_other_doc_count: 58439970,
             buckets: [
               {
                 key: 'Ohio State University, Ohio',
                 doc_count: 4952263,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -524,7 +524,7 @@ let pivotResponse = {
               {
                 key: 'Greene County Court of Commons Pleas, Ohio',
                 doc_count: 1078624,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -568,7 +568,7 @@ let pivotResponse = {
               {
                 key: 'Lakota Local School District, Ohio',
                 doc_count: 778589,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -612,7 +612,7 @@ let pivotResponse = {
               {
                 key: 'Westerville City School District, Ohio',
                 doc_count: 765253,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -656,7 +656,7 @@ let pivotResponse = {
               {
                 key: 'Greene County, Ohio',
                 doc_count: 758371,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -700,7 +700,7 @@ let pivotResponse = {
               {
                 key: 'City of Columbus, Ohio',
                 doc_count: 596072,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -744,7 +744,7 @@ let pivotResponse = {
               {
                 key: 'Dayton City School District, Ohio',
                 doc_count: 594213,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -788,7 +788,7 @@ let pivotResponse = {
               {
                 key: 'Sylvania City School District, Ohio',
                 doc_count: 536559,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -832,7 +832,7 @@ let pivotResponse = {
               {
                 key: 'Stark County, Ohio',
                 doc_count: 527452,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -876,7 +876,7 @@ let pivotResponse = {
               {
                 key: 'Cleveland Metropolitan School District, Ohio',
                 doc_count: 481384,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -923,14 +923,14 @@ let pivotResponse = {
         {
           key: 'California',
           doc_count: 64124722,
-          groups: {
+          rows: {
             doc_count_error_upper_bound: 239292,
             sum_other_doc_count: 39367553,
             buckets: [
               {
                 key: 'County of Los Angeles, California',
                 doc_count: 10888355,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -974,7 +974,7 @@ let pivotResponse = {
               {
                 key: 'County of Santa Clara, California',
                 doc_count: 3414238,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -1018,7 +1018,7 @@ let pivotResponse = {
               {
                 key: 'City of Los Angeles, California',
                 doc_count: 2878536,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -1062,7 +1062,7 @@ let pivotResponse = {
               {
                 key: 'El Camino Hospital, California',
                 doc_count: 1781902,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -1106,7 +1106,7 @@ let pivotResponse = {
               {
                 key: 'Kaweah Delta Health Care District, California',
                 doc_count: 1601346,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -1150,7 +1150,7 @@ let pivotResponse = {
               {
                 key: 'Los Angeles Unified School District, California',
                 doc_count: 1574797,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -1194,7 +1194,7 @@ let pivotResponse = {
               {
                 key: 'Port of Los Angeles, California',
                 doc_count: 776067,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -1238,7 +1238,7 @@ let pivotResponse = {
               {
                 key: 'University of California - Santa Barbara, California',
                 doc_count: 746695,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -1283,7 +1283,7 @@ let pivotResponse = {
                 key:
                   'California Department of Corrections and Rehabilitation, California',
                 doc_count: 583087,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -1327,7 +1327,7 @@ let pivotResponse = {
               {
                 key: 'San Diego Unified School District, California',
                 doc_count: 512146,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -1374,7 +1374,7 @@ let pivotResponse = {
         {
           key: 'Virginia',
           doc_count: 44472457,
-          groups: {
+          rows: {
             doc_count_error_upper_bound: 119005,
             sum_other_doc_count: 10007149,
             buckets: [
@@ -1382,7 +1382,7 @@ let pivotResponse = {
                 key:
                   'Department of Defense: Defense Logistics Agency, Virginia',
                 doc_count: 20473438,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -1427,7 +1427,7 @@ let pivotResponse = {
                 key:
                   'Department of Defense: Defense Logistics Agency - Central, Virginia',
                 doc_count: 5141775,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -1471,7 +1471,7 @@ let pivotResponse = {
               {
                 key: 'City of Richmond, Virginia',
                 doc_count: 2728830,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -1516,7 +1516,7 @@ let pivotResponse = {
                 key:
                   'Defense Contract Management Agency (DCMA) - DLA, Virginia',
                 doc_count: 2435845,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -1560,7 +1560,7 @@ let pivotResponse = {
               {
                 key: 'University of Virginia, Virginia',
                 doc_count: 1221571,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -1605,7 +1605,7 @@ let pivotResponse = {
                 key:
                   'Virginia Polytechnic Institute And State University, Virginia',
                 doc_count: 702118,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -1649,7 +1649,7 @@ let pivotResponse = {
               {
                 key: 'Fairfax County Schools, Virginia',
                 doc_count: 567798,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -1693,7 +1693,7 @@ let pivotResponse = {
               {
                 key: 'Virginia Commonwealth University, Virginia',
                 doc_count: 462921,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -1737,7 +1737,7 @@ let pivotResponse = {
               {
                 key: 'Chesterfield County, Virginia',
                 doc_count: 379948,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -1781,7 +1781,7 @@ let pivotResponse = {
               {
                 key: 'Virginia Department of Transportation, Virginia',
                 doc_count: 351064,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -1828,14 +1828,14 @@ let pivotResponse = {
         {
           key: 'New York',
           doc_count: 39288383,
-          groups: {
+          rows: {
             doc_count_error_upper_bound: 170147,
             sum_other_doc_count: 29196807,
             buckets: [
               {
                 key: 'City of New York, New York',
                 doc_count: 1713517,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -1879,7 +1879,7 @@ let pivotResponse = {
               {
                 key: 'New York City Department of Finance, New York',
                 doc_count: 1690325,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -1923,7 +1923,7 @@ let pivotResponse = {
               {
                 key: 'New York City Council, New York',
                 doc_count: 1678148,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -1967,7 +1967,7 @@ let pivotResponse = {
               {
                 key: 'State University of New York SUNY Buffalo, New York',
                 doc_count: 1676457,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -2011,7 +2011,7 @@ let pivotResponse = {
               {
                 key: 'SUNY Upstate Medical University, New York',
                 doc_count: 835746,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -2055,7 +2055,7 @@ let pivotResponse = {
               {
                 key: 'New York City School Construction Authority, New York',
                 doc_count: 644906,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -2099,7 +2099,7 @@ let pivotResponse = {
               {
                 key: 'New York City Department of Education, New York',
                 doc_count: 644795,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -2143,7 +2143,7 @@ let pivotResponse = {
               {
                 key: 'NYC Department of Environmental Protection, New York',
                 doc_count: 433782,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -2187,7 +2187,7 @@ let pivotResponse = {
               {
                 key: 'New York City Transit Authority, New York',
                 doc_count: 407118,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -2231,7 +2231,7 @@ let pivotResponse = {
               {
                 key: "New York City Comptroller's Office, New York",
                 doc_count: 366782,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -2278,14 +2278,14 @@ let pivotResponse = {
         {
           key: 'Florida',
           doc_count: 39206506,
-          groups: {
+          rows: {
             doc_count_error_upper_bound: 264500,
             sum_other_doc_count: 24714887,
             buckets: [
               {
                 key: 'Jackson Health System, Florida',
                 doc_count: 7633238,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -2329,7 +2329,7 @@ let pivotResponse = {
               {
                 key: 'University of Florida, Florida',
                 doc_count: 1350903,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -2373,7 +2373,7 @@ let pivotResponse = {
               {
                 key: 'Broward County Public Schools, Florida',
                 doc_count: 1158074,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -2417,7 +2417,7 @@ let pivotResponse = {
               {
                 key: 'Florida Department of Health, Florida',
                 doc_count: 821457,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -2461,7 +2461,7 @@ let pivotResponse = {
               {
                 key: 'City of Milton, Florida',
                 doc_count: 732396,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -2505,7 +2505,7 @@ let pivotResponse = {
               {
                 key: 'Halifax Medical Center, Florida',
                 doc_count: 623926,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -2549,7 +2549,7 @@ let pivotResponse = {
               {
                 key: 'Nassau County School District, Florida',
                 doc_count: 567478,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -2593,7 +2593,7 @@ let pivotResponse = {
               {
                 key: 'Okeechobee County Schools, Florida',
                 doc_count: 550406,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -2637,7 +2637,7 @@ let pivotResponse = {
               {
                 key: 'Hillsborough County Public School Board, Florida',
                 doc_count: 529912,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -2681,7 +2681,7 @@ let pivotResponse = {
               {
                 key: 'Florida Department of Corrections, Florida',
                 doc_count: 523829,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -2728,14 +2728,14 @@ let pivotResponse = {
         {
           key: 'Illinois',
           doc_count: 37538822,
-          groups: {
+          rows: {
             doc_count_error_upper_bound: 111550,
             sum_other_doc_count: 31185933,
             buckets: [
               {
                 key: 'Chicago Public Schools, Illinois',
                 doc_count: 2526461,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -2780,7 +2780,7 @@ let pivotResponse = {
                 key:
                   'University of Illinois at Chicago, Urbana-Champaign, and Springfield, Illinois',
                 doc_count: 826448,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -2824,7 +2824,7 @@ let pivotResponse = {
               {
                 key: 'Illinois State Department Of Transportation, Illinois',
                 doc_count: 792432,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -2868,7 +2868,7 @@ let pivotResponse = {
               {
                 key: 'Cook County, Illinois',
                 doc_count: 715188,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -2912,7 +2912,7 @@ let pivotResponse = {
               {
                 key: 'Metra Commuter Rail Board, Illinois',
                 doc_count: 346144,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -2956,7 +2956,7 @@ let pivotResponse = {
               {
                 key: 'Rockford School District No. 205, Illinois',
                 doc_count: 293504,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -3001,7 +3001,7 @@ let pivotResponse = {
                 key:
                   'Kane County Community Unit School District No. 300, Illinois',
                 doc_count: 280988,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -3045,7 +3045,7 @@ let pivotResponse = {
               {
                 key: 'Illinois Department of Corrections, Illinois',
                 doc_count: 230931,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -3089,7 +3089,7 @@ let pivotResponse = {
               {
                 key: 'Cicero Public School District No. 99, Illinois',
                 doc_count: 179302,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -3133,7 +3133,7 @@ let pivotResponse = {
               {
                 key: 'Winnebago County, Illinois',
                 doc_count: 161491,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -3180,14 +3180,14 @@ let pivotResponse = {
         {
           key: 'Michigan',
           doc_count: 30984705,
-          groups: {
+          rows: {
             doc_count_error_upper_bound: 87337,
             sum_other_doc_count: 14320143,
             buckets: [
               {
                 key: 'University of Michigan at Ann Arbor, Michigan',
                 doc_count: 13615474,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -3231,7 +3231,7 @@ let pivotResponse = {
               {
                 key: 'County of Macomb, Michigan',
                 doc_count: 801980,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -3275,7 +3275,7 @@ let pivotResponse = {
               {
                 key: 'Michigan State University, Michigan',
                 doc_count: 745099,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -3319,7 +3319,7 @@ let pivotResponse = {
               {
                 key: 'Wayne State University, Michigan',
                 doc_count: 380636,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -3363,7 +3363,7 @@ let pivotResponse = {
               {
                 key: 'City of Detroit, Michigan',
                 doc_count: 252994,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -3407,7 +3407,7 @@ let pivotResponse = {
               {
                 key: 'Michigan State Department Of Corrections, Michigan',
                 doc_count: 210364,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -3451,7 +3451,7 @@ let pivotResponse = {
               {
                 key: 'City of Kalamazoo, Michigan',
                 doc_count: 195170,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -3495,7 +3495,7 @@ let pivotResponse = {
               {
                 key: 'Washtenaw County, Michigan',
                 doc_count: 177396,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -3540,7 +3540,7 @@ let pivotResponse = {
                 key:
                   'Michigan State Department Of Health & Human Services, Michigan',
                 doc_count: 149338,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -3584,7 +3584,7 @@ let pivotResponse = {
               {
                 key: 'Michigan State Department Of Natural Resources, Michigan',
                 doc_count: 136111,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -3631,14 +3631,14 @@ let pivotResponse = {
         {
           key: 'New Jersey',
           doc_count: 29082460,
-          groups: {
+          rows: {
             doc_count_error_upper_bound: 138157,
             sum_other_doc_count: 26528043,
             buckets: [
               {
                 key: 'Newark Public Schools, New Jersey',
                 doc_count: 349082,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -3682,7 +3682,7 @@ let pivotResponse = {
               {
                 key: 'Monmouth County, New Jersey',
                 doc_count: 303493,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -3726,7 +3726,7 @@ let pivotResponse = {
               {
                 key: 'County of Morris, New Jersey',
                 doc_count: 290330,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -3770,7 +3770,7 @@ let pivotResponse = {
               {
                 key: 'Hudson County, New Jersey',
                 doc_count: 272180,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -3814,7 +3814,7 @@ let pivotResponse = {
               {
                 key: 'Hackensack Public Schools, New Jersey',
                 doc_count: 267957,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -3858,7 +3858,7 @@ let pivotResponse = {
               {
                 key: 'Brick Township Public Schools, New Jersey',
                 doc_count: 248415,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -3902,7 +3902,7 @@ let pivotResponse = {
               {
                 key: 'Deptford Township Schools, New Jersey',
                 doc_count: 213910,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -3946,7 +3946,7 @@ let pivotResponse = {
               {
                 key: 'New Jersey Turnpike Authority, New Jersey',
                 doc_count: 210273,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -3990,7 +3990,7 @@ let pivotResponse = {
               {
                 key: 'New Jersey Transit Corporation, New Jersey',
                 doc_count: 203853,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -4034,7 +4034,7 @@ let pivotResponse = {
               {
                 key: 'Rowan University, New Jersey',
                 doc_count: 194924,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -4081,14 +4081,14 @@ let pivotResponse = {
         {
           key: 'Washington',
           doc_count: 27410983,
-          groups: {
+          rows: {
             doc_count_error_upper_bound: 149568,
             sum_other_doc_count: 21288180,
             buckets: [
               {
                 key: 'University of Washington Medical Center, Washington',
                 doc_count: 1655206,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -4132,7 +4132,7 @@ let pivotResponse = {
               {
                 key: 'University of Washington, Washington',
                 doc_count: 1177600,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -4176,7 +4176,7 @@ let pivotResponse = {
               {
                 key: 'King County, Washington',
                 doc_count: 992466,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -4220,7 +4220,7 @@ let pivotResponse = {
               {
                 key: 'Mukilteo School District, Washington',
                 doc_count: 565947,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -4264,7 +4264,7 @@ let pivotResponse = {
               {
                 key: 'City of Tacoma, Washington',
                 doc_count: 381463,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -4308,7 +4308,7 @@ let pivotResponse = {
               {
                 key: 'City of Omak, Washington',
                 doc_count: 306668,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -4352,7 +4352,7 @@ let pivotResponse = {
               {
                 key: 'City of Selah, Washington',
                 doc_count: 288571,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -4396,7 +4396,7 @@ let pivotResponse = {
               {
                 key: 'Pasco School District, Washington',
                 doc_count: 268552,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -4440,7 +4440,7 @@ let pivotResponse = {
               {
                 key: 'Seattle School District 1, Washington',
                 doc_count: 251026,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',
@@ -4484,7 +4484,7 @@ let pivotResponse = {
               {
                 key: 'City of Seattle, Washington',
                 doc_count: 235304,
-                groups: {
+                rows: {
                   buckets: [
                     {
                       key: '0.0-500.0',

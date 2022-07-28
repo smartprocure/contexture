@@ -67,17 +67,17 @@ describe('pivot', () => {
         { type: 'cardinality', field: 'Vendor.Name' },
         { type: 'topHits' },
       ],
-      groups: [
+      rows: [
         { type: 'fieldValues', field: 'Organization.NameState' },
         { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
       ],
     }
     let expected = {
       aggs: {
-        groups: {
+        rows: {
           terms: { field: 'Organization.NameState.untouched', size: 10 },
           aggs: {
-            groups: {
+            rows: {
               date_histogram: {
                 field: 'PO.IssuedDate',
                 interval: 'month',
@@ -169,7 +169,7 @@ describe('pivot', () => {
       key: 'test',
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      groups: [
+      rows: [
         {
           type: 'fieldValuePartition',
           field: 'Vendor.City',
@@ -180,7 +180,7 @@ describe('pivot', () => {
     let expected = {
       track_total_hits: true,
       aggs: {
-        groups: {
+        rows: {
           filters: {
             other_bucket_key: 'fail',
             filters: {
@@ -210,7 +210,7 @@ describe('pivot', () => {
       key: 'test',
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      groups: [
+      rows: [
         {
           type: 'fieldValues',
           field: 'Organization.Name',
@@ -237,7 +237,7 @@ describe('pivot', () => {
             },
           },
           aggs: {
-            groups: {
+            rows: {
               terms: { field: 'Organization.Name', size: 10 },
               aggs: {
                 'pivotMetric-sum-LineItem.TotalPrice': {
@@ -261,13 +261,13 @@ describe('pivot', () => {
   })
   it('should buildQuery for fieldValues with drilldown', async () => {
     // TODO: add tests for dateInterval, numberInterval, fieldValuePartition
-    // TODO: test keyForGroup (e.g. month for date interval)
+    // TODO: test keyForRow (e.g. month for date interval)
     let inputTopLevel = {
       key: 'test',
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       drilldown: [],
-      groups: [
+      rows: [
         {
           type: 'fieldValues',
           field: 'Organization.Name',
@@ -289,7 +289,7 @@ describe('pivot', () => {
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       drilldown: ['Reno', '0.0-500.0'],
-      groups: [
+      rows: [
         {
           type: 'fieldValues',
           field: 'Organization.Name',
@@ -311,7 +311,7 @@ describe('pivot', () => {
             bool: { must: [{ term: { 'Organization.Name': 'Reno' } }] },
           },
           aggs: {
-            groups: {
+            rows: {
               terms: { field: 'Organization.Name', size: 10 },
               aggs: {
                 'pivotMetric-sum-LineItem.TotalPrice': {
@@ -347,10 +347,10 @@ describe('pivot', () => {
             },
           },
           aggs: {
-            groups: {
+            rows: {
               terms: { field: 'Organization.Name', size: 10 },
               aggs: {
-                groups: {
+                rows: {
                   range: {
                     field: 'LineItem.TotalPrice',
                     ranges: [
@@ -389,7 +389,7 @@ describe('pivot', () => {
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       drilldown: [],
-      groups: [
+      rows: [
         {
           type: 'fieldValues',
           field: 'Organization.Name',
@@ -407,7 +407,7 @@ describe('pivot', () => {
     let expected = {
       track_total_hits: true,
       aggs: {
-        groups: {
+        rows: {
           terms: { field: 'Organization.Name', size: 10 },
           aggs: {
             'pivotMetric-sum-LineItem.TotalPrice': {
@@ -433,7 +433,7 @@ describe('pivot', () => {
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       drilldown: ['Reno'],
-      groups: [
+      rows: [
         {
           type: 'fieldValues',
           field: 'Organization.Name',
@@ -460,10 +460,10 @@ describe('pivot', () => {
             bool: { must: [{ term: { 'Organization.Name': 'Reno' } }] },
           },
           aggs: {
-            groups: {
+            rows: {
               terms: { field: 'Organization.Name', size: 10 },
               aggs: {
-                groups: {
+                rows: {
                   range: {
                     field: 'LineItem.TotalPrice',
                     ranges: [
@@ -496,7 +496,7 @@ describe('pivot', () => {
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       drilldown: ['Reno', '0.0-500.0', 'A - U.S. OWNED BUSINESS'],
-      groups: [
+      rows: [
         {
           type: 'fieldValues',
           field: 'Organization.Name',
@@ -543,13 +543,13 @@ describe('pivot', () => {
             },
           },
           aggs: {
-            groups: {
+            rows: {
               terms: {
                 field: 'Organization.Name',
                 size: 10,
               },
               aggs: {
-                groups: {
+                rows: {
                   range: {
                     field: 'LineItem.TotalPrice',
                     ranges: [
@@ -564,7 +564,7 @@ describe('pivot', () => {
                     ],
                   },
                   aggs: {
-                    groups: {
+                    rows: {
                       terms: {
                         field: 'Organization.Type',
                         size: 10,
@@ -598,7 +598,7 @@ describe('pivot', () => {
       key: 'test',
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      groups: [
+      rows: [
         {
           type: 'numberInterval',
           field: 'LineItem.UnitPrice',
@@ -609,7 +609,7 @@ describe('pivot', () => {
     let expected = {
       track_total_hits: true,
       aggs: {
-        groups: {
+        rows: {
           histogram: {
             field: 'LineItem.UnitPrice',
             interval: 25,
@@ -636,7 +636,7 @@ describe('pivot', () => {
   })
   it('should buildQuery with subtotals', async () => {
     // ES -> PVT
-    // buckets -> groups (rows/columns)
+    // buckets -> rows (rows/columns)
     // metrics -> values
     let input = {
       key: 'test',
@@ -647,7 +647,7 @@ describe('pivot', () => {
         { type: 'avg', field: 'LineItem.TotalPrice' },
         { type: 'sum', field: 'LineItem.TotalPrice' },
       ],
-      groups: [
+      rows: [
         { type: 'fieldValues', field: 'Organization.NameState' },
         { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
       ],
@@ -655,10 +655,10 @@ describe('pivot', () => {
     let expected = {
       track_total_hits: true,
       aggs: {
-        groups: {
+        rows: {
           terms: { field: 'Organization.NameState.untouched', size: 10 },
           aggs: {
-            groups: {
+            rows: {
               date_histogram: {
                 field: 'PO.IssuedDate',
                 interval: 'month',
@@ -724,7 +724,7 @@ describe('pivot', () => {
         { type: 'avg', field: 'LineItem.TotalPrice' },
         { type: 'sum', field: 'LineItem.TotalPrice' },
       ],
-      groups: [
+      rows: [
         { type: 'fieldValues', field: 'Organization.State' },
         { type: 'fieldValues', field: 'Organization.NameState' },
         {
@@ -739,13 +739,13 @@ describe('pivot', () => {
     }
     let expected = {
       aggs: {
-        groups: {
+        rows: {
           terms: { field: 'Organization.State.untouched', size: 10 },
           aggs: {
-            groups: {
+            rows: {
               terms: { field: 'Organization.NameState.untouched', size: 10 },
               aggs: {
-                groups: {
+                rows: {
                   range: {
                     field: 'LineItem.TotalPrice',
                     ranges: [
@@ -828,7 +828,7 @@ describe('pivot', () => {
         { type: 'avg', field: 'LineItem.TotalPrice' },
         { type: 'sum', field: 'LineItem.TotalPrice' },
       ],
-      groups: [
+      rows: [
         { type: 'fieldValues', field: 'Organization.State' },
         { type: 'fieldValues', field: 'Organization.NameState' },
         {
@@ -846,13 +846,13 @@ describe('pivot', () => {
     }
     let expected = {
       aggs: {
-        groups: {
+        rows: {
           terms: { field: 'Organization.State.untouched', size: 10 },
           aggs: {
-            groups: {
+            rows: {
               terms: { field: 'Organization.NameState.untouched', size: 10 },
               aggs: {
-                groups: {
+                rows: {
                   range: {
                     field: 'LineItem.TotalPrice',
                     ranges: [
@@ -1014,7 +1014,7 @@ describe('pivot', () => {
       key: 'test',
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      groups: [
+      rows: [
         { type: 'fieldValues', field: 'Organization.State' },
         { type: 'fieldValues', field: 'Organization.NameState' },
       ],
@@ -1025,10 +1025,10 @@ describe('pivot', () => {
     let expected = {
       track_total_hits: true,
       aggs: {
-        groups: {
+        rows: {
           terms: { field: 'Organization.State.untouched', size: 10 },
           aggs: {
-            groups: {
+            rows: {
               terms: { field: 'Organization.NameState.untouched', size: 10 },
               aggs: {
                 columns: {
@@ -1095,7 +1095,7 @@ describe('pivot', () => {
       key: 'test',
       type: 'pivot',
       values: [{ type: 'sum', field: 'PO.IssuedAmount' }],
-      groups: [
+      rows: [
         {
           type: 'fieldValues',
           field: 'Organization.State',
@@ -1114,7 +1114,7 @@ describe('pivot', () => {
     }
     let expected = {
       aggs: {
-        groups: {
+        rows: {
           terms: {
             field: 'Organization.State.untouched',
             size: 10,
@@ -1180,12 +1180,12 @@ describe('pivot', () => {
     )
     expect(result).to.eql(expected)
   })
-  it('should build query and sort on the group if top-level sort is missing', async () => {
+  it('should build query and sort on the row if top-level sort is missing', async () => {
     let input = {
       key: 'test',
       type: 'pivot',
       values: [{ type: 'sum', field: 'PO.IssuedAmount' }],
-      groups: [
+      rows: [
         {
           type: 'fieldValues',
           field: 'Organization.State',
@@ -1198,7 +1198,7 @@ describe('pivot', () => {
     }
     let expected = {
       aggs: {
-        groups: {
+        rows: {
           terms: {
             field: 'Organization.State.untouched',
             size: 10,
@@ -1257,7 +1257,7 @@ describe('pivot', () => {
         { type: 'sum', field: 'PO.IssuedAmount' },
         { type: 'avg', field: 'PO.IssuedAmount' },
       ],
-      groups: [{ type: 'fieldValues', field: 'Organization.State' }],
+      rows: [{ type: 'fieldValues', field: 'Organization.State' }],
       columns: [
         { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
       ],
@@ -1269,7 +1269,7 @@ describe('pivot', () => {
     }
     let expected = {
       aggs: {
-        groups: {
+        rows: {
           terms: {
             field: 'Organization.State.untouched',
             size: 10,
@@ -1374,7 +1374,7 @@ describe('pivot', () => {
         { type: 'sum', field: 'PO.IssuedAmount' },
         { type: 'avg', field: 'PO.IssuedAmount' },
       ],
-      groups: [{ type: 'fieldValues', field: 'Organization.State' }],
+      rows: [{ type: 'fieldValues', field: 'Organization.State' }],
       columns: [
         { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
       ],
@@ -1382,7 +1382,7 @@ describe('pivot', () => {
     }
     let expected = {
       aggs: {
-        groups: {
+        rows: {
           terms: {
             field: 'Organization.State.untouched',
             size: 10,
@@ -1453,7 +1453,7 @@ describe('pivot', () => {
         { type: 'sum', field: 'PO.IssuedAmount' },
         { type: 'avg', field: 'PO.IssuedAmount' },
       ],
-      groups: [{ type: 'fieldValues', field: 'Organization.State' }],
+      rows: [{ type: 'fieldValues', field: 'Organization.State' }],
       columns: [
         { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
       ],
@@ -1461,7 +1461,7 @@ describe('pivot', () => {
     }
     let expected = {
       aggs: {
-        groups: {
+        rows: {
           terms: {
             field: 'Organization.State.untouched',
             size: 10,
@@ -1528,7 +1528,7 @@ describe('pivot', () => {
       key: 'test',
       type: 'pivot',
       values: [{ type: 'sum', field: 'PO.IssuedAmount' }],
-      groups: [{ type: 'fieldValues', field: 'Organization.State' }],
+      rows: [{ type: 'fieldValues', field: 'Organization.State' }],
       columns: [
         { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
         { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
@@ -1541,7 +1541,7 @@ describe('pivot', () => {
     }
     let expected = {
       aggs: {
-        groups: {
+        rows: {
           terms: {
             field: 'Organization.State.untouched',
             size: 10,
@@ -1639,12 +1639,12 @@ describe('pivot', () => {
     )
     expect(result).to.eql(expected)
   })
-  it('should build query with multiple groups, columns, and sort', async () => {
+  it('should build query with multiple rows, columns, and sort', async () => {
     let input = {
       key: 'test',
       type: 'pivot',
       values: [{ type: 'stats', field: 'PO.IssuedAmount' }],
-      groups: [
+      rows: [
         { type: 'fieldValues', field: 'Organization.State' },
         { type: 'fieldValues', field: 'Organization.NameState' },
       ],
@@ -1660,7 +1660,7 @@ describe('pivot', () => {
     }
     let expected = {
       aggs: {
-        groups: {
+        rows: {
           terms: {
             field: 'Organization.State.untouched',
             size: 10,
@@ -1684,7 +1684,7 @@ describe('pivot', () => {
               },
               aggs: { metric: { stats: { field: 'PO.IssuedAmount' } } },
             },
-            groups: {
+            rows: {
               terms: {
                 field: 'Organization.NameState.untouched',
                 size: 10,
@@ -1767,12 +1767,12 @@ describe('pivot', () => {
     )
     expect(result).to.eql(expected)
   })
-  it('should build query with multiple groups, columns, and sort on _count without valueIndex', async () => {
+  it('should build query with multiple rows, columns, and sort on _count without valueIndex', async () => {
     let input = {
       key: 'test',
       type: 'pivot',
       values: [{ type: 'stats', field: 'PO.IssuedAmount' }],
-      groups: [
+      rows: [
         { type: 'fieldValues', field: 'Organization.State' },
         { type: 'fieldValues', field: 'Organization.NameState' },
       ],
@@ -1786,7 +1786,7 @@ describe('pivot', () => {
     }
     let expected = {
       aggs: {
-        groups: {
+        rows: {
           terms: {
             field: 'Organization.State.untouched',
             size: 10,
@@ -1811,7 +1811,7 @@ describe('pivot', () => {
                 },
               },
             },
-            groups: {
+            rows: {
               terms: {
                 field: 'Organization.NameState.untouched',
                 size: 10,
@@ -1912,7 +1912,7 @@ describe('pivot', () => {
       key: 'test',
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      groups: [
+      rows: [
         { type: 'fieldValues', field: 'Organization.State' },
         { type: 'fieldValues', field: 'Organization.NameState' },
       ],
@@ -1924,10 +1924,10 @@ describe('pivot', () => {
     let expected = {
       track_total_hits: true,
       aggs: {
-        groups: {
+        rows: {
           terms: { field: 'Organization.State.untouched', size: 10 },
           aggs: {
-            groups: {
+            rows: {
               terms: { field: 'Organization.NameState.untouched', size: 10 },
               aggs: {
                 columns: {
@@ -2029,144 +2029,22 @@ describe('pivot', () => {
     let aggs = pivotResponse.aggregations
 
     // make tiny
-    aggs.groups.buckets = aggs.groups.buckets.slice(0, 2)
-    aggs.groups.buckets = _.map(buck => {
-      buck.groups.buckets = buck.groups.buckets.slice(0, 2)
+    aggs.rows.buckets = aggs.rows.buckets.slice(0, 2)
+    aggs.rows.buckets = _.map(buck => {
+      buck.rows.buckets = buck.rows.buckets.slice(0, 2)
       return buck
-    }, aggs.groups.buckets)
-
-    let flatResult = processResponse(pivotResponse, {
-      groups: [
-        { type: 'fieldValues', field: 'Organization.State' },
-        { type: 'fieldValues', field: 'Organization.NameState' },
-        {
-          type: 'numberRanges',
-          field: 'LineItem.TotalPrice',
-          ranges: [
-            { from: '0', to: '500' },
-            { from: '500', to: '10000' },
-          ],
-        },
-      ],
-      flatten: true,
-    })
-    expect(flatResult.results).to.eql([
-      {
-        key: '0.0-500.0',
-        from: 0,
-        to: 500,
-        count: 1774855,
-        avg: 123.61877539749409,
-        min: 0,
-        max: 499.989990234375,
-        sum: 219405401.60811937,
-        group0: 'Texas',
-        group1: 'UT Southwestern Medical Center, Texas',
-        group2: '0.0-500.0',
-      },
-      {
-        key: '500.0-10000.0',
-        from: 500,
-        to: 10000,
-        count: 463268,
-        avg: 1930.249843325976,
-        min: 500,
-        max: 9999.98046875,
-        sum: 894222984.4179382,
-        group0: 'Texas',
-        group1: 'UT Southwestern Medical Center, Texas',
-        group2: '500.0-10000.0',
-      },
-      {
-        key: '0.0-500.0',
-        from: 0,
-        to: 500,
-        count: 1072035,
-        avg: 86.85762873285029,
-        min: 0,
-        max: 499.989990234375,
-        sum: 93114418.01862116,
-        group0: 'Texas',
-        group1: 'University of Texas MD Anderson Cancer Center, Texas',
-        group2: '0.0-500.0',
-      },
-      {
-        key: '500.0-10000.0',
-        from: 500,
-        to: 10000,
-        count: 183007,
-        avg: 1989.2294442580583,
-        min: 500,
-        max: 9998.7998046875,
-        sum: 364042912.9053345,
-        group0: 'Texas',
-        group1: 'University of Texas MD Anderson Cancer Center, Texas',
-        group2: '500.0-10000.0',
-      },
-      {
-        key: '0.0-500.0',
-        from: 0,
-        to: 500,
-        count: 4024309,
-        avg: 96.12894216963802,
-        min: 0,
-        max: 499.989990234375,
-        sum: 386852567.13375384,
-        group0: 'Ohio',
-        group1: 'Ohio State University, Ohio',
-        group2: '0.0-500.0',
-      },
-      {
-        key: '500.0-10000.0',
-        from: 500,
-        to: 10000,
-        count: 644351,
-        avg: 1802.1472297222226,
-        min: 500,
-        max: 9999.990234375,
-        sum: 1161215369.618744,
-        group0: 'Ohio',
-        group1: 'Ohio State University, Ohio',
-        group2: '500.0-10000.0',
-      },
-      {
-        key: '0.0-500.0',
-        from: 0,
-        to: 500,
-        count: 864306,
-        avg: 101.28828428425045,
-        min: 0,
-        max: 499.989990234375,
-        sum: 87544071.83658338,
-        group0: 'Ohio',
-        group1: 'Greene County Court of Commons Pleas, Ohio',
-        group2: '0.0-500.0',
-      },
-      {
-        key: '500.0-10000.0',
-        from: 500,
-        to: 10000,
-        count: 179714,
-        avg: 1426.013434972438,
-        min: 500,
-        max: 9998,
-        sum: 256274578.45263672,
-        group0: 'Ohio',
-        group1: 'Greene County Court of Commons Pleas, Ohio',
-        group2: '500.0-10000.0',
-      },
-    ])
+    }, aggs.rows.buckets)
 
     let nestedResult = processResponse(pivotResponse)
     expect(nestedResult.results).to.eql({
       count: 442825686,
-      groups: [
+      rows: [
         {
           key: 'Texas',
-          groups: [
+          rows: [
             {
               key: 'UT Southwestern Medical Center, Texas',
-              groups: [
+              rows: [
                 {
                   key: '0.0-500.0',
                   from: 0,
@@ -2192,7 +2070,7 @@ describe('pivot', () => {
             },
             {
               key: 'University of Texas MD Anderson Cancer Center, Texas',
-              groups: [
+              rows: [
                 {
                   key: '0.0-500.0',
                   from: 0,
@@ -2221,10 +2099,10 @@ describe('pivot', () => {
         },
         {
           key: 'Ohio',
-          groups: [
+          rows: [
             {
               key: 'Ohio State University, Ohio',
-              groups: [
+              rows: [
                 {
                   key: '0.0-500.0',
                   from: 0,
@@ -2250,7 +2128,7 @@ describe('pivot', () => {
             },
             {
               key: 'Greene County Court of Commons Pleas, Ohio',
-              groups: [
+              rows: [
                 {
                   key: '0.0-500.0',
                   from: 0,
@@ -2280,12 +2158,12 @@ describe('pivot', () => {
       ],
     })
   })
-  it('should handle pivotResponse with filtered fieldValueGroup', () => {
+  it('should handle pivotResponse with filtered fieldValueRow', () => {
     let nestedResult = processResponse(
       pivotRepsonseWithFilteredFieldValueGroup,
       {
         values: [{ field: 'PO.IssuedAmount', type: 'avg' }],
-        groups: [
+        rows: [
           {
             field: 'Organization.NameState',
             type: 'fieldValues',
@@ -2297,11 +2175,11 @@ describe('pivot', () => {
     )
     expect(nestedResult.results).to.eql({
       count: 574247,
-      groups: [
+      rows: [
         {
           key: 'Okeechobee County Schools, Florida',
           count: 552831,
-          groups: [
+          rows: [
             {
               keyAsString: '2015-01-01T00:00:00.000Z',
               key: 1420070400000,
@@ -2349,7 +2227,7 @@ describe('pivot', () => {
         {
           key: "Okeechobee County Sheriff's Office, Florida",
           count: 11984,
-          groups: [
+          rows: [
             {
               keyAsString: '2015-01-01T00:00:00.000Z',
               key: 1420070400000,
@@ -2397,7 +2275,7 @@ describe('pivot', () => {
         {
           key: 'Okeechobee County Board of County Commissioners, Florida',
           count: 5100,
-          groups: [
+          rows: [
             {
               keyAsString: '2018-01-01T00:00:00.000Z',
               key: 1514764800000,
@@ -2427,7 +2305,7 @@ describe('pivot', () => {
         {
           key: 'Okeechobee Soil And Water Conservation District, Florida',
           count: 2983,
-          groups: [
+          rows: [
             {
               keyAsString: '2015-01-01T00:00:00.000Z',
               key: 1420070400000,
@@ -2475,7 +2353,7 @@ describe('pivot', () => {
         {
           key: 'Okeechobee County Clerk of the Circuit Court, Florida',
           count: 1349,
-          groups: [
+          rows: [
             {
               keyAsString: '2015-01-01T00:00:00.000Z',
               key: 1420070400000,
@@ -2528,7 +2406,7 @@ describe('pivot', () => {
       key: 'test',
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      groups: [
+      rows: [
         { type: 'fieldValues', field: 'Organization.State' },
         { type: 'fieldValues', field: 'Organization.NameState' },
       ],
@@ -2543,7 +2421,7 @@ describe('pivot', () => {
       key: 'test',
       type: 'pivot',
       values: [{ type: 'stats', field: 'PO.IssuedAmount' }],
-      groups: [
+      rows: [
         { type: 'fieldValues', field: 'Organization.State' },
         { type: 'fieldValues', field: 'Organization.City' },
       ],
@@ -2555,8 +2433,8 @@ describe('pivot', () => {
         direction: 'desc',
       },
       filters: [
-        { groups: ['Nevada', 'Reno'], columns: ['2017'] },
-        { groups: ['Florida', 'Hillsboro Beach'] },
+        { rows: ['Nevada', 'Reno'], columns: ['2017'] },
+        { rows: ['Florida', 'Hillsboro Beach'] },
       ],
     }
     let expected = {
