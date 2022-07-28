@@ -2068,7 +2068,7 @@ let AllTests = ContextureClient => {
   })
   it('should support key based pivot response merges', async () => {
     let service = sinon.spy(mockService())
-    let groups = [
+    let rows = [
       { type: 'fieldValuesPartition', field: 'State', matchValue: 'Florida' },
       { type: 'fieldValues', field: 'City', size: 10 },
     ]
@@ -2078,7 +2078,7 @@ let AllTests = ContextureClient => {
         key: 'root',
         join: 'and',
         children: [
-          { key: 'pivot', type: 'pivot', groups },
+          { key: 'pivot', type: 'pivot', rows },
           { key: 'test', type: 'facet', values: [] },
         ],
       }
@@ -2093,16 +2093,16 @@ let AllTests = ContextureClient => {
         Tree.snapshot
       )
     merge({
-      groups: [
-        { key: 'FL', groups: [{ key: 'fl1', a: 1 }] },
-        { key: 'NV', groups: [{ key: 'nv1', a: 1 }] },
+      rows: [
+        { key: 'FL', rows: [{ key: 'fl1', a: 1 }] },
+        { key: 'NV', rows: [{ key: 'nv1', a: 1 }] },
       ],
     })
     merge({
-      groups: [
+      rows: [
         {
           key: 'NV',
-          groups: [
+          rows: [
             { key: 'nv2', b: 1 },
             { key: 'nv1', a: 2 },
           ],
@@ -2111,11 +2111,11 @@ let AllTests = ContextureClient => {
     })
 
     expect(node.context.results).to.deep.equal({
-      groups: [
-        { key: 'FL', groups: [{ key: 'fl1', a: 1 }] },
+      rows: [
+        { key: 'FL', rows: [{ key: 'fl1', a: 1 }] },
         {
           key: 'NV',
-          groups: [
+          rows: [
             { key: 'nv1', a: 2 },
             { key: 'nv2', b: 1 },
           ],
@@ -2123,10 +2123,10 @@ let AllTests = ContextureClient => {
       ],
     })
   })
-  it('should merge pivot response with nested groups and columns', async () => {
+  it('should merge pivot response with nested rows and columns', async () => {
     let service = sinon.spy(mockService())
     let columns = [{ type: 'dateInterval', field: 'Date', interval: 'year' }]
-    let groups = [
+    let rows = [
       { type: 'fieldValuesPartition', field: 'State', matchValue: 'Florida' },
       { type: 'fieldValues', field: 'City', size: 10 },
       { type: 'fieldValues', field: 'Name', size: 10 },
@@ -2137,7 +2137,7 @@ let AllTests = ContextureClient => {
         key: 'root',
         join: 'and',
         children: [
-          { key: 'pivot', type: 'pivot', columns, groups },
+          { key: 'pivot', type: 'pivot', columns, rows },
           { key: 'test', type: 'facet', values: [] },
         ],
       }
@@ -2152,14 +2152,14 @@ let AllTests = ContextureClient => {
         Tree.snapshot
       )
     merge({
-      groups: [
+      rows: [
         {
           key: 'FL',
           columns: [
             { key: '2021', a: 3 },
             { key: '2022', a: 4 },
           ],
-          groups: [],
+          rows: [],
         },
         {
           key: 'NV',
@@ -2167,26 +2167,26 @@ let AllTests = ContextureClient => {
             { key: '2021', a: 6 },
             { key: '2022', a: 8 },
           ],
-          groups: [],
+          rows: [],
         },
       ],
     })
     merge({
-      groups: [
+      rows: [
         {
           key: 'FL',
           columns: [
             { key: '2021', a: 3 },
             { key: '2022', a: 4 },
           ],
-          groups: [
+          rows: [
             {
               key: 'Miami',
               columns: [
                 { key: '2021', a: 2 },
                 { key: '2022', a: 3 },
               ],
-              groups: [],
+              rows: [],
             },
             {
               key: 'Hollywood',
@@ -2194,28 +2194,28 @@ let AllTests = ContextureClient => {
                 { key: '2021', a: 1 },
                 { key: '2022', a: 1 },
               ],
-              groups: [],
+              rows: [],
             },
           ],
         },
       ],
     })
     merge({
-      groups: [
+      rows: [
         {
           key: 'FL',
           columns: [
             { key: '2021', a: 3 },
             { key: '2022', a: 4 },
           ],
-          groups: [
+          rows: [
             {
               key: 'Miami',
               columns: [
                 { key: '2021', a: 2 },
                 { key: '2022', a: 3 },
               ],
-              groups: [
+              rows: [
                 {
                   key: 'NanoSoft',
                   columns: [
@@ -2238,21 +2238,21 @@ let AllTests = ContextureClient => {
     })
 
     expect(node.context.results).to.deep.equal({
-      groups: [
+      rows: [
         {
           key: 'FL',
           columns: [
             { key: '2021', a: 3 },
             { key: '2022', a: 4 },
           ],
-          groups: [
+          rows: [
             {
               key: 'Miami',
               columns: [
                 { key: '2021', a: 2 },
                 { key: '2022', a: 3 },
               ],
-              groups: [
+              rows: [
                 {
                   key: 'NanoSoft',
                   columns: [
@@ -2275,7 +2275,7 @@ let AllTests = ContextureClient => {
                 { key: '2021', a: 1 },
                 { key: '2022', a: 1 },
               ],
-              groups: [],
+              rows: [],
             },
           ],
         },
@@ -2285,15 +2285,15 @@ let AllTests = ContextureClient => {
             { key: '2021', a: 6 },
             { key: '2022', a: 8 },
           ],
-          groups: [],
+          rows: [],
         },
       ],
     })
   })
-  it('should support onDispatch (and pivot overriding response merges)', async () => {
+  it('should support onDispatch (and pivot resetting drilldown)', async () => {
     let service = sinon.spy(mockService())
-    let groups = [
-      { type: 'fieldValuesPartition', field: 'State', matchValue: 'Florida' },
+    let rows = [
+      { type: 'fieldValuesPartition', field: 'State' },
       { type: 'fieldValues', field: 'City', size: 10 },
     ]
     let Tree = ContextureClient(
@@ -2302,7 +2302,7 @@ let AllTests = ContextureClient => {
         key: 'root',
         join: 'and',
         children: [
-          { key: 'pivot', type: 'pivot', groups },
+          { key: 'pivot', type: 'pivot', drilldown: [], rows },
           { key: 'test', type: 'facet', values: [] },
         ],
       }
@@ -2310,14 +2310,13 @@ let AllTests = ContextureClient => {
 
     // These tests set `forceReplaceResponse` conditionally during mutate based on the pivot's onDispatch
     // Changing fieldValues Size doesn't force replace
-    Tree.mutate(['root', 'pivot'], { groups: _.set('1.size', 20, groups) })
-    expect(!!Tree.getNode(['root', 'pivot']).forceReplaceResponse).be.false
+    Tree.mutate(['root', 'pivot'], { drilldown: ['Florida'] })
 
     // Changing fieldValuesPartition matchValue does force replace
     Tree.mutate(['root', 'pivot'], {
-      groups: _.set('0.matchValue', 'Nevada', groups),
+      rows: _.set('0.matchValue', 'Nevada', rows),
     })
-    expect(Tree.getNode(['root', 'pivot']).forceReplaceResponse).to.equal(true)
+    expect(Tree.getNode(['root', 'pivot']).drilldown).to.deep.equal([])
   })
   it('should support watchNode', async () => {
     let service = sinon.spy(mockService())

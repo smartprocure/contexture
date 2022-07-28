@@ -1,3 +1,6 @@
+# 2.46.0
+* Pivot node: renaming groups to rows and deprecating the flatten flag
+
 # 2.45.1
 * Pivot node: reset the drilldown on tree mutations
 
