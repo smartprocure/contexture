@@ -26,6 +26,7 @@ module.exports = {
   numberRangesGroupStats: require('./metricGroups/numberRangesGroupStats'),
   numberIntervalGroupStats: require('./metricGroups/numberIntervalGroupStats'),
   fieldValuePartitionGroupStats: require('./metricGroups/fieldValuePartitionGroupStats'),
+  tagsQueryGroupStats: require('./metricGroups/tagsQueryGroupStats'),
 
   // Legacy (covered by metric groups)
   statistical: require('./legacy/statistical'),
