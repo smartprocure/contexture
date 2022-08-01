@@ -33,26 +33,10 @@ describe('tagsQueryGroupStats', () => {
           },
         },
         aggs: {
-          min: {
-            min: {
-              field: 'LineItem.TotalPrice',
-            },
-          },
-          max: {
-            max: {
-              field: 'LineItem.TotalPrice',
-            },
-          },
-          avg: {
-            avg: {
-              field: 'LineItem.TotalPrice',
-            },
-          },
-          sum: {
-            sum: {
-              field: 'LineItem.TotalPrice',
-            },
-          },
+          min: { min: { field: 'LineItem.TotalPrice' } },
+          max: { max: { field: 'LineItem.TotalPrice' } },
+          avg: { avg: { field: 'LineItem.TotalPrice' } },
+          sum: { sum: { field: 'LineItem.TotalPrice' } },
         },
       },
     })
