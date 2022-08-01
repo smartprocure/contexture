@@ -759,7 +759,7 @@ describe('pivot', () => {
     }
     let result = await buildQuery(
       input,
-      testSchemas(['Vendor.City']),
+      testSchemas(['Organization.Name']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
     expect(result).to.eql(expected)
