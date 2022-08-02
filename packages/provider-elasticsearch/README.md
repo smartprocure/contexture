@@ -289,7 +289,7 @@ We have a few new nodes of the form xGroupStats, where `x` is a grouping (bucket
 | Name            | Type                            | Default           | Description |
 | ----            | ----                            | -------           | ----------- |
 | `groupField`         | string                          | None, *required*  | The field to group by |
-| `statField`         | string                          | None  | The field to calculate stats for |
+| `statsField`         | string                          | None  | The field to calculate stats for |
 | `stats`        | [string]                   | ['sum', 'min', 'max', 'sum']                | Which stats to include, can be avg, min, max, sum, or any of the other metrics supported by elasticsearch. |
 
 Here's a kitchen example, with sections for the various types along with explanations for the more mongo focused developer:

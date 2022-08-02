@@ -199,7 +199,10 @@ describe('filter', () => {
       },
     })
   })
-  it('buildResultQuery should construct correct agg', () => {
+})
+
+describe('buildResultQuery', () => {
+  it('should construct a correct basic agg when just the node prop is provided', () => {
     let node = {
       tags: [{ word: 'foo' }, { word: 'bar' }],
       field: 'baz',
@@ -230,6 +233,106 @@ describe('filter', () => {
       },
     })
   })
+  it('should spread the children aggs when they are provided', () => {
+    let node = {
+      tags: [{ word: 'foo' }, { word: 'bar' }],
+      field: 'baz',
+      join: 'and',
+    }
+    let children = {
+      aggs: {
+        groups: {
+          terms: {
+            field: 'Organization.Name',
+            size: 10,
+            order: { max: 'asc' },
+          },
+          aggs: {
+            min: { min: { field: 'LineItem.TotalPrice' } },
+            max: { max: { field: 'LineItem.TotalPrice' } },
+            avg: { avg: { field: 'LineItem.TotalPrice' } },
+            sum: { sum: { field: 'LineItem.TotalPrice' } },
+          },
+        },
+      },
+    }
+    expect(buildResultQuery(node, children)).to.deep.equal({
+      aggs: {
+        aggs: {
+          groups: {
+            aggs: {
+              min: { min: { field: 'LineItem.TotalPrice' } },
+              max: { max: { field: 'LineItem.TotalPrice' } },
+              avg: { avg: { field: 'LineItem.TotalPrice' } },
+              sum: { sum: { field: 'LineItem.TotalPrice' } },
+            },
+            terms: {
+              field: 'Organization.Name',
+              order: {
+                max: 'asc',
+              },
+              size: 10,
+            },
+          },
+        },
+        tags: {
+          filters: {
+            filters: {
+              foo: {
+                query_string: {
+                  query: 'foo',
+                  default_operator: 'AND',
+                  default_field: 'baz',
+                },
+              },
+              bar: {
+                query_string: {
+                  query: 'bar',
+                  default_operator: 'AND',
+                  default_field: 'baz',
+                },
+              },
+            },
+          },
+        },
+      },
+    })
+  })
+  it('should set the proper `groupsKey` when provided', () => {
+    let node = {
+      tags: [{ word: 'foo' }, { word: 'bar' }],
+      field: 'baz',
+      join: 'and',
+    }
+    let groupsKey = 'columns'
+    expect(buildResultQuery(node, {}, groupsKey)).to.deep.equal({
+      aggs: {
+        columns: {
+          filters: {
+            filters: {
+              foo: {
+                query_string: {
+                  query: 'foo',
+                  default_operator: 'AND',
+                  default_field: 'baz',
+                },
+              },
+              bar: {
+                query_string: {
+                  query: 'bar',
+                  default_operator: 'AND',
+                  default_field: 'baz',
+                },
+              },
+            },
+          },
+        },
+      },
+    })
+  })
+})
+
+describe('result', () => {
   it('result should query tag counts', async () => {
     expect(
       await result(

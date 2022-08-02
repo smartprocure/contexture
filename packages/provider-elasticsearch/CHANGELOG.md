@@ -1,4 +1,7 @@
 # 1.15.0
+* [pivot] Create new `tagsQueryGroupStats` type
+
+# 1.15.0
 * [pivot] Renaming groups to rows and deprecating the flatten flag
 
 # 1.14.2
