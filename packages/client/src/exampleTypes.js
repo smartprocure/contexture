@@ -278,7 +278,7 @@ export default F.stampKey('type', {
       columns: 'self',
       rows: 'self',
       values: 'self',
-      drilldown: 'self',
+      pagination: 'self',
       filters: 'others',
       sort: 'self',
     },
@@ -288,7 +288,10 @@ export default F.stampKey('type', {
       values: [],
       filters: [],
       sort: {},
-      drilldown: null,
+      pagination: {
+        drilldown: null,
+        skip: [],
+      },
       showCounts: false,
       context: {
         results: [],
@@ -298,21 +301,26 @@ export default F.stampKey('type', {
       // If mutating any row/column type specific "resetting" keys, set `forceReplaceResponse`
       let { type, node, value } = event
       if (type === 'mutate') {
-        // Resetting the drilldown when the node is changed
+        // Resetting the pagination when the node is changed
         // allows to return expected root results instead of nested drilldown
         // EX: changing the columns or rows config was not returning the new results
-        if (node.drilldown && !_.has('drilldown', value)) {
-          extend(node, { drilldown: [] })
+        if (
+          node.pagination.drilldown &&
+          !_.has('pagination.drilldown', value)
+        ) {
+          extend(node, { pagination: { drilldown: [], skip: [] } })
         }
       }
     },
-    // Resetting the drilldown when the tree is changed
+    // Resetting the pagination when the tree is changed
     // allows to return expected root results instead of nested drilldown
     // EX: criteria filters didn't work properly when drilldown was applied
     onUpdateByOthers(node, extend) {
-      if (node.drilldown) extend(node, { drilldown: [] })
+      if (node.pagination.drilldown)
+        extend(node, { pagination: { drilldown: [], skip: [] } })
     },
-    shouldMergeResponse: node => !_.isEmpty(node.drilldown),
+    shouldMergeResponse: node =>
+      !_.isEmpty(node.pagination.drilldown) || !_.isEmpty(node.pagination.skip),
     mergeResponse(node, response, extend, snapshot) {
       // Convert response rows and columns to objects for easy merges
       let groupsToObjects = deepMultiTransformOn(
