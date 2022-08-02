@@ -714,6 +714,56 @@ describe('pivot', () => {
     )
     expect(result).to.eql(expected)
   })
+  it('should buildQuery for tagsQuery', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      rows: [
+        {
+          type: 'tagsQuery',
+          field: 'Organization.Name',
+          tags: [{ word: 'test' }],
+        },
+      ],
+    }
+    let expected = {
+      aggs: {
+        rows: {
+          filters: {
+            filters: {
+              test: {
+                query_string: {
+                  query: 'test',
+                  default_operator: 'AND',
+                  default_field: 'Organization.Name',
+                },
+              },
+            },
+          },
+        },
+        aggs: {
+          'pivotMetric-sum-LineItem.TotalPrice': {
+            sum: {
+              field: 'LineItem.TotalPrice',
+            },
+          },
+        },
+        'pivotMetric-sum-LineItem.TotalPrice': {
+          sum: {
+            field: 'LineItem.TotalPrice',
+          },
+        },
+      },
+      track_total_hits: true,
+    }
+    let result = await buildQuery(
+      input,
+      testSchemas(['Organization.Name']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    expect(result).to.eql(expected)
+  })
   it('should buildQuery with more types', async () => {
     let input = {
       key: 'test',
