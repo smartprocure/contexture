@@ -266,7 +266,9 @@ describe('pivot', () => {
       key: 'test',
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      drilldown: [],
+      pagination: {
+        drilldown: [],
+      },
       rows: [
         {
           type: 'fieldValues',
@@ -288,7 +290,9 @@ describe('pivot', () => {
       key: 'test',
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      drilldown: ['Reno', '0.0-500.0'],
+      pagination: {
+        drilldown: ['Reno', '0.0-500.0'],
+      },
       rows: [
         {
           type: 'fieldValues',
@@ -388,7 +392,9 @@ describe('pivot', () => {
       key: 'test',
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      drilldown: [],
+      pagination: {
+        drilldown: [],
+      },
       rows: [
         {
           type: 'fieldValues',
@@ -432,7 +438,9 @@ describe('pivot', () => {
       key: 'test',
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      drilldown: ['Reno'],
+      pagination: {
+        drilldown: ['Reno'],
+      },
       rows: [
         {
           type: 'fieldValues',
@@ -495,7 +503,9 @@ describe('pivot', () => {
       key: 'test',
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      drilldown: ['Reno', '0.0-500.0', 'A - U.S. OWNED BUSINESS'],
+      pagination: {
+        drilldown: ['Reno', '0.0-500.0', 'A - U.S. OWNED BUSINESS'],
+      },
       rows: [
         {
           type: 'fieldValues',
@@ -540,6 +550,112 @@ describe('pivot', () => {
                   },
                 },
               ],
+            },
+          },
+          aggs: {
+            rows: {
+              terms: {
+                field: 'Organization.Name',
+                size: 10,
+              },
+              aggs: {
+                rows: {
+                  range: {
+                    field: 'LineItem.TotalPrice',
+                    ranges: [
+                      {
+                        from: '0',
+                        to: '500',
+                      },
+                      {
+                        from: '500',
+                        to: '10000',
+                      },
+                    ],
+                  },
+                  aggs: {
+                    rows: {
+                      terms: {
+                        field: 'Organization.Type',
+                        size: 10,
+                      },
+                      aggs: {
+                        'pivotMetric-sum-LineItem.TotalPrice': {
+                          sum: {
+                            field: 'LineItem.TotalPrice',
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      track_total_hits: true,
+    }
+    let result = await buildQuery(
+      input,
+      testSchemas(['Vendor.City']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    expect(result).to.eql(expected)
+  })
+  it('should buildQuery for fieldValues with drilldown and skip pagination', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      pagination: {
+        drilldown: ['Reno', '0.0-500.0'],
+        skip: ['A - U.S. OWNED BUSINESS'],
+      },
+      rows: [
+        {
+          type: 'fieldValues',
+          field: 'Organization.Name',
+        },
+        {
+          type: 'numberRanges',
+          field: 'LineItem.TotalPrice',
+          ranges: [
+            { from: '0', to: '500' },
+            { from: '500', to: '10000' },
+          ],
+        },
+        {
+          type: 'fieldValues',
+          field: 'Organization.Type',
+        },
+      ],
+    }
+    let expected = {
+      aggs: {
+        pivotFilter: {
+          filter: {
+            bool: {
+              must: [
+                {
+                  term: {
+                    'Organization.Name': 'Reno',
+                  },
+                },
+                {
+                  range: {
+                    'LineItem.TotalPrice': {
+                      gte: '0.0',
+                      lt: '500.0',
+                    },
+                  },
+                },
+              ],
+              must_not: {
+                terms: {
+                  'Organization.Type': ['A - U.S. OWNED BUSINESS'],
+                },
+              },
             },
           },
           aggs: {
