@@ -1,4 +1,7 @@
-# 1.15.0
+# 1.17.0
+* [pivot] New `pagination` logic with `drilldown` and `skip`
+
+# 1.16.0
 * [pivot] Create new `tagsQueryGroupStats` type
 
 # 1.15.0
