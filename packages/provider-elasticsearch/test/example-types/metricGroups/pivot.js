@@ -651,11 +651,13 @@ describe('pivot', () => {
                   },
                 },
               ],
-              must_not: {
-                terms: {
-                  'Organization.Type': ['A - U.S. OWNED BUSINESS'],
+              must_not: [
+                {
+                  term: {
+                    'Organization.Type': 'A - U.S. OWNED BUSINESS',
+                  },
                 },
-              },
+              ],
             },
           },
           aggs: {
