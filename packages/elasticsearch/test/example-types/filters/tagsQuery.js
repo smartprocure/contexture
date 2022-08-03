@@ -258,23 +258,6 @@ describe('buildResultQuery', () => {
     }
     expect(buildResultQuery(node, children)).to.deep.equal({
       aggs: {
-        aggs: {
-          groups: {
-            aggs: {
-              min: { min: { field: 'LineItem.TotalPrice' } },
-              max: { max: { field: 'LineItem.TotalPrice' } },
-              avg: { avg: { field: 'LineItem.TotalPrice' } },
-              sum: { sum: { field: 'LineItem.TotalPrice' } },
-            },
-            terms: {
-              field: 'Organization.Name',
-              order: {
-                max: 'asc',
-              },
-              size: 10,
-            },
-          },
-        },
         tags: {
           filters: {
             filters: {
@@ -291,6 +274,23 @@ describe('buildResultQuery', () => {
                   default_operator: 'AND',
                   default_field: 'baz',
                 },
+              },
+            },
+          },
+          aggs: {
+            groups: {
+              terms: {
+                field: 'Organization.Name',
+                size: 10,
+                order: {
+                  max: 'asc',
+                },
+              },
+              aggs: {
+                min: { min: { field: 'LineItem.TotalPrice' } },
+                max: { max: { field: 'LineItem.TotalPrice' } },
+                avg: { avg: { field: 'LineItem.TotalPrice' } },
+                sum: { sum: { field: 'LineItem.TotalPrice' } },
               },
             },
           },
