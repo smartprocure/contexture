@@ -31,8 +31,8 @@ let aggsForValues = (node, schema) =>
     }))
   )(node)
 
-let maybeWrapWithFilterAgg = ({ query, filters, skipFilter, aggName }) =>
-  _.isEmpty(filters) && _.isEmpty(skipFilter)
+let maybeWrapWithFilterAgg = ({ query, filters, skipFilters, aggName }) =>
+  _.isEmpty(filters) && _.isEmpty(skipFilters)
     ? query
     : {
         aggs: {
@@ -40,7 +40,7 @@ let maybeWrapWithFilterAgg = ({ query, filters, skipFilter, aggName }) =>
             filter: {
               bool: {
                 ...(!_.isEmpty(filters) && { must: filters }),
-                ...(skipFilter && { must_not: { terms: skipFilter.term } }),
+                ...(skipFilters && { must_not: skipFilters }),
               },
             },
             ...query,
@@ -58,7 +58,7 @@ let drilldownFilters = ({ drilldowns = [], groups = [], schema, getStats }) =>
   }, groups)
 
 // Builds filters for drilldowns
-let paginationSkipFilter = ({
+let paginationSkipFilters = ({
   drilldowns = [],
   skip = [],
   groups = [],
@@ -66,10 +66,11 @@ let paginationSkipFilter = ({
   getStats,
 }) => {
   let group = groups[drilldowns.length]
-  if (!group) return false
+  if (!group || _.isEmpty(skip)) return false
   let filter = lookupTypeProp(_.stubFalse, 'drilldown', group.type)
-  return (
-    !_.isEmpty(skip) && filter({ drilldown: skip, ...group }, schema, getStats)
+  return _.map(
+    value => filter({ drilldown: value, ...group }, schema, getStats),
+    skip
   )
 }
 
@@ -171,7 +172,7 @@ let buildQuery = async (node, schema, getStats) => {
     schema,
     getStats,
   })
-  let skipFilter = paginationSkipFilter({
+  let skipFilters = paginationSkipFilters({
     drilldowns,
     skip: pagination.skip,
     groups: rows,
@@ -181,7 +182,7 @@ let buildQuery = async (node, schema, getStats) => {
 
   query = maybeWrapWithFilterAgg({
     filters,
-    skipFilter,
+    skipFilters,
     aggName: 'pivotFilter',
     query,
   })
