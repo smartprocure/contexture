@@ -40,7 +40,7 @@ let maybeWrapWithFilterAgg = ({ query, filters, skipFilters, aggName }) =>
             filter: {
               bool: {
                 ...(!_.isEmpty(filters) && { must: filters }),
-                ...(skipFilters && { must_not: skipFilters }),
+                ...(!_.isEmpty(skipFilters) && { must_not: skipFilters }),
               },
             },
             ...query,
