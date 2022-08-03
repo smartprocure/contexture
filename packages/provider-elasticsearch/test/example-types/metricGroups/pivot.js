@@ -741,11 +741,11 @@ describe('pivot', () => {
               },
             },
           },
-        },
-        aggs: {
-          'pivotMetric-sum-LineItem.TotalPrice': {
-            sum: {
-              field: 'LineItem.TotalPrice',
+          aggs: {
+            'pivotMetric-sum-LineItem.TotalPrice': {
+              sum: {
+                field: 'LineItem.TotalPrice',
+              },
             },
           },
         },
