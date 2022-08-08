@@ -1,3 +1,6 @@
+# 1.16.1
+* [pivot] Support drilldowns with additional fields (multi-term aggregation) for `fieldValuesGroupStats` type
+
 # 1.15.0
 * [pivot] Create new `tagsQueryGroupStats` type
 
