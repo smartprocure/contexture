@@ -1,4 +1,5 @@
 let _ = require('lodash/fp')
+let F = require('futil')
 let { buildRegexQueryForWords } = require('../../utils/regex')
 let { getField } = require('../../utils/fields')
 let { groupStats } = require('./groupStatUtils')
@@ -9,9 +10,22 @@ let getSortField = field => {
   return field
 }
 
-let drilldown = ({ field, drilldown }, schema) => ({
-  term: { [getField(schema, field)]: drilldown },
-})
+let drilldown = ({ field, drilldown, additionalFields }, schema) =>
+  // value is a pipe-delimited list of values when drilldown is using additional fields (multi-term aggregation)
+  _.flow(_.split('|'), ([fieldValue, ...additionalFieldValues]) => [
+    {
+      term: { [getField(schema, field)]: fieldValue },
+    },
+    // if there are additional fields, add a filter for each additional field value
+    ...(!_.isEmpty(additionalFields)
+      ? F.mapIndexed(
+          (fieldValue, field) => ({
+            term: { [getField(schema, field)]: fieldValue },
+          }),
+          _.zipObject(additionalFields, additionalFieldValues)
+        )
+      : []),
+  ])(drilldown)
 
 let buildGroupQuery = (node, children, groupingType, schema) => {
   let {
