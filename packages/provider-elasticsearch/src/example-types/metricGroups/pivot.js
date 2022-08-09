@@ -44,13 +44,21 @@ let maybeWrapWithFilterAgg = ({ query, filters, aggName }) =>
       }
 
 // Builds filters for drilldowns
-let drilldownFilters = ({ drilldowns = [], groups = [], schema, getStats }) =>
-  compactMapAsync((group, i) => {
-    let filter = lookupTypeProp(_.stubFalse, 'drilldown', group.type)
-    // Drilldown can come from root or be inlined on the group definition
-    let drilldown = drilldowns[i] || group.drilldown
-    return drilldown && filter({ drilldown, ...group }, schema, getStats)
-  }, groups)
+let drilldownFilters = async ({
+  drilldowns = [],
+  groups = [],
+  schema,
+  getStats,
+}) =>
+  // flatten in case some drilldowns represent multi-field aggregation values and produce multiple filters
+  _.flatten(
+    await compactMapAsync((group, i) => {
+      let filter = lookupTypeProp(_.stubFalse, 'drilldown', group.type)
+      // Drilldown can come from root or be inlined on the group definition
+      let drilldown = drilldowns[i] || group.drilldown
+      return drilldown && filter({ drilldown, ...group }, schema, getStats)
+    }, groups)
+  )
 
 let getSortAgg = async ({ node, sort, schema, getStats }) => {
   if (!sort) return
