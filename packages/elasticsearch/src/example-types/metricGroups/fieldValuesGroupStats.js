@@ -14,7 +14,7 @@ let drilldown = ({ field, drilldown, additionalFields = [] }, schema) =>
   _.zipWith(
     (field, value) => ({ term: { [getField(schema, field)]: value } }),
     [field, ...additionalFields],
-    _.split('|', drilldown),
+    _.split('|', drilldown)
   )
 
 let buildGroupQuery = (node, children, groupingType, schema) => {
