@@ -1,5 +1,4 @@
 let _ = require('lodash/fp')
-let F = require('futil')
 let { buildRegexQueryForWords } = require('../../utils/regex')
 let { getField } = require('../../utils/fields')
 let { groupStats } = require('./groupStatUtils')
