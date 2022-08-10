@@ -43,12 +43,10 @@ let simplifyBucket = _.flow(
   _.mapValues(flattenMetrics),
   _.mapKeys(renameMetrics)
 )
-
 let simplifyBuckets = _.flow(
   F.when(_.isPlainObject, F.unkeyBy('key')),
   _.map(simplifyBucket)
 )
-
 // VERY hacky and inefficient tree simpification
 // inefficient due to copying the entire tree to flatten, again to unflatten, and running regex replaces on EVERY key
 // This will be superseeded by a transmuteTree version later :)
@@ -79,10 +77,15 @@ let basicSimplifyTree = _.flow(
   ),
   // Rename __DOT__ to '.'
   tree => {
-    F.walk()(x => {
+    F.walk()((x, index) => {
       let dots = _.filter(_.includes('__DOT__'), _.keys(x))
       _.each(dot => renameOn(dot, _.replace(/__DOT__/g, '.', dot), x), dots)
+
+      if (index === 'rows' || index === 'columns') {
+        tree['results'][index] = simplifyBuckets(x)
+      }
     })(tree)
+    console.log(JSON.stringify(tree, null, 2))
     return tree
   }
 )
