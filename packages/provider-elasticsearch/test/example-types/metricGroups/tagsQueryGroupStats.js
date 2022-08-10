@@ -24,19 +24,19 @@ describe('tagsQueryGroupStats', () => {
             filters: {
               test: {
                 query_string: {
-                  default_field: 'Organization.Name',
-                  default_operator: 'AND',
                   query: 'test',
+                  default_operator: 'AND',
+                  default_field: 'Organization.Name',
                 },
               },
             },
           },
-        },
-        aggs: {
-          min: { min: { field: 'LineItem.TotalPrice' } },
-          max: { max: { field: 'LineItem.TotalPrice' } },
-          avg: { avg: { field: 'LineItem.TotalPrice' } },
-          sum: { sum: { field: 'LineItem.TotalPrice' } },
+          aggs: {
+            min: { min: { field: 'LineItem.TotalPrice' } },
+            max: { max: { field: 'LineItem.TotalPrice' } },
+            avg: { avg: { field: 'LineItem.TotalPrice' } },
+            sum: { sum: { field: 'LineItem.TotalPrice' } },
+          },
         },
       },
     })
