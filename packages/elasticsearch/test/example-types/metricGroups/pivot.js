@@ -312,7 +312,9 @@ describe('pivot', () => {
       key: 'test',
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      drilldown: ['Reno|NV', '0.0-500.0'],
+      pagination: {
+        drilldown: ['Reno|NV', '0.0-500.0'],
+      },
       rows: [
         {
           type: 'fieldValues',
