@@ -1,3 +1,6 @@
+# 1.16.2
+* [tagsQuery] Fix the level at which child aggs are spread onto the query
+
 # 1.16.1
 * [pivot] Support drilldowns with additional fields (multi-term aggregation) for `fieldValuesGroupStats` type
 
