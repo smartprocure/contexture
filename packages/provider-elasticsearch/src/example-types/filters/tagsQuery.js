@@ -91,8 +91,8 @@ let buildResultQuery = (node, children = {}, groupsKey = 'tags') => ({
           node.tags
         ),
       },
+      ...children,
     },
-    ...children,
   },
 })
 
