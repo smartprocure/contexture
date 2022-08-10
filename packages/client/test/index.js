@@ -2302,7 +2302,7 @@ let AllTests = ContextureClient => {
         key: 'root',
         join: 'and',
         children: [
-          { key: 'pivot', type: 'pivot', drilldown: [], rows },
+          { key: 'pivot', type: 'pivot', pagination: { drilldown: [] }, rows },
           { key: 'test', type: 'facet', values: [] },
         ],
       }
@@ -2310,13 +2310,17 @@ let AllTests = ContextureClient => {
 
     // These tests set `forceReplaceResponse` conditionally during mutate based on the pivot's onDispatch
     // Changing fieldValues Size doesn't force replace
-    Tree.mutate(['root', 'pivot'], { drilldown: ['Florida'] })
+    Tree.mutate(['root', 'pivot'], {
+      pagination: { drilldown: ['Florida'], skip: ['Miami'] },
+    })
 
     // Changing fieldValuesPartition matchValue does force replace
     Tree.mutate(['root', 'pivot'], {
       rows: _.set('0.matchValue', 'Nevada', rows),
     })
-    expect(Tree.getNode(['root', 'pivot']).drilldown).to.deep.equal([])
+    expect(Tree.getNode(['root', 'pivot']).pagination.drilldown).to.deep.equal(
+      []
+    )
   })
   it('should support watchNode', async () => {
     let service = sinon.spy(mockService())

@@ -1,3 +1,6 @@
+# 2.47.0
+* Pivot node: new `pagination` logic with `drilldown` and `skip`
+
 # 2.46.0
 * Pivot node: renaming groups to rows and deprecating the flatten flag
 
