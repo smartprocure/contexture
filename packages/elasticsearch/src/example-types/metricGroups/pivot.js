@@ -68,7 +68,7 @@ let paginationSkipFilters = ({
   let group = groups[drilldowns.length]
   if (!group || _.isEmpty(skip)) return false
   let filter = lookupTypeProp(_.stubFalse, 'drilldown', group.type)
-  return _.map(
+  return compactMapAsync(
     value => filter({ drilldown: value, ...group }, schema, getStats),
     skip
   )
@@ -172,7 +172,7 @@ let buildQuery = async (node, schema, getStats) => {
     schema,
     getStats,
   })
-  let skipFilters = paginationSkipFilters({
+  let skipFilters = await paginationSkipFilters({
     drilldowns,
     skip: pagination.skip,
     groups: rows,
