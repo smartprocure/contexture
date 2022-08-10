@@ -229,11 +229,8 @@ let pivot = {
   // TODO: unify this with groupStatsUtil - the general pipeline is the same conceptually
   async result(node, search, schema) {
     let query = await buildQuery(node, schema, getStats(search))
-    // console.log(JSON.stringify({ query }, 0, 2))
     let response = await search(query)
-    // console.log(JSON.stringify({ response }, 0, 2))
     let result = processResponse(response, node)
-    // console.log(JSON.stringify({ result }, 0, 2))
     return result
   },
 }
