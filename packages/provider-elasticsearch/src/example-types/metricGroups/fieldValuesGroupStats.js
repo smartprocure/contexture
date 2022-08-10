@@ -9,9 +9,13 @@ let getSortField = field => {
   return field
 }
 
-let drilldown = ({ field, drilldown }, schema) => ({
-  term: { [getField(schema, field)]: drilldown },
-})
+let drilldown = ({ field, drilldown, additionalFields = [] }, schema) =>
+  // value is a pipe-delimited list of values when drilldown is using additional fields (multi-term aggregation)
+  _.zipWith(
+    (field, value) => ({ term: { [getField(schema, field)]: value } }),
+    [field, ...additionalFields],
+    _.split('|', drilldown)
+  )
 
 let buildGroupQuery = (node, children, groupingType, schema) => {
   let {
