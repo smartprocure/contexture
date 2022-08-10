@@ -79,7 +79,7 @@ let paginationSkipFilters = async ({
   return _.flatten(
     await compactMapAsync(
       value => filter({ drilldown: value, ...group }, schema, getStats),
-      skip,
+      skip
     )
   )
 }
