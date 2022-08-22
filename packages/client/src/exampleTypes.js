@@ -321,14 +321,12 @@ export default F.stampKey('type', {
         ) {
           let isRowPagination = _.has('pagination.rows', value)
 
-          let getPrevPage = (type) =>
+          let getPrevPage = type =>
             _.flow(
               _.get(['pagination', type]),
               _.pick(['drilldown', 'skip']),
-              (page) =>
-                _.isEmpty(page.drilldown) && _.isEmpty(page.skip)
-                  ? false
-                  : page,
+              page =>
+                _.isEmpty(page.drilldown) && _.isEmpty(page.skip) ? false : page
             )(previous)
 
           let prevRowPage = getPrevPage('rows')
@@ -339,12 +337,11 @@ export default F.stampKey('type', {
             pagination: {
               columns: {
                 ...(!isRowPagination
-                    ? value.pagination.columns
-                    : {
+                  ? value.pagination.columns
+                  : {
                       drilldown: columnDrill && [],
                       skip: [],
-                    }
-                ),
+                    }),
                 expanded: _.compact([
                   ..._.getOr([], 'pagination.columns.expanded', previous),
                   prevColumnPage,
@@ -352,12 +349,11 @@ export default F.stampKey('type', {
               },
               rows: {
                 ...(isRowPagination
-                    ? value.pagination.rows
-                    : {
+                  ? value.pagination.rows
+                  : {
                       drilldown: rowDrill && [],
                       skip: [],
-                    }
-                ),
+                    }),
                 expanded: _.compact([
                   ..._.getOr([], 'pagination.rows.expanded', previous),
                   prevRowPage,
@@ -411,11 +407,14 @@ export default F.stampKey('type', {
     shouldMergeResponse: node =>
       // checking for presence of drilldown, skip, expanded in pagination
       _.flow(
-        _.flatMapDeep((type) =>
-          _.map((prop) => _.get(['pagination', type, prop], node),
-            ['drilldown', 'skip', 'expanded']),
+        _.flatMapDeep(type =>
+          _.map(prop => _.get(['pagination', type, prop], node), [
+            'drilldown',
+            'skip',
+            'expanded',
+          ])
         ),
-        _.some(_.negate(_.isEmpty)),
+        _.some(_.negate(_.isEmpty))
       )(['columns', 'rows']),
     mergeResponse(node, response, extend, snapshot) {
       // Convert response rows and columns to objects for easy merges
