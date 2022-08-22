@@ -135,7 +135,8 @@ let mapQueries = node => {
 
   let rowDrillMode = !(
     _.isEmpty(pagination.rows.drilldown) && _.isEmpty(pagination.rows.skip)
-  )let expanded = rowDrillMode
+  )
+  let expanded = rowDrillMode
       ? _.get('columns.expanded', pagination)
       : _.get('rows.expanded', pagination)
 
