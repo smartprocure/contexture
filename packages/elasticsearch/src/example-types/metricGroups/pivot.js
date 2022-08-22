@@ -4,7 +4,7 @@ let { getStats } = require('./stats')
 let { getField } = require('../../utils/fields')
 let types = require('../../../src/example-types')
 let { basicSimplifyTree } = require('../../utils/elasticDSL')
-let { compactMapAsync } = require('../../utils/futil')
+let { compactMapAsync, deepMultiTransformOn } = require('../../utils/futil')
 
 let lookupTypeProp = (def, prop, type) =>
   _.getOr(def, `${type}GroupStats.${prop}`, types)
@@ -124,15 +124,49 @@ let getSortField = ({ columnValues = [], valueProp, valueIndex } = {}) =>
     valueProp,
   ])
 
+let mapQueries = node => {
+  let pagination = node.pagination || { columns: {}, rows: {} }
+  let isDrilldown = _.flow(
+      _.flatMapDeep((type) =>
+        _.map((prop) => _.get([type, prop], pagination),
+          ['drilldown', 'skip']),
+      ),
+      _.some(_.negate(_.isEmpty)),
+    )(['columns', 'rows'])
+
+  let rowDrillMode = !(_.isEmpty(pagination.rows.drilldown) && _.isEmpty(pagination.rows.skip))
+  let expanded = isDrilldown && rowDrillMode
+    ? _.get('columns.expanded', pagination)
+    : _.get('rows.expanded', pagination)
+
+  if (_.get('length', expanded)) {
+    return [
+      node,
+      ..._.map(page =>
+        _.merge(node, { pagination: {
+            [rowDrillMode ? 'columns' : 'rows']: page
+        }})
+      )(expanded)
+    ]
+  } else
+    return [node]
+}
+
+
 let buildQuery = async (node, schema, getStats) => {
-  let pagination = node.pagination || {}
-  let drilldowns = pagination.drilldown || []
+  let pagination = node.pagination || { columns: {}, rows: {} }
+  let rowDrills = _.getOr([], 'rows.drilldown', pagination)
+  let columnDrills = _.getOr([], 'columns.drilldown', pagination)
   // Don't consider deeper levels than +1 the current drilldown
   // This allows avoiding expansion until ready
   // Opt out with falsey drilldown
-  let rows = pagination.drilldown
-    ? _.take(_.size(pagination.drilldown) + 1, node.rows)
+  let rows = _.get('rows.drilldown', pagination)
+    ? _.take(_.size(pagination.rows.drilldown) + 1, node.rows)
     : node.rows
+
+  let columns = _.get('columns.drilldown', pagination)
+    ? _.take(_.size(pagination.columns.drilldown) + 1, node.columns)
+    : node.columns
 
   let statsAggs = { aggs: aggsForValues(node.values, schema) }
   // buildGroupQuery applied to a list of groups
@@ -147,7 +181,8 @@ let buildQuery = async (node, schema, getStats) => {
         if (!group.size) group.size = 10
         // Calculating subtotal metrics at each group level if not drilling down
         // Support for per group stats could also be added here - merge on another stats agg blob to children based on group.stats/statsField or group.values
-        if (!pagination.drilldown) children = _.merge(await children, statsAggs)
+        if (!_.get([groupingType, 'drilldown'], pagination))
+          children = _.merge(await children, statsAggs)
         // At each level, add a filters bucket agg and nested metric to enable sorting
         // For example, to sort by Sum of Price for 2022, add a filters agg for 2022 and nested metric for sum of price so we can target it
         // As far as we're aware, there's no way to sort by the nth bucket - but we can simulate that by using filters to create a discrete agg for that bucket
@@ -165,30 +200,52 @@ let buildQuery = async (node, schema, getStats) => {
     )
   }
 
-  if (node.columns)
+  if (!_.isEmpty(columns))
     statsAggs = _.merge(
-      await buildNestedGroupQuery(statsAggs, node.columns, 'columns'),
-      statsAggs
+      await buildNestedGroupQuery(statsAggs, columns, 'columns'),
+      _.isEmpty(columnDrills) && _.isEmpty(_.get('columns.skip', pagination))
+        ? statsAggs
+        : {}
     )
   let query = _.merge(
     await buildNestedGroupQuery(statsAggs, rows, 'rows', node.sort),
     // Stamping total row metrics if not drilling data
-    _.isEmpty(drilldowns) && _.isEmpty(pagination.skip) ? statsAggs : {}
+    _.isEmpty(rowDrills) && _.isEmpty(_.get('rows.skip', pagination))
+      ? statsAggs
+      : {}
   )
 
-  let filters = await drilldownFilters({
-    drilldowns,
-    groups: rows,
-    schema,
-    getStats,
-  })
-  let skipFilters = await paginationSkipFilters({
-    drilldowns,
-    skip: pagination.skip,
-    groups: rows,
-    schema,
-    getStats,
-  })
+  let filters = [
+    ...await drilldownFilters({
+      drilldowns: rowDrills,
+      groups: rows,
+      schema,
+      getStats,
+    }) || [],
+    ...await drilldownFilters({
+      drilldowns: columnDrills,
+      groups: columns,
+      schema,
+      getStats,
+    }) || [],
+  ]
+
+  let skipFilters = [
+    ...await paginationSkipFilters({
+      drilldowns: rowDrills,
+      skip: pagination.rows.skip,
+      groups: rows,
+      schema,
+      getStats,
+    }) || [],
+    ...await paginationSkipFilters({
+      drilldowns: columnDrills,
+      skip: pagination.columns.skip,
+      groups: columns,
+      schema,
+      getStats,
+    }) || [],
+  ]
 
   query = maybeWrapWithFilterAgg({
     filters,
@@ -219,9 +276,9 @@ let processResponse = (response, node = {}) => {
   let { results } = basicSimplifyTree({ results: input })
 
   if (!results.count)
-    results.count = _.get(['hits', 'total', 'value'], response)
+    results.count = _.get('hits.total.value', response)
 
-  clearDrilldownCounts(results, _.get(['drilldown', 'length'], node))
+  clearDrilldownCounts(results, _.get('drilldown.length', node))
 
   return { results }
 }
@@ -276,12 +333,35 @@ let pivot = {
   validContext: node => node.rows.length && node.values.length,
   // TODO: unify this with groupStatsUtil - the general pipeline is the same conceptually
   async result(node, search, schema) {
-    let query = await buildQuery(node, schema, getStats(search))
-    // console.log(JSON.stringify({ query }, 0, 2))
-    let response = await search(query)
-    // console.log(JSON.stringify({ response }, 0, 2))
-    let result = processResponse(response, node)
+    let queries = await Promise.all(_.map(nodePage =>
+      buildQuery(nodePage, schema, getStats(search))
+    )(mapQueries(node)))
+
+    // console.log(JSON.stringify({ queries }, 0, 2))
+
+    let responses = await Promise.all(_.map(search, queries))
+
+    // console.log(JSON.stringify({ responses }, 0, 2))
+
+    // Convert response rows and columns to objects for easy merges
+    let groupsToObjects = deepMultiTransformOn(
+      ['rows', 'columns'],
+      groupsToObjects => _.flow(_.map(groupsToObjects), _.keyBy('key'))
+    )
+    // Convert rows and columns back to arrays
+    let groupsToArrays = deepMultiTransformOn(
+      ['rows', 'columns'],
+      groupsToArrays => _.flow(_.values, _.map(groupsToArrays))
+    )
+
+    let result = _.reduce((result, response) =>
+      F.mergeAllArrays([result, groupsToObjects(processResponse(response, node).results)]),
+    )({}, responses)
+
+    result = { results: groupsToArrays(result) }
+
     // console.log(JSON.stringify({ result }, 0, 2))
+
     return result
   },
 }
