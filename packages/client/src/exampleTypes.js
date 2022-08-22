@@ -289,8 +289,16 @@ export default F.stampKey('type', {
       filters: [],
       sort: {},
       pagination: {
-        drilldown: null,
-        skip: [],
+        columns: {
+          drilldown: null,
+          skip: [],
+          expanded: [],
+        },
+        rows: {
+          drilldown: null,
+          skip: [],
+          expanded: [],
+        },
       },
       showCounts: false,
       context: {
@@ -298,29 +306,117 @@ export default F.stampKey('type', {
       },
     },
     onDispatch(event, extend) {
-      // If mutating any row/column type specific "resetting" keys, set `forceReplaceResponse`
-      let { type, node, value } = event
+      let { type, node, previous, value } = event
+
       if (type === 'mutate') {
-        // Resetting the pagination when the node is changed
-        // allows to return expected root results instead of nested drilldown
-        // EX: changing the columns or rows config was not returning the new results
+        let rowDrill = _.get('pagination.rows.drilldown', previous)
+        let columnDrill = _.get('pagination.columns.drilldown', previous)
+
+        // TODO allow mutation for expanded when collapsing levels
+
+        // If mutation is a pagination
         if (
-          node.pagination.drilldown &&
-          !_.has('pagination.drilldown', value)
+          _.has('pagination.columns', value) ||
+          _.has('pagination.rows', value)
         ) {
-          extend(node, { pagination: { drilldown: [], skip: [] } })
-        }
+          let isRowPagination = _.has('pagination.rows', value)
+
+          let getPrevPage = (type) =>
+            _.flow(
+              _.get(['pagination', type]),
+              _.pick(['drilldown', 'skip']),
+              (page) =>
+                _.isEmpty(page.drilldown) && _.isEmpty(page.skip)
+                  ? false
+                  : page,
+            )(previous)
+
+          let prevRowPage = getPrevPage('rows')
+          let prevColumnPage = getPrevPage('columns')
+
+          // Preserving previous pagination entries in the expanded prop
+          extend(node, {
+            pagination: {
+              columns: {
+                ...(!isRowPagination
+                    ? value.pagination.columns
+                    : {
+                      drilldown: columnDrill && [],
+                      skip: [],
+                    }
+                ),
+                expanded: _.compact([
+                  ..._.getOr([], 'pagination.columns.expanded', previous),
+                  prevColumnPage,
+                ]),
+              },
+              rows: {
+                ...(isRowPagination
+                    ? value.pagination.rows
+                    : {
+                      drilldown: rowDrill && [],
+                      skip: [],
+                    }
+                ),
+                expanded: _.compact([
+                  ..._.getOr([], 'pagination.rows.expanded', previous),
+                  prevRowPage,
+                ]),
+              },
+            },
+          })
+          // If drilldown mode is enabled for columns or rows
+        } else if (columnDrill || rowDrill)
+          // Resetting the pagination when the pivot node is changed
+          // allows to return expected root results instead of nested drilldown
+          // EX: changing the columns or rows config was not returning the new results
+          extend(node, {
+            pagination: {
+              columns: {
+                drilldown: columnDrill && [],
+                skip: [],
+                expanded: [],
+              },
+              rows: {
+                drilldown: rowDrill && [],
+                skip: [],
+                expanded: [],
+              },
+            },
+          })
       }
     },
     // Resetting the pagination when the tree is changed
     // allows to return expected root results instead of nested drilldown
     // EX: criteria filters didn't work properly when drilldown was applied
     onUpdateByOthers(node, extend) {
-      if (node.pagination.drilldown)
-        extend(node, { pagination: { drilldown: [], skip: [] } })
+      let rowDrill = _.get('pagination.rows.drilldown', node)
+      let columnDrill = _.get('pagination.columns.drilldown', node)
+      if (columnDrill || rowDrill)
+        extend(node, {
+          pagination: {
+            columns: {
+              drilldown: columnDrill && [],
+              skip: [],
+              expanded: [],
+            },
+            rows: {
+              drilldown: rowDrill && [],
+              skip: [],
+              expanded: [],
+            },
+          },
+        })
     },
     shouldMergeResponse: node =>
-      !_.isEmpty(node.pagination.drilldown) || !_.isEmpty(node.pagination.skip),
+      // checking for presence of drilldown, skip, expanded in pagination
+      _.flow(
+        _.flatMapDeep((type) =>
+          _.map((prop) => _.get(['pagination', type, prop], node),
+            ['drilldown', 'skip', 'expanded']),
+        ),
+        _.some(_.negate(_.isEmpty)),
+      )(['columns', 'rows']),
     mergeResponse(node, response, extend, snapshot) {
       // Convert response rows and columns to objects for easy merges
       let groupsToObjects = deepMultiTransformOn(
@@ -330,7 +426,7 @@ export default F.stampKey('type', {
       // Convert rows and columns back to arrays
       let groupsToArrays = deepMultiTransformOn(
         ['rows', 'columns'],
-        groupsToArrays => _.flow(F.unkeyBy('key'), _.map(groupsToArrays))
+        groupsToArrays => _.flow(_.values, _.map(groupsToArrays))
       )
 
       // `snapshot` here is to solve a mobx issue
