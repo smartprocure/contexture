@@ -135,13 +135,11 @@ let mapQueries = node => {
 
   let rowDrillMode = !(
     _.isEmpty(pagination.rows.drilldown) && _.isEmpty(pagination.rows.skip)
-  )
-  let expanded =
-    isDrilldown && rowDrillMode
+  )let expanded = rowDrillMode
       ? _.get('columns.expanded', pagination)
       : _.get('rows.expanded', pagination)
 
-  if (_.get('length', expanded)) {
+  if (isDrilldown && _.get('length', expanded)) {
     return [
       node,
       ..._.map(page =>
