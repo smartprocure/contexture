@@ -303,7 +303,7 @@ describe('elasticDSL utils', () => {
         ],
       })
     })
-    it('should return what we want', () => {
+    it('should return the proper results structure', () => {
       let tree = {
         results: {
           columns: [
