@@ -77,15 +77,18 @@ let basicSimplifyTree = _.flow(
   ),
   // Rename __DOT__ to '.'
   tree => {
-    F.walk()((x, index) => {
-      let dots = _.filter(_.includes('__DOT__'), _.keys(x))
-      _.each(dot => renameOn(dot, _.replace(/__DOT__/g, '.', dot), x), dots)
-
-      if (index === 'rows' || index === 'columns') {
-        tree['results'][index] = simplifyBuckets(x)
+    F.walk()(
+      x => {
+        let dots = _.filter(_.includes('__DOT__'), _.keys(x))
+        _.each(dot => renameOn(dot, _.replace(/__DOT__/g, '.', dot), x), dots)
+      },
+      (x, index, ps, pis) => {
+        if (index === 'rows' || index === 'columns') {
+          let treePath = F.treePath()(x, index, ps, pis)
+          F.setOn(treePath, F.when(_.isPlainObject, F.unkeyBy('key'))(x), tree)
+        }
       }
-    })(tree)
-    console.log(JSON.stringify(tree, null, 2))
+    )(tree)
     return tree
   }
 )
