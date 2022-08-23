@@ -21,15 +21,14 @@ let twoLevelMatch = {
 
 let getKey = x => x.keyAsString || x.key
 
-let drilldownLookup = (type, path, results)=> {
+let drilldownLookup = (type, path, results) => {
   if (_.isEmpty(path)) return results
 
   let key = _.first(path)
   let groups = _.get(type, results)
-  let match = _.find((node) => getKey(node) === key, groups)
+  let match = _.find(node => getKey(node) === key, groups)
   return drilldownLookup(type, path.slice(1), match)
 }
-
 
 export default F.stampKey('type', {
   facet: {
@@ -336,17 +335,23 @@ export default F.stampKey('type', {
           let getPrevPage = type => {
             let page = _.flow(
               _.get(['pagination', type]),
-              _.pick(['drilldown', 'skip']),
+              _.pick(['drilldown', 'skip'])
             )(previous)
 
-            if (page){
+            if (page) {
               // adding include for the first page only if expanded is empty yet
-              if (_.isEmpty(page.drilldown) && _.isEmpty(page.skip) &&
+              if (
+                _.isEmpty(page.drilldown) &&
+                _.isEmpty(page.skip) &&
                 !_.isEmpty(_.get(['pagination', type, 'expanded'], previous))
               )
                 return false
 
-              let results = drilldownLookup(type, page.drilldown,  _.get('context.results', node))
+              let results = drilldownLookup(
+                type,
+                page.drilldown,
+                _.get('context.results', node)
+              )
 
               page.include = _.flow(
                 _.get(type),
