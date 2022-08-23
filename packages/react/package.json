@@ -4,6 +4,7 @@
   "description": "React components for building contexture interfaces",
   "main": "dist/index.js",
   "scripts": {
+    "ci": "npm ci --legacy-peer-deps",
     "start": "npm run storybook",
     "build": "babel ./src --out-dir ./dist --source-maps --delete-dir-on-start",
     "watch": "npm run build -- --watch",
