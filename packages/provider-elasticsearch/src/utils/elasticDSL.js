@@ -82,6 +82,7 @@ let basicSimplifyTree = _.flow(
         let dots = _.filter(_.includes('__DOT__'), _.keys(x))
         _.each(dot => renameOn(dot, _.replace(/__DOT__/g, '.', dot), x), dots)
       },
+      // When pivot results are called, the results on interior nodes aren't, so we need to ensure they are returned with the proper structure
       (x, index, ps, pis) => {
         if (index === 'rows' || index === 'columns') {
           let treePath = F.treePath()(x, index, ps, pis)
