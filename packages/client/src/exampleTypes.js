@@ -19,6 +19,18 @@ let twoLevelMatch = {
   },
 }
 
+let getKey = x => x.keyAsString || x.key
+
+let drilldownLookup = (type, path, results)=> {
+  if (_.isEmpty(path)) return results
+
+  let key = _.first(path)
+  let groups = _.get(type, results)
+  let match = _.find((node) => getKey(node) === key, groups)
+  return drilldownLookup(type, path.slice(1), match)
+}
+
+
 export default F.stampKey('type', {
   facet: {
     label: 'List',
@@ -309,8 +321,8 @@ export default F.stampKey('type', {
       let { type, node, previous, value } = event
 
       if (type === 'mutate') {
-        let rowDrill = _.get('pagination.rows.drilldown', previous)
-        let columnDrill = _.get('pagination.columns.drilldown', previous)
+        let prevRowDrill = _.get('pagination.rows.drilldown', previous)
+        let prevColumnDrill = _.get('pagination.columns.drilldown', previous)
 
         // TODO allow mutation for expanded when collapsing levels
 
@@ -321,13 +333,30 @@ export default F.stampKey('type', {
         ) {
           let isRowPagination = _.has('pagination.rows', value)
 
-          let getPrevPage = type =>
-            _.flow(
+          let getPrevPage = type => {
+            let page = _.flow(
               _.get(['pagination', type]),
               _.pick(['drilldown', 'skip']),
-              page =>
-                _.isEmpty(page.drilldown) && _.isEmpty(page.skip) ? false : page
             )(previous)
+
+            if (page){
+              // adding include for the first page only if expanded is empty yet
+              if (_.isEmpty(page.drilldown) && _.isEmpty(page.skip) &&
+                !_.isEmpty(_.get(['pagination', type, 'expanded'], previous))
+              )
+                return false
+
+              let results = drilldownLookup(type, page.drilldown,  _.get('context.results', node))
+
+              page.include = _.flow(
+                _.get(type),
+                _.map(getKey),
+                _.without(page.skip)
+              )(results)
+            }
+
+            return page
+          }
 
           let prevRowPage = getPrevPage('rows')
           let prevColumnPage = getPrevPage('columns')
@@ -339,7 +368,7 @@ export default F.stampKey('type', {
                 ...(!isRowPagination
                   ? value.pagination.columns
                   : {
-                      drilldown: columnDrill && [],
+                      drilldown: prevColumnDrill && [],
                       skip: [],
                     }),
                 expanded: _.compact([
@@ -351,7 +380,7 @@ export default F.stampKey('type', {
                 ...(isRowPagination
                   ? value.pagination.rows
                   : {
-                      drilldown: rowDrill && [],
+                      drilldown: prevRowDrill && [],
                       skip: [],
                     }),
                 expanded: _.compact([
@@ -362,19 +391,19 @@ export default F.stampKey('type', {
             },
           })
           // If drilldown mode is enabled for columns or rows
-        } else if (columnDrill || rowDrill)
+        } else if (prevColumnDrill || prevRowDrill)
           // Resetting the pagination when the pivot node is changed
           // allows to return expected root results instead of nested drilldown
           // EX: changing the columns or rows config was not returning the new results
           extend(node, {
             pagination: {
               columns: {
-                drilldown: columnDrill && [],
+                drilldown: prevColumnDrill && [],
                 skip: [],
                 expanded: [],
               },
               rows: {
-                drilldown: rowDrill && [],
+                drilldown: prevRowDrill && [],
                 skip: [],
                 expanded: [],
               },
