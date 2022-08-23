@@ -311,56 +311,56 @@ describe('elasticDSL utils', () => {
               keyAsString: '2015-01-01T00:00:00.000Z',
               key: 1420070400000,
               count: 149899462,
-              'sum-LineItem.TotalPrice': 1217970954399.7263,
+              'pivotMetric-sum-LineItem.TotalPrice': 1217970954399.7263,
             },
             {
               keyAsString: '2016-01-01T00:00:00.000Z',
               key: 1451606400000,
               count: 157148228,
-              'sum-LineItem.TotalPrice': 1408804510809.2117,
+              'pivotMetric-sum-LineItem.TotalPrice': 1408804510809.2117,
             },
           ],
           rows: {
             texas: {
               count: 102059166,
               metric: 496115788610.9865,
+              'pivotMetric-sum-LineItem.TotalPrice': 496115788610.9865,
               columns: [
                 {
                   keyAsString: '2015-01-01T00:00:00.000Z',
                   key: 1420070400000,
                   count: 13792834,
-                  'sum-LineItem.TotalPrice': 41095252731.51122,
+                  'pivotMetric-sum-LineItem.TotalPrice': 41095252731.51122,
                 },
                 {
                   keyAsString: '2016-01-01T00:00:00.000Z',
                   key: 1451606400000,
                   count: 14099014,
-                  'sum-LineItem.TotalPrice': 54416178152.06644,
+                  'pivotMetric-sum-LineItem.TotalPrice': 54416178152.06644,
                 },
               ],
-              'sum-LineItem.TotalPrice': 496115788610.9865,
             },
             utah: {
               count: 22791481,
               metric: 79524119321.59206,
+              'pivotMetric-sum-LineItem.TotalPrice': 79524119321.59206,
               columns: [
                 {
                   keyAsString: '2015-01-01T00:00:00.000Z',
                   key: 1420070400000,
                   count: 2972357,
-                  'sum-LineItem.TotalPrice': 10773624509.026503,
+                  'pivotMetric-sum-LineItem.TotalPrice': 10773624509.026503,
                 },
                 {
                   keyAsString: '2016-01-01T00:00:00.000Z',
                   key: 1451606400000,
                   count: 3696754,
-                  'sum-LineItem.TotalPrice': 14220850666.835142,
+                  'pivotMetric-sum-LineItem.TotalPrice': 14220850666.835142,
                 },
               ],
-              'sum-LineItem.TotalPrice': 79524119321.59206,
             },
           },
-          'sum-LineItem.TotalPrice': 11333822932797.13,
+          'pivotMetric-sum-LineItem.TotalPrice': 11333822932797.13,
         },
       }
       expect(basicSimplifyTree(tree)).to.deep.equal({
@@ -384,6 +384,7 @@ describe('elasticDSL utils', () => {
               key: 'texas',
               count: 102059166,
               metric: 496115788610.9865,
+              'sum-LineItem.TotalPrice': 496115788610.9865,
               columns: [
                 {
                   keyAsString: '2015-01-01T00:00:00.000Z',
@@ -398,12 +399,12 @@ describe('elasticDSL utils', () => {
                   'sum-LineItem.TotalPrice': 54416178152.06644,
                 },
               ],
-              'sum-LineItem.TotalPrice': 496115788610.9865,
             },
             {
               key: 'utah',
               count: 22791481,
               metric: 79524119321.59206,
+              'sum-LineItem.TotalPrice': 79524119321.59206,
               columns: [
                 {
                   keyAsString: '2015-01-01T00:00:00.000Z',
@@ -418,7 +419,6 @@ describe('elasticDSL utils', () => {
                   'sum-LineItem.TotalPrice': 14220850666.835142,
                 },
               ],
-              'sum-LineItem.TotalPrice': 79524119321.59206,
             },
           ],
           'sum-LineItem.TotalPrice': 11333822932797.13,
