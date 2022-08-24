@@ -91,4 +91,28 @@ export let options = [
     typeDefault: 'number',
     label: 'Field C2',
   },
+  // Commonly Used Section Examples
+  // Fields with `isCommonlyUsed` set, will show in a group node "Commonly Used Fields" as a flat list regardless of their path nesting.
+  // In addition, they will also show in their regular place in the group tree based on their path (with nesting where applicable)
+  {
+    value: 'GroupA.GroupB.FieldC1',
+    field: 'GroupA.GroupB.FieldC1',
+    label: 'Commonly Used 1',
+    typeDefault: 'number',
+    isCommonlyUsed: true,
+  },
+  {
+    value: 'GroupF.FieldE1',
+    field: 'GroupF.FieldE1',
+    label: 'Commonly Used 2',
+    typeDefault: 'number',
+    isCommonlyUsed: true,
+  },
+  {
+    value: 'GroupA.GroupC.FieldD1',
+    field: 'GroupA.GroupC.FieldD1',
+    label: 'Commonly Used 3',
+    typeDefault: 'number',
+    isCommonlyUsed: true,
+  },
 ]

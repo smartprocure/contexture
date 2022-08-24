@@ -26,6 +26,17 @@ let getItemLabel = item =>
 
 let toNested = _.flow(
   _.map(x => _.defaults({ path: x.value }, x)),
+  fields => [
+    ..._.map(
+      field => ({
+        ...field,
+        // flatten path of fields for this group after "CommonlyUsedFields"
+        path: `CommonlyUsedFields.${_.camelCase(field.path)}`,
+      }),
+      _.filter('isCommonlyUsed', fields)
+    ),
+    ...fields,
+  ],
   unflattenObjectBy('path')
 )
 
@@ -168,6 +179,7 @@ let NestedPicker = ({
     filter: '',
     checked: new Map(),
   }))
+
   return (
     <PickerContext.Provider value={{ PickerItem, TextHighlight }}>
       <Box style={style}>

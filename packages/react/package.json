@@ -1,9 +1,10 @@
 {
   "name": "contexture-react",
-  "version": "2.51.1",
+  "version": "2.51.2",
   "description": "React components for building contexture interfaces",
   "main": "dist/index.js",
   "scripts": {
+    "ci": "npm ci --legacy-peer-deps",
     "start": "npm run storybook",
     "build": "babel ./src --out-dir ./dist --source-maps --delete-dir-on-start",
     "watch": "npm run build -- --watch",
