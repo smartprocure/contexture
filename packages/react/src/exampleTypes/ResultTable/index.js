@@ -121,10 +121,11 @@ let ResultTable = ({
                   ({ groupName, colspan, HeaderCell = Th, HeaderGroup }, j) => (
                     <HeaderCell key={j} colSpan={colspan}>
                       <span>
-                        {HeaderGroup
-                          ? <HeaderGroup>{groupName}</HeaderGroup>
-                          : F.autoLabel(groupName)
-                        }
+                        {HeaderGroup ? (
+                          <HeaderGroup>{groupName}</HeaderGroup>
+                        ) : (
+                          F.autoLabel(groupName)
+                        )}
                       </span>
                     </HeaderCell>
                   ),
