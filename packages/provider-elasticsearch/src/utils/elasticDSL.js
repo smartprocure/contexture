@@ -43,12 +43,10 @@ let simplifyBucket = _.flow(
   _.mapValues(flattenMetrics),
   _.mapKeys(renameMetrics)
 )
-
 let simplifyBuckets = _.flow(
   F.when(_.isPlainObject, F.unkeyBy('key')),
   _.map(simplifyBucket)
 )
-
 // VERY hacky and inefficient tree simpification
 // inefficient due to copying the entire tree to flatten, again to unflatten, and running regex replaces on EVERY key
 // This will be superseeded by a transmuteTree version later :)
@@ -79,10 +77,19 @@ let basicSimplifyTree = _.flow(
   ),
   // Rename __DOT__ to '.'
   tree => {
-    F.walk()(x => {
-      let dots = _.filter(_.includes('__DOT__'), _.keys(x))
-      _.each(dot => renameOn(dot, _.replace(/__DOT__/g, '.', dot), x), dots)
-    })(tree)
+    F.walk()(
+      x => {
+        let dots = _.filter(_.includes('__DOT__'), _.keys(x))
+        _.each(dot => renameOn(dot, _.replace(/__DOT__/g, '.', dot), x), dots)
+      },
+      // When pivot results are called, the results on interior node types aren't, so we need to ensure they are returned with the proper structure
+      (x, index, ps, pis) => {
+        if (index === 'rows' || index === 'columns') {
+          let treePath = F.treePath()(x, index, ps, pis)
+          F.setOn(treePath, F.when(_.isPlainObject, F.unkeyBy('key'))(x), tree)
+        }
+      }
+    )(tree)
     return tree
   }
 )
