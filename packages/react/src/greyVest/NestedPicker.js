@@ -24,54 +24,19 @@ let getItemLabel = item =>
     ? F.cascade(['shortLabel', 'label'], item)
     : _.startCase(item._key)
 
-/*
-  if field "path" is a nested object with a single field (no other field has the same parent path),
-  the path is transformed to combine the object name and the field name into a new field
-*/
-let rollupSingleFieldObjects = _.flow(
-  _.map(field => {
-    let pathParts = _.isString(field.path) ? field.path.split('.') : field.path
-    let parentPath = _.flow(_.dropRight(1), F.dotJoin)(pathParts)
-    return { ...field, parentPath }
-  }),
-  fields => {
-    let hasFieldsToRollup = false
-    for (let field of fields) {
-      let hasSibling
-      let otherFields = _.pull(field, fields)
-      let parenthPath = field.parentPath
-
-      while (parenthPath && !hasSibling) {
-        hasSibling = _.some(
-          otherField => _.startsWith(parenthPath, otherField.parentPath),
-          otherFields
-        )
-        if (!hasSibling) {
-          parenthPath = _.flow(
-            _.split('.'),
-            _.dropRight(1),
-            F.dotJoin
-          )(parenthPath)
-        }
-      }
-
-      // re-write parent path, if needed
-      if (parenthPath !== field.parentPath) {
-        field.path = `${parenthPath ? `${parenthPath}.` : ''}${_.flow(
-          _.replace(parenthPath, ''),
-          _.replace(/\./g, '')
-        )(field.path)}`
-        hasFieldsToRollup = true
-      }
-    }
-
-    return hasFieldsToRollup ? rollupSingleFieldObjects(fields) : fields
-  }
-)
-
 let toNested = _.flow(
   _.map(x => _.defaults({ path: x.value }, x)),
-  rollupSingleFieldObjects,
+  fields => [
+    ..._.map(
+      field => ({
+        ...field,
+        // flatten path of fields for this group after "CommonlyUsedFields"
+        path: `CommonlyUsedFields.${_.camelCase(field.path)}`,
+      }),
+      _.filter('isCommonlyUsed', fields)
+    ),
+    ...fields,
+  ],
   unflattenObjectBy('path')
 )
 
@@ -209,24 +174,11 @@ let NestedPicker = ({
     paddingBottom: 10,
   },
   theme: { Button },
-  makeCommonlyUsedOptionSection = true,
 }) => {
   let state = useLocalStore(() => ({
     filter: '',
     checked: new Map(),
   }))
-
-  if (makeCommonlyUsedOptionSection) {
-    options = _.map(
-      option => ({
-        ...option,
-        ...(option.isCommonlyUsed && {
-          path: `CommonlyUsedFields.${option.value}`,
-        }),
-      }),
-      options
-    )
-  }
 
   return (
     <PickerContext.Provider value={{ PickerItem, TextHighlight }}>

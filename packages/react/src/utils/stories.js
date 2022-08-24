@@ -92,33 +92,26 @@ export let options = [
     label: 'Field C2',
   },
   // Commonly Used Section Examples
-  // these fields belong to parents with only one field and will rollup to the next parent in the nested picker
+  // Fields with `isCommonlyUsed` set, will show in a group node "Commonly Used Fields" as a flat list regardless of their path nesting.
+  // In addition, they will also show in their regular place in the group tree based on their path (with nesting where applicable)
   {
     value: 'GroupA.GroupB.FieldC1',
     field: 'GroupA.GroupB.FieldC1',
-    label: 'Rolled Up Field GroupB.FieldC1',
+    label: 'Commonly Used 1',
     typeDefault: 'number',
     isCommonlyUsed: true,
   },
   {
     value: 'GroupF.FieldE1',
     field: 'GroupF.FieldE1',
-    label: 'Rolled Up Field GroupF.FieldE1',
+    label: 'Commonly Used 2',
     typeDefault: 'number',
     isCommonlyUsed: true,
   },
-  // fields that do not require rolling up to the next parent but will group under the Commonly Used Fields group in the nested picker
   {
     value: 'GroupA.GroupC.FieldD1',
     field: 'GroupA.GroupC.FieldD1',
-    label: 'FieldD1',
-    typeDefault: 'number',
-    isCommonlyUsed: true,
-  },
-  {
-    value: 'GroupA.GroupC.FieldD2',
-    field: 'GroupA.GroupC.FieldD2',
-    label: 'FieldD2',
+    label: 'Commonly Used 3',
     typeDefault: 'number',
     isCommonlyUsed: true,
   },
