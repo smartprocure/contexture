@@ -322,14 +322,14 @@ let buildQuery = async (node, schema, getStats) => {
 
   let includeRowFilters = await paginationFilters({
     drilldowns: rowDrills,
-    values: pagination.rows.include,
+    values: _.get('rows.include', pagination),
     groups: rows,
     schema,
     getStats,
   })
   let includeColumnFilters = await paginationFilters({
     drilldowns: columnDrills,
-    values: pagination.columns.include,
+    values: _.get('rows.columns', pagination),
     groups: columns,
     schema,
     getStats,
@@ -338,14 +338,14 @@ let buildQuery = async (node, schema, getStats) => {
   let skipFilters = [
     ...((await paginationFilters({
       drilldowns: rowDrills,
-      values: pagination.rows.skip,
+      values: _.get('rows.skip', pagination),
       groups: rows,
       schema,
       getStats,
     })) || []),
     ...((await paginationFilters({
       drilldowns: columnDrills,
-      values: pagination.columns.skip,
+      values: _.get('columns.skip', pagination),
       groups: columns,
       schema,
       getStats,
