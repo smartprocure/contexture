@@ -267,7 +267,9 @@ describe('pivot', () => {
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       pagination: {
-        drilldown: [],
+        rows: {
+          drilldown: [],
+        },
       },
       rows: [
         {
@@ -291,7 +293,9 @@ describe('pivot', () => {
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       pagination: {
+        rows: {
         drilldown: ['Reno', '0.0-500.0'],
+      },
       },
       rows: [
         {
@@ -313,7 +317,9 @@ describe('pivot', () => {
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       pagination: {
+        rows: {
         drilldown: ['Reno|NV', '0.0-500.0'],
+      },
       },
       rows: [
         {
@@ -482,7 +488,9 @@ describe('pivot', () => {
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       pagination: {
+        rows: {
         drilldown: [],
+      },
       },
       rows: [
         {
@@ -528,7 +536,9 @@ describe('pivot', () => {
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       pagination: {
+        rows: {
         drilldown: ['Reno'],
+      },
       },
       rows: [
         {
@@ -593,7 +603,9 @@ describe('pivot', () => {
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       pagination: {
+        rows: {
         drilldown: ['Reno', '0.0-500.0', 'A - U.S. OWNED BUSINESS'],
+      },
       },
       rows: [
         {
@@ -698,8 +710,10 @@ describe('pivot', () => {
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       pagination: {
+        rows: {
         drilldown: ['Reno', '0.0-500.0'],
         skip: ['A - U.S. OWNED BUSINESS'],
+      },
       },
       rows: [
         {
