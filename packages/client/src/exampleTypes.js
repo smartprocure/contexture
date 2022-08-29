@@ -22,7 +22,7 @@ let twoLevelMatch = {
 let getKey = x => x.keyAsString || x.key
 
 let drilldownLookup = (type, path, results) => {
-  if (_.isEmpty(path)) return results
+  if (_.isEmpty(path) || !results) return results
 
   let key = _.first(path)
   let groups = _.get(type, results)
@@ -323,8 +323,6 @@ export default F.stampKey('type', {
         let prevRowDrill = _.get('pagination.rows.drilldown', previous)
         let prevColumnDrill = _.get('pagination.columns.drilldown', previous)
 
-        // TODO allow mutation for expanded when collapsing levels
-
         // If mutation is a pagination
         if (
           _.has('pagination.columns', value) ||
@@ -363,35 +361,27 @@ export default F.stampKey('type', {
             return page
           }
 
-          let prevRowPage = getPrevPage('rows')
-          let prevColumnPage = getPrevPage('columns')
+          let getExpanded = type =>
+            _.compact(
+              [
+                ..._.getOr([], ['pagination', type, 'expanded'], previous),
+                getPrevPage(type),
+              ])
 
           // Preserving previous pagination entries in the expanded prop
           extend(node, {
             pagination: {
               columns: {
-                ...(!isRowPagination
-                  ? value.pagination.columns
-                  : {
-                      drilldown: prevColumnDrill && [],
-                      skip: [],
-                    }),
-                expanded: _.compact([
-                  ..._.getOr([], 'pagination.columns.expanded', previous),
-                  prevColumnPage,
-                ]),
+                drilldown: prevColumnDrill && [],
+                skip: [],
+                ...(!isRowPagination && value.pagination.columns),
+                expanded: getExpanded('columns'),
               },
               rows: {
-                ...(isRowPagination
-                  ? value.pagination.rows
-                  : {
-                      drilldown: prevRowDrill && [],
-                      skip: [],
-                    }),
-                expanded: _.compact([
-                  ..._.getOr([], 'pagination.rows.expanded', previous),
-                  prevRowPage,
-                ]),
+                drilldown: prevRowDrill && [],
+                skip: [],
+                ...(isRowPagination && value.pagination.rows),
+                expanded: getExpanded('rows'),
               },
             },
           })
