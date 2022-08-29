@@ -1,3 +1,6 @@
+# 2.48.0
+* Pivot node: new `pagination` logic for `columns` and `rows` with `drilldown`, `skip`, `include` and `expanded`
+
 # 2.47.0
 * Pivot node: new `pagination` logic with `drilldown` and `skip`
 
