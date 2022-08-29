@@ -362,11 +362,10 @@ export default F.stampKey('type', {
           }
 
           let getExpanded = type =>
-            _.compact(
-              [
-                ..._.getOr([], ['pagination', type, 'expanded'], previous),
-                getPrevPage(type),
-              ])
+            _.compact([
+              ..._.getOr([], ['pagination', type, 'expanded'], previous),
+              getPrevPage(type),
+            ])
 
           // Preserving previous pagination entries in the expanded prop
           extend(node, {
