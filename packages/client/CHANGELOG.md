@@ -1,3 +1,6 @@
+# 2.47.1
+* Migrate tests to jest
+
 # 2.47.0
 * Pivot node: new `pagination` logic with `drilldown` and `skip`
 
