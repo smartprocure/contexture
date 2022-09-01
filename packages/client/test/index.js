@@ -100,6 +100,31 @@ let AllTests = ContextureClient => {
         ],
       })
     })
+    it('should support per-node onSerialize hook', () => {
+      Tree.tree.children[1].onSerialize = _.flow(
+        _.set('customKey', 'customValue'),
+        _.unset('pageSize')
+      )
+      expect(Tree.serialize()).to.deep.equal({
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'filter',
+            type: 'facet',
+            mode: 'include',
+            values: ['a'],
+            optionsFilter: '',
+          },
+          {
+            key: 'results',
+            type: 'results',
+            page: 1,
+            customKey: 'customValue',
+          },
+        ],
+      })
+    })
     it('should not block blank searches', async () => {
       service.resetHistory()
       await Tree.mutate(['root', 'filter'], {
