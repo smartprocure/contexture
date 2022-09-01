@@ -99,12 +99,16 @@ export let options = [
     field: 'GroupA.GroupB.FieldC1',
     label: 'Commonly Used 1',
     typeDefault: 'number',
+    description:
+      'I tend to be pretty useful on my good days, but you never know really. I tend to be pretty useful on my good days, but you never know really.',
     isCommonlyUsed: true,
   },
   {
     value: 'GroupF.FieldE1',
     field: 'GroupF.FieldE1',
     label: 'Commonly Used 2',
+    description:
+      'This is a super-duper useful field, you should totally select it. This is a super-duper useful field, you should totally select it. This is a super-duper useful field, you should totally select it.',
     typeDefault: 'number',
     isCommonlyUsed: true,
   },
@@ -113,6 +117,7 @@ export let options = [
     field: 'GroupA.GroupC.FieldD1',
     label: 'Commonly Used 3',
     typeDefault: 'number',
+    description: 'You should pick me or suffer the consequences',
     isCommonlyUsed: true,
   },
 ]
