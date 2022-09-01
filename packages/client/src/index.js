@@ -154,7 +154,7 @@ export let ContextTree = _.curry(
       let node = getNode(path)
 
       markLastUpdate(now)(node || tree)
-      let body = serialize(snapshot(tree), { search: true })
+      let body = serialize(snapshot(tree), types, { search: true })
       prepForUpdate(node || tree)
 
       // make all other nodes filter only
@@ -257,7 +257,8 @@ export let ContextTree = _.curry(
     }
 
     let TreeInstance = initObject({
-      serialize: path => serialize(snapshot(path ? getNode(path) : tree), {}),
+      serialize: path =>
+        serialize(snapshot(path ? getNode(path) : tree), types, {}),
       tree,
       debugInfo,
       ...actionProps,

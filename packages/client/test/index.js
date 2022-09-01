@@ -39,6 +39,37 @@ let AllTests = ContextureClient => {
     }
     let service = sinon.spy(mockService())
     let Tree = ContextureClient({ service, debounce: 1 }, tree)
+
+    it('should support per-node onSerialize hook', () => {
+      let types = _.merge(exampleTypes, {
+        results: {
+          onSerialize: _.flow(
+            _.set('customKey', 'customValue'),
+            _.unset('pageSize')
+          ),
+        },
+      })
+      let Tree = ContextureClient({ service, debounce: 0, types }, tree)
+      expect(Tree.serialize()).to.deep.equal({
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'filter',
+            type: 'facet',
+            mode: 'include',
+            values: [],
+            optionsFilter: '',
+          },
+          {
+            key: 'results',
+            type: 'results',
+            page: 1,
+            customKey: 'customValue',
+          },
+        ],
+      })
+    })
     it('should generally mutate', async () => {
       await Tree.mutate(['root', 'filter'], {
         values: ['a'],
@@ -96,31 +127,6 @@ let AllTests = ContextureClient => {
             type: 'results',
             page: 1,
             pageSize: 10,
-          },
-        ],
-      })
-    })
-    it('should support per-node onSerialize hook', () => {
-      Tree.tree.children[1].onSerialize = _.flow(
-        _.set('customKey', 'customValue'),
-        _.unset('pageSize')
-      )
-      expect(Tree.serialize()).to.deep.equal({
-        key: 'root',
-        join: 'and',
-        children: [
-          {
-            key: 'filter',
-            type: 'facet',
-            mode: 'include',
-            values: ['a'],
-            optionsFilter: '',
-          },
-          {
-            key: 'results',
-            type: 'results',
-            page: 1,
-            customKey: 'customValue',
           },
         ],
       })
