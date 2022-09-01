@@ -1,6 +1,4 @@
 import { flatten, encode, isParent } from '../src/util/tree'
-import chai from 'chai'
-const expect = chai.expect
 
 describe('tree', () => {
   let tree = {
@@ -36,20 +34,22 @@ describe('tree', () => {
       },
     ],
   }
+
   it('should maintain references in flattened tree', () => {
     let flat = flatten(tree)
     let path = encode(['root', 'criteria'])
     flat[path].join = 'or'
-    expect(tree.children[1].join).to.equal('or')
+    expect(tree.children[1].join).toBe('or')
 
     tree.children[1].join = 'and'
-    expect(flat[path].join).to.equal('and')
+    expect(flat[path].join).toBe('and')
   })
+
   it('should correctly answer isParent', () => {
-    expect(isParent([1, 2, 3], [1, 2, 3, 4, 5])).to.be.true
-    expect(isParent([1, 3, 2], [1, 2, 3, 4, 5])).to.be.false
-    expect(isParent([2, 3], [1, 2, 3, 4, 5])).to.be.false
-    expect(isParent([8, 2, 3], [1, 2, 3, 4, 5])).to.be.false
-    expect(isParent([1, 2, 3, 4, 5], [1, 2, 3, 4, 5])).to.be.false
+    expect(isParent([1, 2, 3], [1, 2, 3, 4, 5])).toBe(true)
+    expect(isParent([1, 3, 2], [1, 2, 3, 4, 5])).toBe(false)
+    expect(isParent([2, 3], [1, 2, 3, 4, 5])).toBe(false)
+    expect(isParent([8, 2, 3], [1, 2, 3, 4, 5])).toBe(false)
+    expect(isParent([1, 2, 3, 4, 5], [1, 2, 3, 4, 5])).toBe(false)
   })
 })
