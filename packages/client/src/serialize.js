@@ -6,7 +6,19 @@ import { runTypeFunctionOrDefault } from './types'
 
 let isFilterOnly = x => !x.children && (x.forceFilterOnly || !x.markedForUpdate)
 
-let getNilKeys = _.flow(_.pickBy(_.isNil), _.keys)
+// Use Tree.walk instead of Tree.map since the latter clones the tree and we
+// already get a cloned tree. We have not profiled the performance impact of
+// cloning the tree twice but just in case.
+//
+// TODO: Remove cloning from the caller and use F.mapTree once we remove mobx
+// usage from this library.
+let mapTree = (fn, tree) =>
+  _.tap(
+    Tree.walk((node, index, [parent]) => {
+      if (parent) parent.children[index] = fn(node)
+    }),
+    fn(tree)
+  )
 
 export default (tree, types, { search } = {}) => {
   let onSerialize = node =>
@@ -19,12 +31,8 @@ export default (tree, types, { search } = {}) => {
     _.set('filterOnly', true)
   )
 
-  return Tree.map(
-    _.flow(
-      setFilterOnly,
-      x => _.omit([...internalKeys, ...getNilKeys(x)], x),
-      onSerialize
-    ),
+  return mapTree(
+    _.flow(setFilterOnly, _.omitBy(_.isNil), _.omit(internalKeys), onSerialize),
     tree
   )
 }
