@@ -1,5 +1,6 @@
 import _ from 'lodash/fp'
 import React from 'react'
+import { defaultProps } from 'react-recompose'
 import { contexturifyWithoutLoader } from './utils/hoc'
 import { newNodeFromField } from './utils/search'
 import { ModalPicker } from './purgatory'
@@ -20,7 +21,7 @@ let FilterAdder = ({
   path,
   fields,
   uniqueFields,
-  Picker = ModalPicker,
+  Picker = defaultProps({ modalClassName: 'filter-adder' })(ModalPicker),
   theme: { Icon },
   ...props
 }) => {
