@@ -1,3 +1,6 @@
+# 2.48.0
+* New feature: new per-node hook `onSerialize` allows users to customize tree nodes as the tree is being serialized
+
 # 2.47.0
 * Pivot node: new `pagination` logic with `drilldown` and `skip`
 
