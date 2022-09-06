@@ -11,9 +11,8 @@
     "lint:fix": "npm run lint -- --fix",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:ci": "jest --json --outputFile test-results.json",
+    "test:ci": "jest --coverage --json --outputFile test-results.json",
     "fmt": "prettier --ignore-path .gitignore --write './**/*.js'",
-    "danger": "duti",
     "duti:fix": "npm run lint:fix; npm run fmt",
     "prepublish": "webpack"
   },
@@ -32,19 +31,16 @@
     "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
+    "@babel/core": "^7.19.0",
+    "@babel/preset-env": "^7.19.0",
     "babel-eslint": "^8.0.3",
-    "babel-loader": "^7.1.2",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-latest": "^6.24.1",
-    "danger": "^10.5.4",
+    "babel-loader": "^8.2.5",
+    "danger": "^11.1.2",
+    "danger-plugin-code-coverage": "^1.2.0",
     "duti": "^0.15.2",
     "eslint": "^4.12.1",
     "eslint-config-smartprocure": "^1.1.0",
     "jest": "^29.0.1",
-    "jest-esbuild": "^0.2.9",
     "mobx": "^4.3.1",
     "prettier": "^1.8.2",
     "webpack": "^3.8.1"
@@ -53,14 +49,5 @@
     "semi": false,
     "singleQuote": true,
     "trailingComma": "es5"
-  },
-  "babel": {
-    "presets": [
-      "latest"
-    ],
-    "plugins": [
-      "transform-object-rest-spread",
-      "transform-runtime"
-    ]
   }
 }

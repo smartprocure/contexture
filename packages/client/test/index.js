@@ -45,7 +45,7 @@ let AllTests = ContextureClient => {
         },
       })
       let Tree = ContextureClient({ service, debounce: 0, types }, tree)
-      expect(Tree.serialize()).to.deep.equal({
+      expect(Tree.serialize()).toEqual({
         key: 'root',
         join: 'and',
         children: [
