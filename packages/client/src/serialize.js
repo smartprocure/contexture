@@ -1,19 +1,38 @@
 import _ from 'lodash/fp'
-import { unsetOn } from 'futil-js'
+import F from 'futil-js'
 import { Tree } from './util/tree'
 import { internalStateKeys } from './node'
+import { runTypeFunctionOrDefault } from './types'
 
 let isFilterOnly = x => !x.children && (x.forceFilterOnly || !x.markedForUpdate)
-let getNilKeys = _.flow(_.pickBy(_.isNil), _.keys)
 
-export default (tree, { search } = {}) =>
+// Use Tree.walk instead of Tree.map since the latter clones the tree and we
+// already get a cloned tree. We have not profiled the performance impact of
+// cloning the tree twice but just in case.
+//
+// TODO: Remove cloning from the caller and use F.mapTree once we remove mobx
+// usage from this library.
+let mapTree = (fn, tree) =>
   _.tap(
-    Tree.walk(x => {
-      if (search && isFilterOnly(x)) x.filterOnly = true
-      _.each(unsetOn(_, x), [
-        ..._.without(search && ['lastUpdateTime'], internalStateKeys),
-        ...getNilKeys(x),
-      ])
+    Tree.walk((node, index, [parent]) => {
+      if (parent) parent.children[index] = fn(node)
     }),
+    fn(tree)
+  )
+
+export default (tree, types, { search } = {}) => {
+  let onSerialize = node =>
+    runTypeFunctionOrDefault(_.identity, types, 'onSerialize', node, {})
+
+  let internalKeys = _.without(search && ['lastUpdateTime'], internalStateKeys)
+
+  let setFilterOnly = F.when(
+    node => search && isFilterOnly(node),
+    _.set('filterOnly', true)
+  )
+
+  return mapTree(
+    _.flow(setFilterOnly, _.omitBy(_.isNil), _.omit(internalKeys), onSerialize),
     tree
   )
+}
