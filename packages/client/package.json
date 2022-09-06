@@ -13,6 +13,7 @@
     "test:watch": "jest --watch",
     "test:ci": "jest --coverage --json --outputFile test-results.json",
     "fmt": "prettier --ignore-path .gitignore --write './**/*.js'",
+    "danger": "danger ci",
     "duti:fix": "npm run lint:fix; npm run fmt",
     "prepublish": "webpack"
   },
