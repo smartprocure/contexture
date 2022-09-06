@@ -1,3 +1,5 @@
+/* global schedule */
+
 import { danger, markdown, fail, message, warn } from 'danger'
 
 import fs from 'fs'
@@ -45,4 +47,9 @@ duti.hasLintWarnings(args)
 duti.hasLintErrors(args)
 duti.hasTestErrors(args)
 
-schedule(coverage({ showAllFiles: true }))
+schedule(
+  coverage({
+    showAllFiles: true,
+    threshold: { statements: 0, branches: 0, functions: 0, lines: 0 },
+  })
+)
