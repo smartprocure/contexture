@@ -1,8 +1,8 @@
-let { danger, markdown, fail, message, warn } = require('danger')
+import { danger, markdown, fail, message, warn } from 'danger'
 
-let fs = require('fs')
-let duti = require('duti')
-let { codeCoverage } = require('danger-plugin-code-coverage')
+import fs from 'fs'
+import duti from 'duti'
+import coverage from 'danger-plugin-coverage'
 
 let readJson = path => {
   try {
@@ -45,4 +45,4 @@ duti.hasLintWarnings(args)
 duti.hasLintErrors(args)
 duti.hasTestErrors(args)
 
-codeCoverage()
+schedule(coverage({ showAllFiles: true }))
