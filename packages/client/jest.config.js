@@ -7,6 +7,6 @@
 
 module.exports = {
   testMatch: ['<rootDir>/test/**/*.js'],
-  coverageReporters: ['json'],
+  coverageReporters: ['clover'],
   collectCoverageFrom: ['src/**/*.js'],
 }

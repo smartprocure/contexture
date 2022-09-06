@@ -37,7 +37,7 @@
     "babel-eslint": "^8.0.3",
     "babel-loader": "^8.2.5",
     "danger": "^11.1.2",
-    "danger-plugin-code-coverage": "^1.2.0",
+    "danger-plugin-coverage": "^1.6.2",
     "duti": "^0.15.2",
     "eslint": "^4.12.1",
     "eslint-config-smartprocure": "^1.1.0",
