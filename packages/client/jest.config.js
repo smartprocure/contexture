@@ -7,5 +7,6 @@
 
 module.exports = {
   testMatch: ['<rootDir>/test/**/*.js'],
-  transform: { '^.+\\.js?$': 'jest-esbuild' },
+  coverageReporters: ['json'],
+  collectCoverageFrom: ['src/**/*.js'],
 }
