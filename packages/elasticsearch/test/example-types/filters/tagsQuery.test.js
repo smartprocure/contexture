@@ -27,7 +27,9 @@ describe('wordPermutations', () => {
 
 describe('limitResultsToCertainTags', () => {
   it('should return truthy if found', () => {
-    expect(limitResultsToCertainTags([{ onlyShowTheseResults: true }, {}])).toBeDefined()
+    expect(
+      limitResultsToCertainTags([{ onlyShowTheseResults: true }, {}])
+    ).toBeDefined()
   })
 })
 
@@ -37,7 +39,9 @@ describe('addQuotesAndDistance', () => {
     expect(addQuotesAndDistance(tag, 'foo bar')).toEqual(`"foo bar"~3`)
   })
   it('should quote if is phrase', () => {
-    expect(addQuotesAndDistance({ isPhrase: true }, 'foo bar')).toEqual(`"foo bar"`)
+    expect(addQuotesAndDistance({ isPhrase: true }, 'foo bar')).toEqual(
+      `"foo bar"`
+    )
   })
   it('should quote and not set distance if distance is 0', () => {
     expect(
@@ -86,14 +90,11 @@ describe('tagToQueryString', () => {
       tagToQueryString({ word: 'foo bar', distance: 'unlimited' })
     ).toEqual('(foo AND bar)')
   })
-  it(
-    'should handle multiple words with unlimited distance and more than one space',
-    () => {
-      expect(
-        tagToQueryString({ word: 'foo    bar    baz', distance: 'unlimited' })
-      ).toEqual('(foo AND bar AND baz)')
-    }
-  )
+  it('should handle multiple words with unlimited distance and more than one space', () => {
+    expect(
+      tagToQueryString({ word: 'foo    bar    baz', distance: 'unlimited' })
+    ).toEqual('(foo AND bar AND baz)')
+  })
   it('should handle multiple words with any order', () => {
     expect(
       tagToQueryString({ word: 'foo bar', anyOrder: true, isPhrase: true })
@@ -115,36 +116,30 @@ describe('tagsToQueryString', () => {
       )
     ).toEqual(`("foo bar" OR "bar foo") OR baz`)
   })
-  it(
-    'should only include one word if onlyShowTheseResults is enabled for one tag',
-    () => {
-      expect(
-        tagsToQueryString(
-          [
-            { word: 'foo', onlyShowTheseResults: true },
-            { word: 'bar' },
-            { word: 'baz' },
-          ],
-          'any'
-        )
-      ).toEqual('foo')
-    }
-  )
-  it(
-    'should only include two words if onlyShowTheseResults is enabled for two tags',
-    () => {
-      expect(
-        tagsToQueryString(
-          [
-            { word: 'foo', onlyShowTheseResults: true },
-            { word: 'bar', onlyShowTheseResults: true },
-            { word: 'baz' },
-          ],
-          'any'
-        )
-      ).toEqual('foo OR bar')
-    }
-  )
+  it('should only include one word if onlyShowTheseResults is enabled for one tag', () => {
+    expect(
+      tagsToQueryString(
+        [
+          { word: 'foo', onlyShowTheseResults: true },
+          { word: 'bar' },
+          { word: 'baz' },
+        ],
+        'any'
+      )
+    ).toEqual('foo')
+  })
+  it('should only include two words if onlyShowTheseResults is enabled for two tags', () => {
+    expect(
+      tagsToQueryString(
+        [
+          { word: 'foo', onlyShowTheseResults: true },
+          { word: 'bar', onlyShowTheseResults: true },
+          { word: 'baz' },
+        ],
+        'any'
+      )
+    ).toEqual('foo OR bar')
+  })
 })
 
 describe('hasValue', () => {
@@ -204,40 +199,37 @@ describe('filter', () => {
 })
 
 describe('buildResultQuery', () => {
-  it(
-    'should construct a correct basic agg when just the node prop is provided',
-    () => {
-      let node = {
-        tags: [{ word: 'foo' }, { word: 'bar' }],
-        field: 'baz',
-        join: 'and',
-      }
-      expect(buildResultQuery(node)).toEqual({
-        aggs: {
-          tags: {
+  it('should construct a correct basic agg when just the node prop is provided', () => {
+    let node = {
+      tags: [{ word: 'foo' }, { word: 'bar' }],
+      field: 'baz',
+      join: 'and',
+    }
+    expect(buildResultQuery(node)).toEqual({
+      aggs: {
+        tags: {
+          filters: {
             filters: {
-              filters: {
-                foo: {
-                  query_string: {
-                    query: 'foo',
-                    default_operator: 'AND',
-                    default_field: 'baz',
-                  },
+              foo: {
+                query_string: {
+                  query: 'foo',
+                  default_operator: 'AND',
+                  default_field: 'baz',
                 },
-                bar: {
-                  query_string: {
-                    query: 'bar',
-                    default_operator: 'AND',
-                    default_field: 'baz',
-                  },
+              },
+              bar: {
+                query_string: {
+                  query: 'bar',
+                  default_operator: 'AND',
+                  default_field: 'baz',
                 },
               },
             },
           },
         },
-      })
-    }
-  )
+      },
+    })
+  })
   it('should spread the children aggs when they are provided', () => {
     let node = {
       tags: [{ word: 'foo' }, { word: 'bar' }],
