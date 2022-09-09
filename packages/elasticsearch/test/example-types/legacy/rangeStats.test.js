@@ -4,57 +4,51 @@ const utils = require('../testUtils')
 
 describe('rangeStats', () => {
   describe('validContext', () => {
-    it(
-      'should validate a node with config key_field, value_field and ranges',
-      () => {
-        utils.validContexts(rangeStats)([
-          {
-            key_field: true,
-            value_field: true,
-            ranges: true,
-          },
-          {
-            key_field: 'key_field',
-            value_field: 'value_field',
-            ranges: [1],
-          },
-        ])
-      }
-    )
-    it(
-      'should validate a node without config key_field, value_field or ranges',
-      () => {
-        utils.noValidContexts(rangeStats)([
-          {
-            key_field: true,
-            value_field: true,
-            ranges: false,
-          },
-          {
-            key_field: true,
-            value_field: true,
-          },
-          {
-            key_field: true,
-            value_field: false,
-            ranges: true,
-          },
-          {
-            key_field: true,
-            ranges: true,
-          },
-          {
-            key_field: false,
-            value_field: true,
-            ranges: true,
-          },
-          {
-            value_field: true,
-            ranges: true,
-          },
-        ])
-      }
-    )
+    it('should validate a node with config key_field, value_field and ranges', () => {
+      utils.validContexts(rangeStats)([
+        {
+          key_field: true,
+          value_field: true,
+          ranges: true,
+        },
+        {
+          key_field: 'key_field',
+          value_field: 'value_field',
+          ranges: [1],
+        },
+      ])
+    })
+    it('should validate a node without config key_field, value_field or ranges', () => {
+      utils.noValidContexts(rangeStats)([
+        {
+          key_field: true,
+          value_field: true,
+          ranges: false,
+        },
+        {
+          key_field: true,
+          value_field: true,
+        },
+        {
+          key_field: true,
+          value_field: false,
+          ranges: true,
+        },
+        {
+          key_field: true,
+          ranges: true,
+        },
+        {
+          key_field: false,
+          value_field: true,
+          ranges: true,
+        },
+        {
+          value_field: true,
+          ranges: true,
+        },
+      ])
+    })
   })
 
   describe('validContext', () => {

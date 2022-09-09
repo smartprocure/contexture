@@ -13,60 +13,57 @@ describe('futil candidates', () => {
     expect(maybeAppend('.txt', 'file')).toEqual('file.txt')
     expect(maybeAppend('.txt', 'file.txt')).toEqual('file.txt')
   })
-  it(
-    'writeTreeNode should support dynamic depth-dependent tree traversal and map',
-    () => {
-      let tree = {
-        key: 'root',
-        aggregations: {
-          groups: {
-            buckets: [
-              {
-                key: 'filteredTerms',
-                valueFilter: {
-                  groups: {
-                    buckets: [
-                      {
-                        key: 'nonFiltered',
-                        groups: { buckets: [{ key: 'innermost' }] },
-                      },
-                    ],
-                  },
+  it('writeTreeNode should support dynamic depth-dependent tree traversal and map', () => {
+    let tree = {
+      key: 'root',
+      aggregations: {
+        groups: {
+          buckets: [
+            {
+              key: 'filteredTerms',
+              valueFilter: {
+                groups: {
+                  buckets: [
+                    {
+                      key: 'nonFiltered',
+                      groups: { buckets: [{ key: 'innermost' }] },
+                    },
+                  ],
                 },
               },
-            ],
-          },
+            },
+          ],
         },
-      }
-      let traverse = (node, index, parents) => {
-        let depth = parents.length
-        if (depth === 0) return node.aggregations.groups.buckets
-        if (depth === 1) return node.valueFilter.groups.buckets
-        if (depth === 2) return node.groups.buckets
-      }
-      let Tree = F.tree(traverse, _.identity, writeTreeNode(traverse))
-      let expected = ['root', 'filteredTerms', 'nonFiltered', 'innermost']
-      let result = Tree.toArrayBy(node => node.key, tree)
-      expect(result).toEqual(expected)
-
-      // Mapping works with new write property!
-      let modifiedTree = Tree.map(
-        node => ({
-          ...node,
-          key: `${node.key}Modified`,
-        }),
-        tree
-      )
-      let modifiedExpected = [
-        'rootModified',
-        'filteredTermsModified',
-        'nonFilteredModified',
-        'innermostModified',
-      ]
-      let modifiedResult = Tree.toArrayBy(node => node.key, modifiedTree)
-      expect(modifiedResult).toEqual(modifiedExpected)
+      },
     }
-  )
+    let traverse = (node, index, parents) => {
+      let depth = parents.length
+      if (depth === 0) return node.aggregations.groups.buckets
+      if (depth === 1) return node.valueFilter.groups.buckets
+      if (depth === 2) return node.groups.buckets
+    }
+    let Tree = F.tree(traverse, _.identity, writeTreeNode(traverse))
+    let expected = ['root', 'filteredTerms', 'nonFiltered', 'innermost']
+    let result = Tree.toArrayBy(node => node.key, tree)
+    expect(result).toEqual(expected)
+
+    // Mapping works with new write property!
+    let modifiedTree = Tree.map(
+      node => ({
+        ...node,
+        key: `${node.key}Modified`,
+      }),
+      tree
+    )
+    let modifiedExpected = [
+      'rootModified',
+      'filteredTermsModified',
+      'nonFilteredModified',
+      'innermostModified',
+    ]
+    let modifiedResult = Tree.toArrayBy(node => node.key, modifiedTree)
+    expect(modifiedResult).toEqual(modifiedExpected)
+  })
   it('transmuteTree should simplify groups.buckets in tree', () => {
     let tree = {
       key: 'root',
@@ -221,64 +218,61 @@ describe('futil candidates', () => {
     //   console.log(x, i) // iterates over all values
     // }, arr)
   })
-  it(
-    'transmuteTree should simplify groups.buckets in tree with rows and columns',
-    () => {
-      let tree = {
-        key: 'root',
-        groups: {
-          buckets: [
-            {
-              key: 'row1',
-              groups: {
-                buckets: [{ key: 'thing' }, { key: 'thing2' }],
-              },
-              columns: {
-                buckets: [
-                  { key: 'innermost' },
-                  { key: 'inner2', min: { value: 12 }, some_value: 3 },
-                ],
-              },
-            },
-          ],
-        },
-      }
-
-      let traverseSource = node =>
-        virtualConcat(
-          _.getOr([], 'groups.buckets', node),
-          _.getOr([], 'columns.buckets', node)
-        )
-
-      let traverseTarget = node => virtualConcat(node.groups, node.columns)
-
-      let cleanup = node => {
-        // groups needs to be the right length or virtualConcat will put everything in columns since the cut off for determining when to go to arr2 would be 0 if arr1 is size 0
-        if (node.groups && !_.isArray(node.groups))
-          node.groups = Array(_.get('groups.buckets.length', node))
-        if (node.columns && !_.isArray(node.columns)) node.columns = []
-      }
-      // Goal here is to map the tree from one structure to another
-      // goal is to keep _nodes_ the same, but write back with different (dynamic) traversal
-      //   e.g. valuefilter.groups.buckets -> groups, groups.buckets -> groups
-      let simplifyGroups = transmuteTree(traverseSource, traverseTarget, cleanup)
-
-      // More realistic test that also maps min.value -> min
-      let bucketSimplified = simplifyGroups(simplifyBucket, tree)
-
-      expect(bucketSimplified).toEqual({
-        key: 'root',
-        groups: [
+  it('transmuteTree should simplify groups.buckets in tree with rows and columns', () => {
+    let tree = {
+      key: 'root',
+      groups: {
+        buckets: [
           {
             key: 'row1',
-            groups: [{ key: 'thing' }, { key: 'thing2' }],
-            columns: [
-              { key: 'innermost' },
-              { key: 'inner2', min: 12, someValue: 3 },
-            ],
+            groups: {
+              buckets: [{ key: 'thing' }, { key: 'thing2' }],
+            },
+            columns: {
+              buckets: [
+                { key: 'innermost' },
+                { key: 'inner2', min: { value: 12 }, some_value: 3 },
+              ],
+            },
           },
         ],
-      })
+      },
     }
-  )
+
+    let traverseSource = node =>
+      virtualConcat(
+        _.getOr([], 'groups.buckets', node),
+        _.getOr([], 'columns.buckets', node)
+      )
+
+    let traverseTarget = node => virtualConcat(node.groups, node.columns)
+
+    let cleanup = node => {
+      // groups needs to be the right length or virtualConcat will put everything in columns since the cut off for determining when to go to arr2 would be 0 if arr1 is size 0
+      if (node.groups && !_.isArray(node.groups))
+        node.groups = Array(_.get('groups.buckets.length', node))
+      if (node.columns && !_.isArray(node.columns)) node.columns = []
+    }
+    // Goal here is to map the tree from one structure to another
+    // goal is to keep _nodes_ the same, but write back with different (dynamic) traversal
+    //   e.g. valuefilter.groups.buckets -> groups, groups.buckets -> groups
+    let simplifyGroups = transmuteTree(traverseSource, traverseTarget, cleanup)
+
+    // More realistic test that also maps min.value -> min
+    let bucketSimplified = simplifyGroups(simplifyBucket, tree)
+
+    expect(bucketSimplified).toEqual({
+      key: 'root',
+      groups: [
+        {
+          key: 'row1',
+          groups: [{ key: 'thing' }, { key: 'thing2' }],
+          columns: [
+            { key: 'innermost' },
+            { key: 'inner2', min: 12, someValue: 3 },
+          ],
+        },
+      ],
+    })
+  })
 })

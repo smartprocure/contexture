@@ -96,38 +96,35 @@ describe('results', () => {
     ])
     delete node.exclude
   })
-  it(
-    'should add fields to "_source.include" if in highlight override',
-    async () => {
-      schema.elasticsearch.highlight = {}
-      F.extendOn(node, {
+  it('should add fields to "_source.include" if in highlight override', async () => {
+    schema.elasticsearch.highlight = {}
+    F.extendOn(node, {
+      highlight: {
+        fields: {
+          myField: {},
+        },
+      },
+    })
+    await resultsTest(node, [
+      _.extend(expectedCalls[0], {
+        _source: {
+          includes: ['myField'],
+        },
+        sort: {
+          _score: 'desc',
+        },
         highlight: {
           fields: {
             myField: {},
           },
+          number_of_fragments: 0,
+          post_tags: ['</b>'],
+          pre_tags: ['<b class="search-highlight">'],
+          require_field_match: false,
         },
-      })
-      await resultsTest(node, [
-        _.extend(expectedCalls[0], {
-          _source: {
-            includes: ['myField'],
-          },
-          sort: {
-            _score: 'desc',
-          },
-          highlight: {
-            fields: {
-              myField: {},
-            },
-            number_of_fragments: 0,
-            post_tags: ['</b>'],
-            pre_tags: ['<b class="search-highlight">'],
-            require_field_match: false,
-          },
-        }),
-      ])
-    }
-  )
+      }),
+    ])
+  })
   it('should skip highlight when node highlight is false', async () => {
     schema.elasticsearch.highlight = {}
     F.extendOn(node, { highlight: false })
@@ -173,62 +170,56 @@ describe('results', () => {
       }),
     ])
   })
-  it(
-    'should highlight additionalFields if showOtherMatches is set',
-    async () => {
-      schema.elasticsearch.highlight = { test: ['field'] }
-      service[0].hits.hits[0].anotherField = 'test another field'
-      F.extendOn(node, {
-        showOtherMatches: true,
-        include: 'anotherField',
-        highlight: true,
-      })
-      expectedResult.results[0].anotherField = 'test another field'
-      await resultsTest(node, [
-        _.extend(expectedCalls[0], {
-          _source: {
-            includes: ['anotherField'],
-          },
-          sort: {
-            _score: 'desc',
-          },
-          highlight: {
-            fields: {},
-            number_of_fragments: 0,
-            post_tags: ['</b>'],
-            pre_tags: ['<b class="search-highlight">'],
-            require_field_match: false,
-          },
-        }),
-      ])
-    }
-  )
-  it(
-    'should not highlight additionalFields if showOtherMatches is not set',
-    async () => {
-      schema.elasticsearch.highlight = { test: ['field'] }
-      service[0].hits.hits[0].anotherField = 'test another field'
-      F.extendOn(node, { include: 'anotherField', highlight: true })
-      expectedResult.results[0].anotherField = 'test another field'
-      await resultsTest(node, [
-        _.extend(expectedCalls[0], {
-          _source: {
-            includes: ['anotherField'],
-          },
-          sort: {
-            _score: 'desc',
-          },
-          highlight: {
-            fields: {},
-            number_of_fragments: 0,
-            post_tags: ['</b>'],
-            pre_tags: ['<b class="search-highlight">'],
-            require_field_match: false,
-          },
-        }),
-      ])
-    }
-  )
+  it('should highlight additionalFields if showOtherMatches is set', async () => {
+    schema.elasticsearch.highlight = { test: ['field'] }
+    service[0].hits.hits[0].anotherField = 'test another field'
+    F.extendOn(node, {
+      showOtherMatches: true,
+      include: 'anotherField',
+      highlight: true,
+    })
+    expectedResult.results[0].anotherField = 'test another field'
+    await resultsTest(node, [
+      _.extend(expectedCalls[0], {
+        _source: {
+          includes: ['anotherField'],
+        },
+        sort: {
+          _score: 'desc',
+        },
+        highlight: {
+          fields: {},
+          number_of_fragments: 0,
+          post_tags: ['</b>'],
+          pre_tags: ['<b class="search-highlight">'],
+          require_field_match: false,
+        },
+      }),
+    ])
+  })
+  it('should not highlight additionalFields if showOtherMatches is not set', async () => {
+    schema.elasticsearch.highlight = { test: ['field'] }
+    service[0].hits.hits[0].anotherField = 'test another field'
+    F.extendOn(node, { include: 'anotherField', highlight: true })
+    expectedResult.results[0].anotherField = 'test another field'
+    await resultsTest(node, [
+      _.extend(expectedCalls[0], {
+        _source: {
+          includes: ['anotherField'],
+        },
+        sort: {
+          _score: 'desc',
+        },
+        highlight: {
+          fields: {},
+          number_of_fragments: 0,
+          post_tags: ['</b>'],
+          pre_tags: ['<b class="search-highlight">'],
+          require_field_match: false,
+        },
+      }),
+    ])
+  })
   it('should sort on "_score: desc" with no sortField config', () =>
     resultsTest(node, [{ ...expectedCalls[0], sort: { _score: 'desc' } }]))
   it('should order by sortDir config', async () => {
@@ -243,41 +234,35 @@ describe('results', () => {
     ])
   })
 
-  it(
-    'should add ".untouched" suffix from schema notAnalyzedField',
-    async () => {
-      let sortField = 'test.field'
-      F.extendOn(node, { sortField })
-      F.extendOn(schema, {
-        fields: {
-          [sortField]: {
-            elasticsearch: {
-              notAnalyzedField: 'untouched',
-            },
+  it('should add ".untouched" suffix from schema notAnalyzedField', async () => {
+    let sortField = 'test.field'
+    F.extendOn(node, { sortField })
+    F.extendOn(schema, {
+      fields: {
+        [sortField]: {
+          elasticsearch: {
+            notAnalyzedField: 'untouched',
           },
         },
-      })
-      await resultsTest(node, [
-        _.extend(expectedCalls[0], {
-          sort: {
-            [`${sortField}.untouched`]: 'desc',
-          },
-        }),
-      ])
-    }
-  )
-  it(
-    'should strip ".untouched" from sortField config when sortMode config is "word"',
-    async () => {
-      let sortField = 'test.field'
-      F.extendOn(node, { sortField, sortMode: 'word' })
-      await resultsTest(node, [
-        _.extend(expectedCalls[0], {
-          sort: {
-            [sortField]: 'desc',
-          },
-        }),
-      ])
-    }
-  )
+      },
+    })
+    await resultsTest(node, [
+      _.extend(expectedCalls[0], {
+        sort: {
+          [`${sortField}.untouched`]: 'desc',
+        },
+      }),
+    ])
+  })
+  it('should strip ".untouched" from sortField config when sortMode config is "word"', async () => {
+    let sortField = 'test.field'
+    F.extendOn(node, { sortField, sortMode: 'word' })
+    await resultsTest(node, [
+      _.extend(expectedCalls[0], {
+        sort: {
+          [sortField]: 'desc',
+        },
+      }),
+    ])
+  })
 })
