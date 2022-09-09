@@ -2,18 +2,18 @@
 
 exports[`terms_stats retrieves records 1`] = `
 [MockFunction] {
-  "calls": Array [
-    Array [
-      Object {
-        "children": Array [
-          Object {
-            "children": Array [
-              Object {
+  "calls": [
+    [
+      {
+        "children": [
+          {
+            "children": [
+              {
                 "filterOnly": true,
                 "key": "terms",
                 "type": "terms_stats",
               },
-              Object {
+              {
                 "filterOnly": true,
                 "key": "results",
                 "type": "results",
@@ -22,9 +22,9 @@ exports[`terms_stats retrieves records 1`] = `
             "filterOnly": true,
             "key": "root",
           },
-          Object {
-            "context": Object {
-              "terms": Array [
+          {
+            "context": {
+              "terms": [
                 "record1",
                 "record2",
                 "record3",
@@ -43,17 +43,17 @@ exports[`terms_stats retrieves records 1`] = `
         "type": "group",
       },
     ],
-    Array [
-      Object {
-        "children": Array [
-          Object {
-            "children": Array [
-              Object {
+    [
+      {
+        "children": [
+          {
+            "children": [
+              {
                 "filterOnly": true,
                 "key": "terms",
                 "type": "terms_stats",
               },
-              Object {
+              {
                 "filterOnly": true,
                 "key": "results",
                 "type": "results",
@@ -62,9 +62,9 @@ exports[`terms_stats retrieves records 1`] = `
             "filterOnly": true,
             "key": "root",
           },
-          Object {
-            "context": Object {
-              "terms": Array [
+          {
+            "context": {
+              "terms": [
                 "record1",
                 "record2",
                 "record3",
@@ -85,19 +85,19 @@ exports[`terms_stats retrieves records 1`] = `
       },
     ],
   ],
-  "results": Array [
-    Object {
-      "isThrow": false,
-      "value": Object {
-        "children": Array [
-          Object {
-            "children": Array [
-              Object {
+  "results": [
+    {
+      "type": "return",
+      "value": {
+        "children": [
+          {
+            "children": [
+              {
                 "filterOnly": true,
                 "key": "terms",
                 "type": "terms_stats",
               },
-              Object {
+              {
                 "filterOnly": true,
                 "key": "results",
                 "type": "results",
@@ -106,9 +106,9 @@ exports[`terms_stats retrieves records 1`] = `
             "filterOnly": true,
             "key": "root",
           },
-          Object {
-            "context": Object {
-              "terms": Array [
+          {
+            "context": {
+              "terms": [
                 "record1",
                 "record2",
                 "record3",
@@ -127,18 +127,18 @@ exports[`terms_stats retrieves records 1`] = `
         "type": "group",
       },
     },
-    Object {
-      "isThrow": false,
-      "value": Object {
-        "children": Array [
-          Object {
-            "children": Array [
-              Object {
+    {
+      "type": "return",
+      "value": {
+        "children": [
+          {
+            "children": [
+              {
                 "filterOnly": true,
                 "key": "terms",
                 "type": "terms_stats",
               },
-              Object {
+              {
                 "filterOnly": true,
                 "key": "results",
                 "type": "results",
@@ -147,9 +147,9 @@ exports[`terms_stats retrieves records 1`] = `
             "filterOnly": true,
             "key": "root",
           },
-          Object {
-            "context": Object {
-              "terms": Array [
+          {
+            "context": {
+              "terms": [
                 "record1",
                 "record2",
                 "record3",

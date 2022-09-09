@@ -1,4 +1,7 @@
-﻿# 1.0.6
+﻿# 1.0.7
+* Add coverage to danger and other cleanup
+
+# 1.0.6
 * Update the pull-request workflow to better catch test failures
 
 # 1.0.5
