@@ -1,3 +1,6 @@
+# 0.26.3
+* Add code coverage to danger
+
 # 0.26.2
 * Update pull-request workflow to better catch test failures
 

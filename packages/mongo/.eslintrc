@@ -3,8 +3,8 @@
   "parserOptions": {
     "ecmaVersion": 2018
   },
-  env: {
-    jest: true,
+  "env": {
+    "jest": true
   },
   "rules": {
     "no-unused-vars": 1
