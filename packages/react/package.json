@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "2.51.2",
+  "version": "2.51.3",
   "description": "React components for building contexture interfaces",
   "main": "dist/index.js",
   "scripts": {
@@ -35,9 +35,9 @@
   },
   "homepage": "https://github.com/smartprocure/contexture-react#readme",
   "peerDependencies": {
-    "mobx": "^6",
-    "mobx-react": "^7",
-    "mobx-utils": "^6",
+    "mobx": ">=4.0.0",
+    "mobx-react": ">=6.3.0",
+    "mobx-utils": ">=5.0.0",
     "react": "^16.8.0 || ^17.0.0"
   },
   "prettier": {
@@ -107,9 +107,9 @@
     "eslint-config-smartprocure": "^1.1.0",
     "jest": "^24.7.1",
     "material-ui-chip-input": "^1.0.0",
-    "mobx": "^6.6.1",
-    "mobx-react": "^7.5.1",
-    "mobx-utils": "^6.0.5",
+    "mobx": ">=4.0.0",
+    "mobx-react": ">=6.3.0",
+    "mobx-utils": ">=5.0.0",
     "moment": "^2.24.0",
     "prettier": "^2.0.5",
     "raw-loader": "^2.0.0",

@@ -1,4 +1,5 @@
-import { observable, set } from 'mobx'
+import { set } from 'mobx'
+import { observable } from '../../utils/mobx'
 import { action } from '@storybook/addon-actions'
 import _ from 'lodash/fp'
 

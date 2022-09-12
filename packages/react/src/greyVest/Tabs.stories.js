@@ -1,6 +1,6 @@
 import React from 'react'
 import { action } from '@storybook/addon-actions'
-import { observable } from 'mobx'
+import { observable } from '../utils/mobx'
 import { Observer } from 'mobx-react'
 import { Tabs, Tab, TabLabel, TabContent, ButtonRadio, Button } from '.'
 import decorator from './stories/decorator'

@@ -1,7 +1,7 @@
 import _ from 'lodash/fp'
 import * as F from 'futil'
 import React from 'react'
-import { observable } from 'mobx'
+import { observable } from '../utils/mobx'
 import { observer, inject } from 'mobx-react'
 import { DropdownItem } from './DropdownItem'
 import Popover from './Popover'

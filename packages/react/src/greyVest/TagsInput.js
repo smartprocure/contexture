@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react'
 import _ from 'lodash/fp'
-import { observable } from 'mobx'
+import { observable } from '../utils/mobx'
 import { observer, inject, useLocalObservable } from 'mobx-react'
 import Flex from './Flex'
 import DefaultTag from './Tag'
