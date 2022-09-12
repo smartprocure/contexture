@@ -5,12 +5,13 @@ import ThemePicker from '../stories/themePicker'
 import { useTheme } from '../utils/theme'
 import { StepsAccordion, AccordionStep } from '.'
 
-let makeStepTitle = title => n => (
-  <h1>
-    <span className="step-number">{n + 1}) </span>
-    {title}
-  </h1>
-)
+let makeStepTitle = title => n =>
+  (
+    <h1>
+      <span className="step-number">{n + 1}) </span>
+      {title}
+    </h1>
+  )
 
 storiesOf('Search Components|Internals/StepsAccordion', module)
   .addDecorator(ThemePicker('greyVest'))
