@@ -1,19 +1,14 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import F from 'futil'
 import { observer } from 'mobx-react'
 import { getRecord, getResults } from '../../utils/schema'
 import HighlightedColumn from './HighlightedColumn'
-import { rawHtml, addBlankRows, blankResult } from '../../utils/format'
+import { addBlankRows, blankResult } from '../../utils/format'
 import { withTheme } from '../../utils/theme'
 import { StripedLoader } from '../../greyVest'
 
-let displayCell = (display, field, result) => {
-  let record = getRecord(result)
-  let data = _.get(field, record)
-  if (result.isBlank) return blankResult(display)(data, record)
-  return F.ifElse(_.isString, rawHtml, _.identity, display(data, record))
-}
+let displayCell = ({ display, value, record, result }) =>
+  result.isBlank ? blankResult(display)(value, record) : display(value, record)
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
 let TableBody = ({
@@ -30,6 +25,7 @@ let TableBody = ({
   Row = Tr,
   NoResultsComponent,
   IntroComponent,
+  defaultDisplay = displayCell,
 }) => {
   let results = blankRows
     ? addBlankRows(getResults(node), pageSize, '_id')
@@ -65,7 +61,12 @@ let TableBody = ({
                         left: field === stickyColumn ? 0 : '',
                       }}
                     >
-                      {displayCell(display, field, x)}
+                      {defaultDisplay({
+                        display,
+                        value: _.get(field, getRecord(x)),
+                        record: getRecord(x),
+                        result: x,
+                      })}
                     </Cell>
                   ),
                   visibleFields

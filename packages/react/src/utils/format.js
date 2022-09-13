@@ -1,6 +1,5 @@
 import _ from 'lodash/fp'
 import React from 'react'
-import { sanitize } from 'dompurify'
 
 export let toNumber = (number, ...params) => {
   if (_.isNumber(number)) {
@@ -44,19 +43,14 @@ let toBlankText = (display, data, record) => {
   }
 }
 
-export let blankResult = display => (data, record) =>
-  (
-    <span
-      style={{
-        fontFamily: 'monospace',
-        display: 'inline-block',
-        opacity: 0.2,
-      }}
-    >
-      {toBlankText(display, data, record)}
-    </span>
-  )
-
-export let rawHtml = data => (
-  <span dangerouslySetInnerHTML={{ __html: sanitize(data) }} />
+export let blankResult = display => (data, record) => (
+  <span
+    style={{
+      fontFamily: 'monospace',
+      display: 'inline-block',
+      opacity: 0.2,
+    }}
+  >
+    {toBlankText(display, data, record)}
+  </span>
 )
