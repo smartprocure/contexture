@@ -1,12 +1,21 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import F from 'futil'
 import { observer } from 'mobx-react'
 import { getRecord, getResults } from '../../utils/schema'
 import HighlightedColumn from './HighlightedColumn'
 import { addBlankRows, blankResult } from '../../utils/format'
 import { withTheme } from '../../utils/theme'
 import { StripedLoader } from '../../greyVest'
+
+let displayCell = (display, field, result) => {
+  let record = getRecord(result)
+  let data = _.get(field, record)
+  if (result.isBlank) return blankResult(display)(data, record)
+  data = display(data, record)
+  if (_.isString(data))
+    return <span dangerouslySetInnerHTML={{ __html: data }} />
+  return data
+}
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
 let TableBody = ({
@@ -58,11 +67,7 @@ let TableBody = ({
                         left: field === stickyColumn ? 0 : '',
                       }}
                     >
-                      {F.when(
-                        () => x.isBlank,
-                        blankResult,
-                        display
-                      )(_.get(field, getRecord(x)), getRecord(x))}
+                      {displayCell(display, field, x)}
                     </Cell>
                   ),
                   visibleFields
