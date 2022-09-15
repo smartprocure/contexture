@@ -2344,8 +2344,6 @@ let AllTests = ContextureClient => {
       }
     )
 
-    // These tests set `forceReplaceResponse` conditionally during mutate based on the pivot's onDispatch
-    // Changing fieldValues Size doesn't force replace
     Tree.mutate(['root', 'pivot'], {
       pagination: { rows: { drilldown: ['Florida'], skip: ['Miami'] } },
     })
@@ -2357,6 +2355,76 @@ let AllTests = ContextureClient => {
     expect(
       Tree.getNode(['root', 'pivot']).pagination.rows.drilldown
     ).to.deep.equal([])
+  })
+  it('should preserve expanded drilldowns when drilling and paginating', async () => {
+    let service = sinon.spy(mockService())
+    let rows = [
+      { type: 'fieldValuesPartition', field: 'State' },
+      { type: 'fieldValues', field: 'City', size: 10 },
+    ]
+    let Tree = ContextureClient(
+      { service, debounce: 1 },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'pivot',
+            type: 'pivot',
+            pagination: { rows: { drilldown: [] } },
+            rows,
+          },
+          { key: 'test', type: 'facet', values: [] },
+        ],
+      }
+    )
+
+    Tree.mutate(['root', 'pivot'], {
+      context: {
+        results: {
+          rows: [
+            { key: 'Florida', rows: [{ key: 'Miami', a: 1 }] },
+            {
+              key: 'Nevada',
+              rows: [{ key: 'Las Vegas', a: 2 }],
+            },
+          ],
+        },
+      },
+    })
+
+    Tree.mutate(['root', 'pivot'], {
+      pagination: { rows: { drilldown: ['Florida'] } },
+    })
+
+    expect(
+      Tree.getNode(['root', 'pivot']).pagination.rows.expanded
+    ).to.deep.equal([
+      {
+        drilldown: [],
+        skip: [],
+        include: ['Florida', 'Nevada'],
+      },
+    ])
+
+    Tree.mutate(['root', 'pivot'], {
+      pagination: { rows: { drilldown: ['Florida'], skip: ['Miami'] } },
+    })
+
+    expect(
+      Tree.getNode(['root', 'pivot']).pagination.rows.expanded
+    ).to.deep.equal([
+      {
+        drilldown: [],
+        skip: [],
+        include: ['Florida', 'Nevada'],
+      },
+      {
+        drilldown: ['Florida'],
+        skip: [],
+        include: ['Miami'],
+      },
+    ])
   })
   it('should support watchNode', async () => {
     let service = sinon.spy(mockService())
