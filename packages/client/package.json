@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/smartprocure/contexture-client#readme",
   "dependencies": {
-    "futil": "^1.69.0",
+    "futil": "^1.70.0",
     "lodash": "^4.17.15"
   },
   "devDependencies": {

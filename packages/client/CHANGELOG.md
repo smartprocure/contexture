@@ -1,5 +1,8 @@
-# 2.48.0
+# 2.49.0
 * Pivot node: new `pagination` logic for `columns` and `rows` with `drilldown`, `skip`, `include` and `expanded`
+
+# 2.48.0
+* New feature: new per-node hook `onSerialize` allows users to customize tree nodes as the tree is being serialized
 
 # 2.47.0
 * Pivot node: new `pagination` logic with `drilldown` and `skip`
