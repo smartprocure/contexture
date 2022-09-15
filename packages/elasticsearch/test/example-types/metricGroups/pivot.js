@@ -2,6 +2,7 @@ let _ = require('lodash/fp')
 let {
   filter,
   buildQuery,
+  mapExpandedPages,
   aggsForValues,
   processResponse,
 } = require('../../../src/example-types/metricGroups/pivot')
@@ -814,6 +815,121 @@ describe('pivot', () => {
     )
     expect(result).to.eql(expected)
   })
+  it('should buildQuery for fieldValues with drilldown and include', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      pagination: {
+        rows: {
+          drilldown: ['Reno', '0.0-500.0'],
+          include: ['A - U.S. OWNED BUSINESS'],
+        },
+      },
+      rows: [
+        {
+          type: 'fieldValues',
+          field: 'Organization.Name',
+        },
+        {
+          type: 'numberRanges',
+          field: 'LineItem.TotalPrice',
+          ranges: [
+            { from: '0', to: '500' },
+            { from: '500', to: '10000' },
+          ],
+        },
+        {
+          type: 'fieldValues',
+          field: 'Organization.Type',
+        },
+      ],
+    }
+    let expected = {
+      aggs: {
+        pivotFilter: {
+          filter: {
+            bool: {
+              must: [
+                {
+                  term: {
+                    'Organization.Name': 'Reno',
+                  },
+                },
+                {
+                  range: {
+                    'LineItem.TotalPrice': {
+                      gte: '0.0',
+                      lt: '500.0',
+                    },
+                  },
+                },
+                {
+                  bool: {
+                    minimum_should_match: 1,
+                    should: [
+                      {
+                        term: {
+                          'Organization.Type': 'A - U.S. OWNED BUSINESS',
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          aggs: {
+            rows: {
+              terms: {
+                field: 'Organization.Name',
+                size: 10,
+              },
+              aggs: {
+                rows: {
+                  range: {
+                    field: 'LineItem.TotalPrice',
+                    ranges: [
+                      {
+                        from: '0',
+                        to: '500',
+                      },
+                      {
+                        from: '500',
+                        to: '10000',
+                      },
+                    ],
+                  },
+                  aggs: {
+                    rows: {
+                      terms: {
+                        field: 'Organization.Type',
+                        size: 10,
+                      },
+                      aggs: {
+                        'pivotMetric-sum-LineItem.TotalPrice': {
+                          sum: {
+                            field: 'LineItem.TotalPrice',
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      track_total_hits: true,
+    }
+    let result = await buildQuery(
+      input,
+      testSchemas(['Vendor.City']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    expect(result).to.eql(expected)
+  })
   it('should buildQuery for smart numberInterval to show getStats works', async () => {
     let input = {
       key: 'test',
@@ -1089,7 +1205,7 @@ describe('pivot', () => {
     )
     expect(result).to.eql(expected)
   })
-  it('should build query with pivot columns', async () => {
+  it('should buildQuery with pivot columns', async () => {
     let input = {
       key: 'test',
       type: 'pivot',
@@ -1280,7 +1396,7 @@ describe('pivot', () => {
     )
     expect(result).to.eql(expected)
   })
-  it('should build query with pivot columns and subtotals', async () => {
+  it('should buildQuery with pivot columns and subtotals', async () => {
     let input = {
       key: 'test',
       type: 'pivot',
@@ -1361,7 +1477,7 @@ describe('pivot', () => {
     // console.log(JSON.stringify(result))
     expect(result).to.eql(expected)
   })
-  it('should build query with nested pivot column and sort', async () => {
+  it('should buildQuery with nested pivot column and sort', async () => {
     let input = {
       key: 'test',
       type: 'pivot',
@@ -1451,7 +1567,7 @@ describe('pivot', () => {
     )
     expect(result).to.eql(expected)
   })
-  it('should build query and sort on the row if top-level sort is missing', async () => {
+  it('should buildQuery and sort on the row if top-level sort is missing', async () => {
     let input = {
       key: 'test',
       type: 'pivot',
@@ -1520,7 +1636,7 @@ describe('pivot', () => {
     )
     expect(result).to.eql(expected)
   })
-  it('should build query and sort on nth value metric', async () => {
+  it('should buildQuery and sort on nth value metric', async () => {
     let input = {
       key: 'test',
       type: 'pivot',
@@ -1637,7 +1753,7 @@ describe('pivot', () => {
     // console.log(JSON.stringify(result, null, 2))
     expect(result).to.eql(expected)
   })
-  it('should build query and sort with no columns', async () => {
+  it('should buildQuery and sort with no columns', async () => {
     let input = {
       key: 'test',
       type: 'pivot',
@@ -1716,7 +1832,7 @@ describe('pivot', () => {
     // console.log(JSON.stringify(result, null, 2))
     expect(result).to.eql(expected)
   })
-  it('should build query and sort on document count without valueIndex', async () => {
+  it('should buildQuery and sort on document count without valueIndex', async () => {
     let input = {
       key: 'test',
       type: 'pivot',
@@ -1794,7 +1910,7 @@ describe('pivot', () => {
     // console.log(JSON.stringify(result, null, 2))
     expect(result).to.eql(expected)
   })
-  it('should build query with multiple columns and sorting on multiple columns', async () => {
+  it('should buildQuery with multiple columns and sorting on multiple columns', async () => {
     let input = {
       key: 'test',
       type: 'pivot',
@@ -1910,7 +2026,7 @@ describe('pivot', () => {
     )
     expect(result).to.eql(expected)
   })
-  it('should build query with multiple rows, columns, and sort', async () => {
+  it('should buildQuery with multiple rows, columns, and sort', async () => {
     let input = {
       key: 'test',
       type: 'pivot',
@@ -2038,7 +2154,7 @@ describe('pivot', () => {
     )
     expect(result).to.eql(expected)
   })
-  it('should build query with multiple rows, columns, and sort on _count without valueIndex', async () => {
+  it('should buildQuery with multiple rows, columns, and sort on _count without valueIndex', async () => {
     let input = {
       key: 'test',
       type: 'pivot',
@@ -2178,7 +2294,7 @@ describe('pivot', () => {
     )
     expect(result).to.eql(expected)
   })
-  it('should build query with nested pivot columns and subtotals', async () => {
+  it('should buildQuery with nested pivot columns and subtotals', async () => {
     let input = {
       key: 'test',
       type: 'pivot',
@@ -2295,6 +2411,283 @@ describe('pivot', () => {
     )
     // console.log(JSON.stringify(result))
     expect(result).to.eql(expected)
+  })
+  it('should mapExpandedPages for no expanded', async () => {
+    let rows = [
+      { type: 'fieldValues', field: 'Organization.State' },
+      { type: 'fieldValues', field: 'Organization.NameState' },
+    ]
+    let columns = [
+      { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
+    ]
+    let expandedColumns = []
+    let expandedRows = []
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      rows,
+      columns,
+      pagination: {
+        columns: {
+          drilldown: [],
+          skip: [],
+          expanded: expandedColumns,
+        },
+        rows: {
+          drilldown: ['New York'],
+          skip: [],
+          expanded: expandedRows,
+        },
+      },
+    }
+    let expectedIntial = {
+      key: 'test',
+      type: 'pivot',
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      rows,
+      columns,
+      pagination: {
+        columns: {
+          drilldown: [],
+          skip: [],
+          expanded: expandedColumns,
+        },
+        rows: {
+          drilldown: ['New York'],
+          skip: [],
+          expanded: expandedRows,
+        },
+      },
+    }
+
+    let { initial, makePages } = mapExpandedPages(input)
+    // console.log(JSON.stringify(initial))
+    expect(initial).to.eql(expectedIntial)
+
+    let includeValues = [
+      'New York',
+      'Albany',
+      'Brooklyn',
+      'Long Island City',
+      'Corona',
+      'Buffalo',
+      'Syracuse',
+      'Cooperstown',
+      'Rochester',
+      'White Plains',
+    ]
+    let expectedPages = []
+    let pages = makePages(includeValues)
+    // console.log(JSON.stringify(pages))
+    expect(pages).to.eql(expectedPages)
+  })
+  it('should mapExpandedPages for 2 expanded columns', async () => {
+    let rows = [
+      { type: 'fieldValues', field: 'Organization.State' },
+      { type: 'fieldValues', field: 'Organization.NameState' },
+    ]
+    let columns = [
+      { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
+    ]
+    let expandedColumns = [
+      {
+        drilldown: [],
+        include: [
+          '2015-01-01T00:00:00.000Z',
+          '2016-01-01T00:00:00.000Z',
+          '2017-01-01T00:00:00.000Z',
+          '2018-01-01T00:00:00.000Z',
+          '2019-01-01T00:00:00.000Z',
+          '2020-01-01T00:00:00.000Z',
+          '2021-01-01T00:00:00.000Z',
+          '2022-01-01T00:00:00.000Z',
+        ],
+      },
+      {
+        drilldown: ['2015-01-01T00:00:00.000Z'],
+        skip: [],
+        include: [
+          '2015-01-01T00:00:00.000Z',
+          '2015-04-01T00:00:00.000Z',
+          '2015-07-01T00:00:00.000Z',
+          '2015-10-01T00:00:00.000Z',
+        ],
+      },
+      {
+        drilldown: ['2016-01-01T00:00:00.000Z'],
+        skip: [],
+        include: [
+          '2016-01-01T00:00:00.000Z',
+          '2016-04-01T00:00:00.000Z',
+          '2016-07-01T00:00:00.000Z',
+          '2016-10-01T00:00:00.000Z',
+        ],
+      },
+    ]
+    let expandedRows = [
+      {
+        drilldown: [],
+        include: [
+          'District of Columbia',
+          'California',
+          'New York',
+          'Virginia',
+          'Texas',
+          'Massachusetts',
+          'Illinois',
+          'New Jersey',
+          'Ohio',
+          'Florida',
+        ],
+      },
+    ]
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      rows,
+      columns,
+      pagination: {
+        columns: {
+          drilldown: [],
+          skip: [],
+          expanded: expandedColumns,
+        },
+        rows: {
+          drilldown: ['New York'],
+          skip: [],
+          expanded: expandedRows,
+        },
+      },
+    }
+    let expectedIntial = {
+      key: 'test',
+      type: 'pivot',
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      rows,
+      columns,
+      pagination: {
+        columns: {
+          drilldown: [],
+          skip: [],
+          include: [
+            '2015-01-01T00:00:00.000Z',
+            '2016-01-01T00:00:00.000Z',
+            '2017-01-01T00:00:00.000Z',
+            '2018-01-01T00:00:00.000Z',
+            '2019-01-01T00:00:00.000Z',
+            '2020-01-01T00:00:00.000Z',
+            '2021-01-01T00:00:00.000Z',
+            '2022-01-01T00:00:00.000Z',
+          ],
+          expanded: expandedColumns,
+        },
+        rows: {
+          drilldown: ['New York'],
+          skip: [],
+          expanded: expandedRows,
+        },
+      },
+    }
+
+    let { initial, makePages } = mapExpandedPages(input)
+    // console.log(JSON.stringify(initial))
+    expect(initial).to.eql(expectedIntial)
+
+    let includeValues = [
+      'New York',
+      'Albany',
+      'Brooklyn',
+      'Long Island City',
+      'Corona',
+      'Buffalo',
+      'Syracuse',
+      'Cooperstown',
+      'Rochester',
+      'White Plains',
+    ]
+    let expectedPages = [
+      {
+        key: 'test',
+        type: 'pivot',
+        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+        rows,
+        columns,
+        pagination: {
+          columns: {
+            drilldown: ['2015-01-01T00:00:00.000Z'],
+            skip: [],
+            include: [
+              '2015-01-01T00:00:00.000Z',
+              '2015-04-01T00:00:00.000Z',
+              '2015-07-01T00:00:00.000Z',
+              '2015-10-01T00:00:00.000Z',
+            ],
+            expanded: expandedColumns,
+          },
+          rows: {
+            drilldown: ['New York'],
+            skip: [],
+            include: [
+              'New York',
+              'Albany',
+              'Brooklyn',
+              'Long Island City',
+              'Corona',
+              'Buffalo',
+              'Syracuse',
+              'Cooperstown',
+              'Rochester',
+              'White Plains',
+            ],
+            expanded: expandedRows,
+          },
+        },
+      },
+      {
+        key: 'test',
+        type: 'pivot',
+        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+        rows,
+        columns,
+        pagination: {
+          columns: {
+            drilldown: ['2016-01-01T00:00:00.000Z'],
+            skip: [],
+            include: [
+              '2016-01-01T00:00:00.000Z',
+              '2016-04-01T00:00:00.000Z',
+              '2016-07-01T00:00:00.000Z',
+              '2016-10-01T00:00:00.000Z',
+            ],
+            expanded: expandedColumns,
+          },
+          rows: {
+            drilldown: ['New York'],
+            skip: [],
+            include: [
+              'New York',
+              'Albany',
+              'Brooklyn',
+              'Long Island City',
+              'Corona',
+              'Buffalo',
+              'Syracuse',
+              'Cooperstown',
+              'Rochester',
+              'White Plains',
+            ],
+            expanded: expandedRows,
+          },
+        },
+      },
+    ]
+    let pages = makePages(includeValues)
+    // console.log(JSON.stringify(pages))
+    expect(pages).to.eql(expectedPages)
   })
   it('should handle pivotResponse', () => {
     let aggs = pivotResponse.aggregations
