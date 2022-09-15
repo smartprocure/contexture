@@ -21,14 +21,17 @@ let twoLevelMatch = {
 
 let getKey = x => x.keyAsString || x.key
 
-let drilldownLookup = (type, path, results) => {
+// Similar to Tree.lookup but path is a drilldown which uses keyAsString or key
+let resultsForDrilldown = (type, path, results) => {
   if (_.isEmpty(path) || !results) return results
 
   let key = _.first(path)
   let groups = _.get(type, results)
   let match = _.find(node => getKey(node) === key, groups)
-  return drilldownLookup(type, path.slice(1), match)
+  return resultsForDrilldown(type, path.slice(1), match)
 }
+
+let someNotEmpty = _.some(_.negate(_.isEmpty))
 
 export default F.stampKey('type', {
   facet: {
@@ -330,6 +333,7 @@ export default F.stampKey('type', {
         ) {
           let isRowPagination = _.has('pagination.rows', value)
 
+          // Getting previous drilldown/skip values and adding include
           let getPrevPage = type => {
             let page = _.flow(
               _.get(['pagination', type]),
@@ -337,7 +341,8 @@ export default F.stampKey('type', {
             )(previous)
 
             if (page) {
-              // adding include for the first page only if expanded is empty yet
+              // adding root level include for the first page only if expanded is empty yet
+              // allows us to remember values of existing root level rows/columns
               if (
                 _.isEmpty(page.drilldown) &&
                 _.isEmpty(page.skip) &&
@@ -345,12 +350,14 @@ export default F.stampKey('type', {
               )
                 return false
 
-              let results = drilldownLookup(
+              // getting existing results for the drilldown
+              let results = resultsForDrilldown(
                 type,
                 page.drilldown,
                 _.get('context.results', node)
               )
 
+              // getting existing row/column values without skipped ones
               page.include = _.flow(
                 _.get(type),
                 _.map(getKey),
@@ -361,6 +368,7 @@ export default F.stampKey('type', {
             return page
           }
 
+          // Previous expanded values with previous drilldown added
           let getExpanded = type =>
             _.compact([
               ..._.getOr([], ['pagination', type, 'expanded'], previous),
@@ -429,16 +437,17 @@ export default F.stampKey('type', {
     },
     shouldMergeResponse: node =>
       // checking for presence of drilldown, skip, expanded in pagination
-      _.flow(
-        _.flatMapDeep(type =>
-          _.map(prop => _.get(['pagination', type, prop], node), [
-            'drilldown',
-            'skip',
-            'expanded',
-          ])
-        ),
-        _.some(_.negate(_.isEmpty))
-      )(['columns', 'rows']),
+      someNotEmpty(_.map(
+        _.get(_, node),
+        [
+          'pagination.columns.drilldown',
+          'pagination.columns.skip',
+          'pagination.columns.expanded',
+          'pagination.rows.drilldown',
+          'pagination.rows.skip',
+          'pagination.rows.expanded',
+        ],
+      )),
     mergeResponse(node, response, extend, snapshot) {
       // Convert response rows and columns to objects for easy merges
       let groupsToObjects = deepMultiTransformOn(
