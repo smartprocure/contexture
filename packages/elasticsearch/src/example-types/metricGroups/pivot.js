@@ -17,6 +17,7 @@ let lookupTypeProp = (def, prop, type) =>
 // Add `pivotMetric-` to auto keys so we can skip camelCasing it in the response
 let aggKeyForValue = ({ key, type, field }) =>
   key || F.compactJoin('-', ['pivotMetric', type, field])
+
 let aggsForValues = (node, schema) =>
   _.flow(
     _.keyBy(aggKeyForValue),
@@ -33,23 +34,28 @@ let aggsForValues = (node, schema) =>
 
 let getKey = x => x.keyAsString || x.key
 
-let drilldownLookup = (type, path, results) => {
+// Similar to Tree.lookup but path is a drilldown which uses keyAsString or key
+let resultsForDrilldown = (type, path, results) => {
   if (_.isEmpty(path) || !results) return results
 
   let key = _.first(path)
   let groups = _.get(type, results)
   let match = _.find(node => getKey(node) === key, groups)
-  return drilldownLookup(type, path.slice(1), match)
+  return resultsForDrilldown(type, path.slice(1), match)
 }
+
+let someNotEmpty = _.some(_.negate(_.isEmpty))
 
 let getResultValues = (node, results) => {
   let pagination = node.pagination
-  let isDrilldown = _.flow(
-    _.flatMapDeep(type =>
-      _.map(prop => _.get([type, prop], pagination), ['drilldown', 'skip'])
-    ),
-    _.some(_.negate(_.isEmpty))
-  )(['columns', 'rows'])
+  let isDrilldown = someNotEmpty(
+    _.map(_.get(_, pagination), [
+      'columns.drilldown',
+      'columns.skip',
+      'rows.drilldown',
+      'rows.skip',
+    ])
+  )
 
   if (!isDrilldown) return []
 
@@ -60,9 +66,11 @@ let getResultValues = (node, results) => {
 
   let drilldown = _.get([groupType, 'drilldown'], pagination)
 
-  let resultNode = drilldownLookup(groupType, drilldown, results)
-  return _.map(getKey, _.get(groupType, resultNode))
+  let drilldownResults = resultsForDrilldown(groupType, drilldown, results)
+  return _.map(getKey, _.get(groupType, drilldownResults))
 }
+
+let everyEmpty = _.every(_.isEmpty)
 
 let maybeWrapWithFilterAgg = ({
   query,
@@ -72,41 +80,46 @@ let maybeWrapWithFilterAgg = ({
   skipFilters,
   aggName,
 }) =>
-  _.isEmpty(filters) &&
-  _.isEmpty(includeRowFilters) &&
-  _.isEmpty(includeColumnFilters) &&
-  _.isEmpty(skipFilters)
+  everyEmpty([filters, includeRowFilters, includeColumnFilters, skipFilters])
     ? query
     : {
         aggs: {
           [aggName]: {
             filter: {
               bool: {
-                ...((!_.isEmpty(filters) ||
-                  !_.isEmpty(includeRowFilters) ||
-                  !_.isEmpty(includeColumnFilters)) && {
+                ...(someNotEmpty([
+                  filters,
+                  includeRowFilters,
+                  includeColumnFilters,
+                ]) && {
                   must: [
+                    // filters representing the drilldown
                     ...(filters || []),
+                    // querying data only for specific row values when paginating/expanding
                     ...(!_.isEmpty(includeRowFilters)
                       ? [
                           {
                             bool: {
                               should: includeRowFilters,
+                              minimum_should_match: 1,
                             },
                           },
                         ]
                       : []),
+                    // querying data only for specific column values when paginating/expanding
                     ...(!_.isEmpty(includeColumnFilters)
                       ? [
                           {
                             bool: {
                               should: includeColumnFilters,
+                              minimum_should_match: 1,
                             },
                           },
                         ]
                       : []),
                   ],
                 }),
+                // skipping exising row or column values when paginating next rows/columns
                 ...(!_.isEmpty(skipFilters) && { must_not: skipFilters }),
               },
             },
@@ -191,15 +204,19 @@ let getSortField = ({ columnValues = [], valueProp, valueIndex } = {}) =>
     valueProp,
   ])
 
-let mapDrilldownPages = node => {
+let mapExpandedPages = node => {
   let pagination = node.pagination || { columns: {}, rows: {} }
-  let isDrilldown = _.flow(
-    _.flatMapDeep(type =>
-      _.map(prop => _.get([type, prop], pagination), ['drilldown', 'skip'])
-    ),
-    _.some(_.negate(_.isEmpty))
-  )(['columns', 'rows'])
 
+  let isDrilldown = someNotEmpty(
+    _.map(_.get(_, pagination), [
+      'columns.drilldown',
+      'columns.skip',
+      'rows.drilldown',
+      'rows.skip',
+    ])
+  )
+
+  // drilldown/skip request can be performed on rows or on columns at a time
   let rowDrillMode = !(
     _.isEmpty(pagination.rows.drilldown) && _.isEmpty(pagination.rows.skip)
   )
@@ -207,7 +224,9 @@ let mapDrilldownPages = node => {
     ? _.get('columns.expanded', pagination)
     : _.get('rows.expanded', pagination)
 
-  let mergePageNode = page =>
+  // Restoring pages from expanded into pagination
+  // Merge this row/column drilldown with includes from already expanded columns/rows
+  let mergePaginationNode = page =>
     _.merge(node, {
       pagination: {
         [rowDrillMode ? 'columns' : 'rows']: _.pick(
@@ -219,14 +238,18 @@ let mapDrilldownPages = node => {
 
   if (isDrilldown && _.get('length', expanded)) {
     return {
-      initial: mergePageNode(expanded[0]),
+      // Initial page represents first query to get row/column values for this request
+      initial: mergePaginationNode(expanded[0]),
+      // And then can we make additional queries for already expanded columns/rows
+      // but only for rows/columns returned by the initial page query
       makePages: include =>
         _.map(
-          _.flow(mergePageNode, node =>
+          _.flow(mergePaginationNode, node =>
             _.merge(node, {
               pagination: {
                 [rowDrillMode ? 'rows' : 'columns']: {
                   include,
+                  // Removing any skip values as we are using explicit include instead
                   skip: [],
                 },
               },
@@ -293,18 +316,20 @@ let buildQuery = async (node, schema, getStats) => {
   if (!_.isEmpty(columns))
     statsAggs = _.merge(
       await buildNestedGroupQuery(statsAggs, columns, 'columns'),
+      // Stamping total column metrics if not drilling columns
       _.isEmpty(columnDrills) && _.isEmpty(_.get('columns.skip', pagination))
         ? statsAggs
         : {}
     )
   let query = _.merge(
     await buildNestedGroupQuery(statsAggs, rows, 'rows', node.sort),
-    // Stamping total row metrics if not drilling data
+    // Stamping total row metrics if not drilling rows
     _.isEmpty(rowDrills) && _.isEmpty(_.get('rows.skip', pagination))
       ? statsAggs
       : {}
   )
 
+  // Filtering data specified by the drilldown
   let filters = [
     ...((await drilldownFilters({
       drilldowns: rowDrills,
@@ -320,6 +345,7 @@ let buildQuery = async (node, schema, getStats) => {
     })) || []),
   ]
 
+  // Narrowing query down to values specified in include
   let includeRowFilters = await paginationFilters({
     drilldowns: rowDrills,
     values: _.get('rows.include', pagination),
@@ -335,6 +361,7 @@ let buildQuery = async (node, schema, getStats) => {
     getStats,
   })
 
+  // Skipping existing values when requesting the next page
   let skipFilters = [
     ...((await paginationFilters({
       drilldowns: rowDrills,
@@ -435,11 +462,14 @@ let pivot = {
   filter,
   aggsForValues,
   buildQuery,
+  mapExpandedPages,
   processResponse,
   validContext: node => node.rows.length && node.values.length,
-  // TODO: unify this with groupStatsUtil - the general pipeline is the same conceptually
   async result(node, search, schema) {
-    let { initial, makePages } = mapDrilldownPages(node)
+    // Initial request gets new row/column values for this request
+    // Then using those values makePages will produce additional queries
+    // for already expanded columns/rows
+    let { initial, makePages } = mapExpandedPages(node)
 
     let initialPageResult = processResponse(
       await search(await buildQuery(initial, schema, getStats(search))),
