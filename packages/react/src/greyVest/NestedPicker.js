@@ -6,7 +6,6 @@ import { inject, observer, Observer, useLocalStore } from 'mobx-react'
 import { observable } from 'mobx'
 import { withTheme } from '../utils/theme'
 import pluralize from 'pluralize'
-import Box from './Box'
 import Flex from './Flex'
 import GVTextInput from './TextInput'
 import GVTextHighlight from './TextHighlight'
@@ -50,7 +49,9 @@ let FilteredSection = _.flow(
     style = { maxHeight: 340, overflowY: 'scroll' },
     checked,
   }) => {
-    let { PickerItem, TextHighlight } = React.useContext(PickerContext)
+    let { PickerItem, TextHighlight, setHoverItem } = React.useContext(
+      PickerContext
+    )
     return (
       <div style={style}>
         {F.mapIndexed(
@@ -63,6 +64,9 @@ let FilteredSection = _.flow(
                   ? checked.delete(option.value)
                   : checked.set(option.value, option)
               }}
+              {...F.domLens.hover(isHover =>
+                setHoverItem(isHover ? option : null)
+              )}
             >
               <TextHighlight text={option.label} pattern={highlight} />
             </PickerItem>
@@ -85,7 +89,7 @@ let Section = _.flow(
     checked,
     style = { overflow: 'auto', width: '100%', maxHeight: 300 },
   }) => {
-    let { PickerItem } = React.useContext(PickerContext)
+    let { PickerItem, setHoverItem } = React.useContext(PickerContext)
     return (
       <div style={style}>
         {_.map(
@@ -101,6 +105,9 @@ let Section = _.flow(
               active={selected === item._key}
               hasChildren={!isField(item)}
               isChecked={checked.has(item.value)}
+              {...F.domLens.hover(isHover =>
+                setHoverItem(isHover ? item : null)
+              )}
             >
               {getItemLabel(item)}
             </PickerItem>
@@ -166,70 +173,105 @@ let NestedPicker = ({
   TextInput = GVTextInput,
   TextHighlight = GVTextHighlight,
   itemType = 'filter',
-  style = {
-    margin: 0,
-    padding: 0,
-    minWidth: 500,
-    maxHeight: 400,
-    paddingBottom: 10,
-  },
+  style = {},
   theme: { Button },
 }) => {
   let state = useLocalStore(() => ({
     filter: '',
     checked: new Map(),
+    hoverItem: null,
+    get hasItemDescription() {
+      return _.flow(_.trim, F.isNotBlank)(state.hoverItem?.description)
+    },
   }))
+  let showDescriptionPanel = _.some('description', options)
 
   return (
-    <PickerContext.Provider value={{ PickerItem, TextHighlight }}>
-      <Box style={style}>
-        <Observer>
-          {() => (
-            <>
-              <TextInput
-                style={{ marginBottom: 10 }}
-                value={state.filter}
-                onChange={e => (state.filter = e.target.value)}
-                placeholder="Enter filter keyword..."
-              />
-              {state.filter ? (
-                <FilteredSection
-                  checked={state.checked}
-                  highlight={state.filter}
-                  options={matchLabel(state.filter)(options)}
-                />
-              ) : (
-                <PanelTreePicker options={options} checked={state.checked} />
-              )}
-            </>
-          )}
-        </Observer>
-      </Box>
-      <Flex justifyContent="space-between" style={{ marginTop: 20 }}>
-        <Button
-          onClick={() => {
-            state.checked = new Map()
-            onChange()
-          }}
-        >
-          Cancel
-        </Button>
-        <Observer>
-          {() =>
-            !!state.checked.size && (
-              <Button
-                primary
-                onClick={() => onChange(Array.from(state.checked.values()))}
+    <PickerContext.Provider
+      value={{
+        PickerItem,
+        TextHighlight,
+        setHoverItem: _.debounce(100, item => (state.hoverItem = item)),
+      }}
+    >
+      <Flex style={style}>
+        {showDescriptionPanel && (
+          <Observer>
+            {() => (
+              <Flex
+                alignItems="center"
+                className="gv-picker-description-container"
+                style={{
+                  flexShrink: 0,
+                  flexBasis: 200,
+                  paddingLeft: 16,
+                  paddingRight: 16,
+                  textAlign: state.hasItemDescription ? 'left' : 'center',
+                }}
               >
-                Add{' '}
-                {`${state.checked.size} ${pluralize(
-                  itemType,
-                  state.checked.size
-                )}`}
-              </Button>
-            )
-          }
-        </Observer>
+                {state.hasItemDescription ? (
+                  <div>
+                    <em>
+                      <h4>{state.hoverItem.label}</h4>
+                    </em>
+                    <em>{state.hoverItem.description}</em>
+                  </div>
+                ) : (
+                  <em>Hover over a field to view the description</em>
+                )}
+              </Flex>
+            )}
+          </Observer>
+        )}
+        <div style={{ padding: 16, flexGrow: 1 }}>
+          <Observer>
+            {() => (
+              <>
+                <TextInput
+                  style={{ marginBottom: 10 }}
+                  value={state.filter}
+                  onChange={e => (state.filter = e.target.value)}
+                  placeholder="Enter filter keyword..."
+                />
+                {state.filter ? (
+                  <FilteredSection
+                    checked={state.checked}
+                    highlight={state.filter}
+                    options={matchLabel(state.filter)(options)}
+                  />
+                ) : (
+                  <PanelTreePicker options={options} checked={state.checked} />
+                )}
+              </>
+            )}
+          </Observer>
+          <Flex justifyContent="space-between" style={{ marginTop: 20 }}>
+            <Button
+              onClick={() => {
+                state.checked = new Map()
+                onChange()
+              }}
+            >
+              Cancel
+            </Button>
+            <Observer>
+              {() =>
+                !!state.checked.size && (
+                  <Button
+                    primary
+                    onClick={() => onChange(Array.from(state.checked.values()))}
+                  >
+                    Add{' '}
+                    {`${state.checked.size} ${pluralize(
+                      itemType,
+                      state.checked.size
+                    )}`}
+                  </Button>
+                )
+              }
+            </Observer>
+          </Flex>
+        </div>
       </Flex>
     </PickerContext.Provider>
   )
