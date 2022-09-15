@@ -437,17 +437,16 @@ export default F.stampKey('type', {
     },
     shouldMergeResponse: node =>
       // checking for presence of drilldown, skip, expanded in pagination
-      someNotEmpty(_.map(
-        _.get(_, node),
-        [
+      someNotEmpty(
+        _.map(_.get(_, node), [
           'pagination.columns.drilldown',
           'pagination.columns.skip',
           'pagination.columns.expanded',
           'pagination.rows.drilldown',
           'pagination.rows.skip',
           'pagination.rows.expanded',
-        ],
-      )),
+        ])
+      ),
     mergeResponse(node, response, extend, snapshot) {
       // Convert response rows and columns to objects for easy merges
       let groupsToObjects = deepMultiTransformOn(
