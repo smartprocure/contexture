@@ -12,6 +12,8 @@ export {
 } from './utils/theme'
 export { contexturify, contexturifyWithoutLoader } from './utils/hoc'
 
+export * as format from './utils/format'
+
 // exampleTypes
 export * from './exampleTypes'
 

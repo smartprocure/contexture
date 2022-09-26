@@ -27,6 +27,7 @@ let ResultTable = ({
   criteria,
   node = {},
   tree,
+  defaultDisplay,
   NoResultsComponent = 'No Results Found',
   IntroComponent = null, // Initial component to be shown instead of the grid when no data has been loaded
   Row = DefaultRow, // accept a custom Row component so we can do fancy expansion things
@@ -165,6 +166,7 @@ let ResultTable = ({
             stickyColumn,
             NoResultsComponent,
             IntroComponent,
+            defaultDisplay,
           }}
         />
       </Table>
