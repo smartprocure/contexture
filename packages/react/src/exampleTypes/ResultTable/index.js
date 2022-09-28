@@ -27,6 +27,7 @@ let ResultTable = ({
   criteria,
   node = {},
   tree,
+  defaultDisplay,
   NoResultsComponent = 'No Results Found',
   IntroComponent = null, // Initial component to be shown instead of the grid when no data has been loaded
   Row = DefaultRow, // accept a custom Row component so we can do fancy expansion things
@@ -94,7 +95,7 @@ let ResultTable = ({
   )(visibleFields)
 
   let columnGroups = _.reduce(
-    (columnGroups, { fieldGroup, HeaderCell }) => {
+    (columnGroups, { fieldGroup, HeaderCell, HeaderGroup }) => {
       for (let i = 0; i < columnGroupsHeight; i++) {
         let groupRow = columnGroups[i] || (columnGroups[i] = [])
         let groupName = _.getOr('', i, fieldGroup)
@@ -102,7 +103,7 @@ let ResultTable = ({
         if (_.get('groupName', lastGroup) === groupName) {
           lastGroup.colspan++
           lastGroup.HeaderCell = HeaderCell
-        } else groupRow.push({ groupName, colspan: 1, HeaderCell })
+        } else groupRow.push({ groupName, colspan: 1, HeaderCell, HeaderGroup })
       }
       return columnGroups
     },
@@ -118,9 +119,15 @@ let ResultTable = ({
             (columnGroupRow, i) => (
               <Tr key={i}>
                 {F.mapIndexed(
-                  ({ groupName, colspan, HeaderCell = Th }, j) => (
+                  ({ groupName, colspan, HeaderCell = Th, HeaderGroup }, j) => (
                     <HeaderCell key={j} colSpan={colspan}>
-                      <span>{F.autoLabel(groupName)}</span>
+                      <span>
+                        {HeaderGroup ? (
+                          <HeaderGroup>{groupName}</HeaderGroup>
+                        ) : (
+                          F.autoLabel(groupName)
+                        )}
+                      </span>
                     </HeaderCell>
                   ),
                   columnGroupRow
@@ -159,6 +166,7 @@ let ResultTable = ({
             stickyColumn,
             NoResultsComponent,
             IntroComponent,
+            defaultDisplay,
           }}
         />
       </Table>
