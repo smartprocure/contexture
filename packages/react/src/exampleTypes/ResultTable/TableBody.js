@@ -40,7 +40,7 @@ let TableBody = ({
     <>
       <Tbody
         style={{
-          display: showIntro || showLoader || showNoResults ? 'none' : '',
+          display: showIntro || showNoResults ? 'none' : '',
         }}
       >
         {!!results.length &&

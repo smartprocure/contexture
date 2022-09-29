@@ -51,12 +51,17 @@ export let useMemoryTree = ({
     setTree(tree)
   }
 
-  Promise.resolve(records).then(records => {
+  let setRecords = records => {
     if (records !== memoryStorage.records) {
       memoryStorage.records = records
       tree.refresh(['root'])
     }
-  })
+  }
+
+  if (records.then)
+    Promise.resolve(records).then(setRecords)
+  else
+    setRecords(records)
 
   return tree
 }
