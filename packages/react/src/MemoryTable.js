@@ -58,10 +58,8 @@ export let useMemoryTree = ({
     }
   }
 
-  if (records.then)
-    Promise.resolve(records).then(setRecords)
-  else
-    setRecords(records)
+  if (records.then) Promise.resolve(records).then(setRecords)
+  else setRecords(records)
 
   return tree
 }
