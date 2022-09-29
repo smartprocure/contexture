@@ -52,17 +52,20 @@ let getResultValues = (node, results) => {
     _.map(_.get(_, pagination), [
       'columns.drilldown',
       'columns.skip',
+      'columns.expanded',
       'rows.drilldown',
       'rows.skip',
+      'rows.expanded',
     ])
   )
 
   if (!isDrilldown) return []
 
   let groupType =
-    _.isEmpty(pagination.rows.drilldown) && _.isEmpty(pagination.rows.skip)
-      ? 'columns'
-      : 'rows'
+    _.isEmpty(pagination.columns.drilldown) &&
+    _.isEmpty(pagination.columns.skip)
+      ? 'rows'
+      : 'columns'
 
   let drilldown = _.get([groupType, 'drilldown'], pagination)
 
@@ -211,15 +214,17 @@ let mapExpandedPages = node => {
     _.map(_.get(_, pagination), [
       'columns.drilldown',
       'columns.skip',
+      'columns.expanded',
       'rows.drilldown',
       'rows.skip',
+      'rows.expanded',
     ])
   )
 
   // drilldown/skip request can be performed on rows or on columns at a time
-  let rowDrillMode = !(
-    _.isEmpty(pagination.rows.drilldown) && _.isEmpty(pagination.rows.skip)
-  )
+  let rowDrillMode =
+    _.isEmpty(pagination.columns.drilldown) &&
+    _.isEmpty(pagination.columns.skip)
   let expanded = rowDrillMode
     ? _.get('columns.expanded', pagination)
     : _.get('rows.expanded', pagination)
