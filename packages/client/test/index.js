@@ -2402,7 +2402,6 @@ let AllTests = ContextureClient => {
     ).to.deep.equal([
       {
         drilldown: [],
-        skip: [],
         include: ['Florida', 'Nevada'],
       },
     ])
@@ -2416,15 +2415,112 @@ let AllTests = ContextureClient => {
     ).to.deep.equal([
       {
         drilldown: [],
-        skip: [],
         include: ['Florida', 'Nevada'],
       },
       {
         drilldown: ['Florida'],
-        skip: [],
         include: ['Miami'],
       },
     ])
+  })
+  it('should preserve expanded columns when changing sort configuration', async () => {
+    let service = sinon.spy(mockService())
+    let columns = [
+      { type: 'fieldValuesPartition', field: 'State' },
+      { type: 'fieldValues', field: 'City', size: 10 },
+    ]
+    let rows = [
+      { type: 'fieldValues', field: 'Name', size: 10 },
+    ]
+    let Tree = ContextureClient(
+      { service, debounce: 1 },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'pivot',
+            type: 'pivot',
+            pagination: {
+              rows: { drilldown: [] },
+              columns: { drilldown: [] },
+            },
+            columns,
+            rows,
+            sort: {
+              columnValues: [],
+              valueIndex: 0,
+            },
+          },
+          { key: 'test', type: 'facet', values: [] },
+        ],
+      }
+    )
+
+    Tree.mutate(['root', 'pivot'], {
+      context: {
+        results: {
+          columns: [
+            { key: 'Florida', columns: [{ key: 'Miami', a: 1 }] },
+            {
+              key: 'Nevada',
+              columns: [{ key: 'Las Vegas', a: 2 }],
+            },
+          ],
+          rows: [ {
+            key: 'NanoSoft',
+            columns: [
+              { key: 'Florida', columns: [{ key: 'Miami', a: 1 }] },
+              {
+                key: 'Nevada',
+                columns: [{ key: 'Las Vegas', a: 2 }],
+              },
+            ],
+          }],
+        },
+      },
+    })
+
+    Tree.mutate(['root', 'pivot'], {
+      pagination: { rows: { drilldown: ['NanoSoft'] } },
+    })
+
+    Tree.mutate(['root', 'pivot'], {
+      pagination: { columns: { drilldown: ['Florida'] } },
+    })
+
+    Tree.mutate(['root', 'pivot'], {
+      sort: {
+        columnValues: ['Florida', 'Miami'],
+        valueIndex: 0,
+      },
+    })
+
+    expect(
+      Tree.getNode(['root', 'pivot']).pagination
+    ).to.deep.equal(
+      {
+        rows: {
+          drilldown: [],
+          skip: [],
+          expanded: [],
+        },
+        columns: {
+          drilldown: [],
+          skip: [],
+          expanded: [
+            {
+              drilldown: [],
+              include: ['Florida', 'Nevada'],
+            },
+            {
+              drilldown: ['Florida'],
+              include: ['Miami'],
+            },
+          ],
+        },
+      },
+    )
   })
   it('should support watchNode', async () => {
     let service = sinon.spy(mockService())
