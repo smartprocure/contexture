@@ -35,7 +35,7 @@ let getDrilldownWithInclude = (node, previous, drillType) => {
     let results = resultsForDrilldown(
       drillType,
       page.drilldown,
-      _.get('context.results', node),
+      _.get('context.results', node)
     )
 
     return {
@@ -44,8 +44,8 @@ let getDrilldownWithInclude = (node, previous, drillType) => {
       include: _.flow(
         _.get(drillType),
         _.map(getKey),
-        _.without(page.skip),
-      )(results)
+        _.without(page.skip)
+      )(results),
     }
   }
 
@@ -82,7 +82,6 @@ let addDrilldownToExpanded = (extend, node, previous, value) => {
     },
   })
 }
-
 
 // Resetting the pagination when the pivot node is changed
 // allows to return expected root results instead of merging result
@@ -137,7 +136,7 @@ export default {
         (type !== 'numberRanges' && type !== 'percentiles') ||
         (type === 'numberRanges' && ranges.length > 0) ||
         (type === 'percentiles' && percents.length > 0),
-      _.concat(context.columns, context.rows),
+      _.concat(context.columns, context.rows)
     ),
   reactors: {
     columns: 'self',
@@ -177,20 +176,14 @@ export default {
       let prevRowDrill = _.get('pagination.rows.drilldown', previous)
       let prevColumnDrill = _.get('pagination.columns.drilldown', previous)
 
-      if (
-        _.has('pagination.columns', value) ||
-        _.has('pagination.rows', value)
-      )
+      if (_.has('pagination.columns', value) || _.has('pagination.rows', value))
         // If mutation is a pagination
         addDrilldownToExpanded(extend, node, previous, value)
-
       else if (_.has('sort', value)) {
         // if sorting is changes we are preserving expanded columns
         addDrilldownToExpanded(extend, node, previous, value)
         resetExpandedRows(extend, node)
-      }
-
-      else if (prevColumnDrill || prevRowDrill)
+      } else if (prevColumnDrill || prevRowDrill)
         // If node configuration is changes disable mergeResponse
         resetPagination(extend, node, previous)
     }
@@ -209,18 +202,18 @@ export default {
         'pagination.columns.skip',
         'pagination.rows.drilldown',
         'pagination.rows.skip',
-      ]),
+      ])
     ),
   mergeResponse(node, response, extend, snapshot) {
     // Convert response rows and columns to objects for easy merges
     let groupsToObjects = deepMultiTransformOn(
       ['rows', 'columns'],
-      groupsToObjects => _.flow(_.map(groupsToObjects), _.keyBy('key')),
+      groupsToObjects => _.flow(_.map(groupsToObjects), _.keyBy('key'))
     )
     // Convert rows and columns back to arrays
     let groupsToArrays = deepMultiTransformOn(
       ['rows', 'columns'],
-      groupsToArrays => _.flow(_.values, _.map(groupsToArrays)),
+      groupsToArrays => _.flow(_.values, _.map(groupsToArrays))
     )
 
     // `snapshot` here is to solve a mobx issue
