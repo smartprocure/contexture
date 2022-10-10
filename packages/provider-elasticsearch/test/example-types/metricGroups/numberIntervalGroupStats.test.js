@@ -2,7 +2,6 @@ let {
   buildQuery,
   drilldown,
 } = require('../../../src/example-types/metricGroups/numberIntervalGroupStats')
-let { expect } = require('chai')
 
 describe('numberIntervalGroupStats', () => {
   it('should buildQuery', async () => {
@@ -14,7 +13,7 @@ describe('numberIntervalGroupStats', () => {
         statsField: 'LineItem.TotalPrice',
         interval: 100,
       })
-    ).to.eql({
+    ).toEqual({
       aggs: {
         groups: {
           histogram: {
@@ -45,7 +44,7 @@ describe('numberIntervalGroupStats', () => {
         null,
         () => ({ min: 10, max: 5000 })
       )
-    ).to.eql({
+    ).toEqual({
       aggs: {
         groups: {
           histogram: {
@@ -70,7 +69,7 @@ describe('numberIntervalGroupStats', () => {
         interval: 5000,
         drilldown: 0,
       })
-    ).to.eql({
+    ).toEqual({
       range: { 'LineItem.TotalPrice': { gte: 0, lt: 5000 } },
     })
   })
@@ -86,7 +85,7 @@ describe('numberIntervalGroupStats', () => {
         // This result makes interval 250, see above test
         () => ({ min: 10, max: 5000 })
       )
-    ).to.eql({
+    ).toEqual({
       range: { 'LineItem.TotalPrice': { gte: 0, lt: 250 } },
     })
   })

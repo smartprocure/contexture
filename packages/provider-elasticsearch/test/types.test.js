@@ -1,29 +1,28 @@
 let _ = require('lodash/fp')
 let Types = require('../src/types')
-let { expect } = require('chai')
 
-describe('All Example Types', function() {
-  this.timeout(5000)
+describe('All Example Types', () => {
   it('should load', () => {
     let types = Types()
-    expect(_.sortBy(x => x, _.keys(types))).to.have.members([
+    expect(_.sortBy(x => x, _.keys(types))).toEqual([
       'bool',
       'cardinality',
       'date',
       'dateHistogram',
+      'dateIntervalGroupStats',
       'dateRangeFacet',
       'exists',
       'facet',
-      'geo',
-      'dateIntervalGroupStats',
+      'fieldValuePartitionGroupStats',
+      'fieldValuesDelta',
       'fieldValuesGroupStats',
+      'geo',
+      'matchStats',
+      'number',
       'numberIntervalGroupStats',
       'numberRangesGroupStats',
       'percentilesGroupStats',
-      'fieldValuePartitionGroupStats',
-      'tagsQueryGroupStats',
-      'matchStats',
-      'number',
+      'pivot',
       'query',
       'rangeStats',
       'results',
@@ -31,11 +30,10 @@ describe('All Example Types', function() {
       'statistical',
       'stats',
       'tagsQuery',
+      'tagsQueryGroupStats',
       'tagsText',
       'terms_stats',
       'text',
-      'fieldValuesDelta',
-      'pivot',
     ])
-  })
+  }, 5000)
 })

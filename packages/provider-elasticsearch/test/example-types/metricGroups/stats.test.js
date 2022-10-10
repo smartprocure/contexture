@@ -2,7 +2,6 @@ let {
   buildQuery,
   result,
 } = require('../../../src/example-types/metricGroups/stats')
-let { expect } = require('chai')
 
 describe('stats', () => {
   it('should buildQuery', () => {
@@ -13,7 +12,7 @@ describe('stats', () => {
         statsField: 'PO.IssuedAmount',
         stats: ['min', 'max'],
       })
-    ).to.eql({
+    ).toEqual({
       aggs: {
         min: { min: { field: 'PO.IssuedAmount' } },
         max: { max: { field: 'PO.IssuedAmount' } },
@@ -34,7 +33,7 @@ describe('stats', () => {
           cardinality: true,
         },
       })
-    ).to.eql({
+    ).toEqual({
       aggs: {
         min: { min: { field: 'PO.IssuedAmount' } },
         max: { max: { field: 'PO.IssuedAmount' } },
@@ -116,7 +115,7 @@ describe('stats', () => {
         },
       },
     })
-    expect(await result({}, search)).to.eql({
+    expect(await result({}, search)).toEqual({
       percentiles: {
         '20.0': 280.6375270684573,
         '50.0': 1341.541076270763,
