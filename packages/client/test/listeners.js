@@ -1,12 +1,7 @@
 import _ from 'lodash/fp'
-import chai from 'chai'
-import sinon from 'sinon'
-import sinonChai from 'sinon-chai'
 import ContextureClient from '../src'
 import mockService from '../src/mockService'
 import { observable, toJS, set } from 'mobx'
-const expect = chai.expect
-chai.use(sinonChai)
 
 let mobxAdapter = { snapshot: toJS, extend: set, initObject: observable }
 let ContextureMobx = _.curry((x, y) =>
@@ -16,7 +11,7 @@ let ContextureMobx = _.curry((x, y) =>
 let AllTests = ContextureClient => {
   describe('listeners', () => {
     it('watchNode', async () => {
-      let service = sinon.spy(mockService({ delay: 10 }))
+      let service = jest.fn(mockService({ delay: 10 }))
       let tree = ContextureClient(
         { service, debounce: 1 },
         {
@@ -35,14 +30,14 @@ let AllTests = ContextureClient => {
       )
       let filterDom = ''
       let resultsDom = ''
-      let filterWatcher = sinon.spy(node => {
+      let filterWatcher = jest.fn(node => {
         filterDom = `<div>
   <h1>Facet</h1>
   <b>Field: ${node.field}</>
   values: ${_.join(', ', node.values)}
 </div>`
       })
-      let resultWatcher = sinon.spy(node => {
+      let resultWatcher = jest.fn(node => {
         resultsDom = `<table>${_.map(
           result =>
             `\n<tr>${_.map(val => `<td>${val}</td>`, _.values(result))}</tr>`,
@@ -52,25 +47,25 @@ let AllTests = ContextureClient => {
       })
       tree.watchNode(['root', 'filter'], filterWatcher)
       tree.watchNode(['root', 'results'], resultWatcher)
-      expect(filterDom).to.equal('')
+      expect(filterDom).toBe('')
       let action = tree.mutate(['root', 'filter'], { values: ['other Value'] })
-      expect(filterDom).to.equal(`<div>
+      expect(filterDom).toBe(`<div>
   <h1>Facet</h1>
   <b>Field: facetfield</>
   values: other Value
 </div>`)
-      expect(resultsDom).to.equal(`<table>\n</table>`)
+      expect(resultsDom).toBe(`<table>\n</table>`)
       await action
 
-      expect(resultsDom).to.equal(`<table>
+      expect(resultsDom).toBe(`<table>
 <tr><td>some result</td></tr>
 </table>`)
 
-      expect(filterWatcher).to.have.callCount(4) // mark for update, updating, results, not updating
-      expect(resultWatcher).to.have.callCount(9)
+      expect(filterWatcher).toBeCalledTimes(4) // mark for update, updating, results, not updating
+      expect(resultWatcher).toBeCalledTimes(9)
     })
     it('watchNode with keys', async () => {
-      let service = sinon.spy(mockService({ delay: 10 }))
+      let service = jest.fn(mockService({ delay: 10 }))
       let tree = ContextureClient(
         { service, debounce: 1 },
         {
@@ -89,14 +84,14 @@ let AllTests = ContextureClient => {
       )
       let filterDom = ''
       let resultsDom = ''
-      let filterWatcher = sinon.spy(node => {
+      let filterWatcher = jest.fn(node => {
         filterDom = `<div>
   <h1>Facet</h1>
   <b>Field: ${node.field}</>
   values: ${_.join(', ', node.values)}
 </div>`
       })
-      let resultWatcher = sinon.spy(node => {
+      let resultWatcher = jest.fn(node => {
         resultsDom = `<table>${_.map(
           result =>
             `\n<tr>${_.map(val => `<td>${val}</td>`, _.values(result))}</tr>`,
@@ -106,25 +101,25 @@ let AllTests = ContextureClient => {
       })
       tree.watchNode(['root', 'filter'], filterWatcher, ['field', 'values'])
       tree.watchNode(['root', 'results'], resultWatcher, ['context.results'])
-      expect(filterDom).to.equal('')
+      expect(filterDom).toBe('')
       let action = tree.mutate(['root', 'filter'], { values: ['other Value'] })
-      expect(filterDom).to.equal(`<div>
+      expect(filterDom).toBe(`<div>
   <h1>Facet</h1>
   <b>Field: facetfield</>
   values: other Value
 </div>`)
-      expect(resultsDom).to.equal('') // hasn't run yet
+      expect(resultsDom).toBe('') // hasn't run yet
       await action
 
-      expect(resultsDom).to.equal(`<table>
+      expect(resultsDom).toBe(`<table>
 <tr><td>some result</td></tr>
 </table>`)
 
-      expect(filterWatcher).to.have.callCount(1) // mark for update, updating, results, not updating
-      expect(resultWatcher).to.have.callCount(1)
+      expect(filterWatcher).toBeCalledTimes(1) // mark for update, updating, results, not updating
+      expect(resultWatcher).toBeCalledTimes(1)
     })
     it('watchNode on children', async () => {
-      let service = sinon.spy(mockService({ delay: 10 }))
+      let service = jest.fn(mockService({ delay: 10 }))
       let tree = ContextureClient(
         { service, debounce: 1 },
         {
@@ -161,10 +156,10 @@ let AllTests = ContextureClient => {
         field: 'facetfield2',
         values: ['otherValues'],
       })
-      expect(criteriaKeys).to.deep.eq(['filter', 'newFilter'])
+      expect(criteriaKeys).toEqual(['filter', 'newFilter'])
     })
     it('watchNode with changing keys', async () => {
-      let service = sinon.spy(mockService({ delay: 10 }))
+      let service = jest.fn(mockService({ delay: 10 }))
       let tree = ContextureClient(
         { service, debounce: 1 },
         {
@@ -184,17 +179,17 @@ let AllTests = ContextureClient => {
 
       let keys = ['context.results']
       // Mutating the original keys will change what's watched
-      let resultWatcher = sinon.spy(() => {
+      let resultWatcher = jest.fn(() => {
         keys[0] = 'pageSize'
       })
       tree.watchNode(['root', 'results'], resultWatcher, keys)
       await tree.mutate(['root', 'filter'], { values: ['other Value'] })
-      expect(resultWatcher).to.have.callCount(1)
+      expect(resultWatcher).toBeCalledTimes(1)
       await tree.mutate(['root', 'filter'], { values: ['other Value 2'] })
 
-      expect(resultWatcher).to.have.callCount(1)
+      expect(resultWatcher).toBeCalledTimes(1)
       await tree.mutate(['root', 'results'], { pageSize: 2 })
-      expect(resultWatcher).to.have.callCount(2)
+      expect(resultWatcher).toBeCalledTimes(2)
     })
   })
 }
