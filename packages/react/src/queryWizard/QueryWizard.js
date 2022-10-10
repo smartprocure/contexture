@@ -7,16 +7,17 @@ import { StepsAccordion, AccordionStep } from '../purgatory'
 import { withNode } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
 
-let generateStepTitle = (node, title) => i => (
-  <h1>
-    <span className="step-number">Step {i + 1} - </span>
-    {i === 0
-      ? `Search for ${title || 'Results'} by...`
-      : i < _.size(node.children) - 1
-      ? `And...`
-      : `Narrow Your Results`}
-  </h1>
-)
+let generateStepTitle = (node, title) => i =>
+  (
+    <h1>
+      <span className="step-number">Step {i + 1} - </span>
+      {i === 0
+        ? `Search for ${title || 'Results'} by...`
+        : i < _.size(node.children) - 1
+        ? `And...`
+        : `Narrow Your Results`}
+    </h1>
+  )
 
 let QueryWizard = _.flow(
   setDisplayName('QueryWizard'),

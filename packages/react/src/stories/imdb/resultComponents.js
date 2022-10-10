@@ -1,7 +1,7 @@
 import * as F from 'futil'
 import _ from 'lodash/fp'
 import React from 'react'
-import { observable } from 'mobx'
+import { observable } from '../../utils/mobx'
 import { fromPromise } from 'mobx-utils'
 import { observer } from 'mobx-react'
 import Contexture, { updateSchemas } from '../utils/contexture'
