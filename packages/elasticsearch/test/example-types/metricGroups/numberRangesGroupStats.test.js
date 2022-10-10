@@ -1,7 +1,6 @@
 let {
   buildQuery,
 } = require('../../../src/example-types/metricGroups/numberRangesGroupStats')
-let { expect } = require('chai')
 
 describe('numberRangesGroupStats', () => {
   it('should buildQuery', () => {
@@ -16,7 +15,7 @@ describe('numberRangesGroupStats', () => {
           { from: '500', to: '10000' },
         ],
       })
-    ).to.eql({
+    ).toEqual({
       aggs: {
         groups: {
           range: {

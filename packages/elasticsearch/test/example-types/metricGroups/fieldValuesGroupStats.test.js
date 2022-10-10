@@ -2,7 +2,6 @@ let {
   buildQuery,
   buildGroupQuery,
 } = require('../../../src/example-types/metricGroups/fieldValuesGroupStats')
-let { expect } = require('chai')
 let { testSchema } = require('../testUtils')
 
 describe('fieldValuesGroupStats', () => {
@@ -17,7 +16,7 @@ describe('fieldValuesGroupStats', () => {
         },
         testSchema('Organization.Name')
       )
-    ).to.eql({
+    ).toEqual({
       aggs: {
         groups: {
           terms: {
@@ -44,7 +43,7 @@ describe('fieldValuesGroupStats', () => {
         statsField: 'LineItem.TotalPrice',
         sort: { field: 'max', direction: 'asc' },
       })
-    ).to.eql({
+    ).toEqual({
       aggs: {
         groups: {
           terms: {
@@ -70,7 +69,7 @@ describe('fieldValuesGroupStats', () => {
         groupField: 'Organization.Name',
         sort: { field: 'count' },
       })
-    ).to.eql({
+    ).toEqual({
       aggs: {
         groups: {
           terms: {
@@ -90,7 +89,7 @@ describe('fieldValuesGroupStats', () => {
         groupField: 'Organization.Name',
         sort: { field: 'key' },
       })
-    ).to.eql({
+    ).toEqual({
       aggs: {
         groups: {
           terms: {
@@ -113,7 +112,7 @@ describe('fieldValuesGroupStats', () => {
         stats: ['sum'],
         size: 20,
       })
-    ).to.eql({
+    ).toEqual({
       aggs: {
         valueFilter: {
           filter: {
@@ -154,7 +153,7 @@ describe('fieldValuesGroupStats', () => {
         filter: 'city   of    ',
         stats: ['sum'],
       })
-    ).to.eql({
+    ).toEqual({
       aggs: {
         valueFilter: {
           filter: {
@@ -217,7 +216,7 @@ describe('fieldValuesGroupStats', () => {
       }
 
       let result = buildGroupQuery(node, children, groupingType, schema)
-      expect(expected).to.eql(result)
+      expect(expected).toEqual(result)
     })
 
     it('should return a query with a multi-terms group type if additional fields are passed', () => {
@@ -254,7 +253,7 @@ describe('fieldValuesGroupStats', () => {
       }
 
       let result = buildGroupQuery(node, children, groupingType, schema)
-      expect(expected).to.eql(result)
+      expect(expected).toEqual(result)
     })
   })
 })

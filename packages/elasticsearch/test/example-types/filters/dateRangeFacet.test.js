@@ -1,5 +1,4 @@
 let _ = require('lodash/fp')
-let { expect } = require('chai')
 let {
   getDateIfValid,
   rollingRangeToDates,
@@ -25,14 +24,14 @@ describe('validContext', () => {
         field: 'value_field',
         ranges: [{ key: 'asd', range: 'allFutureDates' }],
       })
-    ).to.be.true
+    ).toBe(true)
   })
   it('should invalidate a node with no ranges prop', () => {
     expect(
       dateRangeFacet.validContext({
         field: 'value_field',
       })
-    ).to.be.false
+    ).toBe(false)
   })
   it('should invalidate a node with missing range key', () => {
     expect(
@@ -40,7 +39,7 @@ describe('validContext', () => {
         field: 'value_field',
         ranges: [{ range: 'allPastDates' }],
       })
-    ).to.be.false
+    ).toBe(false)
   })
 })
 
@@ -51,7 +50,7 @@ describe('dateRangeFacet/filter', () => {
         ...commonFilterParts,
         values: ['open'],
       })
-    ).to.deep.equal({
+    ).toEqual({
       bool: {
         should: [
           {

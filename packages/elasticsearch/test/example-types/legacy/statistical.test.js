@@ -1,6 +1,6 @@
 let sequentialResultTest = require('../testUtils').sequentialResultTest
 
-describe('statistical', function() {
+describe('statistical', () => {
   let statsTest = (...x) =>
     sequentialResultTest(
       [

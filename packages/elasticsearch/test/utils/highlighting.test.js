@@ -2,7 +2,6 @@ let {
   highlightResults,
   arrayToHighlightsFieldMap,
 } = require('../../src/utils/highlighting')
-let { expect } = require('chai')
 
 describe('highlighting', () => {
   describe('highlightResults', () => {
@@ -22,7 +21,7 @@ describe('highlighting', () => {
       }
       let include = ['title']
       let result = highlightResults(highlightFields, hit, undefined, include)
-      expect(result).to.deep.equal({
+      expect(result).toEqual({
         additionalFields: [
           {
             label: 'summary',
@@ -51,7 +50,7 @@ describe('highlighting', () => {
         highlight: { summary: ['a'], description: ['b'], title: ['c'] },
       }
       let result = highlightResults(highlightFields, hit)
-      expect(result).to.deep.equal({
+      expect(result).toEqual({
         additionalFields: [],
         mainHighlighted: true,
       })
@@ -68,11 +67,11 @@ describe('highlighting', () => {
         highlight: { title: ['<a>foo</a>'], description: ['<a>bar</a>'] },
       }
       let result = highlightResults(highlightFields, hit)
-      expect(hit._source).to.deep.equal({
+      expect(hit._source).toEqual({
         title: '<a>foo</a>',
         description: '<a>bar</a>',
       })
-      expect(result).to.deep.equal({
+      expect(result).toEqual({
         additionalFields: [],
         mainHighlighted: true,
       })
@@ -103,7 +102,7 @@ describe('highlighting', () => {
         },
       }
       let result = highlightResults(highlightFields, hit)
-      expect(hit._source).to.deep.equal({
+      expect(hit._source).toEqual({
         title: '<a>foo</a>',
         description: '<a>bar</a>',
         documents: {
@@ -112,7 +111,7 @@ describe('highlighting', () => {
           },
         },
       })
-      expect(result).to.deep.equal({
+      expect(result).toEqual({
         additionalFields: [],
         mainHighlighted: true,
       })
@@ -141,12 +140,12 @@ describe('highlighting', () => {
         },
       }
       let result = highlightResults(highlightFields, hit)
-      expect(hit._source).to.deep.equal({
+      expect(hit._source).toEqual({
         title: '<a>foo</a>',
         description: '<a>bar</a>',
         documents: '<a>fooBar</a>',
       })
-      expect(result).to.deep.equal({
+      expect(result).toEqual({
         additionalFields: [],
         mainHighlighted: true,
       })
@@ -169,11 +168,11 @@ describe('highlighting', () => {
         },
       }
       let result = highlightResults(highlightFields, hit)
-      expect(hit._source).to.deep.equal({
+      expect(hit._source).toEqual({
         title: '<a>foo</a>',
         description: '<a>bar</a>',
       })
-      expect(result).to.deep.equal({
+      expect(result).toEqual({
         additionalFields: [],
         mainHighlighted: true,
       })
@@ -195,10 +194,10 @@ describe('highlighting', () => {
         },
       }
       let result = highlightResults(highlightFields, hit)
-      expect(hit._source).to.deep.equal({
+      expect(hit._source).toEqual({
         description: '<a>foo</a>',
       })
-      expect(result).to.deep.equal({
+      expect(result).toEqual({
         additionalFields: [],
         mainHighlighted: true,
       })
@@ -214,7 +213,7 @@ describe('highlighting', () => {
         },
       ]
       let result = arrayToHighlightsFieldMap(inline)
-      expect(result).to.deep.equal({
+      expect(result).toEqual({
         title: {},
         description: {},
         documents: {

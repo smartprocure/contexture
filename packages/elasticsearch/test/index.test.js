@@ -1,6 +1,4 @@
-let sinon = require('sinon')
 let provider = require('../src/index')
-let { expect } = require('chai')
 
 const requestOptions = {
   headers: {
@@ -22,13 +20,13 @@ describe('Core Provider', () => {
   it('groupCombinator should return a query joining filters by group.join', () => {
     expect(
       provider().groupCombinator({ join: 'or' }, ['Anything works'])
-    ).to.eql({
+    ).toEqual({
       bool: {
         should: ['Anything works'],
         minimum_should_match: 1,
       },
     })
-    expect(provider().groupCombinator({}, ['Anything works'])).to.eql({
+    expect(provider().groupCombinator({}, ['Anything works'])).toEqual({
       bool: {
         must: ['Anything works'],
       },
@@ -36,41 +34,43 @@ describe('Core Provider', () => {
   })
   it('runSearch should wrap queries in constant_score if sort._score is not present', () => {
     const client = {
-      child: sinon
-        .stub()
-        .returns({ search: sinon.stub().returns(Promise.resolve({})) }),
+      child: jest.fn().mockReturnValue({
+        search: jest.fn().mockReturnValue(Promise.resolve({})),
+      }),
     }
 
     provider({
       getClient: () => client,
     }).runSearch({}, initialNode, initialSchema, { query_string }, {})
 
-    let firstSearchCall = client.child.firstCall.returnValue.search.firstCall
+    let firstSearchCall =
+      client.child.mock.results[0].value.search.mock.calls[0]
 
-    expect(firstSearchCall.args[0].body.query.constant_score.filter).to.eql({
+    expect(firstSearchCall[0].body.query.constant_score.filter).toEqual({
       query_string,
     })
   })
   it('runSearch should not wrap queries in constant_score if no query is given', () => {
     const client = {
-      child: sinon
-        .stub()
-        .returns({ search: sinon.stub().returns(Promise.resolve({})) }),
+      child: jest.fn().mockReturnValue({
+        search: jest.fn().mockReturnValue(Promise.resolve({})),
+      }),
     }
 
     provider({
       getClient: () => client,
     }).runSearch({}, initialNode, initialSchema, null, {})
 
-    let firstSearchCall = client.child.firstCall.returnValue.search.firstCall
+    let firstSearchCall =
+      client.child.mock.results[0].value.search.mock.calls[0]
 
-    expect(firstSearchCall.args[0].body).to.eql({ query: null })
+    expect(firstSearchCall[0].body).toEqual({ query: null })
   })
   it('runSearch should not wrap queries in constant_score if sort._score is present', () => {
     const client = {
-      child: sinon
-        .stub()
-        .returns({ search: sinon.stub().returns(Promise.resolve({})) }),
+      child: jest.fn().mockReturnValue({
+        search: jest.fn().mockReturnValue(Promise.resolve({})),
+      }),
     }
 
     provider({
@@ -83,17 +83,18 @@ describe('Core Provider', () => {
       { sort: { _score: 'desc' } }
     )
 
-    let firstSearchCall = client.child.firstCall.returnValue.search.firstCall
+    let firstSearchCall =
+      client.child.mock.results[0].value.search.mock.calls[0]
 
-    expect(firstSearchCall.args[0].body.query).to.eql({
+    expect(firstSearchCall[0].body.query).toEqual({
       query_string,
     })
   })
   it('should pass any request options to the child client upon initialization', () => {
     const client = {
-      child: sinon
-        .stub()
-        .returns({ search: sinon.stub().returns(Promise.resolve({})) }),
+      child: jest.fn().mockReturnValue({
+        search: jest.fn().mockReturnValue(Promise.resolve({})),
+      }),
     }
 
     provider({
@@ -106,9 +107,7 @@ describe('Core Provider', () => {
       {}
     )
 
-    let childClientStub = client.child.firstCall
-
-    expect(childClientStub.args[0]).to.eql({
+    expect(client.child.mock.calls[0][0]).toEqual({
       headers: requestOptions.headers,
       requestTimeout: requestOptions.requestTimeout,
     })

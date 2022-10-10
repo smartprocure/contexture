@@ -1,3 +1,6 @@
+# 1.17.2
+* Migrate tests to jest
+
 # 1.17.1
 * [elasticDSL] Ensure the results are structured correctly
 

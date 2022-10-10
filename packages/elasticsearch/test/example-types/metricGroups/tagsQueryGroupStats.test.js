@@ -2,7 +2,6 @@ let {
   buildQuery,
   // buildGroupQuery,
 } = require('../../../src/example-types/metricGroups/tagsQueryGroupStats')
-let { expect } = require('chai')
 let { testSchema } = require('../testUtils')
 
 describe('tagsQueryGroupStats', () => {
@@ -17,7 +16,7 @@ describe('tagsQueryGroupStats', () => {
       },
       testSchema('Organization.Name')
     )
-    expect(result).to.eql({
+    expect(result).toEqual({
       aggs: {
         groups: {
           filters: {
