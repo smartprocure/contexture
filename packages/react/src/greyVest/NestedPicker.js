@@ -2,7 +2,13 @@ import React from 'react'
 import F from 'futil'
 import _ from 'lodash/fp'
 import { setDisplayName } from 'react-recompose'
-import { inject, observer, Observer, useLocalObservable } from 'mobx-react'
+import {
+  inject,
+  observer,
+  Observer,
+  useLocalStore,
+  useLocalObservable,
+} from 'mobx-react'
 import { observable } from '../utils/mobx'
 import { withTheme } from '../utils/theme'
 import pluralize from 'pluralize'
@@ -49,8 +55,9 @@ let FilteredSection = _.flow(
     style = { maxHeight: 340, overflowY: 'scroll' },
     checked,
   }) => {
-    let { PickerItem, TextHighlight, setHoverItem } =
-      React.useContext(PickerContext)
+    let { PickerItem, TextHighlight, setHoverItem } = React.useContext(
+      PickerContext
+    )
     return (
       <div style={style}>
         {F.mapIndexed(
@@ -175,7 +182,7 @@ let NestedPicker = ({
   style = {},
   theme: { Button },
 }) => {
-  let state = useLocalObservable(() => ({
+  let state = (useLocalObservable || useLocalStore)(() => ({
     filter: '',
     checked: new Map(),
     hoverItem: null,
