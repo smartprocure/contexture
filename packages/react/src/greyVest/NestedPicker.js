@@ -55,9 +55,8 @@ let FilteredSection = _.flow(
     style = { maxHeight: 340, overflowY: 'scroll' },
     checked,
   }) => {
-    let { PickerItem, TextHighlight, setHoverItem } = React.useContext(
-      PickerContext
-    )
+    let { PickerItem, TextHighlight, setHoverItem } =
+      React.useContext(PickerContext)
     return (
       <div style={style}>
         {F.mapIndexed(
