@@ -4,14 +4,9 @@
 import { Tree } from '../src/util/tree'
 import F from 'futil'
 import _ from 'lodash/fp'
-import chai from 'chai'
-import sinon from 'sinon'
-import sinonChai from 'sinon-chai'
 import ContextureClient from '../src'
 import mockService from '../src/mockService'
 import { observable, reaction, autorun, toJS, set } from 'mobx'
-const expect = chai.expect
-chai.use(sinonChai)
 
 let mobxAdapter = { snapshot: toJS, extend: set, initObject: observable }
 let ContextureMobx = _.curry((x, y) =>
@@ -38,6 +33,7 @@ describe('usage with mobx should generally work', () => {
       { key: 'results', type: 'results', context: { results: null } },
     ],
   }
+
   let responseData = {
     key: 'root',
     children: [
@@ -52,20 +48,19 @@ describe('usage with mobx should generally work', () => {
       { key: 'filter', type: 'facet' },
     ],
   }
-  let service = sinon.spy(() => responseData)
-
+  let service = jest.fn(() => responseData)
   let Tree = ContextureMobx({ service, debounce: 1 })(tree)
 
-  let reactor = sinon.spy()
+  let reactor = jest.fn()
 
   it('should generally mutate and have updated contexts', async () => {
     let disposer = reaction(() => toJS(Tree.tree), reactor)
     await Tree.mutate(['root', 'filter'], {
       values: ['a'],
     })
-    expect(service).to.have.callCount(1)
-    let [dto, now] = service.getCall(0).args
-    expect(dto).to.deep.equal({
+    expect(service).toHaveBeenCalledTimes(1)
+    let [dto, now] = service.mock.calls[0]
+    expect(dto).toEqual({
       key: 'root',
       join: 'and',
       lastUpdateTime: now,
@@ -87,11 +82,11 @@ describe('usage with mobx should generally work', () => {
         },
       ],
     })
-    expect(reactor).to.satisfy(x => x.callCount > 1)
+    expect(reactor.mock.calls.length).toBeGreaterThan(1)
     disposer()
     expect(
-      simplifyObject(treeUtils.lookup(['filter'], reactor.getCall(1).args[0]))
-    ).to.deep.equal({
+      simplifyObject(treeUtils.lookup(['filter'], reactor.mock.calls[1][0]))
+    ).toEqual({
       key: 'filter',
       type: 'facet',
       values: ['a'],
@@ -102,40 +97,38 @@ describe('usage with mobx should generally work', () => {
       metaHistory: [],
     })
     // should update contexts
-    expect(Tree.getNode(['root', 'results']).updating).to.be.false
-    expect(toJS(Tree.getNode(['root', 'results']).context)).to.deep.equal({
+    expect(Tree.getNode(['root', 'results']).updating).toBe(false)
+    expect(toJS(Tree.getNode(['root', 'results']).context)).toEqual({
       count: 1,
       results: [{ title: 'Some result' }, { title: 'Some other result' }],
     })
     expect(
-      treeUtils.lookup(['results'], reactor.lastCall.args[0]).context
-    ).to.deep.equal({
+      treeUtils.lookup(['results'], reactor.mock.lastCall[0]).context
+    ).toEqual({
       count: 1,
       results: [{ title: 'Some result' }, { title: 'Some other result' }],
     })
   })
 
   it('should support add', async () => {
-    reactor.resetHistory()
-    service.resetHistory()
+    reactor.mockClear()
+    service.mockClear()
     let disposer = reaction(() => toJS(Tree.tree), reactor)
-    await Tree.add(['root'], {
-      key: 'newFilter',
-      type: 'text',
-    })
-    expect(service).to.have.callCount(0)
+
+    await Tree.add(['root'], { key: 'newFilter', type: 'text' })
+    expect(service).not.toHaveBeenCalled()
     await Tree.add(['root'], {
       key: 'newFilterWithValue',
       type: 'facet',
       values: 'asdf',
     })
-    expect(service).to.have.callCount(1)
-    expect(reactor).to.satisfy(x => x.callCount > 1)
+    expect(service).toHaveBeenCalledTimes(1)
+    expect(reactor.mock.calls.length).toBeGreaterThan(1)
     expect(
       simplifyObject(
-        treeUtils.lookup(['newFilterWithValue'], reactor.getCall(2).args[0])
+        treeUtils.lookup(['newFilterWithValue'], reactor.mock.calls[2][0])
       )
-    ).to.deep.equal({
+    ).toEqual({
       key: 'newFilterWithValue',
       type: 'facet',
       mode: 'include',
@@ -148,8 +141,8 @@ describe('usage with mobx should generally work', () => {
   })
 
   it('should support remove', async () => {
-    reactor.resetHistory()
-    service.resetHistory()
+    reactor.mockClear()
+    service.mockClear()
     let disposer = reaction(() => toJS(Tree.tree), reactor)
 
     await Tree.add(['root'], {
@@ -157,38 +150,41 @@ describe('usage with mobx should generally work', () => {
       type: 'facet',
       context: { options: [1] },
     })
-    expect(service).to.have.callCount(1)
-    expect(reactor).to.satisfy(x => x.callCount > 1)
-    expect(Tree.getNode(['root', 'newNotEmptyFilter'])).to.exist
+    expect(service).toHaveBeenCalledTimes(1)
+    expect(reactor.mock.calls.length).toBeGreaterThan(1)
+    expect(Tree.getNode(['root', 'newNotEmptyFilter'])).toBeDefined()
 
-    let previousCallCount = reactor.callCount
+    let previousCallCount = reactor.mock.calls.length
     await Tree.remove(['root', 'newNotEmptyFilter'])
-    expect(service).to.have.callCount(1)
-    expect(reactor).to.satisfy(x => x.callCount > previousCallCount)
-    expect(Tree.getNode(['root', 'newNotEmptyFilter'])).to.not.exist
+    expect(service).toHaveBeenCalledTimes(1)
+    expect(reactor.mock.calls.length).toBeGreaterThan(previousCallCount)
+    expect(Tree.getNode(['root', 'newNotEmptyFilter'])).not.toBeDefined()
 
-    previousCallCount = reactor.callCount
+    previousCallCount = reactor.mock.calls.length
     await Tree.add(['root'], {
       key: 'newFilterWithValueForRemoveTest',
       type: 'facet',
       values: 'asdf',
     })
-    expect(service).to.have.callCount(2)
-    expect(reactor).to.satisfy(x => x.callCount > previousCallCount)
-    expect(Tree.getNode(['root', 'newFilterWithValueForRemoveTest'])).to.exist
+    expect(service).toHaveBeenCalledTimes(2)
+    expect(reactor.mock.calls.length).toBeGreaterThan(previousCallCount)
+    expect(
+      Tree.getNode(['root', 'newFilterWithValueForRemoveTest'])
+    ).toBeDefined()
 
-    previousCallCount = reactor.callCount
+    previousCallCount = reactor.mock.calls.length
     await Tree.remove(['root', 'newFilterWithValueForRemoveTest'])
-    expect(Tree.getNode(['root', 'newFilterWithValueForRemoveTest'])).to.not
-      .exist
-    expect(service).to.have.callCount(3)
-    expect(reactor).to.satisfy(x => x.callCount > previousCallCount)
+    expect(
+      Tree.getNode(['root', 'newFilterWithValueForRemoveTest'])
+    ).not.toBeDefined()
+    expect(service).toHaveBeenCalledTimes(3)
+    expect(reactor.mock.calls.length).toBeGreaterThan(previousCallCount)
 
     expect(
       simplifyObject(
-        treeUtils.lookup(['newNotEmptyFilter'], reactor.getCall(0).args[0])
+        treeUtils.lookup(['newNotEmptyFilter'], reactor.mock.calls[0][0])
       )
-    ).to.deep.equal({
+    ).toEqual({
       key: 'newNotEmptyFilter',
       type: 'facet',
       mode: 'include',
@@ -201,8 +197,8 @@ describe('usage with mobx should generally work', () => {
       _.flow(
         _.omit(['lastUpdateTime']),
         simplifyObject
-      )(treeUtils.lookup(['newNotEmptyFilter'], reactor.getCall(1).args[0]))
-    ).to.deep.equal({
+      )(treeUtils.lookup(['newNotEmptyFilter'], reactor.mock.calls[1][0]))
+    ).toEqual({
       key: 'newNotEmptyFilter',
       type: 'facet',
       mode: 'include',
@@ -215,51 +211,51 @@ describe('usage with mobx should generally work', () => {
     expect(
       treeUtils.lookup(
         ['newFilterWithValueForRemoveTest'],
-        reactor.getCall(0).args[0]
+        reactor.mock.calls[0][0]
       )
-    ).to.equal(undefined)
+    ).toBeUndefined()
     expect(
       treeUtils.lookup(
         ['newFilterWithValueForRemoveTest'],
-        reactor.lastCall.args[0]
+        reactor.mock.lastCall[0]
       )
-    ).to.deep.equal(undefined)
+    ).toBeUndefined()
     disposer()
   })
 
   it('should support retrieving results with different array sizes', async () => {
-    reactor.resetHistory()
-    service.resetHistory()
+    reactor.mockClear()
+    service.mockClear()
     let disposer = reaction(() => toJS(Tree.tree), reactor)
 
     await Tree.mutate(['root', 'filter'], { values: [1, 2, 3] })
-    expect(service).to.have.callCount(1)
+    expect(service).toHaveBeenCalledTimes(1)
     expect(
       _.flow(
         _.get(['context', 'results']),
         _.toArray
       )(Tree.getNode(['root', 'results']))
-    ).to.deep.equal([{ title: 'Some result' }, { title: 'Some other result' }])
+    ).toEqual([{ title: 'Some result' }, { title: 'Some other result' }])
     treeUtils.lookup(['results'], responseData).context.results = [
       { title: 'New values' },
     ]
     await Tree.mutate(['root', 'filter'], { values: [1, 2, 3, 4] })
-    expect(service).to.have.callCount(2)
+    expect(service).toHaveBeenCalledTimes(2)
     expect(
       _.flow(
         _.get(['context', 'results']),
         _.toArray
       )(Tree.getNode(['root', 'results']))
-    ).to.deep.equal([{ title: 'New values' }])
+    ).toEqual([{ title: 'New values' }])
     disposer()
   })
 
   it('should refresh properly', async () => {
     await Tree.refresh(['root'])
-    expect(service).to.have.callCount(3)
+    expect(service).toHaveBeenCalledTimes(3)
   })
   it('onUpdateByOthers should work with mobx (and not be called on self updates)', async () => {
-    service.resetHistory()
+    service.mockClear()
     let Tree = ContextureMobx({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -273,15 +269,15 @@ describe('usage with mobx should generally work', () => {
     // Get the results node instead of passing an array in to test case where dispatched path is an observable array
     let resultsNode = tree.getNode(['root', 'results'])
     await tree.mutate(resultsNode.path, { page: 2 })
-    expect(tree.getNode(resultsNode.path).page).to.equal(2)
-    expect(service).to.have.callCount(1)
+    expect(tree.getNode(resultsNode.path).page).toBe(2)
+    expect(service).toHaveBeenCalledTimes(1)
     await tree.mutate(['root', 'agencies'], { values: ['Other City'] })
-    expect(tree.getNode(resultsNode.path).page).to.equal(1)
-    expect(service).to.have.callCount(2)
+    expect(tree.getNode(resultsNode.path).page).toBe(1)
+    expect(service).toHaveBeenCalledTimes(2)
   })
   it(`should be possible to change a group's join property`, async () => {
     // This wasn't possible before this PR: https://github.com/smartprocure/contexture-client/pull/74
-    service.resetHistory()
+    service.mockClear()
     let Tree = ContextureMobx({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -307,7 +303,7 @@ describe('usage with mobx should generally work', () => {
     await tree.mutate(['root', 'subgroup'], { join: 'and' })
   })
   it('should match flat and nested trees after add', async () => {
-    service.resetHistory()
+    service.mockClear()
     let Tree = ContextureMobx({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -327,22 +323,22 @@ describe('usage with mobx should generally work', () => {
       field: 'facetfield',
       value: 'some value',
     })
-    expect(tree.getNode(['root', 'filter 2'])).to.equal(tree.tree.children[1])
+    expect(tree.getNode(['root', 'filter 2'])).toBe(tree.tree.children[1])
   })
   it('Test that pushing into an observable array converts array items to observables different from what was pushed', () => {
     let tree = observable({ key: 'a', children: [{ key: 'b' }] })
     let plainNode = { key: 'c' }
     tree.children.push(plainNode)
-    expect(tree.children[1]).not.to.equal(plainNode)
+    expect(tree.children[1]).not.toBe(plainNode)
 
     let observableNode = { key: 'd' }
     observableNode = observable(observableNode)
     tree.children.push(observableNode)
-    expect(tree.children[2]).to.equal(observableNode)
+    expect(tree.children[2]).toBe(observableNode)
   })
   it('should support observing disableAutoUpdate', () => {
-    service.resetHistory()
-    let reactor = sinon.spy()
+    service.mockClear()
+    let reactor = jest.fn()
     let tree = ContextureMobx({ service, debounce: 1 })({
       key: 'root',
       join: 'and',
@@ -357,11 +353,11 @@ describe('usage with mobx should generally work', () => {
     })
     reaction(() => tree.disableAutoUpdate, reactor)
     tree.disableAutoUpdate = true
-    expect(reactor).to.have.callCount(1)
+    expect(reactor).toHaveBeenCalledTimes(1)
   })
   it('should react to group fns', async () => {
-    let service = sinon.spy(mockService({}))
-    let reactor = sinon.spy()
+    let service = jest.fn(mockService({}))
+    let reactor = jest.fn()
     let tree = ContextureMobx(
       { service, debounce: 1 },
       {
@@ -376,8 +372,8 @@ describe('usage with mobx should generally work', () => {
     autorun(() => reactor(tree.getNode(['root']).markedForUpdate))
     await tree.mutate(['root', 'filter'], { values: ['other Value'] })
 
-    expect(service).to.have.callCount(1)
+    expect(service).toHaveBeenCalledTimes(1)
     // once on initial run to false, then true, then again back to false
-    expect(reactor).to.have.callCount(3)
+    expect(reactor).toHaveBeenCalledTimes(3)
   })
 })

@@ -1,14 +1,9 @@
 import _ from 'lodash/fp'
-import chai from 'chai'
-import sinon from 'sinon'
-import sinonChai from 'sinon-chai'
 import ContextureClient, { encode, exampleTypes } from '../src'
 import Promise from 'bluebird'
 import mockService from '../src/mockService'
 import wrap from '../src/actions/wrap'
 import { observable, toJS, set } from 'mobx'
-const expect = chai.expect
-chai.use(sinonChai)
 
 let mobxAdapter = { snapshot: toJS, extend: set, initObject: observable }
 let ContextureMobx = _.curry((x, y) =>
@@ -37,7 +32,7 @@ let AllTests = ContextureClient => {
         },
       ],
     }
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient({ service, debounce: 1 }, tree)
 
     it('should support per-node onSerialize hook', () => {
@@ -50,7 +45,7 @@ let AllTests = ContextureClient => {
         },
       })
       let Tree = ContextureClient({ service, debounce: 0, types }, tree)
-      expect(Tree.serialize()).to.deep.equal({
+      expect(Tree.serialize()).toEqual({
         key: 'root',
         join: 'and',
         children: [
@@ -74,9 +69,9 @@ let AllTests = ContextureClient => {
       await Tree.mutate(['root', 'filter'], {
         values: ['a'],
       })
-      expect(service).to.have.callCount(1)
-      let [dto, now] = service.getCall(0).args
-      expect(dto).to.deep.equal({
+      expect(service).toBeCalledTimes(1)
+      let [dto, now] = service.mock.calls[0]
+      expect(dto).toEqual({
         key: 'root',
         join: 'and',
         lastUpdateTime: now,
@@ -100,8 +95,8 @@ let AllTests = ContextureClient => {
       })
     })
     it('should update contexts', () => {
-      expect(Tree.getNode(['root', 'results']).updating).to.be.false
-      expect(Tree.getNode(['root', 'results']).context).to.deep.equal({
+      expect(Tree.getNode(['root', 'results']).updating).toBe(false)
+      expect(toJS(Tree.getNode(['root', 'results']).context)).toEqual({
         count: 1,
         results: [
           {
@@ -111,7 +106,7 @@ let AllTests = ContextureClient => {
       })
     })
     it('should serialize cleanly', () => {
-      expect(Tree.serialize()).to.deep.equal({
+      expect(Tree.serialize()).toEqual({
         key: 'root',
         join: 'and',
         children: [
@@ -132,85 +127,89 @@ let AllTests = ContextureClient => {
       })
     })
     it('should not block blank searches', async () => {
-      service.resetHistory()
+      service.mockClear()
       await Tree.mutate(['root', 'filter'], {
         values: [],
       })
-      expect(service).to.have.callCount(1)
+      expect(service).toBeCalledTimes(1)
     })
     it('should not search if nothing needs updating', async () => {
-      service.resetHistory()
-      expect(service).to.have.callCount(0)
+      service.mockClear()
+      expect(service).toBeCalledTimes(0)
       await Tree.dispatch({
         path: ['root'],
         type: 'notAType',
       })
-      expect(service).to.have.callCount(0)
+      expect(service).toBeCalledTimes(0)
     })
     // it('should not dispatch if there is no mutation')
     it('should handle join changes', async () => {
-      service.resetHistory()
-      expect(service).to.have.callCount(0)
+      service.mockClear()
+      expect(service).toBeCalledTimes(0)
       Tree.getNode(['root', 'filter']).values = ['real val']
       await Tree.mutate(['root'], {
         join: 'or',
       })
-      expect(service).to.have.callCount(0)
+      expect(service).toBeCalledTimes(0)
       await Tree.mutate(['root'], {
         join: 'not',
       })
-      expect(service).to.have.callCount(1)
-      // let [dto] = service.getCall(0).args
+      expect(service).toBeCalledTimes(1)
+      // let [dto] = service.mock.calls[0]
       // console.log('call', dto)
     })
     it('should support add', async () => {
-      service.resetHistory()
+      service.mockClear()
       await Tree.add(['root'], {
         key: 'newFilter',
         type: 'text',
       })
-      expect(service).to.have.callCount(0)
+      expect(service).toBeCalledTimes(0)
       await Tree.add(['root'], {
         key: 'newFilterWithValue',
         type: 'text',
         value: 'asdf',
       })
-      expect(service).to.have.callCount(1)
+      expect(service).toBeCalledTimes(1)
     })
     it('should support remove', async () => {
-      service.resetHistory()
+      service.mockClear()
       await Tree.add(['root'], {
         key: 'newEmptyFilter',
         type: 'text',
       })
-      expect(service).to.have.callCount(0)
-      expect(Tree.getNode(['root', 'newEmptyFilter'])).to.exist
+      expect(service).toBeCalledTimes(0)
+      expect(Tree.getNode(['root', 'newEmptyFilter'])).toBeDefined()
       await Tree.remove(['root', 'newEmptyFilter'])
-      expect(service).to.have.callCount(0)
-      expect(Tree.getNode(['root', 'newEmptyFilter'])).to.not.exist
+      expect(service).toBeCalledTimes(0)
+      expect(Tree.getNode(['root', 'newEmptyFilter'])).not.toBeDefined()
 
       await Tree.add(['root'], {
         key: 'newFilterWithValueForRemoveTest',
         type: 'facet',
         values: 'asdf',
       })
-      expect(service).to.have.callCount(1)
-      expect(Tree.getNode(['root', 'newFilterWithValueForRemoveTest'])).to.exist
+      expect(service).toBeCalledTimes(1)
+      expect(
+        Tree.getNode(['root', 'newFilterWithValueForRemoveTest'])
+      ).toBeDefined()
       await Tree.remove(['root', 'newFilterWithValueForRemoveTest'])
-      expect(Tree.getNode(['root', 'newFilterWithValueForRemoveTest'])).to.not
-        .exist
-      expect(service).to.have.callCount(2)
+      expect(
+        Tree.getNode(['root', 'newFilterWithValueForRemoveTest'])
+      ).not.toBeDefined()
+      expect(service).toBeCalledTimes(2)
     })
     it('should support refresh', async () => {
-      service.resetHistory()
+      service.mockClear()
       await Tree.refresh(['root'])
-      expect(service).to.have.callCount(1)
+      expect(service).toBeCalledTimes(1)
     })
-    it('should support field changes')
-    it('should probably support type changes ¯\\_(ツ)_/¯')
+
+    it.todo('should support field changes')
+    it.todo('should probably support type changes ¯\\_(ツ)_/¯')
 
     it('should (un)pause', async () => {
-      service.resetHistory()
+      service.mockClear()
       await Tree.mutate(['root', 'filter'], {
         paused: true,
       })
@@ -225,18 +224,18 @@ let AllTests = ContextureClient => {
       await Tree.mutate(['root', 'filter'], {
         size: 42,
       })
-      expect(service).to.have.callCount(0)
-      expect(Tree.getNode(['root', 'filter']).paused).to.be.true
-      expect(Tree.getNode(['root', 'filter']).missedUpdate).to.be.true
+      expect(service).toBeCalledTimes(0)
+      expect(Tree.getNode(['root', 'filter']).paused).toBe(true)
+      expect(Tree.getNode(['root', 'filter']).missedUpdate).toBe(true)
       // Unpause here should trigger this to run
       await Tree.mutate(['root', 'filter'], {
         paused: false,
       })
-      expect(service).to.have.callCount(1)
-      expect(Tree.getNode(['root', 'filter']).paused).to.be.false
-      expect(Tree.getNode(['root', 'filter']).missedUpdate).to.be.false
+      expect(service).toBeCalledTimes(1)
+      expect(Tree.getNode(['root', 'filter']).paused).toBe(false)
+      expect(Tree.getNode(['root', 'filter']).missedUpdate).toBe(false)
     })
-    it('should handle groups being paused')
+    it.todo('should handle groups being paused')
   })
   it('should throw if no service is provided', async () => {
     let Tree = ContextureClient(
@@ -261,13 +260,13 @@ let AllTests = ContextureClient => {
         values: ['cable'],
       })
     } catch (e) {
-      expect(e.message).to.equal('No update service provided!')
+      expect(e.message).toBe('No update service provided!')
       return
     }
     throw Error('Should have thrown')
   })
   it('should work', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient(
       { service, debounce: 1 },
       {
@@ -310,9 +309,9 @@ let AllTests = ContextureClient => {
     await Tree.mutate(['root', 'criteria', 'mainQuery'], {
       query: 'cable',
     })
-    expect(service).to.have.callCount(1)
-    let [dto, now] = service.getCall(0).args
-    expect(dto).to.deep.equal({
+    expect(service).toBeCalledTimes(1)
+    let [dto, now] = service.mock.calls[0]
+    expect(dto).toEqual({
       key: 'root',
       join: 'and',
       lastUpdateTime: now,
@@ -371,14 +370,14 @@ let AllTests = ContextureClient => {
         },
       ],
     }
-    let service = sinon.spy(async (dto, lastUpdateTime) => {
+    let service = jest.fn(async (dto, lastUpdateTime) => {
       let testChange = dto.children[0].values[0]
       // arbitrarily delay the first call to trigger a stale update
       await Promise.delay(testChange === 'a' ? 20 : 1)
       return mockService()(dto, lastUpdateTime)
     })
 
-    let spy = sinon.spy()
+    let spy = jest.fn()
     // Just call the spy for `results`
     let onResult = path => _.isEqual(path, ['root', 'results']) && spy()
     let Tree = ContextureClient(
@@ -398,7 +397,7 @@ let AllTests = ContextureClient => {
       values: ['b'],
     })
     await Promise.all([step1, step2])
-    expect(spy).to.have.callCount(1)
+    expect(spy).toBeCalledTimes(1)
   })
   it('should call onError when the service returns error', async () => {
     let tree = {
@@ -415,11 +414,11 @@ let AllTests = ContextureClient => {
         },
       ],
     }
-    let service = sinon.spy(async () => {
+    let service = jest.fn(async () => {
       throw 'service error!'
     })
 
-    let spy = sinon.spy()
+    let spy = jest.fn()
     // Just call the spy for `onError`
     let onError = () => spy()
     let Tree = ContextureClient(
@@ -435,13 +434,13 @@ let AllTests = ContextureClient => {
     })
     await Promise.delay(20)
     await Promise.resolve(step1)
-    expect(spy).to.have.callCount(1)
+    expect(spy).toBeCalledTimes(1)
   })
   it('onError tree should be back to normal - no updating flags etc', async () => {
-    let service = sinon.spy(async () => {
+    let service = jest.fn(async () => {
       throw 'service error!'
     })
-    let spy = sinon.spy()
+    let spy = jest.fn()
     let onError = () => spy()
     let tree = ContextureClient(
       {
@@ -474,11 +473,11 @@ let AllTests = ContextureClient => {
     let step1 = tree.mutate(['root', 'a'], { values: [1] })
     await Promise.delay(5)
     await Promise.resolve(step1)
-    expect(spy).to.have.callCount(1)
+    expect(spy).toBeCalledTimes(1)
     let node = tree.getNode(['root', 'b'])
-    expect(node.updating).to.be.false
+    expect(node.updating).toBe(false)
     await node.updatingPromise
-    expect(node.updating).to.be.false
+    expect(node.updating).toBe(false)
   })
   it('should throw when the service crashes', async () => {
     let tree = {
@@ -495,7 +494,7 @@ let AllTests = ContextureClient => {
         },
       ],
     }
-    let service = sinon.spy(async () => {
+    let service = jest.fn(async () => {
       throw 'service error!'
     })
 
@@ -511,13 +510,13 @@ let AllTests = ContextureClient => {
         values: ['a'],
       })
     } catch (e) {
-      expect(e).to.equal('service error!')
+      expect(e).toBe('service error!')
     }
   })
   it('should support custom type reactors', async () => {
-    let service = sinon.spy(mockService())
-    let resultsUpdated = sinon.spy()
-    let filterUpdated = sinon.spy()
+    let service = jest.fn(mockService())
+    let resultsUpdated = jest.fn()
+    let filterUpdated = jest.fn()
     let onResult = _.cond([
       [_.isEqual(['root', 'results']), resultsUpdated],
       [_.isEqual(['root', 'filter']), filterUpdated],
@@ -555,20 +554,18 @@ let AllTests = ContextureClient => {
     await Tree.mutate(['root', 'filter'], {
       value: 'a',
     })
-    expect(service).to.have.callCount(1)
-    expect(resultsUpdated).to.have.callCount(1)
-    expect(filterUpdated).to.have.callCount(0)
+    expect(service).toBeCalledTimes(1)
+    expect(resultsUpdated).toBeCalledTimes(1)
+    expect(filterUpdated).toBeCalledTimes(0)
     await Tree.mutate(['root', 'filter'], {
       optionType: 2,
     })
-    expect(service).to.have.callCount(2)
-    expect(resultsUpdated).to.have.callCount(1)
-    expect(filterUpdated).to.have.callCount(1)
+    expect(service).toBeCalledTimes(2)
+    expect(resultsUpdated).toBeCalledTimes(1)
+    expect(filterUpdated).toBeCalledTimes(1)
   })
   it('should support custom type initializers', async () => {
-    let testInit = sinon.spy((node, extend) =>
-      extend(node, { isExtended: true })
-    )
+    let testInit = jest.fn((node, extend) => extend(node, { isExtended: true }))
     let Tree = ContextureClient(
       {
         debounce: 1,
@@ -588,8 +585,8 @@ let AllTests = ContextureClient => {
         ],
       }
     )
-    expect(testInit).to.have.callCount(1)
-    expect(Tree.getNode(['root', 'filter']).isExtended).to.be.true
+    expect(testInit).toBeCalledTimes(1)
+    expect(Tree.getNode(['root', 'filter']).isExtended).toBe(true)
   })
   it('should support custom type defaults', async () => {
     let Tree = ContextureClient(
@@ -616,13 +613,13 @@ let AllTests = ContextureClient => {
         ],
       }
     )
-    expect(Tree.getNode(['root', 'filter']).isExtended).to.be.true
-    expect(Tree.getNode(['root', 'filter']).context.example).to.equal(0)
+    expect(Tree.getNode(['root', 'filter']).isExtended).toBe(true)
+    expect(Tree.getNode(['root', 'filter']).context.example).toBe(0)
   })
   it('should custom type reactors should work with and without values, and nested', async () => {
-    let service = sinon.spy(mockService({}))
-    let resultsUpdated = sinon.spy()
-    let filterUpdated = sinon.spy()
+    let service = jest.fn(mockService({}))
+    let resultsUpdated = jest.fn()
+    let filterUpdated = jest.fn()
     let onResult = _.cond([
       [_.isEqual(['root', 'results']), resultsUpdated],
       [_.isEqual(['root', 'filter']), filterUpdated],
@@ -679,26 +676,26 @@ let AllTests = ContextureClient => {
     await Tree.mutate(['root', 'filter'], {
       value: 'z',
     })
-    expect(service).to.have.callCount(1)
-    expect(resultsUpdated).to.have.callCount(1)
-    expect(filterUpdated).to.have.callCount(0)
+    expect(service).toBeCalledTimes(1)
+    expect(resultsUpdated).toBeCalledTimes(1)
+    expect(filterUpdated).toBeCalledTimes(0)
     await Tree.mutate(['root', 'filterNoData'], {
       value: 'z',
     })
-    expect(service).to.have.callCount(2)
-    expect(resultsUpdated).to.have.callCount(2)
-    expect(filterUpdated).to.have.callCount(1)
+    expect(service).toBeCalledTimes(2)
+    expect(resultsUpdated).toBeCalledTimes(2)
+    expect(filterUpdated).toBeCalledTimes(1)
     await Tree.mutate(['root', 'filterGroup', 'filterChild'], {
       value: 'z',
     })
-    expect(service).to.have.callCount(3)
-    expect(resultsUpdated).to.have.callCount(3)
-    expect(filterUpdated).to.have.callCount(2)
+    expect(service).toBeCalledTimes(3)
+    expect(resultsUpdated).toBeCalledTimes(3)
+    expect(filterUpdated).toBeCalledTimes(2)
   })
   it('Tree lenses should work', async () => {
-    let service = sinon.spy(mockService({}))
-    let resultsUpdated = sinon.spy()
-    let filterUpdated = sinon.spy()
+    let service = jest.fn(mockService({}))
+    let resultsUpdated = jest.fn()
+    let filterUpdated = jest.fn()
     let onResult = _.cond([
       [_.isEqual(['root', 'results']), resultsUpdated],
       [_.isEqual(['root', 'filter']), filterUpdated],
@@ -730,14 +727,14 @@ let AllTests = ContextureClient => {
       }
     )
     let lens = Tree.lens(['root', 'filter'])('values')
-    expect(lens.get()).to.equal(null)
+    expect(lens.get()).toBeNull()
     await lens.set(['values'])
-    expect(lens.get()).to.deep.equal(['values'])
-    expect(filterUpdated).to.have.callCount(0)
-    expect(resultsUpdated).to.have.callCount(1)
+    expect(toJS(lens.get())).toEqual(['values'])
+    expect(filterUpdated).toBeCalledTimes(0)
+    expect(resultsUpdated).toBeCalledTimes(1)
   })
   it('should support custom actions', async () => {
-    let service = sinon.spy(mockService({}))
+    let service = jest.fn(mockService({}))
     let tree = ContextureClient(
       {
         debounce: 1,
@@ -772,9 +769,9 @@ let AllTests = ContextureClient => {
     let node = tree.getNode(['root', 'b'])
     tree.shallowRekey(['root', 'b'], 'f')
     await tree.dispatch({ type: 'all', path: ['root', 'a'] })
-    expect(service).to.have.callCount(1)
-    let [dto, now] = service.getCall(0).args
-    expect(dto).to.deep.equal({
+    expect(service).toBeCalledTimes(1)
+    let [dto, now] = service.mock.calls[0]
+    expect(dto).toEqual({
       key: 'root',
       join: 'and',
       lastUpdateTime: now,
@@ -795,12 +792,12 @@ let AllTests = ContextureClient => {
       ],
     })
     let newNode = tree.getNode(['root', 'f'])
-    expect(node).to.deep.equal(newNode)
-    expect(newNode.key).to.equal('f')
-    expect(newNode.special).to.equal(true)
+    expect(node).toEqual(newNode)
+    expect(newNode.key).toBe('f')
+    expect(newNode.special).toBe(true)
   })
   it('should support custom reactors', async () => {
-    let service = sinon.spy(mockService({}))
+    let service = jest.fn(mockService({}))
     let tree = ContextureClient(
       {
         debounce: 1,
@@ -828,9 +825,9 @@ let AllTests = ContextureClient => {
       onlySpecial: parent => _.filter('special', parent.children),
     }))
     await tree.dispatch({ type: 'onlySpecial', path: ['root', 'b'] })
-    expect(service).to.have.callCount(1)
-    let [dto, now] = service.getCall(0).args
-    expect(dto).to.deep.equal({
+    expect(service).toBeCalledTimes(1)
+    let [dto, now] = service.mock.calls[0]
+    expect(dto).toEqual({
       key: 'root',
       join: 'and',
       lastUpdateTime: now,
@@ -853,7 +850,7 @@ let AllTests = ContextureClient => {
     })
   })
   it('should support updatingPromise', async () => {
-    let spy = sinon.spy(mockService({}))
+    let spy = jest.fn(mockService({}))
     let service = async (...args) => {
       // Add an artificial delay so we can see when updating starts
       await Promise.delay(10)
@@ -890,13 +887,13 @@ let AllTests = ContextureClient => {
     let node = tree.getNode(['root', 'b'])
     // Allow updating to start (after debounce elaspses) but before the service finishes
     await Promise.delay(5)
-    expect(node.updating).to.be.true
+    expect(node.updating).toBe(true)
     await node.updatingPromise
-    expect(node.updating).to.be.false
+    expect(node.updating).toBe(false)
   })
   describe('Previously fixed bugs', () => {
     it('should not incorrectly mark siblings for update when their parents are marked on self', async () => {
-      let service = addDelay(10, sinon.spy(mockService()))
+      let service = addDelay(10, jest.fn(mockService()))
       let Tree = ContextureClient({ service, debounce: 1 })
       let tree = Tree({
         key: 'root',
@@ -921,11 +918,12 @@ let AllTests = ContextureClient => {
         ],
       })
       await tree.mutate(['root', 'criteria', 'agencies'], { size: 12 })
-      expect(tree.getNode(['root', 'criteria', 'vendors']).lastUpdateTime).to.be
-        .null
+      expect(
+        tree.getNode(['root', 'criteria', 'vendors']).lastUpdateTime
+      ).toBeNull()
     })
     it('should not prevent siblings from updating', async () => {
-      let service = addDelay(10, sinon.spy(mockService()))
+      let service = addDelay(10, jest.fn(mockService()))
       let Tree = ContextureClient({ service, debounce: 1 })
       let tree = Tree({
         key: 'root',
@@ -989,11 +987,12 @@ let AllTests = ContextureClient => {
       })
       // Previously, we would not mark for update if any children already were, which would prevent siblings
       //  of things markedForUpdate from being correctly updated by other parts of the tree
-      expect(tree.getNode(['root', 'criteria1', 'vendors']).lastUpdateTime).to
-        .not.be.null
+      expect(
+        tree.getNode(['root', 'criteria1', 'vendors']).lastUpdateTime
+      ).not.toBeNull()
     })
     it('should not keep nodes without results updating forever', async () => {
-      let service = sinon.spy(mockService())
+      let service = jest.fn(mockService())
       let Tree = ContextureClient({ debounce: 1, service })
       let tree = Tree({
         key: 'root',
@@ -1016,14 +1015,14 @@ let AllTests = ContextureClient => {
           },
         ],
       })
-      expect(!!tree.getNode(['root', 'vendors']).updating).to.be.false
+      expect(!!tree.getNode(['root', 'vendors']).updating).toBe(false)
       await tree.mutate(['root', 'agencies'], { values: ['City of Deerfield'] })
       // Since this is `text`, it won't get a context back but should still not be updating
-      expect(!!tree.getNode(['root', 'vendors']).updating).to.be.false
+      expect(!!tree.getNode(['root', 'vendors']).updating).toBe(false)
     })
   })
   it('should support subquery', async () => {
-    let spy = sinon.spy(
+    let spy = jest.fn(
       mockService({
         mocks({ type }) {
           if (type === 'facet')
@@ -1079,20 +1078,20 @@ let AllTests = ContextureClient => {
 
     await promise
     expect(
-      sourceTree.getNode(['innerRoot', 'c']).context.options
-    ).to.deep.equal([{ name: 1 }, { name: 2 }])
-    expect(targetTree.getNode(['root', 'a']).values).to.deep.equal([1, 2])
+      toJS(sourceTree.getNode(['innerRoot', 'c']).context.options)
+    ).toEqual([{ name: 1 }, { name: 2 }])
+    expect(toJS(targetTree.getNode(['root', 'a']).values)).toEqual([1, 2])
 
     // Mutate on sourceTree will await the Subquery into targetTree
     // so results are fetched only once despite dispatching them directly
-    expect(spy).to.have.callCount(2)
+    expect(spy).toBeCalledTimes(2)
 
-    expect(targetTree.getNode(['root', 'b']).markedForUpdate).to.be.false
-    expect(targetTree.getNode(['root', 'b']).updating).to.be.false
-    expect(targetTree.getNode(['root', 'b']).context.count).to.equal(1)
+    expect(targetTree.getNode(['root', 'b']).markedForUpdate).toBe(false)
+    expect(targetTree.getNode(['root', 'b']).updating).toBe(false)
+    expect(targetTree.getNode(['root', 'b']).context.count).toBe(1)
   })
   it('should support subquery clearing target tree', async () => {
-    let spy = sinon.spy(
+    let spy = jest.fn(
       mockService({
         mocks({ key, type }) {
           if (type === 'facet')
@@ -1149,17 +1148,15 @@ let AllTests = ContextureClient => {
     let promise = sourceTree.mutate(['innerRoot', 'd'], { values: ['test'] })
 
     await promise
-    expect(
-      sourceTree.getNode(['innerRoot', 'c']).context.options
-    ).to.deep.equal([])
-    expect(targetTree.getNode(['root', 'a']).values).to.deep.equal([])
+    expect(sourceTree.getNode(['innerRoot', 'c']).context.options).toEqual([])
+    expect(targetTree.getNode(['root', 'a']).values).toEqual([])
 
     // Mutate on sourceTree will await the Subquery into targetTree
     // so results are fetched only once despite dispatching them directly
-    expect(spy).to.have.callCount(2)
+    expect(spy).toBeCalledTimes(2)
   })
   it('should respect disableAutoUpdate', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient({
       service,
       debounce: 1,
@@ -1187,20 +1184,20 @@ let AllTests = ContextureClient => {
     })
     // With disableAutoUpdate, search should not go through
     await tree.mutate(['root', 'agencies'], { values: ['Other City'] })
-    expect(service).to.not.have.been.called
+    expect(service).not.toBeCalled()
     // If it affects itself it will go through
     await tree.mutate(['root', 'agencies'], { size: 12 })
-    expect(service).to.have.callCount(1)
+    expect(service).toBeCalledTimes(1)
 
     // Trigger Update should also let searches through
     await tree.mutate(['root', 'agencies'], { values: ['First City'] })
-    expect(service).to.have.callCount(1)
+    expect(service).toBeCalledTimes(1)
     await tree.triggerUpdate()
-    expect(service).to.have.callCount(2)
+    expect(service).toBeCalledTimes(2)
   })
   it('should not update nodes without values', async () => {
     // working here
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient({
       service,
       debounce: 1,
@@ -1219,9 +1216,9 @@ let AllTests = ContextureClient => {
 
     // Don't trigger Update if there is not value
     await tree.mutate(['root', 'agencies'], { mode: 'exclude' })
-    expect(service).to.have.callCount(0)
+    expect(service).toBeCalledTimes(0)
     await tree.mutate(['root', 'dates'], { range: 'allDates' })
-    expect(service).to.have.callCount(0)
+    expect(service).toBeCalledTimes(0)
 
     // Don't trigger Update if adding node without value
     await tree.add(
@@ -1234,11 +1231,11 @@ let AllTests = ContextureClient => {
       },
       { index: 1 }
     )
-    expect(service).to.have.callCount(1)
+    expect(service).toBeCalledTimes(1)
   })
   it('should allow individual nodes to be updated', async () => {
     // working here
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient({
       service,
       debounce: 1,
@@ -1266,9 +1263,9 @@ let AllTests = ContextureClient => {
 
     // Trigger Update should let only targeted search through
     await tree.mutate(['root', 'criteria', 'agencies'], { size: 12 })
-    expect(service).to.have.callCount(1)
-    let [dto, now] = service.getCall(0).args
-    expect(dto).to.deep.equal({
+    expect(service).toBeCalledTimes(1)
+    let [dto, now] = service.mock.calls[0]
+    expect(dto).toEqual({
       children: [
         {
           filterOnly: true,
@@ -1310,10 +1307,10 @@ let AllTests = ContextureClient => {
     })
     // Refreshing whole tree shouldn't block searches
     await tree.dispatch({ type: 'refresh', path: ['root'] })
-    expect(service).to.have.callCount(2)
-    let [body, ts] = service.getCall(1).args
+    expect(service).toBeCalledTimes(2)
+    let [body, ts] = service.mock.calls[1]
 
-    expect(body).to.deep.equal({
+    expect(body).toEqual({
       children: [
         {
           key: 'results',
@@ -1356,7 +1353,7 @@ let AllTests = ContextureClient => {
     })
   })
   it('should still debounce disableAutoUpdate even with self affecting reactors that triggerImmediate', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient({
       service,
       debounce: 1,
@@ -1370,7 +1367,7 @@ let AllTests = ContextureClient => {
         { key: 'results', type: 'results' },
       ],
     })
-    expect(service).to.have.callCount(0)
+    expect(service).toBeCalledTimes(0)
 
     // Tags mutate has a self affecting reactor (`all`), which will triggerImmediate and bypass disableAutoUpdate
     let toTags = _.map(word => ({ word }))
@@ -1380,14 +1377,14 @@ let AllTests = ContextureClient => {
       tree.mutate(['root', 'filter1'], { tags: toTags(['1', '2', '3']) }),
       tree.mutate(['root', 'filter1'], { tags: toTags(['1', '2', '3', '4']) }),
     ]
-    expect(service).to.have.callCount(0)
+    expect(service).toBeCalledTimes(0)
 
     // Even though 4 mutate calls were made, only 1 search should have actually triggered
     await Promise.all(calls)
-    expect(service).to.have.callCount(1)
+    expect(service).toBeCalledTimes(1)
   })
   it('should call onUpdateByOthers', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let types = {
       facet: {
         reactors: { values: 'others' },
@@ -1426,11 +1423,11 @@ let AllTests = ContextureClient => {
       ],
     })
     await tree.mutate(['root', 'agencies'], { values: ['Other City'] })
-    expect(tree.getNode(['root', 'results']).page).to.equal(1)
-    expect(service).to.have.callCount(1)
+    expect(tree.getNode(['root', 'results']).page).toBe(1)
+    expect(service).toBeCalledTimes(1)
   })
   it('onUpdateByOthers should not block on self update', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1454,11 +1451,11 @@ let AllTests = ContextureClient => {
       ],
     })
     await tree.mutate(['root', 'results'], { page: 2 })
-    expect(tree.getNode(['root', 'results']).page).to.equal(2)
-    expect(service).to.have.callCount(1)
+    expect(tree.getNode(['root', 'results']).page).toBe(2)
+    expect(service).toBeCalledTimes(1)
   })
   it('should support add at index', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1487,10 +1484,10 @@ let AllTests = ContextureClient => {
     )
 
     let keys = _.map('key', tree.tree.children)
-    expect(keys).to.deep.equal(['results', 'filter1', 'analytics'])
+    expect(keys).toEqual(['results', 'filter1', 'analytics'])
   })
   it('should support add with children', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1520,28 +1517,28 @@ let AllTests = ContextureClient => {
     })
     let filter1Get = tree.getNode(['root', 'criteria', 'filter1'])
     let filter1Direct = tree.getNode(['root', 'criteria']).children[0]
-    expect(filter1Direct).to.exist
-    expect(filter1Direct.path).to.deep.equal(['root', 'criteria', 'filter1'])
-    expect(filter1Get).to.equal(filter1Direct)
+    expect(filter1Direct).toBeDefined()
+    expect(toJS(filter1Direct.path)).toEqual(['root', 'criteria', 'filter1'])
+    expect(filter1Get).toBe(filter1Direct)
 
     // Check initNode worked and added default props
-    expect(filter1Get.values).to.deep.equal([])
-    expect(filter1Get.path).to.deep.equal(['root', 'criteria', 'filter1'])
+    expect(filter1Get.values).toEqual([])
+    expect(toJS(filter1Get.path)).toEqual(['root', 'criteria', 'filter1'])
 
     // "move" to another node location and make sure everything is updated
     await tree.mutate(['root', 'criteria', 'filter1'], { values: [1, 2, 3] })
     await tree.remove(['root', 'criteria', 'filter1'])
-    expect(tree.getNode(['root', 'criteria', 'filter1'])).not.to.exist
-    expect(filter1Direct).to.exist
+    expect(tree.getNode(['root', 'criteria', 'filter1'])).not.toBeDefined()
+    expect(filter1Direct).toBeDefined()
     await tree.add(['root'], filter1Direct)
 
     let newlyAddedNode = tree.getNode(['root', 'filter1'])
-    expect(newlyAddedNode).to.exist
-    expect(newlyAddedNode.path).to.deep.equal(['root', 'filter1'])
-    expect(newlyAddedNode.values).to.deep.equal([1, 2, 3])
+    expect(newlyAddedNode).toBeDefined()
+    expect(toJS(newlyAddedNode.path)).toEqual(['root', 'filter1'])
+    expect(toJS(newlyAddedNode.values)).toEqual([1, 2, 3])
   })
   it('should remove children from flat array', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1570,11 +1567,11 @@ let AllTests = ContextureClient => {
       ],
     })
     await tree.remove(['root', 'criteria'])
-    expect(tree.getNode(['root', 'criteria'])).to.not.exist
-    expect(tree.getNode(['root', 'criteria', 'filter1'])).to.not.exist
+    expect(tree.getNode(['root', 'criteria'])).not.toBeDefined()
+    expect(tree.getNode(['root', 'criteria', 'filter1'])).not.toBeDefined()
   })
   it('should replace', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1602,30 +1599,30 @@ let AllTests = ContextureClient => {
         },
       ],
     })
-    expect(tree.tree.children[1].key).to.deep.equal('criteria')
+    expect(tree.tree.children[1].key).toEqual('criteria')
     // Replace with a transform
     await tree.replace(['root', 'criteria'], node => ({
       ...node,
       key: 'criteria1',
       values: [1, 2, 3],
     }))
-    expect(tree.getNode(['root', 'criteria'])).to.not.exist
-    expect(tree.getNode(['root', 'criteria1']).values).to.deep.equal([1, 2, 3])
-    expect(tree.getNode(['root', 'criteria1']).children).to.have.lengthOf(2)
+    expect(tree.getNode(['root', 'criteria'])).not.toBeDefined()
+    expect(toJS(tree.getNode(['root', 'criteria1']).values)).toEqual([1, 2, 3])
+    expect(tree.getNode(['root', 'criteria1']).children).toHaveLength(2)
     // Confirm it's at the right index
-    expect(tree.tree.children[1].key).to.deep.equal('criteria1')
+    expect(tree.tree.children[1].key).toEqual('criteria1')
     // Replace with a new object
     await tree.replace(['root', 'criteria1'], () => ({
       key: 'criteria2',
       type: 'facet',
     }))
-    expect(tree.getNode(['root', 'criteria'])).to.not.exist
-    expect(tree.getNode(['root', 'criteria2']).values).to.deep.equal([])
-    expect(tree.getNode(['root', 'criteria2']).children).to.not.exist
-    expect(tree.tree.children[1].key).to.deep.equal('criteria2')
+    expect(tree.getNode(['root', 'criteria'])).not.toBeDefined()
+    expect(toJS(tree.getNode(['root', 'criteria2']).values)).toEqual([])
+    expect(tree.getNode(['root', 'criteria2']).children).not.toBeDefined()
+    expect(tree.tree.children[1].key).toEqual('criteria2')
   })
   it('should clear', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1667,14 +1664,14 @@ let AllTests = ContextureClient => {
     tree.clear(['root', 'criteria', 'filter1'])
     tree.clear(['root', 'criteria', 'filter2'])
 
-    expect(tree.getNode(['root', 'criteria', 'filter1']).tags).to.deep.equal([])
-    expect(tree.getNode(['root', 'criteria', 'filter2']).tags).to.deep.equal([])
+    expect(tree.getNode(['root', 'criteria', 'filter1']).tags).toEqual([])
+    expect(tree.getNode(['root', 'criteria', 'filter2']).tags).toEqual([])
 
-    expect(tree.getNode(['root', 'criteria', 'filter1']).join).to.equal('none')
-    expect(tree.getNode(['root', 'criteria', 'filter2']).join).to.equal('any')
+    expect(tree.getNode(['root', 'criteria', 'filter1']).join).toBe('none')
+    expect(tree.getNode(['root', 'criteria', 'filter2']).join).toBe('any')
   })
   it('should wrapInGroup replace', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1708,12 +1705,12 @@ let AllTests = ContextureClient => {
       join: 'and',
     })
 
-    expect(tree.getNode(['root', 'analytics'])).to.exist
-    expect(tree.getNode(['root', 'results'])).not.to.exist
-    expect(tree.getNode(['root', 'analytics', 'results'])).to.exist
+    expect(tree.getNode(['root', 'analytics'])).toBeDefined()
+    expect(tree.getNode(['root', 'results'])).not.toBeDefined()
+    expect(tree.getNode(['root', 'analytics', 'results'])).toBeDefined()
   })
   it('should wrapInGroup root', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1732,16 +1729,16 @@ let AllTests = ContextureClient => {
     tree.addActions(config => wrap(config, tree))
     await tree.wrapInGroupInPlace(['root'], { key: 'newRootChild', join: 'or' })
 
-    expect(tree.getNode(['newRootChild'])).to.exist
-    expect(tree.getNode(['newRootChild']).join).to.equal('or')
-    expect(tree.getNode(['newRootChild', 'root'])).to.exist
-    expect(tree.getNode(['newRootChild', 'root', 'results'])).to.exist
+    expect(tree.getNode(['newRootChild'])).toBeDefined()
+    expect(tree.getNode(['newRootChild']).join).toBe('or')
+    expect(tree.getNode(['newRootChild', 'root'])).toBeDefined()
+    expect(tree.getNode(['newRootChild', 'root', 'results'])).toBeDefined()
     expect(
-      tree.getNode(['newRootChild', 'root', 'criteria']).path
-    ).to.deep.equal(['newRootChild', 'root', 'criteria'])
+      toJS(tree.getNode(['newRootChild', 'root', 'criteria']).path)
+    ).toEqual(['newRootChild', 'root', 'criteria'])
   })
   it('should wrapInGroup', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1763,23 +1760,24 @@ let AllTests = ContextureClient => {
       join: 'and',
     })
 
-    expect(tree.getNode(['root', 'analytics'])).to.exist
-    expect(tree.getNode(['root', 'results'])).not.to.exist
-    expect(tree.getNode(['root', 'analytics', 'results'])).to.exist
+    expect(tree.getNode(['root', 'analytics'])).toBeDefined()
+    expect(tree.getNode(['root', 'results'])).not.toBeDefined()
+    expect(tree.getNode(['root', 'analytics', 'results'])).toBeDefined()
 
     await tree.wrapInGroupInPlace(['root'], { key: 'newRootChild', join: 'or' })
 
-    expect(tree.getNode(['newRootChild'])).to.exist
-    expect(tree.getNode(['newRootChild']).join).to.equal('or')
-    expect(tree.getNode(['newRootChild', 'root'])).to.exist
-    expect(tree.getNode(['newRootChild', 'root', 'analytics', 'results'])).to
-      .exist
+    expect(tree.getNode(['newRootChild'])).toBeDefined()
+    expect(tree.getNode(['newRootChild']).join).toBe('or')
+    expect(tree.getNode(['newRootChild', 'root'])).toBeDefined()
     expect(
-      tree.getNode(['newRootChild', 'root', 'criteria']).path
-    ).to.deep.equal(['newRootChild', 'root', 'criteria'])
+      tree.getNode(['newRootChild', 'root', 'analytics', 'results'])
+    ).toBeDefined()
+    expect(
+      toJS(tree.getNode(['newRootChild', 'root', 'criteria']).path)
+    ).toEqual(['newRootChild', 'root', 'criteria'])
   })
   it('should move', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1795,29 +1793,21 @@ let AllTests = ContextureClient => {
         },
       ],
     })
-    expect(tree.getNode(['root', 'criteria']).children[0].key).to.equal(
-      'filter1'
-    )
-    expect(tree.getNode(['root', 'criteria']).children[1].key).to.equal(
-      'filter2'
-    )
+    expect(tree.getNode(['root', 'criteria']).children[0].key).toBe('filter1')
+    expect(tree.getNode(['root', 'criteria']).children[1].key).toBe('filter2')
 
     await tree.move(['root', 'criteria', 'filter1'], { index: 1 })
-    expect(tree.getNode(['root', 'criteria']).children[0].key).to.equal(
-      'filter2'
-    )
-    expect(tree.getNode(['root', 'criteria']).children[1].key).to.equal(
-      'filter1'
-    )
-    expect(service).to.have.not.been.called
+    expect(tree.getNode(['root', 'criteria']).children[0].key).toBe('filter2')
+    expect(tree.getNode(['root', 'criteria']).children[1].key).toBe('filter1')
+    expect(service).not.toBeCalled()
 
     await tree.move(['root', 'criteria', 'filter1'], { path: ['root'] })
-    expect(tree.getNode(['root', 'criteria', 'filter1'])).to.not.exist
-    expect(tree.getNode(['root', 'filter1'])).to.exist
-    expect(service).to.have.callCount(1)
+    expect(tree.getNode(['root', 'criteria', 'filter1'])).not.toBeDefined()
+    expect(tree.getNode(['root', 'filter1'])).toBeDefined()
+    expect(service).toBeCalledTimes(1)
   })
   it('should support pause actions', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1833,20 +1823,20 @@ let AllTests = ContextureClient => {
         },
       ],
     })
-    expect(tree.isPausedNested(['root', 'criteria'])).to.be.false
-    expect(tree.getNode(['root', 'criteria', 'filter1']).paused).to.not.be.true
-    expect(tree.getNode(['root', 'criteria', 'filter2']).paused).to.not.be.true
+    expect(tree.isPausedNested(['root', 'criteria'])).toBe(false)
+    expect(tree.getNode(['root', 'criteria', 'filter1']).paused).not.toBe(true)
+    expect(tree.getNode(['root', 'criteria', 'filter2']).paused).not.toBe(true)
     await tree.pauseNested(['root', 'criteria'])
-    expect(tree.isPausedNested(['root', 'criteria'])).to.be.true
-    expect(tree.getNode(['root', 'criteria', 'filter1']).paused).to.be.true
-    expect(tree.getNode(['root', 'criteria', 'filter2']).paused).to.be.true
+    expect(tree.isPausedNested(['root', 'criteria'])).toBe(true)
+    expect(tree.getNode(['root', 'criteria', 'filter1']).paused).toBe(true)
+    expect(tree.getNode(['root', 'criteria', 'filter2']).paused).toBe(true)
     await tree.unpauseNested(['root', 'criteria'])
-    expect(tree.isPausedNested(['root', 'criteria'])).to.be.false
-    expect(tree.getNode(['root', 'criteria', 'filter1']).paused).to.be.false
-    expect(tree.getNode(['root', 'criteria', 'filter2']).paused).to.be.false
+    expect(tree.isPausedNested(['root', 'criteria'])).toBe(false)
+    expect(tree.getNode(['root', 'criteria', 'filter1']).paused).toBe(false)
+    expect(tree.getNode(['root', 'criteria', 'filter2']).paused).toBe(false)
   })
   it('should autogenerate keys on node add', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1867,10 +1857,10 @@ let AllTests = ContextureClient => {
         },
       ],
     })
-    expect(tree.getNode(['root', 'criteria', 'field-facet2'])).to.not.exist
+    expect(tree.getNode(['root', 'criteria', 'field-facet2'])).not.toBeDefined()
     // should dedupe added nodes against existing siblings
     await tree.add(['root', 'criteria'], { type: 'facet', field: 'field' })
-    expect(tree.getNode(['root', 'criteria', 'field-facet2'])).to.exist
+    expect(tree.getNode(['root', 'criteria', 'field-facet2'])).toBeDefined()
     // should autokey nested nodes
     await tree.add(['root'], {
       type: 'group',
@@ -1881,20 +1871,20 @@ let AllTests = ContextureClient => {
         },
       ],
     })
-    expect(tree.getNode(['root', 'group', 'birthday-date'])).to.exist
+    expect(tree.getNode(['root', 'group', 'birthday-date'])).toBeDefined()
     // should still dedupe nodes with user-created keys
     await tree.add(['root', 'group'], { key: 'birthday-date' })
-    expect(tree.getNode(['root', 'group', 'birthday-date1'])).to.exist
+    expect(tree.getNode(['root', 'group', 'birthday-date1'])).toBeDefined()
     // should use the type-config autokey if one exists (as it does for terms_stats)
     await tree.add(['root'], {
       type: 'terms_stats',
       key_field: 'holland',
       value_field: 'oats',
     })
-    expect(tree.getNode(['root', 'holland-oats-terms_stats'])).to.exist
+    expect(tree.getNode(['root', 'holland-oats-terms_stats'])).toBeDefined()
   })
   it('should autogenerate keys on tree initialization', () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient({ debounce: 1, service })
     let tree = Tree({
       key: 'root',
@@ -1932,18 +1922,20 @@ let AllTests = ContextureClient => {
         },
       ],
     })
-    expect(tree.getNode(['root', 'criteria', 'field-facet'])).to.exist
-    expect(tree.getNode(['root', 'criteria', 'field-facet1'])).to.exist
-    expect(tree.getNode(['root', 'criteria', 'group', 'pizza-query'])).to.exist
+    expect(tree.getNode(['root', 'criteria', 'field-facet'])).toBeDefined()
+    expect(tree.getNode(['root', 'criteria', 'field-facet1'])).toBeDefined()
+    expect(
+      tree.getNode(['root', 'criteria', 'group', 'pizza-query'])
+    ).toBeDefined()
     expect(
       _.map(
         'key',
         tree.getNode(['root', 'criteria', 'group', 'group']).children
       )
-    ).to.deep.equal(['node', 'node1', 'node11', 'node2'])
+    ).toEqual(['node', 'node1', 'node11', 'node2'])
   })
   it('should have debugInfo', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient({
       debounce: 1,
       service,
@@ -1961,14 +1953,14 @@ let AllTests = ContextureClient => {
         },
       ],
     })
-    expect(tree.debugInfo.dispatchHistory).to.deep.equal([])
+    expect(tree.debugInfo.dispatchHistory).toEqual([])
     await tree.mutate(['root', 'filter'], {
       values: ['a'],
     })
     let dispatchRecord = tree.debugInfo.dispatchHistory[0]
-    expect(dispatchRecord.node).to.exist
-    expect(dispatchRecord.type).to.equal('mutate')
-    expect(dispatchRecord.path).to.deep.equal(['root', 'filter'])
+    expect(dispatchRecord.node).toBeDefined()
+    expect(dispatchRecord.type).toBe('mutate')
+    expect(toJS(dispatchRecord.path)).toEqual(['root', 'filter'])
   })
   it('should have metaHistory', async () => {
     let mocks = ({ type }) =>
@@ -2030,18 +2022,16 @@ let AllTests = ContextureClient => {
         { type: 'results', page: 1 },
       ],
     })
-    expect(tree.debugInfo.dispatchHistory).to.deep.equal([])
+    expect(tree.debugInfo.dispatchHistory).toEqual([])
     await tree.mutate(['root', 'filter'], {
       values: ['a'],
     })
     let resultsNode = tree.getNode(['root', 'results'])
-    expect(resultsNode.metaHistory).to.exist
-    expect(resultsNode.metaHistory[0].requests[0].response.hits.total).to.equal(
-      1
-    )
+    expect(resultsNode.metaHistory).toBeDefined()
+    expect(resultsNode.metaHistory[0].requests[0].response.hits.total).toBe(1)
   })
   it('should support processResponseNode', () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient(
       { service, debounce: 1 },
       {
@@ -2066,11 +2056,11 @@ let AllTests = ContextureClient => {
     })
     expect(
       Tree.tree.children[0].children[0].context.response.totalRecords
-    ).to.equal(1337)
-    expect(service).to.have.callCount(0)
+    ).toBe(1337)
+    expect(service).toBeCalledTimes(0)
   })
   it('should support response merges', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient(
       { service, debounce: 1 },
       {
@@ -2086,19 +2076,19 @@ let AllTests = ContextureClient => {
     // Simulating infinite scroll, page 1 and 2 are combined
     await Tree.mutate(['root', 'results'], { page: 1 }) // returns 1 record
     await Tree.mutate(['root', 'results'], { page: 2 }) // returns 1 record
-    expect(toJS(Tree.tree.children[0].context.results)).to.deep.equal([
+    expect(toJS(Tree.tree.children[0].context.results)).toEqual([
       { title: 'some result' },
       { title: 'some result' },
     ])
 
     // update by others forces response replace instead of merge
     await Tree.mutate(['root', 'test'], { values: ['asdf'] })
-    expect(toJS(Tree.tree.children[0].context.results)).to.deep.equal([
+    expect(toJS(Tree.tree.children[0].context.results)).toEqual([
       { title: 'some result' },
     ])
   })
   it('should support key based pivot response merges', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let rows = [
       { type: 'fieldValuesPartition', field: 'State', matchValue: 'Florida' },
       { type: 'fieldValues', field: 'City', size: 10 },
@@ -2141,7 +2131,7 @@ let AllTests = ContextureClient => {
       ],
     })
 
-    expect(node.context.results).to.deep.equal({
+    expect(toJS(node.context.results)).toEqual({
       rows: [
         { key: 'FL', rows: [{ key: 'fl1', a: 1 }] },
         {
@@ -2155,7 +2145,7 @@ let AllTests = ContextureClient => {
     })
   })
   it('should merge pivot response with nested rows and columns', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let columns = [{ type: 'dateInterval', field: 'Date', interval: 'year' }]
     let rows = [
       { type: 'fieldValuesPartition', field: 'State', matchValue: 'Florida' },
@@ -2268,7 +2258,7 @@ let AllTests = ContextureClient => {
       ],
     })
 
-    expect(node.context.results).to.deep.equal({
+    expect(toJS(node.context.results)).toEqual({
       rows: [
         {
           key: 'FL',
@@ -2322,9 +2312,9 @@ let AllTests = ContextureClient => {
     })
   })
   it('should support onDispatch (and pivot resetting drilldown)', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let rows = [
-      { type: 'fieldValuesPartition', field: 'State' },
+      { type: 'fieldValuesPartition', field: 'State', matchValue: 'Florida' },
       { type: 'fieldValues', field: 'City', size: 10 },
     ]
     let Tree = ContextureClient(
@@ -2519,7 +2509,7 @@ let AllTests = ContextureClient => {
     })
   })
   it('should support watchNode', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient(
       { service, debounce: 1 },
       {
@@ -2531,25 +2521,25 @@ let AllTests = ContextureClient => {
         ],
       }
     )
-    let resultWatcher = sinon.spy()
+    let resultWatcher = jest.fn()
     Tree.watchNode(['root', 'results'], resultWatcher, ['page', 'context'])
-    let facetWatcher = sinon.spy()
+    let facetWatcher = jest.fn()
     Tree.watchNode(['root', 'test'], facetWatcher, ['values'])
 
     let promise = Tree.mutate(['root', 'results'], { page: 1 })
-    expect(resultWatcher).to.have.callCount(1)
+    expect(resultWatcher).toBeCalledTimes(1)
     await promise
-    expect(resultWatcher).to.have.callCount(2)
+    expect(resultWatcher).toBeCalledTimes(2)
     await Tree.mutate(['root', 'results'], { page: 2 })
-    expect(resultWatcher).to.have.callCount(4)
+    expect(resultWatcher).toBeCalledTimes(4)
 
     await Tree.mutate(['root', 'test'], { values: ['asdf'] })
-    expect(facetWatcher).to.have.callCount(1)
+    expect(facetWatcher).toBeCalledTimes(1)
     // resultWatcher called twice more because facet change resets page to 0
-    expect(resultWatcher).to.have.callCount(6)
+    expect(resultWatcher).toBeCalledTimes(6)
   })
   it('should getNode', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let Tree = ContextureClient(
       { service, debounce: 1 },
       {
@@ -2562,10 +2552,10 @@ let AllTests = ContextureClient => {
       }
     )
     let result = Tree.getNode(['root', 'results'])
-    expect(result.infiniteScroll).to.be.true
+    expect(result.infiniteScroll).toBe(true)
   })
   it('should support group level markedForUpdate', async () => {
-    let service = sinon.spy(mockService({ delay: 10 }))
+    let service = jest.fn(mockService({ delay: 10 }))
     let tree = ContextureMobx(
       { service, debounce: 1 },
       {
@@ -2585,28 +2575,28 @@ let AllTests = ContextureClient => {
     let action = tree.mutate(['root', 'filter'], { values: ['other Value'] })
 
     // Before async validate runs on dispatch ( and thus before marking for update)
-    expect(!!tree.getNode(['root', 'results']).isStale).to.be.false
-    expect(!!tree.getNode(['root']).isStale).to.be.false
+    expect(!!tree.getNode(['root', 'results']).isStale).toBe(false)
+    expect(!!tree.getNode(['root']).isStale).toBe(false)
 
     // Preparing to search (0 ms delay because validate is async)
     await Promise.delay()
-    expect(tree.getNode(['root', 'results']).isStale).to.be.true
-    expect(tree.getNode(['root']).markedForUpdate).to.be.true
-    expect(tree.getNode(['root']).isStale).to.be.true
-    expect(!!tree.getNode(['root']).updating).to.be.false
+    expect(tree.getNode(['root', 'results']).isStale).toBe(true)
+    expect(tree.getNode(['root']).markedForUpdate).toBe(true)
+    expect(tree.getNode(['root']).isStale).toBe(true)
+    expect(!!tree.getNode(['root']).updating).toBe(false)
 
     // Prepare for search, but run before search finishes
     /// TODOOO HERE:::: unpredicable fail - could be timing issue???
     await Promise.delay(5)
-    expect(tree.getNode(['root']).markedForUpdate).to.be.false
-    expect(tree.getNode(['root']).isStale).to.be.true
-    expect(tree.getNode(['root']).updating).to.be.true
+    expect(tree.getNode(['root']).markedForUpdate).toBe(false)
+    expect(tree.getNode(['root']).isStale).toBe(true)
+    expect(tree.getNode(['root']).updating).toBe(true)
 
     // After search finishes
     await action
-    expect(tree.getNode(['root']).markedForUpdate).to.be.false
-    expect(tree.getNode(['root']).isStale).to.be.false
-    expect(tree.getNode(['root']).updating).to.be.false
+    expect(tree.getNode(['root']).markedForUpdate).toBe(false)
+    expect(tree.getNode(['root']).isStale).toBe(false)
+    expect(tree.getNode(['root']).updating).toBe(false)
   })
 }
 
