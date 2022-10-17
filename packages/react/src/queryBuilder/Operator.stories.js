@@ -3,20 +3,21 @@ import { storiesOf } from '@storybook/react'
 import { parent, root, DnDDecorator } from './stories/util'
 import Operator from './Operator'
 
-let operatorStory = (join, index, root) => () => (
-  <Operator
-    {...{
-      node: { join },
-      child: {
-        join: 'and',
-      },
-      root,
-      index,
-      parent,
-      noDrop: true,
-    }}
-  />
-)
+let operatorStory = (join, index, root) => () =>
+  (
+    <Operator
+      {...{
+        node: { join },
+        child: {
+          join: 'and',
+        },
+        root,
+        index,
+        parent,
+        noDrop: true,
+      }}
+    />
+  )
 
 storiesOf('Search Components|QueryBuilder/Internals/Operator', module)
   .addDecorator(DnDDecorator)
