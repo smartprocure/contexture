@@ -2342,9 +2342,9 @@ let AllTests = ContextureClient => {
     Tree.mutate(['root', 'pivot'], {
       rows: _.set('0.matchValue', 'Nevada', rows),
     })
-    expect(
-      Tree.getNode(['root', 'pivot']).pagination.rows.drilldown
-    ).toEqual([])
+    expect(Tree.getNode(['root', 'pivot']).pagination.rows.drilldown).toEqual(
+      []
+    )
   })
   it('should preserve expanded drilldowns when drilling and paginating', async () => {
     let service = jest.fn(mockService())
@@ -2387,9 +2387,9 @@ let AllTests = ContextureClient => {
       pagination: { rows: { drilldown: ['Florida'] } },
     })
 
-    expect(toJS(
-      Tree.getNode(['root', 'pivot']).pagination.rows.expanded
-    )).toEqual([
+    expect(
+      toJS(Tree.getNode(['root', 'pivot']).pagination.rows.expanded)
+    ).toEqual([
       {
         drilldown: [],
         include: ['Florida', 'Nevada'],
@@ -2400,9 +2400,9 @@ let AllTests = ContextureClient => {
       pagination: { rows: { drilldown: ['Florida'], skip: ['Miami'] } },
     })
 
-    expect(toJS(
-      Tree.getNode(['root', 'pivot']).pagination.rows.expanded
-    )).toEqual([
+    expect(
+      toJS(Tree.getNode(['root', 'pivot']).pagination.rows.expanded)
+    ).toEqual([
       {
         drilldown: [],
         include: ['Florida', 'Nevada'],
