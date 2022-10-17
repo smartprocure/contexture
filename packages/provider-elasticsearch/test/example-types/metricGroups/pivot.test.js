@@ -928,7 +928,7 @@ describe('pivot', () => {
       testSchemas(['Vendor.City']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
   it('should buildQuery for smart numberInterval to show getStats works', async () => {
     let input = {
@@ -1474,7 +1474,6 @@ describe('pivot', () => {
       testSchemas(['Organization.NameState', 'Organization.State']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    // console.log(JSON.stringify(result))
     expect(result).toEqual(expected)
   })
   it('should buildQuery with nested pivot column and sort', async () => {
@@ -1750,7 +1749,6 @@ describe('pivot', () => {
       testSchemas(['Organization.NameState', 'Organization.State']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    // console.log(JSON.stringify(result, null, 2))
     expect(result).toEqual(expected)
   })
   it('should buildQuery and sort with no columns', async () => {
@@ -1829,7 +1827,6 @@ describe('pivot', () => {
       testSchemas(['Organization.NameState', 'Organization.State']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    // console.log(JSON.stringify(result, null, 2))
     expect(result).toEqual(expected)
   })
   it('should buildQuery and sort on document count without valueIndex', async () => {
@@ -1907,7 +1904,6 @@ describe('pivot', () => {
       testSchemas(['Organization.NameState', 'Organization.State']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    // console.log(JSON.stringify(result, null, 2))
     expect(result).toEqual(expected)
   })
   it('should buildQuery with multiple columns and sorting on multiple columns', async () => {
@@ -2409,7 +2405,6 @@ describe('pivot', () => {
       testSchemas(['Organization.NameState', 'Organization.State']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    // console.log(JSON.stringify(result))
     expect(result).toEqual(expected)
   })
   it('should mapExpandedPages for no expanded', async () => {
@@ -2463,8 +2458,7 @@ describe('pivot', () => {
     }
 
     let { initial, makePages } = mapExpandedPages(input)
-    // console.log(JSON.stringify(initial))
-    expect(initial).to.eql(expectedIntial)
+    expect(initial).toEqual(expectedIntial)
 
     let includeValues = [
       'New York',
@@ -2480,8 +2474,7 @@ describe('pivot', () => {
     ]
     let expectedPages = []
     let pages = makePages(includeValues)
-    // console.log(JSON.stringify(pages))
-    expect(pages).to.eql(expectedPages)
+    expect(pages).toEqual(expectedPages)
   })
   it('should mapExpandedPages for 2 expanded columns', async () => {
     let rows = [
@@ -2594,8 +2587,7 @@ describe('pivot', () => {
     }
 
     let { initial, makePages } = mapExpandedPages(input)
-    // console.log(JSON.stringify(initial))
-    expect(initial).to.eql(expectedIntial)
+    expect(initial).toEqual(expectedIntial)
 
     let includeValues = [
       'New York',
@@ -2686,8 +2678,7 @@ describe('pivot', () => {
       },
     ]
     let pages = makePages(includeValues)
-    // console.log(JSON.stringify(pages))
-    expect(pages).to.eql(expectedPages)
+    expect(pages).toEqual(expectedPages)
   })
   it('should handle pivotResponse', () => {
     let aggs = pivotResponse.aggregations
