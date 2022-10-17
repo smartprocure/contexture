@@ -175,14 +175,14 @@ export default {
     if (type !== 'mutate') return
 
     if (_.has('pagination.columns', value) || _.has('pagination.rows', value))
-      // If mutation is a pagination
+      // if mutation is a pagination
       addDrilldownToExpanded(extend, node, previous, value)
     else if (_.has('sort', value)) {
-      // if sorting is changes we are preserving expanded columns
+      // if sorting is changed we are preserving expanded columns
       addDrilldownToExpanded(extend, node, previous, value)
       resetExpandedRows(extend, node)
     }
-    // If node configuration is changes disable mergeResponse
+    // if node configuration is changed resetting drilldowns
     else resetPagination(extend, node, previous)
   },
   // Resetting the pagination when the tree is changed
