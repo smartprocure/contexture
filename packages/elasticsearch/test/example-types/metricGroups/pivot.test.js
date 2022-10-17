@@ -6,12 +6,12 @@ let {
   aggsForValues,
   processResponse,
 } = require('../../../src/example-types/metricGroups/pivot')
-let { expect } = require('chai')
 let { testSchema, testSchemas } = require('../testUtils')
 let pivotResponse = require('./pivotData/pivotResponse')
 let pivotRepsonseWithFilteredFieldValueGroup = require('./pivotData/pivotRepsonseWithFilteredFieldValueGroup')
 let columnResponse = require('./pivotData/columnResponse')
 let columnResult = require('./pivotData/columnResult')
+let stringify = require('json-stable-stringify')
 
 // pass aggsForValues in each stage
 describe('pivot', () => {
@@ -22,7 +22,7 @@ describe('pivot', () => {
       { type: 'avg', field: 'LineItem.TotalPrice' },
       { type: 'sum', field: 'LineItem.TotalPrice' },
     ]
-    expect(aggsForValues(values)).to.deep.equal({
+    expect(aggsForValues(values)).toEqual({
       'pivotMetric-min-LineItem.TotalPrice': {
         min: { field: 'LineItem.TotalPrice' },
       },
@@ -39,7 +39,7 @@ describe('pivot', () => {
   })
   it('aggsForValues with not analyzed field form schemas', () => {
     let values = [{ type: 'cardinality', field: 'Vendor.Name' }]
-    expect(aggsForValues(values, testSchema('Vendor.Name'))).to.deep.equal({
+    expect(aggsForValues(values, testSchema('Vendor.Name'))).toEqual({
       'pivotMetric-cardinality-Vendor.Name': {
         cardinality: { field: 'Vendor.Name.untouched' },
       },
@@ -163,7 +163,7 @@ describe('pivot', () => {
       testSchemas(['Organization.NameState', 'Vendor.Name']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
   it('should buildQuery for fieldValuePartition', async () => {
     let input = {
@@ -204,7 +204,7 @@ describe('pivot', () => {
       testSchemas(['Vendor.City']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
   it('should buildQuery for fieldValues', async () => {
     let input = {
@@ -258,7 +258,7 @@ describe('pivot', () => {
       testSchemas(['Vendor.City']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
   it('should buildQuery for fieldValues with drilldown', async () => {
     // TODO: add tests for dateInterval, numberInterval, fieldValuePartition
@@ -469,19 +469,19 @@ describe('pivot', () => {
       testSchemas(['Organization.Name']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    expect(resultTopLevel).to.eql(expectedTopLevel)
+    expect(resultTopLevel).toEqual(expectedTopLevel)
     let resultDrilldownLevel = await buildQuery(
       inputDrilldownLevel,
       testSchemas(['Organization.Name']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    expect(resultDrilldownLevel).to.eql(expectedDrilldown)
+    expect(resultDrilldownLevel).toEqual(expectedDrilldown)
     let resultMultiTermDrilldownLevel = await buildQuery(
       inputMultiTermDrilldownLevel,
       testSchemas(['Organization.Name', 'Organization.State']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    expect(resultMultiTermDrilldownLevel).to.eql(expectedMultiTermDrilldown)
+    expect(resultMultiTermDrilldownLevel).toEqual(expectedMultiTermDrilldown)
   })
   it('should buildQuery for fieldValues with drilldown and limited depth', async () => {
     let input = {
@@ -529,7 +529,7 @@ describe('pivot', () => {
       testSchemas(['Vendor.City']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
   it('should buildQuery for fieldValues with drilldown and limited depth (deeper)', async () => {
     let input = {
@@ -596,7 +596,7 @@ describe('pivot', () => {
       testSchemas(['Vendor.City']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
   it('should buildQuery for fieldValues with drilldown (deepest)', async () => {
     let input = {
@@ -703,7 +703,7 @@ describe('pivot', () => {
       testSchemas(['Vendor.City']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
   it('should buildQuery for fieldValues with drilldown and skip pagination', async () => {
     let input = {
@@ -813,7 +813,7 @@ describe('pivot', () => {
       testSchemas(['Vendor.City']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
   it('should buildQuery for fieldValues with drilldown and include', async () => {
     let input = {
@@ -969,7 +969,7 @@ describe('pivot', () => {
       // get stats hard coded here
       () => ({ min: 10, max: 500 })
     )
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
   it('should buildQuery with subtotals', async () => {
     // ES -> PVT
@@ -1049,7 +1049,7 @@ describe('pivot', () => {
       testSchema('Organization.NameState'),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
   it('should buildQuery for tagsQuery', async () => {
     let input = {
@@ -1099,7 +1099,7 @@ describe('pivot', () => {
       testSchemas(['Organization.Name']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
   it('should buildQuery with more types', async () => {
     let input = {
@@ -1203,7 +1203,7 @@ describe('pivot', () => {
       testSchemas(['Organization.NameState', 'Organization.State']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
   it('should buildQuery with pivot columns', async () => {
     let input = {
@@ -1394,7 +1394,7 @@ describe('pivot', () => {
       testSchemas(['Organization.NameState', 'Organization.State']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
   it('should buildQuery with pivot columns and subtotals', async () => {
     let input = {
@@ -1475,7 +1475,7 @@ describe('pivot', () => {
       () => {} // getStats(search) -> stats(field, statsArray)
     )
     // console.log(JSON.stringify(result))
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
   it('should buildQuery with nested pivot column and sort', async () => {
     let input = {
@@ -1565,7 +1565,7 @@ describe('pivot', () => {
       testSchemas(['Organization.NameState', 'Organization.State']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
   it('should buildQuery and sort on the row if top-level sort is missing', async () => {
     let input = {
@@ -1634,7 +1634,7 @@ describe('pivot', () => {
       testSchemas(['Organization.NameState', 'Organization.State']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
   it('should buildQuery and sort on nth value metric', async () => {
     let input = {
@@ -1751,7 +1751,7 @@ describe('pivot', () => {
       () => {} // getStats(search) -> stats(field, statsArray)
     )
     // console.log(JSON.stringify(result, null, 2))
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
   it('should buildQuery and sort with no columns', async () => {
     let input = {
@@ -1830,7 +1830,7 @@ describe('pivot', () => {
       () => {} // getStats(search) -> stats(field, statsArray)
     )
     // console.log(JSON.stringify(result, null, 2))
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
   it('should buildQuery and sort on document count without valueIndex', async () => {
     let input = {
@@ -1908,7 +1908,7 @@ describe('pivot', () => {
       () => {} // getStats(search) -> stats(field, statsArray)
     )
     // console.log(JSON.stringify(result, null, 2))
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
   it('should buildQuery with multiple columns and sorting on multiple columns', async () => {
     let input = {
@@ -2024,7 +2024,7 @@ describe('pivot', () => {
       testSchemas(['Organization.NameState', 'Organization.State']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
   it('should buildQuery with multiple rows, columns, and sort', async () => {
     let input = {
@@ -2152,7 +2152,7 @@ describe('pivot', () => {
       testSchemas(['Organization.NameState', 'Organization.State']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
   it('should buildQuery with multiple rows, columns, and sort on _count without valueIndex', async () => {
     let input = {
@@ -2292,7 +2292,7 @@ describe('pivot', () => {
       testSchemas(['Organization.NameState', 'Organization.State']),
       () => {} // getStats(search) -> stats(field, statsArray)
     )
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
   it('should buildQuery with nested pivot columns and subtotals', async () => {
     let input = {
@@ -2410,7 +2410,7 @@ describe('pivot', () => {
       () => {} // getStats(search) -> stats(field, statsArray)
     )
     // console.log(JSON.stringify(result))
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
   it('should mapExpandedPages for no expanded', async () => {
     let rows = [
@@ -2700,127 +2700,129 @@ describe('pivot', () => {
     }, aggs.rows.buckets)
 
     let nestedResult = processResponse(pivotResponse)
-    expect(nestedResult.results).to.eql({
-      count: 442825686,
-      rows: [
-        {
-          key: 'Texas',
-          rows: [
-            {
-              key: 'UT Southwestern Medical Center, Texas',
-              rows: [
-                {
-                  key: '0.0-500.0',
-                  from: 0,
-                  to: 500,
-                  avg: 123.61877539749409,
-                  min: 0,
-                  max: 499.989990234375,
-                  sum: 219405401.60811937,
-                  count: 1774855,
-                },
-                {
-                  key: '500.0-10000.0',
-                  from: 500,
-                  to: 10000,
-                  avg: 1930.249843325976,
-                  min: 500,
-                  max: 9999.98046875,
-                  sum: 894222984.4179382,
-                  count: 463268,
-                },
-              ],
-              count: 2280465,
-            },
-            {
-              key: 'University of Texas MD Anderson Cancer Center, Texas',
-              rows: [
-                {
-                  key: '0.0-500.0',
-                  from: 0,
-                  to: 500,
-                  avg: 86.85762873285029,
-                  min: 0,
-                  max: 499.989990234375,
-                  sum: 93114418.01862116,
-                  count: 1072035,
-                },
-                {
-                  key: '500.0-10000.0',
-                  from: 500,
-                  to: 10000,
-                  avg: 1989.2294442580583,
-                  min: 500,
-                  max: 9998.7998046875,
-                  sum: 364042912.9053345,
-                  count: 183007,
-                },
-              ],
-              count: 1272132,
-            },
-          ],
-          count: 85720456,
-        },
-        {
-          key: 'Ohio',
-          rows: [
-            {
-              key: 'Ohio State University, Ohio',
-              rows: [
-                {
-                  key: '0.0-500.0',
-                  from: 0,
-                  to: 500,
-                  avg: 96.12894216963802,
-                  min: 0,
-                  max: 499.989990234375,
-                  sum: 386852567.13375384,
-                  count: 4024309,
-                },
-                {
-                  key: '500.0-10000.0',
-                  from: 500,
-                  to: 10000,
-                  avg: 1802.1472297222226,
-                  min: 500,
-                  max: 9999.990234375,
-                  sum: 1161215369.618744,
-                  count: 644351,
-                },
-              ],
-              count: 4952263,
-            },
-            {
-              key: 'Greene County Court of Commons Pleas, Ohio',
-              rows: [
-                {
-                  key: '0.0-500.0',
-                  from: 0,
-                  to: 500,
-                  avg: 101.28828428425045,
-                  min: 0,
-                  max: 499.989990234375,
-                  sum: 87544071.83658338,
-                  count: 864306,
-                },
-                {
-                  key: '500.0-10000.0',
-                  from: 500,
-                  to: 10000,
-                  avg: 1426.013434972438,
-                  min: 500,
-                  max: 9998,
-                  sum: 256274578.45263672,
-                  count: 179714,
-                },
-              ],
-              count: 1078624,
-            },
-          ],
-          count: 69508750,
-        },
-      ],
-    })
+    expect(stringify(nestedResult.results)).toEqual(
+      stringify({
+        count: 442825686,
+        rows: [
+          {
+            key: 'Texas',
+            rows: [
+              {
+                key: 'UT Southwestern Medical Center, Texas',
+                rows: [
+                  {
+                    key: '0.0-500.0',
+                    from: 0,
+                    to: 500,
+                    avg: 123.61877539749409,
+                    min: 0,
+                    max: 499.989990234375,
+                    sum: 219405401.60811937,
+                    count: 1774855,
+                  },
+                  {
+                    key: '500.0-10000.0',
+                    from: 500,
+                    to: 10000,
+                    avg: 1930.249843325976,
+                    min: 500,
+                    max: 9999.98046875,
+                    sum: 894222984.4179382,
+                    count: 463268,
+                  },
+                ],
+                count: 2280465,
+              },
+              {
+                key: 'University of Texas MD Anderson Cancer Center, Texas',
+                rows: [
+                  {
+                    key: '0.0-500.0',
+                    from: 0,
+                    to: 500,
+                    avg: 86.85762873285029,
+                    min: 0,
+                    max: 499.989990234375,
+                    sum: 93114418.01862116,
+                    count: 1072035,
+                  },
+                  {
+                    key: '500.0-10000.0',
+                    from: 500,
+                    to: 10000,
+                    avg: 1989.2294442580583,
+                    min: 500,
+                    max: 9998.7998046875,
+                    sum: 364042912.9053345,
+                    count: 183007,
+                  },
+                ],
+                count: 1272132,
+              },
+            ],
+            count: 85720456,
+          },
+          {
+            key: 'Ohio',
+            rows: [
+              {
+                key: 'Ohio State University, Ohio',
+                rows: [
+                  {
+                    key: '0.0-500.0',
+                    from: 0,
+                    to: 500,
+                    avg: 96.12894216963802,
+                    min: 0,
+                    max: 499.989990234375,
+                    sum: 386852567.13375384,
+                    count: 4024309,
+                  },
+                  {
+                    key: '500.0-10000.0',
+                    from: 500,
+                    to: 10000,
+                    avg: 1802.1472297222226,
+                    min: 500,
+                    max: 9999.990234375,
+                    sum: 1161215369.618744,
+                    count: 644351,
+                  },
+                ],
+                count: 4952263,
+              },
+              {
+                key: 'Greene County Court of Commons Pleas, Ohio',
+                rows: [
+                  {
+                    key: '0.0-500.0',
+                    from: 0,
+                    to: 500,
+                    avg: 101.28828428425045,
+                    min: 0,
+                    max: 499.989990234375,
+                    sum: 87544071.83658338,
+                    count: 864306,
+                  },
+                  {
+                    key: '500.0-10000.0',
+                    from: 500,
+                    to: 10000,
+                    avg: 1426.013434972438,
+                    min: 500,
+                    max: 9998,
+                    sum: 256274578.45263672,
+                    count: 179714,
+                  },
+                ],
+                count: 1078624,
+              },
+            ],
+            count: 69508750,
+          },
+        ],
+      })
+    )
   })
   it('should handle pivotResponse with filtered fieldValueRow', () => {
     let nestedResult = processResponse(
@@ -2837,233 +2839,235 @@ describe('pivot', () => {
         ],
       }
     )
-    expect(nestedResult.results).to.eql({
-      count: 574247,
-      rows: [
-        {
-          key: 'Okeechobee County Schools, Florida',
-          count: 552831,
-          rows: [
-            {
-              keyAsString: '2015-01-01T00:00:00.000Z',
-              key: 1420070400000,
-              count: 149661,
-              'avg-PO.IssuedAmount': 20844.647948233425,
-            },
-            {
-              keyAsString: '2016-01-01T00:00:00.000Z',
-              key: 1451606400000,
-              count: 161271,
-              'avg-PO.IssuedAmount': 21172.11132216827,
-            },
-            {
-              keyAsString: '2017-01-01T00:00:00.000Z',
-              key: 1483228800000,
-              count: 195607,
-              'avg-PO.IssuedAmount': 21265.707126306814,
-            },
-            {
-              keyAsString: '2018-01-01T00:00:00.000Z',
-              key: 1514764800000,
-              count: 26707,
-              'avg-PO.IssuedAmount': 23561.699367492976,
-            },
-            {
-              keyAsString: '2019-01-01T00:00:00.000Z',
-              key: 1546300800000,
-              count: 7118,
-              'avg-PO.IssuedAmount': 6285.349479416158,
-            },
-            {
-              keyAsString: '2020-01-01T00:00:00.000Z',
-              key: 1577836800000,
-              count: 6901,
-              'avg-PO.IssuedAmount': 9253.239317711703,
-            },
-            {
-              keyAsString: '2021-01-01T00:00:00.000Z',
-              key: 1609459200000,
-              count: 5566,
-              'avg-PO.IssuedAmount': 8548.494813621837,
-            },
-          ],
-        },
-        {
-          key: "Okeechobee County Sheriff's Office, Florida",
-          count: 11984,
-          rows: [
-            {
-              keyAsString: '2015-01-01T00:00:00.000Z',
-              key: 1420070400000,
-              count: 1719,
-              'avg-PO.IssuedAmount': 2244.3115442241606,
-            },
-            {
-              keyAsString: '2016-01-01T00:00:00.000Z',
-              key: 1451606400000,
-              count: 1648,
-              'avg-PO.IssuedAmount': 2572.4247905976563,
-            },
-            {
-              keyAsString: '2017-01-01T00:00:00.000Z',
-              key: 1483228800000,
-              count: 1772,
-              'avg-PO.IssuedAmount': 1848.8124668818834,
-            },
-            {
-              keyAsString: '2018-01-01T00:00:00.000Z',
-              key: 1514764800000,
-              count: 1668,
-              'avg-PO.IssuedAmount': 2929.421505508663,
-            },
-            {
-              keyAsString: '2019-01-01T00:00:00.000Z',
-              key: 1546300800000,
-              count: 1765,
-              'avg-PO.IssuedAmount': 2365.297106342478,
-            },
-            {
-              keyAsString: '2020-01-01T00:00:00.000Z',
-              key: 1577836800000,
-              count: 2270,
-              'avg-PO.IssuedAmount': 2458.5539745973597,
-            },
-            {
-              keyAsString: '2021-01-01T00:00:00.000Z',
-              key: 1609459200000,
-              count: 1142,
-              'avg-PO.IssuedAmount': 2940.05088930915,
-            },
-          ],
-        },
-        {
-          key: 'Okeechobee County Board of County Commissioners, Florida',
-          count: 5100,
-          rows: [
-            {
-              keyAsString: '2018-01-01T00:00:00.000Z',
-              key: 1514764800000,
-              count: 1673,
-              'avg-PO.IssuedAmount': 102648.52495089962,
-            },
-            {
-              keyAsString: '2019-01-01T00:00:00.000Z',
-              key: 1546300800000,
-              count: 1531,
-              'avg-PO.IssuedAmount': 107292.1159183937,
-            },
-            {
-              keyAsString: '2020-01-01T00:00:00.000Z',
-              key: 1577836800000,
-              count: 1406,
-              'avg-PO.IssuedAmount': 141619.58640305314,
-            },
-            {
-              keyAsString: '2021-01-01T00:00:00.000Z',
-              key: 1609459200000,
-              count: 490,
-              'avg-PO.IssuedAmount': 19925.228112987596,
-            },
-          ],
-        },
-        {
-          key: 'Okeechobee Soil And Water Conservation District, Florida',
-          count: 2983,
-          rows: [
-            {
-              keyAsString: '2015-01-01T00:00:00.000Z',
-              key: 1420070400000,
-              count: 193,
-              'avg-PO.IssuedAmount': 849.2400590403605,
-            },
-            {
-              keyAsString: '2016-01-01T00:00:00.000Z',
-              key: 1451606400000,
-              count: 370,
-              'avg-PO.IssuedAmount': 792.2180872080756,
-            },
-            {
-              keyAsString: '2017-01-01T00:00:00.000Z',
-              key: 1483228800000,
-              count: 229,
-              'avg-PO.IssuedAmount': 546.3209660218058,
-            },
-            {
-              keyAsString: '2018-01-01T00:00:00.000Z',
-              key: 1514764800000,
-              count: 225,
-              'avg-PO.IssuedAmount': 688.5280880631341,
-            },
-            {
-              keyAsString: '2019-01-01T00:00:00.000Z',
-              key: 1546300800000,
-              count: 580,
-              'avg-PO.IssuedAmount': 1278.2532585058361,
-            },
-            {
-              keyAsString: '2020-01-01T00:00:00.000Z',
-              key: 1577836800000,
-              count: 618,
-              'avg-PO.IssuedAmount': 1016.9871758723656,
-            },
-            {
-              keyAsString: '2021-01-01T00:00:00.000Z',
-              key: 1609459200000,
-              count: 768,
-              'avg-PO.IssuedAmount': 1594.242624501135,
-            },
-          ],
-        },
-        {
-          key: 'Okeechobee County Clerk of the Circuit Court, Florida',
-          count: 1349,
-          rows: [
-            {
-              keyAsString: '2015-01-01T00:00:00.000Z',
-              key: 1420070400000,
-              count: 161,
-              'avg-PO.IssuedAmount': 1252.3234916582498,
-            },
-            {
-              keyAsString: '2016-01-01T00:00:00.000Z',
-              key: 1451606400000,
-              count: 239,
-              'avg-PO.IssuedAmount': 2217.290081339297,
-            },
-            {
-              keyAsString: '2017-01-01T00:00:00.000Z',
-              key: 1483228800000,
-              count: 276,
-              'avg-PO.IssuedAmount': 2114.950146716574,
-            },
-            {
-              keyAsString: '2018-01-01T00:00:00.000Z',
-              key: 1514764800000,
-              count: 247,
-              'avg-PO.IssuedAmount': 2059.0517405768637,
-            },
-            {
-              keyAsString: '2019-01-01T00:00:00.000Z',
-              key: 1546300800000,
-              count: 217,
-              'avg-PO.IssuedAmount': 2070.5967847586776,
-            },
-            {
-              keyAsString: '2020-01-01T00:00:00.000Z',
-              key: 1577836800000,
-              count: 113,
-              'avg-PO.IssuedAmount': 1614.6408893956548,
-            },
-            {
-              keyAsString: '2021-01-01T00:00:00.000Z',
-              key: 1609459200000,
-              count: 96,
-              'avg-PO.IssuedAmount': 981.880828499794,
-            },
-          ],
-        },
-      ],
-    })
+    expect(stringify(nestedResult.results)).toEqual(
+      stringify({
+        count: 574247,
+        rows: [
+          {
+            key: 'Okeechobee County Schools, Florida',
+            count: 552831,
+            rows: [
+              {
+                keyAsString: '2015-01-01T00:00:00.000Z',
+                key: 1420070400000,
+                count: 149661,
+                'avg-PO.IssuedAmount': 20844.647948233425,
+              },
+              {
+                keyAsString: '2016-01-01T00:00:00.000Z',
+                key: 1451606400000,
+                count: 161271,
+                'avg-PO.IssuedAmount': 21172.11132216827,
+              },
+              {
+                keyAsString: '2017-01-01T00:00:00.000Z',
+                key: 1483228800000,
+                count: 195607,
+                'avg-PO.IssuedAmount': 21265.707126306814,
+              },
+              {
+                keyAsString: '2018-01-01T00:00:00.000Z',
+                key: 1514764800000,
+                count: 26707,
+                'avg-PO.IssuedAmount': 23561.699367492976,
+              },
+              {
+                keyAsString: '2019-01-01T00:00:00.000Z',
+                key: 1546300800000,
+                count: 7118,
+                'avg-PO.IssuedAmount': 6285.349479416158,
+              },
+              {
+                keyAsString: '2020-01-01T00:00:00.000Z',
+                key: 1577836800000,
+                count: 6901,
+                'avg-PO.IssuedAmount': 9253.239317711703,
+              },
+              {
+                keyAsString: '2021-01-01T00:00:00.000Z',
+                key: 1609459200000,
+                count: 5566,
+                'avg-PO.IssuedAmount': 8548.494813621837,
+              },
+            ],
+          },
+          {
+            key: "Okeechobee County Sheriff's Office, Florida",
+            count: 11984,
+            rows: [
+              {
+                keyAsString: '2015-01-01T00:00:00.000Z',
+                key: 1420070400000,
+                count: 1719,
+                'avg-PO.IssuedAmount': 2244.3115442241606,
+              },
+              {
+                keyAsString: '2016-01-01T00:00:00.000Z',
+                key: 1451606400000,
+                count: 1648,
+                'avg-PO.IssuedAmount': 2572.4247905976563,
+              },
+              {
+                keyAsString: '2017-01-01T00:00:00.000Z',
+                key: 1483228800000,
+                count: 1772,
+                'avg-PO.IssuedAmount': 1848.8124668818834,
+              },
+              {
+                keyAsString: '2018-01-01T00:00:00.000Z',
+                key: 1514764800000,
+                count: 1668,
+                'avg-PO.IssuedAmount': 2929.421505508663,
+              },
+              {
+                keyAsString: '2019-01-01T00:00:00.000Z',
+                key: 1546300800000,
+                count: 1765,
+                'avg-PO.IssuedAmount': 2365.297106342478,
+              },
+              {
+                keyAsString: '2020-01-01T00:00:00.000Z',
+                key: 1577836800000,
+                count: 2270,
+                'avg-PO.IssuedAmount': 2458.5539745973597,
+              },
+              {
+                keyAsString: '2021-01-01T00:00:00.000Z',
+                key: 1609459200000,
+                count: 1142,
+                'avg-PO.IssuedAmount': 2940.05088930915,
+              },
+            ],
+          },
+          {
+            key: 'Okeechobee County Board of County Commissioners, Florida',
+            count: 5100,
+            rows: [
+              {
+                keyAsString: '2018-01-01T00:00:00.000Z',
+                key: 1514764800000,
+                count: 1673,
+                'avg-PO.IssuedAmount': 102648.52495089962,
+              },
+              {
+                keyAsString: '2019-01-01T00:00:00.000Z',
+                key: 1546300800000,
+                count: 1531,
+                'avg-PO.IssuedAmount': 107292.1159183937,
+              },
+              {
+                keyAsString: '2020-01-01T00:00:00.000Z',
+                key: 1577836800000,
+                count: 1406,
+                'avg-PO.IssuedAmount': 141619.58640305314,
+              },
+              {
+                keyAsString: '2021-01-01T00:00:00.000Z',
+                key: 1609459200000,
+                count: 490,
+                'avg-PO.IssuedAmount': 19925.228112987596,
+              },
+            ],
+          },
+          {
+            key: 'Okeechobee Soil And Water Conservation District, Florida',
+            count: 2983,
+            rows: [
+              {
+                keyAsString: '2015-01-01T00:00:00.000Z',
+                key: 1420070400000,
+                count: 193,
+                'avg-PO.IssuedAmount': 849.2400590403605,
+              },
+              {
+                keyAsString: '2016-01-01T00:00:00.000Z',
+                key: 1451606400000,
+                count: 370,
+                'avg-PO.IssuedAmount': 792.2180872080756,
+              },
+              {
+                keyAsString: '2017-01-01T00:00:00.000Z',
+                key: 1483228800000,
+                count: 229,
+                'avg-PO.IssuedAmount': 546.3209660218058,
+              },
+              {
+                keyAsString: '2018-01-01T00:00:00.000Z',
+                key: 1514764800000,
+                count: 225,
+                'avg-PO.IssuedAmount': 688.5280880631341,
+              },
+              {
+                keyAsString: '2019-01-01T00:00:00.000Z',
+                key: 1546300800000,
+                count: 580,
+                'avg-PO.IssuedAmount': 1278.2532585058361,
+              },
+              {
+                keyAsString: '2020-01-01T00:00:00.000Z',
+                key: 1577836800000,
+                count: 618,
+                'avg-PO.IssuedAmount': 1016.9871758723656,
+              },
+              {
+                keyAsString: '2021-01-01T00:00:00.000Z',
+                key: 1609459200000,
+                count: 768,
+                'avg-PO.IssuedAmount': 1594.242624501135,
+              },
+            ],
+          },
+          {
+            key: 'Okeechobee County Clerk of the Circuit Court, Florida',
+            count: 1349,
+            rows: [
+              {
+                keyAsString: '2015-01-01T00:00:00.000Z',
+                key: 1420070400000,
+                count: 161,
+                'avg-PO.IssuedAmount': 1252.3234916582498,
+              },
+              {
+                keyAsString: '2016-01-01T00:00:00.000Z',
+                key: 1451606400000,
+                count: 239,
+                'avg-PO.IssuedAmount': 2217.290081339297,
+              },
+              {
+                keyAsString: '2017-01-01T00:00:00.000Z',
+                key: 1483228800000,
+                count: 276,
+                'avg-PO.IssuedAmount': 2114.950146716574,
+              },
+              {
+                keyAsString: '2018-01-01T00:00:00.000Z',
+                key: 1514764800000,
+                count: 247,
+                'avg-PO.IssuedAmount': 2059.0517405768637,
+              },
+              {
+                keyAsString: '2019-01-01T00:00:00.000Z',
+                key: 1546300800000,
+                count: 217,
+                'avg-PO.IssuedAmount': 2070.5967847586776,
+              },
+              {
+                keyAsString: '2020-01-01T00:00:00.000Z',
+                key: 1577836800000,
+                count: 113,
+                'avg-PO.IssuedAmount': 1614.6408893956548,
+              },
+              {
+                keyAsString: '2021-01-01T00:00:00.000Z',
+                key: 1609459200000,
+                count: 96,
+                'avg-PO.IssuedAmount': 981.880828499794,
+              },
+            ],
+          },
+        ],
+      })
+    )
   })
   it('should processResponse correctly for pivots with columns', () => {
     let nestedResult = processResponse(columnResponse, {
@@ -3078,7 +3082,7 @@ describe('pivot', () => {
         { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
       ],
     })
-    expect(nestedResult.results).to.eql(columnResult)
+    expect(stringify(nestedResult.results)).toEqual(stringify(columnResult))
   })
   it('should filter', async () => {
     let input = {
@@ -3136,6 +3140,6 @@ describe('pivot', () => {
       input,
       testSchemas(['Organization.City', 'Organization.State'])
     )
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
   })
 })

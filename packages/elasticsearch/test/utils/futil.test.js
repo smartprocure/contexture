@@ -1,6 +1,5 @@
 let _ = require('lodash/fp')
 let F = require('futil')
-let { expect } = require('chai')
 let {
   maybeAppend,
   writeTreeNode,
@@ -11,8 +10,8 @@ let { simplifyBucket } = require('../../src/utils/elasticDSL')
 
 describe('futil candidates', () => {
   it('maybeAppend should work', () => {
-    expect(maybeAppend('.txt', 'file')).to.eql('file.txt')
-    expect(maybeAppend('.txt', 'file.txt')).to.eql('file.txt')
+    expect(maybeAppend('.txt', 'file')).toEqual('file.txt')
+    expect(maybeAppend('.txt', 'file.txt')).toEqual('file.txt')
   })
   it('writeTreeNode should support dynamic depth-dependent tree traversal and map', () => {
     let tree = {
@@ -46,7 +45,7 @@ describe('futil candidates', () => {
     let Tree = F.tree(traverse, _.identity, writeTreeNode(traverse))
     let expected = ['root', 'filteredTerms', 'nonFiltered', 'innermost']
     let result = Tree.toArrayBy(node => node.key, tree)
-    expect(result).to.eql(expected)
+    expect(result).toEqual(expected)
 
     // Mapping works with new write property!
     let modifiedTree = Tree.map(
@@ -63,7 +62,7 @@ describe('futil candidates', () => {
       'innermostModified',
     ]
     let modifiedResult = Tree.toArrayBy(node => node.key, modifiedTree)
-    expect(modifiedResult).to.eql(modifiedExpected)
+    expect(modifiedResult).toEqual(modifiedExpected)
   })
   it('transmuteTree should simplify groups.buckets in tree', () => {
     let tree = {
@@ -139,7 +138,7 @@ describe('futil candidates', () => {
       (node, index, parents = []) => ({ depth: parents.length, ...node }),
       tree
     )
-    expect(depthAdded).to.deep.equal({
+    expect(depthAdded).toEqual({
       depth: 0,
       key: 'root',
       groups: [
@@ -170,7 +169,7 @@ describe('futil candidates', () => {
 
     // More realistic test that also maps min.value -> min
     let bucketSimplified = simplifyGroups(simplifyBucket, tree)
-    expect(bucketSimplified).to.deep.equal({
+    expect(bucketSimplified).toEqual({
       key: 'root',
       groups: [
         {
@@ -200,11 +199,11 @@ describe('futil candidates', () => {
     let arr2 = [4, 5, 6, 7]
     let arr = virtualConcat(arr1, arr2)
 
-    expect(arr[5]).to.equal(5)
-    expect(arr.length).to.equal(8)
+    expect(arr[5]).toBe(5)
+    expect(arr.length).toBe(8)
     arr[5] = 'a'
-    expect(arr2[1]).to.equal('a') // underlying array is mutated
-    expect(_.toPairs(arr)).to.deep.equal([
+    expect(arr2[1]).toBe('a') // underlying array is mutated
+    expect(_.toPairs(arr)).toEqual([
       ['0', 0],
       ['1', 1],
       ['2', 2],
@@ -214,7 +213,7 @@ describe('futil candidates', () => {
       ['6', 6],
       ['7', 7],
     ])
-    expect(JSON.stringify(arr)).to.equal('[0,1,2,3,4,"a",6,7]')
+    expect(JSON.stringify(arr)).toBe('[0,1,2,3,4,"a",6,7]')
     // F.eachIndexed((x, i) => {
     //   console.log(x, i) // iterates over all values
     // }, arr)
@@ -262,7 +261,7 @@ describe('futil candidates', () => {
     // More realistic test that also maps min.value -> min
     let bucketSimplified = simplifyGroups(simplifyBucket, tree)
 
-    expect(bucketSimplified).to.deep.equal({
+    expect(bucketSimplified).toEqual({
       key: 'root',
       groups: [
         {

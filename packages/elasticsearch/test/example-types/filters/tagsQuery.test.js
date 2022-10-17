@@ -13,51 +13,48 @@ let {
 } = require('../../../src/example-types/filters/tagsQuery')
 let _ = require('lodash/fp')
 
-let { expect } = require('chai')
-
 describe('wordPermutations', () => {
   it('should handle empty string', () => {
-    expect(wordPermutations('')).to.deep.equal([''])
+    expect(wordPermutations('')).toEqual([''])
   })
   it('should handle one word', () => {
-    expect(wordPermutations('foo')).to.deep.equal(['foo'])
+    expect(wordPermutations('foo')).toEqual(['foo'])
   })
   it('should handle two words', () => {
-    expect(wordPermutations('foo bar')).to.deep.equal(['foo bar', 'bar foo'])
+    expect(wordPermutations('foo bar')).toEqual(['foo bar', 'bar foo'])
   })
 })
 
 describe('limitResultsToCertainTags', () => {
   it('should return truthy if found', () => {
-    expect(limitResultsToCertainTags([{ onlyShowTheseResults: true }, {}])).to
-      .exist
+    expect(
+      limitResultsToCertainTags([{ onlyShowTheseResults: true }, {}])
+    ).toBeDefined()
   })
 })
 
 describe('addQuotesAndDistance', () => {
   it('should work as `isPhrase` if text includes empty space', () => {
     let tag = { word: 'foo bar', distance: 3 }
-    expect(addQuotesAndDistance(tag, 'foo bar')).to.deep.equal(`"foo bar"~3`)
+    expect(addQuotesAndDistance(tag, 'foo bar')).toEqual(`"foo bar"~3`)
   })
   it('should quote if is phrase', () => {
-    expect(addQuotesAndDistance({ isPhrase: true }, 'foo bar')).to.deep.equal(
+    expect(addQuotesAndDistance({ isPhrase: true }, 'foo bar')).toEqual(
       `"foo bar"`
     )
   })
   it('should quote and not set distance if distance is 0', () => {
     expect(
       addQuotesAndDistance({ isPhrase: true, distance: 0 }, 'foo bar')
-    ).to.deep.equal(`"foo bar"`)
+    ).toEqual(`"foo bar"`)
   })
   it('should quote and set distance if distance is > 0', () => {
     expect(
       addQuotesAndDistance({ isPhrase: true, distance: 2 }, 'foo bar')
-    ).to.deep.equal(`"foo bar"~2`)
+    ).toEqual(`"foo bar"~2`)
   })
   it('should add ~1 for misspellings', () => {
-    expect(addQuotesAndDistance({ misspellings: true }, 'foo')).to.deep.equal(
-      `foo~1`
-    )
+    expect(addQuotesAndDistance({ misspellings: true }, 'foo')).toEqual(`foo~1`)
   })
 })
 
@@ -65,43 +62,43 @@ describe('replaceReservedChars', () => {
   it('should replace reserved characters with empty space', () => {
     expect(
       replaceReservedChars('foo: [bar] (baz) - 1 ^ 2 <> 3 !$ 4,5')
-    ).to.deep.equal('foo   bar   baz    1   2    3    4 5')
+    ).toEqual('foo   bar   baz    1   2    3    4 5')
   })
 })
 
 describe('joinTags', () => {
   it('should return empty string if empty', () => {
-    expect(joinTags('all', [])).to.deep.equal('')
+    expect(joinTags('all', [])).toEqual('')
   })
   it('should join with AND', () => {
-    expect(joinTags('all', ['foo', 'bar'])).to.deep.equal('foo AND bar')
+    expect(joinTags('all', ['foo', 'bar'])).toEqual('foo AND bar')
   })
   it('should join with OR', () => {
-    expect(joinTags('any', ['foo', 'bar'])).to.deep.equal('foo OR bar')
+    expect(joinTags('any', ['foo', 'bar'])).toEqual('foo OR bar')
   })
   it('should join with OR and wrap with NOT', () => {
-    expect(joinTags('none', ['foo', 'bar'])).to.deep.equal('NOT (foo OR bar)')
+    expect(joinTags('none', ['foo', 'bar'])).toEqual('NOT (foo OR bar)')
   })
 })
 
 describe('tagToQueryString', () => {
   it('should return as-is', () => {
-    expect(tagToQueryString({ word: 'foo' })).to.deep.equal('foo')
+    expect(tagToQueryString({ word: 'foo' })).toEqual('foo')
   })
   it('should handle multiple words with unlimited distance', () => {
     expect(
       tagToQueryString({ word: 'foo bar', distance: 'unlimited' })
-    ).to.deep.equal('(foo AND bar)')
+    ).toEqual('(foo AND bar)')
   })
   it('should handle multiple words with unlimited distance and more than one space', () => {
     expect(
       tagToQueryString({ word: 'foo    bar    baz', distance: 'unlimited' })
-    ).to.deep.equal('(foo AND bar AND baz)')
+    ).toEqual('(foo AND bar AND baz)')
   })
   it('should handle multiple words with any order', () => {
     expect(
       tagToQueryString({ word: 'foo bar', anyOrder: true, isPhrase: true })
-    ).to.deep.equal(`("foo bar" OR "bar foo")`)
+    ).toEqual(`("foo bar" OR "bar foo")`)
   })
 })
 
@@ -109,7 +106,7 @@ describe('tagsToQueryString', () => {
   it('should join multiple tags', () => {
     expect(
       tagsToQueryString([{ word: 'foo' }, { word: 'bar' }], 'any')
-    ).to.deep.equal('foo OR bar')
+    ).toEqual('foo OR bar')
   })
   it('should join multiple tags with multi-word text', () => {
     expect(
@@ -117,7 +114,7 @@ describe('tagsToQueryString', () => {
         [{ word: 'foo bar', anyOrder: true, isPhrase: true }, { word: 'baz' }],
         'any'
       )
-    ).to.deep.equal(`("foo bar" OR "bar foo") OR baz`)
+    ).toEqual(`("foo bar" OR "bar foo") OR baz`)
   })
   it('should only include one word if onlyShowTheseResults is enabled for one tag', () => {
     expect(
@@ -129,7 +126,7 @@ describe('tagsToQueryString', () => {
         ],
         'any'
       )
-    ).to.deep.equal('foo')
+    ).toEqual('foo')
   })
   it('should only include two words if onlyShowTheseResults is enabled for two tags', () => {
     expect(
@@ -141,13 +138,13 @@ describe('tagsToQueryString', () => {
         ],
         'any'
       )
-    ).to.deep.equal('foo OR bar')
+    ).toEqual('foo OR bar')
   })
 })
 
 describe('hasValue', () => {
   it('should be truthy if tags is not empty', () => {
-    expect(hasValue({ tags: [{ word: 'foo' }] })).to.deep.equal(1)
+    expect(hasValue({ tags: [{ word: 'foo' }] })).toEqual(1)
   })
 })
 
@@ -159,7 +156,7 @@ describe('filter', () => {
         join: 'any',
         field: 'titleAndDescription',
       })
-    ).to.deep.equal({
+    ).toEqual({
       query_string: {
         query: 'foo OR bar',
         default_operator: 'AND',
@@ -174,7 +171,7 @@ describe('filter', () => {
         join: 'any',
         field: 'titleAndDescription.untouched',
       })
-    ).to.deep.equal({
+    ).toEqual({
       query_string: {
         query: 'foo',
         default_operator: 'AND',
@@ -190,7 +187,7 @@ describe('filter', () => {
         field: 'titleAndDescription',
         exact: true,
       })
-    ).to.deep.equal({
+    ).toEqual({
       query_string: {
         query: 'foo',
         default_operator: 'AND',
@@ -208,7 +205,7 @@ describe('buildResultQuery', () => {
       field: 'baz',
       join: 'and',
     }
-    expect(buildResultQuery(node)).to.deep.equal({
+    expect(buildResultQuery(node)).toEqual({
       aggs: {
         tags: {
           filters: {
@@ -256,7 +253,7 @@ describe('buildResultQuery', () => {
         },
       },
     }
-    expect(buildResultQuery(node, children)).to.deep.equal({
+    expect(buildResultQuery(node, children)).toEqual({
       aggs: {
         tags: {
           filters: {
@@ -305,7 +302,7 @@ describe('buildResultQuery', () => {
       join: 'and',
     }
     let groupsKey = 'columns'
-    expect(buildResultQuery(node, {}, groupsKey)).to.deep.equal({
+    expect(buildResultQuery(node, {}, groupsKey)).toEqual({
       aggs: {
         columns: {
           filters: {
@@ -351,6 +348,6 @@ describe('result', () => {
           },
         })
       )
-    ).to.deep.equal({ results: { foo: 2, bar: 5 } })
+    ).toEqual({ results: { foo: 2, bar: 5 } })
   })
 })

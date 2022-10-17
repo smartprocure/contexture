@@ -5,12 +5,12 @@ let {
   simplifyBuckets,
   basicSimplifyTree,
 } = require('../../src/utils/elasticDSL')
-let { expect } = require('chai')
+let stringify = require('json-stable-stringify')
 
 describe('elasticDSL utils', () => {
   describe('buildMetrics', () => {
     it('should work', () => {
-      expect(buildMetrics('price')).to.eql({
+      expect(buildMetrics('price')).toEqual({
         min: { min: { field: 'price' } },
         max: { max: { field: 'price' } },
         avg: { avg: { field: 'price' } },
@@ -18,7 +18,7 @@ describe('elasticDSL utils', () => {
       })
     })
     it('should work with explicit stats', () => {
-      expect(buildMetrics('price', ['max', 'sum', 'cardinality'])).to.eql({
+      expect(buildMetrics('price', ['max', 'sum', 'cardinality'])).toEqual({
         max: { max: { field: 'price' } },
         sum: { sum: { field: 'price' } },
         cardinality: { cardinality: { field: 'price' } },
@@ -27,7 +27,7 @@ describe('elasticDSL utils', () => {
   })
   describe('statsAggs', () => {
     it('should work', () => {
-      expect(statsAggs('price')).to.eql({
+      expect(statsAggs('price')).toEqual({
         aggs: {
           min: { min: { field: 'price' } },
           max: { max: { field: 'price' } },
@@ -37,7 +37,7 @@ describe('elasticDSL utils', () => {
       })
     })
     it('should work with explicit stats', () => {
-      expect(statsAggs('price', ['max', 'sum', 'cardinality'])).to.eql({
+      expect(statsAggs('price', ['max', 'sum', 'cardinality'])).toEqual({
         aggs: {
           max: { max: { field: 'price' } },
           sum: { sum: { field: 'price' } },
@@ -46,11 +46,11 @@ describe('elasticDSL utils', () => {
       })
     })
     it('should add no stats without field', () => {
-      expect(statsAggs(null, ['max', 'sum', 'cardinality'])).to.eql({})
-      expect(statsAggs()).to.eql({})
+      expect(statsAggs(null, ['max', 'sum', 'cardinality'])).toEqual({})
+      expect(statsAggs()).toEqual({})
     })
     it('should work with top hits in array', () => {
-      expect(statsAggs('price', ['min', 'topHits'])).to.eql({
+      expect(statsAggs('price', ['min', 'topHits'])).toEqual({
         aggs: {
           min: { min: { field: 'price' } },
           topHits: { top_hits: {} },
@@ -60,7 +60,7 @@ describe('elasticDSL utils', () => {
     it('should work with objects', () => {
       expect(
         statsAggs('price', { min: true, percentiles: { percents: [20, 50] } })
-      ).to.eql({
+      ).toEqual({
         aggs: {
           min: { min: { field: 'price' } },
           percentiles: { percentiles: { field: 'price', percents: [20, 50] } },
@@ -73,7 +73,7 @@ describe('elasticDSL utils', () => {
           min: true,
           topHits: { field: null, order: {}, _source: { include: ['city'] } },
         })
-      ).to.eql({
+      ).toEqual({
         aggs: {
           min: { min: { field: 'price' } },
           topHits: { top_hits: { order: {}, _source: { include: ['city'] } } },
@@ -86,7 +86,7 @@ describe('elasticDSL utils', () => {
           min: true,
           histogram: { interval: 10000 },
         })
-      ).to.eql({
+      ).toEqual({
         aggs: {
           min: { min: { field: 'price' } },
           histogram: { histogram: { field: 'price', interval: 10000 } },
@@ -101,7 +101,7 @@ describe('elasticDSL utils', () => {
           { key: 'test', doc_count: 12, min: { value: 1 }, max: { value: 6 } },
           { key: 'testy', doc_count: 12, min: { value: 1 }, max: { value: 6 } },
         ])
-      ).to.eql([
+      ).toEqual([
         { key: 'test', count: 12, min: 1, max: 6 },
         { key: 'testy', count: 12, min: 1, max: 6 },
       ])
@@ -112,7 +112,7 @@ describe('elasticDSL utils', () => {
           pass: { doc_count: 12, min: { value: 1 }, max: { value: 6 } },
           fail: { doc_count: 12, min: { value: 1 }, max: { value: 6 } },
         })
-      ).to.eql([
+      ).toEqual([
         { key: 'pass', count: 12, min: 1, max: 6 },
         { key: 'fail', count: 12, min: 1, max: 6 },
       ])
@@ -145,7 +145,7 @@ describe('elasticDSL utils', () => {
             sum: { value: 335754844787.8146 },
           },
         ])
-      ).to.eql([
+      ).toEqual([
         {
           key: '0.0-500.0',
           from: 0,
@@ -177,7 +177,7 @@ describe('elasticDSL utils', () => {
     it('should work on value (cardinality example)', () => {
       let input = { cardinality: { value: 471 } }
       let expected = { cardinality: 471 }
-      expect(simplifyBucket(input)).to.eql(expected)
+      expect(simplifyBucket(input)).toEqual(expected)
     })
     it('should work on values (percentiles example)', () => {
       expect(
@@ -191,7 +191,7 @@ describe('elasticDSL utils', () => {
             ],
           },
         })
-      ).to.eql({
+      ).toEqual({
         percentiles: [
           { key: 10.0, value: 44 },
           { key: 30.0, value: 63 },
@@ -200,7 +200,7 @@ describe('elasticDSL utils', () => {
       })
     })
     it('should work on cases where value is 0', () => {
-      expect(simplifyBucket({ min: { value: 0 }, max: { value: 0 } })).to.eql({
+      expect(simplifyBucket({ min: { value: 0 }, max: { value: 0 } })).toEqual({
         min: 0,
         max: 0,
       })
@@ -208,12 +208,12 @@ describe('elasticDSL utils', () => {
     it('should work on cases where value is null', () => {
       expect(
         simplifyBucket({ min: { value: null }, max: { value: null } })
-      ).to.eql({ min: null, max: null })
+      ).toEqual({ min: null, max: null })
     })
     it('should avoid camelCasing pivotMetrics', () => {
       expect(
         simplifyBucket({ 'pivotMetric-min-PO.IssuedDate': { value: 12 } })
-      ).to.eql({ 'min-PO.IssuedDate': 12 })
+      ).toEqual({ 'min-PO.IssuedDate': 12 })
     })
   })
   describe('basicSimplifyTree', () => {
@@ -277,31 +277,40 @@ describe('elasticDSL utils', () => {
           },
         },
       }
-      expect(basicSimplifyTree(tree)).to.deep.equal({
-        key: 'root',
-        groups: [
-          {
-            key: 'row1',
-            groups: [{ key: 'thing' }, { key: 'thing2' }],
-            columns: [
-              {
-                key: 'innermost',
-                columns: [
-                  { key: 'colbucket', columns: [{ key: 'specialInner' }] },
-                ],
-              },
-              { key: 'inner2', min: 12, someValue: 3, 'min-PO.IssuedDate': 12 },
-            ],
-          },
-        ],
-        columns: [
-          {
-            key: 'innermostC',
-            columns: [{ key: 'colbucket', columns: [{ key: 'specialInner' }] }],
-          },
-          { key: 'inner2C', min: 12, someValue: 3, 'min-PO.IssuedDate': 12 },
-        ],
-      })
+      expect(stringify(basicSimplifyTree(tree))).toEqual(
+        stringify({
+          key: 'root',
+          groups: [
+            {
+              key: 'row1',
+              groups: [{ key: 'thing' }, { key: 'thing2' }],
+              columns: [
+                {
+                  key: 'innermost',
+                  columns: [
+                    { key: 'colbucket', columns: [{ key: 'specialInner' }] },
+                  ],
+                },
+                {
+                  key: 'inner2',
+                  min: 12,
+                  someValue: 3,
+                  'min-PO.IssuedDate': 12,
+                },
+              ],
+            },
+          ],
+          columns: [
+            {
+              key: 'innermostC',
+              columns: [
+                { key: 'colbucket', columns: [{ key: 'specialInner' }] },
+              ],
+            },
+            { key: 'inner2C', min: 12, someValue: 3, 'min-PO.IssuedDate': 12 },
+          ],
+        })
+      )
     })
     it('should return the proper results structure', () => {
       let tree = {
@@ -363,7 +372,7 @@ describe('elasticDSL utils', () => {
           'pivotMetric-sum-LineItem.TotalPrice': 11333822932797.13,
         },
       }
-      expect(basicSimplifyTree(tree)).to.deep.equal({
+      expect(basicSimplifyTree(tree)).toEqual({
         results: {
           columns: [
             {

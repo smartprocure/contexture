@@ -1,7 +1,6 @@
 let _ = require('lodash/fp')
 let facet = require('../../../src/example-types/filters/facet')
 let { sequentialResultTest, testSchema } = require('../testUtils')
-let { expect } = require('chai')
 let facetTest = sequentialResultTest([
   {
     aggregations: {
@@ -44,7 +43,7 @@ describe('facet', () => {
           },
           testSchema('testField')
         )
-      ).to.deep.equal({
+      ).toEqual({
         terms: {
           'testField.untouched': ['abc', '123'],
         },
@@ -62,7 +61,7 @@ describe('facet', () => {
           },
           testSchema('testField')
         )
-      ).to.deep.equal({
+      ).toEqual({
         bool: {
           must_not: {
             terms: {
@@ -84,7 +83,7 @@ describe('facet', () => {
           },
           testSchema('testField')
         )
-      ).to.deep.equal({
+      ).toEqual({
         bool: {
           filter: {
             terms: {

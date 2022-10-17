@@ -2,7 +2,6 @@ let {
   buildQuery,
   drilldown,
 } = require('../../../src/example-types/metricGroups/fieldValuePartitionGroupStats')
-let { expect } = require('chai')
 let { testSchema } = require('../testUtils')
 
 describe('fieldValuePartitionGroupStats', () => {
@@ -18,7 +17,7 @@ describe('fieldValuePartitionGroupStats', () => {
         },
         testSchema('Vendor.City')
       )
-    ).to.eql({
+    ).toEqual({
       aggs: {
         groups: {
           filters: {
@@ -50,7 +49,7 @@ describe('fieldValuePartitionGroupStats', () => {
         },
         testSchema('Vendor.City')
       )
-    ).to.eql({
+    ).toEqual({
       aggs: {
         groups: {
           filters: {
@@ -78,7 +77,7 @@ describe('fieldValuePartitionGroupStats', () => {
         },
         testSchema('Vendor.City')
       )
-    ).to.eql({
+    ).toEqual({
       term: { 'Vendor.City.untouched': 'Washington' },
     })
     expect(
@@ -92,7 +91,7 @@ describe('fieldValuePartitionGroupStats', () => {
         },
         testSchema('Vendor.City')
       )
-    ).to.eql({
+    ).toEqual({
       bool: { must_not: [{ term: { 'Vendor.City.untouched': 'Washington' } }] },
     })
     expect(
@@ -106,6 +105,6 @@ describe('fieldValuePartitionGroupStats', () => {
         },
         testSchema('Vendor.City')
       )
-    ).to.eql(undefined)
+    ).toBeUndefined()
   })
 })

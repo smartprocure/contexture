@@ -2,7 +2,6 @@ let {
   buildQuery,
   drilldown,
 } = require('../../../src/example-types/metricGroups/dateIntervalGroupStats')
-let { expect } = require('chai')
 
 describe('dateIntervalGroupStats', () => {
   it('should buildQuery', () => {
@@ -13,7 +12,7 @@ describe('dateIntervalGroupStats', () => {
         groupField: 'PO.IssuedDate',
         statsField: 'LineItem.TotalPrice',
       })
-    ).to.eql({
+    ).toEqual({
       aggs: {
         groups: {
           date_histogram: {
@@ -40,7 +39,7 @@ describe('dateIntervalGroupStats', () => {
         statsField: 'LineItem.TotalPrice',
         interval: 'month',
       })
-    ).to.eql({
+    ).toEqual({
       aggs: {
         groups: {
           date_histogram: {
@@ -66,7 +65,7 @@ describe('dateIntervalGroupStats', () => {
         groupField: 'PO.IssuedDate',
         interval: 'month',
       })
-    ).to.eql({
+    ).toEqual({
       aggs: {
         groups: {
           date_histogram: {
@@ -85,7 +84,7 @@ describe('dateIntervalGroupStats', () => {
         interval: 'month',
         drilldown: '2015-01-01T00:00:00.000Z',
       })
-    ).to.eql({
+    ).toEqual({
       range: {
         'PO.IssuedDate': {
           gte: '2015-01-01T00:00:00.000Z',
@@ -99,7 +98,7 @@ describe('dateIntervalGroupStats', () => {
         interval: 'quarter',
         drilldown: '2015-01-01T00:00:00.000Z',
       })
-    ).to.eql({
+    ).toEqual({
       range: {
         'PO.IssuedDate': {
           gte: '2015-01-01T00:00:00.000Z',
@@ -113,7 +112,7 @@ describe('dateIntervalGroupStats', () => {
         interval: 'year',
         drilldown: '2015-01-01T00:00:00.000Z',
       })
-    ).to.eql({
+    ).toEqual({
       range: {
         'PO.IssuedDate': {
           gte: '2015-01-01T00:00:00.000Z',

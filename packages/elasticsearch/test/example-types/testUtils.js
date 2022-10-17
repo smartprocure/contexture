@@ -1,13 +1,6 @@
-const chai = require('chai')
-const sinon = require('sinon')
 const F = require('futil')
 const _ = require('lodash/fp')
-const sinonChai = require('sinon-chai')
 const types = require('../../src/example-types')
-
-let { expect } = require('chai')
-
-chai.use(sinonChai)
 
 let sequentialResultTest = _.curry(
   async (getService, node, expectedResult, expectedCalls, schema = {}) => {
@@ -15,11 +8,15 @@ let sequentialResultTest = _.curry(
 
     if (_.isFunction(getService)) service = getService()
     else if (_.isArray(getService)) {
-      service = sinon.stub()
-      F.eachIndexed(
-        (value, index) => service.onCall(index).returns(Promise.resolve(value)),
-        getService
-      )
+      let calls = 0
+      service = jest.fn(() => {
+        calls++
+        return Promise.resolve(getService[calls - 1])
+      })
+      // F.eachIndexed(
+      //   (value, index) => service.onCall(index).returns(Promise.resolve(value)),
+      //   getService
+      // )
     }
     let result = await types[node.type].result(
       _.defaults(
@@ -32,24 +29,24 @@ let sequentialResultTest = _.curry(
       schema
     )
 
-    expect(result).to.deep.equal(expectedResult)
+    expect(result).toEqual(expectedResult)
 
-    expect(service).to.have.callCount(expectedCalls.length)
+    expect(service).toBeCalledTimes(expectedCalls.length)
 
-    // Can't use sinon-chai-in-order as it doesn't do deep equality with diffs
     F.eachIndexed(
-      (input, index) =>
-        expect(service.getCall(index).args[0]).to.deep.equal(input),
+      (input, index) => expect(service.mock.calls[index][0]).toEqual(input),
       expectedCalls
     )
   }
 )
 
+let toBe = y => x => expect(x).toBe(y)
+
 module.exports = {
-  validContexts: type => F.flowMap(type.validContext, chai.assert.isTrue),
-  noValidContexts: type => F.flowMap(type.validContext, chai.assert.isFalse),
-  hasValueContexts: type => F.flowMap(type.hasValue, chai.assert.isTrue),
-  noValueContexts: type => F.flowMap(type.hasValue, chai.assert.isFalse),
+  validContexts: type => F.flowMap(type.validContext, toBe(true)),
+  noValidContexts: type => F.flowMap(type.validContext, toBe(false)),
+  hasValueContexts: type => F.flowMap(type.hasValue, toBe(true)),
+  noValueContexts: type => F.flowMap(type.hasValue, toBe(false)),
   sequentialResultTest,
 
   testSchema: (field, notAnalyzedField = 'untouched') => ({

@@ -1,7 +1,6 @@
 let {
   buildQuery,
 } = require('../../../src/example-types/metricGroups/percentilesGroupStats')
-let { expect } = require('chai')
 
 describe('percentilesGroupStats', () => {
   it('should buildQuery', async () => {
@@ -21,7 +20,7 @@ describe('percentilesGroupStats', () => {
           },
         })
       )
-    ).to.eql({
+    ).toEqual({
       aggs: {
         groups: {
           range: {
