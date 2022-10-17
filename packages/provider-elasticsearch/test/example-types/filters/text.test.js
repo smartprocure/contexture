@@ -1,6 +1,5 @@
 let text = require('../../../src/example-types/filters/text')
 let { testSchema } = require('../testUtils')
-let { expect } = require('chai')
 
 describe('text', () => {
   it('should check for values', () => {
@@ -10,14 +9,14 @@ describe('text', () => {
         field: 'test',
         values: ['asdf'],
       })
-    ).to.be.true
+    ).toBe(true)
     expect(
       !!text.hasValue({
         type: 'text',
         field: 'test',
         values: [],
       })
-    ).to.be.false
+    ).toBe(false)
   })
   describe('filter', () => {
     let anyText = values => (
@@ -40,7 +39,7 @@ describe('text', () => {
     it('contains (match ALL)', () => {
       expect(
         laserjetPrinterText('contains', testSchema('description'), 'all')
-      ).to.deep.equal({
+      ).toEqual({
         query_string: {
           default_field: 'description',
           default_operator: 'AND',
@@ -49,7 +48,7 @@ describe('text', () => {
       })
     })
     it('contains (match ANY)', () => {
-      expect(laserjetPrinterText('contains')).to.deep.equal({
+      expect(laserjetPrinterText('contains')).toEqual({
         query_string: {
           default_field: 'description',
           default_operator: 'OR',
@@ -60,7 +59,7 @@ describe('text', () => {
     it('contains (match NONE)', () => {
       expect(
         laserjetPrinterText('contains', testSchema('description'), 'none')
-      ).to.deep.equal({
+      ).toEqual({
         bool: {
           must_not: {
             query_string: {
@@ -74,7 +73,7 @@ describe('text', () => {
     })
     describe('containsWord', () => {
       it('should use regexp for < 3 words', () => {
-        expect(laserjetPrinterText('containsWord')).to.deep.equal({
+        expect(laserjetPrinterText('containsWord')).toEqual({
           bool: {
             should: [
               {
@@ -98,20 +97,18 @@ describe('text', () => {
         })
       })
       it('should use query_string for > 2 words', () => {
-        expect(anyText(['has', 'more', 'words'])('containsWord')).to.deep.equal(
-          {
-            query_string: {
-              default_field: 'description',
-              default_operator: 'OR',
-              query: '"has" "more" "words"',
-            },
-          }
-        )
+        expect(anyText(['has', 'more', 'words'])('containsWord')).toEqual({
+          query_string: {
+            default_field: 'description',
+            default_operator: 'OR',
+            query: '"has" "more" "words"',
+          },
+        })
       })
     })
     // it.skip('containsExact');
     it('startsWith', () => {
-      expect(laserjetPrinterText('startsWith')).to.deep.equal({
+      expect(laserjetPrinterText('startsWith')).toEqual({
         bool: {
           should: [
             {
@@ -137,7 +134,7 @@ describe('text', () => {
     it('startsWith using alternative notAnalyzedField', () => {
       expect(
         laserjetPrinterText('startsWith', testSchema('description', 'keyword'))
-      ).to.deep.equal({
+      ).toEqual({
         bool: {
           should: [
             {
@@ -161,7 +158,7 @@ describe('text', () => {
       })
     })
     it('endsWith', () => {
-      expect(laserjetPrinterText('endsWith')).to.deep.equal({
+      expect(laserjetPrinterText('endsWith')).toEqual({
         bool: {
           should: [
             {
@@ -183,10 +180,10 @@ describe('text', () => {
           ],
         },
       })
-      expect(() => anyText(['<', '2', 'words'])('endsWith')).to.throw
+      expect(() => anyText(['<', '2', 'words'])('endsWith')).toThrow()
     })
     it('is', () => {
-      expect(laserjetPrinterText('is')).to.deep.equal({
+      expect(laserjetPrinterText('is')).toEqual({
         bool: {
           should: [
             {
@@ -210,7 +207,7 @@ describe('text', () => {
       })
     })
     it('isNot', () => {
-      expect(laserjetPrinterText('isNot')).to.deep.equal({
+      expect(laserjetPrinterText('isNot')).toEqual({
         bool: {
           must_not: {
             bool: {
@@ -238,7 +235,7 @@ describe('text', () => {
       })
     })
     it('doesNotContain', () => {
-      expect(laserjetPrinterText('doesNotContain')).to.deep.equal({
+      expect(laserjetPrinterText('doesNotContain')).toEqual({
         bool: {
           must_not: {
             bool: {
@@ -266,7 +263,7 @@ describe('text', () => {
       })
     })
     it('wordStartsWith', () => {
-      expect(laserjetPrinterText('wordStartsWith')).to.deep.equal({
+      expect(laserjetPrinterText('wordStartsWith')).toEqual({
         bool: {
           should: [
             {
@@ -290,7 +287,7 @@ describe('text', () => {
       })
     })
     it('wordEndsWith', () => {
-      expect(laserjetPrinterText('wordEndsWith')).to.deep.equal({
+      expect(laserjetPrinterText('wordEndsWith')).toEqual({
         bool: {
           should: [
             {
@@ -312,7 +309,7 @@ describe('text', () => {
           ],
         },
       })
-      expect(() => anyText(['<', '2', 'words'])('wordEndsWith')).to.throw
+      expect(() => anyText(['<', '2', 'words'])('wordEndsWith')).toThrow()
     })
   })
 })

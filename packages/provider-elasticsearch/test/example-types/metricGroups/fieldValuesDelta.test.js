@@ -2,7 +2,6 @@ let {
   buildQuery,
   result,
 } = require('../../../src/example-types/metricGroups/fieldValuesDelta')
-let { expect } = require('chai')
 let { testSchema } = require('../testUtils')
 
 describe('fieldValuesDelta', () => {
@@ -27,7 +26,7 @@ describe('fieldValuesDelta', () => {
     },
   }
   it('should buildQuery', () => {
-    expect(buildQuery(exampleNode, testSchema('Organization.State'))).to.eql({
+    expect(buildQuery(exampleNode, testSchema('Organization.State'))).toEqual({
       aggs: {
         results: {
           filters: {
@@ -98,6 +97,6 @@ describe('fieldValuesDelta', () => {
         },
       },
     })
-    expect(await result(exampleNode, search)).to.eql({ results: ['mo', 'oh'] })
+    expect(await result(exampleNode, search)).toEqual({ results: ['mo', 'oh'] })
   })
 })

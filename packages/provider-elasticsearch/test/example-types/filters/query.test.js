@@ -1,5 +1,4 @@
 let query = require('../../../src/example-types/filters/query')
-let { expect } = require('chai')
 
 describe('query', () => {
   it('should filter properly', () => {
@@ -10,7 +9,7 @@ describe('query', () => {
         field: '_all',
         query: 'cable',
       })
-    ).to.deep.equal({
+    ).toEqual({
       query_string: {
         query: 'cable',
         default_operator: 'AND',
@@ -25,7 +24,7 @@ describe('query', () => {
         query: 'cable',
         exact: true,
       })
-    ).to.deep.equal({
+    ).toEqual({
       query_string: {
         query: 'cable',
         default_operator: 'AND',

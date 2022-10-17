@@ -1,5 +1,4 @@
 let date = require('../../../src/example-types/filters/date')
-let { expect } = require('chai')
 
 describe('date/filter', () => {
   it('should handle from', () => {
@@ -10,7 +9,7 @@ describe('date/filter', () => {
         range: 'exact',
         from: '2016-04-25',
       })
-    ).to.deep.equal({
+    ).toEqual({
       range: {
         test: {
           gte: '2016-04-25T00:00:00.000Z',
@@ -27,7 +26,7 @@ describe('date/filter', () => {
         range: 'exact',
         to: '2016-04-25T00:00:00.000Z',
       })
-    ).to.deep.equal({
+    ).toEqual({
       range: {
         test: {
           lte: '2016-04-25T00:00:00.000Z',
@@ -45,7 +44,7 @@ describe('date/filter', () => {
         from: '2015-04-25',
         to: '2016-04-25',
       })
-    ).to.deep.equal({
+    ).toEqual({
       range: {
         test: {
           lte: '2016-04-25T00:00:00.000Z',
@@ -65,7 +64,7 @@ describe('date/filter', () => {
         to: 'another very specific date',
         isDateTime: true,
       })
-    ).to.deep.equal({
+    ).toEqual({
       range: {
         test: {
           gte: 'a very specific date',

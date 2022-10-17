@@ -1,6 +1,5 @@
 const geo = require('../../../src/example-types/filters/geo')
 const utils = require('../testUtils')
-let { expect } = require('chai')
 
 describe('geo', () => {
   it('hasValue should work', () => {
@@ -35,7 +34,7 @@ describe('geo', () => {
           operator: 'within',
           _meta: {},
         })
-      ).to.deep.equal({
+      ).toEqual({
         geo_distance: { test: [-80.1131784, 26.3170479], distance: '10mi' },
       })
     })
@@ -50,7 +49,7 @@ describe('geo', () => {
           operator: 'outside',
           _meta: {},
         })
-      ).to.deep.equal({
+      ).toEqual({
         bool: {
           must_not: {
             geo_distance: { test: [-80.1131784, 26.3170479], distance: '15mi' },

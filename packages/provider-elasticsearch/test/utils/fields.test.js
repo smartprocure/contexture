@@ -1,5 +1,4 @@
 let { getField } = require('../../src/utils/fields')
-let { expect } = require('chai')
 
 describe('field utils', () => {
   it('getField should work', () => {
@@ -10,8 +9,8 @@ describe('field utils', () => {
         field3: {},
       },
     }
-    expect(getField(schema, 'field1')).to.eql('field1.untouched')
-    expect(getField(schema, 'field2')).to.eql('field2.raw')
-    expect(getField(schema, 'field3')).to.eql('field3')
+    expect(getField(schema, 'field1')).toEqual('field1.untouched')
+    expect(getField(schema, 'field2')).toEqual('field2.raw')
+    expect(getField(schema, 'field3')).toEqual('field3')
   })
 })

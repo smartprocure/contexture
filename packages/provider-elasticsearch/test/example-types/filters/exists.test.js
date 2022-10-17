@@ -1,5 +1,4 @@
 var exists = require('../../../src/example-types/filters/exists')
-let { expect } = require('chai')
 
 describe('exists', () => {
   describe('hasValue', () => {
@@ -8,11 +7,11 @@ describe('exists', () => {
       field: 'test',
     }
     it('should detect a boolean value only', () => {
-      expect(exists.hasValue({ ...node, value: true })).to.be.true
-      expect(exists.hasValue({ ...node, value: false })).to.be.true
-      expect(exists.hasValue({ ...node, value: null })).to.be.false
-      expect(exists.hasValue({ ...node, value: undefined })).to.be.false
-      expect(exists.hasValue(node)).to.be.false
+      expect(exists.hasValue({ ...node, value: true })).toBe(true)
+      expect(exists.hasValue({ ...node, value: false })).toBe(true)
+      expect(exists.hasValue({ ...node, value: null })).toBe(false)
+      expect(exists.hasValue({ ...node, value: undefined })).toBe(false)
+      expect(exists.hasValue(node)).toBe(false)
     })
   })
   it('should filter properly', () => {
@@ -22,7 +21,7 @@ describe('exists', () => {
         field: 'test',
         value: true,
       })
-    ).to.deep.equal({
+    ).toEqual({
       exists: {
         field: 'test',
       },
@@ -35,7 +34,7 @@ describe('exists', () => {
         field: 'test',
         value: false,
       })
-    ).to.deep.equal({
+    ).toEqual({
       bool: {
         must_not: {
           exists: {
