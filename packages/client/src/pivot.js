@@ -172,21 +172,18 @@ export default {
   onDispatch(event, extend) {
     let { type, node, previous, value } = event
 
-    if (type === 'mutate') {
-      let prevRowDrill = _.get('pagination.rows.drilldown', previous)
-      let prevColumnDrill = _.get('pagination.columns.drilldown', previous)
+    if (type !== 'mutate') return
 
-      if (_.has('pagination.columns', value) || _.has('pagination.rows', value))
-        // If mutation is a pagination
-        addDrilldownToExpanded(extend, node, previous, value)
-      else if (_.has('sort', value)) {
-        // if sorting is changes we are preserving expanded columns
-        addDrilldownToExpanded(extend, node, previous, value)
-        resetExpandedRows(extend, node)
-      } else if (prevColumnDrill || prevRowDrill)
-        // If node configuration is changes disable mergeResponse
-        resetPagination(extend, node, previous)
-    }
+    if (_.has('pagination.columns', value) || _.has('pagination.rows', value))
+      // If mutation is a pagination
+      addDrilldownToExpanded(extend, node, previous, value)
+    else if (_.has('sort', value)) {
+      // if sorting is changes we are preserving expanded columns
+      addDrilldownToExpanded(extend, node, previous, value)
+      resetExpandedRows(extend, node)
+    } else
+      // If node configuration is changes disable mergeResponse
+      resetPagination(extend, node, previous)
   },
   // Resetting the pagination when the tree is changed
   // allows to return expected root results instead of nested drilldown
