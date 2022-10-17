@@ -181,9 +181,9 @@ export default {
       // if sorting is changes we are preserving expanded columns
       addDrilldownToExpanded(extend, node, previous, value)
       resetExpandedRows(extend, node)
-    } else
-      // If node configuration is changes disable mergeResponse
-      resetPagination(extend, node, previous)
+    }
+    // If node configuration is changes disable mergeResponse
+    else resetPagination(extend, node, previous)
   },
   // Resetting the pagination when the tree is changed
   // allows to return expected root results instead of nested drilldown
