@@ -2344,10 +2344,10 @@ let AllTests = ContextureClient => {
     })
     expect(
       Tree.getNode(['root', 'pivot']).pagination.rows.drilldown
-    ).to.deep.equal([])
+    ).toEqual([])
   })
   it('should preserve expanded drilldowns when drilling and paginating', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let rows = [
       { type: 'fieldValuesPartition', field: 'State' },
       { type: 'fieldValues', field: 'City', size: 10 },
@@ -2389,7 +2389,7 @@ let AllTests = ContextureClient => {
 
     expect(
       Tree.getNode(['root', 'pivot']).pagination.rows.expanded
-    ).to.deep.equal([
+    ).toEqual([
       {
         drilldown: [],
         include: ['Florida', 'Nevada'],
@@ -2402,7 +2402,7 @@ let AllTests = ContextureClient => {
 
     expect(
       Tree.getNode(['root', 'pivot']).pagination.rows.expanded
-    ).to.deep.equal([
+    ).toEqual([
       {
         drilldown: [],
         include: ['Florida', 'Nevada'],
@@ -2414,7 +2414,7 @@ let AllTests = ContextureClient => {
     ])
   })
   it('should preserve expanded columns when changing sort configuration', async () => {
-    let service = sinon.spy(mockService())
+    let service = jest.fn(mockService())
     let columns = [
       { type: 'fieldValuesPartition', field: 'State' },
       { type: 'fieldValues', field: 'City', size: 10 },
@@ -2486,7 +2486,7 @@ let AllTests = ContextureClient => {
       },
     })
 
-    expect(Tree.getNode(['root', 'pivot']).pagination).to.deep.equal({
+    expect(Tree.getNode(['root', 'pivot']).pagination).toEqual({
       rows: {
         drilldown: [],
         skip: [],
