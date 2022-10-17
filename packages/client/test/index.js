@@ -2387,9 +2387,9 @@ let AllTests = ContextureClient => {
       pagination: { rows: { drilldown: ['Florida'] } },
     })
 
-    expect(
+    expect(toJS(
       Tree.getNode(['root', 'pivot']).pagination.rows.expanded
-    ).toEqual([
+    )).toEqual([
       {
         drilldown: [],
         include: ['Florida', 'Nevada'],
@@ -2400,9 +2400,9 @@ let AllTests = ContextureClient => {
       pagination: { rows: { drilldown: ['Florida'], skip: ['Miami'] } },
     })
 
-    expect(
+    expect(toJS(
       Tree.getNode(['root', 'pivot']).pagination.rows.expanded
-    ).toEqual([
+    )).toEqual([
       {
         drilldown: [],
         include: ['Florida', 'Nevada'],
@@ -2486,7 +2486,7 @@ let AllTests = ContextureClient => {
       },
     })
 
-    expect(Tree.getNode(['root', 'pivot']).pagination).toEqual({
+    expect(toJS(Tree.getNode(['root', 'pivot']).pagination)).toEqual({
       rows: {
         drilldown: [],
         skip: [],
