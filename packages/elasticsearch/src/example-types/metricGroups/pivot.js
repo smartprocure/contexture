@@ -89,12 +89,8 @@ let maybeWrapWithFilterAgg = ({
         aggs: {
           [aggName]: {
             filter: _.merge(
-              and([
-                filters,
-                or(includeRowFilters),
-                or(includeColumnFilters),
-              ]),
-              not(skipFilters),
+              and([filters, or(includeRowFilters), or(includeColumnFilters)]),
+              not(skipFilters)
             ),
             ...query,
           },
