@@ -1,6 +1,6 @@
 let _ = require('lodash/fp')
 let esTwoLevel = require('./esTwoLevelAggregation').result
-let { negate } = require('../../utils/elasticDSL')
+let { not } = require('../../utils/elasticDSL')
 
 module.exports = {
   validContext: node => node.key_field && node.value_field && node.key_value,
@@ -17,7 +17,7 @@ module.exports = {
           key_data: {
             filters: {
               pass: filter,
-              fail: negate(filter),
+              fail: not(filter),
             },
             field: null,
           },

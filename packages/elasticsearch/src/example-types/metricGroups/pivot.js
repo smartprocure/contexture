@@ -3,7 +3,7 @@ let _ = require('lodash/fp')
 let { getStats } = require('./stats')
 let { getField } = require('../../utils/fields')
 let types = require('../../../src/example-types')
-let { basicSimplifyTree } = require('../../utils/elasticDSL')
+let { basicSimplifyTree, and, not, or } = require('../../utils/elasticDSL')
 let { compactMapAsync, deepMultiTransformOn } = require('../../utils/futil')
 
 let lookupTypeProp = (def, prop, type) =>
@@ -88,44 +88,14 @@ let maybeWrapWithFilterAgg = ({
     : {
         aggs: {
           [aggName]: {
-            filter: {
-              bool: {
-                ...(someNotEmpty([
-                  filters,
-                  includeRowFilters,
-                  includeColumnFilters,
-                ]) && {
-                  must: [
-                    // filters representing the drilldown
-                    ...(filters || []),
-                    // querying data only for specific row values when paginating/expanding
-                    ...(!_.isEmpty(includeRowFilters)
-                      ? [
-                          {
-                            bool: {
-                              should: includeRowFilters,
-                              minimum_should_match: 1,
-                            },
-                          },
-                        ]
-                      : []),
-                    // querying data only for specific column values when paginating/expanding
-                    ...(!_.isEmpty(includeColumnFilters)
-                      ? [
-                          {
-                            bool: {
-                              should: includeColumnFilters,
-                              minimum_should_match: 1,
-                            },
-                          },
-                        ]
-                      : []),
-                  ],
-                }),
-                // skipping exising row or column values when paginating next rows/columns
-                ...(!_.isEmpty(skipFilters) && { must_not: skipFilters }),
-              },
-            },
+            filter: _.merge(
+              and([
+                filters,
+                or(includeRowFilters),
+                or(includeColumnFilters),
+              ]),
+              not(skipFilters),
+            ),
             ...query,
           },
         },
@@ -334,6 +304,8 @@ let buildQuery = async (node, schema, getStats) => {
       : {}
   )
 
+  // TODO: refactor filter functions not to pass schema and getStats everytime
+
   // Filtering data specified by the drilldown
   let filters = [
     ...((await drilldownFilters({
@@ -494,6 +466,7 @@ let pivot = {
     let responses = await Promise.all(_.map(search, queries))
 
     // Convert response rows and columns to objects for easy merges
+    // This could be done with Tree.merge if Tree supported multi path children
     let groupsToObjects = deepMultiTransformOn(
       ['rows', 'columns'],
       groupsToObjects => _.flow(_.map(groupsToObjects), _.keyBy('key'))

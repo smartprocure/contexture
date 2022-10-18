@@ -94,6 +94,13 @@ let basicSimplifyTree = _.flow(
   }
 )
 
+let flatCompact = _.flow(_.flatten, _.compact)
+let unlessEmpty = onFalse =>
+  _.flow(
+    F.when(_.isArray, flatCompact),
+    F.unless(_.isEmpty, onFalse)
+  )
+
 module.exports = {
   statsAggs,
   buildMetrics,
@@ -104,6 +111,8 @@ module.exports = {
   flattenMetrics,
   // https://www.elastic.co/guide/en/elasticsearch/reference/current/number.html#number
   elasticsearchIntegerMax: 2 ** 31 - 1,
-  negate: filter => ({ bool: { must_not: filter } }),
+  and: unlessEmpty(must => ({ bool: { must } })),
+  or: unlessEmpty(should => ({ bool: { should, minimum_should_match: 1 } })),
+  not: unlessEmpty(must_not => ({ bool: { must_not } })),
   buildFilter: ({ type, field, ...rest }) => ({ [type]: { [field]: rest } }),
 }
