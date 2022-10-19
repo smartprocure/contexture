@@ -6,6 +6,9 @@ let types = require('../../../src/example-types')
 let { basicSimplifyTree, and, not, or } = require('../../utils/elasticDSL')
 let { compactMapAsync, deepMultiTransformOn } = require('../../utils/futil')
 
+let everyEmpty = _.every(_.isEmpty)
+let someNotEmpty = _.some(_.negate(_.isEmpty))
+
 let lookupTypeProp = (def, prop, type) =>
   _.getOr(def, `${type}GroupStats.${prop}`, types)
 
@@ -44,8 +47,6 @@ let resultsForDrilldown = (type, path, results) => {
   return resultsForDrilldown(type, path.slice(1), match)
 }
 
-let someNotEmpty = _.some(_.negate(_.isEmpty))
-
 let getResultValues = (node, results) => {
   let pagination = node.pagination
   let isDrilldown = someNotEmpty(
@@ -72,8 +73,6 @@ let getResultValues = (node, results) => {
   let drilldownResults = resultsForDrilldown(groupType, drilldown, results)
   return _.map(getKey, _.get(groupType, drilldownResults))
 }
-
-let everyEmpty = _.every(_.isEmpty)
 
 let maybeWrapWithFilterAgg = ({
   query,
@@ -173,7 +172,7 @@ let getSortField = ({ columnValues = [], valueProp, valueIndex } = {}) =>
     valueProp,
   ])
 
-let mapExpandedPages = node => {
+let paginateExpandedGroups = node => {
   let pagination = node.pagination || { columns: {}, rows: {} }
 
   let isDrilldown = someNotEmpty(
@@ -379,7 +378,7 @@ let clearDrilldownCounts = (data, depth = 0) => {
 
 let processResponse = (response, node = {}) => {
   let input = F.getOrReturn('pivotFilter', response.aggregations)
-  // SUPER HACKY TEMPORARY METHOD
+  // TODO SUPER HACKY TEMPORARY METHOD
   let { results } = basicSimplifyTree({ results: input })
 
   if (!results.count) results.count = _.get('hits.total.value', response)
@@ -435,14 +434,15 @@ let pivot = {
   filter,
   aggsForValues,
   buildQuery,
-  mapExpandedPages,
+  paginateExpandedGroups,
   processResponse,
   validContext: node => node.rows.length && node.values.length,
   async result(node, search, schema) {
     // Initial request gets new row/column values for this request
     // Then using those values makePages will produce additional queries
     // for already expanded columns/rows
-    let { initial, makePages } = mapExpandedPages(node)
+    // TODO refactor into 2 functions
+    let { initial, makePages } = paginateExpandedGroups(node)
 
     let initialPageResult = processResponse(
       await search(await buildQuery(initial, schema, getStats(search))),

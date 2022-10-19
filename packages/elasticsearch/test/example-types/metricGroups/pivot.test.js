@@ -2,7 +2,7 @@ let _ = require('lodash/fp')
 let {
   filter,
   buildQuery,
-  mapExpandedPages,
+  paginateExpandedGroups,
   aggsForValues,
   processResponse,
 } = require('../../../src/example-types/metricGroups/pivot')
@@ -2407,7 +2407,7 @@ describe('pivot', () => {
     )
     expect(result).toEqual(expected)
   })
-  it('should mapExpandedPages for no expanded', async () => {
+  it('should paginateExpandedGroups for no expanded', async () => {
     let rows = [
       { type: 'fieldValues', field: 'Organization.State' },
       { type: 'fieldValues', field: 'Organization.NameState' },
@@ -2457,7 +2457,7 @@ describe('pivot', () => {
       },
     }
 
-    let { initial, makePages } = mapExpandedPages(input)
+    let { initial, makePages } = paginateExpandedGroups(input)
     expect(initial).toEqual(expectedIntial)
 
     let includeValues = [
@@ -2476,7 +2476,7 @@ describe('pivot', () => {
     let pages = makePages(includeValues)
     expect(pages).toEqual(expectedPages)
   })
-  it('should mapExpandedPages for 2 expanded columns', async () => {
+  it('should paginateExpandedGroups for 2 expanded columns', async () => {
     let rows = [
       { type: 'fieldValues', field: 'Organization.State' },
       { type: 'fieldValues', field: 'Organization.NameState' },
@@ -2586,7 +2586,7 @@ describe('pivot', () => {
       },
     }
 
-    let { initial, makePages } = mapExpandedPages(input)
+    let { initial, makePages } = paginateExpandedGroups(input)
     expect(initial).toEqual(expectedIntial)
 
     let includeValues = [
