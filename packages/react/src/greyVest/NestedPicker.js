@@ -24,10 +24,12 @@ let unflattenObjectBy = _.curry((iteratee, x) =>
   _.zipObjectDeep(F.mapIndexed(iteratee, x), _.values(x))
 )
 
+// current implementation is that if the non-field name contains a space, it does not require auto-formatting for display purposes
+let getNonFieldItemLabel = F.unless(_.includes(' '), _.startCase)
 let getItemLabel = item =>
   isField(item)
     ? F.cascade(['shortLabel', 'label'], item)
-    : _.startCase(item._key)
+    : getNonFieldItemLabel(item._key)
 
 let toNested = _.flow(
   _.map(x => _.defaults({ path: x.value }, x)),
