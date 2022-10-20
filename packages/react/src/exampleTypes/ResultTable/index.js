@@ -125,7 +125,7 @@ let ResultTable = ({
                         {HeaderGroup ? (
                           <HeaderGroup>{groupName}</HeaderGroup>
                         ) : (
-                          F.autoLabel(groupName)
+                          groupName
                         )}
                       </span>
                     </HeaderCell>
