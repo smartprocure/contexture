@@ -24,7 +24,7 @@ let unflattenObjectBy = _.curry((iteratee, x) =>
   _.zipObjectDeep(F.mapIndexed(iteratee, x), _.values(x))
 )
 
-// current implementation is that if the non-field name contains a space, it does not require auto-formatting for display purposes
+// current implementation is that if a non-field name contains a space, it does not require auto-formatting for display purposes
 let getNonFieldItemLabel = F.unless(_.includes(' '), _.startCase)
 let getItemLabel = item =>
   isField(item)
