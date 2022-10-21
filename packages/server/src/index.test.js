@@ -1,8 +1,8 @@
-let Contexture = require('../src/index')
-let provider = require('../src/provider-debug')
-let _ = require('lodash/fp')
+import Contexture from './index'
+import provider from './provider-debug'
+import _ from 'lodash/fp'
 
-describe('Contexture Core', () => {
+describe('Contexture Server', () => {
   let process = Contexture({
     schemas: {
       test: {
