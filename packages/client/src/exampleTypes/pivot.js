@@ -17,22 +17,21 @@ let resultsForDrilldown = (type, drilldown, results) => {
 let getResultValues = (groupType, node, results) => {
   let pagination = node.pagination
   let page = _.last(pagination[groupType])
-  let drilldown = _.getOr([],'drilldown', page)
+  let drilldown = _.getOr([], 'drilldown', page)
   let drilldownResults = resultsForDrilldown(groupType, drilldown, results)
   return _.map(getKey, _.get(groupType, drilldownResults))
 }
 
 let someNotEmpty = _.some(_.negate(_.isEmpty))
 
-let mergeResults = _.mergeWith((current, additional, prop)=> {
+let mergeResults = _.mergeWith((current, additional, prop) => {
   if (prop === 'columns' || prop === 'rows') {
     return _.flow(
       _.map(_.keyBy('key')),
       _.spread(mergeResults),
       _.values
     )([current, additional])
-  } else if (_.isArray(additional))
-    return additional
+  } else if (_.isArray(additional)) return additional
 })
 
 // Resetting the pagination when the pivot node is changed
@@ -46,7 +45,7 @@ let resetPagination = (extend, node, previous) => {
   extend(node, {
     pagination: {
       type: 'rows',
-      columns:  prevColumns && [],
+      columns: prevColumns && [],
       rows: prevRows && [],
     },
   })
@@ -77,19 +76,19 @@ let expand = (tree, path, type, drilldown) => {
   if (_.isArray(pagination.columns) && _.isEmpty(pagination.columns))
     pagination.columns.push({
       drilldown: [],
-      values: getResultValues('columns', node, results)
+      values: getResultValues('columns', node, results),
     })
   if (_.isArray(pagination.rows) && _.isEmpty(pagination.rows))
     pagination.rows.push({
       drilldown: [],
-      values: getResultValues('rows', node, results)
+      values: getResultValues('rows', node, results),
     })
 
   tree.mutate(path, {
     pagination: {
       ...pagination,
       type,
-      [type]: _.concat(pagination[type],{ drilldown }),
+      [type]: _.concat(pagination[type], { drilldown }),
     },
   })
 }
@@ -102,17 +101,16 @@ let collapse = (tree, path, type, drilldown) => {
 
   // removing pages under this drilldown level
   node.pagination[type] = _.filter(
-    page => // page.drilldown is not a child of drilldown
-      !_.isEqual(
-        _.take(drilldown.length, page.drilldown),
-        _.toArray(drilldown)
-      )
+    (
+      page // page.drilldown is not a child of drilldown
+    ) =>
+      !_.isEqual(_.take(drilldown.length, page.drilldown), _.toArray(drilldown))
   )(node.pagination[type])
 
   // removing collapsed rows or columns from results
   drilldownResults[type] = undefined
   // triggering observer update
-  tree.extend(node, {context: { results }})
+  tree.extend(node, { context: { results } })
 }
 
 export default {
@@ -169,11 +167,9 @@ export default {
     if (type !== 'mutate' || _.has('pagination.type', value)) return
 
     // if sorting is changed we are preserving expanded columns
-    if (_.has('sort', value))
-      resetExpandedRows(extend, node)
+    if (_.has('sort', value)) resetExpandedRows(extend, node)
     // if node configuration is changed resetting pages
-    else
-      resetPagination(extend, node, previous)
+    else resetPagination(extend, node, previous)
   },
   // Resetting the pagination when the tree is changed
   // allows to return expected root results instead of nested drilldown
@@ -184,19 +180,13 @@ export default {
   shouldMergeResponse: node =>
     // checking for presence of drilldown, skip, expanded in pagination
     ['rows', 'columns'].includes(node.pagination.type) &&
-    someNotEmpty([
-      node.pagination.columns,
-      node.pagination.rows,
-    ]),
+    someNotEmpty([node.pagination.columns, node.pagination.rows]),
   mergeResponse(node, response, extend, snapshot) {
     let type = _.get('pagination.type', node)
-    let page = _.flow(
-      _.get(`pagination.${type}`),
-      _.last
-    )(node)
+    let page = _.flow(_.get(`pagination.${type}`), _.last)(node)
 
     if (!page) {
-      page = {drilldown: []}
+      page = { drilldown: [] }
       _.set(`pagination.${type}`, [page], node)
     }
 
