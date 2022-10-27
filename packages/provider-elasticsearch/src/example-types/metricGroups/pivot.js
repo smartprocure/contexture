@@ -171,9 +171,11 @@ let paginateExpandedGroups = node => {
   let type = pagination.type
   let rowDrillMode = type === 'rows'
 
+  let hasPages = !!_.get(rowDrillMode ? 'rows' : 'columns', pagination)
   let pages = _.getOr([], rowDrillMode ? 'rows' : 'columns', pagination)
   let requestedPage = _.last(pages) || { drilldown: [] }
   let previousPages = _.initial(pages)
+  let hasGridPages = !!_.get(rowDrillMode ? 'columns' : 'rows', pagination)
   let gridPages = _.getOr([], rowDrillMode ? 'columns' : 'rows', pagination)
 
   let skip = _.flow(
@@ -188,11 +190,11 @@ let paginateExpandedGroups = node => {
       pagination: {
         page: {
           [rowDrillMode ? 'rows' : 'columns']: {
-            drilldown: requestedPage.drilldown,
+            drilldown: hasPages && requestedPage.drilldown,
             ...(!_.isEmpty(values) ? { include: values } : { skip }),
           },
           [rowDrillMode ? 'columns' : 'rows']: {
-            drilldown: _.getOr([], 'drilldown', gridPage),
+            drilldown: hasGridPages && _.getOr([], 'drilldown', gridPage),
             include: _.getOr([], 'values', gridPage),
           },
         },
