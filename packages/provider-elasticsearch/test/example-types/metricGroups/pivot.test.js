@@ -268,9 +268,12 @@ describe('pivot', () => {
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       pagination: {
-        rows: {
-          drilldown: [],
-        },
+        type: 'rows',
+        page: {
+          rows: {
+            drilldown: [],
+          },
+        }
       },
       rows: [
         {
@@ -294,9 +297,12 @@ describe('pivot', () => {
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       pagination: {
-        rows: {
-          drilldown: ['Reno', '0.0-500.0'],
-        },
+        type: 'rows',
+        page: {
+          rows: {
+            drilldown: ['Reno', '0.0-500.0'],
+          },
+        }
       },
       rows: [
         {
@@ -318,9 +324,12 @@ describe('pivot', () => {
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       pagination: {
-        rows: {
-          drilldown: ['Reno|NV', '0.0-500.0'],
-        },
+        type: 'rows',
+        page: {
+          rows: {
+            drilldown: ['Reno|NV', '0.0-500.0'],
+          },
+        }
       },
       rows: [
         {
@@ -489,9 +498,12 @@ describe('pivot', () => {
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       pagination: {
-        rows: {
-          drilldown: [],
-        },
+        type: 'rows',
+        page: {
+          rows: {
+            drilldown: [],
+          },
+        }
       },
       rows: [
         {
@@ -537,9 +549,12 @@ describe('pivot', () => {
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       pagination: {
-        rows: {
-          drilldown: ['Reno'],
-        },
+        type: 'rows',
+        page: {
+          rows: {
+            drilldown: ['Reno'],
+          },
+        }
       },
       rows: [
         {
@@ -604,9 +619,12 @@ describe('pivot', () => {
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       pagination: {
-        rows: {
-          drilldown: ['Reno', '0.0-500.0', 'A - U.S. OWNED BUSINESS'],
-        },
+        type: 'rows',
+        page: {
+          rows: {
+            drilldown: ['Reno', '0.0-500.0', 'A - U.S. OWNED BUSINESS'],
+          },
+        }
       },
       rows: [
         {
@@ -711,9 +729,12 @@ describe('pivot', () => {
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       pagination: {
-        rows: {
-          drilldown: ['Reno', '0.0-500.0'],
-          skip: ['A - U.S. OWNED BUSINESS'],
+        type: 'rows',
+        page: {
+          rows: {
+            drilldown: ['Reno', '0.0-500.0'],
+            skip: ['A - U.S. OWNED BUSINESS'],
+          },
         },
       },
       rows: [
@@ -821,10 +842,13 @@ describe('pivot', () => {
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       pagination: {
-        rows: {
-          drilldown: ['Reno', '0.0-500.0'],
-          include: ['A - U.S. OWNED BUSINESS'],
-        },
+        type: 'rows',
+        page: {
+          rows: {
+            drilldown: ['Reno', '0.0-500.0'],
+            include: ['A - U.S. OWNED BUSINESS'],
+          },
+        }
       },
       rows: [
         {
@@ -2416,8 +2440,8 @@ describe('pivot', () => {
       { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
       { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
     ]
-    let expandedColumns = []
-    let expandedRows = []
+    let columnsPages = []
+    let rowsPages = []
     let input = {
       key: 'test',
       type: 'pivot',
@@ -2425,16 +2449,12 @@ describe('pivot', () => {
       rows,
       columns,
       pagination: {
-        columns: {
-          drilldown: [],
-          skip: [],
-          expanded: expandedColumns,
-        },
-        rows: {
-          drilldown: ['New York'],
-          skip: [],
-          expanded: expandedRows,
-        },
+        type: 'rows',
+        columns: columnsPages,
+        rows: [
+          ...rowsPages,
+          { drilldown: ['New York'] }
+        ],
       },
     }
     let expectedIntial = {
@@ -2444,15 +2464,21 @@ describe('pivot', () => {
       rows,
       columns,
       pagination: {
-        columns: {
-          drilldown: [],
-          skip: [],
-          expanded: expandedColumns,
-        },
-        rows: {
-          drilldown: ['New York'],
-          skip: [],
-          expanded: expandedRows,
+        type: 'rows',
+        columns: columnsPages,
+        rows: [
+          ...rowsPages,
+          { drilldown: ['New York'] }
+        ],
+        page: {
+          columns: {
+            drilldown: [],
+            include: [],
+          },
+          rows: {
+            drilldown: ['New York'],
+            skip: [],
+          },
         },
       },
     }
@@ -2485,10 +2511,10 @@ describe('pivot', () => {
       { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
       { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
     ]
-    let expandedColumns = [
+    let columnsPages = [
       {
         drilldown: [],
-        include: [
+        values: [
           '2015-01-01T00:00:00.000Z',
           '2016-01-01T00:00:00.000Z',
           '2017-01-01T00:00:00.000Z',
@@ -2501,8 +2527,7 @@ describe('pivot', () => {
       },
       {
         drilldown: ['2015-01-01T00:00:00.000Z'],
-        skip: [],
-        include: [
+        values: [
           '2015-01-01T00:00:00.000Z',
           '2015-04-01T00:00:00.000Z',
           '2015-07-01T00:00:00.000Z',
@@ -2511,8 +2536,7 @@ describe('pivot', () => {
       },
       {
         drilldown: ['2016-01-01T00:00:00.000Z'],
-        skip: [],
-        include: [
+        values: [
           '2016-01-01T00:00:00.000Z',
           '2016-04-01T00:00:00.000Z',
           '2016-07-01T00:00:00.000Z',
@@ -2520,10 +2544,10 @@ describe('pivot', () => {
         ],
       },
     ]
-    let expandedRows = [
+    let rowsPages = [
       {
         drilldown: [],
-        include: [
+        values: [
           'District of Columbia',
           'California',
           'New York',
@@ -2544,16 +2568,12 @@ describe('pivot', () => {
       rows,
       columns,
       pagination: {
-        columns: {
-          drilldown: [],
-          skip: [],
-          expanded: expandedColumns,
-        },
-        rows: {
-          drilldown: ['New York'],
-          skip: [],
-          expanded: expandedRows,
-        },
+        type: 'rows',
+        columns: columnsPages,
+        rows: [
+          ...rowsPages,
+          { drilldown: ['New York'] }
+        ],
       },
     }
     let expectedIntial = {
@@ -2563,26 +2583,31 @@ describe('pivot', () => {
       rows,
       columns,
       pagination: {
-        columns: {
-          drilldown: [],
-          skip: [],
-          include: [
-            '2015-01-01T00:00:00.000Z',
-            '2016-01-01T00:00:00.000Z',
-            '2017-01-01T00:00:00.000Z',
-            '2018-01-01T00:00:00.000Z',
-            '2019-01-01T00:00:00.000Z',
-            '2020-01-01T00:00:00.000Z',
-            '2021-01-01T00:00:00.000Z',
-            '2022-01-01T00:00:00.000Z',
-          ],
-          expanded: expandedColumns,
-        },
-        rows: {
-          drilldown: ['New York'],
-          skip: [],
-          expanded: expandedRows,
-        },
+        type: 'rows',
+        columns: columnsPages,
+        rows: [
+          ...rowsPages,
+          { drilldown: ['New York'] }
+        ],
+        page: {
+          columns: {
+            drilldown: [],
+            include: [
+              '2015-01-01T00:00:00.000Z',
+              '2016-01-01T00:00:00.000Z',
+              '2017-01-01T00:00:00.000Z',
+              '2018-01-01T00:00:00.000Z',
+              '2019-01-01T00:00:00.000Z',
+              '2020-01-01T00:00:00.000Z',
+              '2021-01-01T00:00:00.000Z',
+              '2022-01-01T00:00:00.000Z',
+            ],
+          },
+          rows: {
+            drilldown: ['New York'],
+            skip: [],
+          },
+        }
       },
     }
 
@@ -2609,33 +2634,37 @@ describe('pivot', () => {
         rows,
         columns,
         pagination: {
-          columns: {
-            drilldown: ['2015-01-01T00:00:00.000Z'],
-            skip: [],
-            include: [
-              '2015-01-01T00:00:00.000Z',
-              '2015-04-01T00:00:00.000Z',
-              '2015-07-01T00:00:00.000Z',
-              '2015-10-01T00:00:00.000Z',
-            ],
-            expanded: expandedColumns,
-          },
-          rows: {
-            drilldown: ['New York'],
-            skip: [],
-            include: [
-              'New York',
-              'Albany',
-              'Brooklyn',
-              'Long Island City',
-              'Corona',
-              'Buffalo',
-              'Syracuse',
-              'Cooperstown',
-              'Rochester',
-              'White Plains',
-            ],
-            expanded: expandedRows,
+          type: 'rows',
+          columns: columnsPages,
+          rows: [
+            ...rowsPages,
+            { drilldown: ['New York'] },
+          ],
+          page: {
+            columns: {
+              drilldown: ['2015-01-01T00:00:00.000Z'],
+              include: [
+                '2015-01-01T00:00:00.000Z',
+                '2015-04-01T00:00:00.000Z',
+                '2015-07-01T00:00:00.000Z',
+                '2015-10-01T00:00:00.000Z',
+              ],
+            },
+            rows: {
+              drilldown: ['New York'],
+              include: [
+                'New York',
+                'Albany',
+                'Brooklyn',
+                'Long Island City',
+                'Corona',
+                'Buffalo',
+                'Syracuse',
+                'Cooperstown',
+                'Rochester',
+                'White Plains',
+              ],
+            },
           },
         },
       },
@@ -2646,33 +2675,37 @@ describe('pivot', () => {
         rows,
         columns,
         pagination: {
-          columns: {
-            drilldown: ['2016-01-01T00:00:00.000Z'],
-            skip: [],
-            include: [
-              '2016-01-01T00:00:00.000Z',
-              '2016-04-01T00:00:00.000Z',
-              '2016-07-01T00:00:00.000Z',
-              '2016-10-01T00:00:00.000Z',
-            ],
-            expanded: expandedColumns,
-          },
-          rows: {
-            drilldown: ['New York'],
-            skip: [],
-            include: [
-              'New York',
-              'Albany',
-              'Brooklyn',
-              'Long Island City',
-              'Corona',
-              'Buffalo',
-              'Syracuse',
-              'Cooperstown',
-              'Rochester',
-              'White Plains',
-            ],
-            expanded: expandedRows,
+          type: 'rows',
+          columns: columnsPages,
+          rows: [
+            ...rowsPages,
+            { drilldown: ['New York'] }
+          ],
+          page: {
+            columns: {
+              drilldown: ['2016-01-01T00:00:00.000Z'],
+              include: [
+                '2016-01-01T00:00:00.000Z',
+                '2016-04-01T00:00:00.000Z',
+                '2016-07-01T00:00:00.000Z',
+                '2016-10-01T00:00:00.000Z',
+              ],
+            },
+            rows: {
+              drilldown: ['New York'],
+              include: [
+                'New York',
+                'Albany',
+                'Brooklyn',
+                'Long Island City',
+                'Corona',
+                'Buffalo',
+                'Syracuse',
+                'Cooperstown',
+                'Rochester',
+                'White Plains',
+              ],
+            },
           },
         },
       },

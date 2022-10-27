@@ -4,10 +4,9 @@ let { getStats } = require('./stats')
 let { getField } = require('../../utils/fields')
 let types = require('../../../src/example-types')
 let { basicSimplifyTree, and, not, or } = require('../../utils/elasticDSL')
-let { compactMapAsync, deepMultiTransformOn } = require('../../utils/futil')
+let { compactMapAsync } = require('../../utils/futil')
 
 let everyEmpty = _.every(_.isEmpty)
-let someNotEmpty = _.some(_.negate(_.isEmpty))
 
 let lookupTypeProp = (def, prop, type) =>
   _.getOr(def, `${type}GroupStats.${prop}`, types)
@@ -38,41 +37,37 @@ let aggsForValues = (node, schema) =>
 let getKey = x => x.keyAsString || x.key
 
 // Similar to Tree.lookup but path is a drilldown which uses keyAsString or key
-let resultsForDrilldown = (type, path, results) => {
-  if (_.isEmpty(path) || !results) return results
+let resultsForDrilldown = (type, drilldown, results) => {
+  if (_.isEmpty(drilldown) || !results) return results
 
-  let key = _.first(path)
+  let key = _.first(drilldown)
   let groups = _.get(type, results)
   let match = _.find(node => getKey(node) === key, groups)
-  return resultsForDrilldown(type, path.slice(1), match)
+  return resultsForDrilldown(type, drilldown.slice(1), match)
 }
 
 let getResultValues = (node, results) => {
   let pagination = node.pagination
-  let isDrilldown = someNotEmpty(
-    _.map(_.get(_, pagination), [
-      'columns.drilldown',
-      'columns.skip',
-      'columns.expanded',
-      'rows.drilldown',
-      'rows.skip',
-      'rows.expanded',
-    ])
-  )
 
-  if (!isDrilldown) return []
+  if (!['rows', 'columns'].includes(pagination.type)) return []
 
-  let groupType =
-    _.isEmpty(pagination.columns.drilldown) &&
-    _.isEmpty(pagination.columns.skip)
-      ? 'rows'
-      : 'columns'
-
-  let drilldown = _.get([groupType, 'drilldown'], pagination)
-
+  let groupType = pagination.type
+  let drilldown = _.getOr([],['page', groupType, 'drilldown'], pagination)
   let drilldownResults = resultsForDrilldown(groupType, drilldown, results)
+
   return _.map(getKey, _.get(groupType, drilldownResults))
 }
+
+let mergeResults = _.mergeWith((current, additional, prop)=> {
+  if (prop === 'columns' || prop === 'rows') {
+    return _.flow(
+      _.map(_.keyBy('key')),
+      _.spread(mergeResults),
+      _.values
+    )([current, additional])
+  } else if (_.isArray(additional))
+    return additional
+})
 
 let maybeWrapWithFilterAgg = ({
   query,
@@ -173,82 +168,61 @@ let getSortField = ({ columnValues = [], valueProp, valueIndex } = {}) =>
   ])
 
 let paginateExpandedGroups = node => {
-  let pagination = node.pagination || { columns: {}, rows: {} }
+  let pagination = node.pagination
+  let type = pagination.type
+  let rowDrillMode = type === 'rows'
 
-  let isDrilldown = someNotEmpty(
-    _.map(_.get(_, pagination), [
-      'columns.drilldown',
-      'columns.skip',
-      'columns.expanded',
-      'rows.drilldown',
-      'rows.skip',
-      'rows.expanded',
-    ])
-  )
+  let pages = _.getOr([], rowDrillMode ? 'rows' : 'columns', pagination)
+  let requestedPage = _.last(pages) || { drilldown: [] }
+  let previousPages = _.initial(pages)
+  let gridPages = _.getOr([], rowDrillMode ? 'columns' : 'rows', pagination)
 
-  // drilldown/skip request can be performed on rows or on columns at a time
-  let rowDrillMode =
-    _.isEmpty(pagination.columns.drilldown) &&
-    _.isEmpty(pagination.columns.skip)
-  let expanded = rowDrillMode
-    ? _.get('columns.expanded', pagination)
-    : _.get('rows.expanded', pagination)
+  let skip = _.flow(
+    _.filter({drilldown: requestedPage.drilldown}),
+    _.flatMap('values'),
+  )(previousPages)
 
   // Restoring pages from expanded into pagination
   // Merge this row/column drilldown with includes from already expanded columns/rows
-  let mergePaginationNode = page =>
+  let makePageNode = values => gridPage =>
     _.merge(node, {
       pagination: {
-        [rowDrillMode ? 'columns' : 'rows']: _.pick(
-          ['drilldown', 'include'],
-          page
-        ),
+        page: {
+          [rowDrillMode ? 'rows' : 'columns']: {
+            drilldown: requestedPage.drilldown,
+            ...(!_.isEmpty(values) ? { include: values } : { skip })
+          },
+          [rowDrillMode ? 'columns' : 'rows']: {
+            drilldown: _.getOr([], 'drilldown', gridPage),
+            include: _.getOr([],'values', gridPage),
+          }
+        },
       },
     })
 
-  if (isDrilldown && _.get('length', expanded)) {
     return {
       // Initial page represents first query to get row/column values for this request
-      initial: mergePaginationNode(expanded[0]),
+      initial: makePageNode(requestedPage.values)(gridPages[0]),
       // And then can we make additional queries for already expanded columns/rows
       // but only for rows/columns returned by the initial page query
-      makePages: include =>
-        _.map(
-          _.flow(mergePaginationNode, node =>
-            _.merge(node, {
-              pagination: {
-                [rowDrillMode ? 'rows' : 'columns']: {
-                  include,
-                  // Removing any skip values as we are using explicit include instead
-                  skip: [],
-                },
-              },
-            })
-          )
-        )(expanded.slice(1)),
-    }
-  } else
-    return {
-      initial: node,
-      makePages() {
-        return []
-      },
+      makePages: includeValues =>
+        _.map(makePageNode(includeValues), gridPages.slice(1)),
     }
 }
 
 let buildQuery = async (node, schema, getStats) => {
-  let pagination = node.pagination || { columns: {}, rows: {} }
-  let rowDrills = _.getOr([], 'rows.drilldown', pagination)
-  let columnDrills = _.getOr([], 'columns.drilldown', pagination)
+  let page = _.getOr({ columns: {}, rows: {} },'pagination.page' , node)
+  let rowDrills = _.getOr([], 'rows.drilldown', page)
+  let columnDrills = _.getOr([], 'columns.drilldown', page)
   // Don't consider deeper levels than +1 the current drilldown
   // This allows avoiding expansion until ready
   // Opt out with falsey drilldown
-  let rows = _.get('rows.drilldown', pagination)
-    ? _.take(_.size(pagination.rows.drilldown) + 1, node.rows)
+  let rows = _.get('rows.drilldown', page)
+    ? _.take(_.size(page.rows.drilldown) + 1, node.rows)
     : node.rows
 
-  let columns = _.get('columns.drilldown', pagination)
-    ? _.take(_.size(pagination.columns.drilldown) + 1, node.columns)
+  let columns = _.get('columns.drilldown', page)
+    ? _.take(_.size(page.columns.drilldown) + 1, node.columns)
     : node.columns
 
   let statsAggs = { aggs: aggsForValues(node.values, schema) }
@@ -264,7 +238,7 @@ let buildQuery = async (node, schema, getStats) => {
         if (!group.size) group.size = 10
         // Calculating subtotal metrics at each group level if not drilling down
         // Support for per group stats could also be added here - merge on another stats agg blob to children based on group.stats/statsField or group.values
-        if (!_.get([groupingType, 'drilldown'], pagination))
+        if (!_.get([groupingType, 'drilldown'], page))
           children = _.merge(await children, statsAggs)
         // At each level, add a filters bucket agg and nested metric to enable sorting
         // For example, to sort by Sum of Price for 2022, add a filters agg for 2022 and nested metric for sum of price so we can target it
@@ -287,14 +261,16 @@ let buildQuery = async (node, schema, getStats) => {
     statsAggs = _.merge(
       await buildNestedGroupQuery(statsAggs, columns, 'columns'),
       // Stamping total column metrics if not drilling columns
-      _.isEmpty(columnDrills) && _.isEmpty(_.get('columns.skip', pagination))
+      _.isEmpty(columnDrills)
+      && _.isEmpty(_.get('columns.skip', page))
         ? statsAggs
-        : {}
+        : {},
     )
   let query = _.merge(
     await buildNestedGroupQuery(statsAggs, rows, 'rows', node.sort),
     // Stamping total row metrics if not drilling rows
-    _.isEmpty(rowDrills) && _.isEmpty(_.get('rows.skip', pagination))
+    _.isEmpty(rowDrills)
+    && _.isEmpty(_.get('rows.skip', page))
       ? statsAggs
       : {}
   )
@@ -320,14 +296,14 @@ let buildQuery = async (node, schema, getStats) => {
   // Narrowing query down to values specified in include
   let includeRowFilters = await paginationFilters({
     drilldowns: rowDrills,
-    values: _.get('rows.include', pagination),
+    values: _.get('rows.include', page),
     groups: rows,
     schema,
     getStats,
   })
   let includeColumnFilters = await paginationFilters({
     drilldowns: columnDrills,
-    values: _.get('rows.columns', pagination),
+    values: _.get('columns.include', page),
     groups: columns,
     schema,
     getStats,
@@ -337,14 +313,14 @@ let buildQuery = async (node, schema, getStats) => {
   let skipFilters = [
     ...((await paginationFilters({
       drilldowns: rowDrills,
-      values: _.get('rows.skip', pagination),
+      values: _.get('rows.skip', page),
       groups: rows,
       schema,
       getStats,
     })) || []),
     ...((await paginationFilters({
       drilldowns: columnDrills,
-      values: _.get('columns.skip', pagination),
+      values: _.get('columns.skip', page),
       groups: columns,
       schema,
       getStats,
@@ -367,12 +343,27 @@ let buildQuery = async (node, schema, getStats) => {
 }
 
 let Tree = F.tree(_.get('rows'))
+let ColTree = F.tree(_.get('columns'))
 
-let clearDrilldownCounts = (data, depth = 0) => {
-  if (!data || !depth) return
+let clearDrilldownCounts = (data, node) => {
+  if (!data) return
+  let columnsDepth = _.getOr(0,'pagination.page.columns.drilldown.length', node)
+  let rowsDepth = _.getOr(0,'pagination.page.rows.drilldown.length', node)
+  // keeping the root counter only for empty drilldown
+  // otherwise cleaning root level counter + intermediary levels counters
+  if (columnsDepth > 0)
+    columnsDepth++
+  if (rowsDepth > 0)
+    rowsDepth++
 
   Tree.walk((leaf, index, parents) => {
-    if (parents.length < depth) leaf.count = undefined
+    if (parents.length < rowsDepth)
+      leaf.count = undefined
+
+    ColTree.walk((leaf, index, parents) => {
+      if (parents.length < columnsDepth)
+        leaf.count = undefined
+    })(leaf)
   })(data)
 }
 
@@ -383,7 +374,7 @@ let processResponse = (response, node = {}) => {
 
   if (!results.count) results.count = _.get('hits.total.value', response)
 
-  clearDrilldownCounts(results, _.get('drilldown.length', node))
+  clearDrilldownCounts(results, node)
 
   return { results }
 }
@@ -446,41 +437,31 @@ let pivot = {
 
     let initialPageResult = processResponse(
       await search(await buildQuery(initial, schema, getStats(search))),
-      node
+      initial
     )
 
     let includeValues = getResultValues(initial, initialPageResult.results)
 
+    let pages = makePages(includeValues)
     let queries = await Promise.all(
-      _.map(nodePage => buildQuery(nodePage, schema, getStats(search)))(
-        makePages(includeValues)
-      )
+      _.map(nodePage =>
+        buildQuery(nodePage, schema, getStats(search))
+      )(pages)
     )
 
     if (_.isEmpty(queries)) return initialPageResult
 
     let responses = await Promise.all(_.map(search, queries))
-
-    // Convert response rows and columns to objects for easy merges
-    // This could be done with Tree.merge if Tree supported multi path children
-    let groupsToObjects = deepMultiTransformOn(
-      ['rows', 'columns'],
-      groupsToObjects => _.flow(_.map(groupsToObjects), _.keyBy('key'))
-    )
-    // Convert rows and columns back to arrays
-    let groupsToArrays = deepMultiTransformOn(
-      ['rows', 'columns'],
-      groupsToArrays => _.flow(_.values, _.map(groupsToArrays))
+    let results = F.mapIndexed(
+      (response, i) =>
+        processResponse(response, pages[i]),
+      responses
     )
 
-    let result = _.reduce((result, response) =>
-      F.mergeAllArrays([
-        result,
-        groupsToObjects(processResponse(response, node).results),
-      ])
-    )(groupsToObjects(initialPageResult.results), responses)
-
-    return { results: groupsToArrays(result) }
+    return _.reduce(mergeResults)(
+      initialPageResult,
+      results
+    )
   },
 }
 module.exports = pivot
