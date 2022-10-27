@@ -179,7 +179,7 @@ let paginateExpandedGroups = node => {
   let gridPages = _.getOr([], rowDrillMode ? 'columns' : 'rows', pagination)
 
   let skip = _.flow(
-    _.filter({ drilldown: requestedPage.drilldown }),
+    _.filter(({drilldown}) => _.isEqual(drilldown, requestedPage.drilldown)),
     _.flatMap('values')
   )(previousPages)
 
@@ -324,6 +324,8 @@ let buildQuery = async (node, schema, getStats) => {
     })) || []),
   ]
 
+  // TODO apply the include/skip filters below the grand total level
+  // so the total values are not calculated on a subset of data
   query = maybeWrapWithFilterAgg({
     filters,
     includeRowFilters,
@@ -343,17 +345,19 @@ let Tree = F.tree(_.get('rows'))
 let ColTree = F.tree(_.get('columns'))
 
 let clearDrilldownCounts = (data, node) => {
-  if (!data) return
-  let columnsDepth = _.getOr(
-    0,
-    'pagination.page.columns.drilldown.length',
-    node
-  )
+  if (!data) return data
+
+  let columnsDepth = _.getOr(0,'pagination.page.columns.drilldown.length', node)
+  let columnsPagination = !!_.get('pagination.page.columns.skip.length', node)
+  // TODO maybe account for include length or differentiate root page
+
   let rowsDepth = _.getOr(0, 'pagination.page.rows.drilldown.length', node)
-  // keeping the root counter only for empty drilldown
+  let rowsPagination = !!_.get('pagination.page.rows.skip.length', node)
+
+  // keeping the root counter only for empty drilldown and no pagination
   // otherwise cleaning root level counter + intermediary levels counters
-  if (columnsDepth > 0) columnsDepth++
-  if (rowsDepth > 0) rowsDepth++
+  if (columnsDepth > 0 || columnsPagination) columnsDepth++
+  if (rowsDepth > 0 || rowsPagination) rowsDepth++
 
   Tree.walk((leaf, index, parents) => {
     if (parents.length < rowsDepth) leaf.count = undefined
@@ -452,7 +456,7 @@ let pivot = {
       responses
     )
 
-    return _.reduce(mergeResults)(initialPageResult, results)
+    return _.reduce(mergeResults, initialPageResult, results)
   },
 }
 module.exports = pivot
