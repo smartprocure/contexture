@@ -2326,7 +2326,7 @@ let AllTests = ContextureClient => {
           {
             key: 'pivot',
             type: 'pivot',
-            pagination: { rows: { drilldown: [] } },
+            pagination: { type: 'rows', rows: [] },
             rows,
           },
           { key: 'test', type: 'facet', values: [] },
@@ -2334,15 +2334,16 @@ let AllTests = ContextureClient => {
       }
     )
 
-    Tree.mutate(['root', 'pivot'], {
-      pagination: { rows: { drilldown: ['Florida'], skip: ['Miami'] } },
-    })
+
+    let node = Tree.getNode(['root', 'pivot'])
+
+    node.expand(Tree, ['root', 'pivot'], 'rows', ['Florida'])
 
     // Changing fieldValuesPartition matchValue does force replace
     Tree.mutate(['root', 'pivot'], {
       rows: _.set('0.matchValue', 'Nevada', rows),
     })
-    expect(Tree.getNode(['root', 'pivot']).pagination.rows.drilldown).toEqual(
+    expect(Tree.getNode(['root', 'pivot']).pagination.rows).toEqual(
       []
     )
   })
@@ -2361,7 +2362,7 @@ let AllTests = ContextureClient => {
           {
             key: 'pivot',
             type: 'pivot',
-            pagination: { rows: { drilldown: [] } },
+            pagination: { type: 'rows', rows: [] },
             rows,
           },
           { key: 'test', type: 'facet', values: [] },
@@ -2383,33 +2384,19 @@ let AllTests = ContextureClient => {
       },
     })
 
-    Tree.mutate(['root', 'pivot'], {
-      pagination: { rows: { drilldown: ['Florida'] } },
-    })
+
+    let node = Tree.getNode(['root', 'pivot'])
+    node.expand(Tree, ['root', 'pivot'], 'rows', ['Florida'])
 
     expect(
-      toJS(Tree.getNode(['root', 'pivot']).pagination.rows.expanded)
+      toJS(Tree.getNode(['root', 'pivot']).pagination.rows)
     ).toEqual([
       {
         drilldown: [],
-        include: ['Florida', 'Nevada'],
-      },
-    ])
-
-    Tree.mutate(['root', 'pivot'], {
-      pagination: { rows: { drilldown: ['Florida'], skip: ['Miami'] } },
-    })
-
-    expect(
-      toJS(Tree.getNode(['root', 'pivot']).pagination.rows.expanded)
-    ).toEqual([
-      {
-        drilldown: [],
-        include: ['Florida', 'Nevada'],
+        values: ['Florida', 'Nevada'],
       },
       {
         drilldown: ['Florida'],
-        include: ['Miami'],
       },
     ])
   })
@@ -2430,8 +2417,9 @@ let AllTests = ContextureClient => {
             key: 'pivot',
             type: 'pivot',
             pagination: {
-              rows: { drilldown: [] },
-              columns: { drilldown: [] },
+              type: 'rows',
+              rows: [],
+              columns: [],
             },
             columns,
             rows,
@@ -2471,13 +2459,10 @@ let AllTests = ContextureClient => {
       },
     })
 
-    Tree.mutate(['root', 'pivot'], {
-      pagination: { rows: { drilldown: ['NanoSoft'] } },
-    })
+    let node = Tree.getNode(['root', 'pivot'])
 
-    Tree.mutate(['root', 'pivot'], {
-      pagination: { columns: { drilldown: ['Florida'] } },
-    })
+    node.expand(Tree, ['root', 'pivot'], 'rows', ['NanoSoft'])
+    node.expand(Tree, ['root', 'pivot'], 'columns', ['Florida'])
 
     Tree.mutate(['root', 'pivot'], {
       sort: {
@@ -2487,25 +2472,17 @@ let AllTests = ContextureClient => {
     })
 
     expect(toJS(Tree.getNode(['root', 'pivot']).pagination)).toEqual({
-      rows: {
-        drilldown: [],
-        skip: [],
-        expanded: [],
-      },
-      columns: {
-        drilldown: [],
-        skip: [],
-        expanded: [
-          {
-            drilldown: [],
-            include: ['Florida', 'Nevada'],
-          },
-          {
-            drilldown: ['Florida'],
-            include: ['Miami'],
-          },
-        ],
-      },
+      type: 'rows',
+      rows: [],
+      columns: [
+        {
+          drilldown: [],
+          values: ['Florida', 'Nevada'],
+        },
+        {
+          drilldown: ['Florida'],
+        },
+      ],
     })
   })
   it('should support watchNode', async () => {
