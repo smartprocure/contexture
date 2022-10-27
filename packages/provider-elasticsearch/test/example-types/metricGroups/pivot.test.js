@@ -273,7 +273,7 @@ describe('pivot', () => {
           rows: {
             drilldown: [],
           },
-        }
+        },
       },
       rows: [
         {
@@ -302,7 +302,7 @@ describe('pivot', () => {
           rows: {
             drilldown: ['Reno', '0.0-500.0'],
           },
-        }
+        },
       },
       rows: [
         {
@@ -329,7 +329,7 @@ describe('pivot', () => {
           rows: {
             drilldown: ['Reno|NV', '0.0-500.0'],
           },
-        }
+        },
       },
       rows: [
         {
@@ -503,7 +503,7 @@ describe('pivot', () => {
           rows: {
             drilldown: [],
           },
-        }
+        },
       },
       rows: [
         {
@@ -554,7 +554,7 @@ describe('pivot', () => {
           rows: {
             drilldown: ['Reno'],
           },
-        }
+        },
       },
       rows: [
         {
@@ -624,7 +624,7 @@ describe('pivot', () => {
           rows: {
             drilldown: ['Reno', '0.0-500.0', 'A - U.S. OWNED BUSINESS'],
           },
-        }
+        },
       },
       rows: [
         {
@@ -848,7 +848,7 @@ describe('pivot', () => {
             drilldown: ['Reno', '0.0-500.0'],
             include: ['A - U.S. OWNED BUSINESS'],
           },
-        }
+        },
       },
       rows: [
         {
@@ -2451,10 +2451,7 @@ describe('pivot', () => {
       pagination: {
         type: 'rows',
         columns: columnsPages,
-        rows: [
-          ...rowsPages,
-          { drilldown: ['New York'] }
-        ],
+        rows: [...rowsPages, { drilldown: ['New York'] }],
       },
     }
     let expectedIntial = {
@@ -2466,10 +2463,7 @@ describe('pivot', () => {
       pagination: {
         type: 'rows',
         columns: columnsPages,
-        rows: [
-          ...rowsPages,
-          { drilldown: ['New York'] }
-        ],
+        rows: [...rowsPages, { drilldown: ['New York'] }],
         page: {
           columns: {
             drilldown: [],
@@ -2570,10 +2564,7 @@ describe('pivot', () => {
       pagination: {
         type: 'rows',
         columns: columnsPages,
-        rows: [
-          ...rowsPages,
-          { drilldown: ['New York'] }
-        ],
+        rows: [...rowsPages, { drilldown: ['New York'] }],
       },
     }
     let expectedIntial = {
@@ -2585,10 +2576,7 @@ describe('pivot', () => {
       pagination: {
         type: 'rows',
         columns: columnsPages,
-        rows: [
-          ...rowsPages,
-          { drilldown: ['New York'] }
-        ],
+        rows: [...rowsPages, { drilldown: ['New York'] }],
         page: {
           columns: {
             drilldown: [],
@@ -2607,7 +2595,7 @@ describe('pivot', () => {
             drilldown: ['New York'],
             skip: [],
           },
-        }
+        },
       },
     }
 
@@ -2636,10 +2624,7 @@ describe('pivot', () => {
         pagination: {
           type: 'rows',
           columns: columnsPages,
-          rows: [
-            ...rowsPages,
-            { drilldown: ['New York'] },
-          ],
+          rows: [...rowsPages, { drilldown: ['New York'] }],
           page: {
             columns: {
               drilldown: ['2015-01-01T00:00:00.000Z'],
@@ -2677,10 +2662,7 @@ describe('pivot', () => {
         pagination: {
           type: 'rows',
           columns: columnsPages,
-          rows: [
-            ...rowsPages,
-            { drilldown: ['New York'] }
-          ],
+          rows: [...rowsPages, { drilldown: ['New York'] }],
           page: {
             columns: {
               drilldown: ['2016-01-01T00:00:00.000Z'],

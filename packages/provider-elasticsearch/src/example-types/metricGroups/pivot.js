@@ -52,21 +52,20 @@ let getResultValues = (node, results) => {
   if (!['rows', 'columns'].includes(pagination.type)) return []
 
   let groupType = pagination.type
-  let drilldown = _.getOr([],['page', groupType, 'drilldown'], pagination)
+  let drilldown = _.getOr([], ['page', groupType, 'drilldown'], pagination)
   let drilldownResults = resultsForDrilldown(groupType, drilldown, results)
 
   return _.map(getKey, _.get(groupType, drilldownResults))
 }
 
-let mergeResults = _.mergeWith((current, additional, prop)=> {
+let mergeResults = _.mergeWith((current, additional, prop) => {
   if (prop === 'columns' || prop === 'rows') {
     return _.flow(
       _.map(_.keyBy('key')),
       _.spread(mergeResults),
       _.values
     )([current, additional])
-  } else if (_.isArray(additional))
-    return additional
+  } else if (_.isArray(additional)) return additional
 })
 
 let maybeWrapWithFilterAgg = ({
@@ -178,8 +177,8 @@ let paginateExpandedGroups = node => {
   let gridPages = _.getOr([], rowDrillMode ? 'columns' : 'rows', pagination)
 
   let skip = _.flow(
-    _.filter({drilldown: requestedPage.drilldown}),
-    _.flatMap('values'),
+    _.filter({ drilldown: requestedPage.drilldown }),
+    _.flatMap('values')
   )(previousPages)
 
   // Restoring pages from expanded into pagination
@@ -190,28 +189,28 @@ let paginateExpandedGroups = node => {
         page: {
           [rowDrillMode ? 'rows' : 'columns']: {
             drilldown: requestedPage.drilldown,
-            ...(!_.isEmpty(values) ? { include: values } : { skip })
+            ...(!_.isEmpty(values) ? { include: values } : { skip }),
           },
           [rowDrillMode ? 'columns' : 'rows']: {
             drilldown: _.getOr([], 'drilldown', gridPage),
-            include: _.getOr([],'values', gridPage),
-          }
+            include: _.getOr([], 'values', gridPage),
+          },
         },
       },
     })
 
-    return {
-      // Initial page represents first query to get row/column values for this request
-      initial: makePageNode(requestedPage.values)(gridPages[0]),
-      // And then can we make additional queries for already expanded columns/rows
-      // but only for rows/columns returned by the initial page query
-      makePages: includeValues =>
-        _.map(makePageNode(includeValues), gridPages.slice(1)),
-    }
+  return {
+    // Initial page represents first query to get row/column values for this request
+    initial: makePageNode(requestedPage.values)(gridPages[0]),
+    // And then can we make additional queries for already expanded columns/rows
+    // but only for rows/columns returned by the initial page query
+    makePages: includeValues =>
+      _.map(makePageNode(includeValues), gridPages.slice(1)),
+  }
 }
 
 let buildQuery = async (node, schema, getStats) => {
-  let page = _.getOr({ columns: {}, rows: {} },'pagination.page' , node)
+  let page = _.getOr({ columns: {}, rows: {} }, 'pagination.page', node)
   let rowDrills = _.getOr([], 'rows.drilldown', page)
   let columnDrills = _.getOr([], 'columns.drilldown', page)
   // Don't consider deeper levels than +1 the current drilldown
@@ -261,18 +260,14 @@ let buildQuery = async (node, schema, getStats) => {
     statsAggs = _.merge(
       await buildNestedGroupQuery(statsAggs, columns, 'columns'),
       // Stamping total column metrics if not drilling columns
-      _.isEmpty(columnDrills)
-      && _.isEmpty(_.get('columns.skip', page))
+      _.isEmpty(columnDrills) && _.isEmpty(_.get('columns.skip', page))
         ? statsAggs
-        : {},
+        : {}
     )
   let query = _.merge(
     await buildNestedGroupQuery(statsAggs, rows, 'rows', node.sort),
     // Stamping total row metrics if not drilling rows
-    _.isEmpty(rowDrills)
-    && _.isEmpty(_.get('rows.skip', page))
-      ? statsAggs
-      : {}
+    _.isEmpty(rowDrills) && _.isEmpty(_.get('rows.skip', page)) ? statsAggs : {}
   )
 
   // TODO: refactor filter functions not to pass schema and getStats everytime
@@ -347,22 +342,22 @@ let ColTree = F.tree(_.get('columns'))
 
 let clearDrilldownCounts = (data, node) => {
   if (!data) return
-  let columnsDepth = _.getOr(0,'pagination.page.columns.drilldown.length', node)
-  let rowsDepth = _.getOr(0,'pagination.page.rows.drilldown.length', node)
+  let columnsDepth = _.getOr(
+    0,
+    'pagination.page.columns.drilldown.length',
+    node
+  )
+  let rowsDepth = _.getOr(0, 'pagination.page.rows.drilldown.length', node)
   // keeping the root counter only for empty drilldown
   // otherwise cleaning root level counter + intermediary levels counters
-  if (columnsDepth > 0)
-    columnsDepth++
-  if (rowsDepth > 0)
-    rowsDepth++
+  if (columnsDepth > 0) columnsDepth++
+  if (rowsDepth > 0) rowsDepth++
 
   Tree.walk((leaf, index, parents) => {
-    if (parents.length < rowsDepth)
-      leaf.count = undefined
+    if (parents.length < rowsDepth) leaf.count = undefined
 
     ColTree.walk((leaf, index, parents) => {
-      if (parents.length < columnsDepth)
-        leaf.count = undefined
+      if (parents.length < columnsDepth) leaf.count = undefined
     })(leaf)
   })(data)
 }
@@ -444,24 +439,18 @@ let pivot = {
 
     let pages = makePages(includeValues)
     let queries = await Promise.all(
-      _.map(nodePage =>
-        buildQuery(nodePage, schema, getStats(search))
-      )(pages)
+      _.map(nodePage => buildQuery(nodePage, schema, getStats(search)))(pages)
     )
 
     if (_.isEmpty(queries)) return initialPageResult
 
     let responses = await Promise.all(_.map(search, queries))
     let results = F.mapIndexed(
-      (response, i) =>
-        processResponse(response, pages[i]),
+      (response, i) => processResponse(response, pages[i]),
       responses
     )
 
-    return _.reduce(mergeResults)(
-      initialPageResult,
-      results
-    )
+    return _.reduce(mergeResults)(initialPageResult, results)
   },
 }
 module.exports = pivot
