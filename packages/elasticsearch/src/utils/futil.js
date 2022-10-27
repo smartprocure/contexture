@@ -91,20 +91,6 @@ let renameOn = (from, to, obj) => {
 let compactMapAsync = async (...args) =>
   _.compact(await Promise.all(F.mapIndexed(...args)))
 
-let maybeUpdateOn = _.curry((fn, key, data) =>
-  _.get(key, data) ? F.updateOn(key, fn, data) : data
-)
-
-// Recursively transforming multiple props with supplying produced transformation
-// Could be refactored to use evolve
-let deepMultiTransformOn = (props, transformWith) => {
-  let self = _.flow(
-    _.map(maybeUpdateOn(transformWith(x => self(x)))),
-    _.flow
-  )(props)
-  return self
-}
-
 module.exports = {
   maybeAppend,
   keysToObject,
@@ -121,6 +107,4 @@ module.exports = {
   mapStringParts,
   renameOn,
   compactMapAsync,
-  maybeUpdateOn,
-  deepMultiTransformOn,
 }
