@@ -179,7 +179,7 @@ let paginateExpandedGroups = node => {
   let gridPages = _.getOr([], rowDrillMode ? 'columns' : 'rows', pagination)
 
   let skip = _.flow(
-    _.filter(({drilldown}) => _.isEqual(drilldown, requestedPage.drilldown)),
+    _.filter(({ drilldown }) => _.isEqual(drilldown, requestedPage.drilldown)),
     _.flatMap('values')
   )(previousPages)
 
@@ -347,7 +347,11 @@ let ColTree = F.tree(_.get('columns'))
 let clearDrilldownCounts = (data, node) => {
   if (!data) return data
 
-  let columnsDepth = _.getOr(0,'pagination.page.columns.drilldown.length', node)
+  let columnsDepth = _.getOr(
+    0,
+    'pagination.page.columns.drilldown.length',
+    node
+  )
   let columnsPagination = !!_.get('pagination.page.columns.skip.length', node)
   // TODO maybe account for include length or differentiate root page
 
