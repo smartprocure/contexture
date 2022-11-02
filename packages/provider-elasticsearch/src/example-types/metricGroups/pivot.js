@@ -8,6 +8,9 @@ let { compactMapAsync } = require('../../utils/futil')
 
 let everyEmpty = _.every(_.isEmpty)
 
+let Tree = F.tree(_.get('rows'))
+let ColTree = F.tree(_.get('columns'))
+
 let lookupTypeProp = (def, prop, type) =>
   _.getOr(def, `${type}GroupStats.${prop}`, types)
 
@@ -20,42 +23,58 @@ let lookupTypeProp = (def, prop, type) =>
 let aggKeyForValue = ({ key, type, field }) =>
   key || F.compactJoin('-', ['pivotMetric', type, field])
 
-let aggsForValues = (node, schema) =>
-  _.flow(
-    _.keyBy(aggKeyForValue),
-    // This is a very interesting lint error - while key is not used in the function body, it is important.
-    // Omitting key here would include it in the props spread and then pass it along as part of the body of the ES aggregation.
-    // eslint-disable-next-line
-    _.mapValues(({ key, type, field, ...props }) => ({
-      [_.snakeCase(type)]: {
-        ...props,
-        ...(field && { field: getField(schema, field) }),
-      },
-    }))
-  )(node)
+let getSortField = ({ columnValues = [], valueProp, valueIndex } = {}) =>
+  F.dotJoin([
+    _.size(columnValues)
+      ? `sortFilter${_.isNil(valueIndex) ? '.doc_count' : '>metric'}`
+      : // If there are no columns, get the generated key for the value or default to _count
+      _.isNil(valueIndex)
+      ? '_count'
+      : 'metric',
+    valueProp,
+  ])
+
+let maybeWrapWithFilterAgg = ({
+  query,
+  drilldownFilters,
+  includeRowFilters,
+  includeColumnFilters,
+  skipFilters,
+  aggName,
+}) =>
+  everyEmpty([
+    drilldownFilters,
+    includeRowFilters,
+    includeColumnFilters,
+    skipFilters,
+  ])
+    ? query
+    : {
+        aggs: {
+          [aggName]: {
+            filter: _.merge(
+              and([
+                drilldownFilters,
+                or(includeRowFilters),
+                or(includeColumnFilters),
+              ]),
+              not(skipFilters)
+            ),
+            ...query,
+          },
+        },
+      }
 
 let getKey = x => x.keyAsString || x.key
 
 // Similar to Tree.lookup but path is a drilldown which uses keyAsString or key
-let resultsForDrilldown = (type, drilldown, results) => {
+let resultsForDrilldown = (groupType, drilldown, results) => {
   if (_.isEmpty(drilldown) || !results) return results
 
   let key = _.first(drilldown)
-  let groups = _.get(type, results)
+  let groups = _.get(groupType, results)
   let match = _.find(node => getKey(node) === key, groups)
-  return resultsForDrilldown(type, drilldown.slice(1), match)
-}
-
-let getResultValues = (node, results) => {
-  let pagination = node.pagination
-
-  if (!['rows', 'columns'].includes(pagination.type)) return []
-
-  let groupType = pagination.type
-  let drilldown = _.getOr([], ['page', groupType, 'drilldown'], pagination)
-  let drilldownResults = resultsForDrilldown(groupType, drilldown, results)
-
-  return _.map(getKey, _.get(groupType, drilldownResults))
+  return resultsForDrilldown(groupType, drilldown.slice(1), match)
 }
 
 let mergeResults = _.mergeWith((current, additional, prop) => {
@@ -68,169 +87,140 @@ let mergeResults = _.mergeWith((current, additional, prop) => {
   } else if (_.isArray(additional)) return additional
 })
 
-let maybeWrapWithFilterAgg = ({
-  query,
-  filters,
-  includeRowFilters,
-  includeColumnFilters,
-  skipFilters,
-  aggName,
-}) =>
-  everyEmpty([filters, includeRowFilters, includeColumnFilters, skipFilters])
-    ? query
-    : {
-        aggs: {
-          [aggName]: {
-            filter: _.merge(
-              and([filters, or(includeRowFilters), or(includeColumnFilters)]),
-              not(skipFilters)
-            ),
-            ...query,
-          },
-        },
-      }
+let createPivotScope = (node, schema, getStats) => {
+  /***
+   COMMON VARIABLES
+   ***/
 
-// Builds filters for drilldowns
-let drilldownFilters = async ({
-  drilldowns = [],
-  groups = [],
-  schema,
-  getStats,
-}) =>
-  // flatten in case some drilldowns represent multi-field aggregation values and produce multiple filters
-  _.flatten(
-    await compactMapAsync((group, i) => {
-      let filter = lookupTypeProp(_.stubFalse, 'drilldown', group.type)
-      // Drilldown can come from root or be inlined on the group definition
-      let drilldown = drilldowns[i] || group.drilldown
-      return drilldown && filter({ drilldown, ...group }, schema, getStats)
-    }, groups)
-  )
-
-// Builds filters for drilldowns
-let paginationFilters = async ({
-  drilldowns = [],
-  values = [],
-  groups = [],
-  schema,
-  getStats,
-}) => {
-  let group = groups[drilldowns.length]
-  if (!group || _.isEmpty(values)) return false
-  let filter = lookupTypeProp(_.stubFalse, 'drilldown', group.type)
-  return _.flatten(
-    await compactMapAsync(
-      value => filter({ drilldown: value, ...group }, schema, getStats),
-      values
-    )
-  )
-}
-
-let getSortAgg = async ({ node, sort, schema, getStats }) => {
-  if (!sort) return
-  let filters = await drilldownFilters({
-    drilldowns: sort.columnValues,
-    groups: node.columns,
-    schema,
-    getStats,
-  })
-  let valueNode = node.values[sort.valueIndex]
-  let metric = valueNode && {
-    aggs: {
-      metric: {
-        [valueNode.type]: { field: getField(schema, valueNode.field) },
-      },
-    },
-  }
-  // No columns means that we are sorting by a metric, but we still need to stamp it so we can sort by it since the original metric has dots in the name and can't be sorted
-  // TODO: consider replacing dots in metric agg names which come from fields
-  if (!_.size(filters)) return metric
-
-  return {
-    aggs: {
-      sortFilter: {
-        filter: { bool: { must: filters } },
-        ...metric,
-      },
-    },
-  }
-}
-let getSortField = ({ columnValues = [], valueProp, valueIndex } = {}) =>
-  F.dotJoin([
-    _.size(columnValues)
-      ? `sortFilter${_.isNil(valueIndex) ? '.doc_count' : '>metric'}`
-      : // If there are no columns, get the generated key for the value or default to _count
-      _.isNil(valueIndex)
-      ? '_count'
-      : 'metric',
-    valueProp,
-  ])
-
-let paginateExpandedGroups = node => {
   let pagination = node.pagination
-  let type = pagination.type
-  let rowDrillMode = type === 'rows'
+  let groupType = pagination.type
+  let rowDrillMode = groupType === 'rows'
+  let currentDrilldown = _.getOr([], 'drilldown', _.last(pagination[groupType]))
+
+  /***
+    MAKING PAGES
+  ***/
 
   let hasPages = !!_.get(rowDrillMode ? 'rows' : 'columns', pagination)
-  let pages = _.getOr([], rowDrillMode ? 'rows' : 'columns', pagination)
-  let requestedPage = _.last(pages) || { drilldown: [] }
-  let previousPages = _.initial(pages)
   let hasGridPages = !!_.get(rowDrillMode ? 'columns' : 'rows', pagination)
+  let pages = _.getOr([], rowDrillMode ? 'rows' : 'columns', pagination)
   let gridPages = _.getOr([], rowDrillMode ? 'columns' : 'rows', pagination)
 
+  let requestedPage = _.last(pages) || { drilldown: [] }
+  let previousPages = _.initial(pages)
+
   let skip = _.flow(
-    _.filter(({ drilldown }) => _.isEqual(drilldown, requestedPage.drilldown)),
+    _.filter(({ drilldown }) => _.isEqual(drilldown, currentDrilldown)),
     _.flatMap('values')
   )(previousPages)
 
-  // Restoring pages from expanded into pagination
-  // Merge this row/column drilldown with includes from already expanded columns/rows
-  let makePageNode = values => gridPage =>
-    _.merge(node, {
-      pagination: {
-        page: {
-          [rowDrillMode ? 'rows' : 'columns']: {
-            drilldown: hasPages && requestedPage.drilldown,
-            ...(!_.isEmpty(values) ? { include: values } : { skip }),
-          },
-          [rowDrillMode ? 'columns' : 'rows']: {
-            drilldown: hasGridPages && _.getOr([], 'drilldown', gridPage),
-            include: _.getOr([], 'values', gridPage),
-          },
+  // Merge current row/column drilldown with includes from already expanded columns/rows
+  let makePage = values => gridPage => ({
+    type: groupType,
+    [rowDrillMode ? 'rows' : 'columns']: {
+      drilldown: hasPages && currentDrilldown,
+      ...(!_.isEmpty(values) ? { include: values } : { skip }),
+    },
+    [rowDrillMode ? 'columns' : 'rows']: {
+      drilldown: hasGridPages && _.getOr([], 'drilldown', gridPage),
+      include: _.getOr([], 'values', gridPage),
+    },
+  })
+
+  let getInitialPage = () => makePage(requestedPage.values)(gridPages[0])
+
+  let getAdditionalPages = includeValues =>
+    _.map(makePage(includeValues), gridPages.slice(1))
+
+  /***
+   BUILDING QUERY
+   ***/
+
+  // Builds aggregation for pivot values
+  let getAggsForValues = values =>
+    _.flow(
+      _.keyBy(aggKeyForValue),
+      // This is a very interesting lint error - while key is not used in the function body, it is important.
+      // Omitting key here would include it in the props spread and then pass it along as part of the body of the ES aggregation.
+      // eslint-disable-next-line
+      _.mapValues(({ key, type, field, ...props }) => ({
+        [_.snakeCase(type)]: {
+          ...props,
+          ...(field && { field: getField(schema, field) }),
+        },
+      }))
+    )(values)
+
+  // Builds filters for drilldowns
+  let getDrilldownFilters = async ({ drilldowns = [], groups = [] }) =>
+    // flatten in case some drilldowns represent multi-field aggregation values and produce multiple filters
+    _.flatten(
+      await compactMapAsync((group, i) => {
+        let filter = lookupTypeProp(_.stubFalse, 'drilldown', group.type)
+        // Drilldown can come from root or be inlined on the group definition
+        let drilldown = drilldowns[i] || group.drilldown
+        return drilldown && filter({ drilldown, ...group }, schema, getStats)
+      }, groups)
+    )
+
+  // Builds filters for skip/include values
+  let getPaginationFilters = async ({
+    drilldowns = [],
+    values = [],
+    groups = [],
+  }) => {
+    let group = groups[drilldowns.length]
+    if (!group || _.isEmpty(values)) return false
+    let filter = lookupTypeProp(_.stubFalse, 'drilldown', group.type)
+    return _.flatten(
+      await compactMapAsync(
+        value => filter({ drilldown: value, ...group }, schema, getStats),
+        values
+      )
+    )
+  }
+
+  // Builds aggregation for sorting
+  let getSortAgg = async sort => {
+    if (!sort) return
+    let filters = await getDrilldownFilters({
+      drilldowns: sort.columnValues,
+      groups: node.columns,
+      schema,
+      getStats,
+    })
+    let valueNode = node.values[sort.valueIndex]
+    let metric = valueNode && {
+      aggs: {
+        metric: {
+          [valueNode.type]: { field: getField(schema, valueNode.field) },
         },
       },
-    })
+    }
+    // No columns means that we are sorting by a metric, but we still need to stamp it so we can sort by it since the original metric has dots in the name and can't be sorted
+    // TODO: consider replacing dots in metric agg names which come from fields
+    if (!_.size(filters)) return metric
 
-  return {
-    // Initial page represents first query to get row/column values for this request
-    initial: makePageNode(requestedPage.values)(gridPages[0]),
-    // And then can we make additional queries for already expanded columns/rows
-    // but only for rows/columns returned by the initial page query
-    makePages: includeValues =>
-      _.map(makePageNode(includeValues), gridPages.slice(1)),
+    return {
+      aggs: {
+        sortFilter: {
+          filter: { bool: { must: filters } },
+          ...metric,
+        },
+      },
+    }
   }
-}
 
-let buildQuery = async (node, schema, getStats) => {
-  let page = _.getOr({ columns: {}, rows: {} }, 'pagination.page', node)
-  let rowDrills = _.getOr([], 'rows.drilldown', page)
-  let columnDrills = _.getOr([], 'columns.drilldown', page)
-  // Don't consider deeper levels than +1 the current drilldown
-  // This allows avoiding expansion until ready
-  // Opt out with falsey drilldown
-  let rows = _.get('rows.drilldown', page)
-    ? _.take(_.size(page.rows.drilldown) + 1, node.rows)
-    : node.rows
-
-  let columns = _.get('columns.drilldown', page)
-    ? _.take(_.size(page.columns.drilldown) + 1, node.columns)
-    : node.columns
-
-  let statsAggs = { aggs: aggsForValues(node.values, schema) }
   // buildGroupQuery applied to a list of groups
-  let buildNestedGroupQuery = async (statsAggs, groups, groupingType, sort) => {
+  let buildNestedGroupQuery = async (
+    page,
+    statsAggs,
+    groups,
+    groupingType,
+    sort
+  ) => {
     // Generate filters from sort column values
-    let sortAgg = await getSortAgg({ node, sort, schema, getStats })
+    let sortAgg = await getSortAgg(sort)
     let sortField = getSortField(sort)
 
     return _.reduce(
@@ -258,130 +248,172 @@ let buildQuery = async (node, schema, getStats) => {
     )
   }
 
-  if (!_.isEmpty(columns))
-    statsAggs = _.merge(
-      await buildNestedGroupQuery(statsAggs, columns, 'columns'),
-      // Stamping total column metrics if not drilling columns
-      _.isEmpty(columnDrills) && _.isEmpty(_.get('columns.skip', page))
-        ? statsAggs
+  let buildQuery = async page => {
+    let rowDrills = _.getOr([], 'rows.drilldown', page)
+    let columnDrills = _.getOr([], 'columns.drilldown', page)
+    // Don't consider deeper levels than +1 the current drilldown
+    // This allows avoiding expansion until ready
+    // Opt out with falsey drilldown
+    let rows = _.get('rows.drilldown', page)
+      ? _.take(_.size(rowDrills) + 1, node.rows)
+      : node.rows
+
+    let columns = _.get('columns.drilldown', page)
+      ? _.take(_.size(columnDrills) + 1, node.columns)
+      : node.columns
+
+    let statsAggs = { aggs: getAggsForValues(node.values) }
+
+    if (!_.isEmpty(columns))
+      statsAggs = _.merge(
+        await buildNestedGroupQuery(page, statsAggs, columns, 'columns'),
+        // Stamping total column metrics if not drilling columns
+        _.isEmpty(columnDrills) && _.isEmpty(_.get('columns.skip', page))
+          ? statsAggs // TODO fix total column
+          : {}
+      )
+    let query = _.merge(
+      await buildNestedGroupQuery(page, statsAggs, rows, 'rows', node.sort),
+      // Stamping total row metrics if not drilling rows
+      _.isEmpty(rowDrills) && _.isEmpty(_.get('rows.skip', page))
+        ? statsAggs // TODO fix grand total row
         : {}
     )
-  let query = _.merge(
-    await buildNestedGroupQuery(statsAggs, rows, 'rows', node.sort),
-    // Stamping total row metrics if not drilling rows
-    _.isEmpty(rowDrills) && _.isEmpty(_.get('rows.skip', page)) ? statsAggs : {}
-  )
 
-  // TODO: refactor filter functions not to pass schema and getStats everytime
+    // Filtering data specified by the drilldown
+    let drilldownFilters = [
+      ...((await getDrilldownFilters({
+        drilldowns: rowDrills,
+        groups: rows,
+        schema,
+        getStats,
+      })) || []),
+      ...((await getDrilldownFilters({
+        drilldowns: columnDrills,
+        groups: columns,
+        schema,
+        getStats,
+      })) || []),
+    ]
 
-  // Filtering data specified by the drilldown
-  let filters = [
-    ...((await drilldownFilters({
+    // Narrowing query down to values specified in include
+    let includeRowFilters = await getPaginationFilters({
       drilldowns: rowDrills,
+      values: _.get('rows.include', page),
       groups: rows,
       schema,
       getStats,
-    })) || []),
-    ...((await drilldownFilters({
+    })
+    let includeColumnFilters = await getPaginationFilters({
       drilldowns: columnDrills,
+      values: _.get('columns.include', page),
       groups: columns,
       schema,
       getStats,
-    })) || []),
-  ]
+    })
 
-  // Narrowing query down to values specified in include
-  let includeRowFilters = await paginationFilters({
-    drilldowns: rowDrills,
-    values: _.get('rows.include', page),
-    groups: rows,
-    schema,
-    getStats,
-  })
-  let includeColumnFilters = await paginationFilters({
-    drilldowns: columnDrills,
-    values: _.get('columns.include', page),
-    groups: columns,
-    schema,
-    getStats,
-  })
+    // Skipping existing values when requesting the next page
+    let skipFilters = [
+      ...((await getPaginationFilters({
+        drilldowns: rowDrills,
+        values: _.get('rows.skip', page),
+        groups: rows,
+        schema,
+        getStats,
+      })) || []),
+      ...((await getPaginationFilters({
+        drilldowns: columnDrills,
+        values: _.get('columns.skip', page),
+        groups: columns,
+        schema,
+        getStats,
+      })) || []),
+    ]
 
-  // Skipping existing values when requesting the next page
-  let skipFilters = [
-    ...((await paginationFilters({
-      drilldowns: rowDrills,
-      values: _.get('rows.skip', page),
-      groups: rows,
-      schema,
-      getStats,
-    })) || []),
-    ...((await paginationFilters({
-      drilldowns: columnDrills,
-      values: _.get('columns.skip', page),
-      groups: columns,
-      schema,
-      getStats,
-    })) || []),
-  ]
+    // TODO apply the include/skip filters below the grand total level
+    // so the total values are not calculated on a subset of data
+    query = maybeWrapWithFilterAgg({
+      drilldownFilters,
+      includeRowFilters,
+      includeColumnFilters,
+      skipFilters,
+      aggName: 'pivotFilter',
+      query,
+    })
 
-  // TODO apply the include/skip filters below the grand total level
-  // so the total values are not calculated on a subset of data
-  query = maybeWrapWithFilterAgg({
-    filters,
-    includeRowFilters,
-    includeColumnFilters,
-    skipFilters,
-    aggName: 'pivotFilter',
-    query,
-  })
+    // Without this, ES7+ stops counting at 10k instead of returning the actual count
+    query.track_total_hits = true
 
-  // Without this, ES7+ stops counting at 10k instead of returning the actual count
-  query.track_total_hits = true
+    return query
+  }
 
-  return query
-}
+  /***
+   PROCESSING RESULTS
+   ***/
 
-let Tree = F.tree(_.get('rows'))
-let ColTree = F.tree(_.get('columns'))
+  let getResultValues = results => {
+    let pagination = node.pagination
 
-let clearDrilldownCounts = (data, node) => {
-  if (!data) return data
+    if (!['rows', 'columns'].includes(pagination.type)) return []
 
-  let columnsDepth = _.getOr(
-    0,
-    'pagination.page.columns.drilldown.length',
-    node
-  )
-  let columnsPagination = !!_.get('pagination.page.columns.skip.length', node)
-  // TODO maybe account for include length or differentiate root page
+    let drilldownResults = resultsForDrilldown(
+      groupType,
+      currentDrilldown,
+      results
+    )
 
-  let rowsDepth = _.getOr(0, 'pagination.page.rows.drilldown.length', node)
-  let rowsPagination = !!_.get('pagination.page.rows.skip.length', node)
+    return _.map(getKey, _.get(groupType, drilldownResults))
+  }
 
-  // keeping the root counter only for empty drilldown and no pagination
-  // otherwise cleaning root level counter + intermediary levels counters
-  if (columnsDepth > 0 || columnsPagination) columnsDepth++
-  if (rowsDepth > 0 || rowsPagination) rowsDepth++
+  let clearDrilldownCounts = (results, page) => {
+    if (!results) return results
 
-  Tree.walk((leaf, index, parents) => {
-    if (parents.length < rowsDepth) leaf.count = undefined
+    let columnsDepth = _.size(page.columns.drilldown)
+    let columnsPagination = !!_.size(page.columns.skip)
+    // TODO maybe account for include length or differentiate root page
 
-    ColTree.walk((leaf, index, parents) => {
-      if (parents.length < columnsDepth) leaf.count = undefined
-    })(leaf)
-  })(data)
-}
+    let rowsDepth = _.size(page.rows.drilldown)
+    let rowsPagination = !!_.size(page.rows.skip)
 
-let processResponse = (response, node = {}) => {
-  let input = F.getOrReturn('pivotFilter', response.aggregations)
-  // TODO SUPER HACKY TEMPORARY METHOD
-  let { results } = basicSimplifyTree({ results: input })
+    // keeping the root counter only for empty drilldown and no pagination
+    // otherwise cleaning root level counter + intermediary levels counters
+    if (columnsDepth > 0 || columnsPagination) columnsDepth++
+    if (rowsDepth > 0 || rowsPagination) rowsDepth++
 
-  if (!results.count) results.count = _.get('hits.total.value', response)
+    Tree.walk((leaf, index, parents) => {
+      if (parents.length < rowsDepth) leaf.count = undefined
 
-  clearDrilldownCounts(results, node)
+      ColTree.walk((leaf, index, parents) => {
+        if (parents.length < columnsDepth) leaf.count = undefined
+      })(leaf)
+    })(results)
+  }
 
-  return { results }
+  let processResponse = (response, page) => {
+    let input = F.getOrReturn('pivotFilter', response.aggregations)
+    // TODO SUPER HACKY TEMPORARY METHOD
+    let { results } = basicSimplifyTree({ results: input })
+
+    if (!results.count) results.count = _.get('hits.total.value', response)
+
+    clearDrilldownCounts(results, page)
+
+    return { results }
+  }
+
+  /***
+   RETURNING SCOPED FUNCTIONS
+   ***/
+
+  return {
+    getInitialPage,
+    getAdditionalPages,
+    getDrilldownFilters,
+    getPaginationFilters,
+    buildQuery,
+    getResultValues,
+    processResponse,
+  }
 }
 
 // Example Payload:
@@ -390,70 +422,61 @@ let processResponse = (response, node = {}) => {
 //   { rows: ['Hillsboro Beach', '2500-*'] }
 // ] -> (Reno AND 0-500 AND 2017) OR (Hillsboro AND 2500-*)
 let hasValue = ({ filters }) => !_.isEmpty(filters)
-let filter = async ({ filters, rows = [], columns = [] }, schema) => {
+let filter = async (node, schema) => {
   // This requires getting `search` passed in to filter
   // This is a change to contexture server, which is likely a breaking change moving all contexture type methods to named object params
   //    That will allow everything to get all props inclding `search`
+  let { filters, rows = [], columns = [] } = node
   let getStats = () => {
     throw 'Pivot filtering does not support running searches to build filters yet'
   }
-  return {
-    bool: {
-      minimum_should_match: 1,
-      should: await compactMapAsync(
-        async filter => ({
-          bool: {
-            must: [
-              ...(await drilldownFilters({
-                drilldowns: filter.rows,
-                groups: rows,
-                schema,
-                getStats,
-              })),
-              ...(await drilldownFilters({
-                drilldowns: filter.columns,
-                groups: columns,
-                schema,
-                getStats,
-              })),
-            ],
-          },
-        }),
-        filters
-      ),
-    },
-  }
+  let { getDrilldownFilters } = createPivotScope(node, schema, getStats)
+
+  return or(
+    await compactMapAsync(
+      async filter =>
+        and([
+          await getDrilldownFilters({
+            drilldowns: filter.rows,
+            groups: rows,
+          }),
+          await getDrilldownFilters({
+            drilldowns: filter.columns,
+            groups: columns,
+          }),
+        ]),
+      filters
+    )
+  )
 }
 
 let pivot = {
   hasValue,
   filter,
-  aggsForValues,
-  buildQuery,
-  paginateExpandedGroups,
-  processResponse,
   validContext: node => node.rows.length && node.values.length,
   async result(node, search, schema) {
+    let {
+      getInitialPage,
+      getAdditionalPages,
+      buildQuery,
+      getResultValues,
+      processResponse,
+    } = createPivotScope(node, schema, getStats(search))
+
     // Initial request gets new row/column values for this request
     // Then using those values makePages will produce additional queries
     // for already expanded columns/rows
-    // TODO refactor into 2 functions
-    let { initial, makePages } = paginateExpandedGroups(node)
-
+    let initialPage = getInitialPage()
     let initialPageResult = processResponse(
-      await search(await buildQuery(initial, schema, getStats(search))),
-      initial
+      await search(await buildQuery(initialPage)),
+      initialPage
     )
+    let includeValues = getResultValues(initialPageResult.results)
+    let pages = getAdditionalPages(includeValues)
 
-    let includeValues = getResultValues(initial, initialPageResult.results)
+    if (_.isEmpty(pages)) return initialPageResult
 
-    let pages = makePages(includeValues)
-    let queries = await Promise.all(
-      _.map(nodePage => buildQuery(nodePage, schema, getStats(search)))(pages)
-    )
-
-    if (_.isEmpty(queries)) return initialPageResult
-
+    let queries = await Promise.all(_.map(buildQuery, pages))
     let responses = await Promise.all(_.map(search, queries))
     let results = F.mapIndexed(
       (response, i) => processResponse(response, pages[i]),
