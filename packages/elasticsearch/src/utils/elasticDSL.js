@@ -98,7 +98,10 @@ let basicSimplifyTree = _.flow(
 
 let flatCompact = _.flow(_.flattenDeep, _.compact)
 let unlessEmpty = onNotEmpty =>
-  _.flow(F.when(_.isArray, flatCompact), F.ifElse(_.negate(_.isEmpty), onNotEmpty, false))
+  _.flow(
+    F.when(_.isArray, flatCompact),
+    F.ifElse(_.negate(_.isEmpty), onNotEmpty, false)
+  )
 
 module.exports = {
   statsAggs,

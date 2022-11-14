@@ -102,13 +102,14 @@ let createPivotScope = (node, schema, getStats) => {
   if (rootColumnsExpansion) {
     // to use rows expansion for the root request
     if (!rootColumnsExpansion.loaded) rootColumnsExpansion.loaded = []
-  } else
-    // adding initial root level columns expansion
+  }
+  // adding initial root level columns expansion
+  else
     expansions.unshift({
-    type: 'columns',
-    drilldown: [],
-    loaded: [], // to use rows expansion for the root request
-  })
+      type: 'columns',
+      drilldown: [],
+      loaded: [], // to use rows expansion for the root request
+    })
 
   // adding initial root level rows expansion
   if (!_.find({ type: 'rows' }, expansions))
@@ -121,8 +122,7 @@ let createPivotScope = (node, schema, getStats) => {
   /***
    MAKING REQUESTS
    ***/
-  let findNotLoadedExpansion = () =>
-    _.find(({ loaded }) => !loaded, expansions)
+  let findNotLoadedExpansion = () => _.find(({ loaded }) => !loaded, expansions)
 
   let previouslyLoadedKeys = expansion =>
     _.flow(
@@ -317,7 +317,6 @@ let createPivotScope = (node, schema, getStats) => {
       groups: rows,
     })
 
-
     // Narrowing query down to values specified in include
     let includeColumnFilters = await getRequestFilters({
       drilldown: columnDrills,
@@ -345,7 +344,12 @@ let createPivotScope = (node, schema, getStats) => {
     let statsAggs = { aggs: getAggsForValues(node.values) }
 
     if (!_.isEmpty(columns)) {
-      let columnsStatsAggs = await buildNestedGroupQuery(request, statsAggs, columns, 'columns')
+      let columnsStatsAggs = await buildNestedGroupQuery(
+        request,
+        statsAggs,
+        columns,
+        'columns'
+      )
 
       if (request.columns.totals) {
         // adding total column statsAggs above the column filters
@@ -356,7 +360,7 @@ let createPivotScope = (node, schema, getStats) => {
             includeColumnFilters,
             skipFilters: skipColumnFilters,
             query: columnsStatsAggs,
-          }),
+          })
         )
         // disabling the filters as we already used them
         drilldownColumnFilters = includeColumnFilters = skipColumnFilters = false
@@ -365,7 +369,13 @@ let createPivotScope = (node, schema, getStats) => {
       }
     }
 
-    let rowsStatsAggs = await buildNestedGroupQuery(request, statsAggs, rows, 'rows', node.sort)
+    let rowsStatsAggs = await buildNestedGroupQuery(
+      request,
+      statsAggs,
+      rows,
+      'rows',
+      node.sort
+    )
     let query
 
     if (request.rows.totals) {
@@ -377,7 +387,7 @@ let createPivotScope = (node, schema, getStats) => {
           includeRowFilters,
           skipFilters: skipRowFilters,
           query: rowsStatsAggs,
-        }),
+        })
       )
       // disabling the filters as we already used them
       drilldownRowFilters = includeRowFilters = skipRowFilters = false
@@ -423,7 +433,8 @@ let createPivotScope = (node, schema, getStats) => {
 
     // keeping the root counter only for request with totals
     // otherwise cleaning root level counter + counters above drilldown
-    let columnsDepth = _.size(request.columns.drilldown) + request.columns.totals ? 0 : 1
+    let columnsDepth =
+      _.size(request.columns.drilldown) + request.columns.totals ? 0 : 1
     let rowsDepth = _.size(request.rows.drilldown) + request.rows.totals ? 0 : 1
 
     // TODO fix total column on total row when drilling columns
@@ -522,14 +533,13 @@ let pivot = {
 
     // Looping through expansions without loaded property
     while ((expansion = findNotLoadedExpansion())) {
-
       // Initial request gets new row/column values for this request
       // Then using those values makeRequests will produce additional queries
       // for already expanded columns/rows
       let initialRequest = getInitialRequest(expansion)
       let initialResult = processResponse(
         initialRequest,
-        await search(await buildQuery(initialRequest)),
+        await search(await buildQuery(initialRequest))
       )
 
       let resultKeys = getResultValues(expansion, initialResult.results)
@@ -540,11 +550,14 @@ let pivot = {
       if (initialRequest.columns.totals && initialRequest.rows.totals) {
         let gridExpansion = _.first(getGridExpansions(expansion))
         if (!gridExpansion.loaded) {
-          let gridResultKeys = getResultValues(gridExpansion, initialResult.results)
+          let gridResultKeys = getResultValues(
+            gridExpansion,
+            initialResult.results
+          )
           addLoadedKeys(gridExpansion, gridResultKeys)
         }
       }
-      
+
       results = mergeResults(results, initialResult)
 
       if (_.isEmpty(additionalRequests)) continue
