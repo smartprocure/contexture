@@ -204,7 +204,11 @@ export default {
 
     while ((expansion = nextEmptyExpansion())) {
       // adding values to loaded expansion
-      expansion.loaded = getResultValues(expansion, node, response.context.results)
+      expansion.loaded = getResultValues(
+        expansion,
+        node,
+        response.context.results
+      )
     }
 
     let context = mergeResults(snapshot(node.context), response.context)
