@@ -14,15 +14,28 @@ let resultsForDrilldown = (type, drilldown, results) => {
   return resultsForDrilldown(type, drilldown.slice(1), match)
 }
 
-let getResultValues = (groupType, node, results) => {
-  let pagination = node.pagination
-  let page = _.last(pagination[groupType])
-  let drilldown = _.getOr([], 'drilldown', page)
-  let drilldownResults = resultsForDrilldown(groupType, drilldown, results)
-  return _.map(getKey, _.get(groupType, drilldownResults))
-}
+let previouslyLoadedKeys = (expansion, expansions) =>
+  _.flow(
+    _.filter(
+      ({ type, drilldown, loaded }) =>
+        type === expansion.type &&
+        _.isEqual(drilldown, expansion.drilldown) &&
+        loaded
+    ),
+    _.flatMap('loaded')
+  )(expansions)
 
-let someNotEmpty = _.some(_.negate(_.isEmpty))
+let getResultValues = (expansion, node, results) => {
+  let groupType = expansion.type
+  let expansions = node.expansions
+  let drilldown = _.getOr([], 'drilldown', expansion)
+  let drilldownResults = resultsForDrilldown(groupType, drilldown, results)
+  let loadedKeys = _.map(getKey, _.get(groupType, drilldownResults))
+  return _.flow(
+    _.without(previouslyLoadedKeys(expansion, expansions)),
+    _.take(_.getOr(Infinity, [groupType, drilldown.length, 'size'], node))
+  )(loadedKeys)
+}
 
 let mergeResults = _.mergeWith((current, additional, prop) => {
   if (prop === 'columns' || prop === 'rows') {
@@ -34,34 +47,19 @@ let mergeResults = _.mergeWith((current, additional, prop) => {
   } else if (_.isArray(additional)) return additional
 })
 
-// Resetting the pagination when the pivot node is changed
+// Resetting the expansions when the pivot node is changed
 // allows to return expected root results instead of merging result
 // EX: changing the columns or rows config was not returning the new results
-let resetPagination = (extend, node, previous) => {
-  // If drilldown mode is enabled for columns or rows
-  let prevColumns = _.get('pagination.columns', previous)
-  let prevRows = _.get('pagination.rows', previous)
-
+let resetExpansions = (extend, node) => {
   extend(node, {
-    pagination: {
-      type: 'rows',
-      columns: prevColumns && [],
-      rows: prevRows && [],
-    },
+    expansions: [],
   })
 }
 
-// Resetting the row pagination when the sorting is changed
+// Resetting the row expansions when the sorting is changed
 let resetExpandedRows = (extend, node) => {
-  let columns = _.get('pagination.columns', node)
-  let rows = _.get('pagination.rows', node)
-
   extend(node, {
-    pagination: {
-      type: 'rows',
-      columns,
-      rows: rows && [],
-    },
+    expansions: _.filter({ type: 'columns' }, node.expansions),
   })
 }
 
@@ -69,27 +67,37 @@ let expand = (tree, path, type, drilldown) => {
   path = toJS(path)
   drilldown = toJS(drilldown)
   let node = toJS(tree.getNode(path))
-  let pagination = node.pagination
+  let expansions = node.expansions
   let results = node.context.results
 
-  // adding values to initial root pages
-  if (_.isArray(pagination.columns) && _.isEmpty(pagination.columns))
-    pagination.columns.push({
+  // adding values for initial root level expansions
+  if (!_.find({ type: 'columns' }, expansions)) {
+    let columnsExpansion = {
+      type: 'columns',
       drilldown: [],
-      values: getResultValues('columns', node, results),
-    })
-  if (_.isArray(pagination.rows) && _.isEmpty(pagination.rows))
-    pagination.rows.push({
+    }
+    columnsExpansion.loaded = getResultValues(columnsExpansion, node, results)
+    expansions.push(columnsExpansion)
+  }
+  // adding values for initial root level expansions
+  if (!_.find({ type: 'rows' }, expansions)) {
+    let rowsExpansion = {
+      type: 'rows',
       drilldown: [],
-      values: getResultValues('rows', node, results),
-    })
+    }
+    rowsExpansion.loaded = getResultValues(rowsExpansion, node, results)
+    expansions.push(rowsExpansion)
+  }
 
   tree.mutate(path, {
-    pagination: {
-      ...pagination,
-      type,
-      [type]: _.concat(pagination[type], { drilldown }),
-    },
+    expansions: [
+      ...expansions,
+      {
+        type,
+        drilldown,
+        loaded: false,
+      },
+    ],
   })
 }
 let collapse = (tree, path, type, drilldown) => {
@@ -99,13 +107,16 @@ let collapse = (tree, path, type, drilldown) => {
   let results = toJS(_.get('context.results', node))
   let drilldownResults = resultsForDrilldown(type, drilldown, results)
 
-  // removing pages under this drilldown level
-  node.pagination[type] = _.filter(
-    (
-      page // page.drilldown is not a child of drilldown
-    ) =>
-      !_.isEqual(_.take(drilldown.length, page.drilldown), _.toArray(drilldown))
-  )(node.pagination[type])
+  // removing expansions under this drilldown level
+  node.expansions = _.filter(
+    expansion =>
+      expansion.type !== type ||
+      !_.isEqual(
+        // expantion.drilldown is not a child of drilldown
+        _.take(drilldown.length, expansion.drilldown),
+        _.toArray(drilldown)
+      )
+  )(node.expansions)
 
   // removing collapsed rows or columns from results
   drilldownResults[type] = undefined
@@ -126,7 +137,7 @@ export default {
     columns: 'self',
     rows: 'self',
     values: 'self',
-    pagination: 'self',
+    expansions: 'self',
     filters: 'others',
     sort: 'self',
   },
@@ -136,24 +147,27 @@ export default {
     values: [],
     filters: [],
     sort: {},
-    pagination: {
-      type: 'rows', // or columns
-      columns: [], // false to request all nested levels
-      rows: [],
+    expansions: [
       /*
-      rows: [
-        {
-          drilldown: [],
-          values: [ 'a', 'b', 'c' ]
-        },
-        {
-          drilldown: [],
-          // empty to load next page
-          // will skip [ 'a', 'b', 'c' ] automatically
-        },
-      ],
-      */
-    },
+     {
+        type: 'columns',
+        drilldown: [],
+        loaded: [ 'x', 'y', 'z' ],
+      },
+     {
+        type: 'rows',
+        drilldown: [],
+        loaded: [ 'a', 'b', 'c' ],
+      },
+      {
+        type: 'rows',
+        drilldown: [],
+        loaded: false,
+        // falsy loaded to request more results
+        // will skip [ 'a', 'b', 'c' ] automatically
+      },
+     */
+    ],
     showCounts: false,
     context: {
       results: {},
@@ -164,34 +178,34 @@ export default {
   onDispatch(event, extend) {
     let { type, node, previous, value } = event
 
-    if (type !== 'mutate' || _.has('pagination.type', value)) return
+    if (type !== 'mutate') return
 
     // if sorting is changed we are preserving expanded columns
     if (_.has('sort', value)) resetExpandedRows(extend, node)
-    // if node configuration is changed resetting pages
-    else resetPagination(extend, node, previous)
+
+    if (_.has('expansions', value)) return
+
+    // if anything else about node configuration is changed resetting pages
+
+    resetExpansions(extend, node, previous)
   },
-  // Resetting the pagination when the tree is changed
+  // Resetting the expansions when the tree is changed
   // allows to return expected root results instead of nested drilldown
   // EX: criteria filters didn't work properly when drilldown was applied
   onUpdateByOthers(node, extend) {
-    resetPagination(extend, node, node)
+    resetExpansions(extend, node, node)
   },
-  shouldMergeResponse: node =>
-    // checking for presence of drilldown, skip, expanded in pagination
-    ['rows', 'columns'].includes(node.pagination.type) &&
-    someNotEmpty([node.pagination.columns, node.pagination.rows]),
+  shouldMergeResponse: node => !_.isEmpty(node.expansions),
   mergeResponse(node, response, extend, snapshot) {
-    let type = _.get('pagination.type', node)
-    let page = _.flow(_.get(`pagination.${type}`), _.last)(node)
+    let nextEmptyExpansion = () =>
+      _.find(({ loaded }) => !loaded, node.expansions)
 
-    if (!page) {
-      page = { drilldown: [] }
-      _.set(`pagination.${type}`, [page], node)
+    let expansion
+
+    while ((expansion = nextEmptyExpansion())) {
+      // adding values to loaded expansion
+      expansion.loaded = getResultValues(expansion, node, response.context.results)
     }
-
-    // adding values to loaded page
-    page.values = getResultValues(type, node, response.context.results)
 
     let context = mergeResults(snapshot(node.context), response.context)
 
