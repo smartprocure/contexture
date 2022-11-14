@@ -55,6 +55,8 @@ let basicSimplifyTree = _.flow(
     _.flow(
       // flatten out buckets
       _.replace(/\.buckets\./g, '.'),
+      // Needs to unfold the pivot filters
+      _.replace(/(pivotFilter)\./g, ''),
       // Needs to handle custom traversals, e.g. value filter
       // TODO: this isn't scalable nor type specific!!
       _.replace(/(valueFilter)\./g, ''),
@@ -94,9 +96,9 @@ let basicSimplifyTree = _.flow(
   }
 )
 
-let flatCompact = _.flow(_.flatten, _.compact)
-let unlessEmpty = onFalse =>
-  _.flow(F.when(_.isArray, flatCompact), F.ifElse(_.isEmpty, false, onFalse))
+let flatCompact = _.flow(_.flattenDeep, _.compact)
+let unlessEmpty = onNotEmpty =>
+  _.flow(F.when(_.isArray, flatCompact), F.ifElse(_.negate(_.isEmpty), onNotEmpty, false))
 
 module.exports = {
   statsAggs,
