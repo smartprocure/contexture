@@ -181,7 +181,7 @@ export default {
     if (type !== 'mutate') return
 
     // if sorting is changed we are preserving expanded columns
-    if (_.has('sort', value)) resetExpandedRows(extend, node)
+    if (_.has('sort', value)) return resetExpandedRows(extend, node)
 
     if (_.has('expansions', value)) return
 
