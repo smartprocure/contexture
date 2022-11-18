@@ -1,10 +1,7 @@
 let _ = require('lodash/fp')
 let {
   filter,
-  buildQuery,
-  paginateExpandedGroups,
-  aggsForValues,
-  processResponse,
+  createPivotScope,
 } = require('../../../src/example-types/metricGroups/pivot')
 let { testSchema, testSchemas } = require('../testUtils')
 let pivotResponse = require('./pivotData/pivotResponse')
@@ -13,33 +10,76 @@ let columnResponse = require('./pivotData/columnResponse')
 let columnResult = require('./pivotData/columnResult')
 let stringify = require('json-stable-stringify')
 
+let pivotTestNode = node => ({
+  key: 'test',
+  type: 'pivot',
+  values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+  rows: [
+    { type: 'fieldValues', field: 'Organization.State' },
+    { type: 'fieldValues', field: 'Organization.NameState' },
+  ],
+  columns: [{ type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' }],
+  extensions: [],
+  ...node,
+})
+
+let getStats = () => {}
+
+let rowsExpansion = {
+  type: 'rows',
+  drilldown: ['New York'],
+  loaded: false,
+}
+
+let rootPivotRequest = {
+  type: 'rows',
+  columns: {
+    drilldown: [],
+    totals: true,
+  },
+  rows: {
+    drilldown: [],
+    totals: true,
+  },
+}
+
 // pass aggsForValues in each stage
 describe('pivot', () => {
   it('aggsForValues', () => {
+    let { getAggsForValues } = createPivotScope(
+      pivotTestNode(),
+      testSchema('LineItem.TotalPrice'),
+      getStats
+    )
     let values = [
       { type: 'min', field: 'LineItem.TotalPrice' },
       { type: 'max', field: 'LineItem.TotalPrice' },
       { type: 'avg', field: 'LineItem.TotalPrice' },
       { type: 'sum', field: 'LineItem.TotalPrice' },
     ]
-    expect(aggsForValues(values)).toEqual({
+    expect(getAggsForValues(values)).toEqual({
       'pivotMetric-min-LineItem.TotalPrice': {
-        min: { field: 'LineItem.TotalPrice' },
+        min: { field: 'LineItem.TotalPrice.untouched' },
       },
       'pivotMetric-max-LineItem.TotalPrice': {
-        max: { field: 'LineItem.TotalPrice' },
+        max: { field: 'LineItem.TotalPrice.untouched' },
       },
       'pivotMetric-avg-LineItem.TotalPrice': {
-        avg: { field: 'LineItem.TotalPrice' },
+        avg: { field: 'LineItem.TotalPrice.untouched' },
       },
       'pivotMetric-sum-LineItem.TotalPrice': {
-        sum: { field: 'LineItem.TotalPrice' },
+        sum: { field: 'LineItem.TotalPrice.untouched' },
       },
     })
   })
   it('aggsForValues with not analyzed field form schemas', () => {
     let values = [{ type: 'cardinality', field: 'Vendor.Name' }]
-    expect(aggsForValues(values, testSchema('Vendor.Name'))).toEqual({
+    let { getAggsForValues } = createPivotScope(
+      pivotTestNode(),
+      testSchema('Vendor.Name'),
+      getStats
+    )
+    expect(getAggsForValues(values)).toEqual({
       'pivotMetric-cardinality-Vendor.Name': {
         cardinality: { field: 'Vendor.Name.untouched' },
       },
@@ -49,66 +89,39 @@ describe('pivot', () => {
     // ES -> PVT
     // buckets -> groups (rows/columns)
     // metrics -> values
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [
-        // labels are `${_.startCase(type)} of ${schemaLabel(field)}`
-        // key - defaults to `${type}-${field}`
-        //    unless type has a special override? e.g. if doesnt take field, like top_hits
-        { type: 'min', field: 'LineItem.TotalPrice' },
-        { type: 'max', field: 'LineItem.TotalPrice' },
-        { type: 'avg', field: 'LineItem.TotalPrice' },
-        { type: 'sum', field: 'LineItem.TotalPrice' },
-        {
-          type: 'percentiles',
-          field: 'LineItem.TotalPrice',
-          percents: [20, 50],
-        },
-        { type: 'cardinality', field: 'Vendor.Name' },
-        { type: 'topHits' },
-      ],
-      rows: [
-        { type: 'fieldValues', field: 'Organization.NameState' },
-        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
-      ],
-    }
+    let { buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [
+          // labels are `${_.startCase(type)} of ${schemaLabel(field)}`
+          // key - defaults to `${type}-${field}`
+          //    unless type has a special override? e.g. if doesnt take field, like top_hits
+          { type: 'min', field: 'LineItem.TotalPrice' },
+          { type: 'max', field: 'LineItem.TotalPrice' },
+          { type: 'avg', field: 'LineItem.TotalPrice' },
+          { type: 'sum', field: 'LineItem.TotalPrice' },
+          {
+            type: 'percentiles',
+            field: 'LineItem.TotalPrice',
+            percents: [20, 50],
+          },
+          { type: 'cardinality', field: 'Vendor.Name' },
+          { type: 'topHits' },
+        ],
+        rows: [
+          { type: 'fieldValues', field: 'Organization.NameState' },
+          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
+        ],
+        columns: [],
+      }),
+      testSchemas(['Organization.NameState', 'Vendor.Name']),
+      getStats
+    )
+
     let expected = {
       aggs: {
         rows: {
           terms: { field: 'Organization.NameState.untouched', size: 10 },
           aggs: {
-            rows: {
-              date_histogram: {
-                field: 'PO.IssuedDate',
-                interval: 'month',
-                min_doc_count: 0,
-              },
-              aggs: {
-                'pivotMetric-min-LineItem.TotalPrice': {
-                  min: { field: 'LineItem.TotalPrice' },
-                },
-                'pivotMetric-max-LineItem.TotalPrice': {
-                  max: { field: 'LineItem.TotalPrice' },
-                },
-                'pivotMetric-avg-LineItem.TotalPrice': {
-                  avg: { field: 'LineItem.TotalPrice' },
-                },
-                'pivotMetric-sum-LineItem.TotalPrice': {
-                  sum: { field: 'LineItem.TotalPrice' },
-                },
-                'pivotMetric-percentiles-LineItem.TotalPrice': {
-                  percentiles: {
-                    percents: [20, 50],
-                    field: 'LineItem.TotalPrice',
-                  },
-                },
-                'pivotMetric-cardinality-Vendor.Name': {
-                  cardinality: { field: 'Vendor.Name.untouched' },
-                },
-                'pivotMetric-topHits': { top_hits: {} },
-              },
-            },
             'pivotMetric-min-LineItem.TotalPrice': {
               min: { field: 'LineItem.TotalPrice' },
             },
@@ -158,26 +171,26 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
-    let result = await buildQuery(
-      input,
-      testSchemas(['Organization.NameState', 'Vendor.Name']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+    let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery for fieldValuePartition', async () => {
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      rows: [
-        {
-          type: 'fieldValuePartition',
-          field: 'Vendor.City',
-          matchValue: 'Washington',
-        },
-      ],
-    }
+    let { buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+        rows: [
+          {
+            type: 'fieldValuePartition',
+            field: 'Vendor.City',
+            matchValue: 'Washington',
+          },
+        ],
+        columns: [],
+      }),
+      testSchemas(['Vendor.City']),
+      getStats
+    )
+
     let expected = {
       track_total_hits: true,
       aggs: {
@@ -199,26 +212,26 @@ describe('pivot', () => {
         },
       },
     }
-    let result = await buildQuery(
-      input,
-      testSchemas(['Vendor.City']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+    let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery for fieldValues', async () => {
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      rows: [
-        {
-          type: 'fieldValues',
-          field: 'Organization.Name',
-          filter: 'city',
-        },
-      ],
-    }
+    let { buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+        rows: [
+          {
+            type: 'fieldValues',
+            field: 'Organization.Name',
+            filter: 'city',
+          },
+        ],
+        columns: [],
+      }),
+      testSchemas(['Vendor.City']),
+      getStats
+    )
+
     let expected = {
       track_total_hits: true,
       aggs: {
@@ -253,102 +266,66 @@ describe('pivot', () => {
         },
       },
     }
-    let result = await buildQuery(
-      input,
-      testSchemas(['Vendor.City']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+    let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery for fieldValues with drilldown', async () => {
     // TODO: add tests for dateInterval, numberInterval, fieldValuePartition
     // TODO: test keyForRow (e.g. month for date interval)
-    let inputTopLevel = {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      pagination: {
-        type: 'rows',
-        page: {
-          rows: {
-            drilldown: [],
+    let { buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+        columns: [],
+        rows: [
+          {
+            type: 'fieldValues',
+            field: 'Organization.Name',
+            drilldown: 'Reno',
           },
-        },
-      },
-      rows: [
-        {
-          type: 'fieldValues',
-          field: 'Organization.Name',
-          drilldown: 'Reno',
-        },
-        {
-          type: 'numberRanges',
-          field: 'LineItem.TotalPrice',
-          ranges: [
-            { from: '0', to: '500' },
-            { from: '500', to: '10000' },
-          ],
-          drilldown: '0.0-500.0',
-        },
-      ],
-    }
-    let inputDrilldownLevel = {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      pagination: {
-        type: 'rows',
-        page: {
-          rows: {
-            drilldown: ['Reno', '0.0-500.0'],
+          {
+            type: 'numberRanges',
+            field: 'LineItem.TotalPrice',
+            ranges: [
+              { from: '0', to: '500' },
+              { from: '500', to: '10000' },
+            ],
+            drilldown: '0.0-500.0',
           },
-        },
-      },
-      rows: [
-        {
-          type: 'fieldValues',
-          field: 'Organization.Name',
-        },
-        {
-          type: 'numberRanges',
-          field: 'LineItem.TotalPrice',
-          ranges: [
-            { from: '0', to: '500' },
-            { from: '500', to: '10000' },
-          ],
-        },
-      ],
-    }
-    let inputMultiTermDrilldownLevel = {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      pagination: {
-        type: 'rows',
-        page: {
-          rows: {
-            drilldown: ['Reno|NV', '0.0-500.0'],
+        ],
+      }),
+      testSchemas(['Organization.Name', 'Organization.State']),
+      getStats
+    )
+
+    let { buildQuery: buildQueryMultiTerm } = createPivotScope(
+      pivotTestNode({
+        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+        columns: [],
+        rows: [
+          {
+            type: 'fieldValues',
+            field: 'Organization.Name',
+            additionalFields: ['Organization.State'],
           },
-        },
-      },
-      rows: [
-        {
-          type: 'fieldValues',
-          field: 'Organization.Name',
-          additionalFields: ['Organization.State'],
-        },
-        {
-          type: 'numberRanges',
-          field: 'LineItem.TotalPrice',
-          ranges: [
-            { from: '0', to: '500' },
-            { from: '500', to: '10000' },
-          ],
-        },
-      ],
-    }
+          {
+            type: 'numberRanges',
+            field: 'LineItem.TotalPrice',
+            ranges: [
+              { from: '0', to: '500' },
+              { from: '500', to: '10000' },
+            ],
+          },
+        ],
+      }),
+      testSchemas(['Organization.Name', 'Organization.State']),
+      getStats
+    )
+
     let expectedTopLevel = {
       aggs: {
+        'pivotMetric-sum-LineItem.TotalPrice': {
+          sum: { field: 'LineItem.TotalPrice' },
+        },
         pivotFilter: {
           filter: {
             bool: {
@@ -363,9 +340,6 @@ describe('pivot', () => {
                   sum: { field: 'LineItem.TotalPrice' },
                 },
               },
-            },
-            'pivotMetric-sum-LineItem.TotalPrice': {
-              sum: { field: 'LineItem.TotalPrice' },
             },
           },
         },
@@ -473,53 +447,60 @@ describe('pivot', () => {
         },
       },
     }
-    let resultTopLevel = await buildQuery(
-      inputTopLevel,
-      testSchemas(['Organization.Name']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+    let resultTopLevel = await buildQuery({
+      type: 'rows',
+      rows: {
+        drilldown: [],
+        totals: true,
+      },
+      columns: {},
+    })
     expect(resultTopLevel).toEqual(expectedTopLevel)
-    let resultDrilldownLevel = await buildQuery(
-      inputDrilldownLevel,
-      testSchemas(['Organization.Name']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+    let resultDrilldownLevel = await buildQuery({
+      type: 'rows',
+      rows: {
+        drilldown: ['Reno', '0.0-500.0'],
+      },
+      columns: {},
+    })
     expect(resultDrilldownLevel).toEqual(expectedDrilldown)
-    let resultMultiTermDrilldownLevel = await buildQuery(
-      inputMultiTermDrilldownLevel,
-      testSchemas(['Organization.Name', 'Organization.State']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+
+    let resultMultiTermDrilldownLevel = await buildQueryMultiTerm({
+      type: 'rows',
+      rows: {
+        drilldown: ['Reno|NV', '0.0-500.0'],
+      },
+      columns: {},
+    })
     expect(resultMultiTermDrilldownLevel).toEqual(expectedMultiTermDrilldown)
   })
   it('should buildQuery for fieldValues with drilldown and limited depth', async () => {
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      pagination: {
-        type: 'rows',
-        page: {
-          rows: {
-            drilldown: [],
+    let { buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+        columns: [],
+        rows: [
+          {
+            type: 'fieldValues',
+            field: 'Organization.Name',
           },
-        },
-      },
-      rows: [
-        {
-          type: 'fieldValues',
-          field: 'Organization.Name',
-        },
-        {
-          type: 'numberRanges',
-          field: 'LineItem.TotalPrice',
-          ranges: [
-            { from: '0', to: '500' },
-            { from: '500', to: '10000' },
-          ],
-        },
-      ],
-    }
+          {
+            type: 'numberRanges',
+            field: 'LineItem.TotalPrice',
+            ranges: [
+              { from: '0', to: '500' },
+              { from: '500', to: '10000' },
+            ],
+          },
+          {
+            type: 'fieldValues',
+            field: 'Organization.Type',
+          },
+        ],
+      }),
+      testSchemas(['Vendor.City']),
+      getStats
+    )
     let expected = {
       track_total_hits: true,
       aggs: {
@@ -536,45 +517,43 @@ describe('pivot', () => {
         },
       },
     }
-    let result = await buildQuery(
-      input,
-      testSchemas(['Vendor.City']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+    let result = await buildQuery({
+      type: 'rows',
+      rows: {
+        drilldown: [],
+        totals: true,
+      },
+    })
     expect(result).toEqual(expected)
   })
   it('should buildQuery for fieldValues with drilldown and limited depth (deeper)', async () => {
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      pagination: {
-        type: 'rows',
-        page: {
-          rows: {
-            drilldown: ['Reno'],
+    let { buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+        columns: [],
+        rows: [
+          {
+            type: 'fieldValues',
+            field: 'Organization.Name',
           },
-        },
-      },
-      rows: [
-        {
-          type: 'fieldValues',
-          field: 'Organization.Name',
-        },
-        {
-          type: 'numberRanges',
-          field: 'LineItem.TotalPrice',
-          ranges: [
-            { from: '0', to: '500' },
-            { from: '500', to: '10000' },
-          ],
-        },
-        {
-          type: 'fieldValues',
-          field: 'Organization.Type',
-        },
-      ],
-    }
+          {
+            type: 'numberRanges',
+            field: 'LineItem.TotalPrice',
+            ranges: [
+              { from: '0', to: '500' },
+              { from: '500', to: '10000' },
+            ],
+          },
+          {
+            type: 'fieldValues',
+            field: 'Organization.Type',
+          },
+        ],
+      }),
+      testSchemas(['Vendor.City']),
+      getStats
+    )
+
     let expected = {
       track_total_hits: true,
       aggs: {
@@ -606,45 +585,42 @@ describe('pivot', () => {
         },
       },
     }
-    let result = await buildQuery(
-      input,
-      testSchemas(['Vendor.City']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+    let result = await buildQuery({
+      type: 'rows',
+      rows: {
+        drilldown: ['Reno'],
+      },
+      columns: {},
+    })
     expect(result).toEqual(expected)
   })
   it('should buildQuery for fieldValues with drilldown (deepest)', async () => {
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      pagination: {
-        type: 'rows',
-        page: {
-          rows: {
-            drilldown: ['Reno', '0.0-500.0', 'A - U.S. OWNED BUSINESS'],
+    let { buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+        columns: [],
+        rows: [
+          {
+            type: 'fieldValues',
+            field: 'Organization.Name',
           },
-        },
-      },
-      rows: [
-        {
-          type: 'fieldValues',
-          field: 'Organization.Name',
-        },
-        {
-          type: 'numberRanges',
-          field: 'LineItem.TotalPrice',
-          ranges: [
-            { from: '0', to: '500' },
-            { from: '500', to: '10000' },
-          ],
-        },
-        {
-          type: 'fieldValues',
-          field: 'Organization.Type',
-        },
-      ],
-    }
+          {
+            type: 'numberRanges',
+            field: 'LineItem.TotalPrice',
+            ranges: [
+              { from: '0', to: '500' },
+              { from: '500', to: '10000' },
+            ],
+          },
+          {
+            type: 'fieldValues',
+            field: 'Organization.Type',
+          },
+        ],
+      }),
+      testSchemas(['Vendor.City']),
+      getStats
+    )
     let expected = {
       aggs: {
         pivotFilter: {
@@ -716,46 +692,42 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
-    let result = await buildQuery(
-      input,
-      testSchemas(['Vendor.City']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+    let result = await buildQuery({
+      type: 'rows',
+      rows: {
+        drilldown: ['Reno', '0.0-500.0', 'A - U.S. OWNED BUSINESS'],
+      },
+    })
     expect(result).toEqual(expected)
   })
   it('should buildQuery for fieldValues with drilldown and skip pagination', async () => {
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      pagination: {
-        type: 'rows',
-        page: {
-          rows: {
-            drilldown: ['Reno', '0.0-500.0'],
-            skip: ['A - U.S. OWNED BUSINESS'],
+    let { buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+        columns: [],
+        rows: [
+          {
+            type: 'fieldValues',
+            field: 'Organization.Name',
           },
-        },
-      },
-      rows: [
-        {
-          type: 'fieldValues',
-          field: 'Organization.Name',
-        },
-        {
-          type: 'numberRanges',
-          field: 'LineItem.TotalPrice',
-          ranges: [
-            { from: '0', to: '500' },
-            { from: '500', to: '10000' },
-          ],
-        },
-        {
-          type: 'fieldValues',
-          field: 'Organization.Type',
-        },
-      ],
-    }
+          {
+            type: 'numberRanges',
+            field: 'LineItem.TotalPrice',
+            ranges: [
+              { from: '0', to: '500' },
+              { from: '500', to: '10000' },
+            ],
+          },
+          {
+            type: 'fieldValues',
+            field: 'Organization.Type',
+          },
+        ],
+      }),
+      testSchemas(['Vendor.City']),
+      getStats
+    )
+
     let expected = {
       aggs: {
         pivotFilter: {
@@ -829,112 +801,95 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
-    let result = await buildQuery(
-      input,
-      testSchemas(['Vendor.City']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+    let result = await buildQuery({
+      type: 'rows',
+      rows: {
+        drilldown: ['Reno', '0.0-500.0'],
+        skip: ['A - U.S. OWNED BUSINESS'],
+      },
+      columns: {},
+    })
     expect(result).toEqual(expected)
   })
-  it('should buildQuery for fieldValues with drilldown and include', async () => {
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      pagination: {
-        type: 'rows',
-        page: {
-          rows: {
-            drilldown: ['Reno', '0.0-500.0'],
-            include: ['A - U.S. OWNED BUSINESS'],
-          },
-        },
-      },
-      rows: [
-        {
-          type: 'fieldValues',
-          field: 'Organization.Name',
-        },
-        {
-          type: 'numberRanges',
-          field: 'LineItem.TotalPrice',
-          ranges: [
-            { from: '0', to: '500' },
-            { from: '500', to: '10000' },
-          ],
-        },
-        {
-          type: 'fieldValues',
-          field: 'Organization.Type',
-        },
-      ],
+  it('should buildQuery for fieldValues with drilldown and loaded', async () => {
+    let expansion = {
+      type: 'rows',
+      drilldown: ['Reno', '0.0-500.0'],
+      loaded: false,
     }
+    let { getInitialRequest, buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+        columns: [],
+        rows: [
+          {
+            type: 'fieldValues',
+            field: 'Organization.Name',
+          },
+          {
+            type: 'numberRanges',
+            field: 'LineItem.TotalPrice',
+            ranges: [
+              { from: '0', to: '500' },
+              { from: '500', to: '10000' },
+            ],
+          },
+          {
+            type: 'fieldValues',
+            field: 'Organization.Type',
+          },
+        ],
+        expansions: [
+          {
+            type: 'columns',
+            drilldown: [],
+            loaded: [],
+          },
+          {
+            type: 'rows',
+            drilldown: ['Reno', '0.0-500.0'],
+            loaded: ['A - U.S. OWNED BUSINESS'],
+          },
+          expansion,
+        ],
+      }),
+      testSchemas(['Vendor.City']),
+      getStats
+    )
     let expected = {
       aggs: {
         pivotFilter: {
           filter: {
             bool: {
               must: [
+                { term: { 'Organization.Name': 'Reno' } },
                 {
-                  term: {
-                    'Organization.Name': 'Reno',
-                  },
+                  range: { 'LineItem.TotalPrice': { gte: '0.0', lt: '500.0' } },
                 },
-                {
-                  range: {
-                    'LineItem.TotalPrice': {
-                      gte: '0.0',
-                      lt: '500.0',
-                    },
-                  },
-                },
-                {
-                  bool: {
-                    minimum_should_match: 1,
-                    should: [
-                      {
-                        term: {
-                          'Organization.Type': 'A - U.S. OWNED BUSINESS',
-                        },
-                      },
-                    ],
-                  },
-                },
+              ],
+              must_not: [
+                { term: { 'Organization.Type': 'A - U.S. OWNED BUSINESS' } },
               ],
             },
           },
           aggs: {
             rows: {
-              terms: {
-                field: 'Organization.Name',
-                size: 10,
-              },
+              terms: { size: 10, field: 'Organization.Name' },
               aggs: {
                 rows: {
                   range: {
                     field: 'LineItem.TotalPrice',
                     ranges: [
-                      {
-                        from: '0',
-                        to: '500',
-                      },
-                      {
-                        from: '500',
-                        to: '10000',
-                      },
+                      { from: '0', to: '500' },
+                      { from: '500', to: '10000' },
                     ],
                   },
                   aggs: {
                     rows: {
-                      terms: {
-                        field: 'Organization.Type',
-                        size: 10,
-                      },
+                      terms: { size: 10, field: 'Organization.Type' },
                       aggs: {
                         'pivotMetric-sum-LineItem.TotalPrice': {
-                          sum: {
-                            field: 'LineItem.TotalPrice',
-                          },
+                          sum: { field: 'LineItem.TotalPrice' },
                         },
                       },
                     },
@@ -947,26 +902,26 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
-    let result = await buildQuery(
-      input,
-      testSchemas(['Vendor.City']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+
+    let result = await buildQuery(getInitialRequest(expansion))
     expect(result).toEqual(expected)
   })
   it('should buildQuery for smart numberInterval to show getStats works', async () => {
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      rows: [
-        {
-          type: 'numberInterval',
-          field: 'LineItem.UnitPrice',
-          interval: 'smart',
-        },
-      ],
-    }
+    let { buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+        rows: [
+          {
+            type: 'numberInterval',
+            field: 'LineItem.UnitPrice',
+            interval: 'smart',
+          },
+        ],
+        columns: [],
+      }),
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => ({ min: 10, max: 500 })
+    )
     let expected = {
       track_total_hits: true,
       aggs: {
@@ -987,59 +942,36 @@ describe('pivot', () => {
         },
       },
     }
-    let result = await buildQuery(
-      input,
-      testSchemas(['Vendor.City']),
-      // get stats hard coded here
-      () => ({ min: 10, max: 500 })
-    )
+    let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery with subtotals', async () => {
     // ES -> PVT
     // buckets -> rows (rows/columns)
     // metrics -> values
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [
-        { type: 'min', field: 'LineItem.TotalPrice' },
-        { type: 'max', field: 'LineItem.TotalPrice' },
-        { type: 'avg', field: 'LineItem.TotalPrice' },
-        { type: 'sum', field: 'LineItem.TotalPrice' },
-      ],
-      rows: [
-        { type: 'fieldValues', field: 'Organization.NameState' },
-        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
-      ],
-    }
+    let { buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [
+          { type: 'min', field: 'LineItem.TotalPrice' },
+          { type: 'max', field: 'LineItem.TotalPrice' },
+          { type: 'avg', field: 'LineItem.TotalPrice' },
+          { type: 'sum', field: 'LineItem.TotalPrice' },
+        ],
+        rows: [
+          { type: 'fieldValues', field: 'Organization.NameState' },
+          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
+        ],
+        columns: [],
+      }),
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      getStats
+    )
     let expected = {
       track_total_hits: true,
       aggs: {
         rows: {
           terms: { field: 'Organization.NameState.untouched', size: 10 },
           aggs: {
-            rows: {
-              date_histogram: {
-                field: 'PO.IssuedDate',
-                interval: 'month',
-                min_doc_count: 0,
-              },
-              aggs: {
-                'pivotMetric-min-LineItem.TotalPrice': {
-                  min: { field: 'LineItem.TotalPrice' },
-                },
-                'pivotMetric-max-LineItem.TotalPrice': {
-                  max: { field: 'LineItem.TotalPrice' },
-                },
-                'pivotMetric-avg-LineItem.TotalPrice': {
-                  avg: { field: 'LineItem.TotalPrice' },
-                },
-                'pivotMetric-sum-LineItem.TotalPrice': {
-                  sum: { field: 'LineItem.TotalPrice' },
-                },
-              },
-            },
             'pivotMetric-min-LineItem.TotalPrice': {
               min: { field: 'LineItem.TotalPrice' },
             },
@@ -1068,26 +1000,25 @@ describe('pivot', () => {
         },
       },
     }
-    let result = await buildQuery(
-      input,
-      testSchema('Organization.NameState'),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+    let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery for tagsQuery', async () => {
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      rows: [
-        {
-          type: 'tagsQuery',
-          field: 'Organization.Name',
-          tags: [{ word: 'test' }],
-        },
-      ],
-    }
+    let { buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+        rows: [
+          {
+            type: 'tagsQuery',
+            field: 'Organization.Name',
+            tags: [{ word: 'test' }],
+          },
+        ],
+        columns: [],
+      }),
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      getStats
+    )
     let expected = {
       aggs: {
         rows: {
@@ -1118,81 +1049,52 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
-    let result = await buildQuery(
-      input,
-      testSchemas(['Organization.Name']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+    let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery with more types', async () => {
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [
-        { type: 'min', field: 'LineItem.TotalPrice' },
-        { type: 'max', field: 'LineItem.TotalPrice' },
-        { type: 'avg', field: 'LineItem.TotalPrice' },
-        { type: 'sum', field: 'LineItem.TotalPrice' },
-      ],
-      rows: [
-        { type: 'fieldValues', field: 'Organization.State' },
-        { type: 'fieldValues', field: 'Organization.NameState' },
-        {
-          type: 'numberRanges',
-          field: 'LineItem.TotalPrice',
-          ranges: [
-            { from: '0', to: '500' },
-            { from: '500', to: '10000' },
-          ],
-        },
-      ],
-    }
+    let { buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [
+          { type: 'min', field: 'LineItem.TotalPrice' },
+          { type: 'max', field: 'LineItem.TotalPrice' },
+          { type: 'avg', field: 'LineItem.TotalPrice' },
+          { type: 'sum', field: 'LineItem.TotalPrice' },
+        ],
+        columns: [],
+        rows: [
+          { type: 'fieldValues', field: 'Organization.State' },
+          { type: 'fieldValues', field: 'Organization.NameState' },
+          {
+            type: 'numberRanges',
+            field: 'LineItem.TotalPrice',
+            ranges: [
+              { from: '0', to: '500' },
+              { from: '500', to: '10000' },
+            ],
+          },
+        ],
+      }),
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      getStats
+    )
     let expected = {
       aggs: {
+        'pivotMetric-min-LineItem.TotalPrice': {
+          min: { field: 'LineItem.TotalPrice' },
+        },
+        'pivotMetric-max-LineItem.TotalPrice': {
+          max: { field: 'LineItem.TotalPrice' },
+        },
+        'pivotMetric-avg-LineItem.TotalPrice': {
+          avg: { field: 'LineItem.TotalPrice' },
+        },
+        'pivotMetric-sum-LineItem.TotalPrice': {
+          sum: { field: 'LineItem.TotalPrice' },
+        },
         rows: {
-          terms: { field: 'Organization.State.untouched', size: 10 },
+          terms: { size: 10, field: 'Organization.State.untouched' },
           aggs: {
-            rows: {
-              terms: { field: 'Organization.NameState.untouched', size: 10 },
-              aggs: {
-                rows: {
-                  range: {
-                    field: 'LineItem.TotalPrice',
-                    ranges: [
-                      { from: '0', to: '500' },
-                      { from: '500', to: '10000' },
-                    ],
-                  },
-                  aggs: {
-                    'pivotMetric-min-LineItem.TotalPrice': {
-                      min: { field: 'LineItem.TotalPrice' },
-                    },
-                    'pivotMetric-max-LineItem.TotalPrice': {
-                      max: { field: 'LineItem.TotalPrice' },
-                    },
-                    'pivotMetric-avg-LineItem.TotalPrice': {
-                      avg: { field: 'LineItem.TotalPrice' },
-                    },
-                    'pivotMetric-sum-LineItem.TotalPrice': {
-                      sum: { field: 'LineItem.TotalPrice' },
-                    },
-                  },
-                },
-                'pivotMetric-min-LineItem.TotalPrice': {
-                  min: { field: 'LineItem.TotalPrice' },
-                },
-                'pivotMetric-max-LineItem.TotalPrice': {
-                  max: { field: 'LineItem.TotalPrice' },
-                },
-                'pivotMetric-avg-LineItem.TotalPrice': {
-                  avg: { field: 'LineItem.TotalPrice' },
-                },
-                'pivotMetric-sum-LineItem.TotalPrice': {
-                  sum: { field: 'LineItem.TotalPrice' },
-                },
-              },
-            },
             'pivotMetric-min-LineItem.TotalPrice': {
               min: { field: 'LineItem.TotalPrice' },
             },
@@ -1207,197 +1109,44 @@ describe('pivot', () => {
             },
           },
         },
-        'pivotMetric-min-LineItem.TotalPrice': {
-          min: { field: 'LineItem.TotalPrice' },
-        },
-        'pivotMetric-max-LineItem.TotalPrice': {
-          max: { field: 'LineItem.TotalPrice' },
-        },
-        'pivotMetric-avg-LineItem.TotalPrice': {
-          avg: { field: 'LineItem.TotalPrice' },
-        },
-        'pivotMetric-sum-LineItem.TotalPrice': {
-          sum: { field: 'LineItem.TotalPrice' },
-        },
       },
       track_total_hits: true,
     }
-    let result = await buildQuery(
-      input,
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+
+    let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery with pivot columns', async () => {
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [
-        { type: 'min', field: 'LineItem.TotalPrice' },
-        { type: 'max', field: 'LineItem.TotalPrice' },
-        { type: 'avg', field: 'LineItem.TotalPrice' },
-        { type: 'sum', field: 'LineItem.TotalPrice' },
-      ],
-      rows: [
-        { type: 'fieldValues', field: 'Organization.State' },
-        { type: 'fieldValues', field: 'Organization.NameState' },
-        {
-          type: 'numberRanges',
-          field: 'LineItem.TotalPrice',
-          ranges: [
-            { from: '0', to: '500' },
-            { from: '500', to: '10000' },
-          ],
-        },
-      ],
-      columns: [
-        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-      ],
-    }
+    let { buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [
+          { type: 'min', field: 'LineItem.TotalPrice' },
+          { type: 'max', field: 'LineItem.TotalPrice' },
+          { type: 'avg', field: 'LineItem.TotalPrice' },
+          { type: 'sum', field: 'LineItem.TotalPrice' },
+        ],
+        rows: [
+          { type: 'fieldValues', field: 'Organization.State' },
+          { type: 'fieldValues', field: 'Organization.NameState' },
+          {
+            type: 'numberRanges',
+            field: 'LineItem.TotalPrice',
+            ranges: [
+              { from: '0', to: '500' },
+              { from: '500', to: '10000' },
+            ],
+          },
+        ],
+        columns: [
+          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+        ],
+      }),
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      getStats
+    )
+
     let expected = {
       aggs: {
-        rows: {
-          terms: { field: 'Organization.State.untouched', size: 10 },
-          aggs: {
-            rows: {
-              terms: { field: 'Organization.NameState.untouched', size: 10 },
-              aggs: {
-                rows: {
-                  range: {
-                    field: 'LineItem.TotalPrice',
-                    ranges: [
-                      { from: '0', to: '500' },
-                      { from: '500', to: '10000' },
-                    ],
-                  },
-                  aggs: {
-                    columns: {
-                      date_histogram: {
-                        field: 'PO.IssuedDate',
-                        interval: 'year',
-                        min_doc_count: 0,
-                      },
-                      aggs: {
-                        'pivotMetric-min-LineItem.TotalPrice': {
-                          min: { field: 'LineItem.TotalPrice' },
-                        },
-                        'pivotMetric-max-LineItem.TotalPrice': {
-                          max: { field: 'LineItem.TotalPrice' },
-                        },
-                        'pivotMetric-avg-LineItem.TotalPrice': {
-                          avg: { field: 'LineItem.TotalPrice' },
-                        },
-                        'pivotMetric-sum-LineItem.TotalPrice': {
-                          sum: { field: 'LineItem.TotalPrice' },
-                        },
-                      },
-                    },
-                    'pivotMetric-min-LineItem.TotalPrice': {
-                      min: { field: 'LineItem.TotalPrice' },
-                    },
-                    'pivotMetric-max-LineItem.TotalPrice': {
-                      max: { field: 'LineItem.TotalPrice' },
-                    },
-                    'pivotMetric-avg-LineItem.TotalPrice': {
-                      avg: { field: 'LineItem.TotalPrice' },
-                    },
-                    'pivotMetric-sum-LineItem.TotalPrice': {
-                      sum: { field: 'LineItem.TotalPrice' },
-                    },
-                  },
-                },
-                columns: {
-                  date_histogram: {
-                    field: 'PO.IssuedDate',
-                    interval: 'year',
-                    min_doc_count: 0,
-                  },
-                  aggs: {
-                    'pivotMetric-min-LineItem.TotalPrice': {
-                      min: { field: 'LineItem.TotalPrice' },
-                    },
-                    'pivotMetric-max-LineItem.TotalPrice': {
-                      max: { field: 'LineItem.TotalPrice' },
-                    },
-                    'pivotMetric-avg-LineItem.TotalPrice': {
-                      avg: { field: 'LineItem.TotalPrice' },
-                    },
-                    'pivotMetric-sum-LineItem.TotalPrice': {
-                      sum: { field: 'LineItem.TotalPrice' },
-                    },
-                  },
-                },
-                'pivotMetric-min-LineItem.TotalPrice': {
-                  min: { field: 'LineItem.TotalPrice' },
-                },
-                'pivotMetric-max-LineItem.TotalPrice': {
-                  max: { field: 'LineItem.TotalPrice' },
-                },
-                'pivotMetric-avg-LineItem.TotalPrice': {
-                  avg: { field: 'LineItem.TotalPrice' },
-                },
-                'pivotMetric-sum-LineItem.TotalPrice': {
-                  sum: { field: 'LineItem.TotalPrice' },
-                },
-              },
-            },
-            columns: {
-              date_histogram: {
-                field: 'PO.IssuedDate',
-                interval: 'year',
-                min_doc_count: 0,
-              },
-              aggs: {
-                'pivotMetric-min-LineItem.TotalPrice': {
-                  min: { field: 'LineItem.TotalPrice' },
-                },
-                'pivotMetric-max-LineItem.TotalPrice': {
-                  max: { field: 'LineItem.TotalPrice' },
-                },
-                'pivotMetric-avg-LineItem.TotalPrice': {
-                  avg: { field: 'LineItem.TotalPrice' },
-                },
-                'pivotMetric-sum-LineItem.TotalPrice': {
-                  sum: { field: 'LineItem.TotalPrice' },
-                },
-              },
-            },
-            'pivotMetric-min-LineItem.TotalPrice': {
-              min: { field: 'LineItem.TotalPrice' },
-            },
-            'pivotMetric-max-LineItem.TotalPrice': {
-              max: { field: 'LineItem.TotalPrice' },
-            },
-            'pivotMetric-avg-LineItem.TotalPrice': {
-              avg: { field: 'LineItem.TotalPrice' },
-            },
-            'pivotMetric-sum-LineItem.TotalPrice': {
-              sum: { field: 'LineItem.TotalPrice' },
-            },
-          },
-        },
-        columns: {
-          date_histogram: {
-            field: 'PO.IssuedDate',
-            interval: 'year',
-            min_doc_count: 0,
-          },
-          aggs: {
-            'pivotMetric-min-LineItem.TotalPrice': {
-              min: { field: 'LineItem.TotalPrice' },
-            },
-            'pivotMetric-max-LineItem.TotalPrice': {
-              max: { field: 'LineItem.TotalPrice' },
-            },
-            'pivotMetric-avg-LineItem.TotalPrice': {
-              avg: { field: 'LineItem.TotalPrice' },
-            },
-            'pivotMetric-sum-LineItem.TotalPrice': {
-              sum: { field: 'LineItem.TotalPrice' },
-            },
-          },
-        },
         'pivotMetric-min-LineItem.TotalPrice': {
           min: { field: 'LineItem.TotalPrice' },
         },
@@ -1410,54 +1159,41 @@ describe('pivot', () => {
         'pivotMetric-sum-LineItem.TotalPrice': {
           sum: { field: 'LineItem.TotalPrice' },
         },
-      },
-      track_total_hits: true,
-    }
-    let result = await buildQuery(
-      input,
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
-    expect(result).toEqual(expected)
-  })
-  it('should buildQuery with pivot columns and subtotals', async () => {
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      rows: [
-        { type: 'fieldValues', field: 'Organization.State' },
-        { type: 'fieldValues', field: 'Organization.NameState' },
-      ],
-      columns: [
-        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-      ],
-    }
-    let expected = {
-      track_total_hits: true,
-      aggs: {
-        rows: {
-          terms: { field: 'Organization.State.untouched', size: 10 },
+        columns: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            interval: 'year',
+            min_doc_count: 0,
+          },
           aggs: {
-            rows: {
-              terms: { field: 'Organization.NameState.untouched', size: 10 },
-              aggs: {
-                columns: {
-                  date_histogram: {
-                    field: 'PO.IssuedDate',
-                    interval: 'year',
-                    min_doc_count: 0,
-                  },
-                  aggs: {
-                    'pivotMetric-sum-LineItem.TotalPrice': {
-                      sum: { field: 'LineItem.TotalPrice' },
-                    },
-                  },
-                },
-                'pivotMetric-sum-LineItem.TotalPrice': {
-                  sum: { field: 'LineItem.TotalPrice' },
-                },
-              },
+            'pivotMetric-min-LineItem.TotalPrice': {
+              min: { field: 'LineItem.TotalPrice' },
+            },
+            'pivotMetric-max-LineItem.TotalPrice': {
+              max: { field: 'LineItem.TotalPrice' },
+            },
+            'pivotMetric-avg-LineItem.TotalPrice': {
+              avg: { field: 'LineItem.TotalPrice' },
+            },
+            'pivotMetric-sum-LineItem.TotalPrice': {
+              sum: { field: 'LineItem.TotalPrice' },
+            },
+          },
+        },
+        rows: {
+          terms: { size: 10, field: 'Organization.State.untouched' },
+          aggs: {
+            'pivotMetric-min-LineItem.TotalPrice': {
+              min: { field: 'LineItem.TotalPrice' },
+            },
+            'pivotMetric-max-LineItem.TotalPrice': {
+              max: { field: 'LineItem.TotalPrice' },
+            },
+            'pivotMetric-avg-LineItem.TotalPrice': {
+              avg: { field: 'LineItem.TotalPrice' },
+            },
+            'pivotMetric-sum-LineItem.TotalPrice': {
+              sum: { field: 'LineItem.TotalPrice' },
             },
             columns: {
               date_histogram: {
@@ -1466,15 +1202,48 @@ describe('pivot', () => {
                 min_doc_count: 0,
               },
               aggs: {
+                'pivotMetric-min-LineItem.TotalPrice': {
+                  min: { field: 'LineItem.TotalPrice' },
+                },
+                'pivotMetric-max-LineItem.TotalPrice': {
+                  max: { field: 'LineItem.TotalPrice' },
+                },
+                'pivotMetric-avg-LineItem.TotalPrice': {
+                  avg: { field: 'LineItem.TotalPrice' },
+                },
                 'pivotMetric-sum-LineItem.TotalPrice': {
                   sum: { field: 'LineItem.TotalPrice' },
                 },
               },
             },
-            'pivotMetric-sum-LineItem.TotalPrice': {
-              sum: { field: 'LineItem.TotalPrice' },
-            },
           },
+        },
+      },
+      track_total_hits: true,
+    }
+    let result = await buildQuery(rootPivotRequest)
+    expect(result).toEqual(expected)
+  })
+  it('should buildQuery with pivot columns and subtotals', async () => {
+    let { buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+        rows: [
+          { type: 'fieldValues', field: 'Organization.State' },
+          { type: 'fieldValues', field: 'Organization.NameState' },
+        ],
+        columns: [
+          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+        ],
+      }),
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      getStats
+    )
+
+    let expected = {
+      aggs: {
+        'pivotMetric-sum-LineItem.TotalPrice': {
+          sum: { field: 'LineItem.TotalPrice' },
         },
         columns: {
           date_histogram: {
@@ -1488,65 +1257,84 @@ describe('pivot', () => {
             },
           },
         },
-        'pivotMetric-sum-LineItem.TotalPrice': {
-          sum: { field: 'LineItem.TotalPrice' },
+        rows: {
+          terms: { size: 10, field: 'Organization.State.untouched' },
+          aggs: {
+            'pivotMetric-sum-LineItem.TotalPrice': {
+              sum: { field: 'LineItem.TotalPrice' },
+            },
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                interval: 'year',
+                min_doc_count: 0,
+              },
+              aggs: {
+                'pivotMetric-sum-LineItem.TotalPrice': {
+                  sum: { field: 'LineItem.TotalPrice' },
+                },
+              },
+            },
+          },
         },
       },
+      track_total_hits: true,
     }
-    let result = await buildQuery(
-      input,
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+    let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery with nested pivot column and sort', async () => {
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'sum', field: 'PO.IssuedAmount' }],
-      rows: [
-        {
-          type: 'fieldValues',
-          field: 'Organization.State',
-          // Should be ignored if sort is set on the top-level
-          sort: { field: '_count' },
+    let { buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [{ type: 'sum', field: 'PO.IssuedAmount' }],
+        rows: [
+          {
+            type: 'fieldValues',
+            field: 'Organization.State',
+            // Should be ignored if sort is set on the top-level
+            sort: { field: '_count' },
+          },
+        ],
+        columns: [
+          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+        ],
+        sort: {
+          columnValues: ['2022'],
+          valueIndex: 0,
+          direction: 'asc',
         },
-      ],
-      columns: [
-        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-      ],
-      sort: {
-        columnValues: ['2022'],
-        valueIndex: 0,
-        direction: 'asc',
-      },
-    }
+      }),
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      getStats
+    )
+
     let expected = {
       aggs: {
-        rows: {
-          terms: {
-            field: 'Organization.State.untouched',
-            size: 10,
-            order: { 'sortFilter>metric': 'asc' },
+        'pivotMetric-sum-PO.IssuedAmount': {
+          sum: { field: 'PO.IssuedAmount' },
+        },
+        columns: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            interval: 'year',
+            min_doc_count: 0,
           },
           aggs: {
-            sortFilter: {
-              filter: {
-                bool: {
-                  must: [
-                    {
-                      range: {
-                        'PO.IssuedDate': {
-                          gte: '2022',
-                          lte: '2022-12-31T23:59:59Z',
-                        },
-                      },
-                    },
-                  ],
-                },
-              },
-              aggs: { metric: { sum: { field: 'PO.IssuedAmount' } } },
+            'pivotMetric-sum-PO.IssuedAmount': {
+              sum: { field: 'PO.IssuedAmount' },
+            },
+          },
+        },
+        rows: {
+          terms: {
+            size: 10,
+            order: { 'sortFilter>metric': 'asc' },
+            field: 'Organization.State.untouched',
+          },
+          aggs: {
+            metric: { sum: { field: 'PO.IssuedAmount' } },
+            'pivotMetric-sum-PO.IssuedAmount': {
+              sum: { field: 'PO.IssuedAmount' },
             },
             columns: {
               date_histogram: {
@@ -1560,52 +1348,33 @@ describe('pivot', () => {
                 },
               },
             },
-            'pivotMetric-sum-PO.IssuedAmount': {
-              sum: { field: 'PO.IssuedAmount' },
-            },
           },
-        },
-        columns: {
-          date_histogram: {
-            field: 'PO.IssuedDate',
-            interval: 'year',
-            min_doc_count: 0,
-          },
-          aggs: {
-            'pivotMetric-sum-PO.IssuedAmount': {
-              sum: { field: 'PO.IssuedAmount' },
-            },
-          },
-        },
-        'pivotMetric-sum-PO.IssuedAmount': {
-          sum: { field: 'PO.IssuedAmount' },
         },
       },
       track_total_hits: true,
     }
-    let result = await buildQuery(
-      input,
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+    let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery and sort on the row if top-level sort is missing', async () => {
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'sum', field: 'PO.IssuedAmount' }],
-      rows: [
-        {
-          type: 'fieldValues',
-          field: 'Organization.State',
-          sort: { field: '_key', direction: 'asc' },
-        },
-      ],
-      columns: [
-        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-      ],
-    }
+    let { buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [{ type: 'sum', field: 'PO.IssuedAmount' }],
+        rows: [
+          {
+            type: 'fieldValues',
+            field: 'Organization.State',
+            sort: { field: '_key', direction: 'asc' },
+          },
+        ],
+        columns: [
+          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+        ],
+      }),
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      getStats
+    )
+
     let expected = {
       aggs: {
         rows: {
@@ -1652,93 +1421,37 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
-    let result = await buildQuery(
-      input,
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+    let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery and sort on nth value metric', async () => {
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [
-        { type: 'sum', field: 'PO.IssuedAmount' },
-        { type: 'avg', field: 'PO.IssuedAmount' },
-      ],
-      rows: [{ type: 'fieldValues', field: 'Organization.State' }],
-      columns: [
-        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-      ],
-      sort: {
-        columnValues: ['2022'],
-        valueIndex: 1,
-        direction: 'asc',
-      },
-    }
+    let { buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [
+          { type: 'sum', field: 'PO.IssuedAmount' },
+          { type: 'avg', field: 'PO.IssuedAmount' },
+        ],
+        rows: [{ type: 'fieldValues', field: 'Organization.State' }],
+        columns: [
+          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+        ],
+        sort: {
+          columnValues: ['2022'],
+          valueIndex: 1,
+          direction: 'asc',
+        },
+      }),
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      getStats
+    )
+
     let expected = {
       aggs: {
-        rows: {
-          terms: {
-            field: 'Organization.State.untouched',
-            size: 10,
-            order: {
-              'sortFilter>metric': 'asc',
-            },
-          },
-          aggs: {
-            sortFilter: {
-              filter: {
-                bool: {
-                  must: [
-                    {
-                      range: {
-                        'PO.IssuedDate': {
-                          gte: '2022',
-                          lte: '2022-12-31T23:59:59Z',
-                        },
-                      },
-                    },
-                  ],
-                },
-              },
-              aggs: {
-                metric: {
-                  avg: {
-                    field: 'PO.IssuedAmount',
-                  },
-                },
-              },
-            },
-            columns: {
-              date_histogram: {
-                field: 'PO.IssuedDate',
-                interval: 'year',
-                min_doc_count: 0,
-              },
-              aggs: {
-                'pivotMetric-sum-PO.IssuedAmount': {
-                  sum: {
-                    field: 'PO.IssuedAmount',
-                  },
-                },
-                'pivotMetric-avg-PO.IssuedAmount': {
-                  avg: {
-                    field: 'PO.IssuedAmount',
-                  },
-                },
-              },
-            },
-            'pivotMetric-sum-PO.IssuedAmount': {
-              sum: { field: 'PO.IssuedAmount' },
-            },
-            'pivotMetric-avg-PO.IssuedAmount': {
-              avg: {
-                field: 'PO.IssuedAmount',
-              },
-            },
-          },
+        'pivotMetric-sum-PO.IssuedAmount': {
+          sum: { field: 'PO.IssuedAmount' },
+        },
+        'pivotMetric-avg-PO.IssuedAmount': {
+          avg: { field: 'PO.IssuedAmount' },
         },
         columns: {
           date_histogram: {
@@ -1751,53 +1464,24 @@ describe('pivot', () => {
               sum: { field: 'PO.IssuedAmount' },
             },
             'pivotMetric-avg-PO.IssuedAmount': {
-              avg: {
-                field: 'PO.IssuedAmount',
-              },
+              avg: { field: 'PO.IssuedAmount' },
             },
           },
         },
-        'pivotMetric-sum-PO.IssuedAmount': {
-          sum: { field: 'PO.IssuedAmount' },
-        },
-        'pivotMetric-avg-PO.IssuedAmount': {
-          avg: {
-            field: 'PO.IssuedAmount',
-          },
-        },
-      },
-      track_total_hits: true,
-    }
-    let result = await buildQuery(
-      input,
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
-    expect(result).toEqual(expected)
-  })
-  it('should buildQuery and sort with no columns', async () => {
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [
-        { type: 'sum', field: 'PO.IssuedAmount' },
-        { type: 'avg', field: 'PO.IssuedAmount' },
-      ],
-      rows: [{ type: 'fieldValues', field: 'Organization.State' }],
-      columns: [
-        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-      ],
-      sort: { valueIndex: 1, direction: 'asc' },
-    }
-    let expected = {
-      aggs: {
         rows: {
           terms: {
-            field: 'Organization.State.untouched',
             size: 10,
-            order: { metric: 'asc' },
+            order: { 'sortFilter>metric': 'asc' },
+            field: 'Organization.State.untouched',
           },
           aggs: {
+            metric: { avg: { field: 'PO.IssuedAmount' } },
+            'pivotMetric-sum-PO.IssuedAmount': {
+              sum: { field: 'PO.IssuedAmount' },
+            },
+            'pivotMetric-avg-PO.IssuedAmount': {
+              avg: { field: 'PO.IssuedAmount' },
+            },
             columns: {
               date_histogram: {
                 field: 'PO.IssuedDate',
@@ -1813,14 +1497,38 @@ describe('pivot', () => {
                 },
               },
             },
-            'pivotMetric-sum-PO.IssuedAmount': {
-              sum: { field: 'PO.IssuedAmount' },
-            },
-            'pivotMetric-avg-PO.IssuedAmount': {
-              avg: { field: 'PO.IssuedAmount' },
-            },
-            metric: { avg: { field: 'PO.IssuedAmount' } },
           },
+        },
+      },
+      track_total_hits: true,
+    }
+
+    let result = await buildQuery(rootPivotRequest)
+    expect(result).toEqual(expected)
+  })
+  it('should buildQuery and sort with no columns', async () => {
+    let { buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [
+          { type: 'sum', field: 'PO.IssuedAmount' },
+          { type: 'avg', field: 'PO.IssuedAmount' },
+        ],
+        rows: [{ type: 'fieldValues', field: 'Organization.State' }],
+        columns: [
+          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+        ],
+        sort: { valueIndex: 1, direction: 'asc' },
+      }),
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      getStats
+    )
+    let expected = {
+      aggs: {
+        'pivotMetric-sum-PO.IssuedAmount': {
+          sum: { field: 'PO.IssuedAmount' },
+        },
+        'pivotMetric-avg-PO.IssuedAmount': {
+          avg: { field: 'PO.IssuedAmount' },
         },
         columns: {
           date_histogram: {
@@ -1837,36 +1545,60 @@ describe('pivot', () => {
             },
           },
         },
-        'pivotMetric-sum-PO.IssuedAmount': {
-          sum: { field: 'PO.IssuedAmount' },
-        },
-        'pivotMetric-avg-PO.IssuedAmount': {
-          avg: { field: 'PO.IssuedAmount' },
+        rows: {
+          terms: {
+            size: 10,
+            order: { metric: 'asc' },
+            field: 'Organization.State.untouched',
+          },
+          aggs: {
+            metric: { avg: { field: 'PO.IssuedAmount' } },
+            'pivotMetric-sum-PO.IssuedAmount': {
+              sum: { field: 'PO.IssuedAmount' },
+            },
+            'pivotMetric-avg-PO.IssuedAmount': {
+              avg: { field: 'PO.IssuedAmount' },
+            },
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                interval: 'year',
+                min_doc_count: 0,
+              },
+              aggs: {
+                'pivotMetric-sum-PO.IssuedAmount': {
+                  sum: { field: 'PO.IssuedAmount' },
+                },
+                'pivotMetric-avg-PO.IssuedAmount': {
+                  avg: { field: 'PO.IssuedAmount' },
+                },
+              },
+            },
+          },
         },
       },
       track_total_hits: true,
     }
-    let result = await buildQuery(
-      input,
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+
+    let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery and sort on document count without valueIndex', async () => {
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [
-        { type: 'sum', field: 'PO.IssuedAmount' },
-        { type: 'avg', field: 'PO.IssuedAmount' },
-      ],
-      rows: [{ type: 'fieldValues', field: 'Organization.State' }],
-      columns: [
-        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-      ],
-      sort: { valueIndex: null, direction: 'asc' },
-    }
+    let { buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [
+          { type: 'sum', field: 'PO.IssuedAmount' },
+          { type: 'avg', field: 'PO.IssuedAmount' },
+        ],
+        rows: [{ type: 'fieldValues', field: 'Organization.State' }],
+        columns: [
+          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+        ],
+        sort: { valueIndex: null, direction: 'asc' },
+      }),
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      getStats
+    )
     let expected = {
       aggs: {
         rows: {
@@ -1923,367 +1655,170 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
-    let result = await buildQuery(
-      input,
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+    let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery with multiple columns and sorting on multiple columns', async () => {
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'sum', field: 'PO.IssuedAmount' }],
-      rows: [{ type: 'fieldValues', field: 'Organization.State' }],
-      columns: [
-        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
-      ],
-      sort: {
-        columnValues: ['2022', '2022-02-01'],
-        valueIndex: 0,
-        direction: 'asc',
-      },
-    }
+    let { buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [{ type: 'sum', field: 'PO.IssuedAmount' }],
+        rows: [{ type: 'fieldValues', field: 'Organization.State' }],
+        columns: [
+          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
+        ],
+        sort: {
+          columnValues: ['2022', '2022-02-01'],
+          valueIndex: 0,
+          direction: 'asc',
+        },
+      }),
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      getStats
+    )
+
     let expected = {
       aggs: {
-        rows: {
-          terms: {
-            field: 'Organization.State.untouched',
-            size: 10,
-            order: { 'sortFilter>metric': 'asc' },
-          },
-          aggs: {
-            sortFilter: {
-              filter: {
-                bool: {
-                  must: [
-                    {
-                      range: {
-                        'PO.IssuedDate': {
-                          gte: '2022',
-                          lte: '2022-12-31T23:59:59Z',
-                        },
-                      },
-                    },
-                    {
-                      range: {
-                        'PO.IssuedDate': {
-                          gte: '2022-02-01',
-                          lte: '2022-02-28T23:59:59Z',
-                        },
-                      },
-                    },
-                  ],
-                },
-              },
-              aggs: { metric: { sum: { field: 'PO.IssuedAmount' } } },
-            },
-            columns: {
-              date_histogram: {
-                field: 'PO.IssuedDate',
-                interval: 'year',
-                min_doc_count: 0,
-              },
-              aggs: {
-                columns: {
-                  date_histogram: {
-                    field: 'PO.IssuedDate',
-                    interval: 'month',
-                    min_doc_count: 0,
-                  },
-                  aggs: {
-                    'pivotMetric-sum-PO.IssuedAmount': {
-                      sum: { field: 'PO.IssuedAmount' },
-                    },
-                  },
-                },
-                'pivotMetric-sum-PO.IssuedAmount': {
-                  sum: { field: 'PO.IssuedAmount' },
-                },
-              },
-            },
-            'pivotMetric-sum-PO.IssuedAmount': {
-              sum: { field: 'PO.IssuedAmount' },
-            },
-          },
-        },
-        columns: {
-          date_histogram: {
-            field: 'PO.IssuedDate',
-            interval: 'year',
-            min_doc_count: 0,
-          },
-          aggs: {
-            columns: {
-              date_histogram: {
-                field: 'PO.IssuedDate',
-                interval: 'month',
-                min_doc_count: 0,
-              },
-              aggs: {
-                'pivotMetric-sum-PO.IssuedAmount': {
-                  sum: { field: 'PO.IssuedAmount' },
-                },
-              },
-            },
-            'pivotMetric-sum-PO.IssuedAmount': {
-              sum: { field: 'PO.IssuedAmount' },
-            },
-          },
-        },
         'pivotMetric-sum-PO.IssuedAmount': {
           sum: { field: 'PO.IssuedAmount' },
         },
+        columns: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            interval: 'year',
+            min_doc_count: 0,
+          },
+          aggs: {
+            'pivotMetric-sum-PO.IssuedAmount': {
+              sum: { field: 'PO.IssuedAmount' },
+            },
+          },
+        },
+        rows: {
+          terms: {
+            size: 10,
+            order: { 'sortFilter>metric': 'asc' },
+            field: 'Organization.State.untouched',
+          },
+          aggs: {
+            metric: { sum: { field: 'PO.IssuedAmount' } },
+            'pivotMetric-sum-PO.IssuedAmount': {
+              sum: { field: 'PO.IssuedAmount' },
+            },
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                interval: 'year',
+                min_doc_count: 0,
+              },
+              aggs: {
+                'pivotMetric-sum-PO.IssuedAmount': {
+                  sum: { field: 'PO.IssuedAmount' },
+                },
+              },
+            },
+          },
+        },
       },
       track_total_hits: true,
     }
-    let result = await buildQuery(
-      input,
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+
+    let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery with multiple rows, columns, and sort', async () => {
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'stats', field: 'PO.IssuedAmount' }],
-      rows: [
-        { type: 'fieldValues', field: 'Organization.State' },
-        { type: 'fieldValues', field: 'Organization.NameState' },
-      ],
-      columns: [
-        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-      ],
-      sort: {
-        columnValues: ['2022'],
-        valueIndex: 0,
-        valueProp: 'max',
-        direction: 'desc',
-      },
-    }
+    let { buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [{ type: 'stats', field: 'PO.IssuedAmount' }],
+        rows: [
+          { type: 'fieldValues', field: 'Organization.State' },
+          { type: 'fieldValues', field: 'Organization.NameState' },
+        ],
+        columns: [
+          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+        ],
+        sort: {
+          columnValues: ['2022'],
+          valueIndex: 0,
+          valueProp: 'max',
+          direction: 'desc',
+        },
+      }),
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      getStats
+    )
     let expected = {
       aggs: {
-        rows: {
-          terms: {
-            field: 'Organization.State.untouched',
-            size: 10,
-            order: { 'sortFilter>metric.max': 'desc' },
-          },
-          aggs: {
-            sortFilter: {
-              filter: {
-                bool: {
-                  must: [
-                    {
-                      range: {
-                        'PO.IssuedDate': {
-                          gte: '2022',
-                          lte: '2022-12-31T23:59:59Z',
-                        },
-                      },
-                    },
-                  ],
-                },
-              },
-              aggs: { metric: { stats: { field: 'PO.IssuedAmount' } } },
-            },
-            rows: {
-              terms: {
-                field: 'Organization.NameState.untouched',
-                size: 10,
-                order: { 'sortFilter>metric.max': 'desc' },
-              },
-              aggs: {
-                sortFilter: {
-                  filter: {
-                    bool: {
-                      must: [
-                        {
-                          range: {
-                            'PO.IssuedDate': {
-                              gte: '2022',
-                              lte: '2022-12-31T23:59:59Z',
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                  aggs: { metric: { stats: { field: 'PO.IssuedAmount' } } },
-                },
-                columns: {
-                  date_histogram: {
-                    field: 'PO.IssuedDate',
-                    interval: 'year',
-                    min_doc_count: 0,
-                  },
-                  aggs: {
-                    'pivotMetric-stats-PO.IssuedAmount': {
-                      stats: { field: 'PO.IssuedAmount' },
-                    },
-                  },
-                },
-                'pivotMetric-stats-PO.IssuedAmount': {
-                  stats: { field: 'PO.IssuedAmount' },
-                },
-              },
-            },
-            columns: {
-              date_histogram: {
-                field: 'PO.IssuedDate',
-                interval: 'year',
-                min_doc_count: 0,
-              },
-              aggs: {
-                'pivotMetric-stats-PO.IssuedAmount': {
-                  stats: { field: 'PO.IssuedAmount' },
-                },
-              },
-            },
-            'pivotMetric-stats-PO.IssuedAmount': {
-              stats: { field: 'PO.IssuedAmount' },
-            },
-          },
-        },
-        columns: {
-          date_histogram: {
-            field: 'PO.IssuedDate',
-            interval: 'year',
-            min_doc_count: 0,
-          },
-          aggs: {
-            'pivotMetric-stats-PO.IssuedAmount': {
-              stats: { field: 'PO.IssuedAmount' },
-            },
-          },
-        },
         'pivotMetric-stats-PO.IssuedAmount': {
           stats: { field: 'PO.IssuedAmount' },
         },
+        columns: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            interval: 'year',
+            min_doc_count: 0,
+          },
+          aggs: {
+            'pivotMetric-stats-PO.IssuedAmount': {
+              stats: { field: 'PO.IssuedAmount' },
+            },
+          },
+        },
+        rows: {
+          terms: {
+            size: 10,
+            order: { 'sortFilter>metric.max': 'desc' },
+            field: 'Organization.State.untouched',
+          },
+          aggs: {
+            metric: { stats: { field: 'PO.IssuedAmount' } },
+            'pivotMetric-stats-PO.IssuedAmount': {
+              stats: { field: 'PO.IssuedAmount' },
+            },
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                interval: 'year',
+                min_doc_count: 0,
+              },
+              aggs: {
+                'pivotMetric-stats-PO.IssuedAmount': {
+                  stats: { field: 'PO.IssuedAmount' },
+                },
+              },
+            },
+          },
+        },
       },
       track_total_hits: true,
     }
-    let result = await buildQuery(
-      input,
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+    let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery with multiple rows, columns, and sort on _count without valueIndex', async () => {
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'stats', field: 'PO.IssuedAmount' }],
-      rows: [
-        { type: 'fieldValues', field: 'Organization.State' },
-        { type: 'fieldValues', field: 'Organization.NameState' },
-      ],
-      columns: [
-        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-      ],
-      sort: {
-        columnValues: ['2022'],
-        direction: 'desc',
-      },
-    }
+    let { buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [{ type: 'stats', field: 'PO.IssuedAmount' }],
+        rows: [
+          { type: 'fieldValues', field: 'Organization.State' },
+          { type: 'fieldValues', field: 'Organization.NameState' },
+        ],
+        columns: [
+          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+        ],
+        sort: {
+          columnValues: ['2022'],
+          direction: 'desc',
+        },
+      }),
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      getStats
+    )
+
     let expected = {
       aggs: {
-        rows: {
-          terms: {
-            field: 'Organization.State.untouched',
-            size: 10,
-            order: {
-              'sortFilter.doc_count': 'desc',
-            },
-          },
-          aggs: {
-            sortFilter: {
-              filter: {
-                bool: {
-                  must: [
-                    {
-                      range: {
-                        'PO.IssuedDate': {
-                          gte: '2022',
-                          lte: '2022-12-31T23:59:59Z',
-                        },
-                      },
-                    },
-                  ],
-                },
-              },
-            },
-            rows: {
-              terms: {
-                field: 'Organization.NameState.untouched',
-                size: 10,
-                order: {
-                  'sortFilter.doc_count': 'desc',
-                },
-              },
-              aggs: {
-                sortFilter: {
-                  filter: {
-                    bool: {
-                      must: [
-                        {
-                          range: {
-                            'PO.IssuedDate': {
-                              gte: '2022',
-                              lte: '2022-12-31T23:59:59Z',
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                },
-                columns: {
-                  date_histogram: {
-                    field: 'PO.IssuedDate',
-                    interval: 'year',
-                    min_doc_count: 0,
-                  },
-                  aggs: {
-                    'pivotMetric-stats-PO.IssuedAmount': {
-                      stats: {
-                        field: 'PO.IssuedAmount',
-                      },
-                    },
-                  },
-                },
-                'pivotMetric-stats-PO.IssuedAmount': {
-                  stats: {
-                    field: 'PO.IssuedAmount',
-                  },
-                },
-              },
-            },
-            columns: {
-              date_histogram: {
-                field: 'PO.IssuedDate',
-                interval: 'year',
-                min_doc_count: 0,
-              },
-              aggs: {
-                'pivotMetric-stats-PO.IssuedAmount': {
-                  stats: {
-                    field: 'PO.IssuedAmount',
-                  },
-                },
-              },
-            },
-            'pivotMetric-stats-PO.IssuedAmount': {
-              stats: {
-                field: 'PO.IssuedAmount',
-              },
-            },
-          },
+        'pivotMetric-stats-PO.IssuedAmount': {
+          stats: { field: 'PO.IssuedAmount' },
         },
         columns: {
           date_histogram: {
@@ -2293,107 +1828,61 @@ describe('pivot', () => {
           },
           aggs: {
             'pivotMetric-stats-PO.IssuedAmount': {
-              stats: {
-                field: 'PO.IssuedAmount',
-              },
+              stats: { field: 'PO.IssuedAmount' },
             },
           },
         },
-        'pivotMetric-stats-PO.IssuedAmount': {
-          stats: {
-            field: 'PO.IssuedAmount',
+        rows: {
+          terms: {
+            size: 10,
+            order: { 'sortFilter.doc_count': 'desc' },
+            field: 'Organization.State.untouched',
+          },
+          aggs: {
+            'pivotMetric-stats-PO.IssuedAmount': {
+              stats: { field: 'PO.IssuedAmount' },
+            },
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                interval: 'year',
+                min_doc_count: 0,
+              },
+              aggs: {
+                'pivotMetric-stats-PO.IssuedAmount': {
+                  stats: { field: 'PO.IssuedAmount' },
+                },
+              },
+            },
           },
         },
       },
       track_total_hits: true,
     }
-    let result = await buildQuery(
-      input,
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+    let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery with nested pivot columns and subtotals', async () => {
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      rows: [
-        { type: 'fieldValues', field: 'Organization.State' },
-        { type: 'fieldValues', field: 'Organization.NameState' },
-      ],
-      columns: [
-        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
-      ],
-    }
+    let { buildQuery } = createPivotScope(
+      pivotTestNode({
+        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+        rows: [
+          { type: 'fieldValues', field: 'Organization.State' },
+          { type: 'fieldValues', field: 'Organization.NameState' },
+        ],
+        columns: [
+          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
+        ],
+      }),
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      getStats
+    )
+
     let expected = {
-      track_total_hits: true,
       aggs: {
-        rows: {
-          terms: { field: 'Organization.State.untouched', size: 10 },
-          aggs: {
-            rows: {
-              terms: { field: 'Organization.NameState.untouched', size: 10 },
-              aggs: {
-                columns: {
-                  date_histogram: {
-                    field: 'PO.IssuedDate',
-                    interval: 'year',
-                    min_doc_count: 0,
-                  },
-                  aggs: {
-                    columns: {
-                      date_histogram: {
-                        field: 'PO.IssuedDate',
-                        interval: 'month',
-                        min_doc_count: 0,
-                      },
-                      aggs: {
-                        'pivotMetric-sum-LineItem.TotalPrice': {
-                          sum: { field: 'LineItem.TotalPrice' },
-                        },
-                      },
-                    },
-                    'pivotMetric-sum-LineItem.TotalPrice': {
-                      sum: { field: 'LineItem.TotalPrice' },
-                    },
-                  },
-                },
-                'pivotMetric-sum-LineItem.TotalPrice': {
-                  sum: { field: 'LineItem.TotalPrice' },
-                },
-              },
-            },
-            columns: {
-              date_histogram: {
-                field: 'PO.IssuedDate',
-                interval: 'year',
-                min_doc_count: 0,
-              },
-              aggs: {
-                columns: {
-                  date_histogram: {
-                    field: 'PO.IssuedDate',
-                    interval: 'month',
-                    min_doc_count: 0,
-                  },
-                  aggs: {
-                    'pivotMetric-sum-LineItem.TotalPrice': {
-                      sum: { field: 'LineItem.TotalPrice' },
-                    },
-                  },
-                },
-                'pivotMetric-sum-LineItem.TotalPrice': {
-                  sum: { field: 'LineItem.TotalPrice' },
-                },
-              },
-            },
-            'pivotMetric-sum-LineItem.TotalPrice': {
-              sum: { field: 'LineItem.TotalPrice' },
-            },
-          },
+        'pivotMetric-sum-LineItem.TotalPrice': {
+          sum: { field: 'LineItem.TotalPrice' },
         },
         columns: {
           date_histogram: {
@@ -2402,10 +1891,21 @@ describe('pivot', () => {
             min_doc_count: 0,
           },
           aggs: {
+            'pivotMetric-sum-LineItem.TotalPrice': {
+              sum: { field: 'LineItem.TotalPrice' },
+            },
+          },
+        },
+        rows: {
+          terms: { size: 10, field: 'Organization.State.untouched' },
+          aggs: {
+            'pivotMetric-sum-LineItem.TotalPrice': {
+              sum: { field: 'LineItem.TotalPrice' },
+            },
             columns: {
               date_histogram: {
                 field: 'PO.IssuedDate',
-                interval: 'month',
+                interval: 'year',
                 min_doc_count: 0,
               },
               aggs: {
@@ -2414,21 +1914,12 @@ describe('pivot', () => {
                 },
               },
             },
-            'pivotMetric-sum-LineItem.TotalPrice': {
-              sum: { field: 'LineItem.TotalPrice' },
-            },
           },
         },
-        'pivotMetric-sum-LineItem.TotalPrice': {
-          sum: { field: 'LineItem.TotalPrice' },
-        },
       },
+      track_total_hits: true,
     }
-    let result = await buildQuery(
-      input,
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+    let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should paginateExpandedGroups for no expanded', async () => {
@@ -2440,45 +1931,35 @@ describe('pivot', () => {
       { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
       { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
     ]
-    let columnsPages = []
-    let rowsPages = []
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      rows,
-      columns,
-      pagination: {
-        type: 'rows',
-        columns: columnsPages,
-        rows: [...rowsPages, { drilldown: ['New York'] }],
-      },
-    }
+    let columnsExpantions = []
+    let rowsExpansions = []
+
+    let { getInitialRequest, getAdditionalRequests } = createPivotScope(
+      pivotTestNode({
+        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+        rows,
+        columns,
+        expansions: [...columnsExpantions, ...rowsExpansions, rowsExpansion],
+      }),
+      testSchema('LineItem.TotalPrice'),
+      getStats
+    )
+
     let expectedIntial = {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      rows,
-      columns,
-      pagination: {
-        type: 'rows',
-        columns: columnsPages,
-        rows: [...rowsPages, { drilldown: ['New York'] }],
-        page: {
-          columns: {
-            drilldown: [],
-            include: [],
-          },
-          rows: {
-            drilldown: ['New York'],
-            skip: [],
-          },
-        },
+      type: 'rows',
+      columns: {
+        drilldown: [],
+        include: [],
+        totals: true,
+      },
+      rows: {
+        drilldown: ['New York'],
+        skip: [],
+        totals: true,
       },
     }
 
-    let { initial, makePages } = paginateExpandedGroups(input)
-    expect(initial).toEqual(expectedIntial)
+    expect(getInitialRequest(rowsExpansion)).toEqual(expectedIntial)
 
     let includeValues = [
       'New York',
@@ -2492,9 +1973,9 @@ describe('pivot', () => {
       'Rochester',
       'White Plains',
     ]
-    let expectedPages = []
-    let pages = makePages(includeValues)
-    expect(pages).toEqual(expectedPages)
+    let expectedRequests = []
+    let requests = getAdditionalRequests(rowsExpansion, includeValues)
+    expect(requests).toEqual(expectedRequests)
   })
   it('should paginateExpandedGroups for 2 expanded columns', async () => {
     let rows = [
@@ -2505,10 +1986,11 @@ describe('pivot', () => {
       { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
       { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
     ]
-    let columnsPages = [
+    let columnsExpantions = [
       {
+        type: 'columns',
         drilldown: [],
-        values: [
+        loaded: [
           '2015-01-01T00:00:00.000Z',
           '2016-01-01T00:00:00.000Z',
           '2017-01-01T00:00:00.000Z',
@@ -2520,8 +2002,9 @@ describe('pivot', () => {
         ],
       },
       {
+        type: 'columns',
         drilldown: ['2015-01-01T00:00:00.000Z'],
-        values: [
+        loaded: [
           '2015-01-01T00:00:00.000Z',
           '2015-04-01T00:00:00.000Z',
           '2015-07-01T00:00:00.000Z',
@@ -2529,8 +2012,9 @@ describe('pivot', () => {
         ],
       },
       {
+        type: 'columns',
         drilldown: ['2016-01-01T00:00:00.000Z'],
-        values: [
+        loaded: [
           '2016-01-01T00:00:00.000Z',
           '2016-04-01T00:00:00.000Z',
           '2016-07-01T00:00:00.000Z',
@@ -2538,10 +2022,11 @@ describe('pivot', () => {
         ],
       },
     ]
-    let rowsPages = [
+    let rowsExpansions = [
       {
+        type: 'rows',
         drilldown: [],
-        values: [
+        loaded: [
           'District of Columbia',
           'California',
           'New York',
@@ -2555,52 +2040,41 @@ describe('pivot', () => {
         ],
       },
     ]
-    let input = {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      rows,
-      columns,
-      pagination: {
-        type: 'rows',
-        columns: columnsPages,
-        rows: [...rowsPages, { drilldown: ['New York'] }],
-      },
-    }
-    let expectedIntial = {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      rows,
-      columns,
-      pagination: {
-        type: 'rows',
-        columns: columnsPages,
-        rows: [...rowsPages, { drilldown: ['New York'] }],
-        page: {
-          columns: {
-            drilldown: [],
-            include: [
-              '2015-01-01T00:00:00.000Z',
-              '2016-01-01T00:00:00.000Z',
-              '2017-01-01T00:00:00.000Z',
-              '2018-01-01T00:00:00.000Z',
-              '2019-01-01T00:00:00.000Z',
-              '2020-01-01T00:00:00.000Z',
-              '2021-01-01T00:00:00.000Z',
-              '2022-01-01T00:00:00.000Z',
-            ],
-          },
-          rows: {
-            drilldown: ['New York'],
-            skip: [],
-          },
-        },
-      },
-    }
 
-    let { initial, makePages } = paginateExpandedGroups(input)
-    expect(initial).toEqual(expectedIntial)
+    let { getInitialRequest, getAdditionalRequests } = createPivotScope(
+      pivotTestNode({
+        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+        rows,
+        columns,
+        expansions: [...columnsExpantions, ...rowsExpansions, rowsExpansion],
+      }),
+      testSchema('LineItem.TotalPrice'),
+      getStats
+    )
+
+    let expectedIntial = {
+      type: 'rows',
+      columns: {
+        drilldown: [],
+        include: [
+          '2015-01-01T00:00:00.000Z',
+          '2016-01-01T00:00:00.000Z',
+          '2017-01-01T00:00:00.000Z',
+          '2018-01-01T00:00:00.000Z',
+          '2019-01-01T00:00:00.000Z',
+          '2020-01-01T00:00:00.000Z',
+          '2021-01-01T00:00:00.000Z',
+          '2022-01-01T00:00:00.000Z',
+        ],
+        totals: true,
+      },
+      rows: {
+        drilldown: ['New York'],
+        skip: [],
+        totals: false,
+      },
+    }
+    expect(getInitialRequest(rowsExpansion)).toEqual(expectedIntial)
 
     let includeValues = [
       'New York',
@@ -2614,64 +2088,46 @@ describe('pivot', () => {
       'Rochester',
       'White Plains',
     ]
-    let expectedPages = [
+    let expectedRequests = [
       {
-        key: 'test',
-        type: 'pivot',
-        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-        rows,
-        columns,
-        pagination: {
-          type: 'rows',
-          columns: columnsPages,
-          rows: [...rowsPages, { drilldown: ['New York'] }],
-          page: {
-            columns: {
-              drilldown: ['2015-01-01T00:00:00.000Z'],
-              include: [
-                '2015-01-01T00:00:00.000Z',
-                '2015-04-01T00:00:00.000Z',
-                '2015-07-01T00:00:00.000Z',
-                '2015-10-01T00:00:00.000Z',
-              ],
-            },
-            rows: {
-              drilldown: ['New York'],
-              include: includeValues,
-            },
-          },
+        type: 'rows',
+        columns: {
+          drilldown: ['2015-01-01T00:00:00.000Z'],
+          include: [
+            '2015-01-01T00:00:00.000Z',
+            '2015-04-01T00:00:00.000Z',
+            '2015-07-01T00:00:00.000Z',
+            '2015-10-01T00:00:00.000Z',
+          ],
+          totals: false,
+        },
+        rows: {
+          drilldown: ['New York'],
+          include: includeValues,
+          totals: false,
         },
       },
       {
-        key: 'test',
-        type: 'pivot',
-        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-        rows,
-        columns,
-        pagination: {
-          type: 'rows',
-          columns: columnsPages,
-          rows: [...rowsPages, { drilldown: ['New York'] }],
-          page: {
-            columns: {
-              drilldown: ['2016-01-01T00:00:00.000Z'],
-              include: [
-                '2016-01-01T00:00:00.000Z',
-                '2016-04-01T00:00:00.000Z',
-                '2016-07-01T00:00:00.000Z',
-                '2016-10-01T00:00:00.000Z',
-              ],
-            },
-            rows: {
-              drilldown: ['New York'],
-              include: includeValues,
-            },
-          },
+        type: 'rows',
+        columns: {
+          drilldown: ['2016-01-01T00:00:00.000Z'],
+          include: [
+            '2016-01-01T00:00:00.000Z',
+            '2016-04-01T00:00:00.000Z',
+            '2016-07-01T00:00:00.000Z',
+            '2016-10-01T00:00:00.000Z',
+          ],
+          totals: false,
+        },
+        rows: {
+          drilldown: ['New York'],
+          include: includeValues,
+          totals: false,
         },
       },
     ]
-    let pages = makePages(includeValues)
-    expect(pages).toEqual(expectedPages)
+    let requests = getAdditionalRequests(rowsExpansion, includeValues)
+    expect(requests).toEqual(expectedRequests)
   })
   it('should handle pivotResponse', () => {
     let aggs = pivotResponse.aggregations
@@ -2683,7 +2139,13 @@ describe('pivot', () => {
       return buck
     }, aggs.rows.buckets)
 
-    let nestedResult = processResponse(pivotResponse)
+    let { processResponse } = createPivotScope(
+      pivotTestNode(),
+      testSchema('Vendor.Name'),
+      getStats
+    )
+
+    let nestedResult = processResponse(rootPivotRequest, pivotResponse)
     expect(stringify(nestedResult.results)).toEqual(
       stringify({
         count: 442825686,
@@ -2809,9 +2271,8 @@ describe('pivot', () => {
     )
   })
   it('should handle pivotResponse with filtered fieldValueRow', () => {
-    let nestedResult = processResponse(
-      pivotRepsonseWithFilteredFieldValueGroup,
-      {
+    let { processResponse } = createPivotScope(
+      pivotTestNode({
         values: [{ field: 'PO.IssuedAmount', type: 'avg' }],
         rows: [
           {
@@ -2821,7 +2282,13 @@ describe('pivot', () => {
           },
           { field: 'PO.IssuedDate', type: 'dateInterval', interval: 'year' },
         ],
-      }
+      }),
+      testSchema('Vendor.Name'),
+      getStats
+    )
+    let nestedResult = processResponse(
+      rootPivotRequest,
+      pivotRepsonseWithFilteredFieldValueGroup
     )
     expect(stringify(nestedResult.results)).toEqual(
       stringify({
@@ -3054,18 +2521,12 @@ describe('pivot', () => {
     )
   })
   it('should processResponse correctly for pivots with columns', () => {
-    let nestedResult = processResponse(columnResponse, {
-      key: 'test',
-      type: 'pivot',
-      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-      rows: [
-        { type: 'fieldValues', field: 'Organization.State' },
-        { type: 'fieldValues', field: 'Organization.NameState' },
-      ],
-      columns: [
-        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-      ],
-    })
+    let { processResponse } = createPivotScope(
+      pivotTestNode(),
+      testSchema('Vendor.Name'),
+      getStats
+    )
+    let nestedResult = processResponse(rootPivotRequest, columnResponse)
     expect(stringify(nestedResult.results)).toEqual(stringify(columnResult))
   })
   it('should filter', async () => {
