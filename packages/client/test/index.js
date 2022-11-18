@@ -2387,11 +2387,10 @@ let AllTests = ContextureClient => {
     node.expand(Tree, ['root', 'pivot'], 'rows', ['Florida'])
 
     expect(toJS(Tree.getNode(['root', 'pivot']).expansions)).toEqual([
-        { type: 'columns', drilldown: [], loaded: [] },
-        { type: 'rows', drilldown: [], loaded: [ 'Florida', 'Nevada' ] },
-        { type: 'rows', drilldown: [ 'Florida' ], loaded: false }
-      ]
-    )
+      { type: 'columns', drilldown: [], loaded: [] },
+      { type: 'rows', drilldown: [], loaded: ['Florida', 'Nevada'] },
+      { type: 'rows', drilldown: ['Florida'], loaded: false },
+    ])
   })
   it('should preserve expanded columns when changing sort configuration', async () => {
     let service = jest.fn(mockService())
@@ -2464,12 +2463,14 @@ let AllTests = ContextureClient => {
       },
     })
 
-    expect(toJS(Tree.getNode(['root', 'pivot']).expansions)).toEqual([{
-        'drilldown': [],
-        'loaded': ['Florida', 'Nevada'],
-        'type': 'columns',
-      }, { 'drilldown': ['Florida'], 'loaded': false, 'type': 'columns' }],
-    )
+    expect(toJS(Tree.getNode(['root', 'pivot']).expansions)).toEqual([
+      {
+        drilldown: [],
+        loaded: ['Florida', 'Nevada'],
+        type: 'columns',
+      },
+      { drilldown: ['Florida'], loaded: false, type: 'columns' },
+    ])
   })
   it('should support watchNode', async () => {
     let service = jest.fn(mockService())
