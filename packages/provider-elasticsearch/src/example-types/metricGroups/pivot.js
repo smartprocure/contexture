@@ -432,12 +432,11 @@ let createPivotScope = (node, schema, getStats) => {
     if (!results) return results
 
     // keeping the root counter only for request with totals
-    // otherwise cleaning root level counter + counters above drilldown
+    // otherwise cleaning root level counter + counters above drilldown depth
     let columnsDepth =
-      _.size(request.columns.drilldown) + request.columns.totals ? 0 : 1
-    let rowsDepth = _.size(request.rows.drilldown) + request.rows.totals ? 0 : 1
-
-    // TODO fix total column on total row when drilling columns
+      _.size(request.columns.drilldown) + (request.columns.totals ? 0 : 1)
+    let rowsDepth =
+      _.size(request.rows.drilldown) + (request.rows.totals ? 0 : 1)
 
     Tree.walk((leaf, index, parents) => {
       if (parents.length < rowsDepth) leaf.count = undefined
@@ -470,6 +469,7 @@ let createPivotScope = (node, schema, getStats) => {
     getGridExpansions,
     getInitialRequest,
     getAdditionalRequests,
+    getAggsForValues,
     getDrilldownFilters,
     getRequestFilters,
     buildQuery,
@@ -515,6 +515,7 @@ let filter = async (node, schema) => {
 let pivot = {
   hasValue,
   filter,
+  createPivotScope,
   validContext: node => node.rows.length && node.values.length,
   async result(node, search, schema) {
     let {
