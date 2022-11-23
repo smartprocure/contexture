@@ -229,10 +229,8 @@ let createPivotScope = (node, schema, getStats) => {
   let getSortAgg = async sort => {
     if (!sort) return
     let filters = await getDrilldownFilters({
-      drilldowns: sort.columnValues,
+      drilldown: sort.columnValues,
       groups: node.columns,
-      schema,
-      getStats,
     })
     let valueNode = node.values[sort.valueIndex]
     let metric = valueNode && {
@@ -274,7 +272,7 @@ let createPivotScope = (node, schema, getStats) => {
         if (!group.size) group.size = 10
         // Calculating subtotal metrics at each group level if not drilling down
         // Support for per group stats could also be added here - merge on another stats agg blob to children based on group.stats/statsField or group.values
-        if (!_.get([groupingType, 'drilldown'], request))
+        if (_.get(['expanded', groupingType], node))
           children = _.merge(await children, statsAggs)
         // At each level, add a filters bucket agg and nested metric to enable sorting
         // For example, to sort by Sum of Price for 2022, add a filters agg for 2022 and nested metric for sum of price so we can target it
@@ -294,18 +292,19 @@ let createPivotScope = (node, schema, getStats) => {
   }
 
   let buildQuery = async request => {
-    let rowDrills = _.getOr([], 'rows.drilldown', request)
     let columnDrills = _.getOr([], 'columns.drilldown', request)
+    let rowDrills = _.getOr([], 'rows.drilldown', request)
     // Don't consider deeper levels than +1 the current drilldown
     // This allows avoiding expansion until ready
-    // Opt out with falsey drilldown
-    let rows = _.get('rows.drilldown', request)
-      ? _.take(_.size(rowDrills) + 1, node.rows)
-      : node.rows
+    // Opt out with expandColumns / expandRows
 
-    let columns = _.get('columns.drilldown', request)
-      ? _.take(_.size(columnDrills) + 1, node.columns)
-      : node.columns
+    let columns = _.get('expanded.columns', node)
+      ? node.columns
+      : _.take(_.size(columnDrills) + 1, node.columns)
+
+    let rows = _.get('expanded.rows', node)
+      ? node.rows
+      : _.take(_.size(rowDrills) + 1, node.rows)
 
     // Filtering data specified by the drilldown
     let drilldownColumnFilters = await getDrilldownFilters({

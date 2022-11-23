@@ -48,7 +48,7 @@ describe('pivot', () => {
   it('aggsForValues', () => {
     let { getAggsForValues } = createPivotScope(
       pivotTestNode(),
-      testSchema('LineItem.TotalPrice'),
+      {},
       getStats
     )
     let values = [
@@ -59,16 +59,16 @@ describe('pivot', () => {
     ]
     expect(getAggsForValues(values)).toEqual({
       'pivotMetric-min-LineItem.TotalPrice': {
-        min: { field: 'LineItem.TotalPrice.untouched' },
+        min: { field: 'LineItem.TotalPrice' },
       },
       'pivotMetric-max-LineItem.TotalPrice': {
-        max: { field: 'LineItem.TotalPrice.untouched' },
+        max: { field: 'LineItem.TotalPrice' },
       },
       'pivotMetric-avg-LineItem.TotalPrice': {
-        avg: { field: 'LineItem.TotalPrice.untouched' },
+        avg: { field: 'LineItem.TotalPrice' },
       },
       'pivotMetric-sum-LineItem.TotalPrice': {
-        sum: { field: 'LineItem.TotalPrice.untouched' },
+        sum: { field: 'LineItem.TotalPrice' },
       },
     })
   })
@@ -107,11 +107,12 @@ describe('pivot', () => {
           { type: 'cardinality', field: 'Vendor.Name' },
           { type: 'topHits' },
         ],
+        columns: [],
         rows: [
           { type: 'fieldValues', field: 'Organization.NameState' },
           { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
         ],
-        columns: [],
+        expanded: { columns: true, rows: true },
       }),
       testSchemas(['Organization.NameState', 'Vendor.Name']),
       getStats
@@ -122,6 +123,37 @@ describe('pivot', () => {
         rows: {
           terms: { field: 'Organization.NameState.untouched', size: 10 },
           aggs: {
+            rows: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                interval: 'month',
+                min_doc_count: 0,
+              },
+              aggs: {
+                'pivotMetric-min-LineItem.TotalPrice': {
+                  min: { field: 'LineItem.TotalPrice' },
+                },
+                'pivotMetric-max-LineItem.TotalPrice': {
+                  max: { field: 'LineItem.TotalPrice' },
+                },
+                'pivotMetric-avg-LineItem.TotalPrice': {
+                  avg: { field: 'LineItem.TotalPrice' },
+                },
+                'pivotMetric-sum-LineItem.TotalPrice': {
+                  sum: { field: 'LineItem.TotalPrice' },
+                },
+                'pivotMetric-percentiles-LineItem.TotalPrice': {
+                  percentiles: {
+                    percents: [20, 50],
+                    field: 'LineItem.TotalPrice',
+                  },
+                },
+                'pivotMetric-cardinality-Vendor.Name': {
+                  cardinality: { field: 'Vendor.Name.untouched' },
+                },
+                'pivotMetric-topHits': { top_hits: {} },
+              },
+            },
             'pivotMetric-min-LineItem.TotalPrice': {
               min: { field: 'LineItem.TotalPrice' },
             },
@@ -178,6 +210,7 @@ describe('pivot', () => {
     let { buildQuery } = createPivotScope(
       pivotTestNode({
         values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+        columns: [],
         rows: [
           {
             type: 'fieldValuePartition',
@@ -185,7 +218,6 @@ describe('pivot', () => {
             matchValue: 'Washington',
           },
         ],
-        columns: [],
       }),
       testSchemas(['Vendor.City']),
       getStats
@@ -219,6 +251,7 @@ describe('pivot', () => {
     let { buildQuery } = createPivotScope(
       pivotTestNode({
         values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+        columns: [],
         rows: [
           {
             type: 'fieldValues',
@@ -226,7 +259,6 @@ describe('pivot', () => {
             filter: 'city',
           },
         ],
-        columns: [],
       }),
       testSchemas(['Vendor.City']),
       getStats
@@ -701,7 +733,12 @@ describe('pivot', () => {
     expect(result).toEqual(expected)
   })
   it('should buildQuery for fieldValues with drilldown and skip pagination', async () => {
-    let { buildQuery } = createPivotScope(
+    let expansion = {
+      type: 'rows',
+      drilldown: ['Reno', '0.0-500.0'],
+      loaded: false,
+    }
+    let { getInitialRequest, buildQuery } = createPivotScope(
       pivotTestNode({
         values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
         columns: [],
@@ -722,6 +759,19 @@ describe('pivot', () => {
             type: 'fieldValues',
             field: 'Organization.Type',
           },
+        ],
+        expansions: [
+          {
+            type: 'columns',
+            drilldown: [],
+            loaded: [],
+          },
+          {
+            type: 'rows',
+            drilldown: ['Reno', '0.0-500.0'],
+            loaded: ['A - U.S. OWNED BUSINESS'],
+          },
+          expansion,
         ],
       }),
       testSchemas(['Vendor.City']),
@@ -801,14 +851,7 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
-    let result = await buildQuery({
-      type: 'rows',
-      rows: {
-        drilldown: ['Reno', '0.0-500.0'],
-        skip: ['A - U.S. OWNED BUSINESS'],
-      },
-      columns: {},
-    })
+    let result = await buildQuery(getInitialRequest(expansion))
     expect(result).toEqual(expected)
   })
   it('should buildQuery for fieldValues with drilldown and loaded', async () => {
@@ -820,7 +863,12 @@ describe('pivot', () => {
     let { getInitialRequest, buildQuery } = createPivotScope(
       pivotTestNode({
         values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-        columns: [],
+        columns: [
+          {
+            type: 'fieldValues',
+            field: 'Organization.State',
+          },
+        ],
         rows: [
           {
             type: 'fieldValues',
@@ -843,7 +891,7 @@ describe('pivot', () => {
           {
             type: 'columns',
             drilldown: [],
-            loaded: [],
+            loaded: ['New York', 'Florida'],
           },
           {
             type: 'rows',
@@ -862,34 +910,101 @@ describe('pivot', () => {
           filter: {
             bool: {
               must: [
-                { term: { 'Organization.Name': 'Reno' } },
                 {
-                  range: { 'LineItem.TotalPrice': { gte: '0.0', lt: '500.0' } },
+                  term: {
+                    'Organization.Name': 'Reno',
+                  },
+                },
+                {
+                  range: {
+                    'LineItem.TotalPrice': {
+                      gte: '0.0',
+                      lt: '500.0',
+                    },
+                  },
                 },
               ],
               must_not: [
-                { term: { 'Organization.Type': 'A - U.S. OWNED BUSINESS' } },
+                {
+                  term: {
+                    'Organization.Type': 'A - U.S. OWNED BUSINESS',
+                  },
+                },
               ],
             },
           },
           aggs: {
             rows: {
-              terms: { size: 10, field: 'Organization.Name' },
+              terms: {
+                field: 'Organization.Name',
+                size: 10,
+              },
               aggs: {
                 rows: {
                   range: {
                     field: 'LineItem.TotalPrice',
                     ranges: [
-                      { from: '0', to: '500' },
-                      { from: '500', to: '10000' },
+                      {
+                        from: '0',
+                        to: '500',
+                      },
+                      {
+                        from: '500',
+                        to: '10000',
+                      },
                     ],
                   },
                   aggs: {
                     rows: {
-                      terms: { size: 10, field: 'Organization.Type' },
+                      terms: {
+                        field: 'Organization.Type',
+                        size: 10,
+                      },
                       aggs: {
+                        pivotFilter: {
+                          aggs: {
+                            columns: {
+                              aggs: {
+                                'pivotMetric-sum-LineItem.TotalPrice': {
+                                  sum: {
+                                    field: 'LineItem.TotalPrice',
+                                  },
+                                },
+                              },
+                              terms: {
+                                field: 'Organization.State',
+                                size: 10,
+                              },
+                            },
+                          },
+                          filter: {
+                            bool: {
+                              must: [
+                                {
+                                  bool: {
+                                    minimum_should_match: 1,
+                                    should: [
+                                      {
+                                        term: {
+                                          'Organization.State': 'New York',
+                                        },
+                                      },
+                                      {
+                                        term: {
+                                          'Organization.State': 'Florida',
+                                        },
+                                      },
+                                    ],
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                        },
                         'pivotMetric-sum-LineItem.TotalPrice': {
-                          sum: { field: 'LineItem.TotalPrice' },
+                          sum: {
+                            field: 'LineItem.TotalPrice',
+                          },
                         },
                       },
                     },
@@ -910,6 +1025,7 @@ describe('pivot', () => {
     let { buildQuery } = createPivotScope(
       pivotTestNode({
         values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+        columns: [],
         rows: [
           {
             type: 'numberInterval',
@@ -917,7 +1033,7 @@ describe('pivot', () => {
             interval: 'smart',
           },
         ],
-        columns: [],
+        expanded: { columns: true, rows: true },
       }),
       testSchemas(['Organization.NameState', 'Organization.State']),
       () => ({ min: 10, max: 500 })
@@ -957,11 +1073,12 @@ describe('pivot', () => {
           { type: 'avg', field: 'LineItem.TotalPrice' },
           { type: 'sum', field: 'LineItem.TotalPrice' },
         ],
+        columns: [],
         rows: [
           { type: 'fieldValues', field: 'Organization.NameState' },
           { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
         ],
-        columns: [],
+        expanded: { columns: true, rows: true },
       }),
       testSchemas(['Organization.NameState', 'Organization.State']),
       getStats
@@ -972,6 +1089,27 @@ describe('pivot', () => {
         rows: {
           terms: { field: 'Organization.NameState.untouched', size: 10 },
           aggs: {
+            rows: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                interval: 'month',
+                min_doc_count: 0,
+              },
+              aggs: {
+                'pivotMetric-min-LineItem.TotalPrice': {
+                  min: { field: 'LineItem.TotalPrice' },
+                },
+                'pivotMetric-max-LineItem.TotalPrice': {
+                  max: { field: 'LineItem.TotalPrice' },
+                },
+                'pivotMetric-avg-LineItem.TotalPrice': {
+                  avg: { field: 'LineItem.TotalPrice' },
+                },
+                'pivotMetric-sum-LineItem.TotalPrice': {
+                  sum: { field: 'LineItem.TotalPrice' },
+                },
+              },
+            },
             'pivotMetric-min-LineItem.TotalPrice': {
               min: { field: 'LineItem.TotalPrice' },
             },
@@ -1007,6 +1145,7 @@ describe('pivot', () => {
     let { buildQuery } = createPivotScope(
       pivotTestNode({
         values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+        columns: [],
         rows: [
           {
             type: 'tagsQuery',
@@ -1014,7 +1153,7 @@ describe('pivot', () => {
             tags: [{ word: 'test' }],
           },
         ],
-        columns: [],
+        expanded: { columns: true, rows: true },
       }),
       testSchemas(['Organization.NameState', 'Organization.State']),
       getStats
@@ -1074,27 +1213,56 @@ describe('pivot', () => {
             ],
           },
         ],
+        expanded: { columns: true, rows: true },
       }),
       testSchemas(['Organization.NameState', 'Organization.State']),
       getStats
     )
     let expected = {
       aggs: {
-        'pivotMetric-min-LineItem.TotalPrice': {
-          min: { field: 'LineItem.TotalPrice' },
-        },
-        'pivotMetric-max-LineItem.TotalPrice': {
-          max: { field: 'LineItem.TotalPrice' },
-        },
-        'pivotMetric-avg-LineItem.TotalPrice': {
-          avg: { field: 'LineItem.TotalPrice' },
-        },
-        'pivotMetric-sum-LineItem.TotalPrice': {
-          sum: { field: 'LineItem.TotalPrice' },
-        },
         rows: {
-          terms: { size: 10, field: 'Organization.State.untouched' },
+          terms: { field: 'Organization.State.untouched', size: 10 },
           aggs: {
+            rows: {
+              terms: { field: 'Organization.NameState.untouched', size: 10 },
+              aggs: {
+                rows: {
+                  range: {
+                    field: 'LineItem.TotalPrice',
+                    ranges: [
+                      { from: '0', to: '500' },
+                      { from: '500', to: '10000' },
+                    ],
+                  },
+                  aggs: {
+                    'pivotMetric-min-LineItem.TotalPrice': {
+                      min: { field: 'LineItem.TotalPrice' },
+                    },
+                    'pivotMetric-max-LineItem.TotalPrice': {
+                      max: { field: 'LineItem.TotalPrice' },
+                    },
+                    'pivotMetric-avg-LineItem.TotalPrice': {
+                      avg: { field: 'LineItem.TotalPrice' },
+                    },
+                    'pivotMetric-sum-LineItem.TotalPrice': {
+                      sum: { field: 'LineItem.TotalPrice' },
+                    },
+                  },
+                },
+                'pivotMetric-min-LineItem.TotalPrice': {
+                  min: { field: 'LineItem.TotalPrice' },
+                },
+                'pivotMetric-max-LineItem.TotalPrice': {
+                  max: { field: 'LineItem.TotalPrice' },
+                },
+                'pivotMetric-avg-LineItem.TotalPrice': {
+                  avg: { field: 'LineItem.TotalPrice' },
+                },
+                'pivotMetric-sum-LineItem.TotalPrice': {
+                  sum: { field: 'LineItem.TotalPrice' },
+                },
+              },
+            },
             'pivotMetric-min-LineItem.TotalPrice': {
               min: { field: 'LineItem.TotalPrice' },
             },
@@ -1108,6 +1276,18 @@ describe('pivot', () => {
               sum: { field: 'LineItem.TotalPrice' },
             },
           },
+        },
+        'pivotMetric-min-LineItem.TotalPrice': {
+          min: { field: 'LineItem.TotalPrice' },
+        },
+        'pivotMetric-max-LineItem.TotalPrice': {
+          max: { field: 'LineItem.TotalPrice' },
+        },
+        'pivotMetric-avg-LineItem.TotalPrice': {
+          avg: { field: 'LineItem.TotalPrice' },
+        },
+        'pivotMetric-sum-LineItem.TotalPrice': {
+          sum: { field: 'LineItem.TotalPrice' },
         },
       },
       track_total_hits: true,
@@ -1125,6 +1305,9 @@ describe('pivot', () => {
           { type: 'avg', field: 'LineItem.TotalPrice' },
           { type: 'sum', field: 'LineItem.TotalPrice' },
         ],
+        columns: [
+          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+        ],
         rows: [
           { type: 'fieldValues', field: 'Organization.State' },
           { type: 'fieldValues', field: 'Organization.NameState' },
@@ -1137,9 +1320,7 @@ describe('pivot', () => {
             ],
           },
         ],
-        columns: [
-          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-        ],
+        expanded: { columns: true, rows: true },
       }),
       testSchemas(['Organization.NameState', 'Organization.State']),
       getStats
@@ -1147,53 +1328,90 @@ describe('pivot', () => {
 
     let expected = {
       aggs: {
-        'pivotMetric-min-LineItem.TotalPrice': {
-          min: { field: 'LineItem.TotalPrice' },
-        },
-        'pivotMetric-max-LineItem.TotalPrice': {
-          max: { field: 'LineItem.TotalPrice' },
-        },
-        'pivotMetric-avg-LineItem.TotalPrice': {
-          avg: { field: 'LineItem.TotalPrice' },
-        },
-        'pivotMetric-sum-LineItem.TotalPrice': {
-          sum: { field: 'LineItem.TotalPrice' },
-        },
-        columns: {
-          date_histogram: {
-            field: 'PO.IssuedDate',
-            interval: 'year',
-            min_doc_count: 0,
-          },
-          aggs: {
-            'pivotMetric-min-LineItem.TotalPrice': {
-              min: { field: 'LineItem.TotalPrice' },
-            },
-            'pivotMetric-max-LineItem.TotalPrice': {
-              max: { field: 'LineItem.TotalPrice' },
-            },
-            'pivotMetric-avg-LineItem.TotalPrice': {
-              avg: { field: 'LineItem.TotalPrice' },
-            },
-            'pivotMetric-sum-LineItem.TotalPrice': {
-              sum: { field: 'LineItem.TotalPrice' },
-            },
-          },
-        },
         rows: {
-          terms: { size: 10, field: 'Organization.State.untouched' },
+          terms: { field: 'Organization.State.untouched', size: 10 },
           aggs: {
-            'pivotMetric-min-LineItem.TotalPrice': {
-              min: { field: 'LineItem.TotalPrice' },
-            },
-            'pivotMetric-max-LineItem.TotalPrice': {
-              max: { field: 'LineItem.TotalPrice' },
-            },
-            'pivotMetric-avg-LineItem.TotalPrice': {
-              avg: { field: 'LineItem.TotalPrice' },
-            },
-            'pivotMetric-sum-LineItem.TotalPrice': {
-              sum: { field: 'LineItem.TotalPrice' },
+            rows: {
+              terms: { field: 'Organization.NameState.untouched', size: 10 },
+              aggs: {
+                rows: {
+                  range: {
+                    field: 'LineItem.TotalPrice',
+                    ranges: [
+                      { from: '0', to: '500' },
+                      { from: '500', to: '10000' },
+                    ],
+                  },
+                  aggs: {
+                    columns: {
+                      date_histogram: {
+                        field: 'PO.IssuedDate',
+                        interval: 'year',
+                        min_doc_count: 0,
+                      },
+                      aggs: {
+                        'pivotMetric-min-LineItem.TotalPrice': {
+                          min: { field: 'LineItem.TotalPrice' },
+                        },
+                        'pivotMetric-max-LineItem.TotalPrice': {
+                          max: { field: 'LineItem.TotalPrice' },
+                        },
+                        'pivotMetric-avg-LineItem.TotalPrice': {
+                          avg: { field: 'LineItem.TotalPrice' },
+                        },
+                        'pivotMetric-sum-LineItem.TotalPrice': {
+                          sum: { field: 'LineItem.TotalPrice' },
+                        },
+                      },
+                    },
+                    'pivotMetric-min-LineItem.TotalPrice': {
+                      min: { field: 'LineItem.TotalPrice' },
+                    },
+                    'pivotMetric-max-LineItem.TotalPrice': {
+                      max: { field: 'LineItem.TotalPrice' },
+                    },
+                    'pivotMetric-avg-LineItem.TotalPrice': {
+                      avg: { field: 'LineItem.TotalPrice' },
+                    },
+                    'pivotMetric-sum-LineItem.TotalPrice': {
+                      sum: { field: 'LineItem.TotalPrice' },
+                    },
+                  },
+                },
+                columns: {
+                  date_histogram: {
+                    field: 'PO.IssuedDate',
+                    interval: 'year',
+                    min_doc_count: 0,
+                  },
+                  aggs: {
+                    'pivotMetric-min-LineItem.TotalPrice': {
+                      min: { field: 'LineItem.TotalPrice' },
+                    },
+                    'pivotMetric-max-LineItem.TotalPrice': {
+                      max: { field: 'LineItem.TotalPrice' },
+                    },
+                    'pivotMetric-avg-LineItem.TotalPrice': {
+                      avg: { field: 'LineItem.TotalPrice' },
+                    },
+                    'pivotMetric-sum-LineItem.TotalPrice': {
+                      sum: { field: 'LineItem.TotalPrice' },
+                    },
+                  },
+                },
+                'pivotMetric-min-LineItem.TotalPrice': {
+                  min: { field: 'LineItem.TotalPrice' },
+                },
+                'pivotMetric-max-LineItem.TotalPrice': {
+                  max: { field: 'LineItem.TotalPrice' },
+                },
+                'pivotMetric-avg-LineItem.TotalPrice': {
+                  avg: { field: 'LineItem.TotalPrice' },
+                },
+                'pivotMetric-sum-LineItem.TotalPrice': {
+                  sum: { field: 'LineItem.TotalPrice' },
+                },
+              },
             },
             columns: {
               date_histogram: {
@@ -1216,7 +1434,52 @@ describe('pivot', () => {
                 },
               },
             },
+            'pivotMetric-min-LineItem.TotalPrice': {
+              min: { field: 'LineItem.TotalPrice' },
+            },
+            'pivotMetric-max-LineItem.TotalPrice': {
+              max: { field: 'LineItem.TotalPrice' },
+            },
+            'pivotMetric-avg-LineItem.TotalPrice': {
+              avg: { field: 'LineItem.TotalPrice' },
+            },
+            'pivotMetric-sum-LineItem.TotalPrice': {
+              sum: { field: 'LineItem.TotalPrice' },
+            },
           },
+        },
+        columns: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            interval: 'year',
+            min_doc_count: 0,
+          },
+          aggs: {
+            'pivotMetric-min-LineItem.TotalPrice': {
+              min: { field: 'LineItem.TotalPrice' },
+            },
+            'pivotMetric-max-LineItem.TotalPrice': {
+              max: { field: 'LineItem.TotalPrice' },
+            },
+            'pivotMetric-avg-LineItem.TotalPrice': {
+              avg: { field: 'LineItem.TotalPrice' },
+            },
+            'pivotMetric-sum-LineItem.TotalPrice': {
+              sum: { field: 'LineItem.TotalPrice' },
+            },
+          },
+        },
+        'pivotMetric-min-LineItem.TotalPrice': {
+          min: { field: 'LineItem.TotalPrice' },
+        },
+        'pivotMetric-max-LineItem.TotalPrice': {
+          max: { field: 'LineItem.TotalPrice' },
+        },
+        'pivotMetric-avg-LineItem.TotalPrice': {
+          avg: { field: 'LineItem.TotalPrice' },
+        },
+        'pivotMetric-sum-LineItem.TotalPrice': {
+          sum: { field: 'LineItem.TotalPrice' },
         },
       },
       track_total_hits: true,
@@ -1235,33 +1498,37 @@ describe('pivot', () => {
         columns: [
           { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
         ],
+        expanded: { columns: true, rows: true },
       }),
       testSchemas(['Organization.NameState', 'Organization.State']),
       getStats
     )
 
     let expected = {
+      track_total_hits: true,
       aggs: {
-        'pivotMetric-sum-LineItem.TotalPrice': {
-          sum: { field: 'LineItem.TotalPrice' },
-        },
-        columns: {
-          date_histogram: {
-            field: 'PO.IssuedDate',
-            interval: 'year',
-            min_doc_count: 0,
-          },
-          aggs: {
-            'pivotMetric-sum-LineItem.TotalPrice': {
-              sum: { field: 'LineItem.TotalPrice' },
-            },
-          },
-        },
         rows: {
-          terms: { size: 10, field: 'Organization.State.untouched' },
+          terms: { field: 'Organization.State.untouched', size: 10 },
           aggs: {
-            'pivotMetric-sum-LineItem.TotalPrice': {
-              sum: { field: 'LineItem.TotalPrice' },
+            rows: {
+              terms: { field: 'Organization.NameState.untouched', size: 10 },
+              aggs: {
+                columns: {
+                  date_histogram: {
+                    field: 'PO.IssuedDate',
+                    interval: 'year',
+                    min_doc_count: 0,
+                  },
+                  aggs: {
+                    'pivotMetric-sum-LineItem.TotalPrice': {
+                      sum: { field: 'LineItem.TotalPrice' },
+                    },
+                  },
+                },
+                'pivotMetric-sum-LineItem.TotalPrice': {
+                  sum: { field: 'LineItem.TotalPrice' },
+                },
+              },
             },
             columns: {
               date_histogram: {
@@ -1275,10 +1542,27 @@ describe('pivot', () => {
                 },
               },
             },
+            'pivotMetric-sum-LineItem.TotalPrice': {
+              sum: { field: 'LineItem.TotalPrice' },
+            },
           },
         },
+        columns: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            interval: 'year',
+            min_doc_count: 0,
+          },
+          aggs: {
+            'pivotMetric-sum-LineItem.TotalPrice': {
+              sum: { field: 'LineItem.TotalPrice' },
+            },
+          },
+        },
+        'pivotMetric-sum-LineItem.TotalPrice': {
+          sum: { field: 'LineItem.TotalPrice' },
+        },
       },
-      track_total_hits: true,
     }
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
@@ -1303,6 +1587,7 @@ describe('pivot', () => {
           valueIndex: 0,
           direction: 'asc',
         },
+        expanded: { columns: true, rows: true },
       }),
       testSchemas(['Organization.NameState', 'Organization.State']),
       getStats
@@ -1310,31 +1595,29 @@ describe('pivot', () => {
 
     let expected = {
       aggs: {
-        'pivotMetric-sum-PO.IssuedAmount': {
-          sum: { field: 'PO.IssuedAmount' },
-        },
-        columns: {
-          date_histogram: {
-            field: 'PO.IssuedDate',
-            interval: 'year',
-            min_doc_count: 0,
-          },
-          aggs: {
-            'pivotMetric-sum-PO.IssuedAmount': {
-              sum: { field: 'PO.IssuedAmount' },
-            },
-          },
-        },
         rows: {
           terms: {
+            field: 'Organization.State.untouched',
             size: 10,
             order: { 'sortFilter>metric': 'asc' },
-            field: 'Organization.State.untouched',
           },
           aggs: {
-            metric: { sum: { field: 'PO.IssuedAmount' } },
-            'pivotMetric-sum-PO.IssuedAmount': {
-              sum: { field: 'PO.IssuedAmount' },
+            sortFilter: {
+              filter: {
+                bool: {
+                  must: [
+                    {
+                      range: {
+                        'PO.IssuedDate': {
+                          gte: '2022',
+                          lte: '2022-12-31T23:59:59Z',
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+              aggs: { metric: { sum: { field: 'PO.IssuedAmount' } } },
             },
             columns: {
               date_histogram: {
@@ -1348,7 +1631,25 @@ describe('pivot', () => {
                 },
               },
             },
+            'pivotMetric-sum-PO.IssuedAmount': {
+              sum: { field: 'PO.IssuedAmount' },
+            },
           },
+        },
+        columns: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            interval: 'year',
+            min_doc_count: 0,
+          },
+          aggs: {
+            'pivotMetric-sum-PO.IssuedAmount': {
+              sum: { field: 'PO.IssuedAmount' },
+            },
+          },
+        },
+        'pivotMetric-sum-PO.IssuedAmount': {
+          sum: { field: 'PO.IssuedAmount' },
         },
       },
       track_total_hits: true,
@@ -1370,6 +1671,7 @@ describe('pivot', () => {
         columns: [
           { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
         ],
+        expanded: { columns: true, rows: true },
       }),
       testSchemas(['Organization.NameState', 'Organization.State']),
       getStats
@@ -1440,6 +1742,7 @@ describe('pivot', () => {
           valueIndex: 1,
           direction: 'asc',
         },
+        expanded: { columns: true, rows: true },
       }),
       testSchemas(['Organization.NameState', 'Organization.State']),
       getStats
@@ -1447,11 +1750,66 @@ describe('pivot', () => {
 
     let expected = {
       aggs: {
-        'pivotMetric-sum-PO.IssuedAmount': {
-          sum: { field: 'PO.IssuedAmount' },
-        },
-        'pivotMetric-avg-PO.IssuedAmount': {
-          avg: { field: 'PO.IssuedAmount' },
+        rows: {
+          terms: {
+            field: 'Organization.State.untouched',
+            size: 10,
+            order: {
+              'sortFilter>metric': 'asc',
+            },
+          },
+          aggs: {
+            sortFilter: {
+              filter: {
+                bool: {
+                  must: [
+                    {
+                      range: {
+                        'PO.IssuedDate': {
+                          gte: '2022',
+                          lte: '2022-12-31T23:59:59Z',
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+              aggs: {
+                metric: {
+                  avg: {
+                    field: 'PO.IssuedAmount',
+                  },
+                },
+              },
+            },
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                interval: 'year',
+                min_doc_count: 0,
+              },
+              aggs: {
+                'pivotMetric-sum-PO.IssuedAmount': {
+                  sum: {
+                    field: 'PO.IssuedAmount',
+                  },
+                },
+                'pivotMetric-avg-PO.IssuedAmount': {
+                  avg: {
+                    field: 'PO.IssuedAmount',
+                  },
+                },
+              },
+            },
+            'pivotMetric-sum-PO.IssuedAmount': {
+              sum: { field: 'PO.IssuedAmount' },
+            },
+            'pivotMetric-avg-PO.IssuedAmount': {
+              avg: {
+                field: 'PO.IssuedAmount',
+              },
+            },
+          },
         },
         columns: {
           date_histogram: {
@@ -1464,39 +1822,18 @@ describe('pivot', () => {
               sum: { field: 'PO.IssuedAmount' },
             },
             'pivotMetric-avg-PO.IssuedAmount': {
-              avg: { field: 'PO.IssuedAmount' },
+              avg: {
+                field: 'PO.IssuedAmount',
+              },
             },
           },
         },
-        rows: {
-          terms: {
-            size: 10,
-            order: { 'sortFilter>metric': 'asc' },
-            field: 'Organization.State.untouched',
-          },
-          aggs: {
-            metric: { avg: { field: 'PO.IssuedAmount' } },
-            'pivotMetric-sum-PO.IssuedAmount': {
-              sum: { field: 'PO.IssuedAmount' },
-            },
-            'pivotMetric-avg-PO.IssuedAmount': {
-              avg: { field: 'PO.IssuedAmount' },
-            },
-            columns: {
-              date_histogram: {
-                field: 'PO.IssuedDate',
-                interval: 'year',
-                min_doc_count: 0,
-              },
-              aggs: {
-                'pivotMetric-sum-PO.IssuedAmount': {
-                  sum: { field: 'PO.IssuedAmount' },
-                },
-                'pivotMetric-avg-PO.IssuedAmount': {
-                  avg: { field: 'PO.IssuedAmount' },
-                },
-              },
-            },
+        'pivotMetric-sum-PO.IssuedAmount': {
+          sum: { field: 'PO.IssuedAmount' },
+        },
+        'pivotMetric-avg-PO.IssuedAmount': {
+          avg: {
+            field: 'PO.IssuedAmount',
           },
         },
       },
@@ -1518,17 +1855,43 @@ describe('pivot', () => {
           { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
         ],
         sort: { valueIndex: 1, direction: 'asc' },
+        expanded: { columns: true, rows: true },
       }),
       testSchemas(['Organization.NameState', 'Organization.State']),
       getStats
     )
     let expected = {
       aggs: {
-        'pivotMetric-sum-PO.IssuedAmount': {
-          sum: { field: 'PO.IssuedAmount' },
-        },
-        'pivotMetric-avg-PO.IssuedAmount': {
-          avg: { field: 'PO.IssuedAmount' },
+        rows: {
+          terms: {
+            field: 'Organization.State.untouched',
+            size: 10,
+            order: { metric: 'asc' },
+          },
+          aggs: {
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                interval: 'year',
+                min_doc_count: 0,
+              },
+              aggs: {
+                'pivotMetric-sum-PO.IssuedAmount': {
+                  sum: { field: 'PO.IssuedAmount' },
+                },
+                'pivotMetric-avg-PO.IssuedAmount': {
+                  avg: { field: 'PO.IssuedAmount' },
+                },
+              },
+            },
+            'pivotMetric-sum-PO.IssuedAmount': {
+              sum: { field: 'PO.IssuedAmount' },
+            },
+            'pivotMetric-avg-PO.IssuedAmount': {
+              avg: { field: 'PO.IssuedAmount' },
+            },
+            metric: { avg: { field: 'PO.IssuedAmount' } },
+          },
         },
         columns: {
           date_histogram: {
@@ -1545,36 +1908,11 @@ describe('pivot', () => {
             },
           },
         },
-        rows: {
-          terms: {
-            size: 10,
-            order: { metric: 'asc' },
-            field: 'Organization.State.untouched',
-          },
-          aggs: {
-            metric: { avg: { field: 'PO.IssuedAmount' } },
-            'pivotMetric-sum-PO.IssuedAmount': {
-              sum: { field: 'PO.IssuedAmount' },
-            },
-            'pivotMetric-avg-PO.IssuedAmount': {
-              avg: { field: 'PO.IssuedAmount' },
-            },
-            columns: {
-              date_histogram: {
-                field: 'PO.IssuedDate',
-                interval: 'year',
-                min_doc_count: 0,
-              },
-              aggs: {
-                'pivotMetric-sum-PO.IssuedAmount': {
-                  sum: { field: 'PO.IssuedAmount' },
-                },
-                'pivotMetric-avg-PO.IssuedAmount': {
-                  avg: { field: 'PO.IssuedAmount' },
-                },
-              },
-            },
-          },
+        'pivotMetric-sum-PO.IssuedAmount': {
+          sum: { field: 'PO.IssuedAmount' },
+        },
+        'pivotMetric-avg-PO.IssuedAmount': {
+          avg: { field: 'PO.IssuedAmount' },
         },
       },
       track_total_hits: true,
@@ -1595,6 +1933,7 @@ describe('pivot', () => {
           { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
         ],
         sort: { valueIndex: null, direction: 'asc' },
+        expanded: { columns: true, rows: true },
       }),
       testSchemas(['Organization.NameState', 'Organization.State']),
       getStats
@@ -1672,6 +2011,7 @@ describe('pivot', () => {
           valueIndex: 0,
           direction: 'asc',
         },
+        expanded: { columns: true, rows: true },
       }),
       testSchemas(['Organization.NameState', 'Organization.State']),
       getStats
@@ -1679,31 +2019,37 @@ describe('pivot', () => {
 
     let expected = {
       aggs: {
-        'pivotMetric-sum-PO.IssuedAmount': {
-          sum: { field: 'PO.IssuedAmount' },
-        },
-        columns: {
-          date_histogram: {
-            field: 'PO.IssuedDate',
-            interval: 'year',
-            min_doc_count: 0,
-          },
-          aggs: {
-            'pivotMetric-sum-PO.IssuedAmount': {
-              sum: { field: 'PO.IssuedAmount' },
-            },
-          },
-        },
         rows: {
           terms: {
+            field: 'Organization.State.untouched',
             size: 10,
             order: { 'sortFilter>metric': 'asc' },
-            field: 'Organization.State.untouched',
           },
           aggs: {
-            metric: { sum: { field: 'PO.IssuedAmount' } },
-            'pivotMetric-sum-PO.IssuedAmount': {
-              sum: { field: 'PO.IssuedAmount' },
+            sortFilter: {
+              filter: {
+                bool: {
+                  must: [
+                    {
+                      range: {
+                        'PO.IssuedDate': {
+                          gte: '2022',
+                          lte: '2022-12-31T23:59:59Z',
+                        },
+                      },
+                    },
+                    {
+                      range: {
+                        'PO.IssuedDate': {
+                          gte: '2022-02-01',
+                          lte: '2022-02-28T23:59:59Z',
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+              aggs: { metric: { sum: { field: 'PO.IssuedAmount' } } },
             },
             columns: {
               date_histogram: {
@@ -1712,12 +2058,54 @@ describe('pivot', () => {
                 min_doc_count: 0,
               },
               aggs: {
+                columns: {
+                  date_histogram: {
+                    field: 'PO.IssuedDate',
+                    interval: 'month',
+                    min_doc_count: 0,
+                  },
+                  aggs: {
+                    'pivotMetric-sum-PO.IssuedAmount': {
+                      sum: { field: 'PO.IssuedAmount' },
+                    },
+                  },
+                },
                 'pivotMetric-sum-PO.IssuedAmount': {
                   sum: { field: 'PO.IssuedAmount' },
                 },
               },
             },
+            'pivotMetric-sum-PO.IssuedAmount': {
+              sum: { field: 'PO.IssuedAmount' },
+            },
           },
+        },
+        columns: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            interval: 'year',
+            min_doc_count: 0,
+          },
+          aggs: {
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                interval: 'month',
+                min_doc_count: 0,
+              },
+              aggs: {
+                'pivotMetric-sum-PO.IssuedAmount': {
+                  sum: { field: 'PO.IssuedAmount' },
+                },
+              },
+            },
+            'pivotMetric-sum-PO.IssuedAmount': {
+              sum: { field: 'PO.IssuedAmount' },
+            },
+          },
+        },
+        'pivotMetric-sum-PO.IssuedAmount': {
+          sum: { field: 'PO.IssuedAmount' },
         },
       },
       track_total_hits: true,
@@ -1743,37 +2131,77 @@ describe('pivot', () => {
           valueProp: 'max',
           direction: 'desc',
         },
+        expanded: { columns: true, rows: true },
       }),
       testSchemas(['Organization.NameState', 'Organization.State']),
       getStats
     )
     let expected = {
       aggs: {
-        'pivotMetric-stats-PO.IssuedAmount': {
-          stats: { field: 'PO.IssuedAmount' },
-        },
-        columns: {
-          date_histogram: {
-            field: 'PO.IssuedDate',
-            interval: 'year',
-            min_doc_count: 0,
-          },
-          aggs: {
-            'pivotMetric-stats-PO.IssuedAmount': {
-              stats: { field: 'PO.IssuedAmount' },
-            },
-          },
-        },
         rows: {
           terms: {
+            field: 'Organization.State.untouched',
             size: 10,
             order: { 'sortFilter>metric.max': 'desc' },
-            field: 'Organization.State.untouched',
           },
           aggs: {
-            metric: { stats: { field: 'PO.IssuedAmount' } },
-            'pivotMetric-stats-PO.IssuedAmount': {
-              stats: { field: 'PO.IssuedAmount' },
+            sortFilter: {
+              filter: {
+                bool: {
+                  must: [
+                    {
+                      range: {
+                        'PO.IssuedDate': {
+                          gte: '2022',
+                          lte: '2022-12-31T23:59:59Z',
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+              aggs: { metric: { stats: { field: 'PO.IssuedAmount' } } },
+            },
+            rows: {
+              terms: {
+                field: 'Organization.NameState.untouched',
+                size: 10,
+                order: { 'sortFilter>metric.max': 'desc' },
+              },
+              aggs: {
+                sortFilter: {
+                  filter: {
+                    bool: {
+                      must: [
+                        {
+                          range: {
+                            'PO.IssuedDate': {
+                              gte: '2022',
+                              lte: '2022-12-31T23:59:59Z',
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                  aggs: { metric: { stats: { field: 'PO.IssuedAmount' } } },
+                },
+                columns: {
+                  date_histogram: {
+                    field: 'PO.IssuedDate',
+                    interval: 'year',
+                    min_doc_count: 0,
+                  },
+                  aggs: {
+                    'pivotMetric-stats-PO.IssuedAmount': {
+                      stats: { field: 'PO.IssuedAmount' },
+                    },
+                  },
+                },
+                'pivotMetric-stats-PO.IssuedAmount': {
+                  stats: { field: 'PO.IssuedAmount' },
+                },
+              },
             },
             columns: {
               date_histogram: {
@@ -1787,7 +2215,25 @@ describe('pivot', () => {
                 },
               },
             },
+            'pivotMetric-stats-PO.IssuedAmount': {
+              stats: { field: 'PO.IssuedAmount' },
+            },
           },
+        },
+        columns: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            interval: 'year',
+            min_doc_count: 0,
+          },
+          aggs: {
+            'pivotMetric-stats-PO.IssuedAmount': {
+              stats: { field: 'PO.IssuedAmount' },
+            },
+          },
+        },
+        'pivotMetric-stats-PO.IssuedAmount': {
+          stats: { field: 'PO.IssuedAmount' },
         },
       },
       track_total_hits: true,
@@ -1810,6 +2256,7 @@ describe('pivot', () => {
           columnValues: ['2022'],
           direction: 'desc',
         },
+        expanded: { columns: true, rows: true },
       }),
       testSchemas(['Organization.NameState', 'Organization.State']),
       getStats
@@ -1817,30 +2264,76 @@ describe('pivot', () => {
 
     let expected = {
       aggs: {
-        'pivotMetric-stats-PO.IssuedAmount': {
-          stats: { field: 'PO.IssuedAmount' },
-        },
-        columns: {
-          date_histogram: {
-            field: 'PO.IssuedDate',
-            interval: 'year',
-            min_doc_count: 0,
-          },
-          aggs: {
-            'pivotMetric-stats-PO.IssuedAmount': {
-              stats: { field: 'PO.IssuedAmount' },
-            },
-          },
-        },
         rows: {
           terms: {
-            size: 10,
-            order: { 'sortFilter.doc_count': 'desc' },
             field: 'Organization.State.untouched',
+            size: 10,
+            order: {
+              'sortFilter.doc_count': 'desc',
+            },
           },
           aggs: {
-            'pivotMetric-stats-PO.IssuedAmount': {
-              stats: { field: 'PO.IssuedAmount' },
+            sortFilter: {
+              filter: {
+                bool: {
+                  must: [
+                    {
+                      range: {
+                        'PO.IssuedDate': {
+                          gte: '2022',
+                          lte: '2022-12-31T23:59:59Z',
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+            rows: {
+              terms: {
+                field: 'Organization.NameState.untouched',
+                size: 10,
+                order: {
+                  'sortFilter.doc_count': 'desc',
+                },
+              },
+              aggs: {
+                sortFilter: {
+                  filter: {
+                    bool: {
+                      must: [
+                        {
+                          range: {
+                            'PO.IssuedDate': {
+                              gte: '2022',
+                              lte: '2022-12-31T23:59:59Z',
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                },
+                columns: {
+                  date_histogram: {
+                    field: 'PO.IssuedDate',
+                    interval: 'year',
+                    min_doc_count: 0,
+                  },
+                  aggs: {
+                    'pivotMetric-stats-PO.IssuedAmount': {
+                      stats: {
+                        field: 'PO.IssuedAmount',
+                      },
+                    },
+                  },
+                },
+                'pivotMetric-stats-PO.IssuedAmount': {
+                  stats: {
+                    field: 'PO.IssuedAmount',
+                  },
+                },
+              },
             },
             columns: {
               date_histogram: {
@@ -1850,10 +2343,36 @@ describe('pivot', () => {
               },
               aggs: {
                 'pivotMetric-stats-PO.IssuedAmount': {
-                  stats: { field: 'PO.IssuedAmount' },
+                  stats: {
+                    field: 'PO.IssuedAmount',
+                  },
                 },
               },
             },
+            'pivotMetric-stats-PO.IssuedAmount': {
+              stats: {
+                field: 'PO.IssuedAmount',
+              },
+            },
+          },
+        },
+        columns: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            interval: 'year',
+            min_doc_count: 0,
+          },
+          aggs: {
+            'pivotMetric-stats-PO.IssuedAmount': {
+              stats: {
+                field: 'PO.IssuedAmount',
+              },
+            },
+          },
+        },
+        'pivotMetric-stats-PO.IssuedAmount': {
+          stats: {
+            field: 'PO.IssuedAmount',
           },
         },
       },
@@ -1874,33 +2393,49 @@ describe('pivot', () => {
           { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
           { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
         ],
+        expanded: { columns: true, rows: true },
       }),
       testSchemas(['Organization.NameState', 'Organization.State']),
       getStats
     )
 
     let expected = {
+      track_total_hits: true,
       aggs: {
-        'pivotMetric-sum-LineItem.TotalPrice': {
-          sum: { field: 'LineItem.TotalPrice' },
-        },
-        columns: {
-          date_histogram: {
-            field: 'PO.IssuedDate',
-            interval: 'year',
-            min_doc_count: 0,
-          },
-          aggs: {
-            'pivotMetric-sum-LineItem.TotalPrice': {
-              sum: { field: 'LineItem.TotalPrice' },
-            },
-          },
-        },
         rows: {
-          terms: { size: 10, field: 'Organization.State.untouched' },
+          terms: { field: 'Organization.State.untouched', size: 10 },
           aggs: {
-            'pivotMetric-sum-LineItem.TotalPrice': {
-              sum: { field: 'LineItem.TotalPrice' },
+            rows: {
+              terms: { field: 'Organization.NameState.untouched', size: 10 },
+              aggs: {
+                columns: {
+                  date_histogram: {
+                    field: 'PO.IssuedDate',
+                    interval: 'year',
+                    min_doc_count: 0,
+                  },
+                  aggs: {
+                    columns: {
+                      date_histogram: {
+                        field: 'PO.IssuedDate',
+                        interval: 'month',
+                        min_doc_count: 0,
+                      },
+                      aggs: {
+                        'pivotMetric-sum-LineItem.TotalPrice': {
+                          sum: { field: 'LineItem.TotalPrice' },
+                        },
+                      },
+                    },
+                    'pivotMetric-sum-LineItem.TotalPrice': {
+                      sum: { field: 'LineItem.TotalPrice' },
+                    },
+                  },
+                },
+                'pivotMetric-sum-LineItem.TotalPrice': {
+                  sum: { field: 'LineItem.TotalPrice' },
+                },
+              },
             },
             columns: {
               date_histogram: {
@@ -1909,15 +2444,56 @@ describe('pivot', () => {
                 min_doc_count: 0,
               },
               aggs: {
+                columns: {
+                  date_histogram: {
+                    field: 'PO.IssuedDate',
+                    interval: 'month',
+                    min_doc_count: 0,
+                  },
+                  aggs: {
+                    'pivotMetric-sum-LineItem.TotalPrice': {
+                      sum: { field: 'LineItem.TotalPrice' },
+                    },
+                  },
+                },
                 'pivotMetric-sum-LineItem.TotalPrice': {
                   sum: { field: 'LineItem.TotalPrice' },
                 },
               },
             },
+            'pivotMetric-sum-LineItem.TotalPrice': {
+              sum: { field: 'LineItem.TotalPrice' },
+            },
           },
         },
+        columns: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            interval: 'year',
+            min_doc_count: 0,
+          },
+          aggs: {
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                interval: 'month',
+                min_doc_count: 0,
+              },
+              aggs: {
+                'pivotMetric-sum-LineItem.TotalPrice': {
+                  sum: { field: 'LineItem.TotalPrice' },
+                },
+              },
+            },
+            'pivotMetric-sum-LineItem.TotalPrice': {
+              sum: { field: 'LineItem.TotalPrice' },
+            },
+          },
+        },
+        'pivotMetric-sum-LineItem.TotalPrice': {
+          sum: { field: 'LineItem.TotalPrice' },
+        },
       },
-      track_total_hits: true,
     }
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
