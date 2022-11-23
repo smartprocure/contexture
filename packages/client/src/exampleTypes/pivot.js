@@ -25,7 +25,7 @@ let previouslyLoadedKeys = (expansion, expansions) =>
     _.flatMap('loaded')
   )(expansions)
 
-let getResultValues = (expansion, node, results) => {
+let getResultKeys = (expansion, node, results) => {
   let groupType = expansion.type
   let expansions = node.expansions
   let drilldown = _.getOr([], 'drilldown', expansion)
@@ -76,7 +76,7 @@ let expand = (tree, path, type, drilldown) => {
       type: 'columns',
       drilldown: [],
     }
-    columnsExpansion.loaded = getResultValues(columnsExpansion, node, results)
+    columnsExpansion.loaded = getResultKeys(columnsExpansion, node, results)
     expansions.push(columnsExpansion)
   }
   // adding values for initial root level expansions
@@ -85,7 +85,7 @@ let expand = (tree, path, type, drilldown) => {
       type: 'rows',
       drilldown: [],
     }
-    rowsExpansion.loaded = getResultValues(rowsExpansion, node, results)
+    rowsExpansion.loaded = getResultKeys(rowsExpansion, node, results)
     expansions.push(rowsExpansion)
   }
 
@@ -147,6 +147,13 @@ export default {
     values: [],
     filters: [],
     sort: {},
+    showCounts: false,
+    expanded: {
+      columns: false,
+      rows: false,
+    },
+    expand,
+    collapse,
     expansions: [
       /*
      {
@@ -168,12 +175,9 @@ export default {
       },
      */
     ],
-    showCounts: false,
     context: {
       results: {},
     },
-    expand,
-    collapse,
   },
   onDispatch(event, extend) {
     let { type, node, previous, value } = event
@@ -204,7 +208,7 @@ export default {
 
     while ((expansion = nextEmptyExpansion())) {
       // adding values to loaded expansion
-      expansion.loaded = getResultValues(
+      expansion.loaded = getResultKeys(
         expansion,
         node,
         response.context.results
