@@ -201,12 +201,12 @@ export default {
   },
   shouldMergeResponse: node => !_.isEmpty(node.expansions),
   mergeResponse(node, response, extend, snapshot) {
-    let nextEmptyExpansion = () =>
+    let findNotLoadedExpansion = () =>
       _.find(({ loaded }) => !loaded, node.expansions)
 
     let expansion
 
-    while ((expansion = nextEmptyExpansion())) {
+    while ((expansion = findNotLoadedExpansion())) {
       // adding values to loaded expansion
       expansion.loaded = getResultKeys(
         expansion,
