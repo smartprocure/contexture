@@ -265,14 +265,16 @@ let createPivotScope = (node, schema, getStats) => {
     // Generate filters from sort column values
     let sortAgg = await getSortAgg(sort)
     let sortField = getSortField(sort)
+    let isFullyExpanded = _.get(['expanded', groupingType], node)
+    let drilldownDepth = _.get([groupingType, 'drilldown', 'length'], request)
 
-    return _.reduce(
-      async (children, group) => {
+    return F.reduceIndexed(
+      async (children, group, index, groups) => {
         // Defaulting the group size to be 10
         if (!group.size) group.size = 10
-        // Calculating subtotal metrics at each group level if not drilling down
+        // Calculating subtotal metrics at each group level under drilldown if expanded is set
         // Support for per group stats could also be added here - merge on another stats agg blob to children based on group.stats/statsField or group.values
-        if (_.get(['expanded', groupingType], node))
+        if (isFullyExpanded && index < groups.length - drilldownDepth)
           children = _.merge(await children, statsAggs)
         // At each level, add a filters bucket agg and nested metric to enable sorting
         // For example, to sort by Sum of Price for 2022, add a filters agg for 2022 and nested metric for sum of price so we can target it
@@ -414,7 +416,7 @@ let createPivotScope = (node, schema, getStats) => {
    PROCESSING RESULTS
    ***/
 
-  let getResultValues = (expansion, results) => {
+  let getResultKeys = (expansion, results) => {
     let groupType = expansion.type
     if (!['rows', 'columns'].includes(groupType)) return []
 
@@ -472,7 +474,7 @@ let createPivotScope = (node, schema, getStats) => {
     getDrilldownFilters,
     getRequestFilters,
     buildQuery,
-    getResultValues,
+    getResultKeys,
     processResponse,
   }
 }
@@ -524,7 +526,7 @@ let pivot = {
       getInitialRequest,
       getAdditionalRequests,
       buildQuery,
-      getResultValues,
+      getResultKeys,
       processResponse,
     } = createPivotScope(node, schema, getStats(search))
 
@@ -542,7 +544,7 @@ let pivot = {
         await search(await buildQuery(initialRequest))
       )
 
-      let resultKeys = getResultValues(expansion, initialResult.results)
+      let resultKeys = getResultKeys(expansion, initialResult.results)
       let additionalRequests = getAdditionalRequests(expansion, resultKeys)
 
       addLoadedKeys(expansion, resultKeys)
@@ -550,7 +552,7 @@ let pivot = {
       if (initialRequest.columns.totals && initialRequest.rows.totals) {
         let gridExpansion = _.first(getGridExpansions(expansion))
         if (!gridExpansion.loaded) {
-          let gridResultKeys = getResultValues(
+          let gridResultKeys = getResultKeys(
             gridExpansion,
             initialResult.results
           )
