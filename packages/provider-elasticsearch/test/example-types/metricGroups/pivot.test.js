@@ -46,11 +46,7 @@ let rootPivotRequest = {
 // pass aggsForValues in each stage
 describe('pivot', () => {
   it('aggsForValues', () => {
-    let { getAggsForValues } = createPivotScope(
-      pivotTestNode(),
-      {},
-      getStats
-    )
+    let { getAggsForValues } = createPivotScope(pivotTestNode(), {}, getStats)
     let values = [
       { type: 'min', field: 'LineItem.TotalPrice' },
       { type: 'max', field: 'LineItem.TotalPrice' },
