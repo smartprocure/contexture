@@ -63,31 +63,29 @@ let resetExpandedRows = (extend, node) => {
   })
 }
 
-let expand = (tree, path, type, drilldown) => {
-  path = toJS(path)
-  drilldown = toJS(drilldown)
-  let node = toJS(tree.getNode(path))
+// adding values for initial root level expansions
+let maybeAddRootExpansion = (node, type) => {
   let expansions = node.expansions
   let results = node.context.results
 
-  // adding values for initial root level expansions
-  if (!_.find({ type: 'columns' }, expansions)) {
+  if (!_.find({ type }, expansions)) {
     let columnsExpansion = {
-      type: 'columns',
+      type,
       drilldown: [],
     }
     columnsExpansion.loaded = getResultKeys(columnsExpansion, node, results)
     expansions.push(columnsExpansion)
   }
-  // adding values for initial root level expansions
-  if (!_.find({ type: 'rows' }, expansions)) {
-    let rowsExpansion = {
-      type: 'rows',
-      drilldown: [],
-    }
-    rowsExpansion.loaded = getResultKeys(rowsExpansion, node, results)
-    expansions.push(rowsExpansion)
-  }
+}
+
+let expand = (tree, path, type, drilldown) => {
+  path = toJS(path)
+  drilldown = toJS(drilldown)
+  let node = toJS(tree.getNode(path))
+  let expansions = node.expansions
+
+  maybeAddRootExpansion(node, 'columns')
+  maybeAddRootExpansion(node, 'rows')
 
   tree.mutate(path, {
     expansions: [
@@ -100,6 +98,7 @@ let expand = (tree, path, type, drilldown) => {
     ],
   })
 }
+
 let collapse = (tree, path, type, drilldown) => {
   path = toJS(path)
   drilldown = toJS(drilldown)
@@ -137,6 +136,7 @@ export default {
     columns: 'self',
     rows: 'self',
     values: 'self',
+    expanded: 'self',
     expansions: 'self',
     filters: 'others',
     sort: 'self',
@@ -180,7 +180,7 @@ export default {
     },
   },
   onDispatch(event, extend) {
-    let { type, node, previous, value } = event
+    let { type, node, value } = event
 
     if (type !== 'mutate') return
 
@@ -189,9 +189,9 @@ export default {
 
     if (_.has('expansions', value)) return
 
-    // if anything else about node configuration is changed resetting pages
+    // if anything else about node configuration is changed resetting expansions
 
-    resetExpansions(extend, node, previous)
+    resetExpansions(extend, node)
   },
   // Resetting the expansions when the tree is changed
   // allows to return expected root results instead of nested drilldown
