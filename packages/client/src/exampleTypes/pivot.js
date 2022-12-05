@@ -213,6 +213,9 @@ export default {
         node,
         response.context.results
       )
+
+      // TODO automatically create and populate nested expansions
+      // when expanded flag is set to true
     }
 
     let context = mergeResults(snapshot(node.context), response.context)
