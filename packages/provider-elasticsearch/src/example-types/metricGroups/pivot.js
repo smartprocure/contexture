@@ -265,7 +265,8 @@ let createPivotScope = (node, schema, getStats) => {
     // Generate filters from sort column values
     let sortAgg = await getSortAgg(sort)
     let sortField = getSortField(sort)
-    let isFullyExpanded = request.type === groupingType && _.get(['expanded', groupingType], node)
+    let isFullyExpanded =
+      request.type === groupingType && _.get(['expanded', groupingType], node)
     let drilldownDepth = _.get([groupingType, 'drilldown', 'length'], request)
 
     return F.reduceIndexed(
