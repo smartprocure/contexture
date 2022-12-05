@@ -2494,7 +2494,7 @@ describe('pivot', () => {
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
-  it('should paginateExpandedGroups for no expanded', async () => {
+  it('should paginateExpandedGroups for not expanded', async () => {
     let rows = [
       { type: 'fieldValues', field: 'Organization.State' },
       { type: 'fieldValues', field: 'Organization.NameState' },
