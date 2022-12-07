@@ -65,7 +65,29 @@ module.exports = {
       set(response, 'aggregations.groups.buckets', offsetBuckets)
     }
     if (node.interval === 'federalFiscalYear') {
-      // compute buckets annual buckets
+      let aggregatedBuckets = _.flow(
+        _.get('aggregations.groups.buckets'),
+        _.groupBy(({ key }) => new Date(key).getUTCFullYear()),
+        _.mapValues(
+          _.reduce(
+            (agg, o) => {
+              let m = moment(new Date(o.key)).startOf('year')
+              let rtn = {
+                key: m.valueOf(),
+                key_as_string: m.toISOString(),
+              }
+              rtn.doc_count = agg.doc_count + o.doc_count
+
+              if (o.sum)
+                rtn.sum = { value: _.getOr(0, 'sum.value', agg) + o.sum.value }
+              return rtn
+            },
+            { doc_count: 0 }
+          )
+        ),
+        _.values
+      )(response)
+      set(response, 'aggregations.groups.buckets', aggregatedBuckets)
     }
     return { results: simplifyBuckets(getGroups(response.aggregations)) }
   },
