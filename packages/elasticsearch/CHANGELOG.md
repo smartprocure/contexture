@@ -1,3 +1,5 @@
+# 1.18.0
+* [pivot] Create new `dateRangesGroupStats` type
 # 1.17.3
 * Changed package manger from npm to yarn
 
