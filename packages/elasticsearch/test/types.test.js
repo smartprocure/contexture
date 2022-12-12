@@ -11,6 +11,7 @@ describe('All Example Types', () => {
       'dateHistogram',
       'dateIntervalGroupStats',
       'dateRangeFacet',
+      'dateRangesGroupStats',
       'exists',
       'facet',
       'fieldValuePartitionGroupStats',
