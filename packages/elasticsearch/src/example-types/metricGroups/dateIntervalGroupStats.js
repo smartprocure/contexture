@@ -13,7 +13,33 @@ let drilldown = ({ field, interval, drilldown }) => {
     .format()
   return { range: { [field]: { gte, lte } } }
 }
-let buildGroupQuery = ({ field, interval = 'year' }, children, groupsKey) => {
+
+let supportedFederalFiscalYearMetrics = [
+  'sum',
+  // TODO
+  // 'avg',
+  // 'min',
+  // 'max',
+  // 'percentiles', // maybe can do?
+  // 'geo_bounds', // likely can do?
+  // 'geo_centroid', // maybe can do but looks tricky
+]
+
+let isOffsetDates = node => {
+  if (
+    node.interval !== 'federalFiscalQuarter' &&
+    node.interval !== 'federalFiscalYear'
+  )
+    return false
+  if (_.isEmpty(stats)) return false
+  return node.stats.every(val =>
+    supportedFederalFiscalYearMetrics.includes(val)
+  )
+}
+
+let buildGroupQuery = (node, children, groupsKey) => {
+  let { field, interval = 'year' } = node
+
   // Federal fiscal year quarters have the
   // same start and end dates as conventional
   // calendar year quarters but offset forward by one.
@@ -24,13 +50,39 @@ let buildGroupQuery = ({ field, interval = 'year' }, children, groupsKey) => {
   // and the date offset and
   // year bucketing (in the case of federalFiscalYear)
   // are computed in node in the `result` function.
-  if (interval === 'federalFiscalYear' || interval === 'federalFiscalQuarter')
-    interval = 'quarter'
+  if (interval === 'federalFiscalQuarter') interval = 'quarter'
+
+  let offsetDates = isOffsetDates(node)
+  if (interval === 'federalFiscalYear') {
+    if (offsetDates) {
+      interval = 'quarter'
+    } else {
+      interval = 'year'
+    }
+  }
 
   return {
+    ...(offsetDates
+      ? {
+          runtime_mappings: {
+            [`${field}-offset`]: {
+              type: 'date',
+              script: `
+            long date = doc['${field}'].value.toInstant().toEpochMilli();
+            date += 7862400000;
+            emit(date);
+          `,
+            },
+          },
+        }
+      : {}),
     aggs: {
       [groupsKey]: {
-        date_histogram: { field, interval, min_doc_count: 0 },
+        date_histogram: {
+          field: offsetDates ? `${field}-offset` : field,
+          interval,
+          min_doc_count: 0,
+        },
         ...children,
       },
     },
@@ -42,12 +94,14 @@ let getGroups = aggs => F.unkeyBy('key', aggs.groups.buckets)
 module.exports = {
   ...stats,
   async result(node, search, schema) {
+    let offsetDates = isOffsetDates(node)
     let query = stats.buildQuery(node, schema)
     let response = await search(query)
 
     if (
-      node.interval === 'federalFiscalYear' ||
-      node.interval === 'federalFiscalQuarter'
+      (node.interval === 'federalFiscalYear' ||
+        node.interval === 'federalFiscalQuarter') &&
+      !offsetDates
     ) {
       let offsetBuckets = _.flow(
         _.get('aggregations.groups.buckets'),
@@ -64,7 +118,8 @@ module.exports = {
       )(response)
       set(response, 'aggregations.groups.buckets', offsetBuckets)
     }
-    if (node.interval === 'federalFiscalYear') {
+    // bundle up the quarterly bucketed data for a fiscal year
+    if (node.interval === 'federalFiscalYear' && !isOffsetDates) {
       let aggregatedBuckets = _.flow(
         _.get('aggregations.groups.buckets'),
         _.groupBy(({ key }) => new Date(key).getUTCFullYear()),
