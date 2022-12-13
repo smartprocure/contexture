@@ -5,7 +5,7 @@ let {
 } = require('../../../src/example-types/metricGroups/pivot')
 let { testSchema, testSchemas } = require('../testUtils')
 let pivotResponse = require('./pivotData/pivotResponse')
-let pivotRepsonseWithFilteredFieldValueGroup = require('./pivotData/pivotRepsonseWithFilteredFieldValueGroup')
+let pivotResponseWithFilteredFieldValueGroup = require('./pivotData/pivotResponseWithFilteredFieldValueGroup')
 let columnResponse = require('./pivotData/columnResponse')
 let columnResult = require('./pivotData/columnResult')
 let stringify = require('json-stable-stringify')
@@ -19,7 +19,7 @@ let pivotTestNode = node => ({
     { type: 'fieldValues', field: 'Organization.NameState' },
   ],
   columns: [{ type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' }],
-  extensions: [],
+  expansions: [],
   ...node,
 })
 
@@ -2860,7 +2860,7 @@ describe('pivot', () => {
     )
     let nestedResult = processResponse(
       rootPivotRequest,
-      pivotRepsonseWithFilteredFieldValueGroup
+      pivotResponseWithFilteredFieldValueGroup
     )
     expect(stringify(nestedResult.results)).toEqual(
       stringify({
