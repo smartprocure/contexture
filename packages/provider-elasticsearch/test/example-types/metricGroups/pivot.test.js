@@ -85,34 +85,30 @@ describe('pivot', () => {
     // ES -> PVT
     // buckets -> groups (rows/columns)
     // metrics -> values
-    let { buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [
-          // labels are `${_.startCase(type)} of ${schemaLabel(field)}`
-          // key - defaults to `${type}-${field}`
-          //    unless type has a special override? e.g. if doesnt take field, like top_hits
-          { type: 'min', field: 'LineItem.TotalPrice' },
-          { type: 'max', field: 'LineItem.TotalPrice' },
-          { type: 'avg', field: 'LineItem.TotalPrice' },
-          { type: 'sum', field: 'LineItem.TotalPrice' },
-          {
-            type: 'percentiles',
-            field: 'LineItem.TotalPrice',
-            percents: [20, 50],
-          },
-          { type: 'cardinality', field: 'Vendor.Name' },
-          { type: 'topHits' },
-        ],
-        columns: [],
-        rows: [
-          { type: 'fieldValues', field: 'Organization.NameState' },
-          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
-        ],
-        expanded: { columns: true, rows: true },
-      }),
-      testSchemas(['Organization.NameState', 'Vendor.Name']),
-      getStats
-    )
+    let input = pivotTestNode({
+      values: [
+        // labels are `${_.startCase(type)} of ${schemaLabel(field)}`
+        // key - defaults to `${type}-${field}`
+        //    unless type has a special override? e.g. if doesnt take field, like top_hits
+        { type: 'min', field: 'LineItem.TotalPrice' },
+        { type: 'max', field: 'LineItem.TotalPrice' },
+        { type: 'avg', field: 'LineItem.TotalPrice' },
+        { type: 'sum', field: 'LineItem.TotalPrice' },
+        {
+          type: 'percentiles',
+          field: 'LineItem.TotalPrice',
+          percents: [20, 50],
+        },
+        { type: 'cardinality', field: 'Vendor.Name' },
+        { type: 'topHits' },
+      ],
+      columns: [],
+      rows: [
+        { type: 'fieldValues', field: 'Organization.NameState' },
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
+      ],
+      expanded: { columns: true, rows: true },
+    })
 
     let expected = {
       aggs: {
@@ -199,26 +195,26 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas(['Organization.NameState', 'Vendor.Name']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery for fieldValuePartition', async () => {
-    let { buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-        columns: [],
-        rows: [
-          {
-            type: 'fieldValuePartition',
-            field: 'Vendor.City',
-            matchValue: 'Washington',
-          },
-        ],
-      }),
-      testSchemas(['Vendor.City']),
-      getStats
-    )
-
+    let input = pivotTestNode({
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      columns: [],
+      rows: [
+        {
+          type: 'fieldValuePartition',
+          field: 'Vendor.City',
+          matchValue: 'Washington',
+        },
+      ],
+    })
     let expected = {
       track_total_hits: true,
       aggs: {
@@ -240,26 +236,26 @@ describe('pivot', () => {
         },
       },
     }
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas(['Vendor.City']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery for fieldValues', async () => {
-    let { buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-        columns: [],
-        rows: [
-          {
-            type: 'fieldValues',
-            field: 'Organization.Name',
-            filter: 'city',
-          },
-        ],
-      }),
-      testSchemas(['Vendor.City']),
-      getStats
-    )
-
+    let input = pivotTestNode({
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      columns: [],
+      rows: [
+        {
+          type: 'fieldValues',
+          field: 'Organization.Name',
+          filter: 'city',
+        },
+      ],
+    })
     let expected = {
       track_total_hits: true,
       aggs: {
@@ -294,61 +290,75 @@ describe('pivot', () => {
         },
       },
     }
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas(['Vendor.City']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery for fieldValues with drilldown', async () => {
     // TODO: add tests for dateInterval, numberInterval, fieldValuePartition
     // TODO: test keyForRow (e.g. month for date interval)
-    let { buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-        columns: [],
-        rows: [
-          {
-            type: 'fieldValues',
-            field: 'Organization.Name',
-            drilldown: 'Reno',
-          },
-          {
-            type: 'numberRanges',
-            field: 'LineItem.TotalPrice',
-            ranges: [
-              { from: '0', to: '500' },
-              { from: '500', to: '10000' },
-            ],
-            drilldown: '0.0-500.0',
-          },
-        ],
-      }),
-      testSchemas(['Organization.Name', 'Organization.State']),
-      getStats
-    )
+    let inputTopLevel = pivotTestNode({
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      columns: [],
+      rows: [
+        {
+          type: 'fieldValues',
+          field: 'Organization.Name',
+          drilldown: 'Reno',
+        },
+        {
+          type: 'numberRanges',
+          field: 'LineItem.TotalPrice',
+          ranges: [
+            { from: '0', to: '500' },
+            { from: '500', to: '10000' },
+          ],
+          drilldown: '0.0-500.0',
+        },
+      ],
+    })
 
-    let { buildQuery: buildQueryMultiTerm } = createPivotScope(
-      pivotTestNode({
-        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-        columns: [],
-        rows: [
-          {
-            type: 'fieldValues',
-            field: 'Organization.Name',
-            additionalFields: ['Organization.State'],
-          },
-          {
-            type: 'numberRanges',
-            field: 'LineItem.TotalPrice',
-            ranges: [
-              { from: '0', to: '500' },
-              { from: '500', to: '10000' },
-            ],
-          },
-        ],
-      }),
-      testSchemas(['Organization.Name', 'Organization.State']),
-      getStats
-    )
-
+    let inputDrilldownLevel = pivotTestNode({
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      columns: [],
+      rows: [
+        {
+          type: 'fieldValues',
+          field: 'Organization.Name',
+        },
+        {
+          type: 'numberRanges',
+          field: 'LineItem.TotalPrice',
+          ranges: [
+            { from: '0', to: '500' },
+            { from: '500', to: '10000' },
+          ],
+        },
+      ],
+    })
+    let inputMultiTermDrilldownLevel = pivotTestNode({
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      columns: [],
+      rows: [
+        {
+          type: 'fieldValues',
+          field: 'Organization.Name',
+          additionalFields: ['Organization.State'],
+        },
+        {
+          type: 'numberRanges',
+          field: 'LineItem.TotalPrice',
+          ranges: [
+            { from: '0', to: '500' },
+            { from: '500', to: '10000' },
+          ],
+        },
+      ],
+    })
     let expectedTopLevel = {
       aggs: {
         'pivotMetric-sum-LineItem.TotalPrice': {
@@ -475,7 +485,12 @@ describe('pivot', () => {
         },
       },
     }
-    let resultTopLevel = await buildQuery({
+    let { buildQuery: buildQueryTopLevel } = createPivotScope(
+      inputTopLevel,
+      testSchemas(['Organization.Name']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    let resultTopLevel = await buildQueryTopLevel({
       type: 'rows',
       rows: {
         drilldown: [],
@@ -484,7 +499,12 @@ describe('pivot', () => {
       columns: {},
     })
     expect(resultTopLevel).toEqual(expectedTopLevel)
-    let resultDrilldownLevel = await buildQuery({
+    let { buildQuery: buildQueryDrilldownLevel } = createPivotScope(
+      inputDrilldownLevel,
+      testSchemas(['Organization.Name']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    let resultDrilldownLevel = await buildQueryDrilldownLevel({
       type: 'rows',
       rows: {
         drilldown: ['Reno', '0.0-500.0'],
@@ -492,7 +512,11 @@ describe('pivot', () => {
       columns: {},
     })
     expect(resultDrilldownLevel).toEqual(expectedDrilldown)
-
+    let { buildQuery: buildQueryMultiTerm } = createPivotScope(
+      inputMultiTermDrilldownLevel,
+      testSchemas(['Organization.Name', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
     let resultMultiTermDrilldownLevel = await buildQueryMultiTerm({
       type: 'rows',
       rows: {
@@ -503,32 +527,24 @@ describe('pivot', () => {
     expect(resultMultiTermDrilldownLevel).toEqual(expectedMultiTermDrilldown)
   })
   it('should buildQuery for fieldValues with drilldown and limited depth', async () => {
-    let { buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-        columns: [],
-        rows: [
-          {
-            type: 'fieldValues',
-            field: 'Organization.Name',
-          },
-          {
-            type: 'numberRanges',
-            field: 'LineItem.TotalPrice',
-            ranges: [
-              { from: '0', to: '500' },
-              { from: '500', to: '10000' },
-            ],
-          },
-          {
-            type: 'fieldValues',
-            field: 'Organization.Type',
-          },
-        ],
-      }),
-      testSchemas(['Vendor.City']),
-      getStats
-    )
+    let input = pivotTestNode({
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      columns: [],
+      rows: [
+        {
+          type: 'fieldValues',
+          field: 'Organization.Name',
+        },
+        {
+          type: 'numberRanges',
+          field: 'LineItem.TotalPrice',
+          ranges: [
+            { from: '0', to: '500' },
+            { from: '500', to: '10000' },
+          ],
+        },
+      ],
+    })
     let expected = {
       track_total_hits: true,
       aggs: {
@@ -545,6 +561,11 @@ describe('pivot', () => {
         },
       },
     }
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas(['Vendor.City']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
     let result = await buildQuery({
       type: 'rows',
       rows: {
@@ -555,32 +576,28 @@ describe('pivot', () => {
     expect(result).toEqual(expected)
   })
   it('should buildQuery for fieldValues with drilldown and limited depth (deeper)', async () => {
-    let { buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-        columns: [],
-        rows: [
-          {
-            type: 'fieldValues',
-            field: 'Organization.Name',
-          },
-          {
-            type: 'numberRanges',
-            field: 'LineItem.TotalPrice',
-            ranges: [
-              { from: '0', to: '500' },
-              { from: '500', to: '10000' },
-            ],
-          },
-          {
-            type: 'fieldValues',
-            field: 'Organization.Type',
-          },
-        ],
-      }),
-      testSchemas(['Vendor.City']),
-      getStats
-    )
+    let input = pivotTestNode({
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      columns: [],
+      rows: [
+        {
+          type: 'fieldValues',
+          field: 'Organization.Name',
+        },
+        {
+          type: 'numberRanges',
+          field: 'LineItem.TotalPrice',
+          ranges: [
+            { from: '0', to: '500' },
+            { from: '500', to: '10000' },
+          ],
+        },
+        {
+          type: 'fieldValues',
+          field: 'Organization.Type',
+        },
+      ],
+    })
 
     let expected = {
       track_total_hits: true,
@@ -613,6 +630,11 @@ describe('pivot', () => {
         },
       },
     }
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas(['Vendor.City']),
+      getStats
+    )
     let result = await buildQuery({
       type: 'rows',
       rows: {
@@ -623,32 +645,28 @@ describe('pivot', () => {
     expect(result).toEqual(expected)
   })
   it('should buildQuery for fieldValues with drilldown (deepest)', async () => {
-    let { buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-        columns: [],
-        rows: [
-          {
-            type: 'fieldValues',
-            field: 'Organization.Name',
-          },
-          {
-            type: 'numberRanges',
-            field: 'LineItem.TotalPrice',
-            ranges: [
-              { from: '0', to: '500' },
-              { from: '500', to: '10000' },
-            ],
-          },
-          {
-            type: 'fieldValues',
-            field: 'Organization.Type',
-          },
-        ],
-      }),
-      testSchemas(['Vendor.City']),
-      getStats
-    )
+    let input = pivotTestNode({
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      columns: [],
+      rows: [
+        {
+          type: 'fieldValues',
+          field: 'Organization.Name',
+        },
+        {
+          type: 'numberRanges',
+          field: 'LineItem.TotalPrice',
+          ranges: [
+            { from: '0', to: '500' },
+            { from: '500', to: '10000' },
+          ],
+        },
+        {
+          type: 'fieldValues',
+          field: 'Organization.Type',
+        },
+      ],
+    })
     let expected = {
       aggs: {
         pivotFilter: {
@@ -720,6 +738,11 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas(['Vendor.City']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
     let result = await buildQuery({
       type: 'rows',
       rows: {
@@ -729,51 +752,45 @@ describe('pivot', () => {
     expect(result).toEqual(expected)
   })
   it('should buildQuery for fieldValues with drilldown and skip pagination', async () => {
-    let expansion = {
-      type: 'rows',
-      drilldown: ['Reno', '0.0-500.0'],
-      loaded: false,
-    }
-    let { getInitialRequest, buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-        columns: [],
-        rows: [
-          {
-            type: 'fieldValues',
-            field: 'Organization.Name',
-          },
-          {
-            type: 'numberRanges',
-            field: 'LineItem.TotalPrice',
-            ranges: [
-              { from: '0', to: '500' },
-              { from: '500', to: '10000' },
-            ],
-          },
-          {
-            type: 'fieldValues',
-            field: 'Organization.Type',
-          },
-        ],
-        expansions: [
-          {
-            type: 'columns',
-            drilldown: [],
-            loaded: [],
-          },
-          {
-            type: 'rows',
-            drilldown: ['Reno', '0.0-500.0'],
-            loaded: ['A - U.S. OWNED BUSINESS'],
-          },
-          expansion,
-        ],
-      }),
-      testSchemas(['Vendor.City']),
-      getStats
-    )
-
+    let input = pivotTestNode({
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      expansions: [
+        {
+          type: 'columns',
+          drilldown: [],
+          loaded: [],
+        },
+        {
+          type: 'rows',
+          drilldown: ['Reno', '0.0-500.0'],
+          loaded: ['A - U.S. OWNED BUSINESS'],
+        },
+        {
+          type: 'rows',
+          drilldown: ['Reno', '0.0-500.0'],
+          loaded: false,
+        },
+      ],
+      columns: [],
+      rows: [
+        {
+          type: 'fieldValues',
+          field: 'Organization.Name',
+        },
+        {
+          type: 'numberRanges',
+          field: 'LineItem.TotalPrice',
+          ranges: [
+            { from: '0', to: '500' },
+            { from: '500', to: '10000' },
+          ],
+        },
+        {
+          type: 'fieldValues',
+          field: 'Organization.Type',
+        },
+      ],
+    })
     let expected = {
       aggs: {
         pivotFilter: {
@@ -847,59 +864,63 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
-    let result = await buildQuery(getInitialRequest(expansion))
+    let {
+      findNotLoadedExpansion,
+      getInitialRequest,
+      buildQuery,
+    } = createPivotScope(
+      input,
+      testSchemas(['Vendor.City']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    let result = await buildQuery(getInitialRequest(findNotLoadedExpansion()))
     expect(result).toEqual(expected)
   })
   it('should buildQuery for fieldValues with drilldown and loaded', async () => {
-    let expansion = {
-      type: 'rows',
-      drilldown: ['Reno', '0.0-500.0'],
-      loaded: false,
-    }
-    let { getInitialRequest, buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-        columns: [
-          {
-            type: 'fieldValues',
-            field: 'Organization.State',
-          },
-        ],
-        rows: [
-          {
-            type: 'fieldValues',
-            field: 'Organization.Name',
-          },
-          {
-            type: 'numberRanges',
-            field: 'LineItem.TotalPrice',
-            ranges: [
-              { from: '0', to: '500' },
-              { from: '500', to: '10000' },
-            ],
-          },
-          {
-            type: 'fieldValues',
-            field: 'Organization.Type',
-          },
-        ],
-        expansions: [
-          {
-            type: 'columns',
-            drilldown: [],
-            loaded: ['New York', 'Florida'],
-          },
-          {
-            type: 'rows',
-            drilldown: ['Reno', '0.0-500.0'],
-            loaded: ['A - U.S. OWNED BUSINESS'],
-          },
-          expansion,
-        ],
-      }),
-      testSchemas(['Vendor.City']),
-      getStats
-    )
+    let input = pivotTestNode({
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      columns: [
+        {
+          type: 'fieldValues',
+          field: 'Organization.State',
+        },
+      ],
+      rows: [
+        {
+          type: 'fieldValues',
+          field: 'Organization.Name',
+        },
+        {
+          type: 'numberRanges',
+          field: 'LineItem.TotalPrice',
+          ranges: [
+            { from: '0', to: '500' },
+            { from: '500', to: '10000' },
+          ],
+        },
+        {
+          type: 'fieldValues',
+          field: 'Organization.Type',
+        },
+      ],
+      expansions: [
+        {
+          type: 'columns',
+          drilldown: [],
+          loaded: ['New York', 'Florida'],
+        },
+        {
+          type: 'rows',
+          drilldown: ['Reno', '0.0-500.0'],
+          loaded: ['A - U.S. OWNED BUSINESS'],
+        },
+        {
+          type: 'rows',
+          drilldown: ['Reno', '0.0-500.0'],
+          loaded: false,
+        },
+      ],
+    })
     let expected = {
       aggs: {
         pivotFilter: {
@@ -1013,27 +1034,31 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
-
-    let result = await buildQuery(getInitialRequest(expansion))
+    let {
+      findNotLoadedExpansion,
+      getInitialRequest,
+      buildQuery,
+    } = createPivotScope(
+      input,
+      testSchemas(['Vendor.City']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    let result = await buildQuery(getInitialRequest(findNotLoadedExpansion()))
     expect(result).toEqual(expected)
   })
   it('should buildQuery for smart numberInterval to show getStats works', async () => {
-    let { buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-        columns: [],
-        rows: [
-          {
-            type: 'numberInterval',
-            field: 'LineItem.UnitPrice',
-            interval: 'smart',
-          },
-        ],
-        expanded: { columns: true, rows: true },
-      }),
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      () => ({ min: 10, max: 500 })
-    )
+    let input = pivotTestNode({
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      columns: [],
+      rows: [
+        {
+          type: 'numberInterval',
+          field: 'LineItem.UnitPrice',
+          interval: 'smart',
+        },
+      ],
+      expanded: { columns: true, rows: true },
+    })
     let expected = {
       track_total_hits: true,
       aggs: {
@@ -1054,6 +1079,12 @@ describe('pivot', () => {
         },
       },
     }
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas(['Vendor.City']),
+      // get stats hard coded here
+      () => ({ min: 10, max: 500 })
+    )
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
@@ -1061,24 +1092,20 @@ describe('pivot', () => {
     // ES -> PVT
     // buckets -> rows (rows/columns)
     // metrics -> values
-    let { buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [
-          { type: 'min', field: 'LineItem.TotalPrice' },
-          { type: 'max', field: 'LineItem.TotalPrice' },
-          { type: 'avg', field: 'LineItem.TotalPrice' },
-          { type: 'sum', field: 'LineItem.TotalPrice' },
-        ],
-        columns: [],
-        rows: [
-          { type: 'fieldValues', field: 'Organization.NameState' },
-          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
-        ],
-        expanded: { columns: true, rows: true },
-      }),
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      getStats
-    )
+    let input = pivotTestNode({
+      values: [
+        { type: 'min', field: 'LineItem.TotalPrice' },
+        { type: 'max', field: 'LineItem.TotalPrice' },
+        { type: 'avg', field: 'LineItem.TotalPrice' },
+        { type: 'sum', field: 'LineItem.TotalPrice' },
+      ],
+      columns: [],
+      rows: [
+        { type: 'fieldValues', field: 'Organization.NameState' },
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
+      ],
+      expanded: { columns: true, rows: true },
+    })
     let expected = {
       track_total_hits: true,
       aggs: {
@@ -1134,26 +1161,27 @@ describe('pivot', () => {
         },
       },
     }
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchema('Organization.NameState'),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery for tagsQuery', async () => {
-    let { buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-        columns: [],
-        rows: [
-          {
-            type: 'tagsQuery',
-            field: 'Organization.Name',
-            tags: [{ word: 'test' }],
-          },
-        ],
-        expanded: { columns: true, rows: true },
-      }),
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      getStats
-    )
+    let input = pivotTestNode({
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      columns: [],
+      rows: [
+        {
+          type: 'tagsQuery',
+          field: 'Organization.Name',
+          tags: [{ word: 'test' }],
+        },
+      ],
+      expanded: { columns: true, rows: true },
+    })
     let expected = {
       aggs: {
         rows: {
@@ -1184,36 +1212,37 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas(['Organization.Name']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery with more types', async () => {
-    let { buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [
-          { type: 'min', field: 'LineItem.TotalPrice' },
-          { type: 'max', field: 'LineItem.TotalPrice' },
-          { type: 'avg', field: 'LineItem.TotalPrice' },
-          { type: 'sum', field: 'LineItem.TotalPrice' },
-        ],
-        columns: [],
-        rows: [
-          { type: 'fieldValues', field: 'Organization.State' },
-          { type: 'fieldValues', field: 'Organization.NameState' },
-          {
-            type: 'numberRanges',
-            field: 'LineItem.TotalPrice',
-            ranges: [
-              { from: '0', to: '500' },
-              { from: '500', to: '10000' },
-            ],
-          },
-        ],
-        expanded: { columns: true, rows: true },
-      }),
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      getStats
-    )
+    let input = pivotTestNode({
+      values: [
+        { type: 'min', field: 'LineItem.TotalPrice' },
+        { type: 'max', field: 'LineItem.TotalPrice' },
+        { type: 'avg', field: 'LineItem.TotalPrice' },
+        { type: 'sum', field: 'LineItem.TotalPrice' },
+      ],
+      columns: [],
+      rows: [
+        { type: 'fieldValues', field: 'Organization.State' },
+        { type: 'fieldValues', field: 'Organization.NameState' },
+        {
+          type: 'numberRanges',
+          field: 'LineItem.TotalPrice',
+          ranges: [
+            { from: '0', to: '500' },
+            { from: '500', to: '10000' },
+          ],
+        },
+      ],
+      expanded: { columns: true, rows: true },
+    })
     let expected = {
       aggs: {
         rows: {
@@ -1288,40 +1317,39 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
-
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery with pivot columns', async () => {
-    let { buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [
-          { type: 'min', field: 'LineItem.TotalPrice' },
-          { type: 'max', field: 'LineItem.TotalPrice' },
-          { type: 'avg', field: 'LineItem.TotalPrice' },
-          { type: 'sum', field: 'LineItem.TotalPrice' },
-        ],
-        columns: [
-          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-        ],
-        rows: [
-          { type: 'fieldValues', field: 'Organization.State' },
-          { type: 'fieldValues', field: 'Organization.NameState' },
-          {
-            type: 'numberRanges',
-            field: 'LineItem.TotalPrice',
-            ranges: [
-              { from: '0', to: '500' },
-              { from: '500', to: '10000' },
-            ],
-          },
-        ],
-        expanded: { columns: true, rows: true },
-      }),
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      getStats
-    )
-
+    let input = pivotTestNode({
+      values: [
+        { type: 'min', field: 'LineItem.TotalPrice' },
+        { type: 'max', field: 'LineItem.TotalPrice' },
+        { type: 'avg', field: 'LineItem.TotalPrice' },
+        { type: 'sum', field: 'LineItem.TotalPrice' },
+      ],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+      rows: [
+        { type: 'fieldValues', field: 'Organization.State' },
+        { type: 'fieldValues', field: 'Organization.NameState' },
+        {
+          type: 'numberRanges',
+          field: 'LineItem.TotalPrice',
+          ranges: [
+            { from: '0', to: '500' },
+            { from: '500', to: '10000' },
+          ],
+        },
+      ],
+      expanded: { columns: true, rows: true },
+    })
     let expected = {
       aggs: {
         rows: {
@@ -1480,26 +1508,26 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery with pivot columns and subtotals', async () => {
-    let { buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-        rows: [
-          { type: 'fieldValues', field: 'Organization.State' },
-          { type: 'fieldValues', field: 'Organization.NameState' },
-        ],
-        columns: [
-          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-        ],
-        expanded: { columns: true, rows: true },
-      }),
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      getStats
-    )
-
+    let input = pivotTestNode({
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      rows: [
+        { type: 'fieldValues', field: 'Organization.State' },
+        { type: 'fieldValues', field: 'Organization.NameState' },
+      ],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+      expanded: { columns: true, rows: true },
+    })
     let expected = {
       track_total_hits: true,
       aggs: {
@@ -1560,35 +1588,35 @@ describe('pivot', () => {
         },
       },
     }
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery with nested pivot column and sort', async () => {
-    let { buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [{ type: 'sum', field: 'PO.IssuedAmount' }],
-        rows: [
-          {
-            type: 'fieldValues',
-            field: 'Organization.State',
-            // Should be ignored if sort is set on the top-level
-            sort: { field: '_count' },
-          },
-        ],
-        columns: [
-          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-        ],
-        sort: {
-          columnValues: ['2022'],
-          valueIndex: 0,
-          direction: 'asc',
+    let input = pivotTestNode({
+      values: [{ type: 'sum', field: 'PO.IssuedAmount' }],
+      rows: [
+        {
+          type: 'fieldValues',
+          field: 'Organization.State',
+          // Should be ignored if sort is set on the top-level
+          sort: { field: '_count' },
         },
-        expanded: { columns: true, rows: true },
-      }),
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      getStats
-    )
-
+      ],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+      sort: {
+        columnValues: ['2022'],
+        valueIndex: 0,
+        direction: 'asc',
+      },
+      expanded: { columns: true, rows: true },
+    })
     let expected = {
       aggs: {
         rows: {
@@ -1650,29 +1678,29 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery and sort on the row if top-level sort is missing', async () => {
-    let { buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [{ type: 'sum', field: 'PO.IssuedAmount' }],
-        rows: [
-          {
-            type: 'fieldValues',
-            field: 'Organization.State',
-            sort: { field: '_key', direction: 'asc' },
-          },
-        ],
-        columns: [
-          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-        ],
-        expanded: { columns: true, rows: true },
-      }),
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      getStats
-    )
-
+    let input = pivotTestNode({
+      values: [{ type: 'sum', field: 'PO.IssuedAmount' }],
+      rows: [
+        {
+          type: 'fieldValues',
+          field: 'Organization.State',
+          sort: { field: '_key', direction: 'asc' },
+        },
+      ],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+      expanded: { columns: true, rows: true },
+    })
     let expected = {
       aggs: {
         rows: {
@@ -1719,31 +1747,31 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery and sort on nth value metric', async () => {
-    let { buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [
-          { type: 'sum', field: 'PO.IssuedAmount' },
-          { type: 'avg', field: 'PO.IssuedAmount' },
-        ],
-        rows: [{ type: 'fieldValues', field: 'Organization.State' }],
-        columns: [
-          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-        ],
-        sort: {
-          columnValues: ['2022'],
-          valueIndex: 1,
-          direction: 'asc',
-        },
-        expanded: { columns: true, rows: true },
-      }),
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      getStats
-    )
-
+    let input = pivotTestNode({
+      values: [
+        { type: 'sum', field: 'PO.IssuedAmount' },
+        { type: 'avg', field: 'PO.IssuedAmount' },
+      ],
+      rows: [{ type: 'fieldValues', field: 'Organization.State' }],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+      sort: {
+        columnValues: ['2022'],
+        valueIndex: 1,
+        direction: 'asc',
+      },
+      expanded: { columns: true, rows: true },
+    })
     let expected = {
       aggs: {
         rows: {
@@ -1835,27 +1863,27 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
-
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery and sort with no columns', async () => {
-    let { buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [
-          { type: 'sum', field: 'PO.IssuedAmount' },
-          { type: 'avg', field: 'PO.IssuedAmount' },
-        ],
-        rows: [{ type: 'fieldValues', field: 'Organization.State' }],
-        columns: [
-          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-        ],
-        sort: { valueIndex: 1, direction: 'asc' },
-        expanded: { columns: true, rows: true },
-      }),
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      getStats
-    )
+    let input = pivotTestNode({
+      values: [
+        { type: 'sum', field: 'PO.IssuedAmount' },
+        { type: 'avg', field: 'PO.IssuedAmount' },
+      ],
+      rows: [{ type: 'fieldValues', field: 'Organization.State' }],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+      sort: { valueIndex: 1, direction: 'asc' },
+      expanded: { columns: true, rows: true },
+    })
     let expected = {
       aggs: {
         rows: {
@@ -1913,27 +1941,27 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
-
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery and sort on document count without valueIndex', async () => {
-    let { buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [
-          { type: 'sum', field: 'PO.IssuedAmount' },
-          { type: 'avg', field: 'PO.IssuedAmount' },
-        ],
-        rows: [{ type: 'fieldValues', field: 'Organization.State' }],
-        columns: [
-          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-        ],
-        sort: { valueIndex: null, direction: 'asc' },
-        expanded: { columns: true, rows: true },
-      }),
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      getStats
-    )
+    let input = pivotTestNode({
+      values: [
+        { type: 'sum', field: 'PO.IssuedAmount' },
+        { type: 'avg', field: 'PO.IssuedAmount' },
+      ],
+      rows: [{ type: 'fieldValues', field: 'Organization.State' }],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+      sort: { valueIndex: null, direction: 'asc' },
+      expanded: { columns: true, rows: true },
+    })
     let expected = {
       aggs: {
         rows: {
@@ -1990,29 +2018,29 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery with multiple columns and sorting on multiple columns', async () => {
-    let { buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [{ type: 'sum', field: 'PO.IssuedAmount' }],
-        rows: [{ type: 'fieldValues', field: 'Organization.State' }],
-        columns: [
-          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
-        ],
-        sort: {
-          columnValues: ['2022', '2022-02-01'],
-          valueIndex: 0,
-          direction: 'asc',
-        },
-        expanded: { columns: true, rows: true },
-      }),
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      getStats
-    )
-
+    let input = pivotTestNode({
+      values: [{ type: 'sum', field: 'PO.IssuedAmount' }],
+      rows: [{ type: 'fieldValues', field: 'Organization.State' }],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
+      ],
+      sort: {
+        columnValues: ['2022', '2022-02-01'],
+        valueIndex: 0,
+        direction: 'asc',
+      },
+      expanded: { columns: true, rows: true },
+    })
     let expected = {
       aggs: {
         rows: {
@@ -2106,32 +2134,32 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
-
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery with multiple rows, columns, and sort', async () => {
-    let { buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [{ type: 'stats', field: 'PO.IssuedAmount' }],
-        rows: [
-          { type: 'fieldValues', field: 'Organization.State' },
-          { type: 'fieldValues', field: 'Organization.NameState' },
-        ],
-        columns: [
-          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-        ],
-        sort: {
-          columnValues: ['2022'],
-          valueIndex: 0,
-          valueProp: 'max',
-          direction: 'desc',
-        },
-        expanded: { columns: true, rows: true },
-      }),
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      getStats
-    )
+    let input = pivotTestNode({
+      values: [{ type: 'stats', field: 'PO.IssuedAmount' }],
+      rows: [
+        { type: 'fieldValues', field: 'Organization.State' },
+        { type: 'fieldValues', field: 'Organization.NameState' },
+      ],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+      sort: {
+        columnValues: ['2022'],
+        valueIndex: 0,
+        valueProp: 'max',
+        direction: 'desc',
+      },
+      expanded: { columns: true, rows: true },
+    })
     let expected = {
       aggs: {
         rows: {
@@ -2234,30 +2262,30 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery with multiple rows, columns, and sort on _count without valueIndex', async () => {
-    let { buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [{ type: 'stats', field: 'PO.IssuedAmount' }],
-        rows: [
-          { type: 'fieldValues', field: 'Organization.State' },
-          { type: 'fieldValues', field: 'Organization.NameState' },
-        ],
-        columns: [
-          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-        ],
-        sort: {
-          columnValues: ['2022'],
-          direction: 'desc',
-        },
-        expanded: { columns: true, rows: true },
-      }),
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      getStats
-    )
-
+    let input = pivotTestNode({
+      values: [{ type: 'stats', field: 'PO.IssuedAmount' }],
+      rows: [
+        { type: 'fieldValues', field: 'Organization.State' },
+        { type: 'fieldValues', field: 'Organization.NameState' },
+      ],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+      ],
+      sort: {
+        columnValues: ['2022'],
+        direction: 'desc',
+      },
+      expanded: { columns: true, rows: true },
+    })
     let expected = {
       aggs: {
         rows: {
@@ -2374,27 +2402,27 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
   it('should buildQuery with nested pivot columns and subtotals', async () => {
-    let { buildQuery } = createPivotScope(
-      pivotTestNode({
-        values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
-        rows: [
-          { type: 'fieldValues', field: 'Organization.State' },
-          { type: 'fieldValues', field: 'Organization.NameState' },
-        ],
-        columns: [
-          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-          { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
-        ],
-        expanded: { columns: true, rows: true },
-      }),
-      testSchemas(['Organization.NameState', 'Organization.State']),
-      getStats
-    )
-
+    let input = pivotTestNode({
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      rows: [
+        { type: 'fieldValues', field: 'Organization.State' },
+        { type: 'fieldValues', field: 'Organization.NameState' },
+      ],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
+      ],
+      expanded: { columns: true, rows: true },
+    })
     let expected = {
       track_total_hits: true,
       aggs: {
@@ -2491,6 +2519,11 @@ describe('pivot', () => {
         },
       },
     }
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
@@ -2716,7 +2749,6 @@ describe('pivot', () => {
       testSchema('Vendor.Name'),
       getStats
     )
-
     let nestedResult = processResponse(rootPivotRequest, pivotResponse)
     expect(stringify(nestedResult.results)).toEqual(
       stringify({
