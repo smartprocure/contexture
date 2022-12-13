@@ -2,14 +2,14 @@ let _ = require('lodash/fp')
 let F = require('futil')
 let { buildRegexQueryForWords } = require('../../utils/regex')
 let { getField } = require('../../utils/fields')
-let { negate, elasticsearchIntegerMax } = require('../../utils/elasticDSL')
+let { not, elasticsearchIntegerMax } = require('../../utils/elasticDSL')
 
 module.exports = {
   hasValue: _.get('values.length'),
   filter(node, schema) {
     let field = getField(schema, node.field)
     let result = { terms: { [field]: node.values } }
-    if (node.mode === 'exclude') result = negate(result)
+    if (node.mode === 'exclude') result = not(result)
 
     // trying to prevent 'Too Many Clauses' exception ... http://george-stathis.com/2013/10/18/setting-the-booleanquery-maxclausecount-in-elasticsearch/
     if (node.values.length > 4095) {

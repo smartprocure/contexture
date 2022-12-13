@@ -1,4 +1,4 @@
-let { negate } = require('../../utils/elasticDSL')
+let { not } = require('../../utils/elasticDSL')
 
 module.exports = {
   hasValue: ({ latitude, longitude, radius, operator }) =>
@@ -10,6 +10,6 @@ module.exports = {
         distance: `${radius}mi`,
       },
     }
-    return operator === 'within' ? filter : negate(filter)
+    return operator === 'within' ? filter : not(filter)
   },
 }
