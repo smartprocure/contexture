@@ -1,3 +1,6 @@
+# 1.18.0
+* [pivot] New `pagination` logic for `columns` and `rows` with `drilldown`, `skip`, `include` and `expanded`
+
 # 1.17.3
 * Changed package manger from npm to yarn
 
