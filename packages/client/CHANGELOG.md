@@ -1,3 +1,6 @@
+# 2.49.0
+* Pivot node: new `pagination` logic for `columns` and `rows` with `drilldown`, `skip`, `include` and `expanded`
+
 # 2.48.1
 * Migrate tests to jest
 

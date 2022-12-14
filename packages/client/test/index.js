@@ -2106,6 +2106,7 @@ let AllTests = ContextureClient => {
     )
     let node = Tree.getNode(['root', 'pivot'])
 
+    // TODO test the loaded field population
     let merge = results =>
       exampleTypes.pivot.mergeResponse(
         node,
@@ -2165,6 +2166,7 @@ let AllTests = ContextureClient => {
     )
     let node = Tree.getNode(['root', 'pivot'])
 
+    // TODO test the loaded field population
     let merge = results =>
       exampleTypes.pivot.mergeResponse(
         node,
@@ -2323,23 +2325,152 @@ let AllTests = ContextureClient => {
         key: 'root',
         join: 'and',
         children: [
-          { key: 'pivot', type: 'pivot', pagination: { drilldown: [] }, rows },
+          {
+            key: 'pivot',
+            type: 'pivot',
+            expansions: [],
+            rows,
+          },
           { key: 'test', type: 'facet', values: [] },
         ],
       }
     )
 
-    // These tests set `forceReplaceResponse` conditionally during mutate based on the pivot's onDispatch
-    // Changing fieldValues Size doesn't force replace
-    Tree.mutate(['root', 'pivot'], {
-      pagination: { drilldown: ['Florida'], skip: ['Miami'] },
-    })
+    let node = Tree.getNode(['root', 'pivot'])
+
+    node.expand(Tree, ['root', 'pivot'], 'rows', ['Florida'])
 
     // Changing fieldValuesPartition matchValue does force replace
     Tree.mutate(['root', 'pivot'], {
       rows: _.set('0.matchValue', 'Nevada', rows),
     })
-    expect(Tree.getNode(['root', 'pivot']).pagination.drilldown).toEqual([])
+    expect(Tree.getNode(['root', 'pivot']).expansions).toEqual([])
+  })
+  it('should preserve expanded drilldowns when drilling and paginating', async () => {
+    let service = jest.fn(mockService())
+    let rows = [
+      { type: 'fieldValuesPartition', field: 'State' },
+      { type: 'fieldValues', field: 'City', size: 10 },
+    ]
+    let Tree = ContextureClient(
+      { service, debounce: 1 },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'pivot',
+            type: 'pivot',
+            expansions: { type: 'rows', rows: [] },
+            rows,
+          },
+          { key: 'test', type: 'facet', values: [] },
+        ],
+      }
+    )
+
+    Tree.mutate(['root', 'pivot'], {
+      context: {
+        results: {
+          rows: [
+            { key: 'Florida', rows: [{ key: 'Miami', a: 1 }] },
+            {
+              key: 'Nevada',
+              rows: [{ key: 'Las Vegas', a: 2 }],
+            },
+          ],
+        },
+      },
+    })
+
+    let node = Tree.getNode(['root', 'pivot'])
+    node.expand(Tree, ['root', 'pivot'], 'rows', ['Florida'])
+
+    expect(toJS(Tree.getNode(['root', 'pivot']).expansions)).toEqual([
+      { type: 'columns', drilldown: [], loaded: [] },
+      { type: 'rows', drilldown: [], loaded: ['Florida', 'Nevada'] },
+      { type: 'rows', drilldown: ['Florida'], loaded: false },
+    ])
+  })
+  it('should preserve expanded columns when changing sort configuration', async () => {
+    let service = jest.fn(mockService())
+    let columns = [
+      { type: 'fieldValuesPartition', field: 'State' },
+      { type: 'fieldValues', field: 'City', size: 10 },
+    ]
+    let rows = [{ type: 'fieldValues', field: 'Name', size: 10 }]
+    let Tree = ContextureClient(
+      { service, debounce: 1 },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'pivot',
+            type: 'pivot',
+            expansions: {
+              type: 'rows',
+              rows: [],
+              columns: [],
+            },
+            columns,
+            rows,
+            sort: {
+              columnValues: [],
+              valueIndex: 0,
+            },
+          },
+          { key: 'test', type: 'facet', values: [] },
+        ],
+      }
+    )
+
+    Tree.mutate(['root', 'pivot'], {
+      context: {
+        results: {
+          columns: [
+            { key: 'Florida', columns: [{ key: 'Miami', a: 1 }] },
+            {
+              key: 'Nevada',
+              columns: [{ key: 'Las Vegas', a: 2 }],
+            },
+          ],
+          rows: [
+            {
+              key: 'NanoSoft',
+              columns: [
+                { key: 'Florida', columns: [{ key: 'Miami', a: 1 }] },
+                {
+                  key: 'Nevada',
+                  columns: [{ key: 'Las Vegas', a: 2 }],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    })
+
+    let node = Tree.getNode(['root', 'pivot'])
+
+    node.expand(Tree, ['root', 'pivot'], 'rows', ['NanoSoft'])
+    node.expand(Tree, ['root', 'pivot'], 'columns', ['Florida'])
+
+    Tree.mutate(['root', 'pivot'], {
+      sort: {
+        columnValues: ['Florida', 'Miami'],
+        valueIndex: 0,
+      },
+    })
+
+    expect(toJS(Tree.getNode(['root', 'pivot']).expansions)).toEqual([
+      {
+        drilldown: [],
+        loaded: ['Florida', 'Nevada'],
+        type: 'columns',
+      },
+      { drilldown: ['Florida'], loaded: false, type: 'columns' },
+    ])
   })
   it('should support watchNode', async () => {
     let service = jest.fn(mockService())
