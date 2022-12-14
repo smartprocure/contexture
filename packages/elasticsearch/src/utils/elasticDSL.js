@@ -55,6 +55,8 @@ let basicSimplifyTree = _.flow(
     _.flow(
       // flatten out buckets
       _.replace(/\.buckets\./g, '.'),
+      // Needs to unfold the pivot filters
+      _.replace(/(pivotFilter)\./g, ''),
       // Needs to handle custom traversals, e.g. value filter
       // TODO: this isn't scalable nor type specific!!
       _.replace(/(valueFilter)\./g, ''),
@@ -94,6 +96,13 @@ let basicSimplifyTree = _.flow(
   }
 )
 
+let flatCompact = _.flow(_.flattenDeep, _.compact)
+let unlessEmpty = onNotEmpty =>
+  _.flow(
+    F.when(_.isArray, flatCompact),
+    F.ifElse(_.negate(_.isEmpty), onNotEmpty, false)
+  )
+
 module.exports = {
   statsAggs,
   buildMetrics,
@@ -104,6 +113,8 @@ module.exports = {
   flattenMetrics,
   // https://www.elastic.co/guide/en/elasticsearch/reference/current/number.html#number
   elasticsearchIntegerMax: 2 ** 31 - 1,
-  negate: filter => ({ bool: { must_not: filter } }),
+  and: unlessEmpty(must => ({ bool: { must } })),
+  or: unlessEmpty(should => ({ bool: { should, minimum_should_match: 1 } })),
+  not: unlessEmpty(must_not => ({ bool: { must_not } })),
   buildFilter: ({ type, field, ...rest }) => ({ [type]: { [field]: rest } }),
 }
