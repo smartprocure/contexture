@@ -1,7 +1,7 @@
 let _ = require('lodash/fp')
 let unidecode = require('unidecode')
 let { toSafeRegex } = require('../../utils/regex')
-let { negate } = require('../../utils/elasticDSL')
+let { not } = require('../../utils/elasticDSL')
 let { getField, stripLegacySubFields } = require('../../utils/fields')
 
 module.exports = {
@@ -22,7 +22,7 @@ module.exports = {
           ...(node.operator === 'containsExact' && { analyzer: 'exact' }),
         },
       }
-      return node.join === 'none' ? negate(result) : result
+      return node.join === 'none' ? not(result) : result
     }
 
     let useNotAnalyzedField = /startsWith|endsWith|is|isNot|containsWord/.test(
@@ -80,6 +80,6 @@ module.exports = {
       },
     }
 
-    return /doesNotContain|isNot/.test(node.operator) ? negate(filter) : filter
+    return /doesNotContain|isNot/.test(node.operator) ? not(filter) : filter
   },
 }
