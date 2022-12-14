@@ -1,6 +1,6 @@
 import _ from 'lodash/fp'
 import F from 'futil'
-import { deepMultiTransformOn } from './util/futil'
+import pivot from './exampleTypes/pivot'
 
 let validateValues = ({ value, values = [] }) => value || values.length
 let validateValueExistence = _.flow(_.get('value'), _.negate(_.isNil))
@@ -265,87 +265,7 @@ export default F.stampKey('type', {
       field: null,
     },
   },
-  pivot: {
-    validate: context =>
-      _.every(
-        ({ type, ranges, percents }) =>
-          (type !== 'numberRanges' && type !== 'percentiles') ||
-          (type === 'numberRanges' && ranges.length > 0) ||
-          (type === 'percentiles' && percents.length > 0),
-        _.concat(context.columns, context.rows)
-      ),
-    reactors: {
-      columns: 'self',
-      rows: 'self',
-      values: 'self',
-      pagination: 'self',
-      filters: 'others',
-      sort: 'self',
-    },
-    defaults: {
-      columns: [],
-      rows: [],
-      values: [],
-      filters: [],
-      sort: {},
-      pagination: {
-        drilldown: null,
-        skip: [],
-      },
-      showCounts: false,
-      context: {
-        results: [],
-      },
-    },
-    onDispatch(event, extend) {
-      // If mutating any row/column type specific "resetting" keys, set `forceReplaceResponse`
-      let { type, node, value } = event
-      if (type === 'mutate') {
-        // Resetting the pagination when the node is changed
-        // allows to return expected root results instead of nested drilldown
-        // EX: changing the columns or rows config was not returning the new results
-        if (
-          node.pagination.drilldown &&
-          !_.has('pagination.drilldown', value)
-        ) {
-          extend(node, { pagination: { drilldown: [], skip: [] } })
-        }
-      }
-    },
-    // Resetting the pagination when the tree is changed
-    // allows to return expected root results instead of nested drilldown
-    // EX: criteria filters didn't work properly when drilldown was applied
-    onUpdateByOthers(node, extend) {
-      if (node.pagination.drilldown)
-        extend(node, { pagination: { drilldown: [], skip: [] } })
-    },
-    shouldMergeResponse: node =>
-      !_.isEmpty(node.pagination.drilldown) || !_.isEmpty(node.pagination.skip),
-    mergeResponse(node, response, extend, snapshot) {
-      // Convert response rows and columns to objects for easy merges
-      let groupsToObjects = deepMultiTransformOn(
-        ['rows', 'columns'],
-        groupsToObjects => _.flow(_.map(groupsToObjects), _.keyBy('key'))
-      )
-      // Convert rows and columns back to arrays
-      let groupsToArrays = deepMultiTransformOn(
-        ['rows', 'columns'],
-        groupsToArrays => _.flow(F.unkeyBy('key'), _.map(groupsToArrays))
-      )
-
-      // `snapshot` here is to solve a mobx issue
-      let nodeGroups = groupsToObjects(snapshot(node.context.results))
-      let responseGroups = groupsToObjects(response.context.results)
-
-      // Easy merge now that we can merge by row key
-      let results = F.mergeAllArrays([nodeGroups, responseGroups])
-
-      let context = { results: groupsToArrays(results) }
-
-      // Write on the node
-      extend(node, { context })
-    },
-  },
+  pivot,
   esTwoLevelAggregation: {
     validate: context =>
       context.key_field &&
