@@ -1,3 +1,6 @@
+# 1.19.0
+* [pivot] Create new `dateRangesGroupStats` type
+
 # 1.18.0
 * [pivot] New `pagination` logic for `columns` and `rows` with `drilldown`, `skip`, `include` and `expanded`
 
