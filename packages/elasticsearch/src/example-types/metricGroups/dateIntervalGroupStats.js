@@ -25,10 +25,7 @@ let supportedFederalFiscalYearMetrics = [
 ]
 
 let isOffsetDates = node => {
-  if (
-    node.interval !== 'federalFiscalQuarter' &&
-    node.interval !== 'federalFiscalYear'
-  )
+  if (node.interval !== 'federalFiscalYear')
     return false
   if (_.isEmpty(stats)) return false
   return node.stats.every(val =>
