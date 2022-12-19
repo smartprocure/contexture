@@ -68,7 +68,7 @@ let buildGroupQuery = (node, children, groupsKey) => {
             // Both third and forth quarter of a standard year are 92 days
             // This allows us to simple add 92 days to a date to offset
             // the dates to correspond to a federal fiscal year.
-            date += 7862400000; // 92 days
+            date += 7862400000L; // 92 days
             emit(date);
           `,
             },
