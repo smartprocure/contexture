@@ -113,7 +113,7 @@ let createPivotScope = (node, schema, getStats) => {
 
   // adding initial root level rows expansion
   if (!_.find({ type: 'rows' }, expansions))
-    expansions.push({
+    expansions.splice(1, 0, {
       type: 'rows',
       drilldown: [],
       loaded: false,
