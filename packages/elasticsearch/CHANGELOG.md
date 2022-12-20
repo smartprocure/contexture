@@ -1,8 +1,11 @@
+# 1.19.1
+* [pivot] Fixing initialization for `expansions` array
+
 # 1.19.0
 * [pivot] Create new `dateRangesGroupStats` type
 
 # 1.18.0
-* [pivot] New `pagination` logic for `columns` and `rows` with `drilldown`, `skip`, `include` and `expanded`
+* [pivot] New `expansions` array for `columns` and `rows` with `drilldown` and `loaded`
 
 # 1.17.3
 * Changed package manger from npm to yarn
