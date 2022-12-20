@@ -43,7 +43,7 @@ let TableBody = ({
           display: showIntro || showNoResults ? 'none' : '',
         }}
       >
-        {!!results.length &&
+        {_.size(results) &&
           _.map(
             x => (
               <Row

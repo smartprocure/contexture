@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "2.54.6",
+  "version": "2.54.7",
   "description": "React components for building contexture interfaces",
   "main": "dist/index.js",
   "scripts": {
@@ -96,7 +96,7 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-require-context-hook": "^1.0.0",
     "chokidar": "^3.5.2",
-    "contexture": "^0.5.2",
+    "contexture": "^0.12.10",
     "contexture-client": "^2.48.0",
     "contexture-elasticsearch": "^1.13.0",
     "danger": "^10.5.4",
