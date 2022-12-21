@@ -2466,7 +2466,7 @@ let AllTests = ContextureClient => {
     expect(toJS(Tree.getNode(['root', 'pivot']).expansions)).toEqual([
       {
         drilldown: [],
-        loaded: ['Florida', 'Nevada'],
+        loaded: false,
         type: 'columns',
       },
       { drilldown: ['Florida'], loaded: false, type: 'columns' },
