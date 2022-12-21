@@ -61,7 +61,7 @@ let resetExpandedRows = (extend, node) => {
   extend(node, {
     expansions: _.flow(
       _.filter({ type: 'columns' }),
-      _.map(_.set('loaded', false)),
+      _.map(_.set('loaded', false))
     )(node.expansions),
   })
 }
@@ -78,10 +78,8 @@ let maybeAddRootExpansion = (node, type) => {
     }
     rootExpansion.loaded = getResultKeys(rootExpansion, node, results)
 
-    if (type === 'columns')
-      expansions.unshift(rootExpansion)
-    else
-      expansions.splice(1, 0, rootExpansion)
+    if (type === 'columns') expansions.unshift(rootExpansion)
+    else expansions.splice(1, 0, rootExpansion)
   }
 }
 
@@ -208,8 +206,8 @@ export default {
   },
   shouldMergeResponse: _.flow(
     _.get('expansions'),
-    _.filter({type: 'rows'}),
-    _.negate(_.isEmpty),
+    _.filter({ type: 'rows' }),
+    _.negate(_.isEmpty)
   ),
   mergeResponse(node, response, extend, snapshot) {
     let findNotLoadedExpansion = () =>
@@ -220,11 +218,7 @@ export default {
 
     while ((expansion = findNotLoadedExpansion())) {
       // adding values to loaded expansion
-      expansion.loaded = getResultKeys(
-        expansion,
-        node,
-        context.results
-      )
+      expansion.loaded = getResultKeys(expansion, node, context.results)
 
       // TODO automatically create and populate nested expansions
       // when expanded flag is set to true
