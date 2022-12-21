@@ -1,5 +1,8 @@
+# 2.49.1
+* Pivot node: fixing issues with sorting and result merging
+
 # 2.49.0
-* Pivot node: new `pagination` logic for `columns` and `rows` with `drilldown`, `skip`, `include` and `expanded`
+* Pivot node: New `expansions` array for `columns` and `rows` with `drilldown` and `loaded`
 
 # 2.48.1
 * Migrate tests to jest
