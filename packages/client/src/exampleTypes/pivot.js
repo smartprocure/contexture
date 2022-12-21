@@ -52,13 +52,13 @@ let mergeResults = _.mergeWith((current, additional, prop) => {
 })
 
 let maybeRemoveSelectedRows = (extend, node) => {
-  let selectedRowKeys = _.filter(rowPath => {
+  let selectedRows = _.filter(rowPath => {
     let expansion = { type: 'rows', drilldown: _.initial(toJS(rowPath)) }
     let parentRowLoadedKeys = previouslyLoadedKeys(expansion, node.expansions)
     return _.includes(_.last(rowPath), parentRowLoadedKeys)
-  }, node.selectedRowKeys)
+  }, node.selectedRows)
 
-  extend(node, { selectedRowKeys })
+  extend(node, { selectedRows })
 }
 
 // Resetting the expansions when the pivot node is changed
@@ -203,7 +203,7 @@ export default {
     context: {
       results: {},
     },
-    selectedRowKeys: [],
+    selectedRows: [],
   },
   onDispatch(event, extend) {
     let { type, node, value } = event
@@ -214,7 +214,7 @@ export default {
     if (_.has('sort', value)) return resetExpandedRows(extend, node)
 
     // if expansions or selected row change, do not reset expansions
-    if (F.cascade(['expansions', 'selectedRowKeys'], value)) return
+    if (F.cascade(['expansions', 'selectedRows'], value)) return
 
     // if anything else about node configuration is changed resetting expansions
     resetExpansions(extend, node)
