@@ -56,10 +56,13 @@ let resetExpansions = (extend, node) => {
   })
 }
 
-// Resetting the row expansions when the sorting is changed
+// Resetting the row expansions and columns loaded when the sorting is changed
 let resetExpandedRows = (extend, node) => {
   extend(node, {
-    expansions: _.filter({ type: 'columns' }, node.expansions),
+    expansions: _.flow(
+      _.filter({ type: 'columns' }),
+      _.map(_.set('loaded', false))
+    )(node.expansions),
   })
 }
 
@@ -69,12 +72,14 @@ let maybeAddRootExpansion = (node, type) => {
   let results = node.context.results
 
   if (!_.find({ type }, expansions)) {
-    let columnsExpansion = {
+    let rootExpansion = {
       type,
       drilldown: [],
     }
-    columnsExpansion.loaded = getResultKeys(columnsExpansion, node, results)
-    expansions.push(columnsExpansion)
+    rootExpansion.loaded = getResultKeys(rootExpansion, node, results)
+
+    if (type === 'columns') expansions.unshift(rootExpansion)
+    else expansions.splice(1, 0, rootExpansion)
   }
 }
 
@@ -199,26 +204,25 @@ export default {
   onUpdateByOthers(node, extend) {
     resetExpansions(extend, node, node)
   },
-  shouldMergeResponse: node => !_.isEmpty(node.expansions),
+  shouldMergeResponse: _.flow(
+    _.get('expansions'),
+    _.filter({ type: 'rows' }),
+    _.negate(_.isEmpty)
+  ),
   mergeResponse(node, response, extend, snapshot) {
     let findNotLoadedExpansion = () =>
       _.find(({ loaded }) => !loaded, node.expansions)
 
+    let context = mergeResults(snapshot(node.context), response.context)
     let expansion
 
     while ((expansion = findNotLoadedExpansion())) {
       // adding values to loaded expansion
-      expansion.loaded = getResultKeys(
-        expansion,
-        node,
-        response.context.results
-      )
+      expansion.loaded = getResultKeys(expansion, node, context.results)
 
       // TODO automatically create and populate nested expansions
       // when expanded flag is set to true
     }
-
-    let context = mergeResults(snapshot(node.context), response.context)
 
     // Write on the node
     extend(node, { context })
