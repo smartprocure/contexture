@@ -1,3 +1,6 @@
+# 2.49.2
+* Pivot node: Add new field `selectedRowsKeys`. Clear as needed `selectedRowsKeys` when the `expansions` array and/or query results are changing 
+
 # 2.49.1
 * Pivot node: fixing issues with sorting and result merging
 
