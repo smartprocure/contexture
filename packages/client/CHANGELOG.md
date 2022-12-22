@@ -1,3 +1,6 @@
+# 2.49.3
+* Pivot node: Do not reset expansions when the filters are changed (that only affects other nodes)
+
 # 2.49.2
 * Pivot node: Add new field `selectedRows`. Clear as needed `selectedRows` when the `expansions` array and/or query results are changing 
 
