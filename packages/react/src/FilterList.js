@@ -162,15 +162,16 @@ let FilterList = _.flow(
     tree,
     node,
     fields,
+    resultsPath,
     mapNodeToProps = _.noop,
     mapNodeToLabel = _.noop,
     className,
     style,
     theme: { UnmappedNodeComponent, Button },
   }) => {
-    // find if any nodes in the tree are marked for update
-    // i.e. usually nodes are marked for update because they react to "others" reactor
-    let updateRequired = tree.disableAutoUpdate && node.markedForUpdate
+    // find results node that this filter node is targeting (['root', 'results'])
+    let updateRequired =
+      tree.disableAutoUpdate && tree.getNode(resultsPath)?.markedForUpdate
 
     return (
       <div style={style} className={className}>
