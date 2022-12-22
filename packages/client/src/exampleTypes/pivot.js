@@ -80,6 +80,8 @@ let resetExpandedRows = (extend, node) => {
       _.map(_.set('loaded', false))
     )(node.expansions),
   })
+  // reset selected rows as well, since that is very much dependent on the expansions array
+  maybeRemoveSelectedRows(extend, node)
 }
 
 // adding values for initial root level expansions
@@ -207,14 +209,13 @@ export default {
   },
   onDispatch(event, extend) {
     let { type, node, value } = event
-
     if (type !== 'mutate') return
 
     // if sorting is changed we are preserving expanded columns
     if (_.has('sort', value)) return resetExpandedRows(extend, node)
 
-    // if expansions or selected row change, do not reset expansions
-    if (F.cascade(['expansions', 'selectedRows'], value)) return
+    // if expansions, selected row change or filters change, do not reset expansions
+    if (F.cascade(['expansions', 'selectedRows', 'filters'], value)) return
 
     // if anything else about node configuration is changed resetting expansions
     resetExpansions(extend, node)
