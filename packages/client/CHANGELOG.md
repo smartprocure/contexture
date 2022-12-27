@@ -1,3 +1,6 @@
+# 2.49.4
+* Pivot node: Do not remove root node when present in `selectedRows` when checking which selected rows should remain 
+
 # 2.49.3
 * Pivot node: Do not reset expansions when the filters are changed (that only affects other nodes)
 
