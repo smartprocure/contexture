@@ -55,7 +55,9 @@ let maybeRemoveSelectedRows = (extend, node) => {
   let selectedRows = _.filter(rowPath => {
     let expansion = { type: 'rows', drilldown: _.initial(toJS(rowPath)) }
     let parentRowLoadedKeys = previouslyLoadedKeys(expansion, node.expansions)
-    return _.includes(_.last(rowPath), parentRowLoadedKeys)
+    return (
+      _.isEmpty(rowPath) || _.includes(_.last(rowPath), parentRowLoadedKeys)
+    )
   }, node.selectedRows)
 
   extend(node, { selectedRows })
