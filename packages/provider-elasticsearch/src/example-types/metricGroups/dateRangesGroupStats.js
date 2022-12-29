@@ -11,7 +11,10 @@ let buildGroupQuery = ({ field, ranges }, children, groupingType) => ({
 })
 
 let drilldown = ({ field, drilldown }) => {
-  let [gte, lt] = _.split('-', drilldown)
+  let separatorIndex = _.floor(drilldown.length / 2)
+  let gte = drilldown.slice(0, separatorIndex)
+  let lt = drilldown.slice(separatorIndex + 1, drilldown.length)
+
   return { range: { [field]: { gte, lt } } }
 }
 
