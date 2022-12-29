@@ -11,9 +11,7 @@ let buildGroupQuery = ({ field, ranges }, children, groupingType) => ({
 })
 
 let drilldown = ({ field, drilldown }) => {
-  let separatorIndex = _.floor(drilldown.length / 2)
-  let gte = drilldown.slice(0, separatorIndex)
-  let lt = drilldown.slice(separatorIndex + 1, drilldown.length)
+  let [gte, lt] = _.split(/(?<=Z)-/, drilldown)
 
   return { range: { [field]: { gte, lt } } }
 }
