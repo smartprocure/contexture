@@ -1,8 +1,5 @@
-let _ = require('lodash/fp')
 let moment = require('moment')
 let { groupStats } = require('./groupStatUtils')
-let { simplifyBuckets } = require('../../utils/elasticDSL')
-let { getStats } = require('./stats')
 
 let drilldown = ({ field, interval, drilldown }) => {
   let gte = drilldown
@@ -13,23 +10,13 @@ let drilldown = ({ field, interval, drilldown }) => {
   return { range: { [field]: { gte, lte } } }
 }
 
-let supportedFederalFiscalYearMetrics = [
-  'sum',
-  // TODO
-  // 'avg',
-  // 'min',
-  // 'max',
-  // 'percentiles', // maybe can do?
-  // 'geo_bounds', // likely can do?
-  // 'geo_centroid', // maybe can do but looks tricky
-]
-
 let isOffsetDates = node => {
-  if (node.interval !== 'federalFiscalYear') return false
-  if (_.isEmpty(stats)) return false
-  return !node.stats.every(val =>
-    supportedFederalFiscalYearMetrics.includes(val)
+  if (
+    node.interval === 'federalFiscalYear' ||
+    node.interval === 'federalFiscalQuarter'
   )
+    return true
+  return false
 }
 
 let buildGroupQuery = (node, children, groupsKey) => {
@@ -63,13 +50,9 @@ let buildGroupQuery = (node, children, groupsKey) => {
             [`${field}-offset`]: {
               type: 'date',
               script: `
-            long date = doc['${field}'].value.toInstant().toEpochMilli();
-            // Both third and forth quarter of a standard year are 92 days
-            // This allows us to simple add 92 days to a date to offset
-            // the dates to correspond to a federal fiscal year.
-            date += 7862400000L; // 92 days
-            emit(date);
-          `,
+                if(doc['${field}'].size()!=0) {
+                  emit(doc['${field}'].value.plusMonths(3).toInstant().toEpochMilli())
+                }`,
             },
           },
         }
@@ -87,66 +70,7 @@ let buildGroupQuery = (node, children, groupsKey) => {
   }
 }
 
-let processResponse = (response, node) => {
-  let offsetDates = isOffsetDates(node)
-  if (
-    (node.interval === 'federalFiscalYear' ||
-      node.interval === 'federalFiscalQuarter') &&
-    !offsetDates
-  ) {
-    let offsetBuckets = _.flow(
-      _.get('aggregations.groups.buckets'),
-      _.map(o => {
-        // NOTE: the `TZ` of the running node process must be
-        // `UTC` for this to work as expected.
-        let m = moment(new Date(o.key)).add({ quarter: 1 })
-        return {
-          ...o,
-          key: m.valueOf(),
-          key_as_string: m.toISOString(),
-        }
-      })
-    )(response)
-    response = _.set('aggregations.groups.buckets', offsetBuckets, response)
-  }
-  // bundle up the quarterly bucketed data for a fiscal year
-  if (node.interval === 'federalFiscalYear' && !offsetDates) {
-    let aggregatedBuckets = _.flow(
-      _.get('aggregations.groups.buckets'),
-      _.groupBy(({ key }) => new Date(key).getUTCFullYear()),
-      _.mapValues(
-        _.reduce(
-          (agg, o) => {
-            let m = moment(new Date(o.key)).startOf('year')
-            let rtn = {
-              key: m.valueOf(),
-              key_as_string: m.toISOString(),
-            }
-            rtn.doc_count = agg.doc_count + o.doc_count
-
-            if (o.sum)
-              rtn.sum = { value: _.getOr(0, 'sum.value', agg) + o.sum.value }
-            return rtn
-          },
-          { doc_count: 0 }
-        )
-      ),
-      _.values
-    )(response)
-    response = _.set('aggregations.groups.buckets', aggregatedBuckets, response)
-  }
-  return response
-}
-
-let stats = groupStats(buildGroupQuery)
 module.exports = {
-  ...stats,
-  processResponse,
+  ...groupStats(buildGroupQuery),
   drilldown,
-  async result(node, search, schema) {
-    let query = await stats.buildQuery(node, schema, getStats(search))
-    let response = processResponse(await search(query), node)
-    let aggs = response.aggregations.valueFilter || response.aggregations
-    return { results: simplifyBuckets(aggs.groups.buckets) }
-  },
 }
