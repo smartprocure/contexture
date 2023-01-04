@@ -2,6 +2,8 @@ let moment = require('moment')
 let { groupStats } = require('./groupStatUtils')
 
 let drilldown = ({ field, interval, drilldown }) => {
+  if (interval === 'federalFiscalYear') interval = 'year'
+  if (interval === 'federalFiscalQuarter') interval = 'quarter'
   let gte = drilldown
   let lte = moment
     .parseZone(drilldown)
@@ -27,21 +29,9 @@ let buildGroupQuery = (node, children, groupsKey) => {
   // calendar year quarters but offset forward by one.
   // e.g. calendarYear2022Q1 => federalFiscalYear2022Q2
   //      calendarYear2022Q4 => federalFiscalYear2023Q1
-  // In either federalFiscal interval senario,
-  // elasitc computes a date_histogram using `'quarter'`
-  // and the date offset and
-  // year bucketing (in the case of federalFiscalYear)
-  // are computed in node in the `result` function.
+  if (interval === 'federalFiscalYear') interval = 'year'
   if (interval === 'federalFiscalQuarter') interval = 'quarter'
-
   let offsetDates = isOffsetDates(node)
-  if (interval === 'federalFiscalYear') {
-    if (offsetDates) {
-      interval = 'quarter'
-    } else {
-      interval = 'year'
-    }
-  }
 
   return {
     ...(offsetDates
