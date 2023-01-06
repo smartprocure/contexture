@@ -35,8 +35,8 @@ let buildGroupQuery = (node, children, groupsKey) => {
 
   return {
     ...(offsetDates
-      ? {
-          runtime_mappings: {
+      ? { hoistProps : { 
+            runtime_mappings: {
             [`${field}-offset`]: {
               type: 'date',
               script: `
@@ -44,9 +44,10 @@ let buildGroupQuery = (node, children, groupsKey) => {
                   emit(doc['${field}'].value.plusMonths(3).toInstant().toEpochMilli())
                 }`,
             },
-          },
+          }
         }
-      : {}),
+      }
+      : { hoistProps :{}}),
     aggs: {
       [groupsKey]: {
         date_histogram: {
