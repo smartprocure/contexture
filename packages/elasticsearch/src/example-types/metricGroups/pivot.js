@@ -36,6 +36,7 @@ let getSortField = ({ columnValues = [], valueProp, valueIndex } = {}) =>
 
 let maybeWrapWithFilterAgg = ({
   query,
+  hoistProps,
   drilldownFilters,
   includeRowFilters,
   includeColumnFilters,
@@ -268,6 +269,7 @@ let createPivotScope = (node, schema, getStats) => {
     // TODO check for request.type === groupingType when drilling down fully expanded
     let isFullyExpanded = _.get(['expanded', groupingType], node)
     let drilldownDepth = _.get([groupingType, 'drilldown', 'length'], request)
+    let hoistProps = {}
 
     return F.reduceIndexed(
       async (children, group, index, groups) => {
@@ -287,7 +289,9 @@ let createPivotScope = (node, schema, getStats) => {
           group.sort = { field: sortField, direction: sort.direction }
         }
         let build = lookupTypeProp(_.identity, 'buildGroupQuery', group.type)
-        return build(group, await children, groupingType, schema, getStats)
+        //build = build(group, await children, groupingType, schema, getStats)
+        //hoistProps = _.merge(build.hoistProps, hoistProps)
+        return build(group, await children, groupingType, schema, getStats)//_.omit(["hoistProps"], build)
       },
       statsAggs,
       _.reverse(groups)
@@ -358,10 +362,11 @@ let createPivotScope = (node, schema, getStats) => {
         statsAggs = _.merge(
           statsAggs,
           maybeWrapWithFilterAgg({
+            hoistProps: {},
             drilldownFilters: drilldownColumnFilters,
             includeColumnFilters,
             skipFilters: skipColumnFilters,
-            query: columnsStatsAggs,
+            query: _.omit(["hoistProps"], columnsStatsAggs)
           })
         )
         // disabling the filters as we already used them
@@ -385,21 +390,23 @@ let createPivotScope = (node, schema, getStats) => {
       query = _.merge(
         statsAggs,
         maybeWrapWithFilterAgg({
+          hoistProps: rowsStatsAggs.hoistProps,
           drilldownFilters: drilldownRowFilters,
           includeRowFilters,
           skipFilters: skipRowFilters,
-          query: rowsStatsAggs,
+          query: _.omit(["hoistProps"],rowsStatsAggs)
         })
       )
       // disabling the filters as we already used them
       drilldownRowFilters = includeRowFilters = skipRowFilters = false
     } else {
-      query = rowsStatsAggs
+      query = _.omit(["hoistProps"],rowsStatsAggs)
     }
 
     // TODO apply the include/skip filters below the grand total level
     // so the total values are not calculated on a subset of data
     query = maybeWrapWithFilterAgg({
+      hoistProps: {},
       drilldownFilters: [drilldownColumnFilters, drilldownRowFilters],
       includeRowFilters,
       includeColumnFilters,
@@ -410,6 +417,8 @@ let createPivotScope = (node, schema, getStats) => {
     // Without this, ES7+ stops counting at 10k instead of returning the actual count
     query.track_total_hits = true
 
+    query = {...rowsStatsAggs.hoistProps,...query}
+    
     return query
   }
 
