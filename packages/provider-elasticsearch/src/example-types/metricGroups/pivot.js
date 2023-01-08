@@ -358,8 +358,12 @@ let createPivotScope = (node, schema, getStats) => {
       )
 
       //Add any props that should be hoisted for this col agg and remove from agg to be hoisted
-      hoistProps = _.merge(_.get('hoistProps',columnsStatsAggs),hoistProps,{})
-      columnsStatsAggs = _.omit('hoistProps',columnsStatsAggs)
+      hoistProps = _.merge(
+        _.get('hoistProps', columnsStatsAggs),
+        hoistProps,
+        {}
+      )
+      columnsStatsAggs = _.omit('hoistProps', columnsStatsAggs)
 
       if (request.columns.totals) {
         // adding total column statsAggs above the column filters
@@ -369,7 +373,7 @@ let createPivotScope = (node, schema, getStats) => {
             drilldownFilters: drilldownColumnFilters,
             includeColumnFilters,
             skipFilters: skipColumnFilters,
-            query: columnsStatsAggs
+            query: columnsStatsAggs,
           })
         )
         // disabling the filters as we already used them
@@ -388,9 +392,9 @@ let createPivotScope = (node, schema, getStats) => {
     )
     let query
 
-     //Add any props that should be hoisted for this row agg and remove from agg to be hoisted
-     hoistProps = _.merge(_.get('hoistProps',rowsStatsAggs),hoistProps,{})
-     rowsStatsAggs = _.omit('hoistProps',rowsStatsAggs)
+    //Add any props that should be hoisted for this row agg and remove from agg to be hoisted
+    hoistProps = _.merge(_.get('hoistProps', rowsStatsAggs), hoistProps, {})
+    rowsStatsAggs = _.omit('hoistProps', rowsStatsAggs)
 
     if (request.rows.totals) {
       // adding total rows statsAggs above the rows filters
@@ -400,7 +404,7 @@ let createPivotScope = (node, schema, getStats) => {
           drilldownFilters: drilldownRowFilters,
           includeRowFilters,
           skipFilters: skipRowFilters,
-          query: rowsStatsAggs
+          query: rowsStatsAggs,
         })
       )
       // disabling the filters as we already used them
@@ -422,8 +426,8 @@ let createPivotScope = (node, schema, getStats) => {
     // Without this, ES7+ stops counting at 10k instead of returning the actual count
     query.track_total_hits = true
 
-    query = {...hoistProps,...query}
-    
+    query = { ...hoistProps, ...query }
+
     return query
   }
 
