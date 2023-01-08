@@ -1,9 +1,11 @@
+let _ = require('lodash/fp')
 let moment = require('moment')
 let { groupStats } = require('./groupStatUtils')
 
+let fiscalTypes = ['federalFiscal']
+
 let drilldown = ({ field, interval, drilldown }) => {
-  if (interval === 'federalFiscalYear') interval = 'year'
-  if (interval === 'federalFiscalQuarter') interval = 'quarter'
+  interval = _.camelCase(_.replace(fiscalTypes, '', interval))
   let gte = drilldown
   let lte = moment
     .parseZone(drilldown)
@@ -12,46 +14,53 @@ let drilldown = ({ field, interval, drilldown }) => {
   return { range: { [field]: { gte, lte } } }
 }
 
-let isOffsetDates = node => {
-  if (
-    node.interval === 'federalFiscalYear' ||
-    node.interval === 'federalFiscalQuarter'
-  )
-    return true
-  return false
-}
-
 let buildGroupQuery = (node, children, groupsKey) => {
   let { field, interval = 'year' } = node
+  let defaultMonthFiscalOffset = 3
+  
+  /* 
+  *   Federal fiscal year quarters have the
+  *   same start and end dates as conventional
+  *   calendar year quarters but offset forward by one.
+  *   e.g. calendarYear2022Q1 => federalFiscalYear2022Q2
+  *       calendarYear2022Q4 => federalFiscalYear2023Q
+  */
+  let offsetDates = _.includes('fiscal', _.toLower(interval))
+  let untranslatedField = node.field
+  field = offsetDates ? `${field}.fiscal` : field //translate to runtime mapped field if fiscal
+  interval = _.camelCase(_.replace(fiscalTypes, '', interval)) //fiscal only includes quarters and years
 
-  // Federal fiscal year quarters have the
-  // same start and end dates as conventional
-  // calendar year quarters but offset forward by one.
-  // e.g. calendarYear2022Q1 => federalFiscalYear2022Q2
-  //      calendarYear2022Q4 => federalFiscalYear2023Q1
-  if (interval === 'federalFiscalYear') interval = 'year'
-  if (interval === 'federalFiscalQuarter') interval = 'quarter'
-  let offsetDates = isOffsetDates(node)
+  /*
+  *   hoistProps allows the fields within to be hoisted to top of mapping structure  
+  *   this is to avoid having issues in which this is not allowed at the same level 
+  *   of a filter
+  */
+  let hoistMappings = offsetDates ? { 
+    hoistProps : { 
+        runtime_mappings: {
+        [`${field}`]: {
+          type: 'date',
+          script:{
+            source: `if(doc['${untranslatedField}'].size()!=0){\
+                        emit(doc['${untranslatedField}']\
+                        .value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}\
+                    `, 
+            params: {
+              "monthOffset" : defaultMonthFiscalOffset
+            },
+          },
+      }
+    }
+    }
+  } : 
+  {}
 
   return {
-    ...(offsetDates
-      ? { hoistProps : { 
-            runtime_mappings: {
-            [`${field}-offset`]: {
-              type: 'date',
-              script: `
-                if(doc['${field}'].size()!=0) {
-                  emit(doc['${field}'].value.plusMonths(3).toInstant().toEpochMilli())
-                }`,
-            },
-          }
-        }
-      }
-      : { hoistProps :{}}),
+    ...hoistMappings,
     aggs: {
       [groupsKey]: {
         date_histogram: {
-          field: offsetDates ? `${field}-offset` : field,
+          field,
           interval,
           min_doc_count: 0,
         },
