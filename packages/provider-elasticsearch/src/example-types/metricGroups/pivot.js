@@ -36,7 +36,6 @@ let getSortField = ({ columnValues = [], valueProp, valueIndex } = {}) =>
 
 let maybeWrapWithFilterAgg = ({
   query,
-  hoistProps,
   drilldownFilters,
   includeRowFilters,
   includeColumnFilters,
@@ -269,7 +268,6 @@ let createPivotScope = (node, schema, getStats) => {
     // TODO check for request.type === groupingType when drilling down fully expanded
     let isFullyExpanded = _.get(['expanded', groupingType], node)
     let drilldownDepth = _.get([groupingType, 'drilldown', 'length'], request)
-    let hoistProps = {}
 
     return F.reduceIndexed(
       async (children, group, index, groups) => {

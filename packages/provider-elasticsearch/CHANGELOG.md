@@ -1,5 +1,9 @@
+# 1.19.3 
+* [pivot] Fiscal Year work for the pivot table groupings
+
 # 1.19.2
 * [pivot] fix drilldown for `dateRangesGroupStats` type
+
 # 1.19.1
 * [pivot] Fixing initialization for `expansions` array
 
