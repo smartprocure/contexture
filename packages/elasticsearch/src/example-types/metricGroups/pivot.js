@@ -619,8 +619,6 @@ let pivot = {
       results = _.reduce(mergeResults, results, additionalResults)
     }
 
-    // console.log(JSON.stringify(results))
-
     return results
   },
 }
