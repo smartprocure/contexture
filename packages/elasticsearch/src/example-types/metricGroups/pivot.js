@@ -303,7 +303,7 @@ let createPivotScope = (node, schema, getStats) => {
           [groupingType, 'drilldown', reversedLookupIndex],
           request
         )
-        let groupResult = filterGroupRanges({
+        group = filterGroupRanges({
           drilldownKey,
           group,
         })
@@ -318,20 +318,10 @@ let createPivotScope = (node, schema, getStats) => {
           children = _.merge(sortAgg, await children)
           // Set `sort` on the group, deferring to each grouping type to handle it
           // The API of `{sort: {field, direction}}` is respected by fieldValues and can be added to others
-          groupResult.sort = { field: sortField, direction: sort.direction }
+          group.sort = { field: sortField, direction: sort.direction }
         }
-        let build = lookupTypeProp(
-          _.identity,
-          'buildGroupQuery',
-          groupResult.type
-        )
-        return build(
-          groupResult,
-          await children,
-          groupingType,
-          schema,
-          getStats
-        )
+        let build = lookupTypeProp(_.identity, 'buildGroupQuery', group.type)
+        return build(group, await children, groupingType, schema, getStats)
       },
       statsAggs,
       _.reverse(groups)
