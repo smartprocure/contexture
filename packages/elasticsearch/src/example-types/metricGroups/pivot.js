@@ -254,6 +254,30 @@ let createPivotScope = (node, schema, getStats) => {
     }
   }
 
+  let filterGroupRanges = ({ drilldownKey, group }) => {
+    if (group.type === 'dateRanges' && drilldownKey) {
+      let [from, to] = _.map(
+        x => new Date(x).toISOString(),
+        _.split(/(?<=Z)-/, drilldownKey)
+      )
+      group.ranges = _.filter(
+        x =>
+          new Date(x.from).toISOString() === from &&
+          new Date(x.to).toISOString() === to,
+        group.ranges
+      )
+    }
+    if (group.type === 'numberRanges' && drilldownKey) {
+      let [from, to] = _.map(parseFloat, _.split('-', drilldownKey))
+      group.ranges = _.filter(
+        x => parseFloat(x.from) === from && parseFloat(x.to) === to,
+        group.ranges
+      )
+    }
+
+    return group
+  }
+
   // buildGroupQuery applied to a list of groups
   let buildNestedGroupQuery = async (
     request,
@@ -273,6 +297,16 @@ let createPivotScope = (node, schema, getStats) => {
       async (children, group, index, groups) => {
         // Defaulting the group size to be 10
         if (!group.size) group.size = 10
+        // We are iterating through the groups reversed so we need to subtract instead of add to get the right index
+        let reversedLookupIndex = groups.length - index - 1
+        let drilldownKey = _.get(
+          [groupingType, 'drilldown', reversedLookupIndex],
+          request
+        )
+        let groupResult = filterGroupRanges({
+          drilldownKey,
+          group,
+        })
         // Calculating subtotal metrics at each group level under drilldown if expanded is set
         // Support for per group stats could also be added here - merge on another stats agg blob to children based on group.stats/statsField or group.values
         if (isFullyExpanded && index < groups.length - drilldownDepth)
@@ -284,10 +318,20 @@ let createPivotScope = (node, schema, getStats) => {
           children = _.merge(sortAgg, await children)
           // Set `sort` on the group, deferring to each grouping type to handle it
           // The API of `{sort: {field, direction}}` is respected by fieldValues and can be added to others
-          group.sort = { field: sortField, direction: sort.direction }
+          groupResult.sort = { field: sortField, direction: sort.direction }
         }
-        let build = lookupTypeProp(_.identity, 'buildGroupQuery', group.type)
-        return build(group, await children, groupingType, schema, getStats)
+        let build = lookupTypeProp(
+          _.identity,
+          'buildGroupQuery',
+          groupResult.type
+        )
+        return build(
+          groupResult,
+          await children,
+          groupingType,
+          schema,
+          getStats
+        )
       },
       statsAggs,
       _.reverse(groups)
@@ -574,6 +618,8 @@ let pivot = {
 
       results = _.reduce(mergeResults, results, additionalResults)
     }
+
+    // console.log(JSON.stringify(results))
 
     return results
   },
