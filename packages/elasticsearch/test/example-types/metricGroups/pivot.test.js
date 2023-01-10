@@ -399,10 +399,7 @@ describe('pivot', () => {
                 rows: {
                   range: {
                     field: 'LineItem.TotalPrice',
-                    ranges: [
-                      { from: '0', to: '500' },
-                      { from: '500', to: '10000' },
-                    ],
+                    ranges: [{ from: '0', to: '500' }],
                   },
                   aggs: {
                     'pivotMetric-sum-LineItem.TotalPrice': {
@@ -457,10 +454,7 @@ describe('pivot', () => {
                 rows: {
                   range: {
                     field: 'LineItem.TotalPrice',
-                    ranges: [
-                      { from: '0', to: '500' },
-                      { from: '500', to: '10000' },
-                    ],
+                    ranges: [{ from: '0', to: '500' }],
                   },
                   aggs: {
                     'pivotMetric-sum-LineItem.TotalPrice': {
@@ -700,10 +694,6 @@ describe('pivot', () => {
                         from: '0',
                         to: '500',
                       },
-                      {
-                        from: '500',
-                        to: '10000',
-                      },
                     ],
                   },
                   aggs: {
@@ -826,10 +816,6 @@ describe('pivot', () => {
                       {
                         from: '0',
                         to: '500',
-                      },
-                      {
-                        from: '500',
-                        to: '10000',
                       },
                     ],
                   },
@@ -959,10 +945,6 @@ describe('pivot', () => {
                         from: '0',
                         to: '500',
                       },
-                      {
-                        from: '500',
-                        to: '10000',
-                      },
                     ],
                   },
                   aggs: {
@@ -1079,6 +1061,192 @@ describe('pivot', () => {
       testSchemas(['Vendor.City']),
       // get stats hard coded here
       () => ({ min: 10, max: 500 })
+    )
+    let result = await buildQuery(rootPivotRequest)
+    expect(result).toEqual(expected)
+  })
+  it('should buildQuery for date ranges with column expansions', async () => {
+    let input = {
+      key: 'report',
+      type: 'pivot',
+      expanded: { columns: false, rows: false },
+      expansions: [
+        {
+          type: 'columns',
+          drilldown: [],
+          loaded: [
+            '2020-01-01T06:00:00.000Z-2020-12-01T06:00:00.000Z',
+            '2021-01-01T06:00:00.000Z-2021-12-01T06:00:00.000Z',
+            '2022-01-01T06:00:00.000Z-2022-12-01T06:00:00.000Z',
+          ],
+        },
+        {
+          type: 'rows',
+          drilldown: [],
+          loaded: [
+            'US Department of Veterans Affairs',
+            'University of Texas MD Anderson Cancer Center',
+            'Agency for International Development',
+            'Department of State',
+            'County of Los Angeles',
+            'Village of Islamorada',
+            'Federal Emergency Management Agency',
+            'Department of Defense: Department of The Army',
+            'University of Kentucky',
+            'Department of Defense: Department of the Air Force',
+          ],
+        },
+        {
+          type: 'columns',
+          drilldown: ['2021-01-01T06:00:00.000Z-2021-12-01T06:00:00.000Z'],
+          loaded: false,
+        },
+      ],
+      sort: { columnValues: [], valueIndex: 0 },
+      chart: { type: 'Bar' },
+      selectedRows: [[]],
+      maxSelectedRows: 10,
+      maxExpandedRows: 10,
+      maxExpandedColumns: 10,
+      paused: false,
+      columns: [
+        {
+          field: 'PO.IssuedDate',
+          type: 'dateRanges',
+          ranges: [
+            {
+              from: '2020-01-01T00:00:00-06:00',
+              to: '2020-12-01T00:00:00-06:00',
+            },
+            {
+              from: '2021-01-01T00:00:00-06:00',
+              to: '2021-12-01T00:00:00-06:00',
+            },
+            {
+              from: '2022-01-01T00:00:00-06:00',
+              to: '2022-12-01T00:00:00-06:00',
+            },
+          ],
+        },
+        {
+          field: 'PO.Category',
+          type: 'fieldValues',
+          filter: '',
+          size: 10,
+          sort: { field: 'count', direction: 'desc' },
+          additionalFields: [],
+        },
+      ],
+      rows: [
+        {
+          field: 'Organization.Name',
+          type: 'fieldValues',
+          filter: '',
+          size: 10,
+          sort: { field: 'count', direction: 'desc' },
+          additionalFields: [],
+        },
+      ],
+      values: [{ field: 'LineItem.TotalPrice', type: 'sum' }],
+      filters: [],
+      showCounts: false,
+      lastUpdateTime: 1673315831943,
+      schema: 'sp-data-lit',
+    }
+
+    let expected = {
+      track_total_hits: true,
+      aggs: {
+        columns: {
+          aggs: {
+            'pivotMetric-sum-LineItem.TotalPrice': {
+              sum: {
+                field: 'LineItem.TotalPrice.untouched',
+              },
+            },
+          },
+          date_range: {
+            field: 'PO.IssuedDate',
+            ranges: [
+              {
+                from: '2020-01-01T00:00:00-06:00',
+                to: '2020-12-01T00:00:00-06:00',
+              },
+              {
+                from: '2021-01-01T00:00:00-06:00',
+                to: '2021-12-01T00:00:00-06:00',
+              },
+              {
+                from: '2022-01-01T00:00:00-06:00',
+                to: '2022-12-01T00:00:00-06:00',
+              },
+            ],
+          },
+        },
+        'pivotMetric-sum-LineItem.TotalPrice': {
+          sum: {
+            field: 'LineItem.TotalPrice.untouched',
+          },
+        },
+        rows: {
+          aggs: {
+            columns: {
+              aggs: {
+                'pivotMetric-sum-LineItem.TotalPrice': {
+                  sum: {
+                    field: 'LineItem.TotalPrice.untouched',
+                  },
+                },
+              },
+              date_range: {
+                field: 'PO.IssuedDate',
+                ranges: [
+                  {
+                    from: '2020-01-01T00:00:00-06:00',
+                    to: '2020-12-01T00:00:00-06:00',
+                  },
+                  {
+                    from: '2021-01-01T00:00:00-06:00',
+                    to: '2021-12-01T00:00:00-06:00',
+                  },
+                  {
+                    from: '2022-01-01T00:00:00-06:00',
+                    to: '2022-12-01T00:00:00-06:00',
+                  },
+                ],
+              },
+            },
+            metric: {
+              sum: {
+                field: 'LineItem.TotalPrice.untouched',
+              },
+            },
+            'pivotMetric-sum-LineItem.TotalPrice': {
+              sum: {
+                field: 'LineItem.TotalPrice.untouched',
+              },
+            },
+          },
+          terms: {
+            field: 'Organization.Name.untouched',
+            order: {
+              metric: 'desc',
+            },
+            size: 10,
+          },
+        },
+      },
+    }
+
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas([
+        'PO.IssuedDate',
+        'PO.Category',
+        'Organization.Name',
+        'LineItem.TotalPrice',
+      ]),
+      () => {} // getStats(search) -> stats(field, statsArray)
     )
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
