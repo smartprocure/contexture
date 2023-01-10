@@ -1,5 +1,6 @@
 # 1.19.4
 * [pivot] fix range expansions by filtering ranges against drilldown.
+
 # 1.19.3
 * Small tweak throwing more informative error.
 
