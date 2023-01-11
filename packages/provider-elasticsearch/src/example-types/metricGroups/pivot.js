@@ -273,6 +273,7 @@ let createPivotScope = (node, schema, getStats) => {
       async (children, group, index, groups) => {
         // Defaulting the group size to be 10
         if (!group.size) group.size = 10
+                       
         // Calculating subtotal metrics at each group level under drilldown if expanded is set
         // Support for per group stats could also be added here - merge on another stats agg blob to children based on group.stats/statsField or group.values
         if (isFullyExpanded && index < groups.length - drilldownDepth)
@@ -287,12 +288,26 @@ let createPivotScope = (node, schema, getStats) => {
           group.sort = { field: sortField, direction: sort.direction }
         }
         let build = lookupTypeProp(_.identity, 'buildGroupQuery', group.type)
-        return build(group, await children, groupingType, schema, getStats)
+        
+        //Remove anything that needs to be hoisted before composing further
+        let hoist = {hoistProps: {...children.hoistProps}}
+        children = _.omit('hoistProps', children)
+
+        let parent = await build(group, children, groupingType, schema, getStats)
+
+        //Add anything that needs to be hoisted to parent
+        parent.hoistProps = _.merge(
+          _.getOr({},'hoistProps',hoist), 
+          parent.hoistProps
+          )
+        return parent
       },
       statsAggs,
       _.reverse(groups)
     )
   }
+
+
 
   let buildQuery = async request => {
     let columnDrills = _.getOr([], 'columns.drilldown', request)
@@ -302,6 +317,13 @@ let createPivotScope = (node, schema, getStats) => {
     // Opt out with expandColumns / expandRows
 
     let hoistProps = {}
+    let hoistAndClean = (hoistProps, statsAggs) => ({
+      'hoistProps' : _.merge(
+        _.getOr({},'hoistProps',statsAggs),
+        hoistProps
+      ),
+      'statsAggs' : _.omit('hoistProps', statsAggs)
+    })
 
     let columns = _.get('expanded.columns', node)
       ? node.columns
@@ -354,14 +376,9 @@ let createPivotScope = (node, schema, getStats) => {
         columns,
         'columns'
       )
-
-      //Add any props that should be hoisted for this col agg and remove from agg to be hoisted
-      hoistProps = _.merge(
-        _.get('hoistProps', columnsStatsAggs),
-        hoistProps,
-        {}
-      )
-      columnsStatsAggs = _.omit('hoistProps', columnsStatsAggs)
+       
+      {hoistProps, statsAggs} = hoistAndClean(hoistProps, columnsStatsAggs)
+      columnsStatsAggs = cleanedAggs
 
       if (request.columns.totals) {
         // adding total column statsAggs above the column filters
@@ -391,8 +408,11 @@ let createPivotScope = (node, schema, getStats) => {
     let query
 
     //Add any props that should be hoisted for this row agg and remove from agg to be hoisted
-    hoistProps = _.merge(_.get('hoistProps', rowsStatsAggs), hoistProps, {})
-    rowsStatsAggs = _.omit('hoistProps', rowsStatsAggs)
+    hoistProps = _.merge(
+      _.getOr({},'hoistProps',rowsStatsAggs),
+      hoistProps
+    )
+    rowsStatsAggs = _.omit([`hoistProps`], rowsStatsAggs)
 
     if (request.rows.totals) {
       // adding total rows statsAggs above the rows filters
