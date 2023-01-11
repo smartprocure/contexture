@@ -5,18 +5,16 @@ let { groupStats } = require('./groupStatUtils')
 let fiscalTypes = ['federalFiscal']
 
 //translate meta data in interval names to match the contract for Elastic Search
-let toElasticInterval = interval => _.camelCase(
-  _.replace(fiscalTypes, '', interval)
-  )
+let toElasticInterval = interval =>
+  _.camelCase(_.replace(fiscalTypes, '', interval))
 
 let isFiscal = interval => _.includes('fiscal', _.toLower(interval))
 
-let fieldFiscalMappingOr = (field, interval) => (
+let fieldFiscalMappingOr = (field, interval) =>
   _.includes('fiscal', _.toLower(interval)) ? `${field}.fiscal` : field
-  )
 
 let drilldown = ({ field, interval, drilldown }) => {
-  field = fieldFiscalMappingOr(field, interval)//isFiscal(interval) ? `${field}.fiscal` : field
+  field = fieldFiscalMappingOr(field, interval) //isFiscal(interval) ? `${field}.fiscal` : field
   interval = toElasticInterval(interval)
   let gte = drilldown
   let lte = moment
@@ -53,10 +51,7 @@ let buildGroupQuery = (node, children, groupsKey) => {
             [`${field}`]: {
               type: 'date',
               script: {
-                source: `if(doc['${untranslatedField}'].size()!=0){${''
-                          }emit(doc['${untranslatedField}']${''
-                          }.value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())${''
-                        }}`,
+                source: `if(doc['${untranslatedField}'].size()!=0){${''}emit(doc['${untranslatedField}']${''}.value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())${''}}`,
                 params: {
                   monthOffset: defaultMonthFiscalOffset,
                 },

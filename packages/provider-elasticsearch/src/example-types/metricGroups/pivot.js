@@ -321,26 +321,30 @@ let createPivotScope = (node, schema, getStats) => {
           group.sort = { field: sortField, direction: sort.direction }
         }
         let build = lookupTypeProp(_.identity, 'buildGroupQuery', group.type)
-        
+
         //Remove anything that needs to be hoisted before composing further
-        let hoist = {hoistProps: {...children.hoistProps}}
+        let hoist = { hoistProps: { ...children.hoistProps } }
         children = _.omit('hoistProps', children)
 
-        let parent = await build(group, children, groupingType, schema, getStats)
+        let parent = await build(
+          group,
+          children,
+          groupingType,
+          schema,
+          getStats
+        )
 
         //Add anything that needs to be hoisted to parent
         parent.hoistProps = _.merge(
-          _.getOr({},'hoistProps',hoist), 
+          _.getOr({}, 'hoistProps', hoist),
           parent.hoistProps
-          )
+        )
         return parent
       },
       statsAggs,
       _.reverse(groups)
     )
   }
-
-
 
   let buildQuery = async request => {
     let columnDrills = _.getOr([], 'columns.drilldown', request)
@@ -350,11 +354,9 @@ let createPivotScope = (node, schema, getStats) => {
     // Opt out with expandColumns / expandRows
 
     let hoistProps = {}
-    let mergeHoistProps = (hoistProps, statsAggs) =>  _.merge(
-        _.getOr({},'hoistProps',statsAggs),
-        hoistProps
-      )
-    let removeHoistProps = (statsAggs) => (_.omit('hoistProps', statsAggs))
+    let mergeHoistProps = (hoistProps, statsAggs) =>
+      _.merge(_.getOr({}, 'hoistProps', statsAggs), hoistProps)
+    let removeHoistProps = statsAggs => _.omit('hoistProps', statsAggs)
 
     let columns = _.get('expanded.columns', node)
       ? node.columns
@@ -439,10 +441,7 @@ let createPivotScope = (node, schema, getStats) => {
     let query
 
     //Add any props that should be hoisted for this row agg and remove from agg to be hoisted
-    hoistProps = _.merge(
-      _.getOr({},'hoistProps',rowsStatsAggs),
-      hoistProps
-    )
+    hoistProps = _.merge(_.getOr({}, 'hoistProps', rowsStatsAggs), hoistProps)
 
     hoistProps = mergeHoistProps(hoistProps, rowsStatsAggs)
     rowsStatsAggs = removeHoistProps(rowsStatsAggs)
