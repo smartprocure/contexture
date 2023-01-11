@@ -317,13 +317,11 @@ let createPivotScope = (node, schema, getStats) => {
     // Opt out with expandColumns / expandRows
 
     let hoistProps = {}
-    let hoistAndClean = (hoistProps, statsAggs) => ({
-      'hoistProps' : _.merge(
+    let mergeHoistProps = (hoistProps, statsAggs) =>  _.merge(
         _.getOr({},'hoistProps',statsAggs),
         hoistProps
-      ),
-      'statsAggs' : _.omit('hoistProps', statsAggs)
-    })
+      )
+    let removeHoistProps = (statsAggs) => (_.omit('hoistProps', statsAggs))
 
     let columns = _.get('expanded.columns', node)
       ? node.columns
@@ -376,9 +374,9 @@ let createPivotScope = (node, schema, getStats) => {
         columns,
         'columns'
       )
-       
-      {hoistProps, statsAggs} = hoistAndClean(hoistProps, columnsStatsAggs)
-      columnsStatsAggs = cleanedAggs
+
+      hoistProps = mergeHoistProps(hoistProps, columnsStatsAggs)
+      columnsStatsAggs = removeHoistProps(columnsStatsAggs)
 
       if (request.columns.totals) {
         // adding total column statsAggs above the column filters
@@ -412,7 +410,9 @@ let createPivotScope = (node, schema, getStats) => {
       _.getOr({},'hoistProps',rowsStatsAggs),
       hoistProps
     )
-    rowsStatsAggs = _.omit([`hoistProps`], rowsStatsAggs)
+
+    hoistProps = mergeHoistProps(hoistProps, rowsStatsAggs)
+    rowsStatsAggs = removeHoistProps(rowsStatsAggs)
 
     if (request.rows.totals) {
       // adding total rows statsAggs above the rows filters
