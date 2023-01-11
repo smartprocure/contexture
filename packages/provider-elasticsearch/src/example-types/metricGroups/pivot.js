@@ -324,7 +324,7 @@ let createPivotScope = (node, schema, getStats) => {
 
         //Remove anything that needs to be hoisted before composing further
         let hoist = { hoistProps: { ...children.hoistProps } }
-        children = _.omit('hoistProps', children)
+        children = _.omit('hoistProps', await children)
 
         let parent = await build(
           group,
