@@ -120,5 +120,117 @@ describe('dateIntervalGroupStats', () => {
         },
       },
     })
+    expect(
+      drilldown({
+        field: 'PO.IssuedDate',
+        interval: 'federalFiscalYear',
+        drilldown: '2015-01-01T00:00:00.000Z',
+      })
+    ).toEqual({
+      range: {
+        'PO.IssuedDate.fiscal': {
+          gte: '2015-01-01T00:00:00.000Z',
+          lte: '2015-12-31T23:59:59Z',
+        },
+      },
+    })
+    expect(
+      drilldown({
+        field: 'PO.IssuedDate',
+        interval: 'federalFiscalQuarter',
+        drilldown: '2015-01-01T00:00:00.000Z',
+      })
+    ).toEqual({
+      range: {
+        'PO.IssuedDate.fiscal': {
+          gte: '2015-01-01T00:00:00.000Z',
+          lte: '2015-03-31T23:59:59Z',
+        },
+      },
+    })
+  })
+  it('Should buildQuery with Federal fiscal interval: Year', () => {
+    expect(
+      buildQuery({
+        key: 'test',
+        type: 'dateIntervalGroupStats',
+        groupField: 'PO.IssuedDate',
+        statsField: 'LineItem.TotalPrice',
+        interval: 'federalFiscalYear',
+      })
+    ).toEqual({
+      hoistProps: {
+        runtime_mappings: {
+          "PO.IssuedDate.fiscal":  {
+            script:  {
+              params:  {
+                monthOffset: 3,
+              },
+              source: `if(doc['PO.IssuedDate'].size()!=0){${''
+                }emit(doc['PO.IssuedDate']${''
+                }.value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}${''
+                }`},
+            type: "date",
+          },
+        },
+      },
+      aggs: {
+        groups: {
+          date_histogram: {
+            field: 'PO.IssuedDate.fiscal',
+            interval: 'year',
+            min_doc_count: 0,
+          },
+          aggs: {
+            min: { min: { field: 'LineItem.TotalPrice' } },
+            max: { max: { field: 'LineItem.TotalPrice' } },
+            avg: { avg: { field: 'LineItem.TotalPrice' } },
+            sum: { sum: { field: 'LineItem.TotalPrice' } },
+          },
+        },
+      },
+    })
+  })
+  it('Should buildQuery with Federal fiscal interval: Quarter', () => {
+    expect(
+      buildQuery({
+        key: 'test',
+        type: 'dateIntervalGroupStats',
+        groupField: 'PO.IssuedDate',
+        statsField: 'LineItem.TotalPrice',
+        interval: 'federalFiscalQuarter',
+      })
+    ).toEqual({
+      hoistProps: {
+        runtime_mappings: {
+          "PO.IssuedDate.fiscal":  {
+            script:  {
+              params:  {
+                monthOffset: 3,
+              },
+              source: `if(doc['PO.IssuedDate'].size()!=0){${''
+                }emit(doc['PO.IssuedDate']${''
+                }.value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}${''
+                }`},
+            type: "date",
+          },
+        },
+      },
+      aggs: {
+        groups: {
+          date_histogram: {
+            field: 'PO.IssuedDate.fiscal',
+            interval: 'quarter',
+            min_doc_count: 0,
+          },
+          aggs: {
+            min: { min: { field: 'LineItem.TotalPrice' } },
+            max: { max: { field: 'LineItem.TotalPrice' } },
+            avg: { avg: { field: 'LineItem.TotalPrice' } },
+            sum: { sum: { field: 'LineItem.TotalPrice' } },
+          },
+        },
+      },
+    })
   })
 })
