@@ -18,31 +18,40 @@ let extractFieldsAndEsType = obj =>
         ([[type, fields]]) => ({ fields, elasticsearch: { type } })
       )(obj)
 
-let fromEsIndexMapping = _.mapValues(
-  _.flow(
-    _.get('mappings'),
-    // Always 1 type per index but sometimes there's a `_default_` type thing
-    _.omit(['_default_']),
-    // filters out 'dynamic_templates' (an array), 'dynamic: true', etc.
-    _.pickBy(_.isPlainObject),
-    extractFieldsAndEsType,
-    _.update(
-      'fields',
-      _.flow(
-        flatten,
-        F.mapValuesIndexed(({ type, fields }, field) => ({
-          field,
-          label: _.startCase(field),
-          elasticsearch: F.compactObject({
-            dataType: type,
-            // Find the child notAnalyzedField to set up facet autocomplete vs word
-            notAnalyzedField: _.findKey({ type: 'keyword' }, fields),
-          }),
-        }))
-      )
-    )
-  )
-)
+let fromEsIndexMapping = mapping => {
+  let rtn = {}
+  for (let prop in mapping) {
+    try {
+      rtn[prop] = _.flow(
+        _.get('mappings'),
+        // Always 1 type per index but sometimes there's a `_default_` type thing
+        _.omit(['_default_']),
+        // filters out 'dynamic_templates' (an array), 'dynamic: true', etc.
+        _.pickBy(_.isPlainObject),
+        extractFieldsAndEsType,
+        _.update(
+          'fields',
+          _.flow(
+            flatten,
+            F.mapValuesIndexed(({ type, fields }, field) => ({
+              field,
+              label: _.startCase(field),
+              elasticsearch: F.compactObject({
+                dataType: type,
+                // Find the child notAnalyzedField to set up facet autocomplete vs word
+                notAnalyzedField: _.findKey({ type: 'keyword' }, fields),
+              }),
+            }))
+          )
+        )
+      )(mapping[prop])
+    } catch (e) {
+      e.message = `Error processing elastic index mapping '${prop}'\nOriginalError: ${e.message}`
+      throw e
+    }
+  }
+  return rtn
+}
 
 let copySchemasToAliases = schemas =>
   _.flow(
