@@ -273,19 +273,6 @@ let createPivotScope = (node, schema, getStats) => {
       async (children, group, index, groups) => {
         // Defaulting the group size to be 10
         if (!group.size) group.size = 10
-        // We are iterating through the groups reversed so we need to subtract instead of add to get the right index
-        let reversedLookupIndex = groups.length - index - 1
-        let drilldownKey = _.get(
-          [groupingType, 'drilldown', reversedLookupIndex],
-          request
-        )
-        let filterGroupRanges = lookupTypeProp(
-          _.identity,
-          'filterGroupRanges',
-          group.type
-        )
-        group = filterGroupRanges(group, drilldownKey)
-
         // Calculating subtotal metrics at each group level under drilldown if expanded is set
         // Support for per group stats could also be added here - merge on another stats agg blob to children based on group.stats/statsField or group.values
         if (isFullyExpanded && index < groups.length - drilldownDepth)
@@ -304,13 +291,20 @@ let createPivotScope = (node, schema, getStats) => {
         //Remove anything that needs to be hoisted before composing further
         let hoist = { hoistProps: { ...children.hoistProps } }
         children = _.omit('hoistProps', await children)
+        // We are iterating through the groups reversed so we need to subtract instead of add to get the right index
+        let reversedLookupIndex = groups.length - index - 1
+        let drilldownKey = _.get(
+          [groupingType, 'drilldown', reversedLookupIndex],
+          request
+        )
 
         let parent = await build(
           group,
           children,
           groupingType,
           schema,
-          getStats
+          getStats,
+          drilldownKey
         )
 
         //Add anything that needs to be hoisted to parent
