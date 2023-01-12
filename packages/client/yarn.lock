@@ -2259,7 +2259,7 @@ __metadata:
     esbuild-jest: ^0.5.0
     eslint: ^8.31.0
     eslint-plugin-import: ^2.27.4
-    futil: ^1.70.0
+    futil: ^1.71.8
     jest: ^29.0.1
     lodash: ^4.17.15
     mobx: ^4.3.1
@@ -3417,7 +3417,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"futil@npm:^1.70.0":
+"futil@npm:^1.71.8":
   version: 1.71.8
   resolution: "futil@npm:1.71.8"
   dependencies:
