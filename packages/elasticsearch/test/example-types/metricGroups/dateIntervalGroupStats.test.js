@@ -123,7 +123,7 @@ describe('dateIntervalGroupStats', () => {
     expect(
       drilldown({
         field: 'PO.IssuedDate',
-        interval: 'federalFiscalYear',
+        interval: 'fiscalYear',
         drilldown: '2015-01-01T00:00:00.000Z',
       })
     ).toEqual({
@@ -137,7 +137,7 @@ describe('dateIntervalGroupStats', () => {
     expect(
       drilldown({
         field: 'PO.IssuedDate',
-        interval: 'federalFiscalQuarter',
+        interval: 'fiscalQuarter',
         drilldown: '2015-01-01T00:00:00.000Z',
       })
     ).toEqual({
@@ -156,7 +156,7 @@ describe('dateIntervalGroupStats', () => {
         type: 'dateIntervalGroupStats',
         groupField: 'PO.IssuedDate',
         statsField: 'LineItem.TotalPrice',
-        interval: 'federalFiscalYear',
+        interval: 'fiscalYear',
       })
     ).toEqual({
       hoistProps: {
@@ -196,7 +196,7 @@ describe('dateIntervalGroupStats', () => {
         type: 'dateIntervalGroupStats',
         groupField: 'PO.IssuedDate',
         statsField: 'LineItem.TotalPrice',
-        interval: 'federalFiscalQuarter',
+        interval: 'fiscalQuarter',
       })
     ).toEqual({
       hoistProps: {
