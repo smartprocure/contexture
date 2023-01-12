@@ -1,7 +1,7 @@
 let {
   buildQuery,
+  buildGroupQuery,
   drilldown,
-  filterGroupRanges,
 } = require('../../../src/example-types/metricGroups/numberRangesGroupStats')
 
 describe('numberRangesGroupStats', () => {
@@ -37,6 +37,40 @@ describe('numberRangesGroupStats', () => {
       },
     })
   })
+  it('should buildGroupQuery with filtered ranges if drilldown is passed', () => {
+    expect(
+      buildGroupQuery(
+        {
+          key: 'test',
+          type: 'numberRangesGroupStats',
+          field: 'LineItem.UnitPrice',
+          ranges: [
+            { from: '0', to: '500' },
+            { from: '500', to: '10000' },
+          ],
+        },
+        {},
+        'columns',
+        {},
+        () => {},
+        '500.0-10000.0'
+      )
+    ).toEqual({
+      aggs: {
+        columns: {
+          range: {
+            field: 'LineItem.UnitPrice',
+            ranges: [
+              {
+                from: '500',
+                to: '10000',
+              },
+            ],
+          },
+        },
+      },
+    })
+  })
   it('should drilldown', () => {
     expect(
       drilldown({
@@ -56,31 +90,6 @@ describe('numberRangesGroupStats', () => {
           lt: '10000.0',
         },
       },
-    })
-  })
-  it('should filterGroupRanges', () => {
-    expect(
-      filterGroupRanges(
-        {
-          key: 'test',
-          type: 'numberRangesGroupStats',
-          groupField: 'LineItem.UnitPrice',
-          statsField: 'LineItem.TotalPrice',
-          ranges: [
-            { from: '0.0', to: '500.0' },
-            { from: '500.0', to: '10000.0' },
-          ],
-          drilldown: '500.0-10000.0',
-        },
-        '500.0-10000.0'
-      )
-    ).toEqual({
-      key: 'test',
-      type: 'numberRangesGroupStats',
-      groupField: 'LineItem.UnitPrice',
-      statsField: 'LineItem.TotalPrice',
-      ranges: [{ from: '500.0', to: '10000.0' }],
-      drilldown: '500.0-10000.0',
     })
   })
 })
