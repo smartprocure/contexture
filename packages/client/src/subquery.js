@@ -1,5 +1,5 @@
-import _ from 'lodash/fp'
-import { getTypePropOrError } from './types'
+import _ from 'lodash/fp.js'
+import { getTypePropOrError } from './types.js'
 
 let delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 

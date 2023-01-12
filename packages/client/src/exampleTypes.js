@@ -1,6 +1,6 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
-import pivot from './exampleTypes/pivot'
+import pivot from './exampleTypes/pivot.js'
 
 let validateValues = ({ value, values = [] }) => value || values.length
 let validateValueExistence = _.flow(_.get('value'), _.negate(_.isNil))

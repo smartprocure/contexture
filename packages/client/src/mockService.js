@@ -1,6 +1,6 @@
 import Promise from 'bluebird'
 import F from 'futil'
-import { Tree } from './util/tree'
+import { Tree } from './util/tree.js'
 
 export let defaultMocks = ({ type }) =>
   ({

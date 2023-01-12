@@ -1,5 +1,5 @@
-import _ from 'lodash/fp'
-import { encode } from '../util/tree'
+import _ from 'lodash/fp.js'
+import { encode } from '../util/tree.js'
 
 let shallowCloneNode = node => ({
   ...node,

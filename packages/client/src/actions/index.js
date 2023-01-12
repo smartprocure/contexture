@@ -1,9 +1,9 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
-import { encode, Tree } from '../util/tree'
-import { getTypeProp } from '../types'
-import wrap from './wrap'
-import { dedupeWalk } from '../node'
+import { encode, Tree } from '../util/tree.js'
+import { getTypeProp } from '../types.js'
+import wrap from './wrap.js'
+import { dedupeWalk } from '../node.js'
 
 let pushOrSpliceOn = (array, item, index) => {
   if (index === undefined) array.push(item)

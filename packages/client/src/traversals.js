@@ -1,6 +1,6 @@
 import F from 'futil'
-import _ from 'lodash/fp'
-import { Tree } from './util/tree'
+import _ from 'lodash/fp.js'
+import { Tree } from './util/tree.js'
 
 export default extend => {
   let markForUpdate = x => {

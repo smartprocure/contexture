@@ -1,15 +1,17 @@
 /* global schedule */
 
-import { danger, markdown, fail, message, warn } from 'danger'
+let { danger, markdown, fail, message, warn } = require('danger')
 
-import fs from 'fs'
-import duti from 'duti'
-import coverage from 'danger-plugin-coverage'
+let fs = require('fs')
+let duti = require('duti')
+let coverage = require('danger-plugin-coverage').default
 
 let readJson = path => {
   try {
     return JSON.parse(fs.readFileSync(path, { encoding: 'utf8' }))
-  } catch (e) {}
+  } catch (e) {
+    //
+  }
 }
 
 let args = {

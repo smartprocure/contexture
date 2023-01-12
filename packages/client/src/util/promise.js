@@ -1,5 +1,5 @@
 import F from 'futil'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 
 export let promisedProps =
   Promise.props ||
