@@ -3,7 +3,7 @@ let moment = require('moment')
 let { groupStats } = require('./groupStatUtils')
 
 //translate meta data in interval names to match the contract for Elastic Search
-let toElasticInterval = _.flow( _.replace('fiscal', ''), _.toLower)
+let toElasticInterval = _.flow(_.replace('fiscal', ''), _.toLower)
 
 let isFiscal = _.includes('fiscal')
 
@@ -33,15 +33,14 @@ let buildGroupQuery = (node, children, groupsKey) => {
    */
   let untranslatedField = node.field
   field = fieldFiscalMappingOr(field, interval)
-  interval = toElasticInterval(interval) //fiscal only includes quarters and years
+  interval = toElasticInterval(interval) //fiscal only includes quarters and years //should ignore the formatting below, weird formatting needed to be readable wih tests passing.
 
   /*
    *   hoistProps allows the fields within to be hoisted to top of mapping structure
    *   this is to avoid having issues in which this is not allowed at the same level
    *   of a filter
    */
-  /* prettier-ignore */ //should ignore the formatting below, weird formatting needed to be readable wih tests passing.
-  let hoistMappings = isFiscal(field) 
+  /* prettier-ignore */ let hoistMappings = isFiscal(field) 
     ? {
         hoistProps: {
           runtime_mappings: {
