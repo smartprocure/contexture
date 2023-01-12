@@ -254,30 +254,6 @@ let createPivotScope = (node, schema, getStats) => {
     }
   }
 
-  let filterGroupRanges = ({ drilldownKey, group }) => {
-    if (group.type === 'dateRanges' && drilldownKey) {
-      let [from, to] = _.map(
-        x => new Date(x).toISOString(),
-        _.split(/(?<=Z)-/, drilldownKey)
-      )
-      group.ranges = _.filter(
-        x =>
-          new Date(x.from).toISOString() === from &&
-          new Date(x.to).toISOString() === to,
-        group.ranges
-      )
-    }
-    if (group.type === 'numberRanges' && drilldownKey) {
-      let [from, to] = _.map(parseFloat, _.split('-', drilldownKey))
-      group.ranges = _.filter(
-        x => parseFloat(x.from) === from && parseFloat(x.to) === to,
-        group.ranges
-      )
-    }
-
-    return group
-  }
-
   // buildGroupQuery applied to a list of groups
   let buildNestedGroupQuery = async (
     request,
@@ -303,10 +279,13 @@ let createPivotScope = (node, schema, getStats) => {
           [groupingType, 'drilldown', reversedLookupIndex],
           request
         )
-        group = filterGroupRanges({
-          drilldownKey,
-          group,
-        })
+        let filterGroupRanges = lookupTypeProp(
+          _.identity,
+          'filterGroupRanges',
+          group.type
+        )
+        group = filterGroupRanges(group, drilldownKey)
+
         // Calculating subtotal metrics at each group level under drilldown if expanded is set
         // Support for per group stats could also be added here - merge on another stats agg blob to children based on group.stats/statsField or group.values
         if (isFullyExpanded && index < groups.length - drilldownDepth)
