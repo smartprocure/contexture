@@ -419,9 +419,6 @@ let createPivotScope = (node, schema, getStats) => {
     )
     let query
 
-    //Add any props that should be hoisted for this row agg and remove from agg to be hoisted
-    hoistProps = _.merge(_.getOr({}, 'hoistProps', rowsStatsAggs), hoistProps)
-
     hoistProps = mergeHoistProps(hoistProps, rowsStatsAggs)
     rowsStatsAggs = removeHoistProps(rowsStatsAggs)
 
