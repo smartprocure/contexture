@@ -1,3 +1,8 @@
+# 2.49.5
+* Use yarn instead of npm
+* ESM source
+* Use esbuild instead of webpack/babel to build before publishing
+
 # 2.49.4
 * Pivot node: Do not remove root node when present in `selectedRows` when checking which selected rows should remain 
 
