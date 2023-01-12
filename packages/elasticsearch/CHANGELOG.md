@@ -1,11 +1,14 @@
+# 1.19.6
+* [pivot] Remove federal references to fiscal year
+
 # 1.19.5
-* [pivot] Fiscal Year work for the pivot table groupings
+* [pivot] Fiscal Year work for the pivot table groupingsj
 
 # 1.19.4
-* [pivot] fix range expansions by filtering ranges against drilldown.
+* [pivot] fix range expansions by filtering ranges against drilldown
 
 # 1.19.3
-* Small tweak throwing more informative error.
+* Small tweak throwing more informative error
 
 # 1.19.2
 * [pivot] fix drilldown for `dateRangesGroupStats` type
