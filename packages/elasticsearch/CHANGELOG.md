@@ -1,3 +1,6 @@
+# 1.19.6
+* [pivot] refactor `filterGroupRanges` implementation
+
 # 1.19.5
 * [pivot] Fiscal Year work for the pivot table groupings
 
