@@ -10,10 +10,12 @@ let ContextureMobx = _.curry((x, y) =>
   ContextureClient({ ...mobxAdapter, ...x })(y)
 )
 
-let addDelay = (delay, fn) => async (...args) => {
-  await Promise.delay(delay)
-  return fn(...args)
-}
+let addDelay =
+  (delay, fn) =>
+  async (...args) => {
+    await Promise.delay(delay)
+    return fn(...args)
+  }
 
 let AllTests = ContextureClient => {
   describe('should generally work', () => {

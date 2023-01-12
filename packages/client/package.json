@@ -12,7 +12,7 @@
     "prepack": "node scripts/build.js",
     "test": "jest",
     "test:ci": "jest --coverage --json --outputFile test-results.json",
-    "fmt": "prettier --ignore-path .gitignore --write .",
+    "fmt": "prettier --ignore-path .gitignore --write src/ test/",
     "lint": "eslint --ignore-path .gitignore .",
     "lint:ci": "yarn lint -o lint-results.json -f json",
     "duti:fix": "yarn lint --fix && yarn fmt"
@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/smartprocure/contexture-client#readme",
   "dependencies": {
-    "futil": "^1.70.0",
+    "futil": "^1.71.8",
     "lodash": "^4.17.15"
   },
   "devDependencies": {
@@ -47,5 +47,6 @@
     "semi": false,
     "singleQuote": true,
     "arrowParens": "avoid"
-  }
+  },
+  "packageManager": "yarn@3.3.1"
 }

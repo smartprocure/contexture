@@ -17,21 +17,17 @@ export let defaultMocks = ({ type }) =>
     },
   }[type])
 
-export default ({
-  mocks = defaultMocks,
-  logInput,
-  logOutput,
-  delay,
-} = {}) => async (dto, lastUpdateTime) => {
-  if (delay) await Promise.delay(delay)
-  if (logInput) console.info('dto', JSON.stringify(dto, 0, 2))
-  let result = Tree.transform(node => {
-    let context = mocks(node)
-    if (!node.filterOnly && context) {
-      let extending = context.context ? context : { context }
-      F.extendOn(node, { ...extending, lastUpdateTime })
-    }
-  }, dto)
-  if (logOutput) console.info('result', JSON.stringify(result, 0, 2))
-  return result
-}
+export default ({ mocks = defaultMocks, logInput, logOutput, delay } = {}) =>
+  async (dto, lastUpdateTime) => {
+    if (delay) await Promise.delay(delay)
+    if (logInput) console.info('dto', JSON.stringify(dto, 0, 2))
+    let result = Tree.transform(node => {
+      let context = mocks(node)
+      if (!node.filterOnly && context) {
+        let extending = context.context ? context : { context }
+        F.extendOn(node, { ...extending, lastUpdateTime })
+      }
+    }, dto)
+    if (logOutput) console.info('result', JSON.stringify(result, 0, 2))
+    return result
+  }
