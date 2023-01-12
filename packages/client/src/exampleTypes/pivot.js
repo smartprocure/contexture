@@ -213,6 +213,9 @@ export default {
     let { type, node, value } = event
     if (type !== 'mutate') return
 
+    // Pause dispatches as a mutate (but also continue in case there are other properties being mutated)
+    if (F.matchesSignature(['paused'], value)) return
+
     // if sorting is changed we are preserving expanded columns
     if (_.has('sort', value)) return resetExpandedRows(extend, node)
 
