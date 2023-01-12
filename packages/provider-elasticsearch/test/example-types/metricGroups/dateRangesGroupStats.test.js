@@ -1,6 +1,7 @@
 let {
   buildQuery,
   drilldown,
+  filterGroupRanges,
 } = require('../../../src/example-types/metricGroups/dateRangesGroupStats')
 
 describe('dateRangesGroupStats', () => {
@@ -73,6 +74,38 @@ describe('dateRangesGroupStats', () => {
           lt: '2022-10-02T05:00:00.000Z',
         },
       },
+    })
+  })
+  it('should filterGroupRanges', () => {
+    expect(
+      filterGroupRanges(
+        {
+          field: 'PO.IssuedDate',
+          type: 'dateRanges',
+          ranges: [
+            {
+              from: '2022-08-02T00:00:00-05:00',
+              to: '2022-10-02T00:00:00-05:00',
+            },
+            {
+              from: '2022-10-03T00:00:00-05:00',
+              to: '2022-12-03T00:00:00-06:00',
+            },
+          ],
+          drilldown: '2022-08-02T05:00:00.000Z-2022-10-02T05:00:00.000Z',
+        },
+        '2022-08-02T05:00:00.000Z-2022-10-02T05:00:00.000Z'
+      )
+    ).toEqual({
+      field: 'PO.IssuedDate',
+      type: 'dateRanges',
+      ranges: [
+        {
+          from: '2022-08-02T00:00:00-05:00',
+          to: '2022-10-02T00:00:00-05:00',
+        },
+      ],
+      drilldown: '2022-08-02T05:00:00.000Z-2022-10-02T05:00:00.000Z',
     })
   })
 })
