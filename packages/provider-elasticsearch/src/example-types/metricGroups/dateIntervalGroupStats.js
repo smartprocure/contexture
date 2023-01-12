@@ -33,15 +33,15 @@ let buildGroupQuery = (node, children, groupsKey) => {
    */
   let untranslatedField = node.field
   field = fieldFiscalMappingOr(field, interval)
-  interval = toElasticInterval(interval) //fiscal only includes quarters and years 
+  interval = toElasticInterval(interval) //fiscal only includes quarters and years
 
   /*
    *   hoistProps allows the fields within to be hoisted to top of mapping structure
    *   this is to avoid having issues in which this is not allowed at the same level
    *   of a filter
-   * 
-   *   **PRETTY IGNORE: needed to not change the ${} formatting, this is done to 
-   *   make the script readable and have the tests pass without relying on far 
+   *
+   *   **PRETTY IGNORE: needed to not change the ${} formatting, this is done to
+   *   make the script readable and have the tests pass without relying on far
    *   indented the template string it
    */
   /* prettier-ignore */ let hoistMappings = isFiscal(field) 
