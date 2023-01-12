@@ -1,5 +1,7 @@
 let {
   buildQuery,
+  drilldown,
+  filterGroupRanges,
 } = require('../../../src/example-types/metricGroups/numberRangesGroupStats')
 
 describe('numberRangesGroupStats', () => {
@@ -33,6 +35,52 @@ describe('numberRangesGroupStats', () => {
           },
         },
       },
+    })
+  })
+  it('should drilldown', () => {
+    expect(
+      drilldown({
+        key: 'test',
+        type: 'numberRangesGroupStats',
+        field: 'LineItem.UnitPrice',
+        ranges: [
+          { from: '0.0', to: '500.0' },
+          { from: '500.0', to: '10000.0' },
+        ],
+        drilldown: '500.0-10000.0',
+      })
+    ).toEqual({
+      range: {
+        'LineItem.UnitPrice': {
+          gte: '500.0',
+          lt: '10000.0',
+        },
+      },
+    })
+  })
+  it('should filterGroupRanges', () => {
+    expect(
+      filterGroupRanges(
+        {
+          key: 'test',
+          type: 'numberRangesGroupStats',
+          groupField: 'LineItem.UnitPrice',
+          statsField: 'LineItem.TotalPrice',
+          ranges: [
+            { from: '0.0', to: '500.0' },
+            { from: '500.0', to: '10000.0' },
+          ],
+          drilldown: '500.0-10000.0',
+        },
+        '500.0-10000.0'
+      )
+    ).toEqual({
+      key: 'test',
+      type: 'numberRangesGroupStats',
+      groupField: 'LineItem.UnitPrice',
+      statsField: 'LineItem.TotalPrice',
+      ranges: [{ from: '500.0', to: '10000.0' }],
+      drilldown: '500.0-10000.0',
     })
   })
 })
