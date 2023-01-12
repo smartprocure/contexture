@@ -1,6 +1,9 @@
 let _ = require('lodash/fp')
 let { groupStats } = require('./groupStatUtils')
 
+let splitDrilldown = (drilldown, fn = _.identity) =>
+  _.map(fn, _.split(/(?<=Z)-/, drilldown))
+
 let buildGroupQuery = ({ field, ranges }, children, groupingType) => ({
   aggs: {
     [groupingType]: {
@@ -11,17 +14,14 @@ let buildGroupQuery = ({ field, ranges }, children, groupingType) => ({
 })
 
 let drilldown = ({ field, drilldown }) => {
-  let [gte, lt] = _.split(/(?<=Z)-/, drilldown)
+  let [gte, lt] = splitDrilldown(drilldown)
 
   return { range: { [field]: { gte, lt } } }
 }
 
-let filterGroupRanges = (group, drilldownKey) => {
-  if (drilldownKey) {
-    let [from, to] = _.map(
-      x => new Date(x).toISOString(),
-      _.split(/(?<=Z)-/, drilldownKey)
-    )
+let filterGroupRanges = (group, drilldown) => {
+  if (drilldown) {
+    let [from, to] = splitDrilldown(drilldown, x => new Date(x).toISOString())
     group.ranges = _.filter(
       x =>
         new Date(x.from).toISOString() === from &&
