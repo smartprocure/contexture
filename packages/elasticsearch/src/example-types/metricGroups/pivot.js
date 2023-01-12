@@ -321,7 +321,25 @@ let createPivotScope = (node, schema, getStats) => {
           group.sort = { field: sortField, direction: sort.direction }
         }
         let build = lookupTypeProp(_.identity, 'buildGroupQuery', group.type)
-        return build(group, await children, groupingType, schema, getStats)
+
+        //Remove anything that needs to be hoisted before composing further
+        let hoist = { hoistProps: { ...children.hoistProps } }
+        children = _.omit('hoistProps', await children)
+
+        let parent = await build(
+          group,
+          children,
+          groupingType,
+          schema,
+          getStats
+        )
+
+        //Add anything that needs to be hoisted to parent
+        parent.hoistProps = _.merge(
+          _.getOr({}, 'hoistProps', hoist),
+          parent.hoistProps
+        )
+        return parent
       },
       statsAggs,
       _.reverse(groups)
@@ -334,6 +352,11 @@ let createPivotScope = (node, schema, getStats) => {
     // Don't consider deeper levels than +1 the current drilldown
     // This allows avoiding expansion until ready
     // Opt out with expandColumns / expandRows
+
+    let hoistProps = {}
+    let mergeHoistProps = (hoistProps, statsAggs) =>
+      _.merge(_.getOr({}, 'hoistProps', statsAggs), hoistProps)
+    let removeHoistProps = statsAggs => _.omit('hoistProps', statsAggs)
 
     let columns = _.get('expanded.columns', node)
       ? node.columns
@@ -387,6 +410,9 @@ let createPivotScope = (node, schema, getStats) => {
         'columns'
       )
 
+      hoistProps = mergeHoistProps(hoistProps, columnsStatsAggs)
+      columnsStatsAggs = removeHoistProps(columnsStatsAggs)
+
       if (request.columns.totals) {
         // adding total column statsAggs above the column filters
         statsAggs = _.merge(
@@ -413,6 +439,12 @@ let createPivotScope = (node, schema, getStats) => {
       node.sort
     )
     let query
+
+    //Add any props that should be hoisted for this row agg and remove from agg to be hoisted
+    hoistProps = _.merge(_.getOr({}, 'hoistProps', rowsStatsAggs), hoistProps)
+
+    hoistProps = mergeHoistProps(hoistProps, rowsStatsAggs)
+    rowsStatsAggs = removeHoistProps(rowsStatsAggs)
 
     if (request.rows.totals) {
       // adding total rows statsAggs above the rows filters
@@ -443,6 +475,8 @@ let createPivotScope = (node, schema, getStats) => {
 
     // Without this, ES7+ stops counting at 10k instead of returning the actual count
     query.track_total_hits = true
+
+    query = { ...hoistProps, ...query }
 
     return query
   }

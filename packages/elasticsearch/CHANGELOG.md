@@ -1,3 +1,6 @@
+# 1.19.5
+* [pivot] Fiscal Year work for the pivot table groupings
+
 # 1.19.4
 * [pivot] fix range expansions by filtering ranges against drilldown.
 
