@@ -1,6 +1,6 @@
-let _ = require('lodash/fp')
-import { eventEmitter, hasSome } from './util/futil'
-import { encode } from './util/tree'
+import _ from 'lodash/fp.js'
+import { eventEmitter, hasSome } from './util/futil.js'
+import { encode } from './util/tree.js'
 
 export let setupListeners = tree => {
   let { on, emit } = eventEmitter()

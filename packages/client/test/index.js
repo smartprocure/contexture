@@ -1,8 +1,8 @@
-import _ from 'lodash/fp'
-import ContextureClient, { encode, exampleTypes } from '../src'
+import _ from 'lodash/fp.js'
+import ContextureClient, { encode, exampleTypes } from '../src/index.js'
 import Promise from 'bluebird'
-import mockService from '../src/mockService'
-import wrap from '../src/actions/wrap'
+import mockService from '../src/mockService.js'
+import wrap from '../src/actions/wrap.js'
 import { observable, toJS, set } from 'mobx'
 
 let mobxAdapter = { snapshot: toJS, extend: set, initObject: observable }
@@ -10,10 +10,12 @@ let ContextureMobx = _.curry((x, y) =>
   ContextureClient({ ...mobxAdapter, ...x })(y)
 )
 
-let addDelay = (delay, fn) => async (...args) => {
-  await Promise.delay(delay)
-  return fn(...args)
-}
+let addDelay =
+  (delay, fn) =>
+  async (...args) => {
+    await Promise.delay(delay)
+    return fn(...args)
+  }
 
 let AllTests = ContextureClient => {
   describe('should generally work', () => {

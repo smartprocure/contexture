@@ -1,6 +1,6 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
-import { hasContext, hasValue } from './node'
+import { hasContext, hasValue } from './node.js'
 
 let all = parent => _.toArray(parent.children)
 let self = (parent, node) => [node]

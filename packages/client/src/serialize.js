@@ -1,8 +1,8 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil-js'
-import { Tree } from './util/tree'
-import { internalStateKeys } from './node'
-import { runTypeFunctionOrDefault } from './types'
+import { Tree } from './util/tree.js'
+import { internalStateKeys } from './node.js'
+import { runTypeFunctionOrDefault } from './types.js'
 
 let isFilterOnly = x => !x.children && (x.forceFilterOnly || !x.markedForUpdate)
 

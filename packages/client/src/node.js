@@ -1,7 +1,11 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
-import { Tree, encode } from './util/tree'
-import { runTypeFunction, runTypeFunctionOrDefault, getTypeProp } from './types'
+import { Tree, encode } from './util/tree.js'
+import {
+  runTypeFunction,
+  runTypeFunctionOrDefault,
+  getTypeProp,
+} from './types.js'
 
 export let defaults = {
   type: null,
