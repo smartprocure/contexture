@@ -57,5 +57,16 @@ typings/
 # dotenv environment variables file
 .env
 
+dist/*
+
 test-results.json
 lint-results.json
+
+# yarn stuff
+# see https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
