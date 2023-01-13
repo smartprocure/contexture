@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "2.54.8",
+  "version": "2.54.9",
   "description": "React components for building contexture interfaces",
   "type": "module",
   "main": "dist/esm/index.js",
@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "prepack": "node scripts/build.js",
-    "fmt": "prettier --ignore-path .gitignore --write .",
+    "fmt": "prettier --ignore-path .gitignore --write src",
     "lint": "eslint --ignore-path .gitignore .",
     "lint:ci": "yarn lint -o lint-results.json -f json",
     "duti:fix": "yarn lint --fix && yarn fmt",
@@ -46,20 +46,6 @@
   "storybook-deployer": {
     "commitMessage": "Deploy Storybook [ci skip]"
   },
-  "dependencies": {
-    "futil": "^1.71.8",
-    "lodash": "^4.17.15",
-    "moment": "^2.24.0",
-    "pluralize": "^8.0.0",
-    "prop-types": "^15.7.2",
-    "react-date-picker": "^7.2.0",
-    "react-dnd": "^2.5.4",
-    "react-dnd-html5-backend": "^2.5.4",
-    "react-measure": "^2.3.0",
-    "react-outside-click-handler": "^1.2.3",
-    "react-recompose": "^0.31.2",
-    "reactjs-popup": "^2.0.4"
-  },
   "devDependencies": {
     "@date-io/moment": "^1.3.9",
     "@material-ui/core": "^4.3.3",
@@ -94,5 +80,20 @@
     "read-pkg": "^5.2.0",
     "write-pkg": "^4.0.0"
   },
+  "dependencies": {
+    "futil": "^1.71.8",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "pluralize": "^8.0.0",
+    "prop-types": "^15.7.2",
+    "react-date-picker": "^7.2.0",
+    "react-dnd": "^2.5.4",
+    "react-dnd-html5-backend": "^2.5.4",
+    "react-measure": "^2.3.0",
+    "react-outside-click-handler": "^1.2.3",
+    "react-recompose": "^0.31.2",
+    "reactjs-popup": "^2.0.4"
+  },
+  "readme": "README.mdx",
   "packageManager": "yarn@3.3.1"
 }

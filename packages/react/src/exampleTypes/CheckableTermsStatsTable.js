@@ -20,17 +20,23 @@ let CheckableTermsStatsTable = ({
     selected
   )
   return (
-    <TermsStatsTable {...props}>
-      <Column
-        label={<Checkbox checked={allChecked} onChange={checkAll} />}
-        display={(x, y) => (
-          <Checkbox
-            {...F.domLens.checkboxValues(_.iteratee(getValue)(y), selected)}
-          />
-        )}
-      />
-      {children}
-    </TermsStatsTable>
+    <TermsStatsTable
+      {...{
+        ...props,
+        children: [
+          <Column
+            key="checkbox"
+            label={<Checkbox checked={allChecked} onChange={checkAll} />}
+            display={(x, y) => (
+              <Checkbox
+                {...F.domLens.checkboxValues(_.iteratee(getValue)(y), selected)}
+              />
+            )}
+          />,
+          ...children,
+        ],
+      }}
+    />
   )
 }
 
