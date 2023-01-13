@@ -3,7 +3,7 @@ name: Lint, and Danger
 on: pull_request
 
 jobs:
-  lint-danger:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
