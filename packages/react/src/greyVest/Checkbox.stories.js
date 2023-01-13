@@ -1,6 +1,6 @@
 import React from 'react'
-import { Checkbox } from '.'
-import decorator from './stories/decorator'
+import { Checkbox } from './index.js'
+import decorator from './stories/decorator.js'
 
 export default {
   title: 'GreyVest Library|Checkbox',

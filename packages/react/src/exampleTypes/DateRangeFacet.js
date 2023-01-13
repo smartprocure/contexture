@@ -1,7 +1,7 @@
 import React from 'react'
-import { contexturify } from '../utils/hoc'
-import { toNumber } from '../utils/format'
-import { FacetCheckboxList, displayFn, displayBlankFn } from '../utils/facet'
+import { contexturify } from '../utils/hoc.js'
+import { toNumber } from '../utils/format.js'
+import { FacetCheckboxList, displayFn, displayBlankFn } from '../utils/facet.js'
 
 let DateRangeFacet = ({
   tree,

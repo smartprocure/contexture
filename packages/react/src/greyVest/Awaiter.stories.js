@@ -1,7 +1,7 @@
 import React from 'react'
 import { fromPromise } from 'mobx-utils'
-import { Awaiter, Button, Box } from '.'
-import decorator from './stories/decorator'
+import { Awaiter, Button, Box } from './index.js'
+import decorator from './stories/decorator.js'
 
 export default {
   title: 'GreyVest Library|Awaiter',

@@ -1,11 +1,11 @@
 import React from 'react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
-import Pager from './Pager'
-import PagerItem from './PagerItem'
-import PageSize from './PageSize'
-import Flex from './Flex'
-import { toNumber } from '../utils/format'
+import Pager from './Pager.js'
+import PagerItem from './PagerItem.js'
+import PageSize from './PageSize.js'
+import Flex from './Flex.js'
+import { toNumber } from '../utils/format.js'
 
 let PageDetails = ({ startRecord, endRecord, totalRecords, hasMore }) => (
   <span style={{ flex: '0 1 30%', textAlign: 'right' }}>

@@ -1,8 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import TestTree from './stories/testTree'
-import ThemePicker from '../stories/themePicker'
-import TagsQuerySearchBar from './TagsQuerySearchBar'
+import TestTree from '../exampleTypes/stories/testTree.js'
+import ThemePicker from '../stories/themePicker.js'
+import TagsQuerySearchBar from '../exampleTypes/TagsQuerySearchBar.js'
 
 storiesOf('ExampleTypes|TagsQuerySearchBar', module)
   .addDecorator(ThemePicker('greyVest'))

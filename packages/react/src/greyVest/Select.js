@@ -1,6 +1,6 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 
 let Select = ({ options, placeholder = 'Please Select...', ...props }, ref) => (
   <select className="gv-input" {...props} ref={ref}>

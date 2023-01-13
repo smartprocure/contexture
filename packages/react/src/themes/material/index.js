@@ -1,8 +1,8 @@
 import { KeyboardDatePicker } from '@material-ui/pickers'
 import { defaultProps } from 'react-recompose'
 import { observer } from 'mobx-react'
-import { openBinding } from './utils'
-import { expandProp } from '../../utils/react'
+import { openBinding } from './utils.js'
+import { expandProp } from '../../utils/react.js'
 import {
   Button,
   Checkbox,
@@ -12,14 +12,14 @@ import {
   Table,
 } from '@material-ui/core'
 
-import RadioList from './RadioList'
-import TagsInput from './TagsInput'
-import Icon from './Icon'
-import Popover from './Popover'
-import Select from './Select'
-import Tag from './Tag'
-import Root from './Root'
-import Box from './Box'
+import RadioList from './RadioList.js'
+import TagsInput from './TagsInput.js'
+import Icon from './Icon.js'
+import Popover from './Popover.js'
+import Select from './Select.js'
+import Tag from './Tag.js'
+import Root from './Root.js'
+import Box from './Box.js'
 
 export default {
   Box,

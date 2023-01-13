@@ -1,6 +1,6 @@
 import React from 'react'
-import FilterDropTarget from './FilterDropTarget'
-import styles from '../../styles'
+import { FilterDropTarget } from './FilterDropTarget.js'
+import styles from '../../styles/index.js'
 
 // Move
 let FilterMoveSpec = {

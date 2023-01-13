@@ -1,6 +1,6 @@
 import F from 'futil'
-import _ from 'lodash/fp'
-import { defaultNodeProps } from './schema'
+import _ from 'lodash/fp.js'
+import { defaultNodeProps } from './schema.js'
 
 export let oppositeJoin = node =>
   F.getOrReturn('join', node) === 'and' ? 'or' : 'and'

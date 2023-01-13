@@ -1,19 +1,19 @@
 import React from 'react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
 import { setDisplayName } from 'react-recompose'
 import { observer } from 'mobx-react'
-import { Expandable, Flex, Dynamic } from './greyVest'
-import { fieldsToOptions } from './utils/fields'
-import { contexturifyWithoutLoader } from './utils/hoc'
-import { bdJoin } from './styles/generic'
+import { Expandable, Flex, Dynamic } from './greyVest/index.js'
+import { fieldsToOptions } from './utils/fields.js'
+import { contexturifyWithoutLoader } from './utils/hoc.js'
+import { bdJoin } from './styles/generic.js'
 import {
   newNodeFromType,
   transformNodeFromField,
   getTypeLabel,
   getTypeLabelOptions,
-} from './utils/search'
-import { withTheme } from './utils/theme'
+} from './utils/search.js'
+import { withTheme } from './utils/theme.js'
 
 export let FilterActions = _.flow(
   setDisplayName('FilterActions'),

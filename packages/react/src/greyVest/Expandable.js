@@ -1,6 +1,6 @@
 import React from 'react'
-import Flex from './Flex'
-import { withTheme } from '../utils/theme'
+import Flex from './Flex.js'
+import { withTheme } from '../utils/theme.js'
 
 let Expandable = ({
   isOpen,

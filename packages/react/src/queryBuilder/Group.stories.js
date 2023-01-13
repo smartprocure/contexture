@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { root, DnDDecorator } from './stories/util'
-import Group from './Group'
+import { root, DnDDecorator } from './stories/util.js'
+import Group from './Group.js'
 
 storiesOf('Search Components|QueryBuilder/Internals/Group', module)
   .addDecorator(DnDDecorator)

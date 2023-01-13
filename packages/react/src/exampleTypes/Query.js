@@ -1,5 +1,5 @@
 import React from 'react'
-import { contexturify } from '../utils/hoc'
+import { contexturify } from '../utils/hoc.js'
 
 let Query = ({ tree, node, theme: { TextInput } }) => (
   <TextInput

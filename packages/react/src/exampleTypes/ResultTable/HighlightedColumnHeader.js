@@ -1,8 +1,8 @@
 import React from 'react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import { observer } from 'mobx-react'
-import { getResults } from '../../utils/schema'
-import { withTheme } from '../../utils/theme'
+import { getResults } from '../../utils/schema.js'
+import { withTheme } from '../../utils/theme.js'
 
 let HighlightedColumnHeader = ({
   node,

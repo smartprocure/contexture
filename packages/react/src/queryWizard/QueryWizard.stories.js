@@ -1,14 +1,14 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import QueryWizard from '.'
+import QueryWizard from './index.js'
 import { FilterButtonList } from '..'
-import StepsAccordion, { AccordionStep } from '../purgatory/StepsAccordion'
+import StepsAccordion, { AccordionStep } from '../purgatory/StepsAccordion.js'
 import { mergeOverAll } from 'futil'
-import { componentForType, schemaFieldProps } from '../utils/schema'
-import { TypeMap } from '../exampleTypes'
-import { tree, fields, types, nodeOverrides } from './stories/config'
-import ThemePicker from '../stories/themePicker'
+import { componentForType, schemaFieldProps } from '../utils/schema.js'
+import { TypeMap } from '../exampleTypes/index.js'
+import { tree, fields, types, nodeOverrides } from './stories/config.js'
+import ThemePicker from '../stories/themePicker.js'
 
 let mapNodeToDescription = types => (node, fields) => ({
   description: _.join(' ', [

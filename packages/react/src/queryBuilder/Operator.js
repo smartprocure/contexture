@@ -1,11 +1,11 @@
 import React from 'react'
-import * as F from 'futil'
+import F from 'futil'
 import { observer } from 'mobx-react'
 
-import styles from '../styles'
-import { Popover } from '../greyVest'
-import OperatorMenu from './OperatorMenu'
-import { OperatorMoveTarget } from './DragDrop/MoveTargets'
+import styles from '../styles/index.js'
+import { Popover } from '../greyVest/index.js'
+import OperatorMenu from './OperatorMenu.js'
+import { OperatorMoveTarget } from './DragDrop/MoveTargets.js'
 
 let BlankOperator = ({ open, node, child }) => (
   <div>

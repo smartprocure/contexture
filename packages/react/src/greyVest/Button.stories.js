@@ -1,7 +1,7 @@
 import React from 'react'
 import { action } from '@storybook/addon-actions'
-import { Button } from '.'
-import decorator from './stories/decorator'
+import { Button } from './index.js'
+import decorator from './stories/decorator.js'
 
 export default {
   title: 'GreyVest Library|Button',
@@ -15,7 +15,7 @@ export let basicUsage = () => (
 
 export let disabled = () => (
   <Button disabled onClick={() => action('clicked')()}>
-    Don't click
+    Do not click
   </Button>
 )
 
@@ -33,7 +33,7 @@ export let primary = () => (
 
 export let primaryDisabled = () => (
   <Button primary disabled onClick={() => action('clicked')()}>
-    Can't touch this
+    Cannot touch this
   </Button>
 )
 

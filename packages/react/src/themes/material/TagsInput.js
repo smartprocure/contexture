@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import ChipInput from 'material-ui-chip-input'
-import MaterialTag from './Tag'
+import MaterialTag from './Tag.js'
 
 let TagsInput = ({
   tags,

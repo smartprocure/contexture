@@ -1,7 +1,7 @@
 import React from 'react'
-import * as F from 'futil'
+import F from 'futil'
 import { action } from '@storybook/addon-actions'
-import DDContext from '../DragDrop/DDContext'
+import DDContext from '../DragDrop/DDContext.js'
 
 let DnDWrap = DDContext(({ children }) => <div>{children}</div>)
 

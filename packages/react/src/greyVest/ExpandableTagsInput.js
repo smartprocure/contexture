@@ -1,8 +1,12 @@
 import React from 'react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import { observer } from 'mobx-react'
-import { Tag as DefaultTag, Flex } from '.'
-import { sanitizeTagWords, splitTagOnComma, alphaNumericRegEx } from './utils'
+import { Tag as DefaultTag, Flex } from './index.js'
+import {
+  sanitizeTagWords,
+  splitTagOnComma,
+  alphaNumericRegEx,
+} from './utils.js'
 
 export let Tags = ({
   reverse = false,
@@ -74,7 +78,7 @@ let ExpandableTagsInput = ({
 
   return (
     <div style={style}>
-      <span className="tags-input-container" columns="1fr auto" gap="8px 4px">
+      <span className="tags-input-container">
         <input
           style={{ flex: 1, border: 0 }}
           ref={autoFocus && (input => input && input.focus())}

@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react'
-import { openBinding } from './utils'
-import { expandProp } from '../../utils/react'
+import { openBinding } from './utils.js'
+import { expandProp } from '../../utils/react.js'
 import { Menu } from '@material-ui/core'
 import React from 'react'
 

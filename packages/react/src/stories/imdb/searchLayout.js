@@ -1,9 +1,9 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
 import React from 'react'
-import { observable } from '../../utils/mobx'
+import { observable } from '../../utils/mobx.js'
 import { fromPromise } from 'mobx-utils'
-import Contexture, { updateSchemas } from './utils/contexture'
+import Contexture, { updateSchemas } from './utils/contexture.js'
 import {
   Awaiter,
   schemaFieldProps,
@@ -12,8 +12,8 @@ import {
   SearchFilters,
   SearchTree,
   ToggleFiltersHeader,
-} from '../..'
-import { Tab, TabContent, TabLabel, Tabs } from '../../greyVest'
+} from '../../index.js'
+import { Grid, Tab, TabContent, TabLabel, Tabs } from '../../greyVest/index.js'
 import {
   DateRangePicker,
   TypeMap,
@@ -21,10 +21,10 @@ import {
   TagsQuerySearchBar,
   ResultCount,
   ResultTable,
-} from '../../exampleTypes'
-import { Column } from '../../greyVest/ExpandableTable'
-import { ThemeConsumer } from '../../utils/theme'
-import { aspectWrapper } from '../../utils/futil'
+} from '../../exampleTypes/index.js'
+import { Column } from '../../greyVest/ExpandableTable.js'
+import { ThemeConsumer } from '../../utils/theme.js'
+import { aspectWrapper } from '../../utils/futil.js'
 
 let tree = Contexture({
   key: 'root',

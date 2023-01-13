@@ -1,4 +1,4 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 
 // HERE maps Sample config. Requires API Key
 const defaultConfig = {

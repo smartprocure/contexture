@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import _ from 'lodash/fp'
-import { withTheme } from '../utils/theme'
+import _ from 'lodash/fp.js'
+import { withTheme } from '../utils/theme.js'
 
 export let tagToGroupJoin = (x = 'any') =>
   ({

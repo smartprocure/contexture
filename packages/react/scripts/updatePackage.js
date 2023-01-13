@@ -1,6 +1,6 @@
-let _ = require('lodash/fp')
-let readPkg = require('read-pkg')
-let writePkg = require('write-pkg')
+import _ from 'lodash/fp.js'
+import readPkg from 'read-pkg'
+import writePkg from 'write-pkg'
 
 let updatePackage = async mergeObj => {
   let current = await readPkg()
@@ -8,4 +8,4 @@ let updatePackage = async mergeObj => {
   console.info(`Updated package with ${JSON.stringify(mergeObj)}`)
 }
 
-updatePackage({ main: 'dist/greyVest/index.js', name: 'grey-vest' })
+updatePackage({ main: 'dist/esm/greyVest/index.js', name: 'grey-vest' })

@@ -1,7 +1,7 @@
 import React from 'react'
-import _ from 'lodash/fp'
-import GVPagerItem from './PagerItem'
-import Flex from './Flex'
+import _ from 'lodash/fp.js'
+import GVPagerItem from './PagerItem.js'
+import Flex from './Flex.js'
 
 let PageSize = ({
   value,
@@ -11,7 +11,7 @@ let PageSize = ({
   ...props
 }) => (
   <Flex alignItems="baseline" {...props}>
-    <span css={{ marginRight: 4, fontWeight: 'bold' }}>View</span>
+    <span style={{ marginRight: 4, fontWeight: 'bold' }}>View</span>
     {_.map(
       size => (
         <PagerItem

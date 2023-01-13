@@ -14,13 +14,13 @@ import {
   Tag,
   TextHighlight,
   DateInput,
-} from '../../greyVest'
+} from '../../greyVest/index.js'
 
 // components used only for base theme
-import Icon from './Icon'
-import UnmappedNodeComponent from './UnmappedNodeComponent'
+import Icon from './Icon.js'
+import UnmappedNodeComponent from './UnmappedNodeComponent.js'
 
-import { defaultTheme } from '../../utils/theme'
+import { defaultTheme } from '../../utils/theme.js'
 
 let theme = {
   AlternateButton: 'button',

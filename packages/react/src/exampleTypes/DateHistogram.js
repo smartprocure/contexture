@@ -1,5 +1,5 @@
 import React from 'react'
-import { contexturify } from '../utils/hoc'
+import { contexturify } from '../utils/hoc.js'
 
 let DateHistogram = ({ node, theme: { BarChart }, ...props }) => (
   <BarChart

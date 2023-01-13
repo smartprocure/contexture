@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { storiesOf } from '@storybook/react'
-import ThemePicker from '../stories/themePicker'
-import Flex from './Flex'
-import Box from './Box'
-import Expandable from './Expandable'
+import ThemePicker from '../stories/themePicker.js'
+import Flex from './Flex.js'
+import Box from './Box.js'
+import Expandable from './Expandable.js'
 
 let ExpandableDemo = ({ style, ...props }) => {
   let [expanded, setExpanded] = useState(false)

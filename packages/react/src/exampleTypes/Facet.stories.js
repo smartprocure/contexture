@@ -1,9 +1,9 @@
 import React from 'react'
-import TestTree from './stories/testTree'
-import ThemePicker from '../stories/themePicker'
-import { useMemoryTree } from '../MemoryTable'
-import { Grid, Box } from '../greyVest'
-import { Facet, FacetSelect, ResultTable } from '.'
+import TestTree from './stories/testTree.js'
+import ThemePicker from '../stories/themePicker.js'
+import { useMemoryTree } from '../MemoryTable.js'
+import { Grid, Box } from '../greyVest/index.js'
+import { Facet, FacetSelect, ResultTable } from './index.js'
 
 export default {
   title: 'ExampleTypes | Facet',

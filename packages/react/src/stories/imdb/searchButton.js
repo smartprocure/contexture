@@ -1,8 +1,8 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
 import React from 'react'
 import { fromPromise } from 'mobx-utils'
-import Contexture, { updateSchemas } from './utils/contexture'
+import Contexture, { updateSchemas } from './utils/contexture.js'
 import {
   Flex,
   Awaiter,
@@ -10,8 +10,8 @@ import {
   FilterList,
   componentForType,
   FilterAdder,
-} from '../..'
-import theme, { Button } from '../DemoControls'
+} from '../../index.js'
+import theme, { Button } from '../DemoControls.js'
 import {
   Query,
   ResultCount,
@@ -19,8 +19,8 @@ import {
   DateHistogram,
   TermsStats,
   TypeMap,
-} from '../../exampleTypes'
-import { ThemeProvider } from '../../utils/theme'
+} from '../../exampleTypes/index.js'
+import { ThemeProvider } from '../../utils/theme.js'
 
 let formatYear = x => new Date(x).getUTCFullYear()
 

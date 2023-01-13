@@ -1,9 +1,9 @@
 import React from 'react'
-import _ from 'lodash/fp'
-import * as F from 'futil'
+import _ from 'lodash/fp.js'
+import F from 'futil'
 import { observer } from 'mobx-react'
-import { Dynamic } from '../../greyVest'
-import { withTheme } from '../../utils/theme'
+import { Dynamic } from '../../greyVest/index.js'
+import { withTheme } from '../../utils/theme.js'
 
 const moveColumn = (
   mutate,

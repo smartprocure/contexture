@@ -1,7 +1,7 @@
 import { Radio } from '@material-ui/core'
 import React from 'react'
 import { observer } from 'mobx-react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 
 let RadioList = ({ options, value, onChange, ...props }) => (
   <div {...props}>

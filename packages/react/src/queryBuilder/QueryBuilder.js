@@ -1,9 +1,9 @@
 import React from 'react'
 import F from 'futil'
-import DDContext from './DragDrop/DDContext'
-import Group from './Group'
-import styles from '../styles'
-import { contexturifyWithoutLoader } from '../utils/hoc'
+import DDContext from './DragDrop/DDContext.js'
+import Group from './Group.js'
+import styles from '../styles/index.js'
+import { contexturifyWithoutLoader } from '../utils/hoc.js'
 
 let { background } = styles
 

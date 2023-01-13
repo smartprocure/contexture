@@ -1,11 +1,11 @@
 import React from 'react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
-import { contexturify } from '../utils/hoc'
-import { bgJoin } from '../styles/generic'
+import { contexturify } from '../utils/hoc.js'
+import { bgJoin } from '../styles/generic.js'
 
-import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
-import Flex from '../greyVest/Flex'
+import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker.js'
+import Flex from '../greyVest/Flex.js'
 
 let operatorOptions = F.autoLabelOptions([
   { value: 'containsWord', label: 'Field Contains' },

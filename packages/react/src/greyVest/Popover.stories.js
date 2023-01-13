@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import F from 'futil'
-import { Button, Popover } from '.'
-import decorator from './stories/decorator'
+import { Button, Popover } from './index.js'
+import decorator from './stories/decorator.js'
 
 export default {
   title: 'GreyVest Library|Popover',

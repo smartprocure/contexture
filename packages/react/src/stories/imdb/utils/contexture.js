@@ -1,12 +1,12 @@
-import _ from 'lodash/fp'
-import * as F from 'futil'
+import _ from 'lodash/fp.js'
+import F from 'futil'
 import Contexture from 'contexture'
 import { exampleTypes } from 'contexture-client'
 import elasticsearch from 'elasticsearch-browser'
 import contextureES from 'contexture-elasticsearch'
-import contextureESTypes from 'contexture-elasticsearch/src/types'
-import typeMap from 'contexture-elasticsearch/src/example-types/schemaMapping'
-import ContextureMobx from '../../../utils/contexture-mobx'
+import contextureESTypes from 'contexture-elasticsearch/src/types.js'
+import typeMap from 'contexture-elasticsearch/src/example-types/schemaMapping.js'
+import ContextureMobx from '../../../utils/contexture-mobx.js'
 
 export let esClient = elasticsearch.Client({
   apiVersion: '6.0',

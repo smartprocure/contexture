@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { parent, root, DnDDecorator } from './stories/util'
-import Operator from './Operator'
+import { parent, root, DnDDecorator } from './stories/util.js'
+import Operator from './Operator.js'
 
 let operatorStory = (join, index, root) => () =>
   (

@@ -1,9 +1,9 @@
 import React from 'react'
-import * as F from 'futil'
+import F from 'futil'
 import { observer } from 'mobx-react'
-import styles from '../../styles'
-import { oppositeJoin } from '../../utils/search'
-import AddPreview from './AddPreview'
+import styles from '../../styles/index.js'
+import { oppositeJoin } from '../../utils/search.js'
+import AddPreview from './AddPreview.js'
 
 let Indentable = ({ children, indent, parent }) => (
   <div style={{ ...styles.dFlex, ...styles.w100 }}>

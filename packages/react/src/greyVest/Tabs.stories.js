@@ -1,9 +1,16 @@
 import React from 'react'
 import { action } from '@storybook/addon-actions'
-import { observable } from '../utils/mobx'
+import { observable } from '../utils/mobx.js'
 import { Observer } from 'mobx-react'
-import { Tabs, Tab, TabLabel, TabContent, ButtonRadio, Button } from '.'
-import decorator from './stories/decorator'
+import {
+  Tabs,
+  Tab,
+  TabLabel,
+  TabContent,
+  ButtonRadio,
+  Button,
+} from './index.js'
+import decorator from './stories/decorator.js'
 import tabDocs from './docs/tabs.mdx'
 
 let state = observable({ tab: 'results' })

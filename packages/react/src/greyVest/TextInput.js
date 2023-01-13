@@ -1,6 +1,6 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 
 let TextInput = ({ className = '', type = 'text', ...props }, ref) => (
   <input className={`${className} gv-input`} {...{ type, ref, ...props }} />

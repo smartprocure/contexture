@@ -1,4 +1,4 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 
 export let isField = x => x?.typeDefault
 export let isDisplayableField = field => isField(field) || field?._key

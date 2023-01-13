@@ -1,9 +1,9 @@
 import F from 'futil'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import TestTree from './stories/testTree'
-import ThemePicker from '../stories/themePicker'
-import { CheckableResultTable } from '.'
+import TestTree from './stories/testTree.js'
+import ThemePicker from '../stories/themePicker.js'
+import { CheckableResultTable } from './index.js'
 
 storiesOf('ExampleTypes|CheckableResultTable', module)
   .addDecorator(ThemePicker('greyVest'))

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Fonts, Style } from '../../greyVest'
-import ThemeStyle from './Style'
+import { Fonts, Style } from '../../greyVest/index.js'
+import ThemeStyle from './Style.js'
 
 let Root = ({ children }) => (
   <>

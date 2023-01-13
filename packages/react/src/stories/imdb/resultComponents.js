@@ -1,11 +1,11 @@
-import * as F from 'futil'
-import _ from 'lodash/fp'
+import F from 'futil'
+import _ from 'lodash/fp.js'
 import React from 'react'
-import { observable } from '../../utils/mobx'
+import { observable } from '../../utils/mobx.js'
 import { fromPromise } from 'mobx-utils'
 import { observer } from 'mobx-react'
-import Contexture, { updateSchemas } from '../utils/contexture'
-import { useTheme } from '../../../utils/theme'
+import Contexture, { updateSchemas } from './utils/contexture.js'
+import { useTheme } from '../../utils/theme.js'
 import {
   FilterList,
   Flex,
@@ -14,15 +14,15 @@ import {
   Grid,
   componentForType,
   FilterAdder,
-} from '../..'
+} from '../../index.js'
 import {
   ResultCount,
   CheckableResultTable,
   ResultPager,
   TagsQuery,
   TypeMap,
-} from '../../exampleTypes'
-import IMDBCards from './components/IMDBCards'
+} from '../../exampleTypes/index.js'
+import IMDBCards from './components/IMDBCards.js'
 
 let tree = Contexture({
   key: 'root',

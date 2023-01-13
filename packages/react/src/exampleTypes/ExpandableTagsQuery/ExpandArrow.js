@@ -1,10 +1,10 @@
 import React from 'react'
 import F from 'futil'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import { observer } from 'mobx-react'
-import { Flex } from '../../greyVest'
-import { withTheme } from '../../utils/theme'
-import { tagTerm } from '../TagsQuery/utils'
+import { Flex } from '../../greyVest/index.js'
+import { withTheme } from '../../utils/theme.js'
+import { tagTerm } from '../TagsQuery/utils.js'
 
 let ExpandArrow = ({ collapse, tagsLength, style, theme: { Icon } }) =>
   !!(F.view(collapse) && tagsLength) && (

@@ -1,15 +1,15 @@
-import * as F from 'futil'
+import F from 'futil'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import AsyncSelect from 'react-select/lib/Async'
-import { loadHereOptions, geoCodeLocation } from '../utils/geo'
-import { ThemeProvider } from '../utils/theme'
-import theme from '../stories/DemoControls'
+import AsyncSelect from 'react-select/lib/Async.js'
+import { loadOptions, geoCodeLocation } from '../utils/geo.js'
+import { ThemeProvider } from '../utils/theme.js'
+import theme from '../stories/DemoControls.js'
 
-import TestTree from './stories/testTree'
+import TestTree from './stories/testTree.js'
 
 let formatYear = x => new Date(x).getUTCFullYear()
-import { Flex, SpacedList } from '../../src/greyVest'
+import { Flex, SpacedList } from '../../src/greyVest/index.js'
 import {
   Facet,
   Number,
@@ -20,7 +20,7 @@ import {
   DateHistogram,
   TagsQuery,
   Geo,
-} from '../../src/exampleTypes'
+} from '../../src/exampleTypes/index.js'
 
 storiesOf('ExampleTypes|Full Demo', module).add('Full Demo', () => {
   let tree = TestTree()
@@ -51,7 +51,7 @@ storiesOf('ExampleTypes|Full Demo', module).add('Full Demo', () => {
                 <Number tree={tree} path={['number']} />
                 <Geo
                   tree={tree}
-                  loadOptions={loadHereOptions}
+                  loadOptions={loadOptions}
                   path={['geo']}
                   AutoComplete={AsyncSelect}
                   GeoCodeLocation={geoCodeLocation}

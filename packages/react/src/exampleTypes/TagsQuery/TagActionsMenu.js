@@ -1,9 +1,9 @@
 import React from 'react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
 import { observer } from 'mobx-react'
-import { withTheme } from '../../utils/theme'
-import { getTag, tagTerm, tagValueField } from './utils'
+import { withTheme } from '../../utils/theme.js'
+import { getTag, tagTerm, tagValueField } from './utils.js'
 
 let TagActionsMenu = ({
   tag,

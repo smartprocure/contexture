@@ -1,5 +1,5 @@
 import React from 'react'
-import { withTheme } from '../utils/theme'
+import { withTheme } from '../utils/theme.js'
 
 let ShowFiltersButton = ({ onClick, theme: { AlternateButton, Icon } }) => (
   <AlternateButton title="Show Filters" onClick={onClick}>

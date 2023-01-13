@@ -1,8 +1,8 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import React from 'react'
-import GVPagerItem from './PagerItem'
-import Flex from './Flex'
-import { withTheme } from '../utils/theme'
+import GVPagerItem from './PagerItem.js'
+import Flex from './Flex.js'
+import { withTheme } from '../utils/theme.js'
 
 let Pager = ({
   value,

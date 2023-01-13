@@ -1,9 +1,9 @@
 import F from 'futil'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import React from 'react'
 import { observer } from 'mobx-react'
 
-import { withTheme } from '../utils/theme'
+import { withTheme } from '../utils/theme.js'
 
 let ModalPicker = ({
   options = [],

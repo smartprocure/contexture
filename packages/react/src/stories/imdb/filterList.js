@@ -1,11 +1,11 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
 import React from 'react'
 import { autorun } from 'mobx'
-import { observable } from '../../utils/mobx'
+import { observable } from '../../utils/mobx.js'
 import { fromPromise } from 'mobx-utils'
 import { observer, inject } from 'mobx-react'
-import Contexture, { updateSchemas } from './utils/contexture'
+import Contexture, { updateSchemas } from './utils/contexture.js'
 import {
   FilterList,
   Flex,
@@ -13,8 +13,8 @@ import {
   SpacedList,
   componentForType,
   FilterAdder,
-} from '../..'
-import theme, { DarkBox } from '../DemoControls'
+} from '../../index.js'
+import theme, { DarkBox } from '../DemoControls.js'
 import {
   Query,
   ResultCount,
@@ -22,9 +22,9 @@ import {
   DateHistogram,
   CheckableTermsStatsTable,
   TypeMap,
-} from '../../exampleTypes'
-import { ThemeProvider } from '../../utils/theme'
-import { Column } from '../../greyVest/ExpandableTable'
+} from '../../exampleTypes/index.js'
+import { ThemeProvider } from '../../utils/theme.js'
+import { Column } from '../../greyVest/ExpandableTable.js'
 
 let formatYear = x => new Date(x).getUTCFullYear()
 

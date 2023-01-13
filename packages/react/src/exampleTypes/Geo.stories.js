@@ -1,10 +1,10 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import AsyncSelect from 'react-select/lib/Async'
-import ThemePicker from '../stories/themePicker'
-import { Flex } from '../greyVest'
-import TestTree from './stories/testTree'
-import { Geo } from '.'
+import AsyncSelect from 'react-select/lib/Async.js'
+import ThemePicker from '../stories/themePicker.js'
+import { Flex } from '../greyVest/index.js'
+import TestTree from './stories/testTree.js'
+import { Geo } from './index.js'
 
 storiesOf('ExampleTypes|Geo filter & HERE maps', module)
   .addDecorator(ThemePicker('greyVest'))

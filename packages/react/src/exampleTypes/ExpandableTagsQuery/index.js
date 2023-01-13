@@ -1,15 +1,15 @@
 import React from 'react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
 import { withContentRect } from 'react-measure'
-import { contexturifyWithoutLoader } from '../../utils/hoc'
-import ExpandArrow from './ExpandArrow'
+import { contexturifyWithoutLoader } from '../../utils/hoc.js'
+import ExpandArrow from './ExpandArrow.js'
 import { observer } from 'mobx-react'
-import { toNumber } from '../../utils/format'
-import TagActionsMenu from '../TagsQuery/TagActionsMenu'
-import { Grid, GridItem } from '../../greyVest'
-import { getTagStyle, tagValueField } from '../TagsQuery/utils'
-import ActionsMenu from '../TagsQuery/ActionsMenu'
+import { toNumber } from '../../utils/format.js'
+import TagActionsMenu from '../TagsQuery/TagActionsMenu.js'
+import { Grid, GridItem } from '../../greyVest/index.js'
+import { getTagStyle, tagValueField } from '../TagsQuery/utils.js'
+import ActionsMenu from '../TagsQuery/ActionsMenu.js'
 
 let innerHeightLimit = 40
 

@@ -1,8 +1,8 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import React from 'react'
-import ThemePicker from './stories/themePicker'
-import MemoryTable from './MemoryTable'
-import emojiData from './exampleTypes/stories/emojiData'
+import ThemePicker from './stories/themePicker.js'
+import MemoryTable from './MemoryTable.js'
+import emojiData from './exampleTypes/stories/emojiData.js'
 
 export default {
   title: 'MemoryTable',

@@ -1,8 +1,8 @@
 import React from 'react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
 import { observer } from 'mobx-react'
-import Checkbox from './Checkbox'
+import Checkbox from './Checkbox.js'
 
 let CheckboxList = ({ options, value, onChange, ...props }) => (
   <div {...props}>

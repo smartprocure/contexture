@@ -1,9 +1,9 @@
 import React from 'react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
-import Popup from 'reactjs-popup'
-import { openBinding } from './utils'
-import { explodeProp } from '../utils/react'
+import { Popup } from 'reactjs-popup'
+import { openBinding } from './utils.js'
+import { explodeProp } from '../utils/react.js'
 
 /**
  * Self-contained state management:

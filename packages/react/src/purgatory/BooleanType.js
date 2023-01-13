@@ -1,6 +1,6 @@
 import React from 'react'
-import _ from 'lodash/fp'
-import { contexturify } from '../utils/hoc'
+import _ from 'lodash/fp.js'
+import { contexturify } from '../utils/hoc.js'
 
 let getValue = value => (_.isNil(value) ? null : !!value)
 

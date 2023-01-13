@@ -1,3 +1,3 @@
-import QueryBuilder from './QueryBuilder'
+import QueryBuilder from './QueryBuilder.js'
 
 export default QueryBuilder

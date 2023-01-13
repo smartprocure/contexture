@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
-import { withTheme } from '../utils/theme'
-import { toNumber } from '../utils/format'
+import { withTheme } from '../utils/theme.js'
+import { toNumber } from '../utils/format.js'
 import { setDisplayName } from 'react-recompose'
 import { observer } from 'mobx-react'
-import { Flex } from '../greyVest'
-import { contexturifyWithoutLoader } from '../utils/hoc'
+import { Flex } from '../greyVest/index.js'
+import { contexturifyWithoutLoader } from '../utils/hoc.js'
 
 let commonStyle = {
   justifyContent: 'space-between',

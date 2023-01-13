@@ -57,16 +57,20 @@ typings/
 # dotenv environment variables file
 .env
 
-# jest cpverage
-coverage/
-jest_0/
-
 # ignore distribution folder
-dist/
+dist/*
 
 # ignore storybook related folders
 storybook-static/
 
 test-results.json
+lint-results.json
 
-.idea/
+# yarn stuff
+# see https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

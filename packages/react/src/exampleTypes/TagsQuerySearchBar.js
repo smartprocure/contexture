@@ -1,12 +1,12 @@
 import React from 'react'
 import F from 'futil'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import { observer } from 'mobx-react'
 import OutsideClickHandler from 'react-outside-click-handler'
-import { withNode } from '../utils/hoc'
-import { Box, ButtonGroup, Button } from '../greyVest'
-import ExpandableTagsInput, { Tags } from '../greyVest/ExpandableTagsInput'
-import ExpandableTagsQuery from './ExpandableTagsQuery'
+import { withNode } from '../utils/hoc.js'
+import { Box, ButtonGroup, Button } from '../greyVest/index.js'
+import ExpandableTagsInput, { Tags } from '../greyVest/ExpandableTagsInput.js'
+import ExpandableTagsQuery from './ExpandableTagsQuery/index.js'
 
 let searchBarStyle = {
   overflow: 'visible', // for the search button animation
@@ -64,7 +64,7 @@ let SearchBar = ({
 }) => {
   let collapse = React.useState(true)
   return (
-    <OutsideClickHandler
+    <OutsideClickHandler.default
       onOutsideClick={() => {
         F.on(collapse)()
       }}
@@ -103,7 +103,7 @@ let SearchBar = ({
           />
         )}
       </ButtonGroup>
-    </OutsideClickHandler>
+    </OutsideClickHandler.default>
   )
 }
 

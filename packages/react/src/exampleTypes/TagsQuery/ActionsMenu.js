@@ -1,10 +1,10 @@
 import React from 'react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import { observer } from 'mobx-react'
-import TagsJoinPicker from '../TagsJoinPicker'
-import { withTheme } from '../../utils/theme'
-import { Flex } from '../../greyVest'
-import { copyTags, tagTerm } from './utils'
+import TagsJoinPicker from '../TagsJoinPicker.js'
+import { withTheme } from '../../utils/theme.js'
+import { Flex } from '../../greyVest/index.js'
+import { copyTags, tagTerm } from './utils.js'
 
 let ActionsMenu = ({
   node,

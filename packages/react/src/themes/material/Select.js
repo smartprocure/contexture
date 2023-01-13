@@ -1,6 +1,6 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import { Select as MaterialSelect, MenuItem } from '@material-ui/core'
 
 let Select = (

@@ -1,8 +1,8 @@
 import React from 'react'
 import F from 'futil'
 import { storiesOf } from '@storybook/react'
-import { ThemeProvider, ThemeConsumer, withTheme } from '../utils/theme'
-import { wrapDisplayName } from '../utils/react'
+import { ThemeProvider, ThemeConsumer, withTheme } from '../utils/theme.js'
+import { wrapDisplayName } from '../utils/react.js'
 
 let withStyle = (style, Component) =>
   wrapDisplayName(
@@ -92,10 +92,10 @@ storiesOf('Theme API|Examples', module)
     return (
       <ThemeProvider>
         <DefaultVanillaButton>
-          The global default for "Button" supercedes the component-level default
+          The global default for Button supercedes the component-level default
         </DefaultVanillaButton>
         <DefaultVanillaFoo>
-          "Foo" has no global default, so it uses the component-level default
+          Foo has no global default, so it uses the component-level default
         </DefaultVanillaFoo>
       </ThemeProvider>
     )

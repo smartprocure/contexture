@@ -1,10 +1,14 @@
 import React, { forwardRef } from 'react'
-import _ from 'lodash/fp'
-import { observable } from '../utils/mobx'
-import { observer, inject, useLocalStore, useLocalObservable } from 'mobx-react'
-import Flex from './Flex'
-import DefaultTag from './Tag'
-import { sanitizeTagWords, splitTagOnComma, alphaNumericRegEx } from './utils'
+import _ from 'lodash/fp.js'
+import { observable } from '../utils/mobx.js'
+import { observer, inject } from 'mobx-react'
+import Flex from './Flex.js'
+import DefaultTag from './Tag.js'
+import {
+  sanitizeTagWords,
+  splitTagOnComma,
+  alphaNumericRegEx,
+} from './utils.js'
 
 let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
@@ -32,9 +36,11 @@ let TagsInput = forwardRef(
     inputRef
   ) => {
     let containerRef = React.useRef()
-    let state = (useLocalStore || useLocalObservable)(() => ({
-      currentInput: '',
-    }))
+    let state = React.useState(() =>
+      observable({
+        currentInput: '',
+      })
+    )
     let sanitizeTagFn = sanitizeTagWords(
       wordsMatchPattern,
       maxWordsPerTag,
