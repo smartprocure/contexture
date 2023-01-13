@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "2.54.9",
+  "version": "2.54.10",
   "description": "React components for building contexture interfaces",
   "type": "module",
   "main": "dist/esm/index.js",
@@ -56,7 +56,7 @@
     "@storybook/source-loader": "^6.3.7",
     "@storybook/storybook-deployer": "^2.8.10",
     "contexture": "^0.12.11",
-    "contexture-client": "^2.48.0",
+    "contexture-client": "^2.49.5",
     "contexture-elasticsearch": "^1.13.0",
     "danger": "^11.2.1",
     "duti": "^0.15.2",

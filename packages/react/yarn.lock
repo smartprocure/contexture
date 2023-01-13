@@ -5929,13 +5929,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"contexture-client@npm:^2.48.0":
-  version: 2.49.4
-  resolution: "contexture-client@npm:2.49.4"
+"contexture-client@npm:^2.49.5":
+  version: 2.49.5
+  resolution: "contexture-client@npm:2.49.5"
   dependencies:
-    futil: ^1.70.0
+    futil: ^1.71.8
     lodash: ^4.17.15
-  checksum: ae45d78cfd23b2161757e0b57c36305994f84c0e232643ddab81d0cbdfb0949ef88792c1ae1bbc173e9d968e9e53cc6b2004db6ef6fa2a5ba3a7aaad4757c45b
+  checksum: fa80186172ab1dfa9573af262cc58fce2297daf0d3e64b330feb62bb31670abd20b049aa73320f871a7427e13b8ddcf640d2e94a02afbd2c2bef42266a9e41e3
   languageName: node
   linkType: hard
 
@@ -5968,7 +5968,7 @@ __metadata:
     "@storybook/source-loader": ^6.3.7
     "@storybook/storybook-deployer": ^2.8.10
     contexture: ^0.12.11
-    contexture-client: ^2.48.0
+    contexture-client: ^2.49.5
     contexture-elasticsearch: ^1.13.0
     danger: ^11.2.1
     duti: ^0.15.2
@@ -8244,7 +8244,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"futil@npm:^1.66.1, futil@npm:^1.69.0, futil@npm:^1.70.0, futil@npm:^1.71.8":
+"futil@npm:^1.66.1, futil@npm:^1.69.0, futil@npm:^1.71.8":
   version: 1.71.8
   resolution: "futil@npm:1.71.8"
   dependencies:
