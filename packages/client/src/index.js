@@ -1,4 +1,4 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
 import {
   flatten,
@@ -8,19 +8,19 @@ import {
   decode,
   isParent,
   pathFromParents,
-} from './util/tree'
-import { validate } from './validation'
-import { getAffectedNodes, reactors } from './reactors'
-import actions from './actions'
-import serialize from './serialize'
-import traversals from './traversals'
-import { runTypeFunction, getTypeProp } from './types'
-import { initNode, hasContext, hasValue, dedupeWalk } from './node'
-import exampleTypes from './exampleTypes'
-import lens from './lens'
-import mockService from './mockService'
-import subquery from './subquery'
-import { setupListeners } from './listeners'
+} from './util/tree.js'
+import { validate } from './validation.js'
+import { getAffectedNodes, reactors } from './reactors.js'
+import actions from './actions/index.js'
+import serialize from './serialize.js'
+import traversals from './traversals.js'
+import { runTypeFunction, getTypeProp } from './types.js'
+import { initNode, hasContext, hasValue, dedupeWalk } from './node.js'
+import exampleTypes from './exampleTypes.js'
+import lens from './lens.js'
+import mockService from './mockService.js'
+import subquery from './subquery.js'
+import { setupListeners } from './listeners.js'
 
 let shouldBlockUpdate = tree => {
   let leaves = Tree.leaves(tree)
