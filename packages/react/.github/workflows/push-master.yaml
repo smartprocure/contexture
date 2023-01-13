@@ -28,12 +28,9 @@ jobs:
         env:
           NPM_TOKEN: '${{ secrets.NPM_TOKEN }}'
 
-      - name: Update package to grey-vest
-        run: yarn run update-pkg
-
-      - name: Publish to npm
+      - name: Publish grey-vest to npm
         run: |
-          echo -e "npmRegistryServer: \"https://registry.npmjs.org/\"\nnpmAuthToken: \"$NPM_TOKEN\"" >> ./.yarnrc.yml
+          yarn run update-pkg
           yarn npm publish --access public
         env:
           NPM_TOKEN: '${{ secrets.NPM_TOKEN }}'
