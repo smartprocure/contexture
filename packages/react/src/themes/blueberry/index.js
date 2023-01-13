@@ -1,15 +1,15 @@
 import { defaultProps } from 'react-recompose'
 import React from 'react'
 
-import Button from './Button'
-import ButtonRadio from './ButtonRadio'
-import Checkbox from './Checkbox'
-import Fonts from './Fonts'
-import DropdownItem from './DropdownItem'
-import PagerItem from './PagerItem'
-import Style from './Style'
-import Tag from './Tag'
-import TextInput from './TextInput'
+import Button from './Button.js'
+import ButtonRadio from './ButtonRadio.js'
+import Checkbox from './Checkbox.js'
+import Fonts from './Fonts.js'
+import DropdownItem from './DropdownItem.js'
+import { PagerItem } from './PagerItem.js'
+import Style from './Style.js'
+import Tag from './Tag.js'
+import TextInput from './TextInput.js'
 
 import {
   Box,
@@ -18,7 +18,7 @@ import {
   TextButton,
   NestedPicker,
   TagsInput,
-} from '../../greyVest'
+} from '../../greyVest/index.js'
 
 export default {
   AlternateButton: TextButton,

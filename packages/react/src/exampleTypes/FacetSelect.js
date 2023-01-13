@@ -1,11 +1,11 @@
 import React from 'react'
 import F from 'futil'
-import _ from 'lodash/fp'
-import Async from 'react-select/lib/Async'
+import _ from 'lodash/fp.js'
+import Async from 'react-select/lib/Async.js'
 import { components } from 'react-select'
-import { Flex } from '../greyVest'
-import { contexturify } from '../utils/hoc'
-import { Cardinality } from '../utils/facet'
+import { Flex } from '../greyVest/index.js'
+import { contexturify } from '../utils/hoc.js'
+import { Cardinality } from '../utils/facet.js'
 
 let getOptions = node =>
   _.map(

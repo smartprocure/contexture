@@ -1,8 +1,8 @@
 import React from 'react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
-import { Flex } from '../greyVest'
-import { contexturify } from '../utils/hoc'
+import { Flex } from '../greyVest/index.js'
+import { contexturify } from '../utils/hoc.js'
 
 const customStyles = {
   valueContainer: styles => ({

@@ -1,9 +1,9 @@
 import React from 'react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import { storiesOf } from '@storybook/react'
 import { defaultProps } from 'react-recompose'
-import { Grid, GridItem as BaseGridItem } from '.'
-import decorator from './stories/decorator'
+import { Grid, GridItem as BaseGridItem } from './index.js'
+import decorator from './stories/decorator.js'
 
 let GridItem = defaultProps({ className: 'gv-grid-item' })(BaseGridItem)
 

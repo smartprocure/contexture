@@ -1,10 +1,10 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { fromPromise } from 'mobx-utils'
-import { QueryBuilder, Awaiter, componentForType } from '../..'
-import Contexture, { updateSchemas } from './utils/contexture'
-import { ResultCount, ResultTable, TypeMap } from '../../exampleTypes'
+import { QueryBuilder, Awaiter, componentForType } from '../../index.js'
+import Contexture, { updateSchemas } from './utils/contexture.js'
+import { ResultCount, ResultTable, TypeMap } from '../../exampleTypes/index.js'
 
 let tree = Contexture({
   key: 'root',

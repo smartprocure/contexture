@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { root } from './stories/util'
-import FilterContents from './FilterContents'
+import { root } from './stories/util.js'
+import FilterContents from './FilterContents.js'
 
 storiesOf('Search Components|QueryBuilder/Internals', module).add(
   'FilterContents',

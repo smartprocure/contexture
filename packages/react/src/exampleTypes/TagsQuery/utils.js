@@ -1,6 +1,6 @@
-import _ from 'lodash/fp'
-import { bgJoin } from '../../styles/generic'
-import { tagToGroupJoin } from '../TagsJoinPicker'
+import _ from 'lodash/fp.js'
+import { bgJoin } from '../../styles/generic.js'
+import { tagToGroupJoin } from '../TagsJoinPicker.js'
 
 export let tagTerm = 'keyword'
 export let tagValueField = 'word'

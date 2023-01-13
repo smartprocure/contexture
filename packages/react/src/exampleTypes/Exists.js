@@ -1,6 +1,6 @@
 import React from 'react'
-import _ from 'lodash/fp'
-import BooleanType from '../purgatory/BooleanType'
+import _ from 'lodash/fp.js'
+import BooleanType from '../purgatory/BooleanType.js'
 
 export default ({
   display = value =>

@@ -1,7 +1,7 @@
 import React from 'react'
 import F from 'futil'
-import _ from 'lodash/fp'
-import TableFooter from '../../greyVest/TableFooter'
+import _ from 'lodash/fp.js'
+import TableFooter from '../../greyVest/TableFooter.js'
 import { observer } from 'mobx-react'
 
 let ResultTableFooter = ({ tree, node, pageSizeOptions, disabled, style }) => {

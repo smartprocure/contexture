@@ -1,9 +1,9 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
 import React from 'react'
-import { Column } from '../greyVest/ExpandableTable'
-import { contexturify } from '../utils/hoc'
-import TermsStatsTable from './TermsStatsTable'
+import { Column } from '../greyVest/ExpandableTable.js'
+import { contexturify } from '../utils/hoc.js'
+import TermsStatsTable from './TermsStatsTable.js'
 
 let CheckableTermsStatsTable = ({
   node,
@@ -25,6 +25,7 @@ let CheckableTermsStatsTable = ({
         ...props,
         children: [
           <Column
+            key="checkbox"
             label={<Checkbox checked={allChecked} onChange={checkAll} />}
             display={(x, y) => (
               <Checkbox

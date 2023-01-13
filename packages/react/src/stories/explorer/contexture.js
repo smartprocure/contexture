@@ -1,11 +1,11 @@
-import * as F from 'futil'
+import F from 'futil'
 import Contexture from 'contexture'
 import { exampleTypes } from 'contexture-client'
 import elasticsearch from 'elasticsearch-browser'
 import contextureES from 'contexture-elasticsearch'
-import contextureESTypes from 'contexture-elasticsearch/src/types'
-import typeMap from 'contexture-elasticsearch/src/example-types/schemaMapping'
-import ContextureMobx from '../../utils/contexture-mobx'
+import contextureESTypes from 'contexture-elasticsearch/src/types.js'
+import typeMap from 'contexture-elasticsearch/src/example-types/schemaMapping.js'
+import ContextureMobx from '../../utils/contexture-mobx.js'
 
 export let es = { client: {} }
 export let updateClient = config => {

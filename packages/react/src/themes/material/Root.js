@@ -2,7 +2,7 @@ import React from 'react'
 import { CssBaseline } from '@material-ui/core'
 import MomentUtils from '@date-io/moment'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
-import Style from './Style'
+import Style from './Style.js'
 
 let Root = ({ children }) => (
   <>

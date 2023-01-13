@@ -1,6 +1,6 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import styles from '../../styles'
+import styles from '../../styles/index.js'
 
 let AddPreview = ({ join, style, onClick }) => (
   <div style={{ background: styles.background }} onClick={() => onClick(join)}>

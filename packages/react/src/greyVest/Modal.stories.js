@@ -1,8 +1,8 @@
 import React from 'react'
 import F from 'futil'
-import { useLensObject } from '../utils/react'
-import { Modal, Button, Popover, DropdownItem } from '.'
-import decorator from './stories/decorator'
+import { useLensObject } from '../utils/react.js'
+import { Modal, Button, Popover, DropdownItem } from './index.js'
+import decorator from './stories/decorator.js'
 
 export default {
   title: 'GreyVest Library|Modal',
@@ -41,7 +41,7 @@ export let fromPopover = () => {
       <p>
         Demonstrates how to use modals inside of popovers. Ideally, the modal
         component should live outside the popover even if its opener is inside
-        the popover, but in cases where it's absolutely necessary, modals can
+        the popover, but in cases where it is absolutely necessary, modals can
         survive inside of popovers as long as steps are taken to keep the
         popover open as long as the modal is.
       </p>

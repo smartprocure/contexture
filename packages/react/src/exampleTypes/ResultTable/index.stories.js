@@ -1,14 +1,14 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import React from 'react'
-import TestTree from '../stories/testTree'
-import ThemePicker from '../../stories/themePicker'
-import ResultTable from '.'
+import TestTree from '../stories/testTree.js'
+import ThemePicker from '../../stories/themePicker.js'
+import ResultTable from './index.js'
 import { Observer } from 'mobx-react'
-import { Box } from '../../greyVest'
+import { Box } from '../../greyVest/index.js'
 import Contexture from 'contexture'
-import ContextureMobx from '../../utils/contexture-mobx'
-import memory from 'contexture/dist/esm/provider-memory'
-import types from 'contexture/dist/esm/provider-memory/exampleTypes'
+import ContextureMobx from '../../utils/contexture-mobx.js'
+import memory from 'contexture/dist/esm/provider-memory/index.js'
+import types from 'contexture/dist/esm/provider-memory/exampleTypes.js'
 
 export default {
   title: 'ExampleTypes | ResultTable',

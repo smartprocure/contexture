@@ -1,8 +1,8 @@
 import React from 'react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
-import MemoryTable from '../../MemoryTable'
-import EmojiIcon from '../../stories/EmojiIcon'
+import MemoryTable from '../../MemoryTable.js'
+import EmojiIcon from '../../stories/EmojiIcon.js'
 
 // types
 let number = { typeDefault: number }

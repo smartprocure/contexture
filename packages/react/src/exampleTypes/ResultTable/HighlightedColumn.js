@@ -1,9 +1,9 @@
 import React from 'react'
-import _ from 'lodash/fp'
-import * as F from 'futil'
+import _ from 'lodash/fp.js'
+import F from 'futil'
 import { observer } from 'mobx-react'
-import { getResults } from '../../utils/schema'
-import { withTheme } from '../../utils/theme'
+import { getResults } from '../../utils/schema.js'
+import { withTheme } from '../../utils/theme.js'
 
 let labelForField = (schema, field) =>
   _.getOr(field, 'label', _.find({ field }, schema))

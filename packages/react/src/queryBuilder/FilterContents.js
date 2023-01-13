@@ -1,18 +1,18 @@
-import * as F from 'futil'
-import _ from 'lodash/fp'
+import F from 'futil'
+import _ from 'lodash/fp.js'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { Dynamic, Grid } from '../greyVest/'
-import { ModalPicker } from '../purgatory'
-import { fieldsToOptions } from '../utils/fields'
-import { get } from '../utils/mobx-utils'
+import { Dynamic, Grid } from '../greyVest/index.js'
+import { ModalPicker } from '../purgatory/index.js'
+import { fieldsToOptions } from '../utils/fields.js'
+import { get } from '../utils/mobx-utils.js'
 import {
   newNodeFromType,
   newNodeFromField,
   transformNodeFromField,
   getTypeLabelOptions,
-} from '../utils/search'
-import { withTheme } from '../utils/theme'
+} from '../utils/search.js'
+import { withTheme } from '../utils/theme.js'
 
 let FilterContents = ({
   node,

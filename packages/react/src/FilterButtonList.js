@@ -1,14 +1,15 @@
 import F from 'futil'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import React from 'react'
 import { setDisplayName } from 'react-recompose'
-import { Dynamic, Flex } from './greyVest'
-import { CheckButton, ModalPicker } from './purgatory'
-import { contexturifyWithoutLoader } from './utils/hoc'
-import { withTheme } from './utils/theme'
-import styles from './styles'
-import { newNodeFromField } from './utils/search'
-import { fieldsToOptions, unusedOptions } from './FilterAdder'
+import { Dynamic, Flex } from './greyVest/index.js'
+import { CheckButton, ModalPicker } from './purgatory/index.js'
+import { contexturifyWithoutLoader } from './utils/hoc.js'
+import { withTheme } from './utils/theme.js'
+import styles from './styles/index.js'
+import { newNodeFromField } from './utils/search.js'
+import { unusedOptions } from './FilterAdder.js'
+import { fieldsToOptions } from './utils/fields.js'
 
 let FilterButtonItem = _.flow(
   setDisplayName('FilterButtonItem'),

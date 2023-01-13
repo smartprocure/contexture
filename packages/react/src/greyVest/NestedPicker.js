@@ -1,21 +1,15 @@
 import React from 'react'
 import F from 'futil'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import { setDisplayName } from 'react-recompose'
-import {
-  inject,
-  observer,
-  Observer,
-  useLocalStore,
-  useLocalObservable,
-} from 'mobx-react'
-import { observable } from '../utils/mobx'
-import { withTheme } from '../utils/theme'
+import { inject, observer, Observer } from 'mobx-react'
+import { observable } from '../utils/mobx.js'
+import { withTheme } from '../utils/theme.js'
 import pluralize from 'pluralize'
-import Flex from './Flex'
-import GVTextInput from './TextInput'
-import GVTextHighlight from './TextHighlight'
-import { isField } from '../utils/fields'
+import Flex from './Flex.js'
+import GVTextInput from './TextInput.js'
+import GVTextHighlight from './TextHighlight.js'
+import { isField } from '../utils/fields.js'
 
 let PickerContext = React.createContext()
 
@@ -183,14 +177,16 @@ let NestedPicker = ({
   style = {},
   theme: { Button },
 }) => {
-  let state = (useLocalObservable || useLocalStore)(() => ({
-    filter: '',
-    checked: new Map(),
-    hoverItem: null,
-    get hasItemDescription() {
-      return _.flow(_.trim, F.isNotBlank)(state.hoverItem?.description)
-    },
-  }))
+  let [state] = React.useState(() =>
+    observable({
+      filter: '',
+      checked: new Map(),
+      hoverItem: null,
+      get hasItemDescription() {
+        return _.flow(_.trim, F.isNotBlank)(state.hoverItem?.description)
+      },
+    })
+  )
   let showDescriptionPanel = _.some('description', options)
 
   return (

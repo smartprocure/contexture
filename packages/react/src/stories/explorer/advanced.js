@@ -1,15 +1,15 @@
 import React from 'react'
-import _ from 'lodash/fp'
-import * as F from 'futil'
-import { observable } from '../../utils/mobx'
+import _ from 'lodash/fp.js'
+import F from 'futil'
+import { observable } from '../../utils/mobx.js'
 import { fromPromise } from 'mobx-utils'
 import { observer } from 'mobx-react'
 
-import { Awaiter, Flex, QueryBuilder, componentForType } from '../../'
-import { TextInput } from '../DemoControls'
-import { ResultCount, ResultTable, TypeMap } from '../../exampleTypes'
+import { Awaiter, Flex, QueryBuilder, componentForType } from '../../index.js'
+import { TextInput } from '../DemoControls.js'
+import { ResultCount, ResultTable, TypeMap } from '../../exampleTypes/index.js'
 
-import Contexture, { updateClient } from './contexture'
+import Contexture, { updateClient } from './contexture.js'
 
 let state = observable({
   url: '',

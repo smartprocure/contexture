@@ -1,7 +1,7 @@
 import { set } from 'mobx'
-import { observable } from '../../utils/mobx'
+import { observable } from '../../utils/mobx.js'
 import { action } from '@storybook/addon-actions'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 
 // Lifted from contexture-client since it's not exported
 let treeLens = _.curry((tree, path, prop) => ({

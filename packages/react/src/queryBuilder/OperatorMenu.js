@@ -1,9 +1,9 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
-import styles from '../styles'
-import { oppositeJoin, indent } from '../utils/search'
+import styles from '../styles/index.js'
+import { oppositeJoin, indent } from '../utils/search.js'
 let { btn, joinColor, bgJoin } = styles
 
 let OperatorMenu = ({ node, hover, tree, parent, child }) => (

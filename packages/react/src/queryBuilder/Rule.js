@@ -1,13 +1,13 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
-import styles from '../styles'
-import Indentable from './preview/Indentable'
-import FilterContents from './FilterContents'
-import FilterDragSource from './DragDrop/FilterDragSource'
-import { oppositeJoin, indent } from '../utils/search'
-import { useLensObject } from '../utils/react'
+import styles from '../styles/index.js'
+import Indentable from './preview/Indentable.js'
+import FilterContents from './FilterContents.js'
+import FilterDragSource from './DragDrop/FilterDragSource.js'
+import { oppositeJoin, indent } from '../utils/search.js'
+import { useLensObject } from '../utils/react.js'
 
 let Rule = ({
   node,
@@ -55,7 +55,7 @@ let Rule = ({
               }}
               onClick={() => indent(tree, parent, node)}
             >
-              >
+              {'>'}
             </button>
             <button
               {...F.domLens.hover(hover.remove)}

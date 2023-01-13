@@ -1,45 +1,90 @@
-export Box from './Box'
-export Button from './Button'
-export ButtonGroup from './ButtonGroup'
-export ButtonRadio from './ButtonRadio'
-export Checkbox from './Checkbox'
-export CheckboxList from './CheckboxList'
-export ErrorList from './ErrorList'
-export Fonts from './Fonts'
-export GridItem from './GridItem'
-export Icon from './Icon'
-export LinkButton from './LinkButton'
-export DropdownItem from './DropdownItem'
-export Modal from './Modal'
-export Pager from './Pager'
-export PagerItem from './PagerItem'
-export PageSize from './PageSize'
-export RadioList from './RadioList'
-export Select from './Select'
-export Style from './Style'
-export * from './Tabs'
-export Table from './Table'
-export TableFooter from './TableFooter'
-export TabList from './TabList'
-export Textarea from './Textarea'
-export TextButton from './TextButton'
-export TextHighlight from './TextHighlight'
-export TextInput from './TextInput'
+import Box from './Box.js'
+import Button from './Button.js'
+import ButtonGroup from './ButtonGroup.js'
+import ButtonRadio from './ButtonRadio.js'
+import Checkbox from './Checkbox.js'
+import CheckboxList from './CheckboxList.js'
+import ErrorList from './ErrorList.js'
+import Fonts from './Fonts.js'
+import GridItem from './GridItem.js'
+import Icon from './Icon.js'
+import LinkButton from './LinkButton.js'
+export { DropdownItem } from './DropdownItem.js'
+import Modal from './Modal.js'
+import Pager from './Pager.js'
+import PagerItem from './PagerItem.js'
+import PageSize from './PageSize.js'
+import RadioList from './RadioList.js'
+import Select from './Select.js'
+import Style from './Style.js'
+import Table from './Table.js'
+import TableFooter from './TableFooter.js'
+import TabList from './TabList.js'
+import Textarea from './Textarea.js'
+import TextButton from './TextButton.js'
+import TextHighlight from './TextHighlight.js'
+import TextInput from './TextInput.js'
 
 // former layout components
 // ------------------------
-export Awaiter from './Awaiter'
-export BarChart from './BarChart'
-export Dynamic from './Dynamic'
-export Expandable from './Expandable'
-export ExpandableTable, { Column } from './ExpandableTable'
-export Flex from './Flex'
-export Grid from './Grid'
-export NestedPicker from './NestedPicker'
-export Popover from './Popover'
-export Portal from './Portal'
-export SpacedList from './SpacedList'
-export TagsInput from './TagsInput'
-export Tag from './Tag'
-export DateInput from './DateInput'
-export StripedLoader from './StripedLoader'
+import Awaiter from './Awaiter.js'
+import BarChart from './BarChart.js'
+import Dynamic from './Dynamic.js'
+import Expandable from './Expandable.js'
+import ExpandableTable, { Column } from './ExpandableTable.js'
+import Flex from './Flex.js'
+import Grid from './Grid.js'
+import NestedPicker from './NestedPicker.js'
+import Popover from './Popover.js'
+import Portal from './Portal.js'
+import SpacedList from './SpacedList.js'
+import TagsInput from './TagsInput.js'
+import Tag from './Tag.js'
+import DateInput from './DateInput.js'
+import StripedLoader from './StripedLoader.js'
+
+export {
+  Box,
+  Button,
+  ButtonGroup,
+  ButtonRadio,
+  Checkbox,
+  CheckboxList,
+  ErrorList,
+  Fonts,
+  GridItem,
+  Icon,
+  LinkButton,
+  Modal,
+  Pager,
+  PagerItem,
+  PageSize,
+  RadioList,
+  Select,
+  Style,
+  Table,
+  TableFooter,
+  TabList,
+  Textarea,
+  TextButton,
+  TextHighlight,
+  TextInput,
+  Awaiter,
+  BarChart,
+  Dynamic,
+  Expandable,
+  ExpandableTable,
+  Column,
+  Flex,
+  Grid,
+  NestedPicker,
+  Popover,
+  Portal,
+  SpacedList,
+  TagsInput,
+  Tag,
+  DateInput,
+  StripedLoader,
+}
+
+export * from './Tabs.js'

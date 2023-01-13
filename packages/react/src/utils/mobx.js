@@ -1,4 +1,4 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import * as m from 'mobx'
 
 // Observable without proxy for any version of mobx

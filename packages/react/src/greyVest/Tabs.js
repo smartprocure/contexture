@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
-import TabList from './TabList'
-import Box from './Box'
+import TabList from './TabList.js'
+import Box from './Box.js'
 
 /* Usage */
 /*

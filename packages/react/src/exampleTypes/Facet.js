@@ -1,8 +1,8 @@
 import React from 'react'
 import F from 'futil'
-import _ from 'lodash/fp'
-import { contexturify } from '../utils/hoc'
-import { toNumber } from '../utils/format'
+import _ from 'lodash/fp.js'
+import { contexturify } from '../utils/hoc.js'
+import { toNumber } from '../utils/format.js'
 import {
   displayFn,
   displayBlankFn,
@@ -10,7 +10,7 @@ import {
   Cardinality,
   FacetCheckboxList,
   FacetOptionsFilter,
-} from '../utils/facet'
+} from '../utils/facet.js'
 
 // The hard limit to how many checked values we can allow in a facet
 let maxChecked = 500

@@ -1,9 +1,9 @@
 import React from 'react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import { storiesOf } from '@storybook/react'
-import TestTree from './stories/testTree'
-import ThemePicker from '../stories/themePicker'
-import { Bool } from '.'
+import TestTree from './stories/testTree.js'
+import ThemePicker from '../stories/themePicker.js'
+import { Bool } from './index.js'
 
 storiesOf('ExampleTypes|Bool', module)
   .addDecorator(ThemePicker('greyVest'))

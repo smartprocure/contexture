@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import Indentable from './Indentable'
+import Indentable from './Indentable.js'
 
 storiesOf('Search Components|QueryBuilder/Internals/Indentable', module)
   .add('and', () => (

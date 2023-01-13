@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { CheckButton } from '.'
-import ThemePicker from '../stories/themePicker'
+import { CheckButton } from './index.js'
+import ThemePicker from '../stories/themePicker.js'
 
 storiesOf('Search Components|Internals/Checkbutton', module)
   .addDecorator(ThemePicker('greyVest'))

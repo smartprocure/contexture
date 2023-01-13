@@ -1,9 +1,11 @@
 import F from 'futil'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import React from 'react'
-import { contexturifyWithoutLoader } from '../../utils/hoc'
-import ExpandableTagsQuery from '../ExpandableTagsQuery'
-import ExpandableTagsInput, { Tags } from '../../greyVest/ExpandableTagsInput'
+import { contexturifyWithoutLoader } from '../../utils/hoc.js'
+import ExpandableTagsQuery from '../ExpandableTagsQuery/index.js'
+import ExpandableTagsInput, {
+  Tags,
+} from '../../greyVest/ExpandableTagsInput.js'
 
 let TagsQuery = ({ tree, node, actionWrapper, ...props }) => {
   let collapse = React.useState(true)

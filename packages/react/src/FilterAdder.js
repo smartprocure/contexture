@@ -1,11 +1,11 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import React from 'react'
 import { defaultProps } from 'react-recompose'
-import { contexturifyWithoutLoader } from './utils/hoc'
-import { newNodeFromField } from './utils/search'
-import { ModalPicker } from './purgatory'
-import { Flex } from './greyVest'
-import { fieldsToOptions } from './utils/fields'
+import { contexturifyWithoutLoader } from './utils/hoc.js'
+import { newNodeFromField } from './utils/search.js'
+import { ModalPicker } from './purgatory/index.js'
+import { Flex } from './greyVest/index.js'
+import { fieldsToOptions } from './utils/fields.js'
 
 let getGroupFields = node => _.map('field', _.getOr([], 'children', node))
 

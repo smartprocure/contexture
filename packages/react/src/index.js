@@ -3,34 +3,50 @@ export {
   fieldsFromSchema,
   componentForType,
   schemaFieldProps,
-} from './utils/schema'
+} from './utils/schema.js'
 export {
   ThemeProvider,
   useTheme,
   ThemeConsumer,
   withTheme,
-} from './utils/theme'
-export { contexturify, contexturifyWithoutLoader } from './utils/hoc'
+} from './utils/theme.js'
+export { contexturify, contexturifyWithoutLoader } from './utils/hoc.js'
 
-export * as format from './utils/format'
+export * as format from './utils/format.js'
 
 // exampleTypes
-export * from './exampleTypes'
+export * from './exampleTypes/index.js'
 
 // generic search layouts
-export QueryBuilder from './queryBuilder/'
-export QueryWizard from './queryWizard'
-export FilterList, { FilterActions, Label } from './FilterList'
-export FilterAdder from './FilterAdder'
-export FilterButtonList from './FilterButtonList'
-export SearchFilters, { SearchTree } from './SearchFilters'
-export SearchLayout from './SearchLayout'
-export ToggleFiltersHeader from './ToggleFiltersHeader'
+import QueryBuilder from './queryBuilder/index.js'
+import QueryWizard from './queryWizard/index.js'
+import FilterList, { FilterActions, Label } from './FilterList.js'
+import FilterAdder from './FilterAdder.js'
+import FilterButtonList from './FilterButtonList.js'
+import SearchFilters, { SearchTree } from './SearchFilters.js'
+import SearchLayout from './SearchLayout.js'
+import ToggleFiltersHeader from './ToggleFiltersHeader.js'
 
-export MemoryTable, { useMemoryTree } from './MemoryTable'
+import MemoryTable, { useMemoryTree } from './MemoryTable.js'
+
+export {
+  QueryBuilder,
+  QueryWizard,
+  FilterList,
+  FilterActions,
+  Label,
+  FilterAdder,
+  FilterButtonList,
+  SearchFilters,
+  SearchTree,
+  SearchLayout,
+  ToggleFiltersHeader,
+  MemoryTable,
+  useMemoryTree,
+}
 
 // component library
-export * from './greyVest'
+export * from './greyVest/index.js'
 
 // themes
-export * as themes from './themes'
+export * as themes from './themes/index.js'

@@ -1,8 +1,8 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import TestTree from '../stories/testTree'
-import ThemePicker from '../../stories/themePicker'
+import TestTree from '../stories/testTree.js'
+import ThemePicker from '../../stories/themePicker.js'
 import { TagsQuery } from '..'
 
 let tags = _.map(n => ({ word: `(${n}) This is a tag` }), _.range(1, 5))

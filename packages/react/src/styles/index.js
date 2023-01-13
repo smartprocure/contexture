@@ -1,5 +1,5 @@
-import generic from './generic'
-import * as queryBuilder from './queryBuilder'
+import generic from './generic.js'
+import * as queryBuilder from './queryBuilder.js'
 
 export default {
   ...generic,

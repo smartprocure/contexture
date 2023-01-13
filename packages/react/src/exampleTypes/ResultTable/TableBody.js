@@ -1,11 +1,11 @@
 import React from 'react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import { observer } from 'mobx-react'
-import { getRecord, getResults } from '../../utils/schema'
-import HighlightedColumn from './HighlightedColumn'
-import { addBlankRows, blankResult } from '../../utils/format'
-import { withTheme } from '../../utils/theme'
-import { StripedLoader } from '../../greyVest'
+import { getRecord, getResults } from '../../utils/schema.js'
+import HighlightedColumn from './HighlightedColumn.js'
+import { addBlankRows, blankResult } from '../../utils/format.js'
+import { withTheme } from '../../utils/theme.js'
+import { StripedLoader } from '../../greyVest/index.js'
 
 let displayCell = ({ display, value, record, result }) =>
   result.isBlank ? blankResult(display)(value, record) : display(value, record)

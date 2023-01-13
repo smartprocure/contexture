@@ -4,18 +4,18 @@ import {
   applyDefaults,
   componentForType,
   schemaFieldProps,
-} from './utils/schema'
-import ThemePicker from './stories/themePicker'
-import FilterButtonList from './FilterButtonList'
+} from './utils/schema.js'
+import ThemePicker from './stories/themePicker.js'
+import FilterButtonList from './FilterButtonList.js'
 import {
   tree,
   fields,
   nodeOverrides,
   types,
-} from './queryWizard/stories/config'
+} from './queryWizard/stories/config.js'
 import { mergeOverAll } from 'futil'
-import { TypeMap } from './exampleTypes'
-import _ from 'lodash/fp'
+import { TypeMap } from './exampleTypes/index.js'
+import _ from 'lodash/fp.js'
 
 let mapNodeToDescription = (node, fields) => ({
   description: _.join(' ', [

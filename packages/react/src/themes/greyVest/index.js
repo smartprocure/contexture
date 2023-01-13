@@ -18,12 +18,12 @@ import {
   TextButton,
   TextHighlight,
   TextInput,
-} from '../../greyVest'
+} from '../../greyVest/index.js'
 
 //components used only for theme
-import PickerItem from './PickerItem'
-import TagsInput, { Tag } from './TagsInput'
-import Root from './Root'
+import PickerItem from './PickerItem.js'
+import TagsInput, { Tag } from './TagsInput.js'
+import Root from './Root.js'
 
 export default {
   AlternateButton: TextButton,

@@ -1,7 +1,7 @@
 import React from 'react'
-import _ from 'lodash/fp'
-import * as F from 'futil'
-import { observable } from '../../utils/mobx'
+import _ from 'lodash/fp.js'
+import F from 'futil'
+import { observable } from '../../utils/mobx.js'
 import { fromPromise } from 'mobx-utils'
 import { observer } from 'mobx-react'
 
@@ -12,11 +12,11 @@ import {
   Flex,
   componentForType,
   FilterAdder,
-} from '../../'
-import { TextInput, ClampedHTML } from '../DemoControls'
-import { ResultCount, ResultTable, TypeMap } from '../../exampleTypes'
+} from '../../index.js'
+import { TextInput, ClampedHTML } from '../DemoControls.js'
+import { ResultCount, ResultTable, TypeMap } from '../../exampleTypes/index.js'
 
-import Contexture, { updateClient } from './contexture'
+import Contexture, { updateClient } from './contexture.js'
 
 let state = observable({
   url: '',

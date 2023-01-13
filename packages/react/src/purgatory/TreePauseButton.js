@@ -1,7 +1,7 @@
 import React from 'react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import { observer } from 'mobx-react'
-import { withTheme } from '../utils/theme'
+import { withTheme } from '../utils/theme.js'
 
 let setPausedNested = (tree, path, value) =>
   tree[`${value ? '' : 'un'}pauseNested`](path)

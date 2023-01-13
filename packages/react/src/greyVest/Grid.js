@@ -1,5 +1,5 @@
 import React from 'react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
 
 let formatAreas = _.flow(_.map(F.quote), _.join(' '))

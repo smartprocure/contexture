@@ -1,10 +1,10 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { contexturify } from '../utils/hoc'
-import { withTheme } from '../utils/theme'
-import { ExpandableTable, Column, Flex } from '../greyVest/'
+import { contexturify } from '../utils/hoc.js'
+import { withTheme } from '../utils/theme.js'
+import { ExpandableTable, Column, Flex } from '../greyVest/index.js'
 import { setDisplayName } from 'react-recompose'
 
 let toolBarStyle = { justifyContent: 'space-between', alignItems: 'center' }
@@ -73,6 +73,7 @@ let TermsStatsTable = ({
           ? [
               ..._.compact(children),
               <Column
+                key="checkbox"
                 label={criteriaFieldLabel}
                 expand={{
                   display: (value, record) => (

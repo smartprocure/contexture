@@ -1,11 +1,11 @@
 import React from 'react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
 import { observer } from 'mobx-react'
-import { withNode } from '../utils/hoc'
-import { toNumber } from '../utils/format'
-import { withTheme } from '../utils/theme'
-import { StripedLoader } from '../greyVest'
+import { withNode } from '../utils/hoc.js'
+import { toNumber } from '../utils/format.js'
+import { withTheme } from '../utils/theme.js'
+import { StripedLoader } from '../greyVest/index.js'
 
 let ResultCount = ({
   node = {},

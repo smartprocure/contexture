@@ -1,11 +1,11 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
 import React from 'react'
 import { setDisplayName } from 'react-recompose'
-import FilterButtonList from '../FilterButtonList'
-import { StepsAccordion, AccordionStep } from '../purgatory'
-import { withNode } from '../utils/hoc'
-import { withTheme } from '../utils/theme'
+import FilterButtonList from '../FilterButtonList.js'
+import { StepsAccordion, AccordionStep } from '../purgatory/index.js'
+import { withNode } from '../utils/hoc.js'
+import { withTheme } from '../utils/theme.js'
 
 let generateStepTitle = (node, title) => i =>
   (

@@ -1,14 +1,14 @@
 import React from 'react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
 import { setDisplayName } from 'react-recompose'
 import { observer } from 'mobx-react'
-import { getResults, getRecord } from '../utils/schema'
-import { contexturifyWithoutLoader } from '../utils/hoc'
-import { withTheme } from '../utils/theme'
-import ResultTable from './ResultTable'
-import { selectedBinding } from './utils'
-import { expandProp } from '../utils/react'
+import { getResults, getRecord } from '../utils/schema.js'
+import { contexturifyWithoutLoader } from '../utils/hoc.js'
+import { withTheme } from '../utils/theme.js'
+import ResultTable from './ResultTable/index.js'
+import { selectedBinding } from './utils.js'
+import { expandProp } from '../utils/react.js'
 
 let Label = _.flow(
   setDisplayName('Label'),

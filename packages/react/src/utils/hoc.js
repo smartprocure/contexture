@@ -1,9 +1,9 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import _ from 'lodash/fp'
-import { StripedLoader } from '../greyVest'
-import { wrapDisplayName } from './react'
-import { withTheme } from './theme'
+import _ from 'lodash/fp.js'
+import { StripedLoader } from '../greyVest/index.js'
+import { wrapDisplayName } from './react.js'
+import { withTheme } from './theme.js'
 
 export let withNode = Component =>
   wrapDisplayName(

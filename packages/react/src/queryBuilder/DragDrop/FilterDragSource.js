@@ -1,5 +1,6 @@
-import { DragSource } from 'react-dnd'
-export default DragSource(
+import dnd from 'react-dnd'
+
+export default dnd.DragSource(
   'filter',
   {
     beginDrag: props => ({

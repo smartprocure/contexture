@@ -1,12 +1,12 @@
 import React from 'react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import PropTypes from 'prop-types'
 import F from 'futil'
 import { observer } from 'mobx-react'
-import { Flex, QueryBuilder, FilterAdder, FilterList } from '.'
-import { TreePauseButton } from './purgatory'
-import { LinkButton, Popover, DropdownItem } from './greyVest'
-import { withTheme } from './utils/theme'
+import { Flex, QueryBuilder, FilterAdder, FilterList } from './index.js'
+import { TreePauseButton } from './purgatory/index.js'
+import { LinkButton, Popover, DropdownItem } from './greyVest/index.js'
+import { withTheme } from './utils/theme.js'
 
 export let SearchTree = () => {}
 
@@ -61,7 +61,9 @@ let BasicSearchFilters = withTheme(
                 Hide Filters
               </DropdownItem>
             )}
-            <TreePauseButton children={children} Component={DropdownItem} />
+            <TreePauseButton Component={DropdownItem}>
+              {children}
+            </TreePauseButton>
             {setMode && !disableAdvancedMode && (
               <DropdownItem onClick={() => setMode('builder')}>
                 Advanced Search Builder

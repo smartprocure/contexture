@@ -1,10 +1,10 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
 import { observer } from 'mobx-react'
 import React from 'react'
 import { setDisplayName } from 'react-recompose'
-import { Flex } from '../greyVest'
-import { withTheme } from '../utils/theme'
+import { Flex } from '../greyVest/index.js'
+import { withTheme } from '../utils/theme.js'
 
 // Observes node, so we can activate the Continue button if it (or any child) has a value.
 // We don't observe on Step because then it would rerender its children when `node`

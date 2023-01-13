@@ -1,6 +1,6 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import { Flex, Checkbox } from '../../greyVest'
+import { Flex, Checkbox } from '../../greyVest/index.js'
 
 let PickerItem = ({
   active,

@@ -1,9 +1,9 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { withNode, withLoader, withTreeLens } from '../utils/hoc'
-import { withTheme } from '../utils/theme'
+import { withNode, withLoader, withTreeLens } from '../utils/hoc.js'
+import { withTheme } from '../utils/theme.js'
 import { setDisplayName } from 'react-recompose'
 
 let LensInput = ({ lens, theme: { TextInput }, ...props }) => (

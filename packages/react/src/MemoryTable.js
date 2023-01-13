@@ -1,11 +1,11 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import Contexture from 'contexture'
-import memory from 'contexture/dist/esm/provider-memory'
-import types from 'contexture/dist/esm/provider-memory/exampleTypes'
+import memory from 'contexture/dist/esm/provider-memory/index.js'
+import types from 'contexture/dist/esm/provider-memory/exampleTypes.js'
 import React, { useState } from 'react'
-import ContextureMobx from './utils/contexture-mobx'
-import { componentForType } from './utils/schema'
-import { ResultTable, TypeMap } from './exampleTypes'
+import ContextureMobx from './utils/contexture-mobx.js'
+import { componentForType } from './utils/schema.js'
+import { ResultTable, TypeMap } from './exampleTypes/index.js'
 
 export let useMemoryTree = ({
   records,

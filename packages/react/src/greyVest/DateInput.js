@@ -1,8 +1,8 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import moment from 'moment'
-import DatePicker from 'react-date-picker'
-import _ from 'lodash/fp'
+import DatePicker from 'react-date-picker/dist/entry.nostyle.js'
+import _ from 'lodash/fp.js'
 
 let NativeDateInput = ({ value, onChange, ...props }) => (
   <input

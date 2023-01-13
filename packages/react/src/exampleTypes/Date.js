@@ -1,8 +1,8 @@
 import React from 'react'
-import { Flex } from '../greyVest'
-import { contexturifyWithoutLoader } from '../utils/hoc'
+import { Flex } from '../greyVest/index.js'
+import { contexturifyWithoutLoader } from '../utils/hoc.js'
 import F from 'futil'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import moment from 'moment'
 
 let allRollingOpts = [

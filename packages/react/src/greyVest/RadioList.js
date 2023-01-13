@@ -1,5 +1,5 @@
 import React from 'react'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import { observer } from 'mobx-react'
 
 let RadioList = ({

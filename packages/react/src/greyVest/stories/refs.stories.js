@@ -1,7 +1,7 @@
 import { storiesOf } from '@storybook/react'
 import React from 'react'
 import { Button, TextInput, Textarea, Select } from '..'
-import decorator from './decorator'
+import decorator from './decorator.js'
 
 let input
 let select

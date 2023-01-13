@@ -1,8 +1,8 @@
 import React from 'react'
-import _ from 'lodash/fp'
-import { round } from 'lodash'
-import { Flex } from '../greyVest'
-import { contexturify } from '../utils/hoc'
+import _ from 'lodash/fp.js'
+import l from 'lodash'
+import { Flex } from '../greyVest/index.js'
+import { contexturify } from '../utils/hoc.js'
 
 let NumberComponent = ({
   tree,
@@ -19,7 +19,7 @@ let NumberComponent = ({
         onChange={e =>
           tree.mutate(node.path, {
             min: _.isNumber(significantDigits)
-              ? _.toString(round(e.target.value, significantDigits))
+              ? _.toString(l.round(e.target.value, significantDigits))
               : e.target.value,
           })
         }
@@ -30,7 +30,7 @@ let NumberComponent = ({
         onChange={e =>
           tree.mutate(node.path, {
             max: _.isNumber(significantDigits)
-              ? _.toString(round(e.target.value, significantDigits))
+              ? _.toString(l.round(e.target.value, significantDigits))
               : e.target.value,
           })
         }
@@ -45,8 +45,8 @@ let NumberComponent = ({
             await tree.mutate(node.path, { findBestRange: true })
             let { min, max } = _.get('context.bestRange', node)
             if (_.isNumber(significantDigits)) {
-              min = round(min, significantDigits)
-              max = round(max, significantDigits)
+              min = l.round(min, significantDigits)
+              max = l.round(max, significantDigits)
             }
             // Disable best range so the calculation isn't run anymore
             tree.mutate(node.path, {
