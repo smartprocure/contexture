@@ -1,6 +1,5 @@
-let ObjectID = require('mongodb').ObjectID
-let MongoClient = require('mongodb').MongoClient
-let _ = require('lodash/fp')
+import { ObjectID, MongoClient } from 'mongodb'
+import _ from 'lodash/fp.js'
 
 MongoClient.max_delay = 0
 
@@ -16,8 +15,9 @@ export default async ({ collection: collectionName }) => {
   let docs = _.map(
     _id => ({
       _id,
-      code: `${++count}${count}${count + 1}${count + 1}${count + 2}${count +
-        2}`,
+      code: `${++count}${count}${count + 1}${count + 1}${count + 2}${
+        count + 2
+      }`,
       nextCode: ids[count] || ids[0],
     }),
     ids
