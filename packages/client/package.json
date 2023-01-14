@@ -1,6 +1,6 @@
 {
   "name": "contexture-client",
-  "version": "2.49.6",
+  "version": "2.49.7",
   "description": "The Contexture (aka ContextTree) Client",
   "type": "module",
   "main": "dist/cjs/index.js",
