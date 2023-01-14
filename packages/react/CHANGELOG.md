@@ -1,3 +1,7 @@
+# 2.54.12
+
+- Revert package.json exports field
+
 # 2.54.11
 
 - Add exports field to package.json
