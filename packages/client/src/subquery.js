@@ -1,7 +1,7 @@
 import _ from 'lodash/fp.js'
 import { getTypePropOrError } from './types.js'
 
-let delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+let delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 // This is factored out to make it easy to eventually support custom mapSubqueryValues functions
 let mapSubqueryValuesByType = (sourceNode, targetNode, types) =>
@@ -9,7 +9,7 @@ let mapSubqueryValuesByType = (sourceNode, targetNode, types) =>
     // Looks up the function for sourceNode's type to return a list of values (typically an array) from results
     getTypePropOrError(types, 'subquery.getValues', sourceNode),
     // Looks up the function for targetNode's type to return a changeset that can be passed to `mutate` from a list of a values list (the output of a subquery.getValues call)
-    values =>
+    (values) =>
       getTypePropOrError(
         types,
         'subquery.useValues',
