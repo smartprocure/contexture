@@ -1,9 +1,15 @@
 {
   "name": "contexture-react",
-  "version": "2.54.10",
+  "version": "2.54.11",
   "description": "React components for building contexture interfaces",
   "type": "module",
   "main": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
   "files": [
     "./dist"
   ],
