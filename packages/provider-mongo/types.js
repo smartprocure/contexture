@@ -1,6 +1,6 @@
-let F = require('futil')
+import F from 'futil'
 
-module.exports = (config = {}) =>
+export default (config = {}) =>
   F.mapValuesIndexed(
     (x, type) => F.callOrReturn(x, config[type]),
     require('include-all')({

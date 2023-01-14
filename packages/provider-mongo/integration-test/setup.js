@@ -6,7 +6,7 @@ MongoClient.max_delay = 0
 
 let url = 'mongodb://localhost/contexture-test'
 
-module.exports = async ({ collection: collectionName }) => {
+export default async ({ collection: collectionName }) => {
   let db = await MongoClient.connect(url, {})
   let collection = db.collection(collectionName)
 

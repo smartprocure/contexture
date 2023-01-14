@@ -1,8 +1,8 @@
-let _ = require('lodash/fp')
-let F = require('futil')
-let { statsAgg } = require('./statistical')
+import _ from 'lodash/fp.js'
+import F from 'futil'
+import { statsAgg } from './statistical.js'
 
-module.exports = {
+export default {
   result: async ({ key_field, value_field }, search) => ({
     terms: _.map(
       F.renameProperty('_id', 'key'),

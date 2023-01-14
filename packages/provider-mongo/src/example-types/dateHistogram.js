@@ -1,8 +1,8 @@
-let _ = require('lodash/fp')
-let F = require('futil')
-let { statsAgg } = require('./statistical')
+import _ from 'lodash/fp.js'
+import F from 'futil'
+import { statsAgg } from './statistical.js'
 
-module.exports = {
+export default {
   async result(
     {
       key_field,

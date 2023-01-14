@@ -1,4 +1,6 @@
-let F = require('futil')
+import F from 'futil'
+import result from '../../src/example-types/results.js'
+
 let {
   defaults,
   convertPopulate,
@@ -7,7 +9,7 @@ let {
   getStartRecord,
   getResponse,
   projectFromInclude,
-} = require('../../src/example-types/results')
+} = result
 
 let getSchema = collection => ({ mongo: { collection } })
 

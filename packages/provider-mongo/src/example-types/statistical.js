@@ -1,4 +1,4 @@
-let _ = require('lodash/fp')
+import _ from 'lodash/fp.js'
 
 let statsAgg = (valueField, keyField) => ({
   $group: {
@@ -13,7 +13,7 @@ let statsAgg = (valueField, keyField) => ({
 
 let defaults = { count: 0, avg: 0, max: 0, min: 0, sum: 0 }
 
-module.exports = {
+export default {
   statsAgg,
   result: async ({ field }, search) =>
     _.head(await search([statsAgg(field)])) || defaults,
