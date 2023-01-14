@@ -1,3 +1,7 @@
+# 2.49.7
+
+- Misc fixes and cleanup
+
 # 2.49.6
 
 - Format source with prettier

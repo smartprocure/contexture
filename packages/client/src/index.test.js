@@ -1,8 +1,8 @@
 import _ from 'lodash/fp.js'
-import ContextureClient, { encode, exampleTypes } from '../src/index.js'
+import ContextureClient, { encode, exampleTypes } from './index.js'
 import Promise from 'bluebird'
-import mockService from '../src/mockService.js'
-import wrap from '../src/actions/wrap.js'
+import mockService from './mockService.js'
+import wrap from './actions/wrap.js'
 import { observable, toJS, set } from 'mobx'
 
 let mobxAdapter = { snapshot: toJS, extend: set, initObject: observable }
@@ -393,7 +393,7 @@ let AllTests = (ContextureClient) => {
     let step1 = Tree.mutate(['root', 'filter'], {
       values: ['a'],
     })
-    // Give it enough time for the core to trigger a search for step 1 (but not awaiting step1 because that would also wait for the service)
+    // Give it enough time for the server to trigger a search for step 1 (but not awaiting step1 because that would also wait for the service)
     await Promise.delay(10)
     let step2 = Tree.mutate(['root', 'filter'], {
       values: ['b'],

@@ -1,6 +1,6 @@
 import _ from 'lodash/fp.js'
-import ContextureClient from '../src/index.js'
-import mockService from '../src/mockService.js'
+import ContextureClient from './index.js'
+import mockService from './mockService.js'
 import { observable, toJS, set } from 'mobx'
 
 let mobxAdapter = { snapshot: toJS, extend: set, initObject: observable }
