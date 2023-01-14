@@ -1,5 +1,5 @@
-let F = require('futil')
-let _ = require('lodash/fp')
+import F from 'futil'
+import _ from 'lodash/fp.js'
 
 let checkPopulate = ({ include: nodeIncludes, populate }) =>
   _.isEmpty(nodeIncludes) ||
@@ -190,7 +190,7 @@ let result = async (node, search, schema, { getSchema }) => {
 }
 
 // NOTE: pageSize of 0 will return all records
-module.exports = {
+export default {
   getStartRecord,
   getResultsQuery,
   getResponse,

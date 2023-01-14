@@ -1,5 +1,5 @@
-let _ = require('lodash/fp')
-let exists = require('../../src/example-types/exists')
+import _ from 'lodash/fp.js'
+import exists from '../../src/example-types/exists.js'
 
 let node = {
   type: 'exists',

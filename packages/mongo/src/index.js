@@ -1,4 +1,5 @@
-let debug = require('debug')('contexture:mongo')
+import debug from 'debug'
+debug('contexture:mongo')
 
 let revolvingCounter = max => {
   let counter = 0
@@ -57,4 +58,4 @@ let MongoProvider = config => ({
   },
 })
 
-module.exports = MongoProvider
+export default MongoProvider

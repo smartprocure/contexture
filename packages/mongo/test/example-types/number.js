@@ -1,4 +1,4 @@
-let number = require('../../src/example-types/number')
+import number from '../../src/example-types/number.js'
 
 describe('number', () => {
   describe('number.hasValue', () => {

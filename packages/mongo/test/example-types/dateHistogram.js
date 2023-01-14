@@ -1,7 +1,7 @@
-let _ = require('lodash/fp')
-let { MongoClient } = require('mongodb')
-let { MongoMemoryServer } = require('mongodb-memory-server')
-let dateHistogram = require('../../src/example-types/dateHistogram')
+import _ from 'lodash/fp.js'
+import { MongoClient } from 'mongodb'
+import { MongoMemoryServer } from 'mongodb-memory-server'
+import dateHistogram from '../../src/example-types/dateHistogram.js'
 
 let aggregate
 let conn

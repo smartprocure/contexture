@@ -28,7 +28,7 @@ which is the name of the collection it runs against.
 ### Example Schema for SomeMongoCollection
 
 ```js
-module.exports = {
+export default {
   mongo: {
     collection: 'SomeMongoCollection'
   }

@@ -1,5 +1,5 @@
-let mongoId = require('../../src/example-types/mongoId')
-let ObjectID = require('mongodb').ObjectID
+import mongoId from '../../src/example-types/mongoId.js'
+import { ObjectID } from 'mongodb'
 
 describe('mongoId', () => {
   describe('mongoId.hasValue', () => {

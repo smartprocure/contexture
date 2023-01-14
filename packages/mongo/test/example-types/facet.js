@@ -1,9 +1,9 @@
-let _ = require('lodash/fp')
-let facet = require('../../src/example-types/facet')
-let { ObjectId } = require('mongodb')
-require('mingo/init/system') // needed on each test that initializes mingo
+import _ from 'lodash/fp.js'
+import facet from '../../src/example-types/facet.js'
+import { ObjectId } from 'mongodb'
+import 'mingo/init/system.js' // needed on each test that initializes mingo
+import mingo from 'mingo'
 
-let mingo = require('mingo')
 describe('facet', () => {
   describe('facet.hasValue', () => {
     it('Should allow nodes with values', () => {

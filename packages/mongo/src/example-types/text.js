@@ -1,5 +1,5 @@
-let F = require('futil')
-let _ = require('lodash/fp')
+import F from 'futil'
+import _ from 'lodash/fp.js'
 
 let joinmap = {
   all: '$and',
@@ -18,7 +18,7 @@ let hasValue = _.flow(
   _.negate(_.isEmpty)
 )
 
-module.exports = {
+export default {
   hasValue,
   filter: node => ({
     [joinmap[node.join || 'all']]: _.map(
