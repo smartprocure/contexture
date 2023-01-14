@@ -1,10 +1,15 @@
 {
   "name": "contexture-client",
-  "version": "2.49.5",
+  "version": "2.49.6",
   "description": "The Contexture (aka ContextTree) Client",
   "type": "module",
   "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
   "files": [
     "./dist"
   ],
@@ -12,7 +17,7 @@
     "prepack": "node scripts/build.js",
     "test": "jest",
     "test:ci": "jest --coverage --json --outputFile test-results.json",
-    "fmt": "prettier --ignore-path .gitignore --write src/ test/",
+    "fmt": "prettier --ignore-path .gitignore --write .",
     "lint": "eslint --ignore-path .gitignore .",
     "lint:ci": "yarn lint -o lint-results.json -f json",
     "duti:fix": "yarn lint --fix && yarn fmt"
@@ -46,8 +51,7 @@
   },
   "prettier": {
     "semi": false,
-    "singleQuote": true,
-    "arrowParens": "avoid"
+    "singleQuote": true
   },
   "packageManager": "yarn@3.3.1"
 }

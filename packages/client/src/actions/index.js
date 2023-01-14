@@ -13,7 +13,7 @@ let pushOrSpliceOn = (array, item, index) => {
 
 let arrayDropLast = _.flow(_.toArray, _.dropRight(1))
 
-export default config => {
+export default (config) => {
   let {
     getNode,
     flat,
@@ -51,7 +51,7 @@ export default config => {
     return dispatch({ type: 'add', path: _.toArray(node.path), node })
   }
 
-  let remove = path => {
+  let remove = (path) => {
     let previous = getNode(path)
     let parentPath = arrayDropLast(path)
     let parent = getNode(parentPath)
@@ -79,12 +79,12 @@ export default config => {
     })
   })
 
-  let refresh = path => dispatch({ type: 'refresh', path })
+  let refresh = (path) => dispatch({ type: 'refresh', path })
 
   let triggerUpdate = () =>
     dispatch({ type: 'none', path: [], autoUpdate: true })
 
-  let clear = path =>
+  let clear = (path) =>
     mutate(
       path,
       _.omit(['field'], getTypeProp(types, 'defaults', getNode(path)))
@@ -93,7 +93,7 @@ export default config => {
   let replace = (path, transform) => {
     let parentPath = arrayDropLast(path)
     let node = getNode(path)
-    let index = _.findIndex(x => x === node, getNode(parentPath).children)
+    let index = _.findIndex((x) => x === node, getNode(parentPath).children)
     let newNode = F.callOrReturn(transform, node)
     remove(path)
     return add(parentPath, newNode, { index })
@@ -122,12 +122,12 @@ export default config => {
   let mutateNested = (path, payload) =>
     _.flow(
       getNode,
-      Tree.toArrayBy(node => mutate(_.toArray(node.path), payload)),
-      x => Promise.all(x)
+      Tree.toArrayBy((node) => mutate(_.toArray(node.path), payload)),
+      (x) => Promise.all(x)
     )(path)
 
-  let pauseNested = path => mutateNested(path, { paused: true })
-  let unpauseNested = path => mutateNested(path, { paused: false })
+  let pauseNested = (path) => mutateNested(path, { paused: true })
+  let unpauseNested = (path) => mutateNested(path, { paused: false })
 
   let nodeLeaves = _.flow(getNode, Tree.leaves)
   let isPausedNested = _.flow(nodeLeaves, _.every('paused'))

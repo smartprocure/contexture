@@ -1,6 +1,6 @@
 import _ from 'lodash/fp.js'
-import ContextureClient from '../src/index.js'
-import mockService from '../src/mockService.js'
+import ContextureClient from './index.js'
+import mockService from './mockService.js'
 import { observable, toJS, set } from 'mobx'
 
 let mobxAdapter = { snapshot: toJS, extend: set, initObject: observable }
@@ -8,7 +8,7 @@ let ContextureMobx = _.curry((x, y) =>
   ContextureClient({ ...mobxAdapter, ...x })(y)
 )
 
-let AllTests = ContextureClient => {
+let AllTests = (ContextureClient) => {
   describe('listeners', () => {
     it('watchNode', async () => {
       let service = jest.fn(mockService({ delay: 10 }))
@@ -30,17 +30,17 @@ let AllTests = ContextureClient => {
       )
       let filterDom = ''
       let resultsDom = ''
-      let filterWatcher = jest.fn(node => {
+      let filterWatcher = jest.fn((node) => {
         filterDom = `<div>
   <h1>Facet</h1>
   <b>Field: ${node.field}</>
   values: ${_.join(', ', node.values)}
 </div>`
       })
-      let resultWatcher = jest.fn(node => {
+      let resultWatcher = jest.fn((node) => {
         resultsDom = `<table>${_.map(
-          result =>
-            `\n<tr>${_.map(val => `<td>${val}</td>`, _.values(result))}</tr>`,
+          (result) =>
+            `\n<tr>${_.map((val) => `<td>${val}</td>`, _.values(result))}</tr>`,
           node.context.results
         )}
 </table>`
@@ -84,17 +84,17 @@ let AllTests = ContextureClient => {
       )
       let filterDom = ''
       let resultsDom = ''
-      let filterWatcher = jest.fn(node => {
+      let filterWatcher = jest.fn((node) => {
         filterDom = `<div>
   <h1>Facet</h1>
   <b>Field: ${node.field}</>
   values: ${_.join(', ', node.values)}
 </div>`
       })
-      let resultWatcher = jest.fn(node => {
+      let resultWatcher = jest.fn((node) => {
         resultsDom = `<table>${_.map(
-          result =>
-            `\n<tr>${_.map(val => `<td>${val}</td>`, _.values(result))}</tr>`,
+          (result) =>
+            `\n<tr>${_.map((val) => `<td>${val}</td>`, _.values(result))}</tr>`,
           node.context.results
         )}
 </table>`
@@ -145,7 +145,7 @@ let AllTests = ContextureClient => {
       let criteriaKeys = []
       tree.watchNode(
         ['root', 'criteria'],
-        node => {
+        (node) => {
           criteriaKeys = _.map('key', node.children)
         },
         ['children']
