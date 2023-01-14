@@ -1,3 +1,7 @@
+# 2.54.13
+
+- Fix grey-vest publishing
+
 # 2.54.12
 
 - Revert package.json exports field
