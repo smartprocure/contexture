@@ -1,4 +1,4 @@
-import { flatten, encode, isParent } from '../src/util/tree.js'
+import { flatten, encode, isParent } from './tree.js'
 
 describe('tree', () => {
   let tree = {

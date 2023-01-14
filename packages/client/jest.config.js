@@ -1,6 +1,6 @@
 /* https://jestjs.io/docs/configuration */
 export default {
-  testMatch: ['<rootDir>/test/**/*.js'],
+  testMatch: ['<rootDir>/src/**/*.test.js'],
   transform: {
     '^.+\\.js?$': ['esbuild-jest', { sourcemap: true, target: 'es2022' }],
   },

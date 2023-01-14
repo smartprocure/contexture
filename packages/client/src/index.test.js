@@ -1,8 +1,8 @@
 import _ from 'lodash/fp.js'
-import ContextureClient, { encode, exampleTypes } from '../src/index.js'
+import ContextureClient, { encode, exampleTypes } from './index.js'
 import Promise from 'bluebird'
-import mockService from '../src/mockService.js'
-import wrap from '../src/actions/wrap.js'
+import mockService from './mockService.js'
+import wrap from './actions/wrap.js'
 import { observable, toJS, set } from 'mobx'
 
 let mobxAdapter = { snapshot: toJS, extend: set, initObject: observable }
