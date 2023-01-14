@@ -13,7 +13,7 @@ let ResultPager = ({ node, tree, theme: { PagerItem, Icon } }) => {
     <Pager
       value={page}
       pageCount={pages}
-      onChange={page => tree.mutate(node.path, { page })}
+      onChange={(page) => tree.mutate(node.path, { page })}
       {...{ PagerItem, Icon }}
     />
   )

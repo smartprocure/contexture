@@ -12,7 +12,7 @@ let ButtonRadio = ({
 }) => (
   <Flex style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
     {_.map(
-      x => (
+      (x) => (
         <Button
           key={x.value}
           isActive={x.value === value}

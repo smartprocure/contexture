@@ -36,13 +36,13 @@ let SelectSize = _.flow(
     <Flex style={{ marginLeft: 12, ...toolBarStyle }}>
       <SimpleLabel text="Size:" />
       <Select
-        onChange={e => {
+        onChange={(e) => {
           tree.mutate(node.path, { size: e.target.value })
         }}
         value={_.getOr(25, 'size', node)}
         placeholder={null}
         style={{ width: '100px' }}
-        options={_.map(x => ({ value: x, label: x }), options)}
+        options={_.map((x) => ({ value: x, label: x }), options)}
       />
     </Flex>
   )
@@ -115,7 +115,7 @@ let TermsStatsTable = ({
       data={node.context.terms}
       sortField={node.order}
       sortDir={node.sortDir}
-      columnSort={column => {
+      columnSort={(column) => {
         if (column.field !== 'key' && column.enableSort) {
           tree.mutate(node.path, {
             order: column.field,

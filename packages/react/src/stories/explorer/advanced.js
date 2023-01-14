@@ -26,7 +26,7 @@ let load = () => {
   state.tree.refresh()
 }
 
-let changeSchema = schema => {
+let changeSchema = (schema) => {
   state.tree = Contexture({
     key: 'root',
     type: 'group',
@@ -48,10 +48,10 @@ let changeSchema = schema => {
   })
 }
 
-let updateEs = host => {
+let updateEs = (host) => {
   state.url = host
   state.schemas = fromPromise(
-    updateClient({ host }).then(x => {
+    updateClient({ host }).then((x) => {
       changeSchema(_.keys(x)[0])
       return x
     })
@@ -66,18 +66,18 @@ let Story = observer(() => {
   let { tree, schemas } = state
   return (
     <div>
-      <TextInput value={state.url} onChange={e => updateEs(e.target.value)} />
+      <TextInput value={state.url} onChange={(e) => updateEs(e.target.value)} />
       {schemas && (
         <Awaiter promise={schemas}>
-          {schemas =>
+          {(schemas) =>
             _.get('tree.schema', tree) && (
               <div>
                 <select
                   value={tree.schema}
-                  onChange={e => changeSchema(e.target.value)}
+                  onChange={(e) => changeSchema(e.target.value)}
                 >
                   {_.map(
-                    x => (
+                    (x) => (
                       <option key={x}>{x}</option>
                     ),
                     _.sortBy(_.identity, _.keys(schemas))
@@ -93,7 +93,7 @@ let Story = observer(() => {
                     <textarea
                       style={{ width: '50%' }}
                       value={state.savedSearch}
-                      onChange={e => {
+                      onChange={(e) => {
                         state.savedSearch = e.target.value
                       }}
                     />

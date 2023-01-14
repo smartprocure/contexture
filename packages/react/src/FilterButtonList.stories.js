@@ -36,7 +36,7 @@ storiesOf('Search Components|FilterButtonList', module)
           componentForType(TypeMap),
           schemaFieldProps(['label']),
           mapNodeToDescription,
-          node => nodeOverrides[node.key],
+          (node) => nodeOverrides[node.key],
         ])}
       />
     </div>
@@ -51,7 +51,7 @@ storiesOf('Search Components|FilterButtonList', module)
           componentForType(TypeMap),
           schemaFieldProps(['label']),
           mapNodeToDescription,
-          node => nodeOverrides[node.key],
+          (node) => nodeOverrides[node.key],
         ])}
         addFilters="Add Filters"
       />
@@ -67,7 +67,7 @@ storiesOf('Search Components|FilterButtonList', module)
           componentForType(TypeMap),
           schemaFieldProps(['label']),
           mapNodeToDescription,
-          node => nodeOverrides[node.key],
+          (node) => nodeOverrides[node.key],
         ])}
         addFilters
       />

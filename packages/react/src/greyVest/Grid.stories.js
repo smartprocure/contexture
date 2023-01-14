@@ -75,7 +75,7 @@ storiesOf('GreyVest Library|Grid', module)
   .add('Rows/columns shorthand', () => (
     <Grid columns={5} gap={10}>
       {_.times(
-        n => (
+        (n) => (
           <div style={{ border: '2px solid black' }}>{n}</div>
         ),
         20

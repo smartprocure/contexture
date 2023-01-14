@@ -51,7 +51,7 @@ export let useMemoryTree = ({
     setTree(tree)
   }
 
-  let setRecords = records => {
+  let setRecords = (records) => {
     if (records !== memoryStorage.records) {
       memoryStorage.records = records
       tree.refresh(['root'])

@@ -125,7 +125,7 @@ let Header = ({
           )}
           <DropdownItem
             onClick={() =>
-              moveColumn(mutate, i => i - 1, field, visibleFields, includes)
+              moveColumn(mutate, (i) => i - 1, field, visibleFields, includes)
             }
           >
             <Icon icon="MoveLeft" />
@@ -133,7 +133,7 @@ let Header = ({
           </DropdownItem>
           <DropdownItem
             onClick={() =>
-              moveColumn(mutate, i => i + 1, field, visibleFields, includes)
+              moveColumn(mutate, (i) => i + 1, field, visibleFields, includes)
             }
           >
             <Icon icon="MoveRight" />
@@ -181,7 +181,7 @@ let Header = ({
                     <Button
                       primary
                       style={{ width: '100%' }}
-                      onClick={e => {
+                      onClick={(e) => {
                         e.stopPropagation()
                         tree.triggerUpdate()
                       }}
@@ -197,7 +197,7 @@ let Header = ({
             <NestedPicker
               itemType="column"
               options={addOptions}
-              onChange={selectedFields => {
+              onChange={(selectedFields) => {
                 _.each(({ field: addedField }) => {
                   let index = includes.indexOf(field)
                   if (index >= 0 && addedField) {

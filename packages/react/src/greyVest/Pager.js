@@ -30,7 +30,7 @@ let Pager = ({
       )}
       {_.reverse(
         _.times(
-          n =>
+          (n) =>
             value > n + 1 && (
               <PagerItem
                 disabled={disabled}
@@ -47,7 +47,7 @@ let Pager = ({
         {value}
       </PagerItem>
       {_.times(
-        n =>
+        (n) =>
           value + (n + 1) <= pageCount && (
             <PagerItem
               disabled={disabled}

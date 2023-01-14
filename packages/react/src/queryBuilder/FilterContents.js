@@ -34,7 +34,7 @@ let FilterContents = ({
       <ModalPicker
         label={nodeField ? nodeLabel : 'Pick a Field'}
         options={fieldsToOptions(fields)}
-        onChange={addedFields => {
+        onChange={(addedFields) => {
           addedFields = _.castArray(addedFields)
           // Replacing current node with the first added field
           if (addedFields[0])

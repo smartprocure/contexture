@@ -42,7 +42,7 @@ let allRollingOpts = [
   { type: 'future', range: 'next36Months' },
 ]
 
-let endOfDay = date => date && moment(date).endOf('day').toDate()
+let endOfDay = (date) => date && moment(date).endOf('day').toDate()
 
 let DateComponent = ({
   tree,
@@ -51,7 +51,7 @@ let DateComponent = ({
   theme: { DateInput, RadioList, Select },
 }) => {
   let rollingOpts = _.reject(
-    opt => _.includes(opt.type, excludeRollingRanges),
+    (opt) => _.includes(opt.type, excludeRollingRanges),
     allRollingOpts
   )
 
@@ -61,7 +61,7 @@ let DateComponent = ({
         options={F.autoLabelOptions(['exact', 'rolling'])}
         value={node.range !== 'exact' ? 'rolling' : 'exact'}
         style={{ marginBottom: 10 }}
-        onChange={value => {
+        onChange={(value) => {
           tree.mutate(
             node.path,
             value === 'exact'
@@ -74,14 +74,14 @@ let DateComponent = ({
         <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
           <DateInput
             value={node.from}
-            onChange={date =>
+            onChange={(date) =>
               tree.mutate(node.path, { range: 'exact', from: date })
             }
           />
           <div>-</div>
           <DateInput
             value={node.to}
-            onChange={date =>
+            onChange={(date) =>
               tree.mutate(node.path, { range: 'exact', to: endOfDay(date) })
             }
           />
@@ -89,7 +89,7 @@ let DateComponent = ({
       ) : (
         <Select
           value={node.range}
-          onChange={e =>
+          onChange={(e) =>
             tree.mutate(node.path, {
               range: e.target.value,
               timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,

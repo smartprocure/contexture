@@ -6,7 +6,7 @@ import _ from 'lodash/fp.js'
 let RadioList = ({ options, value, onChange, ...props }) => (
   <div {...props}>
     {_.map(
-      option => (
+      (option) => (
         <label
           key={option.value}
           style={{ cursor: 'pointer', marginRight: 25 }}

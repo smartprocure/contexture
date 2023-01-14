@@ -31,7 +31,7 @@ let Modal = ({ isOpen, onClose, children, style = {}, className = '' }) => (
             backgroundColor: '#fff',
             ...style,
           }}
-          onClick={e => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
           className="default-modal-wrap"
         >
           {children}

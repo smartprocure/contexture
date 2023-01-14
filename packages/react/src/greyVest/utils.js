@@ -14,9 +14,9 @@ export let sanitizeTagWords = (
 ) => {
   let words = _.words.convert({ fixed: false })
   return _.flow(
-    string => words(string, wordsMatchPattern),
+    (string) => words(string, wordsMatchPattern),
     _.take(maxWordsPerTag),
-    _.map(word =>
+    _.map((word) =>
       _.flow(
         _.truncate({ length: maxCharsPerTagWord, omission: '' }),
         // Remove beginning of line dash and space dash

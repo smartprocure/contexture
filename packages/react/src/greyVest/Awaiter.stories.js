@@ -21,7 +21,7 @@ export let story = () => {
   return (
     <>
       <Box>
-        <Awaiter promise={p}>{x => <div>{x}</div>}</Awaiter>
+        <Awaiter promise={p}>{(x) => <div>{x}</div>}</Awaiter>
       </Box>
       <Button onClick={() => resolve('async value')} style={{ marginRight: 8 }}>
         Resolve

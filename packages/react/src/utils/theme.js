@@ -1,6 +1,6 @@
 import React from 'react'
 
-let inputType = type => props => <input type={type} {...props} />
+let inputType = (type) => (props) => <input type={type} {...props} />
 
 // We populate the default theme by mutating this in src/layout/index.js, to
 // avoid importing withTheme-wrapped components before the function is defined.
@@ -52,6 +52,6 @@ export let ThemeConsumer = ({ children, theme }) =>
   children({ ...useTheme(), ...theme })
 
 export let withTheme =
-  Component =>
+  (Component) =>
   ({ theme, ...props }) =>
     <Component theme={{ ...useTheme(), ...theme }} {...props} />

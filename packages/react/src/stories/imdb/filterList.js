@@ -26,7 +26,7 @@ import {
 import { ThemeProvider } from '../../utils/theme.js'
 import { Column } from '../../greyVest/ExpandableTable.js'
 
-let formatYear = x => new Date(x).getUTCFullYear()
+let formatYear = (x) => new Date(x).getUTCFullYear()
 
 let tree = Contexture({
   key: 'searchRoot',
@@ -82,7 +82,7 @@ let tree = Contexture({
   ],
 })
 
-let termDetailsTree = _.memoize(term => {
+let termDetailsTree = _.memoize((term) => {
   let termTree = Contexture({
     key: 'detailRoot',
     type: 'group',
@@ -123,14 +123,14 @@ const Story = inject(() => {
   let state = observable({
     selected: [],
   })
-  state.getValue = x => x.key
+  state.getValue = (x) => x.key
   autorun(() => console.info(state.selected.slice()))
   return { state }
 })(
   observer(({ state }) => (
     <DarkBox>
       <Awaiter promise={schemas}>
-        {schemas => (
+        {(schemas) => (
           <SpacedList>
             <Query tree={tree} path={['searchRoot', 'searchQuery']} />
             <Flex>
@@ -160,7 +160,7 @@ const Story = inject(() => {
                   criteria={['searchRoot', 'criteria']}
                   path={['searchRoot', 'genreScores']}
                   tableAttrs={{ style: { margin: 'auto' } }}
-                  Checkbox={props => <input type="checkbox" {...props} />}
+                  Checkbox={(props) => <input type="checkbox" {...props} />}
                   selected={F.lensProp('selected', state)}
                   getValue={state.getValue}
                 >
@@ -171,15 +171,15 @@ const Story = inject(() => {
                     field="key"
                     label=""
                     expand={{
-                      display: x =>
+                      display: (x) =>
                         `Show top 50 based on meta score for ${x} ▼`,
                     }}
                     collapse={{
-                      display: x =>
+                      display: (x) =>
                         `Hide top 50 based on meta score for ${x} ▲`,
                     }}
                   >
-                    {x => (
+                    {(x) => (
                       <div>
                         <ResultTable
                           tree={termDetailsTree(x)}
@@ -198,7 +198,7 @@ const Story = inject(() => {
                     expand={{ display: () => 'Expand me ▼' }}
                     collapse={{ display: () => 'Hide me ▲' }}
                   >
-                    {x => (
+                    {(x) => (
                       <div>
                         I just expand and show my parent value, which is{' '}
                         <strong>{x}</strong>
@@ -212,7 +212,9 @@ const Story = inject(() => {
                     path={['searchRoot', 'results']}
                     fields={{
                       poster: {
-                        display: x => <img src={x} width="180" height="270" />,
+                        display: (x) => (
+                          <img src={x} width="180" height="270" />
+                        ),
                         order: 1,
                       },
                     }}

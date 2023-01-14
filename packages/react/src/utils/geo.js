@@ -26,7 +26,7 @@ export let loadOptions = async (input, config = {}) => {
     console.error('geo > loadOptions error:', data.error)
     throw new Error(data.error)
   } else {
-    return _.getOr([], 'items', data).map(suggestion => ({
+    return _.getOr([], 'items', data).map((suggestion) => ({
       label: _.get('address.label', suggestion),
       value: _.get('id', suggestion),
     }))

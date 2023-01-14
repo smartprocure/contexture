@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "prepack": "node scripts/build.js",
-    "fmt": "prettier --ignore-path .gitignore --write src",
+    "fmt": "prettier --ignore-path .gitignore --write .",
     "lint": "eslint --ignore-path .gitignore .",
     "lint:ci": "yarn lint -o lint-results.json -f json",
     "duti:fix": "yarn lint --fix && yarn fmt",
@@ -39,9 +39,7 @@
   },
   "prettier": {
     "singleQuote": true,
-    "semi": false,
-    "trailingComma": "es5",
-    "arrowParens": "avoid"
+    "semi": false
   },
   "storybook-deployer": {
     "commitMessage": "Deploy Storybook [ci skip]"

@@ -15,7 +15,7 @@ import { blankNode } from '../utils/search.js'
 import { useLensObject } from '../utils/react.js'
 import { setDisplayName } from 'react-recompose'
 
-let GroupItem = FilterDragSource(props => {
+let GroupItem = FilterDragSource((props) => {
   let {
     child,
     node,
@@ -48,7 +48,7 @@ let GroupItem = FilterDragSource(props => {
 let Group = _.flow(
   setDisplayName('Group'),
   observer
-)(props => {
+)((props) => {
   let { parent, node, tree, adding, isRoot } = props
   let hover = useLensObject({ wrap: false, join: '', remove: false })
   return (

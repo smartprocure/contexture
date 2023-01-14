@@ -43,7 +43,7 @@ export let customizations = () => (
     <ResultTable
       tree={TestTree()}
       path={['results']}
-      theme={{ Table: x => <table className="example-table" {...x} /> }}
+      theme={{ Table: (x) => <table className="example-table" {...x} /> }}
       infer
       fields={{
         a: {
@@ -80,16 +80,16 @@ export let customizations = () => (
         },
         title: {
           order: 1,
-          Cell: x => <td style={{ color: 'red' }} {...x} />,
+          Cell: (x) => <td style={{ color: 'red' }} {...x} />,
         },
       }}
-      getRowKey={_.flow(_.get('_id'), x => `key-${x}`)}
+      getRowKey={_.flow(_.get('_id'), (x) => `key-${x}`)}
     />
   </div>
 )
 
 export let displayFieldOptional = () => {
-  let tree = TestTree(testTree => {
+  let tree = TestTree((testTree) => {
     testTree.getNode(['results']).include = ['title', 'a', 'b']
     return testTree
   })
@@ -98,10 +98,10 @@ export let displayFieldOptional = () => {
       <ResultTable
         tree={tree}
         path={['results']}
-        Table={x => <table className="example-table" {...x} />}
+        Table={(x) => <table className="example-table" {...x} />}
         fields={{
           title: {
-            Cell: x => <td style={{ color: 'red' }} {...x} />,
+            Cell: (x) => <td style={{ color: 'red' }} {...x} />,
           },
         }}
       />
@@ -110,7 +110,7 @@ export let displayFieldOptional = () => {
 }
 
 export let pagination = () => {
-  let data = _.times(x => ({ _id: x, value: _.random(0, 20000) }), 221)
+  let data = _.times((x) => ({ _id: x, value: _.random(0, 20000) }), 221)
   let tree = {
     key: 'root',
     schema: 'test',

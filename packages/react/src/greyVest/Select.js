@@ -6,7 +6,7 @@ let Select = ({ options, placeholder = 'Please Select...', ...props }, ref) => (
   <select className="gv-input" {...props} ref={ref}>
     {placeholder && <option value="">{placeholder}</option>}
     {_.map(
-      x => (
+      (x) => (
         <option key={x.value} value={x.value}>
           {x.label}
         </option>

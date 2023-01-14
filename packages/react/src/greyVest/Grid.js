@@ -4,7 +4,7 @@ import F from 'futil'
 
 let formatAreas = _.flow(_.map(F.quote), _.join(' '))
 
-let repeatNumber = F.when(_.isNumber, x => `repeat(${x}, 1fr)`)
+let repeatNumber = F.when(_.isNumber, (x) => `repeat(${x}, 1fr)`)
 
 let Grid = ({
   as: Component = 'div',

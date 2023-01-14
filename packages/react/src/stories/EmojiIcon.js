@@ -1,6 +1,6 @@
 import React from 'react'
 
-let getSheet = set => require(`emoji-datasource/img/${set}/sheets/32.png`)
+let getSheet = (set) => require(`emoji-datasource/img/${set}/sheets/32.png`)
 
 let EmojiIcon = ({ set = 'twitter', record: { sheet_x, sheet_y } }) => (
   <div

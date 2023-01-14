@@ -10,7 +10,7 @@ let Select = (
   <MaterialSelect fullWidth displayEmpty value={value} {...props} ref={ref}>
     {placeholder && <MenuItem value="">{placeholder}</MenuItem>}
     {_.map(
-      x => (
+      (x) => (
         <MenuItem key={x.value} value={x.value}>
           {x.label}
         </MenuItem>

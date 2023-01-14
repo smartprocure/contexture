@@ -7,11 +7,11 @@ import { ModalPicker } from './purgatory/index.js'
 import { Flex } from './greyVest/index.js'
 import { fieldsToOptions } from './utils/fields.js'
 
-let getGroupFields = node => _.map('field', _.getOr([], 'children', node))
+let getGroupFields = (node) => _.map('field', _.getOr([], 'children', node))
 
 export let unusedOptions = (fields, node) =>
   _.reject(
-    x => _.includes(x.field, getGroupFields(node)),
+    (x) => _.includes(x.field, getGroupFields(node)),
     fieldsToOptions(fields)
   )
 
@@ -37,7 +37,7 @@ let FilterAdder = ({
   return (
     <Picker
       options={options}
-      onChange={changes => {
+      onChange={(changes) => {
         if (!_.isEmpty(changes)) {
           _.each(
             ({ field }) => tree.add(path, newNodeFromField({ field, fields })),

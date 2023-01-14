@@ -5,9 +5,9 @@ import TestTree from '../stories/testTree.js'
 import ThemePicker from '../../stories/themePicker.js'
 import { TagsQuery } from '..'
 
-let tags = _.map(n => ({ word: `(${n}) This is a tag` }), _.range(1, 5))
+let tags = _.map((n) => ({ word: `(${n}) This is a tag` }), _.range(1, 5))
 
-let treeWithTags = TestTree(testTree => {
+let treeWithTags = TestTree((testTree) => {
   testTree.getNode(['tagsQuery']).tags = tags
   return testTree
 })

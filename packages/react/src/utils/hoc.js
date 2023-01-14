@@ -5,11 +5,11 @@ import { StripedLoader } from '../greyVest/index.js'
 import { wrapDisplayName } from './react.js'
 import { withTheme } from './theme.js'
 
-export let withNode = Component =>
+export let withNode = (Component) =>
   wrapDisplayName(
     'withNode',
     Component
-  )(props => {
+  )((props) => {
     let { tree, node, path } = props
     node = node || (tree && path && tree.getNode(path))
 
@@ -19,7 +19,7 @@ export let withNode = Component =>
     return <Component {...props} node={node} />
   })
 
-export let withLoader = Component =>
+export let withLoader = (Component) =>
   _.flow(
     wrapDisplayName('withLoader', Component),
     observer
@@ -38,7 +38,7 @@ export let contexturify = _.flow(observer, withLoader, withNode, withTheme)
 export let contexturifyWithoutLoader = _.flow(observer, withNode, withTheme)
 
 // this is used for the text components
-export let withTreeLens = Component =>
+export let withTreeLens = (Component) =>
   wrapDisplayName(
     'withTreeLens',
     Component

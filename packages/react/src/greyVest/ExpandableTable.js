@@ -60,7 +60,7 @@ let TableBody = inject(TableBodyState)(
       return (
         <tbody>
           {_.map(
-            x => (
+            (x) => (
               <React.Fragment key={x[recordKey]}>
                 <tr
                   {...x.rowAttrs}
@@ -70,7 +70,7 @@ let TableBody = inject(TableBodyState)(
                   }
                 >
                   {F.mapIndexed(
-                    ({ field, display = x => x, details = {} }, i) => (
+                    ({ field, display = (x) => x, details = {} }, i) => (
                       <td
                         key={`${field}${i}`}
                         {...(!_.isEmpty(details) && {

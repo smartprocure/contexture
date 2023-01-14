@@ -120,7 +120,7 @@ let FilterButtonList = contexturifyWithoutLoader(
         nodeJoinColor={node && styles.joinColor(node)}
       >
         {children}
-        {_.map(child => {
+        {_.map((child) => {
           let Component = child.children ? FilterButtonList : FilterButtonItem
           return (
             <Component
@@ -143,7 +143,7 @@ let FilterButtonList = contexturifyWithoutLoader(
             <ModalPicker
               options={options}
               className="check-button"
-              onChange={addedFields =>
+              onChange={(addedFields) =>
                 _.each(
                   ({ field }) =>
                     tree.add(node.path, newNodeFromField({ field, fields })),

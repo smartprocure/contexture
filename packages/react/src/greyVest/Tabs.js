@@ -37,7 +37,7 @@ export let Tabs = ({
 }) => {
   let childrenArray = React.Children.toArray(children)
   let options = _.flow(
-    _.filter(child => child.type === Tab || child.type === TabLabel),
+    _.filter((child) => child.type === Tab || child.type === TabLabel),
     F.mapIndexed(({ type, props }, i) => ({
       value: props.value || i,
       label: type === Tab ? props.label : props.children,

@@ -9,11 +9,11 @@ let { btn, joinColor, bgJoin } = styles
 let OperatorMenu = ({ node, hover, tree, parent, child }) => (
   <div>
     {_.map(
-      join =>
+      (join) =>
         node.join !== join && (
           <div
             key={join}
-            {...F.domLens.hover(x => F.set(x && join, hover.join))}
+            {...F.domLens.hover((x) => F.set(x && join, hover.join))}
             style={{ ...btn, ...bgJoin(join) }}
             onClick={() => tree.mutate(node.path, { join })}
           >

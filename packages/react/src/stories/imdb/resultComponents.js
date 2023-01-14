@@ -78,7 +78,7 @@ let state = observable({
   showCards: true,
 })
 
-let divs = _.map(x => <div key={x}>{x}</div>)
+let divs = _.map((x) => <div key={x}>{x}</div>)
 let schemas = fromPromise(
   updateSchemas()
     .then(
@@ -87,11 +87,11 @@ let schemas = fromPromise(
           fields: {
             released: { label: 'Release Date' },
             poster: {
-              display: x => <img src={x} width="180" height="270" />,
+              display: (x) => <img src={x} width="180" height="270" />,
               order: 2,
             },
             title: {
-              display: x => <span dangerouslySetInnerHTML={{ __html: x }} />,
+              display: (x) => <span dangerouslySetInnerHTML={{ __html: x }} />,
               order: 1,
             },
             genres: { display: divs },
@@ -103,7 +103,7 @@ let schemas = fromPromise(
     .then(_.tap(() => tree.refresh(['root'])))
 )
 
-let CheckboxResultTable = observer(props => {
+let CheckboxResultTable = observer((props) => {
   let selected = React.useState([])
   return (
     <div>
@@ -117,7 +117,7 @@ export default () => {
   let theme = useTheme()
   return (
     <Awaiter promise={schemas}>
-      {schemas => (
+      {(schemas) => (
         <Grid gap="22px" columns="1fr 4fr" style={{ margin: '22px' }}>
           <div>
             <h1>Filters</h1>
@@ -128,7 +128,7 @@ export default () => {
                 fields={schemas.movies.fields}
                 mapNodeToProps={F.mergeOverAll([
                   componentForType(TypeMap),
-                  field =>
+                  (field) =>
                     field.key === 'searchNumber' ? { showBestRange: true } : {},
                 ])}
               />
@@ -165,7 +165,7 @@ export default () => {
                     { label: 'AutoSearch Off', value: false },
                   ]}
                   value={!tree.disableAutoUpdate}
-                  onChange={val => {
+                  onChange={(val) => {
                     tree.disableAutoUpdate = !val
                   }}
                 />
@@ -179,7 +179,7 @@ export default () => {
                     { label: 'Checkable Table', value: false },
                   ]}
                   value={state.showCards}
-                  onChange={val => {
+                  onChange={(val) => {
                     state.showCards = val
                   }}
                 />

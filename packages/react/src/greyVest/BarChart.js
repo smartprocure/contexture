@@ -57,7 +57,7 @@ let BarChart = ({
         <YAxis {...{ min, max, height, borderColor: background }} />
       )}
       {_.map(
-        x => (
+        (x) => (
           <div key={x.key}>
             <div
               style={{

@@ -75,7 +75,7 @@ let SearchBar = ({
         style={searchBarStyle}
         // The outside click handler listens for the onMouseUp event which takes priority over any onClick handlers in the children
         // So we need to add this handler to ensure that the child events are triggered appropriately
-        onMouseUp={e => {
+        onMouseUp={(e) => {
           e.stopPropagation()
         }}
       >

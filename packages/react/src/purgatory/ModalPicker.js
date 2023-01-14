@@ -21,7 +21,7 @@ let ModalPicker = ({
         <Modal open={open} className={modalClassName}>
           <NestedPicker
             options={options}
-            onChange={x => {
+            onChange={(x) => {
               onChange(x)
               F.off(open)()
             }}

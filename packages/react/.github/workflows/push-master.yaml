@@ -32,5 +32,6 @@ jobs:
         run: |
           yarn run update-pkg
           yarn npm publish --access public
+          yarn install --immutable
         env:
           NPM_TOKEN: '${{ secrets.NPM_TOKEN }}'

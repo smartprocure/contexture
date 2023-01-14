@@ -7,7 +7,7 @@ import Checkbox from './Checkbox.js'
 let CheckboxList = ({ options, value, onChange, ...props }) => (
   <div {...props}>
     {_.map(
-      option => (
+      (option) => (
         <label
           key={option.value}
           style={{ display: 'flex', cursor: 'pointer', marginRight: 25 }}

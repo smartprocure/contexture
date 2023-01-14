@@ -39,7 +39,7 @@ let HighlightedColumn = ({
       </Modal>
       <button
         className="gv-link-button"
-        onClick={e => {
+        onClick={(e) => {
           e.preventDefault()
           F.on(viewModal)()
         }}

@@ -4,7 +4,7 @@ import TestTree from './stories/testTree.js'
 import ThemePicker from '../stories/themePicker.js'
 import TagsText from './TagsText.js'
 
-let treeWithValues = TestTree(testTree => {
+let treeWithValues = TestTree((testTree) => {
   testTree.getNode(['tagsText']).values = ['this is a tag']
   return testTree
 })

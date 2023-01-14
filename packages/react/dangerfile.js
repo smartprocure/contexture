@@ -3,7 +3,7 @@ let { danger, markdown, fail, message, warn } = require('danger')
 let fs = require('fs')
 let duti = require('duti')
 
-let readJson = path => {
+let readJson = (path) => {
   try {
     return JSON.parse(fs.readFileSync(path, { encoding: 'utf8' }))
   } catch (e) {

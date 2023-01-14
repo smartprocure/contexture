@@ -5,10 +5,10 @@ import { mapProps } from 'react-recompose'
 
 export let useLensObject = _.mapValues(useState)
 
-export let getDisplayName = Component =>
+export let getDisplayName = (Component) =>
   F.cascade(['displayName', 'name'], Component) || 'Unknown'
 
-export let wrapDisplayName = (name, Component) => Wrapped => {
+export let wrapDisplayName = (name, Component) => (Wrapped) => {
   Wrapped.displayName = `${name}(${getDisplayName(Component)})`
   return Wrapped
 }

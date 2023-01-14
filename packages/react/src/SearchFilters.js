@@ -21,7 +21,7 @@ let LabelledList = ({ list, Component }) =>
     list
   )
 
-export let AddableFilterList = props => (
+export let AddableFilterList = (props) => (
   <>
     <FilterList {...props} />
     <FilterAdder {...props} uniqueFields={!props.allowDuplicateFields} />

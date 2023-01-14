@@ -8,7 +8,7 @@ let NativeDateInput = ({ value, onChange, ...props }) => (
   <input
     type="date"
     value={value ? moment(value).format('YYYY-MM-DD') : ''}
-    onChange={e => onChange(new Date(e.target.value))}
+    onChange={(e) => onChange(new Date(e.target.value))}
     {...props}
   />
 )

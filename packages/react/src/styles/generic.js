@@ -49,20 +49,20 @@ export let loading = {
 }
 
 // Search
-export let joinColor = join =>
+export let joinColor = (join) =>
   ({
     and: '#5bc0de',
     or: '#5cb85c',
     not: '#d9534f',
   }[join.join || join])
-export let bgJoin = tree => ({
+export let bgJoin = (tree) => ({
   background: joinColor(tree),
   color: 'white',
 })
-export let bdJoin = tree => ({
+export let bdJoin = (tree) => ({
   borderColor: joinColor(tree),
 })
-export let bgPreview = join => ({
+export let bgPreview = (join) => ({
   ...bgJoin(join),
   ...bgStriped,
 })

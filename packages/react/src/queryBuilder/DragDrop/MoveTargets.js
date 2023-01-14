@@ -12,7 +12,7 @@ let FilterMoveSpec = {
     })
   },
 }
-let FilterMoveDropTarget = style =>
+let FilterMoveDropTarget = (style) =>
   FilterDropTarget(FilterMoveSpec)(
     ({ node, connectDropTarget, isOver, canDrop }) =>
       connectDropTarget(

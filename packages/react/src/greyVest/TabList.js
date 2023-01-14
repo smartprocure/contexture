@@ -5,7 +5,7 @@ import { observer } from 'mobx-react'
 let TabList = ({ value, onChange = () => {}, options }) => (
   <div className="gv-tab-container">
     {_.map(
-      x => (
+      (x) => (
         <div
           key={x.value}
           className={`gv-tab ${x.value === value ? 'active' : ''}`}

@@ -12,7 +12,7 @@ storiesOf('ExampleTypes|Bool', module)
     <Bool
       tree={TestTree()}
       path={['bool']}
-      display={value =>
+      display={(value) =>
         _.isNil(value) ? 'Both' : value ? 'Agree' : 'Disagree'
       }
     />

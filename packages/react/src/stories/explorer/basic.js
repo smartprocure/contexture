@@ -32,12 +32,12 @@ let save = () => {
 let load = () => {
   state.tree = Contexture(JSON.parse(state.savedSearch))
   state.tree.refresh()
-  state.schemas.then(schemas => {
+  state.schemas.then((schemas) => {
     F.mergeOn(schemas, overrideLookups(state.overrides))
   })
 }
 
-let changeSchema = schema => {
+let changeSchema = (schema) => {
   state.tree = Contexture({
     key: 'root',
     type: 'group',
@@ -64,8 +64,8 @@ let lookups = {
     ClampedHTML,
   },
 }
-let overrideLookups = _.each(schema => {
-  _.each(field => {
+let overrideLookups = _.each((schema) => {
+  _.each((field) => {
     F.eachIndexed((prop, propName) => {
       let override = _.get([propName, prop], lookups)
       field[propName] = override || prop
@@ -73,10 +73,10 @@ let overrideLookups = _.each(schema => {
   }, schema.fields)
 })
 
-let updateEs = host => {
+let updateEs = (host) => {
   state.url = host
   state.schemas = fromPromise(
-    updateClient({ host }).then(x => {
+    updateClient({ host }).then((x) => {
       changeSchema(_.keys(x)[0])
       return x
     })
@@ -103,19 +103,19 @@ let Story = observer(() => {
   let { tree, schemas } = state
   return (
     <div style={{ background: '#f4f4f4' }}>
-      <TextInput value={state.url} onChange={e => updateEs(e.target.value)} />
+      <TextInput value={state.url} onChange={(e) => updateEs(e.target.value)} />
       {schemas && (
         <Awaiter promise={schemas}>
-          {schemas =>
+          {(schemas) =>
             _.get('tree.schema', tree) && (
               <div>
                 <div style={blueBar}>
                   <select
                     value={tree.schema}
-                    onChange={e => changeSchema(e.target.value)}
+                    onChange={(e) => changeSchema(e.target.value)}
                   >
                     {_.map(
-                      x => (
+                      (x) => (
                         <option key={x}>{x}</option>
                       ),
                       _.sortBy(_.identity, _.keys(schemas))
@@ -133,7 +133,7 @@ let Story = observer(() => {
                       <textarea
                         style={{ width: '50%' }}
                         value={state.savedSearch}
-                        onChange={e => {
+                        onChange={(e) => {
                           state.savedSearch = e.target.value
                         }}
                       />
@@ -142,7 +142,7 @@ let Story = observer(() => {
                     Overrides:
                     <textarea
                       value={JSON.stringify(state.overrides)}
-                      onChange={e => {
+                      onChange={(e) => {
                         state.overrides = JSON.parse(e.target.value)
                       }}
                     />
