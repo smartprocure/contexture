@@ -1,3 +1,7 @@
+# 2.49.8
+
+- Revert package.json exports field
+
 # 2.49.7
 
 - Misc fixes and cleanup
