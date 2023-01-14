@@ -31,7 +31,7 @@ jobs:
       - name: Publish grey-vest to npm
         run: |
           yarn run update-pkg
-          yarn npm publish --access public
           yarn install
+          yarn npm publish --access public
         env:
           NPM_TOKEN: '${{ secrets.NPM_TOKEN }}'
