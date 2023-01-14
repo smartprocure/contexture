@@ -6,7 +6,7 @@ let validateValues = ({ value, values = [] }) => value || values.length
 let validateValueExistence = _.flow(_.get('value'), _.negate(_.isNil))
 
 let twoLevelMatch = {
-  validate: context =>
+  validate: (context) =>
     !!(context.key_field && context.value_field && context.key_value),
   reactors: {
     value: 'others',
@@ -41,8 +41,8 @@ export default F.stampKey('type', {
       },
     },
     subquery: {
-      useValues: x => ({ values: x }),
-      getValues: x => _.map('name', x.context.options),
+      useValues: (x) => ({ values: x }),
+      getValues: (x) => _.map('name', x.context.options),
     },
   },
   dateRangeFacet: {
@@ -88,7 +88,7 @@ export default F.stampKey('type', {
     },
   },
   query: {
-    validate: x => x.query,
+    validate: (x) => x.query,
     reactors: {
       query: 'others',
     },
@@ -122,7 +122,7 @@ export default F.stampKey('type', {
       values: 'others',
     },
     subquery: {
-      useValues: x => ({ values: x }),
+      useValues: (x) => ({ values: x }),
     },
   },
   results: {
@@ -145,7 +145,7 @@ export default F.stampKey('type', {
     onUpdateByOthers(node, extend) {
       extend(node, { page: 1 })
     },
-    shouldMergeResponse: node => node.infiniteScroll,
+    shouldMergeResponse: (node) => node.infiniteScroll,
     mergeResponse(node, response, extend) {
       // extend but merge results arrays
       extend(node, {
@@ -157,7 +157,7 @@ export default F.stampKey('type', {
     },
   },
   number: {
-    validate: x => !_.isNil(x.min) || !_.isNil(x.max),
+    validate: (x) => !_.isNil(x.min) || !_.isNil(x.max),
     reactors: {
       min: 'others',
       max: 'others',
@@ -208,7 +208,7 @@ export default F.stampKey('type', {
     },
   },
   geo: {
-    validate: x =>
+    validate: (x) =>
       !!((x.location || (x.latitude && x.longitude)) && x.radius && x.operator),
     reactors: {
       location: 'others',
@@ -253,9 +253,9 @@ export default F.stampKey('type', {
       },
     },
     subquery: {
-      getValues: x => _.map('key', x.context.terms),
+      getValues: (x) => _.map('key', x.context.terms),
     },
-    autoKey: x => F.compactJoin('-', [x.key_field, x.value_field, x.type]),
+    autoKey: (x) => F.compactJoin('-', [x.key_field, x.value_field, x.type]),
   },
   cardinality: {
     reactors: {
@@ -267,7 +267,7 @@ export default F.stampKey('type', {
   },
   pivot,
   esTwoLevelAggregation: {
-    validate: context =>
+    validate: (context) =>
       context.key_field &&
       context.key_type &&
       context.value_field &&
@@ -285,7 +285,7 @@ export default F.stampKey('type', {
     },
   },
   groupedMetric: {
-    validate: context =>
+    validate: (context) =>
       context.metric.type &&
       !!(
         /value_count|top_hits/.test(context.metric.type) || context.metric.field
@@ -314,7 +314,7 @@ export default F.stampKey('type', {
     },
   },
   nonzeroClusters: {
-    validate: context => context.field,
+    validate: (context) => context.field,
     reactors: {
       value: 'others',
     },
@@ -323,7 +323,7 @@ export default F.stampKey('type', {
     },
   },
   numberRangeHistogram: {
-    validate: context => !_.isNil(context.min) || !_.isNil(context.max),
+    validate: (context) => !_.isNil(context.min) || !_.isNil(context.max),
     reactors: {
       value: 'others',
     },
@@ -334,7 +334,7 @@ export default F.stampKey('type', {
     },
   },
   percentileRanks: {
-    validate: context => context.field && context.config.values,
+    validate: (context) => context.field && context.config.values,
     reactors: {
       value: 'others',
     },
@@ -344,7 +344,7 @@ export default F.stampKey('type', {
     },
   },
   percentiles: {
-    validate: context => context.field,
+    validate: (context) => context.field,
     reactors: {
       value: 'others',
     },
@@ -353,7 +353,7 @@ export default F.stampKey('type', {
     },
   },
   percentilesRange: {
-    validate: context => context.field,
+    validate: (context) => context.field,
     reactors: {
       value: 'others',
     },
@@ -362,7 +362,7 @@ export default F.stampKey('type', {
     },
   },
   smartIntervalHistogram: {
-    validate: context => context.field,
+    validate: (context) => context.field,
     reactors: {
       value: 'others',
     },
@@ -371,7 +371,7 @@ export default F.stampKey('type', {
     },
   },
   smartPercentileRanks: {
-    validate: context => context.field && context.values,
+    validate: (context) => context.field && context.values,
     reactors: {
       value: 'others',
     },
@@ -396,7 +396,7 @@ export default F.stampKey('type', {
     },
   },
   termsStatsHits: {
-    validate: context => context.key_field && context.value_field,
+    validate: (context) => context.key_field && context.value_field,
     reactors: {
       value: 'others',
     },
@@ -406,7 +406,7 @@ export default F.stampKey('type', {
     },
   },
   subquery: {
-    validate: node =>
+    validate: (node) =>
       node.localField && node.foreignField && (node.search || node.searchId),
     reactors: {
       localField: 'all',
@@ -422,7 +422,7 @@ export default F.stampKey('type', {
     },
   },
   savedSearch: {
-    validate: node => node.search || node.searchId,
+    validate: (node) => node.search || node.searchId,
     reactors: {
       search: 'all',
       searchId: 'all',

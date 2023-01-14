@@ -3,7 +3,7 @@ import F from 'futil'
 
 export let Tree = F.tree(
   _.get('children'),
-  F.when(_.isString, key => ({ key }))
+  F.when(_.isString, (key) => ({ key }))
 )
 
 export let flatten = Tree.flatten(F.propTreePath('key'))
