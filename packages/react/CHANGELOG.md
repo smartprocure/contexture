@@ -1,3 +1,7 @@
+# 2.54.11
+
+- Add exports field to package.json
+
 # 2.54.10
 
 - Bump contexture-client
