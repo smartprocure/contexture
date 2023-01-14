@@ -1,6 +1,8 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
-import { statsAgg } from './statistical.js'
+import statistical from './statistical.js'
+
+let { statsAgg } = statistical
 
 export default {
   result: async ({ key_field, value_field }, search) => ({
