@@ -43,7 +43,7 @@ let toBlankText = (display, data, record) => {
   }
 }
 
-export let blankResult = display => (data, record) =>
+export let blankResult = (display) => (data, record) =>
   (
     <span
       style={{

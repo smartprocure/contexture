@@ -52,7 +52,7 @@ let schemas = fromPromise(
 
 let advanced = () => (
   <Awaiter promise={schemas}>
-    {schemas => (
+    {(schemas) => (
       <div>
         <QueryBuilder
           tree={tree}

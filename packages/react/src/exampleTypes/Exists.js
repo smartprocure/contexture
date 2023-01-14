@@ -3,7 +3,7 @@ import _ from 'lodash/fp.js'
 import BooleanType from '../purgatory/BooleanType.js'
 
 export default ({
-  display = value =>
+  display = (value) =>
     _.isNil(value) ? 'Either' : value ? 'Exists' : 'Does Not Exist',
   ...props
 }) => <BooleanType className="contexture-exists" display={display} {...props} />

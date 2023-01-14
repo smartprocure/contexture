@@ -39,7 +39,7 @@ export let ThemeSwitcher = ({ defaultTheme = 'base', children }) => {
   )
 }
 
-export default defaultTheme => Story =>
+export default (defaultTheme) => (Story) =>
   (
     <ThemeSwitcher defaultTheme={defaultTheme}>
       <Story />

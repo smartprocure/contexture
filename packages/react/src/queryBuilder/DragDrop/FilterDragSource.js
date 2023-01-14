@@ -3,7 +3,7 @@ import dnd from 'react-dnd'
 export default dnd.DragSource(
   'filter',
   {
-    beginDrag: props => ({
+    beginDrag: (props) => ({
       node: props.child || props.node,
       tree: props.tree,
     }),

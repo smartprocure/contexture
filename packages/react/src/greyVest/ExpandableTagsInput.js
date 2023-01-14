@@ -26,7 +26,7 @@ export let Tags = ({
   >
     {_.flow(
       reverse ? _.reverse : _.identity,
-      _.map(t => (
+      _.map((t) => (
         <Tag
           key={t}
           value={t}
@@ -68,8 +68,8 @@ let ExpandableTagsInput = ({
 
   addTags = _.flow(
     _.trim,
-    tags => (splitCommas ? splitTagOnComma(tags) : _.castArray(tags)),
-    tags => (sanitizeTags ? _.map(sanitizeTagFn, tags) : tags),
+    (tags) => (splitCommas ? splitTagOnComma(tags) : _.castArray(tags)),
+    (tags) => (sanitizeTags ? _.map(sanitizeTagFn, tags) : tags),
     _.difference(_, tags),
     addTags
   )
@@ -81,8 +81,8 @@ let ExpandableTagsInput = ({
       <span className="tags-input-container">
         <input
           style={{ flex: 1, border: 0 }}
-          ref={autoFocus && (input => input && input.focus())}
-          onChange={e => {
+          ref={autoFocus && ((input) => input && input.focus())}
+          onChange={(e) => {
             setCurrentInput(e.target.value)
             onInputChange()
           }}
@@ -93,7 +93,7 @@ let ExpandableTagsInput = ({
               onBlur()
             }
           }}
-          onKeyDown={e => {
+          onKeyDown={(e) => {
             if (e.key === 'Enter' && !currentInput) submit()
             if (
               (_.includes(e.key, ['Enter', 'Tab']) ||

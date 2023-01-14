@@ -8,7 +8,7 @@ import typeMap from 'contexture-elasticsearch/src/example-types/schemaMapping.js
 import ContextureMobx from '../../utils/contexture-mobx.js'
 
 export let es = { client: {} }
-export let updateClient = config => {
+export let updateClient = (config) => {
   es.client = elasticsearch.Client(config)
   return updateSchemas()
 }

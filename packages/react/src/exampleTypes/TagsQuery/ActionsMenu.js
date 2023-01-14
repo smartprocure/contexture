@@ -41,7 +41,7 @@ let ActionsMenu = ({
       <Checkbox
         htmlId="stemming"
         checked={!node.exact}
-        onChange={e => tree.mutate(node.path, { exact: !e.target.checked })}
+        onChange={(e) => tree.mutate(node.path, { exact: !e.target.checked })}
       />
       <span>Include word variations</span>
     </label>

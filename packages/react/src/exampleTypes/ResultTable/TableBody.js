@@ -45,14 +45,14 @@ let TableBody = ({
       >
         {_.size(results) &&
           _.map(
-            x => (
+            (x) => (
               <Row
                 key={getRowKey(x)}
                 record={getRecord(x)}
                 {...{ fields, visibleFields, hiddenFields }}
               >
                 {_.map(
-                  ({ field, display = x => x, Cell = Td }) => (
+                  ({ field, display = (x) => x, Cell = Td }) => (
                     <Cell
                       key={field}
                       className={field === stickyColumn ? 'sticky-column' : ''}

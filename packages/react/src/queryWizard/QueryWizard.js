@@ -7,7 +7,7 @@ import { StepsAccordion, AccordionStep } from '../purgatory/index.js'
 import { withNode } from '../utils/hoc.js'
 import { withTheme } from '../utils/theme.js'
 
-let generateStepTitle = (node, title) => i =>
+let generateStepTitle = (node, title) => (i) =>
   (
     <h1>
       <span className="step-number">Step {i + 1} - </span>

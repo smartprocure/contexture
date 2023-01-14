@@ -2,19 +2,19 @@ import React from 'react'
 import _ from 'lodash/fp.js'
 import { contexturify } from '../utils/hoc.js'
 
-let getValue = value => (_.isNil(value) ? null : !!value)
+let getValue = (value) => (_.isNil(value) ? null : !!value)
 
 let BooleanType = ({
   tree,
   node,
-  display = value => (_.isNil(value) ? 'Either' : value ? 'Yes' : 'No'),
+  display = (value) => (_.isNil(value) ? 'Either' : value ? 'Yes' : 'No'),
   className = 'contexture-bool',
   theme: { RadioList },
 }) => (
   <div className={className}>
     <RadioList
       value={getValue(node.value)}
-      onChange={value => {
+      onChange={(value) => {
         tree.mutate(node.path, {
           value: getValue(value),
         })

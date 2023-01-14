@@ -155,7 +155,7 @@ let state = observable({
   mode: 'basic',
 })
 
-let termDetailsTree = _.memoize(term => {
+let termDetailsTree = _.memoize((term) => {
   let termTree = Contexture({
     key: 'detailRoot',
     type: 'group',
@@ -180,18 +180,18 @@ let termDetailsTree = _.memoize(term => {
   return termTree
 })
 
-let divs = _.map(x => <div key={x}>{x}</div>)
+let divs = _.map((x) => <div key={x}>{x}</div>)
 let overrides = {
   movies: {
     fields: {
       released: { label: 'Release Date' },
       poster: {
-        display: x => <img src={x} width="180" height="270" />,
+        display: (x) => <img src={x} width="180" height="270" />,
         order: 2,
       },
       title: {
         order: 1,
-        display: x => <span dangerouslySetInnerHTML={{ __html: x }} />,
+        display: (x) => <span dangerouslySetInnerHTML={{ __html: x }} />,
       },
       genres: { display: divs },
       actors: { display: divs },
@@ -227,11 +227,11 @@ let mapNodeToProps = F.mergeOverAll([
     },
 ])
 
-let GreyVestSearchBarStory = theme => (
+let GreyVestSearchBarStory = (theme) => (
   <Awaiter promise={schemas}>
-    {schemas => (
+    {(schemas) => (
       <SearchLayout mode={state.mode}>
-        <SearchFilters mode={state.mode} setMode={x => (state.mode = x)}>
+        <SearchFilters mode={state.mode} setMode={(x) => (state.mode = x)}>
           <SearchTree
             tree={tree}
             path={['root', 'criteria']}
@@ -248,7 +248,7 @@ let GreyVestSearchBarStory = theme => (
         <div>
           <ToggleFiltersHeader
             mode={state.mode}
-            setMode={x => (state.mode = x)}
+            setMode={(x) => (state.mode = x)}
           >
             Search Movies
           </ToggleFiltersHeader>
@@ -312,10 +312,10 @@ let GreyVestSearchBarStory = theme => (
                 <Column
                   field="key"
                   label=""
-                  expand={{ display: x => `Show results for ${x} +` }}
-                  collapse={{ display: x => `Hide results for ${x} -` }}
+                  expand={{ display: (x) => `Show results for ${x} +` }}
+                  collapse={{ display: (x) => `Hide results for ${x} -` }}
                 >
-                  {x => (
+                  {(x) => (
                     <div style={{ marginBottom: 25 }}>
                       <ResultTable
                         tree={termDetailsTree(x)}

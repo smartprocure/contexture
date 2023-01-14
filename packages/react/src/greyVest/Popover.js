@@ -31,7 +31,7 @@ let Popover = ({
 }) => (
   <Popup
     // always passing trigger, otherwise it opens as fullscreen modal
-    trigger={open => <span>{F.callOrReturn(trigger, open)}</span>}
+    trigger={(open) => <span>{F.callOrReturn(trigger, open)}</span>}
     open={isOpen}
     onClose={onClose}
     arrow={arrow}
@@ -54,7 +54,7 @@ let Popover = ({
     }}
     {...props}
   >
-    {close => (
+    {(close) => (
       <div onClick={closeOnPopoverClick ? close : null}>
         {_.isFunction(children) ? children(close) : children}
       </div>

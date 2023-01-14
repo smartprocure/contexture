@@ -10,7 +10,7 @@ import { TypeMap } from '../exampleTypes/index.js'
 import { tree, fields, types, nodeOverrides } from './stories/config.js'
 import ThemePicker from '../stories/themePicker.js'
 
-let mapNodeToDescription = types => (node, fields) => ({
+let mapNodeToDescription = (types) => (node, fields) => ({
   description: _.join(' ', [
     _.get([node.field, 'description'], fields) || node.description,
     _.get([node.type, 'description'], types),
@@ -26,7 +26,7 @@ let WizardStory = () => (
       componentForType(TypeMap),
       schemaFieldProps(['label']),
       mapNodeToDescription(types),
-      node => nodeOverrides[node.key],
+      (node) => nodeOverrides[node.key],
     ])}
     title="Movies"
   />
@@ -43,7 +43,7 @@ let AccordionStory = () => (
           componentForType(TypeMap),
           schemaFieldProps(['label']),
           mapNodeToDescription(types),
-          node => nodeOverrides[node.key],
+          (node) => nodeOverrides[node.key],
         ])}
       />
     </AccordionStep>
@@ -55,7 +55,7 @@ let AccordionStory = () => (
         mapNodeToProps={mergeOverAll([
           componentForType(TypeMap),
           mapNodeToDescription(types),
-          node => nodeOverrides[node.key],
+          (node) => nodeOverrides[node.key],
         ])}
       />
     </AccordionStep>

@@ -2,7 +2,7 @@ import React from 'react'
 import F from 'futil'
 import { observer } from 'mobx-react'
 
-let DropdownItem = props => {
+let DropdownItem = (props) => {
   let hovering = React.useState(false)
   return (
     <div

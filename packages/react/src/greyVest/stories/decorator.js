@@ -1,7 +1,7 @@
 import React from 'react'
 import { Fonts, Style } from '..'
 
-export default Story => (
+export default (Story) => (
   <>
     <Fonts />
     <Style />

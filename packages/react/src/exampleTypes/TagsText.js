@@ -29,7 +29,7 @@ let Text = ({
   <div className="contexture-text">
     <Select
       value={node.operator}
-      onChange={e => tree.mutate(node.path, { operator: e.target.value })}
+      onChange={(e) => tree.mutate(node.path, { operator: e.target.value })}
       options={operatorOptions}
     />
 
@@ -37,10 +37,10 @@ let Text = ({
       <TagsInput
         splitCommas
         tags={node.values}
-        addTags={tags => {
+        addTags={(tags) => {
           tree.mutate(node.path, { values: [...node.values, ...tags] })
         }}
-        removeTag={tag => {
+        removeTag={(tag) => {
           tree.mutate(node.path, {
             values: _.without([tag], node.values),
           })

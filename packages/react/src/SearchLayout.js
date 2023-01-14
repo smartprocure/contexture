@@ -4,7 +4,7 @@ import { observer } from 'mobx-react'
 
 let margin = 24
 
-let styles = mode => ({
+let styles = (mode) => ({
   display: 'grid',
   gridGap: margin,
   margin: `0 ${margin}px`,

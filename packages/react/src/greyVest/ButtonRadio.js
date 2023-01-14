@@ -6,7 +6,7 @@ import { Flex } from '../greyVest/index.js'
 let ButtonRadio = ({ value, onChange = () => {}, options, style = {} }) => (
   <Flex className="gv-button-radio" style={{ alignItems: 'baseline' }}>
     {_.map(
-      x => (
+      (x) => (
         <Button
           key={x.value}
           isActive={x.value === value}

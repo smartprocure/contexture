@@ -22,7 +22,7 @@ import {
 } from '../../exampleTypes/index.js'
 import { ThemeProvider } from '../../utils/theme.js'
 
-let formatYear = x => new Date(x).getUTCFullYear()
+let formatYear = (x) => new Date(x).getUTCFullYear()
 
 let tree = Contexture({
   key: 'searchRoot',
@@ -85,7 +85,7 @@ let schemas = fromPromise(
       movies: {
         fields: {
           poster: {
-            display: x => <img src={x} width="180" height="270" />,
+            display: (x) => <img src={x} width="180" height="270" />,
             order: 1,
           },
           released: { label: 'Release Date' },
@@ -109,7 +109,7 @@ let whiteBox = {
 
 let Story = () => (
   <Awaiter promise={schemas}>
-    {schemas => (
+    {(schemas) => (
       <div style={{ background: '#f4f4f4' }}>
         <SpacedList>
           <Flex style={{ alignItems: 'center', ...blueBar }}>

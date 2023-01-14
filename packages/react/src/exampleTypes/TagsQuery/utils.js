@@ -5,7 +5,7 @@ import { tagToGroupJoin } from '../TagsJoinPicker.js'
 export let tagTerm = 'keyword'
 export let tagValueField = 'word'
 
-export let copyTags = node => {
+export let copyTags = (node) => {
   if (node.tags) {
     let words = _.flow(_.map(tagValueField), _.reverse, _.join(','))(node.tags)
     navigator.clipboard.writeText(words)
@@ -16,7 +16,7 @@ export let getTag = (tag, node = {}, key = tagValueField) =>
   _.find({ [key]: tag }, node.tags) || {}
 
 // TagsInput expects a `tagStyle` prop, which is a function of `tag`
-export let getTagStyle = (node, key) => tag => {
+export let getTagStyle = (node, key) => (tag) => {
   let tagInstance = getTag(tag, node, key)
   return {
     ...(tagInstance.distance ? {} : { fontWeight: 'bold' }),

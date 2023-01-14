@@ -8,7 +8,7 @@ let withStyle = (style, Component) =>
   wrapDisplayName(
     'withStyle',
     Component
-  )(props => <Component style={style} {...props} />)
+  )((props) => <Component style={style} {...props} />)
 
 let VanillaButton = withStyle(
   {
@@ -64,7 +64,7 @@ storiesOf('Theme API|Examples', module)
         Default button from <code>withTheme</code>
       </ThemedButton>
       <ThemeConsumer>
-        {theme => (
+        {(theme) => (
           <theme.Button>
             Default button from <code>ThemeConsumer</code>
           </theme.Button>
@@ -73,7 +73,7 @@ storiesOf('Theme API|Examples', module)
       <ThemeProvider theme={{ UnusedComponent: 'div' }}>
         <ThemedButton>Global defaults should work...</ThemedButton>
         <ThemeConsumer>
-          {theme => (
+          {(theme) => (
             <theme.Button>...with or without ThemeProvider</theme.Button>
           )}
         </ThemeConsumer>

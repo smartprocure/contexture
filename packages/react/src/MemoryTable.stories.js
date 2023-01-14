@@ -21,7 +21,7 @@ However, in place of ResultTable's contexture-relevant \`tree\`/\`node\`/\`path\
 
 export let story = () => (
   <MemoryTable
-    data={_.times(x => ({ id: x, value: _.random(0, 20000) }), 221)}
+    data={_.times((x) => ({ id: x, value: _.random(0, 20000) }), 221)}
     fields={{ id: { label: '#' }, value: { label: 'Count' } }}
   />
 )
@@ -29,13 +29,13 @@ export let story = () => (
 export let withInfer = () => (
   <MemoryTable
     infer
-    data={_.times(x => ({ id: x, value: _.random(0, 20000) }), 221)}
+    data={_.times((x) => ({ id: x, value: _.random(0, 20000) }), 221)}
   />
 )
 
 export let resultTableProps = () => (
   <MemoryTable
-    data={_.times(x => ({ id: x, value: _.random(0, 20000) }), 221)}
+    data={_.times((x) => ({ id: x, value: _.random(0, 20000) }), 221)}
     fields={{ id: { label: '#' }, value: { label: 'Count' } }}
     pageSizeOptions={[12, 24, 48, 96]}
   />

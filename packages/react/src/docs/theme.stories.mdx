@@ -65,7 +65,7 @@ import { ThemeConsumer } from 'contexture-react'
 
 let IconButton = ({ icon, children, ...props }) => (
   <ThemeConsumer>
-    {theme => (
+    {(theme) => (
       <theme.Button {...props}>
         <theme.Icon icon={icon} />
         {children}
@@ -204,7 +204,7 @@ import { ThemeProvider } from 'contexture-react/src/utils/theme'
 import totallyTubularTheme from './totallyTubularTheme.js'
 import IconButton from './components/IconButton.js'
 
-export default props => (
+export default (props) => (
   <ThemeProvider theme={totallyTubularTheme}>
     {/* Some other stuff... */}
     <IconButton icon="some-icon">My icon button!</IconButton>

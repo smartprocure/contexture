@@ -26,7 +26,7 @@ let TagActionsMenu = ({
           <RadioList
             options={F.autoLabelOptions(['fuzzy', 'exact'])}
             value={tagInstance.distance ? 'fuzzy' : 'exact'}
-            onChange={value => {
+            onChange={(value) => {
               tagInstance.distance = value === 'fuzzy' ? 3 : 0
               tree.mutate(node.path, { tags: [...node.tags] })
             }}
@@ -34,7 +34,7 @@ let TagActionsMenu = ({
           <Button
             onClick={() => {
               tree.mutate(node.path, {
-                tags: _.map(tag => {
+                tags: _.map((tag) => {
                   if (_.includes(' ', tag[tagValueField]))
                     tag.distance = tagInstance.distance
                   return tag
@@ -49,7 +49,7 @@ let TagActionsMenu = ({
       <label className="labeled-checkbox" style={{ marginTop: 15 }}>
         <Checkbox
           checked={tagInstance.onlyShowTheseResults}
-          onChange={e => {
+          onChange={(e) => {
             tagInstance.onlyShowTheseResults = e.target.checked
             tree.mutate(node.path, { tags: [...node.tags] })
           }}

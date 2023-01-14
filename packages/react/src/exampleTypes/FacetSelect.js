@@ -7,7 +7,7 @@ import { Flex } from '../greyVest/index.js'
 import { contexturify } from '../utils/hoc.js'
 import { Cardinality } from '../utils/facet.js'
 
-let getOptions = node =>
+let getOptions = (node) =>
   _.map(
     ({ name, count }) => ({ ...F.autoLabelOption(name), count }),
     _.get('context.options', node)
@@ -20,12 +20,12 @@ let FacetSelect = ({
     counts: false, // Hide the facet counts so only the labels are displayed
   },
   singleValue = false,
-  display = x => x,
-  formatCount = x => x,
+  display = (x) => x,
+  formatCount = (x) => x,
   displayBlank = () => <i>Not Specified</i>,
   theme: { RadioList },
 }) => {
-  let MenuList = props => (
+  let MenuList = (props) => (
     <components.MenuList {...props}>
       {!!node.context.cardinality && (
         <div
@@ -48,7 +48,7 @@ let FacetSelect = ({
     <div className="contexture-facet-select" data-path={node.path}>
       <RadioList
         value={node.mode || 'include'}
-        onChange={mode => tree.mutate(node.path, { mode })}
+        onChange={(mode) => tree.mutate(node.path, { mode })}
         options={F.autoLabelOptions(['include', 'exclude'])}
       />
       <Async
@@ -56,7 +56,7 @@ let FacetSelect = ({
         isMulti={!singleValue}
         cacheOptions
         defaultOptions={getOptions(node)}
-        loadOptions={async val => {
+        loadOptions={async (val) => {
           await tree.mutate(node.path, { optionsFilter: val })
           return getOptions(node)
         }}
@@ -68,7 +68,7 @@ let FacetSelect = ({
             )}
           </Flex>
         )}
-        onChange={x => tree.mutate(node.path, { values: _.map('value', x) })}
+        onChange={(x) => tree.mutate(node.path, { values: _.map('value', x) })}
         components={{ MenuList }}
       />
     </div>

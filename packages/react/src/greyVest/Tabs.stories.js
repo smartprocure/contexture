@@ -51,7 +51,7 @@ export let tabRenderFunction = () => (
   <Tabs>
     <Tab label="Analytics">Charts and Stuff</Tab>
     <Tab label="Analytics2" value="tab 2">
-      {tab => `Current tab is ${tab}`}
+      {(tab) => `Current tab is ${tab}`}
     </Tab>
   </Tabs>
 )

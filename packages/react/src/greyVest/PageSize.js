@@ -13,7 +13,7 @@ let PageSize = ({
   <Flex alignItems="baseline" {...props}>
     <span style={{ marginRight: 4, fontWeight: 'bold' }}>View</span>
     {_.map(
-      size => (
+      (size) => (
         <PagerItem
           key={size}
           active={size === value}

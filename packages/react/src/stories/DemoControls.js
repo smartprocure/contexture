@@ -5,7 +5,7 @@ import { defaultProps } from 'react-recompose'
 
 import { TextHighlight } from '..'
 
-export let Button = x => (
+export let Button = (x) => (
   <button
     style={{
       width: '100%',
@@ -17,7 +17,7 @@ export let Button = x => (
   />
 )
 
-let Input = observer(props => {
+let Input = observer((props) => {
   let focusing = React.useState(false)
   return (
     <input
@@ -43,14 +43,14 @@ let Input = observer(props => {
 export let TextInput = defaultProps({ type: 'text' })(Input)
 export let NumberInput = defaultProps({ type: 'number' })(Input)
 
-export let Highlight = x => (
+export let Highlight = (x) => (
   <TextHighlight
-    Wrap={x => <b style={{ backgroundColor: 'yellow' }} {...x} />}
+    Wrap={(x) => <b style={{ backgroundColor: 'yellow' }} {...x} />}
     {...x}
   />
 )
 
-export let DropdownItem = observer(props => {
+export let DropdownItem = observer((props) => {
   let hovering = React.useState(false)
   return (
     <div
@@ -84,7 +84,7 @@ export let PagerItem = observer(({ active, ...props }) => {
   )
 })
 
-export let DarkBox = props => (
+export let DarkBox = (props) => (
   <div
     {...props}
     style={{
@@ -103,7 +103,7 @@ let textTruncate = {
   // WebkitBoxOrient: 'vertical',
   maxHeight: '100px',
 }
-export let ClampedHTML = x => (
+export let ClampedHTML = (x) => (
   <div style={textTruncate} dangerouslySetInnerHTML={{ __html: x }} />
 )
 

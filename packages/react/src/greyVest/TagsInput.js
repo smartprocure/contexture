@@ -49,8 +49,8 @@ let TagsInput = forwardRef(
 
     addTags = _.flow(
       _.trim,
-      tags => (splitCommas ? splitTagOnComma(tags) : _.castArray(tags)),
-      tags => (sanitizeTags ? _.map(sanitizeTagFn, tags) : tags),
+      (tags) => (splitCommas ? splitTagOnComma(tags) : _.castArray(tags)),
+      (tags) => (sanitizeTags ? _.map(sanitizeTagFn, tags) : tags),
       _.difference(_, tags),
       addTags
     )
@@ -67,7 +67,7 @@ let TagsInput = forwardRef(
           }}
         >
           {_.map(
-            t => (
+            (t) => (
               <Tag
                 key={t}
                 value={t}
@@ -86,7 +86,7 @@ let TagsInput = forwardRef(
               minWidth: 120,
             }}
             ref={inputRef}
-            onChange={e => {
+            onChange={(e) => {
               state.currentInput = e.target.value
               onInputChange()
             }}
@@ -97,7 +97,7 @@ let TagsInput = forwardRef(
                 onBlur()
               }
             }}
-            onKeyDown={e => {
+            onKeyDown={(e) => {
               if (e.key === 'Enter' && !state.currentInput) submit()
               if (
                 (_.includes(e.key, ['Enter', 'Tab']) ||

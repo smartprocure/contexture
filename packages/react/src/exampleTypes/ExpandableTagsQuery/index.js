@@ -58,7 +58,7 @@ let TagsWrapper = observer(
     ...props
   }) => {
     let TagWithPopover = React.memo(
-      observer(props => {
+      observer((props) => {
         let result = _.get(['context', 'results', props.value], node)
         let tagProps = {
           ...props,
@@ -93,9 +93,9 @@ let TagsWrapper = observer(
             wordsMatchPattern={wordsMatchPattern}
             tags={_.map(tagValueField, node.tags)}
             onTagsDropped={onTagsDropped}
-            addTags={addedTags => {
+            addTags={(addedTags) => {
               let addedTagObjects = _.map(
-                tag => ({ [tagValueField]: tag, distance: 3 }),
+                (tag) => ({ [tagValueField]: tag, distance: 3 }),
                 addedTags
               )
               let tags = [...node.tags, ...addedTagObjects]
@@ -107,7 +107,7 @@ let TagsWrapper = observer(
               tree.mutate(node.path, { tags })
               onAddTag(tags)
             }}
-            removeTag={tag => {
+            removeTag={(tag) => {
               tree.mutate(node.path, {
                 tags: _.reject({ [tagValueField]: tag }, node.tags),
               })
@@ -132,7 +132,7 @@ let TagsWrapper = observer(
               </div>
             }
           >
-            {close => (
+            {(close) => (
               <ActionsMenu
                 {...{
                   node,

@@ -12,7 +12,7 @@ let RadioList = ({
 }) => (
   <div className={`gv-radio-list ${className}`} {...props}>
     {_.map(
-      option => (
+      (option) => (
         <label
           className="gv-radio-option"
           key={option.value}

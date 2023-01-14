@@ -8,7 +8,7 @@ import theme from '../stories/DemoControls.js'
 
 import TestTree from './stories/testTree.js'
 
-let formatYear = x => new Date(x).getUTCFullYear()
+let formatYear = (x) => new Date(x).getUTCFullYear()
 import { Flex, SpacedList } from '../../src/greyVest/index.js'
 import {
   Facet,
@@ -44,7 +44,7 @@ storiesOf('ExampleTypes|Full Demo', module).add('Full Demo', () => {
                 <Facet
                   tree={tree}
                   path={['facet']}
-                  formatCount={x => `(${x})`}
+                  formatCount={(x) => `(${x})`}
                 />
                 <Facet tree={tree} path={['facet']} display={F.autoLabel} />
                 <Number tree={tree} path={['number']} />

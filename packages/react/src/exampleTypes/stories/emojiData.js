@@ -6,13 +6,13 @@ import EmojiIcon from '../../stories/EmojiIcon.js'
 
 // types
 let number = { typeDefault: number }
-let bool = { typeDefault: 'bool', display: x => (x ? 'Yes' : 'No') }
+let bool = { typeDefault: 'bool', display: (x) => (x ? 'Yes' : 'No') }
 let codePoint = {
   typeDefault: 'text',
   display: F.whenExists(
     _.flow(
       _.split('-'),
-      _.map(x => parseInt(x, 16)),
+      _.map((x) => parseInt(x, 16)),
       _.spread(String.fromCodePoint)
     )
   ),
@@ -43,7 +43,7 @@ let schema = {
 }
 schema.skin_variations = {
   typeDefault: 'facet',
-  display: x =>
+  display: (x) =>
     x && (
       <MemoryTable
         data={F.unkeyBy('skin_tone', x)}

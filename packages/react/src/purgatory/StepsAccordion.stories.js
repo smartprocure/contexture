@@ -5,7 +5,7 @@ import ThemePicker from '../stories/themePicker.js'
 import { useTheme } from '../utils/theme.js'
 import { StepsAccordion, AccordionStep } from './index.js'
 
-let makeStepTitle = title => n =>
+let makeStepTitle = (title) => (n) =>
   (
     <h1>
       <span className="step-number">{n + 1}) </span>

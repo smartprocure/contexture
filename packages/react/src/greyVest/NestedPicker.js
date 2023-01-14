@@ -20,16 +20,16 @@ let unflattenObjectBy = _.curry((iteratee, x) =>
 
 // current implementation is that if a non-field name contains a space, it does not require auto-formatting for display purposes
 let getNonFieldItemLabel = F.unless(_.includes(' '), _.startCase)
-let getItemLabel = item =>
+let getItemLabel = (item) =>
   isField(item)
     ? F.cascade(['shortLabel', 'label'], item)
     : getNonFieldItemLabel(item._key)
 
 let toNested = _.flow(
-  _.map(x => _.defaults({ path: x.value }, x)),
-  fields => [
+  _.map((x) => _.defaults({ path: x.value }, x)),
+  (fields) => [
     ..._.map(
-      field => ({
+      (field) => ({
         ...field,
         // flatten path of fields for this group after "CommonlyUsedFields"
         path: `CommonlyUsedFields.${_.camelCase(field.path)}`,
@@ -65,7 +65,7 @@ let FilteredSection = _.flow(
                   ? checked.delete(option.value)
                   : checked.set(option.value, option)
               }}
-              {...F.domLens.hover(isHover =>
+              {...F.domLens.hover((isHover) =>
                 setHoverItem(isHover ? option : null)
               )}
             >
@@ -94,7 +94,7 @@ let Section = _.flow(
     return (
       <div style={style}>
         {_.map(
-          item => (
+          (item) => (
             <PickerItem
               key={item._key}
               onClick={() =>
@@ -106,7 +106,7 @@ let Section = _.flow(
               active={selected === item._key}
               hasChildren={!isField(item)}
               isChecked={checked.has(item.value)}
-              {...F.domLens.hover(isHover =>
+              {...F.domLens.hover((isHover) =>
                 setHoverItem(isHover ? item : null)
               )}
             >
@@ -165,7 +165,7 @@ let PanelTreePicker = inject((store, { options, checked }) => {
 )
 PanelTreePicker.displayName = 'PanelTreePicker'
 
-let matchLabel = str => _.filter(x => F.matchAllWords(str)(x.label))
+let matchLabel = (str) => _.filter((x) => F.matchAllWords(str)(x.label))
 
 let NestedPicker = ({
   options,
@@ -194,7 +194,7 @@ let NestedPicker = ({
       value={{
         PickerItem,
         TextHighlight,
-        setHoverItem: _.debounce(100, item => (state.hoverItem = item)),
+        setHoverItem: _.debounce(100, (item) => (state.hoverItem = item)),
       }}
     >
       <Flex style={style}>
@@ -233,7 +233,7 @@ let NestedPicker = ({
                 <TextInput
                   style={{ marginBottom: 10 }}
                   value={state.filter}
-                  onChange={e => (state.filter = e.target.value)}
+                  onChange={(e) => (state.filter = e.target.value)}
                   placeholder="Enter filter keyword..."
                 />
                 {state.filter ? (

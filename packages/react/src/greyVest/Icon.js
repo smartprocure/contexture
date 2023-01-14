@@ -8,7 +8,7 @@ let SmallIcon = ({ icon, style, ...props }) => (
   </i>
 )
 
-let toIcon = id => props => <SmallIcon icon={id} {...props} />
+let toIcon = (id) => (props) => <SmallIcon icon={id} {...props} />
 
 let iconMap = {
   SortAscending: toIcon('expand_less'),

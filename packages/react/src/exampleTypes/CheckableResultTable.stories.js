@@ -20,7 +20,7 @@ storiesOf('ExampleTypes|CheckableResultTable', module)
           fields={{
             _id: true,
             title: true,
-            nested: { label: 'Nested Value', display: x => x.value },
+            nested: { label: 'Nested Value', display: (x) => x.value },
           }}
         />
       </div>
@@ -39,7 +39,7 @@ storiesOf('ExampleTypes|CheckableResultTable', module)
           fields={{
             _id: true,
             title: true,
-            nested: { label: 'Nested Value', display: x => x.value },
+            nested: { label: 'Nested Value', display: (x) => x.value },
           }}
         />
       </div>
