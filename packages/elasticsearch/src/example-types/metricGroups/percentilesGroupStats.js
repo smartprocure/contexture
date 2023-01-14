@@ -1,7 +1,7 @@
-let _ = require('lodash/fp')
-let F = require('futil')
-let { pickSafeNumbers } = require('../../utils/futil')
-let { groupStats } = require('./groupStatUtils')
+import _ from 'lodash/fp.js'
+import F from 'futil'
+import { pickSafeNumbers } from '../../utils/futil.js'
+import { groupStats } from './groupStatUtils.js'
 
 // [1, 2, 3] -> [{to: 1}, {from: 1, to: 2}, {from: 2, to: 3}, {from: 3}]
 let boundariesToRanges = _.flow(
@@ -14,33 +14,32 @@ let drilldownToRange = drilldown => {
   return pickSafeNumbers({ gte, lt })
 }
 
-let buildGroupQuery = async (node, children, groupsKey, schema, getStats) => {
-  let { field, percents, drilldown } = node
-  let ranges
-  // omit ranges with drilldown otherwise we get null/0s......
-  if (drilldown) {
-    let { gte, lt } = drilldownToRange(drilldown)
-    ranges = [{ from: gte, to: lt }]
-  } else {
-    let { percentiles } = await getStats(field, { percentiles: { percents } })
-    ranges = boundariesToRanges(_.values(percentiles))
-  }
-  let result = {
-    aggs: {
-      [groupsKey]: {
-        range: { field, ranges },
-        ...children,
+let { buildQuery, buildGroupQuery, validContext, result } = groupStats(
+  async (node, children, groupsKey, schema, getStats) => {
+    let { field, percents, drilldown } = node
+    let ranges
+    // omit ranges with drilldown otherwise we get null/0s......
+    if (drilldown) {
+      let { gte, lt } = drilldownToRange(drilldown)
+      ranges = [{ from: gte, to: lt }]
+    } else {
+      let { percentiles } = await getStats(field, { percentiles: { percents } })
+      ranges = boundariesToRanges(_.values(percentiles))
+    }
+    let result = {
+      aggs: {
+        [groupsKey]: {
+          range: { field, ranges },
+          ...children,
+        },
       },
-    },
+    }
+    return result
   }
-  return result
-}
+)
 
-let drilldown = ({ field, drilldown }) => ({
+export { buildQuery, buildGroupQuery, validContext, result }
+
+export let drilldown = ({ field, drilldown }) => ({
   range: { [field]: drilldownToRange(drilldown) },
 })
-
-module.exports = {
-  ...groupStats(buildGroupQuery),
-  drilldown,
-}

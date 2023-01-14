@@ -1,7 +1,7 @@
-let {
+import {
   buildQuery,
   drilldown,
-} = require('../../../src/example-types/metricGroups/dateRangesGroupStats')
+} from '../../../src/example-types/metricGroups/dateRangesGroupStats.js'
 
 describe('dateRangesGroupStats', () => {
   it('should buildQuery', () => {

@@ -1,6 +1,4 @@
-let {
-  buildQuery,
-} = require('../../../src/example-types/metricGroups/numberRangesGroupStats')
+import { buildQuery } from '../../../src/example-types/metricGroups/numberRangesGroupStats.js'
 
 describe('numberRangesGroupStats', () => {
   it('should buildQuery', () => {

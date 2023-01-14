@@ -1,8 +1,8 @@
-let {
+import {
   hasValue,
   filter,
   buildQuery,
-} = require('../../../src/example-types/filters/number')
+} from '../../../src/example-types/filters/number.js'
 
 let lteExpectedValue = { range: { test: { lte: 500 } } }
 let gteExpectedValue = { range: { test: { gte: 500 } } }

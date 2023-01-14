@@ -1,7 +1,7 @@
-let _ = require('lodash/fp')
-let { buildRegexQueryForWords } = require('../../utils/regex')
-let { getField } = require('../../utils/fields')
-let { groupStats } = require('./groupStatUtils')
+import _ from 'lodash/fp.js'
+import { buildRegexQueryForWords } from '../../utils/regex.js'
+import { getField } from '../../utils/fields.js'
+import { groupStats } from './groupStatUtils.js'
 
 let getSortField = field => {
   if (field === 'count') return '_count'
@@ -9,7 +9,7 @@ let getSortField = field => {
   return field
 }
 
-let drilldown = ({ field, drilldown, additionalFields = [] }, schema) =>
+export let drilldown = ({ field, drilldown, additionalFields = [] }, schema) =>
   // value is a pipe-delimited list of values when drilldown is using additional fields (multi-term aggregation)
   _.zipWith(
     (field, value) => ({ term: { [getField(schema, field)]: value } }),
@@ -17,7 +17,7 @@ let drilldown = ({ field, drilldown, additionalFields = [] }, schema) =>
     _.split('|', drilldown)
   )
 
-let buildGroupQuery = (node, children, groupingType, schema) => {
+export let buildGroupQuery = (node, children, groupingType, schema) => {
   let {
     field: groupField,
     size = 10,
@@ -62,12 +62,11 @@ let buildGroupQuery = (node, children, groupingType, schema) => {
 let buildGroupQueryWithDefaultSortField = (node, ...args) =>
   buildGroupQuery(_.defaultsDeep({ sort: { field: 'sum' } }, node), ...args)
 
-let getGroups = aggs => (aggs.valueFilter || aggs).groups.buckets
+export let getGroups = aggs => (aggs.valueFilter || aggs).groups.buckets
 
 // We don't want the default sort field for pivot, but we do for this node type
-module.exports = {
-  ...groupStats(buildGroupQueryWithDefaultSortField),
-  buildGroupQuery,
-  getGroups,
-  drilldown,
-}
+let { buildQuery, validContext, result } = groupStats(
+  buildGroupQueryWithDefaultSortField
+)
+
+export { buildQuery, validContext, result }

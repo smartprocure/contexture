@@ -1,10 +1,10 @@
-let F = require('futil')
-let _ = require('lodash/fp')
-let { getStats } = require('./stats')
-let { getField } = require('../../utils/fields')
-let types = require('../../../src/example-types')
-let { basicSimplifyTree, and, not, or } = require('../../utils/elasticDSL')
-let { compactMapAsync } = require('../../utils/futil')
+import F from 'futil'
+import _ from 'lodash/fp.js'
+import { getStats } from './stats.js'
+import { getField } from '../../utils/fields.js'
+import * as types from '../../example-types/index.js'
+import { basicSimplifyTree, and, not, or } from '../../utils/elasticDSL.js'
+import { compactMapAsync } from '../../utils/futil.js'
 
 let everyEmpty = _.flow(_.flattenDeep, _.every(_.isEmpty))
 
@@ -87,7 +87,7 @@ let mergeResults = _.mergeWith((current, additional, prop) => {
   } else if (_.isArray(additional)) return additional
 })
 
-let createPivotScope = (node, schema, getStats) => {
+export let createPivotScope = (node, schema, getStats) => {
   /***
    COMMON VARIABLES
    ***/
@@ -425,7 +425,10 @@ let createPivotScope = (node, schema, getStats) => {
           })
         )
         // disabling the filters as we already used them
-        drilldownColumnFilters = includeColumnFilters = skipColumnFilters = false
+        drilldownColumnFilters =
+          includeColumnFilters =
+          skipColumnFilters =
+            false
       } else {
         statsAggs = columnsStatsAggs
       }
@@ -550,8 +553,9 @@ let createPivotScope = (node, schema, getStats) => {
 //   { rows: ['Reno', '0-500'], columns: ['2017'] },
 //   { rows: ['Hillsboro Beach', '2500-*'] }
 // ] -> (Reno AND 0-500 AND 2017) OR (Hillsboro AND 2500-*)
-let hasValue = ({ filters }) => !_.isEmpty(filters)
-let filter = async (node, schema) => {
+export let hasValue = ({ filters }) => !_.isEmpty(filters)
+
+export let filter = async (node, schema) => {
   // This requires getting `search` passed in to filter
   // This is a change to contexture core, which is likely a breaking change moving all contexture type methods to named object params
   //    That will allow everything to get all props inclding `search`
@@ -579,68 +583,60 @@ let filter = async (node, schema) => {
   )
 }
 
-let pivot = {
-  hasValue,
-  filter,
-  createPivotScope,
-  validContext: node => node.rows.length && node.values.length,
-  async result(node, search, schema) {
-    let {
-      findNotLoadedExpansion,
-      addLoadedKeys,
-      getGridExpansions,
-      getInitialRequest,
-      getAdditionalRequests,
-      buildQuery,
-      getResultKeys,
-      processResponse,
-    } = createPivotScope(node, schema, getStats(search))
+export let validContext = node => node.rows.length && node.values.length
 
-    let results = {}
-    let expansion
+export let result = async (node, search, schema) => {
+  let {
+    findNotLoadedExpansion,
+    addLoadedKeys,
+    getGridExpansions,
+    getInitialRequest,
+    getAdditionalRequests,
+    buildQuery,
+    getResultKeys,
+    processResponse,
+  } = createPivotScope(node, schema, getStats(search))
 
-    // Looping through expansions without loaded property
-    while ((expansion = findNotLoadedExpansion())) {
-      // Initial request gets new row/column values for this request
-      // Then using those values makeRequests will produce additional queries
-      // for already expanded columns/rows
-      let initialRequest = getInitialRequest(expansion)
-      let initialResult = processResponse(
-        initialRequest,
-        await search(await buildQuery(initialRequest))
-      )
+  let results = {}
+  let expansion
 
-      let resultKeys = getResultKeys(expansion, initialResult.results)
-      let additionalRequests = getAdditionalRequests(expansion, resultKeys)
+  // Looping through expansions without loaded property
+  while ((expansion = findNotLoadedExpansion())) {
+    // Initial request gets new row/column values for this request
+    // Then using those values makeRequests will produce additional queries
+    // for already expanded columns/rows
+    let initialRequest = getInitialRequest(expansion)
+    let initialResult = processResponse(
+      initialRequest,
+      await search(await buildQuery(initialRequest))
+    )
 
-      addLoadedKeys(expansion, resultKeys)
-      // Filling rows and columns keys for the root request
-      if (initialRequest.columns.totals && initialRequest.rows.totals) {
-        let gridExpansion = _.first(getGridExpansions(expansion))
-        if (!gridExpansion.loaded) {
-          let gridResultKeys = getResultKeys(
-            gridExpansion,
-            initialResult.results
-          )
-          addLoadedKeys(gridExpansion, gridResultKeys)
-        }
+    let resultKeys = getResultKeys(expansion, initialResult.results)
+    let additionalRequests = getAdditionalRequests(expansion, resultKeys)
+
+    addLoadedKeys(expansion, resultKeys)
+    // Filling rows and columns keys for the root request
+    if (initialRequest.columns.totals && initialRequest.rows.totals) {
+      let gridExpansion = _.first(getGridExpansions(expansion))
+      if (!gridExpansion.loaded) {
+        let gridResultKeys = getResultKeys(gridExpansion, initialResult.results)
+        addLoadedKeys(gridExpansion, gridResultKeys)
       }
-
-      results = mergeResults(results, initialResult)
-
-      if (_.isEmpty(additionalRequests)) continue
-
-      let queries = await Promise.all(_.map(buildQuery, additionalRequests))
-      let responses = await Promise.all(_.map(search, queries))
-      let additionalResults = F.mapIndexed(
-        (response, i) => processResponse(additionalRequests[i], response),
-        responses
-      )
-
-      results = _.reduce(mergeResults, results, additionalResults)
     }
 
-    return results
-  },
+    results = mergeResults(results, initialResult)
+
+    if (_.isEmpty(additionalRequests)) continue
+
+    let queries = await Promise.all(_.map(buildQuery, additionalRequests))
+    let responses = await Promise.all(_.map(search, queries))
+    let additionalResults = F.mapIndexed(
+      (response, i) => processResponse(additionalRequests[i], response),
+      responses
+    )
+
+    results = _.reduce(mergeResults, results, additionalResults)
+  }
+
+  return results
 }
-module.exports = pivot

@@ -1,6 +1,8 @@
-let _ = require('lodash/fp')
-let { getESSchemas } = require('./schema')
-let debug = require('debug')('contexture:elasticsearch')
+import _ from 'lodash/fp.js'
+import { getESSchemas } from './schema.js'
+import _debug from 'debug'
+
+let debug = _debug('contexture:elasticsearch')
 
 let revolvingCounter = max => {
   let counter = 0
@@ -99,4 +101,4 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
   getSchemas: () => getESSchemas(config.getClient()),
 })
 
-module.exports = ElasticsearchProvider
+export default ElasticsearchProvider

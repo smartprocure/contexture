@@ -1,6 +1,5 @@
-let _ = require('lodash/fp')
+import _ from 'lodash/fp.js'
 
-module.exports = {
-  hasValue: ({ value }) => _.isBoolean(value),
-  filter: ({ field, value }) => ({ term: { [field]: value } }),
-}
+export let hasValue = ({ value }) => _.isBoolean(value)
+
+export let filter = ({ field, value }) => ({ term: { [field]: value } })

@@ -1,31 +1,22 @@
-let _ = require('lodash/fp')
-let moment = require('moment-timezone')
-let datemath = require('@elastic/datemath')
+import _ from 'lodash/fp.js'
+import moment from 'moment-timezone'
+import datemath from '@elastic/datemath'
 
-let parseAndShift = (exp, timezone) => {
+export let parseAndShift = (exp, timezone) => {
   let computed = datemath.parse(exp)
   // Replace the server timezone with the user's timezone if the expression
   // is relative to the start of a day, month, year, etc.
   return /\//.test(exp) ? moment(computed).tz(timezone, true) : computed
 }
 
-let getStartOfQuarter = (quarterOffset, timezone) => {
-  let quarter =
-    moment()
-      .tz(timezone)
-      .quarter() + quarterOffset
-  return moment()
-    .tz(timezone)
-    .quarter(quarter)
-    .startOf('quarter')
+export let getStartOfQuarter = (quarterOffset, timezone) => {
+  let quarter = moment().tz(timezone).quarter() + quarterOffset
+  return moment().tz(timezone).quarter(quarter).startOf('quarter')
 }
 
-let getEndOfQuarter = date =>
-  moment(date)
-    .add(1, 'Q')
-    .subtract(1, 'ms')
+export let getEndOfQuarter = date => moment(date).add(1, 'Q').subtract(1, 'ms')
 
-let getDateIfValid = x =>
+export let getDateIfValid = x =>
   moment.utc(new Date(x)).isValid() && moment.utc(new Date(x)).toISOString()
 
 let quarterToOffset = {
@@ -35,7 +26,7 @@ let quarterToOffset = {
 }
 
 // https://www.elastic.co/guide/en/elasticsearch/reference/7.x/common-options.html#date-math
-let rangeToDatemath = {
+export let rangeToDatemath = {
   last1Hour: { from: 'now-1h', to: 'now' },
   last1Day: { from: 'now-1d', to: 'now' },
   last3Days: { from: 'now-3d', to: 'now' },
@@ -68,7 +59,7 @@ let rangeToDatemath = {
   allFutureDates: { from: 'now/d', to: '' },
 }
 
-let rollingRangeToDates = (range, timezone) => {
+export let rollingRangeToDates = (range, timezone) => {
   if (_.has(range, quarterToOffset)) {
     let from = getStartOfQuarter(quarterToOffset[range], timezone)
     let to = getEndOfQuarter(from)
@@ -79,13 +70,4 @@ let rollingRangeToDates = (range, timezone) => {
     let to = parseAndShift(expressions.to, timezone)
     return { from, to }
   }
-}
-
-module.exports = {
-  getDateIfValid,
-  getStartOfQuarter,
-  getEndOfQuarter,
-  parseAndShift,
-  rangeToDatemath,
-  rollingRangeToDates,
 }

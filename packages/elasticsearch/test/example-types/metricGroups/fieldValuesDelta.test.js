@@ -1,8 +1,8 @@
-let {
+import {
   buildQuery,
   result,
-} = require('../../../src/example-types/metricGroups/fieldValuesDelta')
-let { testSchema } = require('../testUtils')
+} from '../../../src/example-types/metricGroups/fieldValuesDelta.js'
+import { testSchema } from '../testUtils.js'
 
 describe('fieldValuesDelta', () => {
   let exampleNode = {

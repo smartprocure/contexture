@@ -1,14 +1,14 @@
-let _ = require('lodash/fp')
-let Contexture = require('contexture')
-// let provider = require('contexture-elasticsearch')
-// let types = require('contexture-elasticsearch/types')
-let Provider = require('../../src/index')
-let types = require('../../src/types')
-let elasticsearch = require('@elastic/elasticsearch')
-let AgentKeepAlive = require('agentkeepalive')
+import _ from 'lodash/fp.js'
+import Contexture from 'contexture'
+// import provider from 'contexture-elasticsearch.js'
+// import types from 'contexture-elasticsearch/types.js'
+import Provider from '../../src/index.js'
+import types from '../../src/types.js'
+import elasticsearch from '@elastic/elasticsearch'
+import AgentKeepAlive from 'agentkeepalive'
 
 describe('Integration Tests', () => {
-  it.skip('should work?', async function() {
+  it.skip('should work?', async function () {
     this.timeout(10000)
     // Setup
     let getClient = _.memoize(

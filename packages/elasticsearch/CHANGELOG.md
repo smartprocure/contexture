@@ -1,3 +1,7 @@
+# 1.19.7
+* ESM source
+* Use esbuild to build before publishing
+
 # 1.19.6
 * [pivot] Remove federal references to fiscal year
 

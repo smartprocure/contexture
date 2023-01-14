@@ -1,12 +1,13 @@
-let _ = require('lodash/fp')
-let { maybeAppend } = require('./futil')
+import _ from 'lodash/fp.js'
+import { maybeAppend } from './futil.js'
 
 let dot = x => (x ? `.${x}` : '')
 
 let path = (schema, field) =>
   dot(_.get(['fields', field, 'elasticsearch', 'notAnalyzedField'], schema))
 
-module.exports = {
-  getField: _.curry((schema, field) => maybeAppend(path(schema, field), field)),
-  stripLegacySubFields: _.replace('.untouched', ''),
-}
+export let getField = _.curry((schema, field) =>
+  maybeAppend(path(schema, field), field)
+)
+
+export let stripLegacySubFields = _.replace('.untouched', '')

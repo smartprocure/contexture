@@ -1,13 +1,13 @@
-let _ = require('lodash/fp')
+import _ from 'lodash/fp.js'
 
-let aliases = require('./schema-data/aliases')
-let mappingWithNonObjects = require('./schema-data/mapping-with-non-objects')
-let mappingWithoutTypes = require('./schema-data/mapping-without-types')
-let mappingWithTypes = require('./schema-data/mapping-with-types')
-let schemaWithoutTypes = require('./schema-data/schema-without-types')
-let schemaWithTypes = require('./schema-data/schema-with-types')
-let { fromMappingsWithAliases } = require('../src/schema')
-let { exampleTypeSchemaMapping } = require('../src/example-types/schemaMapping')
+import aliases from './schema-data/aliases.js'
+import mappingWithNonObjects from './schema-data/mapping-with-non-objects.js'
+import mappingWithoutTypes from './schema-data/mapping-without-types.js'
+import mappingWithTypes from './schema-data/mapping-with-types.js'
+import schemaWithoutTypes from './schema-data/schema-without-types.js'
+import schemaWithTypes from './schema-data/schema-with-types.js'
+import { fromMappingsWithAliases } from '../src/schema.js'
+import { exampleTypeSchemaMapping } from '../src/example-types/schemaMapping.js'
 
 let processSchemas = _.flow(fromMappingsWithAliases, exampleTypeSchemaMapping)
 

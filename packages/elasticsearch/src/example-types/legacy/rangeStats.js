@@ -1,18 +1,18 @@
-let _ = require('lodash/fp')
-let esTwoLevel = require('./esTwoLevelAggregation').result
+import _ from 'lodash/fp.js'
+import { result as esTwoLevel } from './esTwoLevelAggregation.js'
 
-module.exports = {
-  validContext: node => !!(node.key_field && node.value_field && node.ranges),
-  result: (node, search) =>
-    esTwoLevel(
-      _.merge(
-        {
-          key_type: 'range',
-          key_data: { ranges: node.ranges },
-          value_type: 'stats',
-        },
-        node
-      ),
-      search
+export let validContext = node =>
+  !!(node.key_field && node.value_field && node.ranges)
+
+export let result = (node, search) =>
+  esTwoLevel(
+    _.merge(
+      {
+        key_type: 'range',
+        key_data: { ranges: node.ranges },
+        value_type: 'stats',
+      },
+      node
     ),
-}
+    search
+  )

@@ -1,4 +1,4 @@
-let sequentialResultTest = require('../testUtils').sequentialResultTest
+import { sequentialResultTest } from '../testUtils.js'
 
 describe('term_stats', () => {
   let test = (...x) =>

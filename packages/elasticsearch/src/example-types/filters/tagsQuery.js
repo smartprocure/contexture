@@ -1,13 +1,13 @@
-let _ = require('lodash/fp')
-let F = require('futil')
+import _ from 'lodash/fp.js'
+import F from 'futil'
 let { parens, quote } = F
-let Combinatorics = require('js-combinatorics')
-let { stripLegacySubFields } = require('../../utils/fields')
+import Combinatorics from 'js-combinatorics'
+import { stripLegacySubFields } from '../../utils/fields.js'
 
 let maxTagCount = 100
 
 // Split text into words and return array of string permutations
-let wordPermutations = _.flow(
+export let wordPermutations = _.flow(
   _.split(/\s+/),
   x => Combinatorics.permutation(x).toArray(),
   _.map(_.join(' '))
@@ -17,7 +17,7 @@ let wordPermutations = _.flow(
  * Quote phrases and set edit distance.
  * See: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#_fuzziness
  */
-let addQuotesAndDistance = _.curry((tag, text) => {
+export let addQuotesAndDistance = _.curry((tag, text) => {
   // Multiple words
   if (_.includes(' ', text)) {
     return quote(text) + (tag.distance ? `~${tag.distance}` : '')
@@ -28,13 +28,13 @@ let addQuotesAndDistance = _.curry((tag, text) => {
 })
 
 // https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#_reserved_characters
-let replaceReservedChars = _.flow(
+export let replaceReservedChars = _.flow(
   _.toString,
   // Replace characters with white space ` `
   _.replace(/([+\-=&|!(){}[\]^"~*?:\\/<>;,$'])/g, ' ')
 )
 
-let tagToQueryString = tag => {
+export let tagToQueryString = tag => {
   let _tag = replaceReservedChars(tag.word)
 
   if (tag.distance === 'unlimited') {
@@ -51,7 +51,7 @@ let tagToQueryString = tag => {
   }
 }
 
-let joinTags = _.curry((join, tags) => {
+export let joinTags = _.curry((join, tags) => {
   if (!tags.length) return ''
 
   let separator = { all: ' AND ', any: ' OR ' }[join] || ' OR '
@@ -61,18 +61,18 @@ let joinTags = _.curry((join, tags) => {
   return joinedTags
 })
 
-let limitResultsToCertainTags = _.find('onlyShowTheseResults')
+export let limitResultsToCertainTags = _.find('onlyShowTheseResults')
 
-let tagsToQueryString = (tags, join) =>
+export let tagsToQueryString = (tags, join) =>
   _.flow(
     F.when(limitResultsToCertainTags, _.filter('onlyShowTheseResults')),
     _.map(tagToQueryString),
     joinTags(join)
   )(tags)
 
-let hasValue = _.get('tags.length')
+export let hasValue = _.get('tags.length')
 
-let filter = ({ tags, join, field, exact }) => ({
+export let filter = ({ tags, join, field, exact }) => ({
   query_string: {
     query: tagsToQueryString(tags, join),
     default_operator: 'AND',
@@ -81,7 +81,7 @@ let filter = ({ tags, join, field, exact }) => ({
   },
 })
 
-let buildResultQuery = (node, children = {}, groupsKey = 'tags') => ({
+export let buildResultQuery = (node, children = {}, groupsKey = 'tags') => ({
   aggs: {
     [groupsKey]: {
       filters: {
@@ -96,7 +96,7 @@ let buildResultQuery = (node, children = {}, groupsKey = 'tags') => ({
   },
 })
 
-let result = async (node, search) => {
+export let result = async (node, search) => {
   let aggs = buildResultQuery(node)
 
   return _.flow(
@@ -106,22 +106,7 @@ let result = async (node, search) => {
   )(await search(aggs))
 }
 
-let validContext = node => {
+export let validContext = node => {
   let tagsCount = _.get('tags.length', node)
   return tagsCount && tagsCount <= maxTagCount
-}
-
-module.exports = {
-  wordPermutations,
-  limitResultsToCertainTags,
-  addQuotesAndDistance,
-  replaceReservedChars,
-  tagToQueryString,
-  joinTags,
-  tagsToQueryString,
-  hasValue,
-  filter,
-  validContext,
-  buildResultQuery,
-  result,
 }

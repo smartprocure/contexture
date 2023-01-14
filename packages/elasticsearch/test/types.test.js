@@ -1,5 +1,5 @@
-let _ = require('lodash/fp')
-let Types = require('../src/types')
+import _ from 'lodash/fp.js'
+import Types from '../src/types.js'
 
 describe('All Example Types', () => {
   it('should load', () => {

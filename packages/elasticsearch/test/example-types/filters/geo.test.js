@@ -1,5 +1,5 @@
-const geo = require('../../../src/example-types/filters/geo')
-const utils = require('../testUtils')
+import * as geo from '../../../src/example-types/filters/geo.js'
+import * as utils from '../testUtils.js'
 
 describe('geo', () => {
   it('hasValue should work', () => {

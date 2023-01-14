@@ -1,4 +1,4 @@
-let { hasValue, filter } = require('../../../src/example-types/filters/bool')
+import { hasValue, filter } from '../../../src/example-types/filters/bool.js'
 
 describe('bool', () => {
   describe('hasValue', () => {

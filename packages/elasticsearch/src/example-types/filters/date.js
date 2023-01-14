@@ -1,34 +1,37 @@
-let F = require('futil')
-let _ = require('lodash/fp')
-let { rollingRangeToDates, getDateIfValid } = require('../../utils/dateUtil')
+import F from 'futil'
+import _ from 'lodash/fp.js'
+import { rollingRangeToDates, getDateIfValid } from '../../utils/dateUtil.js'
 
-let hasValue = ({ from, to, range }) =>
+export let hasValue = ({ from, to, range }) =>
   range &&
   range !== 'allDates' &&
   ((range === 'exact' && (from || to)) || range !== 'exact')
 
-module.exports = {
-  hasValue,
+export let filter = ({
+  field,
+  range,
+  isDateTime,
   // NOTE: timezone is only used for rolling dates
-  filter({ field, range, isDateTime, timezone = 'UTC', ...node }) {
-    let { from, to } = _.includes(range, ['exact', 'allDates'])
-      ? node
-      : rollingRangeToDates(range, timezone)
+  timezone = 'UTC',
+  ...node
+}) => {
+  let { from, to } = _.includes(range, ['exact', 'allDates'])
+    ? node
+    : rollingRangeToDates(range, timezone)
 
-    // If isDateTime we do not format but rely on the input to be in ES date & time format currently
-    if (!isDateTime) {
-      from = getDateIfValid(from)
-      to = getDateIfValid(to)
-    }
+  // If isDateTime we do not format but rely on the input to be in ES date & time format currently
+  if (!isDateTime) {
+    from = getDateIfValid(from)
+    to = getDateIfValid(to)
+  }
 
-    return {
-      range: {
-        [field]: F.compactObject({
-          gte: from,
-          lte: to,
-          format: 'date_optional_time',
-        }),
-      },
-    }
-  },
+  return {
+    range: {
+      [field]: F.compactObject({
+        gte: from,
+        lte: to,
+        format: 'date_optional_time',
+      }),
+    },
+  }
 }

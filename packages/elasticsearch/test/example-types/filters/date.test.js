@@ -1,4 +1,4 @@
-let date = require('../../../src/example-types/filters/date')
+import * as date from '../../../src/example-types/filters/date.js'
 
 describe('date/filter', () => {
   it('should handle from', () => {

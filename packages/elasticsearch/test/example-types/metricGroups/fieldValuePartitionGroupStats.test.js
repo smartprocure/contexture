@@ -1,8 +1,8 @@
-let {
+import {
   buildQuery,
   drilldown,
-} = require('../../../src/example-types/metricGroups/fieldValuePartitionGroupStats')
-let { testSchema } = require('../testUtils')
+} from '../../../src/example-types/metricGroups/fieldValuePartitionGroupStats.js'
+import { testSchema } from '../testUtils.js'
 
 describe('fieldValuePartitionGroupStats', () => {
   it('should buildQuery', () => {
