@@ -1,12 +1,12 @@
-let _ = require('lodash/fp')
-let F = require('futil')
-let {
+import _ from 'lodash/fp.js'
+import F from 'futil'
+import {
   maybeAppend,
   writeTreeNode,
   transmuteTree,
   virtualConcat,
-} = require('../../src/utils/futil')
-let { simplifyBucket } = require('../../src/utils/elasticDSL')
+} from '../../src/utils/futil.js'
+import { simplifyBucket } from '../../src/utils/elasticDSL.js'
 
 describe('futil candidates', () => {
   it('maybeAppend should work', () => {

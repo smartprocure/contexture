@@ -1,6 +1,6 @@
-const rangeStats = require('../../../src/example-types/legacy/rangeStats')
-const _ = require('lodash/fp')
-const utils = require('../testUtils')
+import * as rangeStats from '../../../src/example-types/legacy/rangeStats.js'
+import _ from 'lodash/fp.js'
+import * as utils from '../testUtils.js'
 
 describe('rangeStats', () => {
   describe('validContext', () => {

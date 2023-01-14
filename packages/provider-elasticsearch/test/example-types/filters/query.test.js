@@ -1,4 +1,4 @@
-let query = require('../../../src/example-types/filters/query')
+import * as query from '../../../src/example-types/filters/query.js'
 
 describe('query', () => {
   it('should filter properly', () => {

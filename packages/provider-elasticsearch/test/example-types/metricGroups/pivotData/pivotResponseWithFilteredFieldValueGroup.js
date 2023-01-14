@@ -1,4 +1,4 @@
-let response = {
+export default {
   took: 29,
   timed_out: false,
   _shards: {
@@ -323,4 +323,3 @@ let response = {
     },
   },
 }
-module.exports = response

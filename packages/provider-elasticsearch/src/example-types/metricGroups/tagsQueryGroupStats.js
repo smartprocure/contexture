@@ -1,7 +1,9 @@
-let { groupStats } = require('./groupStatUtils')
-let { buildResultQuery, filter } = require('../filters/tagsQuery')
+import { groupStats } from './groupStatUtils.js'
+import { buildResultQuery, filter } from '../filters/tagsQuery.js'
 
-module.exports = {
-  ...groupStats(buildResultQuery),
-  drilldown: filter,
-}
+let { buildQuery, buildGroupQuery, validContext, result } =
+  groupStats(buildResultQuery)
+
+export { buildQuery, buildGroupQuery, validContext, result }
+
+export let drilldown = filter

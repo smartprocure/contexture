@@ -1,4 +1,4 @@
-let regex = require('../../src/utils/regex')
+import * as regex from '../../src/utils/regex.js'
 
 describe('regex', () => {
   it('toSafeRegex', () => {

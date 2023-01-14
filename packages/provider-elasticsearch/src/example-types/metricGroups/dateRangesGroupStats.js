@@ -1,23 +1,23 @@
-let _ = require('lodash/fp')
-let { groupStats } = require('./groupStatUtils')
+import _ from 'lodash/fp.js'
+import { groupStats } from './groupStatUtils.js'
 
-let buildGroupQuery = ({ field, ranges }, children, groupingType) => ({
-  aggs: {
-    [groupingType]: {
-      date_range: { field, ranges },
-      ...children,
+let { buildQuery, buildGroupQuery, result } = groupStats(
+  ({ field, ranges }, children, groupingType) => ({
+    aggs: {
+      [groupingType]: {
+        date_range: { field, ranges },
+        ...children,
+      },
     },
-  },
-})
+  })
+)
 
-let drilldown = ({ field, drilldown }) => {
+export { buildQuery, buildGroupQuery, result }
+
+export let drilldown = ({ field, drilldown }) => {
   let [gte, lt] = _.split(/(?<=Z)-/, drilldown)
 
   return { range: { [field]: { gte, lt } } }
 }
 
-module.exports = {
-  ...groupStats(buildGroupQuery),
-  validContext: node => node.groupField && node.ranges,
-  drilldown,
-}
+export let validContext = node => node.groupField && node.ranges

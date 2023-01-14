@@ -1,8 +1,12 @@
-let _ = require('lodash/fp')
-let { calcSmartInterval } = require('../../utils/smartInterval')
-let { groupStats } = require('./groupStatUtils')
+import _ from 'lodash/fp.js'
+import { calcSmartInterval } from '../../utils/smartInterval.js'
+import { groupStats } from './groupStatUtils.js'
 
-let drilldown = async ({ field, drilldown, interval }, schema, getStats) => {
+export let drilldown = async (
+  { field, drilldown, interval },
+  schema,
+  getStats
+) => {
   let gte = _.toNumber(drilldown)
   if (interval === 'smart') {
     let { min, max } = await getStats(field, ['min', 'max'])
@@ -12,24 +16,23 @@ let drilldown = async ({ field, drilldown, interval }, schema, getStats) => {
   return { range: { [field]: { gte, lt } } }
 }
 
-let buildGroupQuery = async (node, children, groupsKey, schema, getStats) => {
-  let { field, interval = 'smart' } = node
-  if (interval === 'smart') {
-    let { min, max } = await getStats(field, ['min', 'max'])
-    interval = calcSmartInterval(min, max)
-  }
+let { buildQuery, buildGroupQuery, validContext, result } = groupStats(
+  async (node, children, groupsKey, schema, getStats) => {
+    let { field, interval = 'smart' } = node
+    if (interval === 'smart') {
+      let { min, max } = await getStats(field, ['min', 'max'])
+      interval = calcSmartInterval(min, max)
+    }
 
-  return {
-    aggs: {
-      [groupsKey]: {
-        histogram: { field, interval, min_doc_count: 0 },
-        ...children,
+    return {
+      aggs: {
+        [groupsKey]: {
+          histogram: { field, interval, min_doc_count: 0 },
+          ...children,
+        },
       },
-    },
+    }
   }
-}
+)
 
-module.exports = {
-  ...groupStats(buildGroupQuery),
-  drilldown,
-}
+export { buildQuery, buildGroupQuery, validContext, result }

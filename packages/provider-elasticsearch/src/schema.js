@@ -1,5 +1,5 @@
-let _ = require('lodash/fp')
-let F = require('futil')
+import _ from 'lodash/fp.js'
+import F from 'futil'
 
 let Tree = F.tree(x => x.properties)
 // flatLeaves should auto detect reject vs omit (or just more general obj vs arr method)
@@ -63,7 +63,7 @@ let copySchemasToAliases = schemas =>
     _.mapValues(([x]) => _.merge({ elasticsearch: { aliasOf: x } }, schemas[x]))
   )
 
-let fromMappingsWithAliases = (mappings, aliases) => {
+export let fromMappingsWithAliases = (mappings, aliases) => {
   // Apparently mappings can sometimes be empty, so omit them to be safe
   let safeMappings = _.omitBy(index => _.isEmpty(index.mappings), mappings)
   let schemas = fromEsIndexMapping(safeMappings)
@@ -77,18 +77,8 @@ let fromMappingsWithAliases = (mappings, aliases) => {
   )(aliases)
 }
 
-let getESSchemas = client =>
-  Promise.all([
-    client.indices.getMapping(),
-    client.indices.getAlias(),
-  ]).then(([{ body: mappings }, { body: aliases }]) =>
-    fromMappingsWithAliases(mappings, aliases)
+export let getESSchemas = client =>
+  Promise.all([client.indices.getMapping(), client.indices.getAlias()]).then(
+    ([{ body: mappings }, { body: aliases }]) =>
+      fromMappingsWithAliases(mappings, aliases)
   )
-
-module.exports = {
-  // flagFields,
-  // applyDefaults,
-  // fromEsIndexMapping,
-  fromMappingsWithAliases,
-  getESSchemas,
-}

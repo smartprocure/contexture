@@ -1,6 +1,4 @@
-let {
-  buildQuery,
-} = require('../../../src/example-types/metricGroups/percentilesGroupStats')
+import { buildQuery } from '../../../src/example-types/metricGroups/percentilesGroupStats.js'
 
 describe('percentilesGroupStats', () => {
   it('should buildQuery', async () => {

@@ -1,23 +1,24 @@
-let _ = require('lodash/fp')
-let F = require('futil')
+import _ from 'lodash/fp.js'
+import F from 'futil'
 
-let maybeAppend = (suffix, str) =>
+export let maybeAppend = (suffix, str) =>
   _.endsWith(suffix, str) ? str : str + suffix
 
-let keysToObject = F.arrayToObject(x => x) // futil candidate from exports
-let keysToEmptyObjects = keysToObject(() => ({}))
+export let keysToObject = F.arrayToObject(x => x) // futil candidate from exports
 
-let pickNumbers = _.pickBy(_.isNumber)
+export let keysToEmptyObjects = keysToObject(() => ({}))
+
+export let pickNumbers = _.pickBy(_.isNumber)
+
 // toNumber but without casting null and '' to 0
-let safeNumber = value => !F.isBlank(value) && _.toNumber(value)
-let pickSafeNumbers = _.flow(_.mapValues(safeNumber), pickNumbers)
+export let safeNumber = value => !F.isBlank(value) && _.toNumber(value)
 
-let writeTreeNode = (next = F.traverse) => (
-  node,
-  index,
-  [parent, ...parents],
-  [parentIndex, ...indexes]
-) => (next(parent, parentIndex, parents, indexes)[index] = node)
+export let pickSafeNumbers = _.flow(_.mapValues(safeNumber), pickNumbers)
+
+export let writeTreeNode =
+  (next = F.traverse) =>
+  (node, index, [parent, ...parents], [parentIndex, ...indexes]) =>
+    (next(parent, parentIndex, parents, indexes)[index] = node)
 
 // POST ORDER MAP
 //  Post order traversal is important if you're replacing the tree structure
@@ -29,8 +30,12 @@ let transformTreePostOrder = (next = F.traverse) =>
     F.walk(next)(_.noop, f)(result)
     return result
   })
+
 // same as map tree, just transforms post order instead of pre order
-let mapTreePostOrder = (next = F.traverse, writeNode = writeTreeNode(next)) =>
+export let mapTreePostOrder = (
+  next = F.traverse,
+  writeNode = writeTreeNode(next)
+) =>
   _.curry(
     (mapper, tree) =>
       transformTreePostOrder(next)((node, i, parents, ...args) => {
@@ -38,8 +43,9 @@ let mapTreePostOrder = (next = F.traverse, writeNode = writeTreeNode(next)) =>
           writeNode(mapper(node, i, parents, ...args), i, parents, ...args)
       })(mapper(tree)) // run mapper on root, and skip root in traversal
   )
+
 // Convert tree from one structure to another
-let transmuteTree = (
+export let transmuteTree = (
   traverseSource,
   traverseTarget,
   cleanupSourceTraversalPaths = _.noop
@@ -52,12 +58,12 @@ let transmuteTree = (
     })
   )
 
-let logJSON = result => console.info(JSON.stringify(result, null, 2))
+export let logJSON = result => console.info(JSON.stringify(result, null, 2))
 
 // Returns a proxy array that represents a virtual concatenation of two arrays
 // Reading/writing this virtual array reads/writes the underlying arrays (and doesn't clone)
 // Should be very memory/CPU efficient when you'd otherwise concat arrays just for traversal
-let virtualConcat = (a1 = [], a2 = []) =>
+export let virtualConcat = (a1 = [], a2 = []) =>
   new Proxy([], {
     get(obj, key) {
       let size = a1.length
@@ -74,37 +80,19 @@ let virtualConcat = (a1 = [], a2 = []) =>
   })
 
 // Flattens an object, runs mapKeys, then unflattens
-let mapFlatKeys = fn =>
+export let mapFlatKeys = fn =>
   _.flow(F.flattenObject, _.mapKeys(fn), F.unflattenObject)
 
 // Splits and joins a string on a delimiter, running a mapper over the parts
-let mapStringParts = (fn, delimiter = '.') =>
+export let mapStringParts = (fn, delimiter = '.') =>
   _.flow(_.split(delimiter), _.map(fn), _.join(delimiter))
 
-let renameOn = (from, to, obj) => {
+export let renameOn = (from, to, obj) => {
   obj[to] = obj[from]
   delete obj[from]
   return obj
 }
 
 // Async version of compactMap (and indexed)
-let compactMapAsync = async (...args) =>
+export let compactMapAsync = async (...args) =>
   _.compact(await Promise.all(F.mapIndexed(...args)))
-
-module.exports = {
-  maybeAppend,
-  keysToObject,
-  keysToEmptyObjects,
-  safeNumber,
-  pickNumbers,
-  pickSafeNumbers,
-  writeTreeNode,
-  mapTreePostOrder,
-  transmuteTree,
-  logJSON,
-  virtualConcat,
-  mapFlatKeys,
-  mapStringParts,
-  renameOn,
-  compactMapAsync,
-}

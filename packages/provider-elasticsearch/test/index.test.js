@@ -1,4 +1,4 @@
-let provider = require('../src/index')
+import provider from '../src/index.js'
 
 const requestOptions = {
   headers: {

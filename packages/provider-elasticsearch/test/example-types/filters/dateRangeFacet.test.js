@@ -1,9 +1,9 @@
-let _ = require('lodash/fp')
-let {
+import _ from 'lodash/fp.js'
+import {
   getDateIfValid,
   rollingRangeToDates,
-} = require('../../../src/utils/dateUtil')
-let dateRangeFacet = require('../../../src/example-types/filters/dateRangeFacet')
+} from '../../../src/utils/dateUtil.js'
+import * as dateRangeFacet from '../../../src/example-types/filters/dateRangeFacet.js'
 
 let commonFilterParts = {
   type: 'dateRangeFacet',

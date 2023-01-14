@@ -1,11 +1,11 @@
-let {
+import {
   statsAggs,
   buildMetrics,
   simplifyBucket,
   simplifyBuckets,
   basicSimplifyTree,
-} = require('../../src/utils/elasticDSL')
-let stringify = require('json-stable-stringify')
+} from '../../src/utils/elasticDSL.js'
+import stringify from 'json-stable-stringify'
 
 describe('elasticDSL utils', () => {
   describe('buildMetrics', () => {

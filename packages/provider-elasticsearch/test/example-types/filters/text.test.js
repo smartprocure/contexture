@@ -1,5 +1,5 @@
-let text = require('../../../src/example-types/filters/text')
-let { testSchema } = require('../testUtils')
+import * as text from '../../../src/example-types/filters/text.js'
+import { testSchema } from '../testUtils.js'
 
 describe('text', () => {
   it('should check for values', () => {
@@ -19,22 +19,20 @@ describe('text', () => {
     ).toBe(false)
   })
   describe('filter', () => {
-    let anyText = values => (
-      operator,
-      schema = testSchema('description'),
-      join = 'any'
-    ) =>
-      text.filter(
-        {
-          key: 'test',
-          type: 'text',
-          field: 'description',
-          join,
-          operator,
-          values,
-        },
-        schema
-      )
+    let anyText =
+      values =>
+      (operator, schema = testSchema('description'), join = 'any') =>
+        text.filter(
+          {
+            key: 'test',
+            type: 'text',
+            field: 'description',
+            join,
+            operator,
+            values,
+          },
+          schema
+        )
     let laserjetPrinterText = anyText(['laserjet', 'printer'])
     it('contains (match ALL)', () => {
       expect(

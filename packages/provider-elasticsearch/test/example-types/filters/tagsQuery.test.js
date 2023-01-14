@@ -1,4 +1,4 @@
-let {
+import {
   wordPermutations,
   limitResultsToCertainTags,
   addQuotesAndDistance,
@@ -10,8 +10,8 @@ let {
   filter,
   buildResultQuery,
   result,
-} = require('../../../src/example-types/filters/tagsQuery')
-let _ = require('lodash/fp')
+} from '../../../src/example-types/filters/tagsQuery.js'
+import _ from 'lodash/fp.js'
 
 describe('wordPermutations', () => {
   it('should handle empty string', () => {

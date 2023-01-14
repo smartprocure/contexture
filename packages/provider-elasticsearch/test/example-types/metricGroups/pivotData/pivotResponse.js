@@ -1,4 +1,4 @@
-let pivotResponse = {
+export default {
   took: 7506,
   timed_out: false,
   _shards: {
@@ -1280,8 +1280,7 @@ let pivotResponse = {
                 },
               },
               {
-                key:
-                  'California Department of Corrections and Rehabilitation, California',
+                key: 'California Department of Corrections and Rehabilitation, California',
                 doc_count: 583087,
                 rows: {
                   buckets: [
@@ -1379,8 +1378,7 @@ let pivotResponse = {
             sum_other_doc_count: 10007149,
             buckets: [
               {
-                key:
-                  'Department of Defense: Defense Logistics Agency, Virginia',
+                key: 'Department of Defense: Defense Logistics Agency, Virginia',
                 doc_count: 20473438,
                 rows: {
                   buckets: [
@@ -1424,8 +1422,7 @@ let pivotResponse = {
                 },
               },
               {
-                key:
-                  'Department of Defense: Defense Logistics Agency - Central, Virginia',
+                key: 'Department of Defense: Defense Logistics Agency - Central, Virginia',
                 doc_count: 5141775,
                 rows: {
                   buckets: [
@@ -1513,8 +1510,7 @@ let pivotResponse = {
                 },
               },
               {
-                key:
-                  'Defense Contract Management Agency (DCMA) - DLA, Virginia',
+                key: 'Defense Contract Management Agency (DCMA) - DLA, Virginia',
                 doc_count: 2435845,
                 rows: {
                   buckets: [
@@ -1602,8 +1598,7 @@ let pivotResponse = {
                 },
               },
               {
-                key:
-                  'Virginia Polytechnic Institute And State University, Virginia',
+                key: 'Virginia Polytechnic Institute And State University, Virginia',
                 doc_count: 702118,
                 rows: {
                   buckets: [
@@ -2777,8 +2772,7 @@ let pivotResponse = {
                 },
               },
               {
-                key:
-                  'University of Illinois at Chicago, Urbana-Champaign, and Springfield, Illinois',
+                key: 'University of Illinois at Chicago, Urbana-Champaign, and Springfield, Illinois',
                 doc_count: 826448,
                 rows: {
                   buckets: [
@@ -2998,8 +2992,7 @@ let pivotResponse = {
                 },
               },
               {
-                key:
-                  'Kane County Community Unit School District No. 300, Illinois',
+                key: 'Kane County Community Unit School District No. 300, Illinois',
                 doc_count: 280988,
                 rows: {
                   buckets: [
@@ -3486,7 +3479,7 @@ let pivotResponse = {
                         value: 9998.5,
                       },
                       sum: {
-                        value: 7.443098977539062e7,
+                        value: 7.443098977539062e5,
                       },
                     },
                   ],
@@ -3537,8 +3530,7 @@ let pivotResponse = {
                 },
               },
               {
-                key:
-                  'Michigan State Department Of Health & Human Services, Michigan',
+                key: 'Michigan State Department Of Health & Human Services, Michigan',
                 doc_count: 149338,
                 rows: {
                   buckets: [
@@ -4532,4 +4524,3 @@ let pivotResponse = {
     },
   },
 }
-module.exports = pivotResponse
