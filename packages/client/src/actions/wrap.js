@@ -1,7 +1,7 @@
 import _ from 'lodash/fp.js'
 import { encode } from '../util/tree.js'
 
-let shallowCloneNode = node => ({
+let shallowCloneNode = (node) => ({
   ...node,
   children: [...node.children],
 })
@@ -14,7 +14,7 @@ export default ({ getNode, flat }, { mutate, replace, remove, add }) => {
     let node = shallowCloneNode(getNode(path))
 
     // Remove all children (they'll be readded at the end when we add the shallow clone)
-    await Promise.all(_.map(child => remove(child.path), node.children))
+    await Promise.all(_.map((child) => remove(child.path), node.children))
 
     // Mutate existing root into new root
     await mutate(path, {

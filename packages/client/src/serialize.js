@@ -4,7 +4,8 @@ import { Tree } from './util/tree.js'
 import { internalStateKeys } from './node.js'
 import { runTypeFunctionOrDefault } from './types.js'
 
-let isFilterOnly = x => !x.children && (x.forceFilterOnly || !x.markedForUpdate)
+let isFilterOnly = (x) =>
+  !x.children && (x.forceFilterOnly || !x.markedForUpdate)
 
 // Use Tree.walk instead of Tree.map since the latter clones the tree and we
 // already get a cloned tree. We have not profiled the performance impact of
@@ -21,13 +22,13 @@ let mapTree = (fn, tree) =>
   )
 
 export default (tree, types, { search } = {}) => {
-  let onSerialize = node =>
+  let onSerialize = (node) =>
     runTypeFunctionOrDefault(_.identity, types, 'onSerialize', node, {})
 
   let internalKeys = _.without(search && ['lastUpdateTime'], internalStateKeys)
 
   let setFilterOnly = F.when(
-    node => search && isFilterOnly(node),
+    (node) => search && isFilterOnly(node),
     _.set('filterOnly', true)
   )
 

@@ -1,11 +1,11 @@
 // DO NOT RENAME THIS FILE... because we need it to run before the other tests...
 // No, we don't know why. We're sorry. #hackathon
 
-import { Tree } from '../src/util/tree.js'
+import { Tree } from './util/tree.js'
 import F from 'futil'
 import _ from 'lodash/fp.js'
-import ContextureClient from '../src/index.js'
-import mockService from '../src/mockService.js'
+import ContextureClient from './index.js'
+import mockService from './mockService.js'
 import { observable, reaction, autorun, toJS, set } from 'mobx'
 
 let mobxAdapter = { snapshot: toJS, extend: set, initObject: observable }
