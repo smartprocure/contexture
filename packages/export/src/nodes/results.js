@@ -1,6 +1,6 @@
 import F from 'futil'
-import _ from 'lodash/fp'
-import { runWith, flattenProp } from '../utils'
+import _ from 'lodash/fp.js'
+import { runWith, flattenProp } from '../utils.js'
 
 // Will go away once results no longer wraps context in `response`
 let resultField = (field, node) =>

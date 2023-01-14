@@ -1,5 +1,5 @@
-import csv from './csv'
-import * as nodes from './nodes'
+import csv from './csv.js'
+import * as nodes from './nodes/index.js'
 
 export { nodes, csv }
-export * from './utils'
+export * from './utils.js'

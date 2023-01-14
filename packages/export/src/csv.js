@@ -1,5 +1,5 @@
 import csv from 'minimal-csv-formatter'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 
 let transformLabels = _.map(_.get('label'))
 

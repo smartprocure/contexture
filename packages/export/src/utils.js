@@ -1,5 +1,5 @@
 import F from 'futil'
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 
 let Tree = F.tree(x => x.children)
 export let setFilterOnly = Tree.transform(x => {

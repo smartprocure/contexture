@@ -1,4 +1,9 @@
-﻿# 1.0.7
+﻿# 1.0.8
+* Use yarn
+* ESM source
+* Use esbuild to build before publishing
+
+# 1.0.7
 * Add coverage to danger and other cleanup
 
 # 1.0.6
