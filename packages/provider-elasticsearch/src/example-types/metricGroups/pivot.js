@@ -2,7 +2,7 @@ import F from 'futil'
 import _ from 'lodash/fp.js'
 import stats from './stats.js'
 import { getField } from '../../utils/fields.js'
-import types from '../../../src/example-types/index.js'
+import types from '../../example-types/index.js'
 import { basicSimplifyTree, and, not, or } from '../../utils/elasticDSL.js'
 import { compactMapAsync } from '../../utils/futil.js'
 
