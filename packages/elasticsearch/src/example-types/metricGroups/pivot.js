@@ -6,6 +6,8 @@ import types from '../../../src/example-types/index.js'
 import { basicSimplifyTree, and, not, or } from '../../utils/elasticDSL.js'
 import { compactMapAsync } from '../../utils/futil.js'
 
+let { getStats } = stats
+
 let everyEmpty = _.flow(_.flattenDeep, _.every(_.isEmpty))
 
 let Tree = F.tree(_.get('rows'))
@@ -570,7 +572,7 @@ export default {
       buildQuery,
       getResultKeys,
       processResponse,
-    } = createPivotScope(node, schema, stats.getStats(search))
+    } = createPivotScope(node, schema, getStats(search))
 
     let results = {}
     let expansion

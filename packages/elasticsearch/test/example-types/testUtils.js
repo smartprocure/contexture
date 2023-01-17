@@ -1,4 +1,3 @@
-/* eslint import/namespace: ['error', { allowComputed: true }] */
 import F from 'futil'
 import _ from 'lodash/fp.js'
 import types from '../../src/example-types/index.js'
