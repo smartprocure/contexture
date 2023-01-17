@@ -1,8 +1,10 @@
-let types = require('../../types')()
-let Contexture = require('contexture')
-let provider = require('../../src')
-let _ = require('lodash/fp')
-let testSetup = require('../setup')
+import types from '../../types.js'
+import Contexture from 'contexture'
+import provider from '../../src/index.js'
+import _ from 'lodash/fp.js'
+import testSetup from '../setup.js'
+
+types()
 
 let schemaName = 'Documents'
 let collection = 'document'

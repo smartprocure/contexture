@@ -1,7 +1,7 @@
-let _ = require('lodash/fp')
-require('mingo/init/system') // needed on each test that initializes mingo
-let mingo = require('mingo')
-let termsStats = require('../../src/example-types/termsStats')
+import _ from 'lodash/fp.js'
+import 'mingo/init/system.js' // needed on each test that initializes mingo
+import mingo from 'mingo'
+import termsStats from '../../src/example-types/termsStats.js'
 
 let aggregate = sampleData => aggs => new mingo.Aggregator(aggs).run(sampleData)
 

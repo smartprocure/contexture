@@ -1,4 +1,4 @@
-let text = require('../../src/example-types/text')
+import text from '../../src/example-types/text.js'
 
 describe('text', () => {
   describe('text.hasValue', () => {

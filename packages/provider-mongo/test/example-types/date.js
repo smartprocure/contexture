@@ -1,5 +1,5 @@
-let _ = require('lodash')
-let date = require('../../src/example-types/date')
+import _ from 'lodash'
+import date from '../../src/example-types/date.js'
 
 let dateBuilder = data =>
   _.extend(
