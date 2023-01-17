@@ -1,4 +1,4 @@
-import * as date from '../../../src/example-types/filters/date.js'
+import date from '../../../src/example-types/filters/date.js'
 
 describe('date/filter', () => {
   it('should handle from', () => {

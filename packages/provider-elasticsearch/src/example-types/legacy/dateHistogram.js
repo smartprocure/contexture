@@ -1,15 +1,18 @@
-import { result as esTwoLevel } from './esTwoLevelAggregation.js'
+import esTwoLevel from './esTwoLevelAggregation.js'
 
-export let validContext = node => node.key_field && node.value_field
-
-export let result = ({ key_field, value_field, interval = 'year' }, search) =>
-  esTwoLevel(
-    {
-      key_type: 'date_histogram',
-      key_field,
-      key_data: { interval, min_doc_count: 0 },
-      value_field,
-      value_type: 'stats',
-    },
-    search
-  ).then(x => ({ entries: x.results }))
+export default {
+  validContext: node => node.key_field && node.value_field,
+  result: ({ key_field, value_field, interval = 'year' }, search) =>
+    esTwoLevel
+      .result(
+        {
+          key_type: 'date_histogram',
+          key_field,
+          key_data: { interval, min_doc_count: 0 },
+          value_field,
+          value_type: 'stats',
+        },
+        search
+      )
+      .then(x => ({ entries: x.results })),
+}

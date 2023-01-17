@@ -1,8 +1,6 @@
-import {
-  hasValue,
-  filter,
-  buildQuery,
-} from '../../../src/example-types/filters/number.js'
+import number from '../../../src/example-types/filters/number.js'
+
+let { hasValue, filter, buildQuery } = number
 
 let lteExpectedValue = { range: { test: { lte: 500 } } }
 let gteExpectedValue = { range: { test: { gte: 500 } } }

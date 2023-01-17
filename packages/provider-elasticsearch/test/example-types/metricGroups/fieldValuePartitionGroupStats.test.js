@@ -1,8 +1,7 @@
-import {
-  buildQuery,
-  drilldown,
-} from '../../../src/example-types/metricGroups/fieldValuePartitionGroupStats.js'
+import fieldValuePartitionGroupStats from '../../../src/example-types/metricGroups/fieldValuePartitionGroupStats.js'
 import { testSchema } from '../testUtils.js'
+
+let { buildQuery, drilldown } = fieldValuePartitionGroupStats
 
 describe('fieldValuePartitionGroupStats', () => {
   it('should buildQuery', () => {

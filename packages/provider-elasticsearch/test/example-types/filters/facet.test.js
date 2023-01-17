@@ -1,5 +1,5 @@
 import _ from 'lodash/fp.js'
-import * as facet from '../../../src/example-types/filters/facet.js'
+import facet from '../../../src/example-types/filters/facet.js'
 import { sequentialResultTest, testSchema } from '../testUtils.js'
 
 let facetTest = sequentialResultTest([

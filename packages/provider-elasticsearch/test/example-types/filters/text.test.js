@@ -1,4 +1,4 @@
-import * as text from '../../../src/example-types/filters/text.js'
+import text from '../../../src/example-types/filters/text.js'
 import { testSchema } from '../testUtils.js'
 
 describe('text', () => {

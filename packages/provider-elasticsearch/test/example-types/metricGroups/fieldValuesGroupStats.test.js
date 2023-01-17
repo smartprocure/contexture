@@ -1,8 +1,7 @@
-import {
-  buildQuery,
-  buildGroupQuery,
-} from '../../../src/example-types/metricGroups/fieldValuesGroupStats.js'
+import fieldValuesGroupStats from '../../../src/example-types/metricGroups/fieldValuesGroupStats.js'
 import { testSchema } from '../testUtils.js'
+
+let { buildQuery, buildGroupQuery } = fieldValuesGroupStats
 
 describe('fieldValuesGroupStats', () => {
   it('should buildQuery', () => {
