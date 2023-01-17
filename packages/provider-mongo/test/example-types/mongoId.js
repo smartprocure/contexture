@@ -1,5 +1,7 @@
 import mongoId from '../../src/example-types/mongoId.js'
-import { ObjectID } from 'mongodb'
+import mongodb from 'mongodb'
+
+let { ObjectID } = mongodb
 
 describe('mongoId', () => {
   describe('mongoId.hasValue', () => {

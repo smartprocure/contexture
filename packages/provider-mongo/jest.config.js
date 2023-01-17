@@ -13,9 +13,6 @@ export default {
       transform: {
         '^.+\\.js?$': ['esbuild-jest', { sourcemap: true, target: 'es2022' }],
       },
-      coverageProvider: 'v8',
-      coverageReporters: ['clover'],
-      collectCoverageFrom: ['src/**/*.js'],
     },
     {
       displayName: 'integration',
@@ -23,11 +20,11 @@ export default {
       transform: {
         '^.+\\.js?$': ['esbuild-jest', { sourcemap: true, target: 'es2022' }],
       },
-      coverageProvider: 'v8',
-      coverageReporters: ['clover'],
-      collectCoverageFrom: ['integration-test/**/*.js'],
-      maxConcurrency: 1,
-      maxWorkers: 1,
     },
   ],
+  coverageProvider: 'v8',
+  coverageReporters: ['clover'],
+  collectCoverageFrom: ['src/**/*.js'],
+  maxConcurrency: 1,
+  maxWorkers: 1,
 }
