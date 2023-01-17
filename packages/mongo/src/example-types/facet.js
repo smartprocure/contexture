@@ -1,6 +1,6 @@
-let F = require('futil')
-let _ = require('lodash/fp')
-let { ObjectId } = require('mongodb')
+import F from 'futil'
+import _ from 'lodash/fp.js'
+import { ObjectId } from 'mongodb'
 
 let projectStageFromLabelFields = node => ({
   $project: {
@@ -102,19 +102,18 @@ let unwindPropOrField = node =>
     _.castArray(node.unwind || node.field)
   )
 
-let runSearch = ({ options, getSchema, getProvider }, node) => (
-  filters,
-  aggs
-) =>
-  getProvider(node).runSearch(
-    options,
-    node,
-    getSchema(node.schema),
-    filters,
-    aggs
-  )
+let runSearch =
+  ({ options, getSchema, getProvider }, node) =>
+  (filters, aggs) =>
+    getProvider(node).runSearch(
+      options,
+      node,
+      getSchema(node.schema),
+      filters,
+      aggs
+    )
 
-module.exports = {
+export default {
   hasValue: _.get('values.length'),
   filter: node => ({
     [node.field]: {

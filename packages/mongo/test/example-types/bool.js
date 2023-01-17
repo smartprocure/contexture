@@ -1,4 +1,4 @@
-let bool = require('../../src/example-types/bool')
+import bool from '../../src/example-types/bool.js'
 
 let node = {
   type: 'bool',

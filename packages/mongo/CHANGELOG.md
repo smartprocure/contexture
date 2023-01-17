@@ -1,3 +1,8 @@
+### 0.26.4
+* Use yarn
+* Use eslint to build source
+* Convert package to ESM
+
 # 0.26.3
 * Add code coverage to danger
 

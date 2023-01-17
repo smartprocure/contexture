@@ -1,4 +1,4 @@
-let statistical = require('../../src/example-types/statistical')
+import statistical from '../../src/example-types/statistical.js'
 
 describe('statistical', () => {
   describe('statistical.result', () => {

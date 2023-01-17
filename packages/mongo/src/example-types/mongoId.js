@@ -1,7 +1,7 @@
-let _ = require('lodash/fp')
-let { ObjectID } = require('mongodb')
+import _ from 'lodash/fp.js'
+import { ObjectID } from 'mongodb'
 
-module.exports = {
+export default {
   hasValue: node => node.values || node.value,
   filter: node => ({
     [node.field]: {

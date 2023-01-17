@@ -1,23 +1,14 @@
-let _ = require('lodash/fp')
-let F = require('futil')
-let moment = require('moment-timezone')
-let datemath = require('@elastic/datemath')
+import _ from 'lodash/fp.js'
+import F from 'futil'
+import moment from 'moment-timezone'
+import datemath from '@elastic/datemath'
 
 let getStartOfQuarter = (quarterOffset, timezone) => {
-  let quarter =
-    moment()
-      .tz(timezone)
-      .quarter() + quarterOffset
-  return moment()
-    .tz(timezone)
-    .quarter(quarter)
-    .startOf('quarter')
+  let quarter = moment().tz(timezone).quarter() + quarterOffset
+  return moment().tz(timezone).quarter(quarter).startOf('quarter')
 }
 
-let getEndOfQuarter = date =>
-  moment(date)
-    .add(1, 'Q')
-    .subtract(1, 'ms')
+let getEndOfQuarter = date => moment(date).add(1, 'Q').subtract(1, 'ms')
 
 let quarterToOffset = {
   thisCalendarQuarter: 0,
@@ -90,7 +81,7 @@ let hasValue = ({ from, to, range }) =>
   range !== 'allDates' &&
   ((range === 'exact' && (from || to)) || range !== 'exact')
 
-module.exports = {
+export default {
   hasValue,
   // NOTE: timezone is only used for rolling dates
   filter({ field, range, dateType = 'date', timezone = 'UTC', ...context }) {
