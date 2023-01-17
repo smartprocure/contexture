@@ -76,6 +76,7 @@ export let virtualConcat = (a1 = [], a2 = []) =>
       let size = a1.length
       if (key < size) a1[key] = value
       else a2[key - size] = value
+      return true
     },
   })
 

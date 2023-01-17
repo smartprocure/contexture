@@ -10,8 +10,8 @@
   ],
   "scripts": {
     "prepack": "node scripts/build.js",
-    "test": "jest",
-    "test:ci": "jest --coverage --json --outputFile test-results.json",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
+    "test:ci": "yarn test --coverage --json --outputFile test-results.json",
     "fmt": "prettier --ignore-path .gitignore --write src test",
     "lint": "eslint --ignore-path .gitignore src test",
     "lint:ci": "yarn lint -o lint-results.json -f json",
@@ -40,7 +40,7 @@
   "dependencies": {
     "@elastic/datemath": "^2.3.0",
     "debug": "^4.3.1",
-    "futil": "^1.69.0",
+    "futil": "^1.71.8",
     "js-combinatorics": "^0.5.3",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
@@ -55,7 +55,6 @@
     "danger-plugin-coverage": "^1.6.2",
     "duti": "^0.15.2",
     "esbuild": "^0.16.17",
-    "esbuild-jest": "^0.5.0",
     "eslint": "^8.31.0",
     "eslint-plugin-import": "^2.27.4",
     "glob": "^8.0.3",

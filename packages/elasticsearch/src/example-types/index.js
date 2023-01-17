@@ -27,7 +27,6 @@ import numberRangesGroupStats from './metricGroups/numberRangesGroupStats.js'
 import numberIntervalGroupStats from './metricGroups/numberIntervalGroupStats.js'
 import fieldValuePartitionGroupStats from './metricGroups/fieldValuePartitionGroupStats.js'
 import tagsQueryGroupStats from './metricGroups/tagsQueryGroupStats.js'
-import pivot from './metricGroups/pivot.js'
 
 // Legacy (covered by metric groups)
 import statistical from './legacy/statistical.js'
@@ -38,7 +37,7 @@ import rangeStats from './legacy/rangeStats.js'
 import smartIntervalHistogram from './legacy/smartIntervalHistogram.js'
 import matchStats from './legacy/matchStats.js'
 
-export default {
+export {
   geo,
   bool,
   date,
@@ -68,5 +67,4 @@ export default {
   rangeStats,
   smartIntervalHistogram,
   matchStats,
-  pivot,
 }
