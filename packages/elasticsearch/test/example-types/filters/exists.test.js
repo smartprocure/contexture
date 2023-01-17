@@ -1,4 +1,4 @@
-import * as exists from '../../../src/example-types/filters/exists.js'
+import exists from '../../../src/example-types/filters/exists.js'
 
 describe('exists', () => {
   describe('hasValue', () => {

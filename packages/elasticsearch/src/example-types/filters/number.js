@@ -1,11 +1,11 @@
 import _ from 'lodash/fp.js'
 import { pickSafeNumbers } from '../../utils/futil.js'
 
-export let filter = ({ field, min, max }) => ({
+let filter = ({ field, min, max }) => ({
   range: { [field]: pickSafeNumbers({ gte: min, lte: max }) },
 })
 
-export let buildQuery = (field, min, max, interval) => ({
+let buildQuery = (field, min, max, interval) => ({
   aggs: {
     rangeFilter: {
       filter: filter({ field, min, max }),
@@ -29,7 +29,7 @@ let hasOutliers = (percentiles, rangeThreshold) => {
 }
 
 // Runs multiple iterations of the query while there are still outliers and remaining iterations
-export let result = async (node, search) => {
+let result = async (node, search) => {
   let { field, min, max, percentileInterval = 1, rangeThreshold = 0.1 } = node
   let iteration = 0
   let maxIterations = 10
@@ -55,6 +55,10 @@ export let result = async (node, search) => {
   return { bestRange: { min, max } }
 }
 
-export let hasValue = ({ min, max }) => !_.isNil(min) || !_.isNil(max)
-
-export let validContext = node => node.findBestRange
+export default {
+  hasValue: ({ min, max }) => !_.isNil(min) || !_.isNil(max),
+  filter,
+  validContext: node => node.findBestRange,
+  result,
+  buildQuery,
+}

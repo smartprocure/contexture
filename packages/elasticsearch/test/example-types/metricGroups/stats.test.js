@@ -1,7 +1,6 @@
-import {
-  buildQuery,
-  result,
-} from '../../../src/example-types/metricGroups/stats.js'
+import stats from '../../../src/example-types/metricGroups/stats.js'
+
+let { buildQuery, result } = stats
 
 describe('stats', () => {
   it('should buildQuery', () => {

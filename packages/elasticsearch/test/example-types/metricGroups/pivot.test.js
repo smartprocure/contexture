@@ -1,14 +1,13 @@
 import _ from 'lodash/fp.js'
-import {
-  filter,
-  createPivotScope,
-} from '../../../src/example-types/metricGroups/pivot.js'
+import pivot from '../../../src/example-types/metricGroups/pivot.js'
 import { testSchema, testSchemas } from '../testUtils.js'
 import pivotResponse from './pivotData/pivotResponse.js'
 import pivotResponseWithFilteredFieldValueGroup from './pivotData/pivotResponseWithFilteredFieldValueGroup.js'
 import columnResponse from './pivotData/columnResponse.js'
 import columnResult from './pivotData/columnResult.js'
 import stringify from 'json-stable-stringify'
+
+let { filter, createPivotScope } = pivot
 
 let rowsExpansion = {
   type: 'rows',

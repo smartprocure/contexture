@@ -9,7 +9,7 @@ let getSortField = field => {
   return field
 }
 
-export let drilldown = ({ field, drilldown, additionalFields = [] }, schema) =>
+let drilldown = ({ field, drilldown, additionalFields = [] }, schema) =>
   // value is a pipe-delimited list of values when drilldown is using additional fields (multi-term aggregation)
   _.zipWith(
     (field, value) => ({ term: { [getField(schema, field)]: value } }),
@@ -17,7 +17,7 @@ export let drilldown = ({ field, drilldown, additionalFields = [] }, schema) =>
     _.split('|', drilldown)
   )
 
-export let buildGroupQuery = (node, children, groupingType, schema) => {
+let buildGroupQuery = (node, children, groupingType, schema) => {
   let {
     field: groupField,
     size = 10,
@@ -62,11 +62,12 @@ export let buildGroupQuery = (node, children, groupingType, schema) => {
 let buildGroupQueryWithDefaultSortField = (node, ...args) =>
   buildGroupQuery(_.defaultsDeep({ sort: { field: 'sum' } }, node), ...args)
 
-export let getGroups = aggs => (aggs.valueFilter || aggs).groups.buckets
+let getGroups = aggs => (aggs.valueFilter || aggs).groups.buckets
 
 // We don't want the default sort field for pivot, but we do for this node type
-let { buildQuery, validContext, result } = groupStats(
-  buildGroupQueryWithDefaultSortField
-)
-
-export { buildQuery, validContext, result }
+export default {
+  ...groupStats(buildGroupQueryWithDefaultSortField),
+  buildGroupQuery,
+  getGroups,
+  drilldown,
+}

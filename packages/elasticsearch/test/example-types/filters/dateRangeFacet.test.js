@@ -3,7 +3,7 @@ import {
   getDateIfValid,
   rollingRangeToDates,
 } from '../../../src/utils/dateUtil.js'
-import * as dateRangeFacet from '../../../src/example-types/filters/dateRangeFacet.js'
+import dateRangeFacet from '../../../src/example-types/filters/dateRangeFacet.js'
 
 let commonFilterParts = {
   type: 'dateRangeFacet',

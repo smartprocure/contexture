@@ -1,4 +1,4 @@
-import * as geo from '../../../src/example-types/filters/geo.js'
+import geo from '../../../src/example-types/filters/geo.js'
 import * as utils from '../testUtils.js'
 
 describe('geo', () => {

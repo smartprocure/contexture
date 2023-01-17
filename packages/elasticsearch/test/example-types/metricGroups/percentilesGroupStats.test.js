@@ -1,4 +1,6 @@
-import { buildQuery } from '../../../src/example-types/metricGroups/percentilesGroupStats.js'
+import percentilesGroupStats from '../../../src/example-types/metricGroups/percentilesGroupStats.js'
+
+let { buildQuery } = percentilesGroupStats
 
 describe('percentilesGroupStats', () => {
   it('should buildQuery', async () => {

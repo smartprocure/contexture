@@ -1,5 +1,5 @@
 import { statsAggs, simplifyBuckets } from '../../utils/elasticDSL.js'
-import { getStats } from './stats.js'
+import stats from './stats.js'
 
 // Adds statsAggs to a groupQuery and maps groupField to field
 export let buildGroupStatsQuery =
@@ -15,7 +15,7 @@ export let buildGroupStatsQuery =
 
 // Generic result method - given a buildQuery method, run the search and simplifyBuckets onto results
 export let groupStatsResult = buildQuery => async (node, search, schema) => {
-  let query = await buildQuery(node, schema, getStats(search))
+  let query = await buildQuery(node, schema, stats.getStats(search))
   let response = await search(query)
   let aggs = response.aggregations.valueFilter || response.aggregations
   return { results: simplifyBuckets(aggs.groups.buckets) }

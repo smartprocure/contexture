@@ -1,7 +1,7 @@
 /* eslint import/namespace: ['error', { allowComputed: true }] */
 import F from 'futil'
 import _ from 'lodash/fp.js'
-import * as types from '../../src/example-types/index.js'
+import types from '../../src/example-types/index.js'
 
 export let sequentialResultTest = _.curry(
   async (getService, node, expectedResult, expectedCalls, schema = {}) => {

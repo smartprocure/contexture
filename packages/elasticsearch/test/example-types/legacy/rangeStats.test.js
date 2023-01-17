@@ -1,4 +1,4 @@
-import * as rangeStats from '../../../src/example-types/legacy/rangeStats.js'
+import rangeStats from '../../../src/example-types/legacy/rangeStats.js'
 import _ from 'lodash/fp.js'
 import * as utils from '../testUtils.js'
 

@@ -3,18 +3,13 @@ import { simplifyBuckets } from '../../utils/elasticDSL.js'
 import { getField } from '../../utils/fields.js'
 import { buildGroupStatsQuery } from './groupStatUtils.js'
 
-export let drilldown = ({ field, matchValue, drilldown }, schema) => {
+let drilldown = ({ field, matchValue, drilldown }, schema) => {
   let filter = { term: { [getField(schema, field)]: matchValue } }
   if (drilldown === 'pass') return filter
   if (drilldown === 'fail') return { bool: { must_not: [filter] } }
 }
 
-export let buildGroupQuery = (
-  { field, matchValue },
-  children,
-  groupKey,
-  schema
-) => ({
+let buildGroupQuery = ({ field, matchValue }, children, groupKey, schema) => ({
   aggs: {
     [groupKey]: {
       filters: {
@@ -27,15 +22,18 @@ export let buildGroupQuery = (
     },
   },
 })
+let buildQuery = buildGroupStatsQuery(buildGroupQuery)
 
-export let buildQuery = buildGroupStatsQuery(buildGroupQuery)
-
-export let getGroups = aggs => F.unkeyBy('key', aggs.groups.buckets)
-
-export let validContext = node => node.groupField
-
-export let result = async (node, search, schema) => {
-  let query = buildQuery(node, schema)
-  let response = await search(query)
-  return { results: simplifyBuckets(getGroups(response.aggregations)) }
+let getGroups = aggs => F.unkeyBy('key', aggs.groups.buckets)
+export default {
+  getGroups,
+  buildQuery,
+  buildGroupQuery,
+  validContext: node => node.groupField,
+  async result(node, search, schema) {
+    let query = buildQuery(node, schema)
+    let response = await search(query)
+    return { results: simplifyBuckets(getGroups(response.aggregations)) }
+  },
+  drilldown,
 }
