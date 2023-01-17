@@ -1,7 +1,9 @@
 import _ from 'lodash/fp.js'
-import { MongoClient } from 'mongodb'
+import mongodb from 'mongodb'
 import { MongoMemoryServer } from 'mongodb-memory-server'
 import dateHistogram from '../../src/example-types/dateHistogram.js'
+
+let { MongoClient } = mongodb
 
 let aggregate
 let conn

@@ -11,7 +11,9 @@ import tagsText from './tagsText.js'
 import termsStats from './termsStats.js'
 import text from './text.js'
 
-export default {
+const defaultType = { validContext: () => true }
+
+export {
   bool,
   date,
   dateHistogram,
@@ -24,7 +26,5 @@ export default {
   tagsText,
   termsStats,
   text,
-  default: {
-    validContext: () => true,
-  },
+  defaultType as default,
 }
