@@ -1,6 +1,9 @@
-# 1.19.7
+# 1.19.8
 * ESM source
 * Use esbuild to build before publishing
+
+# 1.19.7
+* [pivot] refactor `filterGroupRanges` implementation and make pivot `buildGroupQuery` drilldown aware
 
 # 1.19.6
 * [pivot] Remove federal references to fiscal year

@@ -1,5 +1,6 @@
 import {
   buildQuery,
+  buildGroupQuery,
   drilldown,
 } from '../../../src/example-types/metricGroups/dateRangesGroupStats.js'
 
@@ -44,6 +45,48 @@ describe('dateRangesGroupStats', () => {
             max: { max: { field: 'LineItem.TotalPrice' } },
             avg: { avg: { field: 'LineItem.TotalPrice' } },
             sum: { sum: { field: 'LineItem.TotalPrice' } },
+          },
+        },
+      },
+    })
+  })
+  it('should buildGroupQuery with filtered ranges if drilldown is passed', () => {
+    expect(
+      buildGroupQuery(
+        {
+          key: 'test',
+          type: 'dateRangesGroupStats',
+          groupField: 'PO.IssuedDate',
+          statsField: 'LineItem.TotalPrice',
+          field: 'PO.IssuedDate',
+          ranges: [
+            {
+              from: '2022-08-02T00:00:00-05:00',
+              to: '2022-10-02T00:00:00-05:00',
+            },
+            {
+              from: '2022-10-03T00:00:00-05:00',
+              to: '2022-12-03T00:00:00-06:00',
+            },
+          ],
+        },
+        {},
+        'columns',
+        {},
+        () => {},
+        '2022-08-02T05:00:00.000Z-2022-10-02T05:00:00.000Z'
+      )
+    ).toEqual({
+      aggs: {
+        columns: {
+          date_range: {
+            field: 'PO.IssuedDate',
+            ranges: [
+              {
+                from: '2022-08-02T00:00:00-05:00',
+                to: '2022-10-02T00:00:00-05:00',
+              },
+            ],
           },
         },
       },
