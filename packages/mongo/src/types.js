@@ -1,5 +1,10 @@
 import F from 'futil'
-import exampleTypes from './example-types/index.js'
+import * as exampleTypes from './example-types/index.js'
+
+const unwrapDefault = x => x.default || x
 
 export default (config = {}) =>
-  F.mapValuesIndexed((x, type) => F.callOrReturn(x, config[type]), exampleTypes)
+  F.mapValuesIndexed(
+    (x, type) => F.callOrReturn(unwrapDefault(x), config[type]),
+    exampleTypes
+  )
