@@ -1,10 +1,8 @@
-import types from '../../types.js'
+import types from '../../src/types.js'
 import Contexture from 'contexture'
 import provider from '../../src/index.js'
 import _ from 'lodash/fp.js'
 import testSetup from '../setup.js'
-
-types()
 
 let schemaName = 'Documents'
 let collection = 'document'
@@ -25,7 +23,7 @@ let contextureTestSetup = async ({ collection }) => {
       providers: {
         mongo: provider({
           getClient: () => db,
-          types,
+          types: types(),
         }),
       },
     }),
