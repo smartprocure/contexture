@@ -104,17 +104,16 @@ let unwindPropOrField = node =>
     _.castArray(node.unwind || node.field)
   )
 
-let runSearch = ({ options, getSchema, getProvider }, node) => (
-  filters,
-  aggs
-) =>
-  getProvider(node).runSearch(
-    options,
-    node,
-    getSchema(node.schema),
-    filters,
-    aggs
-  )
+let runSearch =
+  ({ options, getSchema, getProvider }, node) =>
+  (filters, aggs) =>
+    getProvider(node).runSearch(
+      options,
+      node,
+      getSchema(node.schema),
+      filters,
+      aggs
+    )
 
 export default {
   hasValue: _.get('values.length'),
