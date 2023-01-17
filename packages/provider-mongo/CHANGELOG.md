@@ -1,3 +1,6 @@
+### 0.26.5
+* Move type.js file into source
+
 ### 0.26.4
 * Use yarn
 * Use eslint to build source
