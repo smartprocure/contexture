@@ -1,5 +1,6 @@
-import debug from 'debug'
-debug('contexture:mongo')
+import _debug from 'debug'
+
+let debug = _debug('contexture:mongo')
 
 let revolvingCounter = max => {
   let counter = 0
