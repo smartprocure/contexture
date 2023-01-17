@@ -11,7 +11,7 @@ let mongoServer
 
 beforeAll(async () => {
   mongoServer = new MongoMemoryServer()
-  let mongoUri = await mongoServer.getConnectionString()
+  let mongoUri = await mongoServer.getUri()
   conn = await MongoClient.connect(mongoUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,

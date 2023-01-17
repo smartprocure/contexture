@@ -1,3 +1,6 @@
+### 0.26.6
+* Fix some default imports/exports
+
 ### 0.26.5
 * Move type.js file into source
 
