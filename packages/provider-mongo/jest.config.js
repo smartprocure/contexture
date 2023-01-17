@@ -6,6 +6,10 @@
  */
 
 export default {
+  maxWorkers: 1,
+  maxConcurrency: 1,
+  coverageReporters: ['clover'],
+  collectCoverageFrom: ['src/**/*.js'],
   projects: [
     {
       displayName: 'unit',
@@ -16,9 +20,4 @@ export default {
       testMatch: ['<rootDir>/integration-test/example-types/**/*.js'],
     },
   ],
-  coverageProvider: 'v8',
-  coverageReporters: ['clover'],
-  collectCoverageFrom: ['src/**/*.js'],
-  maxConcurrency: 1,
-  maxWorkers: 1,
 }
