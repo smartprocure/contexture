@@ -1,8 +1,10 @@
 import _ from 'lodash/fp.js'
 import facet from '../../src/example-types/facet.js'
-import { ObjectId } from 'mongodb'
+import mongodb from 'mongodb'
 import 'mingo/init/system.js' // needed on each test that initializes mingo
 import mingo from 'mingo'
+
+let { ObjectId } = mongodb
 
 describe('facet', () => {
   describe('facet.hasValue', () => {
