@@ -1,6 +1,6 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import { PassThrough } from 'stream'
-import csv from './csv'
+import csv from './csv.js'
 
 let mockFileStream = () => {
   let writeStream = new PassThrough()

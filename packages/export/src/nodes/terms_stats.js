@@ -1,5 +1,5 @@
-import _ from 'lodash/fp'
-import { runWith } from '../utils'
+import _ from 'lodash/fp.js'
+import { runWith } from '../utils.js'
 
 export default async ({ service, tree, ...node }) => {
   let { key_field, size = 100 } = node

@@ -1,5 +1,5 @@
-import _ from 'lodash/fp'
-import results from './results'
+import _ from 'lodash/fp.js'
+import results from './results.js'
 
 describe('results', () => {
   let defaultTree = {
@@ -33,23 +33,25 @@ describe('results', () => {
         return tree
       })
 
-    let prepareSimpleStrategy = service => async (strategyParams = {}) => {
-      let tree = _.cloneDeep(defaultTree)
-      let include = ['a', 'b', 'c']
-      let strategy = await results({
-        service,
-        tree,
-        pageSize: 3,
-        page: 1,
-        totalPages: 1,
-        include,
-        highlight: false,
-        sortField: 'a',
-        sortDir: 'desc',
-        ...strategyParams,
-      })
-      return strategy
-    }
+    let prepareSimpleStrategy =
+      service =>
+      async (strategyParams = {}) => {
+        let tree = _.cloneDeep(defaultTree)
+        let include = ['a', 'b', 'c']
+        let strategy = await results({
+          service,
+          tree,
+          pageSize: 3,
+          page: 1,
+          totalPages: 1,
+          include,
+          highlight: false,
+          sortField: 'a',
+          sortDir: 'desc',
+          ...strategyParams,
+        })
+        return strategy
+      }
     it('retrieves the total records', async () => {
       let strategy = await prepareSimpleStrategy(getSimpleService())({
         totalPages: 1,

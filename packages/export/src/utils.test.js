@@ -1,4 +1,4 @@
-import { setFilterOnly, flattenProp } from './utils'
+import { setFilterOnly, flattenProp } from './utils.js'
 
 describe('utils', () => {
   it('setFilterOnly', () => {
