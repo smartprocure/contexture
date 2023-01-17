@@ -1,3 +1,6 @@
+# 1.19.7
+* [pivot] refactor `filterGroupRanges` implementation and make pivot `buildGroupQuery` drilldown aware
+
 # 1.19.6
 * [pivot] Remove federal references to fiscal year
 
