@@ -1,7 +1,9 @@
 import { groupStats } from './groupStatUtils.js'
 import tagsQuery from '../filters/tagsQuery.js'
 
+let { buildResultQuery, filter } = tagsQuery
+
 export default {
-  ...groupStats(tagsQuery.buildResultQuery),
-  drilldown: tagsQuery.filter,
+  ...groupStats(buildResultQuery),
+  drilldown: filter,
 }
