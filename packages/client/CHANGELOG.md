@@ -1,3 +1,7 @@
+# 2.49.9
+
+- Pivot node: Do not reset expansions on pause mutations
+
 # 2.49.8
 
 - Revert package.json exports field
