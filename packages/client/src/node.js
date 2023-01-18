@@ -1,7 +1,11 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
-import { Tree, encode } from './util/tree'
-import { runTypeFunction, runTypeFunctionOrDefault, getTypeProp } from './types'
+import { Tree, encode } from './util/tree.js'
+import {
+  runTypeFunction,
+  runTypeFunctionOrDefault,
+  getTypeProp,
+} from './types.js'
 
 export let defaults = {
   type: null,
@@ -27,7 +31,7 @@ export let internalStateKeys = [
   'forceReplaceResponse',
 ]
 
-export let autoKey = x => F.compactJoin('-', [x.field, x.type]) || 'node'
+export let autoKey = (x) => F.compactJoin('-', [x.field, x.type]) || 'node'
 
 export let initNode = _.curry(
   ({ extend, types, snapshot }, dedupe, parentPath, node) => {
@@ -60,11 +64,11 @@ export let dedupeWalk = (fn, tree, { target = {}, dedupe } = {}) => {
   })(tree)
 }
 
-export let hasContext = node => node && node.context
-let throwsError = x => {
+export let hasContext = (node) => node && node.context
+let throwsError = (x) => {
   throw Error(x)
 } // Throw expressions are stage 3 :(
-export let hasValue = node =>
+export let hasValue = (node) =>
   node && _.isUndefined(node.hasValue)
     ? throwsError('Node was never validated')
     : node && node.hasValue && !node.error

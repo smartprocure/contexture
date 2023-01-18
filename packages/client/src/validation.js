@@ -1,5 +1,5 @@
-import _ from 'lodash/fp'
-import { mapAsync } from './util/promise'
+import _ from 'lodash/fp.js'
+import { mapAsync } from './util/promise.js'
 
 // Aync fn to inspect types.
 // ASYNC runValidate: return true -> proceed, return false -> exclude, throw -> error!

@@ -1,8 +1,8 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
 import { toJS } from 'mobx'
 
-let getKey = x => x.keyAsString || x.key
+let getKey = (x) => x.keyAsString || x.key
 
 // Similar to Tree.lookup but path is a drilldown which uses keyAsString or key
 let resultsForDrilldown = (type, drilldown, results) => {
@@ -10,7 +10,7 @@ let resultsForDrilldown = (type, drilldown, results) => {
 
   let key = _.first(drilldown)
   let groups = _.get(type, results)
-  let match = _.find(node => getKey(node) === key, groups)
+  let match = _.find((node) => getKey(node) === key, groups)
 
   return resultsForDrilldown(type, drilldown.slice(1), match)
 }
@@ -52,7 +52,7 @@ let mergeResults = _.mergeWith((current, additional, prop) => {
 })
 
 let maybeRemoveSelectedRows = (extend, node) => {
-  let selectedRows = _.filter(rowPath => {
+  let selectedRows = _.filter((rowPath) => {
     let expansion = { type: 'rows', drilldown: _.initial(toJS(rowPath)) }
     let parentRowLoadedKeys = previouslyLoadedKeys(expansion, node.expansions)
     return (
@@ -133,7 +133,7 @@ let collapse = (tree, path, type, drilldown) => {
 
   // removing expansions under this drilldown level
   node.expansions = _.filter(
-    expansion =>
+    (expansion) =>
       expansion.type !== type ||
       !_.isEqual(
         // expantion.drilldown is not a child of drilldown
@@ -153,7 +153,7 @@ let collapse = (tree, path, type, drilldown) => {
 }
 
 export default {
-  validate: context =>
+  validate: (context) =>
     _.every(
       ({ type, ranges, percents }) =>
         (type !== 'numberRanges' && type !== 'percentiles') ||
