@@ -1,8 +1,8 @@
-import _ from 'lodash/fp'
-import ContextureClient, { encode, exampleTypes } from '../src'
+import _ from 'lodash/fp.js'
+import ContextureClient, { encode, exampleTypes } from './index.js'
 import Promise from 'bluebird'
-import mockService from '../src/mockService'
-import wrap from '../src/actions/wrap'
+import mockService from './mockService.js'
+import wrap from './actions/wrap.js'
 import { observable, toJS, set } from 'mobx'
 
 let mobxAdapter = { snapshot: toJS, extend: set, initObject: observable }
@@ -10,12 +10,14 @@ let ContextureMobx = _.curry((x, y) =>
   ContextureClient({ ...mobxAdapter, ...x })(y)
 )
 
-let addDelay = (delay, fn) => async (...args) => {
-  await Promise.delay(delay)
-  return fn(...args)
-}
+let addDelay =
+  (delay, fn) =>
+  async (...args) => {
+    await Promise.delay(delay)
+    return fn(...args)
+  }
 
-let AllTests = ContextureClient => {
+let AllTests = (ContextureClient) => {
   describe('should generally work', () => {
     // TODO: make these generally self contained - some rely on previous test runs
     let tree = {
@@ -379,7 +381,7 @@ let AllTests = ContextureClient => {
 
     let spy = jest.fn()
     // Just call the spy for `results`
-    let onResult = path => _.isEqual(path, ['root', 'results']) && spy()
+    let onResult = (path) => _.isEqual(path, ['root', 'results']) && spy()
     let Tree = ContextureClient(
       {
         service,
@@ -822,7 +824,7 @@ let AllTests = ContextureClient => {
       }
     )
     tree.addReactors(() => ({
-      onlySpecial: parent => _.filter('special', parent.children),
+      onlySpecial: (parent) => _.filter('special', parent.children),
     }))
     await tree.dispatch({ type: 'onlySpecial', path: ['root', 'b'] })
     expect(service).toBeCalledTimes(1)
@@ -1042,8 +1044,8 @@ let AllTests = ContextureClient => {
       facet: {
         reactors: { values: 'others' },
         subquery: {
-          useValues: x => ({ values: x }),
-          getValues: x => _.map('name', x.context.options),
+          useValues: (x) => ({ values: x }),
+          getValues: (x) => _.map('name', x.context.options),
         },
         defaults: {
           context: {
@@ -1114,8 +1116,8 @@ let AllTests = ContextureClient => {
       facet: {
         reactors: { values: 'others' },
         subquery: {
-          useValues: x => ({ values: x }),
-          getValues: x => _.map('name', x.context.options),
+          useValues: (x) => ({ values: x }),
+          getValues: (x) => _.map('name', x.context.options),
         },
         defaults: {
           context: {
@@ -1370,7 +1372,7 @@ let AllTests = ContextureClient => {
     expect(service).toBeCalledTimes(0)
 
     // Tags mutate has a self affecting reactor (`all`), which will triggerImmediate and bypass disableAutoUpdate
-    let toTags = _.map(word => ({ word }))
+    let toTags = _.map((word) => ({ word }))
     let calls = [
       tree.mutate(['root', 'filter1'], { tags: toTags(['1']) }),
       tree.mutate(['root', 'filter1'], { tags: toTags(['1', '2']) }),
@@ -1601,7 +1603,7 @@ let AllTests = ContextureClient => {
     })
     expect(tree.tree.children[1].key).toEqual('criteria')
     // Replace with a transform
-    await tree.replace(['root', 'criteria'], node => ({
+    await tree.replace(['root', 'criteria'], (node) => ({
       ...node,
       key: 'criteria1',
       values: [1, 2, 3],
@@ -1699,7 +1701,7 @@ let AllTests = ContextureClient => {
         },
       ],
     })
-    tree.addActions(config => wrap(config, tree))
+    tree.addActions((config) => wrap(config, tree))
     await tree.wrapInGroupReplace(['root', 'results'], {
       key: 'analytics',
       join: 'and',
@@ -1726,7 +1728,7 @@ let AllTests = ContextureClient => {
         },
       ],
     })
-    tree.addActions(config => wrap(config, tree))
+    tree.addActions((config) => wrap(config, tree))
     await tree.wrapInGroupInPlace(['root'], { key: 'newRootChild', join: 'or' })
 
     expect(tree.getNode(['newRootChild'])).toBeDefined()
@@ -1754,7 +1756,7 @@ let AllTests = ContextureClient => {
         },
       ],
     })
-    tree.addActions(config => wrap(config, tree))
+    tree.addActions((config) => wrap(config, tree))
     await tree.wrapInGroup(['root', 'results'], {
       key: 'analytics',
       join: 'and',
@@ -2107,7 +2109,7 @@ let AllTests = ContextureClient => {
     let node = Tree.getNode(['root', 'pivot'])
 
     // TODO test the loaded field population
-    let merge = results =>
+    let merge = (results) =>
       exampleTypes.pivot.mergeResponse(
         node,
         { context: { results } },
@@ -2167,7 +2169,7 @@ let AllTests = ContextureClient => {
     let node = Tree.getNode(['root', 'pivot'])
 
     // TODO test the loaded field population
-    let merge = results =>
+    let merge = (results) =>
       exampleTypes.pivot.mergeResponse(
         node,
         { context: { results } },

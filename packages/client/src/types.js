@@ -1,4 +1,4 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
 
 // Gets type a specific property from any of the places it might be - on the type in `types` or already on the node itself

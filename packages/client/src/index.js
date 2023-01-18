@@ -1,4 +1,4 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
 import {
   flatten,
@@ -8,21 +8,21 @@ import {
   decode,
   isParent,
   pathFromParents,
-} from './util/tree'
-import { validate } from './validation'
-import { getAffectedNodes, reactors } from './reactors'
-import actions from './actions'
-import serialize from './serialize'
-import traversals from './traversals'
-import { runTypeFunction, getTypeProp } from './types'
-import { initNode, hasContext, hasValue, dedupeWalk } from './node'
-import exampleTypes from './exampleTypes'
-import lens from './lens'
-import mockService from './mockService'
-import subquery from './subquery'
-import { setupListeners } from './listeners'
+} from './util/tree.js'
+import { validate } from './validation.js'
+import { getAffectedNodes, reactors } from './reactors.js'
+import actions from './actions/index.js'
+import serialize from './serialize.js'
+import traversals from './traversals.js'
+import { runTypeFunction, getTypeProp } from './types.js'
+import { initNode, hasContext, hasValue, dedupeWalk } from './node.js'
+import exampleTypes from './exampleTypes.js'
+import lens from './lens.js'
+import mockService from './mockService.js'
+import subquery from './subquery.js'
+import { setupListeners } from './listeners.js'
 
-let shouldBlockUpdate = tree => {
+let shouldBlockUpdate = (tree) => {
   let leaves = Tree.leaves(tree)
   let noUpdates = !tree.markedForUpdate
   let hasErrors = _.some('error', leaves)
@@ -64,7 +64,7 @@ export let ContextTree = _.curry(
       extend = F.extendOn,
       snapshot = _.cloneDeep,
       initObject = _.identity,
-      log = x => debug && console.info(x),
+      log = (x) => debug && console.info(x),
     },
     tree
   ) => {
@@ -75,7 +75,7 @@ export let ContextTree = _.curry(
     // initNode now generates node keys, so it must be run before flattening the tree
     dedupeWalk(initNode({ extend, types, snapshot }), tree)
     let flat = flatten(tree)
-    let getNode = path =>
+    let getNode = (path) =>
       // empty path returns root with tree lookup, but should be undefined to mimic flat tree
       !_.isEmpty(path) && Tree.lookup(_.drop(1, path), tree)
     //  flat[encode(path)]
@@ -93,13 +93,13 @@ export let ContextTree = _.curry(
     } = traversals(extend)
     let typeProp = getTypeProp(types)
 
-    let processEvent = event => path =>
+    let processEvent = (event) => (path) =>
       _.flow(
         getAffectedNodes(customReactors, getNode, types),
         // Mark children only if it's not a parent of the target so we don't incorrectly mark siblings
         // flatMap because traversing children can create arrays
         // groups that aren't properly marked here are taken care of by syncMarkedForUpdate right after
-        _.flatMap(n =>
+        _.flatMap((n) =>
           F.unless(
             isParent(snapshot(n.path), event.path),
             Tree.toArrayBy,
@@ -109,7 +109,7 @@ export let ContextTree = _.curry(
       )(event, path)
 
     // Event Handling
-    let dispatch = async event => {
+    let dispatch = async (event) => {
       log(`${event.type} event at ${event.path}`)
       if (debug) debugInfo.dispatchHistory.push(event)
       if (event.node)
@@ -131,7 +131,7 @@ export let ContextTree = _.curry(
       )(updatedNodes)
       if (!affectsSelf)
         await Promise.all(
-          _.map(n => {
+          _.map((n) => {
             // When updated by others, force replace instead of merge response
             extend(n, { forceReplaceResponse: true })
             runTypeFunction(types, 'onUpdateByOthers', n, extend)
@@ -148,7 +148,7 @@ export let ContextTree = _.curry(
     }
 
     // If specifying path, *only* update that path
-    let runUpdate = async path => {
+    let runUpdate = async (path) => {
       if (shouldBlockUpdate(tree)) return log('Blocked Search')
       let now = new Date().getTime()
       let node = getNode(path)
@@ -172,7 +172,7 @@ export let ContextTree = _.curry(
         await processResponse(await service(body, now))
       } catch (error) {
         // Clear updating
-        Tree.walk(node => {
+        Tree.walk((node) => {
           if (node.updating) {
             clearUpdate(node)
             node.updatingDeferred.resolve()
@@ -193,12 +193,12 @@ export let ContextTree = _.curry(
       F.debounceAsync(debounce, runUpdate)
     )
 
-    let triggerUpdate = path =>
+    let triggerUpdate = (path) =>
       (TreeInstance.disableAutoUpdate
         ? triggerImmediatePathUpdate
         : triggerDelayedPathUpdate)(encode(path))(path)
 
-    let processResponse = async data => {
+    let processResponse = async (data) => {
       // TODO: Remove these 3 deprecated lines in 3.0. Errors will just be on the tree so no need to wrap in `data` to allow `error`
       data = _.isEmpty(data.data) ? data : data.data
       let { error } = data
@@ -257,19 +257,19 @@ export let ContextTree = _.curry(
     }
 
     let TreeInstance = initObject({
-      serialize: path =>
+      serialize: (path) =>
         serialize(snapshot(path ? getNode(path) : tree), types, {}),
       tree,
       debugInfo,
       ...actionProps,
-      addReactors: create => F.extendOn(customReactors, create()),
+      addReactors: (create) => F.extendOn(customReactors, create()),
       onResult,
       onChange,
       disableAutoUpdate,
       processResponseNode,
     })
     setupListeners(TreeInstance)
-    TreeInstance.addActions = create =>
+    TreeInstance.addActions = (create) =>
       F.extendOn(TreeInstance, create(TreeInstance))
     TreeInstance.addActions(actions)
     TreeInstance.lens = lens(TreeInstance)

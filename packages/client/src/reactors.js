@@ -1,8 +1,8 @@
-import _ from 'lodash/fp'
+import _ from 'lodash/fp.js'
 import F from 'futil'
-import { hasContext, hasValue } from './node'
+import { hasContext, hasValue } from './node.js'
 
-let all = parent => _.toArray(parent.children)
+let all = (parent) => _.toArray(parent.children)
 let self = (parent, node) => [node]
 let others = (parent, node) =>
   parent.join === 'or' ? [] : _.without([node], _.toArray(parent.children))
@@ -66,7 +66,7 @@ export let getAffectedNodes = (reactors, lookup, types) => (event, path) => {
   let node = lookup(path)
   // Parent defaults to a fake root since reactors don't handle null parents
   let parent = lookup(_.dropRight(1, path)) || { children: [node] }
-  let reactor = x =>
+  let reactor = (x) =>
     F.maybeCall(reactors[x], parent, node, event, reactor, types, lookup)
   return reactor(event.type)
 }

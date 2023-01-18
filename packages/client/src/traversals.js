@@ -1,9 +1,9 @@
 import F from 'futil'
-import _ from 'lodash/fp'
-import { Tree } from './util/tree'
+import _ from 'lodash/fp.js'
+import { Tree } from './util/tree.js'
 
-export default extend => {
-  let markForUpdate = x => {
+export default (extend) => {
+  let markForUpdate = (x) => {
     if (x.paused) extend(x, { missedUpdate: true })
     else if (!x.markedForUpdate) {
       let updatingDeferred = F.defer()
@@ -18,7 +18,7 @@ export default extend => {
   }
   return {
     markForUpdate,
-    clearUpdate: node => extend(node, { updating: false, isStale: false }),
+    clearUpdate: (node) => extend(node, { updating: false, isStale: false }),
     syncMarkedForUpdate(tree) {
       // This method is to sync markedForUpdate/isStale
       //  in theory this could be a getter/setter or writeableComputed
@@ -28,7 +28,7 @@ export default extend => {
       let updatedNodes = []
       Tree.walk(
         () => {},
-        node => {
+        (node) => {
           if (_.some('markedForUpdate', node.children))
             updatedNodes.push(markForUpdate(node))
           else if (node.children)
@@ -40,11 +40,11 @@ export default extend => {
       )(tree)
       return updatedNodes
     },
-    markLastUpdate: time =>
-      Tree.walk(node => {
+    markLastUpdate: (time) =>
+      Tree.walk((node) => {
         if (node.markedForUpdate) extend(node, { lastUpdateTime: time })
       }),
-    prepForUpdate: Tree.walk(node => {
+    prepForUpdate: Tree.walk((node) => {
       if (node.markedForUpdate) {
         extend(node, {
           updating: true,
