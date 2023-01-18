@@ -1,6 +1,6 @@
 {
   "name": "contexture-client",
-  "version": "2.49.8",
+  "version": "2.49.9",
   "description": "The Contexture (aka ContextTree) Client",
   "type": "module",
   "main": "dist/esm/index.js",
