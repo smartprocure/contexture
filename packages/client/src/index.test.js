@@ -2342,6 +2342,31 @@ let AllTests = (ContextureClient) => {
 
     node.expand(Tree, ['root', 'pivot'], 'rows', ['Florida'])
 
+    // Changing the paused property shouldn't reset expansions
+    Tree.mutate(['root', 'pivot'], {
+      paused: true,
+    })
+    Tree.mutate(['root', 'pivot'], {
+      paused: false,
+    })
+    expect(toJS(Tree.getNode(['root', 'pivot']).expansions)).toEqual([
+      {
+        drilldown: [],
+        loaded: [],
+        type: 'columns',
+      },
+      {
+        drilldown: [],
+        loaded: [],
+        type: 'rows',
+      },
+      {
+        drilldown: ['Florida'],
+        loaded: false,
+        type: 'rows',
+      },
+    ])
+
     // Changing fieldValuesPartition matchValue does force replace
     Tree.mutate(['root', 'pivot'], {
       rows: _.set('0.matchValue', 'Nevada', rows),
