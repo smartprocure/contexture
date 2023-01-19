@@ -1,3 +1,7 @@
+# 2.49.10
+
+- Bring back package.json exports field
+
 # 2.49.9
 
 - Pivot node: Do not reset expansions on pause mutations

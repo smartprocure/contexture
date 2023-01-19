@@ -1,9 +1,18 @@
 {
   "name": "contexture-client",
-  "version": "2.49.9",
+  "version": "2.49.10",
   "description": "The Contexture (aka ContextTree) Client",
   "type": "module",
-  "main": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./*": {
+      "import": "./dist/esm/*",
+      "require": "./dist/cjs/*"
+    }
+  },
   "files": [
     "./dist"
   ],
