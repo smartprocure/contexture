@@ -1,4 +1,4 @@
-import dnd from 'react-dnd'
+import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 
-export default dnd.DragDropContext(HTML5Backend)
+export default DragDropContext(HTML5Backend)

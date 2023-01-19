@@ -1,3 +1,7 @@
+# 2.54.15
+
+- Fix query builder imports
+
 # 2.54.14
 
 - Fix grey-vest publishing v2
