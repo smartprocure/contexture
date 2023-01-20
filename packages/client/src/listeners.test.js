@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals'
 import _ from 'lodash/fp.js'
 import ContextureClient from './index.js'
 import mockService from './mockService.js'
