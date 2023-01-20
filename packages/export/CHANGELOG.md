@@ -1,4 +1,9 @@
-﻿# 1.0.8
+﻿# 1.0.9
+* Add exports to package.json so node knows which version of the code to import
+* Make sure default exports work when using this library from CommonJS
+* Do not use esbuild to transpile source when running tests. Instead use jest ESM support
+
+# 1.0.8
 * Use yarn
 * ESM source
 * Use esbuild to build before publishing
