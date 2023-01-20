@@ -1,10 +1,18 @@
 {
   "name": "contexture-mongo",
-  "version": "0.26.6",
+  "version": "0.26.7",
   "description": "Mongo Provider for Contexture",
   "type": "module",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./*": {
+      "import": "./dist/esm/*",
+      "require": "./dist/cjs/*"
+    }
+  },
   "files": [
     "./dist"
   ],
@@ -50,6 +58,7 @@
     "moment-timezone": "^0.5.28"
   },
   "devDependencies": {
+    "@flex-development/toggle-pkg-type": "^1.0.1",
     "contexture": "^0.0.4",
     "danger": "^11.1.2",
     "danger-plugin-coverage": "^1.6.2",
