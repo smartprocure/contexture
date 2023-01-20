@@ -1,10 +1,4 @@
-/* eslint-env node */
-
-/*
- * For a detailed explanation regarding each configuration property, visit:
- * https://jestjs.io/docs/configuration
- */
-
+/* https://jestjs.io/docs/configuration */
 export default {
   maxWorkers: 1,
   maxConcurrency: 1,

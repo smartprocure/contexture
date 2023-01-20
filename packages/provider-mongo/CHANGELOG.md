@@ -1,3 +1,7 @@
+### 0.26.7
+* Add exports to package.json so node knows which version of the code to import
+* Make sure default exports work when using this library from CommonJS
+
 ### 0.26.6
 * Fix some default imports/exports
 

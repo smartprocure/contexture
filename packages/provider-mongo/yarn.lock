@@ -590,6 +590,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@flex-development/toggle-pkg-type@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@flex-development/toggle-pkg-type@npm:1.0.1"
+  bin:
+    toggle-pkg-type: dist/cli.mjs
+  checksum: 6f1a3e73d707e57a06c240ff8172c741275ed388407528eba2f70ba9dff62907ae0d5efe4544ee3a09994b397125efb1392350023fa83e44411bcab48835da1d
+  languageName: node
+  linkType: hard
+
 "@gar/promisify@npm:^1.1.3":
   version: 1.1.3
   resolution: "@gar/promisify@npm:1.1.3"
@@ -2068,6 +2077,7 @@ __metadata:
   resolution: "contexture-mongo@workspace:."
   dependencies:
     "@elastic/datemath": ^2.3.0
+    "@flex-development/toggle-pkg-type": ^1.0.1
     bluebird: ^3.5.0
     contexture: ^0.0.4
     danger: ^11.1.2
