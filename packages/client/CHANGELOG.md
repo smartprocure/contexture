@@ -1,3 +1,7 @@
+# 2.49.12
+
+- Run tests with jest's ESM support. Remove esbuild-jest transform
+
 # 2.49.11
 
 - Fix default exports when library is being consumed from CommonJS. More info at https://esbuild.github.io/content-types/#default-interop
