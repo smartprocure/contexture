@@ -1,6 +1,6 @@
 {
   "name": "contexture-client",
-  "version": "2.49.10",
+  "version": "2.49.11",
   "description": "The Contexture (aka ContextTree) Client",
   "type": "module",
   "exports": {
@@ -40,6 +40,7 @@
     "lodash": "^4.17.15"
   },
   "devDependencies": {
+    "@flex-development/toggle-pkg-type": "^1.0.1",
     "danger": "^11.1.2",
     "danger-plugin-coverage": "^1.6.2",
     "duti": "^0.15.2",

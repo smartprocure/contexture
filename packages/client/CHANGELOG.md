@@ -1,3 +1,7 @@
+# 2.49.11
+
+- Fix default exports when library is being consumed from CommonJS. More info at https://esbuild.github.io/content-types/#default-interop
+
 # 2.49.10
 
 - Bring back package.json exports field
