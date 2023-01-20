@@ -1,3 +1,8 @@
+# 2.54.16
+
+- Add exports field to package.json
+- Fix default exports when library is being consumed from CommonJS. More info at https://esbuild.github.io/content-types/#default-interop
+
 # 2.54.15
 
 - Fix query builder imports
