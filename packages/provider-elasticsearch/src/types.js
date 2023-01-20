@@ -4,10 +4,8 @@ import * as exampleTypes from './example-types/index.js'
 // dependency (pivot needs all groupStats types)
 import pivot from './example-types/metricGroups/pivot.js'
 
-const unwrapDefault = x => x.default || x
-
 export default (config = {}) =>
-  F.mapValuesIndexed(
-    (x, type) => F.callOrReturn(unwrapDefault(x), config[type]),
-    { ...exampleTypes, pivot }
-  )
+  F.mapValuesIndexed((x, type) => F.callOrReturn(x, config[type]), {
+    ...exampleTypes,
+    pivot,
+  })
