@@ -1,10 +1,18 @@
 {
   "name": "contexture-elasticsearch",
-  "version": "1.19.7",
+  "version": "1.19.8",
   "description": "ElasticSearch Provider for Contexture",
   "type": "module",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./*": {
+      "import": "./dist/esm/*",
+      "require": "./dist/cjs/*"
+    }
+  },
   "files": [
     "./dist"
   ],
@@ -49,6 +57,7 @@
   },
   "devDependencies": {
     "@elastic/elasticsearch": "^7.11.0",
+    "@flex-development/toggle-pkg-type": "^1.0.1",
     "agentkeepalive": "^4.1.4",
     "contexture": "^0.12.11",
     "danger": "^11.1.2",
