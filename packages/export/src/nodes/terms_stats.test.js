@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals'
 import _ from 'lodash/fp.js'
 import terms_stats from './terms_stats.js'
 

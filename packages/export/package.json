@@ -1,17 +1,25 @@
 {
   "name": "contexture-export",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Contexture Exports",
   "type": "module",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./*": {
+      "import": "./dist/esm/*",
+      "require": "./dist/cjs/*"
+    }
+  },
   "files": [
     "./dist"
   ],
   "scripts": {
     "prepack": "node scripts/build.js",
-    "test": "jest",
-    "test:ci": "jest --coverage --json --outputFile test-results.json",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
+    "test:ci": "yarn test --coverage --json --outputFile test-results.json",
     "fmt": "prettier --ignore-path .gitignore --write src",
     "lint": "eslint --ignore-path .gitignore src",
     "lint:ci": "yarn lint -o lint-results.json -f json",
@@ -33,11 +41,11 @@
     "minimal-csv-formatter": "^1.0.15"
   },
   "devDependencies": {
+    "@flex-development/toggle-pkg-type": "^1.0.1",
     "danger": "^11.2.1",
     "danger-plugin-coverage": "^1.6.2",
     "duti": "^0.15.2",
     "esbuild": "^0.17.0",
-    "esbuild-jest": "^0.5.0",
     "eslint": "^8.31.0",
     "eslint-plugin-import": "^2.27.4",
     "glob": "^8.0.3",
