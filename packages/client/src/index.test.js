@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals'
 import _ from 'lodash/fp.js'
 import ContextureClient, { encode, exampleTypes } from './index.js'
 import Promise from 'bluebird'
