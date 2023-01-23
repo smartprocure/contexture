@@ -7,8 +7,8 @@ import { Observer } from 'mobx-react'
 import { Box } from '../../greyVest/index.js'
 import Contexture from 'contexture'
 import ContextureMobx from '../../utils/contexture-mobx.js'
-import memory from 'contexture/dist/esm/provider-memory/index.js'
-import types from 'contexture/dist/esm/provider-memory/exampleTypes.js'
+import memory from 'contexture/provider-memory/index.js'
+import types from 'contexture/provider-memory/exampleTypes.js'
 
 export default {
   title: 'ExampleTypes | ResultTable',
