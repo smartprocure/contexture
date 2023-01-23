@@ -1,10 +1,10 @@
-let _ = require('lodash/fp')
-let esTwoLevel = require('./esTwoLevelAggregation').result
+import _ from 'lodash/fp.js'
+import esTwoLevel from './esTwoLevelAggregation.js'
 
-module.exports = {
+export default {
   validContext: node => !!(node.key_field && node.value_field && node.ranges),
   result: (node, search) =>
-    esTwoLevel(
+    esTwoLevel.result(
       _.merge(
         {
           key_type: 'range',

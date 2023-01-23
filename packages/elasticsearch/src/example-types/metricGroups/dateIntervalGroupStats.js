@@ -1,6 +1,6 @@
-let _ = require('lodash/fp')
-let moment = require('moment')
-let { groupStats } = require('./groupStatUtils')
+import _ from 'lodash/fp.js'
+import moment from 'moment'
+import { groupStats } from './groupStatUtils.js'
 
 //translate meta data in interval names to match the contract for Elastic Search
 let toElasticInterval = _.flow(_.replace('fiscal', ''), _.toLower)
@@ -14,10 +14,7 @@ let drilldown = ({ field, interval, drilldown }) => {
   field = fieldFiscalMappingOr(field, interval)
   interval = toElasticInterval(interval)
   let gte = drilldown
-  let lte = moment
-    .parseZone(drilldown)
-    .endOf(interval)
-    .format()
+  let lte = moment.parseZone(drilldown).endOf(interval).format()
   return { range: { [field]: { gte, lte } } }
 }
 
@@ -80,7 +77,7 @@ let buildGroupQuery = (node, children, groupsKey) => {
   }
 }
 
-module.exports = {
+export default {
   ...groupStats(buildGroupQuery),
   drilldown,
 }

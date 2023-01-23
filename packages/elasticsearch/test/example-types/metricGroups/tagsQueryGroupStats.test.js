@@ -1,8 +1,7 @@
-let {
-  buildQuery,
-  // buildGroupQuery,
-} = require('../../../src/example-types/metricGroups/tagsQueryGroupStats')
-let { testSchema } = require('../testUtils')
+import tagsQueryGroupStats from '../../../src/example-types/metricGroups/tagsQueryGroupStats.js'
+import { testSchema } from '../testUtils.js'
+
+let { buildQuery } = tagsQueryGroupStats
 
 describe('tagsQueryGroupStats', () => {
   it('should buildQuery', () => {

@@ -1,7 +1,6 @@
-/* eslint-env mocha */
-let _ = require('lodash/fp')
-let F = require('futil')
-let { sequentialResultTest } = require('./testUtils')
+import _ from 'lodash/fp.js'
+import F from 'futil'
+import { sequentialResultTest } from './testUtils.js'
 
 describe('results', () => {
   let schema

@@ -1,8 +1,8 @@
-let _ = require('lodash/fp')
-let esTwoLevel = require('./esTwoLevelAggregation').result
-let { not } = require('../../utils/elasticDSL')
+import _ from 'lodash/fp.js'
+import esTwoLevel from './esTwoLevelAggregation.js'
+import { not } from '../../utils/elasticDSL.js'
 
-module.exports = {
+export default {
   validContext: node => node.key_field && node.value_field && node.key_value,
   result(node, search) {
     let filter = {
@@ -10,7 +10,7 @@ module.exports = {
         [node.key_field]: node.key_value,
       },
     }
-    return esTwoLevel(
+    return esTwoLevel.result(
       _.merge(
         {
           key_type: 'filters',

@@ -1,40 +1,70 @@
-module.exports = {
-  // Filtering Only Types
-  geo: require('./filters/geo'),
-  bool: require('./filters/bool'),
-  date: require('./filters/date'),
-  text: require('./filters/text'),
-  query: require('./filters/query'),
-  exists: require('./filters/exists'),
-  tagsText: require('./filters/tagsText'),
-  tagsQuery: require('./filters/tagsQuery'),
+// Filtering Only Types
+import geo from './filters/geo.js'
+import bool from './filters/bool.js'
+import date from './filters/date.js'
+import text from './filters/text.js'
+import query from './filters/query.js'
+import exists from './filters/exists.js'
+import tagsText from './filters/tagsText.js'
+import tagsQuery from './filters/tagsQuery.js'
 
-  // Combo Filter + Results
-  facet: require('./filters/facet'),
-  number: require('./filters/number'),
-  dateRangeFacet: require('./filters/dateRangeFacet'),
+// Combo Filter + Results
+import facet from './filters/facet.js'
+import number from './filters/number.js'
+import dateRangeFacet from './filters/dateRangeFacet.js'
 
-  // Single Metrics
-  results: require('./results'),
-  stats: require('./metricGroups/stats'),
-  fieldValuesDelta: require('./metricGroups/fieldValuesDelta'),
+// Single Metrics
+import results from './results.js'
+import stats from './metricGroups/stats.js'
+import fieldValuesDelta from './metricGroups/fieldValuesDelta.js'
 
-  // Metric Groups
-  fieldValuesGroupStats: require('./metricGroups/fieldValuesGroupStats'),
-  percentilesGroupStats: require('./metricGroups/percentilesGroupStats'),
-  dateIntervalGroupStats: require('./metricGroups/dateIntervalGroupStats'),
-  dateRangesGroupStats: require('./metricGroups/dateRangesGroupStats'),
-  numberRangesGroupStats: require('./metricGroups/numberRangesGroupStats'),
-  numberIntervalGroupStats: require('./metricGroups/numberIntervalGroupStats'),
-  fieldValuePartitionGroupStats: require('./metricGroups/fieldValuePartitionGroupStats'),
-  tagsQueryGroupStats: require('./metricGroups/tagsQueryGroupStats'),
+// Metric Groups
+import fieldValuesGroupStats from './metricGroups/fieldValuesGroupStats.js'
+import percentilesGroupStats from './metricGroups/percentilesGroupStats.js'
+import dateIntervalGroupStats from './metricGroups/dateIntervalGroupStats.js'
+import dateRangesGroupStats from './metricGroups/dateRangesGroupStats.js'
+import numberRangesGroupStats from './metricGroups/numberRangesGroupStats.js'
+import numberIntervalGroupStats from './metricGroups/numberIntervalGroupStats.js'
+import fieldValuePartitionGroupStats from './metricGroups/fieldValuePartitionGroupStats.js'
+import tagsQueryGroupStats from './metricGroups/tagsQueryGroupStats.js'
 
-  // Legacy (covered by metric groups)
-  statistical: require('./legacy/statistical'),
-  cardinality: require('./legacy/cardinality'),
-  terms_stats: require('./legacy/terms_stats'),
-  dateHistogram: require('./legacy/dateHistogram'),
-  rangeStats: require('./legacy/rangeStats'),
-  smartIntervalHistogram: require('./legacy/smartIntervalHistogram'),
-  matchStats: require('./legacy/matchStats'),
+// Legacy (covered by metric groups)
+import statistical from './legacy/statistical.js'
+import cardinality from './legacy/cardinality.js'
+import terms_stats from './legacy/terms_stats.js'
+import dateHistogram from './legacy/dateHistogram.js'
+import rangeStats from './legacy/rangeStats.js'
+import smartIntervalHistogram from './legacy/smartIntervalHistogram.js'
+import matchStats from './legacy/matchStats.js'
+
+export {
+  geo,
+  bool,
+  date,
+  text,
+  query,
+  exists,
+  tagsText,
+  tagsQuery,
+  facet,
+  number,
+  dateRangeFacet,
+  results,
+  stats,
+  fieldValuesDelta,
+  fieldValuesGroupStats,
+  percentilesGroupStats,
+  dateIntervalGroupStats,
+  dateRangesGroupStats,
+  numberRangesGroupStats,
+  numberIntervalGroupStats,
+  fieldValuePartitionGroupStats,
+  tagsQueryGroupStats,
+  statistical,
+  cardinality,
+  terms_stats,
+  dateHistogram,
+  rangeStats,
+  smartIntervalHistogram,
+  matchStats,
 }

@@ -1,4 +1,4 @@
-function calcSmartInterval(min, max) {
+export let calcSmartInterval = (min, max) => {
   let range = Math.max(Math.round(max - min), 1)
   // 1 order of magnitude less and at least 1
   let interval = Math.max(Math.pow(10, Math.floor(Math.log10(range)) - 1), 1)
@@ -11,8 +11,4 @@ function calcSmartInterval(min, max) {
   else if (highestDigit <= 9) interval *= 5
 
   return Math.floor(interval)
-}
-
-module.exports = {
-  calcSmartInterval,
 }

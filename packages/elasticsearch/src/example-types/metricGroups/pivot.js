@@ -1,10 +1,12 @@
-let F = require('futil')
-let _ = require('lodash/fp')
-let { getStats } = require('./stats')
-let { getField } = require('../../utils/fields')
-let types = require('../../../src/example-types')
-let { basicSimplifyTree, and, not, or } = require('../../utils/elasticDSL')
-let { compactMapAsync } = require('../../utils/futil')
+import F from 'futil'
+import _ from 'lodash/fp.js'
+import stats from './stats.js'
+import { getField } from '../../utils/fields.js'
+import * as types from '../../example-types/index.js'
+import { basicSimplifyTree, and, not, or } from '../../utils/elasticDSL.js'
+import { compactMapAsync } from '../../utils/futil.js'
+
+let { getStats } = stats
 
 let everyEmpty = _.flow(_.flattenDeep, _.every(_.isEmpty))
 
@@ -398,7 +400,10 @@ let createPivotScope = (node, schema, getStats) => {
           })
         )
         // disabling the filters as we already used them
-        drilldownColumnFilters = includeColumnFilters = skipColumnFilters = false
+        drilldownColumnFilters =
+          includeColumnFilters =
+          skipColumnFilters =
+            false
       } else {
         statsAggs = columnsStatsAggs
       }
@@ -552,7 +557,7 @@ let filter = async (node, schema) => {
   )
 }
 
-let pivot = {
+export default {
   hasValue,
   filter,
   createPivotScope,
@@ -616,4 +621,3 @@ let pivot = {
     return results
   },
 }
-module.exports = pivot

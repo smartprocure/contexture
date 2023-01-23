@@ -1,7 +1,7 @@
-let {
+import {
   highlightResults,
   arrayToHighlightsFieldMap,
-} = require('../../src/utils/highlighting')
+} from '../../src/utils/highlighting.js'
 
 describe('highlighting', () => {
   describe('highlightResults', () => {

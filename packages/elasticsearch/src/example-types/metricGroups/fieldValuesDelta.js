@@ -1,6 +1,6 @@
-let _ = require('lodash/fp')
-let { getField } = require('../../utils/fields')
-let { buildFilter, elasticsearchIntegerMax } = require('../../utils/elasticDSL')
+import _ from 'lodash/fp.js'
+import { getField } from '../../utils/fields.js'
+import { buildFilter, elasticsearchIntegerMax } from '../../utils/elasticDSL.js'
 
 let buildQuery = (
   { groupField, background, foreground, size = elasticsearchIntegerMax },
@@ -19,7 +19,7 @@ let buildQuery = (
 })
 
 // NOTE: does not export buildGroupQuery because it doesn't make sense with pivot
-module.exports = {
+export default {
   buildQuery,
   validContext: node => node.groupField && node.foreground && node.background,
   async result(node, search, schema) {

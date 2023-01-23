@@ -1,5 +1,5 @@
-let _ = require('lodash/fp')
-let { pickSafeNumbers } = require('../../utils/futil')
+import _ from 'lodash/fp.js'
+import { pickSafeNumbers } from '../../utils/futil.js'
 
 let filter = ({ field, min, max }) => ({
   range: { [field]: pickSafeNumbers({ gte: min, lte: max }) },
@@ -55,7 +55,7 @@ let result = async (node, search) => {
   return { bestRange: { min, max } }
 }
 
-module.exports = {
+export default {
   hasValue: ({ min, max }) => !_.isNil(min) || !_.isNil(max),
   filter,
   validContext: node => node.findBestRange,

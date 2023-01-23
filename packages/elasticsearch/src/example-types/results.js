@@ -1,12 +1,12 @@
-let F = require('futil')
-let _ = require('lodash/fp')
-let {
+import F from 'futil'
+import _ from 'lodash/fp.js'
+import {
   highlightResults,
   arrayToHighlightsFieldMap,
-} = require('../utils/highlighting')
-let { getField } = require('../utils/fields')
+} from '../utils/highlighting.js'
+import { getField } from '../utils/fields.js'
 
-module.exports = {
+export default {
   validContext: () => true,
   result(node, search, schema) {
     let page = (node.page || 1) - 1

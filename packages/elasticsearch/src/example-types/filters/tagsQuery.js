@@ -1,8 +1,7 @@
-let _ = require('lodash/fp')
-let F = require('futil')
-let { parens, quote } = F
-let Combinatorics = require('js-combinatorics')
-let { stripLegacySubFields } = require('../../utils/fields')
+import _ from 'lodash/fp.js'
+import F from 'futil'
+import Combinatorics from 'js-combinatorics'
+import { stripLegacySubFields } from '../../utils/fields.js'
 
 let maxTagCount = 100
 
@@ -20,7 +19,7 @@ let wordPermutations = _.flow(
 let addQuotesAndDistance = _.curry((tag, text) => {
   // Multiple words
   if (_.includes(' ', text)) {
-    return quote(text) + (tag.distance ? `~${tag.distance}` : '')
+    return F.quote(text) + (tag.distance ? `~${tag.distance}` : '')
   }
   // Single word.
   // Note: ~1 for misspellings allows for the insertion, deletion or substitution of a single character, or transposition of two adjacent characters.
@@ -38,13 +37,13 @@ let tagToQueryString = tag => {
   let _tag = replaceReservedChars(tag.word)
 
   if (tag.distance === 'unlimited') {
-    return parens(_tag.replace(/\s+/g, ' AND '))
+    return F.parens(_tag.replace(/\s+/g, ' AND '))
   } else if (!tag.distance && tag.anyOrder) {
     return _.flow(
       wordPermutations,
       _.map(addQuotesAndDistance(tag)),
       _.join(' OR '),
-      parens
+      F.parens
     )(_tag)
   } else {
     return addQuotesAndDistance(tag, _tag)
@@ -111,7 +110,7 @@ let validContext = node => {
   return tagsCount && tagsCount <= maxTagCount
 }
 
-module.exports = {
+export default {
   wordPermutations,
   limitResultsToCertainTags,
   addQuotesAndDistance,

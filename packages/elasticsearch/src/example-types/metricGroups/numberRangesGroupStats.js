@@ -1,5 +1,5 @@
-let _ = require('lodash/fp')
-let { groupStats } = require('./groupStatUtils')
+import _ from 'lodash/fp.js'
+import { groupStats } from './groupStatUtils.js'
 
 let buildGroupQuery = (
   { field, ranges },
@@ -32,7 +32,7 @@ let drilldown = ({ field, drilldown }) => {
   return { range: { [field]: { gte, lt } } }
 }
 
-module.exports = {
+export default {
   ...groupStats(buildGroupQuery),
   validContext: node => node.groupField && node.ranges,
   drilldown,

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   count: 10000,
   rows: [
     {
@@ -1006,8 +1006,7 @@ module.exports = {
           ],
         },
         {
-          key:
-            'California State University Office of the Chancellor, California',
+          key: 'California State University Office of the Chancellor, California',
           count: 932066,
           columns: [
             {
@@ -1683,8 +1682,7 @@ module.exports = {
           ],
         },
         {
-          key:
-            'Department of Defense: Defense Logistics Agency - Central, Virginia',
+          key: 'Department of Defense: Defense Logistics Agency - Central, Virginia',
           count: 5304835,
           columns: [
             {
@@ -3412,8 +3410,7 @@ module.exports = {
           ],
         },
         {
-          key:
-            'University of Illinois at Chicago, Urbana-Champaign, and Springfield, Illinois',
+          key: 'University of Illinois at Chicago, Urbana-Champaign, and Springfield, Illinois',
           count: 862791,
           columns: [
             {

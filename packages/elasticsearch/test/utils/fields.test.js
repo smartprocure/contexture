@@ -1,4 +1,4 @@
-let { getField } = require('../../src/utils/fields')
+import { getField } from '../../src/utils/fields.js'
 
 describe('field utils', () => {
   it('getField should work', () => {

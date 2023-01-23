@@ -1,7 +1,6 @@
-let {
-  buildQuery,
-  drilldown,
-} = require('../../../src/example-types/metricGroups/numberIntervalGroupStats')
+import numberIntervalGroupStats from '../../../src/example-types/metricGroups/numberIntervalGroupStats.js'
+
+let { buildQuery, drilldown } = numberIntervalGroupStats
 
 describe('numberIntervalGroupStats', () => {
   it('should buildQuery', async () => {

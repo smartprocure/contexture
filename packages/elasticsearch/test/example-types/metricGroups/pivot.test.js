@@ -1,14 +1,13 @@
-let _ = require('lodash/fp')
-let {
-  filter,
-  createPivotScope,
-} = require('../../../src/example-types/metricGroups/pivot')
-let { testSchema, testSchemas } = require('../testUtils')
-let pivotResponse = require('./pivotData/pivotResponse')
-let pivotResponseWithFilteredFieldValueGroup = require('./pivotData/pivotResponseWithFilteredFieldValueGroup')
-let columnResponse = require('./pivotData/columnResponse')
-let columnResult = require('./pivotData/columnResult')
-let stringify = require('json-stable-stringify')
+import _ from 'lodash/fp.js'
+import pivot from '../../../src/example-types/metricGroups/pivot.js'
+import { testSchema, testSchemas } from '../testUtils.js'
+import pivotResponse from './pivotData/pivotResponse.js'
+import pivotResponseWithFilteredFieldValueGroup from './pivotData/pivotResponseWithFilteredFieldValueGroup.js'
+import columnResponse from './pivotData/columnResponse.js'
+import columnResult from './pivotData/columnResult.js'
+import stringify from 'json-stable-stringify'
+
+let { filter, createPivotScope } = pivot
 
 let rowsExpansion = {
   type: 'rows',
@@ -842,15 +841,12 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
-    let {
-      findNotLoadedExpansion,
-      getInitialRequest,
-      buildQuery,
-    } = createPivotScope(
-      input,
-      testSchemas(['Vendor.City']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+    let { findNotLoadedExpansion, getInitialRequest, buildQuery } =
+      createPivotScope(
+        input,
+        testSchemas(['Vendor.City']),
+        () => {} // getStats(search) -> stats(field, statsArray)
+      )
     let result = await buildQuery(getInitialRequest(findNotLoadedExpansion()))
     expect(result).toEqual(expected)
   })
@@ -1010,15 +1006,12 @@ describe('pivot', () => {
       },
       track_total_hits: true,
     }
-    let {
-      findNotLoadedExpansion,
-      getInitialRequest,
-      buildQuery,
-    } = createPivotScope(
-      input,
-      testSchemas(['Vendor.City']),
-      () => {} // getStats(search) -> stats(field, statsArray)
-    )
+    let { findNotLoadedExpansion, getInitialRequest, buildQuery } =
+      createPivotScope(
+        input,
+        testSchemas(['Vendor.City']),
+        () => {} // getStats(search) -> stats(field, statsArray)
+      )
     let result = await buildQuery(getInitialRequest(findNotLoadedExpansion()))
     expect(result).toEqual(expected)
   })

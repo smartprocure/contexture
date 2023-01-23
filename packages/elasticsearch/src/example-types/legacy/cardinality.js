@@ -1,6 +1,6 @@
-let { getField } = require('../../utils/fields')
+import { getField } from '../../utils/fields.js'
 
-module.exports = {
+export default {
   validContext: node => node.field,
   result: ({ field }, search, schema) =>
     search({

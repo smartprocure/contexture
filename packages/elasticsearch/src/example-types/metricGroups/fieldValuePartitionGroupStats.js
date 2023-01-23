@@ -1,7 +1,7 @@
-let F = require('futil')
-let { simplifyBuckets } = require('../../utils/elasticDSL')
-let { getField } = require('../../utils/fields')
-let { buildGroupStatsQuery } = require('./groupStatUtils')
+import F from 'futil'
+import { simplifyBuckets } from '../../utils/elasticDSL.js'
+import { getField } from '../../utils/fields.js'
+import { buildGroupStatsQuery } from './groupStatUtils.js'
 
 let drilldown = ({ field, matchValue, drilldown }, schema) => {
   let filter = { term: { [getField(schema, field)]: matchValue } }
@@ -25,7 +25,7 @@ let buildGroupQuery = ({ field, matchValue }, children, groupKey, schema) => ({
 let buildQuery = buildGroupStatsQuery(buildGroupQuery)
 
 let getGroups = aggs => F.unkeyBy('key', aggs.groups.buckets)
-module.exports = {
+export default {
   getGroups,
   buildQuery,
   buildGroupQuery,

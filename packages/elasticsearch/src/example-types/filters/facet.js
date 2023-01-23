@@ -1,10 +1,10 @@
-let _ = require('lodash/fp')
-let F = require('futil')
-let { buildRegexQueryForWords } = require('../../utils/regex')
-let { getField } = require('../../utils/fields')
-let { not, elasticsearchIntegerMax } = require('../../utils/elasticDSL')
+import _ from 'lodash/fp.js'
+import F from 'futil'
+import { buildRegexQueryForWords } from '../../utils/regex.js'
+import { getField } from '../../utils/fields.js'
+import { not, elasticsearchIntegerMax } from '../../utils/elasticDSL.js'
 
-module.exports = {
+export default {
   hasValue: _.get('values.length'),
   filter(node, schema) {
     let field = getField(schema, node.field)

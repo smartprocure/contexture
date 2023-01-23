@@ -1,13 +1,13 @@
-let F = require('futil')
-let _ = require('lodash/fp')
-let { rollingRangeToDates, getDateIfValid } = require('../../utils/dateUtil')
+import F from 'futil'
+import _ from 'lodash/fp.js'
+import { rollingRangeToDates, getDateIfValid } from '../../utils/dateUtil.js'
 
 let hasValue = ({ from, to, range }) =>
   range &&
   range !== 'allDates' &&
   ((range === 'exact' && (from || to)) || range !== 'exact')
 
-module.exports = {
+export default {
   hasValue,
   // NOTE: timezone is only used for rolling dates
   filter({ field, range, isDateTime, timezone = 'UTC', ...node }) {

@@ -1,5 +1,6 @@
-let _ = require('lodash/fp')
-let F = require('futil')
+import _ from 'lodash/fp.js'
+import F from 'futil'
+
 let metrics = [
   'avg',
   'max',
@@ -22,7 +23,7 @@ let hasValidMetrics = node => !_.difference(node.include, metrics).length
 //   value_field: '',
 //   value_data: {}
 // }
-module.exports = {
+export default {
   validContext: node =>
     node.key_field && node.key_type && node.value_field && node.value_type,
   result(node, search) {
