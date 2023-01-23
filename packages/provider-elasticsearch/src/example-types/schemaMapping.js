@@ -1,5 +1,5 @@
-let _ = require('lodash/fp')
-let F = require('futil')
+import _ from 'lodash/fp.js'
+import F from 'futil'
 
 let addNodeType = x => {
   let type = x.elasticsearch.dataType
@@ -29,10 +29,7 @@ let addNodeType = x => {
     x
   )
 }
-let exampleTypeSchemaMapping = _.mapValues(
+
+export let exampleTypeSchemaMapping = _.mapValues(
   _.update('fields', _.mapValues(addNodeType))
 )
-
-module.exports = {
-  exampleTypeSchemaMapping,
-}

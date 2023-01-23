@@ -1,4 +1,5 @@
-let provider = require('../src/index')
+import { jest } from '@jest/globals'
+import provider from '../src/index.js'
 
 const requestOptions = {
   headers: {

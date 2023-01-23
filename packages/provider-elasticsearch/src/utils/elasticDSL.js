@@ -1,14 +1,14 @@
-let _ = require('lodash/fp')
-let F = require('futil')
-let {
+import _ from 'lodash/fp.js'
+import F from 'futil'
+import {
   keysToEmptyObjects,
   mapFlatKeys,
   mapStringParts,
   renameOn,
-} = require('./futil')
+} from './futil.js'
 
 // Rename metricProps keys?   include -> _.source.includes, sort -> order, etc
-let buildMetrics = (field, metrics = ['min', 'max', 'avg', 'sum']) =>
+export let buildMetrics = (field, metrics = ['min', 'max', 'avg', 'sum']) =>
   F.mapValuesIndexed(
     (metricProps, metric) => ({
       [_.snakeCase(metric)]: F.omitNil({
@@ -19,11 +19,11 @@ let buildMetrics = (field, metrics = ['min', 'max', 'avg', 'sum']) =>
     F.when(_.isArray, keysToEmptyObjects, metrics)
   )
 
-let statsAggs = (field, stats) =>
+export let statsAggs = (field, stats) =>
   field ? { aggs: buildMetrics(field, stats) } : {}
 
 // x => F.cascade(['value', 'values', 'hits'], x, x)
-let flattenMetrics = x => {
+export let flattenMetrics = x => {
   // Single value metrics always return value
   if (_.has('value', x)) return x.value
   // Multi value metrics can return values
@@ -33,24 +33,28 @@ let flattenMetrics = x => {
   // Multi value metrics can also return objects (like stats, extended_stats, etc):
   return x
 }
-let renameMetrics = x => {
+
+export let renameMetrics = x => {
   if (x === 'doc_count') return 'count'
   // special case pivotMetric so we don't rename the auto keys
   if (_.startsWith('pivotMetric-', x)) return _.replace('pivotMetric-', '', x)
   return _.camelCase(x)
 }
-let simplifyBucket = _.flow(
+
+export let simplifyBucket = _.flow(
   _.mapValues(flattenMetrics),
   _.mapKeys(renameMetrics)
 )
-let simplifyBuckets = _.flow(
+
+export let simplifyBuckets = _.flow(
   F.when(_.isPlainObject, F.unkeyBy('key')),
   _.map(simplifyBucket)
 )
+
 // VERY hacky and inefficient tree simpification
 // inefficient due to copying the entire tree to flatten, again to unflatten, and running regex replaces on EVERY key
 // This will be superseeded by a transmuteTree version later :)
-let basicSimplifyTree = _.flow(
+export let basicSimplifyTree = _.flow(
   mapFlatKeys(
     _.flow(
       // flatten out buckets
@@ -97,24 +101,24 @@ let basicSimplifyTree = _.flow(
 )
 
 let flatCompact = _.flow(_.flattenDeep, _.compact)
+
 let unlessEmpty = onNotEmpty =>
   _.flow(
     F.when(_.isArray, flatCompact),
     F.ifElse(_.negate(_.isEmpty), onNotEmpty, false)
   )
 
-module.exports = {
-  statsAggs,
-  buildMetrics,
-  simplifyBucket,
-  simplifyBuckets,
-  basicSimplifyTree,
-  renameMetrics,
-  flattenMetrics,
-  // https://www.elastic.co/guide/en/elasticsearch/reference/current/number.html#number
-  elasticsearchIntegerMax: 2 ** 31 - 1,
-  and: unlessEmpty(must => ({ bool: { must } })),
-  or: unlessEmpty(should => ({ bool: { should, minimum_should_match: 1 } })),
-  not: unlessEmpty(must_not => ({ bool: { must_not } })),
-  buildFilter: ({ type, field, ...rest }) => ({ [type]: { [field]: rest } }),
-}
+// https://www.elastic.co/guide/en/elasticsearch/reference/current/number.html#number
+export let elasticsearchIntegerMax = 2 ** 31 - 1
+
+export let and = unlessEmpty(must => ({ bool: { must } }))
+
+export let or = unlessEmpty(should => ({
+  bool: { should, minimum_should_match: 1 },
+}))
+
+export let not = unlessEmpty(must_not => ({ bool: { must_not } }))
+
+export let buildFilter = ({ type, field, ...rest }) => ({
+  [type]: { [field]: rest },
+})

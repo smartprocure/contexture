@@ -1,6 +1,6 @@
-let F = require('futil')
-let _ = require('lodash/fp')
-let { getDateIfValid, rollingRangeToDates } = require('../../utils/dateUtil')
+import F from 'futil'
+import _ from 'lodash/fp.js'
+import { getDateIfValid, rollingRangeToDates } from '../../utils/dateUtil.js'
 
 let getDateRange = (range, timezone) => {
   let { from, to } = rollingRangeToDates(range, timezone)
@@ -10,7 +10,7 @@ let getDateRange = (range, timezone) => {
   })
 }
 
-module.exports = {
+export default {
   hasValue: _.get('values.length'),
   /**
    * VALID CONTEXT

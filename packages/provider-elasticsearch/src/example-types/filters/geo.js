@@ -1,6 +1,6 @@
-let { not } = require('../../utils/elasticDSL')
+import { not } from '../../utils/elasticDSL.js'
 
-module.exports = {
+export default {
   hasValue: ({ latitude, longitude, radius, operator }) =>
     !!(latitude && longitude && radius && operator),
   filter({ field, latitude, longitude, radius, operator }) {

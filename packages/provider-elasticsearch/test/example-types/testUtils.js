@@ -1,8 +1,11 @@
-const F = require('futil')
-const _ = require('lodash/fp')
-const types = require('../../src/example-types')
+/* eslint import/namespace: ['error', { allowComputed: true }] */
 
-let sequentialResultTest = _.curry(
+import F from 'futil'
+import _ from 'lodash/fp.js'
+import { jest } from '@jest/globals'
+import * as types from '../../src/example-types/index.js'
+
+export let sequentialResultTest = _.curry(
   async (getService, node, expectedResult, expectedCalls, schema = {}) => {
     let service
 
@@ -42,24 +45,25 @@ let sequentialResultTest = _.curry(
 
 let toBe = y => x => expect(x).toBe(y)
 
-module.exports = {
-  validContexts: type => F.flowMap(type.validContext, toBe(true)),
-  noValidContexts: type => F.flowMap(type.validContext, toBe(false)),
-  hasValueContexts: type => F.flowMap(type.hasValue, toBe(true)),
-  noValueContexts: type => F.flowMap(type.hasValue, toBe(false)),
-  sequentialResultTest,
+export let validContexts = type => F.flowMap(type.validContext, toBe(true))
 
-  testSchema: (field, notAnalyzedField = 'untouched') => ({
-    fields: { [field]: { elasticsearch: { notAnalyzedField } } },
-  }),
-  testSchemas: (fields, notAnalyzedField = 'untouched') => ({
-    fields: _.reduce(
-      (result, field) => ({
-        [field]: { elasticsearch: { notAnalyzedField } },
-        ...result,
-      }),
-      {},
-      fields
-    ),
-  }),
-}
+export let noValidContexts = type => F.flowMap(type.validContext, toBe(false))
+
+export let hasValueContexts = type => F.flowMap(type.hasValue, toBe(true))
+
+export let noValueContexts = type => F.flowMap(type.hasValue, toBe(false))
+
+export let testSchema = (field, notAnalyzedField = 'untouched') => ({
+  fields: { [field]: { elasticsearch: { notAnalyzedField } } },
+})
+
+export let testSchemas = (fields, notAnalyzedField = 'untouched') => ({
+  fields: _.reduce(
+    (result, field) => ({
+      [field]: { elasticsearch: { notAnalyzedField } },
+      ...result,
+    }),
+    {},
+    fields
+  ),
+})

@@ -1,10 +1,10 @@
-let _ = require('lodash/fp')
+import _ from 'lodash/fp.js'
 
-let toSafeRegex = _.flow(_.replace(/[.?+*|{}[\]()]/g, ' '), _.trim)
+export let toSafeRegex = _.flow(_.replace(/[.?+*|{}[\]()]/g, ' '), _.trim)
 
 let regexPartsForWords = _.flow(_.trim, _.split(/\s+/g), _.map(toSafeRegex))
 
-let buildRegexQueryForWords = field =>
+export let buildRegexQueryForWords = field =>
   _.flow(
     regexPartsForWords,
     _.map(x => ({
@@ -17,8 +17,3 @@ let buildRegexQueryForWords = field =>
     })),
     x => ({ bool: { must: x } })
   )
-
-module.exports = {
-  toSafeRegex,
-  buildRegexQueryForWords,
-}

@@ -1,3 +1,7 @@
+# 1.19.8
+* ESM source
+* Use esbuild to build before publishing
+
 # 1.19.7
 * [pivot] refactor `filterGroupRanges` implementation and make pivot `buildGroupQuery` drilldown aware
 

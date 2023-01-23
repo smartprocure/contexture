@@ -1,3 +1,6 @@
+import tagsQuery from '../../../src/example-types/filters/tagsQuery.js'
+import _ from 'lodash/fp.js'
+
 let {
   wordPermutations,
   limitResultsToCertainTags,
@@ -10,8 +13,7 @@ let {
   filter,
   buildResultQuery,
   result,
-} = require('../../../src/example-types/filters/tagsQuery')
-let _ = require('lodash/fp')
+} = tagsQuery
 
 describe('wordPermutations', () => {
   it('should handle empty string', () => {

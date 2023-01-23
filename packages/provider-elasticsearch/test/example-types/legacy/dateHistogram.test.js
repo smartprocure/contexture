@@ -1,4 +1,4 @@
-let sequentialResultTest = require('../testUtils').sequentialResultTest
+import { sequentialResultTest } from '../testUtils.js'
 
 describe('dateHistogram', () => {
   let test = (...x) =>

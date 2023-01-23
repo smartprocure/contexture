@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   validContext: node => node.field,
   result: ({ field }, search) =>
     search({ aggs: { statistical: { stats: { field } } } }).then(

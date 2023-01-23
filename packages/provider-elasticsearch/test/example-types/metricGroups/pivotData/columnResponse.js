@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   took: 1188,
   timed_out: false,
   _shards: {
@@ -1366,8 +1366,7 @@ module.exports = {
                 },
               },
               {
-                key:
-                  'California State University Office of the Chancellor, California',
+                key: 'California State University Office of the Chancellor, California',
                 doc_count: 932066,
                 columns: {
                   buckets: [
@@ -2211,8 +2210,7 @@ module.exports = {
             sum_other_doc_count: 13090303,
             buckets: [
               {
-                key:
-                  'Department of Defense: Defense Logistics Agency, Virginia',
+                key: 'Department of Defense: Defense Logistics Agency, Virginia',
                 doc_count: 22465914,
                 columns: {
                   buckets: [
@@ -2276,8 +2274,7 @@ module.exports = {
                 },
               },
               {
-                key:
-                  'Department of Defense: Defense Logistics Agency - Central, Virginia',
+                key: 'Department of Defense: Defense Logistics Agency - Central, Virginia',
                 doc_count: 5304835,
                 columns: {
                   buckets: [
@@ -2405,8 +2402,7 @@ module.exports = {
                 },
               },
               {
-                key:
-                  'Defense Contract Management Agency (DCMA) - DLA, Virginia',
+                key: 'Defense Contract Management Agency (DCMA) - DLA, Virginia',
                 doc_count: 2509426,
                 columns: {
                   buckets: [
@@ -2534,8 +2530,7 @@ module.exports = {
                 },
               },
               {
-                key:
-                  'Virginia Polytechnic Institute And State University, Virginia',
+                key: 'Virginia Polytechnic Institute And State University, Virginia',
                 doc_count: 1242113,
                 columns: {
                   buckets: [
@@ -4593,8 +4588,7 @@ module.exports = {
                 },
               },
               {
-                key:
-                  'University of Illinois at Chicago, Urbana-Champaign, and Springfield, Illinois',
+                key: 'University of Illinois at Chicago, Urbana-Champaign, and Springfield, Illinois',
                 doc_count: 862791,
                 columns: {
                   buckets: [
@@ -4730,8 +4724,7 @@ module.exports = {
                 },
               },
               {
-                key:
-                  'Kane County Community Unit School District No. 300, Illinois',
+                key: 'Kane County Community Unit School District No. 300, Illinois',
                 doc_count: 304182,
                 columns: {
                   buckets: [
@@ -5641,8 +5634,7 @@ module.exports = {
                 },
               },
               {
-                key:
-                  'Michigan State Department Of Health & Human Services, Michigan',
+                key: 'Michigan State Department Of Health & Human Services, Michigan',
                 doc_count: 156867,
                 columns: {
                   buckets: [

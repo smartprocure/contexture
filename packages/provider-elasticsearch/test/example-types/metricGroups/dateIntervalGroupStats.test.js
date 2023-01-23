@@ -1,7 +1,6 @@
-let {
-  buildQuery,
-  drilldown,
-} = require('../../../src/example-types/metricGroups/dateIntervalGroupStats')
+import dateIntervalGroupStats from '../../../src/example-types/metricGroups/dateIntervalGroupStats.js'
+
+let { buildQuery, drilldown } = dateIntervalGroupStats
 
 describe('dateIntervalGroupStats', () => {
   it('should buildQuery', () => {

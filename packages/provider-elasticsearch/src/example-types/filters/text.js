@@ -1,10 +1,10 @@
-let _ = require('lodash/fp')
-let unidecode = require('unidecode')
-let { toSafeRegex } = require('../../utils/regex')
-let { not } = require('../../utils/elasticDSL')
-let { getField, stripLegacySubFields } = require('../../utils/fields')
+import _ from 'lodash/fp.js'
+import unidecode from 'unidecode'
+import { toSafeRegex } from '../../utils/regex.js'
+import { not } from '../../utils/elasticDSL.js'
+import { getField, stripLegacySubFields } from '../../utils/fields.js'
 
-module.exports = {
+export default {
   hasValue: node => node.value || _.get('values.length', node),
   filter(node, schema) {
     let fieldName = stripLegacySubFields(node.field)

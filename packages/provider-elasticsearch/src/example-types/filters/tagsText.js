@@ -1,8 +1,8 @@
-let _ = require('lodash/fp')
-let text = require('./text')
+import _ from 'lodash/fp.js'
+import text from './text.js'
 
 // `tagsText` is just text with only values and not value
-module.exports = {
+export default {
   hasValue: _.get('values.length'),
   filter: text.filter,
 }

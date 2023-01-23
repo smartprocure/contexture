@@ -1,9 +1,10 @@
-let F = require('futil')
-let _ = require('lodash/fp')
+import F from 'futil'
+import _ from 'lodash/fp.js'
 
 function regexify(criteria) {
   return new RegExp(criteria)
 }
+
 function anyRegexesMatch(regexes, criteria) {
   return _.some(_.invokeMap(_.map(regexify, regexes), 'test', criteria))
 }
@@ -11,24 +12,19 @@ function anyRegexesMatch(regexes, criteria) {
 // Convert the fields array to object map where we only pick the first key from the objects
 // Highlight fields can be either strings or objects with a single key which value is the ES highlights object config
 // If the highlight field is specific as a string only then it uses the default highlights config
-let arrayToHighlightsFieldMap = _.flow(
+export let arrayToHighlightsFieldMap = _.flow(
   _.map(F.when(_.isString, x => ({ [x]: {} }))),
   F.ifElse(_.isEmpty, _.always({}), _.mergeAll)
 )
 
 // TODO: Support multiple pathToNesteds...
-function highlightResults(highlightFields, hit, pathToNested, include) {
+export let highlightResults = (highlightFields, hit, pathToNested, include) => {
   // TODO: Support Regex and Function basis for all options
 
   // Handle Results Highlighting
   let additionalFields = []
-  let {
-    additional,
-    additionalExclusions,
-    inline,
-    inlineAliases,
-    nested,
-  } = highlightFields
+  let { additional, additionalExclusions, inline, inlineAliases, nested } =
+    highlightFields
   let inlineKeys = _.keys(arrayToHighlightsFieldMap(inline))
 
   F.eachIndexed((value, key) => {
@@ -65,7 +61,7 @@ function highlightResults(highlightFields, hit, pathToNested, include) {
 
         let field = key.replace(`${pathToNested}.`, '')
         // For arrays, strip the highlighting wrapping and compare to the array contents to match up
-        _.each(function(val) {
+        _.each(function (val) {
           let originalValue = val.replace(/<b>|<\/b>/g, '')
           let childItem = _.find(
             item => item[field] === originalValue,
@@ -128,9 +124,4 @@ function highlightResults(highlightFields, hit, pathToNested, include) {
     additionalFields,
     mainHighlighted,
   }
-}
-
-module.exports = {
-  highlightResults,
-  arrayToHighlightsFieldMap,
 }

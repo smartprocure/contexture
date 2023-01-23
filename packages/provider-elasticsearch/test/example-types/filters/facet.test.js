@@ -1,6 +1,7 @@
-let _ = require('lodash/fp')
-let facet = require('../../../src/example-types/filters/facet')
-let { sequentialResultTest, testSchema } = require('../testUtils')
+import _ from 'lodash/fp.js'
+import facet from '../../../src/example-types/filters/facet.js'
+import { sequentialResultTest, testSchema } from '../testUtils.js'
+
 let facetTest = sequentialResultTest([
   {
     aggregations: {
@@ -246,8 +247,7 @@ describe('facet', () => {
                     doc_count: 2552446,
                   },
                   {
-                    key:
-                      'Virginia Polytechnic Institute And State University, VA',
+                    key: 'Virginia Polytechnic Institute And State University, VA',
                     doc_count: 1358257,
                   },
                 ],
@@ -338,8 +338,7 @@ describe('facet', () => {
                     doc_count: 2552446,
                   },
                   {
-                    key:
-                      'Virginia Polytechnic Institute And State University, VA',
+                    key: 'Virginia Polytechnic Institute And State University, VA',
                     doc_count: 1358257,
                   },
                 ],

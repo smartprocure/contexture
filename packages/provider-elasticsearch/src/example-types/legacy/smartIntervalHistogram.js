@@ -1,12 +1,12 @@
-let _ = require('lodash/fp')
-let statsResults = require('./statistical').result
-let calcSmartInterval = require('../../utils/smartInterval').calcSmartInterval
+import _ from 'lodash/fp.js'
+import stats from './statistical.js'
+import { calcSmartInterval } from '../../utils/smartInterval.js'
 
-module.exports = {
+export default {
   validContext: node => node.field,
   async result({ key, field, interval }, search) {
     if (!interval) {
-      let { min, max } = await statsResults({ key, field }, search)
+      let { min, max } = await stats.result({ key, field }, search)
       interval = calcSmartInterval(min, max)
     }
     let results = await search({

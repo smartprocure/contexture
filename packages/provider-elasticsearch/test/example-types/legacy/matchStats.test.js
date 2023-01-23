@@ -1,4 +1,4 @@
-const sequentialResultTest = require('../testUtils').sequentialResultTest
+import { sequentialResultTest } from '../testUtils.js'
 
 describe('matchStats', () => {
   let test = (...x) =>

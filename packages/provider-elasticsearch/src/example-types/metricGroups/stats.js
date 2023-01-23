@@ -1,4 +1,4 @@
-let { statsAggs, simplifyBucket } = require('../../utils/elasticDSL')
+import { statsAggs, simplifyBucket } from '../../utils/elasticDSL.js'
 
 let buildQuery = ({ statsField, stats }) => statsAggs(statsField, stats)
 
@@ -7,7 +7,7 @@ let result = async (node, search) => {
   return simplifyBucket(response.aggregations)
 }
 
-module.exports = {
+export default {
   buildQuery,
   validContext: node => node.statsField,
   result,

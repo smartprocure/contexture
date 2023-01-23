@@ -1,7 +1,7 @@
-let _ = require('lodash/fp')
-let { buildRegexQueryForWords } = require('../../utils/regex')
-let { getField } = require('../../utils/fields')
-let { groupStats } = require('./groupStatUtils')
+import _ from 'lodash/fp.js'
+import { buildRegexQueryForWords } from '../../utils/regex.js'
+import { getField } from '../../utils/fields.js'
+import { groupStats } from './groupStatUtils.js'
 
 let getSortField = field => {
   if (field === 'count') return '_count'
@@ -65,7 +65,7 @@ let buildGroupQueryWithDefaultSortField = (node, ...args) =>
 let getGroups = aggs => (aggs.valueFilter || aggs).groups.buckets
 
 // We don't want the default sort field for pivot, but we do for this node type
-module.exports = {
+export default {
   ...groupStats(buildGroupQueryWithDefaultSortField),
   buildGroupQuery,
   getGroups,

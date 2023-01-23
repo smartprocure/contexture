@@ -1,7 +1,6 @@
-let {
-  buildQuery,
-  result,
-} = require('../../../src/example-types/metricGroups/stats')
+import stats from '../../../src/example-types/metricGroups/stats.js'
+
+let { buildQuery, result } = stats
 
 describe('stats', () => {
   it('should buildQuery', () => {
@@ -83,8 +82,7 @@ describe('stats', () => {
               {
                 _index: 'sp-data-20200814-lit',
                 _type: 'line-item-type',
-                _id:
-                  '74013_Date|Vendor-11_16_2015|Revolution_Electronic_Repair__LLC_3',
+                _id: '74013_Date|Vendor-11_16_2015|Revolution_Electronic_Repair__LLC_3',
                 _score: 1.0,
                 _source: {
                   Description:
@@ -97,12 +95,10 @@ describe('stats', () => {
               {
                 _index: 'sp-data-20200814-lit',
                 _type: 'line-item-type',
-                _id:
-                  '74013_Date|Vendor-11_16_2015|Revolution_Electronic_Repair__LLC_10',
+                _id: '74013_Date|Vendor-11_16_2015|Revolution_Electronic_Repair__LLC_10',
                 _score: 1.0,
                 _source: {
-                  ID:
-                    '74013_Date|Vendor-11_16_2015|Revolution_Electronic_Repair__LLC_10',
+                  ID: '74013_Date|Vendor-11_16_2015|Revolution_Electronic_Repair__LLC_10',
                   Description:
                     'IPAD Repairs - Cracked Glass Repair - DKVM20CMDJ8T',
                   Quantity: 1,
@@ -142,8 +138,7 @@ describe('stats', () => {
           {
             _index: 'sp-data-20200814-lit',
             _type: 'line-item-type',
-            _id:
-              '74013_Date|Vendor-11_16_2015|Revolution_Electronic_Repair__LLC_3',
+            _id: '74013_Date|Vendor-11_16_2015|Revolution_Electronic_Repair__LLC_3',
             _score: 1.0,
             _source: {
               Description: 'IPAD Repairs - Bad Display Repair - DMRHRQTVDJ8T',
@@ -155,12 +150,10 @@ describe('stats', () => {
           {
             _index: 'sp-data-20200814-lit',
             _type: 'line-item-type',
-            _id:
-              '74013_Date|Vendor-11_16_2015|Revolution_Electronic_Repair__LLC_10',
+            _id: '74013_Date|Vendor-11_16_2015|Revolution_Electronic_Repair__LLC_10',
             _score: 1.0,
             _source: {
-              ID:
-                '74013_Date|Vendor-11_16_2015|Revolution_Electronic_Repair__LLC_10',
+              ID: '74013_Date|Vendor-11_16_2015|Revolution_Electronic_Repair__LLC_10',
               Description: 'IPAD Repairs - Cracked Glass Repair - DKVM20CMDJ8T',
               Quantity: 1,
               TotalPrice: 85,
