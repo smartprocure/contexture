@@ -1,3 +1,8 @@
+# 2.54.17
+
+- Bump contexture/contexture-client
+- eslint: Support package.json exports field
+
 # 2.54.16
 
 - Add exports field to package.json

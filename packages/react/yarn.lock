@@ -5938,13 +5938,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"contexture-client@npm:^2.49.5":
-  version: 2.49.5
-  resolution: "contexture-client@npm:2.49.5"
+"contexture-client@npm:^2.49.12":
+  version: 2.49.12
+  resolution: "contexture-client@npm:2.49.12"
   dependencies:
     futil: ^1.71.8
     lodash: ^4.17.15
-  checksum: fa80186172ab1dfa9573af262cc58fce2297daf0d3e64b330feb62bb31670abd20b049aa73320f871a7427e13b8ddcf640d2e94a02afbd2c2bef42266a9e41e3
+  checksum: b86ea3c444a8549a92e4ce88a21dda9144cbaed5bc3ce5994344207caf40edfd7847998d319897f333bdac3ce729abdb63e02c91c8fe551908ea2f2d78c9abd8
   languageName: node
   linkType: hard
 
@@ -5977,8 +5977,8 @@ __metadata:
     "@storybook/react": ^6.3.7
     "@storybook/source-loader": ^6.3.7
     "@storybook/storybook-deployer": ^2.8.10
-    contexture: ^0.12.11
-    contexture-client: ^2.49.5
+    contexture: ^0.12.12
+    contexture-client: ^2.49.12
     contexture-elasticsearch: ^1.13.0
     danger: ^11.2.1
     duti: ^0.15.2
@@ -5986,6 +5986,7 @@ __metadata:
     emoji-datasource: ^5.0.1
     esbuild: ^0.16.17
     eslint: ^8.31.0
+    eslint-import-resolver-exports: ^1.0.0-beta.4
     eslint-plugin-import: ^2.27.4
     eslint-plugin-react: ^7.32.0
     futil: ^1.71.8
@@ -6020,9 +6021,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"contexture@npm:^0.12.11":
-  version: 0.12.11
-  resolution: "contexture@npm:0.12.11"
+"contexture@npm:^0.12.12":
+  version: 0.12.12
+  resolution: "contexture@npm:0.12.12"
   dependencies:
     "@elastic/datemath": ^5.0.3
     date-fns: ^2.11.1
@@ -6030,7 +6031,7 @@ __metadata:
     lodash: ^4.17.21
     moment: ^2.24.0
     moment-timezone: ^0.5.28
-  checksum: b975c869d5bb28974b64152004b71eb1d60175bb847e35bf0d111c25d14f76f41180017f56a60222d020f1132d79dd66ba5e596838b54f25b0843685f252c526
+  checksum: d6b089d85750b6fe53c3b497b4ab8362384b22ed528bb3b001f44ca321e4d9e185a94c736ec39c168a8dcb1eede1ac34944037aa498ed4f1d1fd107e67b1c455
   languageName: node
   linkType: hard
 
@@ -7298,6 +7299,18 @@ __metadata:
     escodegen: bin/escodegen.js
     esgenerate: bin/esgenerate.js
   checksum: 5aa6b2966fafe0545e4e77936300cc94ad57cfe4dc4ebff9950492eaba83eef634503f12d7e3cbd644ecc1bab388ad0e92b06fd32222c9281a75d1cf02ec6cef
+  languageName: node
+  linkType: hard
+
+"eslint-import-resolver-exports@npm:^1.0.0-beta.4":
+  version: 1.0.0-beta.4
+  resolution: "eslint-import-resolver-exports@npm:1.0.0-beta.4"
+  dependencies:
+    resolve.exports: ^1.1.1
+  peerDependencies:
+    eslint: "*"
+    eslint-plugin-import: "*"
+  checksum: bb18cbc5fd02990285cc55973ca4ced44ce3381c70cd9efffd641bc45772c0436fd0d9a4626b270546941399e1324e7e91a1dfbceb0703e152eb9596b095507a
   languageName: node
   linkType: hard
 
@@ -13637,6 +13650,13 @@ __metadata:
   version: 0.2.1
   resolution: "resolve-url@npm:0.2.1"
   checksum: 7b7035b9ed6e7bc7d289e90aef1eab5a43834539695dac6416ca6e91f1a94132ae4796bbd173cdacfdc2ade90b5f38a3fb6186bebc1b221cd157777a23b9ad14
+  languageName: node
+  linkType: hard
+
+"resolve.exports@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "resolve.exports@npm:1.1.1"
+  checksum: 485aa10082eb388a569d696e17ad7b16f4186efc97dd34eadd029d95b811f21ffee13b1b733198bb4584dbb3cb296aa6f141835221fb7613b9606b84f1386655
   languageName: node
   linkType: hard
 
