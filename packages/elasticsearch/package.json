@@ -1,0 +1,75 @@
+{
+  "name": "contexture-elasticsearch",
+  "version": "1.19.8",
+  "description": "ElasticSearch Provider for Contexture",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./*": {
+      "import": "./dist/esm/*",
+      "require": "./dist/cjs/*"
+    }
+  },
+  "files": [
+    "./dist"
+  ],
+  "scripts": {
+    "prepack": "node scripts/build.js",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
+    "test:ci": "yarn test --coverage --json --outputFile test-results.json",
+    "fmt": "prettier --ignore-path .gitignore --write src test",
+    "lint": "eslint --ignore-path .gitignore src test",
+    "lint:ci": "yarn lint -o lint-results.json -f json",
+    "duti:fix": "yarn lint --fix; yarn fmt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smartprocure/contexture-elasticsearch.git"
+  },
+  "keywords": [
+    "contexture",
+    "elasticsearch"
+  ],
+  "author": "Samuel Greene",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smartprocure/contexture-elasticsearch/issues"
+  },
+  "homepage": "https://github.com/smartprocure/contexture-elasticsearch#readme",
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "semi": false,
+    "arrowParens": "avoid"
+  },
+  "dependencies": {
+    "@elastic/datemath": "^2.3.0",
+    "debug": "^4.3.1",
+    "futil": "^1.71.8",
+    "js-combinatorics": "^0.5.3",
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1",
+    "moment-timezone": "^0.5.28",
+    "unidecode": "^0.1.8"
+  },
+  "devDependencies": {
+    "@elastic/elasticsearch": "^7.11.0",
+    "@flex-development/toggle-pkg-type": "^1.0.1",
+    "agentkeepalive": "^4.1.4",
+    "contexture": "^0.12.11",
+    "danger": "^11.1.2",
+    "danger-plugin-coverage": "^1.6.2",
+    "duti": "^0.15.2",
+    "esbuild": "^0.16.17",
+    "eslint": "^8.31.0",
+    "eslint-plugin-import": "^2.27.4",
+    "glob": "^8.0.3",
+    "jest": "^29.0.2",
+    "json-stable-stringify": "^1.0.1",
+    "prettier": "^2.8.2"
+  },
+  "packageManager": "yarn@3.2.0"
+}
