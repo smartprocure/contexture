@@ -1,0 +1,33 @@
+import { Icon } from '@material-ui/core'
+import React from 'react'
+
+let iconMap = {
+  SortAscending: 'expand_less',
+  SortDescending: 'expand_more',
+  MoveLeft: 'chevron_left',
+  MoveRight: 'chevron_right',
+  RemoveColumn: 'remove',
+  AddColumn: 'add',
+  FilterExpand: 'filter_alt',
+  FilterCollapse: 'filter_list',
+  FilterAdd: 'filter_list',
+  TableColumnMenu: 'more_vert',
+  FilterListExpand: 'add',
+  FilterListCollapse: 'remove',
+  TreePause: 'remove_circle_outline',
+  TreeUnpause: 'add_circle_outline',
+  PreviousPage: 'chevron_left',
+  NextPage: 'chevron_right',
+  Previous5Pages: 'more_horiz',
+  Next5Pages: 'more_horiz',
+  Refresh: 'refresh',
+  AutoUpdate: 'autorenew',
+  New: 'fiber_new',
+  Expand: 'keyboard_arrow_down',
+}
+
+export default ({ icon, ...props }) => (
+  <Icon fontSize="small" {...props}>
+    {iconMap[icon]}
+  </Icon>
+)
