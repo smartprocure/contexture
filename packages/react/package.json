@@ -1,0 +1,108 @@
+{
+  "name": "contexture-react",
+  "version": "2.54.17",
+  "description": "React components for building contexture interfaces",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./*": {
+      "import": "./dist/esm/*",
+      "require": "./dist/cjs/*"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepack": "node scripts/build.js",
+    "fmt": "prettier --ignore-path .gitignore --write .",
+    "lint": "eslint --ignore-path .gitignore .",
+    "lint:ci": "yarn lint -o lint-results.json -f json",
+    "duti:fix": "yarn lint --fix && yarn fmt",
+    "start": "npm run storybook",
+    "storybook": "start-storybook -p 3001",
+    "storybook:build": "build-storybook",
+    "storybook:deploy": "storybook-to-ghpages",
+    "update-pkg": "node scripts/updatePackage.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smartprocure/contexture-react.git"
+  },
+  "author": {
+    "name": "Samuel Greene"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smartprocure/contexture-react/issues"
+  },
+  "homepage": "https://github.com/smartprocure/contexture-react#readme",
+  "peerDependencies": {
+    "mobx": ">=4.0.0",
+    "mobx-react": ">=6.3.0",
+    "mobx-utils": ">=5.0.0",
+    "react": "^16.8.0 || ^17.0.0"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false
+  },
+  "storybook-deployer": {
+    "commitMessage": "Deploy Storybook [ci skip]"
+  },
+  "devDependencies": {
+    "@date-io/moment": "^1.3.9",
+    "@flex-development/toggle-pkg-type": "^1.0.1",
+    "@material-ui/core": "^4.3.3",
+    "@material-ui/pickers": "^3.2.3",
+    "@storybook/addon-actions": "^6.3.7",
+    "@storybook/addon-docs": "^6.3.7",
+    "@storybook/react": "^6.3.7",
+    "@storybook/source-loader": "^6.3.7",
+    "@storybook/storybook-deployer": "^2.8.10",
+    "contexture": "^0.12.12",
+    "contexture-client": "^2.49.12",
+    "contexture-elasticsearch": "^1.13.0",
+    "danger": "^11.2.1",
+    "duti": "^0.15.2",
+    "elasticsearch-browser": "^14.2.2",
+    "emoji-datasource": "^5.0.1",
+    "esbuild": "^0.16.17",
+    "eslint": "^8.31.0",
+    "eslint-import-resolver-exports": "^1.0.0-beta.4",
+    "eslint-plugin-import": "^2.27.4",
+    "eslint-plugin-react": "^7.32.0",
+    "glob": "^8.0.3",
+    "material-ui-chip-input": "^1.0.0",
+    "mobx": ">=4.0.0",
+    "mobx-react": ">=6.3.0",
+    "mobx-utils": ">=5.0.0",
+    "moment": "^2.24.0",
+    "prettier": "^2.8.2",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "react-select": "^2.0.0",
+    "react-test-renderer": "^16.2.0",
+    "read-pkg": "^5.2.0",
+    "write-pkg": "^4.0.0"
+  },
+  "dependencies": {
+    "futil": "^1.71.8",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "pluralize": "^8.0.0",
+    "prop-types": "^15.7.2",
+    "react-date-picker": "^7.2.0",
+    "react-dnd": "^2.5.4",
+    "react-dnd-html5-backend": "^2.5.4",
+    "react-measure": "^2.3.0",
+    "react-outside-click-handler": "^1.2.3",
+    "react-recompose": "^0.31.2",
+    "reactjs-popup": "^2.0.4"
+  },
+  "readme": "README.mdx",
+  "packageManager": "yarn@3.3.1"
+}

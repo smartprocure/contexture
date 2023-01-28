@@ -1,0 +1,33 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/recommended",
+    "plugin:react/recommended"
+  ],
+  "ignorePatterns": ["dist", "node_modules", "!.storybook"],
+  "parserOptions": {
+    "ecmaVersion": "2022",
+    "sourceType": "module",
+    "ecmaFeatures": { "jsx": true }
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "jest": true,
+    "es2022": true
+  },
+  "rules": {
+    "import/extensions": [2, { "js": "always" }],
+    "react/display-name": "off",
+    "react/prop-types": "off"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "node": {},
+      "exports": {}
+    }
+  }
+}
