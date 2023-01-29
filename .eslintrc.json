@@ -1,0 +1,21 @@
+{
+  "extends": ["eslint:recommended", "plugin:import/recommended"],
+  "ignorePatterns": ["dist", "node_modules"],
+  "parserOptions": {
+    "ecmaVersion": "2022",
+    "sourceType": "module"
+  },
+  "env": {
+    "es2022": true
+  },
+  "rules": {
+    "import/extensions": [2, { "js": "always" }]
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "extensions": [".js", ".jsx"]
+      }
+    }
+  }
+}

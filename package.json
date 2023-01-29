@@ -4,5 +4,14 @@
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "foreach": "yarn workspaces foreach --no-private --parallel --verbose",
+    "lint": "yarn foreach run lint",
+    "lint:ci": "yarn foreach run lint:ci"
+  },
+  "devDependencies": {
+    "eslint-import-resolver-typescript": "^3.5.3",
+    "eslint-plugin-import": "^2.27.5"
+  },
   "packageManager": "yarn@3.3.1"
 }
