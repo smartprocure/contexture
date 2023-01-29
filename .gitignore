@@ -1,0 +1,18 @@
+# Dependency directories
+node_modules/
+
+# Build output
+dist
+
+# Duti stuff
+test-results.json
+lint-results.json
+
+# Yarn stuff: https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
