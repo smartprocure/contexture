@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import date from '../../src/example-types/date.js'
 
-let dateBuilder = data =>
+let dateBuilder = (data) =>
   _.extend(
     {
       key: 'test',

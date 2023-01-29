@@ -4,14 +4,14 @@ import F from 'futil'
 export let maybeAppend = (suffix, str) =>
   _.endsWith(suffix, str) ? str : str + suffix
 
-export let keysToObject = F.arrayToObject(x => x) // futil candidate from exports
+export let keysToObject = F.arrayToObject((x) => x) // futil candidate from exports
 
 export let keysToEmptyObjects = keysToObject(() => ({}))
 
 export let pickNumbers = _.pickBy(_.isNumber)
 
 // toNumber but without casting null and '' to 0
-export let safeNumber = value => !F.isBlank(value) && _.toNumber(value)
+export let safeNumber = (value) => !F.isBlank(value) && _.toNumber(value)
 
 export let pickSafeNumbers = _.flow(_.mapValues(safeNumber), pickNumbers)
 
@@ -58,7 +58,7 @@ export let transmuteTree = (
     })
   )
 
-export let logJSON = result => console.info(JSON.stringify(result, null, 2))
+export let logJSON = (result) => console.info(JSON.stringify(result, null, 2))
 
 // Returns a proxy array that represents a virtual concatenation of two arrays
 // Reading/writing this virtual array reads/writes the underlying arrays (and doesn't clone)
@@ -81,7 +81,7 @@ export let virtualConcat = (a1 = [], a2 = []) =>
   })
 
 // Flattens an object, runs mapKeys, then unflattens
-export let mapFlatKeys = fn =>
+export let mapFlatKeys = (fn) =>
   _.flow(F.flattenObject, _.mapKeys(fn), F.unflattenObject)
 
 // Splits and joins a string on a delimiter, running a mapper over the parts

@@ -3,10 +3,11 @@ import 'mingo/init/system.js' // needed on each test that initializes mingo
 import mingo from 'mingo'
 import termsStats from '../../src/example-types/termsStats.js'
 
-let aggregate = sampleData => aggs => new mingo.Aggregator(aggs).run(sampleData)
+let aggregate = (sampleData) => (aggs) =>
+  new mingo.Aggregator(aggs).run(sampleData)
 
 let simulateAggregation = aggregate(
-  _.times(i => ({ name: `#${i % 5}`, metrics: { usersCount: i * 100 } }), 50)
+  _.times((i) => ({ name: `#${i % 5}`, metrics: { usersCount: i * 100 } }), 50)
 )
 
 describe('termsStats', () => {
@@ -14,7 +15,7 @@ describe('termsStats', () => {
     it('result should output the expected query and results', async () => {
       let query = null
       let search = _.flow(
-        _.tap(x => (query = x)),
+        _.tap((x) => (query = x)),
         simulateAggregation
       )
 

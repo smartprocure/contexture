@@ -2,7 +2,7 @@ import _ from 'lodash/fp.js'
 import esTwoLevel from './esTwoLevelAggregation.js'
 
 export default {
-  validContext: node => !!(node.key_field && node.value_field && node.ranges),
+  validContext: (node) => !!(node.key_field && node.value_field && node.ranges),
   result: (node, search) =>
     esTwoLevel.result(
       _.merge(

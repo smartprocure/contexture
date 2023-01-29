@@ -1,7 +1,7 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
 
-let addNodeType = x => {
+let addNodeType = (x) => {
   let type = x.elasticsearch.dataType
   let hasNested = x.elasticsearch.notAnalyzedField
   let typeDefault = F.alias(type, {

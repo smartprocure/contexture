@@ -25,17 +25,17 @@ describe('results', () => {
 
   let resultsTests = ({ wrap }) => {
     let getSimpleService = () =>
-      jest.fn(tree => {
+      jest.fn((tree) => {
         let response = {
           totalRecords: 3,
-          results: simpleRecords.map(_source => ({ _source })),
+          results: simpleRecords.map((_source) => ({ _source })),
         }
         _.last(tree.children).context = wrap ? { response } : response
         return tree
       })
 
     let prepareSimpleStrategy =
-      service =>
+      (service) =>
       async (strategyParams = {}) => {
         let tree = _.cloneDeep(defaultTree)
         let include = ['a', 'b', 'c']

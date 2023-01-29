@@ -4,7 +4,7 @@ import Types from '../src/types.js'
 describe('All Example Types', () => {
   it('should load', () => {
     let types = Types()
-    expect(_.sortBy(x => x, _.keys(types))).toEqual([
+    expect(_.sortBy((x) => x, _.keys(types))).toEqual([
       'bool',
       'cardinality',
       'date',

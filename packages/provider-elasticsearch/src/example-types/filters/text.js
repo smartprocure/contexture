@@ -5,7 +5,7 @@ import { not } from '../../utils/elasticDSL.js'
 import { getField, stripLegacySubFields } from '../../utils/fields.js'
 
 export default {
-  hasValue: node => node.value || _.get('values.length', node),
+  hasValue: (node) => node.value || _.get('values.length', node),
   filter(node, schema) {
     let fieldName = stripLegacySubFields(node.field)
     let filterParts = node.values || node.value.toLowerCase().split(' ')
@@ -16,7 +16,7 @@ export default {
     if (useQueryString) {
       let result = {
         query_string: {
-          query: _.map(x => `"${x}"`, filterParts).join(' '),
+          query: _.map((x) => `"${x}"`, filterParts).join(' '),
           default_field: fieldName,
           default_operator: node.join === 'all' ? 'AND' : 'OR',
           ...(node.operator === 'containsExact' && { analyzer: 'exact' }),
@@ -41,7 +41,7 @@ export default {
 
     let filter = {
       bool: {
-        [join]: _.map(f => {
+        [join]: _.map((f) => {
           let value = f
             .toLowerCase()
             .replace('*', '')

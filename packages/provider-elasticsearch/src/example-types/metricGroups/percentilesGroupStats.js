@@ -6,10 +6,10 @@ import { groupStats } from './groupStatUtils.js'
 // [1, 2, 3] -> [{to: 1}, {from: 1, to: 2}, {from: 2, to: 3}, {from: 3}]
 let boundariesToRanges = _.flow(
   F.mapIndexed((to, i, list) => F.compactObject({ from: list[i - 1], to })),
-  arr => F.push({ from: _.last(arr).to }, arr)
+  (arr) => F.push({ from: _.last(arr).to }, arr)
 )
 
-let drilldownToRange = drilldown => {
+let drilldownToRange = (drilldown) => {
   let [gte, lt] = _.split('-', drilldown)
   return pickSafeNumbers({ gte, lt })
 }

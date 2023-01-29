@@ -3,7 +3,7 @@ import { buildRegexQueryForWords } from '../../utils/regex.js'
 import { getField } from '../../utils/fields.js'
 import { groupStats } from './groupStatUtils.js'
 
-let getSortField = field => {
+let getSortField = (field) => {
   if (field === 'count') return '_count'
   if (field === 'key') return '_key'
   return field
@@ -32,7 +32,7 @@ let buildGroupQuery = (node, children, groupingType, schema) => {
     ...(sortField && { order: { [getSortField(sortField)]: direction } }),
   }
   let fields = _.map(
-    _.flow(getField(schema), field => ({ field })),
+    _.flow(getField(schema), (field) => ({ field })),
     [groupField, ...additionalFields]
   )
   let field = getField(schema, groupField)
@@ -62,7 +62,7 @@ let buildGroupQuery = (node, children, groupingType, schema) => {
 let buildGroupQueryWithDefaultSortField = (node, ...args) =>
   buildGroupQuery(_.defaultsDeep({ sort: { field: 'sum' } }, node), ...args)
 
-let getGroups = aggs => (aggs.valueFilter || aggs).groups.buckets
+let getGroups = (aggs) => (aggs.valueFilter || aggs).groups.buckets
 
 // We don't want the default sort field for pivot, but we do for this node type
 export default {

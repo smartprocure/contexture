@@ -21,14 +21,14 @@ beforeAll(async () => {
 
   // Generate sample data
   let sampleData = _.times(
-    i => ({
+    (i) => ({
       createdAt: new Date(`2020-02-0${(i % 5) + 1}`),
       metrics: { usersCount: i * 100 },
     }),
     50
   )
   col.insertMany(sampleData)
-  aggregate = aggs => col.aggregate(aggs).toArray()
+  aggregate = (aggs) => col.aggregate(aggs).toArray()
 })
 
 afterAll(async () => {
@@ -41,7 +41,7 @@ describe('dateHistogram', () => {
     it('result should output the expected query and results', async () => {
       let query = null
       let search = _.flow(
-        _.tap(x => (query = x)),
+        _.tap((x) => (query = x)),
         aggregate
       )
 

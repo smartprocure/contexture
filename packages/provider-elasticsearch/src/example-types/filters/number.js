@@ -58,7 +58,7 @@ let result = async (node, search) => {
 export default {
   hasValue: ({ min, max }) => !_.isNil(min) || !_.isNil(max),
   filter,
-  validContext: node => node.findBestRange,
+  validContext: (node) => node.findBestRange,
   result,
   buildQuery,
 }

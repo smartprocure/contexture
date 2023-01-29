@@ -8,7 +8,7 @@ let orderField = ({ include, order = 'sum' }) =>
     ? `${_.replace('count', 'value_count', order)}.value`
     : `stats.${order}`
 export default {
-  validContext: node => node.key_field && node.value_field,
+  validContext: (node) => node.key_field && node.value_field,
   async result(node, search, schema) {
     let field = getField(schema, node.key_field)
     let x = await esTwoLevel.result(

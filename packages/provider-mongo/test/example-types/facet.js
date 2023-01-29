@@ -25,9 +25,9 @@ describe('facet', () => {
   })
   describe('facet.result', () => {
     let queries = []
-    let search = async query => {
+    let search = async (query) => {
       queries.push(query)
-      return [1, 2, 3].map(i => ({ _id: `${i}`, count: i }))
+      return [1, 2, 3].map((i) => ({ _id: `${i}`, count: i }))
     }
     it('should call the search function and wait for it', async () => {
       queries = []
@@ -36,7 +36,7 @@ describe('facet', () => {
       }
       let result = await facet.result(node, search)
       expect(result.options.length).toBe(3)
-      expect(_.every(x => _.isNumber(x.count), result.options)).toBe(true)
+      expect(_.every((x) => _.isNumber(x.count), result.options)).toBe(true)
     })
     it('should default the limit query to 10 if size is not provided', async () => {
       queries = []
@@ -158,7 +158,7 @@ describe('facet', () => {
         values: ['5a4ea8052c635b002ade8e45', '5a4ea8052c635b002ade8e45'],
       }
       let result = await facet.filter(node)
-      expect(result.field.$in.map(x => x.toString())).toEqual([
+      expect(result.field.$in.map((x) => x.toString())).toEqual([
         '5a4ea8052c635b002ade8e45',
         '5a4ea8052c635b002ade8e45',
       ])
@@ -187,7 +187,7 @@ describe('facet', () => {
         },
       }
 
-      let result = await facet.result(node, agg =>
+      let result = await facet.result(node, (agg) =>
         mingo.aggregate(activities, agg)
       )
 
@@ -224,7 +224,7 @@ describe('facet', () => {
         },
       }
 
-      let result = await facet.result(node, agg =>
+      let result = await facet.result(node, (agg) =>
         mingo.aggregate(activities, agg)
       )
 
@@ -259,7 +259,7 @@ describe('facet', () => {
         field: 'user',
       }
 
-      let result = await facet.result(node, agg =>
+      let result = await facet.result(node, (agg) =>
         mingo.aggregate(activities, agg)
       )
 
@@ -282,7 +282,7 @@ describe('facet', () => {
         field: 'number',
       }
 
-      let result = await facet.result(node, agg =>
+      let result = await facet.result(node, (agg) =>
         mingo.aggregate(activities, agg)
       )
 
@@ -337,7 +337,7 @@ describe('facet', () => {
         },
       })
 
-      let result = await facet.result(node, agg =>
+      let result = await facet.result(node, (agg) =>
         mingo.aggregate(activities, agg)
       )
 
@@ -420,7 +420,7 @@ describe('facet', () => {
         },
       })
 
-      let result = await facet.result(node, agg =>
+      let result = await facet.result(node, (agg) =>
         mingo.aggregate(activities, agg)
       )
 
@@ -466,7 +466,7 @@ describe('facet', () => {
         unwind: 'myFields',
       }
 
-      let result = await facet.result(node, agg =>
+      let result = await facet.result(node, (agg) =>
         mingo.aggregate(collection, agg)
       )
 
@@ -505,7 +505,7 @@ describe('facet', () => {
         node.label.collection = mongoIdData
         node.field = 'bool'
         node.values = [true]
-        let result = await facet.result(node, agg =>
+        let result = await facet.result(node, (agg) =>
           mingo.aggregate(mongoIdData, agg)
         )
         expect(result.options[0].name).toBe(true)
@@ -516,7 +516,7 @@ describe('facet', () => {
         // node.values is selected values
         // when we use [4], we could expect missing values in first search because the first search will pick up the top 2 ids instead of value 4 (the last item from the array)
         node.values = [4]
-        let result = await facet.result(node, agg =>
+        let result = await facet.result(node, (agg) =>
           mingo.aggregate(mongoIdData, agg)
         )
         let ids = _.map(({ name }) => _.toString(name), result.options)
@@ -526,7 +526,7 @@ describe('facet', () => {
         node.label.collection = mongoIdData
         node.field = 'num'
         node.values = [1]
-        let result = await facet.result(node, agg =>
+        let result = await facet.result(node, (agg) =>
           mingo.aggregate(mongoIdData, agg)
         )
         let ids = _.map(({ name }) => _.toString(name), result.options)
@@ -542,7 +542,7 @@ describe('facet', () => {
         node.label.collection = collection
         node.values = ['5ce30b403aa154002d01b9ed']
 
-        let result = await facet.result(node, agg =>
+        let result = await facet.result(node, (agg) =>
           mingo.aggregate(collection, agg)
         )
         let ids = _.map(({ name }) => _.toString(name), result.options)
@@ -558,7 +558,7 @@ describe('facet', () => {
         node.label.collection = collection
         node.values = ['5e9dbd76e991760021124966']
 
-        let result = await facet.result(node, agg =>
+        let result = await facet.result(node, (agg) =>
           mingo.aggregate(collection, agg)
         )
         let ids = _.map(({ name }) => _.toString(name), result.options)
@@ -577,7 +577,7 @@ describe('facet', () => {
         node.values = [5]
         let result = await facet.result(
           node,
-          agg => mingo.aggregate(mongoIdData, agg),
+          (agg) => mingo.aggregate(mongoIdData, agg),
           {},
           mockConfig
         )
@@ -637,7 +637,7 @@ describe('facet', () => {
         node.values = ['5ce30b403aa154002d01b9dd']
         let result = await facet.result(
           node,
-          agg => mingo.aggregate(collection, agg),
+          (agg) => mingo.aggregate(collection, agg),
           {},
           mockConfig
         )

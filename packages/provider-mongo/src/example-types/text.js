@@ -12,7 +12,7 @@ let hasValue = _.flow(
   // NOTE: Don't change the below, otherwise things will explode!
   // Cascade can take a third arg which causes this to behave weird (since hasValue is actually called with extra args like the schema, etc)
   // See https://github.com/smartprocure/futil-js/issues/218
-  x => F.cascade(['value', 'values'], x),
+  (x) => F.cascade(['value', 'values'], x),
   _.castArray,
   _.compact,
   _.negate(_.isEmpty)
@@ -20,9 +20,9 @@ let hasValue = _.flow(
 
 export default {
   hasValue,
-  filter: node => ({
+  filter: (node) => ({
     [joinmap[node.join || 'all']]: _.map(
-      val => ({
+      (val) => ({
         [node.field]: {
           $regex: {
             containsWord: val,

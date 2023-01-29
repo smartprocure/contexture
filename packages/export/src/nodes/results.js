@@ -8,7 +8,7 @@ let resultField = (field, node) =>
 
 export default async ({ service, tree, ...node }) => {
   let { page = 1, pageSize = 100 } = node
-  let run = props =>
+  let run = (props) =>
     runWith(
       service,
       tree,

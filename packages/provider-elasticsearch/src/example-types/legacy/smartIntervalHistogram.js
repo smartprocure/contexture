@@ -3,7 +3,7 @@ import stats from './statistical.js'
 import { calcSmartInterval } from '../../utils/smartInterval.js'
 
 export default {
-  validContext: node => node.field,
+  validContext: (node) => node.field,
   async result({ key, field, interval }, search) {
     if (!interval) {
       let { min, max } = await stats.result({ key, field }, search)
@@ -23,7 +23,7 @@ export default {
     return {
       interval,
       entries: _.map(
-        bucket => ({
+        (bucket) => ({
           key: bucket.key,
           count: bucket.doc_count,
         }),

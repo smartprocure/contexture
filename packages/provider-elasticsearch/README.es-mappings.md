@@ -2,14 +2,16 @@ ES mappings are returned with different shapes depending on the elasticsearch ve
 This is a breakdown of those differences with JSON examples.
 
 ## es5
-  - allows multple types per index.
-  - GET INDEX/_mapping shows type names.
+
+- allows multple types per index.
+- GET INDEX/\_mapping shows type names.
 
 After:
 POST /twitter/users
 POST /twitter/tweets
 
-GET twitter/_mapping
+GET twitter/\_mapping
+
 ```json
 {
   "twitter": {
@@ -70,15 +72,17 @@ GET twitter/_mapping
 ```
 
 ## es6
-  - allows a type to be specified when POSTing but only one type is allowed.
-    - If no type specified, _doc is used.
-  - GET INDEX/_mapping shows type names.
-  - not sure how to import an es5 index to see what multi-type looks like.
+
+- allows a type to be specified when POSTing but only one type is allowed.
+  - If no type specified, \_doc is used.
+- GET INDEX/\_mapping shows type names.
+- not sure how to import an es5 index to see what multi-type looks like.
 
 After:
 POST /twitter/tweets
 
-GET twitter/_mapping
+GET twitter/\_mapping
+
 ```json
 {
   "twitter": {
@@ -116,7 +120,8 @@ GET twitter/_mapping
 After:
 POST /twitter
 
-GET twitter/_mapping
+GET twitter/\_mapping
+
 ```json
 {
   "twitter": {
@@ -152,15 +157,17 @@ GET twitter/_mapping
 ```
 
 ## es7
-  - allows a type to be specified when POSTing but only one type allowed.
-  - If no type specified, _doc is used.
-  - GET INDEX/_mapping DOES NOT show the type.
-  - GET INDEX/_mapping?include_type_name DOES show the type.
+
+- allows a type to be specified when POSTing but only one type allowed.
+- If no type specified, \_doc is used.
+- GET INDEX/\_mapping DOES NOT show the type.
+- GET INDEX/\_mapping?include_type_name DOES show the type.
 
 After:
 POST /twitter/tweets
 
-GET twitter/_mapping
+GET twitter/\_mapping
+
 ```json
 {
   "twitter": {
@@ -196,7 +203,8 @@ GET twitter/_mapping
 After:
 POST /twitter/tweets
 
-GET twitter/_mapping?include_type_name
+GET twitter/\_mapping?include_type_name
+
 ```json
 {
   "twitter": {

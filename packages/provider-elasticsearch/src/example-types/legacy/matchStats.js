@@ -3,7 +3,7 @@ import esTwoLevel from './esTwoLevelAggregation.js'
 import { not } from '../../utils/elasticDSL.js'
 
 export default {
-  validContext: node => node.key_field && node.value_field && node.key_value,
+  validContext: (node) => node.key_field && node.value_field && node.key_value,
   result(node, search) {
     let filter = {
       [node.key_type || 'term']: {

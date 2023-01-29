@@ -28,7 +28,7 @@
   },
   "scripts": {
     "prepack": "node scripts/build.js",
-    "fmt": "prettier --ignore-path .gitignore --write .",
+    "fmt": "prettier --ignore-path ../../.gitignore --write .",
     "lint": "eslint .",
     "lint:ci": "yarn lint -o lint-results.json -f json",
     "duti:fix": "yarn lint --fix && yarn fmt",
@@ -55,10 +55,6 @@
     "mobx-react": ">=6.3.0",
     "mobx-utils": ">=5.0.0",
     "react": "^16.8.0 || ^17.0.0"
-  },
-  "prettier": {
-    "singleQuote": true,
-    "semi": false
   },
   "storybook-deployer": {
     "commitMessage": "Deploy Storybook [ci skip]"
@@ -89,7 +85,7 @@
     "mobx-react": "^6.3.0",
     "mobx-utils": "^5.0.0",
     "moment": "^2.24.0",
-    "prettier": "^2.8.2",
+    "prettier": "^2.8.3",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "react-select": "^2.0.0",

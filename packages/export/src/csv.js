@@ -24,7 +24,7 @@ export default ({
         stream.write(
           csv(
             _.map(
-              t =>
+              (t) =>
                 t.display(_.get(t.key, r), {
                   key: t.key,
                   record: r,

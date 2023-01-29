@@ -11,7 +11,7 @@ let metrics = [
   'cardinality',
   'median_absolute_deviation',
 ]
-let hasValidMetrics = node => !_.difference(node.include, metrics).length
+let hasValidMetrics = (node) => !_.difference(node.include, metrics).length
 
 // let example = {
 //   key_type: 'range',
@@ -24,7 +24,7 @@ let hasValidMetrics = node => !_.difference(node.include, metrics).length
 //   value_data: {}
 // }
 export default {
-  validContext: node =>
+  validContext: (node) =>
     node.key_field && node.key_type && node.value_field && node.value_type,
   result(node, search) {
     // 'count' as alias for `value_count'
@@ -43,7 +43,7 @@ export default {
           }),
           aggs: F.arrayToObject(
             _.identity,
-            metric => ({
+            (metric) => ({
               [metric]: {
                 field: node.value_field,
                 ...F.omitNil(node.value_data),
@@ -64,7 +64,7 @@ export default {
           },
         },
       }
-    return search(query).then(results => {
+    return search(query).then((results) => {
       let rtn = {
         results: F.mapIndexed(
           (bucket, key) =>
@@ -78,7 +78,7 @@ export default {
               // If any one of the metrics in our bucket has a nil value, we
               // pull that out instead of returning the whole bucket
               _.find(
-                x => _.isObject(x) && _.isNil(x.value) && _.isNil(x.values),
+                (x) => _.isObject(x) && _.isNil(x.value) && _.isNil(x.values),
                 bucket
               ) ||
                 _.flow(

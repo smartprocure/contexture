@@ -1,4 +1,4 @@
-export let luceneQueryProcessor = newVal =>
+export let luceneQueryProcessor = (newVal) =>
   `${newVal}`
     .replace(/“/g, '"')
     .replace(/”/g, '"')

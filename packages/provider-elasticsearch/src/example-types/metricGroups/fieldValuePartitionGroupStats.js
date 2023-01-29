@@ -24,12 +24,12 @@ let buildGroupQuery = ({ field, matchValue }, children, groupKey, schema) => ({
 })
 let buildQuery = buildGroupStatsQuery(buildGroupQuery)
 
-let getGroups = aggs => F.unkeyBy('key', aggs.groups.buckets)
+let getGroups = (aggs) => F.unkeyBy('key', aggs.groups.buckets)
 export default {
   getGroups,
   buildQuery,
   buildGroupQuery,
-  validContext: node => node.groupField,
+  validContext: (node) => node.groupField,
   async result(node, search, schema) {
     let query = buildQuery(node, schema)
     let response = await search(query)

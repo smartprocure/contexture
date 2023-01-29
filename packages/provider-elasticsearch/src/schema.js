@@ -1,7 +1,7 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
 
-let Tree = F.tree(x => x.properties)
+let Tree = F.tree((x) => x.properties)
 // flatLeaves should auto detect reject vs omit (or just more general obj vs arr method)
 let flatten = _.flow(Tree.flatten(), _.omitBy(Tree.traverse))
 
@@ -9,7 +9,7 @@ let flatten = _.flow(Tree.flatten(), _.omitBy(Tree.traverse))
 //
 // A missing top-level 'properties' prop is es5 and es6 with types
 // or es7 using 'GET INDEX/_mapping?include_type_name'.
-let extractFieldsAndEsType = obj =>
+let extractFieldsAndEsType = (obj) =>
   _.has('properties', obj)
     ? { fields: obj, elasticsearch: {} }
     : _.flow(
@@ -18,7 +18,7 @@ let extractFieldsAndEsType = obj =>
         ([[type, fields]]) => ({ fields, elasticsearch: { type } })
       )(obj)
 
-let fromEsIndexMapping = mapping => {
+let fromEsIndexMapping = (mapping) => {
   let rtn = {}
   for (let prop in mapping) {
     try {
@@ -53,9 +53,9 @@ let fromEsIndexMapping = mapping => {
   return rtn
 }
 
-let copySchemasToAliases = schemas =>
+let copySchemasToAliases = (schemas) =>
   _.flow(
-    _.mapValues(x => _.keys(x.aliases)),
+    _.mapValues((x) => _.keys(x.aliases)),
     F.invertByArray,
     // only select field values which are arrays
     _.pickBy(_.isArray),
@@ -65,7 +65,7 @@ let copySchemasToAliases = schemas =>
 
 export let fromMappingsWithAliases = (mappings, aliases) => {
   // Apparently mappings can sometimes be empty, so omit them to be safe
-  let safeMappings = _.omitBy(index => _.isEmpty(index.mappings), mappings)
+  let safeMappings = _.omitBy((index) => _.isEmpty(index.mappings), mappings)
   let schemas = fromEsIndexMapping(safeMappings)
   return _.flow(
     copySchemasToAliases(schemas),
@@ -77,7 +77,7 @@ export let fromMappingsWithAliases = (mappings, aliases) => {
   )(aliases)
 }
 
-export let getESSchemas = client =>
+export let getESSchemas = (client) =>
   Promise.all([client.indices.getMapping(), client.indices.getAlias()]).then(
     ([{ body: mappings }, { body: aliases }]) =>
       fromMappingsWithAliases(mappings, aliases)
