@@ -6,7 +6,7 @@ import {
   attachFilters,
   getProvider as getProviderUtil,
   runTypeFunction as runTypeFunctionUtil,
-} from './utils'
+} from './utils.js'
 
 let process = _.curry(async ({ providers, schemas }, group, options = {}) => {
   let getProvider = getProviderUtil(providers, schemas)
