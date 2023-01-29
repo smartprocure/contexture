@@ -8,7 +8,9 @@
     "foreach": "yarn workspaces foreach --no-private --parallel --verbose",
     "fmt": "yarn foreach run fmt",
     "lint": "yarn foreach run lint",
-    "lint:ci": "yarn foreach run lint:ci"
+    "lint:ci": "yarn foreach run lint:ci",
+    "test": "yarn foreach run test",
+    "test:ci": "yarn foreach run test:ci"
   },
   "devDependencies": {
     "eslint-import-resolver-typescript": "^3.5.3",

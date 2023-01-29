@@ -70,7 +70,7 @@
     "esbuild": "^0.16.17",
     "eslint": "^8.33.0",
     "glob": "^8.0.3",
-    "jest": "^29.0.2",
+    "jest": "^29.4.1",
     "mingo": "^4.1.2",
     "mongodb": "^3.5.6",
     "mongodb-memory-server": "^6.5.2",
