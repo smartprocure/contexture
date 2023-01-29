@@ -32,8 +32,7 @@
     "test:ci": "yarn test --coverage --json --outputFile test-results.json",
     "fmt": "prettier --ignore-path ../../.gitignore --write .",
     "lint": "eslint .",
-    "lint:ci": "yarn lint -o lint-results.json -f json",
-    "duti:fix": "yarn lint --fix; yarn fmt"
+    "lint:ci": "yarn lint -o lint-results.json -f json"
   },
   "repository": {
     "type": "git",
@@ -64,9 +63,6 @@
     "@flex-development/toggle-pkg-type": "^1.0.1",
     "agentkeepalive": "^4.1.4",
     "contexture": "^0.12.11",
-    "danger": "^11.1.2",
-    "danger-plugin-coverage": "^1.6.2",
-    "duti": "^0.15.2",
     "esbuild": "^0.16.17",
     "eslint": "^8.33.0",
     "glob": "^8.0.3",

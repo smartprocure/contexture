@@ -16,7 +16,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
-          cache: "yarn"
+          cache: 'yarn'
 
       - name: Install dependencies
         run: yarn install --immutable
@@ -35,6 +35,6 @@ jobs:
           git checkout --track origin/${{github.head_ref}}
 
       - name: Run danger
-        run: yarn run danger ci
+        run: yarn run danger ci -d dangerfile.cjs
         env:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.PAT_DECRAPIFIER }}
