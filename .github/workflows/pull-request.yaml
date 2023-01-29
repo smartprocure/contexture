@@ -22,7 +22,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Lint
-        run: yarn run lint:ci
+        run: yarn run lint
 
       - name: Test
         run: yarn run test:ci
