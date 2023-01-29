@@ -16,7 +16,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
-          cache: 'yarn'
+          cache: "yarn"
 
       - name: Install dependencies
         run: yarn install --immutable
@@ -33,6 +33,7 @@ jobs:
           git config user.name "Decrapifier"
           git config push.default upstream
           git checkout --track origin/${{github.head_ref}}
+
       - name: Run danger
         run: yarn run danger ci
         env:
