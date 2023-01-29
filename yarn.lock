@@ -6655,9 +6655,6 @@ __metadata:
   resolution: "contexture-client@workspace:packages/client"
   dependencies:
     "@flex-development/toggle-pkg-type": ^1.0.1
-    danger: ^11.1.2
-    danger-plugin-coverage: ^1.6.2
-    duti: ^0.15.2
     esbuild: ^0.16.17
     eslint: ^8.33.0
     futil: ^1.71.8
@@ -6678,10 +6675,7 @@ __metadata:
     "@flex-development/toggle-pkg-type": ^1.0.1
     agentkeepalive: ^4.1.4
     contexture: ^0.12.11
-    danger: ^11.1.2
-    danger-plugin-coverage: ^1.6.2
     debug: ^4.3.1
-    duti: ^0.15.2
     esbuild: ^0.16.17
     eslint: ^8.33.0
     futil: ^1.71.8
@@ -6702,9 +6696,6 @@ __metadata:
   resolution: "contexture-export@workspace:packages/export"
   dependencies:
     "@flex-development/toggle-pkg-type": ^1.0.1
-    danger: ^11.2.1
-    danger-plugin-coverage: ^1.6.2
-    duti: ^0.15.2
     esbuild: ^0.17.0
     eslint: ^8.33.0
     futil: ^1.71.8
@@ -6724,10 +6715,7 @@ __metadata:
     "@flex-development/toggle-pkg-type": ^1.0.1
     bluebird: ^3.5.0
     contexture: ^0.0.4
-    danger: ^11.1.2
-    danger-plugin-coverage: ^1.6.2
     debug: ^4.3.1
-    duti: ^0.15.2
     esbuild: ^0.16.17
     eslint: ^8.33.0
     futil: ^1.71.8
@@ -6749,8 +6737,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "contexture-monorepo@workspace:."
   dependencies:
+    danger: ^11.2.3
+    danger-plugin-coverage: ^1.6.2
+    duti: ^0.15.2
     eslint-import-resolver-typescript: ^3.5.3
     eslint-plugin-import: ^2.27.5
+    glob: ^8.1.0
   languageName: unknown
   linkType: soft
 
@@ -6770,8 +6762,6 @@ __metadata:
     contexture: ^0.12.12
     contexture-client: ^2.49.12
     contexture-elasticsearch: ^1.13.0
-    danger: ^11.2.1
-    duti: ^0.15.2
     elasticsearch-browser: ^14.2.2
     emoji-datasource: ^5.0.1
     esbuild: ^0.16.17
@@ -6815,10 +6805,7 @@ __metadata:
   dependencies:
     "@elastic/datemath": ^5.0.3
     "@flex-development/toggle-pkg-type": ^1.0.1
-    danger: ^11.1.2
-    danger-plugin-coverage: ^1.6.2
     date-fns: ^2.11.1
-    duti: ^0.15.2
     esbuild: ^0.15.12
     eslint: ^8.33.0
     futil: ^1.66.1
@@ -7196,7 +7183,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"danger@npm:^11.1.2, danger@npm:^11.2.1":
+"danger@npm:^11.2.3":
   version: 11.2.3
   resolution: "danger@npm:11.2.3"
   dependencies:
@@ -9736,7 +9723,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^8.0.1, glob@npm:^8.0.3":
+"glob@npm:^8.0.1, glob@npm:^8.0.3, glob@npm:^8.1.0":
   version: 8.1.0
   resolution: "glob@npm:8.1.0"
   dependencies:

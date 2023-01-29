@@ -1,7 +1,12 @@
+/* global schedule require */
+
 let { danger, markdown, fail, message, warn } = require('danger')
 
 let fs = require('fs')
+let path = require('path')
+let glob = require('glob')
 let duti = require('duti')
+let coverage = require('danger-plugin-coverage').default
 
 let readJson = (path) => {
   try {
@@ -11,18 +16,29 @@ let readJson = (path) => {
   }
 }
 
+let lintResults = []
+let testResults = []
+
+for (let p of glob.sync('packages/*')) {
+  let results = readJson(path.join(p, 'lint-results.json'))
+  if (results) lintResults = lintResults.concat(results)
+  results = readJson(path.join(p, 'test-results.json'))
+  if (results) testResults = testResults.concat(results)
+}
+
 let args = {
   danger,
   fail,
   message,
   warn,
   markdown,
-  lintResults: readJson('./lint-results.json'),
+  lintResults,
+  testResults,
   config: {
     prNetChangeThreshold: 500,
     personalityNetChangeThreshold: 500,
     recommendedPrReviewers: 1,
-    rootFolder: 'src',
+    rootFolder: '.',
   },
 }
 
@@ -36,10 +52,16 @@ if (danger.github) {
   duti.bigPr(args)
   duti.noPrDescription(args)
   duti.requestedReviewers(args)
-  duti.emptyChangelog(args)
-  duti.versionBump(args)
   duti.autoFix(args)
 }
 
 duti.hasLintWarnings(args)
 duti.hasLintErrors(args)
+duti.hasTestErrors(args)
+
+schedule(
+  coverage({
+    showAllFiles: true,
+    threshold: { statements: 0, branches: 0, functions: 0, lines: 0 },
+  })
+)

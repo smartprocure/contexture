@@ -1,6 +1,7 @@
 {
   "name": "contexture-monorepo",
   "private": true,
+  "type": "module",
   "workspaces": [
     "packages/*"
   ],
@@ -10,11 +11,16 @@
     "lint": "yarn foreach run lint",
     "lint:ci": "yarn foreach run lint:ci",
     "test": "yarn foreach run test",
-    "test:ci": "yarn foreach run test:ci"
+    "test:ci": "yarn foreach run test:ci",
+    "duti:fix": "yarn foreach run lint --fix && yarn foreach run fmt"
   },
   "devDependencies": {
+    "danger": "^11.2.3",
+    "danger-plugin-coverage": "^1.6.2",
+    "duti": "^0.15.2",
     "eslint-import-resolver-typescript": "^3.5.3",
-    "eslint-plugin-import": "^2.27.5"
+    "eslint-plugin-import": "^2.27.5",
+    "glob": "^8.1.0"
   },
   "packageManager": "yarn@3.3.1"
 }
