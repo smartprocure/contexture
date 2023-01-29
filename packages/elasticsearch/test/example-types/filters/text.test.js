@@ -20,7 +20,7 @@ describe('text', () => {
   })
   describe('filter', () => {
     let anyText =
-      values =>
+      (values) =>
       (operator, schema = testSchema('description'), join = 'any') =>
         text.filter(
           {

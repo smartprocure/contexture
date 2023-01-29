@@ -3,7 +3,7 @@ import { runWith } from '../utils.js'
 
 export default async ({ service, tree, ...node }) => {
   let { key_field, size = 100 } = node
-  let run = node => runWith(service, tree, node)
+  let run = (node) => runWith(service, tree, node)
 
   let totalRecords = _.get(
     'context.value',

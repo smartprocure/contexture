@@ -20,7 +20,7 @@ export default {
       : `$${key_field}`
     return {
       entries: _.map(
-        x => ({
+        (x) => ({
           ...x,
           key: new Date(`${x.year}-${x.month || 1}-${x.day || 1}Z`).getTime(),
         }),
@@ -46,7 +46,7 @@ export default {
               _id: 0,
               ...F.arrayToObject(
                 _.identity,
-                x => (x === 'cardinality' ? { $size: '$cardinality' } : 1),
+                (x) => (x === 'cardinality' ? { $size: '$cardinality' } : 1),
                 include
               ),
             },

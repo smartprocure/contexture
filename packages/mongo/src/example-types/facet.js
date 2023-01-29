@@ -4,11 +4,11 @@ import mongodb from 'mongodb'
 
 let { ObjectId } = mongodb
 
-let projectStageFromLabelFields = node => ({
+let projectStageFromLabelFields = (node) => ({
   $project: {
     count: 1,
     ...F.arrayToObject(
-      fieldName => `label.${fieldName}`,
+      (fieldName) => `label.${fieldName}`,
       _.constant(1)
     )(_.flow(_.get('label.fields'), _.castArray)(node)),
   },
@@ -25,14 +25,14 @@ let sortAndLimitIfNotSearching = (should, limit) =>
 let getSearchableKeysList = _.flow(
   _.getOr('_id', 'label.fields'),
   _.castArray,
-  _.map(label => (label === '_id' ? label : `label.${label}`))
+  _.map((label) => (label === '_id' ? label : `label.${label}`))
 )
 
 let getMatchesForMultipleKeywords = (list, optionsFilter) => ({
   $and: _.map(
-    option => ({
+    (option) => ({
       $or: _.map(
-        key => ({
+        (key) => ({
           [key]: {
             $regex: option,
             $options: 'i',
@@ -51,7 +51,7 @@ let setMatchOperators = (list, node) =>
     : {
         $and: _.flow(
           _.words,
-          _.map(option => ({
+          _.map((option) => ({
             [_.first(list)]: {
               $options: 'i',
               $regex: option,
@@ -60,13 +60,13 @@ let setMatchOperators = (list, node) =>
         )(node.optionsFilter),
       }
 
-let mapKeywordFilters = node =>
+let mapKeywordFilters = (node) =>
   node.optionsFilter &&
-  _.flow(getSearchableKeysList, list => ({
+  _.flow(getSearchableKeysList, (list) => ({
     $match: setMatchOperators(list, node),
   }))(node)
 
-let lookupLabel = node =>
+let lookupLabel = (node) =>
   _.get('label', node)
     ? [
         {
@@ -98,9 +98,9 @@ let facetValueLabel = (node, label) => {
   }
 }
 
-let unwindPropOrField = node =>
+let unwindPropOrField = (node) =>
   _.map(
-    field => ({ $unwind: `$${field}` }),
+    (field) => ({ $unwind: `$${field}` }),
     _.castArray(node.unwind || node.field)
   )
 
@@ -117,7 +117,7 @@ let runSearch =
 
 export default {
   hasValue: _.get('values.length'),
-  filter: node => ({
+  filter: (node) => ({
     [node.field]: {
       [node.mode === 'exclude' ? '$nin' : '$in']: node.isMongoId
         ? _.map(ObjectId, node.values)

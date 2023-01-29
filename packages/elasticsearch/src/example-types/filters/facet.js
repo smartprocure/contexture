@@ -19,7 +19,7 @@ export default {
 
     return result
   },
-  validContext: node => node.field,
+  validContext: (node) => node.field,
   async result(node, search, schema) {
     let { values, size } = node
     let field = getField(schema, node.field)
@@ -56,7 +56,7 @@ export default {
       await search(resultRequest)
     )
     let result = {
-      options: agg.facetOptions.buckets.map(x => ({
+      options: agg.facetOptions.buckets.map((x) => ({
         name: x.key,
         count: x.doc_count,
       })),
@@ -89,7 +89,7 @@ export default {
     }
 
     let agg2 = (await search(missingRequest)).aggregations.facetAggregation
-    let moreOptions = agg2.facetOptions.buckets.map(x => ({
+    let moreOptions = agg2.facetOptions.buckets.map((x) => ({
       name: x.key,
       count: x.doc_count,
     }))
@@ -97,7 +97,7 @@ export default {
     // Add zeroes for options that are still missing (since es wont return 0)
     let stillMissing = _.difference(missing, _.map('name', moreOptions))
     moreOptions = moreOptions.concat(
-      stillMissing.map(name => ({ name, count: 0 }))
+      stillMissing.map((name) => ({ name, count: 0 }))
     )
 
     result.options = result.options.concat(moreOptions)

@@ -12,7 +12,7 @@ let buildGroupQuery = (
   if (drilldownKey) {
     let [from, to] = _.map(parseFloat, _.split('-', drilldownKey))
     ranges = _.filter(
-      x => parseFloat(x.from) === from && parseFloat(x.to) === to,
+      (x) => parseFloat(x.from) === from && parseFloat(x.to) === to,
       ranges
     )
   }
@@ -34,6 +34,6 @@ let drilldown = ({ field, drilldown }) => {
 
 export default {
   ...groupStats(buildGroupQuery),
-  validContext: node => node.groupField && node.ranges,
+  validContext: (node) => node.groupField && node.ranges,
   drilldown,
 }

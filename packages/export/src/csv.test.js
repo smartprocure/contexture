@@ -6,7 +6,7 @@ let mockFileStream = () => {
   let writeStream = new PassThrough()
   let fileData = new Promise((res, rej) => {
     let data = []
-    writeStream.on('data', d => data.push(d.toString()))
+    writeStream.on('data', (d) => data.push(d.toString()))
     writeStream.on('end', () => res(_.join('', data)))
     writeStream.on('error', rej)
   })

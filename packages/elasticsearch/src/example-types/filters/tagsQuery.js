@@ -8,7 +8,7 @@ let maxTagCount = 100
 // Split text into words and return array of string permutations
 let wordPermutations = _.flow(
   _.split(/\s+/),
-  x => Combinatorics.permutation(x).toArray(),
+  (x) => Combinatorics.permutation(x).toArray(),
   _.map(_.join(' '))
 )
 
@@ -33,7 +33,7 @@ let replaceReservedChars = _.flow(
   _.replace(/([+\-=&|!(){}[\]^"~*?:\\/<>;,$'])/g, ' ')
 )
 
-let tagToQueryString = tag => {
+let tagToQueryString = (tag) => {
   let _tag = replaceReservedChars(tag.word)
 
   if (tag.distance === 'unlimited') {
@@ -86,7 +86,7 @@ let buildResultQuery = (node, children = {}, groupsKey = 'tags') => ({
       filters: {
         filters: F.arrayToObject(
           _.get('word'),
-          tag => filter({ ...node, tags: [tag] }),
+          (tag) => filter({ ...node, tags: [tag] }),
           node.tags
         ),
       },
@@ -101,11 +101,11 @@ let result = async (node, search) => {
   return _.flow(
     _.get('aggregations.tags.buckets'),
     _.mapValues(_.get('doc_count')),
-    results => ({ results })
+    (results) => ({ results })
   )(await search(aggs))
 }
 
-let validContext = node => {
+let validContext = (node) => {
   let tagsCount = _.get('tags.length', node)
   return tagsCount && tagsCount <= maxTagCount
 }

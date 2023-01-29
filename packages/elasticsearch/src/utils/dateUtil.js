@@ -14,9 +14,10 @@ export let getStartOfQuarter = (quarterOffset, timezone) => {
   return moment().tz(timezone).quarter(quarter).startOf('quarter')
 }
 
-export let getEndOfQuarter = date => moment(date).add(1, 'Q').subtract(1, 'ms')
+export let getEndOfQuarter = (date) =>
+  moment(date).add(1, 'Q').subtract(1, 'ms')
 
-export let getDateIfValid = x =>
+export let getDateIfValid = (x) =>
   moment.utc(new Date(x)).isValid() && moment.utc(new Date(x)).toISOString()
 
 let quarterToOffset = {

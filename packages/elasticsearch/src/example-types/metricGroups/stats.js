@@ -9,9 +9,9 @@ let result = async (node, search) => {
 
 export default {
   buildQuery,
-  validContext: node => node.statsField,
+  validContext: (node) => node.statsField,
   result,
   // Used by metric groups, more convenient API for internal use
-  getStats: search => (statsField, stats) =>
+  getStats: (search) => (statsField, stats) =>
     result({ statsField, stats }, search),
 }

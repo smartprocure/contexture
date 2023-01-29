@@ -11,7 +11,7 @@ let {
   projectFromInclude,
 } = result
 
-let getSchema = collection => ({ mongo: { collection } })
+let getSchema = (collection) => ({ mongo: { collection } })
 
 describe('results', () => {
   describe('convertPopulate', () => {

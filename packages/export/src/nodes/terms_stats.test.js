@@ -20,7 +20,7 @@ describe('terms_stats', () => {
   let simpleRecords = ['record1', 'record2', 'record3']
 
   let getSimpleService = () =>
-    jest.fn(tree => {
+    jest.fn((tree) => {
       _.last(tree.children).context = {
         terms: simpleRecords,
         value: 1337,

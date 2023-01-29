@@ -11,7 +11,7 @@ describe('statistical', () => {
             type: 'statistical',
             field,
           },
-          x => x
+          (x) => x
         )
       ).toEqual({
         $group: {

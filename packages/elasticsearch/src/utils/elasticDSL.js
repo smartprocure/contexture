@@ -23,7 +23,7 @@ export let statsAggs = (field, stats) =>
   field ? { aggs: buildMetrics(field, stats) } : {}
 
 // x => F.cascade(['value', 'values', 'hits'], x, x)
-export let flattenMetrics = x => {
+export let flattenMetrics = (x) => {
   // Single value metrics always return value
   if (_.has('value', x)) return x.value
   // Multi value metrics can return values
@@ -34,7 +34,7 @@ export let flattenMetrics = x => {
   return x
 }
 
-export let renameMetrics = x => {
+export let renameMetrics = (x) => {
   if (x === 'doc_count') return 'count'
   // special case pivotMetric so we don't rename the auto keys
   if (_.startsWith('pivotMetric-', x)) return _.replace('pivotMetric-', '', x)
@@ -82,11 +82,11 @@ export let basicSimplifyTree = _.flow(
     )
   ),
   // Rename __DOT__ to '.'
-  tree => {
+  (tree) => {
     F.walk()(
-      x => {
+      (x) => {
         let dots = _.filter(_.includes('__DOT__'), _.keys(x))
-        _.each(dot => renameOn(dot, _.replace(/__DOT__/g, '.', dot), x), dots)
+        _.each((dot) => renameOn(dot, _.replace(/__DOT__/g, '.', dot), x), dots)
       },
       // When pivot results are called, the results on interior node types aren't, so we need to ensure they are returned with the proper structure
       (x, index, ps, pis) => {
@@ -102,7 +102,7 @@ export let basicSimplifyTree = _.flow(
 
 let flatCompact = _.flow(_.flattenDeep, _.compact)
 
-let unlessEmpty = onNotEmpty =>
+let unlessEmpty = (onNotEmpty) =>
   _.flow(
     F.when(_.isArray, flatCompact),
     F.ifElse(_.negate(_.isEmpty), onNotEmpty, false)
@@ -111,13 +111,13 @@ let unlessEmpty = onNotEmpty =>
 // https://www.elastic.co/guide/en/elasticsearch/reference/current/number.html#number
 export let elasticsearchIntegerMax = 2 ** 31 - 1
 
-export let and = unlessEmpty(must => ({ bool: { must } }))
+export let and = unlessEmpty((must) => ({ bool: { must } }))
 
-export let or = unlessEmpty(should => ({
+export let or = unlessEmpty((should) => ({
   bool: { should, minimum_should_match: 1 },
 }))
 
-export let not = unlessEmpty(must_not => ({ bool: { must_not } }))
+export let not = unlessEmpty((must_not) => ({ bool: { must_not } }))
 
 export let buildFilter = ({ type, field, ...rest }) => ({
   [type]: { [field]: rest },

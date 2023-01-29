@@ -8,7 +8,7 @@ let getStartOfQuarter = (quarterOffset, timezone) => {
   return moment().tz(timezone).quarter(quarter).startOf('quarter')
 }
 
-let getEndOfQuarter = date => moment(date).add(1, 'Q').subtract(1, 'ms')
+let getEndOfQuarter = (date) => moment(date).add(1, 'Q').subtract(1, 'ms')
 
 let quarterToOffset = {
   thisCalendarQuarter: 0,
@@ -71,9 +71,9 @@ let rollingRangeToDates = (range, timezone) => {
 }
 
 let dateTypeToFormatFn = {
-  date: x => x && moment.utc(x).toDate(),
-  unix: x => x && moment.utc(x).unix(),
-  timestamp: x => x && new Date(x).getTime(),
+  date: (x) => x && moment.utc(x).toDate(),
+  unix: (x) => x && moment.utc(x).unix(),
+  timestamp: (x) => x && new Date(x).getTime(),
 }
 
 let hasValue = ({ from, to, range }) =>

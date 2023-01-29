@@ -4,10 +4,10 @@ export let toSafeRegex = _.flow(_.replace(/[.?+*|{}[\]()]/g, ' '), _.trim)
 
 let regexPartsForWords = _.flow(_.trim, _.split(/\s+/g), _.map(toSafeRegex))
 
-export let buildRegexQueryForWords = field =>
+export let buildRegexQueryForWords = (field) =>
   _.flow(
     regexPartsForWords,
-    _.map(x => ({
+    _.map((x) => ({
       regexp: {
         [field]: {
           value: `.*(${x}).*`,
@@ -15,5 +15,5 @@ export let buildRegexQueryForWords = field =>
         },
       },
     })),
-    x => ({ bool: { must: x } })
+    (x) => ({ bool: { must: x } })
   )

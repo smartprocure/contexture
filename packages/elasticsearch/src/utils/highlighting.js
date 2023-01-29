@@ -13,7 +13,7 @@ function anyRegexesMatch(regexes, criteria) {
 // Highlight fields can be either strings or objects with a single key which value is the ES highlights object config
 // If the highlight field is specific as a string only then it uses the default highlights config
 export let arrayToHighlightsFieldMap = _.flow(
-  _.map(F.when(_.isString, x => ({ [x]: {} }))),
+  _.map(F.when(_.isString, (x) => ({ [x]: {} }))),
   F.ifElse(_.isEmpty, _.always({}), _.mergeAll)
 )
 
@@ -64,7 +64,7 @@ export let highlightResults = (highlightFields, hit, pathToNested, include) => {
         _.each(function (val) {
           let originalValue = val.replace(/<b>|<\/b>/g, '')
           let childItem = _.find(
-            item => item[field] === originalValue,
+            (item) => item[field] === originalValue,
             _.get(pathToNested, hit._source)
           )
           if (childItem) childItem[field] = val
@@ -76,17 +76,17 @@ export let highlightResults = (highlightFields, hit, pathToNested, include) => {
   // Copy over all inline highlighted fields
   if (hit.highlight) {
     // do the field replacement for the inline fields
-    _.each(val => {
+    _.each((val) => {
       if (val.endsWith('.*')) {
         // get the root key e.g. "documents" from "documents.*"
         let root = val.split('.*')[0]
         // get all the highlights that start with the root key
         let matchedKeys = _.filter(
-          key => _.startsWith(`${root}.`, key),
+          (key) => _.startsWith(`${root}.`, key),
           _.keys(hit.highlight)
         )
         _.each(
-          key => F.setOn(key, hit.highlight[key], hit._source),
+          (key) => F.setOn(key, hit.highlight[key], hit._source),
           matchedKeys
         )
       } else {

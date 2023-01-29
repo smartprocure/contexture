@@ -43,15 +43,15 @@ export let sequentialResultTest = _.curry(
   }
 )
 
-let toBe = y => x => expect(x).toBe(y)
+let toBe = (y) => (x) => expect(x).toBe(y)
 
-export let validContexts = type => F.flowMap(type.validContext, toBe(true))
+export let validContexts = (type) => F.flowMap(type.validContext, toBe(true))
 
-export let noValidContexts = type => F.flowMap(type.validContext, toBe(false))
+export let noValidContexts = (type) => F.flowMap(type.validContext, toBe(false))
 
-export let hasValueContexts = type => F.flowMap(type.hasValue, toBe(true))
+export let hasValueContexts = (type) => F.flowMap(type.hasValue, toBe(true))
 
-export let noValueContexts = type => F.flowMap(type.hasValue, toBe(false))
+export let noValueContexts = (type) => F.flowMap(type.hasValue, toBe(false))
 
 export let testSchema = (field, notAnalyzedField = 'untouched') => ({
   fields: { [field]: { elasticsearch: { notAnalyzedField } } },

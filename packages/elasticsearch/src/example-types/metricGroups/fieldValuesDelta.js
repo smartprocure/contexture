@@ -21,11 +21,11 @@ let buildQuery = (
 // NOTE: does not export buildGroupQuery because it doesn't make sense with pivot
 export default {
   buildQuery,
-  validContext: node => node.groupField && node.foreground && node.background,
+  validContext: (node) => node.groupField && node.foreground && node.background,
   async result(node, search, schema) {
     let response = await search(buildQuery(node, schema))
     let { foreground, background } = _.mapValues(
-      ground => _.map('key', ground.field.buckets),
+      (ground) => _.map('key', ground.field.buckets),
       response.aggregations.results.buckets
     )
     return { results: _.difference(foreground, background) }

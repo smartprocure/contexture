@@ -6,6 +6,7 @@
   ],
   "scripts": {
     "foreach": "yarn workspaces foreach --no-private --parallel --verbose",
+    "fmt": "yarn foreach run fmt",
     "lint": "yarn foreach run lint",
     "lint:ci": "yarn foreach run lint:ci"
   },

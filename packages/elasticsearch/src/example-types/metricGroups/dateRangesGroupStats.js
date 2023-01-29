@@ -13,11 +13,11 @@ let buildGroupQuery = (
   drilldownKey
 ) => {
   if (drilldownKey) {
-    let [from, to] = splitDrilldown(drilldownKey, x =>
+    let [from, to] = splitDrilldown(drilldownKey, (x) =>
       new Date(x).toISOString()
     )
     ranges = _.filter(
-      x =>
+      (x) =>
         new Date(x.from).toISOString() === from &&
         new Date(x.to).toISOString() === to,
       ranges
@@ -42,6 +42,6 @@ let drilldown = ({ field, drilldown }) => {
 
 export default {
   ...groupStats(buildGroupQuery),
-  validContext: node => node.groupField && node.ranges,
+  validContext: (node) => node.groupField && node.ranges,
   drilldown,
 }

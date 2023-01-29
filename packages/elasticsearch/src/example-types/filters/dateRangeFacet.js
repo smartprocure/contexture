@@ -18,10 +18,10 @@ export default {
    * 2. Each range object must have a "key" property
    * 3. Each range must have a "range" property with the range phrase
    */
-  validContext: node =>
+  validContext: (node) =>
     _.has('field', node) &&
     !!_.get('ranges.length', node) &&
-    _.every(r => _.has('key', r) && _.has('range', r), node.ranges),
+    _.every((r) => _.has('key', r) && _.has('range', r), node.ranges),
   /**
    * FILTER
    * Based on the keys checked we get the actual values
@@ -29,7 +29,7 @@ export default {
    **/
   filter({ field, ranges, values, timezone = 'UTC' }) {
     let should = _.flow(
-      _.filter(r => _.includes(r.key, values)),
+      _.filter((r) => _.includes(r.key, values)),
       _.map(({ range }) => ({
         range: {
           [field]: {

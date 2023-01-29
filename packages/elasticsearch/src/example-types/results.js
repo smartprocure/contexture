@@ -61,7 +61,7 @@ export default {
         _.concat(schemaInlineAliases), // Include the provided field aliases if any
         _.uniq,
         arrayToHighlightsFieldMap, // Convert the array to object map so we can simply _.pick again
-        filtered =>
+        (filtered) =>
           showOtherMatches
             ? // Highlight on all fields specified in the initial _.pick above.
               filtered
@@ -95,13 +95,13 @@ export default {
       F.setOn('_source.includes', resultColumns, searchObj)
     }
 
-    return search(searchObj).then(results => ({
+    return search(searchObj).then((results) => ({
       scrollId: results._scroll_id,
       // ES 7+ is total.value, ES 6- is hits.total
       totalRecords: F.getOrReturn('value', results.hits.total),
       startRecord: startRecord + 1,
       endRecord: startRecord + results.hits.hits.length,
-      results: _.map(hit => {
+      results: _.map((hit) => {
         let additionalFields
         if (schemaHighlight) {
           let highlightObject = highlightResults(

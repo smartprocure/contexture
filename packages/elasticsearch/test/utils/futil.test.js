@@ -44,12 +44,12 @@ describe('futil candidates', () => {
     }
     let Tree = F.tree(traverse, _.identity, writeTreeNode(traverse))
     let expected = ['root', 'filteredTerms', 'nonFiltered', 'innermost']
-    let result = Tree.toArrayBy(node => node.key, tree)
+    let result = Tree.toArrayBy((node) => node.key, tree)
     expect(result).toEqual(expected)
 
     // Mapping works with new write property!
     let modifiedTree = Tree.map(
-      node => ({
+      (node) => ({
         ...node,
         key: `${node.key}Modified`,
       }),
@@ -61,7 +61,7 @@ describe('futil candidates', () => {
       'nonFilteredModified',
       'innermostModified',
     ]
-    let modifiedResult = Tree.toArrayBy(node => node.key, modifiedTree)
+    let modifiedResult = Tree.toArrayBy((node) => node.key, modifiedTree)
     expect(modifiedResult).toEqual(modifiedExpected)
   })
   it('transmuteTree should simplify groups.buckets in tree', () => {
@@ -109,7 +109,7 @@ describe('futil candidates', () => {
       if (depth === 3 && _.has('groups.buckets', node))
         return F.unkeyBy('key', node.groups.buckets)
     }
-    let traverseTarget = node => {
+    let traverseTarget = (node) => {
       if (!_.isArray(node.groups)) node.groups = []
       return node.groups
     }
@@ -239,15 +239,15 @@ describe('futil candidates', () => {
       },
     }
 
-    let traverseSource = node =>
+    let traverseSource = (node) =>
       virtualConcat(
         _.getOr([], 'groups.buckets', node),
         _.getOr([], 'columns.buckets', node)
       )
 
-    let traverseTarget = node => virtualConcat(node.groups, node.columns)
+    let traverseTarget = (node) => virtualConcat(node.groups, node.columns)
 
-    let cleanup = node => {
+    let cleanup = (node) => {
       // groups needs to be the right length or virtualConcat will put everything in columns since the cut off for determining when to go to arr2 would be 0 if arr1 is size 0
       if (node.groups && !_.isArray(node.groups))
         node.groups = Array(_.get('groups.buckets.length', node))

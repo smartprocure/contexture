@@ -14,7 +14,7 @@ let checkPopulate = ({ include: nodeIncludes, populate }) =>
       }
       return _.concat(
         incs,
-        _.map(inc => `${localFieldName}.${inc}`, include)
+        _.map((inc) => `${localFieldName}.${inc}`, include)
       )
     },
     nodeIncludes,
@@ -29,13 +29,13 @@ let checkPopulate = ({ include: nodeIncludes, populate }) =>
 let omitFromInclude = (schema, include, as) => {
   let allTargetFields = _.keys(_.get('fields', schema))
   let omittedFields = _.reject(
-    field =>
+    (field) =>
       _.some(
         // do NOT omit if:
         // - include field is an exact match of schema field
         // - schema field is part of an object field specified by the include field (schemaField = 'topLevel.nestedField' and includeField = 'topLevel')
         // - include field is a dotted field that is part of a schema object field (schemaField = 'topLevel' and includeField = 'topLevel.nestedField')
-        includeField =>
+        (includeField) =>
           _.startsWith(`${includeField}.`, `${field}.`) ||
           _.startsWith(`${field}.`, `${includeField}.`),
         include
@@ -44,12 +44,12 @@ let omitFromInclude = (schema, include, as) => {
   )
 
   return F.arrayToObject(
-    field => `${as}.${field}`,
+    (field) => `${as}.${field}`,
     _.constant(0)
   )(omittedFields)
 }
 
-let convertPopulate = getSchema =>
+let convertPopulate = (getSchema) =>
   _.flow(
     F.mapIndexed((x, as) => {
       as = x.as || as
@@ -101,12 +101,12 @@ let getStartRecord = ({ page, pageSize }) => {
   return page * pageSize
 }
 
-let parentPath = path => path.replace(/(\.[^.]+)$/, '')
+let parentPath = (path) => path.replace(/(\.[^.]+)$/, '')
 
-let isParentPathProjected = include => path =>
+let isParentPathProjected = (include) => (path) =>
   _.some(_.eq(parentPath(path)), _.pull(path, include))
 
-let projectFromInclude = include =>
+let projectFromInclude = (include) =>
   _.flow(
     _.remove(isParentPathProjected(include)),
     _.countBy(_.identity)
@@ -128,7 +128,7 @@ let getResultsQuery = (node, getSchema, startRecord) => {
   let sortSkipLimit = _.compact([...sort, ...skipLimit])
   // If sort field is a join field move $sort, $skip, and $limit to after $lookup.
   // Otherwise, place those stages first to take advantage of any indexes on that field.
-  let sortOnJoinField = _.some(x => {
+  let sortOnJoinField = _.some((x) => {
     let lookupField = _.getOr(x, `${x}.as`, populate)
     return (
       _.startsWith(`${lookupField}.`, sortField) || sortField === lookupField
