@@ -27,12 +27,7 @@
     }
   },
   "scripts": {
-    "prepack": "node scripts/build.js",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
-    "test:ci": "yarn test --coverage --json --outputFile test-results.json",
-    "fmt": "prettier --ignore-path ../../.gitignore --write .",
-    "lint": "eslint .",
-    "lint:ci": "yarn lint -o lint-results.json -f json"
+    "prepack": "node scripts/build.js"
   },
   "repository": {
     "type": "git",
@@ -64,11 +59,8 @@
     "agentkeepalive": "^4.1.4",
     "contexture": "^0.12.11",
     "esbuild": "^0.16.17",
-    "eslint": "^8.33.0",
     "glob": "^8.0.3",
-    "jest": "^29.4.1",
-    "json-stable-stringify": "^1.0.1",
-    "prettier": "^2.8.3"
+    "json-stable-stringify": "^1.0.1"
   },
   "packageManager": "yarn@3.2.0"
 }

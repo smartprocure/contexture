@@ -4,9 +4,8 @@ node_modules/
 # Build output
 dist
 
-# Duti stuff
-test-results.json
-lint-results.json
+# Jest
+coverage
 
 # Yarn stuff: https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
 .pnp.*
