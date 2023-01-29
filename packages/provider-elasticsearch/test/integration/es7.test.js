@@ -1,10 +1,10 @@
 import _ from 'lodash/fp.js'
 import Contexture from 'contexture'
 // import provider from 'contexture-elasticsearch'
-// import types from 'contexture-elasticsearch/dist/esm/types.js'
+// import types from 'contexture-elasticsearch/types.js'
 import Provider from '../../src/index.js'
 import types from '../../src/types.js'
-import elasticsearch from '@elastic/elasticsearch'
+import { Client } from '@elastic/elasticsearch'
 import AgentKeepAlive from 'agentkeepalive'
 
 describe('Integration Tests', () => {
@@ -13,7 +13,7 @@ describe('Integration Tests', () => {
     // Setup
     let getClient = _.memoize(
       () =>
-        new elasticsearch.Client({
+        new Client({
           node:
             //'http://test-elasticsearch-master.default.svc.cluster.local:9200',
             'http://elasticsearch-prod-client.default.svc.cluster.local:9200',

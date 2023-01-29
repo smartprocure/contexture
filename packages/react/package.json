@@ -5,21 +5,31 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js"
+      "import": "./src/index.js"
     },
     "./*": {
-      "import": "./dist/esm/*",
-      "require": "./dist/cjs/*"
+      "import": "./src/*"
     }
   },
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "import": "./dist/esm/index.js",
+        "require": "./dist/cjs/index.js"
+      },
+      "./*": {
+        "import": "./dist/esm/*",
+        "require": "./dist/cjs/*"
+      }
+    }
+  },
   "scripts": {
     "prepack": "node scripts/build.js",
     "fmt": "prettier --ignore-path .gitignore --write .",
-    "lint": "eslint --ignore-path .gitignore .",
+    "lint": "eslint .",
     "lint:ci": "yarn lint -o lint-results.json -f json",
     "duti:fix": "yarn lint --fix && yarn fmt",
     "start": "npm run storybook",
@@ -71,15 +81,13 @@
     "elasticsearch-browser": "^14.2.2",
     "emoji-datasource": "^5.0.1",
     "esbuild": "^0.16.17",
-    "eslint": "^8.31.0",
-    "eslint-import-resolver-exports": "^1.0.0-beta.4",
-    "eslint-plugin-import": "^2.27.4",
+    "eslint": "^8.33.0",
     "eslint-plugin-react": "^7.32.0",
     "glob": "^8.0.3",
     "material-ui-chip-input": "^1.0.0",
-    "mobx": ">=4.0.0",
-    "mobx-react": ">=6.3.0",
-    "mobx-utils": ">=5.0.0",
+    "mobx": "^4.3.1",
+    "mobx-react": "^6.3.0",
+    "mobx-utils": "^5.0.0",
     "moment": "^2.24.0",
     "prettier": "^2.8.2",
     "react": "^16.8.0",
