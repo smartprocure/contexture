@@ -21,6 +21,7 @@ Nodes are part of a tree that captures how they’re related to each other. For 
 ### Client
 
 To keep track of all this, contexture's client manages the UI state and optimizes requests. It can integrate with off-the-shelf state managers (like mobx) or you can use the built-in watch API. There's a lot more detail in the client documentation - but some feature examples include:
+
 - A deep understanding of node relationships allows it to avoid unnecessary requests. For example, nodes related via ORs won't trigger each other to update.
 - Nodes can pause and resume, keeping track of missed updates. This is great for use cases like hidden nodes in inactive tabs or collapsed accordions. The client won't update them until they unpause - and only if they've actually missed updates.
 - Nodes track statuses like loading, last update times, and validation out of the box.
@@ -33,8 +34,6 @@ Contexture has a react component library that interacts with the client. There a
 ### How does all this work?
 
 The client's functions ("actions") dispatch events to nodes (much like redux). An action might mutate node properties, pause or resume a node, or add, remove, or move a node to a group. Node-specific event reactor functions then determine which nodes to update. After an optional debounce, requests go to the server when there are nodes to update. The server walks the tree and runs queries for each node based on its type and the relevant provider. For more detailed information, each package has its own readme.
-
-
 
 ## Repo Notes
 
