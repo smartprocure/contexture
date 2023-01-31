@@ -38,7 +38,7 @@ jobs:
           prettier_command_prefix: yarn
 
       - name: Test
-        run: NODE_OPTIONS='--no-warnings --experimental-vm-modules' yarn run jest --ci --reporters github-actions --reporters summary --coverage .
+        run: NODE_OPTIONS='--no-warnings --experimental-vm-modules' yarn run jest --ci --reporters github-actions --reporters summary --coverage --maxWorkers=2 .
 
       - name: Report Coverage
         uses: romeovs/lcov-reporter-action@2a28ec3e25fb7eae9cb537e9141603486f810d1a
