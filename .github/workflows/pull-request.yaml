@@ -2,6 +2,13 @@ name: Lint, Test, and Danger
 
 on: pull_request
 
+# https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
+permissions:
+  checks: write
+  contents: write
+  pull-requests: write
+  statuses: write
+
 jobs:
   lint-test-danger:
     runs-on: ubuntu-latest
@@ -9,7 +16,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.PAT_DECRAPIFIER }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
       - name: Setup node
@@ -31,7 +38,7 @@ jobs:
           prettier_command_prefix: yarn
 
       - name: Test
-        run: yarn run test --ci --coverage --reporters github-actions --reporters summary
+        run: NODE_OPTIONS='--no-warnings --experimental-vm-modules' yarn run jest --ci --reporters github-actions --reporters summary --coverage .
 
       - name: Report Coverage
         uses: romeovs/lcov-reporter-action@2a28ec3e25fb7eae9cb537e9141603486f810d1a
@@ -39,11 +46,6 @@ jobs:
           delete-old-comments: true
 
       - name: Run danger
-        run: |
-          git config user.email "decrapifier@govspend.com"
-          git config user.name "Decrapifier"
-          git config push.default upstream
-          git checkout --track origin/${{github.head_ref}} || true
-          yarn run danger ci -d dangerfile.cjs
+        run: yarn run danger ci -d dangerfile.cjs
         env:
-          DANGER_GITHUB_API_TOKEN: ${{ secrets.PAT_DECRAPIFIER }}
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
