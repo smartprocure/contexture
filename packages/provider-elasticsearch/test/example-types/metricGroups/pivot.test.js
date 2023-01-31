@@ -2924,7 +2924,7 @@ describe('pivot', () => {
 
     // make tiny
     aggs.rows.buckets = aggs.rows.buckets.slice(0, 2)
-    aggs.rows.buckets = _.map(buck => {
+    aggs.rows.buckets = _.map((buck) => {
       buck.rows.buckets = buck.rows.buckets.slice(0, 2)
       return buck
     }, aggs.rows.buckets)
@@ -3380,7 +3380,7 @@ describe('pivot', () => {
           },
         ],
       },
-      "hoistProps": {},
+      hoistProps: {},
     }
     let result = await filter(
       input,

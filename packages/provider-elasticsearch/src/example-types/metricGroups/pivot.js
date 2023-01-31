@@ -67,7 +67,7 @@ let maybeWrapWithFilterAgg = ({
         },
       }
 
-let getKey = x => x.keyAsString || x.key
+let getKey = (x) => x.keyAsString || x.key
 
 // Similar to Tree.lookup but path is a drilldown which uses keyAsString or key
 let resultsForDrilldown = (groupType, drilldown, results) => {
@@ -75,7 +75,7 @@ let resultsForDrilldown = (groupType, drilldown, results) => {
 
   let key = _.first(drilldown)
   let groups = _.get(groupType, results)
-  let match = _.find(node => getKey(node) === key, groups)
+  let match = _.find((node) => getKey(node) === key, groups)
   return resultsForDrilldown(groupType, drilldown.slice(1), match)
 }
 
@@ -91,7 +91,7 @@ let mergeResults = _.mergeWith((current, additional, prop) => {
 
 //Functions for hoisting functionality
 let hoistProps = {}
-let removeHoistProps = _.curry(group => _.omit(['hoistProps'], group))
+let removeHoistProps = _.curry((group) => _.omit(['hoistProps'], group))
 let mergeHoistProps = _.curry((props, group) =>
   _.merge(_.getOr({}, 'hoistProps', group), props)
 )
@@ -135,7 +135,7 @@ let createPivotScope = (node, schema, getStats) => {
    ***/
   let findNotLoadedExpansion = () => _.find(({ loaded }) => !loaded, expansions)
 
-  let previouslyLoadedKeys = expansion =>
+  let previouslyLoadedKeys = (expansion) =>
     _.flow(
       _.filter(
         ({ type, drilldown, loaded }) =>
@@ -146,10 +146,10 @@ let createPivotScope = (node, schema, getStats) => {
       _.flatMap('loaded')
     )(expansions)
 
-  let isFirstOfType = expansion =>
+  let isFirstOfType = (expansion) =>
     expansion === _.find({ type: expansion.type }, expansions)
 
-  let getGridExpansions = expansion =>
+  let getGridExpansions = (expansion) =>
     _.flow(
       _.take(_.indexOf(expansion, expansions)),
       _.filter(({ type }) => type !== expansion.type)
@@ -160,7 +160,7 @@ let createPivotScope = (node, schema, getStats) => {
   }
 
   // Merge current row/column drilldown with includes from already expanded columns/rows
-  let makeRequest = (expansion, values) => gridExpansion => {
+  let makeRequest = (expansion, values) => (gridExpansion) => {
     let rowDrillMode = expansion.type === 'rows'
     return {
       type: expansion.type,
@@ -179,7 +179,7 @@ let createPivotScope = (node, schema, getStats) => {
     }
   }
 
-  let getInitialRequest = expansion =>
+  let getInitialRequest = (expansion) =>
     makeRequest(expansion)(_.first(getGridExpansions(expansion)))
 
   let getAdditionalRequests = (expansion, includeValues) =>
@@ -193,7 +193,7 @@ let createPivotScope = (node, schema, getStats) => {
    ***/
 
   // Builds aggregation for pivot values
-  let getAggsForValues = values =>
+  let getAggsForValues = (values) =>
     _.flow(
       _.keyBy(aggKeyForValue),
       // This is a very interesting lint error - while key is not used in the function body, it is important.
@@ -230,14 +230,14 @@ let createPivotScope = (node, schema, getStats) => {
     let filter = lookupTypeProp(_.stubFalse, 'drilldown', group.type)
     return _.flatten(
       await compactMapAsync(
-        value => filter({ drilldown: value, ...group }, schema, getStats),
+        (value) => filter({ drilldown: value, ...group }, schema, getStats),
         values
       )
     )
   }
 
   // Builds aggregation for sorting
-  let getSortAgg = async sort => {
+  let getSortAgg = async (sort) => {
     if (!sort) return
     let filters = await getDrilldownFilters({
       drilldown: sort.columnValues,
@@ -330,7 +330,7 @@ let createPivotScope = (node, schema, getStats) => {
     )
   }
 
-  let buildQuery = async request => {
+  let buildQuery = async (request) => {
     let columnDrills = _.getOr([], 'columns.drilldown', request)
     let rowDrills = _.getOr([], 'rows.drilldown', request)
     hoistProps = {}
@@ -563,9 +563,9 @@ let filter = async (node, schema) => {
 
   hoistProps = {}
 
-  let boolFilter =  or(
-   await compactMapAsync(
-    async filter =>
+  let boolFilter = or(
+    await compactMapAsync(
+      async (filter) =>
         and([
           _.map(
             (filterGroup) => {
@@ -577,18 +577,20 @@ let filter = async (node, schema) => {
               groups: rows,
             })
           ),
-          _.map(filterGroup => {
+          _.map(
+            (filterGroup) => {
               hoistProps = mergeHoistProps(hoistProps, filterGroup)
               return removeHoistProps(filterGroup)
             },
             await getDrilldownFilters({
               drilldown: filter.columns,
               groups: columns,
-            }),
+            })
           ),
         ]),
-    filters
-  ))
+      filters
+    )
+  )
 
   return {
     hoistProps,
@@ -600,7 +602,7 @@ export default {
   hasValue,
   filter,
   createPivotScope,
-  validContext: node => node.rows.length && node.values.length,
+  validContext: (node) => node.rows.length && node.values.length,
   async result(node, search, schema) {
     let {
       findNotLoadedExpansion,
