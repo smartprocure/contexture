@@ -45,11 +45,6 @@ jobs:
           delete-old-comments: true
 
       - name: Run danger
-        run: |
-          git config user.email "decrapifier@govspend.com"
-          git config user.name "Decrapifier"
-          git config push.default upstream
-          git checkout --track origin/${{github.head_ref}} || true
-          yarn run danger ci -d dangerfile.cjs
+        run: yarn run danger ci -d dangerfile.cjs
         env:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
