@@ -1,3 +1,7 @@
+# 1.20.0
+* Fully implemented hoisting for filters and aggs
+* [pivot] fix click through of FY data to results tab
+
 # 1.19.8
 
 - ESM source

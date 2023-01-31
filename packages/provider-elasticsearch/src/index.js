@@ -4,7 +4,7 @@ import _debug from 'debug'
 
 let debug = _debug('contexture:elasticsearch')
 
-let revolvingCounter = (max) => {
+let revolvingCounter = max => {
   let counter = 0
   return {
     inc() {
@@ -19,7 +19,7 @@ let revolvingCounter = (max) => {
 }
 let counter = revolvingCounter(500)
 
-let constantScore = (filter) => ({ constant_score: { filter } })
+let constantScore = filter => ({ constant_score: { filter } })
 
 let ElasticsearchProvider = (config = { request: {} }) => ({
   types: config.types,
@@ -40,6 +40,8 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
   async runSearch({ requestOptions = {} } = {}, node, schema, filters, aggs) {
     let { searchWrapper } = config
     let { scroll, scrollId } = node
+    let hoistProps = filters && filters.hoistProps
+    filters = filters && _.omit('hoistProps', filters)
     let request = scrollId
       ? // If we have scrollId then keep scrolling, no query needed
         { scroll: scroll === true ? '60m' : scroll, scrollId }
@@ -49,7 +51,8 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
           // Scroll support (used for bulk export)
           ...(scroll && { scroll: scroll === true ? '2m' : scroll }),
           body: {
-            // Wrap in constant_score when not sorting by score to avoid wasting time on relevance scoring
+            // Wrap in consetant_score when not sorting by score to avoid wasting time on relevance scoring
+            ...(hoistProps && { ...hoistProps }),
             query:
               filters && !_.has('sort._score', aggs)
                 ? constantScore(filters)

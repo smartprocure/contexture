@@ -126,6 +126,20 @@ describe('dateIntervalGroupStats', () => {
         drilldown: '2015-01-01T00:00:00.000Z',
       })
     ).toEqual({
+      hoistProps: {
+        runtime_mappings: {
+          'PO.IssuedDate.fiscal': {
+            script: {
+              params: {
+                monthOffset: 3,
+              },
+              source:
+                "if(doc['PO.IssuedDate'].size()!=0){emit(doc['PO.IssuedDate'].value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}",
+            },
+            type: 'date',
+          },
+        },
+      },
       range: {
         'PO.IssuedDate.fiscal': {
           gte: '2015-01-01T00:00:00.000Z',
@@ -140,6 +154,20 @@ describe('dateIntervalGroupStats', () => {
         drilldown: '2015-01-01T00:00:00.000Z',
       })
     ).toEqual({
+      hoistProps: {
+        runtime_mappings: {
+          'PO.IssuedDate.fiscal': {
+            script: {
+              params: {
+                monthOffset: 3,
+              },
+              source:
+                "if(doc['PO.IssuedDate'].size()!=0){emit(doc['PO.IssuedDate'].value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}",
+            },
+            type: 'date',
+          },
+        },
+      },
       range: {
         'PO.IssuedDate.fiscal': {
           gte: '2015-01-01T00:00:00.000Z',
