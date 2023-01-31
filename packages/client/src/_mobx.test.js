@@ -9,7 +9,6 @@ import ContextureClient from './index.js'
 import mockService from './mockService.js'
 import { observable, reaction, autorun, toJS, set } from 'mobx'
 
-
 let mobxAdapter = { snapshot: toJS, extend: set, initObject: observable }
 let ContextureMobx = _.curry((x, y) =>
   ContextureClient({ ...mobxAdapter, ...x })(y)
