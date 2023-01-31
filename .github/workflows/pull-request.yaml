@@ -5,6 +5,7 @@ on: pull_request
 # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
 permissions:
   checks: write
+  contents: write
   pull-requests: write
 
 jobs:
