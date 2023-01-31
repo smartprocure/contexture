@@ -3,8 +3,8 @@ import Contexture from 'contexture'
 import { exampleTypes } from 'contexture-client'
 import elasticsearch from 'elasticsearch-browser'
 import contextureES from 'contexture-elasticsearch'
-import contextureESTypes from 'contexture-elasticsearch/types.js'
-import { exampleTypeSchemaMapping } from 'contexture-elasticsearch/example-types/schemaMapping.js'
+import contextureESTypes from 'contexture-elasticsearch/src/types.js'
+import typeMap from 'contexture-elasticsearch/src/example-types/schemaMapping.js'
 import ContextureMobx from '../../utils/contexture-mobx.js'
 
 export let es = { client: {} }
@@ -20,7 +20,7 @@ let elasticsearchProvider = contextureES({
 export let schemas = {}
 export let updateSchemas = async () => {
   console.info('Dynamically reading elasticsearch schemas')
-  let result = exampleTypeSchemaMapping(
+  let result = typeMap.exampleTypeSchemaMapping(
     await elasticsearchProvider.getSchemas()
   )
   F.mergeOn(schemas, result)

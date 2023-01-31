@@ -1,12 +1,12 @@
 import TestTree from './stories/testTree.js'
-import Component from './Number.js'
+import Component from './FacetSelect.js'
 
 export default {
   component: Component,
   args: {
     tree: TestTree(),
-    path: ['number'],
+    path: ['facet'],
   },
 }
 
-export const Number = {}
+export const FacetSelect = {}

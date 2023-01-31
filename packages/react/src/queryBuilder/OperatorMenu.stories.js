@@ -1,9 +1,14 @@
-import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { parent, root } from './stories/util.js'
-import OperatorMenu from './OperatorMenu.js'
+import Component from './OperatorMenu.js'
 
-storiesOf('Search Components|QueryBuilder/Internals', module).add(
-  'OperatorMenu',
-  () => <OperatorMenu {...{ node: { join: 'and' }, parent, root }} />
-)
+export default {
+  component: Component,
+  args: {
+    node: { join: 'and' },
+    parent,
+    root,
+    hover: { wrap: [false], join: [''], remove: [false] },
+  },
+}
+
+export const OperatorMenu = {}

@@ -28,10 +28,7 @@
   },
   "scripts": {
     "prepack": "node scripts/build.js",
-    "start": "npm run storybook",
-    "storybook": "start-storybook -p 3001",
-    "storybook:build": "build-storybook",
-    "storybook:deploy": "storybook-to-ghpages",
+    "dev": "storybook dev -p 3001",
     "update-pkg": "node scripts/updatePackage.js"
   },
   "repository": {

@@ -1,13 +1,10 @@
-import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { CheckButton } from './index.js'
-import ThemePicker from '../stories/themePicker.js'
+import Component from './CheckButton.js'
 
-storiesOf('Search Components|Internals/Checkbutton', module)
-  .addDecorator(ThemePicker('greyVest'))
-  .add('Unchecked', () => (
-    <CheckButton>Your refrigerator is running</CheckButton>
-  ))
-  .add('Checked', () => (
-    <CheckButton checked>Your refrigerator is running</CheckButton>
-  ))
+export default {
+  component: Component,
+  args: { children: 'Your refrigerator is running' },
+}
+
+export const Unchecked = {}
+
+export const Checked = { args: { checked: true } }

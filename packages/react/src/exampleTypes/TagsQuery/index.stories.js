@@ -1,9 +1,7 @@
-import _ from 'lodash/fp.js'
 import React from 'react'
-import { storiesOf } from '@storybook/react'
+import _ from 'lodash/fp.js'
 import TestTree from '../stories/testTree.js'
-import ThemePicker from '../../stories/themePicker.js'
-import { TagsQuery } from '..'
+import Component from './index.js'
 
 let tags = _.map((n) => ({ word: `(${n}) This is a tag` }), _.range(1, 5))
 
@@ -12,11 +10,18 @@ let treeWithTags = TestTree((testTree) => {
   return testTree
 })
 
-storiesOf('ExampleTypes|Tags Query', module)
-  .addDecorator(ThemePicker('greyVest'))
-  .add('Default', () => <TagsQuery tree={treeWithTags} path={['tagsQuery']} />)
-  .add('Responsive', () => (
-    <div style={{ maxWidth: 500 }}>
-      <TagsQuery tree={treeWithTags} path={['tagsQuery']} />
-    </div>
-  ))
+export default {
+  component: Component,
+  args: {
+    tree: treeWithTags,
+    path: ['tagsQuery'],
+  },
+}
+
+export const Default = {}
+
+export const Responsive = () => (
+  <div style={{ maxWidth: 500 }}>
+    <Component tree={treeWithTags} path={['tagsQuery']} />
+  </div>
+)

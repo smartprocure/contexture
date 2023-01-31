@@ -1,26 +1,27 @@
-import * as React from 'react'
-import { storiesOf } from '@storybook/react'
+import React from 'react'
 import { Box } from './greyVest/index.js'
-import { default as ThemePicker } from './stories/themePicker.js'
-import { SearchLayout } from './index.js'
+import Component from './SearchLayout.js'
 
-storiesOf('Search Components|SearchLayout', module)
-  .addDecorator(ThemePicker('greyVest'))
-  .add('Basic', () => (
-    <SearchLayout mode="basic">
-      <Box>Filters</Box>
-      <Box>Results</Box>
-    </SearchLayout>
-  ))
-  .add('Builder', () => (
-    <SearchLayout mode="builder">
-      <Box>Filters</Box>
-      <Box>Results</Box>
-    </SearchLayout>
-  ))
-  .add('Results Only', () => (
-    <SearchLayout mode="resultsOnly">
-      {/* <Box>Filters</Box> */}
-      <Box>Results</Box>
-    </SearchLayout>
-  ))
+export default {
+  component: Component,
+}
+
+export const Basic = () => (
+  <Component mode="basic">
+    <Box>Filters</Box>
+    <Box>Results</Box>
+  </Component>
+)
+
+export const Builder = () => (
+  <Component mode="builder">
+    <Box>Filters</Box>
+    <Box>Results</Box>
+  </Component>
+)
+
+export const ResultsOnly = () => (
+  <Component mode="resultsOnly">
+    <Box>Results</Box>
+  </Component>
+)

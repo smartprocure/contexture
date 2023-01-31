@@ -1,12 +1,9 @@
-import React from 'react'
-import { storiesOf } from '@storybook/react'
 import {
   applyDefaults,
   componentForType,
   schemaFieldProps,
 } from './utils/schema.js'
-import ThemePicker from './stories/themePicker.js'
-import FilterButtonList from './FilterButtonList.js'
+import Component from './FilterButtonList.js'
 import {
   tree,
   fields,
@@ -24,52 +21,36 @@ let mapNodeToDescription = (node, fields) => ({
   ]),
 })
 
-storiesOf('Search Components|FilterButtonList', module)
-  .addDecorator(ThemePicker('greyVest'))
-  .add('Simple', () => (
-    <div>
-      <FilterButtonList
-        tree={tree}
-        path={['root', 'step 1', 'foop']}
-        fields={applyDefaults(fields)}
-        mapNodeToProps={mergeOverAll([
-          componentForType(TypeMap),
-          schemaFieldProps(['label']),
-          mapNodeToDescription,
-          (node) => nodeOverrides[node.key],
-        ])}
-      />
-    </div>
-  ))
-  .add('With Filter Adder', () => (
-    <div>
-      <FilterButtonList
-        tree={tree}
-        path={['root', 'step 1', 'foop']}
-        fields={applyDefaults(fields)}
-        mapNodeToProps={mergeOverAll([
-          componentForType(TypeMap),
-          schemaFieldProps(['label']),
-          mapNodeToDescription,
-          (node) => nodeOverrides[node.key],
-        ])}
-        addFilters="Add Filters"
-      />
-    </div>
-  ))
-  .add('With Nested Nodes', () => (
-    <div>
-      <FilterButtonList
-        tree={tree}
-        path={['root']}
-        fields={applyDefaults(fields)}
-        mapNodeToProps={mergeOverAll([
-          componentForType(TypeMap),
-          schemaFieldProps(['label']),
-          mapNodeToDescription,
-          (node) => nodeOverrides[node.key],
-        ])}
-        addFilters
-      />
-    </div>
-  ))
+export default {
+  component: Component,
+  args: {
+    tree,
+    fields: applyDefaults(fields),
+    mapNodeToProps: mergeOverAll([
+      componentForType(TypeMap),
+      schemaFieldProps(['label']),
+      mapNodeToDescription,
+      (node) => nodeOverrides[node.key],
+    ]),
+  },
+}
+
+export const Simple = {
+  args: {
+    path: ['root', 'step 1', 'foop'],
+  },
+}
+
+export const WithFilterAdder = {
+  args: {
+    path: ['root', 'step 1', 'foop'],
+    addFilters: 'Add Filters',
+  },
+}
+
+export const WithNestedNodes = {
+  args: {
+    path: ['root'],
+    addFilters: true,
+  },
+}

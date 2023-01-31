@@ -1,29 +1,27 @@
-import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { parent, root, DnDDecorator } from './stories/util.js'
-import Operator from './Operator.js'
+import Component from './Operator.js'
 
-let operatorStory = (join, index, root) => () =>
-  (
-    <Operator
-      {...{
-        node: { join },
-        child: {
-          join: 'and',
-        },
-        root,
-        index,
-        parent,
-        noDrop: true,
-      }}
-    />
-  )
+export default {
+  component: Component,
+  decorators: [DnDDecorator],
+  args: {
+    index: 1,
+    root,
+    parent,
+    noDrop: true,
+    child: { join: 'and' },
+    hover: { wrap: [false], join: [''], remove: [false] },
+  },
+}
 
-storiesOf('Search Components|QueryBuilder/Internals/Operator', module)
-  .addDecorator(DnDDecorator)
-  .add('and', operatorStory('and', 1, root))
-  .add('or', operatorStory('or', 1, root))
-  .add('not', operatorStory('not', 1, root))
-  .add('first and', operatorStory('and', 0, root))
-  .add('first or', operatorStory('or', 0, root))
-  .add('first not', operatorStory('not', 0, root))
+export const And = { args: { node: { join: 'and' } } }
+
+export const Or = { args: { node: { join: 'or' } } }
+
+export const Not = { args: { node: { join: 'not' } } }
+
+export const FirstAnd = { args: { index: 0, node: { join: 'and' } } }
+
+export const FirstOr = { args: { index: 0, node: { join: 'or' } } }
+
+export const FirstNot = { args: { index: 0, node: { join: 'not' } } }
