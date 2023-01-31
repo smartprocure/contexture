@@ -60,7 +60,6 @@
     "contexture": "^0.12.11",
     "esbuild": "^0.16.17",
     "glob": "^8.0.3",
-    "jest": "^29.4.1",
     "json-stable-stringify": "^1.0.1"
   },
   "packageManager": "yarn@3.2.0"
