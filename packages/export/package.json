@@ -27,7 +27,7 @@
     }
   },
   "scripts": {
-    "prepack": "node scripts/build.js"
+    "prepack": "node ../../scripts/esbuild.js --platform=node"
   },
   "repository": {
     "type": "git",
@@ -43,11 +43,6 @@
     "futil": "^1.71.8",
     "lodash": "^4.17.21",
     "minimal-csv-formatter": "^1.0.15"
-  },
-  "devDependencies": {
-    "@flex-development/toggle-pkg-type": "^1.0.1",
-    "esbuild": "^0.17.0",
-    "glob": "^8.0.3"
   },
   "packageManager": "yarn@3.3.1"
 }
