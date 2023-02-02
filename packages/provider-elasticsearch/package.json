@@ -42,7 +42,7 @@
   "bugs": {
     "url": "https://github.com/smartprocure/contexture/issues"
   },
-  "homepage": "https://github.com/smartprocure/contexture/tree/master/packages/provider-elasticsearch",
+  "homepage": "https://github.com/smartprocure/contexture/tree/main/packages/provider-elasticsearch",
   "dependencies": {
     "@elastic/datemath": "^2.3.0",
     "debug": "^4.3.1",

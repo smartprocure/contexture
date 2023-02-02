@@ -50,7 +50,7 @@ Documentation lives in our [Storybook](https://smartprocure.github.io/contexture
 
 - [Theming documentation](https://smartprocure.github.io/contexture-react/?path=/story/developer-notes-docs--theme-api)
 - A [Live Demo](https://smartprocure.github.io/contexture-react/?path=/story/live-demos-imdb-search--dynamic-search-layout) using IMDB data
-- [Changelog](https://github.com/smartprocure/contexture/blob/master/packages/react/CHANGELOG.md)
+- [Changelog](https://github.com/smartprocure/contexture/blob/main/packages/react/CHANGELOG.md)
 
 ## Notes on this repository
 

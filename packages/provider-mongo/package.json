@@ -42,7 +42,7 @@
   "bugs": {
     "url": "https://github.com/smartprocure/contexture/issues"
   },
-  "homepage": "https://github.com/smartprocure/contexture/tree/master/packages/provider-mongo",
+  "homepage": "https://github.com/smartprocure/contexture/tree/main/packages/provider-mongo",
   "packageManager": "yarn@3.3.1",
   "dependencies": {
     "@elastic/datemath": "^2.3.0",
