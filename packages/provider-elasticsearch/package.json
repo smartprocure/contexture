@@ -56,7 +56,7 @@
   "devDependencies": {
     "@elastic/elasticsearch": "^7.11.0",
     "agentkeepalive": "^4.1.4",
-    "contexture": "^0.12.11",
+    "contexture": "workspace:^",
     "json-stable-stringify": "^1.0.1"
   },
   "packageManager": "yarn@3.2.0"

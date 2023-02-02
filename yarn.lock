@@ -6482,7 +6482,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"contexture-client@^2.49.12, contexture-client@workspace:packages/client":
+"contexture-client@workspace:^, contexture-client@workspace:packages/client":
   version: 0.0.0-use.local
   resolution: "contexture-client@workspace:packages/client"
   dependencies:
@@ -6499,7 +6499,7 @@ __metadata:
     "@elastic/datemath": ^2.3.0
     "@elastic/elasticsearch": ^7.11.0
     agentkeepalive: ^4.1.4
-    contexture: ^0.12.11
+    contexture: "workspace:^"
     debug: ^4.3.1
     futil: ^1.71.8
     js-combinatorics: ^0.5.3
@@ -6527,7 +6527,7 @@ __metadata:
   dependencies:
     "@elastic/datemath": ^2.3.0
     bluebird: ^3.5.0
-    contexture: ^0.0.4
+    contexture: "workspace:^"
     debug: ^4.3.1
     futil: ^1.71.8
     lodash: ^4.17.4
@@ -6571,8 +6571,8 @@ __metadata:
     "@storybook/react": ^6.3.7
     "@storybook/source-loader": ^6.3.7
     "@storybook/storybook-deployer": ^2.8.10
-    contexture: ^0.12.12
-    contexture-client: ^2.49.12
+    contexture: "workspace:^"
+    contexture-client: "workspace:^"
     contexture-elasticsearch: ^1.13.0
     elasticsearch-browser: ^14.2.2
     emoji-datasource: ^5.0.1
@@ -6607,7 +6607,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"contexture@^0.12.11, contexture@^0.12.12, contexture@workspace:packages/server":
+"contexture@workspace:^, contexture@workspace:packages/server":
   version: 0.0.0-use.local
   resolution: "contexture@workspace:packages/server"
   dependencies:
@@ -6620,17 +6620,6 @@ __metadata:
     moment-timezone: ^0.5.28
   languageName: unknown
   linkType: soft
-
-"contexture@npm:^0.0.4":
-  version: 0.0.4
-  resolution: "contexture@npm:0.0.4"
-  dependencies:
-    bluebird: ^3.5.0
-    futil-js: ^1.31.0
-    lodash: ^4.17.4
-  checksum: 542ca48a9e9fde0b9662d397551082f2d1f7e4585a80930330fb44a32699b9db4a7d0c83bbcc47187a6934f0258880e99714b3887562e01a73b9b29f7ca9f560
-  languageName: node
-  linkType: hard
 
 "convert-source-map@npm:^1.4.0, convert-source-map@npm:^1.5.0, convert-source-map@npm:^1.5.1, convert-source-map@npm:^1.6.0, convert-source-map@npm:^1.7.0":
   version: 1.9.0
@@ -8946,7 +8935,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"futil-js@npm:^1.31.0, futil-js@npm:^1.54.0":
+"futil-js@npm:^1.54.0":
   version: 1.71.8
   resolution: "futil-js@npm:1.71.8"
   dependencies:
