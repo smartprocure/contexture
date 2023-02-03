@@ -31,7 +31,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/smartprocure/contexture-elasticsearch.git"
+    "url": "git+https://github.com/smartprocure/contexture.git"
   },
   "keywords": [
     "contexture",
@@ -40,9 +40,9 @@
   "author": "Samuel Greene",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/smartprocure/contexture-elasticsearch/issues"
+    "url": "https://github.com/smartprocure/contexture/issues"
   },
-  "homepage": "https://github.com/smartprocure/contexture-elasticsearch#readme",
+  "homepage": "https://github.com/smartprocure/contexture/tree/main/packages/provider-elasticsearch",
   "dependencies": {
     "@elastic/datemath": "^2.3.0",
     "debug": "^4.3.1",

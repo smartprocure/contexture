@@ -31,14 +31,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://sadasant@github.com/smartprocure/contexture-export.git"
+    "url": "git+https://sadasant@github.com/smartprocure/contexture.git"
   },
   "author": "SmartProcure",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/smartprocure/contexture-export/issues"
+    "url": "https://github.com/smartprocure/contexture/issues"
   },
-  "homepage": "https://github.com/smartprocure/contexture-export#readme",
+  "homepage": "https://github.com/smartprocure/contexture/tree/main/packages/export",
   "dependencies": {
     "futil": "^1.71.8",
     "lodash": "^4.17.21",

@@ -42,7 +42,7 @@
   "bugs": {
     "url": "https://github.com/smartprocure/contexture/issues"
   },
-  "homepage": "https://github.com/smartprocure/contexture#readme",
+  "homepage": "https://github.com/smartprocure/contexture/tree/main/packages/server",
   "dependencies": {
     "@elastic/datemath": "^5.0.3",
     "date-fns": "^2.11.1",

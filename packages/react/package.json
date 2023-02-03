@@ -36,16 +36,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/smartprocure/contexture-react.git"
+    "url": "git+https://github.com/smartprocure/contexture.git"
   },
   "author": {
     "name": "Samuel Greene"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/smartprocure/contexture-react/issues"
+    "url": "https://github.com/smartprocure/contexture/issues"
   },
-  "homepage": "https://github.com/smartprocure/contexture-react#readme",
+  "homepage": "https://github.com/smartprocure/contexture/tree/main/packages/react",
   "peerDependencies": {
     "mobx": ">=4.0.0",
     "mobx-react": ">=6.3.0",

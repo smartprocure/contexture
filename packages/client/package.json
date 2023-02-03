@@ -31,14 +31,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/smartprocure/contexture-client.git"
+    "url": "git+https://github.com/smartprocure/contexture.git"
   },
   "author": "Samuel Greene",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/smartprocure/contexture-client/issues"
+    "url": "https://github.com/smartprocure/contexture/issues"
   },
-  "homepage": "https://github.com/smartprocure/contexture-client#readme",
+  "homepage": "https://github.com/smartprocure/contexture/tree/main/packages/client",
   "dependencies": {
     "futil": "^1.71.8",
     "lodash": "^4.17.15"
