@@ -54,7 +54,7 @@
     "moment-timezone": "^0.5.28"
   },
   "devDependencies": {
-    "contexture": "^0.0.4",
+    "contexture": "^0",
     "mingo": "^4.1.2",
     "mongodb": "^3.5.6",
     "mongodb-memory-server": "^6.5.2"

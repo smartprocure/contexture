@@ -15,9 +15,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0
 
       - name: Setup node
         uses: actions/setup-node@v3
@@ -38,7 +35,9 @@ jobs:
           prettier_command_prefix: yarn
 
       - name: Test
-        run: NODE_OPTIONS='--no-warnings --experimental-vm-modules' yarn run jest --ci --reporters github-actions --reporters summary --coverage .
+        run: yarn run jest --ci --reporters github-actions --reporters summary --coverage .
+        env:
+          NODE_OPTIONS: '--no-warnings --experimental-vm-modules'
 
       - name: Report Coverage
         uses: romeovs/lcov-reporter-action@2a28ec3e25fb7eae9cb537e9141603486f810d1a
