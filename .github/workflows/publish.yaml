@@ -12,15 +12,19 @@ jobs:
     concurrency: publish
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
         with:
           node-version: 16
           cache: 'yarn'
 
-      - run: yarn install --immutable
+      - name: Install dependencies
+        run: yarn install --immutable
 
-      - run: ./scripts/publish.sh
+      - name: Publish
+        run: ./scripts/publish.sh
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

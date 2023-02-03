@@ -29,7 +29,7 @@ if [ ! "$(git config --get user.email)" ]; then
   git config user.email 'publishing-bot@govspend.com'
 fi
 
-git commit --all --message "Version packages"
+git commit --all --message "Bump versions and update changelogs"
 
 git push
 
