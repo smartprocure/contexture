@@ -9,6 +9,7 @@
     "foreach": "yarn workspaces foreach --no-private --parallel --verbose"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.26.0",
     "@flex-development/toggle-pkg-type": "^1.0.1",
     "danger": "^11.2.3",
     "duti": "^0.15.2",
