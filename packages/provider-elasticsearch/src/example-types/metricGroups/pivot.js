@@ -210,15 +210,14 @@ let createPivotScope = (node, schema, getStats) => {
       }, groups)
     )
 
-
   /*
-  *   Get hoisted properties from the groups of a chart, 
-  *   passing values also in case this is needed.
-  *
-  *   This is to avoid having issues in which props are not allowed at the same level.
-  *   hoistProps allows groups to hoist items to top of mapping structure and can be 
-  *   used for other needs in which hoisting is required.
-  */ 
+   *   Get hoisted properties from the groups of a chart,
+   *   passing values also in case this is needed.
+   *
+   *   This is to avoid having issues in which props are not allowed at the same level.
+   *   hoistProps allows groups to hoist items to top of mapping structure and can be
+   *   used for other needs in which hoisting is required.
+   */
   let getHoistProps = async ({
     drilldown = { rowDrills: [], columnDrills: [] },
     groups = { rows: [], columns: [] },
@@ -240,7 +239,7 @@ let createPivotScope = (node, schema, getStats) => {
                     group.type
                   )
                   // Drilldown can come from root or be inlined on the group definition
-                  let drill = drilldown[i] || group.drilldown || null 
+                  let drill = drilldown[i] || group.drilldown || null
                   let result =
                     groupHoistProps &&
                     groupHoistProps(
