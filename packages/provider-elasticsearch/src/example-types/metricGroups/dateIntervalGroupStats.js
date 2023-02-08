@@ -44,7 +44,7 @@ let hoistProps = ({ field, interval, monthOffset = 3 }) => {
   return hoist
 }
 
-let drilldown = ({ field, interval, drilldown}) => {
+let drilldown = ({ field, interval, drilldown }) => {
   let fiscalOrField = fieldFiscalMappingOr(interval)
   interval = toElasticInterval(interval)
   let gte = drilldown
@@ -53,7 +53,7 @@ let drilldown = ({ field, interval, drilldown}) => {
 }
 
 let buildGroupQuery = (node, children, groupsKey) => {
-  let { field, interval = 'year'} = node
+  let { field, interval = 'year' } = node
   let fiscalOrField = fieldFiscalMappingOr(interval)
   interval = toElasticInterval(interval)
 
