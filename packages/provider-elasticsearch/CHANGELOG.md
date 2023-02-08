@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.20.0
+
+- [pivot] refactor hoisting into pivot type function 
+- [pivot] fix click through when hoisted props present
+
 ## 1.19.8
 
 - ESM source
