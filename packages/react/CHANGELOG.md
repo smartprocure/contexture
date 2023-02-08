@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2.54.19
+
 - Fix ResultTable rendering 0 when there are no results
 
 ## 2.54.17
