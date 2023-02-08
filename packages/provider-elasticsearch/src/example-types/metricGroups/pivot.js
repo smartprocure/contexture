@@ -210,9 +210,15 @@ let createPivotScope = (node, schema, getStats) => {
       }, groups)
     )
 
-  //Send the cols and rows on same object
-  //Could pair values with data potentially prior to this
-  //TODO: write a warning for when existing values get clobered
+
+  /*
+  *   Get hoisted properties from the groups of a chart, 
+  *   passing values also in case this is needed.
+  *
+  *   This is to avoid having issues in which props are not allowed at the same level.
+  *   hoistProps allows groups to hoist items to top of mapping structure and can be 
+  *   used for other needs in which hoisting is required.
+  */ 
   let getHoistProps = async ({
     drilldown = { rowDrills: [], columnDrills: [] },
     groups = { rows: [], columns: [] },
@@ -225,6 +231,7 @@ let createPivotScope = (node, schema, getStats) => {
         await Promise.all(
           _.map(
             async ({ drilldown = [], group = [] }) =>
+              // Flatten in case of multi-field aggregation
               _.flatten(
                 await compactMapAsync((group, i) => {
                   let groupHoistProps = lookupTypeProp(
@@ -232,14 +239,15 @@ let createPivotScope = (node, schema, getStats) => {
                     'hoistProps',
                     group.type
                   )
-                  let drill = drilldown[i] || group.drilldown || null // Drilldown can come from root or be inlined on the group definition
+                  // Drilldown can come from root or be inlined on the group definition
+                  let drill = drilldown[i] || group.drilldown || null 
                   let result =
                     groupHoistProps &&
                     groupHoistProps(
                       { drilldown: drill, ...group },
                       schema,
                       getStats
-                    ) //Pretty sure I dont need schema or getStats here
+                    )
                   return result || {}
                 }, group)
               ),
