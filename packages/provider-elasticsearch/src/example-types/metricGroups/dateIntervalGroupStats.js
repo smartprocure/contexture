@@ -34,7 +34,7 @@ let getFiscalMappings = _.curry((toFiscalField,{field, monthOffset}) => ({
   },
 }))
 
-let hoistProps = ({ field, interval, drilldown, monthOffset = 3 }) => {
+let hoistProps = ({ field, interval, monthOffset = 3 }) => {
   let fiscalOrField = fieldFiscalMappingOr(interval)
   interval = toElasticInterval(interval)
   let hoist = {
@@ -44,7 +44,7 @@ let hoistProps = ({ field, interval, drilldown, monthOffset = 3 }) => {
   return hoist
 }
 
-let drilldown = ({ field, interval, drilldown, monthOffset = 3 }) => {
+let drilldown = ({ field, interval, drilldown}) => {
   let fiscalOrField = fieldFiscalMappingOr(interval)
   interval = toElasticInterval(interval)
   let gte = drilldown
@@ -53,7 +53,7 @@ let drilldown = ({ field, interval, drilldown, monthOffset = 3 }) => {
 }
 
 let buildGroupQuery = (node, children, groupsKey) => {
-  let { field, interval = 'year', monthOffset = 3 } = node
+  let { field, interval = 'year'} = node
   let fiscalOrField = fieldFiscalMappingOr(interval)
   interval = toElasticInterval(interval)
 
