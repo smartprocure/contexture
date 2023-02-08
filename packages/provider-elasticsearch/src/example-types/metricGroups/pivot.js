@@ -210,6 +210,30 @@ let createPivotScope = (node, schema, getStats) => {
       }, groups)
     )
 
+  //Send the cols and rows on same object
+  //Could pair values with data potentially prior to this
+  //TODO: write a warning for when existing values get clobered
+  let getHoistProps = async ({ 
+      drilldown = {rowDrills: [], columnDrills: []}, 
+      groups = {rows: [], columns: []} 
+    }) => (_.reduce(_.merge,{})
+      (_.flatten(
+        await Promise.all(
+          _.map( async ({drilldown = [], group = []}) => (
+           _.flatten( await compactMapAsync( (group, i) => {
+            let groupHoistProps = lookupTypeProp(_.stubFalse, 'hoistProps', group.type)
+            let drill = drilldown[i] || group.drilldown || null                        // Drilldown can come from root or be inlined on the group definition
+            let result = groupHoistProps && groupHoistProps({ drilldown: drill, ...group }, schema, getStats) //Pretty sure I dont need schema or getStats here
+            return result || {}
+            }, group)
+          )
+          ), 
+          [{drilldown: drilldown.rowDrills, group: groups.rows}, 
+          {drilldown: drilldown.columnDrills, group: groups.columns}])
+        ))
+      )
+  )
+
   // Builds filters for skip/include values
   let getRequestFilters = async ({
     drilldown = [],
@@ -289,10 +313,7 @@ let createPivotScope = (node, schema, getStats) => {
           group.sort = { field: sortField, direction: sort.direction }
         }
         let build = lookupTypeProp(_.identity, 'buildGroupQuery', group.type)
-
         //Remove anything that needs to be hoisted before composing further
-        let hoist = { hoistProps: { ...children.hoistProps } }
-        children = _.omit('hoistProps', await children)
         // We are iterating through the groups reversed so we need to subtract instead of add to get the right index
         let reversedLookupIndex = groups.length - index - 1
         let drilldownKey = _.get(
@@ -308,12 +329,6 @@ let createPivotScope = (node, schema, getStats) => {
           getStats,
           drilldownKey
         )
-
-        //Add anything that needs to be hoisted to parent
-        parent.hoistProps = _.merge(
-          _.getOr({}, 'hoistProps', hoist),
-          parent.hoistProps
-        )
         return parent
       },
       statsAggs,
@@ -328,11 +343,6 @@ let createPivotScope = (node, schema, getStats) => {
     // This allows avoiding expansion until ready
     // Opt out with expandColumns / expandRows
 
-    let hoistProps = {}
-    let mergeHoistProps = (hoistProps, statsAggs) =>
-      _.merge(_.getOr({}, 'hoistProps', statsAggs), hoistProps)
-    let removeHoistProps = (statsAggs) => _.omit('hoistProps', statsAggs)
-
     let columns = _.get('expanded.columns', node)
       ? node.columns
       : _.take(_.size(columnDrills) + 1, node.columns)
@@ -340,6 +350,9 @@ let createPivotScope = (node, schema, getStats) => {
     let rows = _.get('expanded.rows', node)
       ? node.rows
       : _.take(_.size(rowDrills) + 1, node.rows)
+
+
+    let hoistProps = await getHoistProps({drilldown: {rowDrills, columnDrills}, groups: {rows, columns}})  
 
     // Filtering data specified by the drilldown
     let drilldownColumnFilters = await getDrilldownFilters({
@@ -385,9 +398,6 @@ let createPivotScope = (node, schema, getStats) => {
         'columns'
       )
 
-      hoistProps = mergeHoistProps(hoistProps, columnsStatsAggs)
-      columnsStatsAggs = removeHoistProps(columnsStatsAggs)
-
       if (request.columns.totals) {
         // adding total column statsAggs above the column filters
         statsAggs = _.merge(
@@ -417,9 +427,6 @@ let createPivotScope = (node, schema, getStats) => {
       node.sort
     )
     let query
-
-    hoistProps = mergeHoistProps(hoistProps, rowsStatsAggs)
-    rowsStatsAggs = removeHoistProps(rowsStatsAggs)
 
     if (request.rows.totals) {
       // adding total rows statsAggs above the rows filters
@@ -451,7 +458,7 @@ let createPivotScope = (node, schema, getStats) => {
     // Without this, ES7+ stops counting at 10k instead of returning the actual count
     query.track_total_hits = true
 
-    query = { ...hoistProps, ...query }
+    query = {aggs: query, hoistProps}
 
     return query
   }
@@ -520,6 +527,7 @@ let createPivotScope = (node, schema, getStats) => {
     buildQuery,
     getResultKeys,
     processResponse,
+    getHoistProps,
   }
 }
 
@@ -532,14 +540,20 @@ let hasValue = ({ filters }) => !_.isEmpty(filters)
 let filter = async (node, schema) => {
   // This requires getting `search` passed in to filter
   // This is a change to contexture server, which is likely a breaking change moving all contexture type methods to named object params
-  //    That will allow everything to get all props inclding `search`
+  // That will allow everything to get all props inclding `search`
   let { filters, rows = [], columns = [] } = node
   let getStats = () => {
     throw 'Pivot filtering does not support running searches to build filters yet'
   }
-  let { getDrilldownFilters } = createPivotScope(node, schema, getStats)
+  let { getDrilldownFilters, getHoistProps } = createPivotScope(node, schema, getStats)
 
-  return or(
+  let hoistProps = await getHoistProps(
+    {
+      drilldown: {rowDrills: filters.rows, columnDrills: filters.columns}, 
+      groups: {rows, columns}}
+    )
+  
+  let filterResults =  or(
     await compactMapAsync(
       async (filter) =>
         and([
@@ -555,6 +569,8 @@ let filter = async (node, schema) => {
       filters
     )
   )
+
+  return {filters: filterResults, hoistProps}
 }
 
 export default {
