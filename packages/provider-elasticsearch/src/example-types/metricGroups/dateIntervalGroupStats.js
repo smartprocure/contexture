@@ -8,7 +8,8 @@ let toElasticInterval = _.flow(_.replace('fiscal', ''), _.toLower)
 let isFiscal = _.includes('fiscal')
 
 let fieldFiscalMappingOr = _.curry((interval, field) =>
-  isFiscal(interval) ? `${field}.fiscal` : field)
+  isFiscal(interval) ? `${field}.fiscal` : field
+)
 
 /*
  *   hoistProps allows the fields within to be hoisted to top of mapping structure
@@ -37,18 +38,16 @@ let getFiscalMappings = _.curry((toFiscalField,{field, monthOffset}) => ({
   },
 }))
 
-
 let hoistProps = ({ field, interval, drilldown, monthOffset = 3 }) => {
   let fiscalOrField = fieldFiscalMappingOr(interval)
   interval = toElasticInterval(interval)
   let hoist = {
     ...(isFiscal(fiscalOrField(field)) &&
-      getFiscalMappings(fiscalOrField, { field, monthOffset }))
+      getFiscalMappings(fiscalOrField, { field, monthOffset })),
   }
   return hoist
 }
 
- 
 let drilldown = ({ field, interval, drilldown, monthOffset = 3 }) => {
   let fiscalOrField = fieldFiscalMappingOr(interval)
   interval = toElasticInterval(interval)
@@ -70,7 +69,6 @@ let buildGroupQuery = (node, children, groupsKey) => {
    *       calendarYear2022Q4 => federalFiscalYear2023Q
    */
 
-
   return {
     aggs: {
       [groupsKey]: {
@@ -88,5 +86,5 @@ let buildGroupQuery = (node, children, groupsKey) => {
 export default {
   ...groupStats(buildGroupQuery),
   drilldown,
-  hoistProps
+  hoistProps,
 }

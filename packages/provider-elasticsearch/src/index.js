@@ -37,14 +37,21 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
       },
     }
   },
-  async runSearch({ requestOptions = {} } = {}, node, schema, filterData, aggData) {
+  async runSearch(
+    { requestOptions = {} } = {},
+    node,
+    schema,
+    filterData,
+    aggData
+  ) {
     //Unpack filters and query data if hoisted data present, or use regular values
     let aggs = aggData && aggData.hoistProps ? aggData.aggs : aggData
-    let filters = filterData && filterData.hoistProps ? filterData.filters : filterData
+    let filters =
+      filterData && filterData.hoistProps ? filterData.filters : filterData
     //Unpack hoisted props if any exist
-    let aggsHoistProps = aggData && aggData.hoistProps || {}
-    let filterHoistProps = filterData && filterData.hoistProps || {}
-    
+    let aggsHoistProps = (aggData && aggData.hoistProps) || {}
+    let filterHoistProps = (filterData && filterData.hoistProps) || {}
+
     let { searchWrapper } = config
     let { scroll, scrollId } = node
     let request = scrollId
@@ -58,16 +65,16 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
           body: {
             // Wrap in constant_score when not sorting by score to avoid wasting time on relevance scoring
             ...aggsHoistProps,
-            ...filterHoistProps, 
+            ...filterHoistProps,
             query:
               filters && !_.has('sort._score', aggs)
                 ? constantScore(filters)
                 : filters,
             // If there are aggs, skip search results
-             ...(aggs.aggs && { size: 0 }), 
+            ...(aggs.aggs && { size: 0 }),
             // Sorting by _doc is more efficient for scrolling since it won't waste time on any sorting
             ...(scroll && { sort: ['_doc'] }),
-            ...aggs, 
+            ...aggs,
           },
         }
 
