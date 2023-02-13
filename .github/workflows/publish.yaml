@@ -1,4 +1,4 @@
-name: Publish Packages
+name: Release
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  publish:
+  release:
     # Only one publish job should run at a time
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#concurrency
     concurrency: publish
@@ -24,7 +24,10 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Publish
-        run: ./scripts/publish.sh
+      - name: Create Release Pull Request
+        uses: changesets/action@v1
+        with:
+          publish: yarn changeset publish
         env:
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
