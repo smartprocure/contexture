@@ -14,7 +14,8 @@ let Tree = F.tree(_.get('rows'))
 let ColTree = F.tree(_.get('columns'))
 
 let lookupTypeProp = _.curry((def, prop, type) =>
-  _.getOr(def, `${type}GroupStats.${prop}`, types))
+  _.getOr(def, `${type}GroupStats.${prop}`, types)
+)
 
 // PivotTable -> Query:
 //  rows -> columns -> values
@@ -219,21 +220,28 @@ let createPivotScope = (node, schema, getStats) => {
    *   hoistProps allows groups to hoist items to top of mapping structure and can be
    *   used for other needs in which hoisting is required.
    */
-  
-  let getHoistProps = (hoistFrom) =>_.merge(
-    ...F.flowMap(
-         ({drilldown = [], groups = []}) => F.mapIndexed((group, i) => 
-            _.defaults({drilldown: drilldown[i]}, group), 
-        groups),
+
+  let getHoistProps = (hoistFrom) =>
+    _.merge(
+      ...F.flowMap(
+        ({ drilldown = [], groups = [] }) =>
+          F.mapIndexed(
+            (group, i) => _.defaults({ drilldown: drilldown[i] }, group),
+            groups
+          ),
         _.flattenDeep,
-        F.compactMap(group => ({...group, hoistFun: hoistFunStub(group.type)})),
-        _.map(({hoistFun, ...group}) => _.isFunction(hoistFun) ? 
-          hoistFun({...group}, schema, getStats) : hoistFun
+        F.compactMap((group) => ({
+          ...group,
+          hoistFun: hoistFunStub(group.type),
+        })),
+        _.map(({ hoistFun, ...group }) =>
+          _.isFunction(hoistFun)
+            ? hoistFun({ ...group }, schema, getStats)
+            : hoistFun
         ),
         _.mergeAll
-      )
-      (hoistFrom)
-  )
+      )(hoistFrom)
+    )
 
   // Builds filters for skip/include values
   let getRequestFilters = async ({
