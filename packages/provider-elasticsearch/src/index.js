@@ -19,7 +19,10 @@ let revolvingCounter = (max) => {
 }
 let counter = revolvingCounter(500)
 
-let constantScore = (filter) => ({ constant_score: { filter } })
+let constantScore = (filter) => ({ constant_score: { filter: getFilterOrIgnoreVal(filter) } })
+
+//Elastic ignores entries that resolve to undefined
+let getFilterOrIgnoreVal = (filters) => (_.isEmpty(filters) ? undefined : filters)
 
 let ElasticsearchProvider = (config = { request: {} }) => ({
   types: config.types,
@@ -41,17 +44,9 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
     { requestOptions = {} } = {},
     node,
     schema,
-    filterData,
-    aggData
+    {filterHoistProps = {}, ...filters} = {},
+    {aggsHoistProps = {}, ...aggs} = {},
   ) {
-    //Unpack filters and query data if hoisted data present, or use regular values
-    let aggs = aggData && aggData.hoistProps ? aggData.aggs : aggData
-    let filters =
-      filterData && filterData.hoistProps ? filterData.filters : filterData
-    //Unpack hoisted props if any exist
-    let aggsHoistProps = (aggData && aggData.hoistProps) || {}
-    let filterHoistProps = (filterData && filterData.hoistProps) || {}
-
     let { searchWrapper } = config
     let { scroll, scrollId } = node
     let request = scrollId
@@ -67,9 +62,9 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
             ...aggsHoistProps,
             ...filterHoistProps,
             query:
-              filters && !_.has('sort._score', aggs)
+                !_.isEmpty(filters) && !_.has('sort._score', aggs)
                 ? constantScore(filters)
-                : filters,
+                : getFilterOrIgnoreVal(filters),
             // If there are aggs, skip search results
             ...(aggs.aggs && { size: 0 }),
             // Sorting by _doc is more efficient for scrolling since it won't waste time on any sorting

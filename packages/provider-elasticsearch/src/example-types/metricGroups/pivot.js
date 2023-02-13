@@ -13,8 +13,8 @@ let everyEmpty = _.flow(_.flattenDeep, _.every(_.isEmpty))
 let Tree = F.tree(_.get('rows'))
 let ColTree = F.tree(_.get('columns'))
 
-let lookupTypeProp = (def, prop, type) =>
-  _.getOr(def, `${type}GroupStats.${prop}`, types)
+let lookupTypeProp = _.curry((def, prop, type) =>
+  _.getOr(def, `${type}GroupStats.${prop}`, types))
 
 // PivotTable -> Query:
 //  rows -> columns -> values
@@ -210,6 +210,7 @@ let createPivotScope = (node, schema, getStats) => {
       }, groups)
     )
 
+  let hoistFunStub = lookupTypeProp(_.stubObject, 'hoistProps')
   /*
    *   Get hoisted properties from the groups of a chart,
    *   passing values also in case this is needed.
@@ -218,46 +219,21 @@ let createPivotScope = (node, schema, getStats) => {
    *   hoistProps allows groups to hoist items to top of mapping structure and can be
    *   used for other needs in which hoisting is required.
    */
-  let getHoistProps = async ({
-    drilldown = { rowDrills: [], columnDrills: [] },
-    groups = { rows: [], columns: [] },
-  }) =>
-    _.reduce(
-      _.merge,
-      {}
-    )(
-      _.flatten(
-        await Promise.all(
-          _.map(
-            async ({ drilldown = [], group = [] }) =>
-              // Flatten in case of multi-field aggregation
-              _.flatten(
-                await compactMapAsync((group, i) => {
-                  let groupHoistProps = lookupTypeProp(
-                    _.stubFalse,
-                    'hoistProps',
-                    group.type
-                  )
-                  // Drilldown can come from root or be inlined on the group definition
-                  let drill = drilldown[i] || group.drilldown || null
-                  let result =
-                    groupHoistProps &&
-                    groupHoistProps(
-                      { drilldown: drill, ...group },
-                      schema,
-                      getStats
-                    )
-                  return result || {}
-                }, group)
-              ),
-            [
-              { drilldown: drilldown.rowDrills, group: groups.rows },
-              { drilldown: drilldown.columnDrills, group: groups.columns },
-            ]
-          )
-        )
+  
+  let getHoistProps = (hoistFrom) =>_.merge(
+    ...F.flowMap(
+         ({drilldown = [], groups = []}) => F.mapIndexed((group, i) => 
+            _.defaults({drilldown: drilldown[i]}, group), 
+        groups),
+        _.flattenDeep,
+        F.compactMap(group => ({...group, hoistFun: hoistFunStub(group.type)})),
+        _.map(({hoistFun, ...group}) => _.isFunction(hoistFun) ? 
+          hoistFun({...group}, schema, getStats) : hoistFun
+        ),
+        _.mergeAll
       )
-    )
+      (hoistFrom)
+  )
 
   // Builds filters for skip/include values
   let getRequestFilters = async ({
@@ -376,10 +352,10 @@ let createPivotScope = (node, schema, getStats) => {
       ? node.rows
       : _.take(_.size(rowDrills) + 1, node.rows)
 
-    let hoistProps = await getHoistProps({
-      drilldown: { rowDrills, columnDrills },
-      groups: { rows, columns },
-    })
+    let aggsHoistProps = getHoistProps([
+      { drilldown: columnDrills, groups: columns },
+      { drilldown: rowDrills, groups: rows },
+    ])
 
     // Filtering data specified by the drilldown
     let drilldownColumnFilters = await getDrilldownFilters({
@@ -485,9 +461,7 @@ let createPivotScope = (node, schema, getStats) => {
     // Without this, ES7+ stops counting at 10k instead of returning the actual count
     query.track_total_hits = true
 
-    query = { aggs: query, hoistProps }
-
-    return query
+    return { ...query, aggsHoistProps }
   }
 
   /***
@@ -578,10 +552,10 @@ let filter = async (node, schema) => {
     getStats
   )
 
-  let hoistProps = await getHoistProps({
-    drilldown: { rowDrills: filters.rows, columnDrills: filters.columns },
-    groups: { rows, columns },
-  })
+  let filterHoistProps = await getHoistProps([
+    { drilldown: filters.columns, groups: columns },
+    { drilldown: filters.rows, groups: rows },
+  ])
 
   let filterResults = or(
     await compactMapAsync(
@@ -600,7 +574,7 @@ let filter = async (node, schema) => {
     )
   )
 
-  return { filters: filterResults, hoistProps }
+  return { ...filterResults, filterHoistProps }
 }
 
 export default {
