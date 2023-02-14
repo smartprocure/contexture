@@ -24,7 +24,8 @@ let constantScore = (filter) => ({
 })
 
 //Elastic ignores entries that resolve to undefined
-let getFilterOrIgnoreVal = (filters) => (_.isEmpty(filters) ? undefined : filters)
+let getFilterOrIgnoreVal = (filters) =>
+  _.isEmpty(filters) ? undefined : filters
 
 let ElasticsearchProvider = (config = { request: {} }) => ({
   types: config.types,
