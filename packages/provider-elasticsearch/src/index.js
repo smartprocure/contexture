@@ -22,7 +22,7 @@ let counter = revolvingCounter(500)
 let constantScore = (filter) => ({ constant_score: { filter: getFilterOrIgnoreVal(filter) } })
 
 //Elastic ignores entries that resolve to undefined
-let getFilterOrIgnoreVal = (filters) => (_.isEmpty(filters) ? undefined : filters)
+let getFilterOrIgnoreVal = (filters) => (_.isEmpty(filters) ? null : filters)
 
 let ElasticsearchProvider = (config = { request: {} }) => ({
   types: config.types,
@@ -59,8 +59,8 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
           ...(scroll && { scroll: scroll === true ? '2m' : scroll }),
           body: {
             // Wrap in constant_score when not sorting by score to avoid wasting time on relevance scoring
-            ...aggsHoistProps,
-            ...filterHoistProps,
+            ...(!_.isEmpty(aggsHoistProps) && aggsHoistProps),
+            ...(!_.isEmpty(filterHoistProps) && filterHoistProps),
             query:
                 !_.isEmpty(filters) && !_.has('sort._score', aggs)
                 ? constantScore(filters)

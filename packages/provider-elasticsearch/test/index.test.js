@@ -60,7 +60,7 @@ describe('Server Provider', () => {
 
     provider({
       getClient: () => client,
-    }).runSearch({}, initialNode, initialSchema, null, {})
+    }).runSearch({}, initialNode, initialSchema, undefined, {})
 
     let firstSearchCall =
       client.child.mock.results[0].value.search.mock.calls[0]

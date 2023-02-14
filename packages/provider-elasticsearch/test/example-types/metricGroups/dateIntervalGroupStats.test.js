@@ -158,19 +158,6 @@ describe('dateIntervalGroupStats', () => {
         interval: 'fiscalYear',
       })
     ).toEqual({
-      hoistProps: {
-        runtime_mappings: {
-          'PO.IssuedDate.fiscal': {
-            script: {
-              params: {
-                monthOffset: 3,
-              },
-              source: `if(doc['PO.IssuedDate'].size()!=0){${''}emit(doc['PO.IssuedDate']${''}.value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}${''}`,
-            },
-            type: 'date',
-          },
-        },
-      },
       aggs: {
         groups: {
           date_histogram: {
@@ -198,19 +185,6 @@ describe('dateIntervalGroupStats', () => {
         interval: 'fiscalQuarter',
       })
     ).toEqual({
-      hoistProps: {
-        runtime_mappings: {
-          'PO.IssuedDate.fiscal': {
-            script: {
-              params: {
-                monthOffset: 3,
-              },
-              source: `if(doc['PO.IssuedDate'].size()!=0){${''}emit(doc['PO.IssuedDate']${''}.value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}${''}`,
-            },
-            type: 'date',
-          },
-        },
-      },
       aggs: {
         groups: {
           date_histogram: {

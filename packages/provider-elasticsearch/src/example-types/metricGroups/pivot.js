@@ -324,7 +324,7 @@ let createPivotScope = (node, schema, getStats) => {
 
         let parent = await build(
           group,
-          children,
+          await children,
           groupingType,
           schema,
           getStats,
@@ -461,7 +461,7 @@ let createPivotScope = (node, schema, getStats) => {
     // Without this, ES7+ stops counting at 10k instead of returning the actual count
     query.track_total_hits = true
 
-    return { ...query, aggsHoistProps }
+    return { ...query, ...(!_.isEmpty(aggsHoistProps) && aggsHoistProps) }
   }
 
   /***
@@ -574,7 +574,7 @@ let filter = async (node, schema) => {
     )
   )
 
-  return { ...filterResults, filterHoistProps }
+  return { ...filterResults, ...(!_.isEmpty(filterHoistProps) && filterHoistProps) }
 }
 
 export default {
