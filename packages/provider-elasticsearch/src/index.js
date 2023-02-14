@@ -19,7 +19,9 @@ let revolvingCounter = (max) => {
 }
 let counter = revolvingCounter(500)
 
-let constantScore = (filter) => ({ constant_score: { filter: getFilterOrIgnoreVal(filter) } })
+let constantScore = (filter) => ({
+  constant_score: { filter: getFilterOrIgnoreVal(filter) },
+})
 
 //Elastic ignores entries that resolve to undefined
 let getFilterOrIgnoreVal = (filters) => (_.isEmpty(filters) ? null : filters)
@@ -44,8 +46,8 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
     { requestOptions = {} } = {},
     node,
     schema,
-    {filterHoistProps = {}, ...filters} = {},
-    {aggsHoistProps = {}, ...aggs} = {},
+    { filterHoistProps = {}, ...filters } = {},
+    { aggsHoistProps = {}, ...aggs } = {}
   ) {
     let { searchWrapper } = config
     let { scroll, scrollId } = node
@@ -62,7 +64,7 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
             ...(!_.isEmpty(aggsHoistProps) && aggsHoistProps),
             ...(!_.isEmpty(filterHoistProps) && filterHoistProps),
             query:
-                !_.isEmpty(filters) && !_.has('sort._score', aggs)
+              !_.isEmpty(filters) && !_.has('sort._score', aggs)
                 ? constantScore(filters)
                 : getFilterOrIgnoreVal(filters),
             // If there are aggs, skip search results
