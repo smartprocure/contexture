@@ -582,7 +582,10 @@ let filter = async (node, schema) => {
     )
   )
 
-  return { ...filterResults, ...(!_.isEmpty(filterHoistProps) && filterHoistProps) }
+  return {
+    ...filterResults,
+    ...(!_.isEmpty(filterHoistProps) && filterHoistProps),
+  }
 }
 
 export default {
