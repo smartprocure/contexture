@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.19.12
+
+### Patch Changes
+
+- cd3e075: Update yarn.lock on versioning
+
 ## 1.19.11
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.12.16
+
+### Patch Changes
+
+- cd3e075: Update yarn.lock on versioning
+
 ## 0.12.15
 
 ### Patch Changes
