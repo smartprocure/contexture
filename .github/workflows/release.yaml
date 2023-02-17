@@ -1,4 +1,4 @@
-name: Release
+name: Release or Create Release PR
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  release:
+  release-or-create-pr:
     # Only one publish job should run at a time
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#concurrency
     concurrency: publish
@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Create Release Pull Request
+      - name: Release or Create Release PR
         uses: changesets/action@v1
         with:
           version: yarn version
