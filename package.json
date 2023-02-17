@@ -6,7 +6,8 @@
     "packages/*"
   ],
   "scripts": {
-    "foreach": "yarn workspaces foreach --no-private --parallel --verbose"
+    "foreach": "yarn workspaces foreach --no-private --parallel --verbose",
+    "version": "yarn changeset version && yarn"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.0",
