@@ -1,6 +1,6 @@
 {
   "name": "contexture",
-  "version": "0.12.13",
+  "version": "0.12.14",
   "description": "The Contexture (aka ContextTree) Server",
   "type": "module",
   "exports": {

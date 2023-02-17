@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.54.20
+
+### Patch Changes
+
+- 4afa762: Fix package json contexture repo links
+
 ## 2.54.19
 
 - Fix ResultTable rendering 0 when there are no results

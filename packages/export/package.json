@@ -1,6 +1,6 @@
 {
   "name": "contexture-export",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Contexture Exports",
   "type": "module",
   "exports": {
