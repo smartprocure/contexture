@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.12.15
+
+### Patch Changes
+
+- ec5bb50: Fix yarn.lock
+
 ## 0.12.14
 
 ### Patch Changes
