@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.12.14
+
+### Patch Changes
+
+- 4c9602b: Fix package json contexture repo links and move ecosystem links to the monorepo readme
+
 ## 0.12.12
 
 - Add exports to package.json so node knows which version of the code to import

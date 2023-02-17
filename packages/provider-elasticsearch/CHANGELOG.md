@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.19.10
+
+### Patch Changes
+
+- 4afa762: Fix package json contexture repo links
+
 ## 1.19.8
 
 - ESM source

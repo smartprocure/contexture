@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.49.14
+
+### Patch Changes
+
+- 4afa762: Fix package json contexture repo links
+
 ## 2.49.12
 
 - Run tests with jest's ESM support. Remove esbuild-jest transform

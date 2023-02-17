@@ -1,5 +1,11 @@
 ﻿# Changelog
 
+## 1.0.11
+
+### Patch Changes
+
+- 4afa762: Fix package json contexture repo links
+
 ## 1.0.9
 
 - Add exports to package.json so node knows which version of the code to import
