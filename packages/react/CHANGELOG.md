@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.54.22
+
+### Patch Changes
+
+- cd3e075: Update yarn.lock on versioning
+
 ## 2.54.21
 
 ### Patch Changes
