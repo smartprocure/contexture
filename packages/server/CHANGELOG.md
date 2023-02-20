@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.12.17
+
+### Patch Changes
+
+- 2dc36c8: Republish packages with correct package.json exports field
+
 ## 0.12.16
 
 ### Patch Changes
