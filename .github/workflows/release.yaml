@@ -24,11 +24,15 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
+      - name: Setup npm auth token
+        run: echo -e "npmRegistryServer: \"https://registry.npmjs.org/\"\nnpmAuthToken: \"$NPM_TOKEN\"" >> ./.yarnrc.yml
+        env:
+          NPM_TOKEN: '${{ secrets.NPM_AUTH_TOKEN }}'
+
       - name: Release or Create Release PR
         uses: changesets/action@v1
         with:
           version: yarn version
           publish: yarn publish
         env:
-          NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
