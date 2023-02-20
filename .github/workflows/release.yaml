@@ -28,7 +28,7 @@ jobs:
         uses: changesets/action@v1
         with:
           version: yarn version
-          publish: yarn changeset publish
+          publish: yarn publish
         env:
           NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
