@@ -25,7 +25,8 @@ jobs:
         run: yarn install --immutable
 
       - name: Setup npm auth token
-        run: echo -e "npmRegistryServer: \"https://registry.npmjs.org/\"\nnpmAuthToken: \"$NPM_TOKEN\"" >> ./.yarnrc.yml
+        run: |
+          echo -e "npmRegistryServer: \"https://registry.npmjs.org/\"\nnpmAuthToken: \"$NPM_TOKEN\"" >> ./.yarnrc.yml
         env:
           NPM_TOKEN: '${{ secrets.NPM_AUTH_TOKEN }}'
 
