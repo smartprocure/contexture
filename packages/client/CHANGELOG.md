@@ -24,6 +24,10 @@
 
 - 4afa762: Fix package json contexture repo links
 
+## 2.49.18
+
+- pivot type - do not reset expansions when only certain display related fields are changed on the node
+
 ## 2.49.12
 
 - Run tests with jest's ESM support. Remove esbuild-jest transform
