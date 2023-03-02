@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.49.18
+
+### Patch Changes
+
+- 16ac49f: pivot type - do not reset expansions when only certain display related fields are changed on the node
+
 ## 2.49.17
 
 ### Patch Changes
