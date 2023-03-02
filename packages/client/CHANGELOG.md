@@ -2,7 +2,6 @@
 
 ## 2.49.17
 
-
 ### Patch Changes
 
 - 2dc36c8: Republish packages with correct package.json exports field
@@ -24,10 +23,6 @@
 ### Patch Changes
 
 - 4afa762: Fix package json contexture repo links
-
-## 2.49.18
-
-- pivot type - do not reset expansions when only certain display related fields are changed on the node
 
 ## 2.49.12
 
