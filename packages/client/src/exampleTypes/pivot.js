@@ -152,6 +152,14 @@ let collapse = (tree, path, type, drilldown) => {
   tree.extend(node, { context: { results } })
 }
 
+export let skipResetExpansionsFields = [
+  'paused',
+  'expansions',
+  'selectedRows',
+  'filters',
+  'chart',
+]
+
 export default {
   validate: (context) =>
     _.every(
@@ -212,15 +220,13 @@ export default {
   onDispatch(event, extend) {
     let { type, node, value } = event
     if (type !== 'mutate') return
-
-    // Pause dispatches as a mutate (but also continue in case there are other properties being mutated)
-    if (F.matchesSignature(['paused'], value)) return
+    // if no other fields are changing, do not proceed (but also continue in case there are other properties being mutated)
+    if (F.matchesSignature(skipResetExpansionsFields, value)) {
+      return
+    }
 
     // if sorting is changed we are preserving expanded columns
     if (_.has('sort', value)) return resetExpandedRows(extend, node)
-
-    // if expansions, selected row change or filters change, do not reset expansions
-    if (F.cascade(['expansions', 'selectedRows', 'filters'], value)) return
 
     // if anything else about node configuration is changed resetting expansions
     resetExpansions(extend, node)
