@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.54.24
+
+### Patch Changes
+
+- df53464: Avoid circular imports and react-dnd esm imports
+
 ## 2.54.23
 
 ### Patch Changes
