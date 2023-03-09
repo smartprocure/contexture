@@ -55,16 +55,19 @@ let TagsWrapper = observer(
     sanitizeTags = true,
     splitCommas = true,
     maxTags = 1000,
+    showLabelCounts = true,
     ...props
   }) => {
     let TagWithPopover = React.memo(
       observer((props) => {
         let result = _.get(['context', 'results', props.value], node)
+        let label = props.value
+        if (showLabelCounts) {
+          label = `${label} (${toNumber(result)})`
+        }
         let tagProps = {
           ...props,
-          ...(!_.isNil(result)
-            ? { label: `${props.value} (${toNumber(result)})` }
-            : {}),
+          ...(!_.isNil(result) ? { label } : {}),
         }
         return (
           <Popover
