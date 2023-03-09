@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.19.14
+
+### Patch Changes
+
+- 4acd46a: Nested highlighting fixes
+
 ## 1.19.13
 
 ### Patch Changes
