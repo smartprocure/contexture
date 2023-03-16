@@ -64,7 +64,7 @@ let SearchBar = ({
 }) => {
   let collapse = React.useState(true)
   return (
-    <OutsideClickHandler.default
+    <OutsideClickHandler
       onOutsideClick={() => {
         F.on(collapse)()
       }}
@@ -103,7 +103,7 @@ let SearchBar = ({
           />
         )}
       </ButtonGroup>
-    </OutsideClickHandler.default>
+    </OutsideClickHandler>
   )
 }
 

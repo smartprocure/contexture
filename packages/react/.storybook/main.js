@@ -1,18 +1,11 @@
-/* eslint-env node */
-
-module.exports = {
-  addons: [
-    '@storybook/addon-essentials',
-    {
-      name: '@storybook/addon-docs',
-      options: {
-        transcludeMarkdown: true,
-      },
-    },
-  ],
+export default {
+  addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
   framework: {
     name: '@storybook/react-webpack5',
     options: {},
+  },
+  docs: {
+    autodocs: 'tag',
   },
   stories: [
     {
@@ -43,10 +36,6 @@ module.exports = {
     {
       directory: '../src/exampleTypes',
       titlePrefix: 'Example Types',
-    },
-    {
-      directory: '../src/stories/docs',
-      titlePrefix: 'Docs',
     },
     {
       directory: '../src/stories/imdb',

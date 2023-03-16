@@ -2,57 +2,57 @@ import React from 'react'
 import { action } from '@storybook/addon-actions'
 import { observable } from '../utils/mobx.js'
 import { Observer } from 'mobx-react'
-import { Tabs as Component, Tab, TabLabel, TabContent } from './Tabs.js'
+import { Tabs, Tab, TabLabel, TabContent } from './Tabs.js'
 import { ButtonRadio, Button } from './index.js'
 
 let state = observable({ tab: 'results' })
 
 export default {
-  component: Component,
+  component: Tabs,
 }
 
 export const BaseUsage = () => (
-  <Component>
+  <Tabs>
     <Tab label="Tab One">Tab One Contents</Tab>
     <Tab label="Tab Two">Tab Two Contents</Tab>
-  </Component>
+  </Tabs>
 )
 
 export const AnonymousValues = () => (
-  <Component defaultValue={0}>
+  <Tabs defaultValue={0}>
     <Tab label="First Tab">First Tab Contents</Tab>
     <Tab label="Second Tab">Second Tab Contents</Tab>
-  </Component>
+  </Tabs>
 )
 
 export const TabLabelAndTabContent = () => (
-  <Component>
+  <Tabs>
     <TabLabel value="results">Results</TabLabel>
     <TabContent value="results">Results Tables</TabContent>
     <Tab value="analytics" label="Analytics">
       Charts and Stuff
     </Tab>
-  </Component>
+  </Tabs>
 )
 
 export const TabRenderFunction = () => (
-  <Component>
+  <Tabs>
     <Tab label="Analytics">Charts and Stuff</Tab>
     <Tab label="Analytics2" value="tab 2">
       {(tab) => `Current tab is ${tab}`}
     </Tab>
-  </Component>
+  </Tabs>
 )
 
 export const UncontrolledWithDefaultValue = () => (
-  <Component defaultValue="analytics">
+  <Tabs defaultValue="analytics">
     <Tab value="results" label="Results">
       Results Tables
     </Tab>
     <Tab value="analytics" label="Analytics">
       Charts and Stuff
     </Tab>
-  </Component>
+  </Tabs>
 )
 
 export const Controlled = () => (
@@ -62,7 +62,7 @@ export const Controlled = () => (
         <Button onClick={() => (state.tab = 'analytics')}>
           Change from {state.tab} to analytics
         </Button>
-        <Component
+        <Tabs
           onChange={(x, y) => {
             state.tab = x
             action('change tab')(x, y)
@@ -75,19 +75,19 @@ export const Controlled = () => (
           <Tab value="analytics" label="Analytics">
             Charts and Stuff
           </Tab>
-        </Component>
+        </Tabs>
       </>
     )}
   </Observer>
 )
 
 export const CustomTabListAndTabPanel = () => (
-  <Component TabsList={ButtonRadio} TabPanel={React.Fragment}>
+  <Tabs TabsList={ButtonRadio} TabPanel={React.Fragment}>
     <Tab value="results" label="Results">
       Results Tables
     </Tab>
     <Tab value="analytics" label="Analytics">
       Charts and Stuff
     </Tab>
-  </Component>
+  </Tabs>
 )

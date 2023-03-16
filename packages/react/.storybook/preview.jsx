@@ -10,7 +10,7 @@ configure({ enforceActions: 'never', useProxies: 'never' })
 export const parameters = {
   options: {
     storySort: {
-      order: ['Docs', 'Theming', 'Example Types', 'Search Components'],
+      order: ['Theming', 'Example Types', 'Search Components'],
     },
   },
 }

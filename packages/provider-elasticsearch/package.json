@@ -1,6 +1,6 @@
 {
   "name": "contexture-elasticsearch",
-  "version": "1.19.9",
+  "version": "1.19.14",
   "description": "ElasticSearch Provider for Contexture",
   "type": "module",
   "exports": {
@@ -27,11 +27,11 @@
     }
   },
   "scripts": {
-    "prepack": "node scripts/build.js"
+    "prepack": "node ../../scripts/esbuild.js --platform=node"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/smartprocure/contexture-elasticsearch.git"
+    "url": "git+https://github.com/smartprocure/contexture.git"
   },
   "keywords": [
     "contexture",
@@ -40,9 +40,9 @@
   "author": "Samuel Greene",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/smartprocure/contexture-elasticsearch/issues"
+    "url": "https://github.com/smartprocure/contexture/issues"
   },
-  "homepage": "https://github.com/smartprocure/contexture-elasticsearch#readme",
+  "homepage": "https://github.com/smartprocure/contexture/tree/main/packages/provider-elasticsearch",
   "dependencies": {
     "@elastic/datemath": "^2.3.0",
     "debug": "^4.3.1",
@@ -55,11 +55,8 @@
   },
   "devDependencies": {
     "@elastic/elasticsearch": "^7.11.0",
-    "@flex-development/toggle-pkg-type": "^1.0.1",
     "agentkeepalive": "^4.1.4",
-    "contexture": "^0.12.11",
-    "esbuild": "^0.16.17",
-    "glob": "^8.0.3",
+    "contexture": "^0.12.17",
     "json-stable-stringify": "^1.0.1"
   },
   "packageManager": "yarn@3.2.0"

@@ -107,15 +107,11 @@ let whiteBox = {
   margin: '15px',
 }
 
-export default {
-  title: 'Basic Search',
-}
-
-export const BasicSearch = () => (
-  <Observer>
-    {() => {
-      let { tree, schemas } = state
-      return (
+export let Story = () => {
+  let { tree, schemas } = state
+  return (
+    <Observer>
+      {() => (
         <div style={{ background: '#f4f4f4' }}>
           <TextInput
             value={state.url}
@@ -205,7 +201,11 @@ export const BasicSearch = () => (
             </Awaiter>
           )}
         </div>
-      )
-    }}
-  </Observer>
-)
+      )}
+    </Observer>
+  )
+}
+
+export default {
+  title: 'Basic Search',
+}

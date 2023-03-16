@@ -1,11 +1,6 @@
 {
   "extends": ["plugin:react/recommended"],
-  "ignorePatterns": [
-    ".storybook",
-    "*.stories.js",
-    "src/stories/EmojiIcon.js",
-    "src/stories/basicTagsQuerySearch.js"
-  ],
+  "ignorePatterns": ["!.storybook"],
   "parserOptions": {
     "ecmaFeatures": { "jsx": true }
   },

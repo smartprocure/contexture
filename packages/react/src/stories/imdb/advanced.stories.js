@@ -6,7 +6,7 @@ import Contexture, { updateSchemas } from './utils/contexture.js'
 import { ResultCount, ResultTable, TypeMap } from '../../exampleTypes/index.js'
 
 export default {
-  title: 'Advanced',
+  title: 'IMDB Advanced',
 }
 
 let tree = Contexture({

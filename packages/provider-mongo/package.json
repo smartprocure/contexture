@@ -1,6 +1,6 @@
 {
   "name": "contexture-mongo",
-  "version": "0.26.8",
+  "version": "0.26.12",
   "description": "Mongo Provider for Contexture",
   "type": "module",
   "exports": {
@@ -27,11 +27,11 @@
     }
   },
   "scripts": {
-    "prepack": "node scripts/build.js"
+    "prepack": "node ../../scripts/esbuild.js --platform=node"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/smartprocure/contexture-mongo.git"
+    "url": "git+https://github.com/smartprocure/contexture.git"
   },
   "keywords": [
     "contexture",
@@ -40,9 +40,9 @@
   "author": "Samuel Greene",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/smartprocure/contexture-mongo/issues"
+    "url": "https://github.com/smartprocure/contexture/issues"
   },
-  "homepage": "https://github.com/smartprocure/contexture-mongo#readme",
+  "homepage": "https://github.com/smartprocure/contexture/tree/main/packages/provider-mongo",
   "packageManager": "yarn@3.3.1",
   "dependencies": {
     "@elastic/datemath": "^2.3.0",
@@ -54,10 +54,7 @@
     "moment-timezone": "^0.5.28"
   },
   "devDependencies": {
-    "@flex-development/toggle-pkg-type": "^1.0.1",
-    "contexture": "^0.0.4",
-    "esbuild": "^0.16.17",
-    "glob": "^8.0.3",
+    "contexture": "^0.12.17",
     "mingo": "^4.1.2",
     "mongodb": "^3.5.6",
     "mongodb-memory-server": "^6.5.2"

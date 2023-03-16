@@ -8,8 +8,8 @@ import { useMemoryTree } from '../../MemoryTable.js'
 import { Grid, Box } from '../../greyVest/index.js'
 import Contexture from 'contexture'
 import ContextureMobx from '../../utils/contexture-mobx.js'
-import memory from 'contexture/dist/esm/provider-memory/index.js'
-import types from 'contexture/dist/esm/provider-memory/exampleTypes.js'
+import memory from 'contexture/provider-memory/index.js'
+import types from 'contexture/provider-memory/exampleTypes.js'
 import Facet from '../Facet.js'
 
 export default {

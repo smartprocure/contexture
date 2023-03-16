@@ -55,7 +55,7 @@ export default {
       )
       // Convert the highlight fields from array to an object map
       let fields = _.flow(
-        _.pick(['inline', 'additionalFields']), // Get the highlight fields we will be working with
+        _.pick(['inline', 'additionalFields', 'nested']), // Get the highlight fields we will be working with
         _.values,
         _.flatten,
         _.concat(schemaInlineAliases), // Include the provided field aliases if any

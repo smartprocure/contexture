@@ -62,9 +62,13 @@ export let highlightResults = (highlightFields, hit, pathToNested, include) => {
         let field = key.replace(`${pathToNested}.`, '')
         // For arrays, strip the highlighting wrapping and compare to the array contents to match up
         _.each(function (val) {
-          let originalValue = val.replace(/<b>|<\/b>/g, '')
+          let originalValue = val.replace(
+            /<b class="search-highlight">|<\/b>/g,
+            ''
+          )
           let childItem = _.find(
-            (item) => item[field] === originalValue,
+            // TODO: Remove this asap
+            (item) => _.trim(_.get(field, item)) === _.trim(originalValue),
             _.get(pathToNested, hit._source)
           )
           if (childItem) childItem[field] = val

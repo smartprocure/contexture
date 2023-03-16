@@ -66,15 +66,11 @@ updateEs('https://public-es-demo.smartprocure.us/')
 
 let Debug = ({ value }) => <pre>{JSON.stringify(value, null, 2)}</pre>
 
-export default {
-  title: 'Advanced Search',
-}
-
-export let AdvancedSearch = () => (
-  <Observer>
-    {() => {
-      let { tree, schemas } = state
-      return (
+export let Story = () => {
+  let { tree, schemas } = state
+  return (
+    <Observer>
+      {() => (
         <div>
           <TextInput
             value={state.url}
@@ -133,7 +129,11 @@ export let AdvancedSearch = () => (
             </Awaiter>
           )}
         </div>
-      )
-    }}
-  </Observer>
-)
+      )}
+    </Observer>
+  )
+}
+
+export default {
+  title: 'Advanced Search',
+}

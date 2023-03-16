@@ -1,36 +1,29 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { Flex } from './index.js'
+import Component from './Flex.js'
 
-let FlexDemo = ({ style, ...props }) => (
-  <Flex
-    wrap
-    justifyContent="center"
-    style={{
+export default {
+  component: Component,
+  args: {
+    wrap: true,
+    justifyContent: 'center',
+    style: {
       backgroundColor: 'lightblue',
       fontSize: '2em',
       maxWidth: 300,
-      ...style,
-    }}
-    {...props}
-  >
-    <div>Item1</div>
-    <div>Item2</div>
-    <div>Item2</div>
-    <div>Item4</div>
-    <div>Item5</div>
-    <div>Item6</div>
-  </Flex>
-)
+    },
+    children: (
+      <>
+        <div>Item1</div>
+        <div>Item2</div>
+        <div>Item2</div>
+        <div>Item4</div>
+        <div>Item5</div>
+        <div>Item6</div>
+      </>
+    ),
+  },
+}
 
-storiesOf('GreyVest Library|Flex', module)
-  .add('As button', () => (
-    <Flex column alignItems="center">
-      <FlexDemo as="button" />
-    </Flex>
-  ))
-  .add('No children', () => (
-    <Flex column alignItems="center">
-      <Flex />
-    </Flex>
-  ))
+export const AsButton = { as: 'button' }
+
+export const NoChildren = {}

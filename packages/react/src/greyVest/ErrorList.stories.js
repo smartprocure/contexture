@@ -6,15 +6,6 @@ export default {
   component: Component,
 }
 
-export const Text = { args: { children: 'I am an error' } }
-
-export const Block = {
-  args: {
-    block: true,
-    children: ['Error 1', 'Error 2', ['Error 3A', 'Error 3B']],
-  },
-}
-
 export const FormDemo = () => (
   <Box>
     <h1 style={{ margin: '15px 0' }}>Header</h1>
@@ -30,3 +21,12 @@ export const FormDemo = () => (
     </Flex>
   </Box>
 )
+
+export const Text = { args: { children: 'I am an error' } }
+
+export const Block = {
+  args: {
+    block: true,
+    children: ['Error 1', 'Error 2', ['Error 3A', 'Error 3B']],
+  },
+}

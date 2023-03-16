@@ -1,7 +1,8 @@
 import React from 'react'
 import _ from 'lodash/fp.js'
 import { observer } from 'mobx-react'
-import { Tag as DefaultTag, Flex } from './index.js'
+import Flex from './Flex.js'
+import DefaultTag from './Tag.js'
 import {
   sanitizeTagWords,
   splitTagOnComma,

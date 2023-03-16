@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp.js'
 import Button from './Button.js'
-import { Flex } from '../greyVest/index.js'
+import Flex from './Flex.js'
 
 let ButtonRadio = ({ value, onChange = () => {}, options, style = {} }) => (
   <Flex className="gv-button-radio" style={{ alignItems: 'baseline' }}>

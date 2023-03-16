@@ -1,10 +1,12 @@
 import { jest } from '@jest/globals'
 import _ from 'lodash/fp.js'
+import F from 'futil'
 import ContextureClient, { encode, exampleTypes } from './index.js'
 import Promise from 'bluebird'
 import mockService from './mockService.js'
 import wrap from './actions/wrap.js'
 import { observable, toJS, set } from 'mobx'
+import { skipResetExpansionsFields } from './exampleTypes/pivot.js'
 
 let mobxAdapter = { snapshot: toJS, extend: set, initObject: observable }
 let ContextureMobx = _.curry((x, y) =>
@@ -2343,13 +2345,17 @@ let AllTests = (ContextureClient) => {
 
     node.expand(Tree, ['root', 'pivot'], 'rows', ['Florida'])
 
-    // Changing the paused property shouldn't reset expansions
-    Tree.mutate(['root', 'pivot'], {
-      paused: true,
-    })
-    Tree.mutate(['root', 'pivot'], {
-      paused: false,
-    })
+    // Changing only fields from the skip field list shouldn't reset expansions
+    let currentSkipFieldValues = _.pick(skipResetExpansionsFields, node)
+    Tree.mutate(
+      ['root', 'pivot'],
+      F.arrayToObject(
+        (x) => x,
+        () => true,
+        skipResetExpansionsFields
+      )
+    )
+    Tree.mutate(['root', 'pivot'], currentSkipFieldValues)
     expect(toJS(Tree.getNode(['root', 'pivot']).expansions)).toEqual([
       {
         drilldown: [],
