@@ -1,50 +1,39 @@
 import React, { useState } from 'react'
 import F from 'futil'
-import { Button, Popover } from './index.js'
-import decorator from './stories/decorator.js'
+import { Button } from './index.js'
+import Component from './Popover.js'
 
 export default {
-  title: 'GreyVest Library|Popover',
-  component: Popover,
-  decorators: [decorator],
+  component: Component,
 }
 
-export let withOpenProp = () => {
+export let WithOpenProp = () => {
   let open = useState(false)
   return (
-    <>
-      <Popover
-        open={open}
-        trigger={<Button onClick={F.on(open)}>Open Popover</Button>}
-      >
-        Some Popover Content
-      </Popover>
-    </>
+    <Component
+      open={open}
+      trigger={<Button onClick={F.on(open)}>Open Popover</Button>}
+    >
+      Some Popover Content
+    </Component>
   )
 }
-withOpenProp.story = { name: "With 'open' prop" }
 
-export let withIsOpenOnCloseProps = () => {
+export let WithIsOpenOnCloseProps = () => {
   let [isOpen, setIsOpen] = React.useState(false)
   return (
-    <>
-      <Popover
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        trigger={<Button onClick={() => setIsOpen(true)}>Open Popover</Button>}
-      >
-        Some Popover Content
-      </Popover>
-    </>
+    <Component
+      isOpen={isOpen}
+      onClose={() => setIsOpen(false)}
+      trigger={<Button onClick={() => setIsOpen(true)}>Open Popover</Button>}
+    >
+      Some Popover Content
+    </Component>
   )
 }
-withIsOpenOnCloseProps.story = { name: "With 'isOpen'/'onClose' props" }
 
-export let withTriggerProp = () => (
-  <>
-    <Popover trigger={<Button>Open Popover</Button>}>
-      Some Popover Content
-    </Popover>
-  </>
+export let WithTriggerProp = () => (
+  <Component trigger={<Button>Open Popover</Button>}>
+    Some Popover Content
+  </Component>
 )
-withTriggerProp.story = { name: 'With trigger Component' }

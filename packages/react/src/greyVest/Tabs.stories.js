@@ -2,41 +2,30 @@ import React from 'react'
 import { action } from '@storybook/addon-actions'
 import { observable } from '../utils/mobx.js'
 import { Observer } from 'mobx-react'
-import {
-  Tabs,
-  Tab,
-  TabLabel,
-  TabContent,
-  ButtonRadio,
-  Button,
-} from './index.js'
-import decorator from './stories/decorator.js'
-import tabDocs from './docs/tabs.mdx'
+import { Tabs, Tab, TabLabel, TabContent } from './Tabs.js'
+import { ButtonRadio, Button } from './index.js'
 
 let state = observable({ tab: 'results' })
 
 export default {
-  title: 'GreyVest Library|Tabs',
   component: Tabs,
-  parameters: { docs: { page: tabDocs } },
-  decorators: [decorator],
 }
 
-export let baseUsage = () => (
+export const BaseUsage = () => (
   <Tabs>
     <Tab label="Tab One">Tab One Contents</Tab>
     <Tab label="Tab Two">Tab Two Contents</Tab>
   </Tabs>
 )
 
-export let anonymousValues = () => (
+export const AnonymousValues = () => (
   <Tabs defaultValue={0}>
     <Tab label="First Tab">First Tab Contents</Tab>
     <Tab label="Second Tab">Second Tab Contents</Tab>
   </Tabs>
 )
 
-export let tabLabelAndTabContent = () => (
+export const TabLabelAndTabContent = () => (
   <Tabs>
     <TabLabel value="results">Results</TabLabel>
     <TabContent value="results">Results Tables</TabContent>
@@ -45,9 +34,8 @@ export let tabLabelAndTabContent = () => (
     </Tab>
   </Tabs>
 )
-tabLabelAndTabContent.story = { name: 'TabLabel and TabContent' }
 
-export let tabRenderFunction = () => (
+export const TabRenderFunction = () => (
   <Tabs>
     <Tab label="Analytics">Charts and Stuff</Tab>
     <Tab label="Analytics2" value="tab 2">
@@ -56,7 +44,7 @@ export let tabRenderFunction = () => (
   </Tabs>
 )
 
-export let uncontrolledWithDefaultValue = () => (
+export const UncontrolledWithDefaultValue = () => (
   <Tabs defaultValue="analytics">
     <Tab value="results" label="Results">
       Results Tables
@@ -66,9 +54,8 @@ export let uncontrolledWithDefaultValue = () => (
     </Tab>
   </Tabs>
 )
-uncontrolledWithDefaultValue.story = { name: 'Uncontrolled with defaultValue' }
 
-export let controlled = () => (
+export const Controlled = () => (
   <Observer>
     {() => (
       <>
@@ -94,7 +81,7 @@ export let controlled = () => (
   </Observer>
 )
 
-export let customTabListAndTabPanel = () => (
+export const CustomTabListAndTabPanel = () => (
   <Tabs TabsList={ButtonRadio} TabPanel={React.Fragment}>
     <Tab value="results" label="Results">
       Results Tables
@@ -104,4 +91,3 @@ export let customTabListAndTabPanel = () => (
     </Tab>
   </Tabs>
 )
-customTabListAndTabPanel.story = { name: 'Custom TabList and TabPanel' }

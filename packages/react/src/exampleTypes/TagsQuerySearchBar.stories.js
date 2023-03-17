@@ -1,12 +1,12 @@
 import TestTree from './stories/testTree.js'
-import Component from './Number.js'
+import Component from './TagsQuerySearchBar.js'
 
 export default {
   component: Component,
   args: {
     tree: TestTree(),
-    path: ['number'],
+    path: ['tagsQuery'],
   },
 }
 
-export const Number = {}
+export const TagsQuerySearchBar = {}

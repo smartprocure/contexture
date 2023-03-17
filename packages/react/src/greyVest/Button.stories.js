@@ -1,44 +1,22 @@
-import React from 'react'
 import { action } from '@storybook/addon-actions'
-import { Button } from './index.js'
-import decorator from './stories/decorator.js'
+import Component from './Button.js'
 
 export default {
-  title: 'GreyVest Library|Button',
-  component: Button,
-  decorators: [decorator],
+  component: Component,
+  args: {
+    children: 'Click',
+    onClick: () => action('clicked'),
+  },
 }
 
-export let basicUsage = () => (
-  <Button onClick={() => action('clicked')()}>Click</Button>
-)
+export let Default = {}
 
-export let disabled = () => (
-  <Button disabled onClick={() => action('clicked')()}>
-    Do not click
-  </Button>
-)
+export let Disabled = { args: { disabled: true } }
 
-export let active = () => (
-  <Button isActive onClick={() => action('clicked')()}>
-    Click
-  </Button>
-)
+export let Active = { args: { isActive: true } }
 
-export let primary = () => (
-  <Button primary onClick={() => action('clicked')()}>
-    Click
-  </Button>
-)
+export let Primary = { args: { primary: true } }
 
-export let primaryDisabled = () => (
-  <Button primary disabled onClick={() => action('clicked')()}>
-    Cannot touch this
-  </Button>
-)
+export let PrimaryDisabled = { args: { primary: true, disabled: true } }
 
-export let asDiv = () => (
-  <Button as="div" onClick={() => action('clicked')()}>
-    Click
-  </Button>
-)
+export let AsDiv = { args: { as: 'div' } }

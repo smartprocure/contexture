@@ -1,9 +1,15 @@
-import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import AddPreview from './AddPreview.js'
+import Component from './AddPreview.js'
 
-storiesOf('Search Components|QueryBuilder/Internals/AddPreview', module)
-  .add('and', () => <AddPreview onClick={action('join')} join="and" />)
-  .add('or', () => <AddPreview onClick={action('join')} join="or" />)
-  .add('not', () => <AddPreview onClick={action('join')} join="not" />)
+export default {
+  component: Component,
+  args: {
+    onClick: action('join'),
+  },
+}
+
+export const And = { args: { join: 'and' } }
+
+export const Or = { args: { join: 'or' } }
+
+export const Not = { args: { join: 'not' } }

@@ -1,14 +1,17 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { observable } from '../utils/mobx.js'
-import ThemePicker from '../stories/themePicker.js'
-import { TreePauseButton } from './index.js'
 import { SearchTree } from '../index.js'
+import Component from './TreePauseButton.js'
+
+export default {
+  component: Component,
+}
 
 let pauseWith = action('set paused')
 
 let state = observable({ paused: true })
+
 let tree = {
   pauseNested() {
     pauseWith((state.paused = true))
@@ -19,22 +22,22 @@ let tree = {
   isPausedNested: () => state.paused,
 }
 
-storiesOf('Search Components|Internals/TreePauseButton', module)
-  .addDecorator(ThemePicker('greyVest'))
-  .add('One Tree', () => (
-    <TreePauseButton>
-      <SearchTree tree={tree} path={['root']} />
-    </TreePauseButton>
-  ))
-  .add('Multiple Trees', () => (
-    <TreePauseButton>
-      <SearchTree tree={tree} path={['root']} />
-      <SearchTree tree={tree} path={['root']} />
-    </TreePauseButton>
-  ))
-  .add('Falsey Trees', () => (
-    <TreePauseButton>
-      <SearchTree tree={tree} path={['root']} />
-      {false && <SearchTree tree={tree} path={['root']} />}
-    </TreePauseButton>
-  ))
+export const OneTree = () => (
+  <Component>
+    <SearchTree tree={tree} path={['root']} />
+  </Component>
+)
+
+export const MultipleTrees = () => (
+  <Component>
+    <SearchTree tree={tree} path={['root']} />
+    <SearchTree tree={tree} path={['root']} />
+  </Component>
+)
+
+export const FalseyTrees = () => (
+  <Component>
+    <SearchTree tree={tree} path={['root']} />
+    {false && <SearchTree tree={tree} path={['root']} />}
+  </Component>
+)

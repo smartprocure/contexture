@@ -2,6 +2,7 @@ import { defaultProps } from 'react-recompose'
 
 // components exported from component library
 import {
+  BarChart,
   Box,
   Button,
   ButtonGroup,
@@ -27,6 +28,7 @@ import Root from './Root.js'
 
 export default {
   AlternateButton: TextButton,
+  BarChart,
   Box,
   Button,
   ButtonGroup,

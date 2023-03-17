@@ -1,10 +1,13 @@
 import _ from 'lodash/fp.js'
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { fromPromise } from 'mobx-utils'
 import { QueryBuilder, Awaiter, componentForType } from '../../index.js'
 import Contexture, { updateSchemas } from './utils/contexture.js'
 import { ResultCount, ResultTable, TypeMap } from '../../exampleTypes/index.js'
+
+export default {
+  title: 'IMDB Advanced',
+}
 
 let tree = Contexture({
   key: 'root',
@@ -50,7 +53,7 @@ let schemas = fromPromise(
   )
 )
 
-let advanced = () => (
+export const Advanced = () => (
   <Awaiter promise={schemas}>
     {(schemas) => (
       <div>
@@ -73,5 +76,3 @@ let advanced = () => (
     )}
   </Awaiter>
 )
-
-storiesOf('Live Demos|Advanced Search', module).add('Advanced', advanced)

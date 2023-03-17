@@ -1,15 +1,13 @@
 import React from 'react'
 import { fromPromise } from 'mobx-utils'
-import { Awaiter, Button, Box } from './index.js'
-import decorator from './stories/decorator.js'
+import Component from './Awaiter.js'
+import { Button, Box } from './index.js'
 
 export default {
-  title: 'GreyVest Library|Awaiter',
-  decorators: [decorator],
-  component: Awaiter,
+  component: Component,
 }
 
-export let story = () => {
+export const Awaiter = () => {
   let resolve
   let reject
   let p = fromPromise(
@@ -21,7 +19,7 @@ export let story = () => {
   return (
     <>
       <Box>
-        <Awaiter promise={p}>{(x) => <div>{x}</div>}</Awaiter>
+        <Component promise={p}>{(x) => <div>{x}</div>}</Component>
       </Box>
       <Button onClick={() => resolve('async value')} style={{ marginRight: 8 }}>
         Resolve
