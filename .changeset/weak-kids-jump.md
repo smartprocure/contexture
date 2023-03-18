@@ -1,5 +1,5 @@
 ---
-"contexture-react": patch
+'contexture-react': patch
 ---
 
 Make greyVest the default theme
