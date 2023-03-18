@@ -40,7 +40,7 @@ Here is a quick guide to the directory structure:
 | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | `src/exampleTypes` | Contains React components for the set of example node types included in contexture-client. Exported as `exampleTypes`.                         |
 | `src/greyVest`     | Contains the Grey Vest component library, which is exported as `greyVest` and consists of basic React components. Used by the Grey Vest theme. |
-| `src/themes`       | Contains the Grey Vest, Blueberry, Material, and base themes, hopefully with more soon to come. Exported as `themes`.                          |
+| `src/themes`       | Contains the Grey Vest theme. Exported as `themes`.                                                                                            |
 | `src/purgatory`    | Neither search components nor library components -- they just have nowhere else to go.                                                         |
 | everything else    |
 

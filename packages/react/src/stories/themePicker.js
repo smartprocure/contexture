@@ -2,13 +2,10 @@ import React from 'react'
 import F from 'futil'
 import _ from 'lodash/fp.js'
 import greyVest from '../themes/greyVest/index.js'
-import blueberry from '../themes/blueberry/index.js'
-import base from '../themes/base/index.js'
-import material from '../themes/material/index.js'
 import { ThemeProvider, ThemeConsumer } from '../utils/theme.js'
 import { Flex } from '../greyVest/index.js'
 
-let themes = { base, blueberry, greyVest, material }
+let themes = { greyVest }
 
 export let ThemeSwitcher = ({ defaultTheme = 'base', children }) => {
   let theme = React.useState(defaultTheme)
