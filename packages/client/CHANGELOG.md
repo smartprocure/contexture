@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.49.19
+
+### Patch Changes
+
+- 962f5d3: feat(client): default values for pivot and results nodes
+
 ## 2.49.18
 
 ### Patch Changes
