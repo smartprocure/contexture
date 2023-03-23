@@ -137,6 +137,7 @@ export default F.stampKey('type', {
     defaults: {
       page: 1,
       pageSize: 10,
+      view: 'table',
       context: {
         results: [],
         totalRecords: null,
