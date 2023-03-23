@@ -1,6 +1,6 @@
 {
   "name": "contexture-client",
-  "version": "2.49.18",
+  "version": "2.49.19",
   "description": "The Contexture (aka ContextTree) Client",
   "type": "module",
   "exports": {
