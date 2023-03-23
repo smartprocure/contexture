@@ -215,7 +215,18 @@ export default {
     context: {
       results: {},
     },
+    chart: {
+      type: 'Bar',
+      showCounts: false,
+      customTitle: '',
+      colorPalette: 'monochromatic',
+    },
     selectedRows: [],
+    selectedColumns: [],
+    maxSelectedRows: 10,
+    maxSelectedColumns: 10,
+    maxExpandedRows: 10,
+    maxExpandedColumns: 10,
   },
   onDispatch(event, extend) {
     let { type, node, value } = event
