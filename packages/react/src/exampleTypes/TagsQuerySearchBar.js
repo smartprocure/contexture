@@ -95,10 +95,7 @@ let SearchBar = ({
           />
         </Box>
         {tree.disableAutoUpdate && (
-          <SearchButton
-            tree={tree}
-            searchButtonProps={searchButtonProps}
-          />
+          <SearchButton tree={tree} searchButtonProps={searchButtonProps} />
         )}
       </ButtonGroup>
     </OutsideClickHandler>
