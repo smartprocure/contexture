@@ -1,7 +1,7 @@
-import dnd from 'react-dnd'
+import { DropTarget } from 'react-dnd'
 
 export let FilterDropTarget = (spec) =>
-  dnd.DropTarget('filter', spec, (connect, monitor) => ({
+  DropTarget('filter', spec, (connect, monitor) => ({
     connectDropTarget: connect.dropTarget(),
     isOver: monitor.isOver(),
     canDrop: monitor.canDrop(),
