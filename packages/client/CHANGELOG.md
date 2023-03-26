@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.49.20
+
+### Patch Changes
+
+- 88bab02: Fix broken tests
+  Kill some dead client type definitions
+- a25aa61: bump futil
+
 ## 2.49.19
 
 ### Patch Changes

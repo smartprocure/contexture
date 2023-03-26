@@ -1,5 +1,11 @@
 ﻿# Changelog
 
+## 1.0.15
+
+### Patch Changes
+
+- a25aa61: bump futil
+
 ## 1.0.14
 
 ### Patch Changes
