@@ -83,7 +83,7 @@
     "write-pkg": "^4.0.0"
   },
   "dependencies": {
-    "futil": "^1.71.8",
+    "futil": "^1.74.1",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "pluralize": "^8.0.0",
