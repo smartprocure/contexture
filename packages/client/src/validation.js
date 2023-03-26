@@ -1,5 +1,5 @@
 import _ from 'lodash/fp.js'
-import { mapAsync } from './util/promise.js'
+import F from 'futil'
 
 // Aync fn to inspect types.
 // ASYNC runValidate: return true -> proceed, return false -> exclude, throw -> error!
@@ -7,7 +7,7 @@ export let validate = _.curry(async (runValidate, extend, child) => {
   extend(child, { error: null })
   try {
     if (child.children)
-      await mapAsync(validate(runValidate, extend), child.children)
+      await F.flowAsync(_.map)(validate(runValidate, extend), child.children)
     let hasValue = child.children
       ? _.some('hasValue', child.children)
       : await runValidate(child, extend)

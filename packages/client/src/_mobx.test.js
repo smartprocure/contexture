@@ -80,6 +80,7 @@ describe('usage with mobx should generally work', () => {
           lastUpdateTime: now,
           page: 1,
           pageSize: 10,
+          view: 'table',
         },
       ],
     })

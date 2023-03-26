@@ -66,6 +66,7 @@ let AllTests = (ContextureClient) => {
             type: 'results',
             page: 1,
             customKey: 'customValue',
+            view: 'table',
           },
         ],
       })
@@ -95,6 +96,7 @@ let AllTests = (ContextureClient) => {
             page: 1,
             pageSize: 10,
             lastUpdateTime: now,
+            view: 'table',
           },
         ],
       })
@@ -127,6 +129,7 @@ let AllTests = (ContextureClient) => {
             type: 'results',
             page: 1,
             pageSize: 10,
+            view: 'table',
           },
         ],
       })
@@ -331,6 +334,7 @@ let AllTests = (ContextureClient) => {
               lastUpdateTime: now,
               page: 1,
               pageSize: 10,
+              view: 'table',
             },
           ],
           lastUpdateTime: now,
@@ -1278,6 +1282,7 @@ let AllTests = (ContextureClient) => {
           page: 1,
           pageSize: 10,
           type: 'results',
+          view: 'table',
         },
         {
           filterOnly: true,
@@ -1322,6 +1327,7 @@ let AllTests = (ContextureClient) => {
           page: 1,
           pageSize: 10,
           type: 'results',
+          view: 'table',
           lastUpdateTime: ts,
         },
         {

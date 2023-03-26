@@ -6442,7 +6442,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "contexture-client@workspace:packages/client"
   dependencies:
-    futil: ^1.71.8
+    futil: ^1.74.1
     lodash: ^4.17.15
     mobx: ^4.3.1
   languageName: unknown
@@ -6457,7 +6457,7 @@ __metadata:
     agentkeepalive: ^4.1.4
     contexture: ^0.12.17
     debug: ^4.3.1
-    futil: ^1.71.8
+    futil: ^1.74.1
     js-combinatorics: ^0.5.3
     json-stable-stringify: ^1.0.1
     lodash: ^4.17.4
@@ -6471,7 +6471,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "contexture-export@workspace:packages/export"
   dependencies:
-    futil: ^1.71.8
+    futil: ^1.74.1
     lodash: ^4.17.21
     minimal-csv-formatter: ^1.0.15
   languageName: unknown
@@ -6485,7 +6485,7 @@ __metadata:
     bluebird: ^3.5.0
     contexture: ^0.12.17
     debug: ^4.3.1
-    futil: ^1.71.8
+    futil: ^1.74.1
     lodash: ^4.17.4
     mingo: ^4.1.2
     moment: ^2.18.1
@@ -6535,7 +6535,7 @@ __metadata:
     elasticsearch-browser: ^14.2.2
     emoji-datasource: ^5.0.1
     eslint-plugin-react: ^7.32.0
-    futil: ^1.71.8
+    futil: ^1.74.1
     lodash: ^4.17.15
     material-ui-chip-input: ^1.0.0
     mobx: ^4.3.1
@@ -6572,7 +6572,7 @@ __metadata:
   dependencies:
     "@elastic/datemath": ^5.0.3
     date-fns: ^2.11.1
-    futil: ^1.66.1
+    futil: ^1.74.1
     lodash: ^4.17.21
     mockdate: ^3.0.5
     moment: ^2.24.0
@@ -8695,13 +8695,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"futil@npm:^1.66.1, futil@npm:^1.71.8":
-  version: 1.71.8
-  resolution: "futil@npm:1.71.8"
+"futil@npm:^1.74.1":
+  version: 1.74.1
+  resolution: "futil@npm:1.74.1"
   dependencies:
     babel-polyfill: ^6.23.0
     lodash: ^4.17.4
-  checksum: 8af8d957d23e45901c676f85c1787a1ffce1f032171680d2b776505220b637d827bf4b853174d84adec34d2b86197401a9ef6e0c26d84071389cec10b6ef4dbe
+  checksum: e677c611edafd4fa31cc6f56636fccf987952e18f6a5b05021e39855bebadb0033a5f101799cd3a912c2ba6c5041c28083b9e0ffde02ebc02d8c857c7218eda6
   languageName: node
   linkType: hard
 

@@ -4,9 +4,7 @@ import F from 'futil'
 export let maybeAppend = (suffix, str) =>
   _.endsWith(suffix, str) ? str : str + suffix
 
-export let keysToObject = F.arrayToObject((x) => x) // futil candidate from exports
-
-export let keysToEmptyObjects = keysToObject(() => ({}))
+export let keysToEmptyObjects = F.keysToObject(() => ({}))
 
 export let pickNumbers = _.pickBy(_.isNumber)
 
