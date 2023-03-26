@@ -168,7 +168,7 @@ let FilterList = _.flow(
     style,
     theme: { UnmappedNodeComponent, Button },
   }) => {
-    let updateRequired = tree.disableAutoUpdate && tree.tree.markedForUpdate
+    let updateRequired = tree.disableAutoUpdate && tree?.tree?.markedForUpdate
 
     return (
       <div style={style} className={className}>

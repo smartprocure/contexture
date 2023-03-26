@@ -45,7 +45,7 @@ let AnimatedButton = ({ disabled, style, className, ...props }) => (
 
 let SearchButton = observer(({ tree, searchButtonProps }) => (
   <AnimatedButton
-    disabled={!tree.tree.markedForUpdate}
+    disabled={!tree?.tree?.markedForUpdate}
     onClick={tree.triggerUpdate}
     style={buttonStyle}
     {...searchButtonProps}
