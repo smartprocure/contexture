@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.54.26
+
+### Patch Changes
+
+- f0a7c1e: Make markedForUpdateChecks more defensive
+
 ## 2.54.25
 
 ### Patch Changes
