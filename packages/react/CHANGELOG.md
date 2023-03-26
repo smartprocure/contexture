@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.54.25
+
+### Patch Changes
+
+- a25aa61: bump futil
+- a2b5a23: drive search button from root node markedForUpdate, not resultsNode
+
 ## 2.54.24
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.19.15
+
+### Patch Changes
+
+- 57c91c0: Fix pivot validContext to allow rows, columns, OR values
+- a25aa61: bump futil
+
 ## 1.19.14
 
 ### Patch Changes
