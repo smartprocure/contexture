@@ -561,7 +561,8 @@ export default {
   hasValue,
   filter,
   createPivotScope,
-  validContext: (node) => node.rows.length && node.values.length,
+  validContext: (node) =>
+    node.rows.length || node.values.length || node.columns.length,
   async result(node, search, schema) {
     let {
       findNotLoadedExpansion,
