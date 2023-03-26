@@ -267,83 +267,8 @@ export default F.stampKey('type', {
     },
   },
   pivot,
-  esTwoLevelAggregation: {
-    validate: (context) =>
-      context.key_field &&
-      context.key_type &&
-      context.value_field &&
-      context.value_type,
-    reactors: {
-      value: 'others',
-    },
-    defaults: {
-      key_field: '',
-      key_type: '',
-      key_data: null,
-      value_field: '',
-      value_type: '',
-      value_data: null,
-    },
-  },
-  groupedMetric: {
-    validate: (context) =>
-      context.metric.type &&
-      !!(
-        /value_count|top_hits/.test(context.metric.type) || context.metric.field
-      ),
-    reactors: {
-      value: 'others',
-    },
-    defaults: {
-      metric: {
-        type: 'top_hits',
-      },
-    },
-  },
-  twoLevelMatch,
   matchCardinality: twoLevelMatch,
   matchStats: twoLevelMatch,
-  nLevelAggregation: {
-    reactors: {
-      value: 'others',
-    },
-    defaults: {
-      aggs: [],
-      reducers: [],
-      page: 0,
-      pageSize: 0,
-    },
-  },
-  nonzeroClusters: {
-    validate: (context) => context.field,
-    reactors: {
-      value: 'others',
-    },
-    defaults: {
-      field: '',
-    },
-  },
-  numberRangeHistogram: {
-    validate: (context) => !_.isNil(context.min) || !_.isNil(context.max),
-    reactors: {
-      value: 'others',
-    },
-    defaults: {
-      field: '',
-      min: 0,
-      max: 0,
-    },
-  },
-  percentileRanks: {
-    validate: (context) => context.field && context.config.values,
-    reactors: {
-      value: 'others',
-    },
-    defaults: {
-      field: '',
-      values: [],
-    },
-  },
   percentiles: {
     validate: (context) => context.field,
     reactors: {
@@ -371,22 +296,7 @@ export default F.stampKey('type', {
       field: '',
     },
   },
-  smartPercentileRanks: {
-    validate: (context) => context.field && context.values,
-    reactors: {
-      value: 'others',
-    },
-    defaults: {
-      field: '',
-      values: '',
-    },
-  },
   statistical: {
-    reactors: {
-      value: 'others',
-    },
-  },
-  terms: {
     reactors: {
       value: 'others',
     },
