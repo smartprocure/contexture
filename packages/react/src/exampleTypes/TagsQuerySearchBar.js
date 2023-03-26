@@ -43,9 +43,9 @@ let AnimatedButton = ({ disabled, style, className, ...props }) => (
   />
 )
 
-let SearchButton = observer(({ tree, resultsPath, searchButtonProps }) => (
+let SearchButton = observer(({ tree, searchButtonProps }) => (
   <AnimatedButton
-    disabled={!tree.getNode(resultsPath).markedForUpdate}
+    disabled={!tree.tree.markedForUpdate}
     onClick={tree.triggerUpdate}
     style={buttonStyle}
     {...searchButtonProps}
@@ -57,7 +57,6 @@ let SearchButton = observer(({ tree, resultsPath, searchButtonProps }) => (
 let SearchBar = ({
   tree,
   node,
-  resultsPath,
   actionWrapper,
   searchButtonProps,
   tagsQueryProps,
@@ -98,7 +97,6 @@ let SearchBar = ({
         {tree.disableAutoUpdate && (
           <SearchButton
             tree={tree}
-            resultsPath={resultsPath}
             searchButtonProps={searchButtonProps}
           />
         )}

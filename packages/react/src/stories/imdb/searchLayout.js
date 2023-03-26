@@ -256,7 +256,6 @@ let GreyVestSearchBarStory = (theme) => (
             <TagsQuerySearchBar
               tree={tree}
               path={['root', 'bar']}
-              resultsPath={['root', 'results']}
               autoFocus
               actionWrapper={aspectWrapper}
               searchButtonProps={{ ['data-attribute']: 'attribute1' }}
