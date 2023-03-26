@@ -1,5 +1,5 @@
 import React from 'react'
-import Dynamic from './Dynamic.js'
+import { Dynamic } from '../greyVest/index.js'
 import TextButton from './TextButton.js'
 
 let SmallIcon = ({ icon, style, ...props }) => (
