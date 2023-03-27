@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "2.54.26",
+  "version": "2.54.27",
   "description": "React components for building contexture interfaces",
   "type": "module",
   "exports": {
