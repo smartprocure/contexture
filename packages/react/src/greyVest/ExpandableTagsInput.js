@@ -113,7 +113,7 @@ let ExpandableTagsInput = ({
           }}
           value={currentInput}
           placeholder={placeholder}
-          {...props}
+          {..._.omit(['onTagsDropped', 'maxTags', 'Loader'], props)}
         />
         <Tags reverse {...{ tags, removeTag, tagStyle, onTagClick, Tag }} />
       </span>
