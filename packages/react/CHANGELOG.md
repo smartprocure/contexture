@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.54.29
+
+### Patch Changes
+
+- a0d14ab: Fix another case of non native prop passing
+
 ## 2.54.28
 
 ### Patch Changes
