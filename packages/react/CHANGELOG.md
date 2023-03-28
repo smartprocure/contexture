@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.54.28
+
+### Patch Changes
+
+- 9035b4e: Omit non native props to fix ExpandableTagsQuery console errors
+
 ## 2.54.27
 
 ### Patch Changes
