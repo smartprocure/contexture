@@ -117,7 +117,7 @@ let TagsInput = forwardRef(
             }}
             value={state.currentInput}
             placeholder={placeholder}
-            {...props}
+            {..._.omit(['onTagsDropped', 'maxTags', 'Loader'], props)}
           />
         </Flex>
       </div>
