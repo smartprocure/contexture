@@ -1,6 +1,6 @@
 import F from 'futil'
 import _ from 'lodash/fp.js'
-import { Tree } from './util/tree.js'
+import { Tree, postWalkBranches } from './util/tree.js'
 
 export default (extend) => {
   let markForUpdate = (x) => {
@@ -40,6 +40,13 @@ export default (extend) => {
       )(tree)
       return updatedNodes
     },
+    syncComputedGroupFields: (fields, tree) =>
+      postWalkBranches((node) =>
+        _.each(
+          (field) => extend(node, { [field]: _.some(field, node.children) }),
+          fields
+        )
+      )(tree),
     markLastUpdate: (time) =>
       Tree.walk((node) => {
         if (node.markedForUpdate) extend(node, { lastUpdateTime: time })
