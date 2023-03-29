@@ -90,6 +90,7 @@ export let ContextTree = _.curry(
       prepForUpdate,
       clearUpdate,
       syncMarkedForUpdate,
+      syncComputedGroupFields,
     } = traversals(extend)
     let typeProp = getTypeProp(types)
 
@@ -156,6 +157,9 @@ export let ContextTree = _.curry(
       markLastUpdate(now)(node || tree)
       let body = serialize(snapshot(tree), types, { search: true })
       prepForUpdate(node || tree)
+      // With disableAutoUpdate, self updating mutations cause runUpdate to be called for just the affected node, so prepForUpdate won't be called on the whole tree
+      // This resets group level fields (and prepForUpdate isn't necessarily safe for the whole tree if other nodes are markedForUpdate but we're only updating one node
+      syncComputedGroupFields(['markedForUpdate', 'updating'], tree)
 
       // make all other nodes filter only
       if (path) {

@@ -2560,7 +2560,7 @@ let AllTests = (ContextureClient) => {
   })
   it('should support group level markedForUpdate', async () => {
     let service = jest.fn(mockService({ delay: 10 }))
-    let tree = ContextureMobx(
+    let tree = ContextureClient(
       { service, debounce: 1 },
       {
         key: 'root',
@@ -2601,6 +2601,66 @@ let AllTests = (ContextureClient) => {
     expect(tree.getNode(['root']).markedForUpdate).toBe(false)
     expect(tree.getNode(['root']).isStale).toBe(false)
     expect(tree.getNode(['root']).updating).toBe(false)
+  })
+  it('should support group level markedForUpdate and reset when children are done in disableAutoUpdateMode', async () => {
+    let service = jest.fn(mockService({ delay: 10 }))
+    let tree = ContextureClient(
+      { service, debounce: 1, disableAutoUpdate: true },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'criteria',
+            join: 'and',
+            type: 'group',
+            children: [
+              {
+                key: 'bar',
+                type: 'tagsQuery',
+                field: 'FieldGroup.all',
+              },
+              {
+                key: 'filters',
+                join: 'and',
+                type: 'group',
+                children: [
+                  {
+                    key: 'filter',
+                    type: 'facet',
+                    field: 'facetfield',
+                    values: ['some value'],
+                  },
+                  {
+                    key: 'filter2',
+                    type: 'facet',
+                    field: 'facetfield2',
+                    values: ['some other value'],
+                    paused: true,
+                  },
+                ],
+              },
+            ],
+          },
+          { key: 'results', type: 'results' },
+        ],
+      }
+    )
+
+    let action = tree.mutate(['root', 'results'], { page: 2 })
+    // Preparing to search (0 ms delay because validate is async)
+    await Promise.delay()
+    // await action
+    expect(tree.getNode(['root']).markedForUpdate).toBe(true)
+    expect(tree.getNode(['root']).isStale).toBe(true)
+    await Promise.delay(1)
+    expect(tree.getNode(['root']).markedForUpdate).toBe(false)
+    expect(tree.getNode(['root']).updating).toBe(true)
+    expect(tree.getNode(['root']).isStale).toBe(true)
+    await action
+    expect(tree.getNode(['root']).markedForUpdate).toBe(false)
+    expect(tree.getNode(['root']).updating).toBe(false)
+    expect(tree.getNode(['root']).isStale).toBe(false)
   })
 }
 

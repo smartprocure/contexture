@@ -19,3 +19,12 @@ export let isParent = _.overEvery([isNotEqual, _.startsWith])
 
 export let pathFromParents = (parents, node) =>
   _.map('key', _.reverse([node, ...parents]))
+
+// Post-order walk tree branches, will be replaced by Tree.walk({ postBranches: fn })
+export let postWalkBranches = (fn) =>
+  Tree.walk(
+    () => {},
+    (node, ...args) => {
+      if (Tree.traverse(node)) fn(node, ...args)
+    }
+  )
