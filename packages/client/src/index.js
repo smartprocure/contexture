@@ -115,7 +115,7 @@ export let ContextTree = _.curry(
       if (event.node)
         // not all dispatches have event.node, e.g. `refresh` with no path
         F.maybeCall(typeProp('onDispatch', event.node), event, extend)
-      await validate(runTypeFunction(types, 'validate'), extend, tree)
+      await validate(runTypeFunction(types, 'validate'), extend, tree, _.identity)
       let updatedNodes = [
         // Get updated nodes
         ..._.flatten(bubbleUp(processEvent(event), event.path)),
@@ -134,7 +134,7 @@ export let ContextTree = _.curry(
           _.map((n) => {
             // When updated by others, force replace instead of merge response
             extend(n, { forceReplaceResponse: true })
-            runTypeFunction(types, 'onUpdateByOthers', n, extend)
+            runTypeFunction(types, 'onUpdateByOthers', n, extend, snapshot)
           }, updatedNodes)
         )
 

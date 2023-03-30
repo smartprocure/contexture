@@ -35,10 +35,10 @@ export let autoKey = (x) => F.compactJoin('-', [x.field, x.type]) || 'node'
 
 export let initNode = _.curry(
   ({ extend, types, snapshot }, dedupe, parentPath, node) => {
-    runTypeFunction(types, 'init', node, extend)
+    runTypeFunction(types, 'init', node, extend, snapshot)
     let key = dedupe(
       node.key ||
-        runTypeFunctionOrDefault(autoKey, types, 'autoKey', node, extend)
+        runTypeFunctionOrDefault(autoKey, types, 'autoKey', node, extend, snapshot)
     )
     extend(node, {
       ..._.omit(_.keys(node), defaults),
