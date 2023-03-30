@@ -126,6 +126,14 @@ export default F.stampKey('type', {
     },
   },
   results: {
+    init(node, extend, snapshot) {
+      if (_.isNil(node.hasResults))
+        Object.defineProperty(node, 'hasResults', {
+          get: () => {
+            return !_.isEmpty(snapshot(node.context.results))
+          },
+        })
+    },
     validate: () => false,
     reactors: {
       page: 'self',
