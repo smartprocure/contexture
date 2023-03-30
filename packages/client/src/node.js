@@ -38,7 +38,14 @@ export let initNode = _.curry(
     runTypeFunction(types, 'init', node, extend, snapshot)
     let key = dedupe(
       node.key ||
-        runTypeFunctionOrDefault(autoKey, types, 'autoKey', node, extend, snapshot)
+        runTypeFunctionOrDefault(
+          autoKey,
+          types,
+          'autoKey',
+          node,
+          extend,
+          snapshot
+        )
     )
     extend(node, {
       ..._.omit(_.keys(node), defaults),

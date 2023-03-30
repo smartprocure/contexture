@@ -113,7 +113,10 @@ export default {
     if (_.isNil(node.hasResults))
       Object.defineProperty(node, 'hasResults', {
         get: () => {
-          let { values, context: { results } } = this
+          let {
+            values,
+            context: { results },
+          } = this
           let noData =
             _.isEmpty(values) ||
             _.flow(
@@ -125,7 +128,7 @@ export default {
       })
 
     extend(node, {
-      expand (tree, type, drilldown) {
+      expand(tree, type, drilldown) {
         drilldown = snapshot(drilldown)
         let n = snapshot(node)
         let path = n.path
@@ -145,7 +148,7 @@ export default {
           ],
         })
       },
-      collapse (tree, type, drilldown) {
+      collapse(tree, type, drilldown) {
         drilldown = snapshot(drilldown)
         let results = _.get('context.results', node)
         let drilldownResults = resultsForDrilldown(type, drilldown, results)
@@ -169,7 +172,7 @@ export default {
         drilldownResults[type] = undefined
         // triggering observer update
         extend(node, { context: { results } })
-      }
+      },
     })
   },
   validate: (context) =>
