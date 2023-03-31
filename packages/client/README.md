@@ -291,7 +291,7 @@ For those familiar with the previous client implementation (`DataContext`/`Conte
 
 ### Flat Trees
 
-The client maintains a flat tree in addition to the actual tree, which is an object mapped using `flattenTree` from `futil-js`.
+The client maintains a flat tree in addition to the actual tree, which is an object mapped using `flattenTree` from `futil`.
 The keys are the array paths encoded as a string, currently using a slashEncoder.
 This allows path lookups to perform in constant time at `O(1)`, which drastically speeds up some of the internal tree operations.
 The paths are also stamped on individual nodes for convenience as performing an action on a node requires knowing its path.
