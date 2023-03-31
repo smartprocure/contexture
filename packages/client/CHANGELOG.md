@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.49.22
+
+### Patch Changes
+
+- 1a730b0: Use `futil`, not `futil-js`, when importing F
+
 ## 2.49.21
 
 ### Patch Changes
