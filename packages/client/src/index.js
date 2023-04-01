@@ -14,8 +14,8 @@ import { getAffectedNodes, reactors } from './reactors.js'
 import actions from './actions/index.js'
 import serialize from './serialize.js'
 import traversals from './traversals.js'
-import { runTypeFunction, getTypeProp } from './types.js'
-import { initNode, hasContext, hasValue, dedupeWalk } from './node.js'
+import { runTypeFunction, getTypeProp, runTypeFunctionOrDefault } from './types.js'
+import { initNode, hasContext, hasValue, dedupeWalk, hasResultsDefault } from './node.js'
 import exampleTypes from './exampleTypes.js'
 import lens from './lens.js'
 import mockService from './mockService.js'
@@ -233,6 +233,8 @@ export let ContextTree = _.curry(
           }
           if (debug && node._meta) target.metaHistory.push(node._meta)
         }
+
+        target.hasResults = runTypeFunctionOrDefault(hasResultsDefault(snapshot), types, 'hasResults', target, extend)
 
         clearUpdate(target)
 

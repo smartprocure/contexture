@@ -69,6 +69,7 @@ let maybeRemoveSelectedRows = (extend, node) => {
 let resetExpansions = (extend, node) => {
   extend(node, {
     expansions: [],
+    hasResults: false,
   })
   // reset selected rows as well, since that is very much dependent on the expansions array
   maybeRemoveSelectedRows(extend, node)
@@ -161,13 +162,13 @@ export let skipResetExpansionsFields = [
 ]
 
 export default {
-  validate: (context) =>
+  validate: (node) =>
     _.every(
       ({ type, ranges, percents }) =>
         (type !== 'numberRanges' && type !== 'percentiles') ||
         (type === 'numberRanges' && ranges.length > 0) ||
         (type === 'percentiles' && percents.length > 0),
-      _.concat(context.columns, context.rows)
+      _.concat(node.columns, node.rows)
     ),
   reactors: {
     columns: 'self',
@@ -212,6 +213,7 @@ export default {
       },
      */
     ],
+    hasResults: false,
     context: {
       results: {},
     },
