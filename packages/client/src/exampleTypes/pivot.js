@@ -70,7 +70,7 @@ let resetExpansions = (extend, node) => {
   extend(node, {
     expansions: [],
     hasResults: false,
-    context: { results : {} }
+    context: { results: {} },
   })
   // reset selected rows as well, since that is very much dependent on the expansions array
   maybeRemoveSelectedRows(extend, node)
