@@ -17,7 +17,6 @@ import traversals from './traversals.js'
 import {
   runTypeFunction,
   getTypeProp,
-  runTypeFunctionOrDefault,
 } from './types.js'
 import {
   initNode,
