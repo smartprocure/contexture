@@ -14,10 +14,7 @@ import { getAffectedNodes, reactors } from './reactors.js'
 import actions from './actions/index.js'
 import serialize from './serialize.js'
 import traversals from './traversals.js'
-import {
-  runTypeFunction,
-  getTypeProp,
-} from './types.js'
+import { runTypeFunction, getTypeProp } from './types.js'
 import {
   initNode,
   hasContext,

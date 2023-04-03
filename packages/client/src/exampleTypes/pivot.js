@@ -116,7 +116,6 @@ let expand = (tree, path, type, drilldown) => {
   maybeAddRootExpansion(node, 'columns')
   maybeAddRootExpansion(node, 'rows')
 
-
   console.log('expansions after', expansions)
 
   tree.mutate(path, {
