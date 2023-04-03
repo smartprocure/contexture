@@ -2351,6 +2351,20 @@ let AllTests = (ContextureClient) => {
       }
     )
 
+    Tree.processResponseNode(['root', 'pivot'], {
+      context: {
+        results: {
+          rows: [
+            { key: 'Florida', rows: [{ key: 'Miami', a: 1 }] },
+            {
+              key: 'Nevada',
+              rows: [{ key: 'Las Vegas', a: 2 }],
+            },
+          ],
+        },
+      },
+    })
+
     let node = Tree.getNode(['root', 'pivot'])
 
     node.expand(Tree, ['root', 'pivot'], 'rows', ['Florida'])
@@ -2374,7 +2388,10 @@ let AllTests = (ContextureClient) => {
       },
       {
         drilldown: [],
-        loaded: [],
+        loaded: [
+          'Florida',
+          'Nevada',
+        ],
         type: 'rows',
       },
       {
@@ -2389,6 +2406,7 @@ let AllTests = (ContextureClient) => {
       rows: _.set('0.matchValue', 'Nevada', rows),
     })
     expect(Tree.getNode(['root', 'pivot']).expansions).toEqual([])
+    expect(Tree.getNode(['root', 'pivot']).context.results).toEqual({})
   })
   it('should preserve expanded drilldowns when drilling and paginating', async () => {
     let service = jest.fn(mockService())
