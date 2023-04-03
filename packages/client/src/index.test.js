@@ -2388,10 +2388,7 @@ let AllTests = (ContextureClient) => {
       },
       {
         drilldown: [],
-        loaded: [
-          'Florida',
-          'Nevada',
-        ],
+        loaded: ['Florida', 'Nevada'],
         type: 'rows',
       },
       {
