@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.50.0
+
+### Minor Changes
+
+- 7190a0f: New `hasResults` prop to the tree nodes. Tracks whether the node has results or not.
+
 ## 2.49.22
 
 ### Patch Changes
