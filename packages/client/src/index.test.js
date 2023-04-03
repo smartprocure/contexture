@@ -2405,7 +2405,7 @@ let AllTests = (ContextureClient) => {
           {
             key: 'pivot',
             type: 'pivot',
-            expansions: { type: 'rows', rows: [] },
+            expansions: [],
             rows,
           },
           { key: 'test', type: 'facet', values: [] },
@@ -2413,7 +2413,7 @@ let AllTests = (ContextureClient) => {
       }
     )
 
-    Tree.mutate(['root', 'pivot'], {
+    Tree.processResponseNode(['root', 'pivot'], {
       context: {
         results: {
           rows: [
@@ -2452,11 +2452,7 @@ let AllTests = (ContextureClient) => {
           {
             key: 'pivot',
             type: 'pivot',
-            expansions: {
-              type: 'rows',
-              rows: [],
-              columns: [],
-            },
+            expansions: [],
             columns,
             rows,
             sort: {
