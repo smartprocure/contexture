@@ -24,7 +24,7 @@ import {
   hasContext,
   hasValue,
   dedupeWalk,
-  hasResultsDefault,
+  hasResults,
 } from './node.js'
 import exampleTypes from './exampleTypes.js'
 import lens from './lens.js'
@@ -244,13 +244,7 @@ export let ContextTree = _.curry(
           if (debug && node._meta) target.metaHistory.push(node._meta)
         }
 
-        target.hasResults = runTypeFunctionOrDefault(
-          hasResultsDefault(snapshot),
-          types,
-          'hasResults',
-          target,
-          extend
-        )
+        target.hasResults = hasResults(snapshot)(target)
 
         clearUpdate(target)
 

@@ -2062,9 +2062,17 @@ let AllTests = (ContextureClient) => {
         ],
       }
     )
+    expect(
+      Tree.tree.children[0].children[0].hasResults
+    ).toBe(null)
+
     Tree.processResponseNode(['root', 'analysis', 'results'], {
       context: { response: { totalRecords: 1337 } },
     })
+
+    expect(
+      Tree.tree.children[0].children[0].hasResults
+    ).toBe(true)
     expect(
       Tree.tree.children[0].children[0].context.response.totalRecords
     ).toBe(1337)

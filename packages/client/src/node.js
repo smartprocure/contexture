@@ -74,5 +74,5 @@ export let hasValue = (node) =>
     ? throwsError('Node was never validated')
     : node && node.hasValue && !node.error
 
-export let hasResultsDefault = (snapshot) =>
+export let hasResults = (snapshot) =>
   _.flow(_.get('context'), snapshot, _.negate(F.isBlankDeep(_.every)))

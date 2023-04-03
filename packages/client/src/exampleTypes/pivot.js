@@ -111,8 +111,13 @@ let expand = (tree, path, type, drilldown) => {
   let node = toJS(tree.getNode(path))
   let expansions = node.expansions
 
+  console.log('expansions', expansions)
+
   maybeAddRootExpansion(node, 'columns')
   maybeAddRootExpansion(node, 'rows')
+
+
+  console.log('expansions after', expansions)
 
   tree.mutate(path, {
     expansions: [
@@ -214,7 +219,6 @@ export default {
       },
      */
     ],
-    hasResults: false,
     context: {
       results: {},
     },
@@ -226,10 +230,6 @@ export default {
     },
     selectedRows: [],
     selectedColumns: [],
-    maxSelectedRows: 10,
-    maxSelectedColumns: 10,
-    maxExpandedRows: 10,
-    maxExpandedColumns: 10,
   },
   onDispatch(event, extend) {
     let { type, node, value } = event
