@@ -2062,9 +2062,13 @@ let AllTests = (ContextureClient) => {
         ],
       }
     )
+    expect(Tree.tree.children[0].children[0].hasResults).toBe(null)
+
     Tree.processResponseNode(['root', 'analysis', 'results'], {
       context: { response: { totalRecords: 1337 } },
     })
+
+    expect(Tree.tree.children[0].children[0].hasResults).toBe(true)
     expect(
       Tree.tree.children[0].children[0].context.response.totalRecords
     ).toBe(1337)
@@ -2347,6 +2351,20 @@ let AllTests = (ContextureClient) => {
       }
     )
 
+    Tree.processResponseNode(['root', 'pivot'], {
+      context: {
+        results: {
+          rows: [
+            { key: 'Florida', rows: [{ key: 'Miami', a: 1 }] },
+            {
+              key: 'Nevada',
+              rows: [{ key: 'Las Vegas', a: 2 }],
+            },
+          ],
+        },
+      },
+    })
+
     let node = Tree.getNode(['root', 'pivot'])
 
     node.expand(Tree, ['root', 'pivot'], 'rows', ['Florida'])
@@ -2370,7 +2388,7 @@ let AllTests = (ContextureClient) => {
       },
       {
         drilldown: [],
-        loaded: [],
+        loaded: ['Florida', 'Nevada'],
         type: 'rows',
       },
       {
@@ -2385,6 +2403,7 @@ let AllTests = (ContextureClient) => {
       rows: _.set('0.matchValue', 'Nevada', rows),
     })
     expect(Tree.getNode(['root', 'pivot']).expansions).toEqual([])
+    expect(Tree.getNode(['root', 'pivot']).context.results).toEqual({})
   })
   it('should preserve expanded drilldowns when drilling and paginating', async () => {
     let service = jest.fn(mockService())
@@ -2401,7 +2420,7 @@ let AllTests = (ContextureClient) => {
           {
             key: 'pivot',
             type: 'pivot',
-            expansions: { type: 'rows', rows: [] },
+            expansions: [],
             rows,
           },
           { key: 'test', type: 'facet', values: [] },
@@ -2409,7 +2428,7 @@ let AllTests = (ContextureClient) => {
       }
     )
 
-    Tree.mutate(['root', 'pivot'], {
+    Tree.processResponseNode(['root', 'pivot'], {
       context: {
         results: {
           rows: [
@@ -2448,11 +2467,7 @@ let AllTests = (ContextureClient) => {
           {
             key: 'pivot',
             type: 'pivot',
-            expansions: {
-              type: 'rows',
-              rows: [],
-              columns: [],
-            },
+            expansions: [],
             columns,
             rows,
             sort: {

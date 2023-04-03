@@ -15,7 +15,13 @@ import actions from './actions/index.js'
 import serialize from './serialize.js'
 import traversals from './traversals.js'
 import { runTypeFunction, getTypeProp } from './types.js'
-import { initNode, hasContext, hasValue, dedupeWalk } from './node.js'
+import {
+  initNode,
+  hasContext,
+  hasValue,
+  dedupeWalk,
+  hasResults,
+} from './node.js'
 import exampleTypes from './exampleTypes.js'
 import lens from './lens.js'
 import mockService from './mockService.js'
@@ -233,6 +239,8 @@ export let ContextTree = _.curry(
           }
           if (debug && node._meta) target.metaHistory.push(node._meta)
         }
+
+        target.hasResults = hasResults(snapshot)(target)
 
         clearUpdate(target)
 
