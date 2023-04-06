@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.50.1
+
+### Patch Changes
+
+- 936d6dd: Pivot node: reset pivot results only when pivot config is changed
+
 ## 2.50.0
 
 ### Minor Changes
