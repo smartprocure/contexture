@@ -5,27 +5,17 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./src/index.js"
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
     },
     "./*": {
-      "import": "./src/*"
+      "import": "./dist/esm/*",
+      "require": "./dist/cjs/*"
     }
   },
   "files": [
     "dist"
   ],
-  "publishConfig": {
-    "exports": {
-      ".": {
-        "import": "./dist/esm/index.js",
-        "require": "./dist/cjs/index.js"
-      },
-      "./*": {
-        "import": "./dist/esm/*",
-        "require": "./dist/cjs/*"
-      }
-    }
-  },
   "scripts": {
     "prepack": "node ../../scripts/esbuild.js --platform=browser"
   },
