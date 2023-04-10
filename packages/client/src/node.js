@@ -16,6 +16,7 @@ export let defaults = {
   markedForUpdate: null,
   isStale: null,
   hasValue: null,
+  hasResults: null,
   error: null,
   context: null,
   missedUpdate: null,
@@ -72,3 +73,6 @@ export let hasValue = (node) =>
   node && _.isUndefined(node.hasValue)
     ? throwsError('Node was never validated')
     : node && node.hasValue && !node.error
+
+export let hasResults = (snapshot) =>
+  _.flow(_.get('context'), snapshot, _.negate(F.isBlankDeep(_.every)))

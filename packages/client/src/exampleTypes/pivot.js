@@ -66,9 +66,13 @@ let maybeRemoveSelectedRows = (extend, node) => {
 // Resetting the expansions when the pivot node is changed
 // allows to return expected root results instead of merging result
 // EX: changing the columns or rows config was not returning the new results
-let resetExpansions = (extend, node) => {
+let resetExpansions = (extend, node, clearResults) => {
   extend(node, {
     expansions: [],
+    ...(clearResults && {
+      hasResults: false,
+      context: { results: {} },
+    }),
   })
   // reset selected rows as well, since that is very much dependent on the expansions array
   maybeRemoveSelectedRows(extend, node)
@@ -161,13 +165,13 @@ export let skipResetExpansionsFields = [
 ]
 
 export default {
-  validate: (context) =>
+  validate: (node) =>
     _.every(
       ({ type, ranges, percents }) =>
         (type !== 'numberRanges' && type !== 'percentiles') ||
         (type === 'numberRanges' && ranges.length > 0) ||
         (type === 'percentiles' && percents.length > 0),
-      _.concat(context.columns, context.rows)
+      _.concat(node.columns, node.rows)
     ),
   reactors: {
     columns: 'self',
@@ -223,10 +227,6 @@ export default {
     },
     selectedRows: [],
     selectedColumns: [],
-    maxSelectedRows: 10,
-    maxSelectedColumns: 10,
-    maxExpandedRows: 10,
-    maxExpandedColumns: 10,
   },
   onDispatch(event, extend) {
     let { type, node, value } = event
@@ -240,13 +240,13 @@ export default {
     if (_.has('sort', value)) return resetExpandedRows(extend, node)
 
     // if anything else about node configuration is changed resetting expansions
-    resetExpansions(extend, node)
+    resetExpansions(extend, node, true)
   },
   // Resetting the expansions when the tree is changed
   // allows to return expected root results instead of nested drilldown
   // EX: criteria filters didn't work properly when drilldown was applied
   onUpdateByOthers(node, extend) {
-    resetExpansions(extend, node, node)
+    resetExpansions(extend, node)
   },
   shouldMergeResponse: _.flow(
     _.get('expansions'),

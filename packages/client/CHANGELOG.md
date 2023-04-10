@@ -1,5 +1,23 @@
 # Changelog
 
+## 2.50.1
+
+### Patch Changes
+
+- 936d6dd: Pivot node: reset pivot results only when pivot config is changed
+
+## 2.50.0
+
+### Minor Changes
+
+- 7190a0f: New `hasResults` prop to the tree nodes. Tracks whether the node has results or not.
+
+## 2.49.22
+
+### Patch Changes
+
+- 1a730b0: Use `futil`, not `futil-js`, when importing F
+
 ## 2.49.21
 
 ### Patch Changes

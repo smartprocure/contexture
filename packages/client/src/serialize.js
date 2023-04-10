@@ -1,5 +1,5 @@
 import _ from 'lodash/fp.js'
-import F from 'futil-js'
+import F from 'futil'
 import { Tree } from './util/tree.js'
 import { internalStateKeys } from './node.js'
 import { runTypeFunctionOrDefault } from './types.js'
