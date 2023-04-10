@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.26.14
+
+### Patch Changes
+
+- 3b7125e: Remove publish config and set default config to make yalc linking simpler
+
 ## 0.26.13
 
 ### Patch Changes
