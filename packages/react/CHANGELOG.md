@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.55.0
+
+### Minor Changes
+
+- 3b7bda9: `Create Custom Filter (plus icon)` -> `Create Filter`
+
+### Patch Changes
+
+- 3b7125e: Remove publish config and set default config to make yalc linking simpler
+
 ## 2.54.29
 
 ### Patch Changes
