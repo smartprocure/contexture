@@ -22,7 +22,6 @@ let FilterAdder = ({
   fields,
   uniqueFields,
   Picker = defaultProps({ modalClassName: 'filter-adder' })(ModalPicker),
-  theme: { Icon },
   ...props
 }) => {
   let options = uniqueFields
@@ -30,8 +29,7 @@ let FilterAdder = ({
     : fieldsToOptions(fields)
   let Label = (
     <Flex justifyContent="center" alignItems="center">
-      Add Custom Filter
-      <Icon style={{ paddingLeft: 5 }} icon="FilterAdd" />
+      Add Filter
     </Flex>
   )
   return (
