@@ -39,6 +39,7 @@ export default {
     // to be able to override schema highlight config with node config
     if (searchHighlight.override) {
       schemaHighlight = searchHighlight.override
+      searchHighlight = _.omit('override', searchHighlight)
     }
 
     // Highlighting starts with defaults in the schema first
