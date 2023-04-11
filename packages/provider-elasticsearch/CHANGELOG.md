@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.19.17
+
+### Patch Changes
+
+- fc6fbea: Highlight: override schema config by node config
+
 ## 1.19.16
 
 ### Patch Changes
