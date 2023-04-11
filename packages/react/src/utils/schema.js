@@ -13,6 +13,7 @@ export let applyDefaults = F.mapValuesIndexed((val, field) => ({
 
 export let getRecord = F.when('_source', (x) => ({
   _id: x._id,
+  _highlight: x.highlight,
   ...x._source,
 }))
 
