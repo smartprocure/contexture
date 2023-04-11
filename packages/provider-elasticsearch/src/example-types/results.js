@@ -36,6 +36,11 @@ export default {
     let searchHighlight = _.isPlainObject(node.highlight) ? node.highlight : {}
     let resultColumns = node.include
 
+    // to be able to override schema highlight config with node config
+    if (searchHighlight.override) {
+      schemaHighlight = searchHighlight.override
+    }
+
     // Highlighting starts with defaults in the schema first
     if (schemaHighlight) {
       let showOtherMatches = _.getOr(false, 'showOtherMatches', node)
