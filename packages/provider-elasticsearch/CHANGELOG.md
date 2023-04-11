@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.20.0
+
+### Minor Changes
+
+- 260d6e8: Fix: removing override from searchHighlight
+
 ## 1.19.17
 
 ### Patch Changes
