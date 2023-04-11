@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.56.0
+
+### Minor Changes
+
+- 9c7fc4c: Util: getRecord also adds the `_highlight`
+
 ## 2.55.0
 
 ### Minor Changes
