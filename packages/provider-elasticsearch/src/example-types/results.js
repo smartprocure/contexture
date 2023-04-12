@@ -114,7 +114,8 @@ export default {
             schemaHighlight, // The highlight configuration
             hit, // The ES result
             schema.elasticsearch.nestedPath,
-            resultColumns // The columns to return
+            resultColumns, // The columns to return
+            schemaHighlight.filterNested // Only return the highlighted fields
           )
           additionalFields = highlightObject.additionalFields
         }
