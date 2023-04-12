@@ -221,5 +221,108 @@ describe('highlighting', () => {
         },
       })
     })
+    it('should work with nested', () => {
+      let highlightFields = {
+        nested: ['comments.text'],
+      }
+      let hit = {
+        _source: {
+          title: '...',
+          description: '...',
+          comments: [{ text: 'foo' }, { text: 'bar' }, { text: 'baz' }],
+        },
+        highlight: {
+          'comments.text': [
+            '<b class="search-highlight">foo</b>',
+            '<b class="search-highlight">bar</b>',
+          ],
+        },
+      }
+      let result = highlightResults(highlightFields, hit, 'comments', [
+        'title',
+        'description',
+        'comments.text',
+      ])
+      expect(hit._source).toEqual({
+        title: '...',
+        description: '...',
+        comments: [
+          { text: '<b class="search-highlight">foo</b>' },
+          { text: '<b class="search-highlight">bar</b>' },
+          { text: 'baz' },
+        ],
+      })
+      expect(result).toEqual({
+        additionalFields: [],
+        mainHighlighted: false,
+      })
+    })
+    it('should work with nested and filterNested', () => {
+      let highlightFields = {
+        nested: ['comments.text'],
+      }
+      let hit = {
+        _source: {
+          title: '...',
+          description: '...',
+          comments: [{ text: 'foo' }, { text: 'bar' }, { text: 'baz' }],
+        },
+        highlight: {
+          'comments.text': [
+            '<b class="search-highlight">foo</b>',
+            '<b class="search-highlight">bar</b>',
+          ],
+        },
+      }
+      let result = highlightResults(
+        highlightFields,
+        hit,
+        'comments',
+        ['title', 'description', 'comments.text'],
+        true
+      )
+      expect(hit._source).toEqual({
+        title: '...',
+        description: '...',
+        comments: [
+          { text: '<b class="search-highlight">foo</b>' },
+          { text: '<b class="search-highlight">bar</b>' },
+        ],
+      })
+      expect(result).toEqual({
+        additionalFields: [],
+        mainHighlighted: false,
+      })
+    })
+
+    it('should clear nested when filterNested and highlight is empty', () => {
+      let highlightFields = {
+        nested: ['comments.text'],
+      }
+      let hit = {
+        _source: {
+          title: '...',
+          description: '...',
+          comments: [{ text: 'foo' }, { text: 'bar' }, { text: 'baz' }],
+        },
+        highlight: {},
+      }
+      let result = highlightResults(
+        highlightFields,
+        hit,
+        'comments',
+        ['title', 'description', 'comments.text'],
+        true
+      )
+      expect(hit._source).toEqual({
+        title: '...',
+        description: '...',
+        comments: [],
+      })
+      expect(result).toEqual({
+        additionalFields: [],
+        mainHighlighted: false,
+      })
+    })
   })
 })
