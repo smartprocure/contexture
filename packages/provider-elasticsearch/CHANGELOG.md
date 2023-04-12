@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.21.0
+
+### Minor Changes
+
+- 78e9d0f: Highlight: filterNested flag to return only values with hightlights
+
 ## 1.20.0
 
 ### Minor Changes
