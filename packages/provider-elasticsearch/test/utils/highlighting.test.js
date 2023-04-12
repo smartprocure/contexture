@@ -234,18 +234,22 @@ describe('highlighting', () => {
         highlight: {
           'comments.text': [
             '<b class="search-highlight">foo</b>',
-            '<b class="search-highlight">bar</b>'
-          ]
+            '<b class="search-highlight">bar</b>',
+          ],
         },
       }
-      let result = highlightResults(highlightFields, hit, 'comments', ['title', 'description', 'comments.text'],)
+      let result = highlightResults(highlightFields, hit, 'comments', [
+        'title',
+        'description',
+        'comments.text',
+      ])
       expect(hit._source).toEqual({
         title: '...',
         description: '...',
         comments: [
           { text: '<b class="search-highlight">foo</b>' },
           { text: '<b class="search-highlight">bar</b>' },
-          { text: 'baz' }
+          { text: 'baz' },
         ],
       })
       expect(result).toEqual({
@@ -266,12 +270,16 @@ describe('highlighting', () => {
         highlight: {
           'comments.text': [
             '<b class="search-highlight">foo</b>',
-            '<b class="search-highlight">bar</b>'
-          ]
+            '<b class="search-highlight">bar</b>',
+          ],
         },
       }
       let result = highlightResults(
-        highlightFields, hit, 'comments', ['title', 'description', 'comments.text'], true
+        highlightFields,
+        hit,
+        'comments',
+        ['title', 'description', 'comments.text'],
+        true
       )
       expect(hit._source).toEqual({
         title: '...',
@@ -300,7 +308,11 @@ describe('highlighting', () => {
         highlight: {},
       }
       let result = highlightResults(
-        highlightFields, hit, 'comments', ['title', 'description', 'comments.text'], true
+        highlightFields,
+        hit,
+        'comments',
+        ['title', 'description', 'comments.text'],
+        true
       )
       expect(hit._source).toEqual({
         title: '...',
