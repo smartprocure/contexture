@@ -18,7 +18,13 @@ export let arrayToHighlightsFieldMap = _.flow(
 )
 
 // TODO: Support multiple pathToNesteds...
-export let highlightResults = (highlightFields, hit, pathToNested, include, filterNested) => {
+export let highlightResults = (
+  highlightFields,
+  hit,
+  pathToNested,
+  include,
+  filterNested
+) => {
   // TODO: Support Regex and Function basis for all options
 
   // Handle Results Highlighting
@@ -77,15 +83,13 @@ export let highlightResults = (highlightFields, hit, pathToNested, include, filt
         if (filterNested) {
           let filtered = _.flow(
             _.get(pathToNested),
-            _.filter(_.flow(
-              _.get(field),
-              _.includes('<b class="search-highlight">')
-            )),
+            _.filter(
+              _.flow(_.get(field), _.includes('<b class="search-highlight">'))
+            )
           )(hit._source)
 
           F.setOn(pathToNested, filtered, hit._source)
         }
-
       }
     }
   }, hit.highlight)
