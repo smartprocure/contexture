@@ -52,7 +52,7 @@ const keywordConfig = {
 };
 
 const getKeywordGenerations = async (tags) => {
-  keywordOpts.prompt = `Keyword list: ${_.map('word', tags).join(',')}, `
+  keywordOpts.prompt = `Keyword list: ${_.map('word', tags).join(', ')}, `
   let results = await axios.post('https://api.ai21.com/studio/v1/j1-jumbo/complete', keywordOpts, keywordConfig)
 
   console.log(results) 
@@ -105,7 +105,6 @@ let ExpandableTagsQuery = ({ measureRef, contentRect, collapse, theme,  ...props
             _.map(({word}) => (
             <theme.Tag 
               moveTag={(value) => (e)=> {
-                console.log("Removing tag: ", value)
                 props.tree.mutate(props.node.path, {  
                   tags: [...props.node.tags, {[tagValueField]: value, distance: 3 }],
                   keywordGenerations: _.reject({ [tagValueField]: value }, props.node.keywordGenerations),
@@ -212,17 +211,9 @@ let TagsWrapper = observer(
         <GridItem place="center">
             <TextButton style={(node.tags.length > 2 ? {width: 35}: {display: 'none'})}
               onClick={async (e)=>{
-
                 //Call API HERE
                 let generations = await getKeywordGenerations(node.tags)
-                console.log("Keyword Generations: ", generations)
-                /* [
-                  { word: 'soap', distance: '3'},
-                  { word: 'shampoo', distance: '3'},
-                  { word: 'conditioner', distance: '3'},
-                ] */
                 await tree.mutate(node.path, { keywordGenerations: generations })
-                console.log("Keyword Generations: ", _.get(['context', 'results', 'soap'], node))
                 e.preventDefault()
               }}>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 28 28" stroke="currentColor" stroke-width="2" >
