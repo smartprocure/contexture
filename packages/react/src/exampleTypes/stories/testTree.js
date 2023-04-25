@@ -90,6 +90,7 @@ export default (f = _.identity) => {
       type: 'tagsQuery',
       field: 'title',
       tags: [],
+      keywordGenerations: [],
     },
     tagsText: {
       key: 'tagsText',

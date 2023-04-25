@@ -7,14 +7,72 @@ import ExpandArrow from './ExpandArrow.js'
 import { observer } from 'mobx-react'
 import { toNumber } from '../../utils/format.js'
 import TagActionsMenu from '../TagsQuery/TagActionsMenu.js'
-import { Grid, GridItem } from '../../greyVest/index.js'
+import { Flex, Grid, GridItem } from '../../greyVest/index.js'
 import { getTagStyle, tagValueField } from '../TagsQuery/utils.js'
 import ActionsMenu from '../TagsQuery/ActionsMenu.js'
+import { TextButton, Button, Tag } from '../../greyVest/index.js'
+import axios from 'axios'
+
+const keywordOpts = {
+  "prompt": "",
+  "numResults": 2,
+  "maxTokens": 50,
+  "temperature": 0.4,
+  "topKReturn": 0,
+  "topP":1,
+  "countPenalty": {
+    "scale": 100,
+    "applyToNumbers": true,
+    "applyToPunctuations": false,
+    "applyToStopwords": false,
+    "applyToWhitespaces": false,
+    "applyToEmojis": true
+  },
+  "frequencyPenalty": {
+    "scale": 100,
+    "applyToNumbers": true,
+    "applyToPunctuations": false,
+    "applyToStopwords": false,
+    "applyToWhitespaces": false,
+    "applyToEmojis": false
+  },
+  "presencePenalty": {
+    "scale": 100,
+    "applyToNumbers": true,
+    "applyToPunctuations": false,
+    "applyToStopwords": false,
+    "applyToWhitespaces": false,
+    "applyToEmojis": true
+  },
+  "stopSequences":['.']
+}
+
+const keywordConfig = {
+  headers: { Authorization: `Bearer dxgDJjAF664Yv5oJGl2FfhuxF2rm46MI` }
+};
+
+const getKeywordGenerations = async (tags) => {
+  keywordOpts.prompt = `Keyword list: ${_.map('word', tags).join(',')}, `
+  let results = await axios.post('https://api.ai21.com/studio/v1/j1-jumbo/complete', keywordOpts, keywordConfig)
+
+  console.log(results) 
+  let completions = results.data.completions 
+  //Choose the longest completion to avoid edge cases of one completion returning nothing
+  let index = completions[0].data.text.length > completions[1].data.text.length ? 0 : 1
+  let keywordGenerations = results.data.completions[index].data.text
+  keywordGenerations = keywordGenerations.split(',')
+  keywordGenerations = _.map((val)=> ({word: val, distance: 3}), keywordGenerations)
+  return keywordGenerations
+}
+
 
 let innerHeightLimit = 40
+let addIcon = <i style={{'padding-left': 3}} class="fa fa-plus"/>
+let BlankRemoveIcon = () => <div style={{padding: 3}}/>
 
-let ExpandableTagsQuery = ({ measureRef, contentRect, collapse, ...props }) => (
+let ExpandableTagsQuery = ({ measureRef, contentRect, collapse, theme,  ...props }) => (
   <>
+  <div>
     <div
       style={{
         overflow: 'hidden',
@@ -22,7 +80,7 @@ let ExpandableTagsQuery = ({ measureRef, contentRect, collapse, ...props }) => (
       }}
     >
       <div ref={measureRef}>
-        <TagsWrapper {..._.omit('measure', props)} />
+        <TagsWrapper {..._.omit('measure', props)} theme={theme} />
       </div>
     </div>
     {F.view(collapse) &&
@@ -35,7 +93,37 @@ let ExpandableTagsQuery = ({ measureRef, contentRect, collapse, ...props }) => (
           />
         </div>
       )}
-  </>
+      
+  </div>
+  <Flex >
+    <div style={(props.node.keywordGenerations.length > 0 ? {
+      width: '100%', 
+      position: 'relative', 
+      'border-top': '2px solid #EBEBEB',
+      } : {display: 'none'})}>
+          {!F.isBlank(_.get(`context.results`, props.node)) ?
+            _.map(({word}) => (
+            <theme.Tag 
+              moveTag={(value) => (e)=> {
+                console.log("Removing tag: ", value)
+                props.tree.mutate(props.node.path, {  
+                  tags: [...props.node.tags, {[tagValueField]: value, distance: 3 }],
+                  keywordGenerations: _.reject({ [tagValueField]: value }, props.node.keywordGenerations),
+                })
+    
+                e.preventDefault()
+              }}
+              AddIcon={addIcon}  
+              RemoveIcon={BlankRemoveIcon} 
+              tagStyle={{'border-radius': '3px', 'background-color': '#E2E2E2'}}
+              value={`${word}`}
+              label={`${word} (${toNumber(_.get(`context.results.${word}`)(props.node))})`}
+            />))(props.node.keywordGenerations) 
+            : null
+          }
+    </div>
+  </Flex>
+</>
 )
 
 let TagsWrapper = observer(
@@ -77,12 +165,14 @@ let TagsWrapper = observer(
         )
       })
     )
+    console.log("Node: ", node)
 
     return (
+      <>
       <Grid
         data-path={node.path}
         rows={`${innerHeightLimit}px minmax(0, auto)`}
-        columns="1fr auto"
+        columns="1fr auto auto"
         style={style}
       >
         <GridItem height={2} place="center stretch">
@@ -120,6 +210,27 @@ let TagsWrapper = observer(
           />
         </GridItem>
         <GridItem place="center">
+            <TextButton style={(node.tags.length > 2 ? {width: 35}: {display: 'none'})}
+              onClick={async (e)=>{
+
+                //Call API HERE
+                let generations = await getKeywordGenerations(node.tags)
+                console.log("Keyword Generations: ", generations)
+                /* [
+                  { word: 'soap', distance: '3'},
+                  { word: 'shampoo', distance: '3'},
+                  { word: 'conditioner', distance: '3'},
+                ] */
+                await tree.mutate(node.path, { keywordGenerations: generations })
+                console.log("Keyword Generations: ", _.get(['context', 'results', 'soap'], node))
+                e.preventDefault()
+              }}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 28 28" stroke="currentColor" stroke-width="2" >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+            </TextButton>
+        </GridItem>
+        <GridItem place="center">
           <Popover
             style={{ width: 'auto' }}
             position={popoverPosition}
@@ -146,6 +257,8 @@ let TagsWrapper = observer(
           </Popover>
         </GridItem>
       </Grid>
+      
+      </>
     )
   }
 )

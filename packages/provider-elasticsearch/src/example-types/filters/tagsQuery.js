@@ -84,10 +84,17 @@ let buildResultQuery = (node, children = {}, groupsKey = 'tags') => ({
   aggs: {
     [groupsKey]: {
       filters: {
-        filters: F.arrayToObject(
-          _.get('word'),
-          (tag) => filter({ ...node, tags: [tag] }),
-          node.tags
+        filters: _.merge(
+          F.arrayToObject(
+            _.get('word'),
+            (tag) => filter({ ...node, tags: [tag] }),
+            node.tags
+          ),
+          F.arrayToObject(
+            _.get('word'),
+            (tag) => filter({ ...node, tags: [tag] }),
+            node.keywordGenerations
+          )
         ),
       },
       ...children,

@@ -104,10 +104,13 @@ export default F.stampKey('type', {
       join: 'others',
       tags: 'all',
       exact: 'all',
+      keywordGenerations: 'all',
+      generateKeywords: 'self',
     },
     defaults: {
       field: null,
       tags: [],
+      keywordGenerations: [],
       join: 'any',
       exact: false,
       context: {

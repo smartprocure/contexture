@@ -2,6 +2,7 @@ import React from 'react'
 import F from 'futil'
 import { observer } from 'mobx-react'
 import Flex from './Flex.js'
+import _ from 'lodash'
 
 let RemoveTagIcon = (props) => (
   <span className="tags-input-tag-remove" {...props}>
@@ -13,7 +14,9 @@ let Tag = ({
   value,
   label,
   removeTag,
+  moveTag = null,
   RemoveIcon = RemoveTagIcon,
+  AddIcon = null,
   tagStyle,
   onClick,
 }) => (
@@ -27,9 +30,10 @@ let Tag = ({
       wordBreak: 'break-all',
       ...F.callOrReturn(tagStyle, value),
     }}
-    onClick={onClick}
+    onClick={_.isFunction(moveTag) ? moveTag(value) : onClick}
   >
     <Flex style={{ alignItems: 'center' }}>
+     {AddIcon}
       <span
         style={{
           paddingLeft: '0.45em',
