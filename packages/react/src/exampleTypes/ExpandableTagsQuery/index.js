@@ -102,13 +102,13 @@ let ExpandableTagsQuery = ({
                 (e) => {
                   tree.mutate(node.path, {
                     ...(_.flow(
-                      _.find({ word: _.trim(word) }),
+                      _.find({ value: _.trim(value) }),
                       _.isUndefined
                     )(node.tags) && {
-                      tags: [...node.tags, { word: word, distance: 3, label }],
+                      tags: [...node.tags, { word: value, distance: 3, label }],
                     }),
                     context: {
-                      keywordGenerations: _.omit(word)(
+                      keywordGenerations: _.omit(value)(
                         node.context.keywordGenerations
                       ),
                     },

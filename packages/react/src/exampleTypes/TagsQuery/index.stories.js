@@ -11,11 +11,6 @@ let tags = [
   { word: 'clean', distance: 3 },
 ]
 
-let keywords = _.map(
-  (n) => ({ word: `(${n}) test keyword`, distance: 3 }),
-  _.range(1, 5)
-)
-
 let treeWithTags = TestTree((testTree) => {
   testTree.getNode(['tagsQuery']).tags = tags
   return testTree
