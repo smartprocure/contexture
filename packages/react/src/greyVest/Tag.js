@@ -30,7 +30,7 @@ let Tag = ({
       wordBreak: 'break-all',
       ...F.callOrReturn(tagStyle, value),
     }}
-    onClick={_.isFunction(moveTag) ? moveTag(value) : onClick}
+    onClick={_.isFunction(moveTag) ? moveTag({value, label}) : onClick}
   >
     <Flex style={{ alignItems: 'center' }}>
      {AddIcon}

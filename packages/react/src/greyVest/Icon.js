@@ -2,16 +2,9 @@
 import React from 'react'
 import { Dynamic } from '../greyVest/index.js'
 import TextButton from './TextButton.js'
-import { HiOutlineLightBulb } from "react-icons/hi/index.esm.js"
 
 let SmallIcon = ({ icon, style, ...props }) => (
   <i className="material-icons" style={{ fontSize: 20, ...style }} {...props}>
-    {icon}
-  </i>
-)
-
-let SmallIconHero = ({ icon, style, ...props }) => (
-  <i className="hero-icons" style={{ fontSize: 20, ...style }} {...props}>
     {icon}
   </i>
 )
@@ -32,17 +25,6 @@ let iconMap = {
     <TextButton>
       <SmallIcon icon="more_vert" />
     </TextButton>
-  ),
-  KeywordGenerate: () => (
-      <TextButton>
-        <svg class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-  <path
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-  />
-</svg>
-      </TextButton>
   ),
   FilterListExpand: toIcon('keyboard_arrow_down'),
   FilterListCollapse: toIcon('keyboard_arrow_up'),

@@ -4,7 +4,7 @@ import _ from 'lodash/fp.js'
 import { observer } from 'mobx-react'
 import OutsideClickHandler from 'react-outside-click-handler'
 import { withNode } from '../utils/hoc.js'
-import { Box, ButtonGroup, Button } from '../greyVest/index.js'
+import { Box, ButtonGroup, Button, StripedLoader} from '../greyVest/index.js'
 import ExpandableTagsInput, { Tags } from '../greyVest/ExpandableTagsInput.js'
 import ExpandableTagsQuery from './ExpandableTagsQuery/index.js'
 
@@ -60,6 +60,7 @@ let SearchBar = ({
   actionWrapper,
   searchButtonProps,
   tagsQueryProps,
+  enableKeywordGenerations
 }) => {
   let collapse = React.useState(true)
   return (
@@ -80,10 +81,10 @@ let SearchBar = ({
       >
         <Box style={searchBarBoxStyle} onClick={F.off(collapse)}>
           <ExpandableTagsQuery
-            {...{ tree, node, collapse, actionWrapper }}
+            {...{ tree, node, collapse, actionWrapper, enableKeywordGenerations }}
             onAddTag={F.off(collapse)}
-            Loader={({ children }) => <div>{children}</div>}
-            style={inputStyle}
+            Loader={({ children, ...props }) => <StripedLoader {...props}>{children}</StripedLoader>}
+            style={inputStyle} 
             theme={{
               TagsInput:
                 F.view(collapse) && !_.isEmpty(node.tags)

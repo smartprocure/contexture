@@ -104,10 +104,12 @@ export default F.stampKey('type', {
       join: 'others',
       tags: 'all',
       exact: 'all',
-      keywordGenerations: 'all',
-      generateKeywords: 'self',
+      //Only react when generateKeywords is true
+      generateKeywords: (parent, node, event) => event.value.generateKeywords ? 
+        [node] : [],
     },
     defaults: {
+      generateKeywords: false,
       field: null,
       tags: [],
       keywordGenerations: [],
@@ -117,6 +119,16 @@ export default F.stampKey('type', {
         results: {},
       },
     },
+    shouldMergeResponse: (node) => !node.generateKeywords,
+    mergeResponse(node, response, extend) {
+      // extend but alwayrs persist keywordGenerations when appropriate
+      extend(node, {
+        context: {
+          keywordGenerations: node.context.keywordGenerations, 
+          tags: response.context.tags
+        },
+      })
+    }, 
   },
   mongoId: {
     validate: validateValues,

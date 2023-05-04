@@ -3,6 +3,7 @@ import _ from 'lodash/fp.js'
 import React from 'react'
 import { contexturifyWithoutLoader } from '../../utils/hoc.js'
 import ExpandableTagsQuery from '../ExpandableTagsQuery/index.js'
+import {StripedLoader} from '../../greyVest/index.js'
 import ExpandableTagsInput, {
   Tags,
 } from '../../greyVest/ExpandableTagsInput.js'
@@ -20,7 +21,7 @@ let TagsQuery = ({ tree, node, actionWrapper, ...props }) => {
       <ExpandableTagsQuery
         {...{ tree, node, collapse, actionWrapper, ...props }}
         onAddTag={F.off(collapse)}
-        Loader={({ children }) => <div>{children}</div>}
+        Loader={({ children, ...props }) => <StripedLoader {...props}>{children}</StripedLoader>}
         style={{ padding: '0 5px' }}
         theme={{
           TagsInput: isCollapsed ? Tags : ExpandableTagsInput,

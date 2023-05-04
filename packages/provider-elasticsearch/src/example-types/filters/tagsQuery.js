@@ -2,6 +2,7 @@ import _ from 'lodash/fp.js'
 import F from 'futil'
 import Combinatorics from 'js-combinatorics'
 import { stripLegacySubFields } from '../../utils/fields.js'
+import { generationTagInputs } from '../../utils/keywordGenerations.js'
 
 let maxTagCount = 100
 
@@ -80,35 +81,63 @@ let filter = ({ tags, join, field, exact }) => ({
   },
 })
 
-let buildResultQuery = (node, children = {}, groupsKey = 'tags') => ({
+let buildResultQuery = async (node, children = {}, groupsKey = 'tags', keywordGenerations = []) => {
+  return ({
   aggs: {
     [groupsKey]: {
       filters: {
-        filters: _.merge(
+        filters: 
           F.arrayToObject(
             _.get('word'),
             (tag) => filter({ ...node, tags: [tag] }),
             node.tags
           ),
-          F.arrayToObject(
-            _.get('word'),
-            (tag) => filter({ ...node, tags: [tag] }),
-            node.keywordGenerations
-          )
-        ),
       },
       ...children,
     },
+    ...( keywordGenerations.length > 0 && {keywordGenerations: {
+      filters: {
+        filters: F.compactObject(F.arrayToObject(
+          _.identity,
+          (word) => filter({ ...node, tags: [{word: `${word}`}] }),
+          keywordGenerations
+        ))
+      },
+      aggs: {
+        keyword_generation_sort: {
+          bucket_sort: {
+              sort: [{ '_count': { order: 'desc' } }],
+          }
+        }
+       }
+    }}),
   },
-})
+})}
 
-let result = async (node, search) => {
-  let aggs = buildResultQuery(node)
+
+let result = (generateKeywords) => async (node, search) => {
+  console.log('generateKeywords', node.generateKeywords )
+  let aggs = await buildResultQuery(
+    node, 
+    {}, 
+    'tags', 
+    node.generateKeywords ? 
+      await generateKeywords(generationTagInputs(node.tags)) : 
+      []
+  )
+
 
   return _.flow(
-    _.get('aggregations.tags.buckets'),
-    _.mapValues(_.get('doc_count')),
-    (results) => ({ results })
+    (results) => (
+      {
+        tags: _.get('aggregations.tags.buckets', results), 
+        keywordGenerations: _.flow(
+          _.get('aggregations.keywordGenerations.buckets'),
+          _.omitBy((x) => x.doc_count === 0),
+        )(results)
+      }
+    ),
+    F.map(F.map('doc_count'))
   )(await search(aggs))
 }
 
@@ -117,7 +146,7 @@ let validContext = (node) => {
   return tagsCount && tagsCount <= maxTagCount
 }
 
-export default {
+export default ({_getKeywordGenerations = () => []}) =>  ({
   wordPermutations,
   limitResultsToCertainTags,
   addQuotesAndDistance,
@@ -129,5 +158,5 @@ export default {
   filter,
   validContext,
   buildResultQuery,
-  result,
-}
+  result: result(_getKeywordGenerations)
+})
