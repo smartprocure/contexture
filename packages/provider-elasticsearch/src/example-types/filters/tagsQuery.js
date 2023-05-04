@@ -150,7 +150,7 @@ let validContext = (node) => {
   return tagsCount && tagsCount <= maxTagCount
 }
 
-export default ({ _getKeywordGenerations = () => [] }) => ({
+export default ({ getKeywordGenerations = () => [] }) => ({
   wordPermutations,
   limitResultsToCertainTags,
   addQuotesAndDistance,
@@ -162,5 +162,5 @@ export default ({ _getKeywordGenerations = () => [] }) => ({
   filter,
   validContext,
   buildResultQuery,
-  result: result(_getKeywordGenerations),
+  result: result(getKeywordGenerations),
 })

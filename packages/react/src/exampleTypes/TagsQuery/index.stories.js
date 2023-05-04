@@ -1,5 +1,4 @@
 import React from 'react'
-import _ from 'lodash/fp.js'
 import TestTree from '../stories/testTree.js'
 import Component from './index.js'
 
