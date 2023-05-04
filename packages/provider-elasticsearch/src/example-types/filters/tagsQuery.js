@@ -124,7 +124,6 @@ let buildResultQuery = async (
 }
 
 let result = (generateKeywords) => async (node, search) => {
-
   let aggs = await buildResultQuery(
     node,
     {},
