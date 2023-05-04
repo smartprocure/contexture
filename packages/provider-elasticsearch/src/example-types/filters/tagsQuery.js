@@ -116,7 +116,7 @@ let buildResultQuery = async (node, children = {}, groupsKey = 'tags', keywordGe
 
 
 let result = (generateKeywords) => async (node, search) => {
-  console.log('generateKeywords', node.generateKeywords )
+
   let aggs = await buildResultQuery(
     node, 
     {}, 
