@@ -105,8 +105,8 @@ export default F.stampKey('type', {
       tags: 'all',
       exact: 'all',
       //Only react when generateKeywords is true
-      generateKeywords: (parent, node, event) => event.value.generateKeywords ? 
-        [node] : [],
+      generateKeywords: (parent, node, event) =>
+        event.value.generateKeywords ? [node] : [],
     },
     defaults: {
       generateKeywords: false,
@@ -124,11 +124,11 @@ export default F.stampKey('type', {
       // extend but alwayrs persist keywordGenerations when appropriate
       extend(node, {
         context: {
-          keywordGenerations: node.context.keywordGenerations, 
-          tags: response.context.tags
+          keywordGenerations: node.context.keywordGenerations,
+          tags: response.context.tags,
         },
       })
-    }, 
+    },
   },
   mongoId: {
     validate: validateValues,

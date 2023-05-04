@@ -81,62 +81,67 @@ let filter = ({ tags, join, field, exact }) => ({
   },
 })
 
-let buildResultQuery = async (node, children = {}, groupsKey = 'tags', keywordGenerations = []) => {
-  return ({
-  aggs: {
-    [groupsKey]: {
-      filters: {
-        filters: 
-          F.arrayToObject(
+let buildResultQuery = async (
+  node,
+  children = {},
+  groupsKey = 'tags',
+  keywordGenerations = []
+) => {
+  return {
+    aggs: {
+      [groupsKey]: {
+        filters: {
+          filters: F.arrayToObject(
             _.get('word'),
             (tag) => filter({ ...node, tags: [tag] }),
             node.tags
           ),
+        },
+        ...children,
       },
-      ...children,
+      ...(keywordGenerations.length > 0 && {
+        keywordGenerations: {
+          filters: {
+            filters: F.compactObject(
+              F.arrayToObject(
+                _.identity,
+                (word) => filter({ ...node, tags: [{ word: `${word}` }] }),
+                keywordGenerations
+              )
+            ),
+          },
+          aggs: {
+            keyword_generation_sort: {
+              bucket_sort: {
+                sort: [{ _count: { order: 'desc' } }],
+              },
+            },
+          },
+        },
+      }),
     },
-    ...( keywordGenerations.length > 0 && {keywordGenerations: {
-      filters: {
-        filters: F.compactObject(F.arrayToObject(
-          _.identity,
-          (word) => filter({ ...node, tags: [{word: `${word}`}] }),
-          keywordGenerations
-        ))
-      },
-      aggs: {
-        keyword_generation_sort: {
-          bucket_sort: {
-              sort: [{ '_count': { order: 'desc' } }],
-          }
-        }
-       }
-    }}),
-  },
-})}
-
+  }
+}
 
 let result = (generateKeywords) => async (node, search) => {
-  console.log('generateKeywords', node.generateKeywords )
+  console.log('generateKeywords', node.generateKeywords)
   let aggs = await buildResultQuery(
-    node, 
-    {}, 
-    'tags', 
-    node.generateKeywords ? 
-      await generateKeywords(generationTagInputs(node.tags)) : 
-      []
+    node,
+    {},
+    'tags',
+    node.generateKeywords
+      ? await generateKeywords(generationTagInputs(node.tags))
+      : []
   )
 
-
   return _.flow(
-    (results) => (
-      {
-        tags: _.get('aggregations.tags.buckets', results), 
-        keywordGenerations: _.flow(
-          _.get('aggregations.keywordGenerations.buckets'),
-          _.omitBy((x) => x.doc_count === 0),
-        )(results)
-      }
-    ),
+    (results) => ({
+      tags: _.get('aggregations.tags.buckets', results),
+      keywordGenerations: _.flow(
+        _.get('aggregations.keywordGenerations.buckets'),
+        _.omitBy((x) => x.doc_count === 0)
+      )(results),
+    }),
     F.map(F.map('doc_count'))
   )(await search(aggs))
 }
@@ -146,7 +151,7 @@ let validContext = (node) => {
   return tagsCount && tagsCount <= maxTagCount
 }
 
-export default ({_getKeywordGenerations = () => []}) =>  ({
+export default ({ _getKeywordGenerations = () => [] }) => ({
   wordPermutations,
   limitResultsToCertainTags,
   addQuotesAndDistance,
@@ -158,5 +163,5 @@ export default ({_getKeywordGenerations = () => []}) =>  ({
   filter,
   validContext,
   buildResultQuery,
-  result: result(_getKeywordGenerations)
+  result: result(_getKeywordGenerations),
 })

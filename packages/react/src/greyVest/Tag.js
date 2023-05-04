@@ -30,10 +30,10 @@ let Tag = ({
       wordBreak: 'break-all',
       ...F.callOrReturn(tagStyle, value),
     }}
-    onClick={_.isFunction(moveTag) ? moveTag({value, label}) : onClick}
+    onClick={_.isFunction(moveTag) ? moveTag({ value, label }) : onClick}
   >
     <Flex style={{ alignItems: 'center' }}>
-     {AddIcon}
+      {AddIcon}
       <span
         style={{
           paddingLeft: '0.45em',
