@@ -7,10 +7,9 @@ import ExpandArrow from './ExpandArrow.js'
 import { observer } from 'mobx-react'
 import { toNumber } from '../../utils/format.js'
 import TagActionsMenu from '../TagsQuery/TagActionsMenu.js'
-import { Flex, Grid, GridItem } from '../../greyVest/index.js'
+import { Flex, Grid, GridItem , TextButton} from '../../greyVest/index.js'
 import { getTagStyle, tagValueField } from '../TagsQuery/utils.js'
 import ActionsMenu from '../TagsQuery/ActionsMenu.js'
-import { TextButton} from '../../greyVest/index.js'
 import OutsideClickHandler from 'react-outside-click-handler';
 import { generationTagInputs } from 'contexture-elasticsearch/utils/keywordGenerations.js'
 
