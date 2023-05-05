@@ -81,7 +81,7 @@ let filter = ({ tags, join, field, exact }) => ({
   },
 })
 
-let buildResultQuery = async (
+let buildResultQuery = (
   node,
   children = {},
   groupsKey = 'tags',
@@ -123,15 +123,18 @@ let buildResultQuery = async (
   }
 }
 
-let result = (generateKeywords) => async (node, search) => {
-  let aggs = await buildResultQuery(
-    node,
-    {},
-    'tags',
-    node.generateKeywords
-      ? await generateKeywords(generationTagInputs(node.tags))
-      : []
-  )
+let result = (generateKeywords) =>  async (node, search) => {
+
+  let keywords = node.generateKeywords === true ? await generateKeywords(generationTagInputs(node.tags)) : []
+  let aggs = node.generateKeywords ?
+    buildResultQuery(
+      node,
+      {},
+      'tags',
+      keywords
+    )
+  :
+    buildResultQuery(node)
 
   return _.flow(
     (results) => ({
@@ -150,7 +153,7 @@ let validContext = (node) => {
   return tagsCount && tagsCount <= maxTagCount
 }
 
-export default ({ getKeywordGenerations = () => [] }) => ({
+export default (options) => ({
   wordPermutations,
   limitResultsToCertainTags,
   addQuotesAndDistance,
@@ -162,5 +165,5 @@ export default ({ getKeywordGenerations = () => [] }) => ({
   filter,
   validContext,
   buildResultQuery,
-  result: result(getKeywordGenerations),
+  result: result(options?.generateKeywords || (() => [])),
 })
