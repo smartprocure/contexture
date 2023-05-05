@@ -14,7 +14,7 @@ import OutsideClickHandler from 'react-outside-click-handler'
 import { generationTagInputs } from 'contexture-elasticsearch/utils/keywordGenerations.js'
 
 let innerHeightLimit = 40
-let addIcon = <i style={{ paddingLeft:'8px' }} className="fa fa-plus fa-sm" />
+let addIcon = <i style={{ paddingLeft: '8px' }} className="fa fa-plus fa-sm" />
 let BlankRemoveIcon = () => <div style={{ padding: 3 }} />
 let KeywordGenerationIcon = () => (
   <svg
@@ -118,7 +118,11 @@ let ExpandableTagsQuery = ({
               AddIcon={addIcon}
               key={`tag-${word}`}
               RemoveIcon={BlankRemoveIcon}
-              tagStyle={{ borderRadius: '3px', padding: '3px 0px', backgroundColor: '#E2E2E2' }}
+              tagStyle={{
+                borderRadius: '3px',
+                padding: '3px 0px',
+                backgroundColor: '#E2E2E2',
+              }}
               value={`${word}`}
               label={`${word} (${toNumber(
                 _.get(`context.keywordGenerations.${word}`)(node)

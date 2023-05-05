@@ -123,18 +123,14 @@ let buildResultQuery = (
   }
 }
 
-let result = (generateKeywords) =>  async (node, search) => {
-
-  let keywords = node.generateKeywords === true ? await generateKeywords(generationTagInputs(node.tags)) : []
-  let aggs = node.generateKeywords ?
-    buildResultQuery(
-      node,
-      {},
-      'tags',
-      keywords
-    )
-  :
-    buildResultQuery(node)
+let result = (generateKeywords) => async (node, search) => {
+  let keywords =
+    node.generateKeywords === true
+      ? await generateKeywords(generationTagInputs(node.tags))
+      : []
+  let aggs = node.generateKeywords
+    ? buildResultQuery(node, {}, 'tags', keywords)
+    : buildResultQuery(node)
 
   return _.flow(
     (results) => ({

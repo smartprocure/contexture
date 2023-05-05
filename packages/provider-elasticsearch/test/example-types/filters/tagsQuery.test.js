@@ -13,8 +13,7 @@ let {
   filter,
   buildResultQuery,
   result,
-} = tagsQuery(()=>[])
-
+} = tagsQuery(() => [])
 
 describe('wordPermutations', () => {
   it('should handle empty string', () => {
@@ -351,6 +350,6 @@ describe('result', () => {
           },
         })
       )
-    ).toEqual({ 'keywordGenerations': {}, 'tags': {foo: 2, bar: 5 }})
+    ).toEqual({ keywordGenerations: {}, tags: { foo: 2, bar: 5 } })
   })
 })
