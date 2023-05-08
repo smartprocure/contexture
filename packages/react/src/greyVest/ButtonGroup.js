@@ -1,5 +1,6 @@
-import { defaultProps } from 'react-recompose'
+import React from 'react'
 import Flex from './Flex.js'
 
-let ButtonGroup = defaultProps({ className: 'gv-button-group' })(Flex)
-export default ButtonGroup
+export default React.forwardRef((props, ref) => (
+  <Flex ref={ref} className="gv-button-group" {...props} />
+))

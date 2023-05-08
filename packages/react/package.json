@@ -73,6 +73,7 @@
     "write-pkg": "^4.0.0"
   },
   "dependencies": {
+    "@chakra-ui/react-use-outside-click": "^2.1.0",
     "futil": "^1.74.1",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
@@ -82,7 +83,6 @@
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4",
     "react-measure": "^2.3.0",
-    "react-outside-click-handler": "^1.2.3",
     "react-recompose": "^0.31.2",
     "reactjs-popup": "^2.0.4"
   },
