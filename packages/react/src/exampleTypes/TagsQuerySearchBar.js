@@ -2,7 +2,7 @@ import React from 'react'
 import F from 'futil'
 import _ from 'lodash/fp.js'
 import { observer } from 'mobx-react'
-import OutsideClickHandler from 'react-outside-click-handler'
+import { useOutsideClick } from '@chakra-ui/react-use-outside-click'
 import { withNode } from '../utils/hoc.js'
 import { Box, ButtonGroup, Button, StripedLoader } from '../greyVest/index.js'
 import ExpandableTagsInput, { Tags } from '../greyVest/ExpandableTagsInput.js'
@@ -63,22 +63,19 @@ let SearchBar = ({
   enableKeywordGenerations,
 }) => {
   let collapse = React.useState(true)
+  let ref = React.useRef()
+  useOutsideClick({ ref, handler: F.on(collapse) })
   return (
-    <OutsideClickHandler.default
-      onOutsideClick={() => {
-        F.on(collapse)()
+    <ButtonGroup
+      ref={ref}
+      data-path={node.path}
+      style={searchBarStyle}
+      // The outside click handler listens for the onMouseUp event which takes priority over any onClick handlers in the children
+      // So we need to add this handler to ensure that the child events are triggered appropriately
+      onMouseUp={(e) => {
+        e.stopPropagation()
       }}
-      useCapture={false}
     >
-      <ButtonGroup
-        data-path={node.path}
-        style={searchBarStyle}
-        // The outside click handler listens for the onMouseUp event which takes priority over any onClick handlers in the children
-        // So we need to add this handler to ensure that the child events are triggered appropriately
-        onMouseUp={(e) => {
-          e.stopPropagation()
-        }}
-      >
         <Box style={searchBarBoxStyle} onClick={F.off(collapse)}>
           <ExpandableTagsQuery
             {...{
@@ -107,7 +104,6 @@ let SearchBar = ({
           <SearchButton tree={tree} searchButtonProps={searchButtonProps} />
         )}
       </ButtonGroup>
-    </OutsideClickHandler.default>
   )
 }
 
