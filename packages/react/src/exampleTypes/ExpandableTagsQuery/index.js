@@ -13,12 +13,6 @@ import ActionsMenu from '../TagsQuery/ActionsMenu.js'
 import { useOutsideClick } from '@chakra-ui/react-use-outside-click'
 import { generationTagInputs } from 'contexture-elasticsearch/utils/keywordGenerations.js'
 
-let generationTagInputs = _.flow(
-  _.map('word'),
-  // Removing numbers from the list of words to generate keywords from as
-  // number throw off the keyword generation in most cases.
-  _.remove((word) => !isNaN(word) && !isNaN(parseFloat(word)))
-)
 
 let innerHeightLimit = 40
 let addIcon = <i style={{ paddingLeft: '8px' }} className="fa fa-plus fa-sm" />
