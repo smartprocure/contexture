@@ -2,7 +2,6 @@ import React from 'react'
 import F from 'futil'
 import { observer } from 'mobx-react'
 import Flex from './Flex.js'
-import _ from 'lodash'
 
 let RemoveTagIcon = (props) => (
   <span className="tags-input-tag-remove" {...props}>
@@ -14,7 +13,6 @@ let Tag = ({
   value,
   label,
   removeTag,
-  moveTag = null,
   RemoveIcon = RemoveTagIcon,
   AddIcon = null,
   tagStyle,
