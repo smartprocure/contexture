@@ -13,6 +13,13 @@ import ActionsMenu from '../TagsQuery/ActionsMenu.js'
 import { useOutsideClick } from '@chakra-ui/react-use-outside-click'
 import { generationTagInputs } from 'contexture-elasticsearch/utils/keywordGenerations.js'
 
+let generationTagInputs = _.flow(
+  _.map('word'),
+  // Removing numbers from the list of words to generate keywords from as
+  // number throw off the keyword generation in most cases.
+  _.remove((word) => !isNaN(word) && !isNaN(parseFloat(word)))
+)
+
 let innerHeightLimit = 40
 let addIcon = <i style={{ paddingLeft: '8px' }} className="fa fa-plus fa-sm" />
 let BlankRemoveIcon = () => <div style={{ padding: 3 }} />
@@ -91,16 +98,16 @@ let ExpandableTagsQuery = ({
               : { display: 'none' }
           }
         >
-          {node.generateKeywords && (
+          {node.isStale && (
             <Loader style={{ textAlign: 'center' }} loading={true}>
               Loading...
             </Loader>
           )}
-          {_.map((word) => (
+          {!node.isStale && _.map((word) => (
             <theme.Tag
               tree={tree}
               node={node}
-              moveTag={({ value, label }) =>
+              onClick={({ value, label }) =>
                 (e) => {
                   tree.mutate(node.path, {
                     ...(_.flow(
@@ -109,11 +116,6 @@ let ExpandableTagsQuery = ({
                     )(node.tags) && {
                       tags: [...node.tags, { word: value, distance: 3, label }],
                     }),
-                    context: {
-                      keywordGenerations: _.omit(value)(
-                        node.context.keywordGenerations
-                      ),
-                    },
                   })
                   e.preventDefault()
                 }}
@@ -130,7 +132,11 @@ let ExpandableTagsQuery = ({
                 _.get(`context.keywordGenerations.${word}`)(node)
               )})`}
             />
-          ))(_.keys(node.context.keywordGenerations))}
+          ))(_.flow(
+              _.intersection,
+              (dups) => _.pullAll(dups,_.keys(node.context.keywordGenerations))
+            )(_.keys(node.context.keywordGenerations), _.keys(node.context.tags))
+          )}
         </div>
       </Flex>
     </div>
@@ -243,6 +249,7 @@ let TagsWrapper = observer(
                 // Ensure first time user clicks the lightbulb words generate.
                 // Regenerate words and reset existing for clean loading experience
                 // on subsequent clicks.
+                console.log('generationsCollapse', generationsCollapse, node)
                 if (F.view(generationsCollapse)) {
                   F.off(generationsCollapse)()
                   if (
@@ -258,7 +265,6 @@ let TagsWrapper = observer(
                   if (!node.generateKeywords) {
                     await tree.mutate(node.path, {
                       generateKeywords: true,
-                      context: { keywordGenerations: {} },
                     })
                     tree.mutate(node.path, { generateKeywords: false })
                   }

@@ -86,8 +86,7 @@ let buildResultQuery = (
   children = {},
   groupsKey = 'tags',
   keywordGenerations = []
-) => {
-  return {
+) => ({
     aggs: {
       [groupsKey]: {
         filters: {
@@ -103,11 +102,9 @@ let buildResultQuery = (
         keywordGenerations: {
           filters: {
             filters: F.compactObject(
-              F.arrayToObject(
-                _.identity,
-                (word) => filter({ ...node, tags: [{ word: `${word}` }] }),
-                keywordGenerations
-              )
+              F.keysToObject(
+                (word) => filter({ ...node, tags: [{word}] })
+              )(keywordGenerations)
             ),
           },
           aggs: {
@@ -120,27 +117,30 @@ let buildResultQuery = (
         },
       }),
     },
-  }
-}
+})
 
 let result = (generateKeywords) => async (node, search) => {
-  let keywords =
-    node.generateKeywords === true
-      ? await generateKeywords(generationTagInputs(node.tags))
-      : []
-  let aggs = node.generateKeywords
-    ? buildResultQuery(node, {}, 'tags', keywords)
-    : buildResultQuery(node)
+
+  let keywords = node.generateKeywords ? 
+    await generateKeywords(generationTagInputs(node.tags)) : []
+    
+  let aggs = node.generateKeywords ?
+    buildResultQuery(
+      node,
+      {},
+      'tags',
+      keywords
+    ) : buildResultQuery(node)
 
   return _.flow(
     (results) => ({
       tags: _.get('aggregations.tags.buckets', results),
       keywordGenerations: _.flow(
         _.get('aggregations.keywordGenerations.buckets'),
-        _.omitBy((x) => x.doc_count === 0)
+        _.pickBy('doc_count')
       )(results),
     }),
-    F.map(F.map('doc_count'))
+    _.mapValues(_.mapValues('doc_count'))
   )(await search(aggs))
 }
 
