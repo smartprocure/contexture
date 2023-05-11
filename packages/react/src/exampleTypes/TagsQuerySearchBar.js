@@ -76,34 +76,34 @@ let SearchBar = ({
         e.stopPropagation()
       }}
     >
-        <Box style={searchBarBoxStyle} onClick={F.off(collapse)}>
-          <ExpandableTagsQuery
-            {...{
-              tree,
-              node,
-              collapse,
-              actionWrapper,
-              enableKeywordGenerations,
-            }}
-            onAddTag={F.off(collapse)}
-            Loader={({ children, ...props }) => (
-              <StripedLoader {...props}>{children}</StripedLoader>
-            )}
-            style={inputStyle}
-            theme={{
-              TagsInput:
-                F.view(collapse) && !_.isEmpty(node.tags)
-                  ? Tags
-                  : ExpandableTagsInput,
-            }}
-            autoFocus
-            {...tagsQueryProps}
-          />
-        </Box>
-        {tree.disableAutoUpdate && (
-          <SearchButton tree={tree} searchButtonProps={searchButtonProps} />
-        )}
-      </ButtonGroup>
+      <Box style={searchBarBoxStyle} onClick={F.off(collapse)}>
+        <ExpandableTagsQuery
+          {...{
+            tree,
+            node,
+            collapse,
+            actionWrapper,
+            enableKeywordGenerations,
+          }}
+          onAddTag={F.off(collapse)}
+          Loader={({ children, ...props }) => (
+            <StripedLoader {...props}>{children}</StripedLoader>
+          )}
+          style={inputStyle}
+          theme={{
+            TagsInput:
+              F.view(collapse) && !_.isEmpty(node.tags)
+                ? Tags
+                : ExpandableTagsInput,
+          }}
+          autoFocus
+          {...tagsQueryProps}
+        />
+      </Box>
+      {tree.disableAutoUpdate && (
+        <SearchButton tree={tree} searchButtonProps={searchButtonProps} />
+      )}
+    </ButtonGroup>
   )
 }
 
