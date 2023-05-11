@@ -13,7 +13,6 @@ import ActionsMenu from '../TagsQuery/ActionsMenu.js'
 import { useOutsideClick } from '@chakra-ui/react-use-outside-click'
 import { generationTagInputs } from 'contexture-elasticsearch/utils/keywordGenerations.js'
 
-
 let innerHeightLimit = 40
 let addIcon = <i style={{ paddingLeft: '8px' }} className="fa fa-plus fa-sm" />
 let BlankRemoveIcon = () => <div style={{ padding: 3 }} />
@@ -47,9 +46,10 @@ let ExpandableTagsQuery = ({
   let generationsCollapse = React.useState(true)
 
   let ref = React.useRef()
-  useOutsideClick({ ref, handler: F.on(generationsCollapse)}) 
+  useOutsideClick({ ref, handler: F.on(generationsCollapse) })
   return (
-    <div ref={ref}  
+    <div
+      ref={ref}
       onMouseUp={(e) => {
         e.stopPropagation()
       }}
@@ -97,40 +97,47 @@ let ExpandableTagsQuery = ({
               Loading...
             </Loader>
           )}
-          {!node.isStale && _.map((word) => (
-            <theme.Tag
-              tree={tree}
-              node={node}
-              onClick={({ value, label }) =>
-                (e) => {
-                  tree.mutate(node.path, {
-                    ...(_.flow(
-                      _.find({ value: _.trim(value) }),
-                      _.isUndefined
-                    )(node.tags) && {
-                      tags: [...node.tags, { word: value, distance: 3, label }],
-                    }),
-                  })
-                  e.preventDefault()
+          {!node.isStale &&
+            _.map((word) => (
+              <theme.Tag
+                tree={tree}
+                node={node}
+                onClick={({ value, label }) =>
+                  (e) => {
+                    tree.mutate(node.path, {
+                      ...(_.flow(
+                        _.find({ value: _.trim(value) }),
+                        _.isUndefined
+                      )(node.tags) && {
+                        tags: [
+                          ...node.tags,
+                          { word: value, distance: 3, label },
+                        ],
+                      }),
+                    })
+                    e.preventDefault()
+                  }}
+                AddIcon={addIcon}
+                key={`tag-${word}`}
+                RemoveIcon={BlankRemoveIcon}
+                tagStyle={{
+                  borderRadius: '3px',
+                  padding: '3px 0px',
+                  backgroundColor: '#E2E2E2',
                 }}
-              AddIcon={addIcon}
-              key={`tag-${word}`}
-              RemoveIcon={BlankRemoveIcon}
-              tagStyle={{
-                borderRadius: '3px',
-                padding: '3px 0px',
-                backgroundColor: '#E2E2E2',
-              }}
-              value={`${word}`}
-              label={`${word} (${toNumber(
-                _.get(`context.keywordGenerations.${word}`)(node)
-              )})`}
-            />
-          ))(_.flow(
-              _.intersection,
-              (dups) => _.pullAll(dups,_.keys(node.context.keywordGenerations))
-            )(_.keys(node.context.keywordGenerations), _.keys(node.context.tags))
-          )}
+                value={`${word}`}
+                label={`${word} (${toNumber(
+                  _.get(`context.keywordGenerations.${word}`)(node)
+                )})`}
+              />
+            ))(
+              _.flow(_.intersection, (dups) =>
+                _.pullAll(dups, _.keys(node.context.keywordGenerations))
+              )(
+                _.keys(node.context.keywordGenerations),
+                _.keys(node.context.tags)
+              )
+            )}
         </div>
       </Flex>
     </div>

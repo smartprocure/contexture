@@ -364,6 +364,6 @@ export default F.stampKey('type', {
       return {
         ..._.omit('generateKeywords', node),
       }
-    }
+    },
   },
 })

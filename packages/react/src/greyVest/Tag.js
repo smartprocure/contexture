@@ -28,7 +28,7 @@ let Tag = ({
       wordBreak: 'break-all',
       ...F.callOrReturn(tagStyle, value),
     }}
-    onClick={onClick({value, label})}
+    onClick={onClick({ value, label })}
   >
     <Flex style={{ alignItems: 'center' }}>
       {AddIcon}

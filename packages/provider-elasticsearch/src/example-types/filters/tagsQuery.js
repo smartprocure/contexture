@@ -87,50 +87,46 @@ let buildResultQuery = (
   groupsKey = 'tags',
   keywordGenerations = []
 ) => ({
-    aggs: {
-      [groupsKey]: {
+  aggs: {
+    [groupsKey]: {
+      filters: {
+        filters: F.arrayToObject(
+          _.get('word'),
+          (tag) => filter({ ...node, tags: [tag] }),
+          node.tags
+        ),
+      },
+      ...children,
+    },
+    ...(keywordGenerations.length > 0 && {
+      keywordGenerations: {
         filters: {
-          filters: F.arrayToObject(
-            _.get('word'),
-            (tag) => filter({ ...node, tags: [tag] }),
-            node.tags
+          filters: F.compactObject(
+            F.keysToObject((word) => filter({ ...node, tags: [{ word }] }))(
+              keywordGenerations
+            )
           ),
         },
-        ...children,
-      },
-      ...(keywordGenerations.length > 0 && {
-        keywordGenerations: {
-          filters: {
-            filters: F.compactObject(
-              F.keysToObject(
-                (word) => filter({ ...node, tags: [{word}] })
-              )(keywordGenerations)
-            ),
-          },
-          aggs: {
-            keyword_generation_sort: {
-              bucket_sort: {
-                sort: [{ _count: { order: 'desc' } }],
-              },
+        aggs: {
+          keyword_generation_sort: {
+            bucket_sort: {
+              sort: [{ _count: { order: 'desc' } }],
             },
           },
         },
-      }),
-    },
+      },
+    }),
+  },
 })
 
 let result = (generateKeywords) => async (node, search) => {
+  let keywords = node.generateKeywords
+    ? await generateKeywords(generationTagInputs(node.tags))
+    : []
 
-  let keywords = node.generateKeywords ? 
-    await generateKeywords(generationTagInputs(node.tags)) : []
-    
-  let aggs = node.generateKeywords ?
-    buildResultQuery(
-      node,
-      {},
-      'tags',
-      keywords
-    ) : buildResultQuery(node)
+  let aggs = node.generateKeywords
+    ? buildResultQuery(node, {}, 'tags', keywords)
+    : buildResultQuery(node)
 
   return _.flow(
     (results) => ({
