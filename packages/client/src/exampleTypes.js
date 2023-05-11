@@ -357,5 +357,10 @@ export default F.stampKey('type', {
       searchId: null,
       search: null,
     },
+    onSerialize(node) {
+      return {
+        ..._.omit('generateKeywords', node),
+      }
+    }
   },
 })

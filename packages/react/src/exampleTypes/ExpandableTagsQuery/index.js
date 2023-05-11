@@ -7,10 +7,10 @@ import ExpandArrow from './ExpandArrow.js'
 import { observer } from 'mobx-react'
 import { toNumber } from '../../utils/format.js'
 import TagActionsMenu from '../TagsQuery/TagActionsMenu.js'
-import { Flex, Grid, GridItem, TextButton } from '../../greyVest/index.js'
+import { Flex, Grid, GridItem, TextButton, Box } from '../../greyVest/index.js'
 import { getTagStyle, tagValueField } from '../TagsQuery/utils.js'
 import ActionsMenu from '../TagsQuery/ActionsMenu.js'
-import OutsideClickHandler from 'react-outside-click-handler'
+import { useOutsideClick } from '@chakra-ui/react-use-outside-click'
 import { generationTagInputs } from 'contexture-elasticsearch/utils/keywordGenerations.js'
 
 let innerHeightLimit = 40
@@ -44,12 +44,14 @@ let ExpandableTagsQuery = ({
   ...props
 }) => {
   let generationsCollapse = React.useState(true)
+
+  let ref = React.useRef()
+  useOutsideClick({ ref, handler: F.on(generationsCollapse)}) 
   return (
-    <OutsideClickHandler.default
-      onOutsideClick={() => {
-        F.on(generationsCollapse)()
+    <div ref={ref}  
+      onMouseUp={(e) => {
+        e.stopPropagation()
       }}
-      useCapture={false}
     >
       <div>
         <div
@@ -131,13 +133,12 @@ let ExpandableTagsQuery = ({
           ))(_.keys(node.context.keywordGenerations))}
         </div>
       </Flex>
-    </OutsideClickHandler.default>
+    </div>
   )
 }
 
 let TagsWrapper = observer(
   ({
-    enableKeywordGenerations,
     tree,
     node,
     style,
@@ -154,6 +155,7 @@ let TagsWrapper = observer(
     splitCommas = true,
     maxTags = 1000,
     generationsCollapse,
+    enableKeywordGenerations,
     ...props
   }) => {
     let TagWithPopover = React.memo(
