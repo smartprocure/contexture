@@ -28,6 +28,10 @@ export const Default = {}
 
 export const Responsive = () => (
   <div style={{ maxWidth: 500 }}>
-    <Component enableKeywordGenerations={true} tree={treeWithTags} path={['tagsQuery']} />
+    <Component
+      enableKeywordGenerations={true}
+      tree={treeWithTags}
+      path={['tagsQuery']}
+    />
   </div>
 )
