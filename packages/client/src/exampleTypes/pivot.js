@@ -113,9 +113,9 @@ export let skipResetExpansionsFields = [
 ]
 
 export default {
-  init: (node, {extend, snapshot}) => {
+  init: (node, { extend, snapshot }) => {
     extend(node, {
-      expand(tree, type, drilldown)  {
+      expand(tree, type, drilldown) {
         drilldown = snapshot(drilldown)
         let n = snapshot(node)
         let path = n.path
@@ -159,7 +159,7 @@ export default {
         drilldownResults[type] = undefined
         // triggering observer update
         extend(node, { context: { results } })
-      }
+      },
     })
   },
   validate: (node) =>
@@ -223,7 +223,7 @@ export default {
     selectedRows: [],
     selectedColumns: [],
   },
-  onDispatch(event, {extend}) {
+  onDispatch(event, { extend }) {
     let { type, node, value } = event
     if (type !== 'mutate') return
     // if no other fields are changing, do not proceed (but also continue in case there are other properties being mutated)
@@ -240,7 +240,7 @@ export default {
   // Resetting the expansions when the tree is changed
   // allows to return expected root results instead of nested drilldown
   // EX: criteria filters didn't work properly when drilldown was applied
-  onUpdateByOthers(node, {extend}) {
+  onUpdateByOthers(node, { extend }) {
     resetExpansions(node, extend, false)
   },
   shouldMergeResponse: _.flow(
@@ -248,7 +248,7 @@ export default {
     _.filter({ type: 'rows' }),
     _.negate(_.isEmpty)
   ),
-  mergeResponse(node, response, {extend, snapshot}) {
+  mergeResponse(node, response, { extend, snapshot }) {
     let findNotLoadedExpansion = () =>
       _.find(({ loaded }) => !loaded, node.expansions)
 

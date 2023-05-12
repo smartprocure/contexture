@@ -121,8 +121,17 @@ export let ContextTree = _.curry(
       if (debug) debugInfo.dispatchHistory.push(event)
       if (event.node)
         // not all dispatches have event.node, e.g. `refresh` with no path
-        F.maybeCall(typeProp('onDispatch', event.node), event, {extend, snapshot, initObject, log})
-      await validate(runTypeFunction(types, 'validate'), {extend, snapshot, initObject, log}, tree)
+        F.maybeCall(typeProp('onDispatch', event.node), event, {
+          extend,
+          snapshot,
+          initObject,
+          log,
+        })
+      await validate(
+        runTypeFunction(types, 'validate'),
+        { extend, snapshot, initObject, log },
+        tree
+      )
       let updatedNodes = [
         // Get updated nodes
         ..._.flatten(bubbleUp(processEvent(event), event.path)),
@@ -141,7 +150,12 @@ export let ContextTree = _.curry(
           _.map((n) => {
             // When updated by others, force replace instead of merge response
             extend(n, { forceReplaceResponse: true })
-            runTypeFunction(types, 'onUpdateByOthers', n, {extend, snapshot, initObject, log})
+            runTypeFunction(types, 'onUpdateByOthers', n, {
+              extend,
+              snapshot,
+              initObject,
+              log,
+            })
           }, updatedNodes)
         )
 
@@ -227,12 +241,10 @@ export let ContextTree = _.curry(
             !target.forceReplaceResponse &&
             F.maybeCall(typeProp('shouldMergeResponse', target), target)
           )
-            typeProp('mergeResponse', target)(
-              target,
-              responseNode,
-              {extend,
-              snapshot}
-            )
+            typeProp('mergeResponse', target)(target, responseNode, {
+              extend,
+              snapshot,
+            })
           else {
             target.forceReplaceResponse = false
             extend(target, responseNode)

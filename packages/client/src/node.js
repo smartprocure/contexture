@@ -36,25 +36,23 @@ export let internalStateKeys = [
 
 export let autoKey = (x) => F.compactJoin('-', [x.field, x.type]) || 'node'
 
-export let initNode = _.curry(
-  (actions, dedupe, parentPath, node) => {
-    const { extend, types, snapshot } = actions
-    actions = _.omit(['types'], actions)
+export let initNode = _.curry((actions, dedupe, parentPath, node) => {
+  const { extend, types, snapshot } = actions
+  actions = _.omit(['types'], actions)
 
-    runTypeFunction(types, 'init', node, actions)
-    let key = dedupe(
-      node.key ||
-        runTypeFunctionOrDefault(autoKey, types, 'autoKey', node, actions)
-    )
-    extend(node, {
-      ..._.omit(_.keys(node), defaults),
-      // For some reason, type defaults can end up observable in real world apps, so we `snapshot` instead of `_.deepClone`
-      ..._.omit(_.keys(node), snapshot(getTypeProp(types, 'defaults', node))),
-      key,
-      path: [...parentPath, key],
-    })
-  }
-)
+  runTypeFunction(types, 'init', node, actions)
+  let key = dedupe(
+    node.key ||
+      runTypeFunctionOrDefault(autoKey, types, 'autoKey', node, actions)
+  )
+  extend(node, {
+    ..._.omit(_.keys(node), defaults),
+    // For some reason, type defaults can end up observable in real world apps, so we `snapshot` instead of `_.deepClone`
+    ..._.omit(_.keys(node), snapshot(getTypeProp(types, 'defaults', node))),
+    key,
+    path: [...parentPath, key],
+  })
+})
 
 // fn: (dedupe: string -> string, parentPath: array, node: object) -> void
 export let dedupeWalk = (fn, tree, { target = {}, dedupe } = {}) => {

@@ -574,7 +574,9 @@ let AllTests = (ContextureClient) => {
     expect(filterUpdated).toBeCalledTimes(1)
   })
   it('should support custom type initializers', async () => {
-    let testInit = jest.fn((node,{ extend}) => extend(node, { isExtended: true }))
+    let testInit = jest.fn((node, { extend }) =>
+      extend(node, { isExtended: true })
+    )
     let Tree = ContextureClient(
       {
         debounce: 1,
@@ -1406,7 +1408,7 @@ let AllTests = (ContextureClient) => {
         },
       },
       results: {
-        onUpdateByOthers(node, {extend}) {
+        onUpdateByOthers(node, { extend }) {
           extend(node, { page: 1 })
         },
       },
@@ -2123,11 +2125,7 @@ let AllTests = (ContextureClient) => {
 
     // TODO test the loaded field population
     let merge = (results) =>
-      exampleTypes.pivot.mergeResponse(
-        node,
-        { context: { results } },
-        Tree
-      )
+      exampleTypes.pivot.mergeResponse(node, { context: { results } }, Tree)
     merge({
       rows: [
         { key: 'FL', rows: [{ key: 'fl1', a: 1 }] },
@@ -2182,11 +2180,7 @@ let AllTests = (ContextureClient) => {
 
     // TODO test the loaded field population
     let merge = (results) =>
-      exampleTypes.pivot.mergeResponse(
-        node,
-        { context: { results } },
-        Tree,
-      )
+      exampleTypes.pivot.mergeResponse(node, { context: { results } }, Tree)
     merge({
       rows: [
         {

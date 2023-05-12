@@ -4,7 +4,7 @@ import F from 'futil'
 // Aync fn to inspect types.
 // ASYNC runValidate: return true -> proceed, return false -> exclude, throw -> error!
 export let validate = _.curry(async (runValidate, actions, child) => {
-  let {extend} = actions
+  let { extend } = actions
   extend(child, { error: null })
   try {
     if (child.children)
