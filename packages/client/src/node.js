@@ -36,9 +36,8 @@ export let internalStateKeys = [
 
 export let autoKey = (x) => F.compactJoin('-', [x.field, x.type]) || 'node'
 
-export let initNode = _.curry((props, dedupe, parentPath, node) => {
-  let { types, extend, snapshot } = props
-  let actionProps = _.omit(['types'], props)
+export let initNode = _.curry((actionProps, dedupe, parentPath, node) => {
+  let { types, extend, snapshot } = actionProps
 
   runTypeFunction(types, 'init', node, actionProps)
   let key = dedupe(
