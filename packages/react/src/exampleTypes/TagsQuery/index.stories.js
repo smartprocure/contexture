@@ -20,6 +20,7 @@ export default {
   args: {
     tree: treeWithTags,
     path: ['tagsQuery'],
+    enableKeywordGenerations: true,
   },
 }
 
