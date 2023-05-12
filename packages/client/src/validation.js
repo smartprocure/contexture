@@ -8,7 +8,10 @@ export let validate = _.curry(async (runValidate, actionProps, child) => {
   extend(child, { error: null })
   try {
     if (child.children)
-      await F.flowAsync(_.map)(validate(runValidate, actionProps), child.children)
+      await F.flowAsync(_.map)(
+        validate(runValidate, actionProps),
+        child.children
+      )
     let hasValue = child.children
       ? _.some('hasValue', child.children)
       : await runValidate(child, actionProps)

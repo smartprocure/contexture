@@ -122,11 +122,7 @@ export let ContextTree = _.curry(
       if (event.node)
         // not all dispatches have event.node, e.g. `refresh` with no path
         F.maybeCall(typeProp('onDispatch', event.node), event, actionProps)
-      await validate(
-        runTypeFunction(types, 'validate'),
-        actionProps,
-        tree
-      )
+      await validate(runTypeFunction(types, 'validate'), actionProps, tree)
       let updatedNodes = [
         // Get updated nodes
         ..._.flatten(bubbleUp(processEvent(event), event.path)),
