@@ -574,7 +574,7 @@ let AllTests = (ContextureClient) => {
     expect(filterUpdated).toBeCalledTimes(1)
   })
   it('should support custom type initializers', async () => {
-    let testInit = jest.fn((node, extend) => extend(node, { isExtended: true }))
+    let testInit = jest.fn((node,{ extend}) => extend(node, { isExtended: true }))
     let Tree = ContextureClient(
       {
         debounce: 1,
@@ -1406,7 +1406,7 @@ let AllTests = (ContextureClient) => {
         },
       },
       results: {
-        onUpdateByOthers(node, extend) {
+        onUpdateByOthers(node, {extend}) {
           extend(node, { page: 1 })
         },
       },
@@ -2126,8 +2126,7 @@ let AllTests = (ContextureClient) => {
       exampleTypes.pivot.mergeResponse(
         node,
         { context: { results } },
-        Tree.extend,
-        Tree.snapshot
+        Tree
       )
     merge({
       rows: [
@@ -2186,8 +2185,7 @@ let AllTests = (ContextureClient) => {
       exampleTypes.pivot.mergeResponse(
         node,
         { context: { results } },
-        Tree.extend,
-        Tree.snapshot
+        Tree,
       )
     merge({
       rows: [
@@ -2367,7 +2365,7 @@ let AllTests = (ContextureClient) => {
 
     let node = Tree.getNode(['root', 'pivot'])
 
-    node.expand(Tree, ['root', 'pivot'], 'rows', ['Florida'])
+    node.expand(Tree, 'rows', ['Florida'])
 
     // Changing only fields from the skip field list shouldn't reset expansions
     let currentSkipFieldValues = _.pick(skipResetExpansionsFields, node)
@@ -2443,7 +2441,7 @@ let AllTests = (ContextureClient) => {
     })
 
     let node = Tree.getNode(['root', 'pivot'])
-    node.expand(Tree, ['root', 'pivot'], 'rows', ['Florida'])
+    node.expand(Tree, 'rows', ['Florida'])
 
     expect(toJS(Tree.getNode(['root', 'pivot']).expansions)).toEqual([
       { type: 'columns', drilldown: [], loaded: [] },
@@ -2508,8 +2506,8 @@ let AllTests = (ContextureClient) => {
 
     let node = Tree.getNode(['root', 'pivot'])
 
-    node.expand(Tree, ['root', 'pivot'], 'rows', ['NanoSoft'])
-    node.expand(Tree, ['root', 'pivot'], 'columns', ['Florida'])
+    node.expand(Tree, 'rows', ['NanoSoft'])
+    node.expand(Tree, 'columns', ['Florida'])
 
     Tree.mutate(['root', 'pivot'], {
       sort: {

@@ -14,8 +14,8 @@ export let getTypePropOrError = _.curry(
 )
 
 export let runTypeFunctionOrDefault = _.curry(
-  (defaultFn, types, prop, node, extend) =>
-    (getTypeProp(types, prop, node) || defaultFn)(node, extend)
+  (defaultFn, types, prop, node, actions) =>
+    (getTypeProp(types, prop, node) || defaultFn)(node, actions)
 )
 
 export let runTypeFunction = runTypeFunctionOrDefault(_.stubTrue)

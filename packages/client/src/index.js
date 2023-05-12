@@ -79,7 +79,7 @@ export let ContextTree = _.curry(
     let customReactors = reactors
 
     // initNode now generates node keys, so it must be run before flattening the tree
-    dedupeWalk(initNode({ extend, types, snapshot }), tree)
+    dedupeWalk(initNode({ extend, types, snapshot, initObject, log }), tree)
     let flat = flatten(tree)
     let getNode = (path) =>
       // empty path returns root with tree lookup, but should be undefined to mimic flat tree
@@ -121,8 +121,8 @@ export let ContextTree = _.curry(
       if (debug) debugInfo.dispatchHistory.push(event)
       if (event.node)
         // not all dispatches have event.node, e.g. `refresh` with no path
-        F.maybeCall(typeProp('onDispatch', event.node), event, extend)
-      await validate(runTypeFunction(types, 'validate'), extend, tree)
+        F.maybeCall(typeProp('onDispatch', event.node), event, {extend, snapshot, initObject, log})
+      await validate(runTypeFunction(types, 'validate'), {extend, snapshot, initObject, log}, tree)
       let updatedNodes = [
         // Get updated nodes
         ..._.flatten(bubbleUp(processEvent(event), event.path)),
@@ -141,7 +141,7 @@ export let ContextTree = _.curry(
           _.map((n) => {
             // When updated by others, force replace instead of merge response
             extend(n, { forceReplaceResponse: true })
-            runTypeFunction(types, 'onUpdateByOthers', n, extend)
+            runTypeFunction(types, 'onUpdateByOthers', n, {extend, snapshot, initObject, log})
           }, updatedNodes)
         )
 
@@ -230,8 +230,8 @@ export let ContextTree = _.curry(
             typeProp('mergeResponse', target)(
               target,
               responseNode,
-              extend,
-              snapshot
+              {extend,
+              snapshot}
             )
           else {
             target.forceReplaceResponse = false

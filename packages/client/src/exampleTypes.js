@@ -143,11 +143,11 @@ export default F.stampKey('type', {
         totalRecords: null,
       },
     },
-    onUpdateByOthers(node, extend) {
+    onUpdateByOthers(node, {extend}) {
       extend(node, { page: 1 })
     },
     shouldMergeResponse: (node) => node.infiniteScroll,
-    mergeResponse(node, response, extend) {
+    mergeResponse(node, response, {extend}) {
       // extend but merge results arrays
       extend(node, {
         context: {

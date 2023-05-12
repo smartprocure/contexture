@@ -30,16 +30,21 @@ export let internalStateKeys = [
   'onMarkForUpdate',
   'afterSearch',
   'forceReplaceResponse',
+  'expand',
+  'collapse',
 ]
 
 export let autoKey = (x) => F.compactJoin('-', [x.field, x.type]) || 'node'
 
 export let initNode = _.curry(
-  ({ extend, types, snapshot }, dedupe, parentPath, node) => {
-    runTypeFunction(types, 'init', node, extend)
+  (actions, dedupe, parentPath, node) => {
+    const { extend, types, snapshot } = actions
+    actions = _.omit(['types'], actions)
+
+    runTypeFunction(types, 'init', node, actions)
     let key = dedupe(
       node.key ||
-        runTypeFunctionOrDefault(autoKey, types, 'autoKey', node, extend)
+        runTypeFunctionOrDefault(autoKey, types, 'autoKey', node, actions)
     )
     extend(node, {
       ..._.omit(_.keys(node), defaults),

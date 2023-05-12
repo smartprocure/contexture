@@ -23,7 +23,8 @@ let mapTree = (fn, tree) =>
 
 export default (tree, types, { search } = {}) => {
   let onSerialize = (node) =>
-    runTypeFunctionOrDefault(_.identity, types, 'onSerialize', node, {})
+    runTypeFunctionOrDefault(_.identity, types, 'onSerialize', node, { extend: _.identity, snapshot: _.identity,
+      initObject: _.identity, log: _.identity })
 
   let internalKeys = _.without(search && ['lastUpdateTime'], internalStateKeys)
 
