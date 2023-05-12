@@ -6420,7 +6420,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"contexture-client@^2.51.0, contexture-client@workspace:packages/client":
+"contexture-client@^2.50.2, contexture-client@workspace:packages/client":
   version: 0.0.0-use.local
   resolution: "contexture-client@workspace:packages/client"
   dependencies:
@@ -6430,7 +6430,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"contexture-elasticsearch@^1.22.0, contexture-elasticsearch@workspace:packages/provider-elasticsearch":
+"contexture-elasticsearch@^1.19.16, contexture-elasticsearch@workspace:packages/provider-elasticsearch":
   version: 0.0.0-use.local
   resolution: "contexture-elasticsearch@workspace:packages/provider-elasticsearch"
   dependencies:
@@ -6513,8 +6513,8 @@ __metadata:
     "@storybook/react-webpack5": ^7.0.0-alpha.0
     "@storybook/storybook-deployer": ^2.8.16
     contexture: ^0.12.19
-    contexture-client: ^2.51.0
-    contexture-elasticsearch: ^1.22.0
+    contexture-client: ^2.50.2
+    contexture-elasticsearch: ^1.19.16
     elasticsearch-browser: ^14.2.2
     emoji-datasource: ^5.0.1
     eslint-plugin-react: ^7.32.0
@@ -6532,7 +6532,6 @@ __metadata:
     react-dnd: ^2.5.4
     react-dnd-html5-backend: ^2.5.4
     react-dom: ^16.8.0
-    react-icons: ^4.8.0
     react-measure: ^2.3.0
     react-recompose: ^0.31.2
     react-select: ^2.0.0
@@ -13155,15 +13154,6 @@ __metadata:
     react: ^15.5.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
     react-dom: ^15.5.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
   checksum: c645e6b6a023cf2fcb88d9a0e4c929e37cda2b76576921f70bb35cb2fc33ed5177e694fbaf36612a642e61914d0270c629606646bbf82f3576e116fc9dd94d5d
-  languageName: node
-  linkType: hard
-
-"react-icons@npm:^4.8.0":
-  version: 4.8.0
-  resolution: "react-icons@npm:4.8.0"
-  peerDependencies:
-    react: "*"
-  checksum: 4dbba7ad989c295b410e19b2a702722dae44368cb04b6515f9471353552f31ac80bd350f121d5bff79f81504b84039ede44d09e9f035f48bb1032e6eace126c4
   languageName: node
   linkType: hard
 
