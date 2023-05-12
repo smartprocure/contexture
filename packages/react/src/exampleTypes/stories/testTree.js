@@ -91,6 +91,10 @@ export default (f = _.identity) => {
       field: 'title',
       tags: [],
       keywordGenerations: [],
+      context: {
+        tags: {'janitor': 33, 'soap': 433, 'cleaner': 555, 'cleaning': 444, 'clean': 324543},
+        keywordGenerations: {'cleaning solution': 22, 'towels': 2, 'bucket': 11, 'mop': 23, 'broom': 11222},
+      },
     },
     tagsText: {
       key: 'tagsText',
