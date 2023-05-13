@@ -2,8 +2,11 @@ import _ from 'lodash/fp.js'
 import F from 'futil'
 import Combinatorics from 'js-combinatorics'
 import { stripLegacySubFields } from '../../utils/fields.js'
+import { sanitizeTagInputs } from '../../utils/keywordGenerations.js'
 
 let maxTagCount = 100
+
+let compactMapValues = _.flow(_.mapValues, F.compactObject)
 
 // Split text into words and return array of string permutations
 let wordPermutations = _.flow(
@@ -80,7 +83,12 @@ let filter = ({ tags, join, field, exact }) => ({
   },
 })
 
-let buildResultQuery = (node, children = {}, groupsKey = 'tags') => ({
+let buildResultQuery = (
+  node,
+  children = {},
+  groupsKey = 'tags',
+  keywordGenerations = []
+) => ({
   aggs: {
     [groupsKey]: {
       filters: {
@@ -92,17 +100,44 @@ let buildResultQuery = (node, children = {}, groupsKey = 'tags') => ({
       },
       ...children,
     },
+    ...(keywordGenerations.length > 0 && {
+      keywordGenerations: {
+        filters: {
+          filters: F.compactObject(
+            F.keysToObject(
+              (word) => filter({ ...node, tags: [{ word }] }),
+              keywordGenerations
+            )
+          ),
+        },
+        aggs: {
+          keyword_generation_sort: {
+            bucket_sort: {
+              sort: [{ _count: { order: 'desc' } }],
+            },
+          },
+        },
+      },
+    }),
   },
 })
 
-let result = async (node, search) => {
-  let aggs = buildResultQuery(node)
+let result = (generateKeywords) => async (node, search) => {
+  // Passing defaults in case of keywordGenerations, as async is not supported
+  let aggs = buildResultQuery(
+    node,
+    {},
+    'tags',
+    await F.maybeCall(
+      node.generateKeywords && generateKeywords,
+      sanitizeTagInputs(node.tags)
+    )
+  )
 
-  return _.flow(
-    _.get('aggregations.tags.buckets'),
-    _.mapValues(_.get('doc_count')),
-    (results) => ({ results })
-  )(await search(aggs))
+  return _.mapValues(
+    (prop) => compactMapValues('doc_count', prop.buckets),
+    (await search(aggs)).aggregations
+  )
 }
 
 let validContext = (node) => {
@@ -110,7 +145,7 @@ let validContext = (node) => {
   return tagsCount && tagsCount <= maxTagCount
 }
 
-export default {
+export default ({ generateKeywords } = {}) => ({
   wordPermutations,
   limitResultsToCertainTags,
   addQuotesAndDistance,
@@ -122,5 +157,5 @@ export default {
   filter,
   validContext,
   buildResultQuery,
-  result,
-}
+  result: result(generateKeywords),
+})
