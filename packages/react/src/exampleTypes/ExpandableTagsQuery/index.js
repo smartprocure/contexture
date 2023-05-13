@@ -11,11 +11,17 @@ import { Flex, Grid, GridItem, TextButton } from '../../greyVest/index.js'
 import { getTagStyle, tagValueField } from '../TagsQuery/utils.js'
 import ActionsMenu from '../TagsQuery/ActionsMenu.js'
 import { useOutsideClick } from '@chakra-ui/react-use-outside-click'
-import { generationTagInputs } from 'contexture-elasticsearch/utils/keywordGenerations.js'
+import { sanitizeTagInputs } from 'contexture-elasticsearch/utils/keywordGenerations.js'
 
 let innerHeightLimit = 40
 let addIcon = <i style={{ paddingLeft: '8px' }} className="fa fa-plus fa-sm" />
 let BlankRemoveIcon = () => <div style={{ padding: 3 }} />
+let convertWordToTag = (word, label = '') => ({ [tagValueField]: word, label, distance: 3 })
+let triggerKeywordGeneration =  async (node, tree) => {
+  await tree.mutate(node.path, {generateKeywords: true})
+  tree.mutate(node.path, { generateKeywords: false })
+}
+
 let KeywordGenerationIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -43,10 +49,10 @@ let ExpandableTagsQuery = ({
   Loader,
   ...props
 }) => {
-  let generationsCollapse = React.useState(true)
+  let generationsCollapsed = React.useState(true)
 
   let ref = React.useRef()
-  useOutsideClick({ ref, handler: F.on(generationsCollapse) })
+  useOutsideClick({ ref, handler: F.on(generationsCollapsed) })
   return (
     <div
       ref={ref}
@@ -67,7 +73,7 @@ let ExpandableTagsQuery = ({
               tree={tree}
               node={node}
               theme={theme}
-              generationsCollapse={generationsCollapse}
+              generationsCollapsed={generationsCollapsed}
             />
           </div>
         </div>
@@ -82,7 +88,7 @@ let ExpandableTagsQuery = ({
       <Flex>
         <div
           style={
-            !F.view(generationsCollapse)
+            !F.view(generationsCollapsed)
               ? {
                   width: '100%',
                   marginTop: 20,
@@ -102,21 +108,17 @@ let ExpandableTagsQuery = ({
               <theme.Tag
                 tree={tree}
                 node={node}
-                onClick={({ value, label }) =>
-                  (e) => {
-                    tree.mutate(node.path, {
-                      ...(_.flow(
-                        _.find({ value: _.trim(value) }),
-                        _.isUndefined
-                      )(node.tags) && {
-                        tags: [
-                          ...node.tags,
-                          { word: value, distance: 3, label },
-                        ],
-                      }),
-                    })
-                    e.preventDefault()
-                  }}
+                onClick={({ value, label }) => 
+                  tree.mutate(
+                    node.path, 
+                    {
+                      tags: [
+                        ...node.tags,
+                        convertWordToTag(value, label)
+                      ],
+                    }
+                  )
+                }
                 AddIcon={addIcon}
                 key={`tag-${word}`}
                 RemoveIcon={BlankRemoveIcon}
@@ -131,11 +133,8 @@ let ExpandableTagsQuery = ({
                 )})`}
               />
             ))(
-              _.flow(_.intersection, (dups) =>
-                _.pullAll(dups, _.keys(node.context.keywordGenerations))
-              )(
-                _.keys(node.context.keywordGenerations),
-                _.keys(node.context.tags)
+              _.reject(_.includes( _,  _.memoize(_.keys)(node.context.tags) ),
+                _.keys(node.context.keywordGenerations)
               )
             )}
         </div>
@@ -161,26 +160,21 @@ let TagsWrapper = observer(
     sanitizeTags = true,
     splitCommas = true,
     maxTags = 1000,
-    generationsCollapse,
+    generationsCollapsed: generationsCollapse,
     enableKeywordGenerations,
     ...props
   }) => {
     let TagWithPopover = React.memo(
       observer((props) => {
-        let result = _.get(['context', 'tags', props.value], node)
-        let generations = _.get(
-          ['context', 'keywordGenerations', props.value],
+        let count = F.cascade(
+          [`context.tags.${props.value}`, `context.keywordGenerations.${props.value}`],
           node
         )
         let tagProps = {
           ...props,
-          ...(!_.isNil(result) && {
-            label: `${props.value} (${toNumber(result)})`,
+          ...(!_.isNil(count) && {
+            label: `${props.value} (${toNumber(count)})`,
           }),
-          ...(_.isNil(result) &&
-            !_.isNil(generations) && {
-              label: `${props.value} (${toNumber(generations)})`,
-            }),
         }
         return (
           <Popover
@@ -212,7 +206,7 @@ let TagsWrapper = observer(
               onTagsDropped={onTagsDropped}
               addTags={(addedTags) => {
                 let addedTagObjects = _.map(
-                  (tag) => ({ [tagValueField]: tag, distance: 3 }),
+                  convertWordToTag,
                   addedTags
                 )
                 let tags = [...node.tags, ...addedTagObjects]
@@ -241,34 +235,20 @@ let TagsWrapper = observer(
               style={
                 // Show suggestion lightbulb if min of 3 non numeric tags exist,
                 // including numbers ups the chance of producing bad suggestions
-                generationTagInputs(node.tags)?.length > 2 &&
+                sanitizeTagInputs(node.tags)?.length > 2 &&
                 enableKeywordGenerations
                   ? { width: 35 }
                   : { display: 'none' }
               }
               onClick={async () => {
-                // Ensure first time user clicks the lightbulb words generate.
-                // Regenerate words and reset existing for clean loading experience
-                // on subsequent clicks.
-                console.log('generationsCollapse', generationsCollapse, node)
-                if (F.view(generationsCollapse)) {
-                  F.off(generationsCollapse)()
-                  if (
-                    !node.context.keywordGenerations &&
-                    !node.generateKeywords
-                  ) {
-                    await tree.mutate(node.path, { generateKeywords: true })
-                    // Await on the first generation to update false,because
-                    // subsequent button clicks(hide/show) can have edge cases
-                    tree.mutate(node.path, { generateKeywords: false })
-                  }
-                } else {
-                  if (!node.generateKeywords) {
-                    await tree.mutate(node.path, {
-                      generateKeywords: true,
-                    })
-                    tree.mutate(node.path, { generateKeywords: false })
-                  }
+                // Generate keywords or show existing keywords
+                if (!node.generateKeywords) {
+                  // Store to operate on this after showing keyword section, 
+                  // so that the loading indicator is shown while generating keywords
+                  let collapsedState = F.view(generationsCollapse)
+                  F.when(F.off(generationsCollapse)(), collapsedState)
+                  (!collapsedState || _.isEmpty(node.context.keywordGenerations)) && 
+                    await triggerKeywordGeneration(node, tree)
                 }
               }}
             >

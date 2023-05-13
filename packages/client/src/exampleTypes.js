@@ -112,19 +112,17 @@ export default F.stampKey('type', {
       generateKeywords: false,
       field: null,
       tags: [],
-      keywordGenerations: [],
       join: 'any',
       exact: false,
       context: {
-        results: {},
+        tags: {},
+        keywordGenerations: {},
       },
     },
-    onSerialize: (node) => ({
-      ..._.omit('generateKeywords', node),
-    }),
+    onSerialize:  _.omit('generateKeywords'),
     shouldMergeResponse: (node) => !node.generateKeywords,
     mergeResponse(node, response, extend) {
-      // extend but alwayrs persist keywordGenerations when appropriate
+      // extend but always persist keywordGenerations when appropriate
       extend(node, {
         context: {
           keywordGenerations: node.context.keywordGenerations,
@@ -359,11 +357,6 @@ export default F.stampKey('type', {
     defaults: {
       searchId: null,
       search: null,
-    },
-    onSerialize(node) {
-      return {
-        ..._.omit('generateKeywords', node),
-      }
     },
   },
 })

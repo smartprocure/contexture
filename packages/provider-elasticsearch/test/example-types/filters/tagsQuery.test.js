@@ -13,7 +13,7 @@ let {
   filter,
   buildResultQuery,
   result,
-} = tagsQuery(() => [])
+} = tagsQuery()
 
 describe('wordPermutations', () => {
   it('should handle empty string', () => {

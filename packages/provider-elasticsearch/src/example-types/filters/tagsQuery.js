@@ -2,9 +2,11 @@ import _ from 'lodash/fp.js'
 import F from 'futil'
 import Combinatorics from 'js-combinatorics'
 import { stripLegacySubFields } from '../../utils/fields.js'
-import { generationTagInputs } from '../../utils/keywordGenerations.js'
+import { sanitizeTagInputs } from '../../utils/keywordGenerations.js'
 
 let maxTagCount = 100
+
+let compactMapValues = _.flow(_.mapValues, F.compactObject)
 
 // Split text into words and return array of string permutations
 let wordPermutations = _.flow(
@@ -102,7 +104,7 @@ let buildResultQuery = (
       keywordGenerations: {
         filters: {
           filters: F.compactObject(
-            F.keysToObject((word) => filter({ ...node, tags: [{ word }] }))(
+            F.keysToObject((word) => filter({ ...node, tags: [{ word }] }), 
               keywordGenerations
             )
           ),
@@ -120,32 +122,29 @@ let buildResultQuery = (
 })
 
 let result = (generateKeywords) => async (node, search) => {
-  let keywords = node.generateKeywords
-    ? await generateKeywords(generationTagInputs(node.tags))
-    : []
 
-  let aggs = node.generateKeywords
-    ? buildResultQuery(node, {}, 'tags', keywords)
-    : buildResultQuery(node)
+  // Passing defaults in case of keywordGenerations, as async is not supported
+  let aggs = buildResultQuery(
+    node, 
+    {}, 
+    'tags', 
+    await F.maybeCall(
+      node.generateKeywords && generateKeywords, sanitizeTagInputs(node.tags)
+    )
+  )
 
-  return _.flow(
-    (results) => ({
-      tags: _.get('aggregations.tags.buckets', results),
-      keywordGenerations: _.flow(
-        _.get('aggregations.keywordGenerations.buckets'),
-        _.pickBy('doc_count')
-      )(results),
-    }),
-    _.mapValues(_.mapValues('doc_count'))
-  )(await search(aggs))
-}
+  return _.mapValues(
+    (prop) => compactMapValues('doc_count', prop.buckets),
+    (await search(aggs)).aggregations
+  )
+} 
 
 let validContext = (node) => {
   let tagsCount = _.get('tags.length', node)
   return tagsCount && tagsCount <= maxTagCount
 }
 
-export default (options) => ({
+export default ({generateKeywords} = {}) => ({
   wordPermutations,
   limitResultsToCertainTags,
   addQuotesAndDistance,
@@ -157,5 +156,5 @@ export default (options) => ({
   filter,
   validContext,
   buildResultQuery,
-  result: result(options?.generateKeywords || (() => [])),
+  result: result(generateKeywords),
 })

@@ -67,6 +67,7 @@ export let getAffectedNodes = (reactors, lookup, types) => (event, path) => {
 
   // Parent defaults to a fake root since reactors don't handle null parents
   let parent = lookup(_.dropRight(1, path)) || { children: [node] }
+  // || x allows reactors to be functions instead of just strings
   let reactor = (x) =>
     F.maybeCall(reactors[x] || x, parent, node, event, reactor, types, lookup)
   return reactor(event.type)
