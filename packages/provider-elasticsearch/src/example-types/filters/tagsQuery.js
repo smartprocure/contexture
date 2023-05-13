@@ -104,7 +104,8 @@ let buildResultQuery = (
       keywordGenerations: {
         filters: {
           filters: F.compactObject(
-            F.keysToObject((word) => filter({ ...node, tags: [{ word }] }), 
+            F.keysToObject(
+              (word) => filter({ ...node, tags: [{ word }] }),
               keywordGenerations
             )
           ),
@@ -122,14 +123,14 @@ let buildResultQuery = (
 })
 
 let result = (generateKeywords) => async (node, search) => {
-
   // Passing defaults in case of keywordGenerations, as async is not supported
   let aggs = buildResultQuery(
-    node, 
-    {}, 
-    'tags', 
+    node,
+    {},
+    'tags',
     await F.maybeCall(
-      node.generateKeywords && generateKeywords, sanitizeTagInputs(node.tags)
+      node.generateKeywords && generateKeywords,
+      sanitizeTagInputs(node.tags)
     )
   )
 
@@ -137,14 +138,14 @@ let result = (generateKeywords) => async (node, search) => {
     (prop) => compactMapValues('doc_count', prop.buckets),
     (await search(aggs)).aggregations
   )
-} 
+}
 
 let validContext = (node) => {
   let tagsCount = _.get('tags.length', node)
   return tagsCount && tagsCount <= maxTagCount
 }
 
-export default ({generateKeywords} = {}) => ({
+export default ({ generateKeywords } = {}) => ({
   wordPermutations,
   limitResultsToCertainTags,
   addQuotesAndDistance,

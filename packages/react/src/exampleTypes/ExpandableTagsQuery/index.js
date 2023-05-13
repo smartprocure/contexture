@@ -16,9 +16,13 @@ import { sanitizeTagInputs } from 'contexture-elasticsearch/utils/keywordGenerat
 let innerHeightLimit = 40
 let addIcon = <i style={{ paddingLeft: '8px' }} className="fa fa-plus fa-sm" />
 let BlankRemoveIcon = () => <div style={{ padding: 3 }} />
-let convertWordToTag = (word, label = '') => ({ [tagValueField]: word, label, distance: 3 })
-let triggerKeywordGeneration =  async (node, tree) => {
-  await tree.mutate(node.path, {generateKeywords: true})
+let convertWordToTag = (word, label = '') => ({
+  [tagValueField]: word,
+  label,
+  distance: 3,
+})
+let triggerKeywordGeneration = async (node, tree) => {
+  await tree.mutate(node.path, { generateKeywords: true })
   tree.mutate(node.path, { generateKeywords: false })
 }
 
@@ -108,16 +112,10 @@ let ExpandableTagsQuery = ({
               <theme.Tag
                 tree={tree}
                 node={node}
-                onClick={({ value, label }) => 
-                  tree.mutate(
-                    node.path, 
-                    {
-                      tags: [
-                        ...node.tags,
-                        convertWordToTag(value, label)
-                      ],
-                    }
-                  )
+                onClick={({ value, label }) =>
+                  tree.mutate(node.path, {
+                    tags: [...node.tags, convertWordToTag(value, label)],
+                  })
                 }
                 AddIcon={addIcon}
                 key={`tag-${word}`}
@@ -133,7 +131,8 @@ let ExpandableTagsQuery = ({
                 )})`}
               />
             ))(
-              _.reject(_.includes( _,  _.memoize(_.keys)(node.context.tags) ),
+              _.reject(
+                _.includes(_, _.memoize(_.keys)(node.context.tags)),
                 _.keys(node.context.keywordGenerations)
               )
             )}
@@ -167,7 +166,10 @@ let TagsWrapper = observer(
     let TagWithPopover = React.memo(
       observer((props) => {
         let count = F.cascade(
-          [`context.tags.${props.value}`, `context.keywordGenerations.${props.value}`],
+          [
+            `context.tags.${props.value}`,
+            `context.keywordGenerations.${props.value}`,
+          ],
           node
         )
         let tagProps = {
@@ -205,10 +207,7 @@ let TagsWrapper = observer(
               tags={_.map(tagValueField, node.tags)}
               onTagsDropped={onTagsDropped}
               addTags={(addedTags) => {
-                let addedTagObjects = _.map(
-                  convertWordToTag,
-                  addedTags
-                )
+                let addedTagObjects = _.map(convertWordToTag, addedTags)
                 let tags = [...node.tags, ...addedTagObjects]
                 // Limit the number of tags to maxTags
                 if (_.size(tags) > maxTags) {
@@ -243,12 +242,16 @@ let TagsWrapper = observer(
               onClick={async () => {
                 // Generate keywords or show existing keywords
                 if (!node.generateKeywords) {
-                  // Store to operate on this after showing keyword section, 
+                  // Store to operate on this after showing keyword section,
                   // so that the loading indicator is shown while generating keywords
                   let collapsedState = F.view(generationsCollapse)
-                  F.when(F.off(generationsCollapse)(), collapsedState)
-                  (!collapsedState || _.isEmpty(node.context.keywordGenerations)) && 
-                    await triggerKeywordGeneration(node, tree)
+                  F.when(
+                    F.off(generationsCollapse)(),
+                    collapsedState
+                  )(
+                    !collapsedState ||
+                      _.isEmpty(node.context.keywordGenerations)
+                  ) && (await triggerKeywordGeneration(node, tree))
                 }
               }}
             >
