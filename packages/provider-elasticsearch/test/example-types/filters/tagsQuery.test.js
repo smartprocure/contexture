@@ -350,6 +350,6 @@ describe('result', () => {
           },
         })
       )
-    ).toEqual({ keywordGenerations: {}, tags: { foo: 2, bar: 5 } })
+    ).toEqual({ tags: { foo: 2, bar: 5 } })
   })
 })
