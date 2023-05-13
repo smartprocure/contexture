@@ -246,10 +246,9 @@ let TagsWrapper = observer(
                   // so that the loading indicator is shown while generating keywords
                   let collapsedState = F.view(generationsCollapse)
                   F.when(F.off(generationsCollapse)(), collapsedState)
-                  F.when(
-                    await triggerKeywordGeneration(node, tree), 
-                    (!collapsedState || _.isEmpty(node.context.keywordGenerations))
-                  )
+                  if( !collapsedState || _.isEmpty(node.context.keywordGenerations) ){
+                    await triggerKeywordGeneration(node, tree)
+                  }
                 }
               }}
             >
