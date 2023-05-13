@@ -1,4 +1,3 @@
-import _ from 'lodash/fp.js'
 import { sanitizeTagInputs } from '../../src/utils/keywordGenerations.js'
 
 describe('keywordGenerations', () => {
