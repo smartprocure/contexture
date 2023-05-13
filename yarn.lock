@@ -6420,7 +6420,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"contexture-client@^2.50.2, contexture-client@workspace:packages/client":
+"contexture-client@^2.51.0, contexture-client@workspace:packages/client":
   version: 0.0.0-use.local
   resolution: "contexture-client@workspace:packages/client"
   dependencies:
@@ -6430,7 +6430,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"contexture-elasticsearch@^1.19.16, contexture-elasticsearch@workspace:packages/provider-elasticsearch":
+"contexture-elasticsearch@^1.22.0, contexture-elasticsearch@workspace:packages/provider-elasticsearch":
   version: 0.0.0-use.local
   resolution: "contexture-elasticsearch@workspace:packages/provider-elasticsearch"
   dependencies:
@@ -6513,8 +6513,8 @@ __metadata:
     "@storybook/react-webpack5": ^7.0.0-alpha.0
     "@storybook/storybook-deployer": ^2.8.16
     contexture: ^0.12.19
-    contexture-client: ^2.50.2
-    contexture-elasticsearch: ^1.19.16
+    contexture-client: ^2.51.0
+    contexture-elasticsearch: ^1.22.0
     elasticsearch-browser: ^14.2.2
     emoji-datasource: ^5.0.1
     eslint-plugin-react: ^7.32.0
