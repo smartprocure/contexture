@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.57.0
+
+### Minor Changes
+
+- 35bae50: Add Keyword Generation support to `tagsQuery`
+
+### Patch Changes
+
+- d98fc97: Replace contexture-react's outside click handler library
+
 ## 2.56.0
 
 ### Minor Changes
