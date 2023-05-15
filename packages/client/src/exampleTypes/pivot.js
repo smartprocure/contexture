@@ -119,14 +119,13 @@ export default {
         drilldown = snapshot(drilldown)
         let n = snapshot(node)
         let path = n.path
-        let expansions = n.expansions
 
         maybeAddRootExpansion(n, 'columns')
         maybeAddRootExpansion(n, 'rows')
 
         tree.mutate(path, {
           expansions: [
-            ...expansions,
+            ...n.expansions,
             {
               type,
               drilldown,
