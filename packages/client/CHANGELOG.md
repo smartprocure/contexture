@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.51.0
+
+### Minor Changes
+
+- 35bae50: Add Keyword Generation support to `tagsQuery`
+
 ## 2.50.2
 
 ### Patch Changes

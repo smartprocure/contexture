@@ -13,7 +13,7 @@ let {
   filter,
   buildResultQuery,
   result,
-} = tagsQuery
+} = tagsQuery()
 
 describe('wordPermutations', () => {
   it('should handle empty string', () => {
@@ -350,6 +350,6 @@ describe('result', () => {
           },
         })
       )
-    ).toEqual({ results: { foo: 2, bar: 5 } })
+    ).toEqual({ tags: { foo: 2, bar: 5 } })
   })
 })

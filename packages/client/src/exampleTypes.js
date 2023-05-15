@@ -104,15 +104,31 @@ export default F.stampKey('type', {
       join: 'others',
       tags: 'all',
       exact: 'all',
+      //Only react when generateKeywords is true
+      generateKeywords: (parent, node, event) =>
+        event.value.generateKeywords ? [node] : [],
     },
     defaults: {
+      generateKeywords: false,
       field: null,
       tags: [],
       join: 'any',
       exact: false,
       context: {
-        results: {},
+        tags: {},
+        keywordGenerations: {},
       },
+    },
+    onSerialize: _.omit('generateKeywords'),
+    shouldMergeResponse: (node) => !node.generateKeywords,
+    mergeResponse(node, response, extend) {
+      // extend but always persist keywordGenerations when appropriate
+      extend(node, {
+        context: {
+          keywordGenerations: node.context.keywordGenerations,
+          tags: response.context.tags,
+        },
+      })
     },
   },
   mongoId: {
