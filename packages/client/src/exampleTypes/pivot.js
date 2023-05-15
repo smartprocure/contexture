@@ -1,6 +1,5 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
-import { toJS } from 'mobx'
 
 let getKey = (x) => x.keyAsString || x.key
 
@@ -16,9 +15,7 @@ let resultsForDrilldown = (type, drilldown, results) => {
 }
 
 let previouslyLoadedKeys = (expansion, expansions) => {
-  expansion = toJS(expansion)
   return _.flow(
-    toJS,
     _.filter(
       ({ type, drilldown, loaded }) =>
         type === expansion.type &&
@@ -51,9 +48,9 @@ let mergeResults = _.mergeWith((current, additional, prop) => {
   } else if (_.isArray(additional)) return additional
 })
 
-let maybeRemoveSelectedRows = (extend, node) => {
+let maybeRemoveSelectedRows = (node, extend) => {
   let selectedRows = _.filter((rowPath) => {
-    let expansion = { type: 'rows', drilldown: _.initial(toJS(rowPath)) }
+    let expansion = { type: 'rows', drilldown: _.initial(rowPath) }
     let parentRowLoadedKeys = previouslyLoadedKeys(expansion, node.expansions)
     return (
       _.isEmpty(rowPath) || _.includes(_.last(rowPath), parentRowLoadedKeys)
@@ -66,7 +63,7 @@ let maybeRemoveSelectedRows = (extend, node) => {
 // Resetting the expansions when the pivot node is changed
 // allows to return expected root results instead of merging result
 // EX: changing the columns or rows config was not returning the new results
-let resetExpansions = (extend, node, clearResults) => {
+let resetExpansions = (node, extend, clearResults) => {
   extend(node, {
     expansions: [],
     ...(clearResults && {
@@ -75,11 +72,11 @@ let resetExpansions = (extend, node, clearResults) => {
     }),
   })
   // reset selected rows as well, since that is very much dependent on the expansions array
-  maybeRemoveSelectedRows(extend, node)
+  maybeRemoveSelectedRows(node, extend)
 }
 
 // Resetting the row expansions and columns loaded when the sorting is changed
-let resetExpandedRows = (extend, node) => {
+let resetExpandedRows = (node, extend) => {
   extend(node, {
     expansions: _.flow(
       _.filter({ type: 'columns' }),
@@ -87,7 +84,7 @@ let resetExpandedRows = (extend, node) => {
     )(node.expansions),
   })
   // reset selected rows as well, since that is very much dependent on the expansions array
-  maybeRemoveSelectedRows(extend, node)
+  maybeRemoveSelectedRows(node, extend)
 }
 
 // adding values for initial root level expansions
@@ -107,55 +104,6 @@ let maybeAddRootExpansion = (node, type) => {
   }
 }
 
-let expand = (tree, path, type, drilldown) => {
-  path = toJS(path)
-  drilldown = toJS(drilldown)
-  let node = toJS(tree.getNode(path))
-  let expansions = node.expansions
-
-  maybeAddRootExpansion(node, 'columns')
-  maybeAddRootExpansion(node, 'rows')
-
-  tree.mutate(path, {
-    expansions: [
-      ...expansions,
-      {
-        type,
-        drilldown,
-        loaded: false,
-      },
-    ],
-  })
-}
-
-let collapse = (tree, path, type, drilldown) => {
-  path = toJS(path)
-  drilldown = toJS(drilldown)
-  let node = tree.getNode(path)
-  let results = toJS(_.get('context.results', node))
-  let drilldownResults = resultsForDrilldown(type, drilldown, results)
-
-  // removing expansions under this drilldown level
-  node.expansions = _.filter(
-    (expansion) =>
-      expansion.type !== type ||
-      !_.isEqual(
-        // expantion.drilldown is not a child of drilldown
-        _.take(drilldown.length, expansion.drilldown),
-        _.toArray(drilldown)
-      )
-  )(node.expansions)
-
-  if (type === 'rows') {
-    maybeRemoveSelectedRows(tree.extend, node)
-  }
-
-  // removing collapsed rows or columns from results
-  drilldownResults[type] = undefined
-  // triggering observer update
-  tree.extend(node, { context: { results } })
-}
-
 export let skipResetExpansionsFields = [
   'paused',
   'expansions',
@@ -165,6 +113,54 @@ export let skipResetExpansionsFields = [
 ]
 
 export default {
+  init: (node, { extend, snapshot }) => {
+    extend(node, {
+      expand(tree, type, drilldown) {
+        drilldown = snapshot(drilldown)
+        let n = snapshot(node)
+        let path = n.path
+
+        maybeAddRootExpansion(n, 'columns')
+        maybeAddRootExpansion(n, 'rows')
+
+        tree.mutate(path, {
+          expansions: [
+            ...n.expansions,
+            {
+              type,
+              drilldown,
+              loaded: false,
+            },
+          ],
+        })
+      },
+      collapse(tree, type, drilldown) {
+        drilldown = snapshot(drilldown)
+        let results = _.get('context.results', node)
+        let drilldownResults = resultsForDrilldown(type, drilldown, results)
+
+        // removing expansions under this drilldown level
+        node.expansions = _.filter(
+          (expansion) =>
+            expansion.type !== type ||
+            !_.isEqual(
+              // expantion.drilldown is not a child of drilldown
+              _.take(drilldown.length, expansion.drilldown),
+              _.toArray(drilldown)
+            )
+        )(node.expansions)
+
+        if (type === 'rows') {
+          maybeRemoveSelectedRows(node, extend)
+        }
+
+        // removing collapsed rows or columns from results
+        drilldownResults[type] = undefined
+        // triggering observer update
+        extend(node, { context: { results } })
+      },
+    })
+  },
   validate: (node) =>
     _.every(
       ({ type, ranges, percents }) =>
@@ -193,8 +189,6 @@ export default {
       columns: false,
       rows: false,
     },
-    expand,
-    collapse,
     expansions: [
       /*
      {
@@ -228,7 +222,7 @@ export default {
     selectedRows: [],
     selectedColumns: [],
   },
-  onDispatch(event, extend) {
+  onDispatch(event, { extend }) {
     let { type, node, value } = event
     if (type !== 'mutate') return
     // if no other fields are changing, do not proceed (but also continue in case there are other properties being mutated)
@@ -237,23 +231,23 @@ export default {
     }
 
     // if sorting is changed we are preserving expanded columns
-    if (_.has('sort', value)) return resetExpandedRows(extend, node)
+    if (_.has('sort', value)) return resetExpandedRows(node, extend)
 
     // if anything else about node configuration is changed resetting expansions
-    resetExpansions(extend, node, true)
+    resetExpansions(node, extend, true)
   },
   // Resetting the expansions when the tree is changed
   // allows to return expected root results instead of nested drilldown
   // EX: criteria filters didn't work properly when drilldown was applied
-  onUpdateByOthers(node, extend) {
-    resetExpansions(extend, node)
+  onUpdateByOthers(node, { extend }) {
+    resetExpansions(node, extend, false)
   },
   shouldMergeResponse: _.flow(
     _.get('expansions'),
     _.filter({ type: 'rows' }),
     _.negate(_.isEmpty)
   ),
-  mergeResponse(node, response, extend, snapshot) {
+  mergeResponse(node, response, { extend, snapshot }) {
     let findNotLoadedExpansion = () =>
       _.find(({ loaded }) => !loaded, node.expansions)
 
@@ -271,6 +265,6 @@ export default {
     // Write on the node
     extend(node, { context })
     // remove selected rows that are no longer part of the result
-    maybeRemoveSelectedRows(extend, node)
+    maybeRemoveSelectedRows(node, extend)
   },
 }
