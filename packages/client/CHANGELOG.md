@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.52.1
+
+### Patch Changes
+
+- 71f7471: Avoid boolean for keyword generations persistance when not searching
+
 ## 2.52.0
 
 ### Minor Changes
