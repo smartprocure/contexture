@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.52.0
+
+### Minor Changes
+
+- c596dfe: Passing actions to the runTypeFunction. Removing bundled mobx dependency
+
 ## 2.51.0
 
 ### Minor Changes
