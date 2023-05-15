@@ -119,7 +119,7 @@ export default F.stampKey('type', {
         keywordGenerations: {},
       },
     },
-    onSerialize: (node, {search}) => 
+    onSerialize: (node, { search }) =>
       search ? node : _.omit('generateKeywords', node),
     shouldMergeResponse: (node) => !node.generateKeywords,
     mergeResponse(node, response, extend) {

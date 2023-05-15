@@ -25,7 +25,10 @@ export default (tree, types, options = {}) => {
   let onSerialize = (node) =>
     runTypeFunctionOrDefault(_.identity, types, 'onSerialize', node, options)
 
-  let internalKeys = _.without(options.search && ['lastUpdateTime'], internalStateKeys)
+  let internalKeys = _.without(
+    options.search && ['lastUpdateTime'],
+    internalStateKeys
+  )
 
   let setFilterOnly = F.when(
     (node) => options.search && isFilterOnly(node),
