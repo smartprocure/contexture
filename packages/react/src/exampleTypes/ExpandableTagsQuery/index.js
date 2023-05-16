@@ -133,10 +133,13 @@ let ExpandableTagsQuery = ({
             ))(
               _.reject(
                 _.includes(
-                  _, 
+                  _,
                   _.memoize(_.flow(_.keys, _.map(_.toLower)))(node.context.tags)
                 ),
-                _.flow(_.keys, _.map(_.toLower))(node.context.keywordGenerations)
+                _.flow(
+                  _.keys,
+                  _.map(_.toLower)
+                )(node.context.keywordGenerations)
               )
             )}
         </div>
