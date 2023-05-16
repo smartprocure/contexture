@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.52.2
+
+### Patch Changes
+
+- efd7dff: Fix access to extend function within mergeResponse for keyword generations.
+
 ## 2.52.1
 
 ### Patch Changes
