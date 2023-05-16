@@ -260,17 +260,23 @@ export let ContextTree = _.curry(
       initObject,
       log,
     }
-    F.extendOn(actionProps, _.pick([
-      'mutate',
-      'refresh',
-      'triggerUpdate',
-      'clear',
-      'isPausedNested',
-      'pauseNested',
-      'unpauseNested',
-    ], actions(actionProps)))
+    F.extendOn(
+      actionProps,
+      _.pick(
+        [
+          'mutate',
+          'refresh',
+          'triggerUpdate',
+          'clear',
+          'isPausedNested',
+          'pauseNested',
+          'unpauseNested',
+        ],
+        actions(actionProps)
+      )
+    )
     // initNode now generates node keys, so it must be run before flattening the tree
-    dedupeWalk(initNode(actionProps),tree)
+    dedupeWalk(initNode(actionProps), tree)
     actionProps.flat = flatten(tree)
 
     TreeInstance = initObject({
