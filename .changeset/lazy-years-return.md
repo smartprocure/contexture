@@ -1,5 +1,5 @@
 ---
-'contexture-client': patch
+'contexture-client': minor
 ---
 
-Pivot collapse: triggering observer mutation after collapse
+Passing `dispatch` action to `initNode`. Pivot collapse: triggering observer mutation after collapse
