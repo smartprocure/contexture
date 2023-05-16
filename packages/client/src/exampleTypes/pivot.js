@@ -134,9 +134,9 @@ export default {
           ],
         })
       },
-      collapse(tree, type, drilldown) {
+      collapse(type, drilldown) {
         drilldown = snapshot(drilldown)
-        let results = _.get('context.results', node)
+        let results = snapshot(_.get('context.results', node))
         let drilldownResults = resultsForDrilldown(type, drilldown, results)
 
         // removing expansions under this drilldown level
