@@ -113,7 +113,7 @@ export let skipResetExpansionsFields = [
 ]
 
 export default {
-  init: (node, { dispatch, extend, snapshot }) => {
+  init: (node, { mutate, extend, snapshot }) => {
     extend(node, {
       expand(type, drilldown) {
         drilldown = snapshot(drilldown)
@@ -123,7 +123,7 @@ export default {
         maybeAddRootExpansion(n, 'columns')
         maybeAddRootExpansion(n, 'rows')
 
-        let expanded = {
+        mutate(path, {
           expansions: [
             ...n.expansions,
             {
@@ -132,11 +132,7 @@ export default {
               loaded: false,
             },
           ],
-        }
-
-        let previous = snapshot(node)
-        extend(node, expanded)
-        dispatch({ type: 'mutate', path, previous, value: expanded, node })
+        })
       },
       collapse(type, drilldown) {
         drilldown = snapshot(drilldown)

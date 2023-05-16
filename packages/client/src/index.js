@@ -250,32 +250,28 @@ export let ContextTree = _.curry(
       }
     }
 
-    // initNode now generates node keys, so it must be run before flattening the tree
-    dedupeWalk(
-      initNode({
-        types,
-        getNode,
-        dispatch,
-        extend,
-        snapshot,
-        initNode,
-        initObject,
-        log,
-      }),
-      tree
-    )
-    let flat = flatten(tree)
-
     let actionProps = {
       getNode,
-      flat,
       dispatch,
       extend,
       snapshot,
       types,
       initNode,
       initObject,
+      log,
     }
+    F.extendOn(actionProps, _.pick([
+      'mutate',
+      'refresh',
+      'triggerUpdate',
+      'clear',
+      'isPausedNested',
+      'pauseNested',
+      'unpauseNested',
+    ], actions(actionProps)))
+    // initNode now generates node keys, so it must be run before flattening the tree
+    dedupeWalk(initNode(actionProps),tree)
+    actionProps.flat = flatten(tree)
 
     TreeInstance = initObject({
       serialize: (path) =>
