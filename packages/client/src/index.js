@@ -252,7 +252,16 @@ export let ContextTree = _.curry(
 
     // initNode now generates node keys, so it must be run before flattening the tree
     dedupeWalk(
-      initNode({ types, getNode, dispatch, extend, snapshot, initNode, initObject, log }),
+      initNode({
+        types,
+        getNode,
+        dispatch,
+        extend,
+        snapshot,
+        initNode,
+        initObject,
+        log,
+      }),
       tree
     )
     let flat = flatten(tree)
