@@ -133,10 +133,7 @@ let ExpandableTagsQuery = ({
               />
             ))(
               _.reject(
-                _.includes(
-                  _, 
-                  keysToLower(node.context.tags)
-                ),
+                _.includes(_, keysToLower(node.context.tags)),
                 keysToLower(node.context.keywordGenerations)
               )
             )}
