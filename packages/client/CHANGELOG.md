@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.53.0
+
+### Minor Changes
+
+- 05c9989: Passing more actions to `initNode` and type functions. Pivot collapse: triggering observer mutation after collapse
+
 ## 2.52.2
 
 ### Patch Changes
