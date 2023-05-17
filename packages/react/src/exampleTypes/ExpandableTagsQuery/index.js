@@ -13,6 +13,7 @@ import ActionsMenu from '../TagsQuery/ActionsMenu.js'
 import { useOutsideClick } from '@chakra-ui/react-use-outside-click'
 import { sanitizeTagInputs } from 'contexture-elasticsearch/utils/keywordGenerations.js'
 
+let keysToLower = _.flow(_.keys, _.map(_.toLower))
 let innerHeightLimit = 40
 let addIcon = <i style={{ paddingLeft: '8px' }} className="fa fa-plus fa-sm" />
 let BlankRemoveIcon = () => <div style={{ padding: 3 }} />
@@ -132,8 +133,8 @@ let ExpandableTagsQuery = ({
               />
             ))(
               _.reject(
-                _.includes(_, _.memoize(_.keys)(node.context.tags)),
-                _.keys(node.context.keywordGenerations)
+                _.includes(_, keysToLower(node.context.tags)),
+                keysToLower(node.context.keywordGenerations)
               )
             )}
         </div>
