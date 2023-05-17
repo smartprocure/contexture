@@ -2359,7 +2359,7 @@ let AllTests = (ContextureClient) => {
 
     let node = Tree.getNode(['root', 'pivot'])
 
-    node.expand(Tree, 'rows', ['Florida'])
+    node.expand('rows', ['Florida'])
 
     // Changing only fields from the skip field list shouldn't reset expansions
     let currentSkipFieldValues = _.pick(skipResetExpansionsFields, node)
@@ -2435,7 +2435,7 @@ let AllTests = (ContextureClient) => {
     })
 
     let node = Tree.getNode(['root', 'pivot'])
-    node.expand(Tree, 'rows', ['Florida'])
+    node.expand('rows', ['Florida'])
 
     expect(toJS(Tree.getNode(['root', 'pivot']).expansions)).toEqual([
       { type: 'columns', drilldown: [], loaded: [] },
@@ -2500,8 +2500,8 @@ let AllTests = (ContextureClient) => {
 
     let node = Tree.getNode(['root', 'pivot'])
 
-    node.expand(Tree, 'rows', ['NanoSoft'])
-    node.expand(Tree, 'columns', ['Florida'])
+    node.expand('rows', ['NanoSoft'])
+    node.expand('columns', ['Florida'])
 
     Tree.mutate(['root', 'pivot'], {
       sort: {

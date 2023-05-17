@@ -113,9 +113,9 @@ export let skipResetExpansionsFields = [
 ]
 
 export default {
-  init: (node, { extend, snapshot }) => {
+  init: (node, { mutate, extend, snapshot }) => {
     extend(node, {
-      expand(tree, type, drilldown) {
+      expand(type, drilldown) {
         drilldown = snapshot(drilldown)
         let n = snapshot(node)
         let path = n.path
@@ -123,7 +123,7 @@ export default {
         maybeAddRootExpansion(n, 'columns')
         maybeAddRootExpansion(n, 'rows')
 
-        tree.mutate(path, {
+        mutate(path, {
           expansions: [
             ...n.expansions,
             {
@@ -134,9 +134,9 @@ export default {
           ],
         })
       },
-      collapse(tree, type, drilldown) {
+      collapse(type, drilldown) {
         drilldown = snapshot(drilldown)
-        let results = _.get('context.results', node)
+        let results = snapshot(_.get('context.results', node))
         let drilldownResults = resultsForDrilldown(type, drilldown, results)
 
         // removing expansions under this drilldown level

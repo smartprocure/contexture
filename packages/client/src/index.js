@@ -74,20 +74,18 @@ export let ContextTree = _.curry(
     },
     tree
   ) => {
+    let TreeInstance
     tree = initObject(tree)
     let debugInfo = initObject({ dispatchHistory: [] })
     let customReactors = reactors
 
-    // initNode now generates node keys, so it must be run before flattening the tree
-    dedupeWalk(initNode({ types, extend, snapshot, initObject, log }), tree)
-    let flat = flatten(tree)
     let getNode = (path) =>
       // empty path returns root with tree lookup, but should be undefined to mimic flat tree
       !_.isEmpty(path) && Tree.lookup(_.drop(1, path), tree)
     //  flat[encode(path)]
 
     // Overwrite extend to report changes
-    extend = _.over([extend, (a, b) => TreeInstance.onChange(a, b)])
+    extend = _.over([extend, (a, b) => TreeInstance?.onChange(a, b)])
 
     // Getting the Traversals
     let {
@@ -254,16 +252,34 @@ export let ContextTree = _.curry(
 
     let actionProps = {
       getNode,
-      flat,
       dispatch,
-      snapshot,
       extend,
+      snapshot,
       types,
       initNode,
       initObject,
+      log,
     }
+    F.extendOn(
+      actionProps,
+      _.pick(
+        [
+          'mutate',
+          'refresh',
+          'triggerUpdate',
+          'clear',
+          'isPausedNested',
+          'pauseNested',
+          'unpauseNested',
+        ],
+        actions(actionProps)
+      )
+    )
+    // initNode now generates node keys, so it must be run before flattening the tree
+    dedupeWalk(initNode(actionProps), tree)
+    actionProps.flat = flatten(tree)
 
-    let TreeInstance = initObject({
+    TreeInstance = initObject({
       serialize: (path) =>
         serialize(snapshot(path ? getNode(path) : tree), types, {}),
       tree,
