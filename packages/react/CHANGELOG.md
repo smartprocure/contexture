@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.57.1
+
+### Patch Changes
+
+- 02ee4ec: Deduplicate keyword generations with lower case to dedup regardless of casing
+
 ## 2.57.0
 
 ### Minor Changes
