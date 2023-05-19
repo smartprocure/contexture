@@ -7,21 +7,16 @@ import ExpandArrow from './ExpandArrow.js'
 import { observer } from 'mobx-react'
 import { toNumber } from '../../utils/format.js'
 import TagActionsMenu from '../TagsQuery/TagActionsMenu.js'
-import { Flex, Grid, GridItem, TextButton } from '../../greyVest/index.js'
-import { getTagStyle, tagValueField } from '../TagsQuery/utils.js'
+import { Grid, GridItem, TextButton } from '../../greyVest/index.js'
+import { getTagStyle, tagValueField, convertWordToTag } from '../TagsQuery/utils.js'
 import ActionsMenu from '../TagsQuery/ActionsMenu.js'
 import { useOutsideClick } from '@chakra-ui/react-use-outside-click'
 import { sanitizeTagInputs } from 'contexture-elasticsearch/utils/keywordGenerations.js'
+import KeywordGenerations from './KeywordGenerations.js'
 
-let keysToLower = _.flow(_.keys, _.map(_.toLower))
+
 let innerHeightLimit = 40
-let addIcon = <i style={{ paddingLeft: '8px' }} className="fa fa-plus fa-sm" />
-let BlankRemoveIcon = () => <div style={{ padding: 3 }} />
-let convertWordToTag = (word, label = '') => ({
-  [tagValueField]: word,
-  label,
-  distance: 3,
-})
+
 let triggerKeywordGeneration = async (node, tree) => {
   await tree.mutate(node.path, { generateKeywords: true })
   tree.mutate(node.path, { generateKeywords: false })
@@ -48,23 +43,11 @@ let ExpandableTagsQuery = ({
   measureRef,
   contentRect,
   collapse,
-  theme,
-  tree,
   node,
-  Loader,
   ...props
 }) => {
-  let generationsCollapsed = React.useState(true)
-
-  let ref = React.useRef()
-  useOutsideClick({ ref, handler: F.on(generationsCollapsed) })
   return (
-    <div
-      ref={ref}
-      onMouseUp={(e) => {
-        e.stopPropagation()
-      }}
-    >
+    <>
       <div>
         <div
           style={{
@@ -75,10 +58,7 @@ let ExpandableTagsQuery = ({
           <div ref={measureRef}>
             <TagsWrapper
               {..._.omit('measure', props)}
-              tree={tree}
               node={node}
-              theme={theme}
-              generationsCollapsed={generationsCollapsed}
             />
           </div>
         </div>
@@ -90,56 +70,7 @@ let ExpandableTagsQuery = ({
             </div>
           )}
       </div>
-      <Flex>
-        <div
-          style={
-            !F.view(generationsCollapsed)
-              ? {
-                  width: '100%',
-                  marginTop: 20,
-                  position: 'relative',
-                  borderTop: '2px solid #EBEBEB',
-                }
-              : { display: 'none' }
-          }
-        >
-          {node.isStale && (
-            <Loader style={{ textAlign: 'center' }} loading={true}>
-              Loading...
-            </Loader>
-          )}
-          {!node.isStale &&
-            _.map((word) => (
-              <theme.Tag
-                tree={tree}
-                node={node}
-                onClick={({ value, label }) =>
-                  tree.mutate(node.path, {
-                    tags: [...node.tags, convertWordToTag(value, label)],
-                  })
-                }
-                AddIcon={addIcon}
-                key={`tag-${word}`}
-                RemoveIcon={BlankRemoveIcon}
-                tagStyle={{
-                  borderRadius: '3px',
-                  padding: '3px 0px',
-                  backgroundColor: '#E2E2E2',
-                }}
-                value={`${word}`}
-                label={`${word} (${toNumber(
-                  _.get(`context.keywordGenerations.${word}`)(node)
-                )})`}
-              />
-            ))(
-              _.reject(
-                _.includes(_, keysToLower(node.context.tags)),
-                keysToLower(node.context.keywordGenerations)
-              )
-            )}
-        </div>
-      </Flex>
-    </div>
+    </>
   )
 }
 
@@ -160,10 +91,15 @@ let TagsWrapper = observer(
     sanitizeTags = true,
     splitCommas = true,
     maxTags = 1000,
-    generationsCollapsed: generationsCollapse,
     enableKeywordGenerations,
     ...props
   }) => {
+
+    //Handle Outside Clicks for Keyword Generations display 
+    let ref = React.useRef()
+    let generationsCollapsed = React.useState(true)
+    useOutsideClick({ ref, handler: F.on(generationsCollapsed) })
+
     let TagWithPopover = React.memo(
       observer((props) => {
         let count = F.cascade(
@@ -192,7 +128,10 @@ let TagsWrapper = observer(
     )
 
     return (
-      <>
+      <div       ref={ref}
+      onMouseUp={(e) => {
+        e.stopPropagation()
+      }}>
         <Grid
           data-path={node.path}
           rows={`${innerHeightLimit}px minmax(0, auto)`}
@@ -245,8 +184,8 @@ let TagsWrapper = observer(
                 if (!node.generateKeywords) {
                   // Store to operate on this after showing keyword section,
                   // so that the loading indicator is shown while generating keywords
-                  let collapsedState = F.view(generationsCollapse)
-                  F.when(F.off(generationsCollapse)(), collapsedState)
+                  let collapsedState = F.view(generationsCollapsed)
+                  F.when(F.off(generationsCollapsed)(), collapsedState)
                   if (
                     !collapsedState ||
                     _.isEmpty(node.context.keywordGenerations)
@@ -286,7 +225,14 @@ let TagsWrapper = observer(
             </Popover>
           </GridItem>
         </Grid>
-      </>
+        <KeywordGenerations 
+          node={node}
+          tree={tree}
+          Tag={Tag}
+          generationsCollapsed={generationsCollapsed}
+          {...props}
+                />
+      </div>
     )
   }
 )
