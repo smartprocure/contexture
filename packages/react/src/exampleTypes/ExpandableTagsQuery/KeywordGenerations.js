@@ -34,7 +34,7 @@ let KeywordGenerations =
           >
             {node.isStale && node.generateKeywords && (
               <Loader style={{ textAlign: 'center' }} loading={true}>
-                Loading...23
+                Loading...
               </Loader>
             )}
             {!node.generateKeywords &&
