@@ -52,7 +52,7 @@ let KeywordGenerations =
                   RemoveIcon={BlankRemoveIcon}
                   tagStyle={{
                     borderRadius: '3px',
-                    padding: '3px 0px',
+                    padding: '2px 0px',
                     backgroundColor: '#E2E2E2',
                   }}
                   value={`${word}`}
