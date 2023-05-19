@@ -8,12 +8,15 @@ import { observer } from 'mobx-react'
 import { toNumber } from '../../utils/format.js'
 import TagActionsMenu from '../TagsQuery/TagActionsMenu.js'
 import { Grid, GridItem, TextButton } from '../../greyVest/index.js'
-import { getTagStyle, tagValueField, convertWordToTag } from '../TagsQuery/utils.js'
+import {
+  getTagStyle,
+  tagValueField,
+  convertWordToTag,
+} from '../TagsQuery/utils.js'
 import ActionsMenu from '../TagsQuery/ActionsMenu.js'
 import { useOutsideClick } from '@chakra-ui/react-use-outside-click'
 import { sanitizeTagInputs } from 'contexture-elasticsearch/utils/keywordGenerations.js'
 import KeywordGenerations from './KeywordGenerations.js'
-
 
 let innerHeightLimit = 40
 
@@ -56,10 +59,7 @@ let ExpandableTagsQuery = ({
           }}
         >
           <div ref={measureRef}>
-            <TagsWrapper
-              {..._.omit('measure', props)}
-              node={node}
-            />
+            <TagsWrapper {..._.omit('measure', props)} node={node} />
           </div>
         </div>
         {F.view(collapse) &&
@@ -94,8 +94,7 @@ let TagsWrapper = observer(
     enableKeywordGenerations,
     ...props
   }) => {
-
-    //Handle Outside Clicks for Keyword Generations display 
+    //Handle Outside Clicks for Keyword Generations display
     let ref = React.useRef()
     let generationsCollapsed = React.useState(true)
     useOutsideClick({ ref, handler: F.on(generationsCollapsed) })
@@ -128,10 +127,12 @@ let TagsWrapper = observer(
     )
 
     return (
-      <div       ref={ref}
-      onMouseUp={(e) => {
-        e.stopPropagation()
-      }}>
+      <div
+        ref={ref}
+        onMouseUp={(e) => {
+          e.stopPropagation()
+        }}
+      >
         <Grid
           data-path={node.path}
           rows={`${innerHeightLimit}px minmax(0, auto)`}
@@ -225,13 +226,13 @@ let TagsWrapper = observer(
             </Popover>
           </GridItem>
         </Grid>
-        <KeywordGenerations 
+        <KeywordGenerations
           node={node}
           tree={tree}
           Tag={Tag}
           generationsCollapsed={generationsCollapsed}
           {...props}
-                />
+        />
       </div>
     )
   }
