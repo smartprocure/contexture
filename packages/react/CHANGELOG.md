@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.57.2
+
+### Patch Changes
+
+- 9eb7f3b: TagsQuerySearchBar: prevent collapse on popover click
+
 ## 2.57.1
 
 ### Patch Changes
