@@ -9,6 +9,7 @@ let TagActionsMenu = ({
   tag,
   node,
   tree,
+  onChange,
   theme: { Button, Checkbox, RadioList },
 }) => {
   let tagInstance = getTag(tag, node)
@@ -29,6 +30,7 @@ let TagActionsMenu = ({
             onChange={(value) => {
               tagInstance.distance = value === 'fuzzy' ? 3 : 0
               tree.mutate(node.path, { tags: [...node.tags] })
+              F.maybeCall(onChange)
             }}
           />
           <Button
@@ -40,6 +42,7 @@ let TagActionsMenu = ({
                   return tag
                 }, node.tags),
               })
+              F.maybeCall(onChange)
             }}
           >
             Apply to all {tagTerm}s
@@ -52,6 +55,7 @@ let TagActionsMenu = ({
           onChange={(e) => {
             tagInstance.onlyShowTheseResults = e.target.checked
             tree.mutate(node.path, { tags: [...node.tags] })
+            F.maybeCall(onChange)
           }}
         />
         <span>Only view this {tagTerm}</span>
