@@ -196,7 +196,7 @@ let TagsWrapper = observer(
             <TagActionsMenu
               tag={props.value}
               {...{ node, tree }}
-              onChange={() => hasPopover.current = false}
+              onChange={() => (hasPopover.current = false)}
             />
           </Popover>
         )
