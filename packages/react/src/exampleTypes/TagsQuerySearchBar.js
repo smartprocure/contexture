@@ -64,7 +64,8 @@ let SearchBar = ({
 }) => {
   let collapse = React.useState(true)
   let ref = React.useRef()
-  useOutsideClick({ ref, handler: F.on(collapse) })
+  let hasPopover = React.useRef(false)
+  useOutsideClick({ ref, handler: () => !hasPopover.current && F.on(collapse)() })
   return (
     <ButtonGroup
       ref={ref}
@@ -82,6 +83,7 @@ let SearchBar = ({
             tree,
             node,
             collapse,
+            hasPopover,
             actionWrapper,
             enableKeywordGenerations,
           }}
@@ -96,7 +98,7 @@ let SearchBar = ({
                 ? Tags
                 : ExpandableTagsInput,
           }}
-          autoFocus
+          autoFocus={!hasPopover.current}
           {...tagsQueryProps}
         />
       </Box>
