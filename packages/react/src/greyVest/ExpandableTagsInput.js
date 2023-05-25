@@ -81,7 +81,7 @@ let ExpandableTagsInput = ({
       <span className="tags-input-container">
         <input
           style={{ flex: 1, border: 0 }}
-          ref={autoFocus ? ((input) => input && input.focus()) : undefined}
+          ref={autoFocus ? (input) => input && input.focus() : undefined}
           onChange={(e) => {
             setCurrentInput(e.target.value)
             onInputChange()

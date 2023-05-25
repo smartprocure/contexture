@@ -58,7 +58,10 @@ let ExpandableTagsQuery = ({
   let generationsCollapsed = React.useState(true)
 
   let ref = React.useRef()
-  useOutsideClick({ ref, handler: () => !hasPopover?.current && F.on(generationsCollapsed) })
+  useOutsideClick({
+    ref,
+    handler: () => !hasPopover?.current && F.on(generationsCollapsed),
+  })
   return (
     <div
       ref={ref}
@@ -187,8 +190,8 @@ let TagsWrapper = observer(
             position="right top"
             closeOnPopoverClick={false}
             trigger={<Tag {...tagProps} />}
-            onOpen={() => hasPopover.current = true}
-            onClose={() => hasPopover.current = false}
+            onOpen={() => (hasPopover.current = true)}
+            onClose={() => (hasPopover.current = false)}
           >
             <TagActionsMenu tag={props.value} {...{ node, tree }} />
           </Popover>

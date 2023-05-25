@@ -65,7 +65,10 @@ let SearchBar = ({
   let collapse = React.useState(true)
   let ref = React.useRef()
   let hasPopover = React.useRef(false)
-  useOutsideClick({ ref, handler: () => !hasPopover.current && F.on(collapse)() })
+  useOutsideClick({
+    ref,
+    handler: () => !hasPopover.current && F.on(collapse)(),
+  })
   return (
     <ButtonGroup
       ref={ref}
