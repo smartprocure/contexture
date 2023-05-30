@@ -109,8 +109,8 @@ let TagsWrapper = observer(
     splitCommas = true,
     maxTags = 1000,
     hasPopover,
-    generationsCollapsed: generationsCollapse,
     enableKeywordGenerations,
+    generationsCollapsed: generationsCollapse,
     ...props
   }) => {
     //Handle Outside Clicks for Keyword Generations display
@@ -162,7 +162,7 @@ let TagsWrapper = observer(
           data-path={node.path}
           rows={`${innerHeightLimit}px minmax(0, auto)`}
           columns="1fr auto auto"
-          style={style}
+          style={{...style, marginBottom: 10}}
         >
           <GridItem height={2} place="center stretch">
             <TagsInput
@@ -255,6 +255,7 @@ let TagsWrapper = observer(
           node={node}
           tree={tree}
           Tag={Tag}
+          style={ {paddingTop: 10, borderTop: '2px solid #EBEBEB'}}
           generationsCollapsed={generationsCollapsed}
           {...props}
         />
