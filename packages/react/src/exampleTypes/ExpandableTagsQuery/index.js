@@ -162,7 +162,7 @@ let TagsWrapper = observer(
           data-path={node.path}
           rows={`${innerHeightLimit}px minmax(0, auto)`}
           columns="1fr auto auto"
-          style={{...style, marginBottom: 10}}
+          style={{ ...style, marginBottom: 10 }}
         >
           <GridItem height={2} place="center stretch">
             <TagsInput
@@ -255,7 +255,7 @@ let TagsWrapper = observer(
           node={node}
           tree={tree}
           Tag={Tag}
-          style={ {paddingTop: 10, borderTop: '2px solid #EBEBEB'}}
+          style={{ paddingTop: 10, borderTop: '2px solid #EBEBEB' }}
           generationsCollapsed={generationsCollapsed}
           {...props}
         />

@@ -15,7 +15,7 @@ let KeywordGenerations = ({
   Tag,
   generationsCollapsed,
   Loader,
-  style
+  style,
 }) => (
   <div style={!F.view(generationsCollapsed) ? style : { display: 'none' }}>
     {node.isStale && node.generateKeywords && (
