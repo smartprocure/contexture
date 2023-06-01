@@ -86,7 +86,6 @@ let TagsInput = forwardRef(
             onChange={(e) => {
               setCurrentInput(e.target.value)
               onInputChange()
-
             }}
             onBlur={() => {
               if (isValidInput(currentInput, tags)) {
