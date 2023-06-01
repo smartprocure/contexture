@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.57.3
+
+### Patch Changes
+
+- 35527239: Fix tagsText input to work correctly.
+
 ## 2.57.2
 
 ### Patch Changes
