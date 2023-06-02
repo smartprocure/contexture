@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.53.1
+
+### Patch Changes
+
+- 27c8f069: Improve performance when determining if a node has results
+
 ## 2.53.0
 
 ### Minor Changes
