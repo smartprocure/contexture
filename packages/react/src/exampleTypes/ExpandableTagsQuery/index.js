@@ -138,8 +138,8 @@ let ExpandableTagsQuery = ({
               />
             ))(
               _.reject(
-                _.includes(_, keysToLower(node.context.tags)),
-                keysToLower(node.context.keywordGenerations)
+                _.includes(_, keysToLower(node.context?.tags)),
+                keysToLower(node.context?.keywordGenerations)
               )
             )}
         </div>
@@ -261,7 +261,7 @@ let TagsWrapper = observer(
                   F.when(F.off(generationsCollapse)(), collapsedState)
                   if (
                     !collapsedState ||
-                    _.isEmpty(node.context.keywordGenerations)
+                    _.isEmpty(node.context?.keywordGenerations)
                   ) {
                     await triggerKeywordGeneration(node, tree)
                   }
