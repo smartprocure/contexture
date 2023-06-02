@@ -2045,7 +2045,7 @@ let AllTests = (ContextureClient) => {
   })
   it('should support processResponseNode', () => {
     let service = jest.fn(mockService())
-    let Tree = ContextureMobx(
+    let Tree = ContextureClient(
       { service, debounce: 1 },
       {
         key: 'root',

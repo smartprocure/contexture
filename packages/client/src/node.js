@@ -75,3 +75,16 @@ export let hasValue = (node) =>
   node && _.isUndefined(node.hasValue)
     ? throwsError('Node was never validated')
     : node && node.hasValue && !node.error
+
+// Work around mobx array detection because `_.isArray(mobxArray) !== true`
+const isArrayLike = (x) =>
+  x && !_.isString(x) && _.isFunction(x[Symbol.iterator])
+
+const isTraversable = (x) => _.isPlainObject(x) || isArrayLike(x)
+
+export let hasResults = (node) =>
+  !!F.findNode()((node) => {
+    if (!isTraversable(node)) {
+      return F.isNotBlank(node)
+    }
+  }, node.context)
