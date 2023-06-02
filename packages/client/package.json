@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/smartprocure/contexture/tree/main/packages/client",
   "dependencies": {
-    "futil": "^1.74.1",
+    "futil": "^1.76.0",
     "lodash": "^4.17.15"
   },
   "devDependencies": {

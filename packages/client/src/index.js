@@ -233,7 +233,7 @@ export let ContextTree = _.curry(
           if (debug && node._meta) target.metaHistory.push(node._meta)
         }
 
-        target.hasResults = hasResults(snapshot)(target)
+        target.hasResults = hasResults(target)
 
         clearUpdate(target)
 

@@ -76,5 +76,15 @@ export let hasValue = (node) =>
     ? throwsError('Node was never validated')
     : node && node.hasValue && !node.error
 
-export let hasResults = (snapshot) =>
-  _.flow(_.get('context'), snapshot, _.negate(F.isBlankDeep(_.every)))
+// Work around mobx array detection because `_.isArray(mobxArray) !== true`
+const isArrayLike = (x) =>
+  x && !_.isString(x) && _.isFunction(x[Symbol.iterator])
+
+const isTraversable = (x) => _.isPlainObject(x) || isArrayLike(x)
+
+export let hasResults = (node) =>
+  !!F.findNode()((node) => {
+    if (!isTraversable(node)) {
+      return F.isNotBlank(node)
+    }
+  }, node.context)
