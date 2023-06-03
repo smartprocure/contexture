@@ -2,6 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp.js'
 import F from 'futil'
 import { withContentRect } from 'react-measure'
+import { toJS } from 'mobx'
 import { contexturifyWithoutLoader } from '../../utils/hoc.js'
 import ExpandArrow from './ExpandArrow.js'
 import { observer } from 'mobx-react'
@@ -52,15 +53,16 @@ let ExpandableTagsQuery = ({
   node,
   ...props
 }) => {
-  let generationsCollapsed = React.useState(true)
 
+  let generationsCollapsed = React.useState(true)
   let ref = React.useRef()
   useOutsideClick({
     ref,
-    handler: () => !hasPopover?.current && F.on(generationsCollapsed),
+    handler: () => !hasPopover?.current && F.on(generationsCollapsed)(),
   })
+
   return (
-    <>
+    <div ref={ref} onMouseUp={(e) => e.stopPropagation()}>
       <div>
         <div
           style={{
@@ -87,7 +89,21 @@ let ExpandableTagsQuery = ({
             </div>
           )}
       </div>
-    </>
+      {/*Margin is to ensure that view more(ExpandArrow) is presented nicely*/}
+      {!F.view(generationsCollapsed) && 
+        <hr style={{
+          border: '2px solid #EBEBEB', 
+          ...(F.view(collapse) && {marginBottom: 20 })
+        }}/>
+      }
+      <KeywordGenerations
+        node={node}
+        tree={tree}
+        Tag={theme.Tag}
+        generationsCollapsed={generationsCollapsed}
+        {...props}
+      />
+    </div>
   )
 }
 
@@ -110,14 +126,9 @@ let TagsWrapper = observer(
     maxTags = 1000,
     hasPopover,
     enableKeywordGenerations,
-    generationsCollapsed: generationsCollapse,
+    generationsCollapsed,
     ...props
   }) => {
-    //Handle Outside Clicks for Keyword Generations display
-    let ref = React.useRef()
-    let generationsCollapsed = React.useState(true)
-    useOutsideClick({ ref, handler: F.on(generationsCollapsed) })
-
     let TagWithPopover = React.memo(
       observer((props) => {
         let count = F.cascade(
@@ -127,7 +138,7 @@ let TagsWrapper = observer(
           ],
           node
         )
-        let tagProps = {
+        let tagProps = { 
           ...props,
           ...(!_.isNil(count) && {
             label: `${props.value} (${toNumber(count)})`,
@@ -152,12 +163,7 @@ let TagsWrapper = observer(
     )
 
     return (
-      <div
-        ref={ref}
-        onMouseUp={(e) => {
-          e.stopPropagation()
-        }}
-      >
+      <>
         <Grid
           data-path={node.path}
           rows={`${innerHeightLimit}px minmax(0, auto)`}
@@ -201,9 +207,7 @@ let TagsWrapper = observer(
                 // Show suggestion lightbulb if min of 3 non numeric tags exist,
                 // including numbers ups the chance of producing bad suggestions
                 sanitizeTagInputs(node.tags)?.length > 2 &&
-                enableKeywordGenerations
-                  ? { width: 35 }
-                  : { display: 'none' }
+                enableKeywordGenerations ? { width: 35 } : { display: 'none' }
               }
               onClick={async () => {
                 // Generate keywords or show existing keywords
@@ -211,12 +215,11 @@ let TagsWrapper = observer(
                   // Store to operate on this after showing keyword section,
                   // so that the loading indicator is shown while generating keywords
                   let collapsedState = F.view(generationsCollapsed)
-                  F.when(F.off(generationsCollapsed)(), collapsedState)
-                  if (
-                    !collapsedState ||
-                    _.isEmpty(node.context.keywordGenerations)
-                  ) {
-                    await triggerKeywordGeneration(node, tree)
+                  F.off(generationsCollapsed)()
+                  if (!collapsedState || 
+                      _.isEmpty(toJS(node.context.keywordGenerations))
+                    ){ 
+                      await triggerKeywordGeneration(node, tree) 
                   }
                 }
               }}
@@ -251,15 +254,7 @@ let TagsWrapper = observer(
             </Popover>
           </GridItem>
         </Grid>
-        <KeywordGenerations
-          node={node}
-          tree={tree}
-          Tag={Tag}
-          style={{ paddingTop: 10, borderTop: '2px solid #EBEBEB' }}
-          generationsCollapsed={generationsCollapsed}
-          {...props}
-        />
-      </div>
+      </>
     )
   }
 )
