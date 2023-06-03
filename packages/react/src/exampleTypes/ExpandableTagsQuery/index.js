@@ -61,6 +61,10 @@ let ExpandableTagsQuery = ({
     handler: () => !hasPopover?.current && F.on(generationsCollapsed)(),
   })
 
+  let showMoreKeywordsButton = F.view(collapse) &&
+    contentRect.entry.height > innerHeightLimit &&
+    !!node.tags.length
+
   return (
     <div ref={ref} onMouseUp={(e) => e.stopPropagation()}>
       <div>
@@ -81,9 +85,7 @@ let ExpandableTagsQuery = ({
             />
           </div>
         </div>
-        {F.view(collapse) &&
-          contentRect.entry.height > innerHeightLimit &&
-          !!node.tags.length && (
+        { ( showMoreKeywordsButton && 
             <div style={{ minHeight: 10 }}>
               <ExpandArrow collapse={collapse} tagsLength={node.tags.length} />
             </div>
@@ -93,7 +95,7 @@ let ExpandableTagsQuery = ({
       {!F.view(generationsCollapsed) && 
         <hr style={{
           border: '2px solid #EBEBEB', 
-          ...(F.view(collapse) && {marginBottom: 20 })
+          ...(showMoreKeywordsButton && {marginBottom: 20 })
         }}/>
       }
       <KeywordGenerations
