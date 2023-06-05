@@ -53,7 +53,6 @@ let ExpandableTagsQuery = ({
   node,
   ...props
 }) => {
-
   let generationsCollapsed = React.useState(true)
   let ref = React.useRef()
   useOutsideClick({
@@ -61,7 +60,8 @@ let ExpandableTagsQuery = ({
     handler: () => !hasPopover?.current && F.on(generationsCollapsed)(),
   })
 
-  let showMoreKeywordsButton = F.view(collapse) &&
+  let showMoreKeywordsButton =
+    F.view(collapse) &&
     contentRect.entry.height > innerHeightLimit &&
     !!node.tags.length
 
@@ -85,19 +85,21 @@ let ExpandableTagsQuery = ({
             />
           </div>
         </div>
-        { ( showMoreKeywordsButton && 
-            <div style={{ minHeight: 10 }}>
-              <ExpandArrow collapse={collapse} tagsLength={node.tags.length} />
-            </div>
-          )}
+        {showMoreKeywordsButton && (
+          <div style={{ minHeight: 10 }}>
+            <ExpandArrow collapse={collapse} tagsLength={node.tags.length} />
+          </div>
+        )}
       </div>
       {/*Margin is to ensure that view more(ExpandArrow) is presented nicely*/}
-      {!F.view(generationsCollapsed) && 
-        <hr style={{
-          border: '2px solid #EBEBEB', 
-          ...(showMoreKeywordsButton && {marginBottom: 20 })
-        }}/>
-      }
+      {!F.view(generationsCollapsed) && (
+        <hr
+          style={{
+            border: '2px solid #EBEBEB',
+            ...(showMoreKeywordsButton && { marginBottom: 20 }),
+          }}
+        />
+      )}
       <KeywordGenerations
         node={node}
         tree={tree}
@@ -140,7 +142,7 @@ let TagsWrapper = observer(
           ],
           node
         )
-        let tagProps = { 
+        let tagProps = {
           ...props,
           ...(!_.isNil(count) && {
             label: `${props.value} (${toNumber(count)})`,
@@ -209,7 +211,9 @@ let TagsWrapper = observer(
                 // Show suggestion lightbulb if min of 3 non numeric tags exist,
                 // including numbers ups the chance of producing bad suggestions
                 sanitizeTagInputs(node.tags)?.length > 2 &&
-                enableKeywordGenerations ? { width: 35 } : { display: 'none' }
+                enableKeywordGenerations
+                  ? { width: 35 }
+                  : { display: 'none' }
               }
               onClick={async () => {
                 // Generate keywords or show existing keywords
@@ -218,10 +222,11 @@ let TagsWrapper = observer(
                   // so that the loading indicator is shown while generating keywords
                   let collapsedState = F.view(generationsCollapsed)
                   F.off(generationsCollapsed)()
-                  if (!collapsedState || 
-                      _.isEmpty(toJS(node.context.keywordGenerations))
-                    ){ 
-                      await triggerKeywordGeneration(node, tree) 
+                  if (
+                    !collapsedState ||
+                    _.isEmpty(toJS(node.context.keywordGenerations))
+                  ) {
+                    await triggerKeywordGeneration(node, tree)
                   }
                 }
               }}
