@@ -126,7 +126,7 @@ export default F.stampKey('type', {
       // extend but always persist keywordGenerations when appropriate
       extend(node, {
         context: {
-          keywordGenerations: node.context.keywordGenerations,
+          keywordGenerations: node?.context?.keywordGenerations,
           tags: response.context.tags,
         },
       })
