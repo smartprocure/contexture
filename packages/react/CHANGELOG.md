@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.57.4
+
+### Patch Changes
+
+- 6516fd3e: TagsQuery: Do not error out when there are no tags in context
+
+## 2.57.3
+
+### Patch Changes
+
+- 35527239: Fix tagsText input to work correctly.
+
 ## 2.57.2
 
 ### Patch Changes
