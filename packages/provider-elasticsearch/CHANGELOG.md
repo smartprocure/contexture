@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.22.1
+
+### Patch Changes
+
+- bf48a09b: Fixed various bugs related to keyword generations
+
 ## 1.22.0
 
 ### Minor Changes

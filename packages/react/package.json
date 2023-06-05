@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "2.57.4",
+  "version": "2.57.5",
   "description": "React components for building contexture interfaces",
   "type": "module",
   "exports": {
@@ -55,7 +55,7 @@
     "@storybook/storybook-deployer": "^2.8.16",
     "contexture": "^0.12.19",
     "contexture-client": "^2.51.0",
-    "contexture-elasticsearch": "^1.22.0",
+    "contexture-elasticsearch": "^1.22.1",
     "elasticsearch-browser": "^14.2.2",
     "emoji-datasource": "^5.0.1",
     "eslint-plugin-react": "^7.32.0",

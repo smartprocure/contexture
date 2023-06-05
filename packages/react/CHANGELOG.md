@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.57.5
+
+### Patch Changes
+
+- bf48a09b: Fixed various bugs related to keyword generations
+- 1e020b6a: Update loading behaviour between keyword generation additions
+
 ## 2.57.4
 
 ### Patch Changes
