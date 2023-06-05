@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.53.2
+
+### Patch Changes
+
+- 7c1dcacf: Fix old saved searches loading the right data from keyword generations code changes
+
 ## 2.53.1
 
 ### Patch Changes
