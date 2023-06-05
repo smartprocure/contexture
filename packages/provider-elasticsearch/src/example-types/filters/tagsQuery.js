@@ -106,7 +106,7 @@ let buildResultQuery = (
           filters: F.compactObject(
             F.keysToObject(
               (word) => filter({ ...node, tags: [{ word }] }),
-              keywordGenerations
+              _.map(_.toLower, keywordGenerations)
             )
           ),
         },

@@ -2,26 +2,25 @@ import React from 'react'
 import _ from 'lodash/fp.js'
 import F from 'futil'
 import { withContentRect } from 'react-measure'
+import { toJS } from 'mobx'
 import { contexturifyWithoutLoader } from '../../utils/hoc.js'
 import ExpandArrow from './ExpandArrow.js'
 import { observer } from 'mobx-react'
 import { toNumber } from '../../utils/format.js'
 import TagActionsMenu from '../TagsQuery/TagActionsMenu.js'
-import { Flex, Grid, GridItem, TextButton } from '../../greyVest/index.js'
-import { getTagStyle, tagValueField } from '../TagsQuery/utils.js'
+import { Grid, GridItem, TextButton } from '../../greyVest/index.js'
+import {
+  getTagStyle,
+  tagValueField,
+  convertWordToTag,
+} from '../TagsQuery/utils.js'
 import ActionsMenu from '../TagsQuery/ActionsMenu.js'
 import { useOutsideClick } from '@chakra-ui/react-use-outside-click'
 import { sanitizeTagInputs } from 'contexture-elasticsearch/utils/keywordGenerations.js'
+import KeywordGenerations from './KeywordGenerations.js'
 
-let keysToLower = _.flow(_.keys, _.map(_.toLower))
 let innerHeightLimit = 40
-let addIcon = <i style={{ paddingLeft: '8px' }} className="fa fa-plus fa-sm" />
-let BlankRemoveIcon = () => <div style={{ padding: 3 }} />
-let convertWordToTag = (word, label = '') => ({
-  [tagValueField]: word,
-  label,
-  distance: 3,
-})
+
 let triggerKeywordGeneration = async (node, tree) => {
   await tree.mutate(node.path, { generateKeywords: true })
   tree.mutate(node.path, { generateKeywords: false })
@@ -52,23 +51,22 @@ let ExpandableTagsQuery = ({
   theme,
   tree,
   node,
-  Loader,
   ...props
 }) => {
   let generationsCollapsed = React.useState(true)
-
   let ref = React.useRef()
   useOutsideClick({
     ref,
-    handler: () => !hasPopover?.current && F.on(generationsCollapsed),
+    handler: () => !hasPopover?.current && F.on(generationsCollapsed)(),
   })
+
+  let showMoreKeywordsButton =
+    F.view(collapse) &&
+    contentRect.entry.height > innerHeightLimit &&
+    !!node.tags.length
+
   return (
-    <div
-      ref={ref}
-      onMouseUp={(e) => {
-        e.stopPropagation()
-      }}
-    >
+    <div ref={ref} onMouseUp={(e) => e.stopPropagation()}>
       <div>
         <div
           style={{
@@ -87,63 +85,28 @@ let ExpandableTagsQuery = ({
             />
           </div>
         </div>
-        {F.view(collapse) &&
-          contentRect.entry.height > innerHeightLimit &&
-          !!node.tags.length && (
-            <div style={{ minHeight: 10 }}>
-              <ExpandArrow collapse={collapse} tagsLength={node.tags.length} />
-            </div>
-          )}
+        {showMoreKeywordsButton && (
+          <div style={{ minHeight: 10 }}>
+            <ExpandArrow collapse={collapse} tagsLength={node.tags.length} />
+          </div>
+        )}
       </div>
-      <Flex>
-        <div
-          style={
-            !F.view(generationsCollapsed)
-              ? {
-                  width: '100%',
-                  marginTop: 20,
-                  position: 'relative',
-                  borderTop: '2px solid #EBEBEB',
-                }
-              : { display: 'none' }
-          }
-        >
-          {node.isStale && (
-            <Loader style={{ textAlign: 'center' }} loading={true}>
-              Loading...
-            </Loader>
-          )}
-          {!node.isStale &&
-            _.map((word) => (
-              <theme.Tag
-                tree={tree}
-                node={node}
-                onClick={({ value, label }) =>
-                  tree.mutate(node.path, {
-                    tags: [...node.tags, convertWordToTag(value, label)],
-                  })
-                }
-                AddIcon={addIcon}
-                key={`tag-${word}`}
-                RemoveIcon={BlankRemoveIcon}
-                tagStyle={{
-                  borderRadius: '3px',
-                  padding: '3px 0px',
-                  backgroundColor: '#E2E2E2',
-                }}
-                value={`${word}`}
-                label={`${word} (${toNumber(
-                  _.get(`context.keywordGenerations.${word}`)(node)
-                )})`}
-              />
-            ))(
-              _.reject(
-                _.includes(_, keysToLower(node.context?.tags)),
-                keysToLower(node.context?.keywordGenerations)
-              )
-            )}
-        </div>
-      </Flex>
+      {/*Margin is to ensure that view more(ExpandArrow) is presented nicely*/}
+      {!F.view(generationsCollapsed) && (
+        <hr
+          style={{
+            border: '2px solid #EBEBEB',
+            ...(showMoreKeywordsButton && { marginBottom: 20 }),
+          }}
+        />
+      )}
+      <KeywordGenerations
+        node={node}
+        tree={tree}
+        Tag={theme.Tag}
+        generationsCollapsed={generationsCollapsed}
+        {...props}
+      />
     </div>
   )
 }
@@ -166,8 +129,8 @@ let TagsWrapper = observer(
     splitCommas = true,
     maxTags = 1000,
     hasPopover,
-    generationsCollapsed: generationsCollapse,
     enableKeywordGenerations,
+    generationsCollapsed,
     ...props
   }) => {
     let TagWithPopover = React.memo(
@@ -209,7 +172,7 @@ let TagsWrapper = observer(
           data-path={node.path}
           rows={`${innerHeightLimit}px minmax(0, auto)`}
           columns="1fr auto auto"
-          style={style}
+          style={{ ...style, marginBottom: 10 }}
         >
           <GridItem height={2} place="center stretch">
             <TagsInput
@@ -257,11 +220,11 @@ let TagsWrapper = observer(
                 if (!node.generateKeywords) {
                   // Store to operate on this after showing keyword section,
                   // so that the loading indicator is shown while generating keywords
-                  let collapsedState = F.view(generationsCollapse)
-                  F.when(F.off(generationsCollapse)(), collapsedState)
+                  let collapsedState = F.view(generationsCollapsed)
+                  F.off(generationsCollapsed)()
                   if (
                     !collapsedState ||
-                    _.isEmpty(node.context?.keywordGenerations)
+                    _.isEmpty(toJS(node.context.keywordGenerations))
                   ) {
                     await triggerKeywordGeneration(node, tree)
                   }
