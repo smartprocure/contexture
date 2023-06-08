@@ -1,10 +1,12 @@
 import { jest } from '@jest/globals'
 import _ from 'lodash/fp.js'
+import F from 'futil'
 import ContextureClient, { encode, exampleTypes } from './index.js'
 import Promise from 'bluebird'
 import mockService from './mockService.js'
 import wrap from './actions/wrap.js'
 import { observable, toJS, set } from 'mobx'
+import { skipResetExpansionsFields } from './exampleTypes/pivot.js'
 
 let mobxAdapter = { snapshot: toJS, extend: set, initObject: observable }
 let ContextureMobx = _.curry((x, y) =>
@@ -64,6 +66,7 @@ let AllTests = (ContextureClient) => {
             type: 'results',
             page: 1,
             customKey: 'customValue',
+            view: 'table',
           },
         ],
       })
@@ -93,6 +96,7 @@ let AllTests = (ContextureClient) => {
             page: 1,
             pageSize: 10,
             lastUpdateTime: now,
+            view: 'table',
           },
         ],
       })
@@ -125,6 +129,7 @@ let AllTests = (ContextureClient) => {
             type: 'results',
             page: 1,
             pageSize: 10,
+            view: 'table',
           },
         ],
       })
@@ -329,6 +334,7 @@ let AllTests = (ContextureClient) => {
               lastUpdateTime: now,
               page: 1,
               pageSize: 10,
+              view: 'table',
             },
           ],
           lastUpdateTime: now,
@@ -568,7 +574,9 @@ let AllTests = (ContextureClient) => {
     expect(filterUpdated).toBeCalledTimes(1)
   })
   it('should support custom type initializers', async () => {
-    let testInit = jest.fn((node, extend) => extend(node, { isExtended: true }))
+    let testInit = jest.fn((node, { extend }) =>
+      extend(node, { isExtended: true })
+    )
     let Tree = ContextureClient(
       {
         debounce: 1,
@@ -1276,6 +1284,7 @@ let AllTests = (ContextureClient) => {
           page: 1,
           pageSize: 10,
           type: 'results',
+          view: 'table',
         },
         {
           filterOnly: true,
@@ -1320,6 +1329,7 @@ let AllTests = (ContextureClient) => {
           page: 1,
           pageSize: 10,
           type: 'results',
+          view: 'table',
           lastUpdateTime: ts,
         },
         {
@@ -1398,7 +1408,7 @@ let AllTests = (ContextureClient) => {
         },
       },
       results: {
-        onUpdateByOthers(node, extend) {
+        onUpdateByOthers(node, { extend }) {
           extend(node, { page: 1 })
         },
       },
@@ -2054,9 +2064,13 @@ let AllTests = (ContextureClient) => {
         ],
       }
     )
+    expect(Tree.tree.children[0].children[0].hasResults).toBe(null)
+
     Tree.processResponseNode(['root', 'analysis', 'results'], {
       context: { response: { totalRecords: 1337 } },
     })
+
+    expect(Tree.tree.children[0].children[0].hasResults).toBe(true)
     expect(
       Tree.tree.children[0].children[0].context.response.totalRecords
     ).toBe(1337)
@@ -2111,12 +2125,7 @@ let AllTests = (ContextureClient) => {
 
     // TODO test the loaded field population
     let merge = (results) =>
-      exampleTypes.pivot.mergeResponse(
-        node,
-        { context: { results } },
-        Tree.extend,
-        Tree.snapshot
-      )
+      exampleTypes.pivot.mergeResponse(node, { context: { results } }, Tree)
     merge({
       rows: [
         { key: 'FL', rows: [{ key: 'fl1', a: 1 }] },
@@ -2171,12 +2180,7 @@ let AllTests = (ContextureClient) => {
 
     // TODO test the loaded field population
     let merge = (results) =>
-      exampleTypes.pivot.mergeResponse(
-        node,
-        { context: { results } },
-        Tree.extend,
-        Tree.snapshot
-      )
+      exampleTypes.pivot.mergeResponse(node, { context: { results } }, Tree)
     merge({
       rows: [
         {
@@ -2339,17 +2343,35 @@ let AllTests = (ContextureClient) => {
       }
     )
 
+    Tree.processResponseNode(['root', 'pivot'], {
+      context: {
+        results: {
+          rows: [
+            { key: 'Florida', rows: [{ key: 'Miami', a: 1 }] },
+            {
+              key: 'Nevada',
+              rows: [{ key: 'Las Vegas', a: 2 }],
+            },
+          ],
+        },
+      },
+    })
+
     let node = Tree.getNode(['root', 'pivot'])
 
-    node.expand(Tree, ['root', 'pivot'], 'rows', ['Florida'])
+    node.expand('rows', ['Florida'])
 
-    // Changing the paused property shouldn't reset expansions
-    Tree.mutate(['root', 'pivot'], {
-      paused: true,
-    })
-    Tree.mutate(['root', 'pivot'], {
-      paused: false,
-    })
+    // Changing only fields from the skip field list shouldn't reset expansions
+    let currentSkipFieldValues = _.pick(skipResetExpansionsFields, node)
+    Tree.mutate(
+      ['root', 'pivot'],
+      F.arrayToObject(
+        (x) => x,
+        () => true,
+        skipResetExpansionsFields
+      )
+    )
+    Tree.mutate(['root', 'pivot'], currentSkipFieldValues)
     expect(toJS(Tree.getNode(['root', 'pivot']).expansions)).toEqual([
       {
         drilldown: [],
@@ -2358,7 +2380,7 @@ let AllTests = (ContextureClient) => {
       },
       {
         drilldown: [],
-        loaded: [],
+        loaded: ['Florida', 'Nevada'],
         type: 'rows',
       },
       {
@@ -2373,6 +2395,7 @@ let AllTests = (ContextureClient) => {
       rows: _.set('0.matchValue', 'Nevada', rows),
     })
     expect(Tree.getNode(['root', 'pivot']).expansions).toEqual([])
+    expect(Tree.getNode(['root', 'pivot']).context.results).toEqual({})
   })
   it('should preserve expanded drilldowns when drilling and paginating', async () => {
     let service = jest.fn(mockService())
@@ -2389,7 +2412,7 @@ let AllTests = (ContextureClient) => {
           {
             key: 'pivot',
             type: 'pivot',
-            expansions: { type: 'rows', rows: [] },
+            expansions: [],
             rows,
           },
           { key: 'test', type: 'facet', values: [] },
@@ -2397,7 +2420,7 @@ let AllTests = (ContextureClient) => {
       }
     )
 
-    Tree.mutate(['root', 'pivot'], {
+    Tree.processResponseNode(['root', 'pivot'], {
       context: {
         results: {
           rows: [
@@ -2412,7 +2435,7 @@ let AllTests = (ContextureClient) => {
     })
 
     let node = Tree.getNode(['root', 'pivot'])
-    node.expand(Tree, ['root', 'pivot'], 'rows', ['Florida'])
+    node.expand('rows', ['Florida'])
 
     expect(toJS(Tree.getNode(['root', 'pivot']).expansions)).toEqual([
       { type: 'columns', drilldown: [], loaded: [] },
@@ -2436,11 +2459,7 @@ let AllTests = (ContextureClient) => {
           {
             key: 'pivot',
             type: 'pivot',
-            expansions: {
-              type: 'rows',
-              rows: [],
-              columns: [],
-            },
+            expansions: [],
             columns,
             rows,
             sort: {
@@ -2481,8 +2500,8 @@ let AllTests = (ContextureClient) => {
 
     let node = Tree.getNode(['root', 'pivot'])
 
-    node.expand(Tree, ['root', 'pivot'], 'rows', ['NanoSoft'])
-    node.expand(Tree, ['root', 'pivot'], 'columns', ['Florida'])
+    node.expand('rows', ['NanoSoft'])
+    node.expand('columns', ['Florida'])
 
     Tree.mutate(['root', 'pivot'], {
       sort: {
@@ -2548,7 +2567,7 @@ let AllTests = (ContextureClient) => {
   })
   it('should support group level markedForUpdate', async () => {
     let service = jest.fn(mockService({ delay: 10 }))
-    let tree = ContextureMobx(
+    let tree = ContextureClient(
       { service, debounce: 1 },
       {
         key: 'root',
@@ -2589,6 +2608,66 @@ let AllTests = (ContextureClient) => {
     expect(tree.getNode(['root']).markedForUpdate).toBe(false)
     expect(tree.getNode(['root']).isStale).toBe(false)
     expect(tree.getNode(['root']).updating).toBe(false)
+  })
+  it('should support group level markedForUpdate and reset when children are done in disableAutoUpdateMode', async () => {
+    let service = jest.fn(mockService({ delay: 10 }))
+    let tree = ContextureClient(
+      { service, debounce: 1, disableAutoUpdate: true },
+      {
+        key: 'root',
+        join: 'and',
+        children: [
+          {
+            key: 'criteria',
+            join: 'and',
+            type: 'group',
+            children: [
+              {
+                key: 'bar',
+                type: 'tagsQuery',
+                field: 'FieldGroup.all',
+              },
+              {
+                key: 'filters',
+                join: 'and',
+                type: 'group',
+                children: [
+                  {
+                    key: 'filter',
+                    type: 'facet',
+                    field: 'facetfield',
+                    values: ['some value'],
+                  },
+                  {
+                    key: 'filter2',
+                    type: 'facet',
+                    field: 'facetfield2',
+                    values: ['some other value'],
+                    paused: true,
+                  },
+                ],
+              },
+            ],
+          },
+          { key: 'results', type: 'results' },
+        ],
+      }
+    )
+
+    let action = tree.mutate(['root', 'results'], { page: 2 })
+    // Preparing to search (0 ms delay because validate is async)
+    await Promise.delay()
+    // await action
+    expect(tree.getNode(['root']).markedForUpdate).toBe(true)
+    expect(tree.getNode(['root']).isStale).toBe(true)
+    await Promise.delay(1)
+    expect(tree.getNode(['root']).markedForUpdate).toBe(false)
+    expect(tree.getNode(['root']).updating).toBe(true)
+    expect(tree.getNode(['root']).isStale).toBe(true)
+    await action
+    expect(tree.getNode(['root']).markedForUpdate).toBe(false)
+    expect(tree.getNode(['root']).updating).toBe(false)
+    expect(tree.getNode(['root']).isStale).toBe(false)
   })
 }
 

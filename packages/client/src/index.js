@@ -15,7 +15,13 @@ import actions from './actions/index.js'
 import serialize from './serialize.js'
 import traversals from './traversals.js'
 import { runTypeFunction, getTypeProp } from './types.js'
-import { initNode, hasContext, hasValue, dedupeWalk } from './node.js'
+import {
+  initNode,
+  hasContext,
+  hasValue,
+  dedupeWalk,
+  hasResults,
+} from './node.js'
 import exampleTypes from './exampleTypes.js'
 import lens from './lens.js'
 import mockService from './mockService.js'
@@ -68,20 +74,18 @@ export let ContextTree = _.curry(
     },
     tree
   ) => {
+    let TreeInstance
     tree = initObject(tree)
     let debugInfo = initObject({ dispatchHistory: [] })
     let customReactors = reactors
 
-    // initNode now generates node keys, so it must be run before flattening the tree
-    dedupeWalk(initNode({ extend, types, snapshot }), tree)
-    let flat = flatten(tree)
     let getNode = (path) =>
       // empty path returns root with tree lookup, but should be undefined to mimic flat tree
       !_.isEmpty(path) && Tree.lookup(_.drop(1, path), tree)
     //  flat[encode(path)]
 
     // Overwrite extend to report changes
-    extend = _.over([extend, (a, b) => TreeInstance.onChange(a, b)])
+    extend = _.over([extend, (a, b) => TreeInstance?.onChange(a, b)])
 
     // Getting the Traversals
     let {
@@ -90,6 +94,7 @@ export let ContextTree = _.curry(
       prepForUpdate,
       clearUpdate,
       syncMarkedForUpdate,
+      syncComputedGroupFields,
     } = traversals(extend)
     let typeProp = getTypeProp(types)
 
@@ -114,8 +119,8 @@ export let ContextTree = _.curry(
       if (debug) debugInfo.dispatchHistory.push(event)
       if (event.node)
         // not all dispatches have event.node, e.g. `refresh` with no path
-        F.maybeCall(typeProp('onDispatch', event.node), event, extend)
-      await validate(runTypeFunction(types, 'validate'), extend, tree)
+        F.maybeCall(typeProp('onDispatch', event.node), event, actionProps)
+      await validate(runTypeFunction(types, 'validate'), actionProps, tree)
       let updatedNodes = [
         // Get updated nodes
         ..._.flatten(bubbleUp(processEvent(event), event.path)),
@@ -134,7 +139,7 @@ export let ContextTree = _.curry(
           _.map((n) => {
             // When updated by others, force replace instead of merge response
             extend(n, { forceReplaceResponse: true })
-            runTypeFunction(types, 'onUpdateByOthers', n, extend)
+            runTypeFunction(types, 'onUpdateByOthers', n, actionProps)
           }, updatedNodes)
         )
 
@@ -156,6 +161,9 @@ export let ContextTree = _.curry(
       markLastUpdate(now)(node || tree)
       let body = serialize(snapshot(tree), types, { search: true })
       prepForUpdate(node || tree)
+      // With disableAutoUpdate, self updating mutations cause runUpdate to be called for just the affected node, so prepForUpdate won't be called on the whole tree
+      // This resets group level fields (and prepForUpdate isn't necessarily safe for the whole tree if other nodes are markedForUpdate but we're only updating one node
+      syncComputedGroupFields(['markedForUpdate', 'updating'], tree)
 
       // make all other nodes filter only
       if (path) {
@@ -217,18 +225,15 @@ export let ContextTree = _.curry(
             !target.forceReplaceResponse &&
             F.maybeCall(typeProp('shouldMergeResponse', target), target)
           )
-            typeProp('mergeResponse', target)(
-              target,
-              responseNode,
-              extend,
-              snapshot
-            )
+            typeProp('mergeResponse', target)(target, responseNode, actionProps)
           else {
             target.forceReplaceResponse = false
             extend(target, responseNode)
           }
           if (debug && node._meta) target.metaHistory.push(node._meta)
         }
+
+        target.hasResults = hasResults(target)
 
         clearUpdate(target)
 
@@ -247,16 +252,34 @@ export let ContextTree = _.curry(
 
     let actionProps = {
       getNode,
-      flat,
       dispatch,
-      snapshot,
       extend,
+      snapshot,
       types,
       initNode,
       initObject,
+      log,
     }
+    F.extendOn(
+      actionProps,
+      _.pick(
+        [
+          'mutate',
+          'refresh',
+          'triggerUpdate',
+          'clear',
+          'isPausedNested',
+          'pauseNested',
+          'unpauseNested',
+        ],
+        actions(actionProps)
+      )
+    )
+    // initNode now generates node keys, so it must be run before flattening the tree
+    dedupeWalk(initNode(actionProps), tree)
+    actionProps.flat = flatten(tree)
 
-    let TreeInstance = initObject({
+    TreeInstance = initObject({
       serialize: (path) =>
         serialize(snapshot(path ? getNode(path) : tree), types, {}),
       tree,

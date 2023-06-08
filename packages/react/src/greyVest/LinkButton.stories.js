@@ -1,14 +1,12 @@
-import React from 'react'
 import { action } from '@storybook/addon-actions'
-import { LinkButton } from './index.js'
-import decorator from './stories/decorator.js'
-
-let click = action('clicked')
+import Component from './LinkButton.js'
 
 export default {
-  title: 'GreyVest Library|LinkButton',
-  component: LinkButton,
-  decorators: [decorator],
+  component: Component,
+  args: {
+    onClick: () => action('clicked'),
+    args: { children: 'Link Button' },
+  },
 }
 
-export let story = () => <LinkButton onClick={() => click()}>Click</LinkButton>
+export let LinkButton = {}

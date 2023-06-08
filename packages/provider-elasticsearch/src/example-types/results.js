@@ -36,6 +36,12 @@ export default {
     let searchHighlight = _.isPlainObject(node.highlight) ? node.highlight : {}
     let resultColumns = node.include
 
+    // to be able to override schema highlight config with node config
+    if (searchHighlight.override) {
+      schemaHighlight = searchHighlight.override
+      searchHighlight = _.omit('override', searchHighlight)
+    }
+
     // Highlighting starts with defaults in the schema first
     if (schemaHighlight) {
       let showOtherMatches = _.getOr(false, 'showOtherMatches', node)
@@ -55,7 +61,7 @@ export default {
       )
       // Convert the highlight fields from array to an object map
       let fields = _.flow(
-        _.pick(['inline', 'additionalFields']), // Get the highlight fields we will be working with
+        _.pick(['inline', 'additionalFields', 'nested']), // Get the highlight fields we will be working with
         _.values,
         _.flatten,
         _.concat(schemaInlineAliases), // Include the provided field aliases if any
@@ -108,7 +114,8 @@ export default {
             schemaHighlight, // The highlight configuration
             hit, // The ES result
             schema.elasticsearch.nestedPath,
-            resultColumns // The columns to return
+            resultColumns, // The columns to return
+            schemaHighlight.filterNested // Only return the highlighted fields
           )
           additionalFields = highlightObject.additionalFields
         }

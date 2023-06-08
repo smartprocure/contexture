@@ -1,31 +1,21 @@
 {
   "name": "contexture-client",
-  "version": "2.49.13",
+  "version": "2.53.2",
   "description": "The Contexture (aka ContextTree) Client",
   "type": "module",
   "exports": {
     ".": {
-      "import": "./src/index.js"
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
     },
     "./*": {
-      "import": "./src/*"
+      "import": "./dist/esm/*",
+      "require": "./dist/cjs/*"
     }
   },
   "files": [
     "dist"
   ],
-  "publishConfig": {
-    "exports": {
-      ".": {
-        "import": "./dist/esm/index.js",
-        "require": "./dist/cjs/index.js"
-      },
-      "./*": {
-        "import": "./dist/esm/*",
-        "require": "./dist/cjs/*"
-      }
-    }
-  },
   "scripts": {
     "prepack": "node ../../scripts/esbuild.js --platform=browser"
   },
@@ -40,7 +30,7 @@
   },
   "homepage": "https://github.com/smartprocure/contexture/tree/main/packages/client",
   "dependencies": {
-    "futil": "^1.71.8",
+    "futil": "^1.76.0",
     "lodash": "^4.17.15"
   },
   "devDependencies": {

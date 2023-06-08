@@ -1,31 +1,21 @@
 {
   "name": "contexture-mongo",
-  "version": "0.26.8",
+  "version": "0.26.14",
   "description": "Mongo Provider for Contexture",
   "type": "module",
   "exports": {
     ".": {
-      "import": "./src/index.js"
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
     },
     "./*": {
-      "import": "./src/*"
+      "import": "./dist/esm/*",
+      "require": "./dist/cjs/*"
     }
   },
   "files": [
     "dist"
   ],
-  "publishConfig": {
-    "exports": {
-      ".": {
-        "import": "./dist/esm/index.js",
-        "require": "./dist/cjs/index.js"
-      },
-      "./*": {
-        "import": "./dist/esm/*",
-        "require": "./dist/cjs/*"
-      }
-    }
-  },
   "scripts": {
     "prepack": "node ../../scripts/esbuild.js --platform=node"
   },
@@ -48,13 +38,13 @@
     "@elastic/datemath": "^2.3.0",
     "bluebird": "^3.5.0",
     "debug": "^4.3.1",
-    "futil": "^1.71.8",
+    "futil": "^1.76.0",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.28"
   },
   "devDependencies": {
-    "contexture": "^0",
+    "contexture": "^0.12.19",
     "mingo": "^4.1.2",
     "mongodb": "^3.5.6",
     "mongodb-memory-server": "^6.5.2"

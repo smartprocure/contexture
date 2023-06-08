@@ -1,22 +1,37 @@
-import _ from 'lodash/fp.js'
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import TestTree from '../stories/testTree.js'
-import ThemePicker from '../../stories/themePicker.js'
-import { TagsQuery } from '..'
+import Component from './index.js'
 
-let tags = _.map((n) => ({ word: `(${n}) This is a tag` }), _.range(1, 5))
+let tags = [
+  { word: 'janitor', distance: 3 },
+  { word: 'soap', distance: 3 },
+  { word: 'cleaner', distance: 3 },
+  { word: 'cleaning', distance: 3 },
+  { word: 'clean', distance: 3 },
+]
 
 let treeWithTags = TestTree((testTree) => {
   testTree.getNode(['tagsQuery']).tags = tags
   return testTree
 })
 
-storiesOf('ExampleTypes|Tags Query', module)
-  .addDecorator(ThemePicker('greyVest'))
-  .add('Default', () => <TagsQuery tree={treeWithTags} path={['tagsQuery']} />)
-  .add('Responsive', () => (
-    <div style={{ maxWidth: 500 }}>
-      <TagsQuery tree={treeWithTags} path={['tagsQuery']} />
-    </div>
-  ))
+export default {
+  component: Component,
+  args: {
+    tree: treeWithTags,
+    path: ['tagsQuery'],
+    enableKeywordGenerations: true,
+  },
+}
+
+export const Default = {}
+
+export const Responsive = () => (
+  <div style={{ maxWidth: 500 }}>
+    <Component
+      enableKeywordGenerations={true}
+      tree={treeWithTags}
+      path={['tagsQuery']}
+    />
+  </div>
+)

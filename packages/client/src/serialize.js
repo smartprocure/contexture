@@ -1,5 +1,5 @@
 import _ from 'lodash/fp.js'
-import F from 'futil-js'
+import F from 'futil'
 import { Tree } from './util/tree.js'
 import { internalStateKeys } from './node.js'
 import { runTypeFunctionOrDefault } from './types.js'
@@ -21,14 +21,17 @@ let mapTree = (fn, tree) =>
     fn(tree)
   )
 
-export default (tree, types, { search } = {}) => {
+export default (tree, types, options = {}) => {
   let onSerialize = (node) =>
-    runTypeFunctionOrDefault(_.identity, types, 'onSerialize', node, {})
+    runTypeFunctionOrDefault(_.identity, types, 'onSerialize', node, options)
 
-  let internalKeys = _.without(search && ['lastUpdateTime'], internalStateKeys)
+  let internalKeys = _.without(
+    options.search && ['lastUpdateTime'],
+    internalStateKeys
+  )
 
   let setFilterOnly = F.when(
-    (node) => search && isFilterOnly(node),
+    (node) => options.search && isFilterOnly(node),
     _.set('filterOnly', true)
   )
 

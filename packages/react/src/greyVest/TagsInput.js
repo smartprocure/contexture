@@ -36,11 +36,8 @@ let TagsInput = forwardRef(
     inputRef
   ) => {
     let containerRef = React.useRef()
-    let state = React.useState(() =>
-      observable({
-        currentInput: '',
-      })
-    )
+    let [currentInput, setCurrentInput] = React.useState('')
+
     let sanitizeTagFn = sanitizeTagWords(
       wordsMatchPattern,
       maxWordsPerTag,
@@ -87,37 +84,37 @@ let TagsInput = forwardRef(
             }}
             ref={inputRef}
             onChange={(e) => {
-              state.currentInput = e.target.value
+              setCurrentInput(e.target.value)
               onInputChange()
             }}
             onBlur={() => {
-              if (isValidInput(state.currentInput, tags)) {
-                addTags(state.currentInput)
-                state.currentInput = ''
+              if (isValidInput(currentInput, tags)) {
+                addTags(currentInput)
+                setCurrentInput('')
                 onBlur()
               }
             }}
             onKeyDown={(e) => {
-              if (e.key === 'Enter' && !state.currentInput) submit()
+              if (e.key === 'Enter' && !currentInput) submit()
               if (
                 (_.includes(e.key, ['Enter', 'Tab']) ||
                   (splitCommas && e.key === ',')) &&
-                isValidInput(state.currentInput, tags)
+                isValidInput(currentInput, tags)
               ) {
-                addTags(state.currentInput)
-                state.currentInput = ''
+                addTags(currentInput)
+                setCurrentInput('')
                 e.preventDefault()
               }
-              if (e.key === 'Backspace' && !state.currentInput && tags.length) {
+              if (e.key === 'Backspace' && !currentInput && tags.length) {
                 let last = _.last(tags)
                 removeTag(last)
-                state.currentInput = last
+                setCurrentInput(last)
                 e.preventDefault()
               }
             }}
-            value={state.currentInput}
+            value={currentInput}
             placeholder={placeholder}
-            {...props}
+            {..._.omit(['onTagsDropped', 'maxTags', 'Loader'], props)}
           />
         </Flex>
       </div>

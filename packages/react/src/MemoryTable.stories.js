@@ -1,46 +1,86 @@
-import _ from 'lodash/fp.js'
 import React from 'react'
-import ThemePicker from './stories/themePicker.js'
-import MemoryTable from './MemoryTable.js'
-import emojiData from './exampleTypes/stories/emojiData.js'
+import _ from 'lodash/fp.js'
+import F from 'futil'
+import emojiDataSource from 'emoji-datasource'
+import sheet from 'emoji-datasource/img/facebook/sheets/32.png'
+import Component from './MemoryTable.js'
 
 export default {
-  title: 'MemoryTable',
-  component: MemoryTable,
-  decorators: [ThemePicker('greyVest')],
-  parameters: {
-    componentSubtitle:
-      "A ResultTable from arbitrary data using contexture's memory provider",
-    info: `
-MemoryTable is built on top of ResultTable and supports several of the same props: most notably \`fields\`, which takes a schema object that specifies which fields from the data are visible in the table and how they are ordered, and \`infer\`, which enables MemoryTable to infer field information from the given data without having to explicitly specify it in \`fields\`.
-
-However, in place of ResultTable's contexture-relevant \`tree\`/\`node\`/\`path\` props, MemoryTable simply accepts a \`data\` prop, which should be an array of obects. This is fed into a contexture instance running on the \`memory\` provider, which allows contexture to work against data in the form of plain Javascript objects (in contrast to, for example, a MongoDB database). The result is a dynamically-generated table with built-in support for sorting and filtering operations on the given data.
-`,
+  component: Component,
+  tags: ['autodocs'],
+  args: {
+    data: _.times((x) => ({ id: x, value: _.random(0, 20000) }), 221),
   },
 }
 
-export let story = () => (
-  <MemoryTable
-    data={_.times((x) => ({ id: x, value: _.random(0, 20000) }), 221)}
-    fields={{ id: { label: '#' }, value: { label: 'Count' } }}
-  />
-)
+export const Default = {
+  args: {
+    fields: { id: { label: '#' }, value: { label: 'Count' } },
+  },
+}
 
-export let withInfer = () => (
-  <MemoryTable
-    infer
-    data={_.times((x) => ({ id: x, value: _.random(0, 20000) }), 221)}
-  />
-)
+export const WithInfer = {
+  args: {
+    infer: true,
+  },
+}
 
-export let resultTableProps = () => (
-  <MemoryTable
-    data={_.times((x) => ({ id: x, value: _.random(0, 20000) }), 221)}
-    fields={{ id: { label: '#' }, value: { label: 'Count' } }}
-    pageSizeOptions={[12, 24, 48, 96]}
-  />
-)
+export const ResultTableProps = {
+  args: {
+    fields: { id: { label: '#' }, value: { label: 'Count' } },
+    pageSizeOptions: [12, 24, 48, 96],
+  },
+}
 
-export let emojiDataset = () => (
-  <MemoryTable data={require('emoji-datasource')} fields={emojiData} />
-)
+let bool = { typeDefault: 'bool', display: (x) => (x ? 'Yes' : 'No') }
+
+let codePoint = {
+  typeDefault: 'text',
+  display: F.whenExists(
+    _.flow(
+      _.split('-'),
+      _.map((x) => parseInt(x, 16)),
+      _.spread(String.fromCodePoint)
+    )
+  ),
+}
+
+export const EmojiDataset = {
+  args: {
+    data: emojiDataSource,
+    fields: {
+      image: {
+        display: (x, { sheet_x, sheet_y }) => (
+          <div
+            style={{
+              backgroundImage: `url(${sheet})`,
+              backgroundPosition: `-${sheet_x * 34}px -${sheet_y * 34}px`,
+              width: 33,
+              height: 33,
+              transform: 'scale(0.75)',
+            }}
+          />
+        ),
+      },
+      name: { typeDefault: 'text' },
+      unified: codePoint,
+      non_qualified: codePoint,
+      sheet_x: { typeDefault: 'number' },
+      sheet_y: { typeDefault: 'number' },
+      short_name: { typeDefault: 'facet' },
+      short_names: { typeDefault: 'facet' },
+      category: { typeDefault: 'facet' },
+      sort_order: { typeDefault: 'number' },
+      added_in: { typeDefault: 'facet' },
+      has_img_apple: bool,
+      has_img_google: bool,
+      has_img_twitter: bool,
+      has_img_facebook: bool,
+      text: { typeDefault: 'facet' },
+      texts: { typeDefault: 'facet' },
+      obsoletes: codePoint,
+      obsoleted_by: codePoint,
+      skin_variations: { typeDefault: 'facet' },
+    },
+  },
+}

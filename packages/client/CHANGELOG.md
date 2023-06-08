@@ -1,5 +1,121 @@
 # Changelog
 
+## 2.53.2
+
+### Patch Changes
+
+- 7c1dcacf: Fix old saved searches loading the right data from keyword generations code changes
+
+## 2.53.1
+
+### Patch Changes
+
+- 27c8f069: Improve performance when determining if a node has results
+
+## 2.53.0
+
+### Minor Changes
+
+- 05c9989: Passing more actions to `initNode` and type functions. Pivot collapse: triggering observer mutation after collapse
+
+## 2.52.2
+
+### Patch Changes
+
+- efd7dff: Fix access to extend function within mergeResponse for keyword generations.
+
+## 2.52.1
+
+### Patch Changes
+
+- 71f7471: Avoid boolean for keyword generations persistance when not searching
+
+## 2.52.0
+
+### Minor Changes
+
+- c596dfe: Passing actions to the runTypeFunction. Removing bundled mobx dependency
+
+## 2.51.0
+
+### Minor Changes
+
+- 35bae50: Add Keyword Generation support to `tagsQuery`
+
+## 2.50.2
+
+### Patch Changes
+
+- 3b7125e: Remove publish config and set default config to make yalc linking simpler
+
+## 2.50.1
+
+### Patch Changes
+
+- 936d6dd: Pivot node: reset pivot results only when pivot config is changed
+
+## 2.50.0
+
+### Minor Changes
+
+- 7190a0f: New `hasResults` prop to the tree nodes. Tracks whether the node has results or not.
+
+## 2.49.22
+
+### Patch Changes
+
+- 1a730b0: Use `futil`, not `futil-js`, when importing F
+
+## 2.49.21
+
+### Patch Changes
+
+- e1d13bd: Sync computed group fields (markedForUpdate, updating) in cases where runUpdate doesn't run on the whole tree (self-updating events with disableAutoUpdate). This fixes the bug introduced with the recent contexture-react change to drive search buttons from root `markedForUpdate` which caused search buttons to stay active indefinitely when dispatching self-updating changes (like results pageSize and paused mutations)
+
+## 2.49.20
+
+### Patch Changes
+
+- 88bab02: Fix broken tests
+  Kill some dead client type definitions
+- a25aa61: bump futil
+
+## 2.49.19
+
+### Patch Changes
+
+- 962f5d3: feat(client): default values for pivot and results nodes
+
+## 2.49.18
+
+### Patch Changes
+
+- 16ac49f: pivot type - do not reset expansions when only certain display related fields are changed on the node
+
+## 2.49.17
+
+### Patch Changes
+
+- 2dc36c8: Republish packages with correct package.json exports field
+
+## 2.49.16
+
+### Patch Changes
+
+- cd3e075: Update yarn.lock on versioning
+
+## 2.49.15
+
+### Patch Changes
+
+- ec5bb50: Fix yarn.lock
+
+## 2.49.14
+
+### Patch Changes
+
+- 4afa762: Fix package json contexture repo links
+
 ## 2.49.12
 
 - Run tests with jest's ESM support. Remove esbuild-jest transform

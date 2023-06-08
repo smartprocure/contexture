@@ -1,5 +1,41 @@
 # Changelog
 
+## 0.12.19
+
+### Patch Changes
+
+- 3b7125e: Remove publish config and set default config to make yalc linking simpler
+
+## 0.12.18
+
+### Patch Changes
+
+- a25aa61: bump futil
+
+## 0.12.17
+
+### Patch Changes
+
+- 2dc36c8: Republish packages with correct package.json exports field
+
+## 0.12.16
+
+### Patch Changes
+
+- cd3e075: Update yarn.lock on versioning
+
+## 0.12.15
+
+### Patch Changes
+
+- ec5bb50: Fix yarn.lock
+
+## 0.12.14
+
+### Patch Changes
+
+- 4c9602b: Fix package json contexture repo links and move ecosystem links to the monorepo readme
+
 ## 0.12.12
 
 - Add exports to package.json so node knows which version of the code to import

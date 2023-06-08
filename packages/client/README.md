@@ -110,6 +110,7 @@ When picking field reactors, you should use the `others` reactor for things that
 | paused           | `bool`           | Tracks whether a node is `paused`, which prevents it from requesting updates from the service                                                                                                                             |
 | missedUpdate     | `bool`           | Tracks when nodes would have asked for updates but didn't because they were paused                                                                                                                                        |
 | hasValue         | `bool`           | Tracks when a node passed `validate`, which is used to determine if it participates in the search                                                                                                                         |
+| hasResults       | `bool`           | Tracks whether a node has valid results returned from the server                                                                                                                                                          |
 | lastUpdateTime   | `timestamp`      | Last time this node was updated with results from the service                                                                                                                                                             |
 | context          | `object`         | Object which holds the contextual results from the server                                                                                                                                                                 |
 | type             | `string`         | Represents the contexture node type                                                                                                                                                                                       |
@@ -193,6 +194,7 @@ import { utilName } from 'contexture-client'
 | `decode`       | The futil decoder method used for the internal `flat` tree. Converts a flat tree key to a path array. Currently a slashEncoder.                                                                                                                                                         |
 | `hasContext`   | An internal utility that determines if a node has a context. Used primarily in custom reactors to help figure out if a node needs updating.                                                                                                                                             |
 | `hasValue`     | An internal utility that checks if a node has a value and isn't in an error state. Used primarily in custom reactors to help figure out if other nodes would be affected by an event.                                                                                                   |
+| `hasResults`   | An internal utility that checks if a node has some results in the context.                                                                                                                                                                                                              |
 | `exampleTypes` | A set of example types. This will likely be split out in a future version to its own repo.                                                                                                                                                                                              |
 | `mockService`  | Useful for mocking services during testing. Takes a config object of logInput, logOutput, and a mocks function which will should return results for a node as input (defaults to fixed results by type) and returns a function for use as a `service` for a contexture-client instance. |
 | `subquery`     | A tool for creating a subquery. See the section below.                                                                                                                                                                                                                                  |
@@ -291,7 +293,7 @@ For those familiar with the previous client implementation (`DataContext`/`Conte
 
 ### Flat Trees
 
-The client maintains a flat tree in addition to the actual tree, which is an object mapped using `flattenTree` from `futil-js`.
+The client maintains a flat tree in addition to the actual tree, which is an object mapped using `flattenTree` from `futil`.
 The keys are the array paths encoded as a string, currently using a slashEncoder.
 This allows path lookups to perform in constant time at `O(1)`, which drastically speeds up some of the internal tree operations.
 The paths are also stamped on individual nodes for convenience as performing an action on a node requires knowing its path.

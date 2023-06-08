@@ -1,15 +1,11 @@
 import F from 'futil'
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import AsyncSelect from 'react-select/lib/Async.js'
 import { loadOptions, geoCodeLocation } from '../utils/geo.js'
 import { ThemeProvider } from '../utils/theme.js'
 import theme from '../stories/DemoControls.js'
-
 import TestTree from './stories/testTree.js'
-
-let formatYear = (x) => new Date(x).getUTCFullYear()
-import { Flex, SpacedList } from '../../src/greyVest/index.js'
+import { Flex, SpacedList } from '../greyVest/index.js'
 import {
   Facet,
   Number,
@@ -20,9 +16,15 @@ import {
   DateHistogram,
   TagsQuery,
   Geo,
-} from '../../src/exampleTypes/index.js'
+} from './index.js'
 
-storiesOf('ExampleTypes|Full Demo', module).add('Full Demo', () => {
+export default {
+  title: 'Full Demo',
+}
+
+let formatYear = (x) => new Date(x).getUTCFullYear()
+
+export const FullDemo = () => {
   let tree = TestTree()
   return (
     <ThemeProvider theme={theme}>
@@ -81,4 +83,4 @@ storiesOf('ExampleTypes|Full Demo', module).add('Full Demo', () => {
       </div>
     </ThemeProvider>
   )
-})
+}

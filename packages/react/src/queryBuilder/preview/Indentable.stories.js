@@ -1,20 +1,16 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
-import Indentable from './Indentable.js'
+import Component from './Indentable.js'
 
-storiesOf('Search Components|QueryBuilder/Internals/Indentable', module)
-  .add('and', () => (
-    <Indentable indent={() => true} node={{ join: 'and' }}>
-      <div style={{ height: '100px' }}>Contents</div>
-    </Indentable>
-  ))
-  .add('or', () => (
-    <Indentable indent={() => true} node={{ join: 'or' }}>
-      <div style={{ height: '100px' }}>Contents</div>
-    </Indentable>
-  ))
-  .add('not', () => (
-    <Indentable indent={() => true} node={{ join: 'not' }}>
-      <div style={{ height: '100px' }}>Contents</div>
-    </Indentable>
-  ))
+export default {
+  component: Component,
+  args: {
+    indent: () => true,
+    children: <div style={{ height: '100px' }}>Contents</div>,
+  },
+}
+
+export const And = { args: { node: { join: 'and' } } }
+
+export const Or = { args: { node: { join: 'or' } } }
+
+export const Not = { args: { node: { join: 'not' } } }

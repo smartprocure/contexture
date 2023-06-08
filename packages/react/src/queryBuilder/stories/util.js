@@ -28,13 +28,3 @@ export let root = {
     testType2: {},
   },
 }
-
-/* TODO: Remove this. Left it so git detects this as a file rename
-require('./operatorMenu').default(parent, root)
-require('./operator').default(parent, root, DnDDecorator)
-require('./addPreview').default(parent, root, DnDDecorator)
-require('./indentable').default(parent, root, DnDDecorator)
-require('./filterContents').default(parent, root)
-require('./rule').default(parent, root, DnDDecorator)
-require('./group').default(parent, root, DnDDecorator)
-*/

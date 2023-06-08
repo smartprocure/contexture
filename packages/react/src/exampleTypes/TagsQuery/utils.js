@@ -28,3 +28,9 @@ export let getTagStyle = (node, key) => (tag) => {
         : 0.5,
   }
 }
+
+export let convertWordToTag = (word, label = '') => ({
+  [tagValueField]: word,
+  label,
+  distance: 3,
+})

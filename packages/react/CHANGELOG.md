@@ -1,5 +1,123 @@
 # Changelog
 
+## 2.57.5
+
+### Patch Changes
+
+- bf48a09b: Fixed various bugs related to keyword generations
+- 1e020b6a: Update loading behaviour between keyword generation additions
+
+## 2.57.4
+
+### Patch Changes
+
+- 6516fd3e: TagsQuery: Do not error out when there are no tags in context
+
+## 2.57.3
+
+### Patch Changes
+
+- 35527239: Fix tagsText input to work correctly.
+
+## 2.57.2
+
+### Patch Changes
+
+- 9eb7f3b: TagsQuerySearchBar: prevent collapse on popover click
+
+## 2.57.1
+
+### Patch Changes
+
+- 02ee4ec: Deduplicate keyword generations with lower case to dedup regardless of casing
+
+## 2.57.0
+
+### Minor Changes
+
+- 35bae50: Add Keyword Generation support to `tagsQuery`
+
+### Patch Changes
+
+- d98fc97: Replace contexture-react's outside click handler library
+
+## 2.56.0
+
+### Minor Changes
+
+- 9c7fc4c: Util: getRecord also adds the `_highlight`
+
+## 2.55.0
+
+### Minor Changes
+
+- 3b7bda9: `Create Custom Filter (plus icon)` -> `Create Filter`
+
+### Patch Changes
+
+- 3b7125e: Remove publish config and set default config to make yalc linking simpler
+
+## 2.54.29
+
+### Patch Changes
+
+- a0d14ab: Fix another case of non native prop passing
+
+## 2.54.28
+
+### Patch Changes
+
+- 9035b4e: Omit non native props to fix ExpandableTagsQuery console errors
+
+## 2.54.27
+
+### Patch Changes
+
+- 2a532c6: Revert "Misc import fixes" so imports work in our main product
+
+## 2.54.26
+
+### Patch Changes
+
+- f0a7c1e: Make markedForUpdateChecks more defensive
+
+## 2.54.25
+
+### Patch Changes
+
+- a25aa61: bump futil
+- a2b5a23: drive search button from root node markedForUpdate, not resultsNode
+
+## 2.54.24
+
+### Patch Changes
+
+- df53464: Avoid circular imports and react-dnd esm imports
+
+## 2.54.23
+
+### Patch Changes
+
+- 2dc36c8: Republish packages with correct package.json exports field
+
+## 2.54.22
+
+### Patch Changes
+
+- cd3e075: Update yarn.lock on versioning
+
+## 2.54.21
+
+### Patch Changes
+
+- ec5bb50: Fix yarn.lock
+
+## 2.54.20
+
+### Patch Changes
+
+- 4afa762: Fix package json contexture repo links
+
 ## 2.54.19
 
 - Fix ResultTable rendering 0 when there are no results

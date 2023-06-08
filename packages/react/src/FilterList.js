@@ -162,16 +162,13 @@ let FilterList = _.flow(
     tree,
     node,
     fields,
-    resultsPath,
     mapNodeToProps = _.noop,
     mapNodeToLabel = _.noop,
     className,
     style,
     theme: { UnmappedNodeComponent, Button },
   }) => {
-    // find results node that this filter node is targeting (['root', 'results'])
-    let updateRequired =
-      tree.disableAutoUpdate && tree.getNode(resultsPath)?.markedForUpdate
+    let updateRequired = tree.disableAutoUpdate && tree?.tree?.markedForUpdate
 
     return (
       <div style={style} className={className}>

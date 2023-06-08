@@ -1,19 +1,20 @@
-import React from 'react'
 import _ from 'lodash/fp.js'
-import { storiesOf } from '@storybook/react'
 import TestTree from './stories/testTree.js'
-import ThemePicker from '../stories/themePicker.js'
-import { Bool } from './index.js'
+import Component from './Bool.js'
 
-storiesOf('ExampleTypes|Bool', module)
-  .addDecorator(ThemePicker('greyVest'))
-  .add('Bool', () => <Bool tree={TestTree()} path={['bool']} />)
-  .add('Bool Custom Options', () => (
-    <Bool
-      tree={TestTree()}
-      path={['bool']}
-      display={(value) =>
-        _.isNil(value) ? 'Both' : value ? 'Agree' : 'Disagree'
-      }
-    />
-  ))
+export default {
+  component: Component,
+  args: {
+    tree: TestTree(),
+    path: ['bool'],
+  },
+}
+
+export const Bool = {}
+
+export const BoolCustomOptions = {
+  args: {
+    display: (value) =>
+      _.isNil(value) ? 'Both' : value ? 'Agree' : 'Disagree',
+  },
+}

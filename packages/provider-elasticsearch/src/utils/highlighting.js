@@ -18,7 +18,13 @@ export let arrayToHighlightsFieldMap = _.flow(
 )
 
 // TODO: Support multiple pathToNesteds...
-export let highlightResults = (highlightFields, hit, pathToNested, include) => {
+export let highlightResults = (
+  highlightFields,
+  hit,
+  pathToNested,
+  include,
+  filterNested
+) => {
   // TODO: Support Regex and Function basis for all options
 
   // Handle Results Highlighting
@@ -62,16 +68,35 @@ export let highlightResults = (highlightFields, hit, pathToNested, include) => {
         let field = key.replace(`${pathToNested}.`, '')
         // For arrays, strip the highlighting wrapping and compare to the array contents to match up
         _.each(function (val) {
-          let originalValue = val.replace(/<b>|<\/b>/g, '')
+          let originalValue = val.replace(
+            /<b class="search-highlight">|<\/b>/g,
+            ''
+          )
           let childItem = _.find(
-            (item) => item[field] === originalValue,
+            // TODO: Remove this asap
+            (item) => _.trim(_.get(field, item)) === _.trim(originalValue),
             _.get(pathToNested, hit._source)
           )
           if (childItem) childItem[field] = val
         }, value)
+
+        if (filterNested) {
+          let filtered = _.flow(
+            _.get(pathToNested),
+            _.filter(
+              _.flow(_.get(field), _.includes('<b class="search-highlight">'))
+            )
+          )(hit._source)
+
+          F.setOn(pathToNested, filtered, hit._source)
+        }
       }
     }
   }, hit.highlight)
+
+  if (filterNested && _.isEmpty(hit.highlight))
+    F.setOn(pathToNested, [], hit._source)
+
   let mainHighlighted = false
   // Copy over all inline highlighted fields
   if (hit.highlight) {

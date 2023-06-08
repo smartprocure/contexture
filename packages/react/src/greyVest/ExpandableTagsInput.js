@@ -81,7 +81,7 @@ let ExpandableTagsInput = ({
       <span className="tags-input-container">
         <input
           style={{ flex: 1, border: 0 }}
-          ref={autoFocus && ((input) => input && input.focus())}
+          ref={autoFocus ? (input) => input && input.focus() : undefined}
           onChange={(e) => {
             setCurrentInput(e.target.value)
             onInputChange()
@@ -113,7 +113,7 @@ let ExpandableTagsInput = ({
           }}
           value={currentInput}
           placeholder={placeholder}
-          {...props}
+          {..._.omit(['onTagsDropped', 'maxTags', 'Loader'], props)}
         />
         <Tags reverse {...{ tags, removeTag, tagStyle, onTagClick, Tag }} />
       </span>

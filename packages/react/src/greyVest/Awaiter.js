@@ -4,7 +4,7 @@ import { observer } from 'mobx-react'
 let Awaiter = ({ promise, children }) =>
   promise.case({
     pending: () => <div>Loading...</div>,
-    rejected: (error) => <div>Ooops.. {error}</div>,
+    rejected: (error) => <div>Ooops.. {JSON.stringify(error)}</div>,
     fulfilled: (value) => <div>{children(value)}</div>,
   })
 

@@ -1,9 +1,12 @@
-import React from 'react'
-import { storiesOf } from '@storybook/react'
 import TestTree from './stories/testTree.js'
-import ThemePicker from '../stories/themePicker.js'
-import { Date } from './index.js'
+import Component from './Date.js'
 
-storiesOf('ExampleTypes|Date', module)
-  .addDecorator(ThemePicker('greyVest'))
-  .add('Date', () => <Date tree={TestTree()} path={['date']} />)
+export default {
+  component: Component,
+  args: {
+    tree: TestTree(),
+    path: ['date'],
+  },
+}
+
+export const Date = {}

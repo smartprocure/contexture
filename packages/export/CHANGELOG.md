@@ -1,5 +1,41 @@
 ﻿# Changelog
 
+## 1.0.16
+
+### Patch Changes
+
+- 3b7125e: Remove publish config and set default config to make yalc linking simpler
+
+## 1.0.15
+
+### Patch Changes
+
+- a25aa61: bump futil
+
+## 1.0.14
+
+### Patch Changes
+
+- 2dc36c8: Republish packages with correct package.json exports field
+
+## 1.0.13
+
+### Patch Changes
+
+- cd3e075: Update yarn.lock on versioning
+
+## 1.0.12
+
+### Patch Changes
+
+- ec5bb50: Fix yarn.lock
+
+## 1.0.11
+
+### Patch Changes
+
+- 4afa762: Fix package json contexture repo links
+
 ## 1.0.9
 
 - Add exports to package.json so node knows which version of the code to import

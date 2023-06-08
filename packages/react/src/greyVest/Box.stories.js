@@ -1,12 +1,10 @@
-import React from 'react'
-import { Box } from './index.js'
-import decorator from './stories/decorator.js'
+import Component from './Box.js'
 
 export default {
-  title: 'GreyVest Library|Box',
-  decorators: [decorator],
-  component: Box,
-  descriptionSlot: () => 'box description',
+  component: Component,
+  args: {
+    children: 'Box Contents',
+  },
 }
 
-export let story = () => <Box>Box Contents</Box>
+export const Box = {}

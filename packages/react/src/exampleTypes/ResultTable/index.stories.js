@@ -1,19 +1,19 @@
 import _ from 'lodash/fp.js'
 import React from 'react'
+import emojiDataSource from 'emoji-datasource'
 import TestTree from '../stories/testTree.js'
-import ThemePicker from '../../stories/themePicker.js'
-import ResultTable from './index.js'
+import Component from './index.js'
 import { Observer } from 'mobx-react'
-import { Box } from '../../greyVest/index.js'
+import { useMemoryTree } from '../../MemoryTable.js'
+import { Grid, Box } from '../../greyVest/index.js'
 import Contexture from 'contexture'
 import ContextureMobx from '../../utils/contexture-mobx.js'
 import memory from 'contexture/provider-memory/index.js'
 import types from 'contexture/provider-memory/exampleTypes.js'
+import Facet from '../Facet.js'
 
 export default {
-  title: 'ExampleTypes | ResultTable',
-  component: ResultTable,
-  decorators: [ThemePicker('greyVest')],
+  component: Component,
 }
 
 let style = (
@@ -37,10 +37,33 @@ let style = (
   </style>
 )
 
-export let customizations = () => (
+export let EmojiDataset = () => {
+  let tree = useMemoryTree({
+    records: emojiDataSource,
+    criteriaNodes: [{ type: 'facet', field: 'category' }],
+  })
+
+  return (
+    <Grid columns="1fr 3fr" gap={8}>
+      <Box>
+        <Facet tree={tree} path={['root', 'criteria', 'category-facet']} />
+      </Box>
+      <Box style={{ overflow: 'auto' }}>
+        <Component
+          infer
+          tree={tree}
+          path={['root', 'results']}
+          fields={{ category: { order: 1 } }}
+        />
+      </Box>
+    </Grid>
+  )
+}
+
+export let Customizations = () => (
   <div>
     {style}
-    <ResultTable
+    <Component
       tree={TestTree()}
       path={['results']}
       theme={{ Table: (x) => <table className="example-table" {...x} /> }}
@@ -88,28 +111,26 @@ export let customizations = () => (
   </div>
 )
 
-export let displayFieldOptional = () => {
+export let DisplayFieldOptional = () => {
   let tree = TestTree((testTree) => {
     testTree.getNode(['results']).include = ['title', 'a', 'b']
     return testTree
   })
   return (
-    <div>
-      <ResultTable
-        tree={tree}
-        path={['results']}
-        Table={(x) => <table className="example-table" {...x} />}
-        fields={{
-          title: {
-            Cell: (x) => <td style={{ color: 'red' }} {...x} />,
-          },
-        }}
-      />
-    </div>
+    <Component
+      tree={tree}
+      path={['results']}
+      Table={(x) => <table className="example-table" {...x} />}
+      fields={{
+        title: {
+          Cell: (x) => <td style={{ color: 'red' }} {...x} />,
+        },
+      }}
+    />
   )
 }
 
-export let pagination = () => {
+export let Pagination = () => {
   let data = _.times((x) => ({ _id: x, value: _.random(0, 20000) }), 221)
   let tree = {
     key: 'root',
@@ -127,7 +148,7 @@ export let pagination = () => {
     <Box>
       <Observer>
         {() => (
-          <ResultTable
+          <Component
             fields={{ _id: { label: 'id' }, value: { label: 'val' } }}
             tree={search}
             path={['root', 'results']}

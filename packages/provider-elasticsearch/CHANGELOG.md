@@ -1,9 +1,77 @@
 # Changelog
 
+## 1.22.1
+
+### Patch Changes
+
+- bf48a09b: Fixed various bugs related to keyword generations
+
+## 1.22.0
+
+### Minor Changes
+
+- 35bae50: Add Keyword Generation support to `tagsQuery`
+
+## 1.21.0
+
+### Minor Changes
+
+- 78e9d0f: Highlight: filterNested flag to return only values with hightlights
+
 ## 1.20.0
 
-- [pivot] refactor hoisting into pivot type function
-- [pivot] fix click through when hoisted props present
+### Minor Changes
+
+- 260d6e8: Fix: removing override from searchHighlight
+
+## 1.19.17
+
+### Patch Changes
+
+- fc6fbea: Highlight: override schema config by node config
+
+## 1.19.16
+
+### Patch Changes
+
+- 3b7125e: Remove publish config and set default config to make yalc linking simpler
+
+## 1.19.15
+
+### Patch Changes
+
+- 57c91c0: Fix pivot validContext to allow rows, columns, OR values
+- a25aa61: bump futil
+
+## 1.19.14
+
+### Patch Changes
+
+- 4acd46a: Nested highlighting fixes
+
+## 1.19.13
+
+### Patch Changes
+
+- 2dc36c8: Republish packages with correct package.json exports field
+
+## 1.19.12
+
+### Patch Changes
+
+- cd3e075: Update yarn.lock on versioning
+
+## 1.19.11
+
+### Patch Changes
+
+- ec5bb50: Fix yarn.lock
+
+## 1.19.10
+
+### Patch Changes
+
+- 4afa762: Fix package json contexture repo links
 
 ## 1.19.8
 

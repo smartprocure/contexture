@@ -1,4 +1,4 @@
-name: Publish Packages
+name: Release or Create Release PR
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  publish:
+  release-or-create-pr:
     # Only one publish job should run at a time
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#concurrency
     concurrency: publish
@@ -24,7 +24,16 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Publish
-        run: ./scripts/publish.sh
+      - name: Setup npm auth token
+        run: |
+          echo -e "npmRegistryServer: \"https://registry.npmjs.org/\"\nnpmAuthToken: \"$NPM_TOKEN\"" >> ./.yarnrc.yml
         env:
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          NPM_TOKEN: '${{ secrets.NPM_AUTH_TOKEN }}'
+
+      - name: Release or Create Release PR
+        uses: changesets/action@v1
+        with:
+          version: yarn version
+          publish: yarn publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
