@@ -44,13 +44,7 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
       },
     }
   },
-  async runSearch(
-    { requestOptions = {} } = {},
-    node,
-    schema,
-    filters,
-    aggs
-  ) {
+  async runSearch({ requestOptions = {} } = {}, node, schema, filters, aggs) {
     let hoistedFromFilters = hoistOnTree(filters)
     let hoistedFromAggs = hoistOnTree(aggs)
     let { searchWrapper } = config
@@ -66,7 +60,8 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
           body: {
             // Wrap in constant_score when not sorting by score to avoid wasting time on relevance scoring
             ...(!_.isEmpty(hoistedFromAggs) && _.mergeAll(hoistedFromAggs)),
-            ...(!_.isEmpty(hoistedFromFilters) && _.mergeAll(hoistedFromFilters)),
+            ...(!_.isEmpty(hoistedFromFilters) &&
+              _.mergeAll(hoistedFromFilters)),
             query:
               filters && !_.has('sort._score', aggs)
                 ? constantScore(filters)
