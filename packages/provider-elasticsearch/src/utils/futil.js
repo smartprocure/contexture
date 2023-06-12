@@ -2,7 +2,7 @@ import _ from 'lodash/fp.js'
 import F from 'futil'
 
 export let unsetOnTree = _.curry((prop, tree) =>
-_.compact(F.treeToArrayBy()(F.popProperty(prop), tree))
+  _.compact(F.treeToArrayBy()(F.popProperty(prop), tree))
 )
 
 export let maybeAppend = (suffix, str) =>

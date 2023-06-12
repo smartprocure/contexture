@@ -516,12 +516,8 @@ let filter = async (node, schema) => {
   let getStats = () => {
     throw 'Pivot filtering does not support running searches to build filters yet'
   }
-  let { getDrilldownFilters } = createPivotScope(
-    node,
-    schema,
-    getStats
-  )
-  
+  let { getDrilldownFilters } = createPivotScope(node, schema, getStats)
+
   return or(
     await compactMapAsync(
       async (filter) =>

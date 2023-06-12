@@ -267,7 +267,6 @@ describe('results', () => {
   })
 
   it('Should hoist from tree based on demarcation for hoisting from aggs', () => {
-
     let input = {
       aggs: {
         groups: {
@@ -360,93 +359,98 @@ describe('results', () => {
   })
 
   it('Should hoist from tree based on demarcation for hoisting from filters', () => {
-
     let input = {
-      "index": "sp-data-lit",
-      "body": {
-        "query": {
-          "constant_score": {
-            "filter": {
-              "bool": {
-                "should": [
+      index: 'sp-data-lit',
+      body: {
+        query: {
+          constant_score: {
+            filter: {
+              bool: {
+                should: [
                   {
-                    "bool": {
-                      "must": [
-                        { 
-                          __hoistProps : {
+                    bool: {
+                      must: [
+                        {
+                          __hoistProps: {
                             runtime_mappings: {
-                              "FederalDoc.relevantContractDates.signedDate.fiscal": {
-                                "type": "date",
-                                "script": {
-                                  "source": "if(doc['FederalDoc.relevantContractDates.signedDate'].size()!=0){emit(doc['FederalDoc.relevantContractDates.signedDate'].value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}",
-                                  "params": {
-                                    "monthOffset": 3
-                                  }
-                                }
-                              }
-                            }
+                              'FederalDoc.relevantContractDates.signedDate.fiscal':
+                                {
+                                  type: 'date',
+                                  script: {
+                                    source:
+                                      "if(doc['FederalDoc.relevantContractDates.signedDate'].size()!=0){emit(doc['FederalDoc.relevantContractDates.signedDate'].value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}",
+                                    params: {
+                                      monthOffset: 3,
+                                    },
+                                  },
+                                },
+                            },
                           },
-                          "range": {
-                            "FederalDoc.relevantContractDates.signedDate.fiscal": {
-                              "gte": "2015-04-01T00:00:00.000Z",
-                              "lte": "2015-06-30T23:59:59Z"
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  }
+                          range: {
+                            'FederalDoc.relevantContractDates.signedDate.fiscal':
+                              {
+                                gte: '2015-04-01T00:00:00.000Z',
+                                lte: '2015-06-30T23:59:59Z',
+                              },
+                          },
+                        },
+                      ],
+                    },
+                  },
                 ],
-                "minimum_should_match": 1
-              }
-            }
-          }
-        }
+                minimum_should_match: 1,
+              },
+            },
+          },
+        },
+      },
     }
-  }
-  let output = {
+    let output = {
       result: {
-        "index": "sp-data-lit",
-        "body": {
-          "query": {
-            "constant_score": {
-              "filter": {
-                "bool": {
-                  "should": [
+        index: 'sp-data-lit',
+        body: {
+          query: {
+            constant_score: {
+              filter: {
+                bool: {
+                  should: [
                     {
-                      "bool": {
-                        "must": [
-                          { "range": {
-                              "FederalDoc.relevantContractDates.signedDate.fiscal": {
-                                "gte": "2015-04-01T00:00:00.000Z",
-                                "lte": "2015-06-30T23:59:59Z"
-                              }
-                            }
-                          }
-                        ]
-                      }
-                    }
+                      bool: {
+                        must: [
+                          {
+                            range: {
+                              'FederalDoc.relevantContractDates.signedDate.fiscal':
+                                {
+                                  gte: '2015-04-01T00:00:00.000Z',
+                                  lte: '2015-06-30T23:59:59Z',
+                                },
+                            },
+                          },
+                        ],
+                      },
+                    },
                   ],
-                  "minimum_should_match": 1
-                }
-              }
-            }
-          }
-        }
+                  minimum_should_match: 1,
+                },
+              },
+            },
+          },
+        },
       },
       removed: [
         {
           runtime_mappings: {
-            "FederalDoc.relevantContractDates.signedDate.fiscal": {
-              "type": "date",
-              "script": {
-                "source": "if(doc['FederalDoc.relevantContractDates.signedDate'].size()!=0){emit(doc['FederalDoc.relevantContractDates.signedDate'].value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}",
-                "params": {
-                  "monthOffset": 3
-                }
-              }
-            }
-          }
+            'FederalDoc.relevantContractDates.signedDate.fiscal': {
+              type: 'date',
+              script: {
+                source:
+                  "if(doc['FederalDoc.relevantContractDates.signedDate'].size()!=0){emit(doc['FederalDoc.relevantContractDates.signedDate'].value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}",
+                params: {
+                  monthOffset: 3,
+                },
+              },
+            },
+          },
         },
       ],
     }
@@ -454,5 +458,4 @@ describe('results', () => {
     let result = { result: input, removed: hoistOnTree(input) }
     expect(result).toEqual(output)
   })
-
 })

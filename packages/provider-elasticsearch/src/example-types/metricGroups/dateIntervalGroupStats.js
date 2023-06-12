@@ -34,21 +34,21 @@ let getFiscalMappings = _.curry((toFiscalField,{field, monthOffset}) => ({
   },
 }))
 
-let drilldown = ({ field, interval, drilldown, monthOffset = 3}) => {
+let drilldown = ({ field, interval, drilldown, monthOffset = 3 }) => {
   let fiscalOrField = fieldFiscalMappingOr(interval)
   interval = toElasticInterval(interval)
   let gte = drilldown
   let lte = moment.parseZone(drilldown).endOf(interval).format()
   return {
-    ...(isFiscal(fiscalOrField(field)) &&
-    {
-      __hoistProps: getFiscalMappings(fiscalOrField, { field, monthOffset})}),
-      range: { [fiscalOrField(field)]: { gte, lte } } 
+    ...(isFiscal(fiscalOrField(field)) && {
+      __hoistProps: getFiscalMappings(fiscalOrField, { field, monthOffset }),
+    }),
+    range: { [fiscalOrField(field)]: { gte, lte } },
   }
 }
 
 let buildGroupQuery = (node, children, groupsKey) => {
-  let { field, interval = 'year', monthOffset = 3} = node
+  let { field, interval = 'year', monthOffset = 3 } = node
   let fiscalOrField = fieldFiscalMappingOr(interval)
   interval = toElasticInterval(interval)
 
@@ -64,8 +64,12 @@ let buildGroupQuery = (node, children, groupsKey) => {
     aggs: {
       [groupsKey]: {
         date_histogram: {
-          ...(isFiscal(fiscalOrField(field)) &&
-          {__hoistProps: getFiscalMappings(fiscalOrField, { field, monthOffset})}),
+          ...(isFiscal(fiscalOrField(field)) && {
+            __hoistProps: getFiscalMappings(fiscalOrField, {
+              field,
+              monthOffset,
+            }),
+          }),
           field: fiscalOrField(field),
           interval,
           min_doc_count: 0,

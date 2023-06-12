@@ -127,15 +127,16 @@ describe('dateIntervalGroupStats', () => {
       })
     ).toEqual({
       __hoistProps: {
-        "runtime_mappings": {
-          "PO.IssuedDate.fiscal": {
-            "script": {
-              "params": {
-                "monthOffset": 3,
+        runtime_mappings: {
+          'PO.IssuedDate.fiscal': {
+            script: {
+              params: {
+                monthOffset: 3,
               },
-              "source": "if(doc['PO.IssuedDate'].size()!=0){emit(doc['PO.IssuedDate'].value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}",
+              source:
+                "if(doc['PO.IssuedDate'].size()!=0){emit(doc['PO.IssuedDate'].value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}",
             },
-            "type": "date",
+            type: 'date',
           },
         },
       },
@@ -154,15 +155,16 @@ describe('dateIntervalGroupStats', () => {
       })
     ).toEqual({
       __hoistProps: {
-        "runtime_mappings": {
-          "PO.IssuedDate.fiscal": {
-            "script": {
-              "params": {
-                "monthOffset": 3,
+        runtime_mappings: {
+          'PO.IssuedDate.fiscal': {
+            script: {
+              params: {
+                monthOffset: 3,
               },
-              "source": "if(doc['PO.IssuedDate'].size()!=0){emit(doc['PO.IssuedDate'].value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}",
+              source:
+                "if(doc['PO.IssuedDate'].size()!=0){emit(doc['PO.IssuedDate'].value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}",
             },
-            "type": "date",
+            type: 'date',
           },
         },
       },
@@ -188,15 +190,16 @@ describe('dateIntervalGroupStats', () => {
         groups: {
           date_histogram: {
             __hoistProps: {
-              "runtime_mappings": {
-                "PO.IssuedDate.fiscal": {
-                  "script": {
-                    "params": {
-                      "monthOffset": 3,
+              runtime_mappings: {
+                'PO.IssuedDate.fiscal': {
+                  script: {
+                    params: {
+                      monthOffset: 3,
                     },
-                    "source": "if(doc['PO.IssuedDate'].size()!=0){emit(doc['PO.IssuedDate'].value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}",
+                    source:
+                      "if(doc['PO.IssuedDate'].size()!=0){emit(doc['PO.IssuedDate'].value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}",
                   },
-                  "type": "date",
+                  type: 'date',
                 },
               },
             },
@@ -228,15 +231,16 @@ describe('dateIntervalGroupStats', () => {
         groups: {
           date_histogram: {
             __hoistProps: {
-              "runtime_mappings": {
-                "PO.IssuedDate.fiscal": {
-                  "script": {
-                    "params": {
-                      "monthOffset": 3,
+              runtime_mappings: {
+                'PO.IssuedDate.fiscal': {
+                  script: {
+                    params: {
+                      monthOffset: 3,
                     },
-                    "source": "if(doc['PO.IssuedDate'].size()!=0){emit(doc['PO.IssuedDate'].value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}",
+                    source:
+                      "if(doc['PO.IssuedDate'].size()!=0){emit(doc['PO.IssuedDate'].value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}",
                   },
-                  "type": "date",
+                  type: 'date',
                 },
               },
             },
