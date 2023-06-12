@@ -53,7 +53,6 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
   ) {
     let hoistedFromFilters = hoistOnTree(filters)
     let hoistedFromAggs = hoistOnTree(aggs)
-    console.log('Inside Run Search', _.mergeAll(hoistedFromAggs), _.mergeAll(hoistedFromFilters))
     let { searchWrapper } = config
     let { scroll, scrollId } = node
     let request = scrollId
