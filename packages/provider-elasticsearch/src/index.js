@@ -1,4 +1,5 @@
 import _ from 'lodash/fp.js'
+import { hoistOnTree } from './utils/results.js'
 import { getESSchemas } from './schema.js'
 import _debug from 'debug'
 
@@ -47,14 +48,17 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
     { requestOptions = {} } = {},
     node,
     schema,
-    { filterHoistProps = {}, ...filters } = {},
-    { aggsHoistProps = {}, ...aggs } = {}
+    filters,
+    aggs
   ) {
+    let hoistedFromFilters = hoistOnTree(filters)
+    let hoistedFromAggs = hoistOnTree(aggs)
+    console.log('Inside Run Search', _.mergeAll(hoistedFromAggs), _.mergeAll(hoistedFromFilters))
     let { searchWrapper } = config
     let { scroll, scrollId } = node
     let request = scrollId
       ? // If we have scrollId then keep scrolling, no query needed
-        { scroll: scroll === true ? '60m' : scroll, scrollId }
+        { scroll: scroll === true ? '60m' : hoistedFromFilters, scrollId }
       : // Deterministic ordering of JSON keys for request cache optimization
         {
           index: schema.elasticsearch.index,
@@ -62,12 +66,12 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
           ...(scroll && { scroll: scroll === true ? '2m' : scroll }),
           body: {
             // Wrap in constant_score when not sorting by score to avoid wasting time on relevance scoring
-            ...(!_.isEmpty(aggsHoistProps) && aggsHoistProps),
-            ...(!_.isEmpty(filterHoistProps) && filterHoistProps),
+            ...(!_.isEmpty(hoistedFromAggs) && _.mergeAll(hoistedFromAggs)),
+            ...(!_.isEmpty(hoistedFromFilters) && _.mergeAll(hoistedFromFilters)),
             query:
-              !_.isEmpty(filters) && !_.has('sort._score', aggs)
+              filters && !_.has('sort._score', aggs)
                 ? constantScore(filters)
-                : getFilterOrIgnoreVal(filters),
+                : filters,
             // If there are aggs, skip search results
             ...(aggs.aggs && { size: 0 }),
             // Sorting by _doc is more efficient for scrolling since it won't waste time on any sorting

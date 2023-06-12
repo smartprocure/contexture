@@ -126,6 +126,19 @@ describe('dateIntervalGroupStats', () => {
         drilldown: '2015-01-01T00:00:00.000Z',
       })
     ).toEqual({
+      __hoistProps: {
+        "runtime_mappings": {
+          "PO.IssuedDate.fiscal": {
+            "script": {
+              "params": {
+                "monthOffset": 3,
+              },
+              "source": "if(doc['PO.IssuedDate'].size()!=0){emit(doc['PO.IssuedDate'].value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}",
+            },
+            "type": "date",
+          },
+        },
+      },
       range: {
         'PO.IssuedDate.fiscal': {
           gte: '2015-01-01T00:00:00.000Z',
@@ -140,6 +153,19 @@ describe('dateIntervalGroupStats', () => {
         drilldown: '2015-01-01T00:00:00.000Z',
       })
     ).toEqual({
+      __hoistProps: {
+        "runtime_mappings": {
+          "PO.IssuedDate.fiscal": {
+            "script": {
+              "params": {
+                "monthOffset": 3,
+              },
+              "source": "if(doc['PO.IssuedDate'].size()!=0){emit(doc['PO.IssuedDate'].value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}",
+            },
+            "type": "date",
+          },
+        },
+      },
       range: {
         'PO.IssuedDate.fiscal': {
           gte: '2015-01-01T00:00:00.000Z',
@@ -161,6 +187,19 @@ describe('dateIntervalGroupStats', () => {
       aggs: {
         groups: {
           date_histogram: {
+            __hoistProps: {
+              "runtime_mappings": {
+                "PO.IssuedDate.fiscal": {
+                  "script": {
+                    "params": {
+                      "monthOffset": 3,
+                    },
+                    "source": "if(doc['PO.IssuedDate'].size()!=0){emit(doc['PO.IssuedDate'].value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}",
+                  },
+                  "type": "date",
+                },
+              },
+            },
             field: 'PO.IssuedDate.fiscal',
             interval: 'year',
             min_doc_count: 0,
@@ -188,6 +227,19 @@ describe('dateIntervalGroupStats', () => {
       aggs: {
         groups: {
           date_histogram: {
+            __hoistProps: {
+              "runtime_mappings": {
+                "PO.IssuedDate.fiscal": {
+                  "script": {
+                    "params": {
+                      "monthOffset": 3,
+                    },
+                    "source": "if(doc['PO.IssuedDate'].size()!=0){emit(doc['PO.IssuedDate'].value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}",
+                  },
+                  "type": "date",
+                },
+              },
+            },
             field: 'PO.IssuedDate.fiscal',
             interval: 'quarter',
             min_doc_count: 0,

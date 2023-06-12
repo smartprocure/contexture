@@ -211,38 +211,6 @@ let createPivotScope = (node, schema, getStats) => {
       }, groups)
     )
 
-  let hoistFunStub = lookupTypeProp(_.stubObject, 'hoistProps')
-  /*
-   *   Get hoisted properties from the groups of a chart,
-   *   passing values also in case this is needed.
-   *
-   *   This is to avoid having issues in which props are not allowed at the same level.
-   *   hoistProps allows groups to hoist items to top of mapping structure and can be
-   *   used for other needs in which hoisting is required.
-   */
-
-  let getHoistProps = (hoistFrom) =>
-    _.merge(
-      ...F.flowMap(
-        ({ drilldown = [], groups = [] }) =>
-          F.mapIndexed(
-            (group, i) => _.defaults({ drilldown: drilldown[i] }, group),
-            groups
-          ),
-        _.flattenDeep,
-        F.compactMap((group) => ({
-          ...group,
-          hoistFun: hoistFunStub(group.type),
-        })),
-        _.map(({ hoistFun, ...group }) =>
-          _.isFunction(hoistFun)
-            ? hoistFun({ ...group }, schema, getStats)
-            : hoistFun
-        ),
-        _.mergeAll
-      )(hoistFrom)
-    )
-
   // Builds filters for skip/include values
   let getRequestFilters = async ({
     drilldown = [],
@@ -360,11 +328,6 @@ let createPivotScope = (node, schema, getStats) => {
       ? node.rows
       : _.take(_.size(rowDrills) + 1, node.rows)
 
-    let aggsHoistProps = getHoistProps([
-      { drilldown: columnDrills, groups: columns },
-      { drilldown: rowDrills, groups: rows },
-    ])
-
     // Filtering data specified by the drilldown
     let drilldownColumnFilters = await getDrilldownFilters({
       drilldown: columnDrills,
@@ -469,7 +432,7 @@ let createPivotScope = (node, schema, getStats) => {
     // Without this, ES7+ stops counting at 10k instead of returning the actual count
     query.track_total_hits = true
 
-    return { ...query, ...(!_.isEmpty(aggsHoistProps) && aggsHoistProps) }
+    return query
   }
 
   /***
@@ -536,7 +499,6 @@ let createPivotScope = (node, schema, getStats) => {
     buildQuery,
     getResultKeys,
     processResponse,
-    getHoistProps,
   }
 }
 
@@ -554,18 +516,13 @@ let filter = async (node, schema) => {
   let getStats = () => {
     throw 'Pivot filtering does not support running searches to build filters yet'
   }
-  let { getDrilldownFilters, getHoistProps } = createPivotScope(
+  let { getDrilldownFilters } = createPivotScope(
     node,
     schema,
     getStats
   )
-
-  let filterHoistProps = await getHoistProps([
-    { drilldown: filters.columns, groups: columns },
-    { drilldown: filters.rows, groups: rows },
-  ])
-
-  let filterResults = or(
+  
+  return or(
     await compactMapAsync(
       async (filter) =>
         and([
@@ -581,11 +538,6 @@ let filter = async (node, schema) => {
       filters
     )
   )
-
-  return {
-    ...filterResults,
-    ...(!_.isEmpty(filterHoistProps) && filterHoistProps),
-  }
 }
 
 export default {
