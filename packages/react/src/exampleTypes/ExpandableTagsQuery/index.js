@@ -140,7 +140,8 @@ let TagsWrapper = observer(
             `context.tags.${props.value}`,
             `context.keywordGenerations.${props.value}`,
           ],
-          node
+          node,
+          0
         )
         let tagProps = {
           ...props,
