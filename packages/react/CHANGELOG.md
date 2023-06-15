@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.57.7
+
+### Patch Changes
+
+- 853982b9: Fix counts for filterOnly flag
+
 ## 2.57.6
 
 ### Patch Changes
