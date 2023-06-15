@@ -15,7 +15,7 @@ let searchBarStyle = {
 let searchBarBoxStyle = {
   padding: '8px 10px',
   flex: 1,
-  borderBottomRightRadius: '3px'
+  borderBottomRightRadius: '3px',
 }
 
 let innerEdgeMargins = {

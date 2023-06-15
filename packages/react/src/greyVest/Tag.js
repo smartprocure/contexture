@@ -30,7 +30,7 @@ let Tag = ({
         borderRadius: '3px',
         wordBreak: 'break-all',
         ...F.callOrReturn(tagStyle, value),
-       ...( hoverState && hoverColor && {backgroundColor: hoverColor} )
+        ...(hoverState && hoverColor && { backgroundColor: hoverColor }),
       }}
       onClick={() => onClick({ value, label })}
       onMouseEnter={() => setHoverState(true)}
@@ -40,7 +40,7 @@ let Tag = ({
         {AddIcon}
         <span
           style={{
-           ...( !AddIcon && {paddingLeft: '0.45em'}),
+            ...(!AddIcon && { paddingLeft: '0.45em' }),
             paddingBottom: '0.15em',
             // Prefer padding on the remove icon so it has more area to receive
             // clicks
