@@ -26,15 +26,16 @@ let triggerKeywordGeneration = async (node, tree) => {
   tree.mutate(node.path, { generateKeywords: false })
 }
 
-let KeywordGenerationIcon = () => (
+let KeywordGenerationIcon = ({strokeColor = 'currentColor'}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className="h-6 w-6"
-    fill="none"
     viewBox="0 0 28 28"
-    stroke="currentColor"
+    fill="none"
+    stroke={strokeColor}
     strokeWidth="2"
   >
+    <title>Enter 3 keywords to generate keyword suggestions.</title>
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -51,9 +52,11 @@ let ExpandableTagsQuery = ({
   theme,
   tree,
   node,
+  innerEdgeMargins = {},
   ...props
 }) => {
   let generationsCollapsed = React.useState(true)
+  let {marginRight, marginLeft} = innerEdgeMargins
   let ref = React.useRef()
   useOutsideClick({
     ref,
@@ -92,21 +95,25 @@ let ExpandableTagsQuery = ({
         )}
       </div>
       {/*Margin is to ensure that view more(ExpandArrow) is presented nicely*/}
-      {!F.view(generationsCollapsed) && (
+      {!F.view(generationsCollapsed) && 
         <hr
           style={{
             border: '2px solid #EBEBEB',
+            ...(!_.isEmpty(innerEdgeMargins) && {marginLeft, marginRight}),
+            ...(!F.view(collapse) && {marginBottom: '10px'}),
             ...(showMoreKeywordsButton && { marginBottom: 20 }),
           }}
         />
-      )}
+      }
       <KeywordGenerations
         node={node}
         tree={tree}
         Tag={theme.Tag}
         generationsCollapsed={generationsCollapsed}
+        innerEdgeMargins={innerEdgeMargins}
         {...props}
       />
+      
     </div>
   )
 }
@@ -181,7 +188,10 @@ let TagsWrapper = observer(
               sanitizeTags={sanitizeTags}
               maxTags={maxTags}
               wordsMatchPattern={wordsMatchPattern}
-              tags={_.map(tagValueField, node.tags)}
+              tags={node.tags?.length > 0 ? 
+                _.map(tagValueField, node.tags) : 
+                F.on(generationsCollapsed)()
+              }
               onTagsDropped={onTagsDropped}
               addTags={(addedTags) => {
                 let addedTagObjects = _.map(convertWordToTag, addedTags)
@@ -198,6 +208,7 @@ let TagsWrapper = observer(
                 tree.mutate(node.path, {
                   tags: _.reject({ [tagValueField]: tag }, node.tags),
                 })
+                node.tags?.length <= 2 && F.on(generationsCollapsed)()
               }}
               tagStyle={getTagStyle(node, tagValueField)}
               submit={tree.triggerUpdate}
@@ -213,8 +224,8 @@ let TagsWrapper = observer(
                 // including numbers ups the chance of producing bad suggestions
                 sanitizeTagInputs(node.tags)?.length > 2 &&
                 enableKeywordGenerations
-                  ? { width: 35 }
-                  : { display: 'none' }
+                  ? { width: 35, strokeOpacity: 1 }
+                  : { width: 35, strokeOpacity: 0.5}
               }
               onClick={async () => {
                 // Generate keywords or show existing keywords
@@ -232,7 +243,11 @@ let TagsWrapper = observer(
                 }
               }}
             >
-              <KeywordGenerationIcon />
+              <KeywordGenerationIcon 
+                strokeColor={ 
+                  sanitizeTagInputs(node.tags)?.length > 2 &&
+                  enableKeywordGenerations ? 'rgb(92, 184, 92)' : 'currentColor'
+                }/>
             </TextButton>
           </GridItem>
           <GridItem place="center">
