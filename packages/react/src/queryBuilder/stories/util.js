@@ -2,7 +2,6 @@ import React from 'react'
 import F from 'futil'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { action } from '@storybook/addon-actions'
 
 export let DnDDecorator = (storyFn) => (
   <DndProvider backend={HTML5Backend}>{storyFn()}</DndProvider>

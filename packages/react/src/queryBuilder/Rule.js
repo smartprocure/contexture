@@ -1,6 +1,5 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import _ from 'lodash/fp.js'
 import F from 'futil'
 import styles from '../styles/index.js'
 import Indentable from './preview/Indentable.js'
