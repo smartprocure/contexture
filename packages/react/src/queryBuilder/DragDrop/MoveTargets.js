@@ -1,33 +1,31 @@
 import React from 'react'
-import { FilterDropTarget } from './FilterDropTarget.js'
+import { useFilterDropTarget } from './FilterDropTarget.js'
 import styles from '../../styles/index.js'
 
 // Move
-let FilterMoveSpec = {
-  drop(props, monitor) {
-    let { node } = monitor.getItem()
-    props.tree.move(node.path, {
-      path: props.node.path,
-      index: props.index,
+let FilterMoveDropTarget =
+  (style) =>
+  ({ node, tree, index }) => {
+    const [{ canDrop, isOver }, drop] = useFilterDropTarget({
+      drop(source) {
+        tree.move(source.node.path, {
+          path: node.path,
+          index: index,
+        })
+      },
     })
-  },
-}
-let FilterMoveDropTarget = (style) =>
-  FilterDropTarget(FilterMoveSpec)(
-    ({ node, connectDropTarget, isOver, canDrop }) =>
-      connectDropTarget(
-        canDrop ? (
-          <div
-            style={{
-              ...styles.bgPreview(node),
-              ...style({ isOver }),
-            }}
-          />
-        ) : (
-          <div />
-        )
-      )
-  )
+    return canDrop ? (
+      <div
+        ref={drop}
+        style={{
+          ...styles.bgPreview(node),
+          ...style({ isOver }),
+        }}
+      />
+    ) : (
+      <div />
+    )
+  }
 
 export let OperatorMoveTarget = FilterMoveDropTarget(() => ({
   width: `${styles.operatorWidth}px`,

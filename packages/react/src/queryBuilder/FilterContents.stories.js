@@ -1,4 +1,3 @@
-import { root } from './stories/util.js'
 import Component from './FilterContents.js'
 
 export default {
@@ -8,7 +7,6 @@ export default {
 export const FilterContents = {
   args: {
     node: { key: 'testKey' },
-    root,
     fields: {
       test: {
         field: 'test',

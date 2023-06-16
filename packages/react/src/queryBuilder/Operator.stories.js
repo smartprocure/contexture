@@ -1,4 +1,4 @@
-import { parent, root, DnDDecorator } from './stories/util.js'
+import { parent, DnDDecorator } from './stories/util.js'
 import Component from './Operator.js'
 
 export default {
@@ -6,7 +6,6 @@ export default {
   decorators: [DnDDecorator],
   args: {
     index: 1,
-    root,
     parent,
     noDrop: true,
     child: { join: 'and' },

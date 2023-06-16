@@ -1,16 +1,13 @@
-import { DragSource } from 'react-dnd'
+import { useDrag } from 'react-dnd'
 
-export default DragSource(
-  'filter',
-  {
-    beginDrag: (props) => ({
+export default (props) =>
+  useDrag({
+    type: 'filter',
+    item: {
       node: props.child || props.node,
       tree: props.tree,
+    },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
     }),
-  },
-  (connect, monitor) => ({
-    connectDragSource: connect.dragSource(),
-    connectDragPreview: connect.dragPreview(),
-    isDragging: monitor.isDragging(),
   })
-)
