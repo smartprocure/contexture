@@ -15,6 +15,14 @@ let searchBarStyle = {
 let searchBarBoxStyle = {
   padding: '8px 10px',
   flex: 1,
+  borderBottomRightRadius: '3px',
+}
+
+let innerEdgeMargins = {
+  marginRight: '-10px',
+  marginLeft: '-10px',
+  marginTop: '-8px',
+  marginBottom: '-8px',
 }
 
 let inputStyle = {
@@ -89,6 +97,7 @@ let SearchBar = ({
             hasPopover,
             actionWrapper,
             enableKeywordGenerations,
+            innerEdgeMargins,
           }}
           onAddTag={F.off(collapse)}
           Loader={({ children, ...props }) => (
