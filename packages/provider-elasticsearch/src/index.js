@@ -1,4 +1,5 @@
 import _ from 'lodash/fp.js'
+import { hoistOnTree } from './utils/results.js'
 import { getESSchemas } from './schema.js'
 import _debug from 'debug'
 
@@ -19,7 +20,13 @@ let revolvingCounter = (max) => {
 }
 let counter = revolvingCounter(500)
 
-let constantScore = (filter) => ({ constant_score: { filter } })
+let constantScore = (filter) => ({
+  constant_score: { filter: getFilterOrIgnoreVal(filter) },
+})
+
+//Elastic ignores entries that resolve to undefined
+let getFilterOrIgnoreVal = (filters) =>
+  _.isEmpty(filters) ? undefined : filters
 
 let ElasticsearchProvider = (config = { request: {} }) => ({
   types: config.types,
@@ -38,11 +45,13 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
     }
   },
   async runSearch({ requestOptions = {} } = {}, node, schema, filters, aggs) {
+    let hoistedFromFilters = hoistOnTree(filters)
+    let hoistedFromAggs = hoistOnTree(aggs)
     let { searchWrapper } = config
     let { scroll, scrollId } = node
     let request = scrollId
       ? // If we have scrollId then keep scrolling, no query needed
-        { scroll: scroll === true ? '60m' : scroll, scrollId }
+        { scroll: scroll === true ? '60m' : hoistedFromFilters, scrollId }
       : // Deterministic ordering of JSON keys for request cache optimization
         {
           index: schema.elasticsearch.index,
@@ -50,6 +59,9 @@ let ElasticsearchProvider = (config = { request: {} }) => ({
           ...(scroll && { scroll: scroll === true ? '2m' : scroll }),
           body: {
             // Wrap in constant_score when not sorting by score to avoid wasting time on relevance scoring
+            ...(!_.isEmpty(hoistedFromAggs) && _.mergeAll(hoistedFromAggs)),
+            ...(!_.isEmpty(hoistedFromFilters) &&
+              _.mergeAll(hoistedFromFilters)),
             query:
               filters && !_.has('sort._score', aggs)
                 ? constantScore(filters)

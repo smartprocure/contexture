@@ -13,8 +13,9 @@ let everyEmpty = _.flow(_.flattenDeep, _.every(_.isEmpty))
 let Tree = F.tree(_.get('rows'))
 let ColTree = F.tree(_.get('columns'))
 
-let lookupTypeProp = (def, prop, type) =>
+let lookupTypeProp = _.curry((def, prop, type) =>
   _.getOr(def, `${type}GroupStats.${prop}`, types)
+)
 
 // PivotTable -> Query:
 //  rows -> columns -> values
@@ -289,10 +290,7 @@ let createPivotScope = (node, schema, getStats) => {
           group.sort = { field: sortField, direction: sort.direction }
         }
         let build = lookupTypeProp(_.identity, 'buildGroupQuery', group.type)
-
         //Remove anything that needs to be hoisted before composing further
-        let hoist = { hoistProps: { ...children.hoistProps } }
-        children = _.omit('hoistProps', await children)
         // We are iterating through the groups reversed so we need to subtract instead of add to get the right index
         let reversedLookupIndex = groups.length - index - 1
         let drilldownKey = _.get(
@@ -302,17 +300,11 @@ let createPivotScope = (node, schema, getStats) => {
 
         let parent = await build(
           group,
-          children,
+          await children,
           groupingType,
           schema,
           getStats,
           drilldownKey
-        )
-
-        //Add anything that needs to be hoisted to parent
-        parent.hoistProps = _.merge(
-          _.getOr({}, 'hoistProps', hoist),
-          parent.hoistProps
         )
         return parent
       },
@@ -327,11 +319,6 @@ let createPivotScope = (node, schema, getStats) => {
     // Don't consider deeper levels than +1 the current drilldown
     // This allows avoiding expansion until ready
     // Opt out with expandColumns / expandRows
-
-    let hoistProps = {}
-    let mergeHoistProps = (hoistProps, statsAggs) =>
-      _.merge(_.getOr({}, 'hoistProps', statsAggs), hoistProps)
-    let removeHoistProps = (statsAggs) => _.omit('hoistProps', statsAggs)
 
     let columns = _.get('expanded.columns', node)
       ? node.columns
@@ -385,9 +372,6 @@ let createPivotScope = (node, schema, getStats) => {
         'columns'
       )
 
-      hoistProps = mergeHoistProps(hoistProps, columnsStatsAggs)
-      columnsStatsAggs = removeHoistProps(columnsStatsAggs)
-
       if (request.columns.totals) {
         // adding total column statsAggs above the column filters
         statsAggs = _.merge(
@@ -418,9 +402,6 @@ let createPivotScope = (node, schema, getStats) => {
     )
     let query
 
-    hoistProps = mergeHoistProps(hoistProps, rowsStatsAggs)
-    rowsStatsAggs = removeHoistProps(rowsStatsAggs)
-
     if (request.rows.totals) {
       // adding total rows statsAggs above the rows filters
       query = _.merge(
@@ -450,8 +431,6 @@ let createPivotScope = (node, schema, getStats) => {
 
     // Without this, ES7+ stops counting at 10k instead of returning the actual count
     query.track_total_hits = true
-
-    query = { ...hoistProps, ...query }
 
     return query
   }
@@ -532,7 +511,7 @@ let hasValue = ({ filters }) => !_.isEmpty(filters)
 let filter = async (node, schema) => {
   // This requires getting `search` passed in to filter
   // This is a change to contexture server, which is likely a breaking change moving all contexture type methods to named object params
-  //    That will allow everything to get all props inclding `search`
+  // That will allow everything to get all props inclding `search`
   let { filters, rows = [], columns = [] } = node
   let getStats = () => {
     throw 'Pivot filtering does not support running searches to build filters yet'

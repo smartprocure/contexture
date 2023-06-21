@@ -1,6 +1,7 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
 import { sequentialResultTest } from './testUtils.js'
+import { hoistOnTree } from '../../src/utils/results.js'
 
 describe('results', () => {
   let schema
@@ -263,5 +264,198 @@ describe('results', () => {
         },
       }),
     ])
+  })
+
+  it('Should hoist from tree based on demarcation for hoisting from aggs', () => {
+    let input = {
+      aggs: {
+        groups: {
+          date_histogram: {
+            field: 'PO.IssuedDate.fiscal',
+            interval: 'year',
+            min_doc_count: 0,
+            __hoistProps: {
+              runtime_mappings: {
+                'PO.IssuedDate.fiscal': {
+                  script: {
+                    params: { monthOffset: 3 },
+                    source: `if(doc['PO.IssuedDate'].size()!=0){${''}emit(doc['PO.IssuedDate']${''}.value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}${''}`,
+                  },
+                  type: 'date',
+                },
+              },
+            },
+          },
+          aggs: {
+            min: { min: { field: 'LineItem.TotalPrice' } },
+            max: { max: { field: 'LineItem.TotalPrice' } },
+            avg: { avg: { field: 'LineItem.TotalPrice' } },
+            sum: {
+              sum: {
+                field: 'LineItem.TotalPrice',
+                __hoistProps: {
+                  runtime_mappings: {
+                    'PO.OtherDate.fiscal': {
+                      script: {
+                        params: { monthOffset: 3 },
+                        source: `if(doc['PO.OtherDate'].size()!=0){${''}emit(doc['PO.OtherDate']${''}.value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}${''}`,
+                      },
+                      type: 'date',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    }
+
+    let output = {
+      result: {
+        aggs: {
+          groups: {
+            date_histogram: {
+              field: 'PO.IssuedDate.fiscal',
+              interval: 'year',
+              min_doc_count: 0,
+            },
+            aggs: {
+              min: { min: { field: 'LineItem.TotalPrice' } },
+              max: { max: { field: 'LineItem.TotalPrice' } },
+              avg: { avg: { field: 'LineItem.TotalPrice' } },
+              sum: { sum: { field: 'LineItem.TotalPrice' } },
+            },
+          },
+        },
+      },
+      removed: [
+        {
+          runtime_mappings: {
+            'PO.IssuedDate.fiscal': {
+              script: {
+                params: { monthOffset: 3 },
+                source: `if(doc['PO.IssuedDate'].size()!=0){${''}emit(doc['PO.IssuedDate']${''}.value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}${''}`,
+              },
+              type: 'date',
+            },
+          },
+        },
+        {
+          runtime_mappings: {
+            'PO.OtherDate.fiscal': {
+              script: {
+                params: { monthOffset: 3 },
+                source: `if(doc['PO.OtherDate'].size()!=0){${''}emit(doc['PO.OtherDate']${''}.value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}${''}`,
+              },
+              type: 'date',
+            },
+          },
+        },
+      ],
+    }
+    let result = { result: input, removed: hoistOnTree(input) }
+    expect(result).toEqual(output)
+  })
+
+  it('Should hoist from tree based on demarcation for hoisting from filters', () => {
+    let input = {
+      index: 'sp-data-lit',
+      body: {
+        query: {
+          constant_score: {
+            filter: {
+              bool: {
+                should: [
+                  {
+                    bool: {
+                      must: [
+                        {
+                          __hoistProps: {
+                            runtime_mappings: {
+                              'FederalDoc.relevantContractDates.signedDate.fiscal':
+                                {
+                                  type: 'date',
+                                  script: {
+                                    source:
+                                      "if(doc['FederalDoc.relevantContractDates.signedDate'].size()!=0){emit(doc['FederalDoc.relevantContractDates.signedDate'].value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}",
+                                    params: {
+                                      monthOffset: 3,
+                                    },
+                                  },
+                                },
+                            },
+                          },
+                          range: {
+                            'FederalDoc.relevantContractDates.signedDate.fiscal':
+                              {
+                                gte: '2015-04-01T00:00:00.000Z',
+                                lte: '2015-06-30T23:59:59Z',
+                              },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+                minimum_should_match: 1,
+              },
+            },
+          },
+        },
+      },
+    }
+    let output = {
+      result: {
+        index: 'sp-data-lit',
+        body: {
+          query: {
+            constant_score: {
+              filter: {
+                bool: {
+                  should: [
+                    {
+                      bool: {
+                        must: [
+                          {
+                            range: {
+                              'FederalDoc.relevantContractDates.signedDate.fiscal':
+                                {
+                                  gte: '2015-04-01T00:00:00.000Z',
+                                  lte: '2015-06-30T23:59:59Z',
+                                },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                  minimum_should_match: 1,
+                },
+              },
+            },
+          },
+        },
+      },
+      removed: [
+        {
+          runtime_mappings: {
+            'FederalDoc.relevantContractDates.signedDate.fiscal': {
+              type: 'date',
+              script: {
+                source:
+                  "if(doc['FederalDoc.relevantContractDates.signedDate'].size()!=0){emit(doc['FederalDoc.relevantContractDates.signedDate'].value.plusMonths(params['monthOffset']).toInstant().toEpochMilli())}",
+                params: {
+                  monthOffset: 3,
+                },
+              },
+            },
+          },
+        },
+      ],
+    }
+
+    let result = { result: input, removed: hoistOnTree(input) }
+    expect(result).toEqual(output)
   })
 })
