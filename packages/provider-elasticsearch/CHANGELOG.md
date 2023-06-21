@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.22.2
+
+### Patch Changes
+
+- f80580a: Fix click through of FY dates coming from report view
+
 ## 1.22.1
 
 ### Patch Changes
