@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.58.0
+
+### Minor Changes
+
+- 93ffc55: Upgrade react-dnd
+
 ## 2.57.8
 
 ### Patch Changes
