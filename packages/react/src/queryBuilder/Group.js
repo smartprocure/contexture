@@ -7,7 +7,7 @@ import Indentable from './preview/Indentable.js'
 import AddPreview from './preview/AddPreview.js'
 import Operator from './Operator.js'
 import Rule from './Rule.js'
-import FilterDragSource from './DragDrop/FilterDragSource.js'
+import useFilterDragSource from './DragDrop/FilterDragSource.js'
 import { FilterIndentTarget } from './DragDrop/IndentTarget.js'
 import { FilterMoveTarget } from './DragDrop/MoveTargets.js'
 let { background } = styles
@@ -15,25 +15,18 @@ import { blankNode } from '../utils/search.js'
 import { useLensObject } from '../utils/react.js'
 import { setDisplayName } from 'react-recompose'
 
-let GroupItem = FilterDragSource((props) => {
-  let {
-    child,
-    node,
-    index,
-    tree,
-    adding,
-    isRoot,
-    parent,
-    connectDragSource,
-    hover,
-  } = props
+let GroupItem = (props) => {
+  let { child, node, index, tree, adding, isRoot, parent, hover } = props
+  const [{ isDragging }, drag] = useFilterDragSource(props)
   let Component = child.children ? Group : Rule
-  return connectDragSource(
+  return (
     <div
+      ref={drag}
       style={{
         ...styles.dFlex,
         ...(index === node.children.length - 1 &&
           !F.view(adding) && { background }),
+        ...(isDragging && { opacity: 0.25 }),
       }}
     >
       {!(isRoot && node.children.length === 1) && (
@@ -42,7 +35,7 @@ let GroupItem = FilterDragSource((props) => {
       <Component {...props} node={child} parent={node} />
     </div>
   )
-})
+}
 
 // we need to observe this here and not on the export because Group is referenced elsewhere in the file
 let Group = _.flow(
