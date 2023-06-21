@@ -1,4 +1,7 @@
-# Contexture
+![contexture-logo](https://github.com/smartprocure/contexture/assets/1043503/f87a7303-0668-48d0-ac37-f384670b5d2a)
+
+---
+
 
 A toolkit for building data interfaces (real time search + analytics + more).
 
