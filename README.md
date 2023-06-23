@@ -2,7 +2,6 @@
 
 ---
 
-
 A toolkit for building data interfaces (real time search + analytics + more).
 
 > **TODO**: Include some fancy screenshots 😎
