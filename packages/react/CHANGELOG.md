@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.58.1
+
+### Patch Changes
+
+- 717c1e9: Remove some circular imports
+
 ## 2.58.0
 
 ### Minor Changes
