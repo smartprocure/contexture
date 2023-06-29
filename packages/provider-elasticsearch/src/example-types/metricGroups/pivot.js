@@ -273,7 +273,7 @@ let createPivotScope = (node, schema, getStats) => {
     let drilldownDepth = _.get([groupingType, 'drilldown', 'length'], request)
 
     return F.reduceIndexed(
-      async (children, group, index, groups) => {
+      async (children, group, index) => {
         // Defaulting the group size to be 10
         if (!group.size) group.size = 10
         // Calculating subtotal metrics at each group level under drilldown if expanded is set
@@ -292,19 +292,50 @@ let createPivotScope = (node, schema, getStats) => {
         let build = lookupTypeProp(_.identity, 'buildGroupQuery', group.type)
         //Remove anything that needs to be hoisted before composing further
         // We are iterating through the groups reversed so we need to subtract instead of add to get the right index
-        let reversedLookupIndex = groups.length - index - 1
+        let groupIndex = groups.length - index - 1
         let drilldownKey = _.get(
-          [groupingType, 'drilldown', reversedLookupIndex],
+          [groupingType, 'drilldown', groupIndex],
           request
         )
 
-        let parent = await build(
-          group,
-          await children,
-          groupingType,
-          schema,
-          getStats,
-          drilldownKey
+        // Skip the most nested group grouping if grouping by fieldValues and skipNested is set
+        let parent = (_.get('expanded.skipNested', node) && group.type === 'fieldValues' && index === 0)
+          ? children
+          : await build(
+            group,
+            children,
+            groupingType,
+            schema,
+            getStats,
+            drilldownKey
+          )
+
+        if (_.get('expanded.cardinality', node) && group.type === 'fieldValues') {
+          parent = _.merge(
+            parent,
+            {
+              aggs: {
+                [`${groupingType}Cardinality`]:
+                  _.flow(
+                    getAggsForValues,
+                    _.values,
+                    _.head
+                  )(
+                    [{
+                      type: 'cardinality',
+                      field: group.field,
+                      precision_threshold: 100 // less load on ES
+                    }]
+                  )
+              },
+            }
+          )
+        }
+
+        //Add anything that needs to be hoisted to parent
+        parent.hoistProps = _.merge(
+          _.getOr({}, 'hoistProps', hoist),
+          parent.hoistProps
         )
         return parent
       },
@@ -362,7 +393,7 @@ let createPivotScope = (node, schema, getStats) => {
       groups: rows,
     })
 
-    let statsAggs = { aggs: getAggsForValues(node.values) }
+    let statsAggs = _.get('expanded.skipValues', node) ? {} : { aggs: getAggsForValues(node.values) }
 
     if (!_.isEmpty(columns)) {
       let columnsStatsAggs = await buildNestedGroupQuery(
@@ -395,7 +426,7 @@ let createPivotScope = (node, schema, getStats) => {
 
     let rowsStatsAggs = await buildNestedGroupQuery(
       request,
-      statsAggs,
+      _.get('expanded.skipNested', node) ? {} : statsAggs,
       rows,
       'rows',
       node.sort
