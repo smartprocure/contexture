@@ -300,10 +300,10 @@ let createPivotScope = (node, schema, getStats) => {
 
         // Skip the most nested group grouping if grouping by fieldValues and skipNested is set
         let parent = (_.get('expanded.skipNested', node) && group.type === 'fieldValues' && index === 0)
-          ? children
+          ? await children
           : await build(
             group,
-            children,
+            await children,
             groupingType,
             schema,
             getStats,
@@ -332,11 +332,6 @@ let createPivotScope = (node, schema, getStats) => {
           )
         }
 
-        //Add anything that needs to be hoisted to parent
-        parent.hoistProps = _.merge(
-          _.getOr({}, 'hoistProps', hoist),
-          parent.hoistProps
-        )
         return parent
       },
       statsAggs,

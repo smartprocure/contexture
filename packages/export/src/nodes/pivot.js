@@ -2,7 +2,6 @@ import _ from 'lodash/fp.js'
 import F from 'futil'
 import ContextureClient from 'contexture-client';
 import { andGroup, runWith, setFilterOnly } from '../utils.js'
-import * as path from 'path'
 
 
 // TODO import from contexture-client
