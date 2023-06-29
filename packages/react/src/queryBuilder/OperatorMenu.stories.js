@@ -1,4 +1,4 @@
-import { parent, root } from './stories/util.js'
+import { parent } from './stories/util.js'
 import Component from './OperatorMenu.js'
 
 export default {
@@ -6,7 +6,6 @@ export default {
   args: {
     node: { join: 'and' },
     parent,
-    root,
     hover: { wrap: [false], join: [''], remove: [false] },
   },
 }

@@ -54,7 +54,7 @@ export let joinColor = (join) =>
     and: '#5bc0de',
     or: '#5cb85c',
     not: '#d9534f',
-  }[join.join || join])
+  }[join?.join || join])
 export let bgJoin = (tree) => ({
   background: joinColor(tree),
   color: 'white',

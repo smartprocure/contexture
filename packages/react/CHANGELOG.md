@@ -1,5 +1,23 @@
 # Changelog
 
+## 2.58.1
+
+### Patch Changes
+
+- 717c1e9: Remove some circular imports
+
+## 2.58.0
+
+### Minor Changes
+
+- 93ffc55: Upgrade react-dnd
+
+## 2.57.8
+
+### Patch Changes
+
+- 27d48ff8: - Updated look and feel of keyword generations UI, along with some worflow updates and a new tool tip bar that will later house the settings for generations as well.
+
 ## 2.57.7
 
 ### Patch Changes

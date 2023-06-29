@@ -1,29 +1,22 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import _ from 'lodash/fp.js'
 import F from 'futil'
 import styles from '../styles/index.js'
 import Indentable from './preview/Indentable.js'
 import FilterContents from './FilterContents.js'
-import FilterDragSource from './DragDrop/FilterDragSource.js'
+import useFilterDragSource from './DragDrop/FilterDragSource.js'
 import { oppositeJoin, indent } from '../utils/search.js'
 import { useLensObject } from '../utils/react.js'
 
-let Rule = ({
-  node,
-  parent,
-  tree,
-  connectDragSource,
-  isDragging,
-  ...props
-}) => {
+let Rule = ({ node, parent, tree, ...props }) => {
+  const [{ isDragging }, drag] = useFilterDragSource({ node, tree, ...props })
   let hover = useLensObject({
     indent: false,
     remove: false,
     rule: false,
   })
-  return connectDragSource(
-    <div style={styles.w100}>
+  return (
+    <div ref={drag} style={styles.w100}>
       <Indentable parent={parent} indent={hover.indent}>
         <div
           style={{
@@ -49,7 +42,7 @@ let Rule = ({
             <button
               {...F.domLens.hover(hover.indent)}
               style={{
-                color: styles.joinColor(oppositeJoin(parent.join)),
+                color: styles.joinColor(oppositeJoin(parent?.join)),
                 ...styles.btn,
                 ...styles.roundedRight0,
               }}
@@ -75,4 +68,4 @@ let Rule = ({
   )
 }
 
-export default _.flow(observer, FilterDragSource)(Rule)
+export default observer(Rule)

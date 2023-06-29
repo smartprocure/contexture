@@ -1,10 +1,13 @@
-import { DropTarget } from 'react-dnd'
+import { useDrop } from 'react-dnd'
 
-export let FilterDropTarget = (spec) =>
-  DropTarget('filter', spec, (connect, monitor) => ({
-    connectDropTarget: connect.dropTarget(),
-    isOver: monitor.isOver(),
-    canDrop: monitor.canDrop(),
-    dragItem: monitor.getItem(),
-  }))
-export default FilterDropTarget
+export let useFilterDropTarget = (spec) =>
+  useDrop({
+    accept: 'filter',
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+      dragItem: monitor.getItem(),
+    }),
+    ...spec,
+  })
+export default useFilterDropTarget

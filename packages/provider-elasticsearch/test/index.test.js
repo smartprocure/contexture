@@ -60,12 +60,12 @@ describe('Server Provider', () => {
 
     provider({
       getClient: () => client,
-    }).runSearch({}, initialNode, initialSchema, null, {})
+    }).runSearch({}, initialNode, initialSchema, undefined, {})
 
     let firstSearchCall =
       client.child.mock.results[0].value.search.mock.calls[0]
 
-    expect(firstSearchCall[0].body).toEqual({ query: null })
+    expect(firstSearchCall[0].body).toEqual({ query: undefined })
   })
   it('runSearch should not wrap queries in constant_score if sort._score is present', () => {
     const client = {

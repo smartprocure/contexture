@@ -3,9 +3,11 @@ import _ from 'lodash/fp.js'
 import PropTypes from 'prop-types'
 import F from 'futil'
 import { observer } from 'mobx-react'
-import { Flex, QueryBuilder, FilterAdder, FilterList } from './index.js'
+import FilterList from './FilterList.js'
+import FilterAdder from './FilterAdder.js'
+import QueryBuilder from './queryBuilder/index.js'
 import { TreePauseButton } from './purgatory/index.js'
-import { LinkButton, Popover, DropdownItem } from './greyVest/index.js'
+import { Flex, LinkButton, Popover, DropdownItem } from './greyVest/index.js'
 import { withTheme } from './utils/theme.js'
 
 export let SearchTree = () => {}
