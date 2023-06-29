@@ -1,8 +1,7 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
-import ContextureClient from 'contexture-client';
+import ContextureClient from 'contexture-client'
 import { andGroup, runWith, setFilterOnly } from '../utils.js'
-
 
 // TODO import from contexture-client
 let getKey = (x) => x.keyAsString || x.key
@@ -23,10 +22,13 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
   let run = (node) => runWith(service, tree, node)
 
   let getContextureClient = (tree, node) =>
-    ContextureClient({
-      service,
-      debounce: 0,
-    }, andGroup(setFilterOnly(tree), node))
+    ContextureClient(
+      {
+        service,
+        debounce: 0,
+      },
+      andGroup(setFilterOnly(tree), node)
+    )
 
   let cardinalityNode = await run({
     ...node,
@@ -39,30 +41,31 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
     },
   })
 
-  let cardinalityResult =
-    _.get(
-      'context.results',
-      cardinalityNode
-    )
+  let cardinalityResult = _.get('context.results', cardinalityNode)
 
   let getGroupingCardinality = (groupingType, result) => {
     let getNested = _.get(groupingType)
     let groupingCardinality = 1 // default to 1 for grand total column/row
 
-    F.walk(getNested)(
-      (groupResult, index, parents) => {
-        let groupCardinality = _.getOr(_.size(getNested(groupResult)),`${groupingType}Cardinality` , groupResult)
-        if (!groupCardinality) return
+    F.walk(getNested)((groupResult, index, parents) => {
+      let groupCardinality = _.getOr(
+        _.size(getNested(groupResult)),
+        `${groupingType}Cardinality`,
+        groupResult
+      )
+      if (!groupCardinality) return
 
-        let grouping = _.get([groupingType, _.size(parents)], node)
-        if (!exportAllPages && grouping.type === 'fieldValues') {
-          groupCardinality = _.min([groupCardinality, _.getOr(10, 'size', grouping)])
-        }
-        // TODO else approximate full cardinality by using the size of the first page of each grouping
-
-        groupingCardinality = groupingCardinality + groupCardinality
+      let grouping = _.get([groupingType, _.size(parents)], node)
+      if (!exportAllPages && grouping.type === 'fieldValues') {
+        groupCardinality = _.min([
+          groupCardinality,
+          _.getOr(10, 'size', grouping),
+        ])
       }
-    )(result)
+      // TODO else approximate full cardinality by using the size of the first page of each grouping
+
+      groupingCardinality = groupingCardinality + groupCardinality
+    })(result)
 
     return groupingCardinality
   }
@@ -70,7 +73,8 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
   let columnCardinality = getGroupingCardinality('columns', cardinalityResult)
   let rowCardinality = getGroupingCardinality('rows', cardinalityResult)
 
-  let pivotCardinality = columnCardinality * rowCardinality * (_.size(node.values) || 1)
+  let pivotCardinality =
+    columnCardinality * rowCardinality * (_.size(node.values) || 1)
 
   let pivot = {
     node: cardinalityNode,
@@ -89,8 +93,12 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
       let cNode = (pivot.node = search.getNode(['root-parent', node.key]))
 
       let yieldRows = (drilldown) =>
-         async function * () {
-          let result = resultsForDrilldown('rows', drilldown, _.get('context.results', cNode))
+        async function* () {
+          let result = resultsForDrilldown(
+            'rows',
+            drilldown,
+            _.get('context.results', cNode)
+          )
           let index = 0
           let level = _.size(drilldown)
 
@@ -101,15 +109,17 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
               path,
               index: index++,
               level,
-              recordCount: getGroupingCardinality('columns', row) * (_.size(cNode.values) || 1),
-            };
+              recordCount:
+                getGroupingCardinality('columns', row) *
+                (_.size(cNode.values) || 1),
+            }
 
             // if this row can have nested rows
             if (_.size(drilldown) < _.size(cNode.rows) - 1) {
               cNode.expand('rows', path)
               await search.triggerUpdate()
 
-              yield * yieldRows(path)()
+              yield* yieldRows(path)()
 
               cNode.collapse('rows', path)
             }
@@ -118,11 +128,11 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
           // TODO pagination if exportAllPages
         }
 
-      yield * yieldRows([])()
+      yield* yieldRows([])()
 
       let totalRow = _.get('context.results', cNode)
 
-      yield {...totalRow, path: [], index: 0, level: -1, isTotalRow: true}
+      yield { ...totalRow, path: [], index: 0, level: -1, isTotalRow: true }
     },
   }
   return pivot

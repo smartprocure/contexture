@@ -299,37 +299,39 @@ let createPivotScope = (node, schema, getStats) => {
         )
 
         // Skip the most nested group grouping if grouping by fieldValues and skipNested is set
-        let parent = (_.get('expanded.skipNested', node) && group.type === 'fieldValues' && index === 0)
-          ? await children
-          : await build(
-            group,
-            await children,
-            groupingType,
-            schema,
-            getStats,
-            drilldownKey
-          )
+        let parent =
+          _.get('expanded.skipNested', node) &&
+          group.type === 'fieldValues' &&
+          index === 0
+            ? await children
+            : await build(
+                group,
+                await children,
+                groupingType,
+                schema,
+                getStats,
+                drilldownKey
+              )
 
-        if (_.get('expanded.cardinality', node) && group.type === 'fieldValues') {
-          parent = _.merge(
-            parent,
-            {
-              aggs: {
-                [`${groupingType}Cardinality`]:
-                  _.flow(
-                    getAggsForValues,
-                    _.values,
-                    _.head
-                  )(
-                    [{
-                      type: 'cardinality',
-                      field: group.field,
-                      precision_threshold: 100 // less load on ES
-                    }]
-                  )
-              },
-            }
-          )
+        if (
+          _.get('expanded.cardinality', node) &&
+          group.type === 'fieldValues'
+        ) {
+          parent = _.merge(parent, {
+            aggs: {
+              [`${groupingType}Cardinality`]: _.flow(
+                getAggsForValues,
+                _.values,
+                _.head
+              )([
+                {
+                  type: 'cardinality',
+                  field: group.field,
+                  precision_threshold: 100, // less load on ES
+                },
+              ]),
+            },
+          })
         }
 
         return parent
@@ -388,7 +390,9 @@ let createPivotScope = (node, schema, getStats) => {
       groups: rows,
     })
 
-    let statsAggs = _.get('expanded.skipValues', node) ? {} : { aggs: getAggsForValues(node.values) }
+    let statsAggs = _.get('expanded.skipValues', node)
+      ? {}
+      : { aggs: getAggsForValues(node.values) }
 
     if (!_.isEmpty(columns)) {
       let columnsStatsAggs = await buildNestedGroupQuery(
