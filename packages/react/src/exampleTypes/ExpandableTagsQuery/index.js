@@ -21,8 +21,7 @@ import KeywordGenerations from './KeywordGenerations.js'
 
 let innerHeightLimit = 40
 
-let isKeywordLightBulbOn = (tags) => 
-  sanitizeTagInputs(tags)?.length > 2 
+let isKeywordLightBulbOn = (tags) => sanitizeTagInputs(tags)?.length > 2
 
 let triggerKeywordGeneration = async (node, tree) => {
   await tree.mutate(node.path, { generateKeywords: true })
@@ -228,24 +227,26 @@ let TagsWrapper = observer(
                 {
                   width: 35,
                   strokeOpacity: 0.5,
-                  ...(!enableKeywordGenerations && {display : 'none'}),
-                  ...(isKeywordLightBulbOn(node.tags) && {strokeOpacity: 1.0}),
+                  ...(!enableKeywordGenerations && { display: 'none' }),
+                  ...(isKeywordLightBulbOn(node.tags) && {
+                    strokeOpacity: 1.0,
+                  }),
                 }
               }
               onClick={async () => {
                 // Generate keywords or show existing keywords
-                if ( !node.generateKeywords && isKeywordLightBulbOn(node.tags) ) 
-                {
+                if (!node.generateKeywords && isKeywordLightBulbOn(node.tags)) {
                   // Store to operate on this after showing keyword section,
                   // so that the loading indicator is shown while generating keywords
                   let collapsedState = F.view(generationsCollapsed)
                   let context = toJS(node.context)
                   F.off(generationsCollapsed)()
                   if (
-                    !collapsedState || _.isEmpty(context.keywordGenerations) ||
+                    !collapsedState ||
+                    _.isEmpty(context.keywordGenerations) ||
                     _.isEmpty(
                       _.difference(
-                        _.keys(context.keywordGenerations), 
+                        _.keys(context.keywordGenerations),
                         _.keys(context.tags)
                       )
                     )
