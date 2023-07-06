@@ -101,7 +101,7 @@ let KeywordGenerations = ({
         <span
           style={{
             fontFamily: 'Lato',
-            fontSize: '9px',
+            fontSize: '12px',
             fontWeight: 'normal',
             fontStretch: 'normal',
             fontStyle: 'italic',
