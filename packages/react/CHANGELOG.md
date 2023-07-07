@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.58.2
+
+### Patch Changes
+
+- c004b73: Update UI of keyword generations..
+
 ## 2.58.1
 
 ### Patch Changes
