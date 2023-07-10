@@ -133,17 +133,17 @@ let result = (generateKeywords) => async (node, search) => {
       sanitizeTagInputs(node.tags)
     )
   )
-    
+
   let result = await search(aggs)
 
   return {
-    tags: _.mapValues('doc_count',result.aggregations.tags.buckets),
+    tags: _.mapValues('doc_count', result.aggregations.tags.buckets),
     ...(result.aggregations.keywordGenerations && {
       keywordGenerations: compactMapValues(
         'doc_count',
         result.aggregations.keywordGenerations.buckets
       ),
-    })
+    }),
   }
 }
 

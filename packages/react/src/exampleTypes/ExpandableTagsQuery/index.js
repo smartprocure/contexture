@@ -149,13 +149,13 @@ let TagsWrapper = observer(
             `context.keywordGenerations.${props.value}`,
           ],
           node,
-          node.forceFilterOnly || node.updating ? 
-            undefined : 
-            F.when(
-              _.isNaN(), 
-              undefined, 
-              _.get(`context.tags.${props.value}`, node)
-            )
+          node.forceFilterOnly || node.updating
+            ? undefined
+            : F.when(
+                _.isNaN(),
+                undefined,
+                _.get(`context.tags.${props.value}`, node)
+              )
         )
         let tagProps = {
           ...props,
