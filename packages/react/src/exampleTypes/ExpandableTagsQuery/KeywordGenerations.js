@@ -40,10 +40,10 @@ let KeywordGenerations = ({
   return (
     <div style={!F.view(generationsCollapsed) ? {} : { display: 'none' }}>
       <div>
-        {node.isStale && node.generateKeywords && (
-          <Loader style={{ textAlign: 'center' }} loading={true}>
-            Loading...
-          </Loader>
+        {node.isStale && node.generateKeywords && _.size(node.tags) <= 100 && (
+            <Loader style={{ textAlign: 'center' }} loading={true}>
+              Loading...
+            </Loader>
         )}
         {!node.generateKeywords &&
           _.map((word) => (
@@ -75,6 +75,9 @@ let KeywordGenerations = ({
               keysToLower(node.context?.keywordGenerations)
             )
           )}
+          {_.size(node.tags) > 100 && _.size(node.context?.keywordGenerations) === 0 && (
+            'Keyword suggestions are limited once 100 or more keywords are present, please remove some keywords to generate suggestions.'
+            )}
       </div>
       <div
         style={{
