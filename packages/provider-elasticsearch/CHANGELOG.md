@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.22.3
+
+### Patch Changes
+
+- 83fc5da: Fix keyword count when past the limit to retrieve counts.
+
 ## 1.22.2
 
 ### Patch Changes
