@@ -231,7 +231,7 @@ let TagsWrapper = observer(
                 // Show suggestion lightbulb if min of 3 non numeric tags exist,
                 // including numbers ups the chance of producing bad suggestions
                 {
-                  display: 'flex', 
+                  display: 'flex',
                   width: 32,
                   strokeOpacity: 0.5,
                   ...(!enableKeywordGenerations && { display: 'none' }),
@@ -278,7 +278,7 @@ let TagsWrapper = observer(
               offsetY={popoverOffsetY}
               closeOnPopoverClick={false}
               trigger={
-                <div style={{display: 'flex', justifyContent: "center"}} >
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
                   <Icon icon="TableColumnMenu" />
                 </div>
               }

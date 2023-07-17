@@ -97,16 +97,29 @@ let KeywordGenerations = ({
       >
         <i
           className="material-icons"
-          style={{ margin: 'auto 0', padding: '0px 2px', paddingTop: '1px', opacity: '0.5', fontSize: 'small' }}
+          style={{
+            margin: 'auto 0',
+            padding: '0px 2px',
+            paddingTop: '1px',
+            opacity: '0.5',
+            fontSize: 'small',
+          }}
         >
           info
         </i>
         <span
-        onClick={() => setTips((tips) => [..._.tail(tips), _.head(tips)])}
+          onClick={() => setTips((tips) => [..._.tail(tips), _.head(tips)])}
         >
           <i
             className="material-icons"
-            style={{ margin: 'auto 0', padding: '0px 2px', paddingTop: '1px', opacity: '0.5', fontSize: 'small', cursor: 'pointer' }}
+            style={{
+              margin: 'auto 0',
+              padding: '0px 2px',
+              paddingTop: '1px',
+              opacity: '0.5',
+              fontSize: 'small',
+              cursor: 'pointer',
+            }}
           >
             chevron_left
           </i>
@@ -124,11 +137,20 @@ let KeywordGenerations = ({
           Tip: {tips[0]}
         </span>
         <span
-          onClick={() => setTips((tips) => [_.last(tips), ..._.dropRight(1, tips)])}
+          onClick={() =>
+            setTips((tips) => [_.last(tips), ..._.dropRight(1, tips)])
+          }
         >
           <i
             className="material-icons"
-            style={{ margin: 'auto 0', padding: '0px 2px', paddingTop: '1px', opacity: '0.5', fontSize: 'small', cursor: 'pointer'}}
+            style={{
+              margin: 'auto 0',
+              padding: '0px 2px',
+              paddingTop: '1px',
+              opacity: '0.5',
+              fontSize: 'small',
+              cursor: 'pointer',
+            }}
           >
             chevron_right
           </i>
