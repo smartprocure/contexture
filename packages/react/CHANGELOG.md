@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.58.4
+
+### Patch Changes
+
+- 06193ae: Keyword Suggestions UI Improvements
+
 ## 2.58.3
 
 ### Patch Changes
