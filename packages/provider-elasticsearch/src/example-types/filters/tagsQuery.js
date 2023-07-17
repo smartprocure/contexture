@@ -134,10 +134,17 @@ let result = (generateKeywords) => async (node, search) => {
     )
   )
 
-  return _.mapValues(
-    (prop) => compactMapValues('doc_count', prop.buckets),
-    (await search(aggs)).aggregations
-  )
+  let result = await search(aggs)
+
+  return {
+    tags: _.mapValues('doc_count', result.aggregations.tags.buckets),
+    ...(result.aggregations.keywordGenerations && {
+      keywordGenerations: compactMapValues(
+        'doc_count',
+        result.aggregations.keywordGenerations.buckets
+      ),
+    }),
+  }
 }
 
 let validContext = (node) => {
