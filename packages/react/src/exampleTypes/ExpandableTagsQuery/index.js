@@ -32,7 +32,7 @@ let KeywordGenerationIcon = ({ strokeColor = 'currentColor' }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className="h-6 w-6"
-    viewBox="0 0 28 28"
+    viewBox="0 0 24 24"
     fill="none"
     stroke={strokeColor}
     strokeWidth="2"
@@ -231,7 +231,8 @@ let TagsWrapper = observer(
                 // Show suggestion lightbulb if min of 3 non numeric tags exist,
                 // including numbers ups the chance of producing bad suggestions
                 {
-                  width: 35,
+                  display: 'flex',
+                  width: 32,
                   strokeOpacity: 0.5,
                   ...(!enableKeywordGenerations && { display: 'none' }),
                   ...(isKeywordLightBulbOn(node.tags) && {
@@ -277,7 +278,7 @@ let TagsWrapper = observer(
               offsetY={popoverOffsetY}
               closeOnPopoverClick={false}
               trigger={
-                <div>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
                   <Icon icon="TableColumnMenu" />
                 </div>
               }

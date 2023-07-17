@@ -92,15 +92,38 @@ let KeywordGenerations = ({
           borderBottomRightRadius: 3,
           borderBottomLeftRadius: 3,
           display: 'grid',
-          gridTemplateColumns: '18px 1fr',
+          gridTemplateColumns: '18px 15px fit-content(100%) 15px',
         }}
       >
         <i
           className="material-icons"
-          style={{ margin: 'auto 0', padding: '0px 2px', fontSize: 'small' }}
+          style={{
+            margin: 'auto 0',
+            padding: '0px 2px',
+            paddingTop: '1px',
+            opacity: '0.5',
+            fontSize: 'small',
+          }}
         >
           info
         </i>
+        <span
+          onClick={() => setTips((tips) => [..._.tail(tips), _.head(tips)])}
+        >
+          <i
+            className="material-icons"
+            style={{
+              margin: 'auto 0',
+              padding: '0px 2px',
+              paddingTop: '1px',
+              opacity: '0.5',
+              fontSize: 'small',
+              cursor: 'pointer',
+            }}
+          >
+            chevron_left
+          </i>
+        </span>
         <span
           style={{
             fontFamily: 'Lato',
@@ -112,6 +135,25 @@ let KeywordGenerations = ({
           }}
         >
           Tip: {tips[0]}
+        </span>
+        <span
+          onClick={() =>
+            setTips((tips) => [_.last(tips), ..._.dropRight(1, tips)])
+          }
+        >
+          <i
+            className="material-icons"
+            style={{
+              margin: 'auto 0',
+              padding: '0px 2px',
+              paddingTop: '1px',
+              opacity: '0.5',
+              fontSize: 'small',
+              cursor: 'pointer',
+            }}
+          >
+            chevron_right
+          </i>
         </span>
       </div>
     </div>
