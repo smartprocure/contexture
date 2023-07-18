@@ -19,6 +19,8 @@ let BlankRemoveIcon = () => <div style={{ padding: 3 }} />
 let tipStrings = [
   'Click the keyword generator icon again to regenerate new suggestions based on the keywords selected for your search.',
   'Click on a keyword to add it to your search.',
+  'Enter a minimum of 3 keywords to start generating suggestions.',
+  'Enter more than 3 keywords to improve the quality of the suggestions',
 ]
 
 let KeywordGenerations = ({
