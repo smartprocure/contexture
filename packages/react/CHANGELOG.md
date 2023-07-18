@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.58.5
+
+### Patch Changes
+
+- 5d9c7f4: Addition of two tips for keywords suggestions to help with usage
+
 ## 2.58.4
 
 ### Patch Changes
