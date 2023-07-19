@@ -28,7 +28,6 @@ Tests can be scoped via `jest --selectProjects {project}`. Refer to [jest's conf
 
 > :warning: You need `NODE_OPTIONS=--experimental-vm-modules` in your environment for `jest` to [parse ESM](https://jestjs.io/docs/28.x/ecmascript-modules#differences-between-esm-and-commonjs). Optionally, use [direnv](https://direnv.net/) for local setup of environment variables.
 
-
 Example test command for client watch mode:
 `NODE_OPTIONS=--experimental-vm-modules yarn jest packages/client/src/index.test.js --watch --verbose=false`
 
