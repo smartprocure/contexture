@@ -102,7 +102,7 @@ describe('pivot', () => {
             rows: {
               date_histogram: {
                 field: 'PO.IssuedDate',
-                interval: 'month',
+                calendar_interval: 'month',
                 min_doc_count: 0,
               },
               aggs: {
@@ -1272,7 +1272,7 @@ describe('pivot', () => {
             rows: {
               date_histogram: {
                 field: 'PO.IssuedDate',
-                interval: 'month',
+                calendar_interval: 'month',
                 min_doc_count: 0,
               },
               aggs: {
@@ -1531,7 +1531,7 @@ describe('pivot', () => {
                     columns: {
                       date_histogram: {
                         field: 'PO.IssuedDate',
-                        interval: 'year',
+                        calendar_interval: 'year',
                         min_doc_count: 0,
                       },
                       aggs: {
@@ -1566,7 +1566,7 @@ describe('pivot', () => {
                 columns: {
                   date_histogram: {
                     field: 'PO.IssuedDate',
-                    interval: 'year',
+                    calendar_interval: 'year',
                     min_doc_count: 0,
                   },
                   aggs: {
@@ -1601,7 +1601,7 @@ describe('pivot', () => {
             columns: {
               date_histogram: {
                 field: 'PO.IssuedDate',
-                interval: 'year',
+                calendar_interval: 'year',
                 min_doc_count: 0,
               },
               aggs: {
@@ -1636,7 +1636,7 @@ describe('pivot', () => {
         columns: {
           date_histogram: {
             field: 'PO.IssuedDate',
-            interval: 'year',
+            calendar_interval: 'year',
             min_doc_count: 0,
           },
           aggs: {
@@ -1703,7 +1703,7 @@ describe('pivot', () => {
                 columns: {
                   date_histogram: {
                     field: 'PO.IssuedDate',
-                    interval: 'year',
+                    calendar_interval: 'year',
                     min_doc_count: 0,
                   },
                   aggs: {
@@ -1720,7 +1720,7 @@ describe('pivot', () => {
             columns: {
               date_histogram: {
                 field: 'PO.IssuedDate',
-                interval: 'year',
+                calendar_interval: 'year',
                 min_doc_count: 0,
               },
               aggs: {
@@ -1737,7 +1737,7 @@ describe('pivot', () => {
         columns: {
           date_histogram: {
             field: 'PO.IssuedDate',
-            interval: 'year',
+            calendar_interval: 'year',
             min_doc_count: 0,
           },
           aggs: {
@@ -1811,7 +1811,7 @@ describe('pivot', () => {
             columns: {
               date_histogram: {
                 field: 'PO.IssuedDate',
-                interval: 'year',
+                calendar_interval: 'year',
                 min_doc_count: 0,
               },
               aggs: {
@@ -1828,7 +1828,7 @@ describe('pivot', () => {
         columns: {
           date_histogram: {
             field: 'PO.IssuedDate',
-            interval: 'year',
+            calendar_interval: 'year',
             min_doc_count: 0,
           },
           aggs: {
@@ -1882,7 +1882,7 @@ describe('pivot', () => {
             columns: {
               date_histogram: {
                 field: 'PO.IssuedDate',
-                interval: 'year',
+                calendar_interval: 'year',
                 min_doc_count: 0,
               },
               aggs: {
@@ -1899,7 +1899,7 @@ describe('pivot', () => {
         columns: {
           date_histogram: {
             field: 'PO.IssuedDate',
-            interval: 'year',
+            calendar_interval: 'year',
             min_doc_count: 0,
           },
           aggs: {
@@ -1978,7 +1978,7 @@ describe('pivot', () => {
             columns: {
               date_histogram: {
                 field: 'PO.IssuedDate',
-                interval: 'year',
+                calendar_interval: 'year',
                 min_doc_count: 0,
               },
               aggs: {
@@ -2007,7 +2007,7 @@ describe('pivot', () => {
         columns: {
           date_histogram: {
             field: 'PO.IssuedDate',
-            interval: 'year',
+            calendar_interval: 'year',
             min_doc_count: 0,
           },
           aggs: {
@@ -2067,7 +2067,7 @@ describe('pivot', () => {
             columns: {
               date_histogram: {
                 field: 'PO.IssuedDate',
-                interval: 'year',
+                calendar_interval: 'year',
                 min_doc_count: 0,
               },
               aggs: {
@@ -2091,7 +2091,7 @@ describe('pivot', () => {
         columns: {
           date_histogram: {
             field: 'PO.IssuedDate',
-            interval: 'year',
+            calendar_interval: 'year',
             min_doc_count: 0,
           },
           aggs: {
@@ -2147,7 +2147,7 @@ describe('pivot', () => {
             columns: {
               date_histogram: {
                 field: 'PO.IssuedDate',
-                interval: 'year',
+                calendar_interval: 'year',
                 min_doc_count: 0,
               },
               aggs: {
@@ -2170,7 +2170,7 @@ describe('pivot', () => {
         columns: {
           date_histogram: {
             field: 'PO.IssuedDate',
-            interval: 'year',
+            calendar_interval: 'year',
             min_doc_count: 0,
           },
           aggs: {
@@ -2253,14 +2253,14 @@ describe('pivot', () => {
             columns: {
               date_histogram: {
                 field: 'PO.IssuedDate',
-                interval: 'year',
+                calendar_interval: 'year',
                 min_doc_count: 0,
               },
               aggs: {
                 columns: {
                   date_histogram: {
                     field: 'PO.IssuedDate',
-                    interval: 'month',
+                    calendar_interval: 'month',
                     min_doc_count: 0,
                   },
                   aggs: {
@@ -2282,14 +2282,14 @@ describe('pivot', () => {
         columns: {
           date_histogram: {
             field: 'PO.IssuedDate',
-            interval: 'year',
+            calendar_interval: 'year',
             min_doc_count: 0,
           },
           aggs: {
             columns: {
               date_histogram: {
                 field: 'PO.IssuedDate',
-                interval: 'month',
+                calendar_interval: 'month',
                 min_doc_count: 0,
               },
               aggs: {
@@ -2390,7 +2390,7 @@ describe('pivot', () => {
                 columns: {
                   date_histogram: {
                     field: 'PO.IssuedDate',
-                    interval: 'year',
+                    calendar_interval: 'year',
                     min_doc_count: 0,
                   },
                   aggs: {
@@ -2407,7 +2407,7 @@ describe('pivot', () => {
             columns: {
               date_histogram: {
                 field: 'PO.IssuedDate',
-                interval: 'year',
+                calendar_interval: 'year',
                 min_doc_count: 0,
               },
               aggs: {
@@ -2424,7 +2424,7 @@ describe('pivot', () => {
         columns: {
           date_histogram: {
             field: 'PO.IssuedDate',
-            interval: 'year',
+            calendar_interval: 'year',
             min_doc_count: 0,
           },
           aggs: {
@@ -2520,7 +2520,7 @@ describe('pivot', () => {
                 columns: {
                   date_histogram: {
                     field: 'PO.IssuedDate',
-                    interval: 'year',
+                    calendar_interval: 'year',
                     min_doc_count: 0,
                   },
                   aggs: {
@@ -2541,7 +2541,7 @@ describe('pivot', () => {
             columns: {
               date_histogram: {
                 field: 'PO.IssuedDate',
-                interval: 'year',
+                calendar_interval: 'year',
                 min_doc_count: 0,
               },
               aggs: {
@@ -2562,7 +2562,7 @@ describe('pivot', () => {
         columns: {
           date_histogram: {
             field: 'PO.IssuedDate',
-            interval: 'year',
+            calendar_interval: 'year',
             min_doc_count: 0,
           },
           aggs: {
@@ -2616,14 +2616,14 @@ describe('pivot', () => {
                 columns: {
                   date_histogram: {
                     field: 'PO.IssuedDate',
-                    interval: 'year',
+                    calendar_interval: 'year',
                     min_doc_count: 0,
                   },
                   aggs: {
                     columns: {
                       date_histogram: {
                         field: 'PO.IssuedDate',
-                        interval: 'month',
+                        calendar_interval: 'month',
                         min_doc_count: 0,
                       },
                       aggs: {
@@ -2645,14 +2645,14 @@ describe('pivot', () => {
             columns: {
               date_histogram: {
                 field: 'PO.IssuedDate',
-                interval: 'year',
+                calendar_interval: 'year',
                 min_doc_count: 0,
               },
               aggs: {
                 columns: {
                   date_histogram: {
                     field: 'PO.IssuedDate',
-                    interval: 'month',
+                    calendar_interval: 'month',
                     min_doc_count: 0,
                   },
                   aggs: {
@@ -2674,14 +2674,14 @@ describe('pivot', () => {
         columns: {
           date_histogram: {
             field: 'PO.IssuedDate',
-            interval: 'year',
+            calendar_interval: 'year',
             min_doc_count: 0,
           },
           aggs: {
             columns: {
               date_histogram: {
                 field: 'PO.IssuedDate',
-                interval: 'month',
+                calendar_interval: 'month',
                 min_doc_count: 0,
               },
               aggs: {
