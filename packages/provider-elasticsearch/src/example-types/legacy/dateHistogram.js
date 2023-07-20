@@ -8,7 +8,7 @@ export default {
         {
           key_type: 'date_histogram',
           key_field,
-          key_data: { interval, min_doc_count: 0 },
+          key_data: { calendar_interval: interval, min_doc_count: 0 },
           value_field,
           value_type: 'stats',
         },

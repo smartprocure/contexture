@@ -71,7 +71,7 @@ let buildGroupQuery = (node, children, groupsKey) => {
             }),
           }),
           field: fiscalOrField(field),
-          interval,
+          calendar_interval: interval,
           min_doc_count: 0,
         },
         ...children,

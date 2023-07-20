@@ -79,7 +79,7 @@ describe('dateHistogram', () => {
             twoLevelAgg: {
               date_histogram: {
                 field: 'PO.IssuedDate',
-                interval: 'year',
+                calendar_interval: 'year',
                 min_doc_count: 0,
               },
               aggs: {
