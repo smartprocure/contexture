@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.23.0
+
+### Minor Changes
+
+- 0de3013: Support elasticsearch v8 by moving date_histogram interval to calendar_interval
+
 ## 1.22.3
 
 ### Patch Changes
