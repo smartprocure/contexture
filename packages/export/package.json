@@ -30,12 +30,10 @@
   },
   "homepage": "https://github.com/smartprocure/contexture/tree/main/packages/export",
   "dependencies": {
+    "contexture-client": "^2.53.2",
     "futil": "^1.76.0",
     "lodash": "^4.17.21",
     "minimal-csv-formatter": "^1.0.15"
   },
-  "packageManager": "yarn@3.3.1",
-  "peerDependencies": {
-    "contexture-client": "workspace:^"
-  }
+  "packageManager": "yarn@3.3.1"
 }
