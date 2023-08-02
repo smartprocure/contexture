@@ -123,7 +123,7 @@ export default {
         maybeAddRootExpansion(n, 'columns')
         maybeAddRootExpansion(n, 'rows')
 
-        mutate(path, {
+        return mutate(path, {
           expansions: [
             ...n.expansions,
             {
