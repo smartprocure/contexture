@@ -53,7 +53,6 @@
     "@storybook/react": "^7.0.0-rc.3",
     "@storybook/react-webpack5": "^7.0.0-alpha.0",
     "@storybook/storybook-deployer": "^2.8.16",
-    "contexture": "^0.12.19",
     "contexture-client": "^2.51.0",
     "contexture-elasticsearch": "^1.22.2",
     "elasticsearch-browser": "^14.2.2",
@@ -74,6 +73,7 @@
   },
   "dependencies": {
     "@chakra-ui/react-use-outside-click": "^2.1.0",
+    "contexture": "^0.12.19",
     "futil": "^1.76.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
