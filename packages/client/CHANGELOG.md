@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.53.3
+
+### Patch Changes
+
+- c1be7d8: client/pivot: expand method is returning promise
+
 ## 2.53.2
 
 ### Patch Changes
