@@ -16,7 +16,7 @@ describe('dateIntervalGroupStats', () => {
         groups: {
           date_histogram: {
             field: 'PO.IssuedDate',
-            interval: 'year',
+            calendar_interval: 'year',
             min_doc_count: 0,
           },
           aggs: {
@@ -43,7 +43,7 @@ describe('dateIntervalGroupStats', () => {
         groups: {
           date_histogram: {
             field: 'PO.IssuedDate',
-            interval: 'month',
+            calendar_interval: 'month',
             min_doc_count: 0,
           },
           aggs: {
@@ -69,7 +69,7 @@ describe('dateIntervalGroupStats', () => {
         groups: {
           date_histogram: {
             field: 'PO.IssuedDate',
-            interval: 'month',
+            calendar_interval: 'month',
             min_doc_count: 0,
           },
         },
@@ -204,7 +204,7 @@ describe('dateIntervalGroupStats', () => {
               },
             },
             field: 'PO.IssuedDate.fiscal',
-            interval: 'year',
+            calendar_interval: 'year',
             min_doc_count: 0,
           },
           aggs: {
@@ -245,7 +245,7 @@ describe('dateIntervalGroupStats', () => {
               },
             },
             field: 'PO.IssuedDate.fiscal',
-            interval: 'quarter',
+            calendar_interval: 'quarter',
             min_doc_count: 0,
           },
           aggs: {

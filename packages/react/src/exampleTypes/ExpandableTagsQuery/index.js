@@ -21,6 +21,8 @@ import KeywordGenerations from './KeywordGenerations.js'
 
 let innerHeightLimit = 40
 
+let isKeywordLightBulbOn = (tags) => sanitizeTagInputs(tags)?.length > 2
+
 let triggerKeywordGeneration = async (node, tree) => {
   await tree.mutate(node.path, { generateKeywords: true })
   tree.mutate(node.path, { generateKeywords: false })
@@ -30,7 +32,7 @@ let KeywordGenerationIcon = ({ strokeColor = 'currentColor' }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className="h-6 w-6"
-    viewBox="0 0 28 28"
+    viewBox="0 0 24 24"
     fill="none"
     stroke={strokeColor}
     strokeWidth="2"
@@ -98,7 +100,7 @@ let ExpandableTagsQuery = ({
       {!F.view(generationsCollapsed) && (
         <hr
           style={{
-            border: '2px solid #EBEBEB',
+            border: '1px solid #EBEBEB',
             ...(!_.isEmpty(innerEdgeMargins) && { marginLeft, marginRight }),
             ...(!F.view(collapse) && { marginBottom: '10px' }),
             ...(showMoreKeywordsButton && { marginBottom: 20 }),
@@ -147,7 +149,13 @@ let TagsWrapper = observer(
             `context.keywordGenerations.${props.value}`,
           ],
           node,
-          node.forceFilterOnly ? undefined : 0
+          node.forceFilterOnly || node.updating
+            ? undefined
+            : F.when(
+                _.isNaN(),
+                undefined,
+                _.get(`context.tags.${props.value}`, node)
+              )
         )
         let tagProps = {
           ...props,
@@ -222,21 +230,33 @@ let TagsWrapper = observer(
               style={
                 // Show suggestion lightbulb if min of 3 non numeric tags exist,
                 // including numbers ups the chance of producing bad suggestions
-                sanitizeTagInputs(node.tags)?.length > 2 &&
-                enableKeywordGenerations
-                  ? { width: 35, strokeOpacity: 1 }
-                  : { width: 35, strokeOpacity: 0.5 }
+                {
+                  display: 'flex',
+                  width: 32,
+                  strokeOpacity: 0.5,
+                  ...(!enableKeywordGenerations && { display: 'none' }),
+                  ...(isKeywordLightBulbOn(node.tags) && {
+                    strokeOpacity: 1.0,
+                  }),
+                }
               }
               onClick={async () => {
                 // Generate keywords or show existing keywords
-                if (!node.generateKeywords) {
+                if (!node.generateKeywords && isKeywordLightBulbOn(node.tags)) {
                   // Store to operate on this after showing keyword section,
                   // so that the loading indicator is shown while generating keywords
                   let collapsedState = F.view(generationsCollapsed)
+                  let context = toJS(node.context)
                   F.off(generationsCollapsed)()
                   if (
                     !collapsedState ||
-                    _.isEmpty(toJS(node.context.keywordGenerations))
+                    _.isEmpty(context.keywordGenerations) ||
+                    _.isEmpty(
+                      _.difference(
+                        _.keys(context.keywordGenerations),
+                        _.keys(context.tags)
+                      )
+                    )
                   ) {
                     await triggerKeywordGeneration(node, tree)
                   }
@@ -245,10 +265,7 @@ let TagsWrapper = observer(
             >
               <KeywordGenerationIcon
                 strokeColor={
-                  sanitizeTagInputs(node.tags)?.length > 2 &&
-                  enableKeywordGenerations
-                    ? 'rgb(92, 184, 92)'
-                    : 'currentColor'
+                  isKeywordLightBulbOn(node.tags) ? '#0076de' : 'currentColor'
                 }
               />
             </TextButton>
@@ -261,7 +278,7 @@ let TagsWrapper = observer(
               offsetY={popoverOffsetY}
               closeOnPopoverClick={false}
               trigger={
-                <div>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
                   <Icon icon="TableColumnMenu" />
                 </div>
               }

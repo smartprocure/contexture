@@ -1,5 +1,29 @@
 # Changelog
 
+## 2.58.5
+
+### Patch Changes
+
+- 5d9c7f4: Addition of two tips for keywords suggestions to help with usage
+
+## 2.58.4
+
+### Patch Changes
+
+- 06193ae: Keyword Suggestions UI Improvements
+
+## 2.58.3
+
+### Patch Changes
+
+- 83fc5da: Fix keyword count when past the limit to retrieve counts.
+
+## 2.58.2
+
+### Patch Changes
+
+- c004b73: Update UI of keyword generations..
+
 ## 2.58.1
 
 ### Patch Changes
