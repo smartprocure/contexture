@@ -42,7 +42,7 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
       expanded: {
         [type]: true,
         skipValues: true,
-        cardinality: true,
+        cardinality: !!exportAllPages,
       },
     })
 
@@ -77,7 +77,9 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
   }
 
 
-  let [columnCardinalityResult, rowCardinalityResult] = await Promise.all(_.map(getCardinalityResult, ['columns', 'rows']))
+  // Querying sequentially to reduce the load on ES
+  let columnCardinalityResult = await getCardinalityResult('columns')
+  let rowCardinalityResult = await getCardinalityResult('rows')
 
   let columnCardinality = getGroupingCardinality('columns', columnCardinalityResult)
   let rowCardinality = getGroupingCardinality('rows', rowCardinalityResult)
