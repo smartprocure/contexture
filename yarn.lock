@@ -6443,7 +6443,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"contexture-client@^2.51.0, contexture-client@workspace:packages/client":
+"contexture-client@^2.51.0, contexture-client@^2.53.3, contexture-client@workspace:packages/client":
   version: 0.0.0-use.local
   resolution: "contexture-client@workspace:packages/client"
   dependencies:
@@ -6476,11 +6476,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "contexture-export@workspace:packages/export"
   dependencies:
+    contexture-client: ^2.53.3
     futil: ^1.76.0
     lodash: ^4.17.21
     minimal-csv-formatter: ^1.0.15
-  peerDependencies:
-    contexture-client: "workspace:^"
   languageName: unknown
   linkType: soft
 
