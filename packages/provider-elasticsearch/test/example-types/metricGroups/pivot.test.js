@@ -2708,6 +2708,224 @@ describe('pivot', () => {
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
+  it('should buildQuery without values aggregation', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      rows: [
+        { type: 'fieldValues', field: 'Organization.State' },
+        { type: 'fieldValues', field: 'Organization.NameState' },
+      ],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
+      ],
+      expanded: { columns: true, rows: true, skipValues: true },
+    }
+    let expected = {
+      track_total_hits: true,
+      aggs: {
+        rows: {
+          terms: { field: 'Organization.State.untouched', size: 10 },
+          aggs: {
+            rows: {
+              terms: { field: 'Organization.NameState.untouched', size: 10 },
+              aggs: {
+                columns: {
+                  date_histogram: {
+                    field: 'PO.IssuedDate',
+                    calendar_interval: 'year',
+                    min_doc_count: 0,
+                  },
+                  aggs: {
+                    columns: {
+                      date_histogram: {
+                        field: 'PO.IssuedDate',
+                        calendar_interval: 'month',
+                        min_doc_count: 0,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                calendar_interval: 'year',
+                min_doc_count: 0,
+              },
+              aggs: {
+                columns: {
+                  date_histogram: {
+                    field: 'PO.IssuedDate',
+                    calendar_interval: 'month',
+                    min_doc_count: 0,
+                  },
+                },
+              },
+            },
+          },
+        },
+        columns: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            calendar_interval: 'year',
+            min_doc_count: 0,
+          },
+          aggs: {
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                calendar_interval: 'month',
+                min_doc_count: 0,
+              },
+            },
+          },
+        },
+      },
+    }
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    let result = await buildQuery(rootPivotRequest)
+    expect(result).toEqual(expected)
+  })
+  it('should buildQuery with grouping cardinality', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      rows: [
+        { type: 'fieldValues', field: 'Organization.State' },
+        { type: 'fieldValues', field: 'Organization.NameState' },
+      ],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
+      ],
+      expanded: { columns: true, rows: true, cardinality: true },
+    }
+    let expected = {
+      aggs: {
+        'pivotMetric-sum-LineItem.TotalPrice': {
+          sum: { field: 'LineItem.TotalPrice' },
+        },
+        columns: {
+          date_histogram: {
+            field: 'PO.IssuedDate',
+            calendar_interval: 'year',
+            min_doc_count: 0,
+          },
+          aggs: {
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                calendar_interval: 'month',
+                min_doc_count: 0,
+              },
+              aggs: {
+                'pivotMetric-sum-LineItem.TotalPrice': {
+                  sum: { field: 'LineItem.TotalPrice' },
+                },
+              },
+            },
+            'pivotMetric-sum-LineItem.TotalPrice': {
+              sum: { field: 'LineItem.TotalPrice' },
+            },
+          },
+        },
+        rows: {
+          terms: { size: 10, field: 'Organization.State.untouched' },
+          aggs: {
+            rows: {
+              terms: { size: 10, field: 'Organization.NameState.untouched' },
+              aggs: {
+                'pivotMetric-sum-LineItem.TotalPrice': {
+                  sum: { field: 'LineItem.TotalPrice' },
+                },
+                columns: {
+                  date_histogram: {
+                    field: 'PO.IssuedDate',
+                    calendar_interval: 'year',
+                    min_doc_count: 0,
+                  },
+                  aggs: {
+                    columns: {
+                      date_histogram: {
+                        field: 'PO.IssuedDate',
+                        calendar_interval: 'month',
+                        min_doc_count: 0,
+                      },
+                      aggs: {
+                        'pivotMetric-sum-LineItem.TotalPrice': {
+                          sum: { field: 'LineItem.TotalPrice' },
+                        },
+                      },
+                    },
+                    'pivotMetric-sum-LineItem.TotalPrice': {
+                      sum: { field: 'LineItem.TotalPrice' },
+                    },
+                  },
+                },
+              },
+            },
+            rowsCardinality: {
+              cardinality: {
+                precision_threshold: 100,
+                field: 'Organization.NameState.untouched',
+              },
+            },
+            'pivotMetric-sum-LineItem.TotalPrice': {
+              sum: { field: 'LineItem.TotalPrice' },
+            },
+            columns: {
+              date_histogram: {
+                field: 'PO.IssuedDate',
+                calendar_interval: 'year',
+                min_doc_count: 0,
+              },
+              aggs: {
+                columns: {
+                  date_histogram: {
+                    field: 'PO.IssuedDate',
+                    calendar_interval: 'month',
+                    min_doc_count: 0,
+                  },
+                  aggs: {
+                    'pivotMetric-sum-LineItem.TotalPrice': {
+                      sum: { field: 'LineItem.TotalPrice' },
+                    },
+                  },
+                },
+                'pivotMetric-sum-LineItem.TotalPrice': {
+                  sum: { field: 'LineItem.TotalPrice' },
+                },
+              },
+            },
+          },
+        },
+        rowsCardinality: {
+          cardinality: {
+            precision_threshold: 100,
+            field: 'Organization.State.untouched',
+          },
+        },
+      },
+      track_total_hits: true,
+    }
+
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    let result = await buildQuery(rootPivotRequest)
+    expect(result).toEqual(expected)
+  })
   it('should paginateExpandedGroups for not expanded', async () => {
     let rows = [
       { type: 'fieldValues', field: 'Organization.State' },
@@ -2733,7 +2951,7 @@ describe('pivot', () => {
       () => {}
     )
 
-    let expectedIntial = {
+    let expectedInitial = {
       type: 'rows',
       columns: {
         drilldown: [],
@@ -2747,7 +2965,7 @@ describe('pivot', () => {
       },
     }
 
-    expect(getInitialRequest(rowsExpansion)).toEqual(expectedIntial)
+    expect(getInitialRequest(rowsExpansion)).toEqual(expectedInitial)
 
     let includeValues = [
       'New York',
@@ -2842,7 +3060,7 @@ describe('pivot', () => {
       () => {}
     )
 
-    let expectedIntial = {
+    let expectedInitial = {
       type: 'rows',
       columns: {
         drilldown: [],
@@ -2864,7 +3082,7 @@ describe('pivot', () => {
         totals: false,
       },
     }
-    expect(getInitialRequest(rowsExpansion)).toEqual(expectedIntial)
+    expect(getInitialRequest(rowsExpansion)).toEqual(expectedInitial)
 
     let includeValues = [
       'New York',
