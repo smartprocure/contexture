@@ -314,9 +314,12 @@ let createPivotScope = (node, schema, getStats) => {
           parent = _.merge(parent, {
             aggs: {
               [`${groupingType}Cardinality`]: {
-                field: getField(schema, group.field),
-                precision_threshold: 100, // less load on ES
-              },
+                cardinality:
+                  {
+                    field: getField(schema, group.field),
+                    precision_threshold: 100, // less load on ES
+                  }
+              }
             },
           })
         }
