@@ -309,21 +309,14 @@ let createPivotScope = (node, schema, getStats) => {
 
         if (
           _.get('expanded.cardinality', node) &&
-          group.type === 'fieldValues'
+          lookupTypeProp(false, 'supportsCardinality', group.type)
         ) {
           parent = _.merge(parent, {
             aggs: {
-              [`${groupingType}Cardinality`]: _.flow(
-                getAggsForValues,
-                _.values,
-                _.head
-              )([
-                {
-                  type: 'cardinality',
-                  field: group.field,
-                  precision_threshold: 100, // less load on ES
-                },
-              ]),
+              [`${groupingType}Cardinality`]: {
+                field: getField(schema, group.field),
+                precision_threshold: 100, // less load on ES
+              }
             },
           })
         }

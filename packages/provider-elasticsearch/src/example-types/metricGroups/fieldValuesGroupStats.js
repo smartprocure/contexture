@@ -70,4 +70,5 @@ export default {
   buildGroupQuery,
   getGroups,
   drilldown,
+  supportsCardinality: true,
 }
