@@ -316,7 +316,7 @@ let createPivotScope = (node, schema, getStats) => {
               [`${groupingType}Cardinality`]: {
                 field: getField(schema, group.field),
                 precision_threshold: 100, // less load on ES
-              }
+              },
             },
           })
         }
