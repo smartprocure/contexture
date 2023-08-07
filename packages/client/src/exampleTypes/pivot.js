@@ -188,6 +188,8 @@ export default {
     expanded: {
       columns: false,
       rows: false,
+      skipValues: false,
+      cardinality: false,
     },
     expansions: [
       /*
