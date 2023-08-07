@@ -33,6 +33,7 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
   let getGroupingResult = async (type) => {
     let groups = _.get(type, node)
     if (_.isEmpty(groups)) return {}
+    let hasFieldValuesLast = _.last(groups).type === 'fieldValues'
 
     let cardinalityNode = await run({
       ...node,
@@ -42,7 +43,7 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
       expanded: {
         [type]: true,
         skipValues: true,
-        cardinality: !!exportAllPages,
+        cardinality: hasFieldValuesLast || !!exportAllPages,
       },
     })
 

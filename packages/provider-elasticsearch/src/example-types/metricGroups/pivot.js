@@ -298,19 +298,27 @@ let createPivotScope = (node, schema, getStats) => {
           request
         )
 
-        let parent = await build(
-          group,
-          await children,
-          groupingType,
-          schema,
-          getStats,
-          drilldownKey
-        )
-
-        if (
+        let withGroupingCardinality =
           _.get('expanded.cardinality', node) &&
           lookupTypeProp(false, 'supportsCardinality', group.type)
-        ) {
+
+        let replaceDeepestGroupingWithCardinality =
+          _.get('expanded.skipValues', node) &&
+          withGroupingCardinality &&
+          index === 0 // deepest comes first as we reversed the groups for reduceIndexed
+
+        let parent = replaceDeepestGroupingWithCardinality
+          ? await children
+          : await build(
+            group,
+            await children,
+            groupingType,
+            schema,
+            getStats,
+            drilldownKey
+          )
+
+        if (withGroupingCardinality)
           parent = _.merge(parent, {
             aggs: {
               [`${groupingType}Cardinality`]: {
@@ -321,9 +329,8 @@ let createPivotScope = (node, schema, getStats) => {
               },
             },
           })
-        }
 
-        return parent
+         return parent
       },
       statsAggs,
       _.reverse(groups)
