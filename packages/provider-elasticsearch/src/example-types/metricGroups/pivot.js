@@ -310,13 +310,13 @@ let createPivotScope = (node, schema, getStats) => {
         let parent = replaceDeepestGroupingWithCardinality
           ? await children
           : await build(
-            group,
-            await children,
-            groupingType,
-            schema,
-            getStats,
-            drilldownKey
-          )
+              group,
+              await children,
+              groupingType,
+              schema,
+              getStats,
+              drilldownKey
+            )
 
         if (withGroupingCardinality)
           parent = _.merge(parent, {
@@ -330,7 +330,7 @@ let createPivotScope = (node, schema, getStats) => {
             },
           })
 
-         return parent
+        return parent
       },
       statsAggs,
       _.reverse(groups)

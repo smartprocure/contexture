@@ -2939,64 +2939,69 @@ describe('pivot', () => {
         { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
         { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
       ],
-      expanded: { columns: true, rows: true, skipValues: true, cardinality: true },
+      expanded: {
+        columns: true,
+        rows: true,
+        skipValues: true,
+        cardinality: true,
+      },
     }
     let expected = {
       aggs: {
         columns: {
           date_histogram: {
-            field: "PO.IssuedDate",
-            calendar_interval: "year",
-            min_doc_count: 0
+            field: 'PO.IssuedDate',
+            calendar_interval: 'year',
+            min_doc_count: 0,
           },
           aggs: {
             columns: {
               date_histogram: {
-                field: "PO.IssuedDate",
-                calendar_interval: "month",
-                min_doc_count: 0
-              }
-            }
-          }
+                field: 'PO.IssuedDate',
+                calendar_interval: 'month',
+                min_doc_count: 0,
+              },
+            },
+          },
         },
         rows: {
           terms: {
             size: 10,
-            field: "Organization.State.untouched"
+            field: 'Organization.State.untouched',
           },
           aggs: {
             columns: {
               date_histogram: {
-                field: "PO.IssuedDate",
-                calendar_interval: "year",
-                min_doc_count: 0
+                field: 'PO.IssuedDate',
+                calendar_interval: 'year',
+                min_doc_count: 0,
               },
               aggs: {
                 columns: {
                   date_histogram: {
-                    field: "PO.IssuedDate",
-                    calendar_interval: "month",
-                    min_doc_count: 0
-                  }
-                }
-              }
+                    field: 'PO.IssuedDate',
+                    calendar_interval: 'month',
+                    min_doc_count: 0,
+                  },
+                },
+              },
             },
             rowsCardinality: {
               cardinality: {
-                field: "Organization.NameState.untouched",
-                precision_threshold: 100
-              }
-            }
-          }
+                field: 'Organization.NameState.untouched',
+                precision_threshold: 100,
+              },
+            },
+          },
         },
         rowsCardinality: {
           cardinality: {
-            field: "Organization.State.untouched",
-            precision_threshold: 100
-          }
-        }
+            field: 'Organization.State.untouched',
+            precision_threshold: 100,
+          },
+        },
       },
-      track_total_hits: true
+      track_total_hits: true,
     }
 
     let { buildQuery } = createPivotScope(
