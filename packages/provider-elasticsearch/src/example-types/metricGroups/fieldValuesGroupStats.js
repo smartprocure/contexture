@@ -64,10 +64,24 @@ let buildGroupQueryWithDefaultSortField = (node, ...args) =>
 
 let getGroups = (aggs) => (aggs.valueFilter || aggs).groups.buckets
 
+let addGroupCount = (query, group, type, schema) =>
+  _.merge(query, {
+    aggs: {
+      [`${type}GroupCount`]: {
+        cardinality: {
+          field: getField(schema, group.field),
+          precision_threshold: 100, // less load on ES
+        },
+      },
+    },
+  })
+
+
 // We don't want the default sort field for pivot, but we do for this node type
 export default {
   ...groupStats(buildGroupQueryWithDefaultSortField),
   buildGroupQuery,
   getGroups,
   drilldown,
+  addGroupCount,
 }

@@ -273,12 +273,12 @@ let createPivotScope = (node, schema, getStats) => {
     let drilldownDepth = _.get([groupingType, 'drilldown', 'length'], request)
 
     return F.reduceIndexed(
-      async (children, group, index, groups) => {
+      async (children, group, reversedIndex) => {
         // Defaulting the group size to be 10
         if (!group.size) group.size = 10
         // Calculating subtotal metrics at each group level under drilldown if expanded is set
         // Support for per group stats could also be added here - merge on another stats agg blob to children based on group.stats/statsField or group.values
-        if (isFullyExpanded && index < groups.length - drilldownDepth)
+        if (isFullyExpanded && reversedIndex < groups.length - drilldownDepth)
           children = _.merge(await children, statsAggs)
         // At each level, add a filters bucket agg and nested metric to enable sorting
         // For example, to sort by Sum of Price for 2022, add a filters agg for 2022 and nested metric for sum of price so we can target it
@@ -289,23 +289,30 @@ let createPivotScope = (node, schema, getStats) => {
           // The API of `{sort: {field, direction}}` is respected by fieldValues and can be added to others
           group.sort = { field: sortField, direction: sort.direction }
         }
-        let build = lookupTypeProp(_.identity, 'buildGroupQuery', group.type)
-        //Remove anything that needs to be hoisted before composing further
-        // We are iterating through the groups reversed so we need to subtract instead of add to get the right index
-        let reversedLookupIndex = groups.length - index - 1
+        let build = lookupTypeProp(_.rearg([1], _.identity), 'buildGroupQuery', group.type)
+        // We are iterating through the groups reversed, so we need to subtract instead of add to get the right index
+        let groupIndex = groups.length - reversedIndex - 1
         let drilldownKey = _.get(
-          [groupingType, 'drilldown', reversedLookupIndex],
+          [groupingType, 'drilldown', groupIndex],
           request
         )
 
-        let parent = await build(
-          group,
-          await children,
-          groupingType,
-          schema,
-          getStats,
-          drilldownKey
-        )
+        let parent = group.skip
+          ? await children
+          : await build(
+              group,
+              await children,
+              groupingType,
+              schema,
+              getStats,
+              drilldownKey
+            )
+
+        if (group.groupCounts) {
+          let addGroupCount = lookupTypeProp(_.identity, 'addGroupCount', group.type)
+          parent = addGroupCount(parent, group, groupingType, schema)
+        }
+
         return parent
       },
       statsAggs,
@@ -362,7 +369,8 @@ let createPivotScope = (node, schema, getStats) => {
       groups: rows,
     })
 
-    let statsAggs = { aggs: getAggsForValues(node.values) }
+    let aggValues = _.reject('skip', node.values)
+    let statsAggs = _.isEmpty(aggValues) ? {} : { aggs: getAggsForValues(aggValues) }
 
     if (!_.isEmpty(columns)) {
       let columnsStatsAggs = await buildNestedGroupQuery(
