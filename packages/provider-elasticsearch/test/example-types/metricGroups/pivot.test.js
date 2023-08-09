@@ -2805,7 +2805,12 @@ describe('pivot', () => {
       ],
       columns: [
         { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
-        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month', skip: true },
+        {
+          type: 'dateInterval',
+          field: 'PO.IssuedDate',
+          interval: 'month',
+          skip: true,
+        },
       ],
       expanded: { columns: true, rows: true, skipValues: true },
     }
@@ -2813,28 +2818,28 @@ describe('pivot', () => {
       aggs: {
         columns: {
           date_histogram: {
-            field: "PO.IssuedDate",
-            calendar_interval: "year",
-            min_doc_count: 0
-          }
+            field: 'PO.IssuedDate',
+            calendar_interval: 'year',
+            min_doc_count: 0,
+          },
         },
         rows: {
           terms: {
             size: 10,
-            field: "Organization.State.untouched"
+            field: 'Organization.State.untouched',
           },
           aggs: {
             columns: {
               date_histogram: {
-                field: "PO.IssuedDate",
-                calendar_interval: "year",
-                min_doc_count: 0
-              }
-            }
-          }
-        }
+                field: 'PO.IssuedDate',
+                calendar_interval: 'year',
+                min_doc_count: 0,
+              },
+            },
+          },
+        },
       },
-      track_total_hits: true
+      track_total_hits: true,
     }
     let { buildQuery } = createPivotScope(
       input,
@@ -2851,7 +2856,11 @@ describe('pivot', () => {
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       rows: [
         { type: 'fieldValues', field: 'Organization.State', groupCounts: true },
-        { type: 'fieldValues', field: 'Organization.NameState', groupCounts: true },
+        {
+          type: 'fieldValues',
+          field: 'Organization.NameState',
+          groupCounts: true,
+        },
       ],
       columns: [
         { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
@@ -2983,7 +2992,12 @@ describe('pivot', () => {
       values: [],
       rows: [
         { type: 'fieldValues', field: 'Organization.State', groupCounts: true },
-        { type: 'fieldValues', field: 'Organization.NameState', groupCounts: true, skip: true },
+        {
+          type: 'fieldValues',
+          field: 'Organization.NameState',
+          groupCounts: true,
+          skip: true,
+        },
       ],
       columns: [
         { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },

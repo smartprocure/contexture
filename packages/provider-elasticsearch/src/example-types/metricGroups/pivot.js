@@ -289,7 +289,11 @@ let createPivotScope = (node, schema, getStats) => {
           // The API of `{sort: {field, direction}}` is respected by fieldValues and can be added to others
           group.sort = { field: sortField, direction: sort.direction }
         }
-        let build = lookupTypeProp(_.rearg([1], _.identity), 'buildGroupQuery', group.type)
+        let build = lookupTypeProp(
+          _.rearg([1], _.identity),
+          'buildGroupQuery',
+          group.type
+        )
         // We are iterating through the groups reversed, so we need to subtract instead of add to get the right index
         let groupIndex = groups.length - reversedIndex - 1
         let drilldownKey = _.get(
@@ -309,7 +313,11 @@ let createPivotScope = (node, schema, getStats) => {
             )
 
         if (group.groupCounts) {
-          let addGroupCount = lookupTypeProp(_.identity, 'addGroupCount', group.type)
+          let addGroupCount = lookupTypeProp(
+            _.identity,
+            'addGroupCount',
+            group.type
+          )
           parent = addGroupCount(parent, group, groupingType, schema)
         }
 
@@ -370,7 +378,9 @@ let createPivotScope = (node, schema, getStats) => {
     })
 
     let aggValues = _.reject('skip', node.values)
-    let statsAggs = _.isEmpty(aggValues) ? {} : { aggs: getAggsForValues(aggValues) }
+    let statsAggs = _.isEmpty(aggValues)
+      ? {}
+      : { aggs: getAggsForValues(aggValues) }
 
     if (!_.isEmpty(columns)) {
       let columnsStatsAggs = await buildNestedGroupQuery(
