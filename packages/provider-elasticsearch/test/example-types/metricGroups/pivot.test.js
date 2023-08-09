@@ -2712,7 +2712,7 @@ describe('pivot', () => {
     let input = {
       key: 'test',
       type: 'pivot',
-      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      values: [{ type: 'sum', field: 'LineItem.TotalPrice', skip: true }],
       rows: [
         { type: 'fieldValues', field: 'Organization.State' },
         { type: 'fieldValues', field: 'Organization.NameState' },
@@ -2721,7 +2721,7 @@ describe('pivot', () => {
         { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
         { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
       ],
-      expanded: { columns: true, rows: true, skipValues: true },
+      expanded: { columns: true, rows: true },
     }
     let expected = {
       track_total_hits: true,
@@ -2794,20 +2794,70 @@ describe('pivot', () => {
     let result = await buildQuery(rootPivotRequest)
     expect(result).toEqual(expected)
   })
+  it('should buildQuery and skip some grouping', async () => {
+    let input = {
+      key: 'test',
+      type: 'pivot',
+      values: [],
+      rows: [
+        { type: 'fieldValues', field: 'Organization.State' },
+        { type: 'fieldValues', field: 'Organization.NameState', skip: true },
+      ],
+      columns: [
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
+        { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month', skip: true },
+      ],
+      expanded: { columns: true, rows: true, skipValues: true },
+    }
+    let expected = {
+      aggs: {
+        columns: {
+          date_histogram: {
+            field: "PO.IssuedDate",
+            calendar_interval: "year",
+            min_doc_count: 0
+          }
+        },
+        rows: {
+          terms: {
+            size: 10,
+            field: "Organization.State.untouched"
+          },
+          aggs: {
+            columns: {
+              date_histogram: {
+                field: "PO.IssuedDate",
+                calendar_interval: "year",
+                min_doc_count: 0
+              }
+            }
+          }
+        }
+      },
+      track_total_hits: true
+    }
+    let { buildQuery } = createPivotScope(
+      input,
+      testSchemas(['Organization.NameState', 'Organization.State']),
+      () => {} // getStats(search) -> stats(field, statsArray)
+    )
+    let result = await buildQuery(rootPivotRequest)
+    expect(result).toEqual(expected)
+  })
   it('should buildQuery with grouping cardinality', async () => {
     let input = {
       key: 'test',
       type: 'pivot',
       values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
       rows: [
-        { type: 'fieldValues', field: 'Organization.State' },
-        { type: 'fieldValues', field: 'Organization.NameState' },
+        { type: 'fieldValues', field: 'Organization.State', groupCounts: true },
+        { type: 'fieldValues', field: 'Organization.NameState', groupCounts: true },
       ],
       columns: [
         { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
         { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'month' },
       ],
-      expanded: { columns: true, rows: true, cardinality: true },
+      expanded: { columns: true, rows: true },
     }
     let expected = {
       aggs: {
@@ -2873,7 +2923,7 @@ describe('pivot', () => {
                 },
               },
             },
-            rowsCardinality: {
+            rowsGroupCount: {
               cardinality: {
                 precision_threshold: 100,
                 field: 'Organization.NameState.untouched',
@@ -2908,7 +2958,7 @@ describe('pivot', () => {
             },
           },
         },
-        rowsCardinality: {
+        rowsGroupCount: {
           cardinality: {
             precision_threshold: 100,
             field: 'Organization.State.untouched',
@@ -2930,10 +2980,10 @@ describe('pivot', () => {
     let input = {
       key: 'test',
       type: 'pivot',
-      values: [{ type: 'sum', field: 'LineItem.TotalPrice' }],
+      values: [],
       rows: [
-        { type: 'fieldValues', field: 'Organization.State' },
-        { type: 'fieldValues', field: 'Organization.NameState' },
+        { type: 'fieldValues', field: 'Organization.State', groupCounts: true },
+        { type: 'fieldValues', field: 'Organization.NameState', groupCounts: true, skip: true },
       ],
       columns: [
         { type: 'dateInterval', field: 'PO.IssuedDate', interval: 'year' },
@@ -2942,8 +2992,6 @@ describe('pivot', () => {
       expanded: {
         columns: true,
         rows: true,
-        skipValues: true,
-        cardinality: true,
       },
     }
     let expected = {
@@ -2986,7 +3034,7 @@ describe('pivot', () => {
                 },
               },
             },
-            rowsCardinality: {
+            rowsGroupCount: {
               cardinality: {
                 field: 'Organization.NameState.untouched',
                 precision_threshold: 100,
@@ -2994,7 +3042,7 @@ describe('pivot', () => {
             },
           },
         },
-        rowsCardinality: {
+        rowsGroupCount: {
           cardinality: {
             field: 'Organization.State.untouched',
             precision_threshold: 100,
