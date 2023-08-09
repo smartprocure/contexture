@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.24.0
+
+### Minor Changes
+
+- 001eb3a: Pivot: configuring `groupCounts` and `skip` per group/value level. `groupCounts` flag adds subgroups counter to the parent level. `skip` flag skips the groping level in aggregation
+
 ## 1.23.0
 
 ### Minor Changes
