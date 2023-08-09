@@ -290,7 +290,7 @@ let createPivotScope = (node, schema, getStats) => {
           group.sort = { field: sortField, direction: sort.direction }
         }
         let build = lookupTypeProp(
-          _.rearg([1], _.identity),
+          () => F.throws(Error('Unknown grouping type')),
           'buildGroupQuery',
           group.type
         )

@@ -373,8 +373,8 @@ All of these types share a similar output structure. Results are on a context pr
 Supports nested groupings of `xGroupStats`
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| `groups` | object[] | None, _required_ | Groupings to apply, can be any `xGroupStat` type |
-| `values` | object[] | None | Metric values to compute, includes `field`, `type`, and potentially type specific fields. Type can be avg, min, max, sum, or any of the other metrics supported by elasticsearch |
+| `columns` `rows` | object[] | None | Column and row groupings to apply. Includes `field` can be any `xGroupStat` `type`. `groupCounts` adds subgroups counter to parent level. `skip` skips the groping level in aggregation |
+| `values` | object[] | None | Metric values to compute, includes `field`, `type`, and potentially type specific fields. Type can be avg, min, max, sum, or any of the other metrics supported by elasticsearch. `skip` skips the value in stat aggregation |
 | `drilldown` | [string] | None | Drills down results where each entry of the array corresponds to a key from a grouping to allow progresive "drilldown"/"zooming" of groups. If a drilldown is specified, it will exclude nested groups > 1 deeper (e.g. `['a']` will filter the first group to `a` and expand the second, `[]` will only include the root group). Passing a falsey value will include all groups |
 | `sort` | object[] | None | `{ columnValues, valueIndex, valueProp, direction }` |
 | `sort.columnValues` | [string/number] | None | Values of columns to sort by, e.g. [2017, 'Q1']. If null, it will sort by the root level values. |
