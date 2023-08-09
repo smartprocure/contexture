@@ -76,7 +76,6 @@ let addGroupCount = (query, group, type, schema) =>
     },
   })
 
-
 // We don't want the default sort field for pivot, but we do for this node type
 export default {
   ...groupStats(buildGroupQueryWithDefaultSortField),
