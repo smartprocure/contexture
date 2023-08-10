@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.53.4
+
+### Patch Changes
+
+- 058c270: pivot: exporting helper methods
+
 ## 2.53.3
 
 ### Patch Changes

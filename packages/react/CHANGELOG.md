@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.58.6
+
+### Patch Changes
+
+- 75b0c8b: Do not display checkbox in CheckableResultTable if there is no value
+
 ## 2.58.5
 
 ### Patch Changes
