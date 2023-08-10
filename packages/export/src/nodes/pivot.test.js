@@ -1,7 +1,8 @@
 import { jest } from '@jest/globals'
 import _ from 'lodash/fp.js'
 import F from 'futil'
-import pivot, { getKey } from './pivot.js'
+import { getKey } from 'contexture-client/exampleTypes/pivot.js'
+import pivot, { getGroupingSize } from './pivot.js'
 
 let RowTree = F.tree(_.get('rows'), (key) => ({ key }))
 
@@ -20,13 +21,11 @@ describe('pivot', () => {
       {
         field: 'Organization.State',
         type: 'fieldValues',
-        filter: '',
         size: 10,
-        sort: {
-          field: 'count',
-          direction: 'desc',
-        },
-        additionalFields: [],
+      },
+      {
+        field: 'Organization.City',
+        type: 'fieldValues',
       },
     ],
     values: [
@@ -49,6 +48,7 @@ describe('pivot', () => {
   }
 
   let pivotResult = {
+    'sum-LineItem.TotalPrice': 397196681577.4607,
     columns: [
       {
         keyAsString: '2021-01-01T00:00:00.000Z',
@@ -74,6 +74,7 @@ describe('pivot', () => {
         key: 'Texas',
         count: 30732145,
         metric: 314939690225.14624,
+        'sum-LineItem.TotalPrice': 314939690225.14624,
         columns: [
           {
             keyAsString: '2022-01-01T00:00:00.000Z',
@@ -88,12 +89,30 @@ describe('pivot', () => {
             'sum-LineItem.TotalPrice': 35109618846.44213,
           },
         ],
-        'sum-LineItem.TotalPrice': 314939690225.14624,
+        rows: [{
+          key: 'Houston',
+          'sum-LineItem.TotalPrice': 314939690225.14624,
+          columns: [
+            {
+              keyAsString: '2022-01-01T00:00:00.000Z',
+              key: 1640995200000,
+              count: 17255993,
+              'sum-LineItem.TotalPrice': 170772861458.61346,
+            },
+            {
+              keyAsString: '2023-01-01T00:00:00.000Z',
+              key: 1672531200000,
+              count: 6158859,
+              'sum-LineItem.TotalPrice': 35109618846.44213,
+            },
+          ],
+        }]
       },
       {
         key: 'Florida',
         count: 8671368,
         metric: 82256991352.31442,
+        'sum-LineItem.TotalPrice': 82256991352.31442,
         columns: [
           {
             keyAsString: '2021-01-01T00:00:00.000Z',
@@ -114,10 +133,32 @@ describe('pivot', () => {
             'sum-LineItem.TotalPrice': 17086917008.251938,
           },
         ],
-        'sum-LineItem.TotalPrice': 82256991352.31442,
+        rows: [{
+          key: 'Miami',
+          'sum-LineItem.TotalPrice': 82256991352.31442,
+          columns: [
+            {
+              keyAsString: '2021-01-01T00:00:00.000Z',
+              key: 1609459200000,
+              count: 2523893,
+              'sum-LineItem.TotalPrice': 20725998732.634754,
+            },
+            {
+              keyAsString: '2022-01-01T00:00:00.000Z',
+              key: 1640995200000,
+              count: 4495436,
+              'sum-LineItem.TotalPrice': 44444075611.42773,
+            },
+            {
+              keyAsString: '2023-01-01T00:00:00.000Z',
+              key: 1672531200000,
+              count: 1652039,
+              'sum-LineItem.TotalPrice': 17086917008.251938,
+            },
+          ],
+        }]
       },
     ],
-    'sum-LineItem.TotalPrice': 397196681577.4607,
     count: 39403513,
   }
 
@@ -136,7 +177,7 @@ describe('pivot', () => {
 
   it('should retrieve estimated export credits', async () => {
     let strategy = await prepareSimpleStrategy()
-    expect(await strategy.getTotalRecords()).toBe(12)
+    expect(await strategy.getTotalRecords()).toBe(20)
   })
   it('retrieves records', async () => {
     let service = getService()
@@ -147,8 +188,9 @@ describe('pivot', () => {
         ...record,
         index,
         level: parents.length - 1,
-        path: _.compact([getKey(record)]),
+        path: _.compact([..._.map(getKey, _.reverse(parents)), getKey(record)]),
         recordCount: _.size(record.columns) + 1,
+        rows: undefined,
       }),
       pivotResult
     )
@@ -163,8 +205,30 @@ describe('pivot', () => {
       records
     )
 
-    expect(exportedRecordCount).toEqual(11)
+    expect(exportedRecordCount).toEqual(18)
     expect(records).toEqual(expectedRecords)
     expect(service).toMatchSnapshot()
+  })
+
+  it('should get grouping size', () => {
+    let groupingSizeResult = {
+      rowsGroupCount: 9,
+      rows: [
+        {
+          rowsGroupCount: 8,
+        },
+        {
+          rowsGroupCount: 200, // should limit to size 10
+        },
+        {
+          rows: [{}, {}, {}, {},]
+        },
+        {
+          rows: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},] // should limit to size 10
+        },
+      ]
+    }
+
+    expect(getGroupingSize(pivotNode, 'rows', groupingSizeResult)).toEqual(42)
   })
 })
