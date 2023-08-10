@@ -228,7 +228,8 @@ describe('pivot', () => {
           rows: [{}, {}, {}, {}],
         },
         {
-          rows: [ // should limit to size 10
+          rows: [
+            // should limit to size 10
             {},
             {},
             {},
