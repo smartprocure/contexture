@@ -14,14 +14,14 @@ let Label = _.flow(
   setDisplayName('Label'),
   observer,
   withTheme
-)(({ node, selected, getValue, theme: { Checkbox } }) => {
+)(({ node, selected, getValue, theme }) => {
   let results = _.toArray(getResults(node))
   let allChecked = _.size(results) === _.size(F.view(selected))
   let checkAll = F.sets(
     allChecked ? [] : _.map(_.flow(getRecord, _.iteratee(getValue)), results),
     selected
   )
-  return <Checkbox checked={allChecked} onChange={checkAll} />
+  return <theme.Checkbox checked={allChecked} onChange={checkAll} />
 })
 
 // Extends ResultTable with a checkbox column
@@ -33,7 +33,7 @@ let CheckableResultTable = ({
   selectedValues,
   onChange,
   getValue,
-  theme: { Checkbox },
+  theme,
   ...props
 }) => (
   <ResultTable
@@ -42,17 +42,19 @@ let CheckableResultTable = ({
         hideMenu: true,
         label: () => (
           <Label
-            {...{ node, selected: [selectedValues, onChange], getValue }}
+            {...{ node, selected: [selectedValues, onChange], getValue, theme }}
           />
         ),
-        display: (x, y) => (
-          <Checkbox
-            {...F.domLens.checkboxValues(_.iteratee(getValue)(y), [
-              selectedValues,
-              onChange,
-            ])}
-          />
-        ),
+        display: (x, y) => {
+          let value = _.iteratee(getValue)(y)
+          return (
+            !_.isNil(value) && (
+              <theme.Checkbox
+                {...F.domLens.checkboxValues(value, [selectedValues, onChange])}
+              />
+            )
+          )
+        },
       },
       ...fields,
     }}
