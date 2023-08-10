@@ -1,7 +1,10 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
 import ContextureClient from 'contexture-client'
-import { getKey, resultsForDrilldown } from 'contexture-client/exampleTypes/pivot.js'
+import {
+  getKey,
+  resultsForDrilldown,
+} from 'contexture-client/exampleTypes/pivot.js'
 import { andGroup, runWith, setFilterOnly } from '../utils.js'
 
 export let getGroupingSize = (node, groupingType, cardinalityResult) => {
@@ -52,8 +55,7 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
     if (lastGroup.type === 'fieldValues')
       F.mergeOn(lastGroup, { groupCounts: true, skip: true })
 
-    if (exportAllPages)
-      _.each(_.setOn('groupCounts', true), groups)
+    if (exportAllPages) _.each(_.setOn('groupCounts', true), groups)
 
     let cardinalityNode = await run({
       ...node,
@@ -73,8 +75,12 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
   let columnGroupingResult = await getGroupingResult('columns')
   let rowGroupingResult = await getGroupingResult('rows')
 
-  let columnGroupingSize = getGroupingSize(node,'columns', columnGroupingResult)
-  let rowGroupingSize = getGroupingSize(node,'rows', rowGroupingResult)
+  let columnGroupingSize = getGroupingSize(
+    node,
+    'columns',
+    columnGroupingResult
+  )
+  let rowGroupingSize = getGroupingSize(node, 'rows', rowGroupingResult)
   let valuesSize = _.size(node.values) || 1
 
   let pivotSize = columnGroupingSize * rowGroupingSize * valuesSize
@@ -114,7 +120,7 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
             path,
             index: index++,
             level,
-            recordCount: getGroupingSize(node,'columns', row) * valuesSize,
+            recordCount: getGroupingSize(node, 'columns', row) * valuesSize,
             rows: undefined, // removing children rows to avoid memory leaks
           }
 
@@ -141,7 +147,7 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
         path: [],
         index: 0,
         level: -1,
-        recordCount: getGroupingSize(node,'columns', totalRow) * valuesSize,
+        recordCount: getGroupingSize(node, 'columns', totalRow) * valuesSize,
         rows: undefined, // removing children rows to avoid memory leaks
       }
     },

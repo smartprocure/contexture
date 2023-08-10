@@ -89,24 +89,26 @@ describe('pivot', () => {
             'sum-LineItem.TotalPrice': 35109618846.44213,
           },
         ],
-        rows: [{
-          key: 'Houston',
-          'sum-LineItem.TotalPrice': 314939690225.14624,
-          columns: [
-            {
-              keyAsString: '2022-01-01T00:00:00.000Z',
-              key: 1640995200000,
-              count: 17255993,
-              'sum-LineItem.TotalPrice': 170772861458.61346,
-            },
-            {
-              keyAsString: '2023-01-01T00:00:00.000Z',
-              key: 1672531200000,
-              count: 6158859,
-              'sum-LineItem.TotalPrice': 35109618846.44213,
-            },
-          ],
-        }]
+        rows: [
+          {
+            key: 'Houston',
+            'sum-LineItem.TotalPrice': 314939690225.14624,
+            columns: [
+              {
+                keyAsString: '2022-01-01T00:00:00.000Z',
+                key: 1640995200000,
+                count: 17255993,
+                'sum-LineItem.TotalPrice': 170772861458.61346,
+              },
+              {
+                keyAsString: '2023-01-01T00:00:00.000Z',
+                key: 1672531200000,
+                count: 6158859,
+                'sum-LineItem.TotalPrice': 35109618846.44213,
+              },
+            ],
+          },
+        ],
       },
       {
         key: 'Florida',
@@ -133,30 +135,32 @@ describe('pivot', () => {
             'sum-LineItem.TotalPrice': 17086917008.251938,
           },
         ],
-        rows: [{
-          key: 'Miami',
-          'sum-LineItem.TotalPrice': 82256991352.31442,
-          columns: [
-            {
-              keyAsString: '2021-01-01T00:00:00.000Z',
-              key: 1609459200000,
-              count: 2523893,
-              'sum-LineItem.TotalPrice': 20725998732.634754,
-            },
-            {
-              keyAsString: '2022-01-01T00:00:00.000Z',
-              key: 1640995200000,
-              count: 4495436,
-              'sum-LineItem.TotalPrice': 44444075611.42773,
-            },
-            {
-              keyAsString: '2023-01-01T00:00:00.000Z',
-              key: 1672531200000,
-              count: 1652039,
-              'sum-LineItem.TotalPrice': 17086917008.251938,
-            },
-          ],
-        }]
+        rows: [
+          {
+            key: 'Miami',
+            'sum-LineItem.TotalPrice': 82256991352.31442,
+            columns: [
+              {
+                keyAsString: '2021-01-01T00:00:00.000Z',
+                key: 1609459200000,
+                count: 2523893,
+                'sum-LineItem.TotalPrice': 20725998732.634754,
+              },
+              {
+                keyAsString: '2022-01-01T00:00:00.000Z',
+                key: 1640995200000,
+                count: 4495436,
+                'sum-LineItem.TotalPrice': 44444075611.42773,
+              },
+              {
+                keyAsString: '2023-01-01T00:00:00.000Z',
+                key: 1672531200000,
+                count: 1652039,
+                'sum-LineItem.TotalPrice': 17086917008.251938,
+              },
+            ],
+          },
+        ],
       },
     ],
     count: 39403513,
@@ -221,12 +225,33 @@ describe('pivot', () => {
           rowsGroupCount: 200, // should limit to size 10
         },
         {
-          rows: [{}, {}, {}, {},]
+          rows: [{}, {}, {}, {}],
         },
         {
-          rows: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},] // should limit to size 10
+          rows: [
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+          ], // should limit to size 10
         },
-      ]
+      ],
     }
 
     expect(getGroupingSize(pivotNode, 'rows', groupingSizeResult)).toEqual(42)
