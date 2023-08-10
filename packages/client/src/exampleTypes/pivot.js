@@ -1,10 +1,10 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
 
-let getKey = (x) => x.keyAsString || x.key
+export let getKey = (x) => x.keyAsString || x.key
 
 // Similar to Tree.lookup but path is a drilldown which uses keyAsString or key
-let resultsForDrilldown = (type, drilldown, results) => {
+export let resultsForDrilldown = (type, drilldown, results) => {
   if (_.isEmpty(drilldown) || !results) return results
 
   let key = _.first(drilldown)
