@@ -32,7 +32,7 @@ export let getGroupingSize = (node, groupType, countResult, exportAllPages) =>
       return result + groupSize
     },
     1, // starting with 1 for the total column/row
-    countResult,
+    countResult
   )
 
 export default async ({ service, tree, exportAllPages, ...node }) => {
@@ -81,7 +81,12 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
     columnGroupingResult,
     exportAllPages
   )
-  let rowGroupingSize = getGroupingSize(node, 'rows', rowGroupingResult, exportAllPages)
+  let rowGroupingSize = getGroupingSize(
+    node,
+    'rows',
+    rowGroupingResult,
+    exportAllPages
+  )
   let valuesSize = _.size(node.values) || 1
 
   let pivotSize = columnGroupingSize * rowGroupingSize * valuesSize
@@ -121,7 +126,9 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
             path,
             index: index++,
             level,
-            recordCount: getGroupingSize(node, 'columns', row, exportAllPages) * valuesSize,
+            recordCount:
+              getGroupingSize(node, 'columns', row, exportAllPages) *
+              valuesSize,
             rows: undefined, // removing children rows to avoid memory leaks
           }
 
@@ -148,7 +155,9 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
         path: [],
         index: 0,
         level: -1,
-        recordCount: getGroupingSize(node, 'columns', totalRow, exportAllPages) * valuesSize,
+        recordCount:
+          getGroupingSize(node, 'columns', totalRow, exportAllPages) *
+          valuesSize,
         rows: undefined, // removing children rows to avoid memory leaks
       }
     },
