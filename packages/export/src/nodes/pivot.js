@@ -15,35 +15,25 @@ let getPageSize = (grouping) => {
   return _.getOr(_.noop, grouping.type, pageSizeGetters)(grouping)
 }
 
-export let getGroupingSize = (
-  node,
-  groupingType,
-  cardinalityResult,
-  exportAllPages
-) => {
-  let getNested = _.get(groupingType)
-  let groupingCardinality = 1 // starting with 1 for the total column/row
+export let getGroupingSize = (node, groupType, countResult, exportAllPages) =>
+  F.reduceTree(_.get(groupType))(
+    (result, groupResult, index, parents) => {
+      let childSize = _.size(_.get(groupType, groupResult))
+      let groupSize = _.getOr(childSize, `${groupType}GroupCount`, groupResult)
 
-  F.walk(getNested)((groupResult, index, parents) => {
-    let groupCardinality = _.getOr(
-      _.size(getNested(groupResult)),
-      `${groupingType}GroupCount`,
-      groupResult
-    )
-    if (!groupCardinality) return
+      if (!groupSize) return result
 
-    let grouping = _.get([groupingType, _.size(parents)], node)
+      if (!exportAllPages) {
+        let grouping = _.get([groupType, _.size(parents)], node)
+        groupSize = _.min([groupSize, getPageSize(grouping)])
+      }
 
-    if (!exportAllPages)
-      groupCardinality = _.min([groupCardinality, getPageSize(grouping)])
-
-    // TODO else approximate full cardinality by using the average size of the first page of each grouping
-
-    groupingCardinality = groupingCardinality + groupCardinality
-  })(cardinalityResult)
-
-  return groupingCardinality
-}
+      // TODO else approximate full cardinality by using the average size of the first page of each grouping
+      return result + groupSize
+    },
+    1, // starting with 1 for the total column/row
+    countResult,
+  )
 
 export default async ({ service, tree, exportAllPages, ...node }) => {
   let run = (node) => runWith(service, tree, node)
@@ -67,7 +57,7 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
 
     if (exportAllPages) _.each(_.setOn('groupCounts', true), groups)
 
-    let cardinalityNode = await run({
+    let countNode = await run({
       ...node,
       columns: [],
       rows: [],
@@ -78,7 +68,7 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
       },
     })
 
-    return _.get('context.results', cardinalityNode)
+    return _.get('context.results', countNode)
   }
 
   // Querying sequentially to reduce the load on ES
@@ -91,12 +81,7 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
     columnGroupingResult,
     exportAllPages
   )
-  let rowGroupingSize = getGroupingSize(
-    node,
-    'rows',
-    rowGroupingResult,
-    exportAllPages
-  )
+  let rowGroupingSize = getGroupingSize(node, 'rows', rowGroupingResult, exportAllPages)
   let valuesSize = _.size(node.values) || 1
 
   let pivotSize = columnGroupingSize * rowGroupingSize * valuesSize
@@ -136,9 +121,7 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
             path,
             index: index++,
             level,
-            recordCount:
-              getGroupingSize(node, 'columns', row, exportAllPages) *
-              valuesSize,
+            recordCount: getGroupingSize(node, 'columns', row, exportAllPages) * valuesSize,
             rows: undefined, // removing children rows to avoid memory leaks
           }
 
@@ -165,9 +148,7 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
         path: [],
         index: 0,
         level: -1,
-        recordCount:
-          getGroupingSize(node, 'columns', totalRow, exportAllPages) *
-          valuesSize,
+        recordCount: getGroupingSize(node, 'columns', totalRow, exportAllPages) * valuesSize,
         rows: undefined, // removing children rows to avoid memory leaks
       }
     },
