@@ -7,7 +7,15 @@ import {
 } from 'contexture-client/exampleTypes/pivot.js'
 import { andGroup, runWith, setFilterOnly } from '../utils.js'
 
-export let getGroupingSize = (node, groupingType, cardinalityResult) => {
+// TODO move to shared folder
+let getPageSize = (grouping) => {
+  let pageSizeGetters = {
+    fieldValues: _.getOr(10, 'size'),
+  }
+  return _.getOr(_.noop, grouping.type, pageSizeGetters)(grouping)
+}
+
+export let getGroupingSize = (node, groupingType, cardinalityResult, exportAllPages) => {
   let getNested = _.get(groupingType)
   let groupingCardinality = 1 // starting with 1 for the total column/row
 
@@ -21,12 +29,9 @@ export let getGroupingSize = (node, groupingType, cardinalityResult) => {
 
     let grouping = _.get([groupingType, _.size(parents)], node)
 
-    if (grouping.type === 'fieldValues') {
-      groupCardinality = _.min([
-        groupCardinality,
-        _.getOr(10, 'size', grouping),
-      ])
-    }
+    if (!exportAllPages)
+      groupCardinality = _.min([groupCardinality, getPageSize(grouping)])
+
     // TODO else approximate full cardinality by using the average size of the first page of each grouping
 
     groupingCardinality = groupingCardinality + groupCardinality
@@ -78,9 +83,10 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
   let columnGroupingSize = getGroupingSize(
     node,
     'columns',
-    columnGroupingResult
+    columnGroupingResult,
+    exportAllPages
   )
-  let rowGroupingSize = getGroupingSize(node, 'rows', rowGroupingResult)
+  let rowGroupingSize = getGroupingSize(node, 'rows', rowGroupingResult, exportAllPages)
   let valuesSize = _.size(node.values) || 1
 
   let pivotSize = columnGroupingSize * rowGroupingSize * valuesSize
@@ -120,7 +126,7 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
             path,
             index: index++,
             level,
-            recordCount: getGroupingSize(node, 'columns', row) * valuesSize,
+            recordCount: getGroupingSize(node, 'columns', row, exportAllPages) * valuesSize,
             rows: undefined, // removing children rows to avoid memory leaks
           }
 
@@ -147,7 +153,7 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
         path: [],
         index: 0,
         level: -1,
-        recordCount: getGroupingSize(node, 'columns', totalRow) * valuesSize,
+        recordCount: getGroupingSize(node, 'columns', totalRow, exportAllPages) * valuesSize,
         rows: undefined, // removing children rows to avoid memory leaks
       }
     },
