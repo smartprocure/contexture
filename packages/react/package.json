@@ -22,7 +22,7 @@
     "storybook:build": "storybook build",
     "update-pkg": "node scripts/updatePackage.js",
     "build-storybook": "storybook build",
-    "chromatic": "chromatic --project-token=chpt_a5bbd8a771679cb"
+    "chromatic": "chromatic --project-token=chpt_1b16973ea90f045"
   },
   "repository": {
     "type": "git",
