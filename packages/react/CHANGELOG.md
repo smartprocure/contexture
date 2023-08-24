@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.58.7
+
+### Patch Changes
+
+- 177e816: Add Chromatic white listing and libraries
+
 ## 2.58.6
 
 ### Patch Changes
