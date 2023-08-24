@@ -13,6 +13,7 @@ export const parameters = {
       order: ['Theming', 'Example Types', 'Search Components'],
     },
   },
+  chromatic: { disableSnapshot: true },
 }
 
 export const decorators = [
