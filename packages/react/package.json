@@ -21,7 +21,8 @@
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build",
     "update-pkg": "node scripts/updatePackage.js",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "chromatic"
   },
   "repository": {
     "type": "git",
