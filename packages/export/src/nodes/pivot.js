@@ -49,20 +49,22 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
 
   let getGroupingResult = async (type) => {
     let groups = _.cloneDeep(_.get(type, node))
-    let lastGroup = _.last(groups)
     if (_.isEmpty(groups)) return {}
 
-    if (lastGroup.type === 'fieldValues')
-      F.mergeOn(lastGroup, { groupCounts: true, skip: true })
+    F.mergeOn(
+      _.last(groups),
+      { groupCounts: true, skip: true }
+    )
 
     if (exportAllPages) _.each(_.setOn('groupCounts', true), groups)
 
     let countNode = await run({
       ...node,
-      columns: [],
-      rows: [],
+      columns: _.map(_.set('skip', true), node.columns),
+      rows: _.map(_.set('skip', true), node.rows),
       [type]: groups, // getting only groups for this type
       values: _.map(_.set('skip', true), node.values),
+      expansions: [],
       expanded: {
         [type]: true,
       },

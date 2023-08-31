@@ -203,9 +203,8 @@ describe('pivot', () => {
     let records = []
     for await (const r of strategy) records.push(r)
 
-    let exportedRecordCount = _.reduce(
-      (acc, record) => acc + record.recordCount,
-      0,
+    let exportedRecordCount = _.sumBy(
+      'recordCount',
       records
     )
 
