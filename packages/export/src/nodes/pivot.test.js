@@ -203,10 +203,7 @@ describe('pivot', () => {
     let records = []
     for await (const r of strategy) records.push(r)
 
-    let exportedRecordCount = _.sumBy(
-      'recordCount',
-      records
-    )
+    let exportedRecordCount = _.sumBy('recordCount', records)
 
     expect(exportedRecordCount).toEqual(18)
     expect(records).toEqual(expectedRecords)

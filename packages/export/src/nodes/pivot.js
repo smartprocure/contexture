@@ -51,10 +51,7 @@ export default async ({ service, tree, exportAllPages, ...node }) => {
     let groups = _.cloneDeep(_.get(type, node))
     if (_.isEmpty(groups)) return {}
 
-    F.mergeOn(
-      _.last(groups),
-      { groupCounts: true, skip: true }
-    )
+    F.mergeOn(_.last(groups), { groupCounts: true, skip: true })
 
     if (exportAllPages) _.each(_.setOn('groupCounts', true), groups)
 
