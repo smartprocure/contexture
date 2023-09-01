@@ -38,8 +38,10 @@ let ResultTable = ({
   stickyColumn,
   hideFooter,
   footerStyle,
-  theme: { Table, Thead, Tr, Th },
+  theme,
 }) => {
+  const { Table, Thead, Tr, Th } = theme
+
   // If there are no fields, we won't render anything. This is most definitely a
   // user error when it happens
   if (_.isEmpty(fields) && !infer) throw new Error('Fields are empty')
@@ -88,6 +90,7 @@ let ResultTable = ({
     node,
     mutate,
     criteria,
+    theme,
   }
 
   let columnGroupsHeight = _.flow(
