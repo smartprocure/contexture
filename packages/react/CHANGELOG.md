@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.58.8
+
+### Patch Changes
+
+- 8e6e4af: Result Table: pass theme to header
+
 ## 2.58.7
 
 ### Patch Changes
