@@ -301,23 +301,22 @@ let createPivotScope = (node, schema, getStats) => {
           request
         )
 
-        let parent = group.skip
-          ? await children
-          : await build(
-              group,
-              await children,
-              groupingType,
-              schema,
-              getStats,
-              drilldownKey
-            )
+        let addGroupCount = lookupTypeProp(null, 'addGroupCount', group.type)
 
-        if (group.groupCounts) {
-          let addGroupCount = lookupTypeProp(
-            _.identity,
-            'addGroupCount',
-            group.type
-          )
+        // skip the grouping as flagged but not when trying to add group counts and it's not available
+        let parent =
+          group.skip && (!group.groupCounts || addGroupCount)
+            ? await children
+            : await build(
+                group,
+                await children,
+                groupingType,
+                schema,
+                getStats,
+                drilldownKey
+              )
+
+        if (group.groupCounts && addGroupCount) {
           parent = addGroupCount(parent, group, groupingType, schema)
         }
 

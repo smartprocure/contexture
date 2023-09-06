@@ -56,7 +56,7 @@
     "@storybook/react-webpack5": "^7.0.0-alpha.0",
     "@storybook/storybook-deployer": "^2.8.16",
     "chromatic": "^6.23.0",
-    "contexture-client": "^2.53.3",
+    "contexture-client": "^2.53.4",
     "contexture-elasticsearch": "^1.22.3",
     "elasticsearch-browser": "^14.2.2",
     "emoji-datasource": "^5.0.1",

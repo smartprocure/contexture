@@ -9,11 +9,13 @@ export default ({
   // order list of which indicates the header label,
   // display function for the field,
   // and key of the record.
-  // [{ key: string(suppots lodash dot notation), label: string, display: funciton(value, {key, record, transform})}...]
+  // [{ key: string(supports lodash dot notation), label: string, display: function(value, {key, record, transform})}...]
   transform,
+  headers = null, // array of strings to use as headers, array or arrays for multi-line headers
   onWrite = _.noop, // function to intercept writing a page of records
 }) => {
-  stream.write(csv(transformLabels(transform)))
+  stream.write(csv(headers || transformLabels(transform)))
+
   let cancel = false
   let recordsWritten = 0
 
@@ -34,7 +36,7 @@ export default ({
             )
           )
         )
-        recordsWritten = recordsWritten + 1
+        recordsWritten = recordsWritten + _.getOr(1, 'recordCount', r)
         onWrite({ recordsWritten, record: r })
       }
       await stream.end()

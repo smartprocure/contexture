@@ -6454,7 +6454,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"contexture-client@^2.53.3, contexture-client@workspace:packages/client":
+"contexture-client@^2.53.4, contexture-client@workspace:packages/client":
   version: 0.0.0-use.local
   resolution: "contexture-client@workspace:packages/client"
   dependencies:
@@ -6487,6 +6487,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "contexture-export@workspace:packages/export"
   dependencies:
+    contexture-client: ^2.53.4
     futil: ^1.76.0
     lodash: ^4.17.21
     minimal-csv-formatter: ^1.0.15
@@ -6548,7 +6549,7 @@ __metadata:
     "@storybook/storybook-deployer": ^2.8.16
     chromatic: ^6.23.0
     contexture: ^0.12.19
-    contexture-client: ^2.53.3
+    contexture-client: ^2.53.4
     contexture-elasticsearch: ^1.22.3
     elasticsearch-browser: ^14.2.2
     emoji-datasource: ^5.0.1
