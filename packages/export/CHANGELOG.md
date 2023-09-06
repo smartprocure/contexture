@@ -1,5 +1,11 @@
 ﻿# Changelog
 
+## 1.1.0
+
+### Minor Changes
+
+- 09f3ec5: Pivot: adding support for pivot table export
+
 ## 1.0.16
 
 ### Patch Changes
