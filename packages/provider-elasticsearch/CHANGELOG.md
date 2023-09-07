@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.25.0
+
+### Minor Changes
+
+- 283c50d1: Pivot: combination of `groupCounts` and `skip` won't skip if groupCounts is not available for a type
+
 ## 1.24.0
 
 ### Minor Changes
