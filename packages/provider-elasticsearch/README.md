@@ -377,7 +377,7 @@ Supports nested groupings of `xGroupStats`
 | `values` | object[] | None | Metric values to compute, includes `field`, `type`, and potentially type specific fields. Type can be avg, min, max, sum, or any of the other metrics supported by elasticsearch. `skip` skips the value in the aggregation query |
 | `drilldown` | string[] | None | Drills down results where each entry of the array corresponds to a key from a grouping to allow progresive "drilldown"/"zooming" of groups. If a drilldown is specified, it will exclude nested groups > 1 deeper (e.g. `['a']` will filter the first group to `a` and expand the second, `[]` will only include the root group). Passing a falsey value will include all groups |
 | `sort` | object[] | None | `{ columnValues, valueIndex, valueProp, direction }` |
-| `sort.columnValues` | string/number | None | Values of columns to sort by, e.g. [2017, 'Q1']. If null, it will sort by the root level values. |
+| `sort.columnValues` | string/number[] | None | Values of columns to sort by, e.g. [2017, 'Q1']. If null, it will sort by the root level values. |
 | `sort.valueIndex` | number | None | The index of the value from `node.values` to sort by. If null, the behavior will be to use `doc_count` |
 | `sort.valueProp` | string | None | For multivalue values like `stats`, pick a subfield to sort by. In most cases, you'd use the relevant single value metric instead. |
 | `sort.direction` | `asc/desc` | `desc` | Sort ascending or descending |
