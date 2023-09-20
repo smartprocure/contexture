@@ -1,5 +1,11 @@
 ﻿# Changelog
 
+## 1.1.1
+
+### Patch Changes
+
+- ec0276ec: Await onWrite callback
+
 ## 1.1.0
 
 ### Minor Changes
