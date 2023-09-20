@@ -37,7 +37,7 @@ export default ({
           )
         )
         recordsWritten = recordsWritten + _.getOr(1, 'recordCount', r)
-        onWrite({ recordsWritten, record: r })
+        await onWrite({ recordsWritten, record: r })
       }
       await stream.end()
     })(),
