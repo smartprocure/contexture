@@ -19,6 +19,7 @@ let FilterContents = ({
   tree,
   fields,
   mapNodeToProps = _.noop,
+  style,
   theme: { Select, UnmappedNodeComponent },
 }) => {
   // `get` allows us to create a mobx dependency on field before we know it
@@ -30,7 +31,7 @@ let FilterContents = ({
     typeOptions = [...typeOptions, node.type]
   let nodeLabel = _.get([nodeField, 'label'], fields) || nodeField
   return (
-    <Grid columns="auto auto minmax(0, 1fr)" style={{ width: '100%' }}>
+    <Grid columns="auto auto minmax(0, 1fr)" style={style}>
       <ModalPicker
         label={nodeField ? nodeLabel : 'Pick a Field'}
         options={fieldsToOptions(fields)}

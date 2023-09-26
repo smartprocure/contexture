@@ -41,10 +41,29 @@ let GroupItem = (props) => {
     >
       {!(isRoot && node.children.length === 1) && (
         <Operator
-          {...{ node, child, tree, parent, index, hover, isLast, theme }}
+          {...{
+            node,
+            child,
+            tree,
+            parent,
+            index,
+            hover,
+            isLast,
+            theme,
+            adding,
+          }}
         />
       )}
-      <Component {...props} node={child} parent={node} style={{ flex: 1 }} />
+      <Component
+        {...props}
+        theme={theme}
+        node={child}
+        parent={node}
+        style={{
+          flex: 1,
+          zIndex: 1,
+        }}
+      />
     </div>
   )
 }
@@ -58,12 +77,19 @@ let Group = _.flow(
   let { parent, node, tree, adding, isRoot, style, theme } = props
   let hover = useLensObject({ wrap: false, join: '', remove: false })
   let children = _.toArray(node.children)
+  // hover.wrap = [true]
   return (
-    <Indentable parent={parent} indent={hover.wrap} style={style}>
+    <Indentable
+      theme={theme}
+      parent={parent}
+      indent={hover.wrap}
+      style={{
+        ...style,
+        marginBottom: F.view(hover.wrap) && styles.ruleGutter,
+      }}
+    >
       <div
         style={{
-          // borderLeft: `${styles.lineWidth}px solid black`,
-          // ...styles.bdJoin(node),
           width: !isRoot && '100%',
           ...(F.view(hover.remove) && {
             ...styles.bgStriped,
@@ -94,15 +120,10 @@ let Group = _.flow(
           )}
           {F.view(adding) && (
             <AddPreview
-              onClick={() => {
-                tree.add(node.path, blankNode())
-              }}
+              theme={theme}
               join={node.join}
-              style={{
-                marginLeft: 0,
-                borderTopLeftRadius: 5,
-                borderBottomLeftRadius: 5,
-              }}
+              onClick={() => tree.add(node.path, blankNode())}
+              style={{ marginBottom: styles.ruleGutter }}
             />
           )}
         </div>

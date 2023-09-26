@@ -8,69 +8,80 @@ import useFilterDragSource from './DragDrop/FilterDragSource.js'
 import { oppositeJoin, indent } from '../utils/search.js'
 import { useLensObject } from '../utils/react.js'
 
-let Rule = ({ node, parent, tree, style, ...props }) => {
+let Rule = ({ node, parent, tree, style, theme, ...props }) => {
   const [{ isDragging }, drag] = useFilterDragSource({ node, tree, ...props })
   let hover = useLensObject({
     indent: false,
     remove: false,
     rule: false,
   })
+  // hover.indent = [true]
   return (
-    <div ref={drag} style={{ width: '100%' }}>
-      <Indentable parent={parent} indent={hover.indent} style={style}>
+    <div ref={drag} style={style}>
+      <Indentable
+        theme={theme}
+        parent={parent}
+        indent={hover.indent}
+        isLeaf={true}
+        style={{ marginBottom: styles.ruleGutter }}
+      >
         <div
           style={{
-            // Box around condtion
             padding: '10px',
+            display: 'flex',
+            minHeight: styles.operatorHeight * 2,
             borderRadius: '5px',
-            marginBottom: `${styles.ruleGutter}px`,
-            borderWidth: 1,
-            borderLeftWidth: 1,
+            borderWidth: styles.lineWidth,
             borderStyle: 'solid',
             background: 'white',
-            display: 'flex',
-            justifyContent: 'space-between',
             ...styles.bdJoin(parent),
             ...(F.view(hover.remove) && {
               borderStyle: 'dashed',
-              opacity: 0.25,
+              opacity: 0.5,
               ...styles.bgStriped,
             }),
-            ...(isDragging && { opacity: 0.25 }),
+            ...(isDragging && { opacity: 0.5 }),
             ...(F.view(hover.rule) && { background: styles.background }),
           }}
           {...F.domLens.hover(hover.rule)}
         >
-          <FilterContents {...{ node, tree, ...props }} />
-          <div
+          <FilterContents {...{ node, tree, ...props }} style={{ flex: 1 }} />
+          <theme.ButtonGroup
             style={{
+              height: 'fit-content',
               ...(F.view(hover.rule) || { visibility: 'hidden' }),
-              minWidth: 82,
             }}
           >
-            <button
+            <theme.Button
               {...F.domLens.hover(hover.indent)}
               style={{
-                color: styles.joinColor(oppositeJoin(parent?.join)),
-                ...styles.btn,
-                ...styles.roundedRight0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 0,
+                width: `${styles.operatorWidth}px`,
+                height: `${styles.operatorHeight}px`,
+                background: styles.joinColor(oppositeJoin(parent?.join)),
               }}
               onClick={() => indent(tree, parent, node)}
             >
-              {'>'}
-            </button>
-            <button
+              <theme.Icon icon="NextPage" />
+            </theme.Button>
+            <theme.Button
               {...F.domLens.hover(hover.remove)}
-              style={{
-                ...styles.btn,
-                ...styles.roundedLeft0,
-                marginLeft: '-1px',
-              }}
               onClick={() => tree.remove(node.path)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 0,
+                width: `${styles.operatorWidth}px`,
+                height: `${styles.operatorHeight}px`,
+              }}
             >
               X
-            </button>
-          </div>
+            </theme.Button>
+          </theme.ButtonGroup>
         </div>
       </Indentable>
     </div>

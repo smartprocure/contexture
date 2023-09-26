@@ -5,18 +5,21 @@ import styles from '../styles/index.js'
 import OperatorMenu from './OperatorMenu.js'
 import { OperatorMoveTarget } from './DragDrop/MoveTargets.js'
 
-let HorizontalLine = ({ node }) => (
-  <div
-    style={{
-      width: '100%',
-      height: (styles.operatorHeight - 4) / 2,
-      marginLeft: `${(styles.operatorWidth - styles.lineWidth) / 2}px`,
-      background: styles.background,
-      borderBottom: `solid ${styles.lineWidth}px black`,
-      borderBottomColor: styles.joinColor(node.join),
-    }}
-  />
-)
+let HorizontalLine = ({ node, child }) => {
+  const marginLeft = `${(styles.operatorWidth - styles.lineWidth) / 2}px`
+  return (
+    <div
+      style={{
+        width: child.children ? '100%' : `calc(100% - ${marginLeft})`,
+        height: (styles.operatorHeight - 4) / 2,
+        marginLeft,
+        background: styles.background,
+        borderBottom: `solid ${styles.lineWidth}px black`,
+        borderBottomColor: styles.joinColor(node.join),
+      }}
+    />
+  )
+}
 
 let VerticalLine = ({ node }) => (
   <div
@@ -47,7 +50,17 @@ let OperatorTag = ({ node, hover, theme }) => (
   </theme.Button>
 )
 
-let Operator = ({ hover, node, child, parent, tree, index, isLast, theme }) => (
+let Operator = ({
+  hover,
+  node,
+  child,
+  parent,
+  tree,
+  index,
+  isLast,
+  theme,
+  adding,
+}) => (
   <div
     style={{
       position: 'relative',
@@ -56,8 +69,8 @@ let Operator = ({ hover, node, child, parent, tree, index, isLast, theme }) => (
       width: `${styles.operatorWidth + styles.ruleGutter}px`,
     }}
   >
-    <HorizontalLine node={node} />
-    {!isLast && <VerticalLine node={node} />}
+    <HorizontalLine {...{ node, child }} />
+    {(!isLast || F.view(adding)) && <VerticalLine node={node} />}
     {(index !== 0 || node.join === 'not') && (
       <div style={{ position: 'absolute' }}>
         <theme.Popover
