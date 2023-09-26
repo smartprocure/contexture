@@ -6,16 +6,21 @@ import { oppositeJoin } from '../../utils/search.js'
 import AddPreview from './AddPreview.js'
 
 let Indentable = ({ children, indent, parent }) => (
-  <div style={{ ...styles.dFlex, ...styles.w100 }}>
+  <div style={{ display: 'flex', width: '100%' }}>
     {F.view(indent) && (
       <div
         style={{
-          ...styles.indent,
+          marginBottom: `${styles.ruleGutter}px`,
+          borderRadius: 5,
+          zIndex: 1,
+          minWidth: `${styles.operatorWidth}px`,
+          marginRight: `${styles.ruleGutter}px`,
+          borderBottomRightRadius: 0,
           ...styles.bgPreview(oppositeJoin(parent)),
         }}
       />
     )}
-    <div style={styles.w100}>
+    <div style={{ width: '100%' }}>
       {children}
       {F.view(indent) && <AddPreview join={oppositeJoin(parent)} />}
     </div>

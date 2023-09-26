@@ -4,7 +4,6 @@ import _ from 'lodash/fp.js'
 import F from 'futil'
 import styles from '../styles/index.js'
 import { oppositeJoin, indent } from '../utils/search.js'
-let { btn, joinColor, bgJoin } = styles
 
 let OperatorMenu = ({ node, hover, tree, parent, child }) => (
   <div>
@@ -14,7 +13,7 @@ let OperatorMenu = ({ node, hover, tree, parent, child }) => (
           <div
             key={join}
             {...F.domLens.hover((x) => F.set(x && join, hover.join))}
-            style={{ ...btn, ...bgJoin(join) }}
+            style={{ ...styles.btn, ...styles.bgJoin(join) }}
             onClick={() => tree.mutate(node.path, { join })}
           >
             To {join.toUpperCase()}
@@ -25,8 +24,8 @@ let OperatorMenu = ({ node, hover, tree, parent, child }) => (
     <div>
       <div
         style={{
-          ...btn,
-          color: joinColor(oppositeJoin((parent || node).join)),
+          ...styles.btn,
+          color: styles.joinColor(oppositeJoin((parent || node).join)),
           marginTop: 5,
         }}
         {...F.domLens.hover(hover.wrap)}
@@ -41,7 +40,7 @@ let OperatorMenu = ({ node, hover, tree, parent, child }) => (
     <div>
       <div
         {...F.domLens.hover(hover.remove)}
-        style={{ ...btn, marginTop: 5 }}
+        style={{ ...styles.btn, marginTop: 5 }}
         onClick={() => tree.remove(node.path)}
       >
         Remove

@@ -10,7 +10,6 @@ import Rule from './Rule.js'
 import useFilterDragSource from './DragDrop/FilterDragSource.js'
 import { FilterIndentTarget } from './DragDrop/IndentTarget.js'
 import { FilterMoveTarget } from './DragDrop/MoveTargets.js'
-let { background } = styles
 import { blankNode } from '../utils/search.js'
 import { useLensObject } from '../utils/react.js'
 import { setDisplayName } from 'react-recompose'
@@ -23,9 +22,9 @@ let GroupItem = (props) => {
     <div
       ref={drag}
       style={{
-        ...styles.dFlex,
+        display: 'flex',
         ...(index === node.children.length - 1 &&
-          !F.view(adding) && { background }),
+          !F.view(adding) && { background: styles.background }),
         ...(isDragging && { opacity: 0.25 }),
       }}
     >
@@ -37,7 +36,8 @@ let GroupItem = (props) => {
   )
 }
 
-// we need to observe this here and not on the export because Group is referenced elsewhere in the file
+// We need to observe this here and not on the export because Group is
+// referenced elsewhere in the file
 let Group = _.flow(
   setDisplayName('Group'),
   observer
@@ -48,18 +48,21 @@ let Group = _.flow(
     <Indentable parent={parent} indent={hover.wrap}>
       <div
         style={{
-          ...styles.conditions,
-          ...(!isRoot && styles.w100),
+          borderLeft: `${styles.lineWidth}px solid black`,
+          paddingLeft: `${(styles.operatorWidth - styles.lineWidth) / 2}px`,
+          marginLeft: `${(styles.operatorWidth - styles.lineWidth) / 2}px`,
+          width: !isRoot && '100%',
           ...styles.bdJoin(node),
           ...(F.view(hover.remove) && {
             ...styles.bgStriped,
-            borderColor: background,
+            borderColor: styles.background,
           }),
         }}
       >
         <div
           style={{
-            ...styles.conditionsInner,
+            width: '100%',
+            marginLeft: `-${styles.operatorWidth}px`,
             ...(F.view(hover.remove) && { opacity: 0.25 }),
           }}
         >

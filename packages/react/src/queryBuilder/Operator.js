@@ -12,15 +12,25 @@ let BlankOperator = ({ open, node, child }) => (
     <div
       onClick={F.flip(open)}
       style={{
-        ...styles.blankOperator,
+        width: `${styles.operatorWidth / 2 + styles.ruleGutter}px`,
+        height: styles.operatorHeight / 2,
+        marginLeft: `${(styles.operatorWidth - styles.lineWidth) / 2}px`,
+        background: styles.background,
+        borderBottom: `solid ${styles.lineWidth}px black`,
         borderBottomColor: styles.joinColor(node.join),
       }}
     />
     {child.children && child.join !== 'not' && (
       <div
         style={{
-          ...styles.operatorLine,
-          ...styles.blankOperatorLineExtended,
+          width: `${styles.ruleGutter}px`,
+          bottom: `${styles.operatorHeight / 2}px`,
+          height: `${styles.lineWidth}px`,
+          position: 'relative',
+          left: `${styles.operatorWidth}px`,
+          width: styles.operatorWidth / 2,
+          top: -styles.lineWidth,
+          left: styles.operatorWidth + styles.ruleGutter - styles.lineWidth,
           ...styles.bgJoin(node),
         }}
       />
@@ -31,10 +41,17 @@ let BlankOperator = ({ open, node, child }) => (
 let OperatorLine = observer(({ node, child, style }) => (
   <div
     style={{
-      ...styles.operatorLine,
+      width: `${styles.ruleGutter}px`,
+      bottom: `${styles.operatorHeight / 2}px`,
+      height: `${styles.lineWidth}px`,
+      position: 'relative',
+      left: `${styles.operatorWidth}px`,
       ...(child.children &&
-        child.join !== 'not' &&
-        styles.operatorLineExtended),
+        child.join !== 'not' && {
+          width: `${
+            styles.operatorWidth / 2 + styles.ruleGutter - styles.lineWidth / 2
+          }px`,
+        }),
       ...styles.bgJoin(node),
       ...style,
     }}
@@ -47,7 +64,12 @@ let JoinOperator = ({ open, hover, node, child }) => (
     <div
       onClick={F.flip(open)}
       style={{
-        ...styles.operator,
+        width: `${styles.operatorWidth}px`,
+        marginRight: `${styles.ruleGutter}px`,
+        borderRadius: '5px',
+        color: 'white',
+        lineHeight: `${styles.operatorHeight}px`,
+        textAlign: 'center',
         ...styles.bgJoin(F.view(hover.join) || node),
       }}
     >
@@ -79,7 +101,9 @@ let Operator = ({ hover, node, child, parent, tree, index }) => {
       <Popover
         open={open}
         style={{
-          ...styles.operatorPopover,
+          border: `solid 1px black`,
+          marginLeft: styles.operatorWidth + styles.ruleGutter, // Set to 0 on wrapHover to avoid jumping
+          marginTop: `-${styles.operatorHeight + styles.lineWidth}px`,
           ...styles.bdJoin(node),
           ...(F.view(hover.wrap) && { marginLeft: 0 }),
         }}

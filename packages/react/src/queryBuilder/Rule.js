@@ -16,11 +16,24 @@ let Rule = ({ node, parent, tree, ...props }) => {
     rule: false,
   })
   return (
-    <div ref={drag} style={styles.w100}>
+    <div ref={drag} style={{ width: '100%' }}>
       <Indentable parent={parent} indent={hover.indent}>
         <div
           style={{
-            ...styles.condition,
+            // Box around condtion
+            padding: '10px',
+            borderRadius: '5px',
+            marginBottom: `${styles.ruleGutter}px`,
+            // border: 0,
+            borderWidth: 1,
+            borderLeftWidth: 1,
+            // borderRightWidth: 1,
+            // paddingLeft:0,
+            borderStyle: 'solid',
+            width: '100%',
+            background: 'white',
+            display: 'flex',
+            justifyContent: 'space-between',
             ...styles.bdJoin(parent),
             ...(F.view(hover.remove) && {
               borderStyle: 'dashed',

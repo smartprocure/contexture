@@ -32,7 +32,7 @@ export let OperatorMoveTarget = FilterMoveDropTarget(() => ({
   height: '100%',
 }))
 export let FilterMoveTarget = FilterMoveDropTarget(({ isOver }) => ({
-  ...styles.w100,
+  width: '100%',
   height: isOver ? '50px' : '15px',
   marginTop: '-15px',
 }))

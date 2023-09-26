@@ -1,13 +1,7 @@
 // Layout
-export let dFlex = {
-  display: 'flex',
-}
 export let flexJustifyContentBetween = {
   justifyContent: 'space-between',
-  ...dFlex,
-}
-export let w100 = {
-  width: '100%',
+  display: 'flex',
 }
 export let fullscreen = {
   position: 'fixed',
@@ -69,9 +63,7 @@ export let bgPreview = (join) => ({
 
 export default {
   // Layout
-  dFlex,
   flexJustifyContentBetween,
-  w100,
   fullscreen,
 
   // Button
