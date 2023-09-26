@@ -5,8 +5,8 @@ import styles from '../../styles/index.js'
 import { oppositeJoin } from '../../utils/search.js'
 import AddPreview from './AddPreview.js'
 
-let Indentable = ({ children, indent, parent }) => (
-  <div style={{ display: 'flex', width: '100%' }}>
+let Indentable = ({ children, indent, parent, style }) => (
+  <div style={{ display: 'flex', ...style }}>
     {F.view(indent) && (
       <div
         style={{
@@ -20,7 +20,7 @@ let Indentable = ({ children, indent, parent }) => (
         }}
       />
     )}
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '100%', zIndex: 1 }}>
       {children}
       {F.view(indent) && <AddPreview join={oppositeJoin(parent)} />}
     </div>

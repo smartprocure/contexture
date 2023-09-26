@@ -8,7 +8,7 @@ import useFilterDragSource from './DragDrop/FilterDragSource.js'
 import { oppositeJoin, indent } from '../utils/search.js'
 import { useLensObject } from '../utils/react.js'
 
-let Rule = ({ node, parent, tree, ...props }) => {
+let Rule = ({ node, parent, tree, style, ...props }) => {
   const [{ isDragging }, drag] = useFilterDragSource({ node, tree, ...props })
   let hover = useLensObject({
     indent: false,
@@ -17,20 +17,16 @@ let Rule = ({ node, parent, tree, ...props }) => {
   })
   return (
     <div ref={drag} style={{ width: '100%' }}>
-      <Indentable parent={parent} indent={hover.indent}>
+      <Indentable parent={parent} indent={hover.indent} style={style}>
         <div
           style={{
             // Box around condtion
             padding: '10px',
             borderRadius: '5px',
             marginBottom: `${styles.ruleGutter}px`,
-            // border: 0,
             borderWidth: 1,
             borderLeftWidth: 1,
-            // borderRightWidth: 1,
-            // paddingLeft:0,
             borderStyle: 'solid',
-            width: '100%',
             background: 'white',
             display: 'flex',
             justifyContent: 'space-between',

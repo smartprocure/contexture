@@ -15,7 +15,18 @@ import { useLensObject } from '../utils/react.js'
 import { setDisplayName } from 'react-recompose'
 
 let GroupItem = (props) => {
-  let { child, node, index, tree, adding, isRoot, parent, hover } = props
+  let {
+    child,
+    node,
+    index,
+    tree,
+    adding,
+    isRoot,
+    isLast,
+    parent,
+    hover,
+    theme,
+  } = props
   const [{ isDragging }, drag] = useFilterDragSource(props)
   let Component = child.children ? Group : Rule
   return (
@@ -29,9 +40,11 @@ let GroupItem = (props) => {
       }}
     >
       {!(isRoot && node.children.length === 1) && (
-        <Operator {...{ node, child, tree, parent, index, hover }} />
+        <Operator
+          {...{ node, child, tree, parent, index, hover, isLast, theme }}
+        />
       )}
-      <Component {...props} node={child} parent={node} />
+      <Component {...props} node={child} parent={node} style={{ flex: 1 }} />
     </div>
   )
 }
@@ -42,17 +55,16 @@ let Group = _.flow(
   setDisplayName('Group'),
   observer
 )((props) => {
-  let { parent, node, tree, adding, isRoot } = props
+  let { parent, node, tree, adding, isRoot, style, theme } = props
   let hover = useLensObject({ wrap: false, join: '', remove: false })
+  let children = _.toArray(node.children)
   return (
-    <Indentable parent={parent} indent={hover.wrap}>
+    <Indentable parent={parent} indent={hover.wrap} style={style}>
       <div
         style={{
-          borderLeft: `${styles.lineWidth}px solid black`,
-          paddingLeft: `${(styles.operatorWidth - styles.lineWidth) / 2}px`,
-          marginLeft: `${(styles.operatorWidth - styles.lineWidth) / 2}px`,
+          // borderLeft: `${styles.lineWidth}px solid black`,
+          // ...styles.bdJoin(node),
           width: !isRoot && '100%',
-          ...styles.bdJoin(node),
           ...(F.view(hover.remove) && {
             ...styles.bgStriped,
             borderColor: styles.background,
@@ -62,7 +74,6 @@ let Group = _.flow(
         <div
           style={{
             width: '100%',
-            marginLeft: `-${styles.operatorWidth}px`,
             ...(F.view(hover.remove) && { opacity: 0.25 }),
           }}
         >
@@ -70,18 +81,17 @@ let Group = _.flow(
             (child, index) => (
               <div key={child.key + index}>
                 <FilterIndentTarget {...{ ...props, child, index }} />
-                {/*<FilterMoveTarget index={index} tree={tree} />*/}
-                <GroupItem {...{ ...props, child, index, adding, hover }} />
-                {
-                  /*index !== (tree.children.length-1) &&*/ !child.children && (
-                    <FilterMoveTarget {...{ ...props, child, index }} />
-                  )
-                }
+                <GroupItem
+                  {...{ ...props, child, index, adding, hover, theme }}
+                  isLast={index === _.size(children) - 1}
+                />
+                {!child.children && (
+                  <FilterMoveTarget {...{ ...props, child, index }} />
+                )}
               </div>
             ),
-            _.toArray(node.children)
+            children
           )}
-          {/*<FilterMoveTarget index={tree.children.length} tree={tree} /> */}
           {F.view(adding) && (
             <AddPreview
               onClick={() => {

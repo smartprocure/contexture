@@ -5,29 +5,33 @@ import F from 'futil'
 import styles from '../styles/index.js'
 import { oppositeJoin, indent } from '../utils/search.js'
 
-let OperatorMenu = ({ node, hover, tree, parent, child }) => (
-  <div>
-    {_.map(
-      (join) =>
-        node.join !== join && (
-          <div
-            key={join}
-            {...F.domLens.hover((x) => F.set(x && join, hover.join))}
-            style={{ ...styles.btn, ...styles.bgJoin(join) }}
-            onClick={() => tree.mutate(node.path, { join })}
-          >
-            To {join.toUpperCase()}
-          </div>
-        ),
-      ['and', 'or', 'not']
-    )}
-    <div>
-      <div
-        style={{
-          ...styles.btn,
-          color: styles.joinColor(oppositeJoin((parent || node).join)),
-          marginTop: 5,
-        }}
+let OperatorMenu = ({ node, hover, tree, parent, child, theme }) => {
+  let { Button } = theme
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '8px',
+        padding: '8px',
+      }}
+    >
+      {_.map(
+        (join) =>
+          node.join !== join && (
+            <Button
+              key={join}
+              {...F.domLens.hover((x) => F.set(x && join, hover.join))}
+              style={styles.bgJoin(join)}
+              onClick={() => tree.mutate(node.path, { join })}
+            >
+              To {join.toUpperCase()}
+            </Button>
+          ),
+        ['and', 'or', 'not']
+      )}
+      <Button
+        style={styles.bgJoin(oppositeJoin((parent || node).join))}
         {...F.domLens.hover(hover.wrap)}
         onClick={() => {
           indent(tree, node, child)
@@ -35,18 +39,15 @@ let OperatorMenu = ({ node, hover, tree, parent, child }) => (
         }}
       >
         Wrap in {oppositeJoin((parent || node).join).toUpperCase()}
-      </div>
-    </div>
-    <div>
-      <div
+      </Button>
+      <Button
         {...F.domLens.hover(hover.remove)}
-        style={{ ...styles.btn, marginTop: 5 }}
         onClick={() => tree.remove(node.path)}
       >
         Remove
-      </div>
+      </Button>
     </div>
-  </div>
-)
+  )
+}
 
 export default observer(OperatorMenu)

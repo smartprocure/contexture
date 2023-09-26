@@ -1,10 +1,11 @@
 import { exampleTypes, mockService } from 'contexture-client'
+import { useTheme } from '../utils/theme.js'
 import ContextureMobx from '../utils/contexture-mobx.js'
 import { DnDDecorator } from './stories/util.js'
 import Component from './Group.js'
 
 export default {
-  component: Component,
+  component: (props) => <Component theme={useTheme()} {...props} />,
   decorators: [DnDDecorator],
   args: {
     isRoot: true,

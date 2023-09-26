@@ -14,7 +14,7 @@ let AddPreview = ({ join, style, onClick }) => (
         borderLeft: 0,
         marginLeft: `-${styles.ruleGutter + 5}px`, //+5 arbitrarily aligns bg slashes
         paddingLeft: styles.ruleGutter * 2,
-        ...roundedLeft0,
+        ...styles.roundedLeft0,
         ...styles.bgPreview(join),
         ...style,
       }}

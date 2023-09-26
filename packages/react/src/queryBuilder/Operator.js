@@ -1,117 +1,75 @@
 import React from 'react'
 import F from 'futil'
 import { observer } from 'mobx-react'
-
 import styles from '../styles/index.js'
-import { Popover } from '../greyVest/index.js'
 import OperatorMenu from './OperatorMenu.js'
 import { OperatorMoveTarget } from './DragDrop/MoveTargets.js'
 
-let BlankOperator = ({ open, node, child }) => (
-  <div>
-    <div
-      onClick={F.flip(open)}
-      style={{
-        width: `${styles.operatorWidth / 2 + styles.ruleGutter}px`,
-        height: styles.operatorHeight / 2,
-        marginLeft: `${(styles.operatorWidth - styles.lineWidth) / 2}px`,
-        background: styles.background,
-        borderBottom: `solid ${styles.lineWidth}px black`,
-        borderBottomColor: styles.joinColor(node.join),
-      }}
-    />
-    {child.children && child.join !== 'not' && (
-      <div
-        style={{
-          width: `${styles.ruleGutter}px`,
-          bottom: `${styles.operatorHeight / 2}px`,
-          height: `${styles.lineWidth}px`,
-          position: 'relative',
-          left: `${styles.operatorWidth}px`,
-          width: styles.operatorWidth / 2,
-          top: -styles.lineWidth,
-          left: styles.operatorWidth + styles.ruleGutter - styles.lineWidth,
-          ...styles.bgJoin(node),
-        }}
-      />
-    )}
-  </div>
-)
-
-let OperatorLine = observer(({ node, child, style }) => (
+let HorizontalLine = ({ node }) => (
   <div
     style={{
-      width: `${styles.ruleGutter}px`,
-      bottom: `${styles.operatorHeight / 2}px`,
-      height: `${styles.lineWidth}px`,
-      position: 'relative',
-      left: `${styles.operatorWidth}px`,
-      ...(child.children &&
-        child.join !== 'not' && {
-          width: `${
-            styles.operatorWidth / 2 + styles.ruleGutter - styles.lineWidth / 2
-          }px`,
-        }),
-      ...styles.bgJoin(node),
-      ...style,
+      width: '100%',
+      height: (styles.operatorHeight - 4) / 2,
+      marginLeft: `${(styles.operatorWidth - styles.lineWidth) / 2}px`,
+      background: styles.background,
+      borderBottom: `solid ${styles.lineWidth}px black`,
+      borderBottomColor: styles.joinColor(node.join),
     }}
   />
-))
-OperatorLine.displayName = 'OperatorLine'
-
-let JoinOperator = ({ open, hover, node, child }) => (
-  <div>
-    <div
-      onClick={F.flip(open)}
-      style={{
-        width: `${styles.operatorWidth}px`,
-        marginRight: `${styles.ruleGutter}px`,
-        borderRadius: '5px',
-        color: 'white',
-        lineHeight: `${styles.operatorHeight}px`,
-        textAlign: 'center',
-        ...styles.bgJoin(F.view(hover.join) || node),
-      }}
-    >
-      <span
-        style={{
-          ...(F.view(hover.join) && {
-            fontStyle: 'italic',
-            opacity: 0.5,
-          }),
-        }}
-      >
-        {F.view(hover.join) || node.join}
-      </span>
-    </div>
-    <OperatorLine {...{ node, child }} />
-  </div>
 )
 
-let Operator = ({ hover, node, child, parent, tree, index }) => {
-  let open = React.useState(false)
-  return (
-    <div>
-      {!(index !== 0 || node.join === 'not') ? (
-        <BlankOperator {...{ open, node, child }} />
-      ) : (
-        <JoinOperator {...{ open, node, child, hover }} />
-      )}
-      <OperatorMoveTarget {...{ node, tree, index }} />
-      <Popover
-        open={open}
-        style={{
-          border: `solid 1px black`,
-          marginLeft: styles.operatorWidth + styles.ruleGutter, // Set to 0 on wrapHover to avoid jumping
-          marginTop: `-${styles.operatorHeight + styles.lineWidth}px`,
-          ...styles.bdJoin(node),
-          ...(F.view(hover.wrap) && { marginLeft: 0 }),
-        }}
-      >
-        <OperatorMenu {...{ node, hover, tree, parent, child }} />
-      </Popover>
-    </div>
-  )
-}
+let VerticalLine = ({ node }) => (
+  <div
+    style={{
+      flex: 1,
+      marginLeft: `${(styles.operatorWidth - styles.lineWidth) / 2}px`,
+      borderLeft: `solid ${styles.lineWidth}px black`,
+      borderLeftColor: styles.joinColor(node.join),
+    }}
+  />
+)
+
+let OperatorTag = ({ node, hover, theme }) => (
+  <theme.Button
+    style={{
+      padding: 0,
+      color: 'white',
+      fontWeight: 'bold',
+      width: `${styles.operatorWidth}px`,
+      lineHeight: `${styles.operatorHeight}px`,
+      textTransform: 'none',
+      letterSpacing: 'initial',
+      ...styles.bgJoin(F.view(hover.join) || node),
+      ...(F.view(hover.join) && { fontStyle: 'italic' }),
+    }}
+  >
+    {F.view(hover.join) || node.join}
+  </theme.Button>
+)
+
+let Operator = ({ hover, node, child, parent, tree, index, isLast, theme }) => (
+  <div
+    style={{
+      position: 'relative',
+      display: 'flex',
+      flexDirection: 'column',
+      width: `${styles.operatorWidth + styles.ruleGutter}px`,
+    }}
+  >
+    <HorizontalLine node={node} />
+    {!isLast && <VerticalLine node={node} />}
+    {(index !== 0 || node.join === 'not') && (
+      <div style={{ position: 'absolute' }}>
+        <theme.Popover
+          trigger={<OperatorTag {...{ node, hover, theme }} />}
+          style={{ marginTop: '10px' }}
+        >
+          <OperatorMenu {...{ node, hover, tree, parent, child, theme }} />
+        </theme.Popover>
+      </div>
+    )}
+    <OperatorMoveTarget {...{ node, tree, index }} />
+  </div>
+)
 
 export default observer(Operator)
