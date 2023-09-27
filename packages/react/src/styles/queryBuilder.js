@@ -7,10 +7,11 @@ export let background = 'rgb(247, 247, 247)' //'#f0f8ff'
 let operatorHeight = 35
 // let operatorWidth = 100
 let operatorWidth = 50
-let ruleGutter = 15
+let ruleGutter = 25
 // let ruleGutter = 50
-let lineWidth = 1.5
+let lineWidth = 2
 // let lineWidth = 8
+let borderRadius = 5
 
 export let styles = {
   background,
@@ -18,15 +19,22 @@ export let styles = {
   lineWidth,
   operatorWidth,
   operatorHeight,
+  borderRadius,
 
-  btn,
   w100,
   dFlex,
+
+  // Reset button styles
+  buttonStyleReset: {
+    borderRadius,
+    textTransform: 'none',
+    letterSpacing: 'initial',
+  },
 
   // Indent and Placement Preview
   indent: {
     width: operatorWidth,
-    borderRadius: 5,
+    borderRadius,
     borderBottomRightRadius: 0,
   },
   indentPreview: {
@@ -40,9 +48,9 @@ export let styles = {
   condition: {
     // Box around condtion
     padding: '10px',
-    borderRadius: '5px',
+    borderRadius,
     // border: 0,
-    borderWidth: lineWidth,
+    borderWidth: 1,
     borderLeftWidth: 1,
     // borderRightWidth: 1,
     // paddingLeft:0,

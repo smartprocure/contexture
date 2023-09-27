@@ -17,16 +17,6 @@ export let fullscreen = {
   right: 0,
 }
 
-// Button
-export let btn = {
-  border: '1px solid #ccc',
-  padding: '.5rem 1rem',
-  // fontSize: '1rem',
-  borderRadius: 5000, //'.25rem',
-  background: 'white',
-  textAlign: 'center',
-  display: 'inline-block',
-}
 export let roundedLeft0 = {
   borderTopLeftRadius: 0,
   borderBottomLeftRadius: 0,
@@ -63,6 +53,7 @@ export let bdJoin = (tree) => ({
   borderColor: joinColor(tree),
 })
 export let bgPreview = (join) => ({
+  opacity: 0.7,
   ...bgJoin(join),
   ...bgStriped,
 })
@@ -75,7 +66,6 @@ export default {
   fullscreen,
 
   // Button
-  btn,
   roundedLeft0,
   roundedRight0,
 

@@ -99,7 +99,11 @@ let Rule = ({ index, node, parent, tree, style, theme, ...props }) => {
           ref={drop}
           style={{
             ...styles.bgPreview(parent),
-            height: isOver ? styles.operatorWidth : styles.ruleGutter,
+            height: isOver
+              ? styles.operatorWidth
+              : styles.ruleGutter - styles.ruleGutter / 2,
+            margin: styles.ruleGutter / 4,
+            borderRadius: styles.borderRadius,
           }}
         />
       )}

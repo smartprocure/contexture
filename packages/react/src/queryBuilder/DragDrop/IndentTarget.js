@@ -25,7 +25,7 @@ export let FilterIndentTarget = ({ child, node, tree }) => {
         style={{
           width: '50%',
           height: '100%',
-          borderRadius: '5px',
+          borderRadius: styles.borderRadius,
           position: 'absolute',
           right: 0,
           ...(dragItem.node === child

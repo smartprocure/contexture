@@ -12,7 +12,7 @@ let HorizontalLine = observer(({ node, child }) => {
     <div
       style={{
         width: child.children ? '100%' : `calc(100% - ${marginLeft})`,
-        height: (styles.operatorHeight - 4) / 2,
+        height: styles.operatorHeight / 2,
         marginLeft,
         borderBottom: `solid ${styles.lineWidth}px black`,
         borderBottomColor: styles.joinColor(node.join),
@@ -32,20 +32,16 @@ let VerticalLine = observer(({ node }) => (
   />
 ))
 
-let OperatorTag = observer(({ node, hover, theme, canDrop }) => (
+let OperatorTag = observer(({ node, hover, theme }) => (
   <theme.Button
     style={{
-      padding: 0,
-      color: 'white',
-      fontWeight: 'bold',
       width: `${styles.operatorWidth}px`,
       lineHeight: `${styles.operatorHeight}px`,
-      textTransform: 'none',
-      letterSpacing: 'initial',
-      ...(canDrop
-        ? { background: 'transparent' }
-        : styles.bgJoin(F.view(hover.join) || node)),
+      ...styles.bgJoin(F.view(hover.join) || node),
       ...(F.view(hover.join) && { fontStyle: 'italic' }),
+      // Reset button styles
+      padding: 0,
+      ...styles.buttonStyleReset,
     }}
   >
     {F.view(hover.join) || node.join}
