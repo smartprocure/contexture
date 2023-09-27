@@ -3,9 +3,9 @@ import F from 'futil'
 import { observer } from 'mobx-react'
 import styles from '../styles/index.js'
 import OperatorMenu from './OperatorMenu.js'
-import { OperatorMoveTarget } from './DragDrop/MoveTargets.js'
+import { useFilterDropTarget } from './DragDrop/FilterDropTarget.js'
 
-let HorizontalLine = ({ node, child }) => {
+let HorizontalLine = observer(({ node, child }) => {
   const marginLeft = `${(styles.operatorWidth - styles.lineWidth) / 2}px`
   return (
     <div
@@ -13,15 +13,14 @@ let HorizontalLine = ({ node, child }) => {
         width: child.children ? '100%' : `calc(100% - ${marginLeft})`,
         height: (styles.operatorHeight - 4) / 2,
         marginLeft,
-        background: styles.background,
         borderBottom: `solid ${styles.lineWidth}px black`,
         borderBottomColor: styles.joinColor(node.join),
       }}
     />
   )
-}
+})
 
-let VerticalLine = ({ node }) => (
+let VerticalLine = observer(({ node }) => (
   <div
     style={{
       flex: 1,
@@ -30,9 +29,9 @@ let VerticalLine = ({ node }) => (
       borderLeftColor: styles.joinColor(node.join),
     }}
   />
-)
+))
 
-let OperatorTag = ({ node, hover, theme }) => (
+let OperatorTag = observer(({ node, hover, theme, canDrop }) => (
   <theme.Button
     style={{
       padding: 0,
@@ -42,13 +41,15 @@ let OperatorTag = ({ node, hover, theme }) => (
       lineHeight: `${styles.operatorHeight}px`,
       textTransform: 'none',
       letterSpacing: 'initial',
-      ...styles.bgJoin(F.view(hover.join) || node),
+      ...(canDrop
+        ? { background: 'transparent' }
+        : styles.bgJoin(F.view(hover.join) || node)),
       ...(F.view(hover.join) && { fontStyle: 'italic' }),
     }}
   >
     {F.view(hover.join) || node.join}
   </theme.Button>
-)
+))
 
 let Operator = ({
   hover,
@@ -60,29 +61,40 @@ let Operator = ({
   isLast,
   theme,
   adding,
-}) => (
-  <div
-    style={{
-      position: 'relative',
-      display: 'flex',
-      flexDirection: 'column',
-      width: `${styles.operatorWidth + styles.ruleGutter}px`,
-    }}
-  >
-    <HorizontalLine {...{ node, child }} />
-    {(!isLast || F.view(adding)) && <VerticalLine node={node} />}
-    {(index !== 0 || node.join === 'not') && (
-      <div style={{ position: 'absolute' }}>
-        <theme.Popover
-          trigger={<OperatorTag {...{ node, hover, theme }} />}
-          style={{ marginTop: '10px' }}
-        >
-          <OperatorMenu {...{ node, hover, tree, parent, child, theme }} />
-        </theme.Popover>
-      </div>
-    )}
-    <OperatorMoveTarget {...{ node, tree, index }} />
-  </div>
-)
+}) => {
+  const [{ canDrop }, drop] = useFilterDropTarget({
+    drop(source) {
+      tree.move(source.node.path, {
+        path: node.path,
+        index: index + 1,
+      })
+    },
+  })
+  return (
+    <div
+      ref={drop}
+      style={{
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        width: `${styles.operatorWidth + styles.ruleGutter}px`,
+        ...(canDrop && styles.bgPreview(node)),
+      }}
+    >
+      <HorizontalLine {...{ node, child }} />
+      {(!isLast || F.view(adding)) && <VerticalLine node={node} />}
+      {(index !== 0 || node.join === 'not') && (
+        <div style={{ position: 'absolute' }}>
+          <theme.Popover
+            trigger={<OperatorTag {...{ node, hover, theme, canDrop }} />}
+            style={{ marginTop: '10px' }}
+          >
+            <OperatorMenu {...{ node, hover, tree, parent, child, theme }} />
+          </theme.Popover>
+        </div>
+      )}
+    </div>
+  )
+}
 
 export default observer(Operator)

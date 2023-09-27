@@ -8,8 +8,6 @@ import AddPreview from './preview/AddPreview.js'
 import Operator from './Operator.js'
 import Rule from './Rule.js'
 import useFilterDragSource from './DragDrop/FilterDragSource.js'
-import { FilterIndentTarget } from './DragDrop/IndentTarget.js'
-import { FilterMoveTarget } from './DragDrop/MoveTargets.js'
 import { blankNode } from '../utils/search.js'
 import { useLensObject } from '../utils/react.js'
 import { setDisplayName } from 'react-recompose'
@@ -59,6 +57,7 @@ let GroupItem = (props) => {
         theme={theme}
         node={child}
         parent={node}
+        index={index}
         style={{
           flex: 1,
           zIndex: 1,
@@ -77,7 +76,6 @@ let Group = _.flow(
   let { parent, node, tree, adding, isRoot, style, theme } = props
   let hover = useLensObject({ wrap: false, join: '', remove: false })
   let children = _.toArray(node.children)
-  // hover.wrap = [true]
   return (
     <Indentable
       theme={theme}
@@ -105,16 +103,11 @@ let Group = _.flow(
         >
           {F.mapIndexed(
             (child, index) => (
-              <div key={child.key + index}>
-                <FilterIndentTarget {...{ ...props, child, index }} />
-                <GroupItem
-                  {...{ ...props, child, index, adding, hover, theme }}
-                  isLast={index === _.size(children) - 1}
-                />
-                {!child.children && (
-                  <FilterMoveTarget {...{ ...props, child, index }} />
-                )}
-              </div>
+              <GroupItem
+                key={child.key + index}
+                {...{ ...props, child, index, adding, hover, theme }}
+                isLast={index === _.size(children) - 1}
+              />
             ),
             children
           )}
