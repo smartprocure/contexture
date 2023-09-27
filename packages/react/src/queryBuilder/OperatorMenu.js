@@ -12,11 +12,10 @@ let OperatorMenu = ({ node, hover, tree, parent, child, theme }) => {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '8px',
-        padding: '8px',
+        gap: styles.boxPadding,
       }}
     >
-      <ButtonGroup style={{ gap: '8px' }}>
+      <ButtonGroup style={{ gap: styles.boxPadding }}>
         {_.map(
           (join) =>
             node.join !== join && (

@@ -12,6 +12,7 @@ let ruleGutter = 25
 let lineWidth = 2
 // let lineWidth = 8
 let borderRadius = 5
+let boxPadding = 10
 
 export let styles = {
   background,
@@ -23,6 +24,7 @@ export let styles = {
 
   w100,
   dFlex,
+  boxPadding,
 
   // Reset button styles
   buttonStyleReset: {

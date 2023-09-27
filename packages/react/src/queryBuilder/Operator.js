@@ -73,7 +73,11 @@ let Operator = ({ hover, node, child, parent, tree, index, theme, adding }) => {
         <div style={{ position: 'absolute' }}>
           <theme.Popover
             trigger={<OperatorTag {...{ node, hover, theme, canDrop }} />}
-            style={{ marginTop: '10px' }}
+            style={{
+              // Add top spacing between popover and trigger
+              marginTop: '10px',
+              padding: styles.boxPadding,
+            }}
           >
             <OperatorMenu {...{ node, hover, tree, parent, child, theme }} />
           </theme.Popover>
