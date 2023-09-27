@@ -1,11 +1,6 @@
 {
-  "extends": [
-    "plugin:react/recommended",
-    "plugin:storybook/recommended"
-  ],
-  "ignorePatterns": [
-    "!.storybook"
-  ],
+  "extends": ["plugin:react/recommended", "plugin:storybook/recommended"],
+  "ignorePatterns": ["!.storybook"],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
