@@ -1,8 +1,10 @@
+import React from 'react'
+import { useTheme } from '../../utils/theme.js'
 import { action } from '@storybook/addon-actions'
 import Component from './AddPreview.js'
 
 export default {
-  component: Component,
+  component: (props) => <Component theme={useTheme()} {...props} />,
   args: {
     onClick: action('join'),
   },

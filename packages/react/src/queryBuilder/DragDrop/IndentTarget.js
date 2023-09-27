@@ -19,21 +19,21 @@ export let FilterIndentTarget = ({ child, node, tree }) => {
     },
   })
   return (
-    <div ref={drop}>
-      {!child.children && canDrop && (
-        <div
-          style={{
-            width: '50%',
-            marginLeft: '50%',
-            height: 50,
-            position: 'fixed',
-            ...(dragItem.node === child
-              ? styles.bgStriped
-              : styles.bgPreview(oppositeJoin(node.join))),
-            zIndex: 100,
-          }}
-        />
-      )}
-    </div>
+    canDrop && (
+      <div
+        ref={drop}
+        style={{
+          width: '50%',
+          height: '100%',
+          borderRadius: styles.borderRadius,
+          position: 'absolute',
+          right: 0,
+          ...(dragItem.node === child
+            ? styles.bgStriped
+            : styles.bgPreview(oppositeJoin(node.join))),
+          zIndex: 100,
+        }}
+      />
+    )
   )
 }

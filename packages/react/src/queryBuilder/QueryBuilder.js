@@ -8,13 +8,8 @@ import { contexturifyWithoutLoader } from '../utils/hoc.js'
 
 let { background } = styles
 
-let QueryBuilder = ({
-  tree,
-  node,
-  fields,
-  mapNodeToProps,
-  theme: { Button },
-}) => {
+let QueryBuilder = ({ tree, node, fields, mapNodeToProps, theme }) => {
+  let { Button } = theme
   let adding = React.useState(false)
   return (
     <DndProvider backend={HTML5Backend}>
@@ -23,6 +18,7 @@ let QueryBuilder = ({
           <Group
             isRoot={true}
             {...{
+              theme,
               node,
               tree,
               adding,

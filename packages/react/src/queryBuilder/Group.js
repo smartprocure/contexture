@@ -8,15 +8,13 @@ import AddPreview from './preview/AddPreview.js'
 import Operator from './Operator.js'
 import Rule from './Rule.js'
 import useFilterDragSource from './DragDrop/FilterDragSource.js'
-import { FilterIndentTarget } from './DragDrop/IndentTarget.js'
-import { FilterMoveTarget } from './DragDrop/MoveTargets.js'
 let { background } = styles
 import { blankNode } from '../utils/search.js'
 import { useLensObject } from '../utils/react.js'
 import { setDisplayName } from 'react-recompose'
 
-let GroupItem = (props) => {
-  let { child, node, index, tree, adding, isRoot, parent, hover } = props
+let GroupItem = observer((props) => {
+  let { child, node, index, tree, adding, isRoot, parent, hover, theme } = props
   const [{ isDragging }, drag] = useFilterDragSource(props)
   let Component = child.children ? Group : Rule
   return (
@@ -30,27 +28,52 @@ let GroupItem = (props) => {
       }}
     >
       {!(isRoot && node.children.length === 1) && (
-        <Operator {...{ node, child, tree, parent, index, hover }} />
+        <Operator
+          {...{
+            node,
+            child,
+            tree,
+            parent,
+            index,
+            hover,
+            theme,
+            adding,
+          }}
+        />
       )}
-      <Component {...props} node={child} parent={node} />
+      <Component
+        {...props}
+        node={child}
+        parent={node}
+        theme={theme}
+        index={index}
+        style={{ flex: 1, zIndex: 1 }}
+      />
     </div>
   )
-}
+})
 
-// we need to observe this here and not on the export because Group is referenced elsewhere in the file
+// We need to observe this here and not on the export because Group is
+// referenced elsewhere in the file
 let Group = _.flow(
   setDisplayName('Group'),
   observer
 )((props) => {
-  let { parent, node, tree, adding, isRoot } = props
+  let { parent, node, tree, adding, isRoot, style, theme } = props
   let hover = useLensObject({ wrap: false, join: '', remove: false })
   return (
-    <Indentable parent={parent} indent={hover.wrap}>
+    <Indentable
+      parent={parent}
+      indent={hover.wrap}
+      theme={theme}
+      style={{
+        ...style,
+        marginBottom: F.view(hover.wrap) && styles.ruleGutter,
+      }}
+    >
       <div
         style={{
-          ...styles.conditions,
           ...(!isRoot && styles.w100),
-          ...styles.bdJoin(node),
           ...(F.view(hover.remove) && {
             ...styles.bgStriped,
             borderColor: background,
@@ -59,37 +82,27 @@ let Group = _.flow(
       >
         <div
           style={{
-            ...styles.conditionsInner,
+            width: '100%',
             ...(F.view(hover.remove) && { opacity: 0.25 }),
           }}
         >
           {F.mapIndexed(
             (child, index) => (
-              <div key={child.key + index}>
-                <FilterIndentTarget {...{ ...props, child, index }} />
-                {/*<FilterMoveTarget index={index} tree={tree} />*/}
-                <GroupItem {...{ ...props, child, index, adding, hover }} />
-                {
-                  /*index !== (tree.children.length-1) &&*/ !child.children && (
-                    <FilterMoveTarget {...{ ...props, child, index }} />
-                  )
-                }
-              </div>
+              <GroupItem
+                key={child.key + index}
+                {...{ ...props, child, index, adding, hover, theme }}
+              />
             ),
             _.toArray(node.children)
           )}
-          {/*<FilterMoveTarget index={tree.children.length} tree={tree} /> */}
           {F.view(adding) && (
             <AddPreview
               onClick={() => {
                 tree.add(node.path, blankNode())
               }}
               join={node.join}
-              style={{
-                marginLeft: 0,
-                borderTopLeftRadius: 5,
-                borderBottomLeftRadius: 5,
-              }}
+              theme={theme}
+              style={{ marginBottom: styles.ruleGutter }}
             />
           )}
         </div>

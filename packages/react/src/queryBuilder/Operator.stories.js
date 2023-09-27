@@ -1,8 +1,10 @@
+import React from 'react'
+import { useTheme } from '../utils/theme.js'
 import { parent, DnDDecorator } from './stories/util.js'
 import Component from './Operator.js'
 
 export default {
-  component: Component,
+  component: (props) => <Component theme={useTheme()} {...props} />,
   decorators: [DnDDecorator],
   args: {
     index: 1,

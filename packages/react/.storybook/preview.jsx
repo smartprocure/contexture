@@ -1,6 +1,6 @@
 import React from 'react'
 import { configure } from 'mobx'
-import greyVest from '../src/themes/greyVest/index.js'
+import { base, greyVest } from '../src/themes/index.js'
 import Fonts from '../src/greyVest/Fonts.js'
 import Style from '../src/greyVest/Style.js'
 import { ThemeProvider } from '../src/utils/theme.js'
@@ -18,7 +18,7 @@ export const parameters = {
 
 export const decorators = [
   (Story) => (
-    <ThemeProvider theme={greyVest}>
+    <ThemeProvider theme={{ ...base, ...greyVest }}>
       <Fonts />
       <Style />
       <Story />
