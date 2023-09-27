@@ -74,7 +74,7 @@ let Rule = ({ index, node, parent, tree, style, theme, ...props }) => {
               }}
               onClick={() => indent(tree, parent, node)}
             >
-              <theme.Icon icon="NextPage" />
+              {'>'}
             </theme.Button>
             <theme.Button
               {...F.domLens.hover(hover.remove)}
