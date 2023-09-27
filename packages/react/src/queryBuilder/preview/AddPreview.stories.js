@@ -1,3 +1,4 @@
+import React from 'react'
 import { useTheme } from '../../utils/theme.js'
 import { action } from '@storybook/addon-actions'
 import Component from './AddPreview.js'

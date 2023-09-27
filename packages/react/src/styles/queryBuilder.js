@@ -1,10 +1,4 @@
-import {
-  dFlex,
-  flexJustifyContentBetween,
-  btn,
-  roundedLeft0,
-  w100,
-} from './generic.js'
+import { dFlex, btn, w100 } from './generic.js'
 
 // Style Configuration
 export let background = 'rgb(247, 247, 247)' //'#f0f8ff'
