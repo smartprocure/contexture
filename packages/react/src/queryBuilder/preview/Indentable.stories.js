@@ -1,8 +1,9 @@
+import { useTheme } from '../../utils/theme.js'
 import React from 'react'
 import Component from './Indentable.js'
 
 export default {
-  component: Component,
+  component: (props) => <Component theme={useTheme()} {...props} />,
   args: {
     indent: () => true,
     children: <div style={{ height: '100px' }}>Contents</div>,
