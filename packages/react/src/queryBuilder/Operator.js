@@ -51,17 +51,8 @@ let OperatorTag = observer(({ node, hover, theme, canDrop }) => (
   </theme.Button>
 ))
 
-let Operator = ({
-  hover,
-  node,
-  child,
-  parent,
-  tree,
-  index,
-  isLast,
-  theme,
-  adding,
-}) => {
+let Operator = ({ hover, node, child, parent, tree, index, theme, adding }) => {
+  const isLast = index === _.size(_.toArray(node.children)) - 1
   const [{ canDrop }, drop] = useFilterDropTarget({
     drop(source) {
       tree.move(source.node.path, {
@@ -81,8 +72,6 @@ let Operator = ({
         ...(canDrop && styles.bgPreview(node)),
       }}
     >
-      <HorizontalLine {...{ node, child }} />
-      {(!isLast || F.view(adding)) && <VerticalLine node={node} />}
       {(index !== 0 || node.join === 'not') && (
         <div style={{ position: 'absolute' }}>
           <theme.Popover
@@ -93,6 +82,8 @@ let Operator = ({
           </theme.Popover>
         </div>
       )}
+      <HorizontalLine {...{ node, child }} />
+      {(!isLast || F.view(adding)) && <VerticalLine node={node} />}
     </div>
   )
 }

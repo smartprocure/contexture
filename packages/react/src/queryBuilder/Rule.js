@@ -4,6 +4,7 @@ import F from 'futil'
 import styles from '../styles/index.js'
 import Indentable from './preview/Indentable.js'
 import FilterContents from './FilterContents.js'
+import { FilterIndentTarget } from './DragDrop/IndentTarget.js'
 import useFilterDragSource from './DragDrop/FilterDragSource.js'
 import { useFilterDropTarget } from './DragDrop/FilterDropTarget.js'
 import { oppositeJoin, indent } from '../utils/search.js'
@@ -17,7 +18,7 @@ let Rule = ({ index, node, parent, tree, style, theme, ...props }) => {
     rule: false,
   })
 
-  let [insertAfterDrop, insertAfterDropRef] = useFilterDropTarget({
+  let [{ canDrop, isOver }, drop] = useFilterDropTarget({
     drop(source) {
       tree.move(source.node.path, {
         path: parent.path,
@@ -26,57 +27,33 @@ let Rule = ({ index, node, parent, tree, style, theme, ...props }) => {
     },
   })
 
-  let [indentDrop, indentDropRef] = useFilterDropTarget({
-    drop(source) {
-      let isSelf = node === source.node
-      if (isSelf) {
-        tree.remove(node)
-      } else {
-        let newGroup = indent(tree, parent, node, true)
-        tree.move(source.node.path, {
-          path: newGroup.path,
-          index: 1,
-        })
-      }
-    },
-  })
-
   return (
     <Indentable
-      theme={theme}
       parent={parent}
       indent={hover.indent}
+      theme={theme}
       isLeaf={true}
       style={{
         ...style,
-        marginBottom: !insertAfterDrop.canDrop && styles.ruleGutter,
+        marginBottom: !canDrop && styles.ruleGutter,
       }}
     >
       <div
         ref={drag}
         style={{
-          padding: '10px',
-          borderRadius: '5px',
-          borderWidth: styles.lineWidth,
-          borderStyle: 'solid',
-          background: 'white',
+          ...styles.condition,
           ...styles.bdJoin(parent),
           ...(F.view(hover.remove) && {
             borderStyle: 'dashed',
-            opacity: 0.5,
+            opacity: 0.25,
             ...styles.bgStriped,
           }),
-          ...(isDragging && { opacity: 0.5 }),
+          ...(isDragging && { opacity: 0.25 }),
           ...(F.view(hover.rule) && { background: styles.background }),
         }}
         {...F.domLens.hover(hover.rule)}
       >
-        <div
-          style={{
-            display: 'flex',
-            position: 'relative',
-          }}
-        >
+        <div style={{ display: 'flex', position: 'relative' }}>
           <FilterContents {...{ node, tree, ...props }} style={{ flex: 1 }} />
           <theme.ButtonGroup
             style={{
@@ -114,32 +91,15 @@ let Rule = ({ index, node, parent, tree, style, theme, ...props }) => {
               X
             </theme.Button>
           </theme.ButtonGroup>
-          {indentDrop.canDrop && (
-            <div
-              ref={indentDropRef}
-              style={{
-                width: '50%',
-                height: '100%',
-                borderRadius: '5px',
-                position: 'absolute',
-                right: 0,
-                ...(indentDrop.dragItem.node === node
-                  ? styles.bgStriped
-                  : styles.bgPreview(oppositeJoin(parent?.join))),
-                zIndex: 100,
-              }}
-            />
-          )}
+          <FilterIndentTarget child={node} node={parent} tree={tree} />
         </div>
       </div>
-      {insertAfterDrop.canDrop && (
+      {canDrop && (
         <div
-          ref={insertAfterDropRef}
+          ref={drop}
           style={{
             ...styles.bgPreview(parent),
-            height: insertAfterDrop.isOver
-              ? styles.operatorWidth
-              : styles.ruleGutter,
+            height: isOver ? styles.operatorWidth : styles.ruleGutter,
           }}
         />
       )}

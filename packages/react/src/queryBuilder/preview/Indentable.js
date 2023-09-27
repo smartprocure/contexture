@@ -11,9 +11,7 @@ let Indentable = ({ children, indent, parent, theme, isLeaf, style }) => (
       {F.view(indent) && (
         <div
           style={{
-            width: styles.operatorWidth,
-            borderRadius: 5,
-            borderBottomRightRadius: 0,
+            ...styles.indent,
             ...styles.bgPreview(oppositeJoin(parent)),
           }}
         />

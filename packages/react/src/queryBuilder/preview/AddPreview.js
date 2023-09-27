@@ -6,10 +6,7 @@ let AddPreview = ({ join, onClick, theme, style }) => (
   <theme.Button
     onClick={() => onClick(join)}
     style={{
-      width: '100%',
-      height: styles.operatorWidth,
-      textTransform: 'none',
-      letterSpacing: 'initial',
+      ...styles.indentPreview,
       ...styles.bgPreview(join),
       ...style,
     }}

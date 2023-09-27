@@ -8,32 +8,22 @@ import AddPreview from './preview/AddPreview.js'
 import Operator from './Operator.js'
 import Rule from './Rule.js'
 import useFilterDragSource from './DragDrop/FilterDragSource.js'
+let { background } = styles
 import { blankNode } from '../utils/search.js'
 import { useLensObject } from '../utils/react.js'
 import { setDisplayName } from 'react-recompose'
 
 let GroupItem = observer((props) => {
-  let {
-    child,
-    node,
-    index,
-    tree,
-    adding,
-    isRoot,
-    isLast,
-    parent,
-    hover,
-    theme,
-  } = props
+  let { child, node, index, tree, adding, isRoot, parent, hover, theme } = props
   const [{ isDragging }, drag] = useFilterDragSource(props)
   let Component = child.children ? Group : Rule
   return (
     <div
       ref={drag}
       style={{
-        display: 'flex',
+        ...styles.dFlex,
         ...(index === node.children.length - 1 &&
-          !F.view(adding) && { background: styles.background }),
+          !F.view(adding) && { background }),
         ...(isDragging && { opacity: 0.25 }),
       }}
     >
@@ -46,7 +36,6 @@ let GroupItem = observer((props) => {
             parent,
             index,
             hover,
-            isLast,
             theme,
             adding,
           }}
@@ -54,14 +43,11 @@ let GroupItem = observer((props) => {
       )}
       <Component
         {...props}
-        theme={theme}
         node={child}
         parent={node}
+        theme={theme}
         index={index}
-        style={{
-          flex: 1,
-          zIndex: 1,
-        }}
+        style={{ flex: 1, zIndex: 1 }}
       />
     </div>
   )
@@ -75,12 +61,11 @@ let Group = _.flow(
 )((props) => {
   let { parent, node, tree, adding, isRoot, style, theme } = props
   let hover = useLensObject({ wrap: false, join: '', remove: false })
-  let children = _.toArray(node.children)
   return (
     <Indentable
-      theme={theme}
       parent={parent}
       indent={hover.wrap}
+      theme={theme}
       style={{
         ...style,
         marginBottom: F.view(hover.wrap) && styles.ruleGutter,
@@ -88,10 +73,10 @@ let Group = _.flow(
     >
       <div
         style={{
-          width: !isRoot && '100%',
+          ...(!isRoot && styles.w100),
           ...(F.view(hover.remove) && {
             ...styles.bgStriped,
-            borderColor: styles.background,
+            borderColor: background,
           }),
         }}
       >
@@ -106,16 +91,17 @@ let Group = _.flow(
               <GroupItem
                 key={child.key + index}
                 {...{ ...props, child, index, adding, hover, theme }}
-                isLast={index === _.size(children) - 1}
               />
             ),
-            children
+            _.toArray(node.children)
           )}
           {F.view(adding) && (
             <AddPreview
-              theme={theme}
+              onClick={() => {
+                tree.add(node.path, blankNode())
+              }}
               join={node.join}
-              onClick={() => tree.add(node.path, blankNode())}
+              theme={theme}
               style={{ marginBottom: styles.ruleGutter }}
             />
           )}
