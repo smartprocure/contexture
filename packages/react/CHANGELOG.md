@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.58.9
+
+### Patch Changes
+
+- 3d3295f7: Misc styling fixes to query builder
+
 ## 2.58.8
 
 ### Patch Changes
