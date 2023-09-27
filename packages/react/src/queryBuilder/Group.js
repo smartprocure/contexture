@@ -12,7 +12,7 @@ import { blankNode } from '../utils/search.js'
 import { useLensObject } from '../utils/react.js'
 import { setDisplayName } from 'react-recompose'
 
-let GroupItem = (props) => {
+let GroupItem = observer((props) => {
   let {
     child,
     node,
@@ -65,7 +65,7 @@ let GroupItem = (props) => {
       />
     </div>
   )
-}
+})
 
 // We need to observe this here and not on the export because Group is
 // referenced elsewhere in the file

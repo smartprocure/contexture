@@ -1,3 +1,4 @@
+import React from 'react'
 import { useTheme } from '../utils/theme.js'
 import { parent, DnDDecorator } from './stories/util.js'
 import Component from './Operator.js'

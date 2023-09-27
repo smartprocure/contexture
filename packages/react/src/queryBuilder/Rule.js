@@ -16,7 +16,8 @@ let Rule = ({ index, node, parent, tree, style, theme, ...props }) => {
     remove: false,
     rule: false,
   })
-  let [{ canDrop, isOver }, drop] = useFilterDropTarget({
+
+  let [insertAfterDrop, insertAfterDropRef] = useFilterDropTarget({
     drop(source) {
       tree.move(source.node.path, {
         path: parent.path,
@@ -24,20 +25,37 @@ let Rule = ({ index, node, parent, tree, style, theme, ...props }) => {
       })
     },
   })
+
+  let [indentDrop, indentDropRef] = useFilterDropTarget({
+    drop(source) {
+      let isSelf = node === source.node
+      if (isSelf) {
+        tree.remove(node)
+      } else {
+        let newGroup = indent(tree, parent, node, true)
+        tree.move(source.node.path, {
+          path: newGroup.path,
+          index: 1,
+        })
+      }
+    },
+  })
+
   return (
     <Indentable
       theme={theme}
       parent={parent}
       indent={hover.indent}
       isLeaf={true}
-      style={{ ...style, marginBottom: !canDrop && styles.ruleGutter }}
+      style={{
+        ...style,
+        marginBottom: !insertAfterDrop.canDrop && styles.ruleGutter,
+      }}
     >
       <div
         ref={drag}
         style={{
           padding: '10px',
-          display: 'flex',
-          minHeight: styles.operatorHeight * 2,
           borderRadius: '5px',
           borderWidth: styles.lineWidth,
           borderStyle: 'solid',
@@ -53,50 +71,75 @@ let Rule = ({ index, node, parent, tree, style, theme, ...props }) => {
         }}
         {...F.domLens.hover(hover.rule)}
       >
-        <FilterContents {...{ node, tree, ...props }} style={{ flex: 1 }} />
-        <theme.ButtonGroup
+        <div
           style={{
-            height: 'fit-content',
-            visibility: (!F.view(hover.rule) || isDragging) && 'hidden',
+            display: 'flex',
+            position: 'relative',
           }}
         >
-          <theme.Button
-            {...F.domLens.hover(hover.indent)}
+          <FilterContents {...{ node, tree, ...props }} style={{ flex: 1 }} />
+          <theme.ButtonGroup
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: 0,
-              width: `${styles.operatorWidth}px`,
-              height: `${styles.operatorHeight}px`,
-              background: styles.joinColor(oppositeJoin(parent?.join)),
-            }}
-            onClick={() => indent(tree, parent, node)}
-          >
-            <theme.Icon icon="NextPage" />
-          </theme.Button>
-          <theme.Button
-            {...F.domLens.hover(hover.remove)}
-            onClick={() => tree.remove(node.path)}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: 0,
-              width: `${styles.operatorWidth}px`,
-              height: `${styles.operatorHeight}px`,
+              height: 'fit-content',
+              visibility: (!F.view(hover.rule) || isDragging) && 'hidden',
             }}
           >
-            X
-          </theme.Button>
-        </theme.ButtonGroup>
+            <theme.Button
+              {...F.domLens.hover(hover.indent)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 0,
+                width: `${styles.operatorWidth}px`,
+                height: `${styles.operatorHeight}px`,
+                background: styles.joinColor(oppositeJoin(parent?.join)),
+              }}
+              onClick={() => indent(tree, parent, node)}
+            >
+              <theme.Icon icon="NextPage" />
+            </theme.Button>
+            <theme.Button
+              {...F.domLens.hover(hover.remove)}
+              onClick={() => tree.remove(node.path)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 0,
+                width: `${styles.operatorWidth}px`,
+                height: `${styles.operatorHeight}px`,
+              }}
+            >
+              X
+            </theme.Button>
+          </theme.ButtonGroup>
+          {indentDrop.canDrop && (
+            <div
+              ref={indentDropRef}
+              style={{
+                width: '50%',
+                height: '100%',
+                borderRadius: '5px',
+                position: 'absolute',
+                right: 0,
+                ...(indentDrop.dragItem.node === node
+                  ? styles.bgStriped
+                  : styles.bgPreview(oppositeJoin(parent?.join))),
+                zIndex: 100,
+              }}
+            />
+          )}
+        </div>
       </div>
-      {canDrop && (
+      {insertAfterDrop.canDrop && (
         <div
-          ref={drop}
+          ref={insertAfterDropRef}
           style={{
             ...styles.bgPreview(parent),
-            height: isOver ? styles.operatorWidth : styles.ruleGutter,
+            height: insertAfterDrop.isOver
+              ? styles.operatorWidth
+              : styles.ruleGutter,
           }}
         />
       )}
