@@ -1,7 +1,8 @@
+import { dirname, join } from "path";
 export default {
-  addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
+  addons: [getAbsolutePath("@storybook/addon-links"), getAbsolutePath("@storybook/addon-essentials")],
   framework: {
-    name: '@storybook/react-webpack5',
+    name: getAbsolutePath("@storybook/react-webpack5"),
     options: {},
   },
   docs: {
@@ -46,4 +47,8 @@ export default {
       titlePrefix: 'Live Demos/Index Explorer',
     },
   ],
+}
+
+function getAbsolutePath(value) {
+  return dirname(require.resolve(join(value, "package.json")));
 }
