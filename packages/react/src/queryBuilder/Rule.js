@@ -53,7 +53,7 @@ let Rule = ({ index, node, parent, tree, style, theme, ...props }) => {
         }}
         {...F.domLens.hover(hover.rule)}
       >
-        <div style={{ display: 'flex', position: 'relative' }}>
+        <div style={{ display: 'flex', gap: '8px', position: 'relative' }}>
           <FilterContents {...{ node, tree, ...props }} style={{ flex: 1 }} />
           <theme.ButtonGroup
             style={{

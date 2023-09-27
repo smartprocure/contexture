@@ -178,7 +178,6 @@ export default () => (
       .modal-picker-button {
         display: block;
         width: 100%;
-        margin-top: 8px;
       }
 
       /* Filter Button List */
