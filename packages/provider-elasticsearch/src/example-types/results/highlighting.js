@@ -150,3 +150,63 @@ export let highlightResults = (
     mainHighlighted,
   }
 }
+
+export let getSearchHighlight = (schema, node) => {
+  // Global schema highlight configuration
+  let schemaHighlight =
+    node.highlight !== false && schema.elasticsearch.highlight
+  // Specific search highlight override
+  let nodeHighlight = _.isPlainObject(node.highlight) ? node.highlight : {}
+
+  // to be able to override schema highlight config with node config
+  if (nodeHighlight.override) {
+    schemaHighlight = nodeHighlight.override
+    nodeHighlight = _.omit('override', nodeHighlight)
+  }
+
+  // Highlighting starts with defaults in the schema first
+  if (schemaHighlight) {
+    let showOtherMatches = _.getOr(false, 'showOtherMatches', node)
+    let schemaInline = _.getOr([], 'inline', schemaHighlight)
+    let schemaInlineAliases = _.flow(
+      _.getOr({}, 'inlineAliases'),
+      _.entries,
+      _.filter(([k]) => _.includes(k, node.include)),
+      _.flatten
+    )(schemaHighlight)
+
+    // Concat the search specific override fields with the schema `inline` so we have them as targets for highlight replacement
+    schemaHighlight = _.set(
+      'inline',
+      _.concat(schemaInline, _.keys(nodeHighlight.fields)),
+      schemaHighlight
+    )
+    // Convert the highlight fields from array to an object map
+    let fields = _.flow(
+      _.pick(['inline', 'additionalFields', 'nested']), // Get the highlight fields we will be working with
+      _.values,
+      _.flatten,
+      _.concat(schemaInlineAliases), // Include the provided field aliases if any
+      _.uniq,
+      arrayToHighlightsFieldMap, // Convert the array to object map so we can simply _.pick again
+      (filtered) =>
+        showOtherMatches
+          ? // Highlight on all fields specified in the initial _.pick above.
+            filtered
+          : // Only highlight on the fields listed in the node include section and their aliases (if any)
+            _.pick(_.concat(node.include, schemaInlineAliases), filtered)
+    )(schemaHighlight)
+
+    return _.merge(
+      {
+        // The default schema highlighting settings w/o the fields
+        pre_tags: ['<b class="search-highlight">'],
+        post_tags: ['</b>'],
+        require_field_match: false,
+        number_of_fragments: 0,
+        fields,
+      },
+      nodeHighlight
+    )
+  }
+}
