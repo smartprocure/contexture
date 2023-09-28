@@ -14,7 +14,7 @@ import number from './filters/number.js'
 import dateRangeFacet from './filters/dateRangeFacet.js'
 
 // Single Metrics
-import results from './results.js'
+import results from './results/index.js'
 import stats from './metricGroups/stats.js'
 import fieldValuesDelta from './metricGroups/fieldValuesDelta.js'
 

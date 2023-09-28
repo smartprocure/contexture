@@ -1,7 +1,7 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
-import { sequentialResultTest } from './testUtils.js'
-import { hoistOnTree } from '../utils/results.js'
+import { sequentialResultTest } from '../testUtils.js'
+import { hoistOnTree } from '../../utils/results.js'
 
 describe('results', () => {
   let schema
