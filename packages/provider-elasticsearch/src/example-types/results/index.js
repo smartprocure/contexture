@@ -1,10 +1,7 @@
 import F from 'futil'
 import _ from 'lodash/fp.js'
-import {
-  highlightResults,
-  arrayToHighlightsFieldMap,
-} from '../utils/highlighting.js'
-import { getField } from '../utils/fields.js'
+import { highlightResults, arrayToHighlightsFieldMap } from './highlighting.js'
+import { getField } from '../../utils/fields.js'
 
 export default {
   validContext: () => true,
