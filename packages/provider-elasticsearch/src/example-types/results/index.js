@@ -1,6 +1,6 @@
 import F from 'futil'
 import _ from 'lodash/fp.js'
-import { highlightResults, getSearchHighlight } from './highlighting.js'
+import { highlightResults, getHighlightSettings } from './highlighting.js'
 import { getField } from '../../utils/fields.js'
 
 export default {
@@ -28,7 +28,10 @@ export default {
 
     let resultColumns = node.include
 
-    let searchHighlight = getSearchHighlight(schema, node)
+    let { schemaHighlight, searchHighlight } = getHighlightSettings(
+      schema,
+      node
+    )
 
     if (searchHighlight) {
       // Setup the DEFAULT highlight config object with the calculated fields above

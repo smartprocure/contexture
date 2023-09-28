@@ -151,7 +151,7 @@ export let highlightResults = (
   }
 }
 
-export let getSearchHighlight = (schema, node) => {
+export let getHighlightSettings = (schema, node) => {
   // Global schema highlight configuration
   let schemaHighlight =
     node.highlight !== false && schema.elasticsearch.highlight
@@ -197,7 +197,7 @@ export let getSearchHighlight = (schema, node) => {
             _.pick(_.concat(node.include, schemaInlineAliases), filtered)
     )(schemaHighlight)
 
-    return _.merge(
+    let searchHighlight = _.merge(
       {
         // The default schema highlighting settings w/o the fields
         pre_tags: ['<b class="search-highlight">'],
@@ -208,5 +208,9 @@ export let getSearchHighlight = (schema, node) => {
       },
       nodeHighlight
     )
+
+    return { schemaHighlight, searchHighlight }
   }
+
+  return {}
 }
