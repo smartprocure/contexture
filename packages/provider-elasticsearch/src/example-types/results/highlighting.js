@@ -140,7 +140,7 @@ export let highlightResults = (schemaHighlight, hit, ...args) => {
       inlineHighlightInSource(hit, field)
     }
     // Do the field replacement for the inlineAliases fields
-    for (let [to, from] in _.toPairs(inlineAliases)) {
+    for (let [to, from] of _.toPairs(inlineAliases)) {
       if (hit.highlight[from]) {
         // `inline` takes priority over `inlineAliases`, so only replace the
         // `_source` value if the field is not in `inline` OR if there's no

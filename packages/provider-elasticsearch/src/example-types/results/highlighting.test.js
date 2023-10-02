@@ -50,9 +50,9 @@ describe('highlighting', () => {
         additionalFields: [],
       })
     })
-    it.only('should work with inline', () => {
+    it('should work with inline', () => {
       let highlightFields = {
-        // inline: ['title', 'description'],
+        inline: ['title', 'description'],
       }
       let hit = {
         _source: {
