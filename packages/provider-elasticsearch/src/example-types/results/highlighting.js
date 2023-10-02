@@ -41,7 +41,7 @@ let inlineHighlightInSource = (hit, fieldName) => {
 }
 
 let getAdditionalFields = (
-  schemaHighlight, // The schema highlight configuration
+  highlightFields, // The schema highlight configuration
   hit, // The ES result
   pathToNested, // schema.elasticsearch.nestedPath
   include, // The columns to return
@@ -49,7 +49,7 @@ let getAdditionalFields = (
 ) => {
   // Handle Results Highlighting
   let additionalFields = []
-  let { additional, additionalExclusions, inline, nested } = schemaHighlight
+  let { additional, additionalExclusions, inline, nested } = highlightFields
   let inlineKeys = _.keys(arrayToHighlightsFieldMap(inline))
 
   F.eachIndexed((value, fieldName) => {
@@ -116,9 +116,8 @@ let getAdditionalFields = (
     }
   }, hit.highlight)
 
-  if (filterNested && _.isEmpty(hit.highlight)) {
+  if (filterNested && _.isEmpty(hit.highlight))
     F.setOn(pathToNested, [], hit._source)
-  }
 
   return additionalFields
 }
@@ -126,28 +125,30 @@ let getAdditionalFields = (
 // TODO: Support multiple pathToNesteds...
 // TODO: Support Regex and Function basis for all options
 // TODO: Make this function pure, do not mutate `hit._source`
-export let highlightResults = (schemaHighlight, hit, ...args) => {
+export let highlightResults = (highlightFields, hit, ...args) => {
   // TODO: Make this function pure, do not mutate `hit._source`
   let additionalFields = getAdditionalFields(schemaHighlight, hit, ...args)
 
   let { inline, inlineAliases } = schemaHighlight
   let inlineKeys = _.keys(arrayToHighlightsFieldMap(inline))
 
+  // Copy over all inline highlighted fields
   if (hit.highlight) {
-    // Copy over all inline highlighted fields
     for (let field of inlineKeys) {
       // TODO: Make this function pure, do not mutate `hit._source`
       inlineHighlightInSource(hit, field)
     }
     // Do the field replacement for the inlineAliases fields
-    for (let [to, from] of _.toPairs(inlineAliases)) {
-      if (hit.highlight[from]) {
-        // `inline` takes priority over `inlineAliases`, so only replace the
-        // `_source` value if the field is not in `inline` OR if there's no
-        // highlight returned for the `inline` field
-        if (!_.includes(to, inlineKeys) || !hit.highlight[to]) {
+    for (let [field, mapToField] of _.toPairs(inlineAliases)) {
+      // if we have a highlight result matching the inlineAliases TO field
+      if (hit.highlight[mapToField]) {
+        // if the field is only in inlineAliases OR it is in both but not inlined/highlighted already by the inline section
+        if (
+          !_.includes(field, inlineKeys) ||
+          (_.includes(field, inlineKeys) && !hit.highlight[field])
+        ) {
           // TODO: Do not mutate `hit._source`
-          F.setOn(to, hit.highlight[from][0], hit._source)
+          F.setOn(field, hit.highlight[mapToField][0], hit._source)
         }
       }
     }
