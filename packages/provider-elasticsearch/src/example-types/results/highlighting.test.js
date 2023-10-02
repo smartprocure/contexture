@@ -1,4 +1,8 @@
-import { highlightResults, arrayToHighlightsFieldMap } from './highlighting.js'
+import {
+  highlightResults,
+  arrayToHighlightsFieldMap,
+  anyRegexesMatch,
+} from './highlighting.js'
 
 describe('highlighting', () => {
   describe('highlightResults', () => {
@@ -311,5 +315,20 @@ describe('highlighting', () => {
         additionalFields: [],
       })
     })
+  })
+})
+
+describe('anyRegexesMatch()', () => {
+  it('should match', () => {
+    let actual = anyRegexesMatch(['non-matching', 'nested.*'], 'nested.field')
+    expect(actual).toEqual(true)
+  })
+
+  it('should not match', () => {
+    let actual = anyRegexesMatch(
+      ['non-matching', 'non-matching.*'],
+      'nested.field'
+    )
+    expect(actual).toEqual(false)
   })
 })
