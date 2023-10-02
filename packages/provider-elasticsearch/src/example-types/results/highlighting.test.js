@@ -29,7 +29,6 @@ describe('highlighting', () => {
             value: 'b',
           },
         ],
-        mainHighlighted: true,
       })
     })
     it('should work without includes', () => {
@@ -49,7 +48,6 @@ describe('highlighting', () => {
       let result = highlightResults(highlightFields, hit)
       expect(result).toEqual({
         additionalFields: [],
-        mainHighlighted: true,
       })
     })
     it('should work with inline', () => {
@@ -70,7 +68,6 @@ describe('highlighting', () => {
       })
       expect(result).toEqual({
         additionalFields: [],
-        mainHighlighted: true,
       })
     })
     it('should work with inline and .* object', () => {
@@ -110,7 +107,6 @@ describe('highlighting', () => {
       })
       expect(result).toEqual({
         additionalFields: [],
-        mainHighlighted: true,
       })
     })
     it('should work with inline and object', () => {
@@ -144,7 +140,6 @@ describe('highlighting', () => {
       })
       expect(result).toEqual({
         additionalFields: [],
-        mainHighlighted: true,
       })
     })
     it('should work with inlineAliases', () => {
@@ -171,7 +166,6 @@ describe('highlighting', () => {
       })
       expect(result).toEqual({
         additionalFields: [],
-        mainHighlighted: true,
       })
     })
     it('inline should precede inlineAliases', () => {
@@ -196,7 +190,6 @@ describe('highlighting', () => {
       })
       expect(result).toEqual({
         additionalFields: [],
-        mainHighlighted: true,
       })
     })
     it('arrayToHighlightsFieldMap should work', () => {
@@ -251,7 +244,6 @@ describe('highlighting', () => {
       })
       expect(result).toEqual({
         additionalFields: [],
-        mainHighlighted: false,
       })
     })
     it('should work with nested and filterNested', () => {
@@ -288,7 +280,6 @@ describe('highlighting', () => {
       })
       expect(result).toEqual({
         additionalFields: [],
-        mainHighlighted: false,
       })
     })
 
@@ -318,7 +309,6 @@ describe('highlighting', () => {
       })
       expect(result).toEqual({
         additionalFields: [],
-        mainHighlighted: false,
       })
     })
   })
