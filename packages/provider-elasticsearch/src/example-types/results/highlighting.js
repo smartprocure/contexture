@@ -17,55 +17,77 @@ export let arrayToHighlightsFieldMap = _.flow(
   F.ifElse(_.isEmpty, _.always({}), _.mergeAll)
 )
 
-// TODO: Support multiple pathToNesteds...
-export let highlightResults = (
-  highlightFields,
-  hit,
-  pathToNested,
-  include,
-  filterNested
-) => {
-  // TODO: Support Regex and Function basis for all options
+// Replace _source value with highlighted result for `fieldName`
+let inlineHighlightInSource = (hit, fieldName) => {
+  if (fieldName.endsWith('.*')) {
+    // Get the root key e.g. "documents" from "documents.*"
+    let root = fieldName.split('.*')[0]
+    // Get all the highlights that start with the root key
+    let matchedKeys = _.filter(
+      (key) => _.startsWith(`${root}.`, key),
+      _.keys(hit.highlight)
+    )
+    _.each((key) => F.setOn(key, hit.highlight[key], hit._source), matchedKeys)
+  } else {
+    let highlights = hit.highlight[fieldName]
+    if (highlights) {
+      F.setOn(
+        fieldName,
+        highlights.length > 1 ? highlights : highlights[0],
+        hit._source
+      )
+    }
+  }
+}
 
+let getAdditionalFields = (
+  schemaHighlight, // The schema highlight configuration
+  hit, // The ES result
+  pathToNested, // schema.elasticsearch.nestedPath
+  include, // The columns to return
+  filterNested // Whether to only return the highlighted fields
+) => {
   // Handle Results Highlighting
   let additionalFields = []
-  let { additional, additionalExclusions, inline, inlineAliases, nested } =
-    highlightFields
+  let { additional, additionalExclusions, inline, nested } = schemaHighlight
   let inlineKeys = _.keys(arrayToHighlightsFieldMap(inline))
 
-  F.eachIndexed((value, key) => {
-    // Populate Additional Fields
-    let additionalMatches = anyRegexesMatch(additional, key)
+  F.eachIndexed((value, fieldName) => {
+    // Whether `fieldName` is matched by any field name in `additional`
+    let additionalMatches = anyRegexesMatch(additional, fieldName)
+
     // Exclude explicit exclusions, inline, and nested highlight fields
     let additionalExclusionMatches =
-      anyRegexesMatch(additionalExclusions, key) ||
-      anyRegexesMatch(inline, key) ||
-      anyRegexesMatch(nested, key)
-    // If we have an include array, and if the field is inline but is not in the includes, add it to the additionalFields
+      anyRegexesMatch(additionalExclusions, fieldName) ||
+      anyRegexesMatch(inline, fieldName) ||
+      anyRegexesMatch(nested, fieldName)
+
+    // Whether there is an include array and `fieldName` is contained in
+    // `inline` but is not in `include`
     let inlineButNotIncluded =
-      include && _.includes(key, _.difference(inlineKeys, include))
+      include && _.includes(fieldName, _.difference(inlineKeys, include))
 
     if (
       inlineButNotIncluded ||
       (additionalMatches && !additionalExclusionMatches)
     ) {
       additionalFields.push({
-        label: key,
+        label: fieldName,
         value: value[0],
       })
-    } else if (_.includes(key, nested)) {
-      if (_.isArray(value) && !_.includes(pathToNested, key)) {
+    } else if (_.includes(fieldName, nested)) {
+      if (_.isArray(value) && !_.includes(pathToNested, fieldName)) {
         additionalFields.push({
-          label: key,
+          label: fieldName,
           value,
         })
       } else {
         // Handle Nested Item Highlighting Replacement
-        if (key === pathToNested)
+        if (fieldName === pathToNested)
           // Clarify [{a}, {b}] case and not [a,b] case (ie, does not handle http://stackoverflow.com/questions/25565546/highlight-whole-content-in-elasticsearch-for-multivalue-fields)
           throw new Error('Arrays of scalars not supported')
 
-        let field = key.replace(`${pathToNested}.`, '')
+        let field = fieldName.replace(`${pathToNested}.`, '')
         // For arrays, strip the highlighting wrapping and compare to the array contents to match up
         _.each(function (val) {
           let originalValue = val.replace(
@@ -94,67 +116,51 @@ export let highlightResults = (
     }
   }, hit.highlight)
 
-  if (filterNested && _.isEmpty(hit.highlight))
+  if (filterNested && _.isEmpty(hit.highlight)) {
     F.setOn(pathToNested, [], hit._source)
+  }
 
-  let mainHighlighted = false
-  // Copy over all inline highlighted fields
+  return additionalFields
+}
+
+// TODO: Support multiple pathToNesteds...
+// TODO: Support Regex and Function basis for all options
+// TODO: Make this function pure, do not mutate `hit._source`
+export let highlightResults = (schemaHighlight, hit, ...args) => {
+  // TODO: Make this function pure, do not mutate `hit._source`
+  let additionalFields = getAdditionalFields(schemaHighlight, hit, ...args)
+
+  let { inline, inlineAliases } = schemaHighlight
+  let inlineKeys = _.keys(arrayToHighlightsFieldMap(inline))
+
   if (hit.highlight) {
-    // do the field replacement for the inline fields
-    _.each((val) => {
-      if (val.endsWith('.*')) {
-        // get the root key e.g. "documents" from "documents.*"
-        let root = val.split('.*')[0]
-        // get all the highlights that start with the root key
-        let matchedKeys = _.filter(
-          (key) => _.startsWith(`${root}.`, key),
-          _.keys(hit.highlight)
-        )
-        _.each(
-          (key) => F.setOn(key, hit.highlight[key], hit._source),
-          matchedKeys
-        )
-      } else {
-        let highlights = hit.highlight[val]
-        if (highlights) {
-          F.setOn(
-            val,
-            highlights.length > 1 ? highlights : highlights[0],
-            hit._source
-          )
-          mainHighlighted = true
-        }
-      }
-    }, inlineKeys)
-    // do the field replacement for the inlineAliases fields
-    if (inlineAliases) {
-      for (let field in inlineAliases) {
-        let mapToField = inlineAliases[field]
-        // if we have a highlight result matching the inlineAliases TO field
-        if (hit.highlight[mapToField]) {
-          // if the field is only in inlineAliases OR it is in both but not inlined/highlighted already by the inline section
-          if (
-            !_.includes(field, inlineKeys) ||
-            (_.includes(field, inlineKeys) && !hit.highlight[field])
-          ) {
-            F.setOn(field, hit.highlight[mapToField][0], hit._source)
-            mainHighlighted = true
-          }
+    // Copy over all inline highlighted fields
+    for (let field of inlineKeys) {
+      // TODO: Make this function pure, do not mutate `hit._source`
+      inlineHighlightInSource(hit, field)
+    }
+    // Do the field replacement for the inlineAliases fields
+    for (let [to, from] in _.toPairs(inlineAliases)) {
+      if (hit.highlight[from]) {
+        // `inline` takes priority over `inlineAliases`, so only replace the
+        // `_source` value if the field is not in `inline` OR if there's no
+        // highlight returned for the `inline` field
+        if (!_.includes(to, inlineKeys) || !hit.highlight[to]) {
+          // TODO: Do not mutate `hit._source`
+          F.setOn(to, hit.highlight[from][0], hit._source)
         }
       }
     }
   }
 
-  return {
-    additionalFields,
-    mainHighlighted,
-  }
+  return { additionalFields }
 }
 
 export let getHighlightSettings = (schema, node) => {
   // Global schema highlight configuration
   let schemaHighlight =
     node.highlight !== false && schema.elasticsearch.highlight
+
   // Specific search highlight override
   let nodeHighlight = _.isPlainObject(node.highlight) ? node.highlight : {}
 
@@ -168,6 +174,8 @@ export let getHighlightSettings = (schema, node) => {
   if (schemaHighlight) {
     let showOtherMatches = _.getOr(false, 'showOtherMatches', node)
     let schemaInline = _.getOr([], 'inline', schemaHighlight)
+
+    // Get field names from `inlineAliases` that are also in `node.include`
     let schemaInlineAliases = _.flow(
       _.getOr({}, 'inlineAliases'),
       _.entries,
@@ -175,12 +183,15 @@ export let getHighlightSettings = (schema, node) => {
       _.flatten
     )(schemaHighlight)
 
-    // Concat the search specific override fields with the schema `inline` so we have them as targets for highlight replacement
+    // Add field names from `node.highlight.fields` to
+    // `schema.elasticsearch.highlight.inline` so we have them as targets for
+    // highlight replacement
     schemaHighlight = _.set(
       'inline',
       _.concat(schemaInline, _.keys(nodeHighlight.fields)),
       schemaHighlight
     )
+
     // Convert the highlight fields from array to an object map
     let fields = _.flow(
       _.pick(['inline', 'additionalFields', 'nested']), // Get the highlight fields we will be working with

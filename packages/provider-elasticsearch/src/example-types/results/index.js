@@ -65,12 +65,14 @@ export default {
             hit, // The ES result
             schema.elasticsearch.nestedPath,
             resultColumns, // The columns to return
-            schemaHighlight.filterNested // Only return the highlighted fields
+            schemaHighlight.filterNested // Whether to only return the highlighted fields
           )
           additionalFields = highlightObject.additionalFields
         }
 
-        // TODO - If nested path, iterate properties on nested path, filtering out nested path results unless mainHighlighted or relevant nested fields have "<b></b>" tags in them
+        // TODO - If nested path, iterate properties on nested path, filtering
+        // out nested path results unless mainHighlighted or relevant nested
+        // fields have "<b></b>" tags in them
         return {
           additionalFields: schemaHighlight ? additionalFields : [],
           ...hit,
