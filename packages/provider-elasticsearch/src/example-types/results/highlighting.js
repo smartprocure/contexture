@@ -127,9 +127,9 @@ let getAdditionalFields = (
 // TODO: Make this function pure, do not mutate `hit._source`
 export let highlightResults = (highlightFields, hit, ...args) => {
   // TODO: Make this function pure, do not mutate `hit._source`
-  let additionalFields = getAdditionalFields(schemaHighlight, hit, ...args)
+  let additionalFields = getAdditionalFields(highlightFields, hit, ...args)
 
-  let { inline, inlineAliases } = schemaHighlight
+  let { inline, inlineAliases } = highlightFields
   let inlineKeys = _.keys(arrayToHighlightsFieldMap(inline))
 
   // Copy over all inline highlighted fields
