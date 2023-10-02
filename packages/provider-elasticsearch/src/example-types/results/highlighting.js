@@ -2,7 +2,7 @@ import F from 'futil'
 import _ from 'lodash/fp.js'
 
 export let anyRegexesMatch = (regexes, criteria) =>
-  !!_.find((str) => new RegExp(str).test(criteria), regexes)
+  !!_.find((pattern) => new RegExp(pattern).test(criteria), regexes)
 
 // Convert the fields array to object map where we only pick the first key from the objects
 // Highlight fields can be either strings or objects with a single key which value is the ES highlights object config
@@ -38,14 +38,14 @@ let inlineHighlightInSource = (hit, fieldName) => {
 let getAdditionalFields = ({
   highlightFields,
   hit,
-  pathToNested,
+  nestedPath,
   include,
   inlineKeys,
 }) => {
   let additionalFields = []
   let { additional, additionalExclusions, inline, nested } = highlightFields
 
-  F.eachIndexed((fieldValue, fieldName) => {
+  F.eachIndexed((highlightedValue, fieldName) => {
     // Whether `fieldName` is matched by any field name in `additional`
     let additionalMatches = anyRegexesMatch(additional, fieldName)
 
@@ -66,18 +66,18 @@ let getAdditionalFields = ({
     ) {
       additionalFields.push({
         label: fieldName,
-        value: fieldValue[0],
+        value: highlightedValue[0],
       })
     }
 
     if (
       _.includes(fieldName, nested) &&
-      _.isArray(fieldValue) &&
-      !_.includes(pathToNested, fieldName)
+      _.isArray(highlightedValue) &&
+      !_.includes(nestedPath, fieldName)
     ) {
       additionalFields.push({
         label: fieldName,
-        value: fieldValue,
+        value: highlightedValue,
       })
     }
   }, hit.highlight)
@@ -88,21 +88,21 @@ let getAdditionalFields = ({
 let handleNested = ({
   highlightFields,
   hit,
-  pathToNested,
+  nestedPath,
   filterNested,
   additionalFields,
 }) => {
-  F.eachIndexed((fieldValue, fieldName) => {
+  F.eachIndexed((highlightedValue, fieldName) => {
     if (
       _.includes(fieldName, highlightFields.nested) &&
       !_.find({ label: fieldName }, additionalFields)
     ) {
       // Handle Nested Item Highlighting Replacement
-      if (fieldName === pathToNested)
+      if (fieldName === nestedPath)
         // Clarify [{a}, {b}] case and not [a,b] case (ie, does not handle http://stackoverflow.com/questions/25565546/highlight-whole-content-in-elasticsearch-for-multivalue-fields)
         throw new Error('Arrays of scalars not supported')
 
-      let field = fieldName.replace(`${pathToNested}.`, '')
+      let field = fieldName.replace(`${nestedPath}.`, '')
       // For arrays, strip the highlighting wrapping and compare to the array contents to match up
       _.each(function (val) {
         let originalValue = val.replace(
@@ -112,32 +112,32 @@ let handleNested = ({
         let childItem = _.find(
           // TODO: Remove this asap
           (item) => _.trim(_.get(field, item)) === _.trim(originalValue),
-          _.get(pathToNested, hit._source)
+          _.get(nestedPath, hit._source)
         )
         if (childItem) childItem[field] = val
-      }, fieldValue)
+      }, highlightedValue)
 
       if (filterNested) {
         let filtered = _.flow(
-          _.get(pathToNested),
+          _.get(nestedPath),
           _.filter(
             _.flow(_.get(field), _.includes('<b class="search-highlight">'))
           )
         )(hit._source)
 
-        F.setOn(pathToNested, filtered, hit._source)
+        F.setOn(nestedPath, filtered, hit._source)
       }
     }
   }, hit.highlight)
 }
 
-// TODO: Support multiple pathToNesteds...
+// TODO: Support multiple nestedPaths...
 // TODO: Support Regex and Function basis for all options
 // TODO: Make this function pure, do not mutate `hit._source`
 export let highlightResults = (
   highlightFields, // The schema highlight configuration
   hit, // The ES result
-  pathToNested, // schema.elasticsearch.nestedPath
+  nestedPath, // schema.elasticsearch.nestedPath
   include, // The columns to return
   filterNested // Whether to only return the highlighted fields
 ) => {
@@ -147,7 +147,7 @@ export let highlightResults = (
   let additionalFields = getAdditionalFields({
     highlightFields,
     hit,
-    pathToNested,
+    nestedPath,
     include,
     inlineKeys,
   })
@@ -156,14 +156,14 @@ export let highlightResults = (
   handleNested({
     highlightFields,
     hit,
-    pathToNested,
+    nestedPath,
     filterNested,
     additionalFields,
   })
 
   // TODO: Do not mutate `hit._source`
   if (filterNested && _.isEmpty(hit.highlight)) {
-    F.setOn(pathToNested, [], hit._source)
+    F.setOn(nestedPath, [], hit._source)
   }
 
   // Copy over all inline highlighted fields
