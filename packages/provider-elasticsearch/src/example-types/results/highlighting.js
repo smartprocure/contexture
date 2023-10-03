@@ -261,7 +261,7 @@ export let getHighlightSettings = (schema, node) => {
             _.pick(_.concat(node.include, schemaInlineAliases), filtered)
     )(schemaHighlight)
 
-    let nodeHighlight = _.merge(
+    nodeHighlight = _.merge(
       {
         // The default schema highlighting settings w/o the fields
         pre_tags: ['<b class="search-highlight">'],

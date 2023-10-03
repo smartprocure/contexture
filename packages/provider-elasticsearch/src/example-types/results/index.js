@@ -37,9 +37,11 @@ export default {
 
       // Make sure the search specific overrides are part of the node include.
       // This way they do not have to be added manually. All that is needed is the highlight config
-      let nodeHighlight = _.isPlainObject(node.highlight) ? node.highlight : {}
+      let originalNodeHighlight = _.isPlainObject(node.highlight)
+        ? node.highlight
+        : {}
       resultColumns = _.flow(
-        _.concat(_.keys(nodeHighlight.fields)),
+        _.concat(_.keys(originalNodeHighlight.fields)),
         _.uniq,
         _.compact
       )(node.include)
