@@ -2,6 +2,8 @@ import {
   highlightResults,
   arrayToHighlightsFieldMap,
   anyRegexesMatch,
+  replaceHighlightTagRegex,
+  containsHighlightTagRegex,
 } from './highlighting.js'
 
 describe('highlighting', () => {
@@ -330,5 +332,51 @@ describe('anyRegexesMatch()', () => {
       'nested.field'
     )
     expect(actual).toEqual(false)
+  })
+})
+
+describe.only('replaceHighlightTagRegex()', () => {
+  it('should remove all tags from highlighted text', () => {
+    let regex = replaceHighlightTagRegex({
+      pre_tags: ['<em>', '<b class="hi-1">'],
+      post_tags: ['</em>', '</b>'],
+    })
+    let text =
+      'Lorem Ipsum <em>has</em> been the industry standard <em>dummy</em> text ever <b class="hi-1">since the 1500s</b>.'
+    expect(text.replace(regex, '')).toEqual(
+      'Lorem Ipsum has been the industry standard dummy text ever since the 1500s.'
+    )
+  })
+})
+
+describe.only('containsHighlightTagRegex()', () => {
+  it('should match highlighted text', () => {
+    let regex = containsHighlightTagRegex({
+      pre_tags: ['<em>', '<b class="hi-1">'],
+      post_tags: ['</em>', '</b>'],
+    })
+    let text =
+      'Lorem Ipsum <em>has</em> been the industry standard <em>dummy</em> text ever <b class="hi-1">since the 1500s</b>.'
+    expect(regex.test(text)).toEqual(true)
+  })
+
+  it('should not match non-highlighted text', () => {
+    let regex = containsHighlightTagRegex({
+      pre_tags: ['<em>', '<b class="hi-1">'],
+      post_tags: ['</em>', '</b>'],
+    })
+    let text =
+      'Lorem Ipsum has been the industry standard dummy text ever since the 1500s.'
+    expect(regex.test(text)).toEqual(false)
+  })
+
+  it('should not match non-balanced tags', () => {
+    let regex = containsHighlightTagRegex({
+      pre_tags: ['<em>', '<b class="hi-1">'],
+      post_tags: ['</em>', '</b>'],
+    })
+    let text =
+      'Lorem Ipsum has been the <b class="hi-1">industry standard dummy text ever since the 1500s.'
+    expect(regex.test(text)).toEqual(false)
   })
 })

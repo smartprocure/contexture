@@ -28,15 +28,12 @@ export default {
 
     let resultColumns = node.include
 
-    let { schemaHighlight, searchHighlight } = getHighlightSettings(
-      schema,
-      node
-    )
+    let { schemaHighlight, nodeHighlight } = getHighlightSettings(schema, node)
 
-    if (searchHighlight) {
+    if (nodeHighlight) {
       // Setup the DEFAULT highlight config object with the calculated fields above
       // and merge with the search specific config
-      searchObj.highlight = searchHighlight
+      searchObj.highlight = nodeHighlight
 
       // Make sure the search specific overrides are part of the node include.
       // This way they do not have to be added manually. All that is needed is the highlight config
@@ -63,9 +60,10 @@ export default {
           let highlightObject = highlightResults(
             schemaHighlight, // The highlight configuration
             hit, // The ES result
-            schema.elasticsearch.nestedPath,
+            schema.elasticsearch.highlight.nestedPath,
             resultColumns, // The columns to return
-            schemaHighlight.filterNested // Whether to only return the highlighted fields
+            schemaHighlight.filterNested, // Whether to only return the highlighted fields
+            nodeHighlight // The result node's highlight configuration
           )
           additionalFields = highlightObject.additionalFields
         }
