@@ -84,7 +84,11 @@ let getAdditionalFields = ({
       })
     }
 
-    if (_.includes(fieldName, nested) && !_.includes(nestedPath, fieldName)) {
+    if (
+      _.includes(fieldName, nested) &&
+      _.isArray(highlightedValue) &&
+      !_.includes(nestedPath, fieldName)
+    ) {
       additionalFields.push({
         label: fieldName,
         value: highlightedValue,
@@ -103,13 +107,12 @@ let handleNested = ({
   additionalFields,
   nodeHighlight,
 }) => {
-  let { nested } = highlightFields
   let replaceTagRegex = replaceHighlightTagRegex(nodeHighlight)
   let containsTagRegex = containsHighlightTagRegex(nodeHighlight)
 
   F.eachIndexed((highlightedValue, fieldName) => {
     if (
-      _.includes(fieldName, nested) &&
+      _.includes(fieldName, highlightFields.nested) &&
       !_.find({ label: fieldName }, additionalFields)
     ) {
       // Clarify [{a}, {b}] case and not [a,b] case. See
