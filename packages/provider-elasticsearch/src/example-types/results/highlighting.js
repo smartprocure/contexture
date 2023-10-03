@@ -129,7 +129,7 @@ let handleNested = ({
       // For arrays, strip the highlighting wrapping and compare to the array
       // contents to match up
       for (let val of highlightedValue) {
-        val.replace(replaceTagRegex, '')
+        let originalValue = val.replace(replaceTagRegex, '')
         let childItem = _.find(
           // TODO: Remove this asap
           (item) => _.trim(_.get(field, item)) === _.trim(originalValue),
