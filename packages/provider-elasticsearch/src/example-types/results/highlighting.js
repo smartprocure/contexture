@@ -4,6 +4,20 @@ import _ from 'lodash/fp.js'
 export let anyRegexesMatch = (regexes, criteria) =>
   !!_.find((pattern) => new RegExp(pattern).test(criteria), regexes)
 
+export let replaceHighlightTagRegex = (nodeHighlight) => {
+  let { pre_tags, post_tags } = nodeHighlight
+  return new RegExp(_.join('|', _.concat(pre_tags, post_tags)), 'g')
+}
+
+export let containsHighlightTagRegex = (nodeHighlight) => {
+  let { pre_tags, post_tags } = nodeHighlight
+  let tagRegexes = _.map(
+    ([pre, post]) => `${pre}.+?${post}`,
+    _.zip(pre_tags, post_tags)
+  )
+  return new RegExp(_.join('|', tagRegexes))
+}
+
 // Convert the fields array to object map where we only pick the first key from the objects
 // Highlight fields can be either strings or objects with a single key which value is the ES highlights object config
 // If the highlight field is specific as a string only then it uses the default highlights config
@@ -35,15 +49,10 @@ let inlineHighlightInSource = (hit, fieldName) => {
   }
 }
 
-let getAdditionalFields = ({
-  highlightFields,
-  hit,
-  nestedPath,
-  include,
-  inlineKeys,
-}) => {
+let getAdditionalFields = ({ schemaHighlight, hit, include, inlineKeys }) => {
   let additionalFields = []
-  let { additional, additionalExclusions, inline, nested } = highlightFields
+  let { additional, additionalExclusions, inline, nested, nestedPath } =
+    schemaHighlight
 
   F.eachIndexed((highlightedValue, fieldName) => {
     // Whether `fieldName` is matched by any field name in `additional`
@@ -86,45 +95,48 @@ let getAdditionalFields = ({
 }
 
 let handleNested = ({
-  highlightFields,
+  schemaHighlight,
+  nodeHighlight,
   hit,
-  nestedPath,
-  filterNested,
   additionalFields,
 }) => {
+  let { nested, nestedPath, filterNested } = schemaHighlight
+  let replaceTagRegex = replaceHighlightTagRegex(nodeHighlight)
+  let containsTagRegex = containsHighlightTagRegex(nodeHighlight)
+
   F.eachIndexed((highlightedValue, fieldName) => {
     if (
-      _.includes(fieldName, highlightFields.nested) &&
+      _.includes(fieldName, nested) &&
       !_.find({ label: fieldName }, additionalFields)
     ) {
-      // Handle Nested Item Highlighting Replacement
-      if (fieldName === nestedPath)
-        // Clarify [{a}, {b}] case and not [a,b] case (ie, does not handle http://stackoverflow.com/questions/25565546/highlight-whole-content-in-elasticsearch-for-multivalue-fields)
+      // Clarify [{a}, {b}] case and not [a,b] case. See
+      // https://github.com/elastic/elasticsearch/issues/7416
+      // TODO: We can support arrays of scalars as long as we make sure that
+      // `number_of_fragments` is 0 for the highlighted field so that we can
+      // compare the array items in full.
+      if (fieldName === nestedPath) {
         throw new Error('Arrays of scalars not supported')
+      }
 
       let field = fieldName.replace(`${nestedPath}.`, '')
-      // For arrays, strip the highlighting wrapping and compare to the array contents to match up
-      _.each(function (val) {
-        let originalValue = val.replace(
-          /<b class="search-highlight">|<\/b>/g,
-          ''
-        )
+
+      // For arrays, strip the highlighting wrapping and compare to the array
+      // contents to match up
+      for (let val of highlightedValue) {
+        let originalValue = val.replace(replaceTagRegex, '')
         let childItem = _.find(
           // TODO: Remove this asap
           (item) => _.trim(_.get(field, item)) === _.trim(originalValue),
           _.get(nestedPath, hit._source)
         )
-        if (childItem) childItem[field] = val
-      }, highlightedValue)
+        if (childItem) F.setOn(field, val, childItem)
+      }
 
       if (filterNested) {
-        let filtered = _.flow(
-          _.get(nestedPath),
-          _.filter(
-            _.flow(_.get(field), _.includes('<b class="search-highlight">'))
-          )
-        )(hit._source)
-
+        let filtered = _.filter(
+          (arrayField) => containsTagRegex.test(_.get(field, arrayField)),
+          _.get(nestedPath, hit._source)
+        )
         F.setOn(nestedPath, filtered, hit._source)
       }
     }
@@ -134,30 +146,27 @@ let handleNested = ({
 // TODO: Support multiple nestedPaths...
 // TODO: Support Regex and Function basis for all options
 // TODO: Make this function pure, do not mutate `hit._source`
-export let highlightResults = (
-  highlightFields, // The schema highlight configuration
+export let highlightResults = ({
+  schemaHighlight, // The schema highlight configuration
+  nodeHighlight, // The result node's highlight configuration
   hit, // The ES result
-  nestedPath, // schema.elasticsearch.nestedPath
   include, // The columns to return
-  filterNested // Whether to only return the highlighted fields
-) => {
-  let { inline, inlineAliases } = highlightFields
+}) => {
+  let { inline, inlineAliases, nestedPath, filterNested } = schemaHighlight
   let inlineKeys = _.keys(arrayToHighlightsFieldMap(inline))
 
   let additionalFields = getAdditionalFields({
-    highlightFields,
+    schemaHighlight,
     hit,
-    nestedPath,
     include,
     inlineKeys,
   })
 
   // TODO: Make this function pure, do not mutate `hit._source`
   handleNested({
-    highlightFields,
+    schemaHighlight,
+    nodeHighlight,
     hit,
-    nestedPath,
-    filterNested,
     additionalFields,
   })
 
@@ -244,7 +253,7 @@ export let getHighlightSettings = (schema, node) => {
             _.pick(_.concat(node.include, schemaInlineAliases), filtered)
     )(schemaHighlight)
 
-    let searchHighlight = _.merge(
+    nodeHighlight = _.merge(
       {
         // The default schema highlighting settings w/o the fields
         pre_tags: ['<b class="search-highlight">'],
@@ -256,7 +265,7 @@ export let getHighlightSettings = (schema, node) => {
       nodeHighlight
     )
 
-    return { schemaHighlight, searchHighlight }
+    return { schemaHighlight, nodeHighlight }
   }
 
   return {}
