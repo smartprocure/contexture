@@ -19,9 +19,7 @@ export default {
     },
     {
       displayName: 'provider-elasticsearch',
-      testMatch: [
-        '<rootDir>/packages/provider-elasticsearch/test/**/*.test.js',
-      ],
+      testMatch: ['<rootDir>/packages/provider-elasticsearch/src/**/*.test.js'],
     },
     {
       displayName: 'export',
@@ -29,7 +27,7 @@ export default {
     },
     {
       displayName: 'provider-mongo',
-      testMatch: ['<rootDir>/packages/provider-mongo/test/**/*.js'],
+      testMatch: ['<rootDir>/packages/provider-mongo/src/**/*.test.js'],
     },
     // TODO: Fix tests
     // {
