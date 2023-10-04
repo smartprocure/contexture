@@ -6,10 +6,15 @@ import {
   containsHighlightTagRegex,
 } from './highlighting.js'
 
+let nodeHighlight = {
+  pre_tags: ['<b class="search-highlight">'],
+  post_tags: ['</b>'],
+}
+
 describe('highlighting', () => {
   describe('highlightResults', () => {
     it('should work with includes', () => {
-      let highlightFields = { inline: ['title', 'description', 'summary'] }
+      let schemaHighlight = { inline: ['title', 'description', 'summary'] }
       let hit = {
         _source: {
           summary: 'Chromebooks',
@@ -23,7 +28,12 @@ describe('highlighting', () => {
         highlight: { summary: ['a'], description: ['b'], title: ['c'] },
       }
       let include = ['title']
-      let result = highlightResults(highlightFields, hit, undefined, include)
+      let result = highlightResults({
+        schemaHighlight,
+        nodeHighlight,
+        hit,
+        include,
+      })
       expect(result).toEqual({
         additionalFields: [
           {
@@ -38,7 +48,7 @@ describe('highlighting', () => {
       })
     })
     it('should work without includes', () => {
-      let highlightFields = { inline: ['title', 'description', 'summary'] }
+      let schemaHighlight = { inline: ['title', 'description', 'summary'] }
       let hit = {
         _source: {
           summary: 'Chromebooks',
@@ -51,13 +61,13 @@ describe('highlighting', () => {
         },
         highlight: { summary: ['a'], description: ['b'], title: ['c'] },
       }
-      let result = highlightResults(highlightFields, hit)
+      let result = highlightResults({ schemaHighlight, nodeHighlight, hit })
       expect(result).toEqual({
         additionalFields: [],
       })
     })
     it('should work with inline', () => {
-      let highlightFields = {
+      let schemaHighlight = {
         inline: ['title', 'description'],
       }
       let hit = {
@@ -67,7 +77,7 @@ describe('highlighting', () => {
         },
         highlight: { title: ['<a>foo</a>'], description: ['<a>bar</a>'] },
       }
-      let result = highlightResults(highlightFields, hit)
+      let result = highlightResults({ schemaHighlight, nodeHighlight, hit })
       expect(hit._source).toEqual({
         title: '<a>foo</a>',
         description: '<a>bar</a>',
@@ -77,7 +87,7 @@ describe('highlighting', () => {
       })
     })
     it('should work with inline and .* object', () => {
-      let highlightFields = {
+      let schemaHighlight = {
         inline: [
           'title',
           'description',
@@ -101,7 +111,7 @@ describe('highlighting', () => {
           'documents.file0.parseBoxText': ['<a>fooBar</a>'],
         },
       }
-      let result = highlightResults(highlightFields, hit)
+      let result = highlightResults({ schemaHighlight, nodeHighlight, hit })
       expect(hit._source).toEqual({
         title: '<a>foo</a>',
         description: '<a>bar</a>',
@@ -116,7 +126,7 @@ describe('highlighting', () => {
       })
     })
     it('should work with inline and object', () => {
-      let highlightFields = {
+      let schemaHighlight = {
         inline: [
           'title',
           'description',
@@ -138,7 +148,7 @@ describe('highlighting', () => {
           documents: ['<a>fooBar</a>'],
         },
       }
-      let result = highlightResults(highlightFields, hit)
+      let result = highlightResults({ schemaHighlight, nodeHighlight, hit })
       expect(hit._source).toEqual({
         title: '<a>foo</a>',
         description: '<a>bar</a>',
@@ -149,7 +159,7 @@ describe('highlighting', () => {
       })
     })
     it('should work with inlineAliases', () => {
-      let highlightFields = {
+      let schemaHighlight = {
         inline: ['title', 'description'],
         inlineAliases: {
           description: 'description.exact',
@@ -165,7 +175,7 @@ describe('highlighting', () => {
           'description.exact': ['<a>bar</a>'],
         },
       }
-      let result = highlightResults(highlightFields, hit)
+      let result = highlightResults({ schemaHighlight, nodeHighlight, hit })
       expect(hit._source).toEqual({
         title: '<a>foo</a>',
         description: '<a>bar</a>',
@@ -175,7 +185,7 @@ describe('highlighting', () => {
       })
     })
     it('inline should precede inlineAliases', () => {
-      let highlightFields = {
+      let schemaHighlight = {
         inline: ['description'],
         inlineAliases: {
           description: 'description.exact',
@@ -190,7 +200,7 @@ describe('highlighting', () => {
           'description.exact': ['<a>bar</a>'],
         },
       }
-      let result = highlightResults(highlightFields, hit)
+      let result = highlightResults({ schemaHighlight, nodeHighlight, hit })
       expect(hit._source).toEqual({
         description: '<a>foo</a>',
       })
@@ -218,8 +228,9 @@ describe('highlighting', () => {
       })
     })
     it('should work with nested', () => {
-      let highlightFields = {
+      let schemaHighlight = {
         nested: ['comments.text'],
+        nestedPath: 'comments',
       }
       let hit = {
         _source: {
@@ -234,11 +245,12 @@ describe('highlighting', () => {
           ],
         },
       }
-      let result = highlightResults(highlightFields, hit, 'comments', [
-        'title',
-        'description',
-        'comments.text',
-      ])
+      let result = highlightResults({
+        schemaHighlight,
+        nodeHighlight,
+        hit,
+        include: ['title', 'description', 'comments.text'],
+      })
       expect(hit._source).toEqual({
         title: '...',
         description: '...',
@@ -253,8 +265,10 @@ describe('highlighting', () => {
       })
     })
     it('should work with nested and filterNested', () => {
-      let highlightFields = {
+      let schemaHighlight = {
         nested: ['comments.text'],
+        nestedPath: 'comments',
+        filterNested: true,
       }
       let hit = {
         _source: {
@@ -269,13 +283,12 @@ describe('highlighting', () => {
           ],
         },
       }
-      let result = highlightResults(
-        highlightFields,
+      let result = highlightResults({
+        schemaHighlight,
+        nodeHighlight,
         hit,
-        'comments',
-        ['title', 'description', 'comments.text'],
-        true
-      )
+        include: ['title', 'description', 'comments.text'],
+      })
       expect(hit._source).toEqual({
         title: '...',
         description: '...',
@@ -290,8 +303,10 @@ describe('highlighting', () => {
     })
 
     it('should clear nested when filterNested and highlight is empty', () => {
-      let highlightFields = {
+      let schemaHighlight = {
         nested: ['comments.text'],
+        nestedPath: 'comments',
+        filterNested: true,
       }
       let hit = {
         _source: {
@@ -301,13 +316,12 @@ describe('highlighting', () => {
         },
         highlight: {},
       }
-      let result = highlightResults(
-        highlightFields,
+      let result = highlightResults({
+        schemaHighlight,
+        nodeHighlight,
         hit,
-        'comments',
-        ['title', 'description', 'comments.text'],
-        true
-      )
+        include: ['title', 'description', 'comments.text'],
+      })
       expect(hit._source).toEqual({
         title: '...',
         description: '...',
@@ -335,7 +349,7 @@ describe('anyRegexesMatch()', () => {
   })
 })
 
-describe.only('replaceHighlightTagRegex()', () => {
+describe('replaceHighlightTagRegex()', () => {
   it('should remove all tags from highlighted text', () => {
     let regex = replaceHighlightTagRegex({
       pre_tags: ['<em>', '<b class="hi-1">'],
@@ -349,7 +363,7 @@ describe.only('replaceHighlightTagRegex()', () => {
   })
 })
 
-describe.only('containsHighlightTagRegex()', () => {
+describe('containsHighlightTagRegex()', () => {
   it('should match highlighted text', () => {
     let regex = containsHighlightTagRegex({
       pre_tags: ['<em>', '<b class="hi-1">'],

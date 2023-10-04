@@ -15,7 +15,7 @@ export let containsHighlightTagRegex = (nodeHighlight) => {
     ([pre, post]) => `${pre}.+?${post}`,
     _.zip(pre_tags, post_tags)
   )
-  return new RegExp(_.join('|', tagRegexes), 'g')
+  return new RegExp(_.join('|', tagRegexes))
 }
 
 // Convert the fields array to object map where we only pick the first key from the objects
@@ -49,15 +49,10 @@ let inlineHighlightInSource = (hit, fieldName) => {
   }
 }
 
-let getAdditionalFields = ({
-  highlightFields,
-  hit,
-  nestedPath,
-  include,
-  inlineKeys,
-}) => {
+let getAdditionalFields = ({ schemaHighlight, hit, include, inlineKeys }) => {
   let additionalFields = []
-  let { additional, additionalExclusions, inline, nested } = highlightFields
+  let { additional, additionalExclusions, inline, nested, nestedPath } =
+    schemaHighlight
 
   F.eachIndexed((highlightedValue, fieldName) => {
     // Whether `fieldName` is matched by any field name in `additional`
@@ -100,19 +95,18 @@ let getAdditionalFields = ({
 }
 
 let handleNested = ({
-  highlightFields,
-  hit,
-  nestedPath,
-  filterNested,
-  additionalFields,
+  schemaHighlight,
   nodeHighlight,
+  hit,
+  additionalFields,
 }) => {
+  let { nested, nestedPath, filterNested } = schemaHighlight
   let replaceTagRegex = replaceHighlightTagRegex(nodeHighlight)
   let containsTagRegex = containsHighlightTagRegex(nodeHighlight)
 
   F.eachIndexed((highlightedValue, fieldName) => {
     if (
-      _.includes(fieldName, highlightFields.nested) &&
+      _.includes(fieldName, nested) &&
       !_.find({ label: fieldName }, additionalFields)
     ) {
       // Clarify [{a}, {b}] case and not [a,b] case. See
@@ -135,7 +129,7 @@ let handleNested = ({
           (item) => _.trim(_.get(field, item)) === _.trim(originalValue),
           _.get(nestedPath, hit._source)
         )
-        if (childItem) childItem[field] = val
+        if (childItem) F.setOn(field, val, childItem)
       }
 
       if (filterNested) {
@@ -152,33 +146,28 @@ let handleNested = ({
 // TODO: Support multiple nestedPaths...
 // TODO: Support Regex and Function basis for all options
 // TODO: Make this function pure, do not mutate `hit._source`
-export let highlightResults = (
-  highlightFields, // The schema highlight configuration
+export let highlightResults = ({
+  schemaHighlight, // The schema highlight configuration
+  nodeHighlight, // The result node's highlight configuration
   hit, // The ES result
-  nestedPath, // schema.elasticsearch.highlight.nestedPath
   include, // The columns to return
-  filterNested, // Whether to only return the highlighted fields
-  nodeHighlight // The result node's highlight configuration
-) => {
-  let { inline, inlineAliases } = highlightFields
+}) => {
+  let { inline, inlineAliases, nestedPath, filterNested } = schemaHighlight
   let inlineKeys = _.keys(arrayToHighlightsFieldMap(inline))
 
   let additionalFields = getAdditionalFields({
-    highlightFields,
+    schemaHighlight,
     hit,
-    nestedPath,
     include,
     inlineKeys,
   })
 
   // TODO: Make this function pure, do not mutate `hit._source`
   handleNested({
-    highlightFields,
-    hit,
-    nestedPath,
-    filterNested,
-    additionalFields,
+    schemaHighlight,
     nodeHighlight,
+    hit,
+    additionalFields,
   })
 
   // TODO: Do not mutate `hit._source`

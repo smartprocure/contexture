@@ -56,14 +56,12 @@ export default {
       results: _.map((hit) => {
         let additionalFields
         if (schemaHighlight) {
-          let highlightObject = highlightResults(
-            schemaHighlight, // The highlight configuration
+          let highlightObject = highlightResults({
+            schemaHighlight, // The schema highlight configuration
+            nodeHighlight, // The result node's highlight configuration
             hit, // The ES result
-            schema.elasticsearch.highlight.nestedPath,
-            resultColumns, // The columns to return
-            schemaHighlight.filterNested, // Whether to only return the highlighted fields
-            nodeHighlight // The result node's highlight configuration
-          )
+            include: resultColumns, // The columns to return
+          })
           additionalFields = highlightObject.additionalFields
         }
 
