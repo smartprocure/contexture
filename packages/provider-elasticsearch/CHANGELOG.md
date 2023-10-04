@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.25.1
+
+### Patch Changes
+
+- 9b49d293: Fix regexes handling in elasticsearch highlighting code
+
 ## 1.25.0
 
 ### Minor Changes
