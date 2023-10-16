@@ -201,22 +201,26 @@ export let highlightResults = ({
   return { additionalFields }
 }
 
+const mergeReplacingArrays = _.mergeWith((target, src) => {
+  if (_.isArray(src)) return src
+})
+
 export let getHighlightSettings = (schema, node) => {
-  // Global schema highlight configuration
-  let schemaHighlight =
-    node.highlight !== false && schema.elasticsearch.highlight
-
-  // Specific search highlight override
-  let nodeHighlight = _.isPlainObject(node.highlight) ? node.highlight : {}
-
-  // to be able to override schema highlight config with node config
-  if (nodeHighlight.override) {
-    schemaHighlight = nodeHighlight.override
-    nodeHighlight = _.omit('override', nodeHighlight)
-  }
+  // Users can opt-out of highlighting by setting `node.highlight` to `false`
+  // explicitly.
+  // TODO: Reconsider if it makes more sense to opt-in instead of opt-out since
+  // highlighting decreases performance.
+  let shouldHighlight =
+    node.highlight !== false && _.isPlainObject(schema.elasticsearch?.highlight)
 
   // Highlighting starts with defaults in the schema first
-  if (schemaHighlight) {
+  if (shouldHighlight) {
+    // Result nodes can override schema highlighting configuration
+    let schemaHighlight = mergeReplacingArrays(
+      schema.elasticsearch.highlight,
+      node.highlight
+    )
+
     let showOtherMatches = _.getOr(false, 'showOtherMatches', node)
     let schemaInline = _.getOr([], 'inline', schemaHighlight)
 
@@ -233,7 +237,7 @@ export let getHighlightSettings = (schema, node) => {
     // highlight replacement
     schemaHighlight = _.set(
       'inline',
-      _.concat(schemaInline, _.keys(nodeHighlight.fields)),
+      _.concat(schemaInline, _.keys(node.highlight?.fields)),
       schemaHighlight
     )
 
@@ -253,7 +257,20 @@ export let getHighlightSettings = (schema, node) => {
             _.pick(_.concat(node.include, schemaInlineAliases), filtered)
     )(schemaHighlight)
 
-    nodeHighlight = _.merge(
+    // Properties we support as part of the highlighting configuration that
+    // elastic does not have knowledge of.
+    let nonElasticProperties = [
+      'inline',
+      'inlineAliases',
+      'additional',
+      'additionalExclusions',
+      'additionalFields',
+      'nested',
+      'nestedPath',
+      'filterNested',
+    ]
+
+    let nodeHighlight = _.merge(
       {
         // The default schema highlighting settings w/o the fields
         pre_tags: ['<b class="search-highlight">'],
@@ -262,7 +279,7 @@ export let getHighlightSettings = (schema, node) => {
         number_of_fragments: 0,
         fields,
       },
-      nodeHighlight
+      _.omit(nonElasticProperties, node.highlight)
     )
 
     return { schemaHighlight, nodeHighlight }
