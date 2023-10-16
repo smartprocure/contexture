@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.25.2
+
+### Patch Changes
+
+- 1c64ec48: Merge results node highlighting settings into schema highlighting settings
+
 ## 1.25.1
 
 ### Patch Changes
