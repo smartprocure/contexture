@@ -165,10 +165,12 @@ export let highlightResults = ({
 
   // Regex to find contents of highlight tags
   let highlightContentRegEx = new RegExp(
-    `(?<=${nodeHighlight.pre_tags[0]})(.*?)(?=${nodeHighlight.post_tags[0]})`, 'g')
+    `(?<=${nodeHighlight.pre_tags[0]})(.*?)(?=${nodeHighlight.post_tags[0]})`,
+    'g'
+  )
 
   let highlightMerged = F.highlight(
-    nodeHighlight.pre_tags[0], 
+    nodeHighlight.pre_tags[0],
     nodeHighlight.post_tags[0]
   )
 
@@ -178,35 +180,33 @@ export let highlightResults = ({
     F.dotEncoder.encode
   )
 
-  // Merge exact subfield matches with field matches, for filters based on 
+  // Merge exact subfield matches with field matches, for filters based on
   // copy_to fields to highlight all appropriate fields while respecting
   // other filters that may be applied using exact(non-stemmed) fields
   _.each((subField) => {
-    let field = _.includes(subField,subFields) ? getFieldFromSubField(subField) 
-                  : undefined
-    if( field && hit.highlight[field] && hit.highlight[subField] ){
+    let field = _.includes(subField, subFields)
+      ? getFieldFromSubField(subField)
+      : undefined
+    if (field && hit.highlight[field] && hit.highlight[subField]) {
+      let highlightPostings = F.flowMap(
+        (highlight) =>
+          new RegExp(highlight[0].match(highlightContentRegEx).join('|'), 'gi'),
+        (regex) => F.postings(regex, _.get(field, hit._source))
+      )([hit.highlight[field], hit.highlight[subField]])
 
-        let highlightPostings = F.flowMap(
-          (highlight) => 
-            new RegExp(
-              highlight[0].match(highlightContentRegEx).join('|'), 'gi'
-            ),
-          (regex) => F.postings( regex,  _.get( field, hit._source)),
-        )([ hit.highlight[field], hit.highlight[subField] ])
+      let highlightWords = _.map(
+        ([start, end]) => _.get(field, hit._source).substring(start, end),
+        F.mergeRanges(_.flatten(highlightPostings))
+      )
 
-        let highlightWords = _.map(([start, end]) => 
-          _.get(field, hit._source).substring(start, end), 
-          F.mergeRanges(_.flatten(highlightPostings))
-        )
+      hit.highlight[field] = [
+        highlightMerged(
+          new RegExp(highlightWords.join('|'), 'gi'),
+          _.get(field, hit._source)
+        ),
+      ]
 
-        hit.highlight[field] = [
-          highlightMerged(
-            new RegExp(highlightWords.join('|'), 'gi'),
-            _.get(field, hit._source)
-          )
-        ]
-
-        hit.highlight = _.omit(subField, hit.highlight)
+      hit.highlight = _.omit(subField, hit.highlight)
     }
   }, _.keys(hit.highlight))
 
@@ -255,10 +255,8 @@ const mergeReplacingArrays = _.mergeWith((target, src) => {
 
 let subFieldWhiteList = ['exact']
 
-let isOnSubFieldWhiteList =  _.flow(
-  F.dotEncoder.decode,
-  _.last,
-  (subFieldKey) => _.includes(subFieldKey, subFieldWhiteList)
+let isOnSubFieldWhiteList = _.flow(F.dotEncoder.decode, _.last, (subFieldKey) =>
+  _.includes(subFieldKey, subFieldWhiteList)
 )
 
 export let getHighlightSettings = (schema, node) => {
@@ -313,45 +311,57 @@ export let getHighlightSettings = (schema, node) => {
             _.pick(_.concat(node.include, schemaInlineAliases), filtered)
     )(schemaHighlight)
 
-     //Get copy to field mapping
-    let copyToFields = _.reduce((groups, fieldConfig) => {
-      F.when(F.isNotBlank, _.each((grp) => {
-        //Add base field to copy_to group
-        groups[grp] = _.concat([fieldConfig.field], groups[grp] || [])
-        //Add sub fields to copy_to group
-        _.each((subField) =>{
-          groups[`${grp}.${subField}`] = _.concat(
-            [`${fieldConfig.field}.${subField}`], 
-            groups[`${grp}.${subField}`] || []
-          )
-        }, fieldConfig?.elasticsearch?.subFields)
-      }), fieldConfig?.elasticsearch?.copy_to)
-      return groups
-    }, {}, schema.fields)
+    //Get copy to field mapping
+    let copyToFields = _.reduce(
+      (groups, fieldConfig) => {
+        F.when(
+          F.isNotBlank,
+          _.each((grp) => {
+            //Add base field to copy_to group
+            groups[grp] = _.concat([fieldConfig.field], groups[grp] || [])
+            //Add sub fields to copy_to group
+            _.each((subField) => {
+              groups[`${grp}.${subField}`] = _.concat(
+                [`${fieldConfig.field}.${subField}`],
+                groups[`${grp}.${subField}`] || []
+              )
+            }, fieldConfig?.elasticsearch?.subFields)
+          }),
+          fieldConfig?.elasticsearch?.copy_to
+        )
+        return groups
+      },
+      {},
+      schema.fields
+    )
 
-    // Go through each highlight field and add associated subfields 
+    // Go through each highlight field and add associated subfields
     // to highlight list
-    let subFields = _.reduce((subFields, field)=> {
-      _.each((subField) => {
-        if(isOnSubFieldWhiteList(subField))
-          subFields[`${field}.${subField}`] = {}
-      }, schema.fields[field]?.elasticsearch?.subFields)
-      return subFields
-    }, {}, _.keys(fields))
+    let subFields = _.reduce(
+      (subFields, field) => {
+        _.each((subField) => {
+          if (isOnSubFieldWhiteList(subField))
+            subFields[`${field}.${subField}`] = {}
+        }, schema.fields[field]?.elasticsearch?.subFields)
+        return subFields
+      },
+      {},
+      _.keys(fields)
+    )
 
     fields = _.merge(fields, subFields)
 
     //Map query to copy to fields
     _.each((key) => {
       let isKeyFromCopyTo = false
-      let filter = F.transformTree()((node)=> {
-        if(copyToFields[node?.default_field]?.includes(key)){
+      let filter = F.transformTree()((node) => {
+        if (copyToFields[node?.default_field]?.includes(key)) {
           isKeyFromCopyTo = true
           node.default_field = key
         }
       })(node._meta.relevantFilters)
-      if(isKeyFromCopyTo){
-        fields[key] = {highlight_query: filter, ...fields[key]}
+      if (isKeyFromCopyTo) {
+        fields[key] = { highlight_query: filter, ...fields[key] }
         isKeyFromCopyTo = false
       }
     }, _.keys(fields))
@@ -380,8 +390,8 @@ export let getHighlightSettings = (schema, node) => {
       },
       _.omit(nonElasticProperties, node.highlight)
     )
-    
-    return { schemaHighlight, nodeHighlight, subFields: _.keys(subFields)}
+
+    return { schemaHighlight, nodeHighlight, subFields: _.keys(subFields) }
   }
 
   return {}

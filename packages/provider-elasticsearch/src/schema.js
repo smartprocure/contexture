@@ -41,7 +41,7 @@ let fromEsIndexMapping = (mapping) => {
                 // Find the child notAnalyzedField to set up facet autocomplete vs word
                 notAnalyzedField: _.findKey({ type: 'keyword' }, fields),
                 ...(copy_to && { copy_to }),
-                ...(fields && {subFields: _.keys(fields)})
+                ...(fields && { subFields: _.keys(fields) }),
               }),
             }))
           )
