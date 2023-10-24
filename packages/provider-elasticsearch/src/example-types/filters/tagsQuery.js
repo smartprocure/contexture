@@ -1,6 +1,6 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
-import Combinatorics from 'js-combinatorics'
+import { Permutation } from 'js-combinatorics'
 import { stripLegacySubFields } from '../../utils/fields.js'
 import { sanitizeTagInputs } from '../../utils/keywordGenerations.js'
 
@@ -11,7 +11,7 @@ let compactMapValues = _.flow(_.mapValues, F.compactObject)
 // Split text into words and return array of string permutations
 let wordPermutations = _.flow(
   _.split(/\s+/),
-  (x) => Combinatorics.permutation(x).toArray(),
+  (x) => new Permutation(x).toArray(),
   _.map(_.join(' '))
 )
 

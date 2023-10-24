@@ -7775,7 +7775,7 @@ __metadata:
     contexture: ^0.12.19
     debug: ^4.3.1
     futil: ^1.76.0
-    js-combinatorics: ^0.5.3
+    js-combinatorics: ^2.1.1
     json-stable-stringify: ^1.0.1
     lodash: ^4.17.4
     moment: ^2.18.1
@@ -11900,10 +11900,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-combinatorics@npm:^0.5.3":
-  version: 0.5.5
-  resolution: "js-combinatorics@npm:0.5.5"
-  checksum: ccd1aa7e90832d0590c2f888c3feea95eb2dac01c8f2acd506d942879654738787fa48b74a2fa553ff401c03fd0d22d237eb0495f9a54f0506cb4e5e2ae6256e
+"js-combinatorics@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "js-combinatorics@npm:2.1.1"
+  checksum: 248081b378ad55bfa35d4999f78c033cb85dfb4a1a2abdabc2d6df4f3d89c086121a93d67bb22ec6722f28d70f543aac60c75889cb1c274c675d096ec2b8770a
   languageName: node
   linkType: hard
 
