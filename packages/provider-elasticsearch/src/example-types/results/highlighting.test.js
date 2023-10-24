@@ -398,18 +398,19 @@ describe('containsHighlightTagRegex()', () => {
 
 describe('Highlight field aggregation', () => {
   it.only('should combine all fields with subField definitions', () => {
-    let fields = {'title': {}, 'description': {}, 'documents': {}}
-    let subFields = [{name: 'exact', shouldHighlight: true}, {name: 'keyword', shouldHighlight: false}] 
+    let fields = { title: {}, description: {}, documents: {} }
+    let subFields = [
+      { name: 'exact', shouldHighlight: true },
+      { name: 'keyword', shouldHighlight: false },
+    ]
 
-    expect(combineMultiFields(fields, subFields)).toEqual(
-      {
-        description: {},
-        'description.exact': {},
-        'title': {},
-        'title.exact': {},
-        'documents': {},
-        'documents.exact': {},
-      }
-    )
+    expect(combineMultiFields(fields, subFields)).toEqual({
+      description: {},
+      'description.exact': {},
+      title: {},
+      'title.exact': {},
+      documents: {},
+      'documents.exact': {},
+    })
   })
 })
