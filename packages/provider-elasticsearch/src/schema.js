@@ -29,6 +29,10 @@ let fromEsIndexMapping = (mapping) => {
         // filters out 'dynamic_templates' (an array), 'dynamic: true', etc.
         _.pickBy(_.isPlainObject),
         extractFieldsAndEsType,
+        // TODO: think about how to let users pass this multi-field config information
+        _.set('elasticsearch.subFields', [
+          {name: 'exact', shouldHighlight: true}
+        ]),
         _.update(
           'fields',
           _.flow(
@@ -41,7 +45,6 @@ let fromEsIndexMapping = (mapping) => {
                 // Find the child notAnalyzedField to set up facet autocomplete vs word
                 notAnalyzedField: _.findKey({ type: 'keyword' }, fields),
                 ...(copy_to && { copy_to }),
-                ...(fields && {subFields: _.keys(fields)})
               }),
             }))
           )

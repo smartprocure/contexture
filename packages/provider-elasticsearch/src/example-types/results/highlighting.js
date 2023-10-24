@@ -1,5 +1,6 @@
 import F from 'futil'
 import _ from 'lodash/fp.js'
+import {CartesianProduct} from 'js-combinatorics'
 
 export let anyRegexesMatch = (regexes, criteria) =>
   !!_.find((pattern) => new RegExp(pattern).test(criteria), regexes)
@@ -253,13 +254,25 @@ const mergeReplacingArrays = _.mergeWith((target, src) => {
   if (_.isArray(src)) return src
 })
 
-let subFieldWhiteList = ['exact']
 
-let isOnSubFieldWhiteList =  _.flow(
-  F.dotEncoder.decode,
-  _.last,
-  (subFieldKey) => _.includes(subFieldKey, subFieldWhiteList)
-)
+export let combineMultiFields = (fields, subFields) => {
+  subFields = _.flow(
+    _.filter((field) => field.shouldHighlight),
+    _.map('name'),
+  )(subFields)
+
+  let combined = new CartesianProduct(_.keys(fields), subFields)
+  let allFields = Array.from(
+    combined
+  ).map(F.dotEncoder.encode)
+  
+  subFields = _.reduce((subFields, field)=> {
+    subFields[`${field}`] = {}
+    return subFields
+  }, {}, allFields)
+
+  return  _.merge(fields, subFields)
+}
 
 export let getHighlightSettings = (schema, node) => {
   // Users can opt-out of highlighting by setting `node.highlight` to `false`
@@ -313,6 +326,7 @@ export let getHighlightSettings = (schema, node) => {
             _.pick(_.concat(node.include, schemaInlineAliases), filtered)
     )(schemaHighlight)
 
+    console.log('schema', schema.elasticsearch)
      //Get copy to field mapping
     let copyToFields = _.reduce((groups, fieldConfig) => {
       F.when(F.isNotBlank, _.each((grp) => {
@@ -324,22 +338,15 @@ export let getHighlightSettings = (schema, node) => {
             [`${fieldConfig.field}.${subField}`], 
             groups[`${grp}.${subField}`] || []
           )
-        }, fieldConfig?.elasticsearch?.subFields)
+        }, _.map('name', schema.elasticsearch?.subFields))
       }), fieldConfig?.elasticsearch?.copy_to)
       return groups
     }, {}, schema.fields)
-
+    console.log('after copy to', fields, schema.elasticsearch?.subFields)
     // Go through each highlight field and add associated subfields 
     // to highlight list
-    let subFields = _.reduce((subFields, field)=> {
-      _.each((subField) => {
-        if(isOnSubFieldWhiteList(subField))
-          subFields[`${field}.${subField}`] = {}
-      }, schema.fields[field]?.elasticsearch?.subFields)
-      return subFields
-    }, {}, _.keys(fields))
-
-    fields = _.merge(fields, subFields)
+    fields = combineMultiFields(fields, schema.elasticsearch?.subFields)
+    console.log('fields', fields)
 
     //Map query to copy to fields
     _.each((key) => {

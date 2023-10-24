@@ -4,6 +4,7 @@ import {
   anyRegexesMatch,
   replaceHighlightTagRegex,
   containsHighlightTagRegex,
+  combineMultiFields,
 } from './highlighting.js'
 
 let nodeHighlight = {
@@ -392,5 +393,23 @@ describe('containsHighlightTagRegex()', () => {
     let text =
       'Lorem Ipsum has been the <b class="hi-1">industry standard dummy text ever since the 1500s.'
     expect(regex.test(text)).toEqual(false)
+  })
+})
+
+describe('Highlight field aggregation', () => {
+  it.only('should combine all fields with subField definitions', () => {
+    let fields = {'title': {}, 'description': {}, 'documents': {}}
+    let subFields = [{name: 'exact', shouldHighlight: true}, {name: 'keyword', shouldHighlight: false}] 
+
+    expect(combineMultiFields(fields, subFields)).toEqual(
+      {
+        description: {},
+        'description.exact': {},
+        'title': {},
+        'title.exact': {},
+        'documents': {},
+        'documents.exact': {},
+      }
+    )
   })
 })
