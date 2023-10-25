@@ -1,6 +1,7 @@
 import F from 'futil'
 import _ from 'lodash/fp.js'
 import { CartesianProduct } from 'js-combinatorics'
+import { mergeHitHighlights } from '../../utils/highlightUtil.js'
 
 export let anyRegexesMatch = (regexes, criteria) =>
   !!_.find((pattern) => new RegExp(pattern).test(criteria), regexes)
@@ -144,6 +145,7 @@ let handleNested = ({
   }, hit.highlight)
 }
 
+
 // TODO: Support multiple nestedPaths...
 // TODO: Support Regex and Function basis for all options
 // TODO: Make this function pure, do not mutate `hit._source`
@@ -152,7 +154,6 @@ export let highlightResults = ({
   nodeHighlight, // The result node's highlight configuration
   hit, // The ES result
   include, // The columns to return
-  subFields, // The subfields in highlight fields
 }) => {
   let { inline, inlineAliases, nestedPath, filterNested } = schemaHighlight
   let inlineKeys = _.keys(arrayToHighlightsFieldMap(inline))
@@ -164,52 +165,11 @@ export let highlightResults = ({
     inlineKeys,
   })
 
-  // Regex to find contents of highlight tags
-  let highlightContentRegEx = new RegExp(
-    `(?<=${nodeHighlight.pre_tags[0]})(.*?)(?=${nodeHighlight.post_tags[0]})`,
-    'g'
-  )
-
-  let highlightMerged = F.highlight(
-    nodeHighlight.pre_tags[0],
-    nodeHighlight.post_tags[0]
-  )
-
-  let getFieldFromSubField = _.flow(
-    F.dotEncoder.decode,
-    _.dropRight(1),
-    F.dotEncoder.encode
-  )
-
   // Merge exact subfield matches with field matches, for filters based on
   // copy_to fields to highlight all appropriate fields while respecting
   // other filters that may be applied using exact(non-stemmed) fields
-  _.each((subField) => {
-    let field = _.includes(subField, subFields)
-      ? getFieldFromSubField(subField)
-      : undefined
-    if (field && hit.highlight[field] && hit.highlight[subField]) {
-      let highlightPostings = F.flowMap(
-        (highlight) =>
-          new RegExp(highlight[0].match(highlightContentRegEx).join('|'), 'gi'),
-        (regex) => F.postings(regex, _.get(field, hit._source))
-      )([hit.highlight[field], hit.highlight[subField]])
+  hit.highlight = mergeHitHighlights(nodeHighlight, inline, hit.highlight)
 
-      let highlightWords = _.map(
-        ([start, end]) => _.get(field, hit._source).substring(start, end),
-        F.mergeRanges(_.flatten(highlightPostings))
-      )
-
-      hit.highlight[field] = [
-        highlightMerged(
-          new RegExp(highlightWords.join('|'), 'gi'),
-          _.get(field, hit._source)
-        ),
-      ]
-
-      hit.highlight = _.omit(subField, hit.highlight)
-    }
-  }, _.keys(hit.highlight))
 
   // TODO: Make this function pure, do not mutate `hit._source`
   handleNested({
@@ -254,26 +214,15 @@ const mergeReplacingArrays = _.mergeWith((target, src) => {
   if (_.isArray(src)) return src
 })
 
-export let combineMultiFields = (fields, subFields) => {
-  subFields = _.flow(
-    _.filter((field) => field.shouldHighlight),
-    _.map('name')
+export let combineMultiFields = (fields, subFields) =>  _.flow(
+    _.filter('shouldHighlight'),
+    _.map('name'),
+    (subFields) => new CartesianProduct(_.keys(fields), subFields),
+    _.toArray, 
+    _.map((path) => [_.join('.', path), {}]),
+    _.fromPairs,
+    _.merge(fields)
   )(subFields)
-
-  let combined = new CartesianProduct(_.keys(fields), subFields)
-  let allFields = Array.from(combined).map(F.dotEncoder.encode)
-
-  subFields = _.reduce(
-    (subFields, field) => {
-      subFields[`${field}`] = {}
-      return subFields
-    },
-    {},
-    allFields
-  )
-
-  return _.merge(fields, subFields)
-}
 
 export let getHighlightSettings = (schema, node) => {
   // Users can opt-out of highlighting by setting `node.highlight` to `false`
@@ -327,35 +276,23 @@ export let getHighlightSettings = (schema, node) => {
             _.pick(_.concat(node.include, schemaInlineAliases), filtered)
     )(schemaHighlight)
 
-    console.log('schema', schema.elasticsearch)
-    //Get copy to field mapping
-    let copyToFields = _.reduce(
-      (groups, fieldConfig) => {
-        F.when(
-          F.isNotBlank,
-          _.each((grp) => {
-            //Add base field to copy_to group
-            groups[grp] = _.concat([fieldConfig.field], groups[grp] || [])
-            //Add sub fields to copy_to group
-            _.each((subField) => {
-              groups[`${grp}.${subField}`] = _.concat(
-                [`${fieldConfig.field}.${subField}`],
-                groups[`${grp}.${subField}`] || []
-              )
-            }, _.map('name', schema.elasticsearch?.subFields))
-          }),
-          fieldConfig?.elasticsearch?.copy_to
-        )
-        return groups
-      },
-      {},
-      schema.fields
-    )
-    console.log('after copy to', fields, schema.elasticsearch?.subFields)
-    // Go through each highlight field and add associated subfields
-    // to highlight list
+     //Get copy to field mapping
+    let copyToFields = _.reduce((groups, fieldConfig) => {
+      F.when(F.isNotBlank, _.each((grp) => {
+        //Add base field to copy_to group
+        groups[grp] = _.concat([fieldConfig.field], groups[grp] || [])
+        //Add sub fields to copy_to group
+        _.each((subField) =>{
+          groups[`${grp}.${subField}`] = _.concat(
+            [`${fieldConfig.field}.${subField}`], 
+            groups[`${grp}.${subField}`] || []
+          )
+        }, _.map('name', schema.elasticsearch?.subFields))
+      }), fieldConfig?.elasticsearch?.copy_to)
+      return groups
+    }, {}, schema.fields)
+
     fields = combineMultiFields(fields, schema.elasticsearch?.subFields)
-    console.log('fields', fields)
 
     //Map query to copy to fields
     _.each((key) => {
@@ -397,7 +334,7 @@ export let getHighlightSettings = (schema, node) => {
       _.omit(nonElasticProperties, node.highlight)
     )
 
-    return { schemaHighlight, nodeHighlight, subFields: _.keys(subFields) }
+    return { schemaHighlight, nodeHighlight}
   }
 
   return {}

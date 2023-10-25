@@ -5,6 +5,7 @@ import {
   replaceHighlightTagRegex,
   containsHighlightTagRegex,
   combineMultiFields,
+  mergeHitHighlights,
 } from './highlighting.js'
 
 let nodeHighlight = {
@@ -397,7 +398,7 @@ describe('containsHighlightTagRegex()', () => {
 })
 
 describe('Highlight field aggregation', () => {
-  it.only('should combine all fields with subField definitions', () => {
+  it('should combine all fields with subField definitions', () => {
     let fields = { title: {}, description: {}, documents: {} }
     let subFields = [
       { name: 'exact', shouldHighlight: true },
@@ -412,5 +413,35 @@ describe('Highlight field aggregation', () => {
       documents: {},
       'documents.exact': {},
     })
+  })
+  it('should combine subfield highlights with field highlights', () => {
+    let hitHighlights = { 
+      'foo.bar': ['<b class="search-highlight">foo</b> this handle'],
+      'foo.bar.exact': ['foo this <b class="search-highlight">handle</b>'],
+      'foo': ['foo this <b class="search-highlight">bar</b>'],
+      'foo.exact': ['<b class="search-highlight">foo</b> this bar'],
+      'foo.car.bar': ['<b class="search-highlight">foo</b> this is not merged'],
+    }
+    let node = { 
+      highlight: { 
+        fields : {
+          'foo.bar': {},
+          'foo': {},
+          'foo.car.bar': {},
+        }
+      }
+    }
+
+    let nodeHighlight = {
+      pre_tags: ['<b class="search-highlight">'],
+      post_tags:['</b>'],
+    }
+
+    expect(mergeHitHighlights(nodeHighlight, node, hitHighlights)).toEqual(
+      { 'foo.bar': ['<b class="search-highlight">foo</b> this <b class="search-highlight">handle</b>'],
+        'foo': ['<b class="search-highlight">foo</b> this <b class="search-highlight">bar</b>'],
+        'foo.car.bar': ['<b class="search-highlight">foo</b> this is not merged'],
+      }
+    )
   })
 })
