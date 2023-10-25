@@ -28,10 +28,7 @@ export default {
 
     let resultColumns = node.include
 
-    let { schemaHighlight, nodeHighlight } = getHighlightSettings(
-      schema,
-      node
-    )
+    let { schemaHighlight, nodeHighlight } = getHighlightSettings(schema, node)
 
     if (nodeHighlight) {
       // Setup the DEFAULT highlight config object with the calculated fields above

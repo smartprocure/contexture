@@ -415,33 +415,36 @@ describe('Highlight field aggregation', () => {
     })
   })
   it('should combine subfield highlights with field highlights', () => {
-    let hitHighlights = { 
+    let hitHighlights = {
       'foo.bar': ['<b class="search-highlight">foo</b> this handle'],
       'foo.bar.exact': ['foo this <b class="search-highlight">handle</b>'],
-      'foo': ['foo this <b class="search-highlight">bar</b>'],
+      foo: ['foo this <b class="search-highlight">bar</b>'],
       'foo.exact': ['<b class="search-highlight">foo</b> this bar'],
       'foo.car.bar': ['<b class="search-highlight">foo</b> this is not merged'],
     }
-    let node = { 
-      highlight: { 
-        fields : {
+    let node = {
+      highlight: {
+        fields: {
           'foo.bar': {},
-          'foo': {},
+          foo: {},
           'foo.car.bar': {},
-        }
-      }
+        },
+      },
     }
 
     let nodeHighlight = {
       pre_tags: ['<b class="search-highlight">'],
-      post_tags:['</b>'],
+      post_tags: ['</b>'],
     }
 
-    expect(mergeHitHighlights(nodeHighlight, node, hitHighlights)).toEqual(
-      { 'foo.bar': ['<b class="search-highlight">foo</b> this <b class="search-highlight">handle</b>'],
-        'foo': ['<b class="search-highlight">foo</b> this <b class="search-highlight">bar</b>'],
-        'foo.car.bar': ['<b class="search-highlight">foo</b> this is not merged'],
-      }
-    )
+    expect(mergeHitHighlights(nodeHighlight, node, hitHighlights)).toEqual({
+      'foo.bar': [
+        '<b class="search-highlight">foo</b> this <b class="search-highlight">handle</b>',
+      ],
+      foo: [
+        '<b class="search-highlight">foo</b> this <b class="search-highlight">bar</b>',
+      ],
+      'foo.car.bar': ['<b class="search-highlight">foo</b> this is not merged'],
+    })
   })
 })
