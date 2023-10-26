@@ -208,11 +208,10 @@ export let highlightResults = ({
   return { additionalFields }
 }
 
- 
 let getCopyToReplaceRegEx = (field, copyToFields) => {
-  return copyToFields[field] && new RegExp(
-    copyToFields[field] ? copyToFields[field]?.join('|') : '', 
-     'g'
+  return (
+    copyToFields[field] &&
+    new RegExp(copyToFields[field] ? copyToFields[field]?.join('|') : '', 'g')
   )
 }
 
@@ -222,40 +221,37 @@ const mergeReplacingArrays = _.mergeWith((target, src) => {
   if (_.isArray(src)) return src
 })
 
-let getMutltiFields = _.curry( 
-    (fields, subFields) => _.flow(
-      _.toArray, 
-      _.map((path) => [_.join('.', path), {}]),
-      _.fromPairs,
-    )(new CartesianProduct(_.keys(fields), _.map('name',subFields)))
-  )
+let getMutltiFields = _.curry((fields, subFields) =>
+  _.flow(
+    _.toArray,
+    _.map((path) => [_.join('.', path), {}]),
+    _.fromPairs
+  )(new CartesianProduct(_.keys(fields), _.map('name', subFields)))
+)
 
-export let combineMultiFields = (fields, subFields) =>  _.flow(
+export let combineMultiFields = (fields, subFields) =>
+  _.flow(
     _.filter('shouldHighlight'),
     getMutltiFields(fields),
     _.merge(fields)
   )(subFields)
 
-let getPropSuffix = _.flow(
-    _.split('.'),
-    _.last,
-  )
+let getPropSuffix = _.flow(_.split('.'), _.last)
 
-  export let copyToFieldsMapping = (fields, subFields) => _.flow(
-    _.mapValues(('elasticsearch.copy_to')),
-    _.omitBy(F.isBlank),
-    (fields) =>  _.flow(
+export let copyToFieldsMapping = (fields, subFields) =>
+  _.flow(_.mapValues('elasticsearch.copy_to'), _.omitBy(F.isBlank), (fields) =>
+    _.flow(
       _.keys,
       _.map((multiField) => [
-        multiField, 
+        multiField,
         _.map(
           (field) => `${field}.${getPropSuffix(multiField)}`,
           fields[_.replace(`.${getPropSuffix(multiField)}`, '', multiField)]
-        )
+        ),
       ]),
       _.fromPairs,
       _.merge(fields)
-    )(getMutltiFields(fields, subFields)),
+    )(getMutltiFields(fields, subFields))
   )(fields)
 
 export let getHighlightSettings = (schema, node) => {
@@ -311,8 +307,7 @@ export let getHighlightSettings = (schema, node) => {
     )(schemaHighlight)
 
     let copyToFields = copyToFieldsMapping(
-      _.pick(_.keys(fields), 
-      schema.fields), 
+      _.pick(_.keys(fields), schema.fields),
       schema.elasticsearch?.subFields
     )
 
@@ -322,23 +317,28 @@ export let getHighlightSettings = (schema, node) => {
     let fieldsWithHighlightQuery = _.reduce(
       (highlightFields, highlightField) => {
         return _.flow(
-          _.replace( 
-            getCopyToReplaceRegEx(highlightField, copyToFields), highlightField
+          _.replace(
+            getCopyToReplaceRegEx(highlightField, copyToFields),
+            highlightField
           ),
           F.ifElse(
             _.flow(_.isEqual, _.negate),
-            (replacedFilters) => { highlightFields[highlightField] = 
-              {highlight_query: JSON.parse(replacedFilters) } 
+            (replacedFilters) => {
+              highlightFields[highlightField] = {
+                highlight_query: JSON.parse(replacedFilters),
+              }
               return highlightFields
             },
             () => highlightFields
           )
         )(stringifiedFilters(node))
-      }, {}, _.keys(fields)
+      },
+      {},
+      _.keys(fields)
     )
-  
+
     fields = _.merge(fields, fieldsWithHighlightQuery)
-    
+
     // Properties we support as part of the highlighting configuration that
     // elastic does not have knowledge of.
     let nonElasticProperties = [

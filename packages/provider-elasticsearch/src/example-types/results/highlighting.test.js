@@ -417,24 +417,23 @@ describe('Highlight field aggregation', () => {
 
   it('should combine all fields with copy_to and subField definitions', () => {
     let fields = {
-      'title': {
+      title: {
         elasticsearch: {
           copy_to: ['FieldGroup.All', 'FieldGroup.Title'],
-        }
+        },
       },
       'description.title': {
         elasticsearch: {
           copy_to: ['FieldGroup.All', 'FieldGroup.Description'],
-        }
+        },
       },
-      'documents': {
+      documents: {
         elasticsearch: {
           copy_to: ['FieldGroup.All', 'FieldGroup.Documents'],
-        }
+        },
       },
       'documents.empty': {
-        elasticsearch: {
-        }
+        elasticsearch: {},
       },
     }
 
@@ -444,15 +443,24 @@ describe('Highlight field aggregation', () => {
     ]
 
     expect(copyToFieldsMapping(fields, subFields)).toEqual({
-      'title': ['FieldGroup.All', 'FieldGroup.Title'],
+      title: ['FieldGroup.All', 'FieldGroup.Title'],
       'title.exact': ['FieldGroup.All.exact', 'FieldGroup.Title.exact'],
       'description.title': ['FieldGroup.All', 'FieldGroup.Description'],
-      'description.title.exact': ['FieldGroup.All.exact', 'FieldGroup.Description.exact'],
-      'documents': ['FieldGroup.All', 'FieldGroup.Documents'],
+      'description.title.exact': [
+        'FieldGroup.All.exact',
+        'FieldGroup.Description.exact',
+      ],
+      documents: ['FieldGroup.All', 'FieldGroup.Documents'],
       'documents.exact': ['FieldGroup.All.exact', 'FieldGroup.Documents.exact'],
       'title.keyword': ['FieldGroup.All.keyword', 'FieldGroup.Title.keyword'],
-      'description.title.keyword': ['FieldGroup.All.keyword', 'FieldGroup.Description.keyword'],
-      'documents.keyword': ['FieldGroup.All.keyword', 'FieldGroup.Documents.keyword'],
+      'description.title.keyword': [
+        'FieldGroup.All.keyword',
+        'FieldGroup.Description.keyword',
+      ],
+      'documents.keyword': [
+        'FieldGroup.All.keyword',
+        'FieldGroup.Documents.keyword',
+      ],
     })
   })
 })
