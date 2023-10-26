@@ -5,7 +5,7 @@ import {
   replaceHighlightTagRegex,
   containsHighlightTagRegex,
   combineMultiFields,
-  mergeHitHighlights,
+  copyToFieldsMapping,
 } from './highlighting.js'
 
 let nodeHighlight = {
@@ -414,37 +414,45 @@ describe('Highlight field aggregation', () => {
       'documents.exact': {},
     })
   })
-  it('should combine subfield highlights with field highlights', () => {
-    let hitHighlights = {
-      'foo.bar': ['<b class="search-highlight">foo</b> this handle'],
-      'foo.bar.exact': ['foo this <b class="search-highlight">handle</b>'],
-      foo: ['foo this <b class="search-highlight">bar</b>'],
-      'foo.exact': ['<b class="search-highlight">foo</b> this bar'],
-      'foo.car.bar': ['<b class="search-highlight">foo</b> this is not merged'],
-    }
-    let node = {
-      highlight: {
-        fields: {
-          'foo.bar': {},
-          foo: {},
-          'foo.car.bar': {},
-        },
+
+  it('should combine all fields with copy_to and subField definitions', () => {
+    let fields = {
+      'title': {
+        elasticsearch: {
+          copy_to: ['FieldGroup.All', 'FieldGroup.Title'],
+        }
+      },
+      'description.title': {
+        elasticsearch: {
+          copy_to: ['FieldGroup.All', 'FieldGroup.Description'],
+        }
+      },
+      'documents': {
+        elasticsearch: {
+          copy_to: ['FieldGroup.All', 'FieldGroup.Documents'],
+        }
+      },
+      'documents.empty': {
+        elasticsearch: {
+        }
       },
     }
 
-    let nodeHighlight = {
-      pre_tags: ['<b class="search-highlight">'],
-      post_tags: ['</b>'],
-    }
+    let subFields = [
+      { name: 'exact', shouldHighlight: true },
+      { name: 'keyword', shouldHighlight: false },
+    ]
 
-    expect(mergeHitHighlights(nodeHighlight, node, hitHighlights)).toEqual({
-      'foo.bar': [
-        '<b class="search-highlight">foo</b> this <b class="search-highlight">handle</b>',
-      ],
-      foo: [
-        '<b class="search-highlight">foo</b> this <b class="search-highlight">bar</b>',
-      ],
-      'foo.car.bar': ['<b class="search-highlight">foo</b> this is not merged'],
+    expect(copyToFieldsMapping(fields, subFields)).toEqual({
+      'title': ['FieldGroup.All', 'FieldGroup.Title'],
+      'title.exact': ['FieldGroup.All.exact', 'FieldGroup.Title.exact'],
+      'description.title': ['FieldGroup.All', 'FieldGroup.Description'],
+      'description.title.exact': ['FieldGroup.All.exact', 'FieldGroup.Description.exact'],
+      'documents': ['FieldGroup.All', 'FieldGroup.Documents'],
+      'documents.exact': ['FieldGroup.All.exact', 'FieldGroup.Documents.exact'],
+      'title.keyword': ['FieldGroup.All.keyword', 'FieldGroup.Title.keyword'],
+      'description.title.keyword': ['FieldGroup.All.keyword', 'FieldGroup.Description.keyword'],
+      'documents.keyword': ['FieldGroup.All.keyword', 'FieldGroup.Documents.keyword'],
     })
   })
 })

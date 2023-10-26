@@ -61,7 +61,7 @@ export default {
             nodeHighlight, // The result node's highlight configuration
             hit, // The ES result
             include: resultColumns, // The columns to return
-            node, // The subfields to return
+            node,
           })
           additionalFields = highlightObject.additionalFields
         }

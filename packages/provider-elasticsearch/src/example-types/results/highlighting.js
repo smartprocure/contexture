@@ -1,7 +1,7 @@
 import F from 'futil'
 import _ from 'lodash/fp.js'
 import { CartesianProduct } from 'js-combinatorics'
-import { mergeHitHighlights } from '../../utils/highlightUtil.js'
+import { mergeHitHighlights } from './highlightUtil.js'
 
 export let anyRegexesMatch = (regexes, criteria) =>
   !!_.find((pattern) => new RegExp(pattern).test(criteria), regexes)
@@ -208,20 +208,55 @@ export let highlightResults = ({
   return { additionalFields }
 }
 
+ 
+let getCopyToReplaceRegEx = (field, copyToFields) => {
+  return copyToFields[field] && new RegExp(
+    copyToFields[field] ? copyToFields[field]?.join('|') : '', 
+     'g'
+  )
+}
+
+let stringifiedFilters = (node) => JSON.stringify(node._meta.relevantFilters)
+
 const mergeReplacingArrays = _.mergeWith((target, src) => {
   if (_.isArray(src)) return src
 })
 
-export let combineMultiFields = (fields, subFields) =>
-  _.flow(
+let getMutltiFields = _.curry( 
+    (fields, subFields) => _.flow(
+      _.toArray, 
+      _.map((path) => [_.join('.', path), {}]),
+      _.fromPairs,
+    )(new CartesianProduct(_.keys(fields), _.map('name',subFields)))
+  )
+
+export let combineMultiFields = (fields, subFields) =>  _.flow(
     _.filter('shouldHighlight'),
-    _.map('name'),
-    (subFields) => new CartesianProduct(_.keys(fields), subFields),
-    _.toArray,
-    _.map((path) => [_.join('.', path), {}]),
-    _.fromPairs,
+    getMutltiFields(fields),
     _.merge(fields)
   )(subFields)
+
+let getPropSuffix = _.flow(
+    _.split('.'),
+    _.last,
+  )
+
+  export let copyToFieldsMapping = (fields, subFields) => _.flow(
+    _.mapValues(('elasticsearch.copy_to')),
+    _.omitBy(F.isBlank),
+    (fields) =>  _.flow(
+      _.keys,
+      _.map((multiField) => [
+        multiField, 
+        _.map(
+          (field) => `${field}.${getPropSuffix(multiField)}`,
+          fields[_.replace(`.${getPropSuffix(multiField)}`, '', multiField)]
+        )
+      ]),
+      _.fromPairs,
+      _.merge(fields)
+    )(getMutltiFields(fields, subFields)),
+  )(fields)
 
 export let getHighlightSettings = (schema, node) => {
   // Users can opt-out of highlighting by setting `node.highlight` to `false`
@@ -275,47 +310,35 @@ export let getHighlightSettings = (schema, node) => {
             _.pick(_.concat(node.include, schemaInlineAliases), filtered)
     )(schemaHighlight)
 
-    //Get copy to field mapping
-    let copyToFields = _.reduce(
-      (groups, fieldConfig) => {
-        F.when(
-          F.isNotBlank,
-          _.each((grp) => {
-            //Add base field to copy_to group
-            groups[grp] = _.concat([fieldConfig.field], groups[grp] || [])
-            //Add sub fields to copy_to group
-            _.each((subField) => {
-              groups[`${grp}.${subField}`] = _.concat(
-                [`${fieldConfig.field}.${subField}`],
-                groups[`${grp}.${subField}`] || []
-              )
-            }, _.map('name', schema.elasticsearch?.subFields))
-          }),
-          fieldConfig?.elasticsearch?.copy_to
-        )
-        return groups
-      },
-      {},
-      schema.fields
+    let copyToFields = copyToFieldsMapping(
+      _.pick(_.keys(fields), 
+      schema.fields), 
+      schema.elasticsearch?.subFields
     )
 
     fields = combineMultiFields(fields, schema.elasticsearch?.subFields)
 
-    //Map query to copy to fields
-    _.each((key) => {
-      let isKeyFromCopyTo = false
-      let filter = F.transformTree()((node) => {
-        if (copyToFields[node?.default_field]?.includes(key)) {
-          isKeyFromCopyTo = true
-          node.default_field = key
-        }
-      })(node._meta.relevantFilters)
-      if (isKeyFromCopyTo) {
-        fields[key] = { highlight_query: filter, ...fields[key] }
-        isKeyFromCopyTo = false
-      }
-    }, _.keys(fields))
-
+    // Build highlight_query for each highlight field
+    let fieldsWithHighlightQuery = _.reduce(
+      (highlightFields, highlightField) => {
+        return _.flow(
+          _.replace( 
+            getCopyToReplaceRegEx(highlightField, copyToFields), highlightField
+          ),
+          F.ifElse(
+            _.flow(_.isEqual, _.negate),
+            (replacedFilters) => { highlightFields[highlightField] = 
+              {highlight_query: JSON.parse(replacedFilters) } 
+              return highlightFields
+            },
+            () => highlightFields
+          )
+        )(stringifiedFilters(node))
+      }, {}, _.keys(fields)
+    )
+  
+    fields = _.merge(fields, fieldsWithHighlightQuery)
+    
     // Properties we support as part of the highlighting configuration that
     // elastic does not have knowledge of.
     let nonElasticProperties = [
