@@ -30,8 +30,7 @@ export let mergeHitHighlights = (
   fields,
   hitHighlights
 ) => {
-  if(!fields)
-    return hitHighlights  //nothing to merge
+  if (!fields) return hitHighlights //nothing to merge
   fields = _.remove(_.isPlainObject, fields)
   return _.reduce(
     (highlights, subField) => {

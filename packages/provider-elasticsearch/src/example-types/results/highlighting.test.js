@@ -8,7 +8,7 @@ import {
   copyToFieldsMapping,
   mapFieldsQueryWith,
   mapSubFieldsQueryWith,
-  getCopyToReplaceRegEx
+  getCopyToReplaceRegEx,
 } from './highlighting.js'
 
 let nodeHighlight = {
@@ -82,7 +82,7 @@ describe('highlighting', () => {
         },
         highlight: { title: ['<a>foo</a>'], description: ['<a>bar</a>'] },
       }
-      let result = highlightResults({ schemaHighlight, nodeHighlight, hit})
+      let result = highlightResults({ schemaHighlight, nodeHighlight, hit })
       expect(hit._source).toEqual({
         title: '<a>foo</a>',
         description: '<a>bar</a>',
@@ -116,7 +116,12 @@ describe('highlighting', () => {
           'documents.file0.parseBoxText': ['<a>fooBar</a>'],
         },
       }
-      let result = highlightResults({ schemaHighlight, nodeHighlight, hit, subFields: [] })
+      let result = highlightResults({
+        schemaHighlight,
+        nodeHighlight,
+        hit,
+        subFields: [],
+      })
       expect(hit._source).toEqual({
         title: '<a>foo</a>',
         description: '<a>bar</a>',
@@ -419,7 +424,7 @@ describe('getMultiFields()', () => {
   })
 })
 
-describe('copyToFieldsMapping()', () => { 
+describe('copyToFieldsMapping()', () => {
   it('should combine all fields with copy_to and subField definitions', () => {
     let fields = {
       title: {
@@ -442,15 +447,15 @@ describe('copyToFieldsMapping()', () => {
       },
     }
 
-  /*   let subFields = [
+    /*   let subFields = [
       { name: 'exact', shouldHighlight: true },
       { name: 'keyword', shouldHighlight: false },
     ] */
 
     expect(copyToFieldsMapping(fields)).toEqual({
-      'title': ['FieldGroup.All', 'FieldGroup.Title'],
+      title: ['FieldGroup.All', 'FieldGroup.Title'],
       'description.title': ['FieldGroup.All', 'FieldGroup.Description'],
-      'documents': ['FieldGroup.All', 'FieldGroup.Documents'],
+      documents: ['FieldGroup.All', 'FieldGroup.Documents'],
     })
   })
 })
@@ -458,9 +463,9 @@ describe('copyToFieldsMapping()', () => {
 describe('mapFieldsQueryWith()', () => {
   it('should map fields with query', () => {
     let copyToFields = {
-      'title': ['FieldGroup.All', 'FieldGroup.Title'],
+      title: ['FieldGroup.All', 'FieldGroup.Title'],
       'description.title': ['FieldGroup.All', 'FieldGroup.Description'],
-      'documents': ['FieldGroup.All', 'FieldGroup.Documents'],
+      documents: ['FieldGroup.All', 'FieldGroup.Documents'],
     }
 
     let filterWith = (field) => `{
@@ -500,15 +505,17 @@ describe('mapFieldsQueryWith()', () => {
     }`
 
     let fields = {
-      'title': {},
+      title: {},
       'description.title': {},
-      'documents': {},
+      documents: {},
     }
 
-    expect(mapFieldsQueryWith(copyToFields, filterWith('FieldGroup.All'), fields)).toEqual({
-      'title': { highlight_query: filterWith('title')},
-      'description.title': { highlight_query: filterWith('description.title')},
-      'documents': { highlight_query: filterWith('documents')},
+    expect(
+      mapFieldsQueryWith(copyToFields, filterWith('FieldGroup.All'), fields)
+    ).toEqual({
+      title: { highlight_query: filterWith('title') },
+      'description.title': { highlight_query: filterWith('description.title') },
+      documents: { highlight_query: filterWith('documents') },
     })
   })
 })
@@ -516,9 +523,9 @@ describe('mapFieldsQueryWith()', () => {
 describe('mapSubFieldsQueryWith()', () => {
   it('should map subFields with query', () => {
     let copyToFields = {
-      'title': ['FieldGroup.All', 'FieldGroup.Title'],
+      title: ['FieldGroup.All', 'FieldGroup.Title'],
       'description.title': ['FieldGroup.All', 'FieldGroup.Description'],
-      'documents': ['FieldGroup.All', 'FieldGroup.Documents'],
+      documents: ['FieldGroup.All', 'FieldGroup.Documents'],
     }
 
     let filterWith = (field) => `{
@@ -563,19 +570,31 @@ describe('mapSubFieldsQueryWith()', () => {
       'documents.exact': {},
     }
 
-    expect(mapSubFieldsQueryWith(copyToFields, filterWith('FieldGroup.All.exact'), fields)).toEqual({
-      'title.exact': { highlight_query: filterWith('title.exact')},
-      'description.title.exact': { highlight_query: filterWith('description.title.exact')},
-      'documents.exact': { highlight_query: filterWith('documents.exact')},
+    expect(
+      mapSubFieldsQueryWith(
+        copyToFields,
+        filterWith('FieldGroup.All.exact'),
+        fields
+      )
+    ).toEqual({
+      'title.exact': { highlight_query: filterWith('title.exact') },
+      'description.title.exact': {
+        highlight_query: filterWith('description.title.exact'),
+      },
+      'documents.exact': { highlight_query: filterWith('documents.exact') },
     })
   })
 
   it('should not map subFields if the field has no copy to mapping', () => {
-      let copyToFields = {
-        'Vendor.Name': ['FieldGroup.All', 'FieldGroup.Title', 'FieldGroup.POLineItem'],
-      }
+    let copyToFields = {
+      'Vendor.Name': [
+        'FieldGroup.All',
+        'FieldGroup.Title',
+        'FieldGroup.POLineItem',
+      ],
+    }
 
-      let filterWith = (field) => `{
+    let filterWith = (field) => `{
         "bool":{
           "must":[
               {
@@ -631,9 +650,17 @@ describe('mapSubFieldsQueryWith()', () => {
       'Vendor.NameAlias.exact': {},
     }
 
-    expect(mapSubFieldsQueryWith(copyToFields, filterWith('FieldGroup.POLineItem.exact'), fields)).toEqual({
-      'Vendor.Name.exact': { highlight_query: filterWith('Vendor.Name.exact')},
-      'Vendor.NameAlias.exact': { highlight_query: filterWith('FieldGroup.POLineItem.exact')},
+    expect(
+      mapSubFieldsQueryWith(
+        copyToFields,
+        filterWith('FieldGroup.POLineItem.exact'),
+        fields
+      )
+    ).toEqual({
+      'Vendor.Name.exact': { highlight_query: filterWith('Vendor.Name.exact') },
+      'Vendor.NameAlias.exact': {
+        highlight_query: filterWith('FieldGroup.POLineItem.exact'),
+      },
     })
   })
 })
