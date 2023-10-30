@@ -21,14 +21,14 @@ let process = _.curry(async ({ providers, schemas }, group, options = {}) => {
     await attachFilters(runTypeFunction)(group)
     Tree.walk((node) => {
       // Skip groups
-      if (!Tree.traverse(node)){
-         let {filters, filterNode} = getRelevantFilters(
+      if (!Tree.traverse(node)) {
+        let { filters, filterNode } = getRelevantFilters(
           getProvider(node).groupCombinator,
           node._meta.path,
           node._meta.path,
           group
         )
-        node._meta.relevantFilters = {...filters}
+        node._meta.relevantFilters = { ...filters }
         node._meta.relevantNodes = filterNode
       }
     })(group)
