@@ -4,8 +4,11 @@ import {
   anyRegexesMatch,
   replaceHighlightTagRegex,
   containsHighlightTagRegex,
-  combineMultiFields,
+  getMultiFields,
   copyToFieldsMapping,
+  mapFieldsQueryWith,
+  mapSubFieldsQueryWith,
+  getCopyToReplaceRegEx
 } from './highlighting.js'
 
 let nodeHighlight = {
@@ -79,7 +82,7 @@ describe('highlighting', () => {
         },
         highlight: { title: ['<a>foo</a>'], description: ['<a>bar</a>'] },
       }
-      let result = highlightResults({ schemaHighlight, nodeHighlight, hit })
+      let result = highlightResults({ schemaHighlight, nodeHighlight, hit})
       expect(hit._source).toEqual({
         title: '<a>foo</a>',
         description: '<a>bar</a>',
@@ -113,7 +116,7 @@ describe('highlighting', () => {
           'documents.file0.parseBoxText': ['<a>fooBar</a>'],
         },
       }
-      let result = highlightResults({ schemaHighlight, nodeHighlight, hit })
+      let result = highlightResults({ schemaHighlight, nodeHighlight, hit, subFields: [] })
       expect(hit._source).toEqual({
         title: '<a>foo</a>',
         description: '<a>bar</a>',
@@ -397,7 +400,7 @@ describe('containsHighlightTagRegex()', () => {
   })
 })
 
-describe('Highlight field aggregation', () => {
+describe('getMultiFields()', () => {
   it('should combine all fields with subField definitions', () => {
     let fields = { title: {}, description: {}, documents: {} }
     let subFields = [
@@ -405,16 +408,18 @@ describe('Highlight field aggregation', () => {
       { name: 'keyword', shouldHighlight: false },
     ]
 
-    expect(combineMultiFields(fields, subFields)).toEqual({
-      description: {},
+    expect(getMultiFields(fields, subFields)).toEqual({
       'description.exact': {},
-      title: {},
+      'description.keyword': {},
       'title.exact': {},
-      documents: {},
+      'title.keyword': {},
       'documents.exact': {},
+      'documents.keyword': {},
     })
   })
+})
 
+describe('copyToFieldsMapping()', () => { 
   it('should combine all fields with copy_to and subField definitions', () => {
     let fields = {
       title: {
@@ -437,30 +442,198 @@ describe('Highlight field aggregation', () => {
       },
     }
 
-    let subFields = [
+  /*   let subFields = [
       { name: 'exact', shouldHighlight: true },
       { name: 'keyword', shouldHighlight: false },
-    ]
+    ] */
 
-    expect(copyToFieldsMapping(fields, subFields)).toEqual({
-      title: ['FieldGroup.All', 'FieldGroup.Title'],
-      'title.exact': ['FieldGroup.All.exact', 'FieldGroup.Title.exact'],
+    expect(copyToFieldsMapping(fields)).toEqual({
+      'title': ['FieldGroup.All', 'FieldGroup.Title'],
       'description.title': ['FieldGroup.All', 'FieldGroup.Description'],
-      'description.title.exact': [
-        'FieldGroup.All.exact',
-        'FieldGroup.Description.exact',
-      ],
-      documents: ['FieldGroup.All', 'FieldGroup.Documents'],
-      'documents.exact': ['FieldGroup.All.exact', 'FieldGroup.Documents.exact'],
-      'title.keyword': ['FieldGroup.All.keyword', 'FieldGroup.Title.keyword'],
-      'description.title.keyword': [
-        'FieldGroup.All.keyword',
-        'FieldGroup.Description.keyword',
-      ],
-      'documents.keyword': [
-        'FieldGroup.All.keyword',
-        'FieldGroup.Documents.keyword',
-      ],
+      'documents': ['FieldGroup.All', 'FieldGroup.Documents'],
+    })
+  })
+})
+
+describe('mapFieldsQueryWith()', () => {
+  it('should map fields with query', () => {
+    let copyToFields = {
+      'title': ['FieldGroup.All', 'FieldGroup.Title'],
+      'description.title': ['FieldGroup.All', 'FieldGroup.Description'],
+      'documents': ['FieldGroup.All', 'FieldGroup.Documents'],
+    }
+
+    let filterWith = (field) => `{
+      "bool": {
+        "must": [
+          {
+            "query_string": {
+              "query": "Washington",
+              "default_operator": "AND",
+              "default_field": "${field}"
+            }
+          },
+          {
+            "bool": {
+              "must": [
+                {
+                  "range": {
+                    "LineItem.UnitPrice": {
+                      "gte": 1.01
+                    }
+                  }
+                },
+                {
+                  "bool": {
+                    "must_not": {
+                      "terms": {
+                        "ID.untouched": []
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }`
+
+    let fields = {
+      'title': {},
+      'description.title': {},
+      'documents': {},
+    }
+
+    expect(mapFieldsQueryWith(copyToFields, filterWith('FieldGroup.All'), fields)).toEqual({
+      'title': { highlight_query: filterWith('title')},
+      'description.title': { highlight_query: filterWith('description.title')},
+      'documents': { highlight_query: filterWith('documents')},
+    })
+  })
+})
+
+describe('mapSubFieldsQueryWith()', () => {
+  it('should map subFields with query', () => {
+    let copyToFields = {
+      'title': ['FieldGroup.All', 'FieldGroup.Title'],
+      'description.title': ['FieldGroup.All', 'FieldGroup.Description'],
+      'documents': ['FieldGroup.All', 'FieldGroup.Documents'],
+    }
+
+    let filterWith = (field) => `{
+      "bool": {
+        "must": [
+          {
+            "query_string": {
+              "query": "Washington",
+              "default_operator": "AND",
+              "default_field": "${field}"
+            }
+          },
+          {
+            "bool": {
+              "must": [
+                {
+                  "range": {
+                    "LineItem.UnitPrice": {
+                      "gte": 1.01
+                    }
+                  }
+                },
+                {
+                  "bool": {
+                    "must_not": {
+                      "terms": {
+                        "ID.untouched": []
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }`
+
+    let fields = {
+      'title.exact': {},
+      'description.title.exact': {},
+      'documents.exact': {},
+    }
+
+    expect(mapSubFieldsQueryWith(copyToFields, filterWith('FieldGroup.All.exact'), fields)).toEqual({
+      'title.exact': { highlight_query: filterWith('title.exact')},
+      'description.title.exact': { highlight_query: filterWith('description.title.exact')},
+      'documents.exact': { highlight_query: filterWith('documents.exact')},
+    })
+  })
+
+  it('should not map subFields if the field has no copy to mapping', () => {
+      let copyToFields = {
+        'Vendor.Name': ['FieldGroup.All', 'FieldGroup.Title', 'FieldGroup.POLineItem'],
+      }
+
+      let filterWith = (field) => `{
+        "bool":{
+          "must":[
+              {
+                "terms":{
+                    "ID.untouched":[
+                      "3836_24000285_10"
+                    ]
+                }
+              },
+              {
+                "bool":{
+                    "must":[
+                      {
+                          "query_string":{
+                            "query":"Washington",
+                            "default_operator":"AND",
+                            "default_field": "${field}",
+                          }
+                      },
+                      {
+                          "bool":{
+                            "must":[
+                                {
+                                  "range":{
+                                      "LineItem.UnitPrice":{
+                                        "gte":1.01
+                                      }
+                                  }
+                                },
+                                {
+                                  "bool":{
+                                      "must_not":{
+                                        "terms":{
+                                            "ID.untouched":[
+                                              
+                                            ]
+                                        }
+                                      }
+                                  }
+                                }
+                            ]
+                          }
+                      }
+                    ]
+                }
+              }
+          ]
+        }
+    }`
+
+    let fields = {
+      'Vendor.Name.exact': {},
+      'Vendor.NameAlias.exact': {},
+    }
+
+    expect(mapSubFieldsQueryWith(copyToFields, filterWith('FieldGroup.POLineItem.exact'), fields)).toEqual({
+      'Vendor.Name.exact': { highlight_query: filterWith('Vendor.Name.exact')},
+      'Vendor.NameAlias.exact': { highlight_query: filterWith('FieldGroup.POLineItem.exact')},
     })
   })
 })

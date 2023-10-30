@@ -14,7 +14,7 @@ describe('mergeHitHighlights()', () => {
       'foo.exact': ['<em>foo</em> this bar'],
       'foo.car.bar': ['<em>foo</em> this is not merged'],
     }
-    let fields = ['foo.bar', 'foo', 'foo.car.bar']
+    let fields = ['foo.bar.exact', 'foo.exact']
 
     expect(mergeHitHighlights(nodeHighlight, fields, hitHighlights)).toEqual({
       'foo.bar': ['<em>foo</em> this <em>handle</em>'],
@@ -29,7 +29,7 @@ describe('mergeHitHighlights()', () => {
       foo: ['foo this <em>stop gap bar</em>'],
       'foo.exact': ['foo <em>this stop</em> gap bar'],
     }
-    let fields = ['foo.bar', 'foo', 'foo.car.bar']
+    let fields = ['foo.bar.exact', 'foo.exact']
 
     expect(mergeHitHighlights(nodeHighlight, fields, hitHighlights)).toEqual({
       'foo.bar': ['<em>foo this car</em> handle'],
@@ -44,7 +44,7 @@ describe('mergeHitHighlights()', () => {
       'foo.exact': ['foo this stop <em>gap</em> bar'],
       'foo.car.bar': ['<em>foo</em> this is not merged'],
     }
-    let fields = ['foo.bar', 'foo', 'foo.car.bar']
+    let fields = ['foo.bar.exact', 'foo.exact']
 
     expect(mergeHitHighlights(nodeHighlight, fields, hitHighlights)).toEqual({
       'foo.bar': ['<em>foo this</em> car handle'],

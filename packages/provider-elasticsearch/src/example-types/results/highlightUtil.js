@@ -8,7 +8,7 @@ let getHighlightMatches = _.curry((nodeHighlight, highlight) =>
   highlight.match(highlightContentRegEx(nodeHighlight))
 )
 
-let getWordListMatchesRegEx = (words) => new RegExp(words.join('|'), 'gi')
+let getWordListMatchesRegEx = (words) => new RegExp(words?.join('|'), 'gi')
 
 let highlightWith = ({ pre_tags, post_tags }) =>
   F.highlight(pre_tags[0], post_tags[0])
@@ -30,9 +30,12 @@ export let mergeHitHighlights = (
   fields,
   hitHighlights
 ) => {
+  if(!fields)
+    return hitHighlights  //nothing to merge
+  fields = _.remove(_.isPlainObject, fields)
   return _.reduce(
     (highlights, subField) => {
-      let field = !_.includes(subField, fields)
+      let field = _.includes(subField, fields)
         ? getFieldFromSubField(subField)
         : undefined
       if (field && hitHighlights[field] && hitHighlights[subField]) {

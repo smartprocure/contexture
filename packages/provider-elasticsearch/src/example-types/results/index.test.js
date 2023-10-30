@@ -120,7 +120,7 @@ describe('results', () => {
           number_of_fragments: 0,
           post_tags: ['</b>'],
           pre_tags: ['<b class="search-highlight">'],
-          require_field_match: false,
+          require_field_match: true,
         },
       }),
     ])
@@ -165,7 +165,7 @@ describe('results', () => {
           number_of_fragments: 4,
           post_tags: ['</b>'],
           pre_tags: ['<b class="search-highlight">'],
-          require_field_match: false,
+          require_field_match: true,
         },
       }),
     ])
@@ -192,7 +192,7 @@ describe('results', () => {
           number_of_fragments: 0,
           post_tags: ['</b>'],
           pre_tags: ['<b class="search-highlight">'],
-          require_field_match: false,
+          require_field_match: true,
         },
       }),
     ])
@@ -215,7 +215,7 @@ describe('results', () => {
           number_of_fragments: 0,
           post_tags: ['</b>'],
           pre_tags: ['<b class="search-highlight">'],
-          require_field_match: false,
+          require_field_match: true,
         },
       }),
     ])
