@@ -22,15 +22,15 @@ export let containsHighlightTagRegex = (nodeHighlight) => {
 
 export let getCopyToReplaceRegEx = (field, copyToFields, suffix = '') => {
   let copyMap = copyToFields[field]
-  if(suffix !== ''){
+  if (suffix !== '') {
     field = field.replace(`.${suffix}`, '')
-    copyMap = _.includes(field, _.keys(copyToFields)) ? _.map((copyTo) => `${copyTo}.${suffix}`, copyToFields[field]) : undefined
+    copyMap = _.includes(field, _.keys(copyToFields))
+      ? _.map((copyTo) => `${copyTo}.${suffix}`, copyToFields[field])
+      : undefined
   }
- 
-  if(copyMap)
-    return  new RegExp(`(${copyMap?.join('|')})`, 'g')
-  else
-    return undefined
+
+  if (copyMap) return new RegExp(`(${copyMap?.join('|')})`, 'g')
+  else return undefined
 }
 
 export let getMultiFields = _.curry((fields, subFields) =>
@@ -43,43 +43,44 @@ export let getMultiFields = _.curry((fields, subFields) =>
 
 let getPropSuffix = _.flow(_.split('.'), _.last)
 
-export let mapFieldsQueryWith = _.curry((copyToMap, filter, fields) =>  
-_.fromPairs(
-  _.map(([field, value]) => [
-      field, 
-      _.set(
-        'highlight_query',
-        _.replace(getCopyToReplaceRegEx(field, copyToMap), field, filter),
-        value
-      )
-    ]
-    , _.toPairs(fields)
-  )
-))
-
-export let mapSubFieldsQueryWith  = _.curry((copyToMap, filter, subFields) =>
-_.fromPairs(
-  _.map(([field, value]) => [
-      field, 
-      _.set(
-        'highlight_query',
-        _.replace(
-          getCopyToReplaceRegEx(field, copyToMap, getPropSuffix(field)), 
-          field, 
-          filter
+export let mapFieldsQueryWith = _.curry((copyToMap, filter, fields) =>
+  _.fromPairs(
+    _.map(
+      ([field, value]) => [
+        field,
+        _.set(
+          'highlight_query',
+          _.replace(getCopyToReplaceRegEx(field, copyToMap), field, filter),
+          value
         ),
-        value
-      )
-    ],
-  _.toPairs(subFields)
+      ],
+      _.toPairs(fields)
+    )
   )
-))
+)
+
+export let mapSubFieldsQueryWith = _.curry((copyToMap, filter, subFields) =>
+  _.fromPairs(
+    _.map(
+      ([field, value]) => [
+        field,
+        _.set(
+          'highlight_query',
+          _.replace(
+            getCopyToReplaceRegEx(field, copyToMap, getPropSuffix(field)),
+            field,
+            filter
+          ),
+          value
+        ),
+      ],
+      _.toPairs(subFields)
+    )
+  )
+)
 
 export let copyToFieldsMapping = (fields) =>
-  _.flow(
-    _.mapValues('elasticsearch.copy_to'), 
-    _.omitBy(F.isBlank), 
-  )(fields)
+  _.flow(_.mapValues('elasticsearch.copy_to'), _.omitBy(F.isBlank))(fields)
 
 // Convert the fields array to object map where we only pick the first key from the objects
 // Highlight fields can be either strings or objects with a single key which value is the ES highlights object config
@@ -214,7 +215,7 @@ export let highlightResults = ({
   nodeHighlight, // The result node's highlight configuration
   hit, // The ES result
   include, // The columns to return
-  subFields = []
+  subFields = [],
 }) => {
   let { inline, inlineAliases, nestedPath, filterNested } = schemaHighlight
   let inlineKeys = _.keys(arrayToHighlightsFieldMap(inline))
@@ -230,10 +231,9 @@ export let highlightResults = ({
   // copy_to fields to highlight all appropriate fields while respecting
   // other filters that may be applied using exact(non-stemmed) fields
 
-
-  if(hit.highlight)
+  if (hit.highlight)
     hit.highlight = mergeHitHighlights(nodeHighlight, subFields, hit.highlight)
-  
+
   // TODO: Make this function pure, do not mutate `hit._source`
   handleNested({
     schemaHighlight,
@@ -330,7 +330,9 @@ export let getHighlightSettings = (schema, node) => {
     )(schemaHighlight)
 
     // Get copy to fields mapping for fields
-    let copyToFields = copyToFieldsMapping(_.pick(_.keys(fields), schema.fields))
+    let copyToFields = copyToFieldsMapping(
+      _.pick(_.keys(fields), schema.fields)
+    )
 
     // Stringify query to be used for highlight_query
     let stringifiedFilter = JSON.stringify(node._meta?.relevantFilters)
@@ -339,15 +341,12 @@ export let getHighlightSettings = (schema, node) => {
 
     fields = _.flow(
       mapFieldsQueryWith(copyToFields, stringifiedFilter),
-      (fields) => _.merge(
-        mapSubFieldsQueryWith(
-          copyToFields, 
-          stringifiedFilter,
-          subFields
+      (fields) =>
+        _.merge(
+          mapSubFieldsQueryWith(copyToFields, stringifiedFilter, subFields),
+          fields
         ),
-        fields
-      ),
-      _.mapValues(_.update('highlight_query', JSON.parse)),
+      _.mapValues(_.update('highlight_query', JSON.parse))
     )(fields)
 
     console.log('fields', JSON.stringify(fields))

@@ -3,12 +3,12 @@ export default {
     elasticsearch: {
       index: 'movies',
       type: 'movie',
-      "subFields": [
+      subFields: [
         {
-           "name": "exact",
-           "shouldHighlight": true,
-         },
-       ],
+          name: 'exact',
+          shouldHighlight: true,
+        },
+      ],
     },
     fields: {
       actors: {
@@ -211,12 +211,12 @@ export default {
       index: 'imdb',
       type: 'movie',
       aliasOf: 'movies',
-      "subFields": [
+      subFields: [
         {
-           "name": "exact",
-           "shouldHighlight": true,
-         },
-       ],
+          name: 'exact',
+          shouldHighlight: true,
+        },
+      ],
     },
     fields: {
       actors: {

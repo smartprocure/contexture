@@ -28,7 +28,10 @@ export default {
 
     let resultColumns = node.include
 
-    let { schemaHighlight, nodeHighlight, subFields } = getHighlightSettings(schema, node)
+    let { schemaHighlight, nodeHighlight, subFields } = getHighlightSettings(
+      schema,
+      node
+    )
 
     if (nodeHighlight) {
       // Setup the DEFAULT highlight config object with the calculated fields above
@@ -61,7 +64,7 @@ export default {
             nodeHighlight, // The result node's highlight configuration
             hit, // The ES result
             include: resultColumns, // The columns to return
-            subFields: _.keys(subFields)
+            subFields: _.keys(subFields),
           })
           additionalFields = highlightObject.additionalFields
         }
