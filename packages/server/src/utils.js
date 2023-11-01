@@ -25,6 +25,7 @@ export let getRelevantFilters = _.curry((groupCombinator, Path, group) => {
     relevantChildren
   )
 
+  console.log(relevantChildren)
   let relevantFilters = _.compact(
     _.map(getRelevantFilters(groupCombinator, path), relevantChildren)
   )
