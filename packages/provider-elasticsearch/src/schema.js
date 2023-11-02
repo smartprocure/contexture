@@ -29,17 +29,26 @@ let fromEsIndexMapping = (mapping) => {
         // filters out 'dynamic_templates' (an array), 'dynamic: true', etc.
         _.pickBy(_.isPlainObject),
         extractFieldsAndEsType,
+        // TODO: think about how to let users pass this multi-field config information
+        _.set('elasticsearch.subFields', {
+          keyword: { shouldHighlight: false },
+          exact: { shouldHighlight: true },
+        }),
         _.update(
           'fields',
           _.flow(
             flatten,
-            F.mapValuesIndexed(({ type, fields }, field) => ({
+            F.mapValuesIndexed((mapping, field) => ({
               field,
               label: _.startCase(field),
               elasticsearch: F.compactObject({
-                dataType: type,
+                ...mapping,
+                dataType: mapping.type,
                 // Find the child notAnalyzedField to set up facet autocomplete vs word
-                notAnalyzedField: _.findKey({ type: 'keyword' }, fields),
+                notAnalyzedField: _.findKey(
+                  { type: 'keyword' },
+                  mapping.fields
+                ),
               }),
             }))
           )

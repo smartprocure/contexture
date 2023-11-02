@@ -4,75 +4,55 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
 
-// https://www.elastic.co/guide/en/elasticsearch/reference/8.10/query-dsl.html
-const foo = new Set([
-  // Full-text queries
-  'intervals',
-  'match',
-  'match_bool_prefix',
-  'match_phrase',
-  'match_phrase_prefix',
-  // Term-level queries
-  'fuzzy',
-  'prefix',
-  'regexp',
-  'term',
-  'terms',
-  'terms_set',
-  'wildcard',
-])
-
-const bar = new Set([
-  'query_string',
-  'simple_query_string',
-  'combined_fields',
-  'multi_match',
-])
-
-/**
- * Extract fields relevant for highlighting from an Elastic query DSL.
- *
- * This function walks the query, looking for whitelisted keys that correspond
- * to elastic query names such as "fuzzy" and "match". As such, it may return
- * extra fields that do not exist in the index mappings. For example, given the
- * following query
- *
- * ```
- * { "match": { "match": { "query": "city" } } }`
- * ```
- *
- * this function will return `["match", "query"]` which is incorrect as "query"
- * is not a field. This is a reasonable tradeoff to avoid a more comprehensive
- * parser and keep the implementation simple.
- */
-export const getHighlightFieldsFromQuery = F.reduceTree()(
-  (fields, query, key) => {
-    if (_.isPlainObject(query)) {
-      if (foo.has(key)) {
-        fields.push(..._.keys(query))
-      }
-      // Use https://github.com/bripkens/lucene if we decide to parse lucene query
-      // strings.
-      if (bar.has(key)) {
-        fields.push(...(query.fields ?? []))
-        if (query.default_field) {
-          fields.push(query.default_field)
+export const inlineSubFieldsMappings = _.curry((subFields, mappings) =>
+  F.reduceIndexed(
+    (mappings, fieldMapping, fieldName) => {
+      for (const k in fieldMapping.fields) {
+        if (subFields[k]?.shouldHighlight) {
+          mappings[`${fieldName}.${k}`] = {
+            ...fieldMapping.fields[k],
+            meta: { ...fieldMapping.meta, isSubField: true },
+            copy_to: _.map((f) => `${f}.${k}`, fieldMapping.copy_to),
+          }
         }
       }
-    }
-    return fields
-  },
-  []
+      return mappings
+    },
+    mappings,
+    mappings
+  )
 )
 
-export const expandFieldWildcards = _.curry(() => [])
-
-// Also expand `FieldGroup.All.exact` into `description.exact`, `title.exact`, etc...
-export const expandFieldGroups = _.curry(() => [])
-
-// For each field, produce some default configuration based on the mappings (ex. limiting number of fragments for big text blobs)
-//   - Syncing code should set `{ index_options: 'offsets', meta: { subtype: 'bigtext' } }`
-export const makeHighlightConfig = _.curry(() => [])
+export const makeHighlightConfig = _.curry((query, fieldMapping, fieldName) => {
+  const config = {}
+  if (fieldMapping.meta?.subType === 'blob') {
+    config.order = 'score'
+    config.fragment_size = 250
+    config.number_of_fragments = 3
+  }
+  if (!_.isEmpty(fieldMapping.copy_to)) {
+    // An improvement would be to only set highlight_query when a field group
+    // field is present in the query.
+    const queryHasFieldGroup = F.findNode()(
+      (val) => _.includes(val, fieldMapping.copy_to),
+      query
+    )
+    if (queryHasFieldGroup) {
+      config.highlight_query = F.mapTree()((val) => {
+        if (_.includes(val, fieldMapping.copy_to)) {
+          val = fieldName
+        }
+        if (_.isPlainObject(val)) {
+          for (const copy_to of fieldMapping.copy_to) {
+            F.renamePropertyOn(copy_to, fieldName, val)
+          }
+        }
+        return val
+      }, query)
+    }
+  }
+  return config
+})
 
 export const mergeHighlightResults = _.curry(() => [])
 
