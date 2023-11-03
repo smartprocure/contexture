@@ -1,8 +1,9 @@
 // https://stackoverflow.com/questions/70177601/does-elasticsearch-provide-highlighting-on-copy-to-field-in-their-newer-versio
 // https://github.com/elastic/elasticsearch/issues/5172
 
+import _ from 'lodash/fp.js'
 import F from 'futil'
-import { getHighlightFields } from './highlighting.js'
+import { getHighlightFields, inlineHighlightResults } from './highlighting.js'
 import { getField } from '../../utils/fields.js'
 
 export default {
@@ -15,9 +16,15 @@ export default {
       ? getField(schema, node.sortField)
       : '_score'
 
+    const index = schema.elasticsearch.index
+
+    console.time(`${index}:getHighlightFields`)
     const highlightFields =
       node.enableHighlighting &&
-      getHighlightFields(node._meta.relevantFilters, schema)
+      getHighlightFields(schema, node._meta.relevantFilters)
+    console.timeEnd(`${index}:getHighlightFields`)
+
+    const tags = { pre: '<b class="search-highlight">', post: '</b>' }
 
     const body = F.omitBlank({
       from: startRecord,
@@ -31,23 +38,32 @@ export default {
         excludes: node.exclude,
       }),
       highlight: highlightFields && {
-        pre_tags: ['<b class="search-highlight">'],
-        post_tags: ['</b>'],
+        pre_tags: [tags.pre],
+        post_tags: [tags.post],
         number_of_fragments: 0,
         require_field_match: true,
         fields: highlightFields,
       },
     })
 
+    console.time(`${index}:search`)
     const response = await search(body)
+    const results = response.hits.hits
+    console.timeEnd(`${index}:search`)
+
+    if (node.enableHighlighting) {
+      console.time(`${index}:inlineHighlightResults`)
+      inlineHighlightResults(tags, schema, results)
+      console.timeEnd(`${index}:inlineHighlightResults`)
+    }
 
     return {
       scrollId: response._scroll_id,
       // ES 7+ is total.value, ES 6- is hits.total
       totalRecords: F.getOrReturn('value', response.hits.total),
       startRecord: startRecord + 1,
-      endRecord: startRecord + response.hits.hits.length,
-      results: response.hits.hits,
+      endRecord: startRecord + results.length,
+      results,
     }
   },
 }

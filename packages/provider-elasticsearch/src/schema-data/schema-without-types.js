@@ -2,6 +2,10 @@ export default {
   movies: {
     elasticsearch: {
       index: 'movies',
+      subFields: {
+        keyword: { shouldHighlight: false },
+        exact: { shouldHighlight: true },
+      },
     },
     fields: {
       actors: {
@@ -10,6 +14,13 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          type: 'text',
+          fields: {
+            keyword: {
+              type: 'keyword',
+              ignore_above: 256,
+            },
+          },
         },
         field: 'actors',
         label: 'Actors',
@@ -20,6 +31,13 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          type: 'text',
+          fields: {
+            keyword: {
+              type: 'keyword',
+              ignore_above: 256,
+            },
+          },
         },
         field: 'awards',
         label: 'Awards',
@@ -31,6 +49,10 @@ export default {
     elasticsearch: {
       index: 'imdb',
       aliasOf: 'movies',
+      subFields: {
+        keyword: { shouldHighlight: false },
+        exact: { shouldHighlight: true },
+      },
     },
     fields: {
       actors: {
@@ -39,6 +61,13 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          type: 'text',
+          fields: {
+            keyword: {
+              type: 'keyword',
+              ignore_above: 256,
+            },
+          },
         },
         field: 'actors',
         label: 'Actors',
@@ -49,6 +78,13 @@ export default {
         elasticsearch: {
           dataType: 'text',
           notAnalyzedField: 'keyword',
+          type: 'text',
+          fields: {
+            keyword: {
+              type: 'keyword',
+              ignore_above: 256,
+            },
+          },
         },
         field: 'awards',
         label: 'Awards',
