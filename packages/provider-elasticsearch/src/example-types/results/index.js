@@ -1,23 +1,9 @@
-import F from 'futil'
-import _ from 'lodash/fp.js'
-import {
-  inlineSubFieldsMappings,
-  makeHighlightConfig,
-  mergeHighlightResults,
-  inlineHighlightResults,
-} from './highlighting.js'
-import { getField } from '../../utils/fields.js'
+// https://stackoverflow.com/questions/70177601/does-elasticsearch-provide-highlighting-on-copy-to-field-in-their-newer-versio
+// https://github.com/elastic/elasticsearch/issues/5172
 
-const processResults = (schema, results) => {
-  const mappings = _.flow(
-    _.mapValues('elasticsearch'),
-    F.compactObject
-  )(schema.fields)
-  return _.map(
-    _.flow(mergeHighlightResults(mappings), inlineHighlightResults(mappings)),
-    results
-  )
-}
+import F from 'futil'
+import { getHighlightFields } from './highlighting.js'
+import { getField } from '../../utils/fields.js'
 
 export default {
   validContext: () => true,
@@ -29,13 +15,9 @@ export default {
       ? getField(schema, node.sortField)
       : '_score'
 
-    const getHighlightFieldsMappings = _.memoize(() =>
-      _.flow(
-        _.mapValues('elasticsearch'),
-        F.compactObject,
-        inlineSubFieldsMappings(schema.elasticsearch.subFields)
-      )(schema.fields)
-    )
+    const highlightFields =
+      node.enableHighlighting &&
+      getHighlightFields(node._meta.relevantFilters, schema)
 
     const body = F.omitBlank({
       from: startRecord,
@@ -48,14 +30,12 @@ export default {
         includes: node.include,
         excludes: node.exclude,
       }),
-      highlight: node.enableHighlighting && {
+      highlight: highlightFields && {
         pre_tags: ['<b class="search-highlight">'],
         post_tags: ['</b>'],
         number_of_fragments: 0,
-        fields: F.mapValuesIndexed(
-          makeHighlightConfig(node._meta.relevantFilters),
-          getHighlightFieldsMappings()
-        ),
+        require_field_match: true,
+        fields: highlightFields,
       },
     })
 

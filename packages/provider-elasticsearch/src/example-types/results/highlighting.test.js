@@ -1,183 +1,175 @@
-import _ from 'lodash/fp'
-import { inlineSubFieldsMappings, makeHighlightConfig } from './highlighting.js'
+import _ from 'lodash/fp.js'
+import { getHighlightFields } from './highlighting.js'
 
-describe('inlineSubFieldsMappings()', () => {
-  it('should inline sub-fields into the top-level mappings', () => {
-    const subFields = {
-      keyword: { shouldHighlight: false },
-      exact: { shouldHighlight: true },
-    }
-    const mappings = {
-      all: {
-        type: 'text',
-      },
-      fieldgroup: {
-        type: 'text',
-      },
-      age: {
-        type: 'long',
-        copy_to: [],
-      },
-      name: {
-        type: 'text',
-        copy_to: ['all', 'fieldgroup'],
-      },
-      job: {
-        type: 'text',
-        copy_to: [],
+describe('getHighlightFields()', () => {
+  it('should exclude fields without mappings', () => {
+    const actual = getHighlightFields(
+      {},
+      {
         fields: {
-          keyword: { type: 'keyword' },
-          exact: { type: 'text', analyzer: 'exact' },
+          other: {},
+          state: { elasticsearch: {} },
+          'city.street': { elasticsearch: {} },
         },
-      },
-      street: {
-        type: 'text',
-        copy_to: ['all', 'fieldgroup'],
-        fields: {
-          keyword: { type: 'keyword' },
-          exact: { type: 'text', analyzer: 'exact' },
-        },
-        meta: { subType: 'blob' },
-      },
+      }
+    )
+    const expected = {
+      state: {},
+      'city.street': {},
     }
-    expect(inlineSubFieldsMappings(subFields, mappings)).toEqual({
-      ..._.omit(['all', 'fieldgroup'], mappings),
-      'job.exact': {
-        type: 'text',
-        analyzer: 'exact',
-        copy_to: [],
-        meta: { isSubField: true },
-      },
-      'street.exact': {
-        type: 'text',
-        analyzer: 'exact',
-        copy_to: ['all.exact', 'fieldgroup.exact'],
-        meta: { subType: 'blob', isSubField: true },
-      },
-    })
-  })
-})
-
-describe('makeHighlightConfig()', () => {
-  it('should generate default config for blob subtype', () => {
-    const query = {}
-    const fieldMapping = {
-      meta: { subType: 'blob' },
-    }
-    const fieldName = 'street'
-    const result = makeHighlightConfig(query, fieldMapping, fieldName)
-    expect(result).toEqual({
-      order: 'score',
-      fragment_size: 250,
-      number_of_fragments: 3,
-    })
+    expect(actual).toEqual(expected)
   })
 
-  it('should generate highlight_query with field group name replaced by field name', () => {
-    const query = {
+  it('should exclude group fields', () => {
+    const actual = getHighlightFields(
+      {},
+      {
+        fields: {
+          all: { elasticsearch: {} },
+          address: { elasticsearch: {} },
+          state: { elasticsearch: { copy_to: ['all', 'address'] } },
+          'city.street': { elasticsearch: { copy_to: ['all', 'address'] } },
+        },
+      }
+    )
+    const expected = {
+      state: {},
+      'city.street': {},
+    }
+    expect(actual).toEqual(expected)
+  })
+
+  it('should include whitelisted sub fields', () => {
+    const actual = getHighlightFields(
+      {},
+      {
+        elasticsearch: {
+          subFields: {
+            keyword: { shouldHighlight: false },
+            exact: { shouldHighlight: true },
+          },
+        },
+        fields: {
+          state: {
+            elasticsearch: {
+              fields: { keyword: {}, exact: {} },
+            },
+          },
+          'city.street': {
+            elasticsearch: {
+              fields: { keyword: {}, exact: {} },
+            },
+          },
+        },
+      }
+    )
+    const expected = {
+      state: {},
+      'state.exact': {},
+      'city.street': {},
+      'city.street.exact': {},
+    }
+    expect(actual).toEqual(expected)
+  })
+
+  it('should generate configuration for blob text fields', () => {
+    const actual = getHighlightFields(
+      {},
+      {
+        elasticsearch: {
+          subFields: {
+            exact: { shouldHighlight: true },
+          },
+        },
+        fields: {
+          state: {
+            elasticsearch: {
+              meta: { subType: 'blob' },
+              fields: { exact: {} },
+            },
+          },
+        },
+      }
+    )
+    const expected = {
+      state: {
+        fragment_size: 250,
+        number_of_fragments: 3,
+      },
+      'state.exact': {
+        fragment_size: 250,
+        number_of_fragments: 3,
+      },
+    }
+    expect(actual).toEqual(expected)
+  })
+
+  it('should generate highlight_query with field groups replaced', () => {
+    const queryWith = (field) => ({
       bool: {
         must: [
-          { terms: { all: 'city' } },
-          { terms: { fieldgroup: 'city' } },
-          { query_string: { query: 'city', default_field: 'all' } },
-          { query_string: { query: 'city', default_field: 'fieldgroup' } },
+          { terms: { [field]: 'memphis' } },
+          { query_string: { query: 'memphis', default_field: field } },
         ],
       },
+    })
+    const actual = getHighlightFields(queryWith('address'), {
+      fields: {
+        address: { elasticsearch: {} },
+        state: { elasticsearch: { copy_to: ['address'] } },
+        'city.street': { elasticsearch: { copy_to: ['address'] } },
+      },
+    })
+    const expected = {
+      state: {
+        highlight_query: queryWith('state'),
+      },
+      'city.street': {
+        highlight_query: queryWith('city.street'),
+      },
     }
-    const fieldMapping = {
-      copy_to: ['all', 'fieldgroup'],
-    }
-    const fieldName = 'street'
-    const result = makeHighlightConfig(query, fieldMapping, fieldName)
-    expect(result).toEqual({
-      highlight_query: {
-        bool: {
-          must: [
-            { terms: { [fieldName]: 'city' } },
-            { terms: { [fieldName]: 'city' } },
-            { query_string: { query: 'city', default_field: fieldName } },
-            { query_string: { query: 'city', default_field: fieldName } },
-          ],
+    expect(actual).toEqual(expected)
+  })
+
+  it('should generate highlight_query with field groups replaced for sub fields', () => {
+    const queryWith = (field) => ({
+      bool: {
+        must: [
+          { terms: { [field]: 'memphis' } },
+          { query_string: { query: 'memphis', default_field: field } },
+        ],
+      },
+    })
+    const actual = getHighlightFields(queryWith('address.exact'), {
+      elasticsearch: {
+        subFields: {
+          exact: { shouldHighlight: true },
+        },
+      },
+      fields: {
+        address: {
+          elasticsearch: {},
+        },
+        state: {
+          elasticsearch: {
+            copy_to: ['address'],
+            fields: { exact: {} },
+          },
+        },
+        'city.street': {
+          elasticsearch: {
+            copy_to: ['address'],
+            fields: { exact: {} },
+          },
         },
       },
     })
-  })
-
-  it('should not generate highlight_query when field group name is not in query', () => {
-    const query = {
-      bool: {
-        must: [
-          { terms: { age: 'city' } },
-          { terms: { name: 'city' } },
-          { query_string: { query: 'city', default_field: 'age' } },
-          { query_string: { query: 'city', default_field: 'name' } },
-        ],
-      },
+    const expected = {
+      state: {},
+      'state.exact': { highlight_query: queryWith('state.exact') },
+      'city.street': {},
+      'city.street.exact': { highlight_query: queryWith('city.street.exact') },
     }
-    const fieldMapping = {
-      copy_to: ['all', 'fieldgroup'],
-    }
-    const fieldName = 'street'
-    const result = makeHighlightConfig(query, fieldMapping, fieldName)
-    expect(result).toEqual({})
+    expect(actual).toEqual(expected)
   })
 })
-
-// describe('getHighlightFieldsFromQuery()', () => {
-//   it('should extract all fields relevant for highlighting', () => {
-//     const query = {
-//       // Full-text queries
-//       intervals: { 'field:intervals': {} },
-//       match: { 'field:match': {} },
-//       match_bool_prefix: { 'field:match_bool_prefix': {} },
-//       match_phrase: { 'field:match_phrase': {} },
-//       match_phrase_prefix: { 'field:match_phrase_prefix': {} },
-//       combined_fields: {
-//         fields: ['field:combined_fields:0', 'field:combined_fields:1'],
-//       },
-//       multi_match: {
-//         fields: ['field:multi_match:0', 'field:multi_match:1'],
-//       },
-//       query_string: {
-//         fields: ['field:query_string:0', 'field:query_string:1'],
-//         default_field: 'field:query_string:default',
-//       },
-//       simple_query_string: {
-//         fields: ['field:simple_query_string:0', 'field:simple_query_string:1'],
-//         default_field: 'field:simple_query_string:default',
-//       },
-//       // Term-level queries
-//       fuzzy: { 'field:fuzzy': {} },
-//       prefix: { 'field:prefix': {} },
-//       regexp: { 'field:regexp': {} },
-//       term: { 'field:term': {} },
-//       terms: { 'field:terms': {} },
-//       terms_set: { 'field:terms_set': {} },
-//       wildcard: { 'field:wildcard': {} },
-//     }
-//     expect(getHighlightFieldsFromQuery(query)).toEqual([
-//       'field:intervals',
-//       'field:match',
-//       'field:match_bool_prefix',
-//       'field:match_phrase',
-//       'field:match_phrase_prefix',
-//       'field:combined_fields:0',
-//       'field:combined_fields:1',
-//       'field:multi_match:0',
-//       'field:multi_match:1',
-//       'field:query_string:0',
-//       'field:query_string:1',
-//       'field:query_string:default',
-//       'field:simple_query_string:0',
-//       'field:simple_query_string:1',
-//       'field:simple_query_string:default',
-//       'field:fuzzy',
-//       'field:prefix',
-//       'field:regexp',
-//       'field:term',
-//       'field:terms',
-//       'field:terms_set',
-//       'field:wildcard',
-//     ])
-//   })
-// })
