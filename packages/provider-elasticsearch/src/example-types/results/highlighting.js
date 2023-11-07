@@ -249,6 +249,7 @@ export let getHighlightSettings = (schema, node) => {
       _.concat(schemaInlineAliases), // Include the provided field aliases if any
       _.uniq,
       arrayToHighlightsFieldMap, // Convert the array to object map so we can simply _.pick again
+      _.merge(schemaHighlight.fields),
       (filtered) =>
         showOtherMatches
           ? // Highlight on all fields specified in the initial _.pick above.
