@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.25.3
+
+### Patch Changes
+
+- 250bb471: Ensure original highlight fields from schema merge into highlighting configuration
+
 ## 1.25.2
 
 ### Patch Changes
