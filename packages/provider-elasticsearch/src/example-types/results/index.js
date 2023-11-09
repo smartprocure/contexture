@@ -2,7 +2,7 @@
 // https://github.com/elastic/elasticsearch/issues/5172
 
 import F from 'futil'
-import { getHighlightFields, inlineHighlightResults } from './highlighting.js'
+import { getHighlightFields, inlineHighlightResults } from './highlight.js'
 import { getField } from '../../utils/fields.js'
 
 export default {

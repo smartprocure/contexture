@@ -2,7 +2,7 @@ import {
   getHighlightFields,
   mergeHighlights,
   inlineHighlightResults,
-} from './highlighting.js'
+} from './highlight.js'
 
 const tags = { pre: '<em>', post: '</em>' }
 
