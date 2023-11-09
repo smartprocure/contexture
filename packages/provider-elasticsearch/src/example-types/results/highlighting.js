@@ -273,18 +273,20 @@ export const mergeHighlights = (tags, ...strs) => {
 
 // This function mutates hits for performance reasons
 export const inlineHighlightResults = (tags, schema, highlightConfig, hits) => {
-  const arrayFields = _.flow(
-    _.pickBy({ elasticsearch: { meta: { subType: 'array' } } }),
-    _.keys
-  )(schema.fields)
+  const isSubType = _.curry(
+    (subType, field) => field?.elasticsearch?.meta?.subType === subType
+  )
 
-  const isSubFieldOf = (field, subField) =>
-    !!schema.fields[field]?.elasticsearch?.fields?.[subField]
+  const isSubField = _.curry(
+    (subField, field) => !!field?.elasticsearch?.fields?.[subField]
+  )
+
+  const arrayFields = _.keys(_.pickBy(isSubType('array'), schema.fields))
 
   const lastWordRegex = /\.(\w+)$/
   const getFieldKey = (val, key) => {
     const [field, sub] = key.split(lastWordRegex)
-    return isSubFieldOf(field, sub) ? field : key
+    return isSubField(sub, schema.fields[field]) ? field : key
   }
 
   for (const hit of hits) {
@@ -293,7 +295,11 @@ export const inlineHighlightResults = (tags, schema, highlightConfig, hits) => {
         const arrayField = _.find((k) => field.startsWith(k), arrayFields)
 
         if (!arrayField) {
-          acc[field] = mergeHighlights(tags, ...fragments)
+          if (isSubType('blob', schema.fields[field])) {
+            acc[field] = fragments
+          } else {
+            acc[field] = mergeHighlights(tags, ...fragments)
+          }
           return acc
         }
 
@@ -351,6 +357,12 @@ export const inlineHighlightResults = (tags, schema, highlightConfig, hits) => {
       {},
       _.mapValues(_.flatten, groupByIndexed(getFieldKey, hit.highlight))
     )
+
+    if (highlightConfig.filterSourceArrays) {
+      for (const field of arrayFields) {
+        highlights[field] ??= []
+      }
+    }
 
     for (const [field, val] of _.toPairs(highlights)) {
       F.setOn(field, val, hit._source)

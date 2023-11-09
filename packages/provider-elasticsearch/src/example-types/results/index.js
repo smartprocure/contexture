@@ -1,7 +1,6 @@
 // https://stackoverflow.com/questions/70177601/does-elasticsearch-provide-highlighting-on-copy-to-field-in-their-newer-versio
 // https://github.com/elastic/elasticsearch/issues/5172
 
-import _ from 'lodash/fp.js'
 import F from 'futil'
 import { getHighlightFields, inlineHighlightResults } from './highlighting.js'
 import { getField } from '../../utils/fields.js'
@@ -18,6 +17,7 @@ export default {
 
     const index = schema.elasticsearch.index
 
+    console.info('')
     console.time(`${index}:getHighlightFields`)
     const highlightFields =
       node.highlight?.enable &&

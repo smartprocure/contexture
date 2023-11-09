@@ -280,6 +280,50 @@ describe('inlineHighlightResults()', () => {
     expect(hit).toEqual(expected)
   })
 
+  it('should not merge fragments for blob text fields', () => {
+    const hit = {
+      _source: {},
+      highlight: {
+        blob: [
+          '<em>Meridian</em> St.',
+          '<em>Collins</em> Ave.',
+          '<em>Ocean</em> Drive',
+        ],
+        'blob.exact': [
+          '<em>Jefferson</em> Ave.',
+          '<em>Washington</em> St.',
+          '<em>Lincoln</em> Rd.',
+        ],
+      },
+    }
+    const schema = {
+      elasticsearch: {
+        subFields: {
+          exact: { shouldHighlight: true },
+        },
+      },
+      fields: {
+        blob: {
+          elasticsearch: {
+            meta: { subType: 'blob' },
+            fields: { exact: {} },
+          },
+        },
+      },
+    }
+    inlineHighlightResults(tags, schema, {}, [hit])
+    expect(hit._source).toEqual({
+      blob: [
+        '<em>Meridian</em> St.',
+        '<em>Collins</em> Ave.',
+        '<em>Ocean</em> Drive',
+        '<em>Jefferson</em> Ave.',
+        '<em>Washington</em> St.',
+        '<em>Lincoln</em> Rd.',
+      ],
+    })
+  })
+
   describe('arrays of strings', () => {
     const schema = {
       fields: {
@@ -361,6 +405,29 @@ describe('inlineHighlightResults()', () => {
       expect(hit._source).toEqual({
         city: {
           street: ['<em>Meridian St.</em>', 'Collins <em>Ave.</em>'],
+        },
+      })
+    })
+
+    it('should inline source array with empty array when there are no highlights', () => {
+      const hit = {
+        _source: {
+          city: {
+            street: [
+              'Jefferson Ave.',
+              'Washington St.',
+              'Meridian St.',
+              'Collins Ave.',
+              'Ocean Drive',
+            ],
+          },
+        },
+        highlight: {},
+      }
+      inlineHighlightResults(tags, schema, { filterSourceArrays: true }, [hit])
+      expect(hit._source).toEqual({
+        city: {
+          street: [],
         },
       })
     })
@@ -473,6 +540,29 @@ describe('inlineHighlightResults()', () => {
             { number: 235, name: '<em>Meridian St.</em>' },
             { number: 9, name: 'Collins <em>Ave.</em>' },
           ],
+        },
+      })
+    })
+
+    it('should inline source array with empty array when there are no highlights', () => {
+      const hit = {
+        _source: {
+          city: {
+            street: [
+              { number: 101, name: 'Jefferson Ave.' },
+              { number: 789, name: 'Washington St.' },
+              { number: 235, name: 'Meridian St.' },
+              { number: 9, name: 'Collins Ave.' },
+              { number: 655, name: 'Ocean Drive' },
+            ],
+          },
+        },
+        highlight: {},
+      }
+      inlineHighlightResults(tags, schema, { filterSourceArrays: true }, [hit])
+      expect(hit._source).toEqual({
+        city: {
+          street: [],
         },
       })
     })
