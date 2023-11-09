@@ -20,7 +20,7 @@ export default {
 
     console.time(`${index}:getHighlightFields`)
     const highlightFields =
-      node.enableHighlighting &&
+      node.highlight?.enable &&
       getHighlightFields(schema, node._meta.relevantFilters)
     console.timeEnd(`${index}:getHighlightFields`)
 
@@ -51,9 +51,9 @@ export default {
     const results = response.hits.hits
     console.timeEnd(`${index}:search`)
 
-    if (node.enableHighlighting) {
+    if (node.highlight?.enable) {
       console.time(`${index}:inlineHighlightResults`)
-      inlineHighlightResults(tags, schema, results)
+      inlineHighlightResults(tags, schema, node.highlight, results)
       console.timeEnd(`${index}:inlineHighlightResults`)
     }
 

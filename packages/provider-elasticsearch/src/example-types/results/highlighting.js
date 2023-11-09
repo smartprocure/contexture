@@ -1,6 +1,7 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
 import { CartesianProduct } from 'js-combinatorics'
+import { groupByIndexed } from '../../utils/futil.js'
 
 /**
  * Set of all fields groups in the mappings, including their cartesian product with
@@ -259,7 +260,7 @@ const highlightFromRanges = (tags, str, ranges) => {
     : highlighted
 }
 
-export const mergeHighlights = _.curry((tags, strs) => {
+export const mergeHighlights = (tags, ...strs) => {
   // This may look unnecessary but merging highlights is not cheap and many
   // times is not even needed
   if (_.size(strs) <= 1) return _.head(strs)
@@ -268,34 +269,91 @@ export const mergeHighlights = _.curry((tags, strs) => {
   )
   const plain = _.head(strs).replaceAll(tags.pre, '').replaceAll(tags.post, '')
   return highlightFromRanges(tags, plain, ranges)
-})
-
-// Group sub-fields under their containing multi-fields keys. The only reason
-// this is a reduce instead of a groupBy is because we need the keys.
-const foo = (schema) => (acc, val, key) => {
-  const mappings = getHighlightFieldsMappings(schema)
-  const parts = key.split('.')
-  const multiFieldName = _.dropRight(1, parts).join('.')
-  const subFieldName = _.last(parts)
-  // Will group `name` and `name.{subfield}` under `name`
-  const name = mappings[multiFieldName]?.fields?.[subFieldName]
-    ? multiFieldName
-    : key
-  acc[name] ??= []
-  acc[name].push(val)
-  return acc
 }
 
 // This function mutates hits for performance reasons
-export const inlineHighlightResults = (tags, schema, hits) => {
+export const inlineHighlightResults = (tags, schema, highlightConfig, hits) => {
+  const arrayFields = _.flow(
+    _.pickBy({ elasticsearch: { meta: { subType: 'array' } } }),
+    _.keys
+  )(schema.fields)
+
+  const isSubFieldOf = (field, subField) =>
+    !!schema.fields[field]?.elasticsearch?.fields?.[subField]
+
+  const lastWordRegex = /\.(\w+)$/
+  const getFieldKey = (val, key) => {
+    const [field, sub] = key.split(lastWordRegex)
+    return isSubFieldOf(field, sub) ? field : key
+  }
+
   for (const hit of hits) {
-    const highlightedFields = _.flow(
-      _.mapValues(_.head),
-      F.reduceIndexed(foo(schema), {}),
-      _.mapValues(mergeHighlights(tags))
-    )(hit.highlight)
-    for (const [key, val] of _.toPairs(highlightedFields)) {
-      F.setOn(key, val, hit._source)
+    const highlights = F.reduceIndexed(
+      (acc, fragments, field) => {
+        const arrayField = _.find((k) => field.startsWith(k), arrayFields)
+
+        if (!arrayField) {
+          acc[field] = mergeHighlights(tags, ...fragments)
+          return acc
+        }
+
+        const nestedField = field.slice(arrayField.length).replace('.', '')
+        const array = _.get(arrayField, hit._source)
+
+        if (!array) {
+          acc[arrayField] = nestedField
+            ? _.map((fragment) => _.set(nestedField, fragment, {}), fragments)
+            : fragments
+        } else {
+          const fragmentsMap = _.reduce(
+            (acc, fragment) => {
+              const plain = fragment
+                .replaceAll(tags.pre, '')
+                .replaceAll(tags.post, '')
+              acc[plain] = fragment
+              return acc
+            },
+            {},
+            fragments
+          )
+
+          acc[arrayField] = []
+
+          for (let index in array) {
+            if (nestedField) {
+              const fragment = fragmentsMap[_.get(nestedField, array[index])]
+              const item = highlightConfig.filterSourceArrays
+                ? undefined
+                : _.get(nestedField, array[index])
+              acc[arrayField].push(
+                _.set(nestedField, fragment ?? item, array[index])
+              )
+            } else {
+              const fragment = fragmentsMap[array[index]]
+              const item = highlightConfig.filterSourceArrays
+                ? undefined
+                : array[index]
+              acc[arrayField].push(fragment ?? item)
+            }
+          }
+
+          if (highlightConfig.filterSourceArrays) {
+            acc[arrayField] = _.remove(
+              (item) =>
+                _.isUndefined(nestedField ? _.get(nestedField, item) : item),
+              acc[arrayField]
+            )
+          }
+        }
+
+        return acc
+      },
+      {},
+      _.mapValues(_.flatten, groupByIndexed(getFieldKey, hit.highlight))
+    )
+
+    for (const [field, val] of _.toPairs(highlights)) {
+      F.setOn(field, val, hit._source)
     }
   }
 }
