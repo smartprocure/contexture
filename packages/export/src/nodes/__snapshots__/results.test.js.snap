@@ -45,7 +45,6 @@ exports[`results  with contexts not wrapped in \`response\` retrieves records 1`
                 "totalRecords": 3,
               },
             },
-            "highlight": false,
             "include": [
               "a",
               "b",
@@ -108,7 +107,6 @@ exports[`results  with contexts not wrapped in \`response\` retrieves records 1`
                 "totalRecords": 3,
               },
             },
-            "highlight": false,
             "include": [
               "a",
               "b",
@@ -172,7 +170,6 @@ exports[`results  with contexts not wrapped in \`response\` retrieves records 1`
                 "totalRecords": 3,
               },
             },
-            "highlight": false,
             "include": [
               "a",
               "b",
@@ -239,7 +236,6 @@ exports[`results  with contexts not wrapped in \`response\` retrieves records 1`
                 "totalRecords": 3,
               },
             },
-            "highlight": false,
             "include": [
               "a",
               "b",
@@ -303,7 +299,6 @@ exports[`results  with contexts not wrapped in \`response\` retrieves records 1`
                 "totalRecords": 3,
               },
             },
-            "highlight": false,
             "include": [
               "a",
               "b",
@@ -368,7 +363,6 @@ exports[`results  with contexts not wrapped in \`response\` retrieves records 1`
                 "totalRecords": 3,
               },
             },
-            "highlight": false,
             "include": [
               "a",
               "b",
@@ -437,7 +431,6 @@ exports[`results  with contexts wrapped in \`response\` retrieves records 1`] = 
               ],
               "totalRecords": 3,
             },
-            "highlight": false,
             "include": [
               "a",
               "b",
@@ -498,7 +491,6 @@ exports[`results  with contexts wrapped in \`response\` retrieves records 1`] = 
               ],
               "totalRecords": 3,
             },
-            "highlight": false,
             "include": [
               "a",
               "b",
@@ -560,7 +552,6 @@ exports[`results  with contexts wrapped in \`response\` retrieves records 1`] = 
               ],
               "totalRecords": 3,
             },
-            "highlight": false,
             "include": [
               "a",
               "b",
@@ -625,7 +616,6 @@ exports[`results  with contexts wrapped in \`response\` retrieves records 1`] = 
               ],
               "totalRecords": 3,
             },
-            "highlight": false,
             "include": [
               "a",
               "b",
@@ -687,7 +677,6 @@ exports[`results  with contexts wrapped in \`response\` retrieves records 1`] = 
               ],
               "totalRecords": 3,
             },
-            "highlight": false,
             "include": [
               "a",
               "b",
@@ -750,7 +739,6 @@ exports[`results  with contexts wrapped in \`response\` retrieves records 1`] = 
               ],
               "totalRecords": 3,
             },
-            "highlight": false,
             "include": [
               "a",
               "b",

@@ -46,7 +46,6 @@ describe('results', () => {
           page: 1,
           totalPages: 1,
           include,
-          highlight: false,
           sortField: 'a',
           sortDir: 'desc',
           ...strategyParams,

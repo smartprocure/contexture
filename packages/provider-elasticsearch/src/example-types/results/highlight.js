@@ -272,7 +272,7 @@ export const mergeHighlights = (tags, ...strs) => {
 }
 
 // This function mutates hits for performance reasons
-export const inlineHighlightResults = (tags, schema, highlightConfig, hits) => {
+export const inlineHighlightResults = (tags, schema, highlight, hits) => {
   const isSubType = _.curry(
     (subType, field) => field?.elasticsearch?.meta?.subType === subType
   )
@@ -328,7 +328,7 @@ export const inlineHighlightResults = (tags, schema, highlightConfig, hits) => {
           for (let index in array) {
             if (nestedField) {
               const fragment = fragmentsMap[_.get(nestedField, array[index])]
-              const item = highlightConfig.filterSourceArrays
+              const item = highlight.filterSourceArrays
                 ? undefined
                 : _.get(nestedField, array[index])
               acc[arrayField].push(
@@ -336,14 +336,14 @@ export const inlineHighlightResults = (tags, schema, highlightConfig, hits) => {
               )
             } else {
               const fragment = fragmentsMap[array[index]]
-              const item = highlightConfig.filterSourceArrays
+              const item = highlight.filterSourceArrays
                 ? undefined
                 : array[index]
               acc[arrayField].push(fragment ?? item)
             }
           }
 
-          if (highlightConfig.filterSourceArrays) {
+          if (highlight.filterSourceArrays) {
             acc[arrayField] = _.remove(
               (item) =>
                 _.isUndefined(nestedField ? _.get(nestedField, item) : item),
@@ -358,7 +358,7 @@ export const inlineHighlightResults = (tags, schema, highlightConfig, hits) => {
       _.mapValues(_.flatten, groupByIndexed(getFieldKey, hit.highlight))
     )
 
-    if (highlightConfig.filterSourceArrays) {
+    if (highlight.filterSourceArrays) {
       for (const field of arrayFields) {
         highlights[field] ??= []
       }
